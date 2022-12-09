@@ -23,22 +23,22 @@ module Spree
         created_at_gt = params[:q][:created_at_gt]
         created_at_lt = params[:q][:created_at_lt]
 
-        params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
+        params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == '0'
 
         if params[:q][:created_at_gt].present?
           params[:q][:created_at_gt] = begin
-                                         Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day
-                                       rescue StandardError
-                                         ""
-                                       end
+              Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day
+            rescue StandardError
+              ''
+            end
         end
 
         if params[:q][:created_at_lt].present?
           params[:q][:created_at_lt] = begin
-                                         Time.zone.parse(params[:q][:created_at_lt]).end_of_day
-                                       rescue StandardError
-                                         ""
-                                       end
+              Time.zone.parse(params[:q][:created_at_lt]).end_of_day
+            rescue StandardError
+              ''
+            end
         end
 
         if @show_only_completed
@@ -77,18 +77,28 @@ module Spree
       end
 
       def advance
-        if @order.completed?
-          flash[:notice] = t('spree.order_already_completed')
-          redirect_to edit_admin_order_url(@order)
-        else
-          @order.contents.advance
+        respond_to do |format|
+          format.html do
+            if @order.completed?
+              flash[:notice] = t('spree.order_already_completed')
+              redirect_to edit_admin_order_url(@order)
+            else
+              @order.contents.advance
 
-          if @order.can_complete?
-            flash[:success] = t('spree.order_ready_for_confirm')
-          else
-            flash[:error] = @order.errors.full_messages.join(', ')
+              if @order.can_complete?
+                flash[:success] = t('spree.order_ready_for_confirm')
+              else
+                flash[:error] = @order.errors.full_messages.join(', ')
+              end
+              redirect_to confirm_admin_order_url(@order)
+            end
+
+            format.json do
+              @order.contents.advance
+
+              head :ok
+            end
           end
-          redirect_to confirm_admin_order_url(@order)
         end
       end
 

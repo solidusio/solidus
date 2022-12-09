@@ -14,7 +14,7 @@ $.fn.optionValueAutocomplete = function (options) {
     minimumInputLength: 3,
     multiple: multiple,
     initSelection: function (element, callback) {
-      $.get(Spree.pathFor('api/option_values'), {
+      $.get(Spree.pathFor('admin/option_values'), {
         ids: element.val().split(','),
         token: Spree.api_key
       }, function (data) {
@@ -22,7 +22,7 @@ $.fn.optionValueAutocomplete = function (options) {
       });
     },
     ajax: {
-      url: Spree.pathFor('api/option_values'),
+      url: Spree.pathFor('admin/option_values'),
       datatype: 'json',
       data: function (term, page) {
         // Note: This doesn't work. variants_product_id isn't an allowed filter

@@ -5,6 +5,20 @@ module Spree
     class OptionTypesController < ResourceController
       before_action :setup_new_option_value, only: :edit
 
+      def index
+        response_to do |format|
+          format.html { super }
+          format.json do
+            if params[:ids]
+              @option_types = Spree::OptionType.includes(:option_values).accessible_by(current_ability).where(id: params[:ids].split(','))
+            else
+              @option_types = Spree::OptionType.includes(:option_values).accessible_by(current_ability).load.ransack(params[:q]).result
+            end
+            respond_with(@option_types)
+          end
+        end
+      end
+
       def update_values_positions
         params[:positions].each do |id, index|
           Spree::OptionValue.where(id: id).update_all(position: index)
@@ -31,10 +45,10 @@ module Spree
 
       def set_available_option_types
         @available_option_types = if @product.option_type_ids.any?
-          Spree::OptionType.where('id NOT IN (?)', @product.option_type_ids)
-        else
-          Spree::OptionType.all
-        end
+            Spree::OptionType.where('id NOT IN (?)', @product.option_type_ids)
+          else
+            Spree::OptionType.all
+          end
       end
     end
   end

@@ -15,7 +15,7 @@ Spree.Models.Order = Backbone.Model.extend({
 
   advance: function(opts) {
     var options = {
-      url: Spree.pathFor('api/checkouts/' + this.id + '/advance'),
+      url: Spree.pathFor('admin/orders/' + this.id + '/advance'),
       type: 'PUT',
     };
     _.extend(options, opts);

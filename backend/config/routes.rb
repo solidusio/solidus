@@ -82,6 +82,8 @@ Spree::Core::Engine.routes.draw do
         put :approve
         put :cancel
         put :resume
+
+        resources :coupon_codes, only: [:create, :destroy]
       end
 
       resource :customer, controller: "orders/customer_details"
@@ -182,6 +184,8 @@ Spree::Core::Engine.routes.draw do
     end
 
     resources :style_guide, only: [:index]
+
+    put '/classifications', to: 'classifications#update', as: :classifications
   end
 
   get '/admin', to: 'admin/root#index', as: :admin

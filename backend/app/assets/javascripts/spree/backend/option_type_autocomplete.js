@@ -11,7 +11,7 @@ Spree.ready(function () {
       multiple: true,
       initSelection: function (element, callback) {
         return Spree.ajax({
-          url: Spree.pathFor('api/option_types'),
+          url: Spree.pathFor('admin/option_types'),
           data: { ids: element.val() },
           type: 'get',
           success: function(data) {
@@ -20,7 +20,7 @@ Spree.ready(function () {
         });
       },
       ajax: {
-        url: Spree.pathFor('api/option_types'),
+        url: Spree.pathFor('admin/option_types'),
         quietMillis: 200,
         datatype: 'json',
         params: { "headers": {  'Authorization': 'Bearer ' + Spree.api_key } },

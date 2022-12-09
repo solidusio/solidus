@@ -9,7 +9,7 @@ Spree.ready(function() {
   var saveSort = function(e) {
     var item = e.item;
     Spree.ajax({
-      url: Spree.pathFor('api/classifications'),
+      url: Spree.pathFor('admin/classifications'),
       method: 'PUT',
       data: {
         product_id: item.getAttribute('data-product-id'),
