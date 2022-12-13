@@ -88,10 +88,20 @@ describe Spree::Admin::SearchController, type: :controller do
     end
 
     context 'when ids param is not present' do
-      let(:params) { { q: { name_cont: 'jersey' } } }
+      context "when the default ransack is used" do
+        let(:params) { { q: { name_cont: 'jersey' } } }
 
-      it_should_behave_like 'product search' do
-        let(:expected_products) { [product_one, product_two] }
+        it_should_behave_like 'product search' do
+          let(:expected_products) { [product_one, product_two] }
+        end
+      end
+
+      context "when a custom ransack query is used" do
+        let(:params) { { q: { slug_eq: 'better-jersey' } } }
+
+        it_should_behave_like 'product search' do
+          let(:expected_products) { [product_two] }
+        end
       end
     end
 
