@@ -16,6 +16,7 @@ module Solidus
       classic
       starter
     ]
+
     LEGACY_FRONTENDS = %w[
       solidus_starter_frontend
       solidus_frontend
@@ -322,18 +323,27 @@ module Solidus
       return 'paypal' if Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
       return 'bolt' if Bundler.locked_gems.dependencies['solidus_bolt']
 
-      options[:payment_method] ||
-        (options[:auto_accept] && @selected_frontend == 'classic' ? 'paypal' : 'none') ||
-        (@selected_frontend != 'classic' && 'none') || # bail out if it's not classic
+      descriptions = {
+        paypal: "- [#{set_color 'paypal', :bold}] Install `solidus_paypal_commerce_platform` (#{set_color :default, :bold}).",
+        bolt: "- [#{set_color 'bolt', :bold}] Install `solidus_bolt`.",
+        none: "- [#{set_color 'none', :bold}] Skip installing a payment method.",
+      }
+
+      payment_methods = PAYMENT_METHODS
+
+      if @selected_frontend != 'classic'
+        payment_methods -= ['bolt']
+        descriptions.delete(:bolt)
+      end
+
+      selected = options[:payment_method] || (options[:auto_accept] && 'paypal') ||
         ask_with_description(
           default: 'paypal',
-          limited_to: PAYMENT_METHODS,
+          limited_to: payment_methods,
           desc: <<~TEXT
             Which payment method would you like to use?
 
-            - [#{set_color 'paypal', :bold}] Install `solidus_paypal_commerce_platform` (#{set_color :default, :bold}).
-            - [#{set_color 'bolt', :bold}] Install `solidus_bolt`.
-            - [#{set_color 'none', :bold}] Skip installing a payment method.
+            #{descriptions.values.join("\n")}
           TEXT
         )
     end
