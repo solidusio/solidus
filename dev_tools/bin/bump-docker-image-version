@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'yaml'
+require_relative '../lib/solidus/bumper'
+
+candidate_tag = ARGV[0]
+
+path = File.expand_path('../../docker-compose.yml', __dir__)
+from = YAML
+  .load_file(path)
+  .dig(*%w[services app image])
+to = candidate_tag.delete_prefix('v').prepend('solidus-')
+
+puts <<~MSG
+
+  Bumping docker image name & version from #{from} to #{to} in #{path}
+
+MSG
+
+Solidus::Bumper.(
+  from: from,
+  to: to,
+  path: path
+)
