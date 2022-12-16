@@ -313,6 +313,19 @@ jobs:
       - test_with_coverage
       - notify
 
+  dev_tools:
+    docker:
+      - image: cimg/ruby:3.1
+    steps:
+      - checkout
+      - run:
+          name: "Test development tools"
+          command: |
+            cd dev_tools
+            bundle
+            bundle exec rspec
+      - notify
+
 workflows:
   build:
     jobs:
@@ -344,3 +357,5 @@ workflows:
           context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true] } }
+      - dev_tools:
+          context: slack-secrets

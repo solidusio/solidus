@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/solidus/pipeline_context'
+
+stream = ARGV[0]
+base_branch = ARGV[1]
+tags = ARGV[2..]
+
+context = Solidus::PipelineContext.new(
+  base_branch: base_branch,
+  tags: tags
+)
+
+puts <<~MSG
+
+  Pipeline context:
+    Base branch: #{base_branch}
+    Current tag: #{context.current_tag}
+    Candidate tag: #{context.candidate_tag}
+
+MSG
+
+open(stream, 'a') do |s|
+  s.puts "current_tag=#{context.current_tag}"
+  s.puts "candidate_tag=#{context.candidate_tag}"
+end

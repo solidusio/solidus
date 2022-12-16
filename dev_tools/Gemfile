@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+group :release_drafter do
+  gem 'octokit', '~> 6.0'
+  gem 'faraday-retry', '~> 2.0'
+end
+
+group :test do
+  gem 'rspec', '~> 3.12'
+end
