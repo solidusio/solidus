@@ -170,11 +170,11 @@ module Solidus
     end
 
     def install_frontend
-      if options[:frontend] == 'none'
+      frontend = detect_frontend_to_install
+
+      if frontend == 'none'
         support_solidus_frontend_extraction
       else
-        frontend = detect_frontend_to_install
-
         support_solidus_frontend_extraction unless frontend == LEGACY_FRONTEND
 
         say_status :installing, frontend
