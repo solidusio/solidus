@@ -198,19 +198,7 @@ module Solidus
     end
 
     def install_payment_method
-      return unless PAYMENT_METHODS.fetch(@selected_payment_method)
-
-      plugin_name = PAYMENT_METHODS.fetch(@selected_payment_method)
-      plugin_generator_name = "#{plugin_name}:install"
-
-      if bundler_context.dependencies[plugin_name]
-        say_status :skipping, "#{plugin_name} is already in the gemfile"
-      else
-        gem plugin_name
-        run_bundle
-        run "spring stop" if defined?(Spring)
-        generate "#{plugin_generator_name} --skip_migrations=true"
-      end
+      apply_template_for :payment_method, @selected_payment_method
     end
 
     def run_migrations
@@ -280,6 +268,20 @@ module Solidus
     end
 
     private
+
+    def apply_template_for(topic, selected)
+      template_path = Dir["#{__dir__}/app_templates/#{topic}/*.rb"].find do |path|
+        File.basename(path, '.rb') == selected
+      end
+
+      unless template_path
+        say_status :warning, "Unknown #{topic}: #{selected.inspect}, attempting to run it with `rails app:template`"
+        template_path = selected
+      end
+
+      say_status :installing, "[#{topic}] #{selected}", :blue
+      apply template_path
+    end
 
     def detect_frontend_to_install
       ENV['FRONTEND'] ||
