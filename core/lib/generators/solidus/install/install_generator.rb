@@ -199,7 +199,7 @@ module Solidus
       install_plugin(plugin_name: 'solidus_auth_devise', plugin_generator_name: 'solidus:auth:install')
     end
 
-    def install_payment_method_plugin
+    def install_payment_method
       return unless @payment_method_gem_name
 
       install_plugin(plugin_name: @payment_method_gem_name, plugin_generator_name: "#{@payment_method_gem_name}:install")
