@@ -170,24 +170,24 @@ module Solidus
     end
 
     def install_frontend
-      frontend = detect_frontend_to_install
+      @selected_frontend = detect_frontend_to_install
 
-      if frontend == 'none'
+      if @selected_frontend == 'none'
         support_solidus_frontend_extraction
       else
-        support_solidus_frontend_extraction unless frontend == LEGACY_FRONTEND
+        support_solidus_frontend_extraction unless @selected_frontend == LEGACY_FRONTEND
 
-        say_status :installing, frontend
+        say_status :installing, @selected_frontend
 
         InstallFrontend
           .new(bundler_context: bundler_context, generator_context: self)
-          .call(frontend)
+          .call(@selected_frontend)
 
         # The DEFAULT_FRONTEND installation makes changes to the
         # bundle without updating the bundler context. As such, we need to
         # reset the bundler context to get the latest dependencies from the
         # context.
-        reset_bundler_context if frontend == DEFAULT_FRONTEND
+        reset_bundler_context if @selected_frontend == DEFAULT_FRONTEND
       end
     end
 
