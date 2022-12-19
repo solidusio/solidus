@@ -13,6 +13,8 @@ module Solidus
 
     VERSION_SEPARATOR = '.'
 
+    DEV_VERSION_SUFFIX = '.dev'
+
     STABLE_VERSION_REGEXP = /^#{VERSION_PREFIX}(\d+)#{VERSION_SEPARATOR}(\d+)#{VERSION_SEPARATOR}(\d+)$/.freeze
 
     attr_reader :tags,
@@ -23,13 +25,16 @@ module Solidus
       Spree::VERSION.split('.')[1..2] == ['0', '0']
     end
 
-    def initialize(tags:, base_branch:, tracking_major: self.class.tracking_major?)
+    def initialize(tags:, base_branch:, last_minor: false, tracking_major: self.class.tracking_major?)
       @tags = tags.select { |tag| tag.match?(STABLE_VERSION_REGEXP) }
       raise ArgumentError, 'tags cannot be empty' unless tags.any?
 
       @base_branch = base_branch
       @tracking_major = tracking_major
       raise ArgumentError, "branch #{base_branch} cannot track major version" if tracking_major && !main_branch?
+
+      @last_minor = last_minor
+      raise ArgumentError, "branch #{base_branch} cannot track a last minor release" if last_minor && !main_branch?
     end
 
     def current_tag
@@ -44,22 +49,48 @@ module Solidus
     end
 
     def candidate_tag
-      @candidate_tag ||=
+      @candidate_tag ||= next_tag(current_tag, @tracking_major)
+    end
+
+    def candidate_version
+      @candidate_version ||= candidate_tag.delete_prefix(VERSION_PREFIX)
+    end
+
+    def candidate_minor_version
+      @candidate_minor_version ||= candidate_version.split(VERSION_SEPARATOR)[0..1].join(VERSION_SEPARATOR)
+    end
+
+    def candidate_patch_branch
+      @candidate_patch_branch ||=
         begin
-          current_tag
-            .delete_prefix(VERSION_PREFIX)
-            .split(VERSION_SEPARATOR)
-            .map(&:to_i)
-            .then { |version_numbers| bump(version_numbers) }
+          candidate_tag
+            .split(VERSION_SEPARATOR)[0..1]
             .join(VERSION_SEPARATOR)
-            .prepend(VERSION_PREFIX)
         end
+    end
+
+    def next_candidate_tag
+      @next_candidate_tag ||= next_tag(candidate_tag, @last_minor)
+    end
+
+    def next_candidate_dev_version
+      @next_candidate_dev_version ||= next_candidate_tag.delete_prefix(VERSION_PREFIX) + DEV_VERSION_SUFFIX
     end
 
     private
 
     def main_branch?
       base_branch == MAIN_BRANCH
+    end
+
+    def next_tag(from, next_is_major)
+      from
+        .delete_prefix(VERSION_PREFIX)
+        .split(VERSION_SEPARATOR)
+        .map(&:to_i)
+        .then { |version_numbers| bump(version_numbers, next_is_major) }
+        .join(VERSION_SEPARATOR)
+        .prepend(VERSION_PREFIX)
     end
 
     def highest_tag_between(tags)
@@ -69,12 +100,12 @@ module Solidus
         .prepend(VERSION_PREFIX)
     end
 
-    def bump(version_numbers)
-      main_branch? ? bump_for_main(*version_numbers) : bump_for_patch(*version_numbers)
+    def bump(version_numbers, next_is_major)
+      main_branch? ? bump_for_main(*version_numbers, next_is_major) : bump_for_patch(*version_numbers)
     end
 
-    def bump_for_main(major, minor, patch)
-      tracking_major ? [major + 1, 0, 0] : [major, minor + 1, 0]
+    def bump_for_main(major, minor, patch, next_is_major)
+      next_is_major ? [major + 1, 0, 0] : [major, minor + 1, 0]
     end
 
     def bump_for_patch(major, minor, patch)
