@@ -198,12 +198,11 @@ module Solidus
     end
 
     def install_payment_method
-      @payment_method_gem_name = PAYMENT_METHODS.fetch(@selected_payment_method)
+      plugin_name = PAYMENT_METHODS.fetch(@selected_payment_method)
 
-      return unless @payment_method_gem_name
+      return unless plugin_name
 
-      plugin_name = @payment_method_gem_name
-      plugin_generator_name = "#{@payment_method_gem_name}:install"
+      plugin_generator_name = "#{plugin_name}:install"
 
       if bundler_context.dependencies[plugin_name]
         say_status :skipping, "#{plugin_name} is already in the gemfile"
