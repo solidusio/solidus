@@ -21,6 +21,7 @@ module Spree
     validates :meta_keywords, length: { maximum: 255 }
     validates :meta_description, length: { maximum: 255 }
     validates :meta_title, length: { maximum: 255 }
+    validates :taxonomy_id, uniqueness: { message: :can_have_only_one_root }, if: :root?
 
     after_save :touch_ancestors_and_taxonomy
     after_touch :touch_ancestors_and_taxonomy

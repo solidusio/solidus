@@ -498,6 +498,10 @@ en:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
+        spree/taxon:
+          attributes:
+            taxonomy_id:
+              can_have_only_one_root: can only have one root Taxon
         spree/user_address:
           attributes:
             user_id:

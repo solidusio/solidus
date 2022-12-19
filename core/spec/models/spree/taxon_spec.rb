@@ -176,6 +176,23 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 
+  context "validations" do
+    context "taxonomy_id validations" do
+      let(:taxonomy) { create(:taxonomy) }
+      let(:taxon) { taxonomy.taxons.create(name: 'New node') }
+
+      it "ensures that only one root can be created" do
+        expect(taxon).to be_invalid
+        expect(taxon.errors.full_messages).to match_array(["Taxonomy can only have one root Taxon"])
+      end
+
+      it "allows for multiple taxons under taxonomy" do
+        expect(taxon.update(parent_id: taxonomy.root.id)).to eq(true)
+        expect(taxonomy.taxons.many?).to eq(true)
+      end
+    end
+  end
+
   # Regression test for https://github.com/spree/spree/issues/2620
   context "creating a child node using first_or_create" do
     let(:taxonomy) { create(:taxonomy) }
