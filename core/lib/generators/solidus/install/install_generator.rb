@@ -144,13 +144,13 @@ module Solidus
         :yellow
       ), :yellow
 
-      name = options[:payment_method]
-      name ||= PAYMENT_METHODS.keys.first if options[:auto_accept]
-      name ||= ask("
+      @selected_payment_method = options[:payment_method]
+      @selected_payment_method ||= PAYMENT_METHODS.keys.first if options[:auto_accept]
+      @selected_payment_method ||= ask("
   You can select a payment method to be included in the installation process.
   Please select a payment method name:", limited_to: PAYMENT_METHODS.keys, default: PAYMENT_METHODS.keys.first)
 
-      @payment_method_gem_name = PAYMENT_METHODS.fetch(name)
+      @payment_method_gem_name = PAYMENT_METHODS.fetch(@selected_payment_method)
     end
 
     def include_seed_data
