@@ -53,7 +53,8 @@ RSpec.describe Spree::Taxon, type: :model do
   end
 
   context "set_permalink" do
-    let(:taxon) { FactoryBot.build(:taxon, name: "Ruby on Rails") }
+    let(:taxonomy) { create(:taxonomy, name: "Ruby on Rails") }
+    let(:taxon) { taxonomy.root }
 
     it "should set permalink correctly when no parent present" do
       taxon.set_permalink
