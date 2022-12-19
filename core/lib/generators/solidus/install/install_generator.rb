@@ -149,8 +149,6 @@ module Solidus
       @selected_payment_method ||= ask("
   You can select a payment method to be included in the installation process.
   Please select a payment method name:", limited_to: PAYMENT_METHODS.keys, default: PAYMENT_METHODS.keys.first)
-
-      @payment_method_gem_name = PAYMENT_METHODS.fetch(@selected_payment_method)
     end
 
     def include_seed_data
@@ -200,6 +198,8 @@ module Solidus
     end
 
     def install_payment_method
+      @payment_method_gem_name = PAYMENT_METHODS.fetch(@selected_payment_method)
+
       return unless @payment_method_gem_name
 
       plugin_name = @payment_method_gem_name
