@@ -144,13 +144,11 @@ module Solidus
         :yellow
       ), :yellow
 
-      name = options[:payment_method]
-      name ||= PAYMENT_METHODS.keys.first if options[:auto_accept]
-      name ||= ask("
+      @selected_payment_method = options[:payment_method]
+      @selected_payment_method ||= PAYMENT_METHODS.keys.first if options[:auto_accept]
+      @selected_payment_method ||= ask("
   You can select a payment method to be included in the installation process.
   Please select a payment method name:", limited_to: PAYMENT_METHODS.keys, default: PAYMENT_METHODS.keys.first)
-
-      @payment_method_gem_name = PAYMENT_METHODS.fetch(name)
     end
 
     def include_seed_data
@@ -172,24 +170,24 @@ module Solidus
     end
 
     def install_frontend
-      if options[:frontend] == 'none'
+      @selected_frontend = detect_frontend_to_install
+
+      if @selected_frontend == 'none'
         support_solidus_frontend_extraction
       else
-        frontend = detect_frontend_to_install
+        support_solidus_frontend_extraction unless @selected_frontend == LEGACY_FRONTEND
 
-        support_solidus_frontend_extraction unless frontend == LEGACY_FRONTEND
-
-        say_status :installing, frontend
+        say_status :installing, @selected_frontend
 
         InstallFrontend
           .new(bundler_context: bundler_context, generator_context: self)
-          .call(frontend)
+          .call(@selected_frontend)
 
         # The DEFAULT_FRONTEND installation makes changes to the
         # bundle without updating the bundler context. As such, we need to
         # reset the bundler context to get the latest dependencies from the
         # context.
-        reset_bundler_context if frontend == DEFAULT_FRONTEND
+        reset_bundler_context if @selected_frontend == DEFAULT_FRONTEND
       end
     end
 
@@ -199,10 +197,8 @@ module Solidus
       install_plugin(plugin_name: 'solidus_auth_devise', plugin_generator_name: 'solidus:auth:install')
     end
 
-    def install_payment_method_plugin
-      return unless @payment_method_gem_name
-
-      install_plugin(plugin_name: @payment_method_gem_name, plugin_generator_name: "#{@payment_method_gem_name}:install")
+    def install_payment_method
+      apply_template_for :payment_method, @selected_payment_method
     end
 
     def run_migrations
@@ -272,6 +268,20 @@ module Solidus
     end
 
     private
+
+    def apply_template_for(topic, selected)
+      template_path = Dir["#{__dir__}/app_templates/#{topic}/*.rb"].find do |path|
+        File.basename(path, '.rb') == selected
+      end
+
+      unless template_path
+        say_status :warning, "Unknown #{topic}: #{selected.inspect}, attempting to run it with `rails app:template`"
+        template_path = selected
+      end
+
+      say_status :installing, "[#{topic}] #{selected}", :blue
+      apply template_path
+    end
 
     def detect_frontend_to_install
       ENV['FRONTEND'] ||
