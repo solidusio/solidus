@@ -3,7 +3,7 @@
 
 require 'bundler'
 
-Bundler.setup(:release_drafter)
+Bundler.setup(:release)
 require_relative '../lib/solidus/release_drafter'
 
 github_token = ARGV[0]

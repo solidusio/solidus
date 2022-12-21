@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-group :release_drafter do
+group :release do
   gem 'octokit', '~> 6.0'
   gem 'faraday-retry', '~> 2.0'
 end

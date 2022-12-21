@@ -1,0 +1,39 @@
+name: "Commit and submit Pull Request"
+
+inputs:
+  message:
+    description: "Message for both the created commit and PR"
+    required: true
+    type: string
+  labels:
+    description: "List of labels to apply to the PR"
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Configure git"
+      shell: bash
+      run: |
+        git config --global user.name ${{ github.actor }}
+        git config --global user.email ${{ github.actor }}@users.noreply.github.com
+    - name: "Commit & push changes"
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        branch="github-actions/${{ github.run_id }}-${{ github.run_attempt }}"
+        git checkout -b $branch
+        git commit -a -m "${{ inputs.message }}"
+        git push --set-upstream origin $branch
+    - name: "Submit Pull Request"
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh pr create \
+          --repo ${{ github.repository }} \
+          --base ${{ github.ref_name }} \
+          --fill \
+          `for label in ${{ inputs.labels }}; do echo --label $label; done`
