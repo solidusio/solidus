@@ -1,9 +1,32 @@
+/**
+  * Make the element a select2 dropdown used for finding Products. By default,
+  * it allows the Products to be found by its name and its Variants' SKUs.
+  * @param  {Object} options Options
+  * @param  {Boolean} [options.multiple=true] Allow multiple products to be selectable
+  * @param  {Function|undefined} options.searchParameters Returns a hash object for params to merge on the select2 ajax request
+  *                                                       Accepts an argument of the select2 search term. To use custom Ransack
+  *                                                       define q on the hash and add your custom terms. Note, you need to
+  *                                                       ensure that the attributes are allowed to be Ransacked.
+  */
 $.fn.productAutocomplete = function (options) {
   'use strict';
 
   // Default options
   options = options || {}
   var multiple = typeof(options['multiple']) !== 'undefined' ? options['multiple'] : true
+  function extraParameters(term) {
+    if (typeof(options['searchParameters']) === 'function') {
+      return options['searchParameters'](term)
+    }
+
+    return {
+      q: {
+        name_cont: term,
+        variants_including_master_sku_start: term,
+        m: 'or'
+      }
+    }
+  }
 
   function formatProduct(product) {
     return Select2.util.escapeMarkup(product.name);
@@ -26,15 +49,11 @@ $.fn.productAutocomplete = function (options) {
       datatype: 'json',
       params: { "headers": {  'Authorization': 'Bearer ' + Spree.api_key } },
       data: function (term, page) {
-        return {
-          q: {
-            name_cont: term,
-            variants_including_master_sku_start: term,
-            m: 'or'
-          },
+        const params = {
           token: Spree.api_key,
           page: page
         };
+        return _.extend(params, extraParameters(term));
       },
       results: function (data, page) {
         var products = data.products ? data.products : [];
