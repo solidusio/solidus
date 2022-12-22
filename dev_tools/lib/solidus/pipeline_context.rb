@@ -48,6 +48,15 @@ module Solidus
         end
     end
 
+    def current_diff_source_tag
+      return current_tag unless main_branch?
+
+      current_tag
+        .split(VERSION_SEPARATOR)
+        .then { |(major, minor, patch)| [major, minor, '0'] }
+        .join(VERSION_SEPARATOR)
+    end
+
     def candidate_tag
       @candidate_tag ||= next_tag(current_tag, @tracking_major)
     end

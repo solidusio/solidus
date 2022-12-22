@@ -19,6 +19,7 @@ puts <<~MSG
   Pipeline context:
     Base branch: #{base_branch}
     Current tag: #{context.current_tag}
+    Current diff source tag: #{context.current_diff_source_tag}
     Candidate tag: #{context.candidate_tag}
     Candidate version: #{context.candidate_version}
     Candidate minor version: #{context.candidate_minor_version}
@@ -30,6 +31,7 @@ MSG
 
 open(stream, 'a') do |s|
   s.puts "current_tag=#{context.current_tag}"
+  s.puts "current_diff_source_tag=#{context.current_diff_source_tag}"
   s.puts "candidate_tag=#{context.candidate_tag}"
   s.puts "candidate_version=#{context.candidate_version}"
   s.puts "candidate_minor_version=#{context.candidate_minor_version}"

@@ -74,6 +74,30 @@ RSpec.describe Solidus::PipelineContext do
     end
   end
 
+  describe '#current_diff_source_tag' do
+    context 'when the base branch is the main branch' do
+      it 'returns the current tag adjusted to its first patch version' do
+        context = described_class.new(
+          tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2 v3.0.0 v3.0.1],
+          base_branch: 'master'
+        )
+
+        expect(context.current_diff_source_tag).to eq('v3.0.0')
+      end
+    end
+
+    context 'when the base branch is a patch branch' do
+      it 'returns the current tag' do
+        context = described_class.new(
+          tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2 v3.0.0 v3.0.1],
+          base_branch: 'v3.0'
+        )
+
+        expect(context.current_diff_source_tag).to eq('v3.0.1')
+      end
+    end
+  end
+
   describe '#candidate_tag' do
     context 'when the base branch is a patch branch' do
       it 'returns the next patch level tag on the base branch' do

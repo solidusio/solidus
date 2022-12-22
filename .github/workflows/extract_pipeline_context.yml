@@ -12,6 +12,9 @@ on:
       current_tag:
         description: "Current tag"
         value: ${{ jobs.extract.outputs.current_tag }}
+      current_diff_source_tag:
+        description: "Current diff source tag"
+        value: ${{ jobs.extract.outputs.current_diff_source_tag }}
       candidate_tag:
         description: "Candidate tag"
         value: ${{ jobs.extract.outputs.candidate_tag }}
@@ -47,6 +50,7 @@ jobs:
             `git tag --list`
     outputs:
       current_tag: ${{ steps.extraction.outputs.current_tag }}
+      current_diff_source_tag: ${{ steps.extraction.outputs.current_diff_source_tag }}
       candidate_tag: ${{ steps.extraction.outputs.candidate_tag }}
       candidate_version: ${{ steps.extraction.outputs.candidate_version }}
       candidate_minor_version: ${{ steps.extraction.outputs.candidate_minor_version }}
