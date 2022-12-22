@@ -8,7 +8,7 @@ require_relative '../lib/solidus/release_drafter'
 
 github_token = ARGV[0]
 repository = ARGV[1]
-current_tag = ARGV[2]
+current_diff_source_tag = ARGV[2]
 candidate_tag = ARGV[3]
 branch = ARGV[4]
 pr_number = ARGV[5]
@@ -28,7 +28,7 @@ MSG
 
 draft = drafter.call(
   pr_number: pr_number,
-  current_tag: current_tag,
+  current_diff_source_tag: current_diff_source_tag,
   candidate_tag: candidate_tag,
   branch: branch
 )

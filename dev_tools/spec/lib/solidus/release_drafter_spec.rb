@@ -50,7 +50,7 @@ RSpec.describe Solidus::ReleaseDrafter do
       client.add_pr(pr_number: 1, labels: ['changelog:solidus_core'])
 
       expect(
-        subject.call(pr_number: 1, current_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
+        subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
       ).to match(/#{Regexp.escape("## Solidus Core\n- PR number 1 #1 (@alice)")}/)
     end
 
@@ -58,7 +58,7 @@ RSpec.describe Solidus::ReleaseDrafter do
       client.add_pr(pr_number: 1, labels: %w[changelog:solidus_core changelog:solidus_api])
 
       expect(
-        subject.call(pr_number: 1, current_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
+        subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
       ).to match(/#{Regexp.escape("## Solidus Core\n- PR number 1 #1 (@alice)")}.*#{Regexp.escape("## Solidus API\n- PR number 1 #1 (@alice)")}/m)
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Solidus::ReleaseDrafter do
       client.add_pr(pr_number: 1, labels: %w[other])
 
       expect(
-        subject.call(pr_number: 1, current_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master')
+        subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master')
       ).to be(nil)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Solidus::ReleaseDrafter do
       client.add_pr(pr_number: 1, labels: %w[changelog:solidus_core changelog:skip])
 
       expect(
-        subject.call(pr_number: 1, current_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master')
+        subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master')
       ).to be(nil)
     end
 
@@ -82,7 +82,7 @@ RSpec.describe Solidus::ReleaseDrafter do
       client.add_pr(pr_number: 1, labels: %w[changelog:solidus_core changelog:solidus_api])
 
       expect(
-        subject.call(pr_number: 1, current_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
+        subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
       ).to include("don't edit manually")
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Solidus::ReleaseDrafter do
       client.add_pr(pr_number: 1, labels: %w[changelog:solidus_core changelog:solidus_api])
 
       expect(
-        subject.call(pr_number: 1, current_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
+        subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
       ).to include("**Full Changelog**: https://github.com/fake/solidus/compare/v3.0.0...v3.1.0")
     end
   end

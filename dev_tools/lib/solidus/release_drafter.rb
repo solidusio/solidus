@@ -30,22 +30,22 @@ module Solidus
       @client = client
     end
 
-    def call(pr_number:, current_tag:, candidate_tag:, branch:)
+    def call(pr_number:, current_diff_source_tag:, candidate_tag:, branch:)
       pr = @client.fetch_pr(pr_number: pr_number)
       pr_labels = pr.labels.map(&:name)
       matching_labels = LABELS.keys & pr_labels
       return if pr_labels.include?(SKIP_LABEL) || matching_labels.empty?
 
       draft = @client.fetch_draft(tag: candidate_tag)
-      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_tag, candidate_tag))
+      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_diff_source_tag, candidate_tag))
         .then { |builder| add_pr(builder, pr, matching_labels) }
         .then { |draft| save_release(draft, candidate_tag, branch) }
     end
 
     private
 
-    def builder(draft, current_tag, candidate_tag)
-      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_tag, candidate_tag))
+    def builder(draft, current_diff_source_tag, candidate_tag)
+      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_diff_source_tag, candidate_tag))
     end
 
     def add_pr(builder, pr, labels)
@@ -65,11 +65,11 @@ module Solidus
       end
     end
 
-    def full_changelog(current_tag, candidate_tag)
+    def full_changelog(current_diff_source_tag, candidate_tag)
       <<~TXT
 
 
-        **Full Changelog**: https://github.com/#{@repository}/compare/#{current_tag}...#{candidate_tag}
+        **Full Changelog**: https://github.com/#{@repository}/compare/#{current_diff_source_tag}...#{candidate_tag}
       TXT
     end
   end
