@@ -24,6 +24,12 @@ RSpec.describe Solidus::PipelineContext do
         described_class.new(tags: %w[v3.0.0], base_branch: 'v3.1', tracking_major: true)
       }.to raise_error(ArgumentError, 'branch v3.1 cannot track major version')
     end
+
+    it 'raises when branch is not the main one and tracks last minor is true' do
+      expect {
+        described_class.new(tags: %w[v3.0.0], base_branch: 'v3.1', last_minor: true)
+      }.to raise_error(ArgumentError, 'branch v3.1 cannot track a last minor release')
+    end
   end
 
   describe '#current_tag' do
@@ -100,6 +106,89 @@ RSpec.describe Solidus::PipelineContext do
 
         expect(context.candidate_tag).to eq('v3.0.0')
       end
+    end
+  end
+
+  describe '#candidate_patch_branch' do
+    it 'returns the candidate tag without the patch level' do
+      context = described_class.new(
+        tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+        base_branch: 'master'
+      )
+
+      expect(context.candidate_patch_branch).to eq('v2.1')
+    end
+  end
+
+  describe '#candidate_version' do
+    it 'returns the candidate tag without the tag prefix' do
+      context = described_class.new(
+        tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+        base_branch: 'master'
+      )
+
+      expect(context.candidate_version).to eq('2.1.0')
+    end
+  end
+
+  describe '#candidate_minor_version' do
+    it 'returns the candidate version without the patch segment' do
+      context = described_class.new(
+        tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+        base_branch: 'master'
+      )
+
+      expect(context.candidate_minor_version).to eq('2.1')
+    end
+  end
+
+  describe '#next_candidate_tag' do
+    context 'when the base branch is a patch branch' do
+      it 'returns the next patch level version after the candidate' do
+        context = described_class.new(
+          tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+          base_branch: 'v2.0'
+        )
+
+        expect(context.next_candidate_tag).to eq('v2.0.4')
+      end
+    end
+
+    context 'when the base branch is the main branch' do
+      it "returns the next minor level version after the candidate when last_minor is false" do
+        context = described_class.new(
+          tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+          base_branch: 'master',
+          tracking_major: false,
+          last_minor: false
+        )
+
+        expect(context.next_candidate_tag).to eq('v2.2.0')
+      end
+
+      it "returns the next major level version after the candidate when last_minor is true" do
+        context = described_class.new(
+          tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+          base_branch: 'master',
+          tracking_major: false,
+          last_minor: true
+        )
+
+        expect(context.next_candidate_tag).to eq('v3.0.0')
+      end
+    end
+  end
+
+  describe '#next_candidate_dev_version' do
+    it "returns the next candidate tag without the tag prefix and with '.dev' appended" do
+      context = described_class.new(
+        tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+        base_branch: 'master',
+        tracking_major: false,
+        last_minor: false
+      )
+
+      expect(context.next_candidate_dev_version).to eq('2.2.0.dev')
     end
   end
 

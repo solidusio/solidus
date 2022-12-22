@@ -1,10 +1,18 @@
 name: "Prepare release"
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      last_minor:
+        description: "Next release after this one is going to be a major (don't check on patch-level releases)"
+        type: boolean
+        default: false
 
 jobs:
   extract_pipeline_context:
     uses: "./.github/workflows/extract_pipeline_context.yml"
+    with:
+      last_minor: ${{ inputs.last_minor }}
 
   prepare:
     runs-on: ubuntu-latest
@@ -20,21 +28,30 @@ jobs:
       - name: "Bump version"
         run: |
           cd dev_tools/ && bin/bump-version \
-            ${{ needs.extract_pipeline_context.outputs.candidate_tag }}
+            ${{ needs.extract_pipeline_context.outputs.candidate_version }}
       - name: "Bump docker image version"
         if: github.ref_name == 'master'
         run: |
           cd dev_tools/ && bin/bump-docker-image-version \
-            ${{ needs.extract_pipeline_context.outputs.candidate_tag }}
+            ${{ needs.extract_pipeline_context.outputs.candidate_version }}
       - name: "Update Changelog"
         run: |
           cd dev_tools/ && bin/update-changelog \
             ${{ github.token }} \
             ${{ github.repository }} \
             ${{ needs.extract_pipeline_context.outputs.candidate_tag }}
+      - name: "Compute labels for the PR"
+        id: pr_labels
+        run: |
+          if [ ${{ inputs.last_minor }} == 'true' ]; then
+            last_minor_label="release:generate-last_minor"
+          else
+            last_minor_label=""
+          fi
+          echo "labels='changelog:skip release:generate $last_minor_label'" >> $GITHUB_OUTPUT
       - uses: ./.github/actions/commit_and_submit_pull_request
         with:
-          labels: changelog:skip
+          labels: ${{ steps.pr_labels.outputs.labels }}
           message: |
             Prepare release for Solidus ${{ needs.extract_pipeline_context.outputs.candidate_tag }}
             

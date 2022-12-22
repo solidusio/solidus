@@ -36,4 +36,4 @@ runs:
           --repo ${{ github.repository }} \
           --base ${{ github.ref_name }} \
           --fill \
-          `for label in ${{ inputs.labels }}; do echo --label $label; done`
+          `for label in $(echo ${{ inputs.labels }}); do echo --label $label; done`

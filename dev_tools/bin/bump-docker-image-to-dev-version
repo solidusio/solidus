@@ -4,13 +4,13 @@
 require 'yaml'
 require_relative '../lib/solidus/bumper'
 
-candidate_version = ARGV[0]
+next_candidate_dev_version = ARGV[0]
 
 path = File.expand_path('../../docker-compose.yml', __dir__)
 from = YAML
   .load_file(path)
   .dig(*%w[services app image])
-to = "solidus-#{candidate_version}"
+to = "solidus-#{next_candidate_dev_version}"
 
 puts <<~MSG
 

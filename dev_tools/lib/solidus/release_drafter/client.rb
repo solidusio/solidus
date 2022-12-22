@@ -47,6 +47,11 @@ module Solidus
           target_commitish: branch
         ) && draft
       end
+
+      def publish_draft(tag:)
+        fetch_draft(tag: tag)
+          .then { |draft| @client.update_release(draft.url, draft: false) }
+      end
     end
   end
 end
