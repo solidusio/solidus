@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/solidus/pipeline_context'
+
+stream = ARGV[0]
+last_minor = (ARGV[1] == 'true')
+base_branch = ARGV[2]
+tags = ARGV[3..]
+
+context = Solidus::PipelineContext.new(
+  base_branch: base_branch,
+  tags: tags,
+  last_minor: last_minor
+)
+
+puts <<~MSG
+
+  Pipeline context:
+    Base branch: #{base_branch}
+    Current tag: #{context.current_tag}
+    Current diff source tag: #{context.current_diff_source_tag}
+    Candidate tag: #{context.candidate_tag}
+    Candidate version: #{context.candidate_version}
+    Candidate minor version: #{context.candidate_minor_version}
+    Candidate patch branch: #{context.candidate_patch_branch}
+    Next candidate tag: #{context.next_candidate_tag}
+    Next candidate dev version: #{context.next_candidate_dev_version}
+
+MSG
+
+open(stream, 'a') do |s|
+  s.puts "current_tag=#{context.current_tag}"
+  s.puts "current_diff_source_tag=#{context.current_diff_source_tag}"
+  s.puts "candidate_tag=#{context.candidate_tag}"
+  s.puts "candidate_version=#{context.candidate_version}"
+  s.puts "candidate_minor_version=#{context.candidate_minor_version}"
+  s.puts "candidate_patch_branch=#{context.candidate_patch_branch}"
+  s.puts "next_candidate_tag=#{context.next_candidate_tag}"
+  s.puts "next_candidate_dev_version=#{context.next_candidate_dev_version}"
+end
