@@ -1,3 +1,32 @@
+## Solidus v3.2.5 (2022-12-23)
+
+## Solidus Core
+- Backport Solidus master Circle CI test scenarios to v3.2 #4717 (@gsmendoza)
+- Re-add and fix extension:test_app test #4723 (@gsmendoza)
+- Copy the Solidus::InstallGenerator::InstallFrontend patch from SolidusStarterFrontend v3.2 #4724 (@gsmendoza)
+- [v3.2] Fix the dummy app usage of the generator #4732 (@waiting-for-dev)
+- Don't install solidus_auth_devise if it's already in the Gemfile #4748 (@gsmendoza)
+- [v3.2] Fix call context when a preference default is a proc #4768 (@github-actions[bot])
+- [v3.2] Remove trailing zeroes in tax amount #4770 (@github-actions[bot])
+- Use SolidusPaypalCommercePlatform >= 1.a if frontend is StarterFrontend     #4790 (@gsmendoza)
+- [v3.2] Do not require 'mail' #4792 (@github-actions[bot])
+
+## Solidus Backend
+- [v3.2] Do not pass arrays to can? #4710 (@github-actions[bot])
+- [v3.2] Remove trailing zeroes in tax amount #4770 (@github-actions[bot])
+
+## Solidus API
+- Backport Solidus master Circle CI test scenarios to v3.2 #4717 (@gsmendoza)
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.4...v3.2.5
+
+
 ## Solidus 3.2.0.alpha (master, unreleased)
 
 Remember to run `bin/rails g solidus:update` to support you during the upgrade
