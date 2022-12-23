@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/solidus/bumper'
+require_relative '../../core/lib/spree/core/version'
+
+candidate_version = ARGV[0]
+
+from = Spree::VERSION
+to = candidate_version
+path = File.expand_path('../../core/lib/spree/core/version.rb', __dir__)
+
+puts <<~MSG
+
+  Bumping Spre::VERSION from #{from} to #{to} in #{path}
+
+MSG
+
+Solidus::Bumper.(
+  from: from,
+  to: to,
+  path: path
+)

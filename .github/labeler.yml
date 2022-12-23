@@ -1,0 +1,22 @@
+"changelog:solidus_core":
+  - "core/**/*"
+"changelog:solidus_backend":
+  - "backend/**/*"
+"changelog:solidus_api":
+  - "api/**/*"
+"changelog:solidus_sample":
+  - "sample/**/*"
+"changelog:solidus":
+  - "lib/**/*"
+  - "README.md"
+  - "solidus.gemspec"
+"changelog:repository":
+  - any:
+    - "**/*"
+    - "!core/**/*"
+    - "!backend/**/*"
+    - "!api/**/*"
+    - "!sample/**/*"
+    - "!lib/**/*"
+    - "!README.md"
+    - "!solidus.gemspec"

@@ -1,0 +1,35 @@
+name: "Update Release Draft on GitHub"
+
+on:
+  pull_request_target:
+    branches:
+      - master
+      - v*
+    types:
+      - closed
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event.pull_request.merged == true) &&
+        !contains(github.event.pull_request.labels.*.name, 'changelog:skip')
+    steps:
+      - uses: actions/checkout@v3
+      - id: pipeline_context
+        uses: ./.github/actions/extract_pipeline_context
+      - uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: "dev_tools/Gemfile"
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+      - name: "Save Release Draft"
+        run: |
+          cd dev_tools/ && bin/update-release-draft \
+            ${{ github.token }} \
+            ${{ github.repository }} \
+            ${{ steps.pipeline_context.outputs.current_diff_source_tag }} \
+            ${{ steps.pipeline_context.outputs.candidate_tag }} \
+            ${{ github.ref_name }} \
+            ${{ github.event.number }}
