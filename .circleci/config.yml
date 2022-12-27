@@ -256,7 +256,7 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.1'
+        default: '3.2'
       rails:
         type: string
         default: "7.0"
@@ -334,11 +334,11 @@ workflows:
       - test_solidus:
           context: slack-secrets
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
+          matrix: { parameters: { rails: ['7.0'], ruby: ['3.1', '3.2'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
       - test_solidus:
           context: slack-secrets
           name: *name
-          matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0', '3.1'], database: ['sqlite'], paperclip: [false] } }
       - test_solidus:
           context: slack-secrets
           name: *name
