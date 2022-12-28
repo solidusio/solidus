@@ -56,6 +56,7 @@ group :backend, :frontend do
 end
 
 group :frontend do
+  gem 'solidus_frontend', github: 'solidusio/solidus_frontend', branch: 'v3.2'
   gem 'generator_spec'
 end
 
