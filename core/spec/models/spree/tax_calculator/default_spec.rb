@@ -46,7 +46,7 @@ RSpec.describe Spree::TaxCalculator::Default do
       expect(line_item_tax.amount).to eq 1
       expect(line_item_tax.included_in_price).to be false
       expect(line_item_tax.tax_rate).to eq book_tax_rate
-      expect(line_item_tax.label).to eq "New York Sales Tax 5.000%"
+      expect(line_item_tax.label).to eq "New York Sales Tax 5.0%"
     end
 
     it "has tax information for the shipments" do
