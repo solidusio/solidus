@@ -35,12 +35,16 @@ module Spree
       end
 
       def authorize!
-        handle_payment_preconditions { process_authorization }
+        return unless check_payment_preconditions!
+
+        process_authorization
       end
 
       # Captures the entire amount of a payment.
       def purchase!
-        handle_payment_preconditions { process_purchase }
+        return unless check_payment_preconditions!
+
+        process_purchase
       end
 
       # Takes the amount in cents to capture.
@@ -151,26 +155,20 @@ module Spree
         capture_events.create!(amount: amount)
       end
 
-      def handle_payment_preconditions(&_block)
-        unless block_given?
-          raise ArgumentError.new("handle_payment_preconditions must be called with a block")
-        end
-
+      # @raises Spree::Core::GatewayError
+      def check_payment_preconditions!
         return if payment_method.nil?
-        return if !payment_method.source_required?
-
-        if source
-          if !processing?
-            if payment_method.supports?(source)
-              yield
-            else
-              invalidate!
-              raise Core::GatewayError.new(I18n.t('spree.payment_method_not_supported'))
-            end
-          end
-        else
-          raise Core::GatewayError.new(I18n.t('spree.payment_processing_failed'))
+        return unless payment_method.source_required?
+        unless source
+          gateway_error(I18n.t('spree.payment_processing_failed'))
         end
+        return if processing?
+        unless payment_method.supports?(source)
+          invalidate!
+          gateway_error(I18n.t('spree.payment_method_not_supported'))
+        end
+
+        true
       end
 
       def gateway_action(source, action, success_state)
