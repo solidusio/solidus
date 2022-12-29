@@ -165,12 +165,14 @@ module Spree
 
       # @raises Spree::Core::GatewayError
       def check_payment_preconditions!
-        return if payment_method.nil?
+        return if processing?
+        return unless payment_method
         return unless payment_method.source_required?
+
         unless source
           gateway_error(I18n.t('spree.payment_processing_failed'))
         end
-        return if processing?
+
         unless payment_method.supports?(source)
           invalidate!
           gateway_error(I18n.t('spree.payment_method_not_supported'))
