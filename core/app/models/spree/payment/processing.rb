@@ -37,14 +37,34 @@ module Spree
       def authorize!
         return unless check_payment_preconditions!
 
-        process_authorization
+        started_processing!
+
+        protect_from_connection_error do
+          response = payment_method.authorize(
+            money.money.cents,
+            source,
+            gateway_options,
+          )
+          handle_response(response, :pend, :failure)
+        end
       end
 
       # Captures the entire amount of a payment.
       def purchase!
         return unless check_payment_preconditions!
 
-        process_purchase
+        started_processing!
+
+        protect_from_connection_error do
+          response = payment_method.purchase(
+            money.money.cents,
+            source,
+            gateway_options,
+          )
+          handle_response(response, :complete, :failure)
+        end
+
+        capture_events.create!(amount: amount)
       end
 
       # Takes the amount in cents to capture.
@@ -143,18 +163,6 @@ module Spree
 
       private
 
-      def process_authorization
-        started_processing!
-        gateway_action(source, :authorize, :pend)
-      end
-
-      def process_purchase
-        started_processing!
-        gateway_action(source, :purchase, :complete)
-        # This won't be called if gateway_action raises a GatewayError
-        capture_events.create!(amount: amount)
-      end
-
       # @raises Spree::Core::GatewayError
       def check_payment_preconditions!
         return if payment_method.nil?
@@ -169,15 +177,6 @@ module Spree
         end
 
         true
-      end
-
-      def gateway_action(source, action, success_state)
-        protect_from_connection_error do
-          response = payment_method.send(action, money.money.cents,
-                                         source,
-                                         gateway_options)
-          handle_response(response, success_state, :failure)
-        end
       end
 
       def handle_response(response, success_state, failure_state)
