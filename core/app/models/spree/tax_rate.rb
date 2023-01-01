@@ -113,8 +113,7 @@ module Spree
     def amount_for_adjustment_label
       ActiveSupport::NumberHelper::NumberToPercentageConverter.convert(
         amount * 100,
-        locale: I18n.locale,
-        precision: nil
+        locale: I18n.locale
       )
     end
 
