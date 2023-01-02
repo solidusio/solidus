@@ -52,6 +52,21 @@ module Spree
       expect(response).to redirect_to spree.new_admin_payment_method_path
     end
 
+    describe "#new" do
+      subject { get :new }
+
+      it "adds the default store to the list of stores" do
+        default_store = create(:store, default: true)
+        subject
+        expect(assigns(:payment_method).store_ids).to eql([default_store.id])
+      end
+
+      it "does not add a store if there's no default store" do
+        subject
+        expect(assigns(:payment_method).store_ids).to eql([])
+      end
+    end
+
     describe "#index" do
       subject { get :index }
 

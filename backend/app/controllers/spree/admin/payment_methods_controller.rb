@@ -69,6 +69,12 @@ module Spree
       def payment_method_params
         params.require(:payment_method).permit!
       end
+
+      def build_resource
+        model_class.new(
+          store_ids: [Spree::Store.default.id].compact
+        )
+      end
     end
   end
 end
