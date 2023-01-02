@@ -45,7 +45,7 @@ module Spree
             source,
             gateway_options,
           )
-          handle_response(response, :pend, :failure)
+          pend! if handle_response(response)
         end
       end
 
@@ -61,7 +61,7 @@ module Spree
             source,
             gateway_options,
           )
-          handle_response(response, :complete, :failure)
+          complete! if handle_response(response)
         end
 
         capture_events.create!(amount: amount)
@@ -86,7 +86,7 @@ module Spree
           money = ::Money.new(capture_amount, currency)
           capture_events.create!(amount: money.to_d)
           update!(amount: captured_amount)
-          handle_response(response, :complete, :failure)
+          complete! if handle_response(response)
         end
       end
 
@@ -181,24 +181,28 @@ module Spree
         true
       end
 
-      def handle_response(response, success_state, failure_state)
+      # @returns true if the response is successful
+      # @returns false (and calls #failure) if the response is not successful
+      def handle_response(response)
         record_response(response)
 
-        if response.success?
-          unless response.authorization.nil?
-            self.response_code = response.authorization
-            self.avs_response = response.avs_result['code']
-
-            if response.cvv_result
-              self.cvv_response_code = response.cvv_result['code']
-              self.cvv_response_message = response.cvv_result['message']
-            end
-          end
-          send("#{success_state}!")
-        else
-          send(failure_state)
+        unless response.success?
+          failure
           gateway_error(response)
+          return false
         end
+
+        unless response.authorization.nil?
+          self.response_code = response.authorization
+          self.avs_response = response.avs_result['code']
+
+          if response.cvv_result
+            self.cvv_response_code = response.cvv_result['code']
+            self.cvv_response_message = response.cvv_result['message']
+          end
+        end
+
+        true
       end
 
       def record_response(response)
