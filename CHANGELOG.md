@@ -1,3 +1,23 @@
+## Solidus v3.2.6 (2023-01-02)
+
+## Solidus Core
+
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+- Depend on solidus_frontend in GH for development #4815 (@kennyadsl)
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.5...v3.2.6
+
+
 ## Solidus v3.2.5 (2022-12-23)
 
 ## Solidus Core
