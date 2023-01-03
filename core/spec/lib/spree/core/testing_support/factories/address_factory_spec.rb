@@ -106,3 +106,4 @@ RSpec.describe 'address factory' do
     end
   end
 end
+

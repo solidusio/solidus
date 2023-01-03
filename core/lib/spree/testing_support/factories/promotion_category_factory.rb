@@ -10,3 +10,4 @@ FactoryBot.define do
     name { 'Promotion Category' }
   end
 end
+

@@ -95,3 +95,4 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
     end
   end
 end
+

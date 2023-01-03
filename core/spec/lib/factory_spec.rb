@@ -7,3 +7,4 @@ RSpec.describe "Factories" do
     FactoryBot.lint(FactoryBot.factories.reject{ |f| f.name == :customer_return_without_return_items })
   end
 end
+

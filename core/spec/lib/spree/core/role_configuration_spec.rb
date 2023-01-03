@@ -139,3 +139,4 @@ RSpec.describe Spree::RoleConfiguration do
     end
   end
 end
+

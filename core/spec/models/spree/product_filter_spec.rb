@@ -26,3 +26,4 @@ RSpec.describe 'product filters', type: :model do
     end
   end
 end
+

@@ -19,3 +19,4 @@ module Spree
     alias_method :compute_shipping_rate, :compute
   end
 end
+

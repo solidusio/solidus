@@ -10,3 +10,4 @@ FactoryBot.define do
     sequence(:name) { |n| "Defect ##{n}" }
   end
 end
+

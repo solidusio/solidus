@@ -62,3 +62,4 @@ class ::Spree::PromotionCode::BatchBuilder
     code_set - Spree::PromotionCode.where(value: code_set.to_a).pluck(:value)
   end
 end
+

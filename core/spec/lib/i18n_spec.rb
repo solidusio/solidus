@@ -69,3 +69,4 @@ RSpec.describe "i18n" do
     end
   end
 end
+

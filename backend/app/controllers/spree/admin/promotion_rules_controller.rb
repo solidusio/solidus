@@ -58,3 +58,4 @@ class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
     params[:promotion_rule].permit!
   end
 end
+

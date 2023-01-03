@@ -32,3 +32,4 @@ describe "Jbuilder Cache", type: :request, caching: true do
     expect(variant_b['stock_items']).to be_nil
   end
 end
+

@@ -33,3 +33,4 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::OrderCompleted do
     end
   end
 end
+

@@ -42,3 +42,4 @@ Spree.Views.Product.Search = Backbone.View.extend({
     }
   },
 });
+

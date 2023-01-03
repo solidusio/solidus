@@ -53,3 +53,4 @@ module Spree::Api
     end
   end
 end
+

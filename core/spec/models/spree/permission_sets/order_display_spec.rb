@@ -54,3 +54,4 @@ RSpec.describe Spree::PermissionSets::OrderDisplay do
     it { is_expected.not_to be_able_to(:read, Spree::Refund) }
   end
 end
+

@@ -36,3 +36,4 @@ FactoryBot.define do
     # return_authorization
   end
 end
+

@@ -70,3 +70,4 @@ RSpec.describe Spree::Promotion::Rules::NthOrder do
     end
   end
 end
+

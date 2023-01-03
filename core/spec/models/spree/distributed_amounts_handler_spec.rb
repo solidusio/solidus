@@ -81,3 +81,4 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
     end
   end
 end
+

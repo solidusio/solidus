@@ -14,3 +14,4 @@ RSpec.describe Spree::Core::ControllerHelpers::Store, type: :controller do
     end
   end
 end
+

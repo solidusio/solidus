@@ -10,3 +10,4 @@ FactoryBot.define do
     sequence(:name) { |n| "Refund for return ##{n}" }
   end
 end
+

@@ -165,3 +165,4 @@ describe "Product Images", type: :feature do
     blob.update(key: SecureRandom.uuid)
   end
 end
+

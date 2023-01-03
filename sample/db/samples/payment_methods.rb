@@ -15,3 +15,4 @@ Spree::PaymentMethod::Check.create!(
     active: true
   }
 )
+

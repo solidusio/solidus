@@ -191,3 +191,4 @@ RSpec.describe Spree::LineItem, type: :model do
     end
   end
 end
+

@@ -89,3 +89,4 @@ RSpec.describe Spree::Core::ClassConstantizer::Set do
     end
   end
 end
+

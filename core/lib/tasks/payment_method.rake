@@ -27,3 +27,4 @@ namespace :payment_method do
     )
   end
 end
+

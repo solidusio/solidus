@@ -40,3 +40,4 @@ feature 'Promotion with user rule', js: true do
     end
   end
 end
+

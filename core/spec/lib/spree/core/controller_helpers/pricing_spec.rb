@@ -70,3 +70,4 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
     end
   end
 end
+

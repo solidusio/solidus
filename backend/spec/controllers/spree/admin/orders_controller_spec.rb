@@ -406,3 +406,4 @@ describe Spree::Admin::OrdersController, type: :controller do
     end
   end
 end
+

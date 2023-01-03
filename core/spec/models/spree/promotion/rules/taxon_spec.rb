@@ -216,3 +216,4 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
     end
   end
 end
+

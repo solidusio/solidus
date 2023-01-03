@@ -288,3 +288,4 @@ RSpec.describe Spree::Ability, type: :model do
     end
   end
 end
+

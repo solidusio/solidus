@@ -119,3 +119,4 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     it_should_behave_like "destroying adjustments from incomplete orders"
   end
 end
+

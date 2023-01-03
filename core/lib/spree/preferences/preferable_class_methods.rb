@@ -138,3 +138,4 @@ module Spree::Preferences
     end
   end
 end
+

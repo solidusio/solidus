@@ -6,3 +6,4 @@ class AddRolesUniqueConstraints < ActiveRecord::Migration[5.0]
     add_index :spree_roles_users, [:user_id, :role_id], unique: true
   end
 end
+

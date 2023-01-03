@@ -20,3 +20,4 @@ Spree.ready(function() {
   $preference_source.change(render);
   render();
 });
+

@@ -6,3 +6,4 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :shipping_method_categories, optional: true
   end
 end
+

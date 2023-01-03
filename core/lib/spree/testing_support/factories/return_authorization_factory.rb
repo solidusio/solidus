@@ -23,3 +23,4 @@ FactoryBot.define do
     association(:reason, factory: :return_reason)
   end
 end
+

@@ -37,3 +37,4 @@ Spree.Views.Tables.SelectableTable.SumReturnItemAmount = Backbone.View.extend({
     return accounting.formatNumber(totalAmount, decimals, Spree.t('currency_delimiter'), separator);
   },
 });
+

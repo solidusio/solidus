@@ -49,3 +49,4 @@ RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
     end
   end
 end
+

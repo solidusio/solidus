@@ -67,3 +67,4 @@ task console: :dummy_environment do
   require 'rails/commands/console/console_command'
   Rails::Console.new(Rails.application, sandbox: true, environment: "test").start
 end
+

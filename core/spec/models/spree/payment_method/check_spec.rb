@@ -78,3 +78,4 @@ RSpec.describe Spree::PaymentMethod::Check do
     end
   end
 end
+

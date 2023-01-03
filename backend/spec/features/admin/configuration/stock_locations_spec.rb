@@ -52,3 +52,4 @@ describe "Stock Locations", type: :feature do
     expect(page).to have_content("London")
   end
 end
+

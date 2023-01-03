@@ -57,3 +57,4 @@ describe "Adjustment reasons", type: :feature do
     end
   end
 end
+

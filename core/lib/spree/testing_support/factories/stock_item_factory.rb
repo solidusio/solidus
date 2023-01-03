@@ -17,3 +17,4 @@ FactoryBot.define do
     after(:create) { |object| object.adjust_count_on_hand(10) }
   end
 end
+

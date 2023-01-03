@@ -31,3 +31,4 @@ json.cache! [I18n.locale, @shipment] do
     json.states(manifest_item.states)
   end
 end
+

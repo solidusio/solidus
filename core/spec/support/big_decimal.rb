@@ -5,3 +5,4 @@ class BigDecimal
     "#<BigDecimal: #{self}>"
   end
 end
+

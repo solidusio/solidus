@@ -6,3 +6,4 @@ Spree.ready(function () {
   });
   $("[data-hook='admin_orders_index_search']").find(".variant_autocomplete").variantAutocomplete();
 });
+

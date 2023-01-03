@@ -28,3 +28,4 @@ class Spree::ShippingManifest
     end
   end
 end
+

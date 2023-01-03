@@ -17,3 +17,4 @@ Spree.Views.Cart.AddLineItemButton = Backbone.View.extend({
     this.$el.prop("disabled", !this.collection.length || this.collection.some(isNew));
   }
 });
+

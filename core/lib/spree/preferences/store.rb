@@ -89,3 +89,4 @@ module Spree::Preferences
     include Singleton
   end
 end
+

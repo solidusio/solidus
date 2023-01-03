@@ -994,3 +994,4 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 end
+

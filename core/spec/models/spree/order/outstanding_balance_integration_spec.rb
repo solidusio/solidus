@@ -136,3 +136,4 @@ RSpec.describe "Outstanding balance integration tests" do
     end
   end
 end
+

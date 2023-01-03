@@ -407,3 +407,4 @@ describe "Products", type: :feature do
     end
   end
 end
+

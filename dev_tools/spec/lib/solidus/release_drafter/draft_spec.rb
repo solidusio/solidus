@@ -17,3 +17,4 @@ RSpec.describe Solidus::ReleaseDrafter::Draft do
     end
   end
 end
+

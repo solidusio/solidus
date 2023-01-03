@@ -62,3 +62,4 @@ describe Spree::Admin::Users::ApiKeyController, type: :controller do
     end
   end
 end
+

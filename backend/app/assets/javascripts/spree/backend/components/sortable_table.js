@@ -42,3 +42,4 @@ Spree.SortableTable = {
 };
 
 Spree.ready(Spree.SortableTable.refresh);
+

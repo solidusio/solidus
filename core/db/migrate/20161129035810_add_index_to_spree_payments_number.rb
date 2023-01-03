@@ -5,3 +5,4 @@ class AddIndexToSpreePaymentsNumber < ActiveRecord::Migration[5.0]
     add_index 'spree_payments', ['number'], unique: true
   end
 end
+

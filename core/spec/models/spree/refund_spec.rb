@@ -238,3 +238,4 @@ RSpec.describe Spree::Refund, type: :model do
     end
   end
 end
+

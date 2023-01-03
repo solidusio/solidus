@@ -132,3 +132,4 @@ describe Spree::Admin::NavigationHelper, type: :helper do
     end
   end
 end
+

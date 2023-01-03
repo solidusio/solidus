@@ -150,3 +150,4 @@ end
 if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
   Spree::Deprecation.behavior = :raise
 end
+

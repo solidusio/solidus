@@ -12,3 +12,4 @@ Spree.ready(function() {
     }
   });
 });
+

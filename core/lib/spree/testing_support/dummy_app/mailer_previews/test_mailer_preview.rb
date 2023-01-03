@@ -2,3 +2,4 @@
 
 class TestMailerPreview < ActionMailer::Preview
 end
+

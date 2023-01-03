@@ -402,3 +402,4 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
     end
   end
 end
+

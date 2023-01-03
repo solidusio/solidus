@@ -50,3 +50,4 @@ describe "Order Line Items", type: :feature, js: true do
     expect(page).not_to have_content(product_name)
   end
 end
+

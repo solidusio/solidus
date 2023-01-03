@@ -100,3 +100,4 @@ class Spree::Api::ResourceController < Spree::Api::BaseController
     controller_name.singularize
   end
 end
+

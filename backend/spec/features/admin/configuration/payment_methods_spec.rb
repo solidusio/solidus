@@ -174,3 +174,4 @@ describe "Payment Methods", type: :feature do
     end
   end
 end
+

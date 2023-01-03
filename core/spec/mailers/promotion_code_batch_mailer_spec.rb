@@ -45,3 +45,4 @@ RSpec.describe Spree::PromotionCodeBatchMailer, type: :mailer do
     end
   end
 end
+

@@ -27,3 +27,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_frontend', s.version
   s.add_dependency 'solidus_sample', s.version
 end
+

@@ -18,3 +18,4 @@ FactoryBot.define do
     action { 'received' }
   end
 end
+

@@ -38,3 +38,4 @@ FactoryBot.define do
     association(:stock_location, factory: :stock_location)
   end
 end
+

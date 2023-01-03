@@ -52,3 +52,4 @@ Spree.Views.Calculators.Tiered = Backbone.View.extend({
     valueInput.attr('name', this.tierInputName($(event.target).val()));
   }
 });
+

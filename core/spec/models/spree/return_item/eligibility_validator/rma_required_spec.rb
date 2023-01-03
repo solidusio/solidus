@@ -29,3 +29,4 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::RMARequired, type: :mode
     end
   end
 end
+

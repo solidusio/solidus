@@ -81,3 +81,4 @@ describe 'Promotion Categories', type: :feature do
     end
   end
 end
+

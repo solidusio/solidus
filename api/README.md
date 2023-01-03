@@ -42,3 +42,4 @@ version is released.
 [docs-dir]: https://github.com/solidusio/solidus/tree/master/api/openapi
 [live-docs]: https://solidus.stoplight.io
 [studio]: https://stoplight.io/p/studio
+

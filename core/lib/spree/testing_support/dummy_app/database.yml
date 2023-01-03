@@ -52,3 +52,4 @@ test:
   database: db/<%= db_prefix %>_test.sqlite3
   timeout: 10000
 <% end %>
+

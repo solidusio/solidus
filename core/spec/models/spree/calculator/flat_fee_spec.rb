@@ -24,3 +24,4 @@ RSpec.describe Spree::Calculator::FlatFee, type: :model do
     end
   end
 end
+

@@ -227,3 +227,4 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
     end
   end
 end
+

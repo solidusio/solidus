@@ -21,3 +21,4 @@ RSpec.describe 'Store credits', type: :feature do
     expect(page).to have_content "Amount: $20.00"
   end
 end
+

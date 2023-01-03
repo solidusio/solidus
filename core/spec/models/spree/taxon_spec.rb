@@ -229,3 +229,4 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 end
+

@@ -48,3 +48,4 @@ RSpec.describe Spree::EmailValidator do
     end
   end
 end
+

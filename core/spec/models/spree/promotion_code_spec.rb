@@ -248,3 +248,4 @@ RSpec.describe Spree::PromotionCode do
     }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Could not create promotion code on promotion that apply automatically"
   end
 end
+

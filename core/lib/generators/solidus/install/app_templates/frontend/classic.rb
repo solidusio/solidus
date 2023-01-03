@@ -14,3 +14,4 @@ end
 with_env('SKIP_SOLIDUS_BOLT' => 'true') do
   generate 'solidus_frontend:install'
 end
+

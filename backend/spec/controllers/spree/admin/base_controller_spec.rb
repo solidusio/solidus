@@ -24,3 +24,4 @@ describe Spree::Admin::BaseController, type: :controller do
     end
   end
 end
+

@@ -5,3 +5,4 @@ class ChangeColumnNullOnPrices < ActiveRecord::Migration[5.2]
     change_column_null(:spree_prices, :amount, false)
   end
 end
+

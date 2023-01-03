@@ -43,3 +43,4 @@ class Spree::Wallet::AddPaymentSourcesToWallet
 
   attr_reader :order
 end
+

@@ -198,3 +198,4 @@ describe "Customer Details", type: :feature, js: true do
     fill_in "Phone", with: "123-456-7890"
   end
 end
+

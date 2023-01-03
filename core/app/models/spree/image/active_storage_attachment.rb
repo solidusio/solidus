@@ -22,3 +22,4 @@ module Spree::Image::ActiveStorageAttachment
     end
   end
 end
+

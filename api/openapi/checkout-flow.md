@@ -61,3 +61,4 @@ Now call `PUT /checkouts/:order_number/next` to transition the order from the `p
 At this point, you should show the user a summary of their cart and ask them to confirm they want to place the order.
 
 When they confirm, call `PUT /checkouts/:order_number/complete` to complete the checkout flow and place the order!
+

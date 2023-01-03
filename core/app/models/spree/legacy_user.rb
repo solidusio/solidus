@@ -18,3 +18,4 @@ module Spree
     attr_accessor :password_confirmation
   end
 end
+

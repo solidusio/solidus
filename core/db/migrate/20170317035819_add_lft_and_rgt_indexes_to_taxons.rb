@@ -6,3 +6,4 @@ class AddLftAndRgtIndexesToTaxons < ActiveRecord::Migration[5.0]
     add_index :spree_taxons, :rgt
   end
 end
+

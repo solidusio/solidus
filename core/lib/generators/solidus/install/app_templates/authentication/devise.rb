@@ -14,3 +14,4 @@ generate "solidus:auth:install #{migrations_flag}"
 append_file "db/seeds.rb", <<~RUBY
   Spree::Auth::Engine.load_seed
 RUBY
+

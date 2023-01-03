@@ -17,3 +17,4 @@ FactoryBot.define do
     tax_categories { [build(:tax_category)] }
   end
 end
+

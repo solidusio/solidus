@@ -3,3 +3,4 @@
 Spree.Collections.Shipments = Backbone.Collection.extend({
   model: Spree.Models.Shipment
 })
+

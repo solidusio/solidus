@@ -60,3 +60,4 @@ else
     auto_migrate: false
   )
 end
+

@@ -328,3 +328,4 @@ RSpec.describe Spree::OrderInventory, type: :model do
     end
   end
 end
+

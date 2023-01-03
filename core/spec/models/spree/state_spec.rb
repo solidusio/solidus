@@ -41,3 +41,4 @@ RSpec.describe Spree::State, type: :model do
     expect(Spree::State.states_group_by_country_id).to eq({ state.country_id.to_s => [[state.id, state.name]] })
   end
 end
+

@@ -166,3 +166,4 @@ RSpec.describe Spree::ShippingRate, type: :model do
     end
   end
 end
+

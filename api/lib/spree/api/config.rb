@@ -7,3 +7,4 @@ module Spree
     Config = Spree::ApiConfiguration.new
   end
 end
+

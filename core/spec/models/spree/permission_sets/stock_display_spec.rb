@@ -23,3 +23,4 @@ RSpec.describe Spree::PermissionSets::StockDisplay do
     it { is_expected.not_to be_able_to(:read, Spree::StockLocation) }
   end
 end
+

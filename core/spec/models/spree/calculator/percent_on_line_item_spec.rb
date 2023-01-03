@@ -18,3 +18,4 @@ module Spree
     it_behaves_like 'a calculator with a description'
   end
 end
+

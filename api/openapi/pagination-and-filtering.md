@@ -21,3 +21,4 @@ GET /products?q[name_cont]=Watch
 The `name_cont` matcher will generate a query using `LIKE` to retrieve all the products that contain the value specified. For an extensive list of search matchers supported, please refer to the Ransack documentation.
 
 The result will be paginated as described in the paragraph above.
+

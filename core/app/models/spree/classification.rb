@@ -11,3 +11,4 @@ module Spree
     validates_uniqueness_of :taxon_id, scope: :product_id, message: :already_linked
   end
 end
+

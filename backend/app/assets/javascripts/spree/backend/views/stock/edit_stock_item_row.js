@@ -108,3 +108,4 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
     this.model.save({}, options);
   }
 });
+

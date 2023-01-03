@@ -55,3 +55,4 @@ specs.each do |lib, files|
     exit $?.exitstatus unless $?.success?
   end
 end
+

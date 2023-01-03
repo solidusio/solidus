@@ -5,3 +5,4 @@ class AddDiscontinueOnToSpreeProducts < ActiveRecord::Migration[5.2]
     add_column :spree_products, :discontinue_on, :datetime
   end
 end
+

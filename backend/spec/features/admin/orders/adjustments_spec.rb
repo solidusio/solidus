@@ -207,3 +207,4 @@ describe "Adjustments", type: :feature do
     end
   end
 end
+

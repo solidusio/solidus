@@ -43,3 +43,4 @@ if [ -n "$COVERAGE" ]; then
   echo "******************************"
   bundle exec rake solidus:coverage
 fi
+

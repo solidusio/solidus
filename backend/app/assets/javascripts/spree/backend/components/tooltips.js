@@ -31,3 +31,4 @@ Spree.ready(function(){
     $tooltip.addClass("action-" + $target.data("action"));
   });
 });
+

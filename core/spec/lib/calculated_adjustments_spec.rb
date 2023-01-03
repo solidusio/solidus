@@ -151,3 +151,4 @@ RSpec.describe Spree::CalculatedAdjustments do
     end
   end
 end
+

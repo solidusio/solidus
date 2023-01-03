@@ -17,3 +17,4 @@ RSpec.describe Spree::StoreCreditCategory, type: :model do
     end
   end
 end
+

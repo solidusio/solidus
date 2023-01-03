@@ -376,3 +376,4 @@ describe "New Order", type: :feature do
     fill_in "Phone", with: "123-456-7890"
   end
 end
+

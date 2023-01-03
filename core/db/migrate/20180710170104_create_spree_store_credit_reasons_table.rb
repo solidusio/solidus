@@ -53,3 +53,4 @@ class CreateSpreeStoreCreditReasonsTable < ActiveRecord::Migration[5.1]
     remove_column :spree_store_credit_events, :store_credit_reason_id
   end
 end
+

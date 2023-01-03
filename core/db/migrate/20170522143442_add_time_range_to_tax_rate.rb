@@ -6,3 +6,4 @@ class AddTimeRangeToTaxRate < ActiveRecord::Migration[5.0]
     add_column :spree_tax_rates, :expires_at, :datetime
   end
 end
+

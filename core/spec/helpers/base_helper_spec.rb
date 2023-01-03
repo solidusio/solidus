@@ -165,3 +165,4 @@ RSpec.describe Spree::BaseHelper, type: :helper do
     end
   end
 end
+

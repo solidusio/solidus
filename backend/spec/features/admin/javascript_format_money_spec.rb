@@ -20,3 +20,4 @@ RSpec.describe 'JS Spree.formatMoney', js: true do
     end
   end
 end
+

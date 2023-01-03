@@ -13,3 +13,4 @@ class Spree::ReimbursementType::OriginalPayment < Spree::ReimbursementType
     end
   end
 end
+

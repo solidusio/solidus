@@ -44,3 +44,4 @@ json.cache! [I18n.locale, shipment] do
     end
   end
 end
+

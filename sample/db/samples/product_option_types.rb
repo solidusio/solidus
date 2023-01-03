@@ -14,3 +14,4 @@ Spree::Product.all.each do |product|
   product.option_types << color if colored_clothes.include?(product.name)
   product.save!
 end
+

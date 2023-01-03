@@ -26,3 +26,4 @@ RSpec.describe Spree::StoreSelector::ByServerName do
     end
   end
 end
+

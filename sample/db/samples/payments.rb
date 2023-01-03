@@ -15,3 +15,4 @@ Spree::Order.all.each_with_index do |order, _index|
   payment = order.payments.create!(amount: order.total, source: creditcard.clone, payment_method: method)
   payment.update_columns(state: 'pending', response_code: '12345')
 end
+

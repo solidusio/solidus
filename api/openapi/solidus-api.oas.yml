@@ -7401,3 +7401,4 @@ components:
           type: string
         stock_location_id:
           type: integer
+

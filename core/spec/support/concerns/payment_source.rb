@@ -65,3 +65,4 @@ RSpec.shared_examples "a payment source" do
     end
   end
 end
+

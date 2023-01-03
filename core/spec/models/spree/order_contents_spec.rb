@@ -366,3 +366,4 @@ RSpec.describe Spree::OrderContents, type: :model do
     end
   end
 end
+

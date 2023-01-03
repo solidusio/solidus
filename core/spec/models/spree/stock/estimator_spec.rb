@@ -280,3 +280,4 @@ module Spree
     end
   end
 end
+

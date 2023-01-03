@@ -29,3 +29,4 @@ Spree.Views.NumberWithCurrency = Backbone.View.extend({
     this.$('.number-with-currency-symbol').text(this.getCurrencySymbol());
   }
 });
+

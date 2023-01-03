@@ -80,3 +80,4 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     end
   end
 end
+

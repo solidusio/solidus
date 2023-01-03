@@ -6,3 +6,4 @@ module Spree
     belongs_to :option_value, optional: true
   end
 end
+

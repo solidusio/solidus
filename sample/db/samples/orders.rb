@@ -46,3 +46,4 @@ orders.each do |order|
   order.next! while !order.can_complete?
   order.complete!
 end
+

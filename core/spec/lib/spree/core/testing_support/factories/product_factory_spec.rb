@@ -29,3 +29,4 @@ RSpec.describe 'product factory' do
     it_behaves_like 'a working factory'
   end
 end
+

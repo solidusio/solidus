@@ -25,3 +25,4 @@ RSpec.describe 'stock package factory' do
     # No test for .create, as it's a PORO
   end
 end
+

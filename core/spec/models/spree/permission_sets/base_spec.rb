@@ -12,3 +12,4 @@ RSpec.describe Spree::PermissionSets::Base do
     end
   end
 end
+

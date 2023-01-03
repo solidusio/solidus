@@ -25,3 +25,4 @@ Spree.prepareImageUploader = function () {
 Spree.ready(function () {
   Spree.prepareImageUploader();
 });
+

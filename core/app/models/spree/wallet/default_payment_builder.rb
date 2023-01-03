@@ -26,3 +26,4 @@ class Spree::Wallet::DefaultPaymentBuilder
 
   attr_reader :order
 end
+

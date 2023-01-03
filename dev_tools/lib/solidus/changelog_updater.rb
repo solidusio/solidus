@@ -38,3 +38,4 @@ module Solidus
     private_class_method :changelog_template
   end
 end
+

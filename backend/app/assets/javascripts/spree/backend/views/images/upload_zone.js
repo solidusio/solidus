@@ -37,3 +37,4 @@ Spree.Views.Images.UploadZone = Backbone.View.extend({
     _.each(e.target.files, this.upload, this);
   }
 });
+

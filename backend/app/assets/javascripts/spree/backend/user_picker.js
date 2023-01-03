@@ -47,3 +47,4 @@ $.fn.userAutocomplete = function () {
 Spree.ready(function () {
   $('.user_picker').userAutocomplete();
 });
+

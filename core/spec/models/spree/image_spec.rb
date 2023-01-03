@@ -47,3 +47,4 @@ RSpec.describe Spree::Image, type: :model do
     end
   end
 end
+

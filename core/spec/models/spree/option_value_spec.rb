@@ -56,3 +56,4 @@ RSpec.describe Spree::OptionValue, type: :model do
     create(:option_value, option_type: nil)
   end
 end
+

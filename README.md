@@ -396,3 +396,4 @@ If you want to write an extension for Solidus, you can use the
 
 Solidus is an open source project and we encourage contributions. Please read
 [CONTRIBUTING.md](https://github.com/solidusio/.github/blob/main/CONTRIBUTING.md) before contributing.
+

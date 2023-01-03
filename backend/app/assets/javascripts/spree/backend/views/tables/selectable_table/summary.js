@@ -43,3 +43,4 @@ Spree.Views.Tables.SelectableTable.Summary = Backbone.View.extend({
     }
   }
 });
+

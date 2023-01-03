@@ -56,3 +56,4 @@ describe('Spree.human_attribute_name', function() {
     expect(Spree.human_attribute_name('spree/model', "name")).to.equal('Name');
   });
 });
+

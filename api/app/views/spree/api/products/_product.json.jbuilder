@@ -36,3 +36,4 @@ json.cache! [I18n.locale, @current_user_roles.include?('admin'), current_pricing
     end
   end
 end
+

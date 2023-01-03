@@ -8,3 +8,4 @@ module Spree
     belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
   end
 end
+

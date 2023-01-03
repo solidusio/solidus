@@ -35,3 +35,4 @@ describe Spree::Admin::StockMovementsHelper, type: :helper do
     end
   end
 end
+

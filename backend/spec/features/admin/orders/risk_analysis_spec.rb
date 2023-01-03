@@ -47,3 +47,4 @@ describe 'Order Risk Analysis', type: :feature do
     end
   end
 end
+

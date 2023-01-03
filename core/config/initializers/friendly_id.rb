@@ -88,3 +88,4 @@ FriendlyId.defaults do |config|
   #   end
   # }
 end
+

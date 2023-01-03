@@ -268,3 +268,4 @@ RSpec.describe Spree::Money do
     end
   end
 end
+

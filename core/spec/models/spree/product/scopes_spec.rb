@@ -238,3 +238,4 @@ RSpec.describe "Product scopes", type: :model do
     end
   end
 end
+

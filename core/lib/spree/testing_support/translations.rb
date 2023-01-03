@@ -23,3 +23,4 @@ RSpec.configure do |config|
     check_missing_translations(page, example)
   end
 end
+

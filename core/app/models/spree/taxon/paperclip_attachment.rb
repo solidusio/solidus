@@ -28,3 +28,4 @@ module Spree::Taxon::PaperclipAttachment
     attached_file.destroy
   end
 end
+

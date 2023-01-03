@@ -67,3 +67,4 @@ RSpec.describe Spree::Order::NumberGenerator do
     end
   end
 end
+

@@ -6,3 +6,4 @@ json.attr do
   json.name @taxonomy.root.name
 end
 json.state "closed"
+

@@ -10,3 +10,4 @@ module Spree
     belongs_to :variant_property_rule, touch: true, optional: true
   end
 end
+

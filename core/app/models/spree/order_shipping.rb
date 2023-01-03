@@ -84,3 +84,4 @@ class Spree::OrderShipping
     end
   end
 end
+

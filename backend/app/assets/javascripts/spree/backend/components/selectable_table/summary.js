@@ -5,3 +5,4 @@ Backbone.on('selectableTable:init', function(selectableTable){
     selectableTable.$el.find('thead').prepend(tr);
   }
 })
+

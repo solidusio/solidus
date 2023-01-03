@@ -6,3 +6,4 @@ module Spree
     belongs_to :taxon, optional: true
   end
 end
+

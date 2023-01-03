@@ -16,3 +16,4 @@ RSpec.describe Spree::Stock::ShippingRateSelector do
     end
   end
 end
+

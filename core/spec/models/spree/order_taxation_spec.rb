@@ -168,3 +168,4 @@ RSpec.describe Spree::OrderTaxation do
     end
   end
 end
+

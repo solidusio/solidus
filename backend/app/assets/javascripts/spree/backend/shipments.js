@@ -250,3 +250,4 @@ Spree.ready(function(){
     });
   }
 });
+

@@ -42,3 +42,4 @@ RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
     end
   end
 end
+

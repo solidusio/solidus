@@ -51,3 +51,4 @@ describe Spree::Admin::OrdersHelper, type: :helper do
     end
   end
 end
+

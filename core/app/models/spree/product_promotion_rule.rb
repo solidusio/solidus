@@ -6,3 +6,4 @@ module Spree
     belongs_to :promotion_rule, optional: true
   end
 end
+

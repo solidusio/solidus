@@ -17,3 +17,4 @@ RSpec.describe Spree do
     end
   end
 end
+

@@ -37,3 +37,4 @@ describe Spree::Admin::PromotionCodesController do
     expect(flash[:error]).not_to be_nil
   end
 end
+

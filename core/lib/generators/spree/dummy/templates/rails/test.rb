@@ -36,3 +36,4 @@ Dummy::Application.configure do
     Spree::Deprecation.behavior = :raise
   end
 end
+

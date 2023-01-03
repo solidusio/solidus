@@ -74,3 +74,4 @@ RSpec.describe Spree::TestingSupport::BusHelpers do
     end
   end
 end
+

@@ -90,3 +90,4 @@ RSpec.describe Spree::VariantPropertyRule, type: :model do
     end
   end
 end
+

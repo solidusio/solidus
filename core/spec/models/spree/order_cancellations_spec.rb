@@ -203,3 +203,4 @@ RSpec.describe Spree::OrderCancellations do
     end
   end
 end
+

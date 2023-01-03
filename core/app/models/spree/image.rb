@@ -5,3 +5,4 @@ module Spree
     include ::Spree::Config.image_attachment_module
   end
 end
+

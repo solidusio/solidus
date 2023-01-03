@@ -136,3 +136,4 @@ RSpec.describe Solidus::InstallGenerator do
     string.gsub(/\u001b\[.*?m/, '')
   end
 end
+

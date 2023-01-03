@@ -5,3 +5,4 @@ class AddBccEmailToSpreeStores < ActiveRecord::Migration[5.2]
     add_column :spree_stores, :bcc_email, :string
   end
 end
+

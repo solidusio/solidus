@@ -28,3 +28,4 @@ RSpec.describe 'dummy_task' do
     end
   end
 end
+

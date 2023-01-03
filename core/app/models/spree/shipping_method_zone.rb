@@ -6,3 +6,4 @@ module Spree
     belongs_to :shipping_method, optional: true
   end
 end
+

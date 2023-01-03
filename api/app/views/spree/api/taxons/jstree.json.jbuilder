@@ -8,3 +8,4 @@ json.array!(@taxon.children) do |taxon|
   end
   json.state "closed"
 end
+

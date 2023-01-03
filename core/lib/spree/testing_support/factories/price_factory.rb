@@ -14,3 +14,4 @@ FactoryBot.define do
     currency { 'USD' }
   end
 end
+

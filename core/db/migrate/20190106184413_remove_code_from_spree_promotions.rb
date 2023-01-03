@@ -40,3 +40,4 @@ class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
     # Solidus::Migrations::PromotionWithCodeHandlers::DoNothing
   end
 end
+

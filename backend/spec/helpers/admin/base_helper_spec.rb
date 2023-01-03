@@ -47,3 +47,4 @@ describe Spree::Admin::BaseHelper, type: :helper do
     end
   end
 end
+

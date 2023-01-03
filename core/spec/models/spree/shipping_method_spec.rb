@@ -249,3 +249,4 @@ RSpec.describe Spree::ShippingMethod, type: :model do
     end
   end
 end
+

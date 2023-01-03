@@ -153,3 +153,4 @@ RSpec.describe Spree::Wallet, type: :model do
     end
   end
 end
+

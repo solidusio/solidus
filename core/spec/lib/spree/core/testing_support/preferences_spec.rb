@@ -27,3 +27,4 @@ RSpec.describe Spree::TestingSupport::Preferences do
     end
   end
 end
+

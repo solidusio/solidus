@@ -42,3 +42,4 @@ RSpec.describe Spree::CartonMailer do
     end
   end
 end
+

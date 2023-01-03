@@ -18,3 +18,4 @@ RSpec.describe Spree::ProductProperty, type: :model do
     end
   end
 end
+

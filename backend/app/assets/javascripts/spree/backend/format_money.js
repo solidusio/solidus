@@ -9,3 +9,4 @@ Spree.formatMoney = function(amount, currency) {
 
   return accounting.formatMoney(amount, currencyInfo[0], currencyInfo[1], thousand, decimal, currencyInfo[2]);
 }
+

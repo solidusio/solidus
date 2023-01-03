@@ -10,3 +10,4 @@ describe "Load samples" do
     }.to output.to_stdout
   end
 end
+

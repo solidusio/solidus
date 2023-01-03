@@ -19,3 +19,4 @@ Spree.ready = function(callback) {
     Spree.jQueryReady(callback);
   }
 };
+

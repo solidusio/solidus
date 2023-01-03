@@ -185,3 +185,4 @@ describe "Orders Listing", type: :feature, js: true do
     end
   end
 end
+

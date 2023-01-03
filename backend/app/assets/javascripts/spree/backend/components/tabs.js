@@ -66,3 +66,4 @@ window.addEventListener('load', function() {
     new Tabs(el);
   });
 });
+

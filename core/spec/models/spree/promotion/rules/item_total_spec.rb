@@ -126,3 +126,4 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
     end
   end
 end
+

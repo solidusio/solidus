@@ -32,3 +32,4 @@ RSpec.describe 'stock location factory' do
     end
   end
 end
+

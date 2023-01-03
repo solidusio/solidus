@@ -13,3 +13,4 @@ FactoryBot.define do
     mail_from_address { 'solidus@example.org' }
   end
 end
+

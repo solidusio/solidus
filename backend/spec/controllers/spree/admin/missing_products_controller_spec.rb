@@ -16,3 +16,4 @@ describe Spree::Admin::ProductsController, type: :controller do
     expect(flash[:error]).to eql("Product is not found")
   end
 end
+

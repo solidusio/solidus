@@ -113,3 +113,4 @@ RSpec.describe Spree::Event::SubscriberRegistry do
     end
   end
 end
+

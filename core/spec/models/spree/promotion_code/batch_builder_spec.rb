@@ -105,3 +105,4 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
     end
   end
 end
+

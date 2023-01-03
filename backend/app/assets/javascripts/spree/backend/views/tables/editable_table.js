@@ -13,3 +13,4 @@ Spree.Views.Tables.EditableTable = {
     return this.add($row);
   }
 };
+

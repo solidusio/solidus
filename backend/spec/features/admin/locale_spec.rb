@@ -32,3 +32,4 @@ describe "setting locale", type: :feature do
     expect(page).to have_content("Ordres")
   end
 end
+

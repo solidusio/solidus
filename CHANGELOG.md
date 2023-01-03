@@ -3242,3 +3242,4 @@ See https://github.com/solidusio/solidus/releases/tag/v1.0.1
 ## Solidus 1.0.0 (2015-08-11)
 
 See https://github.com/solidusio/solidus/releases/tag/v1.0.0
+

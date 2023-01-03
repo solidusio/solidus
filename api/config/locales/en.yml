@@ -22,3 +22,4 @@ en:
         transfer_success: Variants successfully transferred
       stock_not_below_zero: Stock must not be below zero.
       unauthorized: You are not authorized to perform that action.
+

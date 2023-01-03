@@ -44,3 +44,4 @@ RSpec.describe Spree::StoreSelector::Legacy do
     end
   end
 end
+

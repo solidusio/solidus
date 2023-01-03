@@ -12,3 +12,4 @@ Spree.ready(function() {
   checkSideBarFit();
   $(window).on('resize', checkSideBarFit);
 });
+

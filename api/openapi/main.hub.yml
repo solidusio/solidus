@@ -63,3 +63,4 @@ pages:
             path: /api-reference
           data:
             $ref: ./solidus-api.oas.yml
+

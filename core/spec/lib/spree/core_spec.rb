@@ -75,3 +75,4 @@ RSpec.describe Spree::Core do
     end
   end
 end
+

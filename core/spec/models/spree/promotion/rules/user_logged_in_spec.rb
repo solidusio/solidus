@@ -31,3 +31,4 @@ RSpec.describe Spree::Promotion::Rules::UserLoggedIn, type: :model do
     end
   end
 end
+

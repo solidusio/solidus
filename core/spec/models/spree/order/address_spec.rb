@@ -50,3 +50,4 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 end
+

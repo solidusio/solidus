@@ -247,3 +247,4 @@ RSpec.describe Spree::StockQuantities, type: :model do
     end
   end
 end
+

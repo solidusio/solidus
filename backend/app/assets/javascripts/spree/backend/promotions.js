@@ -33,3 +33,4 @@ Spree.ready(function() {
 
   window.initPromotionActions();
 });
+

@@ -31,3 +31,4 @@ RSpec.describe Spree::Core::ControllerHelpers::StrongParameters, type: :controll
     end
   end
 end
+

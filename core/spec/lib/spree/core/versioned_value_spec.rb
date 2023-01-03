@@ -122,3 +122,4 @@ RSpec.describe Spree::Core::VersionedValue do
     end
   end
 end
+

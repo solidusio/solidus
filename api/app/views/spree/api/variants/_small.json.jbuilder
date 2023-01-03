@@ -19,3 +19,4 @@ json.cache! [I18n.locale, current_pricing_options, variant] do
     json.partial!("spree/api/images/image", image: image)
   end
 end
+

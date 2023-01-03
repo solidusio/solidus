@@ -54,3 +54,4 @@ RSpec.describe Spree::LogEntry, type: :model do
     end
   end
 end
+

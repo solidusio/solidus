@@ -59,3 +59,4 @@ describe "Taxonomies", type: :feature do
     end
   end
 end
+

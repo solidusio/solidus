@@ -23,3 +23,4 @@ RSpec.describe Spree::Encryptor do
     end
   end
 end
+

@@ -21,3 +21,4 @@ Solidus::ChangelogUpdater.(
   repository: repository,
   candidate_tag: candidate_tag
 )
+

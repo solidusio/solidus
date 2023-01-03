@@ -52,3 +52,4 @@ Spree.Views.Order.CustomerSelect = Backbone.View.extend({
     })
   }
 });
+

@@ -86,3 +86,4 @@ RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
     end
   end
 end
+

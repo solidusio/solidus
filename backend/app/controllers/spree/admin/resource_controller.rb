@@ -306,3 +306,4 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     end
   end
 end
+

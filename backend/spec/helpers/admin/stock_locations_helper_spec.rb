@@ -19,3 +19,4 @@ describe Spree::Admin::StockLocationsHelper, type: :helper do
     end
   end
 end
+

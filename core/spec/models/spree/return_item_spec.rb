@@ -800,3 +800,4 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
   end
 end
+

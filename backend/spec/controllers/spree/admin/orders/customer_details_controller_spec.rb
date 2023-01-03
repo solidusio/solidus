@@ -134,3 +134,4 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
     end
   end
 end
+

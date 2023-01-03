@@ -12,3 +12,4 @@ json.cache! [I18n.locale, Spree::StockLocation.accessible_by(current_ability), v
     json.stock_location_name(stock_item.stock_location.name)
   end
 end
+

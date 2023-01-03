@@ -22,3 +22,4 @@ module Spree
     default_scope -> { order([default: :desc, updated_at: :desc]) }
   end
 end
+

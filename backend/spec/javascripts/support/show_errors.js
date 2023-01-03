@@ -6,3 +6,4 @@ window.onerror = function(message) {
     message:  message
   }));
 }
+

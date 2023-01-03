@@ -130,3 +130,4 @@ describe "Store credits admin" do
     end
   end
 end
+

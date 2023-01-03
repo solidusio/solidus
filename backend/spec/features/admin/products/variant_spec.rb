@@ -123,3 +123,4 @@ describe "Variants", type: :feature do
     end
   end
 end
+

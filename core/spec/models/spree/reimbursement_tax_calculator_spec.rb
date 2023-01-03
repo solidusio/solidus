@@ -50,3 +50,4 @@ RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
     end
   end
 end
+

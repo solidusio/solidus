@@ -54,3 +54,4 @@ RSpec.describe Solidus::ChangelogUpdater do
     end
   end
 end
+

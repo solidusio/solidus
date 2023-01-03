@@ -23,3 +23,4 @@ RSpec.describe Spree::Address::Name do
     expect(name.last_name).to eq('Von Doe')
   end
 end
+

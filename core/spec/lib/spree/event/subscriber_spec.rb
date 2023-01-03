@@ -84,3 +84,4 @@ RSpec.describe Spree::Event::Subscriber do
     end
   end
 end
+

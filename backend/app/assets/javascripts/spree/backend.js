@@ -64,3 +64,4 @@
 //= require spree/backend/variant_autocomplete
 //= require spree/backend/zone
 //= require spree/backend/shipping_methods/stock_locations_picker
+

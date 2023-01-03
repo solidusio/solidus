@@ -94,3 +94,4 @@ RSpec.describe Spree::Promotion::Rules::OptionValue do
     end
   end
 end
+

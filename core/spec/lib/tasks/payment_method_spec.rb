@@ -62,3 +62,4 @@ RSpec.describe 'payment_method:deactivate_unsupported_payment_methods' do
     end
   end
 end
+

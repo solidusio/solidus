@@ -15,3 +15,4 @@ RSpec.describe Spree::Wallet::AddPaymentSourcesToWallet, type: :model do
     end
   end
 end
+

@@ -95,3 +95,4 @@ RSpec.describe Solidus::ReleaseDrafter do
     end
   end
 end
+

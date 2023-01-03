@@ -11,3 +11,4 @@ class Spree::StoreCreditCategory < Spree::Base
     self.class.non_expiring_credit_types.include? name
   end
 end
+

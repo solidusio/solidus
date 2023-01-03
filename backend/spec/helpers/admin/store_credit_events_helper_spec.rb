@@ -95,3 +95,4 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
   end
 end
+

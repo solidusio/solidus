@@ -29,3 +29,4 @@ RSpec.describe Spree::UserLastUrlStorer::Rules::AuthenticationRule do
     end
   end
 end
+

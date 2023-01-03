@@ -19,3 +19,4 @@ FactoryBot.define do
     association :credit_type, factory: :primary_credit_type, strategy: :create
   end
 end
+

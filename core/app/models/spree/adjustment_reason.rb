@@ -10,3 +10,4 @@ module Spree
     scope :active, -> { where(active: true) }
   end
 end
+

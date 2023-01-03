@@ -16,3 +16,4 @@ describe 'Promotions', type: :feature do
     expect(page).to have_css('table thead tr th', text: 'Total')
   end
 end
+

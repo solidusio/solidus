@@ -256,3 +256,4 @@ describe Spree::Admin::WidgetsController, type: :controller do
     end
   end
 end
+

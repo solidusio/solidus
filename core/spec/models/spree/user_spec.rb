@@ -157,3 +157,4 @@ RSpec.describe Spree.user_class, type: :model do
     end
   end
 end
+

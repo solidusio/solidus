@@ -8,3 +8,4 @@ unless Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
 end
 
 generate 'solidus_paypal_commerce_platform:install'
+

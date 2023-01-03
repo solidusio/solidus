@@ -78,3 +78,4 @@ RSpec.describe Spree::TaxCalculator::Default do
     end
   end
 end
+

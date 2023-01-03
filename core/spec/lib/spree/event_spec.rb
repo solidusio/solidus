@@ -108,3 +108,4 @@ RSpec.describe Spree::Event do
     end
   end
 end
+

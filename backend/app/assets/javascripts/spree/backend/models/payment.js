@@ -3,3 +3,4 @@ Spree.Models.Payment = Backbone.Model.extend({
     return Spree.pathFor('api/orders/' + this.get('order_id') + '/payments')
   }
 });
+

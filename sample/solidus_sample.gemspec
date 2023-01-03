@@ -25,3 +25,4 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'solidus_core', s.version
 end
+

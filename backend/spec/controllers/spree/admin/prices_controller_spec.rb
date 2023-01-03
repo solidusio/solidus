@@ -52,3 +52,4 @@ describe Spree::Admin::PricesController do
     end
   end
 end
+

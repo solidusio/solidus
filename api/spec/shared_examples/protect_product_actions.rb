@@ -16,3 +16,4 @@ shared_examples "modifying product actions are restricted" do
     assert_unauthorized!
   end
 end
+

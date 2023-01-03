@@ -6,3 +6,4 @@ Spree.ready(function() {
     $('#new_image').show();
   });
 });
+

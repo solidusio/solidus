@@ -48,3 +48,4 @@ class TransformTaxRateCategoryRelation < ActiveRecord::Migration[5.0]
     drop_table :spree_tax_rate_tax_categories
   end
 end
+

@@ -19,3 +19,4 @@ RUN bundle install
 RUN bundle exec rake sandbox
 
 CMD ["sh", "./lib/demo/docker-entrypoint.sh"]
+

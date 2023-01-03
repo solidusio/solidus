@@ -59,3 +59,4 @@ Spree.ready(function() {
     Spree.Order.initCartPage($(".js-order-cart-page").data("order-number"));
   }
 });
+

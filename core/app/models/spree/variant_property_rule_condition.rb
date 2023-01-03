@@ -8,3 +8,4 @@ module Spree
     validates_uniqueness_of :option_value_id, scope: :variant_property_rule_id
   end
 end
+

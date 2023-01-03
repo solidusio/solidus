@@ -59,3 +59,4 @@ class AddAmountRemainingToStoreCreditEvents < ActiveRecord::Migration[5.0]
     remove_column :spree_store_credit_events, :amount_remaining
   end
 end
+

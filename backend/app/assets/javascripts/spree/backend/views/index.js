@@ -29,3 +29,4 @@
 //= require 'spree/backend/views/tables/selectable_table'
 //= require 'spree/backend/views/tables/selectable_table/summary'
 //= require 'spree/backend/views/tables/selectable_table/sum_return_item_amount'
+

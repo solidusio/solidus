@@ -31,3 +31,4 @@ X-Spree-Order-Token: ORDER_TOKEN
 ```
 
 If you are already providing an API key, you don't need to also provide the order token (although you may do so).
+

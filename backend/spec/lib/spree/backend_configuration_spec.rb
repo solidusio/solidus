@@ -80,3 +80,4 @@ RSpec.describe Spree::BackendConfiguration do
     end
   end
 end
+

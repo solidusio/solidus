@@ -260,3 +260,4 @@ RSpec.describe Spree::OrderShipping do
     end
   end
 end
+

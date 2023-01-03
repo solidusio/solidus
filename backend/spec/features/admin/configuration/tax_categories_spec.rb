@@ -56,3 +56,4 @@ describe "Tax Categories", type: :feature do
     end
   end
 end
+

@@ -31,3 +31,4 @@ namespace :solidus do
     Spree::Order.where(completed_at: nil).each { |order| Spree::PromotionHandler::Cart.new(order).activate }
   end
 end
+

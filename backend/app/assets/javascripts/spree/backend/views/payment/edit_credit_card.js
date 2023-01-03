@@ -21,3 +21,4 @@ Spree.Views.Payment.EditCreditCard = Backbone.View.extend({
     this.$(".ccType").val($.payment.cardType(this.$('.cardNumber').val()))
   }
 })
+

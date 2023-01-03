@@ -87,3 +87,4 @@ RSpec.describe Spree::OrderMutex do
     end
   end
 end
+

@@ -14,3 +14,4 @@ Spree.Views.Zones.Form = Backbone.View.extend({
     $('#country_members :input').prop('disabled', kind !== 'country');
   }
 })
+

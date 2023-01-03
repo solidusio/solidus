@@ -24,3 +24,4 @@ RSpec.describe 'solidus' do
     end
   end
 end
+

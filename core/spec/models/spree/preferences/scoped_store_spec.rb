@@ -60,3 +60,4 @@ RSpec.describe Spree::Preferences::ScopedStore, type: :model do
     end
   end
 end
+

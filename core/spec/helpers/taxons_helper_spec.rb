@@ -41,3 +41,4 @@ RSpec.describe Spree::TaxonsHelper, type: :helper do
     end
   end
 end
+

@@ -384,3 +384,4 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
     end
   end
 end
+

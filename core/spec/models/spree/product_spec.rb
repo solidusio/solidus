@@ -641,3 +641,4 @@ RSpec.describe Spree::Product, type: :model do
     end
   end
 end
+

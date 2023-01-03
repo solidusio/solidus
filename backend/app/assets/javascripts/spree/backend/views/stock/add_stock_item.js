@@ -72,3 +72,4 @@ Spree.Views.Stock.AddStockItem = Backbone.View.extend({
     this.model.save(null, options);
   }
 });
+

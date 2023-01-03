@@ -445,3 +445,4 @@ module Spree
 end
 
 require_dependency 'spree/variant/scopes'
+

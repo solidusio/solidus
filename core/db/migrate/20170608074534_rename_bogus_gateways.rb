@@ -16,3 +16,4 @@ class RenameBogusGateways < ActiveRecord::Migration[5.0]
     # no-op
   end
 end
+

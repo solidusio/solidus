@@ -88,3 +88,4 @@ describe "Homepage", type: :feature do
     end
   end
 end
+

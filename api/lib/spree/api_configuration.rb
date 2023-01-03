@@ -133,3 +133,4 @@ module Spree
     ]
   end
 end
+

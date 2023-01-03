@@ -76,3 +76,4 @@ class Spree::Wallet
     end
   end
 end
+

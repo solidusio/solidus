@@ -7,3 +7,4 @@ module Spree
     acts_as_list scope: :product
   end
 end
+

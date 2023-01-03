@@ -56,3 +56,4 @@ RSpec.describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:read, Spree::Role) }
   end
 end
+

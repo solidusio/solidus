@@ -143,3 +143,4 @@ require 'spree/user_class_handle'
 require 'spree/preferences/store'
 require 'spree/preferences/static_model_preferences'
 require 'spree/preferences/scoped_store'
+

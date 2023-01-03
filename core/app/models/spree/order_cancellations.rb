@@ -124,3 +124,4 @@ class Spree::OrderCancellations
     end
   end
 end
+

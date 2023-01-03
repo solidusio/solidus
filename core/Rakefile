@@ -39,3 +39,4 @@ namespace :spec do
 end
 
 task test_app: 'db:reset'
+

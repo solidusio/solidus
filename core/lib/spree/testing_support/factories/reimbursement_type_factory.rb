@@ -12,3 +12,4 @@ FactoryBot.define do
     mutable { true }
   end
 end
+

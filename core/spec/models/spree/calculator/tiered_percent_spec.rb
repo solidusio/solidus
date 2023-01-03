@@ -195,3 +195,4 @@ RSpec.describe Spree::Calculator::TieredPercent, type: :model do
     end
   end
 end
+

@@ -52,3 +52,4 @@ puts IRBSolidusHelpers::USAGE
 require "irb"
 IRB::ExtendCommandBundle.prepend IRBSolidusHelpers
 IRB.start(__FILE__)
+

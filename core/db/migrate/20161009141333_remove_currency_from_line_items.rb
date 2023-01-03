@@ -5,3 +5,4 @@ class RemoveCurrencyFromLineItems < ActiveRecord::Migration[5.0]
     remove_column :spree_line_items, :currency, :string
   end
 end
+

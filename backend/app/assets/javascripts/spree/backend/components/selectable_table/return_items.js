@@ -3,3 +3,4 @@ Backbone.on('selectableTable:init', function(selectableTable){
     new Spree.Views.Tables.ReturnItems({el: selectableTable.el, model: selectableTable.model});
   }
 })
+

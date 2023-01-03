@@ -8,3 +8,4 @@ module Spree
     delegate :name, to: :zoneable, allow_nil: true
   end
 end
+

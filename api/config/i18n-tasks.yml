@@ -132,3 +132,4 @@ ignore_unused:
 #
 # <%# I18n::Tasks.add_scanner 'I18n::Tasks::Scanners::PatternMapper',
 #       patterns: [['\bSpree\.t[( ]\s*%{key}', 'spree.%{key}']] %>
+

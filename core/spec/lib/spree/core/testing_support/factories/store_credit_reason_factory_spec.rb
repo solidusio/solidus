@@ -11,3 +11,4 @@ RSpec.describe 'store credit reason factory' do
     it_behaves_like 'a working factory'
   end
 end
+

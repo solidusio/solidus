@@ -33,3 +33,4 @@ RSpec.describe Spree::Promotion::Rules::Store, type: :model do
     end
   end
 end
+

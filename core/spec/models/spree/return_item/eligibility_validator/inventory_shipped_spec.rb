@@ -57,3 +57,4 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
     end
   end
 end
+

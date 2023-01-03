@@ -8,3 +8,4 @@ module Spree
     has_many :store_credits, class_name: 'Spree::StoreCredit', foreign_key: 'type_id'
   end
 end
+

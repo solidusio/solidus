@@ -19,3 +19,4 @@ RSpec.describe Spree::Core::ControllerHelpers::Search, type: :controller do
     end
   end
 end
+

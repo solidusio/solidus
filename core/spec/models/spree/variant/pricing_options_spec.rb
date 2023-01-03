@@ -202,3 +202,4 @@ RSpec.describe Spree::Variant::PricingOptions do
     end
   end
 end
+

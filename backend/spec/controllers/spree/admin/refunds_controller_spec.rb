@@ -59,3 +59,4 @@ describe Spree::Admin::RefundsController do
     end
   end
 end
+

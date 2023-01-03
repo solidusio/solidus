@@ -14,3 +14,4 @@ FactoryBot.define do
     association :promotion
   end
 end
+

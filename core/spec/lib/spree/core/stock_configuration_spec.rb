@@ -153,3 +153,4 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 end
+

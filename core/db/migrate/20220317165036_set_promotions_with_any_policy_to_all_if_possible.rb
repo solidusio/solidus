@@ -18,3 +18,4 @@ class SetPromotionsWithAnyPolicyToAllIfPossible < ActiveRecord::Migration[5.2]
     # No-Op
   end
 end
+

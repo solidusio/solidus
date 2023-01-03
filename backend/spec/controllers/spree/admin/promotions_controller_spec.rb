@@ -128,3 +128,4 @@ describe Spree::Admin::PromotionsController, type: :controller do
     end
   end
 end
+

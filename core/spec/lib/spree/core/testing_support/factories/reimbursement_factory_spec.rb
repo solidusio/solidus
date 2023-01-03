@@ -17,3 +17,4 @@ RSpec.describe 'reimbursement factory' do
     it { is_expected.to be_present }
   end
 end
+

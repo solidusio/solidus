@@ -193,3 +193,4 @@ describe Spree::Api::BaseController, type: :controller do
     end
   end
 end
+

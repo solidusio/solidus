@@ -40,3 +40,4 @@ Spree.Views.Order.DetailsAdjustments = Backbone.View.extend({
     this.$el.toggleClass("hidden", _.isEmpty(adjustmentTotals));
   }
 })
+

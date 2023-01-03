@@ -113,3 +113,4 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
     end
   end
 end
+

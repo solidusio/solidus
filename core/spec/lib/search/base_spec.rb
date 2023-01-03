@@ -103,3 +103,4 @@ RSpec.describe Spree::Core::Search::Base do
     expect(searcher.retrieve_products).to eq([@product1])
   end
 end
+

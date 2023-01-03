@@ -11,3 +11,4 @@ FactoryBot.define do
     presentation { 'cap color' }
   end
 end
+

@@ -90,3 +90,4 @@ describe 'Product Details', type: :feature do
     end
   end
 end
+

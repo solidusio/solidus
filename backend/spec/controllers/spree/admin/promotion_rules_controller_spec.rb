@@ -34,3 +34,4 @@ describe Spree::Admin::PromotionRulesController, type: :controller do
     end
   end
 end
+

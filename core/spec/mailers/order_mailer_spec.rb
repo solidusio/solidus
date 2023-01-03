@@ -120,3 +120,4 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
     end
   end
 end
+

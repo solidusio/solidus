@@ -88,3 +88,4 @@ feature 'Promotion with option value rule' do
     end
   end
 end
+

@@ -156,3 +156,4 @@ RSpec.describe Spree::Calculator::FlexiRate, type: :model do
     expect(calculator).to have_attributes(attributes)
   end
 end
+

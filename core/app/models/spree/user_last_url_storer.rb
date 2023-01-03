@@ -45,3 +45,4 @@ module Spree
     delegate :session, :request, to: :controller
   end
 end
+

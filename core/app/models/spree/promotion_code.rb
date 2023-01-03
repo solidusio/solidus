@@ -52,3 +52,4 @@ class Spree::PromotionCode < Spree::Base
     self.value = value.downcase.strip
   end
 end
+

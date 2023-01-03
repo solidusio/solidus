@@ -35,3 +35,4 @@ Run the JavaScript tests (must have [ChromeDriver](https://sites.google.com/a/ch
 ```bash
 bundle exec teaspoon
 ```
+

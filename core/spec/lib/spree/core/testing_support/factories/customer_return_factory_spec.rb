@@ -36,3 +36,4 @@ RSpec.describe 'customer return factory' do
     # No create test, because this factory is (intentionally) invalid
   end
 end
+

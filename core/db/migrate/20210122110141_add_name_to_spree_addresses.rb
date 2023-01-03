@@ -11,3 +11,4 @@ class AddNameToSpreeAddresses < ActiveRecord::Migration[5.2]
     remove_column :spree_addresses, :name
   end
 end
+

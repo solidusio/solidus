@@ -11,3 +11,4 @@ module Spree::Taxon::ActiveStorageAttachment
     validate :icon_is_an_image
   end
 end
+

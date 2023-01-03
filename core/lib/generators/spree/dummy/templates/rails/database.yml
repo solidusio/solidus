@@ -111,3 +111,4 @@ production:
   adapter: sqlite3
   database: db/solidus_production.sqlite3
 <% end %>
+

@@ -19,3 +19,4 @@
 
     $.extend($.fn.select2.defaults, $.fn.select2.locales['fa']);
 })(jQuery);
+

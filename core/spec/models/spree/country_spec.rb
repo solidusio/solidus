@@ -119,3 +119,4 @@ RSpec.describe Spree::Country, type: :model do
     end
   end
 end
+

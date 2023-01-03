@@ -25,3 +25,4 @@ account.
 ```shell
 docker push solidusio/solidus-demo:latest
 ```
+

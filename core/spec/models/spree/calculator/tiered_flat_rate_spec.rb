@@ -97,3 +97,4 @@ RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
     end
   end
 end
+

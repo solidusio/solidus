@@ -74,3 +74,4 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
     });
   }
 });
+

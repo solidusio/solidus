@@ -49,3 +49,4 @@ RSpec.describe Spree::OrderMailerSubscriber do
     end
   end
 end
+

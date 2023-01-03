@@ -24,3 +24,4 @@ Handlebars.registerHelper("concat", function() {
 Handlebars.registerHelper("format_money", function(amount, currency) {
   return Spree.formatMoney(amount, currency);
 });
+

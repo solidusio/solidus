@@ -11,3 +11,4 @@ unless Bundler.locked_gems.dependencies['solidus_bolt']
 end
 
 generate 'solidus_bolt:install'
+

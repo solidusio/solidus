@@ -35,3 +35,4 @@ describe 'Stores', type: :feature do
     end
   end
 end
+

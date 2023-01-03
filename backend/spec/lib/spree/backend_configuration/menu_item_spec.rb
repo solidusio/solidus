@@ -13,3 +13,4 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
     end
   end
 end
+

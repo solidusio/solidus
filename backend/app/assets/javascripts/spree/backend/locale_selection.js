@@ -16,3 +16,4 @@ Spree.ready(function() {
     });
   });
 });
+

@@ -18,3 +18,4 @@ shell = Thor::Base.shell.new
   shell.say_status :seed, seed
   require_relative "default/spree/#{seed}"
 end
+

@@ -116,3 +116,4 @@ describe "Option Types", type: :feature do
     expect(page).to have_css("tbody#option_values tr", count: 0)
   end
 end
+

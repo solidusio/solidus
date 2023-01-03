@@ -88,3 +88,4 @@ describe "Taxonomies and taxons", type: :feature do
     expect(page).to have_content("Icon has been successfully removed!")
   end
 end
+

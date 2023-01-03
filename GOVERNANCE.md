@@ -194,3 +194,4 @@ Your request must be approved by 2/3rds of the existing stakeholders for you to 
 ### Leaving the stakeholders
 
 To leave the stakeholders, simply announce your decision by Slack, email or call.
+

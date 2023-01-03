@@ -18,3 +18,4 @@ RSpec.describe Spree::PaymentMethod::SimpleBogusCreditCard, type: :model do
     end
   end
 end
+

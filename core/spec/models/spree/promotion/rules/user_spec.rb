@@ -37,3 +37,4 @@ RSpec.describe Spree::Promotion::Rules::User, type: :model do
     end
   end
 end
+

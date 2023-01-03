@@ -21,3 +21,4 @@ namespace :spree_sample do
     SpreeSample::Engine.load_samples
   end
 end
+

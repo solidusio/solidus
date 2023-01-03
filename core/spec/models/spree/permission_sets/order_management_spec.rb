@@ -41,3 +41,4 @@ RSpec.describe Spree::PermissionSets::OrderManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::Refund) }
   end
 end
+

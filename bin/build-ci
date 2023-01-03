@@ -208,3 +208,4 @@ class Project
 end
 
 exit Project.run_cli(ARGV)
+

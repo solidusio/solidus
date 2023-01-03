@@ -258,3 +258,4 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
     it_behaves_like 'computing any item'
   end
 end
+

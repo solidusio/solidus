@@ -12,3 +12,4 @@ RSpec.describe Spree::Core::Engine do
     ])
   end
 end
+

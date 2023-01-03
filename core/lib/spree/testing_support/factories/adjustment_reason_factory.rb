@@ -11,3 +11,4 @@ FactoryBot.define do
     sequence(:code) { |n| "Code #{n}" }
   end
 end
+

@@ -12,3 +12,4 @@ Spree::OptionType.create!([
     position: 2
   }
 ])
+

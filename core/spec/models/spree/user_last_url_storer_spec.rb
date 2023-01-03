@@ -63,3 +63,4 @@ RSpec.describe Spree::UserLastUrlStorer do
     end
   end
 end
+

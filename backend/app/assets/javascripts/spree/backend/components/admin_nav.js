@@ -22,3 +22,4 @@ Spree.ready(function() {
     $(adminNavToggle).removeClass('fa-chevron-circle-left').addClass('fa-chevron-circle-right');
   }
 });
+

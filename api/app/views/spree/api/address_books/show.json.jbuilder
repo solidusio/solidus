@@ -11,3 +11,4 @@ json.array! @user_addresses do |user_address|
     json.update_target @address == user_address.address
   end
 end
+

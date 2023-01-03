@@ -14,3 +14,4 @@ FactoryBot.define do
     tax_code { "TaxCode - #{rand(999_999)}" }
   end
 end
+

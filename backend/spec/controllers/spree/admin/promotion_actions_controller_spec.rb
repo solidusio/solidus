@@ -21,3 +21,4 @@ describe Spree::Admin::PromotionActionsController, type: :controller do
     expect(promotion.rules.count).to eq(0)
   end
 end
+

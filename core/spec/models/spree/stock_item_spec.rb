@@ -318,3 +318,4 @@ RSpec.describe Spree::StockItem, type: :model do
     end
   end
 end
+

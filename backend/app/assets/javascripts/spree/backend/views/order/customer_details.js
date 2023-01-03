@@ -65,3 +65,4 @@ Spree.Views.Order.CustomerDetails = Backbone.View.extend({
     this.$('#order_email').val(this.model.get("email"))
   }
 })
+

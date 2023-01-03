@@ -5,3 +5,4 @@ class AddTypeBeforeRemovalToSpreePaymentMethods < ActiveRecord::Migration[5.2]
     add_column :spree_payment_methods, :type_before_removal, :string
   end
 end
+

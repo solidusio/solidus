@@ -44,3 +44,4 @@ Spree.Views.Order.ShipmentTracking = Backbone.View.extend({
     this.$el.html(html);
   }
 });
+

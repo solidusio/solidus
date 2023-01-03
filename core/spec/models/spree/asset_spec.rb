@@ -23,3 +23,4 @@ RSpec.describe Spree::Asset, type: :model do
     end
   end
 end
+

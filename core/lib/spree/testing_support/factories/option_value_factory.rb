@@ -13,3 +13,4 @@ FactoryBot.define do
     option_type
   end
 end
+

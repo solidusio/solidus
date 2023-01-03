@@ -50,3 +50,4 @@ feature 'Promotions' do
     end
   end
 end
+

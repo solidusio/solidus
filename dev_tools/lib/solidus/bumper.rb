@@ -12,3 +12,4 @@ module Solidus
     end
   end
 end
+

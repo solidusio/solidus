@@ -5,3 +5,4 @@ module ImageSpecHelper
     File.open(File.join('lib', 'spree', 'testing_support', 'fixtures', image))
   end
 end
+

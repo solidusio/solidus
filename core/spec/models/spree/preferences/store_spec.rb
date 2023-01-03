@@ -38,3 +38,4 @@ RSpec.describe Spree::Preferences::Store, type: :model do
     expect(@store.get(:random_key){ nil }).to be_nil
   end
 end
+

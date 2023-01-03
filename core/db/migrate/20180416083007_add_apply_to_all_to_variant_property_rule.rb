@@ -10,3 +10,4 @@ class AddApplyToAllToVariantPropertyRule < ActiveRecord::Migration[5.1]
     remove_column :spree_variant_property_rules, :apply_to_all
   end
 end
+

@@ -53,3 +53,4 @@ module Spree::Image::PaperclipAttachment
     end
   end
 end
+

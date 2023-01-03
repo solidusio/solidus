@@ -70,3 +70,4 @@ describe "Tax Rates", type: :feature do
     end
   end
 end
+

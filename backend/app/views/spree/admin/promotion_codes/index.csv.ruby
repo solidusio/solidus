@@ -6,3 +6,4 @@ CSV.generate do |csv|
     csv << [value]
   end
 end
+

@@ -15,3 +15,4 @@ module Spree
   # some pluralization calculators
   I18N_GENERIC_PLURAL = 2.1
 end
+

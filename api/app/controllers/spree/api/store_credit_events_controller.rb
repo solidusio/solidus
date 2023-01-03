@@ -11,3 +11,4 @@ class Spree::Api::StoreCreditEventsController < Spree::Api::BaseController
     end
   end
 end
+

@@ -18,3 +18,4 @@
     flash_div.html(message).show().delay(showTime).fadeOut(fadeOutTime);
   };
 })();
+

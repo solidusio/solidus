@@ -41,3 +41,4 @@ describe Spree::Admin::RootController do
     end
   end
 end
+

@@ -44,3 +44,4 @@ Spree.Models.Order.fetch = function(number, opts) {
   model.fetch(options);
   return model;
 }
+

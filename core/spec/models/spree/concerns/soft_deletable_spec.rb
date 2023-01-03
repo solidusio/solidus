@@ -11,3 +11,4 @@ RSpec.describe Spree::SoftDeletable do
     expect(soft_deletable_model.discard_column).to eq(:deleted_at)
   end
 end
+

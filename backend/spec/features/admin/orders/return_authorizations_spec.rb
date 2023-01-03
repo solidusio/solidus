@@ -79,3 +79,4 @@ describe "ReturnAuthorizations", type: :feature do
     end
   end
 end
+

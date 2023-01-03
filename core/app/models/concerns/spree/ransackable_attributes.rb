@@ -20,3 +20,4 @@ module Spree::RansackableAttributes
     end
   end
 end
+

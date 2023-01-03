@@ -6,3 +6,4 @@ module Spree
     belongs_to :stock_location, class_name: "Spree::StockLocation", inverse_of: :user_stock_locations, optional: true
   end
 end
+

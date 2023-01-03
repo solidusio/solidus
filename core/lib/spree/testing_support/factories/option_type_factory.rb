@@ -14,3 +14,4 @@ FactoryBot.define do
     presentation { 'Size' }
   end
 end
+

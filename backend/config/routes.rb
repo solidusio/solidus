@@ -186,3 +186,4 @@ Spree::Core::Engine.routes.draw do
 
   get '/admin', to: 'admin/root#index', as: :admin
 end
+

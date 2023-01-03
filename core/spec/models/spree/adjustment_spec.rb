@@ -218,3 +218,4 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
   end
 end
+

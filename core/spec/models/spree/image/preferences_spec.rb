@@ -46,3 +46,4 @@ RSpec.describe Spree::Image, type: :model do
     expect(paperclip_asset.attachment_definitions[:attachment][:default_style]).to eq(custom_style_default)
   end
 end
+

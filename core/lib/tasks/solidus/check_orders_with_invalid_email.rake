@@ -16,3 +16,4 @@ namespace :solidus do
     end
   end
 end
+

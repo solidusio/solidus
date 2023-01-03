@@ -19,3 +19,4 @@ RUBY
 create_file 'app/views/spree/admin/shared/_navigation_footer.html.erb', <<~ERB
   <!-- Add here your login/logout links in 'app/views/spree/admin/shared/_navigation_footer.html.erb'. -->
 ERB
+

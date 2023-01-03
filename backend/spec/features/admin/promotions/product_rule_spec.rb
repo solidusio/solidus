@@ -33,3 +33,4 @@ feature 'Promotion with product rule', js: true do
     select2_search product.name, from: "Choose products"
   end
 end
+

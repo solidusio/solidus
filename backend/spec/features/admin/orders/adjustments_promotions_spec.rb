@@ -53,3 +53,4 @@ describe "Adjustments Promotions", type: :feature do
     end
   end
 end
+

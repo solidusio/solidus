@@ -10,3 +10,4 @@ FactoryBot.define do
     sequence(:name) { |n| "ShippingCategory ##{n}" }
   end
 end
+

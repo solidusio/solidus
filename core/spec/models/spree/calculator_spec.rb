@@ -44,3 +44,4 @@ RSpec.describe Spree::Calculator, type: :model do
     end
   end
 end
+

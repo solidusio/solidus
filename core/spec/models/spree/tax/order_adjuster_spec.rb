@@ -33,3 +33,4 @@ RSpec.describe Spree::Tax::OrderAdjuster do
     end
   end
 end
+

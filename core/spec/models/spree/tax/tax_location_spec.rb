@@ -77,3 +77,4 @@ RSpec.describe Spree::Tax::TaxLocation do
     end
   end
 end
+

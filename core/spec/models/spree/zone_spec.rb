@@ -242,3 +242,4 @@ RSpec.describe Spree::Zone, type: :model do
     end
   end
 end
+

@@ -52,3 +52,4 @@ bundler_injector.inject(%w[
 bundler_injector.remove(%w[
   solidus
 ])
+

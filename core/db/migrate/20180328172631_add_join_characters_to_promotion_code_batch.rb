@@ -9,3 +9,4 @@ class AddJoinCharactersToPromotionCodeBatch < ActiveRecord::Migration[5.1]
                default: '_')
   end
 end
+

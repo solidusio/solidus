@@ -317,3 +317,4 @@ describe Spree::Admin::StoreCreditsController do
     end
   end
 end
+

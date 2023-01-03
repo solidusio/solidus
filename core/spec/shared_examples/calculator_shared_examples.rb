@@ -8,3 +8,4 @@ RSpec.shared_examples_for 'a calculator with a description' do
     end
   end
 end
+

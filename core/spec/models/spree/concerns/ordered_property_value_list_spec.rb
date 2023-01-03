@@ -50,3 +50,4 @@ RSpec.describe Spree::OrderedPropertyValueList do
     end
   end
 end
+

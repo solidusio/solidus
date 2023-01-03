@@ -21,3 +21,4 @@ Spree::StoreCreditCategory.find_or_create_by!(name: Spree::StoreCreditCategory::
 Spree::StoreCreditCategory.find_or_create_by!(name: Spree::StoreCreditCategory::REIMBURSEMENT)
 
 Spree::StoreCreditReason.find_or_create_by!(name: 'Credit Given In Error')
+

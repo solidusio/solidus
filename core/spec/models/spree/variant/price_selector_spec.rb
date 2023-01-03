@@ -107,3 +107,4 @@ RSpec.describe Spree::Variant::PriceSelector do
     end
   end
 end
+

@@ -10,3 +10,4 @@ var $uploadEl = $('[data-upload-id="<%= params[:upload_id] %>"]');
   $uploadEl.find('error').removeClass('hidden').html('<%= j @image.errors.full_messages.join("<br>").html_safe %>');
 
 <% end %>
+

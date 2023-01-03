@@ -34,3 +34,4 @@ Spree.Views.Payment.PaymentRow = Backbone.View.extend({
     }, options);
   }
 });
+

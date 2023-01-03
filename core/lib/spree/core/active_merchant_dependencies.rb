@@ -11,3 +11,4 @@ require 'active_merchant/billing/response'
 require 'active_merchant/billing/credit_card_methods'
 require 'active_merchant/billing/credit_card_formatting'
 require 'active_merchant/billing/credit_card'
+

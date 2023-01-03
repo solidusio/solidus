@@ -39,3 +39,4 @@ class Spree::ReimbursementType::StoreCredit < Spree::ReimbursementType
     end
   end
 end
+

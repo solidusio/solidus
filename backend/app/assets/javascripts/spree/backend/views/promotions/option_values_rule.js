@@ -77,3 +77,4 @@ Spree.Views.Promotions.OptionValuesRule = Backbone.View.extend({
     this.addOptionValue(null, null);
   },
 });
+

@@ -34,3 +34,4 @@ Spree.Views.Order.Summary = Backbone.View.extend({
       .text(state_name);
   }
 });
+

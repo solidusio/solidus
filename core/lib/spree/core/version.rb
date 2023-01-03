@@ -15,3 +15,4 @@ module Spree
     Gem::Version.new(solidus_version)
   end
 end
+

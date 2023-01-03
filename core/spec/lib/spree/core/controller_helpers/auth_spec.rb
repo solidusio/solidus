@@ -143,3 +143,4 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
   end
 end
+

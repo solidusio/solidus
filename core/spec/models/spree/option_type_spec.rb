@@ -14,3 +14,4 @@ RSpec.describe Spree::OptionType, type: :model do
     end
   end
 end
+

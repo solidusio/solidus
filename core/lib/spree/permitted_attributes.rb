@@ -159,3 +159,4 @@ module Spree
     @@checkout_confirm_attributes = []
   end
 end
+

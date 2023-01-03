@@ -13,3 +13,4 @@ Spree::TaxRateTaxCategory.create!(
   tax_rate: tax_rate,
   tax_category: clothing
 )
+

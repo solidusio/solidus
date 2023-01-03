@@ -54,3 +54,4 @@ describe "Log entries", type: :feature do
     end
   end
 end
+

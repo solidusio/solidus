@@ -14,3 +14,4 @@ RSpec.describe Spree::Api::ApiHelpers, type: :helper do
     end
   end
 end
+

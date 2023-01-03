@@ -55,3 +55,4 @@ RSpec.describe Spree::OrderPromotion do
     end
   end
 end
+

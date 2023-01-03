@@ -13,3 +13,4 @@ RSpec.describe Spree::Taxonomy, type: :model do
     end
   end
 end
+

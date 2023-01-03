@@ -15,3 +15,4 @@ class Spree::Base < ActiveRecord::Base
     where(nil)
   end
 end
+

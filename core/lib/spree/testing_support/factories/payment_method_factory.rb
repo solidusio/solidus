@@ -35,3 +35,4 @@ FactoryBot.define do
     auto_capture { true }
   end
 end
+

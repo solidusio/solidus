@@ -9,3 +9,4 @@ class Spree::ReimbursementType::Exchange < Spree::ReimbursementType
     [exchange]
   end
 end
+

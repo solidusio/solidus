@@ -94,3 +94,4 @@ deprecated and will be removed in future versions of Solidus."
     end
   end
 end
+

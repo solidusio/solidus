@@ -1091,3 +1091,4 @@ RSpec.describe Spree::Variant, type: :model do
     it { is_expected.to eq("EB1 Size: S") }
   end
 end
+

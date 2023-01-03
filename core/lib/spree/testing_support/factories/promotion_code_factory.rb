@@ -14,3 +14,4 @@ FactoryBot.define do
     sequence(:value) { |i| "code#{i}" }
   end
 end
+

@@ -8,3 +8,4 @@ unless Spree::Store.where(code: 'sample-store').exists?
     mail_from_address: "store@example.com"
   )
 end
+

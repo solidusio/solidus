@@ -876,3 +876,4 @@ RSpec.describe Spree::Shipment, type: :model do
     it { is_expected.to include carton }
   end
 end
+

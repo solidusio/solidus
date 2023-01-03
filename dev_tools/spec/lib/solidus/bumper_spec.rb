@@ -36,3 +36,4 @@ RSpec.describe Solidus::Bumper do
     end
   end
 end
+

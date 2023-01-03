@@ -25,3 +25,4 @@ Spree.Models.Shipment = Backbone.Model.extend({
     }, options));
   }
 })
+

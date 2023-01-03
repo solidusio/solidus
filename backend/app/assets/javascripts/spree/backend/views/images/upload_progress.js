@@ -46,3 +46,4 @@ Spree.Views.Images.UploadProgress = Backbone.View.extend({
     this.model.destroy();
   }
 });
+

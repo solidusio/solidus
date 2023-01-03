@@ -60,3 +60,4 @@ RSpec.describe Spree::StockMovement, type: :model do
     end
   end
 end
+

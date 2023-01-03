@@ -61,3 +61,4 @@ describe "Product Variants", type: :feature do
     end
   end
 end
+

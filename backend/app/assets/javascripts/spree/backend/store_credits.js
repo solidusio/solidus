@@ -39,3 +39,4 @@ Spree.ready(function() {
     });
   });
 });
+

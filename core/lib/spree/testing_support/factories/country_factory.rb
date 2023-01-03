@@ -23,3 +23,4 @@ FactoryBot.define do
     states_required { carmen_country.subregions? }
   end
 end
+

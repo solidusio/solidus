@@ -8,3 +8,4 @@ RSpec::Matchers.define :appear_before do |expected|
     has_text? /#{actual}.*#{expected}/
   end
 end
+

@@ -43,3 +43,4 @@ if country_vals.present?
     VALUES (#{country_vals});
   SQL
 end
+

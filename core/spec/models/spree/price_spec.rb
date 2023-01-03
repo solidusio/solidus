@@ -193,3 +193,4 @@ RSpec.describe Spree::Price, type: :model do
     it { is_expected.to eq(BigDecimal(20) / 1.1) }
   end
 end
+

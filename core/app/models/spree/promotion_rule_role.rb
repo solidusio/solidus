@@ -6,3 +6,4 @@ module Spree
     belongs_to :role, class_name: 'Spree::Role', optional: true
   end
 end
+

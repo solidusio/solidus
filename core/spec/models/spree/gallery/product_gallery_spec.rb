@@ -19,3 +19,4 @@ RSpec.describe Spree::Gallery::ProductGallery do
 
   it_behaves_like 'a gallery'
 end
+

@@ -20,3 +20,4 @@ class AddAvailableToUsersAndRemoveDisplayOnFromShippingMethods < ActiveRecord::M
     remove_column(:spree_shipping_methods, :available_to_users)
   end
 end
+

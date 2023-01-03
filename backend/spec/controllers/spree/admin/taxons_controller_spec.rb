@@ -26,3 +26,4 @@ describe Spree::Admin::TaxonsController, type: :controller do
     end
   end
 end
+

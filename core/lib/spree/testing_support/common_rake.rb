@@ -84,3 +84,4 @@ class CommonRakeTasks
 end
 
 CommonRakeTasks.new
+

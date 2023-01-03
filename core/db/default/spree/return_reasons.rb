@@ -9,3 +9,4 @@ Spree::ReturnReason.find_or_create_by(name: 'Different from description')
 Spree::ReturnReason.find_or_create_by(name: 'No longer needed/wanted')
 Spree::ReturnReason.find_or_create_by(name: 'Accidental order')
 Spree::ReturnReason.find_or_create_by(name: 'Unauthorized purchase')
+

@@ -6,3 +6,4 @@ module Spree
     belongs_to :action, class_name: "Spree::PromotionAction", optional: true
   end
 end
+

@@ -9,3 +9,4 @@ RSpec.describe DummyApp do
     ).to eq("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
   end
 end
+

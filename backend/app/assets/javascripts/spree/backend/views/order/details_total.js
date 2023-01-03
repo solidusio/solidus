@@ -10,3 +10,4 @@ Spree.Views.Order.DetailsTotal = Backbone.View.extend({
     this.$('.order-total').text(this.model.get("display_total"))
   }
 })
+

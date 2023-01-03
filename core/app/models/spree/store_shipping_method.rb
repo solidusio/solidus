@@ -6,3 +6,4 @@ module Spree
     belongs_to :shipping_method, inverse_of: :store_shipping_methods, optional: true
   end
 end
+

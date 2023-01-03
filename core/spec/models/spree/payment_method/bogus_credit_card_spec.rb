@@ -8,3 +8,4 @@ module Spree
     let!(:cc) { create(:credit_card, payment_method: bogus, gateway_customer_profile_id: "BGS-RERTERT") }
   end
 end
+

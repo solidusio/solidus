@@ -62,3 +62,4 @@ RSpec.describe Spree::Payment::Cancellation do
     end
   end
 end
+

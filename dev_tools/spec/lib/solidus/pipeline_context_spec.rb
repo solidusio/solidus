@@ -234,3 +234,4 @@ RSpec.describe Solidus::PipelineContext do
     end
   end
 end
+

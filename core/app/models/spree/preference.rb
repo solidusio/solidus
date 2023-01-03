@@ -5,3 +5,4 @@ class Spree::Preference < Spree::Base
 
   validates :key, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
 end
+

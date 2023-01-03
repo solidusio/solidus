@@ -168,3 +168,4 @@ products.each do |product_attrs|
 end
 
 Spree::Config[:currency] = "USD"
+

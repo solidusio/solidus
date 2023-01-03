@@ -35,3 +35,4 @@ RSpec.describe Spree::Preferences::PreferenceDifferentiator do
     expect(changes.keys).not_to include(:foo)
   end
 end
+

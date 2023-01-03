@@ -77,3 +77,4 @@ describe "Ransackable Attributes" do
     end
   end
 end
+

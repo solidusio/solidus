@@ -65,3 +65,4 @@ Spree::ShippingMethod.create!([
   shipping_method.calculator.save!
   shipping_method.save!
 end
+

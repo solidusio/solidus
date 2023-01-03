@@ -167,3 +167,4 @@ describe "Shipments", type: :feature do
     end
   end
 end
+

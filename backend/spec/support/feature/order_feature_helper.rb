@@ -25,3 +25,4 @@ module OrderFeatureHelper
     click_icon :ok
   end
 end
+

@@ -50,3 +50,4 @@ RSpec.describe Spree::Calculator::FlatRate, type: :model do
     end
   end
 end
+

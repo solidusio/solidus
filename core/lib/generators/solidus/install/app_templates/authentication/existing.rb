@@ -8,3 +8,4 @@ rescue NameError
 end
 
 generate "spree:custom_user #{user_class.shellescape}"
+

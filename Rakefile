@@ -118,3 +118,4 @@ namespace :solidus do
     SimpleCov.result.format!
   end
 end
+

@@ -14,3 +14,4 @@ _.extend(window.Spree, {
     Tables: {}
   }
 })
+

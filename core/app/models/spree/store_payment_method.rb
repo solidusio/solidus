@@ -6,3 +6,4 @@ module Spree
     belongs_to :payment_method, inverse_of: :store_payment_methods, optional: true
   end
 end
+

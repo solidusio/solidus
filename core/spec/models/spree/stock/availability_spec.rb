@@ -177,3 +177,4 @@ module Spree::Stock
     end
   end
 end
+

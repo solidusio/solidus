@@ -7,3 +7,4 @@ json.taxons(@taxons) do |taxon|
     json.partial!("spree/api/taxons/taxons", taxon: taxon)
   end
 end
+

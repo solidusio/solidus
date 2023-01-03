@@ -87,3 +87,4 @@ class Spree::Api::UsersController < Spree::Api::BaseController
     end
   end
 end
+

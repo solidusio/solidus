@@ -105,3 +105,4 @@ RSpec.shared_examples_for 'update only' do
     expect(ability).to_not be_able_to(:index, resource)
   end
 end
+

@@ -493,3 +493,4 @@ describe 'Users', type: :feature do
     end
   end
 end
+

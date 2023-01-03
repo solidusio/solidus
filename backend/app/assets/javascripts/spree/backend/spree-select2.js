@@ -7,3 +7,4 @@ Spree.ready(function() {
     minimumResultsForSearch: 8
   });
 })
+

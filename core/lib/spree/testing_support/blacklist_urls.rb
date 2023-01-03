@@ -21,3 +21,4 @@ RSpec.configure do |config|
     setup_url_blacklist(page.driver.browser)
   end
 end
+

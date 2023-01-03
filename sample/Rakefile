@@ -14,3 +14,4 @@ DummyApp::RakeTasks.new(
 )
 
 task test_app: 'db:reset'
+

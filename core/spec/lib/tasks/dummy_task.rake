@@ -10,3 +10,4 @@ class DummyTaskRunner
   def self.run
   end
 end
+

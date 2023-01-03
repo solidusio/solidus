@@ -65,3 +65,4 @@ describe "spree/admin/shared/_navigation_footer_fallback", type: :view, partial_
     end
   end
 end
+

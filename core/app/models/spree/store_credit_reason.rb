@@ -5,3 +5,4 @@ class Spree::StoreCreditReason < Spree::Base
 
   has_many :store_credit_events, inverse_of: :store_credit_reason
 end
+

@@ -39,3 +39,4 @@ open(stream, 'a') do |s|
   s.puts "next_candidate_tag=#{context.next_candidate_tag}"
   s.puts "next_candidate_dev_version=#{context.next_candidate_dev_version}"
 end
+

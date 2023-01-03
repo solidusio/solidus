@@ -117,3 +117,4 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
     end
   end
 end
+

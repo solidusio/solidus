@@ -28,3 +28,4 @@ class AddAvailableToColumnsAndRemoveDisplayOnFromPaymentMethods < ActiveRecord::
     remove_column(:spree_payment_methods, :available_to_admin)
   end
 end
+

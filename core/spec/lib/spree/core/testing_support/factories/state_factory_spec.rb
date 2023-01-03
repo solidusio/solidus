@@ -76,3 +76,4 @@ RSpec.describe 'state factory' do
     end
   end
 end
+

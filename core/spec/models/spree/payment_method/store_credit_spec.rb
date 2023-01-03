@@ -323,3 +323,4 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
     end
   end
 end
+

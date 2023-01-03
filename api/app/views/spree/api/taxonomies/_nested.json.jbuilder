@@ -8,3 +8,4 @@ json.root do
     json.partial!("spree/api/taxons/taxons", taxon: taxon)
   end
 end
+

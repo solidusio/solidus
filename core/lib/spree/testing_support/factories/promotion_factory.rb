@@ -104,3 +104,4 @@ FactoryBot.define do
     factory :promotion_with_first_order_rule, traits: [:with_first_order_rule]
   end
 end
+

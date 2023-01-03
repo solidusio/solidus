@@ -338,3 +338,4 @@ RSpec.describe Spree::FulfilmentChanger do
     end
   end
 end
+

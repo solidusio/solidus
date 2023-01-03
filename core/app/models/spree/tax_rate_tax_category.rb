@@ -6,3 +6,4 @@ module Spree
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', inverse_of: :tax_rate_tax_categories, optional: true
   end
 end
+

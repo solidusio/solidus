@@ -69,3 +69,4 @@ RSpec.describe Spree::Promotion::Rules::FirstRepeatPurchaseSince do
     end
   end
 end
+

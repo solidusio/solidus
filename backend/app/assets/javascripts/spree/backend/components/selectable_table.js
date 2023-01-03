@@ -3,3 +3,4 @@ Spree.ready(function() {
     new Spree.Views.Tables.SelectableTable({el: this})
   })
 });
+

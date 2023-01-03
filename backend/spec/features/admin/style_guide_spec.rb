@@ -12,3 +12,4 @@ describe "Style guide", type: :feature do
     expect(page).to have_text "Colors"
   end
 end
+

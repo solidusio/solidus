@@ -14,3 +14,4 @@ FactoryBot.define do
     shipment
   end
 end
+

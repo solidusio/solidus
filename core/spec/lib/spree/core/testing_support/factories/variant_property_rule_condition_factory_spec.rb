@@ -11,3 +11,4 @@ RSpec.describe 'variant property rule condition factory' do
     it_behaves_like 'a working factory'
   end
 end
+

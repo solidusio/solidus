@@ -166,3 +166,4 @@ RSpec.describe Spree::UserMethods do
     end
   end
 end
+

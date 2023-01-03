@@ -304,3 +304,4 @@ RSpec.describe Spree::CustomerReturn, type: :model do
     end
   end
 end
+

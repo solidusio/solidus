@@ -190,3 +190,4 @@ describe 'Pricing' do
     end
   end
 end
+

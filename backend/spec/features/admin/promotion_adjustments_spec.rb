@@ -307,3 +307,4 @@ describe "Promotion Adjustments", type: :feature, js: true do
     end
   end
 end
+

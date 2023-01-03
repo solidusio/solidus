@@ -124,3 +124,4 @@ describe Spree::Admin::SearchController, type: :controller do
     end
   end
 end
+

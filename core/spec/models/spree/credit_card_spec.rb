@@ -277,3 +277,4 @@ RSpec.describe Spree::CreditCard, type: :model do
     end
   end
 end
+

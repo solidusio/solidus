@@ -54,3 +54,4 @@ FactoryBot.define do
     association(:source, factory: :store_credit)
   end
 end
+

@@ -15,3 +15,4 @@ RSpec.describe Spree::VariantPropertyRuleCondition, type: :model do
     end
   end
 end
+

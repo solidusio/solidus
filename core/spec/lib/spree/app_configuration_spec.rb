@@ -178,3 +178,4 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 end
+

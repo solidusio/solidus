@@ -15,3 +15,4 @@ module BaseFeatureHelper
     end
   end
 end
+

@@ -18,3 +18,4 @@ require 'spree/permission_sets/stock_management'
 require 'spree/permission_sets/super_user'
 require 'spree/permission_sets/user_display'
 require 'spree/permission_sets/user_management'
+

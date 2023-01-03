@@ -14,3 +14,4 @@ Spree.Views.Cart.LineItemTable = Backbone.View.extend({
     this.$el.empty();
   }
 });
+

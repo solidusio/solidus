@@ -57,3 +57,4 @@ class Spree::Carton < Spree::Base
     inventory_units.any?(&:original_return_item)
   end
 end
+

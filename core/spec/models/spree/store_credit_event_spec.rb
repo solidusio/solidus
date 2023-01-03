@@ -326,3 +326,4 @@ RSpec.describe Spree::StoreCreditEvent do
     end
   end
 end
+

@@ -9,3 +9,4 @@ describe Spree::Api::ResourceController, type: :controller do
     expect(Class.new(described_class))
   end
 end
+

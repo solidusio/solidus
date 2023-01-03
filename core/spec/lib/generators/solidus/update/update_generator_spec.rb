@@ -168,3 +168,4 @@ RSpec.describe Solidus::UpdateGenerator do
     end
   end
 end
+

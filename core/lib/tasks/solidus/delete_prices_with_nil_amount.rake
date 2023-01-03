@@ -6,3 +6,4 @@ namespace :solidus do
     Spree::Price.with_discarded.where(amount: nil).delete_all
   end
 end
+

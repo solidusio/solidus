@@ -15,3 +15,4 @@ json.state do
     json.nil!
   end
 end
+

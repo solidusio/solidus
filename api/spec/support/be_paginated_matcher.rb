@@ -7,3 +7,4 @@ RSpec::Matchers.define :be_paginated do
     end
   end
 end
+

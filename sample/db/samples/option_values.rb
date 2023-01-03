@@ -61,3 +61,4 @@ Spree::OptionValue.create!([
     option_type: color
   }
 ])
+

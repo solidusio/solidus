@@ -1328,3 +1328,4 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 end
+

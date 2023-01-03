@@ -291,3 +291,4 @@ class Spree::StoreCredit < Spree::PaymentSource
     end
   end
 end
+

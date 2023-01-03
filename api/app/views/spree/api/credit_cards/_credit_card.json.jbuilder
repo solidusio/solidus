@@ -10,3 +10,4 @@ json.cache! [I18n.locale, credit_card] do
     end
   end
 end
+

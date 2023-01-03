@@ -3,3 +3,4 @@ Spree.ready(function() {
     Spree.Views.Tables.EditableTable.add($(this));
   });
 });
+

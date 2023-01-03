@@ -27,3 +27,4 @@ RSpec.describe Spree::Order do
     end
   end
 end
+

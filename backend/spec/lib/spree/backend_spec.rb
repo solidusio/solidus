@@ -19,3 +19,4 @@ RSpec.describe Spree::Backend do
     end
   end
 end
+

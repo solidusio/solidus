@@ -71,3 +71,4 @@ $.fn.productAutocomplete = function (options) {
 Spree.ready(function () {
   $('.product_picker').productAutocomplete();
 });
+

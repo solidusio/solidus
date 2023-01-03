@@ -26,3 +26,4 @@ if (!Function.prototype.bind) {
     return fBound;
   };
 }
+

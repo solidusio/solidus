@@ -51,3 +51,4 @@ class Spree::UnitCancel < Spree::Base
     BigDecimal(line_item.inventory_units.not_canceled.reject(&:original_return_item).size)
   end
 end
+

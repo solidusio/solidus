@@ -9,3 +9,4 @@ Spree::Deprecation.warn(
 
 Spree::TestingSupport::FactoryBot.check_version
 Spree::TestingSupport::FactoryBot::PATHS.each { |path| require path }
+

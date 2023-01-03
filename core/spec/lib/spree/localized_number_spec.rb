@@ -43,3 +43,4 @@ RSpec.describe Spree::LocalizedNumber do
     end
   end
 end
+

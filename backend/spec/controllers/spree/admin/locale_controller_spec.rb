@@ -43,3 +43,4 @@ RSpec.describe Spree::Admin::LocaleController, type: :controller do
     end
   end
 end
+

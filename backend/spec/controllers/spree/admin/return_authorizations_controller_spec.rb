@@ -289,3 +289,4 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
     end
   end
 end
+

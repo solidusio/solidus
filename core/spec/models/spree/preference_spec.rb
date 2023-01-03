@@ -77,3 +77,4 @@ RSpec.describe Spree::Preference, type: :model do
     end
   end
 end
+

@@ -41,3 +41,4 @@ RSpec.describe 'shipping method factory' do
     it_behaves_like 'a working factory'
   end
 end
+

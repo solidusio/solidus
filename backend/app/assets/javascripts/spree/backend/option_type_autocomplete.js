@@ -40,3 +40,4 @@ Spree.ready(function () {
     });
   }
 });
+

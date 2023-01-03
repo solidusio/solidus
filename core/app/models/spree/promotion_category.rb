@@ -6,3 +6,4 @@ module Spree
     has_many :promotions
   end
 end
+

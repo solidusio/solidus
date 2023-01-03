@@ -66,3 +66,4 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
     end
   end
 end
+

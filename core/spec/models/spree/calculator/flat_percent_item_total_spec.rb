@@ -37,3 +37,4 @@ RSpec.describe Spree::Calculator::FlatPercentItemTotal, type: :model do
     end
   end
 end
+

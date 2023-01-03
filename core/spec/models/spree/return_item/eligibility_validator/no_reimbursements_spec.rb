@@ -84,3 +84,4 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
     end
   end
 end
+

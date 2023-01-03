@@ -42,3 +42,4 @@ module SpreeSample
     end
   end
 end
+

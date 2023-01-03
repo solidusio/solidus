@@ -52,3 +52,4 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
     end
   end
 end
+

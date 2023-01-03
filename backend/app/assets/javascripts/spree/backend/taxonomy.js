@@ -119,3 +119,4 @@ Spree.ready(function() {
     });
   }
 });
+

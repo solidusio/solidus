@@ -34,3 +34,4 @@ RSpec.describe Spree::ReimbursementMailer, type: :mailer do
     end
   end
 end
+

@@ -126,3 +126,4 @@ images.each do |variant, attachments|
     end
   end
 end
+

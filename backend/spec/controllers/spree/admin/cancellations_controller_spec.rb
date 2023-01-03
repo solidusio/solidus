@@ -89,3 +89,4 @@ describe Spree::Admin::CancellationsController do
     end
   end
 end
+

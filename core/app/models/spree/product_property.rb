@@ -12,3 +12,4 @@ module Spree
     self.whitelisted_ransackable_attributes = ['value']
   end
 end
+

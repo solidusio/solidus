@@ -70,3 +70,4 @@ describe("Spree.Views.NumberWithCurrency", function() {
     });
   });
 });
+

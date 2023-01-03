@@ -134,3 +134,4 @@ Spree::Core::Engine.routes.draw do
     get '/taxons/products', to: 'taxons#products', as: :taxon_products
   end
 end
+

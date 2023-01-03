@@ -49,3 +49,4 @@ class Spree::Admin::PromotionActionsController < Spree::Admin::BaseController
     end
   end
 end
+

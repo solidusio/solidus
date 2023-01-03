@@ -68,3 +68,4 @@ Spree.Views.Tables.SelectableTable = Backbone.View.extend({
     })
   }
 });
+

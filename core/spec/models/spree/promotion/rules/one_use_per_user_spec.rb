@@ -52,3 +52,4 @@ RSpec.describe Spree::Promotion::Rules::OneUsePerUser, type: :model do
     end
   end
 end
+

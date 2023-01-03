@@ -49,3 +49,4 @@ FactoryBot.define do
     address1 { 'PO Box 1337' }
   end
 end
+

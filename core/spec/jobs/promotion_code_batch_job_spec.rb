@@ -94,3 +94,4 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
     end
   end
 end
+

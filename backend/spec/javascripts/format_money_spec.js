@@ -46,3 +46,4 @@ describe('Spree.formatMoney', function() {
     });
   });
 });
+

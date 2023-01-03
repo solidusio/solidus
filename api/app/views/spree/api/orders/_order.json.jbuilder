@@ -10,3 +10,4 @@ json.cache! [I18n.locale, order] do
   json.token(order.guest_token)
   json.checkout_steps(order.checkout_steps)
 end
+

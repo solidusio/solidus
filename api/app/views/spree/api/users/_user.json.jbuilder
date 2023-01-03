@@ -15,3 +15,4 @@ json.ship_address do
     json.nil!
   end
 end
+

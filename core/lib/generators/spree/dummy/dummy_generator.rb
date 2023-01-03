@@ -151,3 +151,4 @@ module Spree
     self.inject_extension_requirements = false
   end
 end
+

@@ -92,3 +92,4 @@ RSpec.describe "Variant scopes", type: :model do
     end
   end
 end
+

@@ -295,3 +295,4 @@ RSpec.describe Spree::Address, type: :model do
     it { is_expected.to be_require_phone }
   end
 end
+

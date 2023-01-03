@@ -14,3 +14,4 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
     expect(shipping_method.reload.deleted_at).not_to be_nil
   end
 end
+

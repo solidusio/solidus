@@ -17,3 +17,4 @@ RSpec.describe Spree::PromotionCategory, type: :model do
     end
   end
 end
+

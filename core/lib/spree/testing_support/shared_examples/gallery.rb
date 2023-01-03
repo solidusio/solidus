@@ -16,3 +16,4 @@ RSpec.shared_examples 'a gallery' do
     end
   end
 end
+

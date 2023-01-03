@@ -75,3 +75,4 @@ RSpec.describe Spree::Variant::VatPriceGenerator do
     end
   end
 end
+

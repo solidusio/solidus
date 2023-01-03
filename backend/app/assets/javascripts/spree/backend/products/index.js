@@ -5,3 +5,4 @@ Spree.ready(function() {
     })
   }
 });
+

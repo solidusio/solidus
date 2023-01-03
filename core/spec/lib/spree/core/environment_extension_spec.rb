@@ -33,3 +33,4 @@ RSpec.describe Spree::Core::EnvironmentExtension do
     end
   end
 end
+

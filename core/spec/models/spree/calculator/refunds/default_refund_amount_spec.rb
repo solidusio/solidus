@@ -68,3 +68,4 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
     it { is_expected.to eq 0.0 }
   end
 end
+

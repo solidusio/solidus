@@ -9,3 +9,4 @@ RSpec.describe Spree::AdjustmentReason do
     end
   end
 end
+

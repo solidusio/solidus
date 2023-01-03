@@ -48,3 +48,4 @@ RSpec.describe Spree::TaxCategory, type: :model do
     end
   end
 end
+

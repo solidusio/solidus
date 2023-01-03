@@ -18,3 +18,4 @@
     <%= f.select currency_attr, Spree::Config.available_currencies.map(&:iso_code), {selected: Spree::Config.currency}, {required: required, class: 'number-with-currency-select'} %>
   <% end %>
 </div>
+

@@ -87,3 +87,4 @@ end
 # the class name:
 #
 # Spree::UserLastUrlStorer.rules << 'Spree::UserLastUrlStorer::Rules::AuthenticationRule'
+

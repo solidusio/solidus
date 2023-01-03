@@ -73,3 +73,4 @@ Spree.ready(function() {
     });
   });
 });
+

@@ -257,3 +257,4 @@ RSpec.describe Spree::TaxRate, type: :model do
     end
   end
 end
+

@@ -16,3 +16,4 @@ json.cache! [I18n.locale, line_item] do
     json.partial!("spree/api/adjustments/adjustment", adjustment: adjustment)
   end
 end
+

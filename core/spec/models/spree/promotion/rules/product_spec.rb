@@ -191,3 +191,4 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
     end
   end
 end
+

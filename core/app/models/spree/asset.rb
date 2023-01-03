@@ -6,3 +6,4 @@ module Spree
     acts_as_list scope: [:viewable_id, :viewable_type]
   end
 end
+

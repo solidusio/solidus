@@ -28,3 +28,4 @@ Spree::Api::Config.configure do |config|
   <%= @api_changes %>
 end
 <% end -%>
+

@@ -12,3 +12,4 @@ Spree.Views.Tables.ReturnItems = Backbone.View.extend({
     }
   },
 })
+

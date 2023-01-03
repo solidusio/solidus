@@ -32,3 +32,4 @@ FactoryBot.define do
     preferred_percent { 10 }
   end
 end
+

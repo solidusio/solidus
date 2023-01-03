@@ -126,3 +126,4 @@ Spree.ready(function(){
     });
   }
 });
+

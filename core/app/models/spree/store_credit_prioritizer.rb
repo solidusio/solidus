@@ -15,3 +15,4 @@ module Spree
     attr_reader :credits
   end
 end
+

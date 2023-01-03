@@ -11,3 +11,4 @@ Spree.Collections.States = Backbone.Collection.extend({
     return resp.states;
   }
 })
+

@@ -107,3 +107,4 @@ RSpec.describe Spree::Store, type: :model do
     end
   end
 end
+

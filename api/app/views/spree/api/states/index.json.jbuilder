@@ -5,3 +5,4 @@ json.states(@states) { |state| json.(state, *state_attributes) }
 if @states.respond_to?(:total_pages)
   json.partial! 'spree/api/shared/pagination', pagination: @states
 end
+

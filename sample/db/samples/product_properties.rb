@@ -115,3 +115,4 @@ products.each do |name, properties|
     product.set_property(prop_name, prop_value)
   end
 end
+

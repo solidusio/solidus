@@ -46,3 +46,4 @@ RSpec.describe Spree::Tax::TaxHelpers do
     end
   end
 end
+

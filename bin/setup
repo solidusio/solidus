@@ -27,3 +27,4 @@ cd ROOT do
 
   system('bundle check') || system('bundle install') || system!('bundle update')
 end
+

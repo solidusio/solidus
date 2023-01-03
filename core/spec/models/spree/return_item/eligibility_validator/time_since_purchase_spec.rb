@@ -40,3 +40,4 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type:
     end
   end
 end
+

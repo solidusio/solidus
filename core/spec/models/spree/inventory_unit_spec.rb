@@ -290,3 +290,4 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     end
   end
 end
+

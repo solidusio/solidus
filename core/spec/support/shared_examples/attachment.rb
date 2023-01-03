@@ -41,3 +41,4 @@ RSpec.shared_examples 'an attachment' do
     end
   end
 end
+

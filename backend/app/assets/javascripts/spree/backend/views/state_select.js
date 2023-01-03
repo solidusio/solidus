@@ -69,3 +69,4 @@ Spree.Views.StateSelect.stateCache = _.memoize(function(country_id) {
   });
   return states;
 });
+

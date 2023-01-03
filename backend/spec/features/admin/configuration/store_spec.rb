@@ -60,3 +60,4 @@ describe "Store", type: :feature, js: true do
     end
   end
 end
+

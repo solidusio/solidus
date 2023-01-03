@@ -11,3 +11,4 @@ end
 %w(US CA).each do |symbol|
   north_america.zone_members.find_or_create_by!(zoneable: Spree::Country.find_by!(iso: symbol))
 end
+

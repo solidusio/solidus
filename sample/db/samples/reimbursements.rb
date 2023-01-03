@@ -44,3 +44,4 @@ customer_return.process_return!
 # Accept the customer return and reimburse it
 reimbursement = Spree::Reimbursement.build_from_customer_return(customer_return)
 reimbursement.return_all(created_by: admin_user)
+

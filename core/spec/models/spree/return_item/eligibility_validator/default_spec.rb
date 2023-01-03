@@ -77,3 +77,4 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::Default, type: :model do
     end
   end
 end
+

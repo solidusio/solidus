@@ -121,3 +121,4 @@ module Spree
     private_class_method :version_gte?
   end
 end
+

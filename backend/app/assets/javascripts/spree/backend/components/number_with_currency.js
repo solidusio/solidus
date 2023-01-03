@@ -10,3 +10,4 @@ Spree.initNumberWithCurrency = function() {
 Spree.ready(function() {
   Spree.initNumberWithCurrency()
 })
+

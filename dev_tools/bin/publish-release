@@ -20,3 +20,4 @@ Solidus::ReleaseDrafter::Client.new(
   github_token: github_token,
   repository: repository
 ).publish_draft(tag: candidate_tag)
+

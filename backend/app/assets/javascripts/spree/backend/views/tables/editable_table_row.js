@@ -59,3 +59,4 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend({
     }
   }
 });
+

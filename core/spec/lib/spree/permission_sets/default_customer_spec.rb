@@ -20,3 +20,4 @@ RSpec.describe Spree::PermissionSets::DefaultCustomer do
     end
   end
 end
+

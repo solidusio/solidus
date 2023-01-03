@@ -32,3 +32,4 @@ RSpec.describe I18n do
     expect(inconsistent_interpolations).to be_empty, error_message
   end
 end
+

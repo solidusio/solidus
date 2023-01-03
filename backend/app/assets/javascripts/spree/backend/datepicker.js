@@ -53,3 +53,4 @@ Spree.ready(function(){
     leftSwapDates(null, $left.val(), leftInstance);
   }
 });
+

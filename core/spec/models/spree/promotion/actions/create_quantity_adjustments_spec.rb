@@ -296,3 +296,4 @@ module Spree::Promotion::Actions
     end
   end
 end
+

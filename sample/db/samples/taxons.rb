@@ -134,3 +134,4 @@ taxons.each do |taxon_attrs|
     Spree::Taxon.create!(taxon_attrs)
   end
 end
+

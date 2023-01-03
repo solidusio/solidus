@@ -9,3 +9,4 @@ Spree.ready(function() {
     new Spree.Views.Payment.EditCreditCard({ el: this })
   });
 });
+

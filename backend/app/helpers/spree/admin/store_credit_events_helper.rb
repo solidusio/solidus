@@ -84,3 +84,4 @@ module Spree::Admin::StoreCreditEventsHelper
     }
   end
 end
+

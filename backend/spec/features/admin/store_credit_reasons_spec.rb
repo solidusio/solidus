@@ -34,3 +34,4 @@ describe "Store credit reasons", type: :feature do
     end
   end
 end
+

@@ -21,3 +21,4 @@ Spree.ready(function() {
     });
   });
 });
+

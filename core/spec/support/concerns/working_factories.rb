@@ -13,3 +13,4 @@ RSpec.shared_examples_for 'a working factory' do
     expect(create(factory)).to be_valid
   end
 end
+

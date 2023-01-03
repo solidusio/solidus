@@ -7,3 +7,4 @@ module Spree
     Config = Spree::BackendConfiguration.new
   end
 end
+

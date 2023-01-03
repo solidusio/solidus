@@ -944,3 +944,4 @@ RSpec.describe Spree::StoreCredit do
     end
   end
 end
+

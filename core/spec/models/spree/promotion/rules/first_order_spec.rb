@@ -85,3 +85,4 @@ RSpec.describe Spree::Promotion::Rules::FirstOrder, type: :model do
     end
   end
 end
+

@@ -24,3 +24,4 @@ FactoryBot.define do
     association(:reason, factory: :refund_reason)
   end
 end
+
