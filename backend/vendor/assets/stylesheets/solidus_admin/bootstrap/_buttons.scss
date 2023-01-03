@@ -55,7 +55,6 @@ fieldset:disabled a.btn {
   pointer-events: none;
 }
 
-
 //
 // Alternate buttons
 //
@@ -71,7 +70,6 @@ fieldset:disabled a.btn {
     @include button-outline-variant($value);
   }
 }
-
 
 //
 // Link buttons
@@ -105,7 +103,6 @@ fieldset:disabled a.btn {
   // No need for an active state here
 }
 
-
 //
 // Button Sizes
 //
@@ -117,7 +114,6 @@ fieldset:disabled a.btn {
 .btn-sm {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
 }
-
 
 //
 // Block button

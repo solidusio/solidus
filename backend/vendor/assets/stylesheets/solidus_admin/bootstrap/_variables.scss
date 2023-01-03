@@ -3,7 +3,6 @@
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
-
 //
 // Color system
 //
@@ -107,7 +106,6 @@ $enable-hover-media-query:  false !default; // Deprecated, no longer affects any
 $enable-grid-classes:       true !default;
 $enable-print-styles:       true !default;
 
-
 // Spacing
 //
 // Control the default styling of most Bootstrap elements by modifying these
@@ -158,7 +156,6 @@ $link-hover-decoration:     underline !default;
 
 $paragraph-margin-bottom:   1rem !default;
 
-
 // Grid breakpoints
 //
 // Define the minimum dimensions at which your layout will change,
@@ -175,7 +172,6 @@ $grid-breakpoints: (
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
 @include _assert-starts-at-zero($grid-breakpoints);
 
-
 // Grid containers
 //
 // Define the maximum width of `.container` for different screen sizes.
@@ -188,7 +184,6 @@ $container-max-widths: (
 ) !default;
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");
-
 
 // Grid columns
 //
@@ -219,7 +214,6 @@ $caret-width:                 .3em !default;
 $transition-base:             all .2s ease-in-out !default;
 $transition-fade:             opacity .15s linear !default;
 $transition-collapse:         height .35s ease !default;
-
 
 // Fonts
 //
@@ -292,7 +286,6 @@ $mark-bg:                     #fcf8e3 !default;
 
 $hr-margin-y:                 $spacer !default;
 
-
 // Tables
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
@@ -317,7 +310,6 @@ $table-dark-hover-bg:         rgba($white, .075) !default;
 $table-dark-border-color:     lighten($gray-900, 7.5%) !default;
 $table-dark-color:            $body-bg !default;
 
-
 // Buttons + Forms
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
@@ -339,7 +331,6 @@ $input-btn-padding-x-lg:      1rem !default;
 $input-btn-line-height-lg:    $line-height-lg !default;
 
 $input-btn-border-width:      $border-width !default;
-
 
 // Buttons
 //
@@ -376,7 +367,6 @@ $btn-border-radius-lg:        $border-radius-lg !default;
 $btn-border-radius-sm:        $border-radius-sm !default;
 
 $btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
-
 
 // Forms
 
@@ -517,13 +507,11 @@ $custom-file-text: (
   en: "Browse"
 ) !default;
 
-
 // Form validation
 $form-feedback-margin-top:          $form-text-margin-top !default;
 $form-feedback-font-size:           $small-font-size !default;
 $form-feedback-valid-color:         theme-color("success") !default;
 $form-feedback-invalid-color:       theme-color("danger") !default;
-
 
 // Dropdowns
 //
@@ -552,7 +540,6 @@ $dropdown-item-padding-y:           .25rem !default;
 $dropdown-item-padding-x:           1.5rem !default;
 
 $dropdown-header-color:             $gray-600 !default;
-
 
 // Z-index master list
 //
@@ -646,12 +633,10 @@ $pagination-disabled-color:         $gray-600 !default;
 $pagination-disabled-bg:            $white !default;
 $pagination-disabled-border-color:  $gray-300 !default;
 
-
 // Jumbotron
 
 $jumbotron-padding:                 2rem !default;
 $jumbotron-bg:                      $gray-200 !default;
-
 
 // Cards
 
@@ -673,7 +658,6 @@ $card-columns-count:                3 !default;
 $card-columns-gap:                  1.25rem !default;
 $card-columns-margin:               $card-spacer-y !default;
 
-
 // Tooltips
 
 $tooltip-font-size:           $font-size-sm !default;
@@ -689,7 +673,6 @@ $tooltip-margin:              0 !default;
 $tooltip-arrow-width:         .8rem !default;
 $tooltip-arrow-height:        .4rem !default;
 $tooltip-arrow-color:         $tooltip-bg !default;
-
 
 // Popovers
 
@@ -716,7 +699,6 @@ $popover-arrow-color:               $popover-bg !default;
 
 $popover-arrow-outer-color:         fade-in($popover-border-color, .05) !default;
 
-
 // Badges
 
 $badge-font-size:                   75% !default;
@@ -729,7 +711,6 @@ $badge-pill-padding-x:              .6em !default;
 // Use a higher than normal value to ensure completely rounded edges when
 // customizing padding or font-size on labels.
 $badge-pill-border-radius:          10rem !default;
-
 
 // Modals
 
@@ -761,7 +742,6 @@ $modal-sm:                          300px !default;
 
 $modal-transition:                  transform .3s ease-out !default;
 
-
 // Alerts
 //
 // Define alert colors, border radius, and padding.
@@ -776,7 +756,6 @@ $alert-border-width:                $border-width !default;
 $alert-bg-level:                    -10 !default;
 $alert-border-level:                -9 !default;
 $alert-color-level:                 6 !default;
-
 
 // Progress bars
 
@@ -814,7 +793,6 @@ $list-group-action-hover-color:     $list-group-action-color !default;
 $list-group-action-active-color:    $body-color !default;
 $list-group-action-active-bg:       $gray-200 !default;
 
-
 // Image thumbnails
 
 $thumbnail-padding:                 .25rem !default;
@@ -824,12 +802,10 @@ $thumbnail-border-color:            $gray-300 !default;
 $thumbnail-border-radius:           $border-radius !default;
 $thumbnail-box-shadow:              0 1px 2px rgba($black, .075) !default;
 
-
 // Figures
 
 $figure-caption-font-size:          90% !default;
 $figure-caption-color:              $gray-600 !default;
-
 
 // Breadcrumbs
 
@@ -843,7 +819,6 @@ $breadcrumb-bg:                     $gray-200 !default;
 $breadcrumb-divider-color:          $gray-600 !default;
 $breadcrumb-active-color:           $gray-600 !default;
 $breadcrumb-divider:                "/" !default;
-
 
 // Carousel
 
@@ -866,7 +841,6 @@ $carousel-control-next-icon-bg:     str-replace(url("data:image/svg+xml;charset=
 
 $carousel-transition:               transform .6s ease !default;
 
-
 // Close
 
 $close-font-size:                   $font-size-base * 1.5 !default;
@@ -887,7 +861,6 @@ $kbd-bg:                            $gray-900 !default;
 
 $pre-color:                         $gray-900 !default;
 $pre-scrollable-max-height:         340px !default;
-
 
 // Printing
 $print-page-size:                   a3 !default;

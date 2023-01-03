@@ -1897,7 +1897,6 @@ should respond to `call`.
 - Add a reference to the Writing Extensions doc [#2851](https://github.com/solidusio/solidus/pull/2851) ([jacobherrington](https://github.com/jacobherrington))
 - Add article that documents a Spree::Order journey [#2803](https://github.com/solidusio/solidus/pull/2803) ([benjaminwil](https://github.com/benjaminwil))
 
-
 ## Solidus 2.7.0 (2018-09-14)
 
 ### Major Changes
@@ -2131,7 +2130,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 [solidus_stock_transfers](https://github.com/solidusio-contrib/solidus_stock_transfers) provides an admin interface to transfer stock between two locations. This used to be included in core but has been extracted to a gem.
 - Extract stock transfers to the [solidus_stock_transfers](https://github.com/solidusio-contrib/solidus_stock_transfers) gem. [#2379](https://github.com/solidusio/solidus/pull/2379) ([jhawthorn](https://github.com/jhawthorn))
 
-
 ## Misc
 
 - Generate correct number of codes in BatchBuilder [#2578](https://github.com/solidusio/solidus/pull/2578) ([jhawthorn](https://github.com/jhawthorn))
@@ -2349,7 +2347,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
   either update their customizations or include the [solidus_legacy_stock_system](https://github.com/solidusio-contrib/solidus_legacy_stock_system)
   extension, which provides the old classes.
 
-
 ### Core
 
 - Replace Stock::Coordinator with Stock::SimpleCoordinator [#2199](https://github.com/solidusio/solidus/pull/2199) ([jhawthorn](https://github.com/jhawthorn))
@@ -2472,8 +2469,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Deprecate support for alternate Kaminari page_method_name [#2115](https://github.com/solidusio/solidus/pull/2115) ([cbrunsdon](https://github.com/cbrunsdon))
 - Deprecate update_params_payment_source method [#2227](https://github.com/solidusio/solidus/pull/2227) ([ccarruitero](https://github.com/ccarruitero))
 
-
-
 ## Solidus 2.3.0 (2017-07-31)
 
 - Rails 5.1 [\#1895](https://github.com/solidusio/solidus/pull/1895) ([jhawthorn](https://github.com/jhawthorn))
@@ -2538,7 +2533,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Fix typo on the new promotions form [\#2035](https://github.com/solidusio/solidus/pull/2035) ([swcraig](https://github.com/swcraig))
 - Use translated model name in admin payment methods form [\#1975](https://github/com/solidusio/solidus/pull/1975) ([tvdeyen](https://github.com/tvdeyen))
 
-
 ### Deprecations
 - Renamed `Spree::Gateway` payment method into `Spree::PaymentMethod::CreditCard` [\#2001](https://github.com/solidusio/solidus/pull/2001) ([tvdeyen](https://github.com/tvdeyen))
 - Deprecate `#simple_current_order` [\#1915](https://github.com/solidusio/solidus/pull/1915) ([ericsaupe](https://github.com/ericsaupe))
@@ -2551,7 +2545,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Rename `PaymentMethod#method_type` into `partial_name` [\#1978](https://github.com/solidusio/solidus/pull/1978) ([tvdeyen](https://github.com/tvdeyen))
 - Remove ! from assign\_default\_user\_addresses!, deprecating the old method [\#2019](https://github.com/solidusio/solidus/pull/2019) ([jhawthorn](https://github.com/jhawthorn))
 - Emit Spree.url JS deprecation warning in all environments [\#2017](https://github.com/solidusio/solidus/pull/2017) ([jhawthorn](https://github.com/jhawthorn))
-
 
 ## Solidus 2.2.1 (2017-05-09)
 
@@ -2580,7 +2573,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
   The admin UI was once again a focus in this release. We've made many incremental changes we think all users will appreciate. This includes an upgrade to Bootstrap 4.0.0.alpha6, changes to table styles, and a better select style.
 
   See the "Admin UI" section below for a full list of changes.
-
 
 ### Core
 - `Spree::Order#available_payment_methods` returns an `ActiveRecord::Relation` instead of an array [\#1802](https://github.com/solidusio/solidus/pull/1802) ([luukveenis](https://github.com/luukveenis))
@@ -2664,7 +2656,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Remove `webkit-tap-highlight-color` [\#1792](https://github.com/solidusio/solidus/pull/1792) ([brchristian](https://github.com/brchristian))
 - Promotion and Shipping calculators can be created or changed without reloading the page. [#1618](https://github.com/solidusio/solidus/pull/1618) ([jhawthorn](https://github.com/jhawthorn))
 
-
 ### Removals
 
 - Extract expedited exchanges to an extension [\#1691](https://github.com/solidusio/solidus/pull/1691) ([jhawthorn](https://github.com/jhawthorn))
@@ -2673,7 +2664,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Remove unused variant\_management.js.coffee [\#1768](https://github.com/solidusio/solidus/pull/1768) ([jhawthorn](https://github.com/jhawthorn))
 - Remove unused payment Javascript [\#1735](https://github.com/solidusio/solidus/pull/1735) ([jhawthorn](https://github.com/jhawthorn))
 - Moved `spree/admin/shared/_translations` partial to `spree/admin/shared/_js_locale_data`.
-
 
 ### Deprecations
 
@@ -2686,7 +2676,6 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Deprecate Address\#empty? [\#1686](https://github.com/solidusio/solidus/pull/1686) ([jhawthorn](https://github.com/jhawthorn))
 - Deprecate `fill_in_quantity` capybara helper [#1710](https://github.com/solidusio/solidus/pull/1710) ([jhawthorn](https://github.com/jhawthorn))
 - Deprecate `wait_for_ajax` capybara helper [#1668](https://github.com/solidusio/solidus/pull/1668) ([cbrunsdon](https://github.com/cbrunsdon))
-
 
 ## Solidus 2.1.0 (2017-01-17)
 

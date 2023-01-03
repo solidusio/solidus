@@ -139,7 +139,6 @@ RSpec.describe Spree::Refund, type: :model do
             .and_return(gateway_response)
         end
 
-
         context 'without performing after create' do
           it 'raises a GatewayError' do
             expect { subject }.to raise_error(Spree::Core::GatewayError, failure_message)

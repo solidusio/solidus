@@ -13,17 +13,14 @@ pages:
           data: >-
             # Solidus API
 
-
             Welcome! This is the documentation for the
             [Solidus](https://solidus.io) REST API.
-
 
             This documentation refers to a stock installation of Solidus.
             However, every store may customize their API in any number of ways,
             so make sure to ensure the store you are working with conforms to
             this documentation or refer to the store's own documentation for
             interacting with the API.
-
 
             Endpoints are grouped by the logical resource they interact with.
             Note that some of the endpoints are duplicated, since the same

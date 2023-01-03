@@ -23,7 +23,6 @@
 - **Join our Slack**: [http://slack.solidus.io/](http://slack.solidus.io/)
 - **Solidus Security**: [mailing list](https://groups.google.com/forum/#!forum/solidus-security)
 
-
 ## Table of Contents
 - [Supporting Solidus](#supporting-solidus)
 - [Summary](#summary)

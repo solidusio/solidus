@@ -5,7 +5,6 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Image), admin_product_images_path(@product)) %>
 <% admin_breadcrumb(@image.filename) %>
 
-
 <% content_for :page_actions do %>
   <li><%= link_to t('spree.back_to_images_list'), admin_product_images_url(@product), class: 'btn btn-primary' %></li>
 <% end %>

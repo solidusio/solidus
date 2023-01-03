@@ -2,7 +2,6 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Property), spree.admin_properties_path) %>
 <% admin_breadcrumb(@property.name) %>
 
-
 <%= render partial: 'spree/shared/error_messages', locals: { target: @property } %>
 
 <%= form_for [:admin, @property] do |f| %>

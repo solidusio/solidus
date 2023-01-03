@@ -7,7 +7,6 @@ Spree::TestingSupport::FactoryBot.when_cherry_picked do
   require 'spree/testing_support/factories/country_factory'
 end
 
-
 FactoryBot.define do
   factory :state, class: 'Spree::State' do
     transient do

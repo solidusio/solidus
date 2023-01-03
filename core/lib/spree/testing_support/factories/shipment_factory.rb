@@ -9,7 +9,6 @@ Spree::TestingSupport::FactoryBot.when_cherry_picked do
   require 'spree/testing_support/factories/shipping_method_factory'
 end
 
-
 FactoryBot.define do
   factory :shipment, class: 'Spree::Shipment' do
     tracking { 'U10000' }

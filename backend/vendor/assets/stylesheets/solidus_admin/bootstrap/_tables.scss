@@ -29,7 +29,6 @@
   }
 }
 
-
 //
 // Condensed table w/ half padding
 //
@@ -40,7 +39,6 @@
     padding: $table-cell-padding-sm;
   }
 }
-
 
 // Bordered version
 //
@@ -62,7 +60,6 @@
   }
 }
 
-
 // Zebra-striping
 //
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
@@ -72,7 +69,6 @@
     background-color: $table-accent-bg;
   }
 }
-
 
 // Hover effect
 //
@@ -86,7 +82,6 @@
   }
 }
 
-
 // Table backgrounds
 //
 // Exact selectors below required to override `.table-striped` and prevent
@@ -97,7 +92,6 @@
 }
 
 @include table-row-variant(active, $table-active-bg);
-
 
 // Dark styles
 //
@@ -150,7 +144,6 @@
     }
   }
 }
-
 
 // Responsive tables
 //

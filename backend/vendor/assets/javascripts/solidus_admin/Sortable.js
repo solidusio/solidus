@@ -140,7 +140,6 @@
           vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
         }
 
-
         if (!(vx || vy)) {
           vx = (winWidth - x <= sens) - (x <= sens);
           vy = (winHeight - y <= sens) - (y <= sens);
@@ -148,7 +147,6 @@
           /* jshint expr:true */
           (vx || vy) && (el = win);
         }
-
 
         if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
           autoScroll.el = el;
@@ -244,7 +242,6 @@
     this.el = el; // root element
     this.options = options = _extend({}, options);
 
-
     // Export instance
     el[expando] = this;
 
@@ -281,7 +278,6 @@
       supportPointer: Sortable.supportPointer !== false
     };
 
-
     // Set default options
     for (var name in defaults) {
       !(name in options) && (options[name] = defaults[name]);
@@ -315,7 +311,6 @@
     options.store && this.sort(options.store.get(this));
   }
 
-
   Sortable.prototype = /** @lends Sortable.prototype */ {
     constructor: Sortable,
 
@@ -332,7 +327,6 @@
         startIndex;
 
       _saveInputCheckedState(el);
-
 
       // Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
       if (dragEl) {
@@ -462,7 +456,6 @@
           dragStartFn();
         }
 
-
       }
     },
 
@@ -577,7 +570,6 @@
         }
       }
     },
-
 
     _onTouchMove: function (/**TouchEvent*/evt) {
       if (tapEvt) {
@@ -772,7 +764,6 @@
 
           return;
         }
-
 
         if ((el.children.length === 0) || (el.children[0] === ghostEl) ||
           (el === evt.target) && (_ghostIsLast(el, evt))
@@ -1062,7 +1053,6 @@
       }
     },
 
-
     /**
      * Serializes the item into an array of string.
      * @returns {String[]}
@@ -1084,7 +1074,6 @@
 
       return order;
     },
-
 
     /**
      * Sorts the elements according to the array.
@@ -1109,7 +1098,6 @@
       });
     },
 
-
     /**
      * Save the current sorting
      */
@@ -1117,7 +1105,6 @@
       var store = this.options.store;
       store && store.set(this);
     },
-
 
     /**
      * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
@@ -1128,7 +1115,6 @@
     closest: function (el, selector) {
       return _closest(el, selector || this.options.draggable, this.el);
     },
-
 
     /**
      * Set/get option
@@ -1149,7 +1135,6 @@
         }
       }
     },
-
 
     /**
      * Destroy
@@ -1181,7 +1166,6 @@
     }
   };
 
-
   function _cloneHide(sortable, state) {
     if (sortable.lastPullMode !== 'clone') {
       state = true;
@@ -1205,7 +1189,6 @@
     }
   }
 
-
   function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx) {
     if (el) {
       ctx = ctx || document;
@@ -1221,13 +1204,11 @@
     return null;
   }
 
-
   function _getParentOrHost(el) {
     var parent = el.host;
 
     return (parent && parent.nodeType) ? parent : el.parentNode;
   }
-
 
   function _globalDragOver(/**Event*/evt) {
     if (evt.dataTransfer) {
@@ -1236,16 +1217,13 @@
     evt.preventDefault();
   }
 
-
   function _on(el, event, fn) {
     el.addEventListener(event, fn, captureMode);
   }
 
-
   function _off(el, event, fn) {
     el.removeEventListener(event, fn, captureMode);
   }
-
 
   function _toggleClass(el, name, state) {
     if (el) {
@@ -1258,7 +1236,6 @@
       }
     }
   }
-
 
   function _css(el, prop, val) {
     var style = el && el.style;
@@ -1284,7 +1261,6 @@
     }
   }
 
-
   function _find(ctx, tagName, iterator) {
     if (ctx) {
       var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
@@ -1300,8 +1276,6 @@
 
     return [];
   }
-
-
 
   function _dispatchEvent(sortable, rootEl, name, targetEl, toEl, fromEl, startIndex, newIndex) {
     sortable = (sortable || rootEl[expando]);
@@ -1326,7 +1300,6 @@
       options[onName].call(sortable, evt);
     }
   }
-
 
   function _onMove(fromEl, toEl, dragEl, dragRect, targetEl, targetRect, originalEvt, willInsertAfter) {
     var evt,
@@ -1354,16 +1327,13 @@
     return retVal;
   }
 
-
   function _disableDraggable(el) {
     el.draggable = false;
   }
 
-
   function _unsilent() {
     _silent = false;
   }
-
 
   /** @returns {HTMLElement|false} */
   function _ghostIsLast(el, evt) {
@@ -1375,7 +1345,6 @@
     return (evt.clientY - (rect.top + rect.height) > 5) ||
       (evt.clientX - (rect.left + rect.width) > 5);
   }
-
 
   /**
    * Generate id
@@ -1523,7 +1492,6 @@
     cancelNextTick: _cancelNextTick
   };
 
-
   /**
    * Create sortable instance
    * @param {HTMLElement}  el
@@ -1532,7 +1500,6 @@
   Sortable.create = function (el, options) {
     return new Sortable(el, options);
   };
-
 
   // Export
   Sortable.version = '1.7.0';

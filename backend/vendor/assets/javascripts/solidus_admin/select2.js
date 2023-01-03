@@ -104,7 +104,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
-
     function reinsertElement(element) {
         var placeholder = $(document.createTextNode(''));
 
@@ -192,7 +191,6 @@ the specific language governing permissions and limitations under the Apache Lic
             }
         });
     }
-
 
     /**
      * filters mouse events so an event is fired only if the mouse moved.
@@ -350,7 +348,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
         dest.attr("class", replacements.join(" "));
     }
-
 
     function markMatch(text, term, markup, escapeMarkup) {
         var match=stripDiacritics(text.toUpperCase()).indexOf(stripDiacritics(term.toUpperCase())),
@@ -1126,7 +1123,6 @@ the specific language governing permissions and limitations under the Apache Lic
                                 node.append(label);
                             }
 
-
                             if (compound) {
                                 innerContainer=$("<ul></ul>");
                                 innerContainer.addClass("select2-result-sub");
@@ -1605,7 +1601,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             });
 
-
         },
 
         // abstract
@@ -1831,7 +1826,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     // ignore a response if the select2 has been closed before it was received
                     if (!self.opened()) return;
-
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
                     self.postprocessResults(data, false, false);
@@ -2374,7 +2368,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     return;
                 }
             }));
-
 
             installKeyUpChangeEvent(this.focusser);
             this.focusser.on("keyup-change input", this.bind(function(e) {
@@ -3447,7 +3440,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             return {added: current, removed: old};
         },
-
 
         // multi
         val: function (val, triggerChange) {

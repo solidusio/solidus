@@ -3,7 +3,6 @@
 <% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
 <% admin_breadcrumb(@store_credit.display_amount.to_html) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>

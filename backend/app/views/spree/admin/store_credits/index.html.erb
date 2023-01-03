@@ -2,7 +2,6 @@
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(Spree::StoreCredit.model_name.human) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>

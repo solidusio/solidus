@@ -10,7 +10,6 @@ load the sample data:
 bundle exec rake spree_sample:load
 ```
 
-
 ## Testing
 
 Run the tests:

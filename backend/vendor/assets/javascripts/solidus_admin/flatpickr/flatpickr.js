@@ -21,8 +21,6 @@ and limitations under the License.
 ***************************************************************************** */
 /* global Reflect, Promise */
 
-
-
 var __assign = Object.assign || function __assign(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];

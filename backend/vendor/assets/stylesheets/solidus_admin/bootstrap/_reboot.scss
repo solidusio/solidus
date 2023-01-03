@@ -7,7 +7,6 @@
 //
 // Normalize is licensed MIT. https://github.com/necolas/normalize.css
 
-
 // Document
 //
 // 1. Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
@@ -74,7 +73,6 @@ body {
   outline: 0 !important;
 }
 
-
 // Content grouping
 //
 // 1. Add the correct box sizing in Firefox.
@@ -85,7 +83,6 @@ hr {
   height: 0; // 1
   overflow: visible; // 2
 }
-
 
 //
 // Typography
@@ -190,7 +187,6 @@ sup {
 sub { bottom: -.25em; }
 sup { top: -.5em; }
 
-
 //
 // Links
 //
@@ -227,7 +223,6 @@ a:not([href]):not([tabindex]) {
   }
 }
 
-
 //
 // Code
 //
@@ -254,7 +249,6 @@ pre {
   -ms-overflow-style: scrollbar;
 }
 
-
 //
 // Figures
 //
@@ -263,7 +257,6 @@ figure {
   // Apply a consistent margin strategy (matches our type styles).
   margin: 0 0 1rem;
 }
-
 
 //
 // Images and content
@@ -277,7 +270,6 @@ img {
 svg:not(:root) {
   overflow: hidden; // Hide the overflow in IE
 }
-
 
 //
 // Tables
@@ -300,7 +292,6 @@ th {
   // closest parent with a set `text-align`.
   text-align: inherit;
 }
-
 
 //
 // Forms
@@ -373,7 +364,6 @@ input[type="checkbox"] {
   box-sizing: border-box; // 1. Add the correct box sizing in IE 10-
   padding: 0; // 2. Remove the padding in IE 10-
 }
-
 
 input[type="date"],
 input[type="time"],

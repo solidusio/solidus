@@ -7,7 +7,6 @@ Spree::TestingSupport::FactoryBot.when_cherry_picked do
   require 'spree/testing_support/sequences'
 end
 
-
 FactoryBot.define do
   factory :tax_category, class: 'Spree::TaxCategory' do
     name { "TaxCategory - #{rand(999_999)}" }
