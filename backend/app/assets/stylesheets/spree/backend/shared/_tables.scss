@@ -1,3 +1,5 @@
+@import "spree/backend/components/actions";
+
 table {
   // Extend all tables with Bootstrap's default table style
   @extend .table;
@@ -114,8 +116,8 @@ table {
   tbody {
     tr {
       &.deleted td {
-        background-color: lighten(theme-color("danger"), 6);
-        border-color: lighten(theme-color("danger"), 15);
+        background-color: $color-action-remove-bg;
+        text-decoration: line-through;
       }
     }
 
