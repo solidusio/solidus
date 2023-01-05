@@ -8,7 +8,7 @@ module Spree
       def index
         params[:q] ||= {}
 
-        @search = @product.prices.accessible_by(current_ability, :index).ransack(params[:q])
+        @search = @product.prices.kept.accessible_by(current_ability, :index).ransack(params[:q])
         @master_prices = @search.result
           .currently_valid
           .for_master
