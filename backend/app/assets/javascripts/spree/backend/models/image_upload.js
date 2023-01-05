@@ -24,7 +24,6 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
     'image/gif': true
   },
 
-
   previewFile: function () {
     var file = this.get('file'),
       that = this;

@@ -68,7 +68,6 @@ module Solidus
     def full_changelog(current_diff_source_tag, candidate_tag)
       <<~TXT
 
-
         **Full Changelog**: https://github.com/#{@repository}/compare/#{current_diff_source_tag}...#{candidate_tag}
       TXT
     end

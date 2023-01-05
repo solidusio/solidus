@@ -76,7 +76,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           - New entry #10 (@alice)
         TXT
@@ -90,9 +89,7 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
         ).to eq <<~TXT.chomp
           ## Solidus Core
 
-
           ## Solidus Backend
-
 
           ## Solidus API
 
@@ -107,9 +104,7 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
         ).to eq <<~TXT.chomp
           ## Solidus Core
 
-
           ## Solidus Backend
-
 
           ## Solidus API
 
@@ -128,7 +123,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - New entry #10 (@alice)
 
           ## Solidus Backend
-
 
           ## Solidus API
           - New entry #10 (@alice)
@@ -149,7 +143,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus API
 
-
           That's been everything!
         TXT
       end
@@ -162,7 +155,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - Old entry 1 #9 (@bob)
 
           ## Solidus Backend
-
 
           ## Solidus API
           - Old entry 2 #8 (@alice)
@@ -192,7 +184,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           - Old entry 2 #8 (@alice)
         TXT
@@ -210,7 +201,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - Old entry 1 #9 (@bob)
 
           ## Solidus Backend
-
 
           ## Solidus API
           - Old entry 2 #8 (@alice)
@@ -233,7 +223,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - Old entry 2 #10 (@alice)
           \t
           ## Solidus Backend
-
 
           ## Solidus API
 
@@ -265,7 +254,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           - Old entry 2 #8 (@alice)
         TXT
@@ -280,7 +268,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - New entry #10 (@alice)
 
           ## Solidus Backend
-
 
           ## Solidus API
           - Old entry 2 #8 (@alice)
@@ -295,7 +282,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           - Old entry 2 #8 (@alice)
         TXT
@@ -311,7 +297,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - New entry #10 (@alice)
 
           ## Solidus Backend
-
 
           ## Solidus API
           - Old entry 2 #8 (@alice)
@@ -343,7 +328,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           - New entry #10 (@alice)
 
           ## Solidus Backend
-
 
           ## Solidus API
           - Old entry 2 #8 (@alice)

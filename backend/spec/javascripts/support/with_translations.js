@@ -8,4 +8,3 @@ support.withTranslations = function(translations) {
     Spree.translations = this._oldTranslations;
   });
 };
-

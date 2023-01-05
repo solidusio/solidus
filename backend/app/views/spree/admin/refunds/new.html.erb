@@ -4,7 +4,6 @@
 <% admin_breadcrumb(link_to "#{Spree::Payment.model_name.human} #{@refund.payment.id}", admin_order_payment_path(@refund.payment.order, @refund.payment)) %>
 <% admin_breadcrumb(t('spree.new_refund')) %>
 
-
 <%= form_for [:admin, @refund.payment.order, @refund.payment, @refund] do |f| %>
   <fieldset class="no-border-top">
     <div data-hook="admin_refund_form_fields" class="row">

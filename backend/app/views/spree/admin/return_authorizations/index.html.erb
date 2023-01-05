@@ -12,7 +12,6 @@
 
 <% admin_breadcrumb(plural_resource_name(Spree::ReturnAuthorization)) %>
 
-
 <% if @order.shipments.any?(&:shipped?) || @order.return_authorizations.any? %>
   <table class="index">
     <thead data-hook="rma_header">
