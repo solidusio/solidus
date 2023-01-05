@@ -12,7 +12,7 @@ module Solidus
     class Client
       def initialize(github_token:, repository:)
         @repository = repository
-        @client = Octokit::Client.new(access_token: github_token).tap { |c| c.auto_paginate }
+        @client = Octokit::Client.new(access_token: github_token).tap { |c| c.auto_paginate = true }
       end
 
       def fetch_draft(tag:)
