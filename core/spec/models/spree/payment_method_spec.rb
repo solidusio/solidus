@@ -116,13 +116,15 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe '#auto_capture?' do
-    class TestGateway < Spree::PaymentMethod::CreditCard
-      def gateway_class
-        Provider
+    let(:gateway) do
+      gateway_class = Class.new(Spree::PaymentMethod::CreditCard) do
+        def gateway_class
+          Provider
+        end
       end
-    end
 
-    let(:gateway) { TestGateway.new }
+      gateway_class.new
+    end
 
     subject { gateway.auto_capture? }
 
@@ -174,28 +176,28 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe 'ActiveMerchant methods' do
-    class PaymentGateway
-      def initialize(options)
+    let(:payment_method) do
+      payment_method_class = Class.new(Spree::PaymentMethod) do
+        def gateway_class
+          Class.new do
+            def initialize(options)
+            end
+
+            def authorize; 'authorize'; end
+
+            def purchase; 'purchase'; end
+
+            def capture; 'capture'; end
+
+            def void; 'void'; end
+
+            def credit; 'credit'; end
+          end
+        end
       end
 
-      def authorize; 'authorize'; end
-
-      def purchase; 'purchase'; end
-
-      def capture; 'capture'; end
-
-      def void; 'void'; end
-
-      def credit; 'credit'; end
+      payment_method_class.new
     end
-
-    class TestPaymentMethod < Spree::PaymentMethod
-      def gateway_class
-        PaymentGateway
-      end
-    end
-
-    let(:payment_method) { TestPaymentMethod.new }
 
     it "passes through authorize" do
       expect(payment_method.authorize).to eq 'authorize'
