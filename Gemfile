@@ -41,7 +41,7 @@ group :backend do
   # - https://github.com/ruby/net-protocol/issues/10
   # - https://stackoverflow.com/a/72474475
   v = ->(string) { Gem::Version.new(string) }
-  if Gem::Requirement.new(['>= 2.6', '< 3']) === Gem::Version.new(RUBY_VERSION)
+  if Gem::Requirement.new(['>= 2.7', '< 3']) === Gem::Version.new(RUBY_VERSION)
     gem 'net-http', require: false
   end
 
