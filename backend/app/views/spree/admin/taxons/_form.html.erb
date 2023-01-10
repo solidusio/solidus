@@ -12,7 +12,7 @@
         <% if @taxon.parent %>
           <div class="input-group-prepend">
             <span class="input-group-text">
-              <%= @taxon.permalink.split('/')[0...-1].join('/') + '/' %>
+              <%= @taxon.permalink.split('/')[...-1].join('/') + '/' %>
             </span>
           </div>
         <% end %>

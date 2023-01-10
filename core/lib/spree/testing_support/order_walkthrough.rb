@@ -34,7 +34,7 @@ module Spree
                               states
                             else
                               end_state_position = states.index(state.to_sym)
-                              states[0..end_state_position]
+                              states[..end_state_position]
                             end
 
         states_to_process.each do |state_to_process|
