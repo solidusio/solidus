@@ -86,7 +86,7 @@ end
 
 if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.7")
   Spree::Deprecation.warn <<~HEREDOC
-    Ruby 2.5 & Ruby 2.6 (both EOL) are deprecated and will not be supported anymore from the next Solidus version.
+    Ruby 2.6, which reached EOL, is deprecated and will not be supported anymore from the next Solidus version.
     Please, upgrade to a more recent Ruby version.
     Read more on the release notes for different Ruby versions here:
     https://www.ruby-lang.org/en/downloads/releases/
