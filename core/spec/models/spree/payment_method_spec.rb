@@ -116,13 +116,15 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe '#auto_capture?' do
-    class TestGateway < Spree::PaymentMethod::CreditCard
-      def gateway_class
-        Provider
+    let(:gateway) do
+      gateway_class = Class.new(Spree::PaymentMethod::CreditCard) do
+        def gateway_class
+          Provider
+        end
       end
-    end
 
-    let(:gateway) { TestGateway.new }
+      gateway_class.new
+    end
 
     subject { gateway.auto_capture? }
 
@@ -174,28 +176,28 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe 'ActiveMerchant methods' do
-    class PaymentGateway
-      def initialize(options)
+    let(:payment_method) do
+      payment_method_class = Class.new(Spree::PaymentMethod) do
+        def gateway_class
+          Class.new do
+            def initialize(options)
+            end
+
+            def authorize; 'authorize'; end
+
+            def purchase; 'purchase'; end
+
+            def capture; 'capture'; end
+
+            def void; 'void'; end
+
+            def credit; 'credit'; end
+          end
+        end
       end
 
-      def authorize; 'authorize'; end
-
-      def purchase; 'purchase'; end
-
-      def capture; 'capture'; end
-
-      def void; 'void'; end
-
-      def credit; 'credit'; end
+      payment_method_class.new
     end
-
-    class TestPaymentMethod < Spree::PaymentMethod
-      def gateway_class
-        PaymentGateway
-      end
-    end
-
-    let(:payment_method) { TestPaymentMethod.new }
 
     it "passes through authorize" do
       expect(payment_method.authorize).to eq 'authorize'
@@ -215,6 +217,114 @@ RSpec.describe Spree::PaymentMethod, type: :model do
 
     it "passes through credit" do
       expect(payment_method.credit).to eq 'credit'
+    end
+  end
+
+  describe "#try_void" do
+    let(:payment) { create(:payment, payment_method: payment_method) }
+
+    context "when the payment method supports payment profiles" do
+      let(:payment_method) do
+        payment_method_class = Class.new(Spree::PaymentMethod) do
+          # We are intentionally not defining try_void on this payment method.
+          # In this way the following specs will use the default implementation
+          # on Spree::PaymentMethod.
+
+          def self.name
+            "PaymentMethodWithPaymentProfiles"
+          end
+
+          def payment_profiles_supported?
+            true
+          end
+
+          def create_profile(payment)
+            # Noop
+          end
+
+          def gateway_class
+            Class.new do
+              def initialize(_options)
+              end
+
+              def void(_response_code, _source, gateway_options = {})
+                payment = gateway_options[:originator]
+
+                if payment.completed?
+                  ActiveMerchant::Billing::Response.new(false, "Can't void a completed payment", {}, test: true)
+                else
+                  ActiveMerchant::Billing::Response.new(true, "Payment correctly voided", {}, test: true)
+                end
+              end
+            end
+          end
+        end
+
+        payment_method_class.new
+      end
+
+      context "when the payment is already captured" do
+        it "returns false" do
+          allow(payment).to receive(:completed?).and_return true
+          expect(payment.payment_method.try_void(payment)).to be_falsey
+        end
+      end
+
+      context "when the payment is not yet captured" do
+        it "returns the success response" do
+          expect(payment.payment_method.try_void(payment)).to be_success
+        end
+      end
+    end
+
+    context "when the payment method doesn't support payment profiles" do
+      let(:payment_method) do
+        payment_method_class = Class.new(Spree::PaymentMethod) do
+          # We are intentionally not defining try_void on this payment method.
+          # In this way the following specs will use the default implementation
+          # on Spree::PaymentMethod.
+
+          def self.name
+            "PaymentMethodWithoutPaymentProfiles"
+          end
+
+          def payment_profiles_supported?
+            false
+          end
+
+          def gateway_class
+            Class.new do
+              def initialize(_options)
+              end
+
+              def void(_response_code, gateway_options = {})
+                payment = gateway_options[:originator]
+
+                if payment.completed?
+                  ActiveMerchant::Billing::Response.new(false, "Can't void a completed payment", {}, test: true)
+                else
+                  ActiveMerchant::Billing::Response.new(true, "Payment correctly voided", {}, test: true)
+                end
+              end
+            end
+          end
+        end
+
+        payment_method_class.new
+      end
+
+      context "when the payment is already captured" do
+        it "returns false" do
+          allow(payment).to receive(:completed?).and_return true
+          expect(payment.payment_method.try_void(payment)).to be_falsey
+        end
+      end
+
+      context "when the payment is not yet captured" do
+        it "returns the success response" do
+          expect(payment.payment_method.try_void(payment)).to be_success
+        end
+      end
     end
   end
 

@@ -173,16 +173,22 @@ module Spree
     # Return +false+ or +nil+ if the void is not possible anymore - because it was already processed by the bank.
     # Solidus will refund the amount of the payment in this case.
     #
-    # @return [ActiveMerchant::Billing::Response] with +true+ if the void succeeded
-    # @return [ActiveMerchant::Billing::Response] with +false+ if the void failed
-    # @return [false] if it can't be voided at this time
+    # This default implementation will void the payment if void succeeds,
+    # otherwise it returns false.
     #
-    def try_void(_payment)
-      raise ::NotImplementedError,
-        "You need to implement `try_void` for #{self.class.name}. In that " \
-        'return a ActiveMerchant::Billing::Response object if the void succeeds '\
-        'or `false|nil` if the void is not possible anymore. ' \
-        'Solidus will refund the amount of the payment then.'
+    # @api public
+    # @param payment [Spree::Payment] the payment to void
+    # @return [ActiveMerchant::Billing::Response|FalseClass]
+    def try_void(payment)
+      void_attempt = if payment.payment_method.payment_profiles_supported?
+        void(nil, nil, { originator: payment })
+      else
+        void(nil, { originator: payment })
+      end
+
+      return void_attempt if void_attempt.success?
+
+      false
     end
 
     def store_credit?
