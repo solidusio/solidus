@@ -18,7 +18,7 @@ bundler_injector = Class.new(Bundler::Injector) do
       requirement = if is_local
                       ", path: \"#{d.source.path}\""
                     elsif is_git
-                      ", git: \"#{d.git}\"".yield_self { |g| d.ref ? g + ", ref: \"#{d.ref}\"" : g }
+                      ", git: \"#{d.git}\"".then { |g| d.ref ? g + ", ref: \"#{d.ref}\"" : g }
                     elsif conservative_versioning
                       ", \"#{conservative_version(@definition.specs[d.name][0])}\""
                     else
