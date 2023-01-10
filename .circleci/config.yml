@@ -343,9 +343,5 @@ workflows:
           context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['6.0'], ruby: ['2.7'], database: ['sqlite'], paperclip: [true] } }
-      - test_solidus:
-          context: slack-secrets
-          name: *name
-          matrix: { parameters: { rails: ['5.2'], ruby: ['2.7'], database: ['sqlite'], paperclip: [true] } }
       - dev_tools:
           context: slack-secrets
