@@ -10,7 +10,7 @@ module Spree
       protect_from_forgery unless: -> { request.format.json? }
 
       include CanCan::ControllerAdditions
-      include Spree::Core::ControllerHelpers::CurrentHost
+      include ActiveStorage::SetCurrent
       include Spree::Core::ControllerHelpers::Store
       include Spree::Core::ControllerHelpers::Pricing
       include Spree::Core::ControllerHelpers::StrongParameters

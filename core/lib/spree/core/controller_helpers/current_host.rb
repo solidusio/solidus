@@ -7,7 +7,11 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          Spree::RailsCompatibility.active_storage_set_current(self)
+          Spree::Deprecation.warn <<~MSG
+            'Spree::Core::ControllerHelpers::CurrentHost' is deprecated.
+            Please, include 'ActiveStorage::SetCurrent' instead.
+          MSG
+          include ActiveStorage::SetCurrent
         end
       end
     end

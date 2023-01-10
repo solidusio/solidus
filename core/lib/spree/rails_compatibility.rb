@@ -72,23 +72,6 @@ module Spree
       end
     end
 
-    # Set current host for ActiveStorage in a controller
-    #
-    # Changed from `#host` to including a module in Rails 6
-    #
-    # See https://github.com/rails/rails/commit/e33c3cd8ccbecaca6c6af0438956431b02cb3fb2
-    #
-    # TODO: Remove when deprecating Rails 5.2
-    def self.active_storage_set_current(controller)
-      if version_gte?('6')
-        controller.include ActiveStorage::SetCurrent
-      else
-        controller.before_action do
-          ActiveStorage::Current.host = request.base_url
-        end
-      end
-    end
-
     # Set current host for ActiveStorage
     #
     # Changed from `#host` to `#url_options` on Rails 7

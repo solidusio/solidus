@@ -4,7 +4,7 @@ require 'cancan'
 require_dependency 'spree/core/controller_helpers/strong_parameters'
 
 class Spree::BaseController < ApplicationController
-  include Spree::Core::ControllerHelpers::CurrentHost
+  include ActiveStorage::SetCurrent
   include Spree::Core::ControllerHelpers::Auth
   include Spree::Core::ControllerHelpers::Common
   include Spree::Core::ControllerHelpers::PaymentParameters
