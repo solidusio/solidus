@@ -54,12 +54,17 @@ module Spree
       end
 
       def addresses
+        Spree::Deprecation.warn <<~MSG unless request.path.include?('/addresses/')
+          This route is deprecated, please, use instead:
+            PUT /addresses/
+        MSG
+
         if request.put?
           if @user.update(user_params)
             flash.now[:success] = t('spree.account_updated')
           end
 
-          render :addresses
+          render "spree/admin/addresses/addresses"
         end
       end
 

@@ -551,4 +551,18 @@ describe Spree::Admin::UsersController, type: :controller do
       expect(assigns[:search].klass).to eq Spree::Order
     end
   end
+
+  describe "#addresses" do
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
+    end
+
+    let(:order) { create(:order) }
+    before { user.orders << order }
+
+    it "deprecates addresses route" do
+      expect(Spree::Deprecation).to receive(:warn).with(%r[deprecated.*PUT /addresses/]m)
+      put :addresses, params: { id: user.id, user: { name: "Bob Bloggs", spree_role_ids: [""] } }
+    end
+  end
 end

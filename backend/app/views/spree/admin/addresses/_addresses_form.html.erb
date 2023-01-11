@@ -4,7 +4,7 @@
     <fieldset class="no-border-bottom">
       <legend align="center"><%= t('spree.billing_address') %></legend>
       <%= f.fields_for :bill_address, @user.bill_address || Spree::Address.build_default do |ba_form| %>
-        <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
+      <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
       <% end %>
     </fieldset>
   </div>

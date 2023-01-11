@@ -6,7 +6,7 @@
       </li>
       <% if can?(:addresses, @user) %>
         <li<%== ' class="active"' if current == :address %>>
-          <%= link_to t("spree.admin.user.addresses"), spree.addresses_admin_user_path(@user) %>
+          <%= link_to t("spree.admin.user.addresses"), spree.admin_user_addresses_path(@user) %>
         </li>
       <% end %>
       <% if can?(:orders, @user) %>
