@@ -277,17 +277,7 @@ jobs:
       BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
       - setup
-      - when:
-          condition:
-            not:
-              equal: [<<parameters.ruby>>, '2.5']
-          steps:
-            - libvips
-      - when:
-          condition:
-            equal: [<<parameters.ruby>>, '2.5']
-          steps:
-            - imagemagick
+      - libvips
       - test
       - notify
 
@@ -356,6 +346,6 @@ workflows:
       - test_solidus:
           context: slack-secrets
           name: *name
-          matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true] } }
+          matrix: { parameters: { rails: ['5.2'], ruby: ['2.6'], database: ['sqlite'], paperclip: [true] } }
       - dev_tools:
           context: slack-secrets

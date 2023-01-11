@@ -97,7 +97,7 @@ module Spree
 
     # Sets the last digits field based on the assigned credit card number.
     def set_last_digits
-      self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
+      self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..)
     end
 
     # @return [String] the credit card type if it can be determined from the
