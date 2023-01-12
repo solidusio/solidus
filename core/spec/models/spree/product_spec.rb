@@ -640,4 +640,17 @@ RSpec.describe Spree::Product, type: :model do
       expect(result).to eq([product_1, product_2])
     end
   end
+
+  describe "ransack scopes" do
+    context "available scope" do
+      subject { described_class.ransack(available: true).result }
+
+      let!(:available_product) { create(:product) }
+      let!(:not_available_product) { create(:product, available_on: Time.zone.tomorrow) }
+
+      it "is included" do
+        expect(subject).to match_array([available_product])
+      end
+    end
+  end
 end

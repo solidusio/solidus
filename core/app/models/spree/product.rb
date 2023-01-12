@@ -135,7 +135,7 @@ module Spree
     self.allowed_ransackable_attributes = %w[name slug]
 
     def self.ransackable_scopes(_auth_object = nil)
-      %i(with_discarded with_variant_sku_cont with_all_variant_sku_cont with_kept_variant_sku_cont)
+      %i(available with_discarded with_variant_sku_cont with_all_variant_sku_cont with_kept_variant_sku_cont)
     end
 
     # @return [Boolean] true if there are any variants
