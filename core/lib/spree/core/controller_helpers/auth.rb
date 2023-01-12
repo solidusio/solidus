@@ -42,12 +42,12 @@ module Spree
         end
 
         def set_guest_token
-          unless cookies.signed[:guest_token].present?
-            cookies.permanent.signed[:guest_token] = Spree::Config[:guest_token_cookie_options].merge(
-              value: SecureRandom.urlsafe_base64(nil, false),
-              httponly: true
-            )
-          end
+          return if cookies.signed[:guest_token].present?
+
+          cookies.permanent.signed[:guest_token] = Spree::Config[:guest_token_cookie_options].merge(
+            value: SecureRandom.urlsafe_base64(nil, false),
+            httponly: true
+          )
         end
 
         def store_location
