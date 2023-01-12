@@ -4,7 +4,7 @@ module Spree
   class Taxonomy < Spree::Base
     acts_as_list
 
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
 
     has_many :taxons, inverse_of: :taxonomy
     has_one :root, -> { where parent_id: nil }, class_name: "Spree::Taxon", dependent: :destroy
