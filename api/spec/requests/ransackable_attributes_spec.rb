@@ -64,8 +64,8 @@ describe "Ransackable Attributes" do
     end
   end
 
-  context "filtering by whitelisted attributes" do
-    it "filtering is supported for whitelisted attributes" do
+  context "filtering by allowed attributes" do
+    it "filtering is supported for allowed attributes" do
       product = create(:product, name: "Fritos")
       other_product = create(:product)
 

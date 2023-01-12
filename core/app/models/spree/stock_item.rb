@@ -20,7 +20,7 @@ module Spree
     after_save :conditional_variant_touch, if: :saved_changes?
     after_touch { variant.touch }
 
-    self.whitelisted_ransackable_attributes = ['count_on_hand', 'stock_location_id']
+    self.allowed_ransackable_attributes = ['count_on_hand', 'stock_location_id']
 
     # @return [Array<Spree::InventoryUnit>] the backordered inventory units
     #   associated with this stock item

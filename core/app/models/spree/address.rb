@@ -26,7 +26,7 @@ module Spree
     DB_ONLY_ATTRS = %w(id updated_at created_at).freeze
     TAXATION_ATTRS = %w(state_id country_id zipcode).freeze
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     scope :with_values, ->(attributes) do
       where(value_attributes(attributes))

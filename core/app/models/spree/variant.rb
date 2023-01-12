@@ -113,8 +113,8 @@ module Spree
       joins(:stock_items).where(arel_conditions.inject(:or)).distinct
     end
 
-    self.whitelisted_ransackable_associations = %w[option_values product prices default_price]
-    self.whitelisted_ransackable_attributes = %w[weight sku]
+    self.allowed_ransackable_associations = %w[option_values product prices default_price]
+    self.allowed_ransackable_attributes = %w[weight sku]
 
     # Returns variants that have a price for the given pricing options
     # If you have modified the pricing options class, you might want to modify this scope too.

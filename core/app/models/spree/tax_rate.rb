@@ -32,7 +32,7 @@ module Spree
 
     validates :amount, presence: true, numericality: true
 
-    self.whitelisted_ransackable_associations = %w[tax_categories zone]
+    self.allowed_ransackable_associations = %w[tax_categories zone]
 
     # Finds all tax rates whose zones match a given address
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }

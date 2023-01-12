@@ -27,7 +27,7 @@ module Spree
     extend DisplayMoney
     money_methods :amount, :total_excluding_vat
 
-    self.whitelisted_ransackable_attributes = ['memo']
+    self.allowed_ransackable_attributes = ['memo']
 
     def total_excluding_vat
       return_items.sum(&:total_excluding_vat)

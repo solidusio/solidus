@@ -16,7 +16,7 @@ module Spree
     validates :promotion, presence: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
-    self.whitelisted_ransackable_associations = %w[promotion_code]
+    self.allowed_ransackable_associations = %w[promotion_code]
 
     private
 
