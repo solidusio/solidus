@@ -191,6 +191,22 @@ RSpec.describe Spree::Taxon, type: :model do
         expect(taxonomy.taxons.many?).to eq(true)
       end
     end
+
+    context "name validations" do
+      let!(:taxonomy) { create(:taxonomy) }
+      let!(:taxon_level_one) { create(:taxon, name: 'Solidus', parent: taxonomy.root) }
+      let(:taxon_level_one_duplicate) { build(:taxon, name: 'Solidus', parent: taxonomy.root) }
+      let(:taxon_level_two) { create(:taxon, name: 'Solidus', parent: taxon_level_one) }
+
+      it "ensures that taxons with the same parent must have unique names" do
+        expect(taxon_level_one_duplicate.save).to eq(false)
+        expect(taxon_level_one_duplicate.errors.full_messages).to match_array(["Name must be unique under the same parent Taxon"])
+      end
+
+      it "allows for multiple taxons with the same name under different parents" do
+        expect(taxon_level_two).to be_valid
+      end
+    end
   end
 
   context 'leaves of the taxon tree' do

@@ -500,6 +500,8 @@ en:
               cannot_destroy_default_store: Cannot destroy the default Store.
         spree/taxon:
           attributes:
+            name:
+              must_be_unique_under_same_parent: must be unique under the same parent Taxon
             taxonomy_id:
               can_have_only_one_root: can only have one root Taxon
         spree/user_address:
