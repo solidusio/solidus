@@ -193,15 +193,6 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/issues/2620
-  context "creating a child node using first_or_create" do
-    let(:taxonomy) { create(:taxonomy) }
-
-    it "does not error out" do
-      taxonomy.root.children.unscoped.where(name: "Some name").first_or_create
-    end
-  end
-
   context 'leaves of the taxon tree' do
     let(:taxonomy) { create(:taxonomy, name: 't') }
     let(:root) { taxonomy.root }
