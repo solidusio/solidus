@@ -37,12 +37,6 @@ module Spree
         end
 
         def redirect_back_or_default(default)
-          Spree::Deprecation.warn <<~MSG
-            'Please use #stored_spree_user_location_or when using solidus_auth_devise.
-            Otherwise, please utilize #redirect_back provided in Rails 5+ or
-            #redirect_back_or_to in Rails 7+ instead'
-          MSG
-
           redirect_to(session["spree_user_return_to"] || default)
           session["spree_user_return_to"] = nil
         end
@@ -57,11 +51,6 @@ module Spree
         end
 
         def store_location
-          Spree::Deprecation.warn <<~MSG
-            store_location is being deprecated in solidus 4.0
-            without replacement
-          MSG
-
           Spree::UserLastUrlStorer.new(self).store_location
         end
 
@@ -83,7 +72,11 @@ module Spree
           end
         end
 
-        deprecate try_spree_current_user: :spree_current_user, deprecator: Spree::Deprecation
+        deprecate \
+          try_spree_current_user: :spree_current_user,
+          redirect_back_or_default: 'Please use `redirect_to stored_spree_user_location_or(...)` when using solidus_auth_devise.',
+          store_location: 'Please use `store_location_for(:spree_user, request.fullpath)` when using solidus_auth_devise.',
+          deprecator: Spree::Deprecation
       end
     end
   end
