@@ -3,8 +3,8 @@
 module Spree::RansackableAttributes
   extend ActiveSupport::Concern
   included do
-    class_attribute :allowed_ransackable_associations
-    class_attribute :allowed_ransackable_attributes
+    class_attribute :allowed_ransackable_associations, default: []
+    class_attribute :allowed_ransackable_attributes, default: []
 
     def self.whitelisted_ransackable_associations
       Spree::Deprecation.deprecation_warning(:whitelisted_ransackable_associations, 'use allowed_ransackable_associations instead')
@@ -32,11 +32,11 @@ module Spree::RansackableAttributes
 
   class_methods do
     def ransackable_associations(*_args)
-      allowed_ransackable_associations || []
+      allowed_ransackable_associations
     end
 
     def ransackable_attributes(*_args)
-      default_ransackable_attributes | (allowed_ransackable_attributes || [])
+      default_ransackable_attributes | allowed_ransackable_attributes
     end
   end
 end
