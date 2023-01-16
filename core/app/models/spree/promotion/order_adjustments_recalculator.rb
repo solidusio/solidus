@@ -14,7 +14,7 @@ module Spree
         @order = order
       end
 
-      def adjust!
+      def call
         all_items = line_items + shipments
         all_items.each do |item|
           promotion_adjustments = item.adjustments.select(&:promotion?)

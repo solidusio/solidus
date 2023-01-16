@@ -85,9 +85,9 @@ module Spree
     describe '#recalculate_adjustments ' do
       describe 'promotion recalculation' do
         it "calls the Promotion Adjustments Recalculator" do
-          adjuster = double(:adjust!)
+          adjuster = double(:call)
           expect(Spree::Promotion::OrderAdjustmentsRecalculator).to receive(:new).and_return(adjuster)
-          expect(adjuster).to receive(:adjust!)
+          expect(adjuster).to receive(:call)
           order.recalculate
         end
       end
