@@ -84,15 +84,6 @@ module Spree
   end
 end
 
-if Gem::Version.new(Rails.version) < Gem::Version.new('6.0')
-  Spree::Deprecation.warn <<~HEREDOC
-    Rails 5.2 (EOL) is deprecated and will not be supported anymore from the next Solidus version.
-    Please, upgrade to a more recent Rails version.
-    Read more on upgrading from Rails 5.2 to Rails 6.0 here:
-    https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-5-2-to-rails-6-0
-  HEREDOC
-end
-
 require 'spree/core/version'
 
 require 'spree/core/active_merchant_dependencies'
@@ -117,7 +108,6 @@ require 'spree/core/permalinks'
 require 'spree/core/product_duplicator'
 require 'spree/core/controller_helpers/auth'
 require 'spree/core/controller_helpers/common'
-require 'spree/core/controller_helpers/current_host'
 require 'spree/core/controller_helpers/order'
 require 'spree/core/controller_helpers/payment_parameters'
 require 'spree/core/controller_helpers/pricing'
