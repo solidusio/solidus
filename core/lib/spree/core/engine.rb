@@ -87,6 +87,7 @@ module Spree
 
       config.after_initialize do
         Spree::Config.check_load_defaults_called('Spree::Config')
+        Spree::Config.static_model_preferences.validate!
       end
 
       config.after_initialize do
