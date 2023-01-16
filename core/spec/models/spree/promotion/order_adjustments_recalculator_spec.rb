@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
-  subject { described_class.new(order).adjust! }
+  subject { described_class.new(order).call }
 
-  describe '#adjust! ' do
+  describe '#call ' do
     describe 'promotion recalculation' do
       let(:order) { create(:order_with_line_items, line_items_count: 1, line_items_price: 10) }
       let(:line_item) { order.line_items[0] }

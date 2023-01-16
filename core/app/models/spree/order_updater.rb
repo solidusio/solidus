@@ -197,7 +197,7 @@ module Spree
     end
 
     def update_promotions
-      Spree::Config.promotion_adjuster_class.new(order).adjust!
+      Spree::Config.promotion_adjuster_class.new(order).call
     end
 
     # DEPRECATED; this functionality is handled in #update_promotions
