@@ -17,7 +17,7 @@ module Spree
 
     accepts_nested_attributes_for :return_items
 
-    self.whitelisted_ransackable_attributes = ['number']
+    self.allowed_ransackable_attributes = ['number']
 
     extend DisplayMoney
     money_methods :total, :total_excluding_vat, :amount

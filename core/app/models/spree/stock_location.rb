@@ -31,7 +31,7 @@ module Spree
     after_create :create_stock_items, if: :propagate_all_variants?
     after_save :ensure_one_default
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     def state_text
       state.try(:abbr) || state.try(:name) || state_name

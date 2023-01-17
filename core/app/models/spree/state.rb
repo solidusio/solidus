@@ -15,7 +15,7 @@ module Spree
       )
     end
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     # table of { country.id => [ state.id , state.name ] }, arrays sorted by name
     # blank is added elsewhere, if needed

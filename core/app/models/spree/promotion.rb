@@ -52,8 +52,8 @@ module Spree
     end
     scope :applied, -> { joins(:order_promotions).distinct }
 
-    self.whitelisted_ransackable_associations = ['codes']
-    self.whitelisted_ransackable_attributes = %w[name path promotion_category_id]
+    self.allowed_ransackable_associations = ['codes']
+    self.allowed_ransackable_attributes = %w[name path promotion_category_id]
     def self.ransackable_scopes(*)
       %i(active)
     end

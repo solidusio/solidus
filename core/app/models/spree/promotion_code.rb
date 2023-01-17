@@ -11,7 +11,7 @@ class Spree::PromotionCode < Spree::Base
   validates :promotion, presence: true
   validate :promotion_not_apply_automatically, on: :create
 
-  self.whitelisted_ransackable_attributes = ['value']
+  self.allowed_ransackable_attributes = ['value']
 
   # Whether the promotion code has exceeded its usage restrictions
   #

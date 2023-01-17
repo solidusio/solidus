@@ -27,7 +27,7 @@ module Spree
 
     include ::Spree::Config.taxon_attachment_module
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     # @return [String] meta_title if set otherwise a string containing the
     #   root name and taxon name

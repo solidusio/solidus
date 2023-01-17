@@ -43,8 +43,8 @@ module Spree
 
     attr_accessor :target_shipment, :price_currency
 
-    self.whitelisted_ransackable_associations = ['variant']
-    self.whitelisted_ransackable_attributes = ['variant_id']
+    self.allowed_ransackable_associations = ['variant']
+    self.allowed_ransackable_attributes = ['variant_id']
 
     # @return [BigDecimal] the amount of this line item, which is the line
     #   item's price multiplied by its quantity.

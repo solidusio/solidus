@@ -25,7 +25,7 @@ module Spree
     # TODO: Remove allow_nil once option_type is required on Solidus v4.0
     delegate :name, :presentation, to: :option_type, prefix: :option_type, allow_nil: true
 
-    self.whitelisted_ransackable_attributes = %w[name presentation]
+    self.allowed_ransackable_attributes = %w[name presentation]
 
     # Updates the updated_at column on all the variants associated with this
     # option value.
