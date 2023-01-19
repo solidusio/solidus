@@ -22,5 +22,13 @@ module Spree
         ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, message: FAILURE_MESSAGE, test: true)
       end
     end
+
+    def void(_response_code, options = {})
+      if options[:originator].completed?
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+      else
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+      end
+    end
   end
 end
