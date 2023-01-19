@@ -181,9 +181,9 @@ module Spree
     # @return [ActiveMerchant::Billing::Response|FalseClass]
     def try_void(payment)
       void_attempt = if payment.payment_method.payment_profiles_supported?
-        void(nil, nil, { originator: payment })
+        void(payment.transaction_id, payment.source, { originator: payment })
       else
-        void(nil, { originator: payment })
+        void(payment.transaction_id, { originator: payment })
       end
 
       return void_attempt if void_attempt.success?
