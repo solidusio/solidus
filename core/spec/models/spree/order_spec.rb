@@ -47,8 +47,12 @@ RSpec.describe Spree::Order, type: :model do
       let(:order) { create(:order_ready_to_ship) }
       let(:payment) { order.payments.first }
 
-      it 'voids the payment' do
-        expect { subject }.to change { payment.reload.state }.from('completed').to('void')
+      it 'does not change the payment state' do
+        expect { subject }.not_to change { payment.reload.state }
+      end
+
+      it 'refunds the payment' do
+        expect { subject }.to change { Spree::Refund.count }.by(1)
       end
 
       it "cancels the order" do

@@ -92,31 +92,42 @@ RSpec.describe Spree::Order, type: :model do
       expect(mail.subject).to include "Cancellation"
     end
 
-    context "resets payment state" do
-      let!(:payment) { create(:payment, order: order, amount: order.total, state: "completed") }
+    it "tries to cancel payments when the order has a complete payment" do
+      payment = create(:payment, order: order, amount: order.total, state: "completed")
 
-      context "without shipped items" do
-        it "should set payment state to 'void'" do
-          expect { order.cancel! }.to change{ order.reload.payment_state }.to("void")
-        end
-      end
+      expect(payment).to receive(:cancel!)
+      expect(order).to be_allow_cancel
 
-      context "with shipped items" do
-        before do
-          order.shipments[0].ship!
-        end
+      order.cancel!
+    end
 
-        it "should not alter the payment state" do
-          expect(order).to_not be_allow_cancel
-          expect(order.cancel).to be false
-          expect(order.payment_state).to eql "paid"
-        end
-      end
+    it "tries to cancel payments when the order has a pending payment" do
+      payment = create(:payment, order: order, amount: order.total, state: "pending")
 
-      it "should automatically refund all payments" do
-        expect(order).to be_allow_cancel
-        expect { order.cancel! }.to change{ payment.reload.state }.to("void")
-      end
+      expect(payment).to receive(:cancel!)
+      expect(order).to be_allow_cancel
+
+      order.cancel!
+    end
+
+    it "does not try to cancel payments when the order has a failed payment" do
+      payment = create(:payment, order: order, amount: order.total, state: "failed")
+
+      expect(payment).not_to receive(:cancel!)
+      expect(order).to be_allow_cancel
+
+      order.cancel!
+    end
+
+    it "does not try to cancel payments when the order has shipped shipments" do
+      payment = create(:payment, order: order, amount: order.total, state: "completed")
+      shipment.ship!
+
+      expect(order).to_not be_allow_cancel
+      expect(payment).to_not receive(:cancel!)
+
+      expect(order.cancel).to be_falsey
+      expect { order.cancel! }.to raise_error(StateMachines::InvalidTransition)
     end
   end
 

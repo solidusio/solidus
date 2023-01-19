@@ -65,11 +65,6 @@ module Spree
       end
     end
 
-    # @see Spree::PaymentMethod#try_void
-    def try_void(_payment)
-      ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
-    end
-
     def test?
       # Test mode is not really relevant with bogus gateway (no such thing as live server)
       true

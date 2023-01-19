@@ -224,44 +224,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     let(:payment) { create(:payment, payment_method: payment_method) }
 
     context "when the payment method supports payment profiles" do
-      let(:payment_method) do
-        payment_method_class = Class.new(Spree::PaymentMethod) do
-          # We are intentionally not defining try_void on this payment method.
-          # In this way the following specs will use the default implementation
-          # on Spree::PaymentMethod.
-
-          def self.name
-            "PaymentMethodWithPaymentProfiles"
-          end
-
-          def payment_profiles_supported?
-            true
-          end
-
-          def create_profile(payment)
-            # Noop
-          end
-
-          def gateway_class
-            Class.new do
-              def initialize(_options)
-              end
-
-              def void(_response_code, _source, gateway_options = {})
-                payment = gateway_options[:originator]
-
-                if payment.completed?
-                  ActiveMerchant::Billing::Response.new(false, "Can't void a completed payment", {}, test: true)
-                else
-                  ActiveMerchant::Billing::Response.new(true, "Payment correctly voided", {}, test: true)
-                end
-              end
-            end
-          end
-        end
-
-        payment_method_class.new
-      end
+      let(:payment_method) { create(:credit_card_payment_method) }
 
       context "when the payment is already captured" do
         it "returns false" do
@@ -278,40 +241,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     end
 
     context "when the payment method doesn't support payment profiles" do
-      let(:payment_method) do
-        payment_method_class = Class.new(Spree::PaymentMethod) do
-          # We are intentionally not defining try_void on this payment method.
-          # In this way the following specs will use the default implementation
-          # on Spree::PaymentMethod.
-
-          def self.name
-            "PaymentMethodWithoutPaymentProfiles"
-          end
-
-          def payment_profiles_supported?
-            false
-          end
-
-          def gateway_class
-            Class.new do
-              def initialize(_options)
-              end
-
-              def void(_response_code, gateway_options = {})
-                payment = gateway_options[:originator]
-
-                if payment.completed?
-                  ActiveMerchant::Billing::Response.new(false, "Can't void a completed payment", {}, test: true)
-                else
-                  ActiveMerchant::Billing::Response.new(true, "Payment correctly voided", {}, test: true)
-                end
-              end
-            end
-          end
-        end
-
-        payment_method_class.new
-      end
+      let(:payment_method) { create(:simple_credit_card_payment_method) }
 
       context "when the payment is already captured" do
         it "returns false" do
