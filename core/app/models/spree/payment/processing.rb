@@ -35,12 +35,36 @@ module Spree
       end
 
       def authorize!
-        handle_payment_preconditions { process_authorization }
+        return unless check_payment_preconditions!
+
+        started_processing!
+
+        protect_from_connection_error do
+          response = payment_method.authorize(
+            money.money.cents,
+            source,
+            gateway_options,
+          )
+          pend! if handle_response(response)
+        end
       end
 
       # Captures the entire amount of a payment.
       def purchase!
-        handle_payment_preconditions { process_purchase }
+        return unless check_payment_preconditions!
+
+        started_processing!
+
+        protect_from_connection_error do
+          response = payment_method.purchase(
+            money.money.cents,
+            source,
+            gateway_options,
+          )
+          complete! if handle_response(response)
+        end
+
+        capture_events.create!(amount: amount)
       end
 
       # Takes the amount in cents to capture.
@@ -62,7 +86,7 @@ module Spree
           money = ::Money.new(capture_amount, currency)
           capture_events.create!(amount: money.to_d)
           update!(amount: captured_amount)
-          handle_response(response, :complete, :failure)
+          complete! if handle_response(response)
         end
       end
 
@@ -139,67 +163,46 @@ module Spree
 
       private
 
-      def process_authorization
-        started_processing!
-        gateway_action(source, :authorize, :pend)
-      end
+      # @raises Spree::Core::GatewayError
+      def check_payment_preconditions!
+        return if processing?
+        return unless payment_method
+        return unless payment_method.source_required?
 
-      def process_purchase
-        started_processing!
-        gateway_action(source, :purchase, :complete)
-        # This won't be called if gateway_action raises a GatewayError
-        capture_events.create!(amount: amount)
-      end
-
-      def handle_payment_preconditions(&_block)
-        unless block_given?
-          raise ArgumentError.new("handle_payment_preconditions must be called with a block")
+        unless source
+          gateway_error(I18n.t('spree.payment_processing_failed'))
         end
 
-        return if payment_method.nil?
-        return if !payment_method.source_required?
-
-        if source
-          if !processing?
-            if payment_method.supports?(source)
-              yield
-            else
-              invalidate!
-              raise Core::GatewayError.new(I18n.t('spree.payment_method_not_supported'))
-            end
-          end
-        else
-          raise Core::GatewayError.new(I18n.t('spree.payment_processing_failed'))
+        unless payment_method.supports?(source)
+          invalidate!
+          gateway_error(I18n.t('spree.payment_method_not_supported'))
         end
+
+        true
       end
 
-      def gateway_action(source, action, success_state)
-        protect_from_connection_error do
-          response = payment_method.send(action, money.money.cents,
-                                         source,
-                                         gateway_options)
-          handle_response(response, success_state, :failure)
-        end
-      end
-
-      def handle_response(response, success_state, failure_state)
+      # @returns true if the response is successful
+      # @returns false (and calls #failure) if the response is not successful
+      def handle_response(response)
         record_response(response)
 
-        if response.success?
-          unless response.authorization.nil?
-            self.response_code = response.authorization
-            self.avs_response = response.avs_result['code']
-
-            if response.cvv_result
-              self.cvv_response_code = response.cvv_result['code']
-              self.cvv_response_message = response.cvv_result['message']
-            end
-          end
-          send("#{success_state}!")
-        else
-          send(failure_state)
+        unless response.success?
+          failure
           gateway_error(response)
+          return false
         end
+
+        unless response.authorization.nil?
+          self.response_code = response.authorization
+          self.avs_response = response.avs_result['code']
+
+          if response.cvv_result
+            self.cvv_response_code = response.cvv_result['code']
+            self.cvv_response_message = response.cvv_result['message']
+          end
+        end
+
+        true
       end
 
       def record_response(response)
@@ -207,9 +210,9 @@ module Spree
       end
 
       def protect_from_connection_error
-          yield
+        yield
       rescue ActiveMerchant::ConnectionError => error
-          gateway_error(error)
+        gateway_error(error)
       end
 
       def gateway_error(error)
