@@ -41,7 +41,15 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#cancel!" do
+    let!(:order) { create(:completed_order_with_totals) }
     subject { order.cancel! }
+
+    it "sends a cancel email" do
+      perform_enqueued_jobs { subject }
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to include "Cancellation"
+    end
 
     context 'when the payment is completed' do
       let(:order) { create(:order_ready_to_ship) }
@@ -93,6 +101,25 @@ RSpec.describe Spree::Order, type: :model do
 
       it 'voids the pending payment' do
         expect { subject }.to change { payment.reload.state }.from('pending').to('void')
+      end
+    end
+
+    context 'when the payment is failed' do
+      let(:order) { create(:completed_order_with_pending_payment) }
+      let(:payment) { order.payments.first.tap(&:failure!) }
+
+      it 'does not change the payment state' do
+        expect { subject }.not_to change { payment.reload.state }
+      end
+    end
+
+    context "when shipment is shipped" do
+      let!(:order) { create(:shipped_order) }
+
+      it "fails" do
+        expect(order.payments.first).to_not receive(:cancel!)
+
+        expect { subject }.to raise_error(StateMachines::InvalidTransition)
       end
     end
 
