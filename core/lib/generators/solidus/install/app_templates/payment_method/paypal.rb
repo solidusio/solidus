@@ -3,7 +3,7 @@ unless Bundler.locked_gems.dependencies['solidus_frontend']
 end
 
 unless Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
-  version = @selected_frontend == 'classic' ? '< 1' : '>= 1.a'
+  version = @selected_frontend == 'classic' ? '< 1' : '~> 1.0'
   bundle_command "add solidus_paypal_commerce_platform --version='#{version}'"
 end
 
