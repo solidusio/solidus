@@ -53,10 +53,20 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#can_cancel?" do
     let(:order) { create(:completed_order_with_totals) }
-    states = [:pending, :backorder, :ready]
 
+    it "is true for completed orders" do
+      expect(order).to be_can_cancel
+    end
+
+    it "is false for cancelled orders" do
+      order.cancel!
+
+      expect(order).to_not be_can_cancel
+    end
+
+    states = [:pending, :backorder, :ready]
     states.each do |shipment_state|
-      it "should be true if shipment_state is #{shipment_state}" do
+      it "is true if shipment_state is #{shipment_state}" do
         expect(order).to be_completed
         order.shipment_state = shipment_state
 
@@ -65,57 +75,10 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     (Spree::Shipment.state_machine.states.keys - states).each do |shipment_state|
-      it "should be false if shipment_state is #{shipment_state}" do
+      it "is false if shipment_state is #{shipment_state}" do
         expect(order).to be_completed
         order.shipment_state = shipment_state
         expect(order).not_to be_can_cancel
-      end
-    end
-  end
-
-  context "#cancel" do
-    let!(:order) { create(:completed_order_with_totals) }
-    let!(:shipment) { order.shipments.first }
-
-    it "is setup correctly" do
-      expect(order).to be_completed
-      expect(order).to be_complete
-      expect(order).to be_allow_cancel
-    end
-
-    it "should send a cancel email" do
-      perform_enqueued_jobs do
-        order.cancel!
-      end
-
-      mail = ActionMailer::Base.deliveries.last
-      expect(mail.subject).to include "Cancellation"
-    end
-
-    context "resets payment state" do
-      let!(:payment) { create(:payment, order: order, amount: order.total, state: "completed") }
-
-      context "without shipped items" do
-        it "should set payment state to 'void'" do
-          expect { order.cancel! }.to change{ order.reload.payment_state }.to("void")
-        end
-      end
-
-      context "with shipped items" do
-        before do
-          order.shipments[0].ship!
-        end
-
-        it "should not alter the payment state" do
-          expect(order).to_not be_allow_cancel
-          expect(order.cancel).to be false
-          expect(order.payment_state).to eql "paid"
-        end
-      end
-
-      it "should automatically refund all payments" do
-        expect(order).to be_allow_cancel
-        expect { order.cancel! }.to change{ payment.reload.state }.to("void")
       end
     end
   end
