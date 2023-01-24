@@ -115,72 +115,62 @@ RSpec.describe Spree::Taxon, type: :model do
     let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy: taxonomy, parent: taxon2) }
 
     context "changing parent" do
-      subject do
-        -> { taxon2.update!(parent: taxon1) }
-      end
+      subject { taxon2.update!(parent: taxon1) }
 
       it "changes own permalink" do
-        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/t2')
+        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/t2')
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/t2/t2_child')
+        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/t2/t2_child')
       end
     end
 
     context "changing own permalink" do
-      subject do
-        -> { taxon2.update!(permalink: 'foo') }
-      end
+      subject { taxon2.update!(permalink: 'foo') }
 
       it "changes own permalink" do
-        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
+        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
+        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
       end
     end
 
     context "changing own permalink part" do
-      subject do
-        -> { taxon2.update!(permalink_part: 'foo') }
-      end
+      subject { taxon2.update!(permalink_part: 'foo') }
 
       it "changes own permalink" do
-        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
+        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
+        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
       end
     end
 
     context "changing parent and own permalink" do
-      subject do
-        -> { taxon2.update!(parent: taxon1, permalink: 'foo') }
-      end
+      subject { taxon2.update!(parent: taxon1, permalink: 'foo') }
 
       it "changes own permalink" do
-        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/foo')
+        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/foo')
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/foo/t2_child')
+        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/foo/t2_child')
       end
     end
 
     context 'changing parent permalink with special characters ' do
-      subject do
-        -> { taxon2.update!(permalink: 'spécial&charactèrs') }
-      end
+      subject { taxon2.update!(permalink: 'spécial&charactèrs') }
 
       it 'changes own permalink with parameterized characters' do
-        is_expected.to change{ taxon2.reload.permalink }.from('t/t2').to('t/special-characters')
+        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/special-characters')
       end
 
       it 'changes child permalink with parameterized characters' do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/special-characters/t2_child')
+        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/special-characters/t2_child')
       end
     end
   end

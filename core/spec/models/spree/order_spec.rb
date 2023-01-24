@@ -1541,10 +1541,10 @@ RSpec.describe Spree::Order, type: :model do
     describe "#record_ip_address" do
       let(:ip_address) { "127.0.0.1" }
 
-      subject { -> { order.record_ip_address(ip_address) } }
+      subject { order.record_ip_address(ip_address) }
 
       it "updates the last used IP address" do
-        expect(subject).to change(order, :last_ip_address).to(ip_address)
+        expect { subject }.to change(order, :last_ip_address).to(ip_address)
       end
 
       # IP address tracking should not raise validation exceptions
@@ -1552,7 +1552,7 @@ RSpec.describe Spree::Order, type: :model do
         before { allow(order).to receive(:valid?).and_return(false) }
 
         it "updates the IP address" do
-          expect(subject).to change(order, :last_ip_address).to(ip_address)
+          expect { subject }.to change(order, :last_ip_address).to(ip_address)
         end
       end
 
@@ -1560,7 +1560,7 @@ RSpec.describe Spree::Order, type: :model do
         let(:order) { build(:order) }
 
         it "updates the IP address" do
-          expect(subject).to change(order, :last_ip_address).to(ip_address)
+          expect { subject }.to change(order, :last_ip_address).to(ip_address)
         end
       end
     end
