@@ -10,9 +10,6 @@ if ENV["COVERAGE"]
   SimpleCov.start('rails')
 end
 
-require 'spree/testing_support/buildkite_test_collector'
-Spree::TestingSupport::BuildkiteTestCollector.enable
-
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
