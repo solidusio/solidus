@@ -274,7 +274,7 @@ RSpec.describe Spree::Order, type: :model do
           end
           specify do
             transition = lambda { order.next! }
-            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.items_cannot_be_shipped')}/)
+            expect { transition.call }.to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.items_cannot_be_shipped')}/)
           end
         end
       end
