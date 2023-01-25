@@ -25,7 +25,7 @@
             <%= item.quantity %>
           </td>
           <td class="line-item-total">
-            <%= line_item_shipment_price(item, item.quantity) %>
+            <%= item.display_amount %>
           </td>
         </tr>
       <% end %>
