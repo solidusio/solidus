@@ -4,10 +4,13 @@ module Spree
   module Admin
     module OrdersHelper
       # Renders all the extension partials that may have been specified in the extensions
+      #
+      # @return [ActiveSupport::SafeBuffer] the string returned is already html-safe
       def event_links
         links = []
         @order_events.sort.each do |event|
           next unless @order.send("can_#{event}?")
+
           translated_event = t(event, scope: [:spree, :admin, :order, :events])
           links << button_to(
             translated_event,
@@ -19,12 +22,18 @@ module Spree
         safe_join(links, "&nbsp;".html_safe)
       end
 
+      # @deprecated use `Spree::LineItem#display_amount` instead
       def line_item_shipment_price(line_item, quantity)
         Spree::Money.new(line_item.price * quantity, { currency: line_item.currency })
       end
       deprecate deprecator: Spree::Deprecation,
         line_item_shipment_price: "use Spree::LineItem#display_amount instead"
 
+      # Addresss Verification System response code
+      #
+      # @see https://en.wikipedia.org/wiki/Address_verification_service
+      #
+      # @return [Hash] codes as keys, descriptions as values
       def avs_response_code
         {
           "A" => "Street address matches, but 5-digit and 9-digit postal code do not match.",
@@ -56,6 +65,13 @@ module Spree
         }
       end
 
+      # Addresss Verification System response code
+      #
+      # @see https://developer.visa.com/request_response_codes#card_verification2_results
+      # @see https://developer.paypal.com/api/nvp-soap/AVSResponseCodes/#cvv2-error-response-codes
+      # @see https://www.checkout.com/docs/resources/codes/cvv-response-codes
+      #
+      # @return [Hash] codes as keys, descriptions as values
       def cvv_response_code
         {
           "M" => "CVV2 Match",
