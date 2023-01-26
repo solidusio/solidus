@@ -15,8 +15,8 @@
   <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
 </div>
 
-<% if @order.payments.exists? && @order.is_risky? %>
-    <%= render 'spree/admin/orders/risk_analysis' %>
+<% if @order.is_risky? %>
+  <%= render 'spree/admin/orders/risk_analysis' %>
 <% end %>
 
 <div data-hook="admin_order_edit_form">
