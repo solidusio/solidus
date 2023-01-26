@@ -1,3 +1,5 @@
+<% latest_payment = @order.payments.reorder("created_at DESC").first %>
+
 <fieldset class="no-border-bottom" id="risk_analysis">
   <legend><%= "#{t('spree.risk_analysis')}: #{t('spree.not') unless @order.is_risky?} #{t('spree.risky')}" %></legend>
   <table>
