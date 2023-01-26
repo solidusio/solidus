@@ -228,9 +228,9 @@ jobs:
       paperclip:
         type: boolean
         default: true
-      legacy:
-        type: string
-        default: "0"
+      legacy_events:
+        type: boolean
+        default: false
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
@@ -238,7 +238,7 @@ jobs:
     environment:
       DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
       RAILS_VERSION: "~> << parameters.rails >>"
-      USE_LEGACY_EVENTS: << parameters.legacy >>
+      USE_LEGACY_EVENTS: << parameters.legacy_events >>
       BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
       - setup
@@ -266,17 +266,17 @@ workflows:
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
           context: slack-secrets
-          name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
+          name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>><<#matrix.legacy_events>>-legacy_events<</matrix.legacy_events>>"
+          matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false], legacy_events: [false] } }
       - test_solidus:
           context: slack-secrets
           name: *name
-          matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false], legacy_events: [false] } }
       - test_solidus:
           context: slack-secrets
           name: *name
-          matrix: { parameters: { rails: ['6.0'], ruby: ['2.6'], database: ['sqlite'], paperclip: [true] } }
+          matrix: { parameters: { rails: ['6.0'], ruby: ['2.6'], database: ['sqlite'], paperclip: [true], legacy_events: [false] } }
       - test_solidus:
           context: slack-secrets
           name: *name
-          matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true] } }
+          matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true], legacy_events: [true] } }
