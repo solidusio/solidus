@@ -16,7 +16,7 @@
 </div>
 
 <% if @order.is_risky? %>
-  <%= render 'spree/admin/orders/risk_analysis' %>
+  <%= render 'spree/admin/orders/risk_analysis', order: @order %>
 <% end %>
 
 <div data-hook="admin_order_edit_form">
