@@ -59,6 +59,16 @@ RSpec.describe Spree::Payment, type: :model do
       end
     end
 
+    context '#risky?' do
+      it 'is true for risky payments' do
+        aggregate_failures do
+          expect(payment_1).not_to be_risky
+          expect(payment_2).not_to be_risky
+          expect(payment_3).to be_risky
+          expect(payment_4).to be_risky
+          expect(payment_5).to be_risky
+        end
+      end
     end
   end
 
@@ -1212,7 +1222,7 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 
-  describe "is_avs_risky?" do
+  describe "#is_avs_risky?" do
     it "returns false if avs_response included in NON_RISKY_AVS_CODES" do
       ('A'..'Z').reject{ |x| subject.class::RISKY_AVS_CODES.include?(x) }.to_a.each do |char|
         payment.update_attribute(:avs_response, char)

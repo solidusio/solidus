@@ -127,6 +127,11 @@ module Spree
       res || payment_method
     end
 
+    # @return [Boolean] true when this payment is risky
+    def risky?
+      is_avs_risky? || is_cvv_risky? || state == 'failed'
+    end
+
     # @return [Boolean] true when this payment is risky based on address
     def is_avs_risky?
       return false if avs_response.blank? || NON_RISKY_AVS_CODES.include?(avs_response)
