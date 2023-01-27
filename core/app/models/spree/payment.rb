@@ -137,7 +137,6 @@ module Spree
     def is_cvv_risky?
       return false if cvv_response_code == "M"
       return false if cvv_response_code.nil?
-      return false if cvv_response_message.present?
       true
     end
 

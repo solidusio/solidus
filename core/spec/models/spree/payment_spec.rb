@@ -1231,26 +1231,17 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 
-  describe "is_cvv_risky?" do
-    it "returns false if cvv_response_code == 'M'" do
-      payment.update_attribute(:cvv_response_code, "M")
-      expect(payment.is_cvv_risky?).to eq(false)
+  describe "#is_cvv_risky?" do
+    ['M', nil].each do |char|
+      it "returns false if cvv_response_code is #{char.inspect}" do
+        payment.cvv_response_code = char
+        expect(payment.is_cvv_risky?).to eq(false)
+      end
     end
 
-    it "returns false if cvv_response_code == nil" do
-      payment.update_attribute(:cvv_response_code, nil)
-      expect(payment.is_cvv_risky?).to eq(false)
-    end
-
-    it "returns false if cvv_response_message == ''" do
-      payment.update_attribute(:cvv_response_message, '')
-      expect(payment.is_cvv_risky?).to eq(false)
-    end
-
-    it "returns true if cvv_response_code == [A-Z], omitting D" do
-      # should use cvv_response_code helper
-      (%w{N P S U} << "").each do |char|
-        payment.update_attribute(:cvv_response_code, char)
+    ['', *('A'...'M'), *('N'..'Z')].each do |char|
+      it "returns true if cvv_response_code is #{char.inspect} (not 'M' or nil)" do
+        payment.cvv_response_code = char
         expect(payment.is_cvv_risky?).to eq(true)
       end
     end
