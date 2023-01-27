@@ -46,14 +46,19 @@ RSpec.describe Spree::Payment, type: :model do
     )
   end
 
-  context '.risky' do
+  context 'risk analysis' do
     let!(:payment_1) { create(:payment, avs_response: 'Y', cvv_response_code: 'M', cvv_response_message: 'Match') }
     let!(:payment_2) { create(:payment, avs_response: 'Y', cvv_response_code: 'M', cvv_response_message: '') }
     let!(:payment_3) { create(:payment, avs_response: 'A', cvv_response_code: 'M', cvv_response_message: 'Match') }
     let!(:payment_4) { create(:payment, avs_response: 'Y', cvv_response_code: 'N', cvv_response_message: 'No Match') }
+    let!(:payment_5) { create(:payment, avs_response: 'Y', cvv_response_code: 'M', cvv_response_message: '', state: 'failed') }
 
-    it 'should not return successful responses' do
-      expect(subject.class.risky.to_a).to match_array([payment_3, payment_4])
+    describe '.risky' do
+      it 'fetches only risky payments' do
+        expect(subject.class.risky.to_a).to match_array([payment_3, payment_4, payment_5])
+      end
+    end
+
     end
   end
 
