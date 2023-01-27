@@ -159,6 +159,13 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
     end
 
+    describe "#show" do
+      it "redirects to :edit" do
+        get :show, params: { id: order.number }
+        expect(response).to redirect_to(spree.edit_admin_order_path(order.number))
+      end
+    end
+
     describe '#advance' do
       subject do
         put :advance, params: { id: order.number }
