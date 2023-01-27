@@ -1,4 +1,7 @@
 openapi: 3.0.3
+x-stoplight:
+  docs:
+    showModels: false
 info:
   title: Solidus API
   version: '1.0'
@@ -8,9 +11,6 @@ info:
     url: 'https://solidus.io'
   license:
     name: ''
-x-stoplight:
-  docs:
-    showModels: false
 paths:
   /products:
     get:
@@ -5928,6 +5928,7 @@ components:
       type: apiKey
       name: Authorization
       in: header
+      description: 'The `API key` is mandatory for each endpoint by default. You can change this configuration [with the Spree::Api::Config.requires_authentication preference](https://github.com/solidusio/solidus/blob/2b79f72aa53f5caa850c587888fff46c1c91f7b7/api/lib/spree/api_configuration.rb#L5) to avoid the default behavior and expose some endpoints without an API key. An example could be the [GET product list](https://solidus.stoplight.io/docs/solidus/08307f3d809e7-list-products) endpoint.'
     order-token:
       type: apiKey
       name: X-Spree-Order-Token
