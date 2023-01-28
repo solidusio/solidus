@@ -50,7 +50,7 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_stock_movements_index_headers">
-      <th><%= Spree::StockMovement.human_attribute_name(:variant) %>
+      <th><%= Spree::StockMovement.human_attribute_name(:variant) %></th>
       <th><%= Spree::StockMovement.human_attribute_name(:quantity) %></th>
       <th><%= Spree::StockMovement.human_attribute_name(:originated_by) %></th>
     </tr>
@@ -58,9 +58,7 @@
   <tbody>
     <% @stock_movements.each do |stock_movement|%>
       <tr id="<%= spree_dom_id stock_movement %>" data-hook="admin_stock_movements_index_rows">
-        <td>
-          <%= display_variant(stock_movement) %>
-        </td>
+        <td><%= display_variant(stock_movement) %></td>
         <td><%= stock_movement.quantity %></td>
         <td><%= pretty_originator(stock_movement) %></td>
       </tr>
