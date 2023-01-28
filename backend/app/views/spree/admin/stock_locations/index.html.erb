@@ -34,10 +34,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @stock_locations.each do |stock_location|
-           @edit_url = edit_admin_stock_location_path(stock_location)
-           @delete_url = admin_stock_location_path(stock_location)
-      %>
+      <% @stock_locations.each do |stock_location| %>
+        <%
+          @edit_url = edit_admin_stock_location_path(stock_location)
+          @delete_url = admin_stock_location_path(stock_location)
+        %>
         <tr id="<%= spree_dom_id stock_location %>" data-hook="stock_location_row">
           <td>
             <% if can?(:update_positions, Spree::StockLocation) %>

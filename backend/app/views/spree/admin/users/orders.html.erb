@@ -49,7 +49,7 @@
             </span>
           </td>
           <td>
-            <% if order.payment_state  %>
+            <% if order.payment_state %>
               <span class="pill pill-<%= order.payment_state %>">
                 <%= t(order.payment_state, scope: 'spree.payment_states') %>
               </span>

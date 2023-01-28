@@ -35,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @payment_methods.each do |method|%>
+      <% @payment_methods.each do |method| %>
         <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows">
           <td><span class="handle"></span></td>
           <td><%= method.name %></td>
@@ -52,7 +52,7 @@
               <%= link_to_edit method.becomes(Spree::PaymentMethod), no_text: true %>
             <% end %>
             <% if can?(:destroy, method.becomes(Spree::PaymentMethod)) %>
-              <%= link_to_delete method.becomes(Spree::PaymentMethod), no_text: true  %>
+              <%= link_to_delete method.becomes(Spree::PaymentMethod), no_text: true %>
             <% end %>
           </td>
         </tr>

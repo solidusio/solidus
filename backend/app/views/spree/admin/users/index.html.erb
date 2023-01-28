@@ -78,9 +78,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user|%>
+    <% @users.each do |user| %>
       <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows">
-        <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
+        <td class='user_email'><%= link_to user.email, edit_admin_user_url(user) %></td>
         <td><%= user.spree_roles.map(&:name).to_sentence %></td>
         <td class="align-center"><%= link_to user.order_count, spree.orders_admin_user_path(user) %></td>
         <td class="align-center"><%= link_to user.display_lifetime_value, spree.items_admin_user_path(user) %></td>

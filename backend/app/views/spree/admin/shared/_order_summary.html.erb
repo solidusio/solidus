@@ -15,7 +15,7 @@
     <dt data-hook='admin_order_tab_subtotal_title'><%= Spree::Order.human_attribute_name(:item_total) %>:</dt>
     <dd id='item_total'><%= @order.display_item_total.to_html %></dd>
 
-    <% if checkout_steps.include?("delivery")  %>
+    <% if checkout_steps.include?("delivery") %>
       <dt class="order-shipment_total <%= "hidden" if @order.ship_total.zero? %>" data-hook='admin_order_tab_ship_total_title'><%= Spree::Order.human_attribute_name(:shipment_total) %>:</dt>
       <dd class="order-shipment_total <%= "hidden" if @order.ship_total.zero? %>" id='ship_total'><%= @order.display_ship_total.to_html %></dd>
     <% end %>

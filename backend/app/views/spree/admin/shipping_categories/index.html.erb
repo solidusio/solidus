@@ -25,7 +25,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @shipping_categories.each do |shipping_category|%>
+    <% @shipping_categories.each do |shipping_category| %>
     <tr id="<%= spree_dom_id shipping_category %>" data-hook="category_row">
       <td><%= shipping_category.name %></td>
       <td class="actions">
