@@ -138,7 +138,7 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.load_defaults(Spree.solidus_version)
 Spree.config do |config|
   config.mails_from = "store@example.com"
-  config.use_legacy_events = ENV['USE_LEGACY_EVENTS'].present?
+  config.use_legacy_events = (ENV['USE_LEGACY_EVENTS'] == 'true')
 
   if ENV['DISABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
