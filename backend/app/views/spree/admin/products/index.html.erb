@@ -16,7 +16,7 @@
   <div data-hook="admin_products_sidebar">
     <%= search_form_for [:admin, @search] do |f| %>
         <%- locals = {f: f} %>
-        <div class="row" data-hook="admin_products_index_search" >
+        <div class="row" data-hook="admin_products_index_search">
           <div class="col-6">
             <div class="field">
               <%= f.label :name_cont, Spree::Product.human_attribute_name(:name) %>
