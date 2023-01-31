@@ -16,7 +16,7 @@
     <div data-hook="admin_store_credit_form_fields" class="row">
       <div class="col-6">
         <%= f.field_container :amount do %>
-          <%= f.label :amount, class: 'required' %><br />
+          <%= f.label :amount, class: 'required' %><br>
           <%= render "spree/admin/shared/number_with_currency", f: f,
             amount_attr: :amount, currency: @store_credit.currency, required: true %>
           <%= f.error_message_on :amount %>

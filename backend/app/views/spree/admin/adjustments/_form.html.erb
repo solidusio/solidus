@@ -19,7 +19,7 @@
 
     <div class="col-3">
       <%= f.field_container :label do %>
-        <%= f.label :adjustment_reason_id %><br/>
+        <%= f.label :adjustment_reason_id %><br>
         <%= f.collection_select(:adjustment_reason_id, reasons_for(@adjustment), :id, :name, {include_blank: true}, {"data-placeholder" => t('spree.select_a_reason'), class: 'custom-select fullwidth'}) %>
       <% end %>
     </div>

@@ -16,19 +16,19 @@
       </div>
       <div class="col-3">
         <div class="field">
-          <label><%= t('spree.credit_allowed') %></label><br/>
+          <label><%= t('spree.credit_allowed') %></label><br>
           <%= Spree::Money.new(@refund.payment.credit_allowed) %>
         </div>
       </div>
       <div class="col-3">
         <div class="field">
-          <%= f.label :amount %><br/>
+          <%= f.label :amount %><br>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency: @refund.currency, required: true %>
         </div>
       </div>
       <div class="col-3">
         <div class="field">
-          <%= f.label :refund_reason_id %><br/>
+          <%= f.label :refund_reason_id %><br>
           <%= f.collection_select(:refund_reason_id, refund_reasons, :id, :name, {prompt: t("spree.choose_reason")}, {class: 'custom-select fullwidth'}) %>
         </div>
       </div>
