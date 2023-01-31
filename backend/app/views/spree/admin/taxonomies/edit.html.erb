@@ -2,7 +2,6 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Taxonomy), spree.admin_taxonomies_path) %>
 <% admin_breadcrumb(@taxonomy.name) %>
 
-
 <% content_for :page_actions do %>
   <li>
     <%= link_to t('spree.add_taxon'), spree.admin_taxonomies_path, class: 'add-taxon-button btn btn-primary' %>
@@ -17,7 +16,6 @@
       <%= link_to t('spree.actions.cancel'), admin_taxonomies_path, class: 'btn btn-default' %>
     </div>
   </fieldset>
-
 
   <div id="taxonomy_tree" class="tree" data-taxonomy-id="<%= @taxonomy.id %>"></div>
 <% end %>
