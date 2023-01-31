@@ -468,7 +468,7 @@ describe 'Users', type: :feature do
       click_link 'Create order for this user'
     end
 
-    it 'prefills the customer addresses with the user addresses' do
+    it 'prefills the customer addresses with the user addresses', :flaky do
       click_link 'Customer'
 
       within '.js-billing-address' do

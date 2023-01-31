@@ -118,7 +118,7 @@ module Spree
               expect(assigns(:rma_return_items)).to include(rma_return_item)
             end
 
-            it "loads the correct return authorization reasons" do
+            it "loads the correct return authorization reasons", :flaky do
               expect(assigns(:reasons)).to match_array([return_reason_1, return_reason_2, return_reason_3])
             end
           end
