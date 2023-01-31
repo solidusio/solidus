@@ -31,18 +31,18 @@
     }
   </style>
 
-  <%= javascript_tag do %>
+  <script>
     Spree.ready(function(){
       $('.translation_missing').tooltip();
     });
-  <% end %>
+  </script>
 <%- end %>
 
 <%= render "spree/admin/shared/js_locale_data" %>
 
-<%= javascript_tag do -%>
+<script>
   Spree.api_key = "<%= spree_current_user.try(:spree_api_key) %>";
   Spree.env = "<%= Rails.env %>";
-<% end %>
+</script>
 
 <%= yield :head %>
