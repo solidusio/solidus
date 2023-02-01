@@ -4,7 +4,6 @@
 <% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, admin_user_store_credit_path(@user, @store_credit)) %>
 <% admin_breadcrumb(t('spree.edit')) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
@@ -16,7 +15,7 @@
     <div data-hook="admin_store_credit_form_fields" class="row">
       <div class="col-6">
         <%= f.field_container :amount do %>
-          <%= f.label :amount, class: 'required' %><br />
+          <%= f.label :amount, class: 'required' %><br>
           <%= render "spree/admin/shared/number_with_currency", f: f,
             amount_attr: :amount, currency: @store_credit.currency, required: true %>
           <%= f.error_message_on :amount %>

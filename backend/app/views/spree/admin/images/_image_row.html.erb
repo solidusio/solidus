@@ -1,5 +1,4 @@
 <tr id="<%= spree_dom_id image %>" data-hook="images_row">
-
   <td>
     <% if can?(:update_positions, Spree::Image) %>
       <span class="handle"></span>
@@ -28,7 +27,7 @@
         <%= f.select :viewable_id, options_for_select(@variants, image.viewable_id), {}, class: 'select2 fullwidth', autocomplete: "off" %>
       <% end %>
     </td>
-  <% end # @product.has_variants? %>
+  <% end %>
 
   <td>
     <%= fields_for image do |f| %>

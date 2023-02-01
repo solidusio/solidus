@@ -4,7 +4,6 @@
 <% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::TaxRate)) %>
 
-
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::TaxRate) %>
     <li>
@@ -19,7 +18,7 @@
 
 <% content_for :table_filter do %>
   <%= search_form_for [:admin, @search], url: spree.admin_tax_rates_path do |f| %>
-    <div class= "row">
+    <div class="row">
       <div class="col-md-6">
         <div class="field">
           <%= f.label :zone_id_eq, Spree::Zone.model_name.human %>
@@ -68,10 +67,10 @@
       </tr>
     </thead>
     <tbody>
-      <% @tax_rates.each do |tax_rate|%>
+      <% @tax_rates.each do |tax_rate| %>
       <tr id="<%= spree_dom_id tax_rate %>" data-hook="rate_row">
-        <td><%=tax_rate.zone.try(:name) || t('spree.not_available') %></td>
-        <td><%=tax_rate.name %></td>
+        <td><%= tax_rate.zone.try(:name) || t('spree.not_available') %></td>
+        <td><%= tax_rate.name %></td>
         <td>
           <% if tax_rate.tax_categories.any? %>
             <%= tax_rate.tax_categories.map(&:name).join(", ") %>
@@ -79,11 +78,11 @@
             <%= t('spree.not_available') %>
           <% end %>
         </td>
-        <td><%=tax_rate.amount %></td>
-        <td><%=tax_rate.included_in_price? ? t('spree.say_yes') : t('spree.say_no') %></td>
-        <td><%=tax_rate.show_rate_in_label? ? t('spree.say_yes') : t('spree.say_no') %></td>
-        <td><%=tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
-        <td><%=tax_rate.calculator && tax_rate.calculator.class.model_name.human %></td>
+        <td><%= tax_rate.amount %></td>
+        <td><%= tax_rate.included_in_price? ? t('spree.say_yes') : t('spree.say_no') %></td>
+        <td><%= tax_rate.show_rate_in_label? ? t('spree.say_yes') : t('spree.say_no') %></td>
+        <td><%= tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
+        <td><%= tax_rate.calculator && tax_rate.calculator.class.model_name.human %></td>
         <td class="actions">
           <% if can?(:update, tax_rate) %>
             <%= link_to_edit tax_rate, no_text: true %>

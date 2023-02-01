@@ -8,12 +8,12 @@
 
   <%= render "spree/admin/orders/order_details", { order: order } %>
 
-  <%= javascript_tag do -%>
+  <script>
     var order_number = '<%= @order.number %>';
     var shipments = [];
 
     <% @order.shipments.each do |shipment| %>
             shipments.push(<%== shipment.as_json(root: false, only: [:id, :tracking, :number, :state, :stock_location_id], include: [:inventory_units, :stock_location]).to_json %>);
     <% end %>
-  <% end -%>
+  </script>
 </div>

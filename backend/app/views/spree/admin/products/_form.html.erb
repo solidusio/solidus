@@ -31,7 +31,7 @@
       <div class="mt-4">
         <div data-hook="admin_product_form_taxons">
           <%= f.field_container :taxons do %>
-            <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
+            <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br>
             <%= f.hidden_field :taxon_ids, value: @product.taxon_ids.join(',') %>
           <% end %>
         </div>

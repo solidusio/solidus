@@ -2,7 +2,6 @@
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(t('spree.admin.user.items_purchased')) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :items %>
 <%= render partial: 'spree/admin/users/user_page_actions' %>
@@ -16,13 +15,13 @@
     <%# TODO add search interface %>
     <table class="stock-contents index" id="listing_items" data-hook="stock-contents">
       <colgroup>
-        <col style="width: 10%;" />
-        <col style="width: 10%;" />
-        <col style="width: 30%;" />
-        <col style="width: 8%;" />
-        <col style="width: 8%;" />
-        <col style="width: 10%;" />
-        <col style="width: 14%;" />
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 30%;">
+        <col style="width: 8%;">
+        <col style="width: 8%;">
+        <col style="width: 10%;">
+        <col style="width: 14%;">
       </colgroup>
 
       <thead>
@@ -69,6 +68,7 @@
             </tr>
           <% end %>
         <% end %>
+      </tbody>
     </table>
   <% else %>
     <div class="no-objects-found">

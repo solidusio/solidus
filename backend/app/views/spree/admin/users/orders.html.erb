@@ -2,7 +2,6 @@
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(t('spree.admin.user.order_history')) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :orders %>
 <%= render partial: 'spree/admin/users/user_page_actions' %>
@@ -50,7 +49,7 @@
             </span>
           </td>
           <td>
-            <% if order.payment_state  %>
+            <% if order.payment_state %>
               <span class="pill pill-<%= order.payment_state %>">
                 <%= t(order.payment_state, scope: 'spree.payment_states') %>
               </span>

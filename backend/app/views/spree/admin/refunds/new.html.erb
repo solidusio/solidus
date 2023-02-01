@@ -4,7 +4,6 @@
 <% admin_breadcrumb(link_to "#{Spree::Payment.model_name.human} #{@refund.payment.id}", admin_order_payment_path(@refund.payment.order, @refund.payment)) %>
 <% admin_breadcrumb(t('spree.new_refund')) %>
 
-
 <%= form_for [:admin, @refund.payment.order, @refund.payment, @refund] do |f| %>
   <fieldset class="no-border-top">
     <div data-hook="admin_refund_form_fields" class="row">
@@ -16,19 +15,19 @@
       </div>
       <div class="col-3">
         <div class="field">
-          <label><%= t('spree.credit_allowed') %></label><br/>
+          <label><%= t('spree.credit_allowed') %></label><br>
           <%= Spree::Money.new(@refund.payment.credit_allowed) %>
         </div>
       </div>
       <div class="col-3">
         <div class="field">
-          <%= f.label :amount %><br/>
+          <%= f.label :amount %><br>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency: @refund.currency, required: true %>
         </div>
       </div>
       <div class="col-3">
         <div class="field">
-          <%= f.label :refund_reason_id %><br/>
+          <%= f.label :refund_reason_id %><br>
           <%= f.collection_select(:refund_reason_id, refund_reasons, :id, :name, {prompt: t("spree.choose_reason")}, {class: 'custom-select fullwidth'}) %>
         </div>
       </div>

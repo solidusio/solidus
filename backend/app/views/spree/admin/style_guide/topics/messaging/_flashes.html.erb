@@ -7,7 +7,7 @@
     type = $(this).data('flashType');
 
     if (!$('.flash.' + type).is('*')) {
-      flash = $("<div class='flash'>")
+      flash = $("<div class='flash'></div>")
         .text(type)
         .addClass(type)
         .appendTo('.js-flash-wrapper')

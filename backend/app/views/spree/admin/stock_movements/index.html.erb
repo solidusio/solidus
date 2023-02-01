@@ -17,14 +17,11 @@
 <% end %>
 
 <% content_for :table_filter do %>
-  <%=
-    search_form_for(
-      [:admin, @search],
-      url: admin_stock_location_stock_movements_path(
-        params[:stock_location_id]
-    )) do |f|
-  %>
-    <div class ="row">
+  <%= search_form_for(
+    [:admin, @search],
+    url: admin_stock_location_stock_movements_path(params[:stock_location_id])
+  ) do |f| %>
+    <div class="row">
       <div class="field-block col-12 col-md-6 col-lg-4 col-xl-3">
         <div class="field">
           <%= label_tag :q_variant_sku_eq, "#{t('spree.variant')} #{t('spree.sku')}" %>
@@ -50,17 +47,15 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_stock_movements_index_headers">
-      <th><%= Spree::StockMovement.human_attribute_name(:variant) %>
+      <th><%= Spree::StockMovement.human_attribute_name(:variant) %></th>
       <th><%= Spree::StockMovement.human_attribute_name(:quantity) %></th>
       <th><%= Spree::StockMovement.human_attribute_name(:originated_by) %></th>
     </tr>
   </thead>
   <tbody>
-    <% @stock_movements.each do |stock_movement|%>
+    <% @stock_movements.each do |stock_movement| %>
       <tr id="<%= spree_dom_id stock_movement %>" data-hook="admin_stock_movements_index_rows">
-        <td>
-          <%= display_variant(stock_movement) %>
-        </td>
+        <td><%= display_variant(stock_movement) %></td>
         <td><%= stock_movement.quantity %></td>
         <td><%= pretty_originator(stock_movement) %></td>
       </tr>

@@ -9,13 +9,13 @@
     <div data-hook="admin_refund_form_fields" class="row">
       <div class="col-3">
         <div class="field">
-          <%= f.label :amount %><br/>
+          <%= f.label :amount %><br>
           <%= @refund.display_amount %>
         </div>
       </div>
       <div class="col-3">
         <div class="field">
-          <%= f.label :refund_reason_id %><br/>
+          <%= f.label :refund_reason_id %><br>
           <%= f.collection_select(:refund_reason_id, refund_reasons, :id, :name, {}, {class: 'custom-select fullwidth'}) %>
         </div>
       </div>

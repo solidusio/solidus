@@ -2,10 +2,10 @@
   <legend><%= "#{t('spree.risk_analysis')}: #{t('spree.not') unless @order.is_risky?} #{t('spree.risky')}" %></legend>
   <table>
     <thead>
-      <th><%= t('spree.risk')%></th>
-      <th><%= t('spree.status')%></th>
+      <th><%= t('spree.risk') %></th>
+      <th><%= t('spree.status') %></th>
     </thead>
-    <tbody id="risk-analysis" data-hook="order_details_adjustments"  class="with-border">
+    <tbody id="risk-analysis" data-hook="order_details_adjustments" class="with-border">
       <tr class="">
         <td><strong>
           <%= t('spree.failed_payment_attempts') %>:

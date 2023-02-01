@@ -18,6 +18,6 @@
     <%= button_tag t('spree.add_coupon_code'), id: "add_coupon_code", class: 'btn btn-primary' %>
   </div>
 <% end %>
-<%= javascript_tag do -%>
+<script>
   var order_number = '<%= @order.number %>';
-<% end -%>
+</script>

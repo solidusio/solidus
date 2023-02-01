@@ -15,32 +15,32 @@
 
     <%= f.field_container :seo_title do %>
       <%= f.label :seo_title %>
-      <%= f.text_field :seo_title, class: 'fullwidth'  %>
+      <%= f.text_field :seo_title, class: 'fullwidth' %>
       <%= f.error_message_on :seo_title %>
     <% end %>
 
     <%= f.field_container :meta_keywords do %>
       <%= f.label :meta_keywords %>
-      <%= f.text_field :meta_keywords, class: 'fullwidth'  %>
+      <%= f.text_field :meta_keywords, class: 'fullwidth' %>
       <%= f.error_message_on :meta_keywords %>
     <% end %>
 
     <%= f.field_container :meta_description do %>
       <%= f.label :meta_description %>
-      <%= f.text_area :meta_description, class: 'fullwidth'  %>
+      <%= f.text_area :meta_description, class: 'fullwidth' %>
       <%= f.error_message_on :meta_description %>
     <% end %>
   </div>
   <div class="col-12 col-md-6">
     <%= f.field_container :url do %>
       <%= f.label :url, class: 'required' %>
-      <%= f.text_field :url, required: true, class: 'fullwidth'  %>
+      <%= f.text_field :url, required: true, class: 'fullwidth' %>
       <%= f.error_message_on :url %>
     <% end %>
 
     <%= f.field_container :mail_from_address do %>
       <%= f.label :mail_from_address, class: 'required' %>
-      <%= f.text_field :mail_from_address, required: true, class: 'fullwidth'  %>
+      <%= f.text_field :mail_from_address, required: true, class: 'fullwidth' %>
       <%= f.error_message_on :mail_from_address %>
     <% end %>
 

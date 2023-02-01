@@ -53,7 +53,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
         json = response.responseJSON;
         message = json.error;
         for (error in json.errors) {
-          message += '<br />' + json.errors[error].join();
+          message += '<br>' + json.errors[error].join();
         }
         window.show_flash('error', message);
       }
