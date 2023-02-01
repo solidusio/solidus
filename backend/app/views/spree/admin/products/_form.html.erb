@@ -1,30 +1,70 @@
 <div data-hook="admin_product_form_fields">
 
   <div class="row">
+    <div class="left col-9">
+      <div data-hook="admin_product_form_left">
+        <div data-hook="admin_product_form_name">
+          <%= f.field_container :name do %>
+            <%= f.label :name, class: 'required' %>
+            <%= f.text_field :name, class: 'fullwidth title', required: true %>
+            <%= f.error_message_on :name %>
+          <% end %>
+        </div>
 
-    <div class="left col-9" data-hook="admin_product_form_left">
-      <div data-hook="admin_product_form_name">
-        <%= f.field_container :name do %>
-          <%= f.label :name, class: 'required' %>
-          <%= f.text_field :name, class: 'fullwidth title', required: true %>
-          <%= f.error_message_on :name %>
-        <% end %>
+        <div data-hook="admin_product_form_slug">
+          <%= f.field_container :slug do %>
+            <%= f.label :slug, class: ('required' if !f.object.new_record?) %>
+            <%= f.text_field :slug, class: 'fullwidth title', required: !f.object.new_record?, disabled: f.object.new_record? %>
+            <%= f.error_message_on :slug %>
+          <% end %>
+        </div>
+
+        <div data-hook="admin_product_form_description">
+          <%= f.field_container :description do %>
+            <%= f.label :description %>
+            <%= f.text_area :description, {rows: "#{unless @product.has_variants? then '22' else '15' end}", class: 'fullwidth'} %>
+            <%= f.error_message_on :description %>
+          <% end %>
+        </div>
       </div>
 
-      <div data-hook="admin_product_form_slug">
-        <%= f.field_container :slug do %>
-          <%= f.label :slug, class: ('required' if !f.object.new_record?) %>
-          <%= f.text_field :slug, class: 'fullwidth title', required: !f.object.new_record?, disabled: f.object.new_record? %>
-          <%= f.error_message_on :slug %>
-        <% end %>
-      </div>
+      <div class="mt-4">
+        <div data-hook="admin_product_form_taxons">
+          <%= f.field_container :taxons do %>
+            <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
+            <%= f.hidden_field :taxon_ids, value: @product.taxon_ids.join(',') %>
+          <% end %>
+        </div>
 
-      <div data-hook="admin_product_form_description">
-        <%= f.field_container :description do %>
-          <%= f.label :description %>
-          <%= f.text_area :description, {rows: "#{unless @product.has_variants? then '22' else '15' end}", class: 'fullwidth'} %>
-          <%= f.error_message_on :description %>
-        <% end %>
+        <div data-hook="admin_product_form_option_types">
+          <%= f.field_container :option_types do %>
+            <%= f.label :option_type_ids, plural_resource_name(Spree::OptionType) %>
+            <%= f.hidden_field :option_type_ids, value: @product.option_type_ids.join(',') %>
+          <% end %>
+        </div>
+
+        <div data-hook="admin_product_form_meta">
+          <div data-hook="admin_product_form_meta_title">
+            <%= f.field_container :meta_title do %>
+              <%= f.label :meta_title %>
+              <%= f.text_field :meta_title, class: 'fullwidth' %>
+            <% end %>
+          </div>
+
+          <div data-hook="admin_product_form_meta_keywords">
+            <%= f.field_container :meta_keywords do %>
+              <%= f.label :meta_keywords %>
+              <%= f.text_field :meta_keywords, class: 'fullwidth' %>
+            <% end %>
+          </div>
+
+          <div data-hook="admin_product_form_meta_description">
+            <%= f.field_container :meta_description do %>
+              <%= f.label :meta_description %>
+              <%= f.text_field :meta_description, class: 'fullwidth' %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -161,49 +201,6 @@
           <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select' }) %>
           <%= f.error_message_on :tax_category %>
         <% end %>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row">
-
-    <div class="col-9">
-      <div data-hook="admin_product_form_taxons">
-        <%= f.field_container :taxons do %>
-          <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
-          <%= f.hidden_field :taxon_ids, value: @product.taxon_ids.join(',') %>
-        <% end %>
-      </div>
-
-      <div data-hook="admin_product_form_option_types">
-        <%= f.field_container :option_types do %>
-          <%= f.label :option_type_ids, plural_resource_name(Spree::OptionType) %>
-          <%= f.hidden_field :option_type_ids, value: @product.option_type_ids.join(',') %>
-        <% end %>
-      </div>
-
-      <div data-hook="admin_product_form_meta">
-        <div data-hook="admin_product_form_meta_title">
-          <%= f.field_container :meta_title do %>
-            <%= f.label :meta_title %>
-            <%= f.text_field :meta_title, class: 'fullwidth' %>
-          <% end %>
-        </div>
-
-        <div data-hook="admin_product_form_meta_keywords">
-          <%= f.field_container :meta_keywords do %>
-            <%= f.label :meta_keywords %>
-            <%= f.text_field :meta_keywords, class: 'fullwidth' %>
-          <% end %>
-        </div>
-
-        <div data-hook="admin_product_form_meta_description">
-          <%= f.field_container :meta_description do %>
-            <%= f.label :meta_description %>
-            <%= f.text_field :meta_description, class: 'fullwidth' %>
-          <% end %>
-        </div>
       </div>
     </div>
 
