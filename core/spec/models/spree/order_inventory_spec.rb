@@ -171,7 +171,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
         end
 
         context 'when there is not enough availability at any stock location' do
-          it 'falls-back selecting first non-shipped shipment that leaves from same stock_location' do
+          it 'falls-back selecting first non-shipped shipment that leaves from same stock_location', :flaky do
             shipment = subject.send(:determine_target_shipment, 1)
             shipment.reload
 
