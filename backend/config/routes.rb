@@ -70,7 +70,7 @@ Spree::Core::Engine.routes.draw do
 
     delete '/product_properties/:id', to: "product_properties#destroy", as: :product_property
 
-    resources :orders, except: [:show] do
+    resources :orders do
       member do
         get :cart
         put :advance
