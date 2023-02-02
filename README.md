@@ -38,7 +38,7 @@
 As a community-driven project, Solidus relies on funds and time donated by developers and stakeholders who use Solidus for their businesses. If you'd like to help Solidus keep growing, please consider:
 
 - [Become a backer or sponsor on Open Collective](https://opencollective.com/solidus).
-- [Contribute to the project](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md).
+- [Contribute to the project](https://github.com/solidusio/.github/blob/main/CONTRIBUTING.md).
 
 ### Main Contributor & Director
 At present, Nebulab is the main code contributor and director of Solidus, providing technical guidance and coordinating community efforts and activities.
