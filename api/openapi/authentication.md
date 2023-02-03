@@ -10,6 +10,8 @@ You can use your API key to access all resources in the API. The API key must be
 Authorization: Bearer API_KEY
 ```
 
+For a client to obtain the API key for a user, you'll first need to implement a custom sign-in strategy. It might depend on your setup, but a common approach is leveraging solidus_auth_devise, as [explained in our guides](https://guides.solidus.io/how-tos/how-to-sign-in-to-the-solidus-api-using-solidus_auth_devise).
+
 As an admin, you can find your API token in the admin section under Users > Your e-email > API Access (at `admin/users/<user_id>/edit`)
 
 Example:
