@@ -54,7 +54,7 @@ module Spree
     scope :processing, -> { with_state('processing') }
     scope :failed, -> { with_state('failed') }
 
-    scope :risky, -> { where("avs_response IN (?) OR (cvv_response_code IS NOT NULL and cvv_response_code != 'M') OR state = 'failed'", RISKY_AVS_CODES) }
+    scope :risky, -> { failed.or(where(avs_response: RISKY_AVS_CODES)).or(where.not(cvv_response_code: [nil, '', 'M'])) }
     scope :valid, -> { where.not(state: %w(failed invalid void)) }
 
     scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
@@ -127,6 +127,11 @@ module Spree
       res || payment_method
     end
 
+    # @return [Boolean] true when this payment is risky
+    def risky?
+      is_avs_risky? || is_cvv_risky? || state == 'failed'
+    end
+
     # @return [Boolean] true when this payment is risky based on address
     def is_avs_risky?
       return false if avs_response.blank? || NON_RISKY_AVS_CODES.include?(avs_response)
@@ -137,7 +142,6 @@ module Spree
     def is_cvv_risky?
       return false if cvv_response_code == "M"
       return false if cvv_response_code.nil?
-      return false if cvv_response_message.present?
       true
     end
 

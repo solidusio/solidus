@@ -4,10 +4,6 @@ module Spree
   # An implementation of a `Spree::PaymentMethod` for credit card payments.
   #
   # It's a good candidate as base class for other credit card based payment methods.
-  #
-  # See https://github.com/solidusio/solidus_gateway/ for
-  # officially supported payment method implementations.
-  #
   class PaymentMethod::CreditCard < PaymentMethod
     def payment_source_class
       Spree::CreditCard
