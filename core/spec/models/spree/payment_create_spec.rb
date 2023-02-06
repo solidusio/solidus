@@ -135,5 +135,35 @@ module Spree
         expect(payment_create.build).to eq(payment)
       end
     end
+
+    context 'with an existing payment' do
+      let(:payment) {
+        order.payments.create!(amount: 123, payment_method: payment_method) do |payment|
+          allow(payment).to receive(:source_required?).and_return(false)
+        end
+      }
+      let(:attributes) { { id: payment.id } }
+
+      it 'picks up the payment specified by the id' do
+        expect(payment_create.build).to eq(payment)
+      end
+
+      context 'when not associated to the order' do
+        let(:unrelated_payment) { create(:payment) }
+        let(:attributes) { { id: unrelated_payment.id } }
+
+        it "raises an exception" do
+          expect{ payment_create.build }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    context 'with an unknown payment' do
+      let(:attributes) { { id: 123 } }
+
+      it "assumes it's a malicious attempt with a crafted request and raises an exception" do
+        expect{payment_create.build}.to raise_error(ActiveRecord::RecordNotFound, /Couldn't find Spree::Payment with 'id'=123/)
+      end
+    end
   end
 end

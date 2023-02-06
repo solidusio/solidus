@@ -7,11 +7,11 @@ module Spree
 
     # @param order [Order] The order for the new payment
     # @param attributes [Hash,ActionController::Parameters] attributes which are assigned to the new payment
+    #   * :id Id of an existing payment
     #   * :payment_method_id Id of payment method used for this payment
     #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
     #     * :wallet_payment_source_id (Integer): The id of a {WalletPaymentSource} to use
     # @param request_env [Hash] rack env of user creating the payment
-    # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: PAYMENT_NOT_PROVIDED, request_env: {})
       @order = order
 
@@ -32,6 +32,7 @@ module Spree
     # Build the new Payment
     # @return [Payment] a new (unpersisted) Payment
     def build
+      @payment ||= order.payments.find(attributes[:id]) if attributes[:id]
       @payment ||= order.payments.new
       @payment.request_env = @request_env if @request_env
       @payment.attributes = @attributes
