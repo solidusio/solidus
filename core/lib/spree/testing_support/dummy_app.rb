@@ -90,7 +90,7 @@ module DummyApp
     config.active_record.dump_schema_after_migration = false
 
     # Configure active storage to use storage within tmp folder
-    unless ENV['DISABLE_ACTIVE_STORAGE']
+    unless (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
       initializer 'solidus.active_storage' do
         config.active_storage.service_configurations = {
           test: {
@@ -140,7 +140,7 @@ Spree.load_defaults(Spree.solidus_version)
 Spree.config do |config|
   config.use_legacy_events = (ENV['USE_LEGACY_EVENTS'] == 'true')
 
-  if ENV['DISABLE_ACTIVE_STORAGE']
+  if (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
     config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
     config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
   end
