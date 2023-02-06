@@ -30,7 +30,7 @@ module Spree
 
       if source_attributes[:wallet_payment_source_id].present?
         build_from_wallet_payment_source
-      else
+      elsif source_attributes.present?
         build_source
       end
 
@@ -43,7 +43,7 @@ module Spree
 
     def build_source
       payment_method = payment.payment_method
-      if source_attributes.present? && payment_method.try(:payment_source_class)
+      if payment_method.try(:payment_source_class)
         payment.source = payment_method.payment_source_class.new(source_attributes)
         payment.source.payment_method_id = payment_method.id
         if order && payment.source.respond_to?(:user=)
