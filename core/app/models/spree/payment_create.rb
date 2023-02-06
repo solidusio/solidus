@@ -3,6 +3,8 @@
 module Spree
   # Service object for creating new payments on an Order
   class PaymentCreate
+    PAYMENT_NOT_PROVIDED = Object.new.freeze
+
     # @param order [Order] The order for the new payment
     # @param attributes [Hash,ActionController::Parameters] attributes which are assigned to the new payment
     #   * :payment_method_id Id of payment method used for this payment
@@ -10,9 +12,15 @@ module Spree
     #     * :wallet_payment_source_id (Integer): The id of a {WalletPaymentSource} to use
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
-    def initialize(order, attributes, payment: nil, request_env: {})
+    def initialize(order, attributes, payment: PAYMENT_NOT_PROVIDED, request_env: {})
       @order = order
-      @payment = payment
+
+      if payment != PAYMENT_NOT_PROVIDED
+        Spree::Deprecation.deprecation_warning("Passing `payment:` to `PaymentCreate.new`")
+        @payment = payment
+      else
+        @payment = nil
+      end
 
       # If AC::Params are passed in, attributes.to_h gives us a hash of only
       # the permitted attributes.

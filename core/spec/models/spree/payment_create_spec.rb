@@ -122,5 +122,18 @@ module Spree
         end
       end
     end
+
+    context 'passing existing payment' do
+      let(:attributes) { {} }
+      let(:payment) { create(:payment, payment_method: payment_method) }
+      let(:payment_create) { described_class.new(order, attributes, request_env: request_env, payment: payment) }
+
+      it "is deprecated" do
+        expect(Spree::Deprecation).to receive(:warn).
+          with(a_string_matching(/Passing `payment:` to `PaymentCreate.new`/), any_args)
+
+        expect(payment_create.build).to eq(payment)
+      end
+    end
   end
 end
