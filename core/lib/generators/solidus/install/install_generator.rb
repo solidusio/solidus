@@ -36,8 +36,8 @@ module Solidus
     ]
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
-    class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
+    class_option :seed, type: :boolean, default: true, banner: 'Run seed data task(migrations must be run)'
+    class_option :sample, type: :boolean, default: true, banner: 'Run sample data task(migrations must be run)'
     class_option :active_storage, type: :boolean, default: (
       Rails.gem_version >= Gem::Version.new("6.1.0")
     ), banner: 'Install ActiveStorage as image attachments handler for products and taxons'
@@ -63,8 +63,8 @@ module Solidus
 
     def prepare_options
       @run_migrations = options[:migrate]
-      @load_seed_data = options[:seed] && @run_migrations
-      @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
+      @run_sample = options[:sample] && @run_migrations
+      @run_seeds = options[:seed] && @run_migrations && !@run_sample
       @selected_frontend = detect_frontend_to_install
       @selected_authentication = detect_authentication_to_install
       @selected_payment_method = detect_payment_method_to_install
@@ -172,27 +172,12 @@ module Solidus
       apply_template_for :payment_method, @selected_payment_method
     end
 
-    def populate_seed_data
-      if @load_seed_data
-        say_status :loading, "seed data"
-        rake_options = []
-        rake_options << "AUTO_ACCEPT=1" if options[:auto_accept]
-        rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
-        rake_options << "ADMIN_PASSWORD=#{options[:admin_password]}" if options[:admin_password]
+    def run_data_loaders
+      say_status_and_run_task("seed and sample data", "spree_sample:load") if @run_sample
+      say_status_and_run_task("seed data", "db:seed #{seed_data_overrides.join(' ')}") if @run_seeds
 
-        rake("db:seed #{rake_options.join(' ')}")
-      else
-        say_status :skipping, "seed data (you can always run rake db:seed)"
-      end
-    end
-
-    def load_sample_data
-      if @load_sample_data
-        say_status :loading, "sample data"
-        rake 'spree_sample:load'
-      else
-        say_status :skipping, "sample data (you can always run rake spree_sample:load)"
-      end
+      say_status :skipping, "seed data (you can always run rake db:seed)" unless @run_seeds || @run_sample
+      say_status :skipping, "sample data (you can always run rake spree_sample:load)" unless @run_sample
     end
 
     def complete
@@ -200,6 +185,19 @@ module Solidus
     end
 
     private
+
+    def say_status_and_run_task(status_text, task)
+      say_status :loading, status_text
+      rake task
+    end
+
+    def seed_data_overrides
+      rake_options = []
+      rake_options << "AUTO_ACCEPT=1" if options[:auto_accept]
+      rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
+      rake_options << "ADMIN_PASSWORD=#{options[:admin_password]}" if options[:admin_password]
+      rake_options
+    end
 
     def generate(what, *args, abort_on_failure: true)
       args << '--auto-accept' if options[:auto_accept]

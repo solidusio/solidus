@@ -148,12 +148,16 @@ bin/rails g solidus:install --migrate=false --sample=false --seed=false
 
 You can always perform any of these steps later by using these commands.
 
+**Note: Loading sample data will automatically load seed data as well because the sample data depends on the data provided by the seeds.**
+
 ```bash
 bin/rails railties:install:migrations
 bin/rails db:migrate
-bin/rails db:seed
 bin/rails spree_sample:load
 ```
+
+If you don't want to load sample data you can use `bin/rails db:seed` instead. This command
+will populate the database with only the basic data needed for Solidus to work.
 
 There are also options and rake tasks provided by
 [solidus\_auth\_devise](https://github.com/solidusio/solidus_auth_devise).

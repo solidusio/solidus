@@ -5,7 +5,7 @@ require 'spree/sample'
 
 namespace :spree_sample do
   desc 'Loads sample data'
-  task load: :environment do
+  task load: ['db:seed', :environment] do
     if ARGV.include?("db:migrate")
       puts <<~TEXT
         Please run db:migrate separately from spree_sample:load.

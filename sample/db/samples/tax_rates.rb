@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
-north_america = Spree::Zone.find_by!(name: "North America")
+begin
+  north_america = Spree::Zone.find_by!(name: "North America")
+rescue ActiveRecord::RecordNotFound
+  puts <<~TEXT
+    Couldn't find 'North America' zone. Did you run `rails db:seed` first?
+
+    That task will set up the countries, states and zones required for your store.
+  TEXT
+  exit
+end
+
 clothing = Spree::TaxCategory.find_by!(name: "Default")
 tax_rate = Spree::TaxRate.create(
   name: "North America",
