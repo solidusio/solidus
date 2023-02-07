@@ -1,3 +1,27 @@
+## Solidus v3.3.1 (2023-02-07)
+
+## Solidus Core
+- Point the Solidus Installer to the right Starter Frontend version [#4898](https://github.com/solidusio/solidus/pull/4898) ([@kennyadsl](https://github.com/kennyadsl))
+- Fix publishing events responding to #to_hash on Ruby 2.7 [#4895](https://github.com/solidusio/solidus/pull/4895) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix CI only testing with the legacy event system adapter [#4887](https://github.com/solidusio/solidus/pull/4887) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix CI only testing with the paperclip adapter [#4911](https://github.com/solidusio/solidus/pull/4911) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.3.0...v3.3.1
+
+
 ## Solidus v3.3.0 (2023-01-24)
 
 ## Solidus Core
