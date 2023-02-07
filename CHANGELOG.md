@@ -1,3 +1,28 @@
+## Solidus v3.2.6 (2023-02-07)
+
+## Solidus Core
+- [v3.2] Revert "Remove trailing zeroes in tax amount" [#4826](https://github.com/solidusio/solidus/pull/4826) ([@tvdeyen](https://github.com/tvdeyen))
+- [v3.2] Fix CI only testing with the legacy event system adapter [#4888](https://github.com/solidusio/solidus/pull/4888) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.2] Fix publishing events responding to #to_hash on Ruby 2.7 [#4894](https://github.com/solidusio/solidus/pull/4894) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.2] Fix CI only testing with the paperclip adapter [#4910](https://github.com/solidusio/solidus/pull/4910) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+
+
+## Solidus Backend
+- [v3.2] Fix styling of table rows for deleted records [#4835](https://github.com/solidusio/solidus/pull/4835) ([@tvdeyen](https://github.com/tvdeyen))
+- [v3.2] Hide soft deleted prices from admin product view [#4836](https://github.com/solidusio/solidus/pull/4836) ([@tvdeyen](https://github.com/tvdeyen))
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+- Depend on solidus_frontend in GH for development [#4815](https://github.com/solidusio/solidus/pull/4815) ([@kennyadsl](https://github.com/kennyadsl))
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.5...v3.2.6
+
+
 ## Solidus v3.2.5 (2022-12-23)
 
 ## Solidus Core
