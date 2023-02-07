@@ -1,3 +1,28 @@
+## Solidus v3.1.9 (2023-02-07)
+
+## Solidus Core
+- [v3.1] Fix call context when a preference default is a proc [#4769](https://github.com/solidusio/solidus/pull/4769) ([@Roddoric](https://github.com/Roddoric))
+- [v3.1] Add EN percentage number format [#4827](https://github.com/solidusio/solidus/pull/4827) ([@tvdeyen](https://github.com/tvdeyen))
+
+
+## Solidus Backend
+- [v3.1] Fix variant price performance regressions [#4691](https://github.com/solidusio/solidus/pull/4691) ([@mamhoff](https://github.com/mamhoff))) 
+- [v3.1] Add EN percentage number format [#4827](https://github.com/solidusio/solidus/pull/4827) ([@tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Paginate variant autocomplete [#4663](https://github.com/solidusio/solidus/pull/4663) ([@tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Do not pass arrays to can? [#4711](https://github.com/solidusio/solidus/pull/4711) ([@jacobherringtom](https://github.com/jacobherringtom)))
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.1.8...v3.1.9
+
+
 ## Solidus 3.1.0 (master, unreleased)
 
 ### Major changes
