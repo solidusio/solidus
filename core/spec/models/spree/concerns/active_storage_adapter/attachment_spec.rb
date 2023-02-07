@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-unless ENV['DISABLE_ACTIVE_STORAGE']
+unless (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
   RSpec.describe Spree::ActiveStorageAdapter::Attachment do
     describe '#variant' do
       it "converts to resize_to_limit when definition doesn't contain any special symbol" do
