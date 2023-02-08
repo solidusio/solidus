@@ -82,11 +82,11 @@ images = {
 
 products[:solidus_tshirt].variants.each do |variant|
   color = variant.option_value("clothing-color").downcase
-  main_image = image["solidus_tshirt_#{color}", "png"]
+  main_image = image["solidus_tshirt_#{color}", "jpg"]
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
-  back_image = image["solidus_tshirt_back_#{color}", "png"]
+  back_image = image["solidus_tshirt_back_#{color}", "jpg"]
 
   next unless back_image
 
@@ -97,11 +97,11 @@ end
 
 products[:solidus_long].variants.each do |variant|
   color = variant.option_value("clothing-color").downcase
-  main_image = image["solidus_long_#{color}", "png"]
+  main_image = image["solidus_long_#{color}", "jpg"]
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
-  back_image = image["solidus_long_back_#{color}", "png"]
+  back_image = image["solidus_long_back_#{color}", "jpg"]
 
   next unless back_image
 
@@ -112,7 +112,7 @@ end
 
 products[:solidus_womens_tshirt].reload.variants.each do |variant|
   color = variant.option_value("clothing-color").downcase
-  main_image = image["solidus_womens_tshirt_#{color}", "png"]
+  main_image = image["solidus_womens_tshirt_#{color}", "jpg"]
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
