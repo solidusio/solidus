@@ -169,16 +169,16 @@ commands:
             cat /tmp/.tool-versions
       - restore_cache:
           keys:
-            - solidus-installer-v6-{{ checksum "/tmp/.tool-versions" }}
-            - solidus-installer-v6-
+            - solidus-installer-v7-{{ checksum "/tmp/.tool-versions" }}
+            - solidus-installer-v7-
       - run:
           name: "Prepare the rails application"
           command: |
             cd /tmp
             test -d my_app || gem install rails solidus
-            test -d my_app || rails new my_app --skip-javascript --skip-git
+            test -d my_app || rails new my_app --skip-git
       - save_cache:
-          key: solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
+          key: solidus-installer-v7-{{ checksum "/tmp/.tool-versions" }}
           paths:
             - /tmp/my_app
             - /home/circleci/.rubygems

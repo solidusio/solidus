@@ -47,8 +47,7 @@ unbundled bundle exec rails new sandbox --database="$RAILSDB" \
   --skip-keeps \
   --skip-rc \
   --skip-spring \
-  --skip-test \
-  --skip-javascript
+  --skip-test
 
 if [ ! -d "sandbox" ]; then
   echo 'sandbox rails application failed'
