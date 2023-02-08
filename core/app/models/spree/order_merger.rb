@@ -67,7 +67,7 @@ module Spree
 
     private
 
-    # Retreive a matching line item from the existing order
+    # Retrieve a matching line item from the existing order
     #
     # It will compare line items based on variants, and all line item
     # comparison hooks on the order.
