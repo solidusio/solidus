@@ -44,10 +44,6 @@ module Solidus
 
     private
 
-    def builder(draft, current_diff_source_tag, candidate_tag)
-      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_diff_source_tag, candidate_tag))
-    end
-
     def add_pr(builder, pr, labels)
       builder.add(
         number: pr.number,
