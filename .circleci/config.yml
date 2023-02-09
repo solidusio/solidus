@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@4.9.3
-
 executors:
   base:
     working_directory: &workdir ~/solidus
@@ -62,13 +59,6 @@ commands:
           paths:
             - vendor/bundle
 
-  notify:
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          branch_pattern: master, v[0-9]+\.[0-9]+
-
   test:
     steps:
       - run:
@@ -109,7 +99,6 @@ jobs:
     steps:
       - setup
       - test
-      - notify
 
   mysql:
     executor: mysql
@@ -117,7 +106,6 @@ jobs:
     steps:
       - setup
       - test
-      - notify
 
   postgres_rails60:
     executor: postgres
@@ -128,7 +116,6 @@ jobs:
     steps:
       - setup
       - test
-      - notify
 
   postgres_rails52:
     executor: postgres
@@ -139,7 +126,6 @@ jobs:
     steps:
       - setup
       - test
-      - notify
 
 workflows:
   build:
@@ -148,11 +134,7 @@ workflows:
           filters:
             branches:
               only: /master|v\d\.\d+/
-      - postgres:
-          context: slack-secrets
-      - mysql:
-          context: slack-secrets
-      - postgres_rails60:
-          context: slack-secrets
-      - postgres_rails52:
-          context: slack-secrets
+      - postgres
+      - mysql
+      - postgres_rails60
+      - postgres_rails52
