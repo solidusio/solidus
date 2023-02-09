@@ -51,7 +51,7 @@ RSpec.describe Solidus::ReleaseDrafter do
 
       expect(
         subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
-      ).to match(/#{Regexp.escape("## Solidus Core\n- PR number 1 #1 (@alice)")}/)
+      ).to match(/#{Regexp.escape("## Solidus Core\n* PR number 1 by @alice in https://github.com/fake/solidus/pull/1")}/)
     end
 
     it 'adds the PR under more than one matching label' do
@@ -59,7 +59,7 @@ RSpec.describe Solidus::ReleaseDrafter do
 
       expect(
         subject.call(pr_number: 1, current_diff_source_tag: 'v3.0.0', candidate_tag: 'v3.1.0', branch: 'master').content
-      ).to match(/#{Regexp.escape("## Solidus Core\n- PR number 1 #1 (@alice)")}.*#{Regexp.escape("## Solidus API\n- PR number 1 #1 (@alice)")}/m)
+      ).to match(/#{Regexp.escape("## Solidus Core\n* PR number 1 by @alice in https://github.com/fake/solidus/pull/1")}.*#{Regexp.escape("## Solidus API\n* PR number 1 by @alice in https://github.com/fake/solidus/pull/1")}/m)
     end
 
     it 'ignores if no matching label is present' do
