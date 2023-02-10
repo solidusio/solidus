@@ -41,12 +41,12 @@ echo "~~~> Removing the old sandbox"
 rm -rf ./sandbox
 
 echo "~~~> Creating a pristine Rails app"
-unbundled bundle exec rails new sandbox --database="$RAILSDB" \
-  --skip-bundle \
+rails new sandbox \
+  --database="$RAILSDB" \
   --skip-git \
   --skip-keeps \
   --skip-rc \
-  --skip-spring \
+  --skip-bootsnap \
   --skip-test
 
 if [ ! -d "sandbox" ]; then
