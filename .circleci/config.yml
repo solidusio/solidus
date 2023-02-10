@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   browser-tools: circleci/browser-tools@1.3
   codecov: codecov/codecov@3.2.3
-  slack: circleci/slack@4.9.3
 
 executors:
   base:
@@ -84,13 +83,6 @@ commands:
           key: solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
-  notify:
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          branch_pattern: master, v[0-9]+\.[0-9]+
 
   test:
     steps:
@@ -247,7 +239,6 @@ jobs:
             bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             export LIB_NAME=set # dummy requireable file
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
-      - notify
 
   test_solidus:
     parameters:
@@ -279,7 +270,6 @@ jobs:
       - setup
       - libvips
       - test
-      - notify
 
   test_with_coverage:
     parameters:
@@ -301,7 +291,6 @@ jobs:
       - setup
       - libvips
       - test_with_coverage
-      - notify
 
   dev_tools:
     docker:
@@ -314,17 +303,14 @@ jobs:
             cd dev_tools
             bundle
             bundle exec rspec
-      - notify
 
 workflows:
   build:
     jobs:
-      - solidus_installer:
-          context: slack-secrets
+      - solidus_installer
 
       # Only test with coverage support with the default versions
       - test_with_coverage:
-          context: slack-secrets
           post-steps:
             - codecov/upload:
                 file: $COVERAGE_FILE
@@ -332,16 +318,12 @@ workflows:
       # Based on supported versions for the current Solidus release and recommended versions from
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
-          context: slack-secrets
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>><<#matrix.legacy_events>>-legacy_events<</matrix.legacy_events>>"
           matrix: { parameters: { rails: ['7.0'], ruby: ['3.1', '3.2'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false], legacy_events: [false] } }
       - test_solidus:
-          context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0', '3.1'], database: ['sqlite'], paperclip: [false], legacy_events: [false] } }
       - test_solidus:
-          context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['6.0'], ruby: ['2.7'], database: ['sqlite'], paperclip: [true], legacy_events: [true] } }
-      - dev_tools:
-          context: slack-secrets
+      - dev_tools
