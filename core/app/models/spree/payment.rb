@@ -55,7 +55,7 @@ module Spree
     scope :failed, -> { with_state('failed') }
 
     scope :risky, -> { failed.or(where(avs_response: RISKY_AVS_CODES)).or(where.not(cvv_response_code: [nil, '', 'M'])) }
-    scope :valid, -> { where.not(state: %w(failed invalid void)) }
+    scope :valid, -> { where.not(state: %w(checkout failed invalid void)) }
 
     scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
     scope :not_store_credits, -> { where(arel_table[:source_type].not_eq(Spree::StoreCredit.to_s).or(arel_table[:source_type].eq(nil))) }

@@ -80,10 +80,13 @@ module Spree
     end
 
     def add_payment
-      expect {
-        post "/api/orders/#{@order.number}/payments",
-          params: { payment: { payment_method_id: payment_method.id } }
-      }.to change { @order.reload.payments.count }.by 1
+      payment = create(:payment, state: :pending, payment_method: payment_method, order: @order)
+
+      post "/api/orders/#{@order.number}/payments", params: {
+        payment: { payment_method_id: payment_method.id, id: payment.id }
+      }
+
+      expect(@order.reload.payments).to eq([payment])
       expect(response).to have_http_status(:created)
       expect(@order.payments.last.payment_method).to eq payment_method
     end

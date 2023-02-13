@@ -1322,15 +1322,22 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 
-  describe '::valid scope' do
-    before do
-      create :payment, state: :void
-      create :payment, state: :failed
-      create :payment, state: :invalid
-    end
-
+  describe '.valid' do
     it 'does not include void, failed and invalid payments' do
-      expect(described_class.valid).to be_empty
+      _invalid_payments = [
+        create(:payment, state: :void),
+        create(:payment, state: :failed),
+        create(:payment, state: :invalid),
+        create(:payment, state: :checkout),
+      ]
+
+      valid_payments = [
+        create(:payment, state: :processing),
+        create(:payment, state: :pending),
+        create(:payment, state: :completed),
+      ]
+
+      expect(described_class.valid).to eq(valid_payments)
     end
   end
 end
