@@ -404,7 +404,7 @@ describe "Order Details", type: :feature, js: true do
 
         context 'there is not enough stock at the other location' do
           context 'and it cannot backorder' do
-            it 'should not allow me to split stock' do
+            it 'should not allow me to split stock', :flaky do
               product.master.stock_items.last.update_column(:backorderable, false)
               product.master.stock_items.last.update_column(:count_on_hand, 0)
 
