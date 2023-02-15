@@ -13,6 +13,12 @@ RSpec.describe 'taxon factory' do
     context "when no taxonomy is given" do
       subject { create(:taxon) }
 
+      before do
+        # ensure that the subject is not accidentally
+        # getting valid parent and taxonomy ids
+        create(:taxon)
+      end
+
       it "sets its taxonomy to created one and its parent to the taxonomy root" do
         expect(subject).to be_valid
         expect(subject.taxonomy).to be_present
