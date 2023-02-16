@@ -7,13 +7,8 @@ module Spree
         attr_reader :preferences
 
         def initialize(klass, hash)
-          hash = hash.symbolize_keys
-          hash.keys.each do |key|
-            if !klass.defined_preferences.include?(key)
-              raise "Preference #{key.inspect} is not defined on #{klass}"
-            end
-          end
-          @preferences = hash
+          @klass = klass
+          @preferences = hash.symbolize_keys
         end
 
         def fetch(key, &block)
@@ -27,6 +22,8 @@ module Spree
         def to_hash
           @preferences.deep_dup
         end
+
+        delegate :keys, to: :@preferences
       end
 
       def initialize
@@ -36,11 +33,31 @@ module Spree
       end
 
       def add(klass, name, preferences)
-        @store[klass.to_s][name] = Definition.new(klass, preferences)
+        @store[klass.to_s][name] = Definition.new(klass.to_s, preferences)
       end
 
       def for_class(klass)
         @store[klass.to_s]
+      end
+
+      def validate!
+        @store.keys.map(&:constantize).each do |klass|
+          validate_for_class!(klass)
+        end
+      end
+
+      private
+
+      def validate_for_class!(klass)
+        for_class(klass).each do |name, preferences|
+          klass_keys = klass.defined_preferences.map(&:to_s)
+          extra_keys = preferences.keys.map(&:to_s) - klass_keys
+          next if extra_keys.empty?
+
+          raise \
+            "Unexpected keys found for #{klass} under #{name}: #{extra_keys.sort.join(', ')} " \
+            "(expected keys: #{klass_keys.sort.join(', ')})"
+        end
       end
     end
   end
