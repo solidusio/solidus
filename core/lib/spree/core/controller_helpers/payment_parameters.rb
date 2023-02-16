@@ -120,9 +120,7 @@ module Spree
 
     # This is a strange thing to do since an order can have multiple payments
     # but we always assume that it only has a single payment and that its
-    # amount should be the current order total.  Also, this is pretty much
-    # overridden when the order transitions to confirm by the logic inside of
-    # Order#add_store_credit_payments.
+    # amount should be the current order total after store credit is applied.
     # We should reconsider this method and its usage at some point.
     #
     # This method expects a params hash in the format of:
@@ -147,7 +145,7 @@ module Spree
     #      payments_attributes: [
     #        {
     #          ...params...
-    #          amount: <the order total>,
+    #          amount: <the order total after store credit>,
     #        },
     #      ],
     #      ...other params...
@@ -159,7 +157,7 @@ module Spree
       return params if params[:order].blank?
       return params if params[:order][:payments_attributes].blank?
 
-      params[:order][:payments_attributes].first[:amount] = order.total
+      params[:order][:payments_attributes].first[:amount] = order.order_total_after_store_credit
 
       params
     end
