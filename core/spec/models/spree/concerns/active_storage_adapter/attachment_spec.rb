@@ -45,7 +45,6 @@ unless (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
         ).to include(resize_to_limit: [10, 10])
       end
 
-
       it "defaults to the image's width and height" do
         image = create(:image)
 

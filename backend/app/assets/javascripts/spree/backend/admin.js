@@ -37,7 +37,6 @@ Spree.ready(function() {
   });
 });
 
-
 $.fn.visible = function(cond) { this[cond ? 'show' : 'hide' ]() };
 
 // Apply to individual radio button that makes another element visible when checked

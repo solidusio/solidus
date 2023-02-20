@@ -15,4 +15,3 @@ Dir.chdir app_root
 require 'bundler'
 
 exec Bundler.unbundled_env, 'bin/rails', *ARGV
-

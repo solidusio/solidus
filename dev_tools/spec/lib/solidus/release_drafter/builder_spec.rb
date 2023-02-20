@@ -77,7 +77,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           * New entry by @alice in https://github.com/solidusio/solidus/pull/10
         TXT
@@ -91,9 +90,7 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
         ).to eq <<~TXT.chomp
           ## Solidus Core
 
-
           ## Solidus Backend
-
 
           ## Solidus API
 
@@ -108,9 +105,7 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
         ).to eq <<~TXT.chomp
           ## Solidus Core
 
-
           ## Solidus Backend
-
 
           ## Solidus API
 
@@ -129,7 +124,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * New entry by @alice in https://github.com/solidusio/solidus/pull/10
 
           ## Solidus Backend
-
 
           ## Solidus API
           * New entry by @alice in https://github.com/solidusio/solidus/pull/10
@@ -150,7 +144,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus API
 
-
           That's been everything!
         TXT
       end
@@ -163,7 +156,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * Old entry 1 by @bob in https://github.com/solidusio/solidus/pull/9
 
           ## Solidus Backend
-
 
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
@@ -193,7 +185,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
         TXT
@@ -211,7 +202,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * Old entry 1 by @bob in https://github.com/solidusio/solidus/pull/9
 
           ## Solidus Backend
-
 
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
@@ -234,7 +224,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/10
           \t
           ## Solidus Backend
-
 
           ## Solidus API
 
@@ -266,7 +255,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
         TXT
@@ -281,7 +269,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * New entry by @alice in https://github.com/solidusio/solidus/pull/10
 
           ## Solidus Backend
-
 
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
@@ -296,7 +283,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
 
           ## Solidus Backend
 
-
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
         TXT
@@ -312,7 +298,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * New entry by @alice in https://github.com/solidusio/solidus/pull/10
 
           ## Solidus Backend
-
 
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8
@@ -344,7 +329,6 @@ RSpec.describe Solidus::ReleaseDrafter::Builder do
           * New entry by @alice in https://github.com/solidusio/solidus/pull/10
 
           ## Solidus Backend
-
 
           ## Solidus API
           * Old entry 2 by @alice in https://github.com/solidusio/solidus/pull/8

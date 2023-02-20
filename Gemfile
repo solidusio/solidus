@@ -46,7 +46,6 @@ group :backend do
     gem 'net-http', require: false
   end
 
-
   if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3')
     # Need to explicitly declare gems when using ruby 3.0 with older versions of rails. Can be removed when mail 2.8.0 is released.
     # - https://bugs.ruby-lang.org/issues/17873
