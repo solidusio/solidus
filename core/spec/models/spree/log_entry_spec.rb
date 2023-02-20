@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::LogEntry, type: :model do
   describe '#parsed_details' do
-    it 'allow aliases by default' do
+    it 'allows aliases by default' do
       x = []
       x << x
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details }.not_to raise_error
     end
 
-    it 'can parse user specified classes instances' do
+    it 'can parse user specified class instances' do
       stub_spree_preferences(log_entry_permitted_classes: ['Date'])
 
       log_entry = described_class.new(details: Date.today)
