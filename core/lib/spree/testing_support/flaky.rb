@@ -15,6 +15,8 @@ RSpec.configure do |config|
   config.around(:each, :flaky) do |example|
     if ENV['CI']
       example.run_with_retry retry: 2
+    else
+      example.run
     end
   end
 end
