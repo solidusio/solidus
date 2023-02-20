@@ -53,4 +53,16 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details }.to raise_error(described_class::DisallowedClass, /log_entry_permitted_classes/)
     end
   end
+
+  describe '#parsed_details=' do
+    it 'serializes the provided value to YAML' do
+      value = double("an object", to_yaml: "---\nfoo: bar")
+
+      log_entry = described_class.new(parsed_details: value)
+
+      expect(value).to have_received(:to_yaml)
+      expect(log_entry.details).to eq("---\nfoo: bar")
+      expect(log_entry.parsed_details).to eq({"foo" => "bar"})
+    end
+  end
 end

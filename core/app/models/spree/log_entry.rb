@@ -80,5 +80,9 @@ module Spree
     rescue Psych::BadAlias => e
       raise BadAlias.new(psych_exception: e)
     end
+
+    def parsed_details=(value)
+      self.details = value.to_yaml
+    end
   end
 end
