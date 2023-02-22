@@ -178,7 +178,7 @@ module Spree::Api
 
           context "authorization fails" do
             before do
-              fake_response = double(success?: false, to_s: "Could not authorize card")
+              fake_response = ActiveMerchant::Billing::Response.new(false, "Could not authorize card")
               expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:authorize).and_return(fake_response)
               put spree.authorize_api_order_payment_path(order, payment)
             end
@@ -201,7 +201,7 @@ module Spree::Api
 
           context "capturing fails" do
             before do
-              fake_response = double(success?: false, to_s: "Insufficient funds")
+              fake_response = ActiveMerchant::Billing::Response.new(false, "Insufficient funds")
               expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:capture).and_return(fake_response)
             end
 
@@ -224,7 +224,7 @@ module Spree::Api
 
           context "purchasing fails" do
             before do
-              fake_response = double(success?: false, to_s: "Insufficient funds")
+              fake_response = ActiveMerchant::Billing::Response.new(false, "Insufficient funds")
               expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:purchase).and_return(fake_response)
             end
 
@@ -247,7 +247,7 @@ module Spree::Api
 
           context "voiding fails" do
             before do
-              fake_response = double(success?: false, to_s: "NO REFUNDS")
+              fake_response = ActiveMerchant::Billing::Response.new(false, "NO REFUNDS")
               expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:void).and_return(fake_response)
             end
 

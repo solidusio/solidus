@@ -206,7 +206,7 @@ module Spree
       end
 
       def record_response(response)
-        log_entries.create!(details: response.to_yaml)
+        log_entries.create!(parsed_details: response)
       end
 
       def protect_from_connection_error

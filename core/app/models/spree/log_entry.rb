@@ -70,11 +70,29 @@ module Spree
     belongs_to :source, polymorphic: true, optional: true
 
     def parsed_details
-      @details ||= YAML.safe_load(
-        details,
-        permitted_classes: self.class.permitted_classes,
-        aliases: Spree::Config.log_entry_allow_aliases
-      )
+      handle_psych_serialization_errors do
+        @details ||= YAML.safe_load(
+          details,
+          permitted_classes: self.class.permitted_classes,
+          aliases: Spree::Config.log_entry_allow_aliases,
+        )
+      end
+    end
+
+    def parsed_details=(value)
+      handle_psych_serialization_errors do
+        self.details = YAML.safe_dump(
+          value,
+          permitted_classes: self.class.permitted_classes,
+          aliases: Spree::Config.log_entry_allow_aliases,
+        )
+      end
+    end
+
+    private
+
+    def handle_psych_serialization_errors
+      yield
     rescue Psych::DisallowedClass => e
       raise DisallowedClass.new(psych_exception: e)
     rescue Psych::BadAlias => e
