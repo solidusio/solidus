@@ -53,7 +53,7 @@ module Spree
       credit_cents = money.cents
 
       @perform_response = process!(credit_cents)
-      log_entries.build(details: perform_response.to_yaml)
+      log_entries.build(parsed_payment_response_details_with_fallback: perform_response)
 
       self.transaction_id = perform_response.authorization
       save!

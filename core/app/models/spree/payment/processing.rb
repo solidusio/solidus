@@ -206,7 +206,7 @@ module Spree
       end
 
       def record_response(response)
-        log_entries.create!(parsed_details: response)
+        log_entries.create!(parsed_payment_response_details_with_fallback: response)
       end
 
       def protect_from_connection_error

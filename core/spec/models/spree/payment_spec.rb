@@ -518,8 +518,7 @@ RSpec.describe Spree::Payment, type: :model do
         it "should do nothing" do
           expect(payment).not_to receive(:complete)
           expect(payment.payment_method).not_to receive(:capture)
-          expect(payment.log_entries).not_to receive(:create!)
-          subject
+          expect{ subject }.not_to change(payment.log_entries, :count)
         end
       end
     end
