@@ -15,15 +15,17 @@ module Spree
       ActiveSupport::TimeZone
     ].freeze
 
-    # Raised when a disallowed class is tried to be loaded
-    class DisallowedClass < RuntimeError
+    class SerializationError < RuntimeError
       attr_reader :psych_exception
 
       def initialize(psych_exception:)
         @psych_exception = psych_exception
         super(default_message)
       end
+    end
 
+    # Raised when a disallowed class is tried to be loaded
+    class DisallowedClass < SerializationError
       private
 
       def default_message
@@ -40,14 +42,7 @@ module Spree
     end
 
     # Raised when YAML contains aliases and they're not enabled
-    class BadAlias < RuntimeError
-      attr_reader :psych_exception
-
-      def initialize(psych_exception:)
-        @psych_exception = psych_exception
-        super(default_message)
-      end
-
+    class BadAlias < SerializationError
       private
 
       def default_message
