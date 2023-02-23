@@ -8,7 +8,7 @@ module Solidus
   class UpdateGenerator < ::Rails::Generators::Base
     FROM = Spree.previous_solidus_minor_version
 
-    desc 'Generates a new initializer to preview the new defaults for current Solidus version'
+    desc 'Generates a new initializer to preview the new defaults for current Solidus version and copy new migrations'
 
     source_root File.expand_path('templates', __dir__)
 
@@ -40,7 +40,7 @@ module Solidus
     def create_new_defaults_initializer
       previous_version_prompt = options[:previous_version_prompt]
       return if previous_version_prompt && !yes?(<<~MSG, :red)
-        The update process is only supported if you are coming from version #{FROM}. If this is not the case, please, skip it and update your application to use Solidus #{FROM} before retrying.
+        The default preferences update process is only supported if you are coming from version #{FROM}. If this is not the case, please, skip it and update your application to use Solidus #{FROM} before retrying.
         If you are confident you want to upgrade from a previous version, you must rerun the generator with the "--from={OLD_VERSION}" argument.
         Are you sure you want to continue? (y/N)
       MSG
@@ -55,6 +55,11 @@ module Solidus
 
       template 'config/initializers/new_solidus_defaults.rb.tt',
                File.join(options[:initializer_directory], "#{options[:initializer_basename]}.rb")
+    end
+
+    def install_migrations
+      say_status :copying, "migrations"
+      rake 'spree:install:migrations'
     end
 
     def print_message
