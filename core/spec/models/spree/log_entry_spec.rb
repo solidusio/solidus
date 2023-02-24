@@ -113,4 +113,23 @@ RSpec.describe Spree::LogEntry, type: :model do
       )
     end
   end
+
+  describe '#parsed_payment_response_details_with_fallback=' do
+    it 'wraps non serializable responses' do
+      log_entry = described_class.new
+      bad_response = ActiveMerchant::Billing::Response.new(
+        true,
+        'FooBar',
+        { foo: { bar: "Symbol keys are not allowed" } }
+      )
+
+      log_entry.parsed_payment_response_details_with_fallback = bad_response
+      details = log_entry.parsed_details
+
+      expect(details.success?).to eq(true)
+      expect(details.message).to eq("[WARNING: An error occurred while trying to serialize the payment response] FooBar")
+      expect(details.params['data']).to include(':bar=>"Symbol keys are not allowed"')
+      expect(details.params['error']).to include('Tried to dump unspecified class: Symbol')
+    end
+  end
 end

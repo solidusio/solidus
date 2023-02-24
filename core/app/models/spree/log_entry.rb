@@ -15,15 +15,17 @@ module Spree
       ActiveSupport::TimeZone
     ].freeze
 
-    # Raised when a disallowed class is tried to be loaded
-    class DisallowedClass < RuntimeError
+    class SerializationError < RuntimeError
       attr_reader :psych_exception
 
       def initialize(psych_exception:)
         @psych_exception = psych_exception
         super(default_message)
       end
+    end
 
+    # Raised when a disallowed class is tried to be loaded
+    class DisallowedClass < SerializationError
       private
 
       def default_message
@@ -40,14 +42,7 @@ module Spree
     end
 
     # Raised when YAML contains aliases and they're not enabled
-    class BadAlias < RuntimeError
-      attr_reader :psych_exception
-
-      def initialize(psych_exception:)
-        @psych_exception = psych_exception
-        super(default_message)
-      end
-
+    class BadAlias < SerializationError
       private
 
       def default_message
@@ -87,6 +82,17 @@ module Spree
           aliases: Spree::Config.log_entry_allow_aliases,
         )
       end
+    end
+
+    def parsed_payment_response_details_with_fallback=(response)
+      self.parsed_details = response
+    rescue SerializationError, YAML::Exception => e
+      # Fall back on wrapping the response and signaling the error to the end user.
+      self.parsed_details = ActiveMerchant::Billing::Response.new(
+        response.success?,
+        "[WARNING: An error occurred while trying to serialize the payment response] #{response.message}",
+        { 'data' => response.inspect, 'error' => e.message.to_s },
+      )
     end
 
     private
