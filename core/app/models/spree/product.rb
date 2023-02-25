@@ -133,10 +133,7 @@ module Spree
 
     self.allowed_ransackable_associations = %w[stores variants_including_master master variants]
     self.allowed_ransackable_attributes = %w[name slug]
-
-    def self.ransackable_scopes(_auth_object = nil)
-      %i(available with_discarded with_variant_sku_cont with_all_variant_sku_cont with_kept_variant_sku_cont)
-    end
+    self.allowed_ransackable_scopes = %i[available with_discarded with_variant_sku_cont with_all_variant_sku_cont with_kept_variant_sku_cont]
 
     # @return [Boolean] true if there are any variants
     def has_variants?
