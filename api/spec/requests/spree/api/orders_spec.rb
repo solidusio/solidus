@@ -300,13 +300,14 @@ module Spree::Api
 
       context "when the current user is not present" do
         let(:current_api_user) { nil }
-        let(:order_token) { nil }
 
         before do
           get spree.api_current_order_path(format: 'json'), params: { order_token: order_token }
         end
 
         context "when the spree guest token is not present" do
+          let(:order_token) { nil }
+
           it "returns a 401" do
             expect(response.status).to eq(401)
           end
