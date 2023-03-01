@@ -334,6 +334,25 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe '#find_or_build_default_price' do
+    it 'is deprecated' do
+      without_partial_double_verification do
+        expect(Spree::Deprecation).to receive(:warn)
+      end
+      variant.find_or_build_default_price
+    end
+
+    it 'is an alias for #default_price_or_build' do
+      without_partial_double_verification do
+        allow(Spree::Deprecation).to receive(:warn)
+      end
+
+      expect(variant).to receive(:default_price_or_build)
+
+      variant.find_or_build_default_price
+    end
+  end
+
   describe '#has_default_price?' do
     context 'when default price is present and not discarded' do
       it 'returns true' do
