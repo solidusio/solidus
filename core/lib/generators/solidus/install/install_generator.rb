@@ -43,6 +43,12 @@ module Solidus
         default: false,
       },
       {
+        name: 'braintree',
+        frontends: %w[none starter],
+        description: 'Install `solidus_braintree`',
+        default: false,
+      },
+      {
         name: 'none',
         frontends: %w[none classic starter],
         description: 'Skip installing a payment method',

@@ -110,6 +110,7 @@ RSpec.describe Solidus::InstallGenerator do
         expect(questions.first[:default]).to eq('paypal')
         expect(strip_ansi questions.first[:desc]).to include('[paypal]')
         expect(strip_ansi questions.first[:desc]).to include('[bolt]')
+        expect(strip_ansi questions.first[:desc]).to_not include('[braintree]')
         expect(strip_ansi questions.first[:desc]).to include('[none]')
       end
 
@@ -121,10 +122,11 @@ RSpec.describe Solidus::InstallGenerator do
         generator.prepare_options
 
         expect(questions.size).to eq(1)
-        expect(questions.first[:limited_to]).to eq(['paypal', 'none'])
+        expect(questions.first[:limited_to]).to eq(['paypal', 'braintree', 'none'])
         expect(questions.first[:default]).to eq('paypal')
         expect(strip_ansi questions.first[:desc]).to include('[paypal]')
         expect(strip_ansi questions.first[:desc]).not_to include('[bolt]')
+        expect(strip_ansi questions.first[:desc]).to include('[braintree]')
         expect(strip_ansi questions.first[:desc]).to include('[none]')
       end
     end
