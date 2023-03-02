@@ -113,7 +113,7 @@ RSpec.describe Solidus::InstallGenerator do
         expect(strip_ansi questions.first[:desc]).to include('[none]')
       end
 
-      it 'presents different options for the "classic"' do
+      it 'presents different options for the "starter"' do
         questions = []
         generator = described_class.new([], ['--frontend=starter', '--authentication=devise'])
         allow(generator).to receive(:ask_with_description) { |**args| questions << args }
