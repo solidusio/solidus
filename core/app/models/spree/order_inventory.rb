@@ -57,7 +57,7 @@ module Spree
     # first unshipped that's leaving from a stock_location that stocks this variant, with availability check
     # first unshipped that's leaving from a stock_location that stocks this variant, without availability check
     def determine_target_shipment(quantity)
-      potential_shipments = order.shipments.select(&:ready_or_pending?)
+      potential_shipments = order.shipments.order(:created_at, :id).select(&:ready_or_pending?)
 
       potential_shipments.detect do |shipment|
         shipment.include?(variant)
