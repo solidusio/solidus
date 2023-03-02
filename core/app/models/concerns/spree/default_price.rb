@@ -32,6 +32,12 @@ module Spree
         prices.build(self.class.default_price_attributes)
     end
 
+    # @deprecated Use {#default_price_or_build} instead.
+    def find_or_build_default_price
+      default_price_or_build
+    end
+    deprecate find_or_build_default_price: :default_price_or_build, deprecator: Spree::Deprecation
+
     # Select from {#prices} the one to be considered as the default
     #
     # This method works with the in-memory association, so non-persisted prices
