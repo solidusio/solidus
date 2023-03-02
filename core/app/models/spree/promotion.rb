@@ -54,9 +54,7 @@ module Spree
 
     self.allowed_ransackable_associations = ['codes']
     self.allowed_ransackable_attributes = %w[name path promotion_category_id]
-    def self.ransackable_scopes(*)
-      %i(active)
-    end
+    self.allowed_ransackable_scopes = %i[active]
 
     def self.order_activatable?(order)
       order && !UNACTIVATABLE_ORDER_STATES.include?(order.state)

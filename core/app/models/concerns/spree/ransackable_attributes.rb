@@ -5,6 +5,7 @@ module Spree::RansackableAttributes
   included do
     class_attribute :allowed_ransackable_associations, default: []
     class_attribute :allowed_ransackable_attributes, default: []
+    class_attribute :allowed_ransackable_scopes, default: []
 
     def self.whitelisted_ransackable_associations
       Spree::Deprecation.deprecation_warning(:whitelisted_ransackable_associations, 'use allowed_ransackable_associations instead')
@@ -37,6 +38,10 @@ module Spree::RansackableAttributes
 
     def ransackable_attributes(*_args)
       default_ransackable_attributes | allowed_ransackable_attributes
+    end
+
+    def ransackable_scopes(*_args)
+      allowed_ransackable_scopes
     end
   end
 end
