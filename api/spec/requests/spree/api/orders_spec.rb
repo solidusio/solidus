@@ -297,6 +297,30 @@ module Spree::Api
         expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: Spree::Store.default)
         get spree.api_current_order_path(format: 'json')
       end
+
+      context "when the current user is not present" do
+        let(:current_api_user) { nil }
+
+        before do
+          get spree.api_current_order_path(format: 'json'), params: { order_token: order_token }
+        end
+
+        context "when the spree guest token is not present" do
+          let(:order_token) { nil }
+
+          it "returns a 401" do
+            expect(response.status).to eq(401)
+          end
+        end
+
+        context "when the spree guest token is present" do
+          let(:order_token) { order.guest_token }
+
+          it "returns a 401" do
+            expect(response.status).to eq(401)
+          end
+        end
+      end
     end
 
     it "can view their own order" do

@@ -229,7 +229,6 @@ paths:
         - Orders
       security:
         - api-key: []
-        - order-token: []
   /countries:
     get:
       responses:
