@@ -23,10 +23,12 @@ module Spree
       expect(definitions).to have_key('my_definition')
     end
 
-    it "errors assigning invalid preferences" do
-      expect {
-        subject.add(preference_class, 'my_definition', { ice_cream: 'chocolate' })
-      }.to raise_error(/\APreference :ice_cream is not defined/)
+    it "can replace preferences" do
+      subject.add(preference_class, 'my_definition', { color: "red" })
+
+      subject.add(preference_class, 'my_definition', { color: "blue" })
+
+      expect(definitions['my_definition'].fetch(:color)).to eq("blue")
     end
 
     context "with stored definitions" do
@@ -73,6 +75,19 @@ module Spree
 
       it "is still empty for other classes" do
         expect(subject.for_class(other_class)).to be_empty
+      end
+    end
+
+    describe '.validate!' do
+      it "errors assigning invalid preferences" do
+        stub_const("SomeClass", preference_class)
+        subject.add(preference_class, 'my_definition', { ice_cream: 'chocolate', spoon: true })
+
+        expect {
+          subject.validate!
+        }.to raise_error(
+          /\AUnexpected keys found for SomeClass under my_definition: ice_cream, spoon \(expected keys: color\)/
+        )
       end
     end
   end
