@@ -158,7 +158,7 @@ module Spree
           # order: 'COALESCE(cnt, 0) DESC'
           add_search_scope :descend_by_popularity do
             joins(:master).
-              order(%{
+              order(Arel.sql(%{
            COALESCE((
              SELECT
                COUNT(#{Spree::LineItem.quoted_table_name}.id)
@@ -171,7 +171,7 @@ module Spree
              WHERE
                popular_variants.product_id = #{Spree::Product.quoted_table_name}.id
            ), 0) DESC
-        })
+        }))
           end
 
           add_search_scope :not_deleted do
