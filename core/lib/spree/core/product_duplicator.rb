@@ -45,7 +45,7 @@ module Spree
         new_master.sku = "COPY OF #{master.sku}"
         new_master.deleted_at = nil
         new_master.images = master.images.map { |image| duplicate_image image } if @include_images
-        new_master.price = master.price
+        new_master.prices = master.prices.map(&:dup)
       end
     end
 
