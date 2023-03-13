@@ -61,6 +61,10 @@ module Spree
         expect(new_product.name).to eql "COPY OF #{product.name}"
       end
 
+      it "will set the same price" do
+        expect(new_product.reload.price).to eql product.price
+      end
+
       it "will set an unique sku" do
         expect(new_product.sku).to include "COPY OF SKU"
       end
