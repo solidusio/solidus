@@ -37,6 +37,11 @@ module Solidus
                  default: 'config/initializers/',
                  hide: true
 
+    class_option :install_migrations,
+                 type: :boolean,
+                 default: true,
+                 hide: true
+
     def create_new_defaults_initializer
       previous_version_prompt = options[:previous_version_prompt]
       return if previous_version_prompt && !yes?(<<~MSG, :red)
@@ -58,6 +63,8 @@ module Solidus
     end
 
     def install_migrations
+      return unless options[:install_migrations]
+
       say_status :copying, "migrations"
       rake 'spree:install:migrations'
     end
