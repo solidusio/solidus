@@ -17,18 +17,27 @@ module Spree
   # @attr [Integer] quantity How many units we want to move
   #
   class FulfilmentChanger
+    TRACK_INVENTORY_NOT_PROVIDED = Object.new.freeze
     include ActiveModel::Validations
 
     attr_accessor :current_shipment, :desired_shipment
-    attr_reader :variant, :quantity, :current_stock_location, :desired_stock_location
+    attr_reader :variant, :quantity, :current_stock_location, :desired_stock_location, :track_inventory
 
-    def initialize(current_shipment:, desired_shipment:, variant:, quantity:)
+    def initialize(current_shipment:, desired_shipment:, variant:, quantity:, track_inventory: TRACK_INVENTORY_NOT_PROVIDED)
       @current_shipment = current_shipment
       @desired_shipment = desired_shipment
       @current_stock_location = current_shipment.stock_location
       @desired_stock_location = desired_shipment.stock_location
       @variant = variant
       @quantity = quantity
+      @track_inventory = if track_inventory == TRACK_INVENTORY_NOT_PROVIDED
+        Spree::Deprecation.warn(
+          "Not passing `track_inventory` to `Spree::FulfilmentChanger` is deprecated." \
+        )
+        true
+      else
+        track_inventory
+      end
     end
 
     validates :quantity, numericality: { greater_than: 0 }
@@ -45,6 +54,45 @@ module Spree
       return false if invalid?
       desired_shipment.save! if desired_shipment.new_record?
 
+      if track_inventory
+        run_tracking_inventory
+      else
+        run_without_tracking_inventory
+      end
+
+      # We modified the inventory units at the database level for speed reasons.
+      # The downside of that is that we need to reload the associations.
+      current_shipment.inventory_units.reload
+      desired_shipment.inventory_units.reload
+
+      # If the current shipment now has no inventory units left, we won't need it any longer.
+      if current_shipment.inventory_units.length.zero?
+        current_shipment.destroy!
+      else
+        # The current shipment has changed, so we need to make sure that shipping rates
+        # have the correct amount.
+        current_shipment.refresh_rates
+      end
+
+      # The desired shipment has also change, so we need to make sure shipping rates
+      # are up-to-date, too.
+      desired_shipment.refresh_rates
+
+      # In order to reflect the changes in the order totals
+      desired_shipment.order.reload
+      desired_shipment.order.recalculate
+
+      true
+    end
+
+    private
+
+    # When moving things from one stock location to another, we need to restock items
+    # from the current location and unstock them at the desired location.
+    # Also, when we want to track inventory changes, we need to make sure that we have
+    # enough stock at the desired location to fulfil the order. Based on how many items
+    # we can take from the desired location, we could end up with some items being backordered.
+    def run_tracking_inventory
       # Retrieve how many on hand items we can take from desired stock location
       available_quantity = [desired_shipment.stock_location.count_on_hand(variant), default_on_hand_quantity].max
 
@@ -79,33 +127,20 @@ module Spree
           limit(quantity - new_on_hand_quantity).
           update_all(shipment_id: desired_shipment.id, state: :backordered)
       end
-
-      # We modified the inventory units at the database level for speed reasons.
-      # The downside of that is that we need to reload the associations.
-      current_shipment.inventory_units.reload
-      desired_shipment.inventory_units.reload
-
-      # If the current shipment now has no inventory units left, we won't need it any longer.
-      if current_shipment.inventory_units.length.zero?
-        current_shipment.destroy!
-      else
-        # The current shipment has changed, so we need to make sure that shipping rates
-        # have the correct amount.
-        current_shipment.refresh_rates
-      end
-
-      # The desired shipment has also change, so we need to make sure shipping rates
-      # are up-to-date, too.
-      desired_shipment.refresh_rates
-
-      # In order to reflect the changes in the order totals
-      desired_shipment.order.reload
-      desired_shipment.order.recalculate
-
-      true
     end
 
-    private
+    # When we don't track inventory, we can just move the inventory units from one shipment
+    # to the other.
+    def run_without_tracking_inventory
+      ActiveRecord::Base.transaction do
+        current_shipment.
+          inventory_units.
+          where(variant: variant).
+          order(state: :asc).
+          limit(quantity).
+          update_all(shipment_id: desired_shipment.id)
+      end
+    end
 
     # We don't need to handle stock counts for incomplete orders. Also, if
     # the new shipment and the desired shipment will ship from the same stock location,

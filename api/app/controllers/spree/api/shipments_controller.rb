@@ -127,7 +127,8 @@ module Spree
           current_shipment: @original_shipment,
           desired_shipment: @desired_shipment,
           variant: @variant,
-          quantity: @quantity
+          quantity: @quantity,
+          track_inventory: Spree::Config.track_inventory_levels
         )
 
         if fulfilment_changer.run!
