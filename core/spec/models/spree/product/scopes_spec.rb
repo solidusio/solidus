@@ -117,12 +117,13 @@ RSpec.describe "Product scopes", type: :model do
   end
 
   context "descend_by_popularity" do
-    let!(:variant_1) { create(:master_variant) }
-    let!(:variant_2) { create(:master_variant) }
-
-    let!(:line_item_1) { create(:line_item, variant: variant_1, quantity: 3) }
-    let!(:line_item_2) { create(:line_item, variant: variant_2, quantity: 2) }
     it "orders products by popularity" do
+      variant_1 = create(:master_variant)
+      variant_2 = create(:master_variant)
+
+      create_list(:line_item, 3, variant: variant_1)
+      create_list(:line_item, 2, variant: variant_2)
+
       expect(Spree::Product.descend_by_popularity.map(&:id)).to eq([variant_1.product.id, variant_2.product.id, product.id])
     end
   end
