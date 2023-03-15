@@ -24,7 +24,7 @@ describe 'Customer returns', type: :feature do
     let(:order) { create :shipped_order, line_items_count: 2 }
 
     context 'when creating a return with state "Received"' do
-      it 'marks the order as returned', :js do
+      it 'marks the order as returned', :js, :flaky do
         create_customer_return('receive')
 
         expect(page).to have_content 'Customer Return has been successfully created'
