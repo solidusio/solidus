@@ -12,6 +12,7 @@ RSpec.describe Solidus::UpdateGenerator do
       Rails::Generators.invoke('solidus:update', [
         "--initializer_directory=#{Rails.root.join('tmp')}",
         "--previous_version_prompt=false",
+        "--install_migrations=false",
         "--from=#{from}",
         "--to=#{to}",
         "--quiet"
