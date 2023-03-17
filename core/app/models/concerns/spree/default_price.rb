@@ -14,15 +14,6 @@ module Spree
       end
     end
 
-    # Returns `#prices` prioritized for being considered as default price
-    #
-    # @deprecated
-    # @return [ActiveRecord::Relation<Spree::Price>]
-    def currently_valid_prices
-      prices.currently_valid
-    end
-    deprecate :currently_valid_prices, deprecator: Spree::Deprecation
-
     # Returns {#default_price} or builds it from {Spree::Variant.default_price_attributes}
     #
     # @return [Spree::Price, nil]

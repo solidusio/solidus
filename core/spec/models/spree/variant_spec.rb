@@ -373,26 +373,6 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  describe '#currently_valid_prices' do
-    around do |example|
-      Spree::Deprecation.silence do
-        example.run
-      end
-    end
-
-    it 'returns prioritized prices' do
-      price_1 = create(:price, country: create(:country))
-      price_2 = create(:price, country: nil)
-      variant = create(:variant, prices: [price_1, price_2])
-
-      result = variant.currently_valid_prices
-
-      expect(
-        result.index(price_1) < result.index(price_2)
-      ).to be(true)
-    end
-  end
-
   context "#cost_currency" do
     context "when cost currency is nil" do
       before { variant.cost_currency = nil }
