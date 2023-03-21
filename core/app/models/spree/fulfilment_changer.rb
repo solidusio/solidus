@@ -17,31 +17,19 @@ module Spree
   # @attr [Integer] quantity How many units we want to move
   #
   class FulfilmentChanger
-    # @note This private constant is only used to deprecate not passing the `track_inventory` argument
-    #   on initialization. It will be removed in Solidus 4.0, please do not use it.
-    TRACK_INVENTORY_NOT_PROVIDED = Object.new.freeze
-    private_constant :TRACK_INVENTORY_NOT_PROVIDED
-
     include ActiveModel::Validations
 
     attr_accessor :current_shipment, :desired_shipment
     attr_reader :variant, :quantity, :current_stock_location, :desired_stock_location, :track_inventory
 
-    def initialize(current_shipment:, desired_shipment:, variant:, quantity:, track_inventory: TRACK_INVENTORY_NOT_PROVIDED)
+    def initialize(current_shipment:, desired_shipment:, variant:, quantity:, track_inventory:)
       @current_shipment = current_shipment
       @desired_shipment = desired_shipment
       @current_stock_location = current_shipment.stock_location
       @desired_stock_location = desired_shipment.stock_location
       @variant = variant
       @quantity = quantity
-      @track_inventory = if track_inventory == TRACK_INVENTORY_NOT_PROVIDED
-        Spree::Deprecation.warn(
-          "Not passing `track_inventory` to `Spree::FulfilmentChanger` is deprecated." \
-        )
-        true
-      else
-        track_inventory
-      end
+      @track_inventory = track_inventory
     end
 
     validates :quantity, numericality: { greater_than: 0 }

@@ -71,22 +71,6 @@ RSpec.describe Spree::FulfilmentChanger do
     end
   end
 
-  context "when track_inventory is not passed" do
-    let(:shipment_splitter) do
-      described_class.new(
-        current_shipment: current_shipment,
-        desired_shipment: desired_shipment,
-        variant: variant,
-        quantity: quantity
-      )
-    end
-
-    it "defaults to true with a deprecation warning" do
-      expect(Spree::Deprecation).to receive(:warn).with(/Not passing `track_inventory` to `Spree::FulfilmentChanger` is deprecated./)
-      expect(shipment_splitter.track_inventory).to be true
-    end
-  end
-
   context "when tracking inventory is not set (same as false)" do
     let(:current_shipment_inventory_unit_count) { 2 }
     let(:quantity) { 1 }
