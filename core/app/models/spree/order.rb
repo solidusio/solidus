@@ -767,14 +767,15 @@ module Spree
       self.email = user.email if user
     end
 
-    # Determine if email is required (we don't want validation errors before we hit the checkout)
+    # Determine if the email is required for this order
+    #
+    # We don't require email for orders in the cart state or address state because those states
+    # precede the entry of an email address.
+    #
+    # @return [Boolean] true if the email is required
+    # @note This method was called require_email before.
     def email_required?
       true unless new_record? || ['cart', 'address'].include?(state)
-    end
-
-    def require_email
-      Spree::Deprecation.warn "Use email_required? instead", caller(1)
-      email_required?
     end
 
     def ensure_inventory_units
