@@ -50,9 +50,9 @@ RSpec.describe Spree::OptionValue, type: :model do
     end
   end
 
-  it 'deprecates creating an option_value with no associated option_type' do
-    expect(Spree::Deprecation).to receive(:warn).with(/deprecated/)
-
-    create(:option_value, option_type: nil)
+  it 'raises when creating an option_value with no associated option_type' do
+    expect {
+      create(:option_value, option_type: nil)
+    }.to raise_error(ActiveRecord::RecordInvalid)
   end
 end

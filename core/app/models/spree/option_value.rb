@@ -2,9 +2,7 @@
 
 module Spree
   class OptionValue < Spree::Base
-    # TODO: Remove optional on Solidus v4.0. Don't forget adding a migration to
-    # enforce at the database layer
-    belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values, optional: true
+    belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values
     acts_as_list scope: :option_type
 
     has_many :option_values_variants, dependent: :destroy
@@ -15,15 +13,8 @@ module Spree
 
     after_save :touch, if: :saved_changes?
     after_touch :touch_all_variants
-    after_save do
-      Spree::Deprecation.warn <<~MSG if option_type.nil?
-        Having an option_value with no associated option_type will be deprecated
-        on Solidus v4.0
-      MSG
-    end
 
-    # TODO: Remove allow_nil once option_type is required on Solidus v4.0
-    delegate :name, :presentation, to: :option_type, prefix: :option_type, allow_nil: true
+    delegate :name, :presentation, to: :option_type, prefix: :option_type
 
     self.allowed_ransackable_attributes = %w[name presentation]
 
