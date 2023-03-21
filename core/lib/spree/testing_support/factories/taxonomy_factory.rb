@@ -7,6 +7,8 @@ end
 
 FactoryBot.define do
   factory :taxonomy, class: 'Spree::Taxonomy' do
-    name { 'Brand' }
+    sequence :name do |seq|
+      "Brand #{seq}"
+    end
   end
 end

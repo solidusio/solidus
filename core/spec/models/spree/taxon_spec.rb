@@ -53,7 +53,8 @@ RSpec.describe Spree::Taxon, type: :model do
   end
 
   context "set_permalink" do
-    let(:taxon) { FactoryBot.build(:taxon, name: "Ruby on Rails") }
+    let(:taxonomy) { create(:taxonomy, name: "Ruby on Rails") }
+    let(:taxon) { taxonomy.root }
 
     it "should set permalink correctly when no parent present" do
       taxon.set_permalink
@@ -175,12 +176,36 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/issues/2620
-  context "creating a child node using first_or_create" do
-    let(:taxonomy) { create(:taxonomy) }
+  context "validations" do
+    context "taxonomy_id validations" do
+      let(:taxonomy) { create(:taxonomy) }
+      let(:taxon) { taxonomy.taxons.create(name: 'New node') }
 
-    it "does not error out" do
-      taxonomy.root.children.unscoped.where(name: "Some name").first_or_create
+      it "ensures that only one root can be created" do
+        expect(taxon).to be_invalid
+        expect(taxon.errors.full_messages).to match_array(["Taxonomy can only have one root Taxon"])
+      end
+
+      it "allows for multiple taxons under taxonomy" do
+        expect(taxon.update(parent_id: taxonomy.root.id)).to eq(true)
+        expect(taxonomy.taxons.many?).to eq(true)
+      end
+    end
+
+    context "name validations" do
+      let!(:taxonomy) { create(:taxonomy) }
+      let!(:taxon_level_one) { create(:taxon, name: 'Solidus', parent: taxonomy.root) }
+      let(:taxon_level_one_duplicate) { build(:taxon, name: 'Solidus', parent: taxonomy.root) }
+      let(:taxon_level_two) { create(:taxon, name: 'Solidus', parent: taxon_level_one) }
+
+      it "ensures that taxons with the same parent must have unique names" do
+        expect(taxon_level_one_duplicate.save).to eq(false)
+        expect(taxon_level_one_duplicate.errors.full_messages).to match_array(["Name must be unique under the same parent Taxon"])
+      end
+
+      it "allows for multiple taxons with the same name under different parents" do
+        expect(taxon_level_two).to be_valid
+      end
     end
   end
 
