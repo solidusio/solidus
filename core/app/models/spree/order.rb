@@ -395,18 +395,6 @@ module Spree
       Spree::CreditCard.where(id: credit_card_ids)
     end
 
-    # TODO: Remove on Solidus 4.0
-    # @api private
-    def finalize!
-      Spree::Deprecation.warn <<~MSG
-        Calling `Spree::Order#finalize!` is discouraged. Instead, use
-        `Spree::Order#complete!`, which goes through all the needed safety
-        checks before finalizing an order. This method will be removed
-        altogether on Solidus 4.0.
-      MSG
-      finalize
-    end
-
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
       updater.update_shipment_state

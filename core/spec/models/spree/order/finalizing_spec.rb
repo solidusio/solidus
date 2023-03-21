@@ -124,16 +124,4 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
-
-  context '#finalize!' do
-    it 'deprecates method and goes ahead' do
-      order = create(:order_ready_to_complete)
-
-      expect(Spree::Deprecation).to receive(:warn).with(/discouraged/)
-
-      order.finalize!
-
-      expect(order.state).to eq("confirm")
-    end
-  end
 end
