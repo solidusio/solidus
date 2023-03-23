@@ -82,7 +82,9 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       records = model_class.where(id: positions.keys).to_a
 
       positions.each do |id, index|
-        records.find { |r| r.id == id.to_i }&.set_list_position(index)
+        # To permit the use of UUID as id, we compare models id in database
+        # and in params under the string representation instead of integer
+        records.find { |r| r.id.to_s == id }&.set_list_position(index)
       end
     end
 
