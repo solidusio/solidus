@@ -61,27 +61,6 @@ module Spree
     #   @return [Boolean] When false, customers must create an account to complete an order (default: +true+)
     preference :allow_guest_checkout, :boolean, default: true
 
-    # @!attribute [rw] allow_promotions_any_match_policy
-    #   @return [Boolean] When false, admins cannot create promotions with an "any" match policy (default: +false+)
-    #                     Create individual, separate promotions for each of your rules instead.
-    preference :allow_promotions_any_match_policy, :boolean, default: false
-    def allow_promotions_any_match_policy=(value)
-      if value == true
-        Spree::Deprecation.warn <<~MSG
-          Solidus 4.0 will remove support for combining promotion rules with the "any" match policy.
-
-          Instead, it's suggested to create individual, separate promotions for each of your current
-          rules combined with the "any" policy. To automate this task, you can use the provided
-          task:
-
-                  bin/rake solidus:split_promotions_with_any_match_policy
-        MSG
-      end
-
-      preferences[:allow_promotions_any_match_policy] = value
-    end
-
-
     # @!attribute [rw] guest_token_cookie_options
     #   @return [Hash] Add additional guest_token cookie options here (ie. domain or path)
     preference :guest_token_cookie_options, :hash, default: {}
