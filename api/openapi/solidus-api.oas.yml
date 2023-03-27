@@ -5290,10 +5290,6 @@ paths:
         Creates a shipment.
 
         Please note that this request can be only performed by users with the `create` permission on the shipment.
-
-        **Deprecation Warning**: Adding items to the shipment via this endpoint
-        is deprecated. Instead, create an empty shipment and populate it with
-        the dedicated endpoint [to add items to the shipment](/docs/solidus/7078dbcf415ac-add-shipment-item).
       operationId: create-shipment
       tags:
         - Shipments
@@ -5307,18 +5303,10 @@ paths:
               properties:
                 stock_location_id:
                   type: integer
-                variant_id:
-                  type: integer
-                  deprecated: true
-                quantity:
-                  type: integer
-                  deprecated: true
             examples:
               Example:
                 value:
                   stock_location_id: 0
-                  variant_id: 0
-                  quantity: 0
   /shipments/transfer_to_location:
     post:
       responses:

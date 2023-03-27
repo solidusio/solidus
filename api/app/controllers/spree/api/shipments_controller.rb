@@ -40,29 +40,7 @@ module Spree
 
       def create
         authorize! :create, Shipment
-
         @shipment = @order.shipments.create(stock_location_id: params.fetch(:stock_location_id))
-
-        if passing_deprecated_params_on_create?
-          Spree::Deprecation.warn <<~MSG
-          Passing `quantity` or `variant_id` to
-
-              POST /api/shipments
-
-          is deprecated and won't be allowed anymore starting from Solidus 4.0.
-          Instead, create an empty shipment and add items to it subsequently using
-          the dedicated endpoint:
-
-              PUT /api/shipments/{shipment_number}/add
-
-          MSG
-
-          quantity = params[:quantity].to_i
-          variant = Spree::Variant.unscoped.find(params[:variant_id])
-          @order.contents.add(variant, quantity, { shipment: @shipment })
-          @shipment.save!
-          @shipment.reload
-        end
 
         respond_with(@shipment, default_template: :show)
       end
@@ -147,10 +125,6 @@ module Spree
         @quantity                  = params[:quantity].to_i
         authorize! [:update, :destroy], @original_shipment
         authorize! :create, Shipment
-      end
-
-      def passing_deprecated_params_on_create?
-        params[:variant_id] || params[:quantity]
       end
 
       def find_order_on_create
