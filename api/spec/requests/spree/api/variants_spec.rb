@@ -216,14 +216,6 @@ module Spree::Api
                                                         :option_type_id])
       end
 
-      it "deprecates showing a variant through a nested route" do
-        expect(Spree::Deprecation).to receive(:warn).with(%r[deprecated.*GET api/variants]m)
-
-        get spree.api_product_variant_path(product, variant)
-
-        expect(json_response).to have_attributes(show_attributes)
-      end
-
       it "can see a single variant with images" do
         variant.images.create!(attachment: image("blank.jpg"))
 
@@ -323,13 +315,6 @@ module Spree::Api
         expect(variant.product.variants.count).to eq(1)
       end
 
-      it "deprecates creating a variant through a shallow route" do
-        expect(Spree::Deprecation).to receive(:warn).with(%r[deprecated.*api/products/{product_id}/variants]m)
-
-        post spree.api_variants_path, params: { variant: { sku: "12345", "product_id": product.id } }
-        expect(json_response).to have_attributes(new_attributes)
-      end
-
       it "creates new variants with nested option values" do
         option_values = create_list(:option_value, 2)
         expect do
@@ -369,25 +354,9 @@ module Spree::Api
         expect(response.status).to eq(200)
       end
 
-      it "deprecates updating a variant through a nested route" do
-        expect(Spree::Deprecation).to receive(:warn).with(%r[deprecated.*PUT api/variants]m)
-
-        put spree.api_product_variant_path(product, variant), params: { variant: { sku: "12345" } }
-
-        expect(json_response).to have_attributes(show_attributes)
-      end
-
       it "can delete a variant" do
         delete spree.api_variant_path(variant)
         expect(response.status).to eq(204)
-        expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-
-      it "deprecates updating a variant through a nested route" do
-        expect(Spree::Deprecation).to receive(:warn).with(%r[deprecated.*DELETE api/variants]m)
-
-        delete spree.api_product_variant_path(product, variant)
-
         expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
