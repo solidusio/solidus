@@ -2,7 +2,8 @@
 
 module Spree
   class Promotion < Spree::Base
-    MATCH_POLICIES = %w(all any)
+
+    autoload(:MATCH_POLICIES, "spree/promotion/match_policies")
 
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
