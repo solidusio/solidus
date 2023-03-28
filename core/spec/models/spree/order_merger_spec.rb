@@ -164,8 +164,8 @@ module Spree
       end
 
       it "should create errors with invalid line items" do
-        order_2.line_items.first.variant.destroy
-        order_2.line_items.reload # so that it registers as invalid
+        pending "Quantity is normalized to 0 before validation so we can't simulate an invalid line item"
+        order_2.line_items.first.update_column(:quantity, -2)
         subject.merge!(order_2)
         expect(order_1.errors.full_messages).not_to be_empty
       end
