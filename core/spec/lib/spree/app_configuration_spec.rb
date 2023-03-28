@@ -178,22 +178,6 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
-  context 'extra_taxon_validations=' do
-    it 'is deprecated' do
-      expect(Spree::Deprecation).to receive(:warn).with(/Solidus will remove `Spree::Config.extra_taxon_validations`/)
-
-      prefs.extra_taxon_validations=(false)
-    end
-
-    it "still sets the value so that consumers aren't broken" do
-      Spree::Deprecation.silence do
-        prefs.extra_taxon_validations=(false)
-      end
-
-      expect(prefs.extra_taxon_validations).to eq(false)
-    end
-  end
-
   context 'extra_taxonomy_validations=' do
     it 'is deprecated' do
       expect(Spree::Deprecation).to receive(:warn).with(/Solidus will remove `Spree::Config.extra_taxonomy_validations`/)
