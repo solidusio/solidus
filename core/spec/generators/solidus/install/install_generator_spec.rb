@@ -41,28 +41,6 @@ RSpec.describe Solidus::InstallGenerator do
       end
     end
 
-    it 'warns when using "enforce_available_locales"' do
-      generator = described_class.new([], ['--auto-accept', '--enforce-available-locales'])
-
-      allow(generator).to receive(:warn)
-      generator.prepare_options
-
-      expect(generator).to have_received(:warn).once.with(
-        a_string_matching('using `solidus:install --enforce-available-locales` is now deprecated')
-      )
-    end
-
-    it 'warns when using "lib_name"' do
-      generator = described_class.new([], ['--auto-accept', '--lib-name'])
-
-      allow(generator).to receive(:warn)
-      generator.prepare_options
-
-      expect(generator).to have_received(:warn).once.with(
-        a_string_matching('using `solidus:install --lib-name` is now deprecated')
-      )
-    end
-
     it 'skips seed and sample data if migrations are disabled' do
       generator = described_class.new([], ['--auto-accept', '--migrate=false'])
       generator.prepare_options

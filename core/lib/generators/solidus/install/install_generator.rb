@@ -71,11 +71,6 @@ module Solidus
     class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
     class_option :payment_method, type: :string, enum: PAYMENT_METHODS.map { |payment_method| payment_method[:name] }, default: nil, desc: "Indicates which payment method to install."
 
-    # DEPRECATED
-    class_option :with_authentication, type: :boolean, hide: true, default: nil
-    class_option :enforce_available_locales, type: :boolean, hide: true, default: nil
-    class_option :lib_name, type: :string, hide: true, default: nil
-
     source_root "#{__dir__}/templates"
 
     def self.exit_on_failure?
@@ -95,18 +90,6 @@ module Solidus
 
       # No reason to check for their presence if we're about to install them
       ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
-
-      if options[:enforce_available_locales] != nil
-        warn \
-          "DEPRECATION WARNING: using `solidus:install --enforce-available-locales` is now deprecated and has no effect. " \
-          "Since Rails 4.1 the default is `true` so we no longer need to explicitly set a value."
-      end
-
-      if options[:lib_name] != nil
-        warn \
-          "DEPRECATION WARNING: using `solidus:install --lib-name` is now deprecated and has no effect. " \
-          "The option is legacy and should be removed from scripts still using it."
-      end
     end
 
     def add_files
@@ -298,21 +281,6 @@ module Solidus
 
     def detect_authentication_to_install
       return 'devise' if @selected_frontend == 'starter'
-
-      if options[:with_authentication] != nil
-        say_status :warning, \
-          "Using `solidus:install --with-authentication` is now deprecated. " \
-          "Please use `--authentication` instead (see --help for the full list of options).",
-          :red
-
-        if options[:with_authentication] == 'false'
-          # Don't use the default authentication if the user explicitly
-          # requested no authentication system.
-          return 'none'
-        else
-          return 'devise'
-        end
-      end
 
       ENV['AUTHENTICATION'] ||
         options[:authentication] ||
