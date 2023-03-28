@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/sequences'
-  require 'spree/testing_support/factories/country_factory'
-end
-
 FactoryBot.define do
   factory :global_zone, class: 'Spree::Zone' do
     initialize_with { Spree::Zone.find_or_initialize_by(name: 'GlobalZone') }

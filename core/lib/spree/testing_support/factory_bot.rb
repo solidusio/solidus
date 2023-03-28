@@ -17,30 +17,6 @@ module Spree
         @paths ||= PATHS.map { |path| path.sub(/.rb\z/, '') }
       end
 
-      def self.when_cherry_picked
-        callsites = caller
-
-        # All good if the factory is being loaded by FactoryBot or from `testing_support/factories.rb`.
-        return if callsites.find do |line|
-          line.include?("/factory_bot/find_definitions.rb") ||
-          line.include?("/spree/testing_support/factories.rb")
-        end
-
-        yield
-      end
-
-      def self.deprecate_cherry_picking
-        callsites = caller
-        core_root = Spree::Core::Engine.root.to_s
-        index = callsites.index { |line| !line.start_with? core_root }
-
-        Spree::Deprecation.warn(
-          "Please do not cherry-pick factories, this is not well supported by FactoryBot, " \
-          'follow the changelog instructions on how to migrate your current setup.',
-          callsites[index..]
-        )
-      end
-
       def self.check_version
         require "factory_bot/version"
 
@@ -48,10 +24,10 @@ module Spree
         version = Gem::Version.new(::FactoryBot::VERSION)
 
         unless requirement.satisfied_by? version
-          Spree::Deprecation.warn(
-            "Please be aware that the supported version of FactoryBot is #{requirement}, " \
-            "using version #{version} could lead to factory loading issues.", caller(2)
-          )
+          raise <<~MSG
+            Please be aware that the supported version of FactoryBot is #{requirement},
+            using version #{version} could lead to factory loading issues.
+          MSG
         end
       end
 
