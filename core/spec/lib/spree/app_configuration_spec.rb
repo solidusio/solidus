@@ -161,20 +161,4 @@ RSpec.describe Spree::AppConfiguration do
   it 'has default Event adapter' do
     expect(prefs.events.adapter).to eq Spree::Event::Adapters::ActiveSupportNotifications
   end
-
-  context 'mails_from' do
-    it 'is deprecated' do
-      expect(Spree::Deprecation).to receive(:warn).with(/Solidus doesn't use `Spree::Config.mails_from`/)
-
-      prefs.mails_from=('solidus@example.com')
-    end
-
-    it "still sets the value so that consumers aren't broken" do
-      Spree::Deprecation.silence do
-        prefs.mails_from=('solidus@example.com')
-      end
-
-      expect(prefs.mails_from).to eq('solidus@example.com')
-    end
-  end
 end
