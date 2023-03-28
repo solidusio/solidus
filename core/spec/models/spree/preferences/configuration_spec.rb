@@ -35,38 +35,6 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
     expect(config.get(:foo)).to be(false)
   end
 
-  context "when default is a proc with arity zero" do
-    it "warns a deprecation message when it's a lambda" do
-      expect(Spree::Deprecation).to receive(:warn).with(/arity.*changed from 0 to 1/m)
-
-      config = Class.new(Spree::Preferences::Configuration) do
-        preference :lambda_with_arity_zero, :string, default: -> { 'foo' }
-      end.new
-
-      config.get(:lambda_with_arity_zero)
-    end
-
-    it "still takes the return value as the default" do
-      allow(Spree::Deprecation).to receive(:warn)
-
-      config = Class.new(Spree::Preferences::Configuration) do
-        preference :lambda_with_arity_zero, :string, default: -> { 'foo' }
-      end.new
-
-      expect(config.get(:lambda_with_arity_zero)).to eq('foo')
-    end
-
-    it "doesn't warn a deprecation message when it isn't a lambda" do
-      config = Class.new(Spree::Preferences::Configuration) do
-        preference :proc_with_arity_zero, :string, default: proc { 'foo' }
-      end.new
-
-      expect(Spree::Deprecation).not_to receive(:warn)
-
-      config.get(:proc_with_arity_zero)
-    end
-  end
-
   describe '#load_defaults' do
     it 'changes loaded_defaults' do
       config.load_defaults '2.1'

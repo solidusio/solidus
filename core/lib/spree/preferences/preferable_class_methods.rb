@@ -29,31 +29,7 @@ module Spree::Preferences
 
       default = begin
                   given = options[:default]
-                  if ancestors.include?(Spree::Preferences::Configuration) &&
-                     given.is_a?(Proc) &&
-                     given.lambda? &&
-                     given.arity.zero?
-                    Spree::Deprecation.warn <<~MSG
-                      The arity of a proc given as the default for a preference
-                      has changed from 0 to 1 on Solidus 3.1. The Solidus
-                      version for the loaded preference defaults is given as the
-                      proc's argument from this point on.
-
-                      If you don't need to return a different default value
-                      depending on the loaded Solidus version, you can change
-                      the proc so that it doesn't have lambda semantics (lambdas
-                      raise when extra arguments are supplied, while raw procs
-                      don't). E.g.:
-
-                      preference :foo, :string, default: proc { true }
-
-                      If you want to branch on the provided Solidus version, you can do like the following:
-
-                      versioned_preference :foo, :string, initial_value: true, boundaries: { "3.2.0" => false }
-
-                    MSG
-                    ->(_default_context) { given.call }
-                  elsif given.is_a?(Proc)
+                  if given.is_a?(Proc)
                     given
                   else
                     proc { given }
