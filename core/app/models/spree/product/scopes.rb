@@ -214,11 +214,6 @@ module Spree
             where(subquery.arel.exists)
           end
 
-          def self.with_variant_sku_cont(sku)
-            Spree::Deprecation.warn("use .with_kept_variant_sku_cont instead")
-            with_kept_variant_sku_cont(sku)
-          end
-
           class << self
             private
 
