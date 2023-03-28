@@ -39,6 +39,7 @@ module Spree
     delegate :shipping_category, :shipping_category_id,
       to: :product, prefix: true
     delegate :tax_rates, to: :tax_category
+    delegate :price_for_options, to: :price_selector
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -287,12 +288,6 @@ module Spree
       @price_selector ||= Spree::Config.variant_price_selector_class.new(self)
     end
 
-    # Chooses an appropriate price for the given pricing options
-    # This has been deprecated in favor of #price_for_options.
-    #
-    # @see Spree::Variant::PriceSelector#price_for_options
-    delegate :price_for, to: :price_selector
-
     # Returns the difference in price from the master variant
     def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
       master_price = product.master.price_for_options(pricing_options)
@@ -304,17 +299,6 @@ module Spree
     def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)
       diff = price_difference_from_master(pricing_options)
       diff && diff.zero?
-    end
-
-    def price_for_options(price_options)
-      if price_selector.respond_to?(:price_for_options)
-        price_selector.price_for_options(price_options)
-      else
-        money = price_for(price_options)
-        return if money.nil?
-
-        Spree::Price.new(amount: money.to_d, variant: self, currency: price_options.currency)
-      end
     end
 
     # Generates a friendly name and sku string.

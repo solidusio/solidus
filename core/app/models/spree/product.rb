@@ -95,7 +95,6 @@ module Spree
              :display_price,
              :has_default_price?,
              :images,
-             :price_for,
              :price_for_options,
              :rebuild_vat_prices=,
              to: :find_or_build_master

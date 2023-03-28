@@ -8,23 +8,11 @@ RSpec.describe Spree::Variant::PriceSelector do
   subject { described_class.new(variant) }
 
   it { is_expected.to respond_to(:variant) }
-  it { is_expected.to respond_to(:price_for) }
   it { is_expected.to respond_to(:price_for_options) }
 
   describe ".pricing_options_class" do
     it "returns the standard pricing options class" do
       expect(described_class.pricing_options_class).to eq(Spree::Variant::PricingOptions)
-    end
-  end
-
-  describe "#price_for(options)" do
-    let(:variant) { create(:variant, price: 12.34) }
-    let(:pricing_options) { described_class.pricing_options_class.new(currency: "USD") }
-
-    it "returns the correct (default) price as a Spree::Money object", :aggregate_failures do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^price_for is deprecated and will be removed/, any_args)
-      expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(12.34, currency: "USD"))
     end
   end
 
