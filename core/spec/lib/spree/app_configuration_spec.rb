@@ -157,8 +157,4 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.admin_vat_location.state_id).to eq(nil)
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
-
-  it 'has default Event adapter' do
-    expect(prefs.events.adapter).to eq Spree::Event::Adapters::ActiveSupportNotifications
-  end
 end

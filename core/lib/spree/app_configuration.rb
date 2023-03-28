@@ -280,14 +280,6 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-    # @!attribute [rw] use_legacy_events
-    #   Before v3.2, Solidus used a custom pub/sub implementation based on
-    #   ActiveSupport::Notifications. Now, we internally use and recommend
-    #   [Omnes](https://github.com/nebulab/omnes). This preference allows falling
-    #   back to the old system.
-    #   @return [Boolean]
-    versioned_preference :use_legacy_events, :boolean, initial_value: true, boundaries: { "3.2.0.alpha" => false }
-
     # Other configurations
 
     # Allows restricting what currencies will be available.
@@ -607,10 +599,6 @@ module Spree
         roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
         roles.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
       end
-    end
-
-    def events
-      @events_configuration ||= Spree::Event::Configuration.new
     end
 
     def user_last_url_storer_rules
