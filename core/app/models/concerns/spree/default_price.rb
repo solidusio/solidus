@@ -8,6 +8,12 @@ module Spree
       delegate :display_price, :display_amount, :price, to: :default_price, allow_nil: true
       delegate :price=, to: :default_price_or_build
 
+      # Chooses an appropriate price for the given pricing options
+      # This has been deprecated in favor of #price_for_options.
+      #
+      # @see Spree::Variant::PriceSelector#price_for_options
+      delegate :price_for, to: :price_selector
+
       # @see Spree::Variant::PricingOptions.default_price_attributes
       def self.default_price_attributes
         Spree::Config.default_pricing_options.desired_attributes
@@ -53,6 +59,14 @@ module Spree
     # @see Spree::Variant.default_price_attributes
     def default_price
       price_selector.price_for_options(Spree::Config.default_pricing_options)
+    end
+
+    # Returns an instance of the globally configured variant price selector class for this variant.
+    # It's cached so we don't create too many objects.
+    #
+    # @return [Spree::Variant::PriceSelector] The default price selector class
+    def price_selector
+      @price_selector ||= Spree::Config.variant_price_selector_class.new(self)
     end
 
     def has_default_price?

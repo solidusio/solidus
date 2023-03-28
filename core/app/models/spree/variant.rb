@@ -279,20 +279,6 @@ module Spree
       option_values.detect { |option| option.option_type.name == opt_name }.try(:presentation)
     end
 
-    # Returns an instance of the globally configured variant price selector class for this variant.
-    # It's cached so we don't create too many objects.
-    #
-    # @return [Spree::Variant::PriceSelector] The default price selector class
-    def price_selector
-      @price_selector ||= Spree::Config.variant_price_selector_class.new(self)
-    end
-
-    # Chooses an appropriate price for the given pricing options
-    # This has been deprecated in favor of #price_for_options.
-    #
-    # @see Spree::Variant::PriceSelector#price_for_options
-    delegate :price_for, to: :price_selector
-
     # Returns the difference in price from the master variant
     def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
       master_price = product.master.price_for_options(pricing_options)
