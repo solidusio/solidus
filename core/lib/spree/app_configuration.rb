@@ -171,22 +171,6 @@ module Spree
     #   @return [Regexp] Regex to be used in email validations, for example in Spree::EmailValidator
     preference :default_email_regexp, :regexp, default: URI::MailTo::EMAIL_REGEXP
 
-    # @!attribute [rw] extra_taxonomy_validations
-    #   Use extra validations on Taxonomies in 3.4.0, but default to false so stores can
-    #   upgrade and then fix any now invalid Taxonomies before enabling.
-    #   @return [Boolean]
-    versioned_preference :extra_taxonomy_validations, :boolean, initial_value: false, boundaries: { "3.4.0.dev" => true }
-    def extra_taxonomy_validations=(value)
-      Spree::Deprecation.warn <<~MSG
-        Solidus will remove `Spree::Config.extra_taxonomy_validations` preference
-        in the next major release and will always use the extra Taxonomy validations.
-        Before upgrading to the next major, please fix any now invalid Taxons
-        and then remove the preference definition in `config/initializers/spree.rb`.
-      MSG
-
-      preferences[:extra_taxonomy_validations] = value
-    end
-
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
