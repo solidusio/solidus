@@ -178,7 +178,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
             expect(shipment.shipped?).to be false
             expect(shipment.inventory_units_for(variant)).to be_empty
             expect(variant.stock_location_ids.include?(shipment.stock_location_id)).to be true
-            expect(shipment.stock_location).not_to eql stock_item.stock_location
+            expect(shipment.stock_location_id).not_to eql stock_item.stock_location_id
           end
         end
       end
