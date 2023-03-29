@@ -336,7 +336,7 @@ module Solidus
         descriptions.delete(:bolt)
       end
 
-      selected = options[:payment_method] || (options[:auto_accept] && 'paypal') ||
+      selected = options[:payment_method] || (options[:auto_accept] && 'none') ||
         ask_with_description(
           default: 'paypal',
           limited_to: payment_methods,

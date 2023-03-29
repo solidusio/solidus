@@ -12,7 +12,7 @@ RSpec.describe Solidus::InstallGenerator do
       aggregate_failures do
         expect(generator.instance_variable_get(:@selected_frontend)).to eq("starter")
         expect(generator.instance_variable_get(:@selected_authentication)).to eq("devise")
-        expect(generator.instance_variable_get(:@selected_payment_method)).to eq("paypal")
+        expect(generator.instance_variable_get(:@selected_payment_method)).to eq("none")
         expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
         expect(generator.instance_variable_get(:@load_seed_data)).to eq(true)
         expect(generator.instance_variable_get(:@load_sample_data)).to eq(true)
