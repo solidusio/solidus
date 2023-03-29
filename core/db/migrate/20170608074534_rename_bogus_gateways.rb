@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class RenameBogusGateways < ActiveRecord::Migration[5.0]
+require "spree/migration"
+
+class RenameBogusGateways < Spree::Migration
   # This migration was only performing a data migration useful updating to
   # Solidus v2.3.
   # Once the update is done, this is no more required to run so we can clean

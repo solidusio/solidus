@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class CreateSpreeStoreCreditReasonsTable < ActiveRecord::Migration[5.1]
+require "spree/migration"
+
+class CreateSpreeStoreCreditReasonsTable < Spree::Migration
   class StoreCreditUpdateReason < ActiveRecord::Base
     self.table_name = "spree_store_credit_update_reasons"
   end

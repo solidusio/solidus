@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class CreateSpreeWalletPaymentSources < ActiveRecord::Migration[4.2]
+require "spree/migration"
+
+class CreateSpreeWalletPaymentSources < Spree::Migration
   def change
     return if table_exists?(:spree_wallet_payment_sources)
 

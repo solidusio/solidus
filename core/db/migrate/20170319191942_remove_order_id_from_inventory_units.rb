@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class RemoveOrderIdFromInventoryUnits < ActiveRecord::Migration[5.0]
+require "spree/migration"
+
+class RemoveOrderIdFromInventoryUnits < Spree::Migration
   class InconsistentInventoryUnitError < StandardError; end
 
   class InventoryUnit < ActiveRecord::Base

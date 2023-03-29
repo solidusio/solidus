@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class AddAvailableToUsersAndRemoveDisplayOnFromShippingMethods < ActiveRecord::Migration[5.0]
+require "spree/migration"
+
+class AddAvailableToUsersAndRemoveDisplayOnFromShippingMethods < Spree::Migration
   def up
     add_column(:spree_shipping_methods, :available_to_users, :boolean, default: true)
     execute("UPDATE spree_shipping_methods "\

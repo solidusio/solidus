@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class AddNameToSpreeAddresses < ActiveRecord::Migration[5.2]
+require "spree/migration"
+
+class AddNameToSpreeAddresses < Spree::Migration
   def up
     add_column :spree_addresses, :name, :string
     add_index :spree_addresses, :name

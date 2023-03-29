@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class AddTypeBeforeRemovalToSpreePaymentMethods < ActiveRecord::Migration[5.2]
+require "spree/migration"
+
+class AddTypeBeforeRemovalToSpreePaymentMethods < Spree::Migration
   def change
     add_column :spree_payment_methods, :type_before_removal, :string
   end

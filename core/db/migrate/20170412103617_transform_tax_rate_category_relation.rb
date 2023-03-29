@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class TransformTaxRateCategoryRelation < ActiveRecord::Migration[5.0]
+require "spree/migration"
+
+class TransformTaxRateCategoryRelation < Spree::Migration
   class TaxRate < ActiveRecord::Base
     self.table_name = "spree_tax_rates"
   end

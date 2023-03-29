@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 require 'solidus/migrations/promotions_with_code_handlers'
+require "spree/migration"
 
-class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
+class RemoveCodeFromSpreePromotions < Spree::Migration
   class Promotion < ActiveRecord::Base
     self.table_name = "spree_promotions"
     self.ignored_columns = %w(type)

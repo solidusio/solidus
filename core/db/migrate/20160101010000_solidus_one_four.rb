@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class SolidusOneFour < ActiveRecord::Migration[5.0]
+require "spree/migration"
+
+class SolidusOneFour < Spree::Migration
   def up
     # This migration is just a compressed version of all the previous
     # migrations for spree_core. Do not run it if one of the core tables

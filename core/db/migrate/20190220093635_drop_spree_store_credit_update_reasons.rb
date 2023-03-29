@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class DropSpreeStoreCreditUpdateReasons < ActiveRecord::Migration[5.1]
+require "spree/migration"
+
+class DropSpreeStoreCreditUpdateReasons < Spree::Migration
   # This migration should run in a subsequent deploy after 20180710170104
   # has been already deployed. See also migration 20180710170104.
 

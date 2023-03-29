@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class AddAmountRemainingToStoreCreditEvents < ActiveRecord::Migration[5.0]
+require "spree/migration"
+
+class AddAmountRemainingToStoreCreditEvents < Spree::Migration
   class StoreCredit < ActiveRecord::Base
     self.table_name = 'spree_store_credits'
     has_many :store_credit_events

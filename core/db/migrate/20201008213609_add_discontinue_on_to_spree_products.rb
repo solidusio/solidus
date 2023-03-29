@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class AddDiscontinueOnToSpreeProducts < ActiveRecord::Migration[5.2]
+require "spree/migration"
+
+class AddDiscontinueOnToSpreeProducts < Spree::Migration
   def change
     add_column :spree_products, :discontinue_on, :datetime
   end

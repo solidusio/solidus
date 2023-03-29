@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class AddJoinCharactersToPromotionCodeBatch < ActiveRecord::Migration[5.1]
+require "spree/migration"
+
+class AddJoinCharactersToPromotionCodeBatch < Spree::Migration
   def change
     add_column(:spree_promotion_code_batches,
                :join_characters,
