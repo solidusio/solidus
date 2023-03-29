@@ -993,4 +993,11 @@ RSpec.describe Spree::Promotion, type: :model do
       expect(order.adjustment_total).to eq(-10)
     end
   end
+
+  describe "MATCH_POLICIES" do
+    it "prints a deprecation warning when used" do
+      expect(Spree::Deprecation).to receive(:warn).once.with(/Spree::Promotion::MATCH_POLICIES is deprecated/)
+      expect(Spree::Promotion::MATCH_POLICIES).to eq %w(all any)
+    end
+  end
 end
