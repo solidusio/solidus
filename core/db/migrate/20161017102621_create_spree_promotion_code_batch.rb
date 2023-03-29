@@ -20,21 +20,11 @@ class CreateSpreePromotionCodeBatch < Spree::Migration
       column: :promotion_id
     )
 
-    add_column(
+    add_reference(
       :spree_promotion_codes,
-      :promotion_code_batch_id,
-      :integer
-    )
-
-    add_foreign_key(
-      :spree_promotion_codes,
-      :spree_promotion_code_batches,
-      column: :promotion_code_batch_id
-    )
-
-    add_index(
-      :spree_promotion_codes,
-      :promotion_code_batch_id
+      :promotion_code_batch,
+      foreign_key: { to_table: :spree_promotion_code_batches },
+      index: true,
     )
   end
 end

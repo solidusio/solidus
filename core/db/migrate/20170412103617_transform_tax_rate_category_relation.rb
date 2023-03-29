@@ -13,12 +13,9 @@ class TransformTaxRateCategoryRelation < Spree::Migration
 
   def up
     create_table :spree_tax_rate_tax_categories do |t|
-      t.integer :tax_category_id, index: true, null: false
-      t.integer :tax_rate_id, index: true, null: false
+      t.references :tax_category, index: true, null: false, foreign_key: { to_table: :spree_tax_categories }
+      t.references :tax_rate, index: true, null: false, foreign_key: { to_table: :spree_tax_rates }
     end
-
-    add_foreign_key :spree_tax_rate_tax_categories, :spree_tax_categories, column: :tax_category_id
-    add_foreign_key :spree_tax_rate_tax_categories, :spree_tax_rates, column: :tax_rate_id
 
     TaxRate.where.not(tax_category_id: nil).find_each do |tax_rate|
       TaxRateTaxCategory.create!(
