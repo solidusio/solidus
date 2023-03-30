@@ -29,10 +29,31 @@ module Solidus
       none
     ]
 
-    PAYMENT_METHODS = %w[
-      paypal
-      bolt
-      none
+    PAYMENT_METHODS = [
+      {
+        name: 'paypal',
+        frontends: %w[none classic starter],
+        description: 'Install `solidus_paypal_commerce_platform`',
+        default: true,
+      },
+      {
+        name: 'bolt',
+        frontends: %w[classic],
+        description: 'Install `solidus_bolt`',
+        default: false,
+      },
+      {
+        name: 'braintree',
+        frontends: %w[none starter],
+        description: 'Install `solidus_braintree`',
+        default: false,
+      },
+      {
+        name: 'none',
+        frontends: %w[none classic starter],
+        description: 'Skip installing a payment method',
+        default: false,
+      },
     ]
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
@@ -48,7 +69,7 @@ module Solidus
 
     class_option :frontend, type: :string, enum: FRONTENDS + LEGACY_FRONTENDS, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
-    class_option :payment_method, type: :string, enum: PAYMENT_METHODS, default: nil, desc: "Indicates which payment method to install."
+    class_option :payment_method, type: :string, enum: PAYMENT_METHODS.map { |payment_method| payment_method[:name] }, default: nil, desc: "Indicates which payment method to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
@@ -323,29 +344,26 @@ module Solidus
       return 'paypal' if Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
       return 'bolt' if Bundler.locked_gems.dependencies['solidus_bolt']
 
-      descriptions = {
-        paypal: "- [#{set_color 'paypal', :bold}] Install `solidus_paypal_commerce_platform` (#{set_color :default, :bold}).",
-        bolt: "- [#{set_color 'bolt', :bold}] Install `solidus_bolt`.",
-        none: "- [#{set_color 'none', :bold}] Skip installing a payment method.",
-      }
-
-      payment_methods = PAYMENT_METHODS
-
-      if @selected_frontend != 'classic'
-        payment_methods -= ['bolt']
-        descriptions.delete(:bolt)
+      selected_frontend_payment_methods = PAYMENT_METHODS.select do |payment_method|
+        payment_method[:frontends].include?(@selected_frontend)
       end
 
       selected = options[:payment_method] || (options[:auto_accept] && 'paypal') ||
         ask_with_description(
           default: 'paypal',
-          limited_to: payment_methods,
+          limited_to: selected_frontend_payment_methods.map { |payment_method| payment_method[:name] },
           desc: <<~TEXT
             Which payment method would you like to use?
 
-            #{descriptions.values.join("\n")}
+            #{selected_frontend_payment_methods.map { |payment_method| formatted_payment_method_description(payment_method) }.join("\n")}
           TEXT
         )
+    end
+
+    def formatted_payment_method_description(payment_method)
+      default_label = " (#{set_color :default, :bold})" if payment_method[:default]
+
+      "- [#{set_color payment_method[:name], :bold}] #{payment_method[:description]}#{default_label}."
     end
   end
 end
