@@ -152,17 +152,19 @@ commands:
           name: "Cleanup & check rails version"
           command: |
             gem environment path
-            rm -rf /tmp/my_app /tmp/.tool-versions # cleanup previous runs
+            rm -rf /tmp/my_app /tmp/.ruby-versions # cleanup previous runs
+            rm -rf /tmp/my_app /tmp/.gems-versions # cleanup previous runs
 
-            ruby -v >> /tmp/.tool-versions
-            gem search -eq rails >> /tmp/.tool-versions # get the latest rails from rubygems
-            gem search -eq solidus >> /tmp/.tool-versions # get the latest solidus from rubygems
+            ruby -v >> /tmp/.ruby-versions
+            gem search -eq rails >> /tmp/.gems-versions # get the latest rails from rubygems
+            gem search -eq solidus >> /tmp/.gems-versions # get the latest solidus from rubygems
 
-            cat /tmp/.tool-versions
+            cat /tmp/.ruby-versions
+            cat /tmp/.gems-versions
       - restore_cache:
           keys:
-            - solidus-installer-v7-{{ checksum "/tmp/.tool-versions" }}
-            - solidus-installer-v7-
+            - solidus-installer-v7-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+            - solidus-installer-v7-{{ checksum "/tmp/.ruby-versions" }}-
       - run:
           name: "Prepare the rails application"
           command: |
@@ -170,7 +172,7 @@ commands:
             test -d my_app || gem install rails solidus
             test -d my_app || rails new my_app --skip-git
       - save_cache:
-          key: solidus-installer-v7-{{ checksum "/tmp/.tool-versions" }}
+          key: solidus-installer-v7-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
           paths:
             - /tmp/my_app
             - /home/circleci/.rubygems
