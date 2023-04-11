@@ -671,9 +671,8 @@ RSpec.describe Spree::Payment, type: :model do
     # Regression test for https://github.com/spree/spree/issues/4403 and https://github.com/spree/spree/issues/4407
     it "is the difference between offsets total and payment amount" do
       payment.amount = 100
-      allow(payment).to receive(:offsets_total).and_return(0)
       expect(payment.credit_allowed).to eq(100)
-      allow(payment).to receive(:offsets_total).and_return(-80)
+      create(:payment, amount: -80, source: payment, source_type: 'Spree::Payment', state: 'completed', payment_method: create(:check_payment_method))
       expect(payment.credit_allowed).to eq(20)
     end
   end
@@ -1330,6 +1329,20 @@ RSpec.describe Spree::Payment, type: :model do
 
     it 'does not include void, failed and invalid payments' do
       expect(described_class.valid).to be_empty
+    end
+  end
+
+  describe '::offset_payment' do
+    it 'is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/offsets` are deprecated/)
+
+      described_class.offset_payment
+    end
+
+    it 'still calls the original method' do
+      Spree::Deprecation.silence do
+        expect(described_class.offset_payment.class.name).to eq('ActiveRecord::Relation')
+      end
     end
   end
 end
