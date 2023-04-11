@@ -286,7 +286,7 @@ module Spree
 
     # Updates the state of the Shipment bypassing any callbacks.
     #
-    # If this moves the shipmnent to the 'shipped' state, after_ship will be
+    # If this moves the shipment to the 'shipped' state, after_ship will be
     # called.
     def update_state
       old_state = state
