@@ -10,4 +10,4 @@ unless Bundler.locked_gems.dependencies['solidus_bolt']
   bundle_command 'add solidus_bolt'
 end
 
-generate 'solidus_bolt:install'
+generate "solidus_bolt:install --auto-run-migrations=#{options[:migrate]}"

@@ -222,12 +222,6 @@ module Solidus
 
     private
 
-    def generate(what, *args, abort_on_failure: true)
-      args << '--auto-accept' if options[:auto_accept]
-      args << '--auto-run-migrations' if options[:migrate]
-      super(what, *args, abort_on_failure: abort_on_failure)
-    end
-
     def bundle_command(command, env = {})
       # Make `bundle install` less verbose by skipping the "Using ..." messages
       super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
