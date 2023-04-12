@@ -15,7 +15,7 @@ module Spree
 
     # Assign the attributes to the order and save the order
     # @return true if saved, otherwise false and errors will be set on the order
-    def apply
+    def call
       order.validate_payments_attributes(@payments_attributes)
 
       assign_order_attributes
@@ -23,6 +23,8 @@ module Spree
 
       order.save
     end
+
+    alias_method :apply, :call
 
     private
 

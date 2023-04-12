@@ -111,13 +111,13 @@ module Spree
       end
 
       it "keeps source attributes on assignment" do
-        OrderUpdateAttributes.new(order, { payments_attributes: [payment_attributes] }).apply
+        OrderUpdateAttributes.new(order, { payments_attributes: [payment_attributes] }).call
         expect(order.unprocessed_payments.last.source.number).to be_present
       end
 
       # For the reason of this test, please see spree/spree_gateway#132
       it "keeps source attributes through OrderUpdateAttributes" do
-        OrderUpdateAttributes.new(order, { payments_attributes: [payment_attributes] }).apply
+        OrderUpdateAttributes.new(order, { payments_attributes: [payment_attributes] }).call
         expect(order.unprocessed_payments.last.source.number).to be_present
       end
     end

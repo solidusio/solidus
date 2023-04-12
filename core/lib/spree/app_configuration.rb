@@ -429,7 +429,7 @@ module Spree
     # Allows providing your own order update attributes class for checkout.
     #
     # @!attribute [rw] order_update_attributes_class
-    # @return [Class] a class that responds to "apply"
+    # @return [Class] a class that responds to "call"
     #   with the same signature as Spree::OrderUpdateAttributes.
     class_name_attribute :order_update_attributes_class, default: 'Spree::OrderUpdateAttributes'
 
