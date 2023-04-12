@@ -38,6 +38,12 @@ module Solidus
         default: false,
       },
       {
+        name: 'stripe',
+        frontends: %w[none classic starter],
+        description: 'Install `solidus_stripe`',
+        default: false,
+      },
+      {
         name: 'braintree',
         frontends: %w[none starter],
         description: 'Install `solidus_braintree`',
@@ -96,6 +102,7 @@ module Solidus
         'payment method',
         selected:
           ('paypal' if has_gem?('solidus_paypal_commerce_platform')) ||
+          ('stripe' if has_gem?('solidus_stripe')) ||
           ('bolt' if has_gem?('solidus_bolt')) ||
           ENV['PAYMENT_METHOD'] || options[:payment_method],
         available_options: PAYMENT_METHODS.select { _1[:frontends].include?(@selected_frontend) },
