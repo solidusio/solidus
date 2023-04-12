@@ -675,6 +675,14 @@ RSpec.describe Spree::Payment, type: :model do
       create(:payment, amount: -80, source: payment, source_type: 'Spree::Payment', state: 'completed', payment_method: create(:check_payment_method))
       expect(payment.credit_allowed).to eq(20)
     end
+
+    it "is the difference between refunds total and payment amount" do
+      payment.amount = 100
+
+      expect {
+        create(:refund, payment: payment, amount: 80)
+      }.to change { payment.credit_allowed }.from(100).to(20)
+    end
   end
 
   describe "#can_credit?" do
