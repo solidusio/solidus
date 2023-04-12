@@ -52,6 +52,7 @@
 
     <%= f.field_container :default_currency do %>
       <%= f.label :default_currency %>
+      <%= f.field_hint :default_currency %>
       <%= f.select :default_currency,
         Spree::Config.available_currencies.map(&:iso_code),
         { include_blank: true },
