@@ -11,7 +11,7 @@ AllCops:
     - '*/spec/dummy/**/*'
     - 'sandbox/**/*'
     - '**/templates/**/*'
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
 
 # Sometimes I believe this reads better
 # This also causes spacing issues on multi-line fixes

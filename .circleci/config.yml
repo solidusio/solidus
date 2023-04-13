@@ -9,7 +9,7 @@ executors:
     parameters: &parameters
       ruby:
         type: string
-        default: "2.7"
+        default: "3.0"
     working_directory: &workdir ~/solidus
     environment: &environment
       DEFAULT_MAX_WAIT_TIME: 10
