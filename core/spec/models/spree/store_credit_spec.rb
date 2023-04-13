@@ -317,18 +317,18 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context 'troublesome floats' do
-      # 8.21.to_d < 8.21 => true
+      if Gem::Requirement.new("~> 3.0.0") === Gem::Version.new(BigDecimal::VERSION)
+        # BigDecimal 2.0.0> 8.21.to_d # => 0.821e1 (all good!)
+        # BigDecimal 3.0.0> 8.21.to_d # => 0.8210000000000001e1 (`8.21.to_d < 8.21` is `true`!!!)
+        # BigDecimal 3.1.4> 8.21.to_d # => 0.821e1 (all good!)
+        before { pending "https://github.com/rails/rails/issues/42098; https://github.com/ruby/bigdecimal/issues/192" }
+      end
+
       let(:store_credit_attrs) { { amount: 8.21 } }
 
       subject { store_credit.validate_authorization(store_credit_attrs[:amount], store_credit.currency) }
 
-      if RUBY_VERSION >= "3"
-        pending "https://github.com/rails/rails/issues/42098" do
-          it { is_expected.to be_truthy }
-        end
-      else
-        it { is_expected.to be_truthy }
-      end
+      it { is_expected.to be_truthy }
     end
   end
 
