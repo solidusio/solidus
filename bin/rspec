@@ -30,7 +30,7 @@ expand_existing = ->(path) {
   [
     File.expand_path(path),
     *LIBS.map { |l| File.expand_path(path, l) }
-  ].find { |p| File.exists?(without_line[p]) }
+  ].find { |p| File.exist?(without_line[p]) }
 }
 
 spec_files, options = ARGV.partition(&is_spec) # Separate specs and options
