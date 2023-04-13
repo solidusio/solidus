@@ -13,8 +13,6 @@ Rails.env = 'test'
 
 require 'solidus_core'
 
-RAILS_6_OR_ABOVE = Rails.gem_version >= Gem::Version.new('6.0')
-
 # @private
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
@@ -86,7 +84,6 @@ module DummyApp
     # Set the preview path within the dummy app:
     config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
 
-    config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
     config.active_record.dump_schema_after_migration = false
 
     # Configure active storage to use storage within tmp folder
