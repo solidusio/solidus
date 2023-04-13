@@ -35,21 +35,6 @@ module Spree
       end
     end
 
-    # `raise_on_missing_translations` config option
-    #
-    # Changed from ActionView to I18n on Rails 6.1
-    #
-    # See https://github.com/rails/rails/pull/31571
-    #
-    # TODO: Remove when deprecating Rails 6.0
-    def self.raise_on_missing_translations(value)
-      if version_gte?('6.1')
-        Rails.application.config.i18n.raise_on_missing_translations = value
-      else
-        Rails.application.config.action_view.raise_on_missing_translations = value
-      end
-    end
-
     # Set default image attachment adapter
     #
     # TODO: Remove when deprecating Rails 6.0

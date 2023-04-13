@@ -6,7 +6,7 @@ describe "setting locale", type: :feature do
   stub_authorization!
 
   before do
-    Spree::RailsCompatibility.raise_on_missing_translations(false)
+    Rails.application.config.i18n.raise_on_missing_translations = false
     I18n.locale = I18n.default_locale
     I18n.backend.store_translations(:fr,
       date: {
@@ -24,7 +24,7 @@ describe "setting locale", type: :feature do
 
   after do
     I18n.locale = I18n.default_locale
-    Spree::RailsCompatibility.raise_on_missing_translations(true)
+    Rails.application.config.i18n.raise_on_missing_translations = true
   end
 
   it "should be in french" do
