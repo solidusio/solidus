@@ -559,8 +559,7 @@ module Spree
     end
 
     def has_non_reimbursement_related_refunds?
-      refunds.non_reimbursement.exists? ||
-        payments.where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'").exists? # how old versions of spree stored refunds
+      refunds.non_reimbursement.exists?
     end
 
     def tax_total

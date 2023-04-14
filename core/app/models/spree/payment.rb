@@ -16,7 +16,6 @@ module Spree
     belongs_to :source, polymorphic: true, optional: true
     belongs_to :payment_method, -> { with_discarded }, class_name: 'Spree::PaymentMethod', inverse_of: :payments, optional: true
 
-    has_many :offsets, -> { offset_payment }, class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source
     has_many :state_changes, as: :stateful
     has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent'
@@ -45,19 +44,6 @@ module Spree
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
     scope :with_state, ->(state) { where(state: state.to_s) }
-    # "offset" is reserved by activerecord
-    # TODO: When removing the method we can also:
-    #   - Remove the `.offsets` association
-    #   - Remove the `#offsets_total` method
-    #   - Remove offsets count from the `#credit_allowed` method
-    #   - Remove offsets check from `Spree::Order#has_non_reimbursement_related_refunds?
-    def self.offset_payment
-      Spree::Deprecation.warn <<~MSG
-        `Spree::Payment offsets` are deprecated. Use the refund system (`Spree::Refund`) instead.
-      MSG
-
-      where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'")
-    end
 
     scope :checkout, -> { with_state('checkout') }
     scope :completed, -> { with_state('completed') }
@@ -100,22 +86,11 @@ module Spree
         end || amount
     end
 
-    # The total amount of the offsets (for old-style refunds) for this payment.
-    #
-    # @return [BigDecimal] the total amount of this payment's offsets
-    def offsets_total
-      offsets.pluck(:amount).sum
-    end
-
     # The total amount this payment can be credited.
     #
-    # @return [BigDecimal] the amount of this payment minus the offsets
-    #   (old-style refunds) and refunds
+    # @return [BigDecimal] the amount of this payment minus refunds
     def credit_allowed
-      amount - (
-        (self.class.where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed' AND source_id = ?", id).sum(:amount)).abs +
-        refunds.sum(:amount)
-      )
+      amount - refunds.sum(:amount)
     end
 
     # @return [Boolean] true when this payment can be credited
