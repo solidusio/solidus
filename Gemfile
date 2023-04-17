@@ -63,6 +63,7 @@ group :backend do
   # JavaScript testing
   gem 'teaspoon', github: 'jejacks0n/teaspoon', require: false
   gem 'teaspoon-mocha', github: 'jejacks0n/teaspoon', require: false
+  gem 'webrick', require: false
 end
 
 group :utils do
