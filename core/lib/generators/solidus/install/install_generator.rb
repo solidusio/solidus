@@ -17,11 +17,6 @@ module Solidus
       starter
     ]
 
-    LEGACY_FRONTENDS = %w[
-      solidus_starter_frontend
-      solidus_frontend
-    ]
-
     AUTHENTICATIONS = %w[
       devise
       existing
@@ -67,7 +62,7 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
 
-    class_option :frontend, type: :string, enum: FRONTENDS + LEGACY_FRONTENDS, default: nil, desc: "Indicates which frontend to install."
+    class_option :frontend, type: :string, enum: FRONTENDS, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
     class_option :payment_method, type: :string, enum: PAYMENT_METHODS.map { |payment_method| payment_method[:name] }, default: nil, desc: "Indicates which payment method to install."
 
@@ -272,13 +267,8 @@ module Solidus
     end
 
     def detect_frontend_to_install
-      # We need to support names that were available in v3.2
-      selected_frontend = 'starter' if options[:frontend] == 'solidus_starter_frontend'
-      selected_frontend = 'classic' if options[:frontend] == 'solidus_frontend'
-      selected_frontend ||= options[:frontend]
-
       ENV['FRONTEND'] ||
-        selected_frontend ||
+        options[:frontend] ||
         (Bundler.locked_gems.dependencies['solidus_frontend'] && 'classic') ||
         (options[:auto_accept] && 'starter') ||
         ask_with_description(
