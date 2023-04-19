@@ -491,7 +491,7 @@ module Spree
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :image_attachment_module, default: Spree::RailsCompatibility.default_image_attachment_module
+    class_name_attribute :image_attachment_module, default: "Spree::Image::ActiveStorageAttachment"
 
     # @!attribute [rw] allowed_image_mime_types
     #
@@ -558,7 +558,7 @@ module Spree
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
-    class_name_attribute :taxon_attachment_module, default: Spree::RailsCompatibility.default_taxon_attachment_module
+    class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
 
     # Configures the absolute path that contains the Solidus engine
     # migrations. This will be checked at app boot to confirm that all Solidus

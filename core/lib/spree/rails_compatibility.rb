@@ -35,43 +35,7 @@ module Spree
       end
     end
 
-    # Set default image attachment adapter
-    #
-    # TODO: Remove when deprecating Rails 6.0
-    def self.default_image_attachment_module
-      if version_gte?("6.1")
-        "Spree::Image::ActiveStorageAttachment"
-      else
-        "Spree::Image::PaperclipAttachment"
-      end
-    end
-
-    # Set default taxon attachment adapter
-    #
-    # TODO: Remove when deprecating Rails 6.0
-    def self.default_taxon_attachment_module
-      if version_gte?("6.1")
-        "Spree::Taxon::ActiveStorageAttachment"
-      else
-        "Spree::Taxon::PaperclipAttachment"
-      end
-    end
-
-    # Set current host for ActiveStorage
-    #
-    # Changed from `#host` to `#url_options` on Rails 7
-    #
-    # See https://github.com/rails/rails/issues/41388
-    #
-    # TODO: Remove when deprecating Rails 6.1
-    def self.active_storage_url_options_host(value)
-      if version_gte?('7')
-        ActiveStorage::Current.url_options = { host: value }
-      else
-        ActiveStorage::Current.host = value
-      end
-    end
-
+    # Set default image at for Rails 6.0 dynamic default attachment module)
     # Default ActiveStorage variant processor
     #
     # Changed from `:mini_magick` to `vips` on Rails 7
