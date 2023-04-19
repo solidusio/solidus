@@ -84,6 +84,8 @@ commands:
           paths:
             - vendor/bundle
 
+      - libvips
+
   test:
     steps:
       - run:
@@ -125,8 +127,6 @@ commands:
           name: Report Coverage
           command: bundle exec rake solidus:coverage[cobertura]
 
-  # TODO: Integrate with `setup` when we deprecate support
-  # for Rails 6.1 (vips is the default from Rails 7)
   libvips:
     steps:
       - run:
@@ -134,12 +134,6 @@ commands:
           command: |
             sudo apt-get update
             sudo apt-get install -yq libvips-dev
-
-  imagemagick:
-    steps:
-      - run:
-          name: Install imagemagick
-          command: sudo apt-get install -y imagemagick
 
   install_solidus:
     parameters:
@@ -183,6 +177,7 @@ commands:
             bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails generate solidus:install --auto-accept <<parameters.flags>>
+
   test_page:
     parameters:
       app_root:
@@ -274,7 +269,6 @@ jobs:
       BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
       - setup
-      - libvips
       - test
 
   test_with_coverage:
@@ -295,7 +289,6 @@ jobs:
       DISABLE_ACTIVE_STORAGE: false
     steps:
       - setup
-      - libvips
       - test_with_coverage
 
   dev_tools:
