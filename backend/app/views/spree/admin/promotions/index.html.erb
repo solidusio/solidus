@@ -98,10 +98,10 @@
             <%= promotion.usage_count %>
           </td>
           <td>
-            <%= Spree::RailsCompatibility.to_fs(promotion.starts_at, :long) if promotion.starts_at %>
+            <%= promotion.starts_at.to_fs(:long) if promotion.starts_at %>
           </td>
           <td>
-            <%= Spree::RailsCompatibility.to_fs(promotion.expires_at, :long) if promotion.expires_at %>
+            <%= promotion.expires_at.to_fs(:long) if promotion.expires_at %>
           </td>
           <td class="actions">
             <% if can?(:edit, promotion) %>

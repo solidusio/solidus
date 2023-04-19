@@ -42,7 +42,7 @@ class Spree::Carton < Spree::Base
   end
 
   def display_shipped_at
-    Spree::RailsCompatibility.to_fs(shipped_at, :rfc822)
+    shipped_at.to_fs(:rfc822)
   end
 
   def manifest
