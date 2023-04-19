@@ -21,7 +21,6 @@ require "spree/core/search/base"
 require "spree/core/search/variant"
 require 'spree/preferences/configuration'
 require 'spree/core/environment'
-require 'spree/rails_compatibility'
 
 module Spree
   class AppConfiguration < Preferences::Configuration

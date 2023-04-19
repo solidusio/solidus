@@ -96,7 +96,7 @@ module DummyApp
           }
         }
         config.active_storage.service = :test
-        config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', Spree::RailsCompatibility.variant_processor).to_sym
+        config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', :vips).to_sym
       end
     end
 
