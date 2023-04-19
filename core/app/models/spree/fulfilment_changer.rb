@@ -17,7 +17,11 @@ module Spree
   # @attr [Integer] quantity How many units we want to move
   #
   class FulfilmentChanger
+    # @note This private constant is only used to deprecate not passing the `track_inventory` argument
+    #   on initialization. It will be removed in Solidus 4.0, please do not use it.
     TRACK_INVENTORY_NOT_PROVIDED = Object.new.freeze
+    private_constant :TRACK_INVENTORY_NOT_PROVIDED
+
     include ActiveModel::Validations
 
     attr_accessor :current_shipment, :desired_shipment
