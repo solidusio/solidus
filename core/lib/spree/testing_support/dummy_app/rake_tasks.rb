@@ -38,14 +38,10 @@ namespace :db do
     # railties:install:migrations and then db:migrate.
     # Migrations should be run one directory at a time
     ActiveRecord::Migrator.migrations_paths.each do |path|
-      if Rails.gem_version >= Gem::Version.new('6.0.0')
-        ActiveRecord::MigrationContext.new(
-          [path],
-          ActiveRecord::SchemaMigration
-        ).migrate
-      else
-        ActiveRecord::MigrationContext.new([path]).migrate
-      end
+      ActiveRecord::MigrationContext.new(
+        [path],
+        ActiveRecord::SchemaMigration
+      ).migrate
     end
 
     ActiveRecord::Base.clear_cache!
