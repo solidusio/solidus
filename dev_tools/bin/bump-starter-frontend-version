@@ -6,7 +6,7 @@ require_relative '../lib/solidus/bumper'
 candidate_version = ARGV[0]
 
 path = File.expand_path('../../core/lib/generators/solidus/install/app_templates/frontend/starter.rb', __dir__)
-File.read(path)[%r{solidusio/solidus_starter_frontend/raw/(.+)/template.rb}, 1]
+from = File.read(path)[%r{solidusio/solidus_starter_frontend/raw/(.+)/template.rb}, 1]
 to = candidate_version
 
 puts <<~MSG
