@@ -27,7 +27,7 @@ RSpec.describe Solidus::PipelineContext do
 
     it 'raises when branch is not the main one and tracks last minor is true' do
       expect {
-        described_class.new(tags: %w[v3.0.0], base_branch: 'v3.1', last_minor: true)
+        described_class.new(tags: %w[v3.0.0], base_branch: 'v3.1', last_minor: true, tracking_major: false)
       }.to raise_error(ArgumentError, 'branch v3.1 cannot track a last minor release')
     end
   end
@@ -57,7 +57,8 @@ RSpec.describe Solidus::PipelineContext do
       it 'returns the highest tag matching the base branch' do
         context = described_class.new(
           tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2 v3.0.0],
-          base_branch: 'v2.0'
+          base_branch: 'v2.0',
+          tracking_major: false
         )
 
         expect(context.current_tag).to eq('v2.0.2')
@@ -66,7 +67,8 @@ RSpec.describe Solidus::PipelineContext do
       it 'compares tags as versions' do
         context = described_class.new(
           tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0.alpha v2.0.0 v3.0.0],
-          base_branch: 'v2.0'
+          base_branch: 'v2.0',
+          tracking_major: false
         )
 
         expect(context.current_tag).to eq('v2.0.0')
@@ -90,7 +92,8 @@ RSpec.describe Solidus::PipelineContext do
       it 'returns the current tag' do
         context = described_class.new(
           tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2 v3.0.0 v3.0.1],
-          base_branch: 'v3.0'
+          base_branch: 'v3.0',
+          tracking_major: false
         )
 
         expect(context.current_diff_source_tag).to eq('v3.0.1')
@@ -103,7 +106,8 @@ RSpec.describe Solidus::PipelineContext do
       it 'returns the next patch level tag on the base branch' do
         context = described_class.new(
           tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
-          base_branch: 'v2.0'
+          base_branch: 'v2.0',
+          tracking_major: false
         )
 
         expect(context.candidate_tag).to eq('v2.0.3')
@@ -137,7 +141,8 @@ RSpec.describe Solidus::PipelineContext do
     it 'returns the candidate tag without the patch level' do
       context = described_class.new(
         tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
-        base_branch: 'master'
+        base_branch: 'master',
+        tracking_major: false
       )
 
       expect(context.candidate_patch_branch).to eq('v2.1')
@@ -148,7 +153,8 @@ RSpec.describe Solidus::PipelineContext do
     it 'returns the candidate tag without the tag prefix' do
       context = described_class.new(
         tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
-        base_branch: 'master'
+        base_branch: 'master',
+        tracking_major: false
       )
 
       expect(context.candidate_version).to eq('2.1.0')
@@ -159,7 +165,8 @@ RSpec.describe Solidus::PipelineContext do
     it 'returns the candidate version without the patch segment' do
       context = described_class.new(
         tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
-        base_branch: 'master'
+        base_branch: 'master',
+        tracking_major: false
       )
 
       expect(context.candidate_minor_version).to eq('2.1')
@@ -171,7 +178,8 @@ RSpec.describe Solidus::PipelineContext do
       it 'returns the next patch level version after the candidate' do
         context = described_class.new(
           tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
-          base_branch: 'v2.0'
+          base_branch: 'v2.0',
+          tracking_major: false
         )
 
         expect(context.next_candidate_tag).to eq('v2.0.4')
