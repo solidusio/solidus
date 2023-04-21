@@ -1,3 +1,75 @@
+## Solidus v3.4.0 (2023-04-21)
+
+## Solidus Core
+* Stop using RSpec is_expected with block expectations by @kennyadsl in https://github.com/solidusio/solidus/pull/4870
+* Fetch solidus_frontend from RubyGems instead of GitHub by @gsmendoza in https://github.com/solidusio/solidus/pull/4885
+* Fix CI only testing with the legacy event system adapter by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4880
+* Update the SolidusFrontend dependency to 3.4.0.dev by @gsmendoza in https://github.com/solidusio/solidus/pull/4889
+* Retry flaky specs automatically by @kennyadsl in https://github.com/solidusio/solidus/pull/4893
+* Fix publishing events responding to #to_hash on Ruby 2.7 by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4875
+* ERB fixes for the backend (🐛+💅) by @elia in https://github.com/solidusio/solidus/pull/4891
+* Risk analysis box update by @elia in https://github.com/solidusio/solidus/pull/4883
+* Fix CI only testing with the paperclip adapter by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4905
+* Fix AddPaymentSourcesToWallet changing default when reused by @RyanofWoods in https://github.com/solidusio/solidus/pull/4198
+* Fix duplicate context name in spec by @FrancescoAiello01 in https://github.com/solidusio/solidus/pull/4925
+* Apply store credits before creating payments by @ccarruitero in https://github.com/solidusio/solidus/pull/4667
+* Use i18n for datepicker format by @coorasse in https://github.com/solidusio/solidus/pull/3321
+* Fix flaky spec helper for local testing by @kennyadsl in https://github.com/solidusio/solidus/pull/4948
+* Ensure LogEntry only saves safe data by @elia in https://github.com/solidusio/solidus/pull/4950
+* Allow bad payloads to be saved in payment log entries by @elia in https://github.com/solidusio/solidus/pull/4953
+* Add back Variant#find_or_build_default_price by @spaghetticode in https://github.com/solidusio/solidus/pull/4960
+* Ensure target shipments are evaluated in order of creation (fix flakey) by @elia in https://github.com/solidusio/solidus/pull/4954
+* Introduce allowed_ransackable_scopes by @RyanofWoods in https://github.com/solidusio/solidus/pull/4956
+* Copy new migrations as part of the update task by @kennyadsl in https://github.com/solidusio/solidus/pull/4957
+* Update Spree::Product scopes.rb to fix issue with 'descend_by_popularity' scope by @cmbaldwin in https://github.com/solidusio/solidus/pull/4969
+* Spree::ProductDuplicator bug on price by @Roddoric in https://github.com/solidusio/solidus/pull/4971
+* Update descend_by_popularity scope spec by @kennyadsl in https://github.com/solidusio/solidus/pull/4979
+* Allow splitting shipments when not tracking inventory by @nspinazz89 in https://github.com/solidusio/solidus/pull/3338
+* Fix rake error testing the update generator by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4980
+* Improve Taxon validations and factory by @RyanofWoods in https://github.com/solidusio/solidus/pull/4851
+* Add a deprecation warning for allow_promotions_any_match_policy = true by @kennyadsl in https://github.com/solidusio/solidus/pull/4991
+* Add Braintree to the installer as a payment method option by @gsmendoza in https://github.com/solidusio/solidus/pull/4961
+* Fix typo in shipmnent.rb by @seand7565 in https://github.com/solidusio/solidus/pull/5004
+* Deprecate `Spree::Payment` offsets by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5008
+* Add a tooltip for default currency in store settings by @kennyadsl in https://github.com/solidusio/solidus/pull/5009
+* Allow to set order_update_attributes_class by @tvdeyen in https://github.com/solidusio/solidus/pull/4955
+* Remove automatic propagation of generators options by @kennyadsl in https://github.com/solidusio/solidus/pull/5011
+* Mark FulfilmentChanger::TRACK_INVENTORY_NOT_PROVIDED as private by @kennyadsl in https://github.com/solidusio/solidus/pull/5028
+
+## Solidus Backend
+* Fix sticky admin nav on long menu by @MassimilianoLattanzio in https://github.com/solidusio/solidus/pull/4884
+* Deprecate `Admin::OrdersHelper#line_item_shipment_price` by @elia in https://github.com/solidusio/solidus/pull/4876
+* Improve Product Details tab layout by @davidedistefano in https://github.com/solidusio/solidus/pull/4892
+* Retry flaky specs automatically by @kennyadsl in https://github.com/solidusio/solidus/pull/4893
+* Add the `/admin/orders/:number` route by @elia in https://github.com/solidusio/solidus/pull/4886
+* ERB fixes for the backend (🐛+💅) by @elia in https://github.com/solidusio/solidus/pull/4891
+* Risk analysis box update by @elia in https://github.com/solidusio/solidus/pull/4883
+* Mark another spec as flaky by @kennyadsl in https://github.com/solidusio/solidus/pull/4946
+* Use i18n for datepicker format by @coorasse in https://github.com/solidusio/solidus/pull/3321
+* Improve REST OpenAPI documentation for auth by @kennyadsl in https://github.com/solidusio/solidus/pull/4951
+* Allow splitting shipments when not tracking inventory by @nspinazz89 in https://github.com/solidusio/solidus/pull/3338
+* Authorize uuid for update_positions on ResourceController by @julienanne in https://github.com/solidusio/solidus/pull/4992
+* Add a tooltip for default currency in store settings by @kennyadsl in https://github.com/solidusio/solidus/pull/5009
+
+## Solidus API
+* Add a better description for the api key to Stoplight  by @vassalloandrea in https://github.com/solidusio/solidus/pull/4847
+* Link to how to sign in the API with solidus_auth_devise by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4900
+* Ensure LogEntry only saves safe data by @elia in https://github.com/solidusio/solidus/pull/4950
+* Improve REST OpenAPI documentation for auth by @kennyadsl in https://github.com/solidusio/solidus/pull/4951
+* Remove order token authorization option from current order API documentation by @Jackwitwicky in https://github.com/solidusio/solidus/pull/4958
+* Allow splitting shipments when not tracking inventory by @nspinazz89 in https://github.com/solidusio/solidus/pull/3338
+* Allow to set order_update_attributes_class by @tvdeyen in https://github.com/solidusio/solidus/pull/4955
+
+## Solidus Sample
+* Reduce size of sample images by @F-Hamid in https://github.com/solidusio/solidus/pull/4924
+
+## Solidus
+* Update the SolidusFrontend dependency to 3.4.0.dev by @gsmendoza in https://github.com/solidusio/solidus/pull/4889
+* fix: update Nebulab missing logo asset reference by @Agostin in https://github.com/solidusio/solidus/pull/5025
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.3.0...v3.4.0
+
+
 ## Solidus v3.3.0 (2023-01-24)
 
 ## Solidus Core
