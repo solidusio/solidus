@@ -1,14 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/factories/store_credit_category_factory'
-  require 'spree/testing_support/factories/store_credit_type_factory'
-  require 'spree/testing_support/factories/user_factory'
-end
-
 FactoryBot.define do
   factory :store_credit, class: 'Spree::StoreCredit' do
     association :user, strategy: :create

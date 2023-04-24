@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-end
-
 FactoryBot.define do
   factory :calculator, aliases: [:flat_rate_calculator], class: 'Spree::Calculator::FlatRate' do
     preferred_amount { 10.0 }

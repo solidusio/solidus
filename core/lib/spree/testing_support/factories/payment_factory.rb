@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/factories/payment_method_factory'
-  require 'spree/testing_support/factories/credit_card_factory'
-  require 'spree/testing_support/factories/order_factory'
-  require 'spree/testing_support/factories/store_credit_factory'
-end
-
 FactoryBot.define do
   factory :payment, aliases: [:credit_card_payment], class: 'Spree::Payment' do
     association(:payment_method, factory: :credit_card_payment_method)
