@@ -94,7 +94,6 @@ require 'spree/core/environment/promotions'
 require 'spree/core/environment'
 require 'spree/migrations'
 require 'spree/migration_helpers'
-require 'spree/event'
 require 'spree/bus'
 require 'spree/core/engine'
 

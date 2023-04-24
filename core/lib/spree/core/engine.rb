@@ -52,27 +52,17 @@ module Spree
 
       # Setup pub/sub
       initializer 'spree.core.pub_sub' do |app|
-        if Spree::Config.use_legacy_events
-          app.reloader.to_prepare do
-            Spree::Event.activate_autoloadable_subscribers
-          end
+        app.reloader.to_prepare do
+          Spree::Bus.clear
 
-          app.reloader.before_class_unload do
-            Spree::Event.deactivate_all_subscribers
-          end
-        else
-          app.reloader.to_prepare do
-            Spree::Bus.clear
+          %i[
+            order_finalized
+            order_recalculated
+            reimbursement_reimbursed
+            reimbursement_errored
+          ].each { |event_name| Spree::Bus.register(event_name) }
 
-            %i[
-              order_finalized
-              order_recalculated
-              reimbursement_reimbursed
-              reimbursement_errored
-            ].each { |event_name| Spree::Bus.register(event_name) }
-
-            Spree::OrderMailerSubscriber.new.subscribe_to(Spree::Bus)
-          end
+          Spree::OrderMailerSubscriber.new.subscribe_to(Spree::Bus)
         end
       end
 
@@ -95,16 +85,6 @@ module Spree
             Gem::Version.new(Spree::Auth::VERSION) < Gem::Version.new('2.5.4') &&
             defined?(Spree::UsersController)
           Spree::UsersController.protect_from_forgery with: :exception
-        end
-      end
-
-      config.after_initialize do
-        if Spree::Config.use_legacy_events && !ENV['CI']
-          Spree::Deprecation.warn <<~MSG
-            Your Solidus store is using the legacy event system. You're
-            encouraged to switch to the new event bus. After you're done, you
-            can remove the `use_legacy_events` setting from `spree.rb`.
-          MSG
         end
       end
     end
