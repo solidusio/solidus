@@ -653,4 +653,22 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
   end
+
+  describe "inventory tracking" do
+    let(:product) { build(:product) }
+
+    describe "#track_inventory=" do
+      it "delegates to master variant" do
+        expect(product.master).to receive(:track_inventory=).with(true)
+        product.track_inventory = true
+      end
+    end
+
+    describe "#track_inventory" do
+      it "delegates to master variant" do
+        expect(product.master).to receive(:track_inventory) { true }
+        expect(product.track_inventory).to be(true)
+      end
+    end
+  end
 end
