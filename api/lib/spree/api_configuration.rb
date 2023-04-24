@@ -114,7 +114,7 @@ module Spree
 
     preference :promotion_attributes, :array, default: [
       :id, :name, :description, :expires_at, :starts_at, :type, :usage_limit,
-      :match_policy, :advertise, :path
+      :advertise, :path
     ]
 
     preference :store_attributes, :array, default: [

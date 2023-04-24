@@ -2,9 +2,6 @@
 
 module Spree
   class Promotion < Spree::Base
-
-    autoload(:MATCH_POLICIES, "spree/promotion/match_policies")
-
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
     attr_reader :eligibility_errors
@@ -167,27 +164,13 @@ module Spree
       specific_rules = rules.select { |rule| rule.applicable?(promotable) }
       return [] if specific_rules.none?
 
-      if match_all?
-        # If there are rules for this promotion, but no rules for this
-        # particular promotable, then the promotion is ineligible by default.
-        unless specific_rules.all?(&eligible)
-          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
-          return nil
-        end
-        specific_rules
-      else
-        Spree::Deprecation.warn(
-        <<~WARN
-          Your promotion "#{name}" with ID #{id} has a match_policy of 'any'.
-          This is deprecated, please split the promotion into separate promotions for each rule.
-        WARN
-        )
-        unless specific_rules.any?(&eligible)
-          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
-          return nil
-        end
-        specific_rules.select(&eligible)
+      # If there are rules for this promotion, but no rules for this
+      # particular promotable, then the promotion is ineligible by default.
+      unless specific_rules.all?(&eligible)
+        @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
+        return nil
       end
+      specific_rules
     end
 
     def products
@@ -224,9 +207,7 @@ module Spree
         if rules.blank?
           true
         else
-          rules.send(match_all? ? :all? : :any?) do |rule|
-            rule.actionable? line_item
-          end
+          rules.all? { |rule| rule.actionable? line_item }
         end
       else
         false
@@ -269,10 +250,6 @@ module Spree
 
     def normalize_blank_values
       self[:path] = nil if self[:path].blank?
-    end
-
-    def match_all?
-      match_policy == "all"
     end
 
     def apply_automatically_disallowed_with_paths
