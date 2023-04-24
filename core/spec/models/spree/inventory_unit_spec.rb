@@ -123,7 +123,6 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     end
 
     it "can still fetch variants by eager loading (remove default_scope)" do
-      skip "find a way to remove default scope when eager loading associations"
       unit.variant.discard
       expect(Spree::InventoryUnit.joins(:variant).includes(:variant).first.variant).to be_a Spree::Variant
     end

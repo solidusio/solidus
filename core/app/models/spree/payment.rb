@@ -158,16 +158,9 @@ module Spree
 
     def validate_source
       if source && !source.valid?
-        if Gem::Requirement.new(">= 6.1").satisfied_by?(Rails.gem_version)
-          source.errors.each do |error|
-            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
-            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
-          end
-        else
-          source.errors.each do |field, error|
-            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
-            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error}")
-          end
+        source.errors.each do |error|
+          field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
+          errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
         end
       end
       if errors.any?

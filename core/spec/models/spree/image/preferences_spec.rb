@@ -12,22 +12,20 @@ RSpec.describe Spree::Image, type: :model do
   }
   custom_style_default = :other
 
-  if Rails.gem_version >= Gem::Version.new('6.1.0.alpha')
-    it 'correctly sets the image styles ActiveStorage' do
-      stub_spree_preferences(
-        product_image_styles: custom_styles,
-        product_image_style_default: custom_style_default
-      )
+  it 'correctly sets the image styles ActiveStorage' do
+    stub_spree_preferences(
+      product_image_styles: custom_styles,
+      product_image_style_default: custom_style_default
+    )
 
-      # We make use of a custom class, such that the preferences loaded
-      # are the mocked ones.
-      active_storage_asset = Class.new(Spree::Asset) do
-        include Spree::Image::ActiveStorageAttachment
-      end
-
-      expect(active_storage_asset.attachment_definitions[:attachment][:styles]).to eq(custom_styles)
-      expect(active_storage_asset.attachment_definitions[:attachment][:default_style]).to eq(custom_style_default)
+    # We make use of a custom class, such that the preferences loaded
+    # are the mocked ones.
+    active_storage_asset = Class.new(Spree::Asset) do
+      include Spree::Image::ActiveStorageAttachment
     end
+
+    expect(active_storage_asset.attachment_definitions[:attachment][:styles]).to eq(custom_styles)
+    expect(active_storage_asset.attachment_definitions[:attachment][:default_style]).to eq(custom_style_default)
   end
 
   it 'correctly sets the image styles Paperclip' do

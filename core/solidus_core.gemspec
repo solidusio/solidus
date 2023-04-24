@@ -20,14 +20,14 @@ Gem::Specification.new do |s|
     f.match(%r{^(spec|script)/})
   end
 
-  s.required_ruby_version = '>= 2.7.0'
+  s.required_ruby_version = '>= 3.0.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   %w[
     actionmailer actionpack actionview activejob activemodel activerecord
     activesupport railties
   ].each do |rails_dep|
-    s.add_dependency rails_dep, ['>= 6.0', '< 7.1.x']
+    s.add_dependency rails_dep, ['>= 7.0', '< 7.1']
   end
 
   s.add_dependency 'activemerchant', '~> 1.66'

@@ -7,23 +7,6 @@ module Spree
     extend ActiveSupport::Concern
     include Spree::ActiveStorageAdapter::Normalization
 
-    included do
-      next if Rails.gem_version >= Gem::Version.new('6.1.0.alpha')
-
-      raise <<~MESSAGE
-        Configuration Error: Solidus ActiveStorage attachment adpater requires Rails >= 6.1.0.
-
-        Spree::Config.image_attachment_module preference is set to #{Spree::Config.image_attachment_module}
-        Spree::Config.taxon_attachment_module preference is set to #{Spree::Config.taxon_attachment_module}
-        Rails version is #{Rails.gem_version}
-
-        To solve the problem you can upgrade to a Rails version greater than or equal to 6.1.0
-        or use legacy Paperclip attachment adapter by editing `config/initialiers/spree/rb`:
-        config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
-        config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
-      MESSAGE
-    end
-
     class_methods do
       attr_reader :attachment_name
       attr_reader :attachment_definition

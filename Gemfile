@@ -36,26 +36,6 @@ gem 'i18n-tasks', '~> 0.9', require: false
 gem 'factory_bot_rails', '>= 4.8', require: false
 
 group :backend do
-  # 'net/http' is required by 'capybara/server', triggering
-  # a few "already initialized constant" warnings when loaded
-  # from default gems. See:
-  # - https://github.com/ruby/net-protocol/issues/10
-  # - https://stackoverflow.com/a/72474475
-  v = ->(string) { Gem::Version.new(string) }
-  if Gem::Requirement.new(['>= 2.7', '< 3']) === Gem::Version.new(RUBY_VERSION)
-    gem 'net-http', require: false
-  end
-
-
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3')
-    # Need to explicitly declare gems when using ruby 3.0 with older versions of rails. Can be removed when mail 2.8.0 is released.
-    # - https://bugs.ruby-lang.org/issues/17873
-    # - https://stackoverflow.com/a/72474475
-    gem 'net-smtp', require: false
-    gem 'net-imap', require: false
-    gem 'net-pop', require: false
-  end
-
   gem 'capybara', '~> 3.13', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
   gem 'selenium-webdriver', require: false
