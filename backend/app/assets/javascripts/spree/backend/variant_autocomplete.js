@@ -17,27 +17,8 @@
     *                                                       you need to ensure that the attributes are allowed to be Ransacked.
     */
   $.fn.variantAutocomplete = function(options) {
-    function extraParameters(term) {
-      if (typeof(options) === 'object') {
-        if (typeof(options['searchParameters']) === 'function') {
-          return options['searchParameters'](term)
-        } else {
-          console.warn(
-            "Solidus deprecation: Passing an object of parameters to variantAutocomplete is deprecated. Instead, on the options object, please declare `searchParameters` as a function returning the parameters.\n\n",
-            "Deprecated usage:\n",
-            "$('#id').variantAutocomplete({\n",
-            "  suppliable_only: true\n",
-            "})",
-            "\n\nNew usage:\n",
-            "$('#id').variantAutocomplete({\n",
-            "  searchParameters: function (_selectSearchTerm) { return { suppliable_only: true  } }\n",
-            "})"
-          )
-        }
-      }
-
-      return {}
-    }
+    // Default options
+    options = options || {}
 
     this.select2({
       placeholder: Spree.translations.variant_placeholder,
@@ -58,14 +39,15 @@
           }
         },
         data: function(term, page) {
-          var searchData = {
+          const extraParameters = options["searchParameters"] ? options["searchParameters"](term) : {}
+
+          return {
             variant_search_term: term,
             token: Spree.api_key,
-            page: page
-          };
-          return _.extend(searchData, extraParameters(term));
+            page: page,
+            ...extraParameters,
+          }
         },
-
         results: function(data, page) {
           window.variants = data["variants"];
           return {

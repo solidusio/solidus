@@ -22,13 +22,6 @@ module Spree
         safe_join(links, "&nbsp;".html_safe)
       end
 
-      # @deprecated use `Spree::LineItem#display_amount` instead
-      def line_item_shipment_price(line_item, quantity)
-        Spree::Money.new(line_item.price * quantity, { currency: line_item.currency })
-      end
-      deprecate deprecator: Spree::Deprecation,
-        line_item_shipment_price: "use Spree::LineItem#display_amount instead"
-
       # Addresss Verification System response code
       #
       # @see https://en.wikipedia.org/wiki/Address_verification_service
