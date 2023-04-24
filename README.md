@@ -65,14 +65,9 @@ Solidus consists of several gems. When you require the `solidus` gem in your
 `Gemfile`, Bundler will install all of the following gems:
 
 - [`solidus_api`](https://github.com/solidusio/solidus/tree/master/api) (RESTful API)
-- [`solidus_frontend`](https://github.com/solidusio/solidus_frontend) (Cart and storefront)
 - [`solidus_backend`](https://github.com/solidusio/solidus/tree/master/backend) (Admin area)
 - [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) (Essential models, mailers, and classes)
 - [`solidus_sample`](https://github.com/solidusio/solidus/tree/master/sample) (Sample data)
-
-While `solidus_frontend` is still present in the meta-gem, it'll be removed in
-Solidus v4.0. For new stores, we recommend using
-[solidus_starter_frontend](https://github.com/solidusio/solidus_starter_frontend).
 
 All of the gems are designed to work together to provide a fully functional
 ecommerce platform. However, you may only want to use the
