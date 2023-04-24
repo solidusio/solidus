@@ -79,12 +79,16 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   def update_positions
     ActiveRecord::Base.transaction do
       positions = params[:positions]
-      records = model_class.where(id: positions.keys).to_a
 
       positions.each do |id, index|
-        # To permit the use of UUID as id, we compare models id in database
-        # and in params under the string representation instead of integer
-        records.find { |r| r.id.to_s == id }&.set_list_position(index)
+        # Yes here there is a N+1 but acts_as_list use after update callback
+        # so we can't keep not reloaded data without create a bug
+        # (spec : backend/spec/controllers/spree/admin/resource_controller_spec.rb)
+        # "with take care of acts_as_list's after update callback" test
+        #
+        # TODO : create a global set_list_position on all concerned objects
+        # maybe in the acts_as_list gem
+        model_class.where(id: id).first&.set_list_position(index)
       end
     end
 

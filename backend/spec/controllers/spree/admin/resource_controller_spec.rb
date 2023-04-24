@@ -237,6 +237,41 @@ describe Spree::Admin::WidgetsController, type: :controller do
         expect(Widget.all.order('position')).to eq [widget_2, widget_1]
       end
     end
+
+    context "with take care of acts_as_list's after update callback" do
+      let(:widget_1) { Widget.create!(id: 4, name: 'widget 4', position: 1) }
+      let(:widget_2) { Widget.create!(id: 2, name: 'widget 3', position: 2) }
+      let(:widget_3) { Widget.create!(id: 1, name: 'widget 2', position: 3) }
+      let(:widget_4) { Widget.create!(id: 3, name: 'widget 1', position: 4) }
+
+      subject do
+        post :update_positions, params: { id: widget_1.to_param,
+          positions: { widget_3.id => '4', widget_2.id => '3', widget_4.id => '1', widget_1.id => '2' }, format: 'js' }
+      end
+
+      it 'updates the position of all widgets' do
+        subject
+        expect(Widget.all.order('position').map(&:id)).to eq [widget_4, widget_1, widget_2, widget_3].map(&:id)
+      end
+
+      context "not passing all elements" do
+        subject do
+          post :update_positions, params: { id: widget_1.to_param,
+            positions: { widget_3.id => '1', widget_2.id => '2', widget_4.id => '3' }, format: 'js' }
+        end
+
+        it 'updates the position of all widgets' do
+          widget_1 # trigger the creation
+          widget_2 # trigger the creation
+          widget_3 # trigger the creation
+          widget_4 # trigger the creation
+          expect(Widget.all.order('position').map(&:id)).to eq [widget_1, widget_2, widget_3, widget_4].map(&:id)
+          subject
+          expect(Widget.all.order('position').pluck(:position).uniq).to eq [1, 2, 3, 4] # trivial test to show no duplicate position integer
+          expect(Widget.all.order('position').map(&:id)).to eq [widget_3, widget_2, widget_4, widget_1].map(&:id)
+        end
+      end
+    end
   end
 
   describe 'rescue_from ActveRecord::RecordNotFound' do
