@@ -667,121 +667,6 @@ paths:
               properties:
                 image:
                   $ref: '#/components/schemas/image-input'
-  '/products/{product_id}/variants/{id}':
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-      summary: Get product variant
-      description: |-
-        **Deprecation Warning**: Use [shallow version](/docs/solidus/87df124706c5f-get-variant) instead
-
-        Retrieves a product's variant.
-      operationId: get-product-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-    parameters:
-      - name: product_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-    delete:
-      responses:
-        '204':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/delete-restriction'
-      summary: Delete product variant
-      description: |-
-        **Deprecation Warning**: Use [shallow version](/docs/solidus/82ccaada99139-delete-variant) instead
-
-        Deletes a product's variant.
-      operationId: delete-product-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-    put:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Update product variant
-      description: |-
-        **Deprecation Warning**: Use [shallow version](/docs/solidus/ce338b5f3b940-update-variant) instead
-
-        Updates a product's variant.
-      operationId: update-product-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                variant:
-                  $ref: '#/components/schemas/variant-input'
-            examples:
-              Example with Option Value Ids:
-                value:
-                  variant:
-                    price: '11.22'
-                    cost_price: '9'
-                    position: 1
-                    track_inventory: true
-                    sku: AWSOME-1122
-                    cost_currency: USD
-                    option_value_ids:
-                      - 1
-                      - 2
-              Example with Option Value Text:
-                value:
-                  variant:
-                    price: '11.22'
-                    cost_price: '9'
-                    position: 1
-                    track_inventory: true
-                    sku: AWSOME-1122
-                    cost_currency: USD
-                    options:
-                      name: Color
-                      value: White
   /states:
     get:
       responses:
@@ -852,65 +737,6 @@ paths:
         - $ref: '#/components/parameters/q'
       security:
         - api-key: []
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create variant
-      description: |-
-        **Deprecation Warning**: Use [nested version](/docs/solidus/681aa6cb75b1e-create-product-variant) instead
-
-        Creates a variant. Only users with `can :create, Variant` permissions can perform this action.
-      operationId: create-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                product_id:
-                  type: integer
-                variant:
-                  $ref: '#/components/schemas/variant-input'
-            examples:
-              Example with Option Value Ids:
-                value:
-                  product_id: 1
-                  variant:
-                    price: '11.22'
-                    cost_price: '9'
-                    position: 1
-                    track_inventory: true
-                    sku: AWSOME-1122
-                    cost_currency: USD
-                    option_value_ids:
-                      - 1
-                      - 2
-              Example with Option Value Text:
-                value:
-                  product_id: 1
-                  variant:
-                    price: '11.22'
-                    cost_price: '9'
-                    position: 1
-                    track_inventory: true
-                    sku: AWSOME-1122
-                    cost_currency: USD
-                    options:
-                      name: Color
-                      value: White
   '/variants/{id}':
     get:
       responses:
@@ -2541,38 +2367,6 @@ paths:
         - Option values
       security:
         - api-key: []
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/option-value'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create option value
-      description: |-
-        **Deprecation Warning**: Use [nested version](/docs/solidus/810154673c613-create-option-type-value) instead
-
-        Creates an option value.
-
-        Only users with the `create` permission on `Spree::OptionValue` can perform this action.
-      operationId: create-option-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                option_value:
-                  $ref: '#/components/schemas/option-value-input'
   '/option_values/{id}':
     get:
       responses:
@@ -2703,99 +2497,6 @@ paths:
 
         Only users with the `create` permission on `Spree::OptionValue` can perform this action.
       operationId: create-option-type-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                option_value:
-                  $ref: '#/components/schemas/option-value-input'
-  '/option_types/{option_type_id}/option_values/{id}':
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema: {}
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-      summary: Get option type value
-      description: |-
-        **Deprecation Warning**: Use [shallow version](/docs/solidus/cbbc403ed08a3-get-option-value) instead
-
-        Retrieves an option type's value.
-      operationId: get-option-type-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-    parameters:
-      - name: option_type_id
-        in: path
-        required: true
-        schema:
-          type: string
-        description: 'The ID of the Spree::OptionType'
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The ID of the OptionValue
-    delete:
-      responses:
-        '204':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/option-value'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/delete-restriction'
-      summary: Delete option type value
-      description: |-
-        **Deprecation Warning**: Use [shallow version](/docs/solidus/0742e63219b1f-delete-option-value) instead
-
-        Deletes an option type's value.
-      operationId: delete-option-type-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-    patch:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/option-value'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Update option type value
-      description: |-
-        **Deprecation Warning**: Use [shallow version](/docs/solidus/b43f889175ebb-update-option-value) instead
-
-        Updates an option type's value.
-
-        Only users with the `update` permission on the option value can perform this action.
-      operationId: update-option-type-value
       tags:
         - Option values
       security:
@@ -5589,10 +5290,6 @@ paths:
         Creates a shipment.
 
         Please note that this request can be only performed by users with the `create` permission on the shipment.
-
-        **Deprecation Warning**: Adding items to the shipment via this endpoint
-        is deprecated. Instead, create an empty shipment and populate it with
-        the dedicated endpoint [to add items to the shipment](/docs/solidus/7078dbcf415ac-add-shipment-item).
       operationId: create-shipment
       tags:
         - Shipments
@@ -5606,18 +5303,10 @@ paths:
               properties:
                 stock_location_id:
                   type: integer
-                variant_id:
-                  type: integer
-                  deprecated: true
-                quantity:
-                  type: integer
-                  deprecated: true
             examples:
               Example:
                 value:
                   stock_location_id: 0
-                  variant_id: 0
-                  quantity: 0
   /shipments/transfer_to_location:
     post:
       responses:

@@ -69,14 +69,6 @@ module Spree
         return_items_params = customer_return_attributes.
           delete(:return_items_attributes)
 
-        if return_items_params.is_a? ActionController::Parameters
-          return_items_params = return_items_params.values
-          Spree::Deprecation.warn(
-            "Passing `return_items_attributes` as a hash of hashes is \
-deprecated and will be removed in future versions of Solidus."
-          )
-        end
-
         @customer_return = CustomerReturn.new(customer_return_attributes)
 
         @customer_return.return_items = return_items_params.map do |item_params|

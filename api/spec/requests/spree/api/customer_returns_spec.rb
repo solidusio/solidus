@@ -172,35 +172,6 @@ module Spree::Api
             from("awaiting")
         end
 
-        context "and return items attributes passed in as a hash of hashes" do
-          let(:customer_return_params) do
-            {
-              stock_location_id: stock_location.id,
-              return_items_attributes: {
-                "0" => return_item.attributes
-              }
-            }
-          end
-
-          it "can create a new customer return" do
-            expect(Spree::Deprecation).to receive(:warn)
-            expect { subject }.to change { Spree::CustomerReturn.count }.
-              from(0).to(1)
-
-            expect(response).to have_http_status(:success)
-            expect(json_response).to have_attributes(attributes)
-          end
-
-          it "logs a deprecation warning" do
-            expect(Spree::Deprecation).
-              to receive(:warn).
-              with(
-                /Passing `return_items_attributes` as a hash of hashes is deprecated/
-              )
-            subject
-          end
-        end
-
         context "with reception_status_event provided for return item" do
           let(:customer_return_params) do
             {

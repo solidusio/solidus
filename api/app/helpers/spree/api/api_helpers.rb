@@ -41,11 +41,6 @@ module Spree
         define_method attribute do
           Spree::Api::Config.send(attribute)
         end
-
-        define_singleton_method attribute do
-          Spree::Deprecation.warn("Please use Spree::Api::Config::#{attribute} instead.")
-          Spree::Api::Config.send(attribute)
-        end
       end
 
       def required_fields_for(model)
