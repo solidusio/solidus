@@ -11,6 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Check for the presence of a changelog label"
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh pr view \
             ${{ github.event.pull_request.number }} \
