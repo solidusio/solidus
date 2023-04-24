@@ -754,7 +754,6 @@ RSpec.describe Spree::Promotion, type: :model do
 
     it "true if there are no applicable rules" do
       promotion.promotion_rules = [stub_model(Spree::PromotionRule, eligible?: true, applicable?: false)]
-      allow(promotion.promotion_rules).to receive(:for).and_return([])
       expect(promotion.eligible_rules(promotable)).to eq []
     end
 

@@ -17,7 +17,6 @@ module Spree
 
         included do
           before_action :set_guest_token
-          helper_method :try_spree_current_user
           helper_method :spree_current_user
 
           class_attribute :unauthorized_redirect
@@ -58,21 +57,6 @@ module Spree
         def spree_current_user
           defined?(super) ? super : nil
         end
-
-        # proxy method to *possible* spree_current_user method
-        # Authentication extensions (such as spree_auth_devise) are meant to provide spree_current_user
-        def try_spree_current_user
-          # This one will be defined by apps looking to hook into Spree
-          # As per authentication_helpers.rb
-          if respond_to?(:spree_current_user, true)
-            spree_current_user
-          # This one will be defined by Devise
-          elsif respond_to?(:current_spree_user, true)
-            current_spree_user
-          end
-        end
-
-        deprecate try_spree_current_user: :spree_current_user, deprecator: Spree::Deprecation
       end
     end
   end

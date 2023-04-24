@@ -395,18 +395,6 @@ module Spree
       Spree::CreditCard.where(id: credit_card_ids)
     end
 
-    # TODO: Remove on Solidus 4.0
-    # @api private
-    def finalize!
-      Spree::Deprecation.warn <<~MSG
-        Calling `Spree::Order#finalize!` is discouraged. Instead, use
-        `Spree::Order#complete!`, which goes through all the needed safety
-        checks before finalizing an order. This method will be removed
-        altogether on Solidus 4.0.
-      MSG
-      finalize
-    end
-
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
       updater.update_shipment_state
@@ -571,8 +559,7 @@ module Spree
     end
 
     def has_non_reimbursement_related_refunds?
-      refunds.non_reimbursement.exists? ||
-        payments.where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'").exists? # how old versions of spree stored refunds
+      refunds.non_reimbursement.exists?
     end
 
     def tax_total
@@ -779,14 +766,15 @@ module Spree
       self.email = user.email if user
     end
 
-    # Determine if email is required (we don't want validation errors before we hit the checkout)
+    # Determine if the email is required for this order
+    #
+    # We don't require email for orders in the cart state or address state because those states
+    # precede the entry of an email address.
+    #
+    # @return [Boolean] true if the email is required
+    # @note This method was called require_email before.
     def email_required?
       true unless new_record? || ['cart', 'address'].include?(state)
-    end
-
-    def require_email
-      Spree::Deprecation.warn "Use email_required? instead", caller(1)
-      email_required?
     end
 
     def ensure_inventory_units

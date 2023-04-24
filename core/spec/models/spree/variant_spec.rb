@@ -334,25 +334,6 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  describe '#find_or_build_default_price' do
-    it 'is deprecated' do
-      without_partial_double_verification do
-        expect(Spree::Deprecation).to receive(:warn)
-      end
-      variant.find_or_build_default_price
-    end
-
-    it 'is an alias for #default_price_or_build' do
-      without_partial_double_verification do
-        allow(Spree::Deprecation).to receive(:warn)
-      end
-
-      expect(variant).to receive(:default_price_or_build)
-
-      variant.find_or_build_default_price
-    end
-  end
-
   describe '#has_default_price?' do
     context 'when default price is present and not discarded' do
       it 'returns true' do
@@ -370,26 +351,6 @@ RSpec.describe Spree::Variant, type: :model do
 
         expect(variant.has_default_price?).to be(false)
       end
-    end
-  end
-
-  describe '#currently_valid_prices' do
-    around do |example|
-      Spree::Deprecation.silence do
-        example.run
-      end
-    end
-
-    it 'returns prioritized prices' do
-      price_1 = create(:price, country: create(:country))
-      price_2 = create(:price, country: nil)
-      variant = create(:variant, prices: [price_1, price_2])
-
-      result = variant.currently_valid_prices
-
-      expect(
-        result.index(price_1) < result.index(price_2)
-      ).to be(true)
     end
   end
 
@@ -415,21 +376,6 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  context "#price_for(price_options)" do
-    let(:price_options) { Spree::Config.variant_price_selector_class.pricing_options_class.new }
-
-    it "calls the price selector with the given options object" do
-      expect(variant.price_selector).to receive(:price_for).with(price_options)
-      variant.price_for(price_options)
-    end
-
-    it "returns a Spree::Money object with a deprecation warning", :aggregate_failures do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^price_for is deprecated and will be removed/, any_args)
-      expect(variant.price_for(price_options)).to eq Spree::Money.new(19.99)
-    end
-  end
-
   context "#price_for_options(price_options)" do
     subject { variant.price_for_options(price_options) }
 
@@ -443,19 +389,6 @@ RSpec.describe Spree::Variant, type: :model do
     it "returns a Spree::Price object for the given pricing_options", :aggregate_failures do
       expect(subject).to be_a Spree::Price
       expect(subject.amount).to eq 19.99
-    end
-
-    context "when the price_selector does not implement #price_for_options" do
-      before do
-        allow(variant.price_selector).to receive(:respond_to?).with(:price_for_options).and_return false
-      end
-
-      it "returns an unpersisted Spree::Price", :aggregate_failures do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^price_for is deprecated and will be removed/, any_args)
-        expect(subject).to be_a Spree::Price
-        expect(subject.amount).to eq 19.99
-      end
     end
   end
 

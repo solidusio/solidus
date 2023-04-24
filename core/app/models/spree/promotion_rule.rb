@@ -18,11 +18,6 @@ module Spree
       []
     end
 
-    def self.for(promotable)
-      all.select { |rule| rule.applicable?(promotable) }
-    end
-    deprecate :for, "Please select promotion rules by their applicable status on the promotable instead."
-
     def applicable?(_promotable)
       raise NotImplementedError, "applicable? should be implemented in a sub-class of Spree::PromotionRule"
     end
