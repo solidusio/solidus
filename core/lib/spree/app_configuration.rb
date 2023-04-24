@@ -150,38 +150,6 @@ module Spree
     #   @return [Regexp] Regex to be used in email validations, for example in Spree::EmailValidator
     preference :default_email_regexp, :regexp, default: URI::MailTo::EMAIL_REGEXP
 
-    # @!attribute [rw] extra_taxon_validations
-    #   Use extra validations on Taxons in 3.4.0, but default to false so stores can
-    #   upgrade and then fix any now invalid Taxons before enabling.
-    #   @return [Boolean]
-    versioned_preference :extra_taxon_validations, :boolean, initial_value: false, boundaries: { "3.4.0.dev" => true }
-    def extra_taxon_validations=(value)
-      Spree::Deprecation.warn <<~MSG
-        Solidus will remove `Spree::Config.extra_taxon_validations` preference
-        in the next major release and will always use the extra Taxon validations.
-        Before upgrading to the next major, please fix any now invalid Taxons
-        and then remove the preference definition in `config/initializers/spree.rb`.
-      MSG
-
-      preferences[:extra_taxon_validations] = value
-    end
-
-    # @!attribute [rw] extra_taxonomy_validations
-    #   Use extra validations on Taxonomies in 3.4.0, but default to false so stores can
-    #   upgrade and then fix any now invalid Taxonomies before enabling.
-    #   @return [Boolean]
-    versioned_preference :extra_taxonomy_validations, :boolean, initial_value: false, boundaries: { "3.4.0.dev" => true }
-    def extra_taxonomy_validations=(value)
-      Spree::Deprecation.warn <<~MSG
-        Solidus will remove `Spree::Config.extra_taxonomy_validations` preference
-        in the next major release and will always use the extra Taxonomy validations.
-        Before upgrading to the next major, please fix any now invalid Taxons
-        and then remove the preference definition in `config/initializers/spree.rb`.
-      MSG
-
-      preferences[:extra_taxonomy_validations] = value
-    end
-
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
@@ -217,20 +185,6 @@ module Spree
     #     on the source of your data, you may consider disabling it to prevent
     #     entity expansion attacks.
     preference :log_entry_allow_aliases, :boolean, default: true
-
-    # @!attribute [rw] mails_from
-    #   @return [String] Email address used as +From:+ field in transactional emails.
-    #   @deprecated Spree::Store#mail_from_address is used instead
-    preference :mails_from, :string, default: 'solidus@example.com'
-    def mails_from=(value)
-      Spree::Deprecation.warn(<<~MSG) && preferences[:mail_from] = value
-        Solidus doesn't use `Spree::Config.mails_from` preference and it'll
-        removed on the next major release. Please, remove its definition in
-        `config/initializers/spree.rb`. Use the `Spree::Store#mail_from_address`
-        attribute for the default email address used as the 'From:' field in
-        transactional emails.
-      MSG
-    end
 
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
