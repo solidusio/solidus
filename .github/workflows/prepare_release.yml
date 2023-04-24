@@ -28,12 +28,12 @@ jobs:
           cd dev_tools/ && bin/bump-version \
             ${{ steps.pipeline_context.outputs.candidate_version }}
       - name: "Bump docker image version"
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: |
           cd dev_tools/ && bin/bump-docker-image-version \
             ${{ steps.pipeline_context.outputs.candidate_version }}
       - name: "Bump installer starter frontend version"
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: |
           cd dev_tools/ && bin/bump-starter-frontend-version \
             ${{ steps.pipeline_context.outputs.candidate_patch_branch }}

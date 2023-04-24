@@ -3,7 +3,7 @@ name: "Prepare post-release"
 on:
   pull_request:
     branches:
-      - master
+      - main
       - v*
     types:
       - closed
@@ -31,17 +31,17 @@ jobs:
           cd dev_tools/ && bin/bump-to-dev-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
       - name: "Bump previous solidus minor version"
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: |
           cd dev_tools/ && bin/bump-previous-minor-version \
             ${{ steps.pipeline_context.outputs.candidate_minor_version }}
       - name: "Bump to the development version in docker-compose"
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: |
           cd dev_tools/ && bin/bump-docker-image-to-dev-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
       - name: "Bump installer starter frontend version"
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: |
           cd dev_tools/ && bin/bump-starter-frontend-version \
             main
@@ -52,14 +52,14 @@ jobs:
             ${{ github.repository }} \
             ${{ steps.pipeline_context.outputs.candidate_tag }}
       - name: "Create patch branch"
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           candidate_patch_branch="${{ steps.pipeline_context.outputs.candidate_patch_branch }}"
           git checkout -b $candidate_patch_branch
           git push --set-upstream origin $candidate_patch_branch
-      - name: "Create PR for master"
+      - name: "Create PR for main"
         uses: ./.github/actions/commit_and_submit_pull_request
         with:
           labels: changelog:skip
