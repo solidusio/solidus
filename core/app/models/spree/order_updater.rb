@@ -162,9 +162,6 @@ module Spree
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
-      # TODO: Delete this line in Solidus 4.0, when it is run in `update_promotions`.
-      order.promo_total = all_items.sum(&:promo_total) + adjustments.select(&:eligible?).select(&:promotion?).sum(&:amount)
-
       update_order_total
     end
 
@@ -199,32 +196,6 @@ module Spree
     def update_promotions
       Spree::Config.promotion_adjuster_class.new(order).call
     end
-
-    # DEPRECATED; this functionality is handled in #update_promotions
-    def update_item_promotions
-      [*line_items, *shipments].each do |item|
-        promotion_adjustments = item.adjustments.select(&:promotion?)
-
-        promotion_adjustments.each(&:recalculate)
-        Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
-
-        item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
-      end
-    end
-    deprecate update_item_promotions: :update_promotions, deprecator: Spree::Deprecation
-
-    # Update and select the best promotion adjustment for the order.
-    # We don't update the order.promo_total yet. Order totals are updated later
-    # in #update_adjustment_total since they include the totals from the order's
-    # line items and/or shipments.
-    #
-    # DEPRECATED; this functionality is handled in #update_promotions
-    def update_order_promotions
-      promotion_adjustments = order.adjustments.select(&:promotion?)
-      promotion_adjustments.each(&:recalculate)
-      Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
-    end
-    deprecate update_order_promotions: :update_promotions, deprecator: Spree::Deprecation
 
     def update_taxes
       Spree::Config.tax_adjuster_class.new(order).adjust!
