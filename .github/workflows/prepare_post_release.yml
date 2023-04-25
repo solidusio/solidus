@@ -51,6 +51,14 @@ jobs:
             ${{ github.token }} \
             ${{ github.repository }} \
             ${{ steps.pipeline_context.outputs.candidate_tag }}
+      - name: "Create backport label"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create \
+            backport-${{ steps.pipeline_context.outputs.candidate_patch_branch }} \
+            --description "Backport this pull-request to ${{ steps.pipeline_context.outputs.candidate_patch_branch }}" \
+            --color 3E4538
       - name: "Create patch branch"
         if: github.ref_name == 'master'
         env:
@@ -74,3 +82,4 @@ jobs:
             
             - [ ] The new release has been published, along with its tag. See https://github.com/${{ github.repository }}/releases/tag/${{ steps.pipeline_context.outputs.candidate_tag }}
             - [ ] The corresponding patch branch exists. See https://github.com/${{ github.repository }}/tree/${{ steps.pipeline_context.outputs.candidate_patch_branch }}
+            - [ ] The corresponding backport-${{ steps.pipeline_context.outputs.candidate_patch_branch }} label exists. See https://github.com/${{ github.repository }}/labels
