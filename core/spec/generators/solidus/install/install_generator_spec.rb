@@ -19,12 +19,12 @@ RSpec.describe Solidus::InstallGenerator do
       end
     end
 
-    it 'defaults to "paypal" for payments when frontend is "classic"' do
-      generator = described_class.new([], ['--auto-accept', '--frontend=classic'])
+    it 'defaults to "paypal" for payments when frontend is "starter"' do
+      generator = described_class.new([], ['--auto-accept', '--frontend=starter'])
       generator.prepare_options
 
       aggregate_failures do
-        expect(generator.instance_variable_get(:@selected_frontend)).to eq("classic")
+        expect(generator.instance_variable_get(:@selected_frontend)).to eq("starter")
         expect(generator.instance_variable_get(:@selected_authentication)).to eq("devise")
         expect(generator.instance_variable_get(:@selected_payment_method)).to eq("paypal")
       end
@@ -60,23 +60,6 @@ RSpec.describe Solidus::InstallGenerator do
     end
 
     context 'when asked interactively' do
-      it 'presents different options for the "classic"' do
-        questions = []
-        generator = described_class.new([], ['--frontend=classic', '--authentication=devise'])
-        allow(generator).to receive(:ask_with_description) { |**args| questions << args }
-
-        generator.prepare_options
-
-        expect(questions.size).to eq(1)
-        expect(questions.first[:limited_to]).to eq(['paypal', 'bolt', 'stripe', 'none'])
-        expect(questions.first[:default]).to eq('paypal')
-        expect(strip_ansi questions.first[:desc]).to include('[paypal]')
-        expect(strip_ansi questions.first[:desc]).to include('[stripe]')
-        expect(strip_ansi questions.first[:desc]).to include('[bolt]')
-        expect(strip_ansi questions.first[:desc]).to_not include('[braintree]')
-        expect(strip_ansi questions.first[:desc]).to include('[none]')
-      end
-
       it 'presents different options for the "starter"' do
         questions = []
         generator = described_class.new([], ['--frontend=starter', '--authentication=devise'])
