@@ -11,17 +11,17 @@ module Solidus
 
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
-    FRONTENDS = %w[
-      none
-      classic
-      starter
+    FRONTENDS = [
+      { name: 'starter', description: 'Generate all necessary controllers and views directly in your Rails app', default: true },
+      { name: 'classic', description: 'Install `solidus_frontend`, was the default in previous solidus versions (DEPRECATED)' },
+      { name: 'none', description: 'Skip installing a frontend' }
     ]
 
-    AUTHENTICATIONS = %w[
-      devise
-      existing
-      custom
-      none
+    AUTHENTICATIONS = [
+      { name: 'devise', description: 'Install and configure the standard `devise` integration', default: true },
+      { name: 'existing', description: 'Integrate and configure an existing `devise` setup' },
+      { name: 'custom', description: 'A starter configuration for rolling your own authentication system' },
+      { name: 'none', description: 'Don\'t add any configuration for authentication' }
     ]
 
     PAYMENT_METHODS = [
@@ -35,6 +35,12 @@ module Solidus
         name: 'bolt',
         frontends: %w[classic],
         description: 'Install `solidus_bolt`',
+        default: false,
+      },
+      {
+        name: 'stripe',
+        frontends: %w[none classic starter],
+        description: 'Install `solidus_stripe`',
         default: false,
       },
       {
@@ -60,9 +66,9 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
 
-    class_option :frontend, type: :string, enum: FRONTENDS, default: nil, desc: "Indicates which frontend to install."
-    class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
-    class_option :payment_method, type: :string, enum: PAYMENT_METHODS.map { |payment_method| payment_method[:name] }, default: nil, desc: "Indicates which payment method to install."
+    class_option :frontend, type: :string, enum: FRONTENDS.map { _1[:name] }, default: nil, desc: "Indicates which frontend to install."
+    class_option :authentication, type: :string, enum: AUTHENTICATIONS.map { _1[:name] }, default: nil, desc: "Indicates which authentication system to install."
+    class_option :payment_method, type: :string, enum: PAYMENT_METHODS.map { _1[:name] }, default: nil, desc: "Indicates which payment method to install."
 
     source_root "#{__dir__}/templates"
 
@@ -74,9 +80,33 @@ module Solidus
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed] && @run_migrations
       @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
-      @selected_frontend = detect_frontend_to_install
-      @selected_authentication = detect_authentication_to_install
-      @selected_payment_method = detect_payment_method_to_install
+
+      @selected_frontend = selected_option_for(
+        'frontend',
+        selected:
+          ('classic' if has_gem?('solidus_frontend')) ||
+          ENV['FRONTEND'] || options[:frontend],
+        available_options: FRONTENDS,
+      )
+
+      @selected_authentication = selected_option_for(
+        'authentication',
+        selected:
+          ('devise' if @selected_frontend == 'starter') ||
+          ('devise' if has_gem?('solidus_auth_devise')) ||
+          ENV['AUTHENTICATION'] || options[:authentication],
+        available_options: AUTHENTICATIONS,
+      )
+
+      @selected_payment_method = selected_option_for(
+        'payment method',
+        selected:
+          ('paypal' if has_gem?('solidus_paypal_commerce_platform')) ||
+          ('stripe' if has_gem?('solidus_stripe')) ||
+          ('bolt' if has_gem?('solidus_bolt')) ||
+          ENV['PAYMENT_METHOD'] || options[:payment_method],
+        available_options: PAYMENT_METHODS.select { _1[:frontends].include?(@selected_frontend) },
+      )
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
       ENV['VERBOSE'] = 'false'
@@ -157,15 +187,9 @@ module Solidus
       end
     end
 
-    def install_authentication
+    def install_subcomponents
       apply_template_for :authentication, @selected_authentication
-    end
-
-    def install_frontend
       apply_template_for :frontend, @selected_frontend
-    end
-
-    def install_payment_method
       apply_template_for :payment_method, @selected_payment_method
     end
 
@@ -247,73 +271,28 @@ module Solidus
       end
     end
 
-    def detect_frontend_to_install
-      ENV['FRONTEND'] ||
-        options[:frontend] ||
-        (Bundler.locked_gems.dependencies['solidus_frontend'] && 'classic') ||
-        (options[:auto_accept] && 'starter') ||
-        ask_with_description(
-          default: 'starter',
-          limited_to: FRONTENDS,
-          desc: <<~TEXT
-            Which frontend would you like to use?
-
-            - [#{set_color 'starter', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
-            - [#{set_color 'classic', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
-            - [#{set_color 'none', :bold}] Skip installing a frontend.
-
-            Selecting `starter` is recommended, however, some extensions are still only compatible with `classic`.
-          TEXT
-        )
+    def has_gem?(name)
+      Bundler.locked_gems.dependencies[name]
     end
 
-    def detect_authentication_to_install
-      return 'devise' if @selected_frontend == 'starter'
+    def selected_option_for(name, selected:, available_options:)
+      return selected if selected
 
-      ENV['AUTHENTICATION'] ||
-        options[:authentication] ||
-        (Bundler.locked_gems.dependencies['solidus_auth_devise'] && 'devise') ||
-        (options[:auto_accept] && 'devise') ||
-        ask_with_description(
-          default: 'devise',
-          limited_to: AUTHENTICATIONS,
-          desc: <<~TEXT
-            Which authentication would you like to use?
+      option_description = ->(name:, description:, default: false, **) do
+        default_label = " (#{set_color :default, :bold})" if default
 
-            - [#{set_color 'devise', :bold}] Install and configure the standard `devise` integration. (#{set_color :default, :bold}).
-            - [#{set_color 'existing', :bold}] Integrate and configure an existing `devise` setup.
-            - [#{set_color 'custom', :bold}] A starter configuration for rolling your own authentication system.
-            - [#{set_color 'none', :bold}] Don't add any configuration for authentication.
-
-            Selecting `devise` is recommended.
-          TEXT
-        )
-    end
-
-    def detect_payment_method_to_install
-      return 'paypal' if Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
-      return 'bolt' if Bundler.locked_gems.dependencies['solidus_bolt']
-
-      selected_frontend_payment_methods = PAYMENT_METHODS.select do |payment_method|
-        payment_method[:frontends].include?(@selected_frontend)
+        "- [#{set_color name, :bold}] #{description}#{default_label}."
       end
 
-      selected = options[:payment_method] || (options[:auto_accept] && 'paypal') ||
-        ask_with_description(
-          default: 'paypal',
-          limited_to: selected_frontend_payment_methods.map { |payment_method| payment_method[:name] },
-          desc: <<~TEXT
-            Which payment method would you like to use?
-
-            #{selected_frontend_payment_methods.map { |payment_method| formatted_payment_method_description(payment_method) }.join("\n")}
-          TEXT
-        )
-    end
-
-    def formatted_payment_method_description(payment_method)
-      default_label = " (#{set_color :default, :bold})" if payment_method[:default]
-
-      "- [#{set_color payment_method[:name], :bold}] #{payment_method[:description]}#{default_label}."
+      default = available_options.find { _1[:default] }
+      (options[:auto_accept] && default[:name]) || ask_with_description(
+        default: default[:name],
+        limited_to: available_options.map { _1[:name] },
+        desc: <<~TEXT
+          Which #{name} would you like to use?
+          #{available_options.map { option_description[**_1] }.join("\n")}
+        TEXT
+      )
     end
   end
 end
