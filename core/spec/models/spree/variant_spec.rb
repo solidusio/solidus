@@ -1042,4 +1042,9 @@ RSpec.describe Spree::Variant, type: :model do
     subject { variant.sku_and_options_text }
     it { is_expected.to eq("EB1 Size: S") }
   end
+
+  it "cannot have the same option value multiple times" do
+    expect { variant.option_values << variant.option_values.first }
+      .to raise_error ActiveRecord::RecordNotUnique
+  end
 end
