@@ -29,7 +29,6 @@ taxons = [
   {
     name: "Categories",
     taxonomy: categories,
-    position: 0
   },
   {
     name: "Clothing",
@@ -40,7 +39,6 @@ taxons = [
     name: "Caps",
     taxonomy: categories,
     parent: "Categories",
-    position: 1,
     products: [
       products[:solidus_snapback_cap]
     ]
@@ -49,7 +47,6 @@ taxons = [
     name: "Bags",
     taxonomy: categories,
     parent: "Categories",
-    position: 2,
     products: [
       products[:solidus_tote],
       products[:ruby_tote]
@@ -59,7 +56,6 @@ taxons = [
     name: "Mugs",
     taxonomy: categories,
     parent: "Categories",
-    position: 3,
     products: [
       products[:solidus_mug],
       products[:ruby_mug]
@@ -69,7 +65,6 @@ taxons = [
     name: "Shirts",
     taxonomy: categories,
     parent: "Clothing",
-    position: 0,
     products: [
       products[:solidus_long],
       products[:ruby_polo],
@@ -80,7 +75,6 @@ taxons = [
     name: "Hoodie",
     taxonomy: categories,
     parent: "Clothing",
-    position: 0,
     products: [
       products[:solidus_hoodie],
       products[:ruby_hoodie],
@@ -94,7 +88,6 @@ taxons = [
     products: [
       products[:solidus_tshirt]
     ],
-    position: 0
   },
   {
     name: "Brands",
