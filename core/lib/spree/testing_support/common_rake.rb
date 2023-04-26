@@ -24,7 +24,7 @@ class CommonRakeTasks
         # While the dummy app is generated the current directory
         # within ruby is changed to that of the dummy app.
         sh({
-          'FRONTEND' => ENV['FRONTEND'] || 'classic',
+          'FRONTEND' => ENV['FRONTEND'] || 'none',
         }, [
           'bin/rails',
           'generate',
@@ -39,6 +39,10 @@ class CommonRakeTasks
           "--user-class=#{args[:user_class]}",
           "--quiet",
         ].shelljoin)
+
+        # TODO: Our extensions ecosystem expects the legacy frontend when the
+        # env FRONTEND variable is not given
+        ENV['FRONTEND'] || sh("bundle add solidus_frontend")
 
         puts "Setting up dummy database..."
 

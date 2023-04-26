@@ -13,7 +13,6 @@ module Solidus
 
     FRONTENDS = [
       { name: 'starter', description: 'Generate all necessary controllers and views directly in your Rails app', default: true },
-      { name: 'classic', description: 'Install `solidus_frontend`, was the default in previous solidus versions (DEPRECATED)' },
       { name: 'none', description: 'Skip installing a frontend' }
     ]
 
@@ -25,36 +24,10 @@ module Solidus
     ]
 
     PAYMENT_METHODS = [
-      {
-        name: 'paypal',
-        frontends: %w[none classic starter],
-        description: 'Install `solidus_paypal_commerce_platform`',
-        default: true,
-      },
-      {
-        name: 'bolt',
-        frontends: %w[classic],
-        description: 'Install `solidus_bolt`',
-        default: false,
-      },
-      {
-        name: 'stripe',
-        frontends: %w[none classic starter],
-        description: 'Install `solidus_stripe`',
-        default: false,
-      },
-      {
-        name: 'braintree',
-        frontends: %w[none starter],
-        description: 'Install `solidus_braintree`',
-        default: false,
-      },
-      {
-        name: 'none',
-        frontends: %w[none classic starter],
-        description: 'Skip installing a payment method',
-        default: false,
-      },
+      { name: 'paypal', description: 'Install `solidus_paypal_commerce_platform`', default: true },
+      { name: 'stripe', description: 'Install `solidus_stripe`', default: false },
+      { name: 'braintree', description: 'Install `solidus_braintree`', default: false },
+      { name: 'none', description: 'Skip installing a payment method', default: false }
     ]
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
@@ -83,9 +56,7 @@ module Solidus
 
       @selected_frontend = selected_option_for(
         'frontend',
-        selected:
-          ('classic' if has_gem?('solidus_frontend')) ||
-          ENV['FRONTEND'] || options[:frontend],
+        selected: ENV['FRONTEND'] || options[:frontend],
         available_options: FRONTENDS,
       )
 
@@ -105,7 +76,7 @@ module Solidus
           ('stripe' if has_gem?('solidus_stripe')) ||
           ('bolt' if has_gem?('solidus_bolt')) ||
           ENV['PAYMENT_METHOD'] || options[:payment_method],
-        available_options: PAYMENT_METHODS.select { _1[:frontends].include?(@selected_frontend) },
+        available_options: PAYMENT_METHODS,
       )
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
