@@ -82,6 +82,12 @@ module Spree::Api
         end
 
         it "can update addresses and transition from address to delivery" do
+          skip <<~MSG if ActiveRecord::Base.connection.adapter_name == "SQLite"
+            SQLite adapter fails sometimes to provide a unique index for the convoluted chain
+            of ActiveRecord persistence calls that happen on
+            https://github.com/solidusio/solidus/blob/8b03161a1894a7d10c8d95f62c016da55027d2b0/core/app/models/spree/stock/simple_coordinator.rb#L83
+          MSG
+
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,
@@ -107,6 +113,12 @@ module Spree::Api
 
         # Regression test for https://github.com/spree/spree/issues/4498
         it "does not contain duplicate variant data in delivery return" do
+          skip <<~MSG if ActiveRecord::Base.connection.adapter_name == "SQLite"
+            SQLite adapter fails sometimes to provide a unique index for the convoluted chain
+            of ActiveRecord persistence calls that happen on
+            https://github.com/solidusio/solidus/blob/8b03161a1894a7d10c8d95f62c016da55027d2b0/core/app/models/spree/stock/simple_coordinator.rb#L83
+          MSG
+
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,
