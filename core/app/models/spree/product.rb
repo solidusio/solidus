@@ -83,6 +83,7 @@ module Spree
       :height,
       :price,
       :sku,
+      :track_inventory,
       :weight,
       :width,
     ]

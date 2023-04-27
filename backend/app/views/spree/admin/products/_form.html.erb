@@ -182,7 +182,14 @@
             </div>
           <% end %>
         </div>
-
+        <div data-hook="admin_product_form_track_inventory">
+          <%= f.field_container :track_inventory do %>
+            <label>
+              <%= f.check_box :track_inventory %>
+              <%= Spree::Variant.human_attribute_name(:track_inventory) %>
+            </label>
+          <% end %>
+        </div>
       <% end %>
 
       <div data-hook="admin_product_form_shipping_categories">
