@@ -61,8 +61,8 @@ group :frontend do
 end
 
 group :backend do
-  gem 'teaspoon', github: 'jejacks0n/teaspoon', require: false
-  gem 'teaspoon-mocha', github: 'jejacks0n/teaspoon', require: false
+  gem 'teaspoon', '~> 1.2', require: false
+  gem 'teaspoon-mocha', '~> 2.3', require: false
   gem 'webrick', require: false
 end
 
