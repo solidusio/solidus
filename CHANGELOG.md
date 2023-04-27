@@ -1,3 +1,28 @@
+## Solidus v3.3.2 (2023-04-27)
+
+## Solidus Core
+- [v3.3] Add back Variant#find_or_build_default_price  #4964 (@github-actions[bot])
+- [v3.3] Copy new migrations as part of the update task #4973 (@github-actions[bot])
+- [v3.3] Spree::ProductDuplicator bug on price #4976 (@github-actions[bot])
+- [v3.3] Fix rake error testing the update generator #4982 (@github-actions[bot])
+- [v3.3] Allow to disable track inventory for product without variants #5048 (@github-actions[bot])
+
+## Solidus Backend
+- [v3.3] Authorize uuid for update_positions on ResourceController #5016 (@github-actions[bot])
+- [v3.3] Allow to disable track inventory for product without variants #5048 (@github-actions[bot])
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.3.1...v3.3.2
+
+
 ## Solidus v3.3.1 (2023-02-07)
 
 ## Solidus Core
