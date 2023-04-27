@@ -270,6 +270,13 @@ describe "Products", type: :feature do
       it "should show default tax category" do
         expect(page).to have_select('product_tax_category_id', selected: 'Alcohol taxes')
       end
+
+      it "can disable track_inventory" do
+        expect(page).to have_field("product_track_inventory", checked: true)
+        uncheck "product_track_inventory"
+        click_button "Create"
+        expect(page).to have_field("product_track_inventory", checked: false)
+      end
     end
 
     context "cloning a product", js: true do
@@ -341,6 +348,23 @@ describe "Products", type: :feature do
             visit spree.admin_product_path(product)
             expect(page).to have_select('product_tax_category_id', selected: clothing.name)
           end
+        end
+      end
+
+      it "can disable track_inventory" do
+        visit spree.admin_product_path(product)
+        expect(page).to have_field("product_track_inventory", checked: true)
+        uncheck "product_track_inventory"
+        click_button "Update"
+        expect(page).to have_field("product_track_inventory", checked: false)
+      end
+
+      context "with variants" do
+        let(:product) { create(:variant).product }
+
+        it "cannot disable track_inventory" do
+          visit spree.admin_product_path(product)
+          expect(page).to_not have_field("product_track_inventory")
         end
       end
     end
