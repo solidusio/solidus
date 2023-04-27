@@ -1,3 +1,23 @@
+## Solidus v3.4.1 (2023-04-27)
+
+## Solidus Core
+* [v3.4] Allow to disable track inventory for product without variants by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5049
+
+## Solidus Backend
+* [v3.4] Allow to disable track inventory for product without variants by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5049
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.4.0...v3.4.1
+
+
 ## Solidus v3.4.0 (2023-04-21)
 
 ## Solidus Core
