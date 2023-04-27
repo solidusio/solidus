@@ -1,3 +1,29 @@
+## Solidus v3.2.7 (2023-04-27)
+
+## Solidus Core
+- [v3.2] Allow storing static preferences using string class names #4939 (@github-actions[bot])
+- [v3.2] Add back Variant#find_or_build_default_price  #4962 (@github-actions[bot])
+- [v3.2] Copy new migrations as part of the update task #4972 (@github-actions[bot])
+- [v3.2] Spree::ProductDuplicator bug on price #4974 (@github-actions[bot])
+- [v3.2] Fix rake error testing the update generator #4981 (@github-actions[bot])
+- [v3.2] Allow to disable track inventory for product without variants #5050 (@waiting-for-dev)
+
+## Solidus Backend
+- [v3.2] Authorize uuid for update_positions on ResourceController #5015 (@github-actions[bot])
+- [v3.2] Allow to disable track inventory for product without variants #5050 (@waiting-for-dev)
+
+## Solidus API
+
+
+## Solidus Sample
+- [v3.2]  Fix occasional "database is locked" errors while loading sample data #4944 (@elia)
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.6...v3.2.7
+
+
 ## Solidus v3.2.6 (2023-02-07)
 
 ## Solidus Core
