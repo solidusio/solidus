@@ -40,9 +40,9 @@ class CommonRakeTasks
           "--quiet",
         ].shelljoin)
 
-        # TODO: Our extensions ecosystem expects the legacy frontend when the
-        # env FRONTEND variable is not given
-        ENV['FRONTEND'] || sh("bundle add solidus_frontend")
+        if Bundler.locked_gems.dependencies['solidus_frontend']
+          sh "bin/rails g solidus_frontend:install --auto-accept"
+        end
 
         puts "Setting up dummy database..."
 

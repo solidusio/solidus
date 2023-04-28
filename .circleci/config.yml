@@ -200,6 +200,25 @@ commands:
             echo "Exited with $?"
             kill $(cat "tmp/pids/server.pid")
 
+  install_dummy_app:
+    parameters:
+      extra_gems:
+        type: string
+        default: ""
+        description: "Gems to be added to the extension's Gemfile before running the installer"
+    steps:
+      - run:
+          name: "Test `rake task: extensions:test_app` <<#parameters.extra_gems>>(with <<parameters.extra_gems>>)<</parameters.extra_gems>>"
+          command: |
+            rm -rf /tmp/dummy_extension # cleanup previous runs
+            mkdir -p /tmp/dummy_extension
+            cd /tmp/dummy_extension
+            bundle init
+            bundle add rails sqlite3 <<parameters.extra_gems>> --skip-install
+            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            export LIB_NAME=set # dummy requireable file
+            bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
+
 jobs:
   solidus_installer:
     executor:
@@ -219,37 +238,14 @@ jobs:
 
       - install_solidus: { flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe" }
       - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
+
+      - install_dummy_app
+
+      - install_dummy_app: { extra_gems: "solidus_frontend" }
       - run:
-          name: Ensure the correct Stripe is installed for SSF
+          name: "Ensure solidus_frontend installer is run"
           command: |
-            cd /tmp/my_app
-            bundle list
-            bundle list | grep 'solidus_stripe (5.'
-
-      - install_solidus: { flags: "--sample=false --frontend=starter --payment-method=braintree" }
-      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
-      - run:
-          name: Ensure the correct Braintree is installed for SSF
-          command: |
-            cd /tmp/my_app
-            bundle list | grep 'solidus_braintree (3.'
-
-      - install_solidus: { flags: "--sample=false --frontend=none --authentication=none" }
-      - test_page: { expected_text: "<title>Ruby on Rails" }
-
-      - install_solidus: { flags: "--sample=false --frontend=starter --authentication=custom" }
-      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
-
-      - run:
-          name: "Test `rake task: extensions:test_app`"
-          command: |
-            mkdir -p /tmp/dummy_extension
-            cd /tmp/dummy_extension
-            bundle init
-            bundle add rails sqlite3 --skip-install
-            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
-            export LIB_NAME=set # dummy requireable file
-            bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
+            test -f /tmp/dummy_extension/spec/dummy/config/initializers/solidus_frontend.rb
 
   test_solidus:
     parameters:
