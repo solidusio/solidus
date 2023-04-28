@@ -54,6 +54,7 @@ module Spree
           )
         end
       end
+      deprecate :check_version, deprecator: Spree::Deprecation
 
       def self.add_definitions!
         ::FactoryBot.definition_file_paths.unshift(*definition_file_paths).uniq!
