@@ -8,20 +8,40 @@ orbs:
   solidusio_extensions: solidusio/extensions@volatile
 
 jobs:
-  run-specs-with-postgres:
-    executor: solidusio_extensions/postgres
+  run-specs:
+    parameters:
+      solidus:
+        type: string
+        default: master
+      db:
+        type: string
+        default: "postgres"
+      ruby:
+        type: string
+        default: "3.2"
+    executor:
+      name: solidusio_extensions/<< parameters.db >>
+      ruby_version: << parameters.ruby >>
     steps:
-      - solidusio_extensions/run-tests
-  run-specs-with-mysql:
-    executor: solidusio_extensions/mysql
-    steps:
-      - solidusio_extensions/run-tests
+      - checkout
+      - solidusio_extensions/run-tests-solidus-<< parameters.solidus >>
 
 workflows:
   "Run specs on supported Solidus versions":
     jobs:
-      - run-specs-with-postgres
-      - run-specs-with-mysql
+      - run-specs:
+          name: &name "run-specs-solidus-<< matrix.solidus >>-ruby-<< matrix.ruby >>-db-<< matrix.db >>"
+          matrix:
+            parameters: { solidus: ["master"], ruby: ["3.2"], db: ["postgres"] }
+      - run-specs:
+          name: *name
+          matrix:
+            parameters: { solidus: ["current"], ruby: ["3.1"], db: ["mysql"] }
+      - run-specs:
+          name: *name
+          matrix:
+            parameters: { solidus: ["older"], ruby: ["3.0"], db: ["sqlite"] }
+
   "Weekly run specs against master":
     triggers:
       - schedule:
@@ -31,5 +51,11 @@ workflows:
               only:
                 - master
     jobs:
-      - run-specs-with-postgres
-      - run-specs-with-mysql
+      - run-specs:
+          name: *name
+          matrix:
+            parameters: { solidus: ["master"], ruby: ["3.2"], db: ["postgres"] }
+      - run-specs:
+          name: *name
+          matrix:
+            parameters: { solidus: ["current"], ruby: ["3.1"], db: ["mysql"] }
