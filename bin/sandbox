@@ -59,6 +59,7 @@ cd ./sandbox
 cat <<RUBY >> Gemfile
 
 gem 'solidus', path: '..'
+gem 'solidus_admin', path: '../admin'
 gem 'rails-i18n'
 gem 'solidus_i18n'
 
