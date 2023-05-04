@@ -133,11 +133,6 @@ module Solidus
       rake 'db:create'
     end
 
-    def install_solidus_admin
-      bundle_command 'add solidus_admin' unless has_gem?('solidus_admin')
-      generate 'solidus_admin:install'
-    end
-
     def install_routes
       if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
         say_status :route_exist, CORE_MOUNT_ROUTE, :blue
@@ -161,6 +156,11 @@ module Solidus
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
+    end
+
+    def install_solidus_admin
+      bundle_command 'add solidus_admin' unless has_gem?('solidus_admin')
+      generate 'solidus_admin:install'
     end
 
     def install_subcomponents
