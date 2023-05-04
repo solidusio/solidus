@@ -1,3 +1,23 @@
+## Solidus v3.4.2 (2023-05-04)
+
+## Solidus Core
+* [v3.4] Deprecate other code related to old factories loading by @kennyadsl in https://github.com/solidusio/solidus/pull/5061
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.4.1...v3.4.2
+
+
 ## Solidus v3.4.1 (2023-04-27)
 
 ## Solidus Core
