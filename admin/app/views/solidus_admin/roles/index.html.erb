@@ -1,0 +1,22 @@
+<h1>Roles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Permissions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr>
+        <td><%= role.name %></td>
+        <td>
+          <% role.permission_sets.each do |permission_set| %>
+            <code><%= permission_set.inspect %></code>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

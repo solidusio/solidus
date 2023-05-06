@@ -1,0 +1,26 @@
+<%
+available_locales = I18n.available_locales #Spree.i18n_available_locales 
+
+content_for(
+  :page_components,
+  javascript_tag(render(template: @virtual_path, formats: :js), type: :module)
+)
+%>
+
+<% if available_locales.size > 1 %>
+  <div class="admin-locale-selection" data-controller="<%= stimulus_id %>">
+    <select
+      data-<%= stimulus_id %>-target="select"
+      data-action="<%= stimulus_id %>#setLocale"
+      class="custom-select fullwidth">
+      <%=
+        options_for_select(
+          available_locales.map do |locale|
+            [I18n.t('spree.i18n.this_file_language', locale: locale, default: locale.to_s, fallback: false), locale]
+          end.sort,
+          selected: I18n.locale,
+        )
+      %>
+    </select>
+  </div>
+<% end %>

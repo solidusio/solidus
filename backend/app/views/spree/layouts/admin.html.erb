@@ -1,15 +1,45 @@
 <!doctype html>
 <html lang="<%= I18n.locale %>">
   <head data-hook="admin_inside_head">
-    <%= render 'spree/admin/shared/head' %>
+    <script type="importmap">
+      {
+        "imports": {
+          "solidus_admin/components/pill/_index.js": "/assets/solidus_admin/components/pill/_index.js",
+          "@hotwired/stimulus": "https://ga.jspm.io/npm:stimulus@3.2.1/dist/stimulus.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import { Application } from "@hotwired/stimulus"
+
+      const application = Application.start()
+
+      // Configure Stimulus development experience
+      application.debug = false
+      window.Stimulus   = application
+
+      export { application }
+    </script>
+    <%= render "spree/admin/shared/head" %>
   </head>
-  <body class="admin <%= "admin-nav-hidden" if cookies[:admin_nav_hidden] == "true" %>">
+  <body
+    class="admin <%= "admin-nav-hidden" if cookies[:admin_nav_hidden] == "true" %>"
+  >
     <%= render "spree/admin/shared/navigation" %>
     <%= render "spree/admin/shared/header" %>
     <%= render "spree/admin/shared/flash" %>
     <%= render "spree/admin/shared/spinner" %>
 
-    <div class="content-wrapper <%= @admin_layout.presence %> <%= 'has-sidebar' if content_for?(:sidebar) %> <%= 'has-tabs' if content_for?(:tabs) %>" id="wrapper" data-hook>
+    <div
+      class="
+        content-wrapper
+        <%= @admin_layout.presence %>
+        <%= 'has-sidebar' if content_for?(:sidebar) %>
+        <%= 'has-tabs' if content_for?(:tabs) %>
+      "
+      id="wrapper"
+      data-hook
+    >
       <div class="content row">
         <div class="content-main col-<%= content_for?(:sidebar) ? '9' : '12' %>">
           <%= yield :tabs %>
@@ -22,5 +52,6 @@
     </div>
 
     <div data-hook="admin_footer_scripts"></div>
+    <%= content_for( :page_components) %>
   </body>
 </html>

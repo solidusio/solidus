@@ -39,11 +39,14 @@
           <%= return_item.acceptance_status_errors %>
         </td>
         <td>
-          <span class="pill pill-<%= return_item.reception_status %>">
-            <%= t(
+          <%= render_component(
+            :pill, 
+            state: return_item.reception_status,
+            text: t(
               return_item.reception_status,
               scope: 'spree.reception_states'
-            ) %>
+            ) 
+          ) %>
           </span>
         </td>
         <% unless return_item.received? %>

@@ -1,0 +1,10 @@
+import { Controller } from "@hotwired/stimulus"
+
+window.Stimulus.register(
+  "<%= stimulus_id %>",
+  class extends Controller {
+    alert() {
+      alert(this.element.textContent)
+    }
+  },
+)

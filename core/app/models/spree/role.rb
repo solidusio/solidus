@@ -10,5 +10,9 @@ module Spree
     def admin?
       name == "admin"
     end
+
+    def permission_sets
+      Spree::Config.roles.roles[name.to_s].permission_sets.to_a
+    end
   end
 end

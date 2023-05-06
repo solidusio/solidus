@@ -1,0 +1,14 @@
+<% raise ArgumentError unless state.in? %w[active inactive]
+
+text = t(".states.#{state}") unless local_assigns[:text]
+content_for(
+  :page_components,
+  javascript_tag(render(template: @virtual_path, formats: :js), type: :module)
+)
+ %>
+
+<span
+  data-controller="<%= stimulus_id %>"
+  data-action="click-><%= stimulus_id %>#alert"
+  class="pill pill-<%= state %>"
+><%= text %></span>

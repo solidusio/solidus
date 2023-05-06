@@ -1,0 +1,41 @@
+import { Controller } from "@hotwired/stimulus"
+
+window.Stimulus.register(
+  "<%= stimulus_id %>",
+  class extends Controller {
+    static targets = ["select"]
+
+    async setLocale(e) {
+      e.preventDefault()
+      
+      const response = await fetch("/admin/locale/set", {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + Spree.api_key,
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+
+        },
+        body: JSON.stringify({
+          switch_to_locale: this.selectTarget.value,
+        }),
+      })
+
+      if (response.ok) {
+        document.location.href = response.location
+      }
+      // Spree.ajax({
+      //   type: "PUT",
+      //   dataType: "json",
+      //   url: Spree.pathFor("admin/locale/set"),
+      //   data: {
+      //     switch_to_locale: this.selectTarget.value,
+      //   },
+      //   success: function (data) {
+      //     document.location.href = data.location
+      //   },
+      // })
+    }
+  },
+)

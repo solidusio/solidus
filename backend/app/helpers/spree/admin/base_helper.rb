@@ -3,6 +3,14 @@
 module Spree
   module Admin
     module BaseHelper
+      def render_component(name, props = {})
+        render "solidus_admin/components/#{name}/index", props
+      end
+
+      def stimulus_id
+        @virtual_path.gsub(%r{/_?}, '--').tr('_', '-')
+      end
+
       def field_container(model, method, options = {}, &block)
         css_classes = options[:class].to_a
         css_classes << 'field'

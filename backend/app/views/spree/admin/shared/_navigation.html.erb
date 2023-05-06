@@ -6,7 +6,7 @@
       <%= button_tag class: 'btn fa fa-chevron-circle-left', id: 'admin-nav-toggle', type: :button do %>
         <span class="text"><%= t('spree.minimize_menu') %></span>
       <% end %>
-      <%= render partial: 'spree/admin/shared/locale_selection' %>
+      <%= render_component 'layout/locale_selection' %>
       <% if lookup_context.exists?('spree/admin/shared/_navigation_footer') %>
         <%= render partial: 'spree/admin/shared/navigation_footer' %>
       <% else %>
