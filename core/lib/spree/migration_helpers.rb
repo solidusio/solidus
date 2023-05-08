@@ -6,9 +6,9 @@ module Spree
       remove_index(table, column) if index_exists?(table, column)
     end
 
-    def safe_add_index(table, column, options = {})
-      if columns_exist?(table, column) && !index_exists?(table, column, options)
-        add_index(table, column, options)
+    def safe_add_index(table, column, **options)
+      if columns_exist?(table, column) && !index_exists?(table, column, **options)
+        add_index(table, column, **options)
       end
     end
 
