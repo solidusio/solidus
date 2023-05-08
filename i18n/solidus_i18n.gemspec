@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   if s.respond_to?(:metadata)
     s.metadata["homepage_uri"] = s.homepage if s.homepage
     s.metadata["source_code_uri"] = s.homepage if s.homepage
+    s.metadata["changelog_uri"] = 'https://github.com/solidusio/solidus_i18n/releases'
   end
 
   s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 5']
