@@ -1,3 +1,52 @@
+## Solidus v4.0.0 (2023-05-04)
+
+## Solidus Core
+* Remove `solidus_frontend` from the meta gem by @elia in https://github.com/solidusio/solidus/pull/5026
+* Remove support for deprecated promo rules matching policy by @kennyadsl in https://github.com/solidusio/solidus/pull/5019
+* Remove Deprecated code from API component by @kennyadsl in https://github.com/solidusio/solidus/pull/5020
+* Remove Deprecated Preferences by @kennyadsl in https://github.com/solidusio/solidus/pull/5022
+* Remove Deprecated code from Core component by @kennyadsl in https://github.com/solidusio/solidus/pull/4989
+* Remove deprecated order updater promotions code by @mamhoff in https://github.com/solidusio/solidus/pull/4890
+* Remove support for the legacy frontend names by @elia in https://github.com/solidusio/solidus/pull/5031
+* Remove support for legacy event system by @kennyadsl in https://github.com/solidusio/solidus/pull/5024
+* Remove deprecated factories usage by @kennyadsl in https://github.com/solidusio/solidus/pull/5023
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Add `stripe` to payment methods by @elia in https://github.com/solidusio/solidus/pull/5007
+* Remove stale warning about paypal not being fully supported by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5044
+* Remove solidus_frontend option from the installer by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5047
+* Drop unused table promotion_action_line_items by @mamhoff in https://github.com/solidusio/solidus/pull/4882
+* Remove unused columns from spree_promotion_rules by @mamhoff in https://github.com/solidusio/solidus/pull/4881
+* Remove position column from spree_taxons by @mamhoff in https://github.com/solidusio/solidus/pull/4754
+* Make option value to variant association unique by @jarednorman in https://github.com/solidusio/solidus/pull/4146
+* Allow to disable track inventory for product without variants by @tvdeyen in https://github.com/solidusio/solidus/pull/5039
+* Remove deprecated_address_id column from shipments by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4379
+* Deprecate other code related to old factories loading by @kennyadsl in https://github.com/solidusio/solidus/pull/5059
+* Fix generating the dummy app for extensions using solidus_frontend by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5060
+* Remove deprecated spree/testing_support file by @kennyadsl in https://github.com/solidusio/solidus/pull/5063
+
+## Solidus Backend
+* Remove support for deprecated promo rules matching policy by @kennyadsl in https://github.com/solidusio/solidus/pull/5019
+* Remove Deprecated code from Backend component by @kennyadsl in https://github.com/solidusio/solidus/pull/5021
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Allow to disable track inventory for product without variants by @tvdeyen in https://github.com/solidusio/solidus/pull/5039
+
+## Solidus API
+* Remove support for deprecated promo rules matching policy by @kennyadsl in https://github.com/solidusio/solidus/pull/5019
+* Remove Deprecated code from API component by @kennyadsl in https://github.com/solidusio/solidus/pull/5020
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Skip two randomly failing tests on SQLite by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5046
+
+## Solidus Sample
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Remove position column from spree_taxons by @mamhoff in https://github.com/solidusio/solidus/pull/4754
+
+## Solidus
+* Remove `solidus_frontend` from the meta gem by @elia in https://github.com/solidusio/solidus/pull/5026
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.4.0...v4.0.0
+
+
 ## Solidus v3.4.0 (2023-04-21)
 
 ## Solidus Core
