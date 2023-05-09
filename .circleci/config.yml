@@ -180,7 +180,7 @@ commands:
           name: "Run `solidus:install` with `<<parameters.flags>>`"
           command: |
             cd /tmp/my_app
-            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails generate solidus:install --auto-accept <<parameters.flags>>
   test_page:
@@ -246,7 +246,7 @@ jobs:
             cd /tmp/dummy_extension
             bundle init
             bundle add rails sqlite3 --skip-install
-            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             export LIB_NAME=set # dummy requireable file
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
 
