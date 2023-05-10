@@ -34,7 +34,7 @@
           <td>
             <%= adjustment_reason.name %>
           </td>
-          <td><%= render_component 'pill', state: adjustment_reason.active? ? 'active' : 'inactive' %></td>
+          <td><%= render admin_component('pill', state: adjustment_reason.active? ? 'active' : 'inactive') %></td>
           <td class="actions">
             <% if can? :edit, adjustment_reason %>
               <%= link_to_edit adjustment_reason, no_text: true %>

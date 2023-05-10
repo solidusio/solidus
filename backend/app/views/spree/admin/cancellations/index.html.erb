@@ -37,7 +37,7 @@
           </td>
           <td class="inventory-unit-quantity align-center">1</td>
           <td class="inventory-unit-state">
-            <%= render_component 'pill', state: inventory_unit.state, text: t(inventory_unit.state, scope: 'spree.inventory_states') %>
+            <%= render admin_component('pill', state: inventory_unit.state, text: t(inventory_unit.state, scope: 'spree.inventory_states')) %>
           </td>
           <td class="inventory-unit-shipment"><%= inventory_unit.shipment.number %></td>
           <td class="inventory-unit-cancel align-right">

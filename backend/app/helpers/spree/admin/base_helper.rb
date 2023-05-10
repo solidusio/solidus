@@ -3,8 +3,18 @@
 module Spree
   module Admin
     module BaseHelper
-      def render_component(name, props = {})
-        render "solidus_admin/components/#{name}/index", props
+      def admin_component(name, locals = {})
+        partial_path = "solidus_admin/components/#{name}/index"
+        virtual_path = "solidus_admin/components/#{name}/_index"
+        
+        helper_class = partial_path.classify
+        if Object.const_defined?(helper_class)
+          helper = helper_class.constantize.new(
+            view_context: self, virtual_path: virtual_path, locals: locals
+          )
+        end
+
+        {partial: partial_path, locals: { helper: helper, **locals }}
       end
 
       def stimulus_id
