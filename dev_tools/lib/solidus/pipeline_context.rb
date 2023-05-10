@@ -7,7 +7,7 @@ module Solidus
   #
   # @api private
   class PipelineContext
-    MAIN_BRANCH = 'master'
+    MAIN_BRANCH = 'main'
 
     VERSION_PREFIX = 'v'
 
