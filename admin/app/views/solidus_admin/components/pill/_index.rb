@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Components::Pill::Index < SolidusAdmin::Components::Base
+module SolidusAdmin::Components::Pill::Index
+  include SolidusAdmin::Components::Helpers
+
   STATES = %w[
     active
     address
@@ -46,11 +48,7 @@ class SolidusAdmin::Components::Pill::Index < SolidusAdmin::Components::Base
     warning
   ].freeze
 
-  def validate!
-    raise ArgumentError, "Unexpected state: #{locals[:state].inspect} (known states are: #{STATES.to_sentence})" unless locals[:state].in? STATES
-  end
-
-  def text
-    locals[:text] || t(".states.#{state}")
+  def validate_state!(state)
+    raise ArgumentError, "Unexpected state: #{state.inspect} (known states are: #{STATES.to_sentence})" unless state.in? STATES
   end
 end

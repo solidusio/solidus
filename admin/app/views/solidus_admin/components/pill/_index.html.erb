@@ -1,8 +1,9 @@
-<% helper.validate! %>
-<% helper.load_javascript! %>
+<% include_helper helper %>
+<% validate_state! state %>
+<% load_javascript! %>
 
 <span
   data-controller="<%= stimulus_id %>"
   data-action="click-><%= stimulus_id %>#alert"
   class="pill pill-<%= state %>"
-><%= helper.text %></span>
+><%= text || t(".states.#{state}") %></span>

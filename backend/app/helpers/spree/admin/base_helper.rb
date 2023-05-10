@@ -9,16 +9,17 @@ module Spree
         
         helper_class = partial_path.classify
         if Object.const_defined?(helper_class)
-          helper = helper_class.constantize.new(
-            view_context: self, virtual_path: virtual_path, locals: locals
-          )
+          # helper = helper_class.constantize.new(
+          #   view_context: self, virtual_path: virtual_path, locals: locals
+          # )
+          helper = helper_class.constantize
         end
 
         {partial: partial_path, locals: { helper: helper, **locals }}
       end
 
-      def stimulus_id
-        @virtual_path.gsub(%r{/_?}, '--').tr('_', '-')
+      def include_helper(helper_module)
+        self.class.include helper_module
       end
 
       def field_container(model, method, options = {}, &block)
