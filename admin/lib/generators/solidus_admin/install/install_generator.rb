@@ -10,6 +10,14 @@ module SolidusAdmin
           }
         RUBY
       end
+
+      def ignore_tailwind_build_files
+        append_file(".gitignore", "app/assets/builds/solidus_admin/") if File.exist?(Rails.root.join(".gitignore"))
+      end
+
+      def build_tailwind
+        rake "solidus_admin:tailwindcss:build"
+      end
     end
   end
 end

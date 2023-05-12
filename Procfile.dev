@@ -1,2 +1,2 @@
 web: env RUBY_DEBUG_OPEN=true bin/rails server
-admin_tailwind: cd admin && bundle exec rake solidus_admin:tailwind:watch
+admin_tailwind: bin/rails solidus_admin:tailwindcss:watch
