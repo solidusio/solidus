@@ -11,3 +11,5 @@
 }
 
 */
+
+<%= SolidusAdmin::Config.tailwind_stylesheets.map { File.read(_1) }.join("\n") %>
