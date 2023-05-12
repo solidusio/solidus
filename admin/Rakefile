@@ -23,9 +23,9 @@ namespace :solidus_admin do
       require "solidus_admin/engine"
       root = SolidusAdmin::Engine.root
       system "#{Tailwindcss::Engine.root.join("exe/tailwindcss")} \
-         -i #{root.join("app/assets/stylesheets/application.tailwind.css")} \
-         -o #{root.join("app/assets/builds/solidus_admin.css")} \
-         -c #{root.join("config/tailwind.config.js")} \
+         -i #{root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css")} \
+         -o #{root.join("app/assets/builds/solidus_admin/tailwind.css")} \
+         -c #{root.join("config/solidus_admin/tailwind.config.js")} \
          --minify -w"
     end
   end
