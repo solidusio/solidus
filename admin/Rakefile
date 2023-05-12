@@ -15,18 +15,3 @@ DummyApp::RakeTasks.new(
 )
 
 task test_app: 'db:reset'
-
-namespace :solidus_admin do
-  namespace :tailwind do
-    task :watch do
-      require "tailwindcss-rails"
-      require "solidus_admin/engine"
-      root = SolidusAdmin::Engine.root
-      system "#{Tailwindcss::Engine.root.join("exe/tailwindcss")} \
-         -i #{root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css")} \
-         -o #{root.join("app/assets/builds/solidus_admin/tailwind.css")} \
-         -c #{root.join("config/solidus_admin/tailwind.config.js")} \
-         --minify -w"
-    end
-  end
-end
