@@ -27,6 +27,15 @@ module SolidusAdmin
       Rails.root.join("app", "assets", "javascripts", "solidus_admin", "**", "*.js"),
       Rails.root.join("app", "views", "solidus_admin", "**", "*.{erb,haml,html,slim}")
     ]
+
+    # List of Tailwind CSS files to be combined into the final stylesheet.
+    #
+    # You can modify this list to include your own files:
+    #
+    #   SolidusAdmin::Config.tailwind_stylesheets << Rails.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css")
+    #
+    # Recompile with `bin/rails solidus_admin:tailwindcss:build` after changing this list.
+    preference :tailwind_stylesheets, :array, default: []
   end
 end
 
