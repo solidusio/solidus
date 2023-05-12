@@ -5,7 +5,7 @@ module SolidusAdmin
     isolate_namespace SolidusAdmin
 
     initializer "solidus_admin.assets" do |app|
-      app.config.assets.precompile += %w[solidus_admin_manifest]
+      app.config.assets.precompile += %w[solidus_admin/application.css]
     end
   end
 end
