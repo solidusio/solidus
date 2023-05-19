@@ -74,6 +74,10 @@ RSpec.describe Spree::Refund, type: :model do
       expect { subject }.to change(Spree::LogEntry, :count)
     end
 
+    it "creates a LogEntry on the Payment" do
+      expect { subject }.to change { refund.payment.log_entries.count }
+    end
+
     context "when transaction_id exists" do
       let(:transaction_id) { "12kfjas0" }
 
