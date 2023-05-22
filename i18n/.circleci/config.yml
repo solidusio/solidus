@@ -12,7 +12,7 @@ jobs:
     parameters:
       solidus:
         type: string
-        default: master
+        default: main
       db:
         type: string
         default: "postgres"
@@ -32,7 +32,7 @@ workflows:
       - run-specs:
           name: &name "run-specs-solidus-<< matrix.solidus >>-ruby-<< matrix.ruby >>-db-<< matrix.db >>"
           matrix:
-            parameters: { solidus: ["master"], ruby: ["3.2"], db: ["postgres"] }
+            parameters: { solidus: ["main"], ruby: ["3.2"], db: ["postgres"] }
       - run-specs:
           name: *name
           matrix:
@@ -42,7 +42,7 @@ workflows:
           matrix:
             parameters: { solidus: ["older"], ruby: ["3.0"], db: ["sqlite"] }
 
-  "Weekly run specs against master":
+  "Weekly run specs against main":
     triggers:
       - schedule:
           cron: "0 0 * * 4" # every Thursday
@@ -54,7 +54,7 @@ workflows:
       - run-specs:
           name: *name
           matrix:
-            parameters: { solidus: ["master"], ruby: ["3.2"], db: ["postgres"] }
+            parameters: { solidus: ["main"], ruby: ["3.2"], db: ["postgres"] }
       - run-specs:
           name: *name
           matrix:
