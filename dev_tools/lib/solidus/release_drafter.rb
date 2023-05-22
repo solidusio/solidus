@@ -37,16 +37,18 @@ module Solidus
       return if pr_labels.include?(SKIP_LABEL) || matching_labels.empty?
 
       draft = @client.fetch_draft(tag: candidate_tag)
-      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_diff_source_tag, candidate_tag))
+      Builder.new(
+        draft: draft,
+        categories: LABELS.values,
+        prepend: NO_EDIT_WARNING,
+        append: full_changelog(current_diff_source_tag, candidate_tag),
+        number_link_builder: number_link_builder
+      )
         .then { |builder| add_pr(builder, pr, matching_labels) }
         .then { |draft| save_release(draft, candidate_tag, branch) }
     end
 
     private
-
-    def builder(draft, current_diff_source_tag, candidate_tag)
-      Builder.new(draft: draft, categories: LABELS.values, prepend: NO_EDIT_WARNING, append: full_changelog(current_diff_source_tag, candidate_tag))
-    end
 
     def add_pr(builder, pr, labels)
       builder.add(
@@ -71,6 +73,10 @@ module Solidus
 
         **Full Changelog**: https://github.com/#{@repository}/compare/#{current_diff_source_tag}...#{candidate_tag}
       TXT
+    end
+
+    def number_link_builder
+      ->(number) { "https://github.com/#{@repository}/pull/#{number}" }
     end
   end
 end
