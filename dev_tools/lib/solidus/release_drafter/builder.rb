@@ -18,15 +18,16 @@ module Solidus
 
       TITLE_SEPARATOR = SEPARATOR
 
-      ENTRY_TEMPLATE = lambda do |title, number, user|
-        "- #{title} ##{number} (@#{user})"
+      ENTRY_TEMPLATE = lambda do |title, link, user|
+        "* #{title} by @#{user} in #{link}"
       end.freeze
 
       ENTRY_SEPARATOR = SEPARATOR
 
       SECTION_SEPARATOR = SEPARATOR + SEPARATOR
 
-      def initialize(draft:, categories:, prepend: '', append: '')
+      def initialize(draft:, categories:, number_link_builder:, prepend: '', append: '')
+        @number_link_builder = number_link_builder
         @categories = Set[*categories]
         @prepend = prepend
         @prepend_pattern = /^#{Regexp.quote(@prepend)}/m
@@ -39,7 +40,7 @@ module Solidus
       end
 
       def add(title:, number:, user:, categories:)
-        ENTRY_TEMPLATE.(title, number, user)
+        ENTRY_TEMPLATE.(title, @number_link_builder.(number), user)
           .then { |entry| add_to_ast(entry, categories) }
           .then { |ast| @draft.with(content: unparse(ast)) }
       end

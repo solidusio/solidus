@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/solidus/bumper'
+
+candidate_version = ARGV[0]
+
+path = File.expand_path('../../core/lib/generators/solidus/install/app_templates/frontend/starter.rb', __dir__)
+from = File.read(path)[%r{solidusio/solidus_starter_frontend/raw/(.+)/template.rb}, 1]
+to = candidate_version
+
+puts <<~MSG
+
+  Bumping starter frontend version to install from #{from} to #{to} in #{path}
+
+MSG
+
+Solidus::Bumper.(
+  from: from,
+  to: to,
+  path: path
+)
