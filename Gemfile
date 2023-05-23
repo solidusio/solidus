@@ -58,7 +58,7 @@ group :backend do
 
   gem 'capybara', '~> 3.13', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
-  gem 'selenium-webdriver', '4.9.0', require: false
+  gem 'selenium-webdriver', require: false
   gem 'webdrivers', require: false
 
   # JavaScript testing
