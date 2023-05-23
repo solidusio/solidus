@@ -10,6 +10,14 @@ namespace :solidus_admin do
       SolidusAdmin::Engine.root.join("config", "solidus_admin", "tailwind.config.js.erb")
     end
 
+    def stylesheet_app_path
+      Rails.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
+    end
+
+    def stylesheet_engine_path
+      SolidusAdmin::Engine.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
+    end
+
     def compile_file(path, name)
       Tempfile.new(name).tap do |file|
         path
@@ -20,13 +28,18 @@ namespace :solidus_admin do
       end
     end
 
+    def copy_file(src, dst)
+      FileUtils.mkdir_p(dst.dirname)
+      FileUtils.cp(src, dst)
+    end
+
     def run(args = "")
       config_file = compile_file(
         [config_app_path, config_engine_path].find(&:exist?),
         "tailwind.config.js"
       )
       stylesheet_file = compile_file(
-        SolidusAdmin::Engine.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb"),
+        [stylesheet_app_path, stylesheet_engine_path].find(&:exist?),
         "application.tailwind.css"
       )
 
@@ -53,7 +66,8 @@ namespace :solidus_admin do
       - `SolidusAdmin::Config.tailwind_content` is updated
       - `SolidusAdmin::Config.tailwind_stylesheets` is updated
       - `bin/rails solidus_admin:tailwindcss:override_config` is run
-      - The override config file is updated
+      - `bin/rails solidus_admin:tailwindcss:override_stylesheet` is run
+      - The override files are updated
     DESC
     task watch: :environment do
       run("-w")
@@ -65,13 +79,16 @@ namespace :solidus_admin do
       It copies the config file from the engine to the app, so it can be customized.
     DESC
     task override_config: :environment do
-      src = config_engine_path
-      dst = config_app_path
-      FileUtils.mkdir_p(dst.dirname)
-      FileUtils.cp(
-        src,
-        dst
-      )
+      copy_file(config_engine_path, config_app_path)
+    end
+
+    desc <<~DESC
+      Override Solidus Admin's TailwindCSS stylesheet
+
+      It copies the stylesheet file from the engine to the app, so it can be customized.
+    DESC
+    task override_stylesheet: :environment do
+      copy_file(stylesheet_engine_path, stylesheet_app_path)
     end
   end
 end
