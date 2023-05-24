@@ -1,6 +1,5 @@
-@import 'spree/backend/globals';
-@import 'spree/backend/vendor';
-@import 'spree/backend/shared';
-@import 'spree/backend/components';
-@import 'spree/backend/plugins';
-@import 'spree/backend/sections';
+@import 'spree/backend/themes/classic';
+
+@warn "[Solidus] [Deprecation] " +
+  "importing or requiring `spree/backend/spree_admin` is deprecated and will be removed in the next major. " +
+  "Please use `spree/backend/themes/classic` instead.";
