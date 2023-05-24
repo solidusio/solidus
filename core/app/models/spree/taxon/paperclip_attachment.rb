@@ -26,5 +26,6 @@ module Spree::Taxon::PaperclipAttachment
     return false unless attached_file.exists?
 
     attached_file.destroy
+    save
   end
 end

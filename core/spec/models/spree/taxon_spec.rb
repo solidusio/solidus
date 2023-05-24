@@ -25,6 +25,17 @@ RSpec.describe Spree::Taxon, type: :model do
 
           expect(taxon.destroy_attachment(:icon)).to be_truthy
         end
+
+        if Spree::Config.taxon_attachment_module == Spree::Taxon::PaperclipAttachment
+          it "resets paperclip attributes when using Paperclip", aggregate_failures: true do
+            taxon = create(:taxon, :with_icon)
+            expect(taxon.destroy_attachment(:icon)).to be_truthy
+            expect(taxon.reload.icon_file_name).to_not be_present
+            expect(taxon.reload.icon_content_type).to_not be_present
+            expect(taxon.reload.icon_file_size).to_not be_present
+            expect(taxon.reload.icon_updated_at).to_not be_present
+          end
+        end
       end
 
       context "and the taxon does not have any file attached yet" do
