@@ -3,10 +3,13 @@
 module SolidusAdmin
   # Menu item within a {MainNavComponent}
   class MainNavItemComponent < BaseComponent
-    attr_reader :title
+    with_collection_parameter :item
 
-    def initialize(title:)
-      @title = title
+    attr_reader :item
+
+    def initialize(item:)
+      @item = item
+      super
     end
   end
 end
