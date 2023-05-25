@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "view_component"
+
 module SolidusAdmin
   class Engine < ::Rails::Engine
     isolate_namespace SolidusAdmin
