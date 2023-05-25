@@ -1,6 +1,6 @@
 <nav>
   <%=
-    render SolidusAdmin::MainNavItemComponent.with_collection(
+    render container["main_nav_item_component"].with_collection(
       container.within_namespace("main_nav").sort_by(&:position)
     )
   %>
