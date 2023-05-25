@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 3.0.0'
   s.required_rubygems_version = '>= 1.8.23'
 
+  s.add_dependency 'dry-system', '~> 1.0'
   s.add_dependency 'solidus_core', s.version
   s.add_dependency 'tailwindcss-rails', '~> 2.0'
   s.add_dependency 'view_component', '~> 3.0'
