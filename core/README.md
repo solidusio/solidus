@@ -5,7 +5,7 @@ Solidus system depends.
 
 Core models
 -----------
-Solidus implements over 200 [models](https://github.com/solidusio/solidus/tree/master/core/app/models/spree),
+Solidus implements over 200 [models](https://github.com/solidusio/solidus/tree/main/core/app/models/spree),
 and thus a deep inspection of each in this README would be overkill. Instead,
 let's take a quick look at the fundamental models upon which all else depend.
 Currently, these models remain in the Spree namespace as part of the legacy of

@@ -692,7 +692,7 @@ Spree::Price.where(amount: nil).any?
 
 If the above code returns `false`, you don't need to do anything else.
 Otherwise, copy [the
-task](https://github.com/solidusio/solidus/blob/master/core/lib/tasks/solidus/delete_prices_with_nil_amount.rake)
+task](https://github.com/solidusio/solidus/blob/main/core/lib/tasks/solidus/delete_prices_with_nil_amount.rake)
 into your code, and deploy & execute it. Another option is to execute it
 manually in your console in production. However, be extremely careful when
 doing that!! :warning: :warning: :warning:
