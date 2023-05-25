@@ -1,5 +1,7 @@
 <nav>
-  <%= render SolidusAdmin::MainNavItemComponent.new(title: "First item") %>
-  <%= render SolidusAdmin::MainNavItemComponent.new(title: "Second item") %>
-  <%= render SolidusAdmin::MainNavItemComponent.new(title: "Third item") %>
+  <%=
+    render SolidusAdmin::MainNavItemComponent.with_collection(
+      container.within_namespace("main_nav").sort_by(&:position)
+    )
+  %>
 </nav>
