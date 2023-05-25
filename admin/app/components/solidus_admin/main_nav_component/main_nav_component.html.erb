@@ -1,5 +1,5 @@
 <nav>
-  <a href="#">First item</a>
-  <a href="#">Second item</a>
-  <a href="#">Third item</a>
+  <%= render SolidusAdmin::MainNavItemComponent.new(title: "First item") %>
+  <%= render SolidusAdmin::MainNavItemComponent.new(title: "Second item") %>
+  <%= render SolidusAdmin::MainNavItemComponent.new(title: "Third item") %>
 </nav>
