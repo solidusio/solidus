@@ -157,8 +157,8 @@ commands:
             cat /tmp/.gems-versions
       - restore_cache:
           keys:
-            - solidus-installer-v7-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
-            - solidus-installer-v7-{{ checksum "/tmp/.ruby-versions" }}-
+            - solidus-installer-v8-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+            - solidus-installer-v8-{{ checksum "/tmp/.ruby-versions" }}-
       - run:
           name: "Prepare the rails application"
           command: |
