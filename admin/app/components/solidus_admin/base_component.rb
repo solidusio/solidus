@@ -6,5 +6,9 @@ module SolidusAdmin
     def container
       SolidusAdmin::Container
     end
+
+    def component(name)
+      container.resolve("#{name}_component")
+    end
   end
 end
