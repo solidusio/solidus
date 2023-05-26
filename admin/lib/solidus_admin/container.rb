@@ -2,7 +2,9 @@
 
 require "dry/system"
 require "dry/system/container"
+require "dry/system/component"
 require "view_component"
+require "solidus_admin/system/loaders/host_overridable_constant"
 
 module SolidusAdmin
   # Global registry for host-injectable components.
@@ -12,17 +14,10 @@ module SolidusAdmin
   #
   # @api private
   class Container < Dry::System::Container
-    class ConstantLoader < Dry::System::Loader
-      def self.call(component, *args)
-        require!(component)
-        constant(component)
-      end
-    end
-
     configure do |config|
       config.root = Pathname(__FILE__).dirname.join("../..").realpath
       config.component_dirs.add("app/components") do |dir|
-        dir.loader = ConstantLoader
+        dir.loader = System::Loaders::HostOverridableConstant.method(:call).curry["components"]
         dir.namespaces.add "solidus_admin", key: nil
       end
     end
