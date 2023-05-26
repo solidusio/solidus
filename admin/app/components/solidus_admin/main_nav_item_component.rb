@@ -11,5 +11,11 @@ module SolidusAdmin
       @item = item
       super
     end
+
+    erb_template <<~ERB
+      <a href="#">
+        <%= item.title %>
+      </a>
+    ERB
   end
 end
