@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+set -e
+test -z "${DEBUG+empty_string}" || set -x
+
+test "$DB" = "sqlite" && export DB="sqlite3"
+
+if [ -z "$SOLIDUS_BRANCH" ]
+then
+  echo "~~> Use 'export SOLIDUS_BRANCH=[master|v3.2|...]' to control the Solidus branch"
+  SOLIDUS_BRANCH="master"
+fi
+echo "~~> Using branch $SOLIDUS_BRANCH of solidus"
+
+if [ -z "$SOLIDUS_FRONTEND" ]
+then
+  echo "~~> Use 'export SOLIDUS_FRONTEND=[solidus_frontend|solidus_starter_frontend]' to control the Solidus frontend"
+  SOLIDUS_FRONTEND="solidus_frontend"
+fi
+echo "~~> Using branch $SOLIDUS_FRONTEND as the solidus frontend"
+
+extension_name="solidus_friendly_promotions"
+
+# Stay away from the bundler env of the containing extension.
+function unbundled {
+  ruby -rbundler -e'b = proc {system *ARGV}; Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&b) : Bundler.with_clean_env(&b)' -- $@
+}
+
+rm -rf ./sandbox
+unbundled bundle exec rails new sandbox \
+  --database="${DB:-sqlite3}" \
+  --skip-bundle \
+  --skip-git \
+  --skip-keeps \
+  --skip-rc \
+  --skip-spring \
+  --skip-test \
+  --skip-javascript
+
+if [ ! -d "sandbox" ]; then
+  echo 'sandbox rails application failed'
+  exit 1
+fi
+
+cd ./sandbox
+cat <<RUBY >> Gemfile
+gem 'solidus', github: 'solidusio/solidus', branch: '$SOLIDUS_BRANCH'
+gem 'rails-i18n'
+gem 'solidus_i18n'
+
+gem '$extension_name', path: '..'
+
+group :test, :development do
+  platforms :mri do
+    gem 'pry-byebug'
+  end
+end
+RUBY
+
+unbundled bundle install --gemfile Gemfile
+
+unbundled bundle exec rake db:drop db:create
+
+unbundled bundle exec rails generate solidus:install \
+  --auto-accept \
+  --user_class=Spree::User \
+  --enforce_available_locales=true \
+  --with-authentication=true \
+  --payment-method=none \
+  --frontend=${SOLIDUS_FRONTEND} \
+  $@
+
+unbundled bundle exec rails generate solidus:auth:install --auto-run-migrations
+unbundled bundle exec rails generate ${extension_name}:install --auto-run-migrations
+
+echo
+echo "🚀 Sandbox app successfully created for $extension_name!"
+echo "🧪 This app is intended for test purposes."

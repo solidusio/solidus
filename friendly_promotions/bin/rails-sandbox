@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+app_root = 'sandbox'
+
+unless File.exist? "#{app_root}/bin/rails"
+  warn 'Creating the sandbox app...'
+  Dir.chdir "#{__dir__}/.." do
+    system "#{__dir__}/sandbox" or begin
+      warn 'Automatic creation of the sandbox app failed'
+      exit 1
+    end
+  end
+end
+
+Dir.chdir app_root
+exec 'bin/rails', *ARGV

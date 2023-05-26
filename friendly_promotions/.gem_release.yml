@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_friendly_promotions/version.rb'
+  message: Bump SolidusFriendlyPromotions to %{version}
+  tag: true

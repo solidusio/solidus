@@ -1,0 +1,53 @@
+version: 2.1
+
+orbs:
+  # Required for feature specs.
+  browser-tools: circleci/browser-tools@1.1
+
+  # Always take the latest version of the orb, this allows us to
+  # run specs against Solidus supported versions only without the need
+  # to change this configuration every time a Solidus version is released
+  # or goes EOL.
+  solidusio_extensions: solidusio/extensions@volatile
+
+jobs:
+  run-specs-with-sqlite:
+    executor: solidusio_extensions/sqlite
+    steps:
+      - browser-tools/install-chrome
+      - solidusio_extensions/run-tests
+  run-specs-with-postgres:
+    executor: solidusio_extensions/postgres
+    steps:
+      - browser-tools/install-chrome
+      - solidusio_extensions/run-tests
+  run-specs-with-mysql:
+    executor: solidusio_extensions/mysql
+    steps:
+      - browser-tools/install-chrome
+      - solidusio_extensions/run-tests
+  lint-code:
+    executor: solidusio_extensions/sqlite-memory
+    steps:
+      - solidusio_extensions/lint-code
+
+workflows:
+  "Run specs on supported Solidus versions":
+    jobs:
+      - run-specs-with-sqlite
+      - run-specs-with-postgres
+      - run-specs-with-mysql
+      - lint-code
+
+  "Weekly run specs against master":
+    triggers:
+      - schedule:
+          cron: "0 0 * * 4" # every Thursday
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - run-specs-with-sqlite
+      - run-specs-with-postgres
+      - run-specs-with-mysql

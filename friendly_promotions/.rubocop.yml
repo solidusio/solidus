@@ -1,0 +1,5 @@
+require:
+  - solidus_dev_support/rubocop
+
+AllCops:
+  NewCops: disable
