@@ -1,65 +1,14 @@
 namespace :solidus_admin do
   namespace :tailwindcss do
-    require "tailwindcss-rails"
+    require "solidus_admin/tailwindcss"
 
-    def config_app_path
-      Rails.root.join("config", "solidus_admin", "tailwind.config.js.erb")
-    end
-
-    def config_engine_path
-      SolidusAdmin::Engine.root.join("config", "solidus_admin", "tailwind.config.js.erb")
-    end
-
-    def stylesheet_app_path
-      Rails.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
-    end
-
-    def stylesheet_engine_path
-      SolidusAdmin::Engine.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
-    end
-
-    def compile_file(path, name)
-      Tempfile.new(name).tap do |file|
-        path
-          .then { |path| File.read(path) }
-          .then { |content| ERB.new(content) }
-          .then { |erb| erb.result }
-          .then { |compiled_content| file.write(compiled_content) && file.rewind }
-      end
-    end
-
-    def copy_file(src, dst)
-      FileUtils.mkdir_p(dst.dirname)
-      FileUtils.cp(src, dst)
-    end
-
-    def run(args = "")
-      config_file = compile_file(
-        [config_app_path, config_engine_path].find(&:exist?),
-        "tailwind.config.js"
-      )
-      stylesheet_file = compile_file(
-        [stylesheet_app_path, stylesheet_engine_path].find(&:exist?),
-        "application.tailwind.css"
-      )
-
-      system "#{Tailwindcss::Engine.root.join("exe/tailwindcss")} \
-         -i #{stylesheet_file.path} \
-         -o #{Rails.root.join("app/assets/builds/solidus_admin/tailwind.css")} \
-         -c #{config_file.path} \
-         #{args}"
-    ensure
-      config_file&.close && config_file&.unlink
-      stylesheet_file&.close && stylesheet_file&.unlink
-    end
-
-    desc "Build Solidus Admin's TailwindCSS"
+    desc "Build Solidus Admin's Tailwind's css"
     task build: :environment do
-      run
+      SolidusAdmin::Tailwindcss.run
     end
 
     desc <<~DESC
-      Watch and build Solidus Admin's Tailwind CSS on file changes
+      Watch and build Solidus Admin's Tailwind css on file changes
 
       It needs to be re-run whenever:
 
@@ -70,25 +19,31 @@ namespace :solidus_admin do
       - The override files are updated
     DESC
     task watch: :environment do
-      run("-w")
+      SolidusAdmin::Tailwindcss.run("-w")
     end
 
     desc <<~DESC
-      Override Solidus Admin's TailwindCSS configuration
+      Override Solidus Admin's Tailwindcss configuration
 
       It copies the config file from the engine to the app, so it can be customized.
     DESC
     task override_config: :environment do
-      copy_file(config_engine_path, config_app_path)
+      SolidusAdmin::Tailwindcss.copy_file(
+        SolidusAdmin::Tailwindcss.config_engine_path,
+        SolidusAdmin::Tailwindcss.config_app_path
+      )
     end
 
     desc <<~DESC
-      Override Solidus Admin's TailwindCSS stylesheet
+      Override Solidus Admin's Tailwind's stylesheet
 
       It copies the stylesheet file from the engine to the app, so it can be customized.
     DESC
     task override_stylesheet: :environment do
-      copy_file(stylesheet_engine_path, stylesheet_app_path)
+      SolidusAdmin::Tailwindcss.copy_file(
+        SolidusAdmin::Tailwindcss.stylesheet_engine_path,
+        SolidusAdmin::Tailwindcss.stylesheet_app_path
+      )
     end
   end
 end
