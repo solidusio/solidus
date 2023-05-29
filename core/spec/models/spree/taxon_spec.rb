@@ -20,26 +20,36 @@ RSpec.describe Spree::Taxon, type: :model do
   describe "#destroy_attachment" do
     context "when trying to destroy a valid attachment definition" do
       context "and taxon has a file attached " do
-        it "removes the attachment" do
-          taxon = create(:taxon, :with_icon)
+        let(:taxon) { create(:taxon, :with_icon)}
 
+        it "removes the attachment" do
           expect(taxon.destroy_attachment(:icon)).to be_truthy
+        end
+
+        if Spree::Config.taxon_attachment_module == Spree::Taxon::PaperclipAttachment
+          it "resets paperclip attributes when using Paperclip", aggregate_failures: true do
+            expect(taxon.destroy_attachment(:icon)).to be_truthy
+            expect(taxon.reload.icon_file_name).to_not be_present
+            expect(taxon.reload.icon_content_type).to_not be_present
+            expect(taxon.reload.icon_file_size).to_not be_present
+            expect(taxon.reload.icon_updated_at).to_not be_present
+          end
         end
       end
 
       context "and the taxon does not have any file attached yet" do
-        it "returns false" do
-          taxon = create(:taxon)
+        let(:taxon) { create(:taxon)}
 
+        it "returns false" do
           expect(taxon.destroy_attachment(:icon)).to be_falsey
         end
       end
     end
 
     context "when trying to destroy an invalid attachment" do
-      it 'returns false' do
-        taxon = create(:taxon)
+      let(:taxon) { create(:taxon)}
 
+      it 'returns false' do
         expect(taxon.destroy_attachment(:foo)).to be_falsey
       end
     end
