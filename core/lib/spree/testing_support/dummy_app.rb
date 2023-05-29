@@ -135,8 +135,10 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.load_defaults(Spree.solidus_version)
 Spree.config do |config|
   if (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
-    config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
-    config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
+    Spree::Deprecation.silence do
+      config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
+      config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
+    end
   end
 end
 
