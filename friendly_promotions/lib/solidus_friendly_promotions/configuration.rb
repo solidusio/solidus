@@ -12,7 +12,7 @@ module SolidusFriendlyPromotions
       @configuration ||= Configuration.new
     end
 
-    alias config configuration
+    alias_method :config, :configuration
 
     def configure
       yield configuration

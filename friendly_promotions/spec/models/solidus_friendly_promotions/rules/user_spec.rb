@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::User, type: :model do
   let(:rule) { SolidusFriendlyPromotions::Rules::User.new }

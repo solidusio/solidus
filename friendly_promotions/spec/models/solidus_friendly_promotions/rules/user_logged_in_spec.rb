@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::UserLoggedIn, type: :model do
   let(:rule) { SolidusFriendlyPromotions::Rules::UserLoggedIn.new }
@@ -9,7 +9,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::UserLoggedIn, type: :model do
     let(:order) { Spree::Order.new }
 
     it "should be eligible if order has an associated user" do
-      user = double('User')
+      user = double("User")
       allow(order).to receive_messages(user: user)
 
       expect(rule).to be_eligible(order)
@@ -20,13 +20,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::UserLoggedIn, type: :model do
       it { expect(rule).not_to be_eligible(order) }
       it "sets an error message" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.full_messages.first).
-          to eq "You need to login before applying this coupon code."
+        expect(rule.eligibility_errors.full_messages.first)
+          .to eq "You need to login before applying this coupon code."
       end
       it "sets an error code" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.details[:base].first[:error_code]).
-          to eq :no_user_specified
+        expect(rule.eligibility_errors.details[:base].first[:error_code])
+          .to eq :no_user_specified
       end
     end
   end

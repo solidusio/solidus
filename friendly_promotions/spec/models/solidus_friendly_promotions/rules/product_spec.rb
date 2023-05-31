@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
   let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(rule_options) }
@@ -35,13 +35,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "You need to add an applicable product before applying this coupon code."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "You need to add an applicable product before applying this coupon code."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :no_applicable_products
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :no_applicable_products
         end
       end
     end
@@ -63,13 +63,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "This coupon code can't be applied because you don't have all of the necessary products in your cart."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "This coupon code can't be applied because you don't have all of the necessary products in your cart."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :missing_product
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :missing_product
         end
       end
     end
@@ -91,13 +91,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "Your cart contains a product that prevents this coupon code from being applied."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "Your cart contains a product that prevents this coupon code from being applied."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :has_excluded_product
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :has_excluded_product
         end
       end
     end
@@ -107,17 +107,17 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
         SolidusFriendlyPromotions::Rules::Product.create!(
           promotion: create(:promotion),
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: product),
-          ],
+            Spree::ProductPromotionRule.new(product: product)
+          ]
         ).tap do |rule|
-          rule.preferred_match_policy = 'invalid'
+          rule.preferred_match_policy = "invalid"
           rule.save!(validate: false)
         end
       end
       let(:product) { order.line_items.first!.product }
       let(:order) { create(:order_with_line_items, line_items_count: 1) }
 
-      it 'raises' do
+      it "raises" do
         expect {
           rule.eligible?(order)
         }.to raise_error('unexpected match policy: "invalid"')

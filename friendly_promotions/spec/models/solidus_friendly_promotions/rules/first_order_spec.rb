@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::FirstOrder, type: :model do
   let(:rule) { SolidusFriendlyPromotions::Rules::FirstOrder.new }
@@ -11,8 +11,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstOrder, type: :model do
     it { expect(rule).to be_eligible(order) }
     it "does not set an error message" do
       rule.eligible?(order)
-      expect(rule.eligibility_errors.full_messages.first).
-        to be_nil
+      expect(rule.eligibility_errors.full_messages.first)
+        .to be_nil
     end
   end
 
@@ -48,21 +48,21 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstOrder, type: :model do
           it { expect(rule).not_to be_eligible(order) }
           it "sets an error message" do
             rule.eligible?(order)
-            expect(rule.eligibility_errors.full_messages.first).
-              to eq "This coupon code can only be applied to your first order."
+            expect(rule.eligibility_errors.full_messages.first)
+              .to eq "This coupon code can only be applied to your first order."
           end
           it "sets an error code" do
             rule.eligible?(order)
-            expect(rule.eligibility_errors.details[:base].first[:error_code]).
-              to eq :not_first_order
+            expect(rule.eligibility_errors.details[:base].first[:error_code])
+              .to eq :not_first_order
           end
         end
       end
     end
 
     context "for a guest user" do
-      let(:email) { 'user@solidus.io' }
-      before { allow(order).to receive_messages email: 'user@solidus.io' }
+      let(:email) { "user@solidus.io" }
+      before { allow(order).to receive_messages email: "user@solidus.io" }
 
       context "with no other orders" do
         it { expect(rule).to be_eligible(order) }
@@ -73,13 +73,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstOrder, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "This coupon code can only be applied to your first order."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "This coupon code can only be applied to your first order."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :not_first_order
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :not_first_order
         end
       end
     end

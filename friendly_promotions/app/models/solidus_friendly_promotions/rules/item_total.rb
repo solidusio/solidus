@@ -11,20 +11,20 @@ module SolidusFriendlyPromotions
       include ActiveSupport::Deprecation::DeprecatedConstantAccessor
 
       preference :amount, :decimal, default: 100.00
-      preference :currency, :string, default: ->{ Spree::Config[:currency] }
-      preference :operator, :string, default: 'gt'
+      preference :currency, :string, default: -> { Spree::Config[:currency] }
+      preference :operator, :string, default: "gt"
 
       # The list of allowed operators names mapped to their symbols.
       def self.operators_map
         {
           gte: :>=,
-          gt: :>,
+          gt: :>
         }
       end
 
       def self.operator_options
         operators_map.map do |name, _method|
-          [I18n.t(name, scope: 'spree.item_total_rule.operators'), name]
+          [I18n.t(name, scope: "spree.item_total_rule.operators"), name]
         end
       end
 
@@ -34,7 +34,7 @@ module SolidusFriendlyPromotions
         :OPERATORS,
         :operators_map,
         message: "OPERATORS is deprecated! Use `operators_map.keys.map(&:to_s)` instead.",
-        deprecator: Spree::Deprecation,
+        deprecator: Spree::Deprecation
       )
 
       def applicable?(promotable)
@@ -56,7 +56,7 @@ module SolidusFriendlyPromotions
       def operator
         self.class.operators_map.fetch(
           preferred_operator.to_sym,
-          preferred_operator_default,
+          preferred_operator_default
         )
       end
 
@@ -74,9 +74,9 @@ module SolidusFriendlyPromotions
 
       def ineligible_message
         case preferred_operator.to_s
-        when 'gte'
+        when "gte"
           eligibility_error_message(:item_total_less_than, amount: formatted_amount)
-        when 'gt'
+        when "gt"
           eligibility_error_message(:item_total_less_than_or_equal, amount: formatted_amount)
         else
           eligibility_error_message(:item_total_doesnt_match_with_operator, amount: formatted_amount, operator: preferred_operator)
@@ -84,7 +84,7 @@ module SolidusFriendlyPromotions
       end
 
       def ineligible_error_code
-        if preferred_operator == 'gte'
+        if preferred_operator == "gte"
           :item_total_less_than
         else
           :item_total_less_than_or_equal

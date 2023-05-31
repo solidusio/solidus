@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
   let(:rule) { SolidusFriendlyPromotions::Rules::OptionValue.new }
@@ -8,8 +8,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
   describe "#preferred_eligible_values" do
     subject { rule.preferred_eligible_values }
     it "assigns a nicely formatted hash" do
-      rule.preferred_eligible_values = Hash["5" => "1,2", "6" => "1"]
-      expect(subject).to eq Hash[5 => [1, 2], 6 => [1]]
+      rule.preferred_eligible_values= {"5" => "1,2", "6" => "1"}
+      expect(subject).to eq({5 => [1, 2], 6 => [1]})
     end
   end
 
@@ -32,15 +32,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
     subject { rule.eligible?(promotable) }
     context "when there are any applicable line items" do
       before do
-        rule.preferred_eligible_values = Hash[line_item.product.id => [
+        rule.preferred_eligible_values= {line_item.product.id => [
           line_item.variant.option_values.pluck(:id).first
-        ]]
+        ]}
       end
       it { is_expected.to be true }
     end
     context "when there are no applicable line items" do
       before do
-        rule.preferred_eligible_values = Hash[99 => [99]]
+        rule.preferred_eligible_values= {99 => [99]}
       end
       it { is_expected.to be false }
     end
