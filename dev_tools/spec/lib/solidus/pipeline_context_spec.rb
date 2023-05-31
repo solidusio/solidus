@@ -173,6 +173,19 @@ RSpec.describe Solidus::PipelineContext do
     end
   end
 
+  describe '#candidate_next_patch_dev_version' do
+    it "returns the candidate's next patch version with '.dev' appended" do
+      context = described_class.new(
+        tags: %w[v1.0.0 v1.0.1 v1.1.0 v2.0.0 v2.0.1 v2.0.2],
+        base_branch: 'main',
+        tracking_major: false,
+        last_minor: false
+      )
+
+      expect(context.candidate_next_patch_dev_version).to eq('2.1.1.dev')
+    end
+  end
+
   describe '#next_candidate_tag' do
     context 'when the base branch is a patch branch' do
       it 'returns the next patch level version after the candidate' do
