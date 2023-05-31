@@ -90,7 +90,7 @@ module Spree
     end
 
     def update_order
-      payment.order.updater.update
+      payment.order.recalculate
     end
   end
 end

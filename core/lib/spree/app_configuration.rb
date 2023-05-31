@@ -357,6 +357,14 @@ module Spree
     #   with the same signature as Spree::OrderUpdateAttributes.
     class_name_attribute :order_update_attributes_class, default: 'Spree::OrderUpdateAttributes'
 
+    # Allows providing a different order recalculator.
+    # @!attribute [rw] order_recalculator_class
+    # @see Spree::OrderUpdater
+    # @return [Class] an object that conforms to the API of
+    #   the standard order recalculator class
+    #   Spree::OrderUpdater.
+    class_name_attribute :order_recalculator_class, default: 'Spree::OrderUpdater'
+
     # Allows providing your own Mailer for promotion code batch mailer.
     #
     # @!attribute [rw] promotion_code_batch_mailer_class

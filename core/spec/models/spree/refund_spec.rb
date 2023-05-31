@@ -115,7 +115,7 @@ RSpec.describe Spree::Refund, type: :model do
         end
 
         it 'should update the payment total' do
-          expect(payment.order.updater).to receive(:update)
+          expect(payment.order).to receive(:recalculate)
           subject
         end
       end

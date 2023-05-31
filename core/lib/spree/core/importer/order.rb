@@ -40,7 +40,7 @@ module Spree
             end
 
             # Really ensure that the order totals & states are correct
-            order.updater.update
+            order.recalculate
             if shipments_attrs.present?
               order.shipments.each_with_index do |shipment, index|
                 shipment.update_columns(cost: shipments_attrs[index][:cost].to_f) if shipments_attrs[index][:cost].present?

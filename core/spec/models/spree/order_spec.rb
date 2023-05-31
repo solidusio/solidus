@@ -707,7 +707,7 @@ RSpec.describe Spree::Order, type: :model do
         receive(:activate)
       ).and_call_original
 
-      expect(order.updater).to receive(:update).and_call_original
+      expect(order.recalculator).to receive(:recalculate).and_call_original
 
       order.apply_shipping_promotions
     end

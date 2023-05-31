@@ -18,21 +18,21 @@ module Spree
       context 'with refund' do
         it "updates payment totals" do
           create(:payment_with_refund, order: order, amount: 33.25, refund_amount: 3)
-          updater.update
+          updater.recalculate
           expect(order.payment_total).to eq(30.25)
         end
       end
 
       it "update item total" do
         expect {
-          updater.update
+          updater.recalculate
         }.to change { order.item_total }.to 20
       end
 
       it "update shipment total" do
         create(:shipment, order: order, cost: 10)
         expect {
-          updater.update
+          updater.recalculate
         }.to change { order.shipment_total }.to 10
       end
 
@@ -43,7 +43,7 @@ module Spree
         end
 
         it "updates the line item total" do
-          expect { updater.update }.to change { line_item.reload.adjustment_total }.from(0).to(-5)
+          expect { updater.recalculate }.to change { line_item.reload.adjustment_total }.from(0).to(-5)
         end
       end
 
@@ -59,11 +59,11 @@ module Spree
         end
 
         before do
-          updater.update
+          updater.recalculate
           create(:adjustment, source: promotion_action, adjustable: order, order: order)
           create(:line_item, order: order, price: 10) # in addition to the two already created
           order.line_items.reload # need to pick up the extra line item
-          updater.update
+          updater.recalculate
         end
 
         it "updates promotion total" do
@@ -75,7 +75,7 @@ module Spree
         create(:adjustment, adjustable: order, order: order, source: nil, amount: 10)
 
         expect {
-          updater.update
+          updater.recalculate
         }.to change {
           order.adjustment_total
         }.from(0).to(10)
@@ -209,7 +209,7 @@ module Spree
 
     context "updating payment state" do
       let(:order) { build(:order) }
-      let(:updater) { order.updater }
+      let(:updater) { order.recalculator }
       before { allow(order).to receive(:refund_total).and_return(0) }
 
       context 'no valid payments with non-zero order total' do
@@ -311,12 +311,12 @@ module Spree
 
       it "updates payment state" do
         expect(updater).to receive(:update_payment_state)
-        updater.update
+        updater.recalculate
       end
 
       it "updates shipment state" do
         expect(updater).to receive(:update_shipment_state)
-        updater.update
+        updater.recalculate
       end
 
       context 'with a shipment' do
@@ -325,12 +325,12 @@ module Spree
 
         it "updates each shipment" do
           expect(shipment).to receive(:update_state)
-          updater.update
+          updater.recalculate
         end
 
         it "updates the shipment amount" do
           expect(shipment).to receive(:update_amounts)
-          updater.update
+          updater.recalculate
         end
       end
     end
@@ -340,12 +340,12 @@ module Spree
 
       it "doesnt update payment state" do
         expect(updater).not_to receive(:update_payment_state)
-        updater.update
+        updater.recalculate
       end
 
       it "doesnt update shipment state" do
         expect(updater).not_to receive(:update_shipment_state)
-        updater.update
+        updater.recalculate
       end
 
       it "doesnt update each shipment" do
@@ -354,7 +354,7 @@ module Spree
         allow(order.shipments).to receive_messages(states: [], ready: [], pending: [], shipped: [])
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene
         expect(updater).not_to receive(:update_shipments)
-        updater.update
+        updater.recalculate
       end
     end
 
@@ -410,7 +410,7 @@ module Spree
 
     context "with invalid associated objects" do
       let(:order) { Spree::Order.create(ship_address: Spree::Address.new) }
-      subject { updater.update }
+      subject { updater.recalculate }
 
       it "raises because of the invalid object" do
         expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
