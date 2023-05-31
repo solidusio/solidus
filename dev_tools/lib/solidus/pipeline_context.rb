@@ -39,12 +39,10 @@ module Solidus
 
     def current_tag
       @current_tag ||=
-        begin
-          if main_branch?
-            highest_tag_between(tags)
-          else
-            highest_tag_between(tags.select { |tag| tag.start_with?(base_branch) })
-          end
+        if main_branch?
+          highest_tag_between(tags)
+        else
+          highest_tag_between(tags.select { |tag| tag.start_with?(base_branch) })
         end
     end
 
@@ -67,6 +65,16 @@ module Solidus
 
     def candidate_minor_version
       @candidate_minor_version ||= candidate_version.split(VERSION_SEPARATOR)[0..1].join(VERSION_SEPARATOR)
+    end
+
+    def candidate_next_patch_dev_version
+      @candidate_next_patch_dev_version ||=
+        candidate_version
+          .split(VERSION_SEPARATOR)
+          .map(&:to_i)
+          .then { |version_numbers| bump_for_patch(*version_numbers) }
+          .join(VERSION_SEPARATOR)
+          .concat(DEV_VERSION_SUFFIX)
     end
 
     def candidate_patch_branch
