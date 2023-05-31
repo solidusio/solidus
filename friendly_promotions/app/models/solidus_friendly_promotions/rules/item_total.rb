@@ -8,8 +8,6 @@ module SolidusFriendlyPromotions
     # To add extra operators please override `self.operators_map` or any other helper method.
     # To customize the error message you can also override `ineligible_message`.
     class ItemTotal < ::Spree::PromotionRule
-      include ActiveSupport::Deprecation::DeprecatedConstantAccessor
-
       preference :amount, :decimal, default: 100.00
       preference :currency, :string, default: -> { Spree::Config[:currency] }
       preference :operator, :string, default: "gt"
@@ -27,15 +25,6 @@ module SolidusFriendlyPromotions
           [I18n.t(name, scope: "spree.item_total_rule.operators"), name]
         end
       end
-
-      # @deprecated
-      OPERATORS = operators_map.keys.map(&:to_s)
-      deprecate_constant(
-        :OPERATORS,
-        :operators_map,
-        message: "OPERATORS is deprecated! Use `operators_map.keys.map(&:to_s)` instead.",
-        deprecator: Spree::Deprecation
-      )
 
       def applicable?(promotable)
         promotable.is_a?(Spree::Order)
