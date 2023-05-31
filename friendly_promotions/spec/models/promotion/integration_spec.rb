@@ -17,7 +17,7 @@ RSpec.describe "Promotion System" do
     end
 
     context "with an order-level rule" do
-      let(:rule) { Spree::Promotion::Rules::Product.new(products: [shirt]) }
+      let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt]) }
 
       context "with an order level action" do
         let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20) }
@@ -38,7 +38,6 @@ RSpec.describe "Promotion System" do
         let(:action) { Spree::Promotion::Actions::CreateItemAdjustments.new(calculator: calculator) }
 
         it "creates one order-level adjustment" do
-          pending
           expect(order.adjustments).to be_empty
           expect(order.total).to eq(31.98)
           expect(order.item_total).to eq(39.98)
@@ -49,14 +48,13 @@ RSpec.describe "Promotion System" do
     end
 
     context "with a line-item level rule" do
-      let(:rule) { Spree::Promotion::Rules::LineItemProduct.new(products: [shirt]) }
+      let(:rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
 
       context "with an order level action" do
         let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20) }
         let(:action) { Spree::Promotion::Actions::CreateAdjustment.new(calculator: calculator) }
 
         it "creates one order-level adjustment" do
-          pending
           # Whoops - this works because line item level rules don't affect order-level actions :(
           expect(order.adjustments.length).to eq(1)
           expect(order.total).to eq(31.98)
