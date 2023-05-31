@@ -20,7 +20,7 @@ RSpec.describe Spree::Taxon, type: :model do
   describe "#destroy_attachment" do
     context "when trying to destroy a valid attachment definition" do
       context "and taxon has a file attached " do
-        let(:taxon) { create(:taxon, :with_icon)}
+        let(:taxon) { create(:taxon, :with_icon) }
 
         it "removes the attachment" do
           expect(taxon.destroy_attachment(:icon)).to be_truthy
@@ -38,7 +38,7 @@ RSpec.describe Spree::Taxon, type: :model do
       end
 
       context "and the taxon does not have any file attached yet" do
-        let(:taxon) { create(:taxon)}
+        let(:taxon) { create(:taxon) }
 
         it "returns false" do
           expect(taxon.destroy_attachment(:icon)).to be_falsey
@@ -47,7 +47,7 @@ RSpec.describe Spree::Taxon, type: :model do
     end
 
     context "when trying to destroy an invalid attachment" do
-      let(:taxon) { create(:taxon)}
+      let(:taxon) { create(:taxon) }
 
       it 'returns false' do
         expect(taxon.destroy_attachment(:foo)).to be_falsey
