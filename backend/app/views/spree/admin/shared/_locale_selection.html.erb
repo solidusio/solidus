@@ -1,6 +1,7 @@
 <% available_locales = Spree.i18n_available_locales %>
 <% if available_locales.size > 1 %>
-  <div class="admin-locale-selection">
+  <label class="admin-navbar-selection admin-locale-selection">
+    <i class="fa fa-globe fa-fw" title="<%= I18n.t('spree.choose_dashboard_locale') %>"></i>
     <select class="js-locale-selection custom-select fullwidth">
       <%=
         options_for_select(
@@ -11,5 +12,5 @@
         )
       %>
     </select>
-  </div>
+  </label>
 <% end %>

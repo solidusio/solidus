@@ -14,6 +14,7 @@ $padding-y-navbar-submenu: 9px;
   display: block;
   height: 39px;
   z-index: 1;
+  margin-bottom: 1em;
 
   span {
     font-size: $font-size-sm;
@@ -288,22 +289,34 @@ nav.menu {
   }
 }
 
-.admin-locale-selection {
-  margin: 1em;
+.admin-navbar-selection {
+  margin: 0 1.5em;
   position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 1.5em;
+
+  i {
+    cursor: pointer;
+    padding-right: 2.4em;
+    min-width: 1em;
+    height: 1em;
+  }
 
   &::after {
-    content: "\f0ac";
     font-family: "FontAwesome";
     position: absolute;
     top: 0;
     left: 0;
     padding: .5rem 0 .5rem .25rem;
-    z-index: -1;
   }
 
-  .admin-nav-hidden & {
-    .js-locale-selection.custom-select {
+   .admin-nav-hidden & {
+    position: relative;
+
+    select {
+      background-image: none;
       background-color: transparent;
       background-position: 1.5rem center;
       background-size: 8px 9px;
@@ -313,6 +326,7 @@ nav.menu {
       overflow: hidden;
       text-indent: 1rem;
       z-index: 1;
+      cursor: pointer;
 
       &:focus {
         box-shadow: none;
@@ -326,14 +340,16 @@ nav.menu {
   bottom: 0;
 }
 
+body.admin-nav-hidden .admin-nav:not(.fits) {
+  .admin-navbar-selection::after {
+    z-index: 0;
+  }
+}
+
 .admin-login-nav {
   list-style: none;
   padding: 0;
-  margin: 1rem 0;
-
-  li {
-    padding: 0.3rem 1.2rem;
-  }
+  margin: 1em 1.5em;
 
   a {
     display: inline-block;
@@ -345,7 +361,8 @@ nav.menu {
   }
 
   i {
-    margin-right: 0.5rem;
+    margin-right: 1.2em;
+    min-width: 1em;
   }
 }
 
