@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :solidus_admin do
   namespace :tailwindcss do
     require "solidus_admin/tailwindcss"
