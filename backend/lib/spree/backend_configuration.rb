@@ -22,6 +22,12 @@ module Spree
       user_theme ? themes.fetch(user_theme.to_sym) : themes.fetch(theme.to_sym)
     end
 
+    # @!attribute [rw] admin_updated_navbar
+    #   @return [Boolean] Should the updated navbar be used in admin (default: +false+)
+    #
+    # TODO: Update boundaries before merging to `main`
+    versioned_preference :admin_updated_navbar, :boolean, initial_value: false, boundaries: { "4.1.0.a" => true }
+
     preference :frontend_product_path,
       :proc,
       default: proc {
@@ -68,7 +74,7 @@ module Spree
       @menu_items ||= [
         MenuItem.new(
           label: :orders,
-          icon: 'shopping-cart',
+          icon: admin_updated_navbar ? 'inbox' : 'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
           match_path: %r{/(
             adjustments|
@@ -84,7 +90,7 @@ module Spree
         ),
         MenuItem.new(
           label: :products,
-          icon: 'th-large',
+          icon: admin_updated_navbar ? 'tag' : 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu',
           data_hook: :admin_product_sub_tabs,
@@ -134,22 +140,23 @@ module Spree
           ],
         ),
         MenuItem.new(
+          condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
-          icon: 'cubes',
+          icon: admin_updated_navbar ? 'tasks' : 'cubes',
           match_path: %r{/(stock_items)},
           condition: -> { can?(:admin, Spree::StockItem) },
           url: :admin_stock_items_path,
         ),
         MenuItem.new(
           label: :users,
-          icon: 'user',
+          icon: admin_updated_navbar ? 'user-o' : 'user',
           match_path: %r{/(users|store_credits)},
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
         ),
         MenuItem.new(
           label: :settings,
-          icon: 'wrench',
+          icon: admin_updated_navbar ? 'cog' : 'wrench',
           data_hook: :admin_settings_sub_tabs,
           partial: 'spree/admin/shared/settings_sub_menu',
           condition: -> { can? :admin, Spree::Store },
