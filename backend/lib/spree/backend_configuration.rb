@@ -22,6 +22,12 @@ module Spree
       user_theme ? themes.fetch(user_theme.to_sym) : themes.fetch(theme.to_sym)
     end
 
+    # @!attribute [rw] admin_updated_navbar
+    #   @return [Boolean] Should the updated navbar be used in admin (default: +false+)
+    #
+    # TODO: Update boundaries before merging to `main`
+    versioned_preference :admin_updated_navbar, :boolean, initial_value: false, boundaries: { "4.1.0.a" => true }
+
     preference :frontend_product_path,
       :proc,
       default: proc {
@@ -76,13 +82,13 @@ module Spree
       @menu_items ||= [
         MenuItem.new(
           ORDER_TABS,
-          'shopping-cart',
+          admin_updated_navbar ? 'inbox' : 'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
           position: 0
         ),
         MenuItem.new(
           PRODUCT_TABS,
-          'th-large',
+          admin_updated_navbar ? 'tag' : 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu',
           position: 1
@@ -97,7 +103,7 @@ module Spree
         ),
         MenuItem.new(
           STOCK_TABS,
-          'cubes',
+          admin_updated_navbar ? 'tasks' : 'cubes',
           condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
           url: :admin_stock_items_path,
@@ -106,14 +112,14 @@ module Spree
         ),
         MenuItem.new(
           USER_TABS,
-          'user',
+          admin_updated_navbar ? 'user-o' : 'user',
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
           position: 4
         ),
         MenuItem.new(
           CONFIGURATION_TABS,
-          'wrench',
+          admin_updated_navbar ? 'cog' : 'wrench',
           condition: -> {
             can?(:admin, Spree::Store) ||
             can?(:admin, Spree::AdjustmentReason) ||

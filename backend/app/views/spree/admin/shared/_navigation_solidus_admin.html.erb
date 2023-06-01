@@ -1,0 +1,82 @@
+<% default_store = Spree::Store.default %>
+
+<aside class="solidus-admin--nav">
+  <header class="solidus-admin--nav--section">
+    <%= link_to spree.admin_path, class: 'solidus-admin--nav--logo' do %>
+      <%= image_tag(Spree::Config[:admin_interface_logo]) %>
+    <%- end %>
+
+    <%= link_to "//#{default_store.url}", target: '_blank', class: 'solidus-admin--nav--store-link' do %>
+      <i class='fa fa-external-link' title="<%= t("spree.back_to_store") %>"></i>
+      <span class="solidus-admin--nav--store-link--name"><%= default_store.name %></span>
+      <span class="solidus-admin--nav--store-link--url"><%= default_store.url %></span>
+    <% end %>
+  </header>
+
+  <nav class="solidus-admin--nav--section">
+    <ul class="solidus-admin--nav--menu">
+      <% Spree::Backend::Config.menu_items.sort_by { |item| item.position || Float::INFINITY }.each do |menu_item| %>
+        <% if instance_exec(&menu_item.condition) %>
+          <%= tab(
+            *menu_item.sections,
+            icon: menu_item.icon,
+            label: menu_item.label,
+            url: menu_item.url.is_a?(Symbol) ? spree.public_send(menu_item.url) : menu_item.url,
+            match_path: menu_item.match_path,
+          ) do %>
+            <%- render partial: menu_item.partial if menu_item.partial %>
+          <%- end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </nav>
+
+  <footer class="solidus-admin--nav--section">
+    <ul class="solidus-admin--nav--menu">
+      <% available_locales = Spree.i18n_available_locales %>
+      <% if available_locales.any? %>
+        <li class="tab-with-icon">
+          <label class="fa fa-globe">
+            <select class="js-locale-selection custom-select fullwidth">
+              <%= options_for_select(
+                available_locales
+                  .map do |locale|
+                    [
+                      t(
+                        "spree.i18n.this_file_language",
+                        locale: locale,
+                        default: locale.to_s,
+                        fallback: false
+                      ),
+                      locale
+                    ]
+                  end
+                  .sort,
+                selected: I18n.locale
+              ) %>
+            </select>
+          </label>
+        </li>
+      <% end %>
+
+      <% if spree_current_user %>
+        <li class="tab-with-icon" data-hook="user-account-link">
+          <%= link_to_if(
+            can?(:admin, spree_current_user),
+            spree_current_user&.email || "Test user",
+            spree.edit_admin_user_path(spree_current_user),
+            class: "fa fa-user"
+          ) %>
+        </li>
+
+        <% if spree.respond_to? :admin_logout_path %>
+          <li class="tab-with-icon" data-hook="user-logout-link">
+            <%= link_to spree.admin_logout_path, method: Devise.sign_out_via, class: "fa fa-sign-out" do %>
+              <%= t("spree.logout") %>
+            <% end %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </footer>
+</aside>
