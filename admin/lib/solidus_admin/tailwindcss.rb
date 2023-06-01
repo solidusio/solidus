@@ -17,9 +17,9 @@ module SolidusAdmin
         "application.tailwind.css"
       )
 
-      system "#{::Tailwindcss::Engine.root.join("exe/tailwindcss")} \
+      system "#{::Tailwindcss::Engine.root.join('exe/tailwindcss')} \
          -i #{stylesheet_file.path} \
-         -o #{Rails.root.join("app/assets/builds/solidus_admin/tailwind.css")} \
+         -o #{Rails.root.join('app/assets/builds/solidus_admin/tailwind.css')} \
          -c #{config_file.path} \
          #{args}"
     ensure
@@ -28,25 +28,25 @@ module SolidusAdmin
     end
 
     def config_app_path
-      Rails.root.join("config", "solidus_admin", "tailwind.config.js.erb")
+      Rails.root.join("config/solidus_admin/tailwind.config.js.erb")
     end
 
     def config_engine_path
-      SolidusAdmin::Engine.root.join("config", "solidus_admin", "tailwind.config.js.erb")
+      SolidusAdmin::Engine.root.join("config/solidus_admin/tailwind.config.js.erb")
     end
 
     def stylesheet_app_path
-      Rails.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
+      Rails.root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css.erb")
     end
 
     def stylesheet_engine_path
-      SolidusAdmin::Engine.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
+      SolidusAdmin::Engine.root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css.erb")
     end
 
     def compile_to_tempfile(path, name)
       Tempfile.new(name).tap do |file|
         path
-          .then { |path| File.read(path) }
+          .then { File.read(_1) }
           .then { |content| ERB.new(content) }
           .then { |erb| erb.result }
           .then { |compiled_content| file.write(compiled_content) && file.rewind }
