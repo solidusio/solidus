@@ -27,6 +27,11 @@ RSpec.describe Spree::Taxon, type: :model do
         end
 
         if Spree::Config.taxon_attachment_module == Spree::Taxon::PaperclipAttachment
+          it "returns false if destroying the attachment fails" do
+            allow(taxon.icon).to receive(:destroy).and_return(false)
+            expect(taxon.destroy_attachment(:icon)).to be_falsey
+          end
+
           it "resets paperclip attributes when using Paperclip", aggregate_failures: true do
             expect(taxon.destroy_attachment(:icon)).to be_truthy
             expect(taxon.reload.icon_file_name).to_not be_present
