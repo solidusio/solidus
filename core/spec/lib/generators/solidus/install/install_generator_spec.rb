@@ -70,11 +70,11 @@ RSpec.describe Solidus::InstallGenerator do
         expect(questions.size).to eq(1)
         expect(questions.first[:limited_to]).to eq(['paypal', 'stripe', 'braintree', 'none'])
         expect(questions.first[:default]).to eq('paypal')
-        expect(strip_ansi questions.first[:desc]).to include('[paypal]')
-        expect(strip_ansi questions.first[:desc]).to include('[stripe]')
-        expect(strip_ansi questions.first[:desc]).not_to include('[bolt]')
-        expect(strip_ansi questions.first[:desc]).to include('[braintree]')
-        expect(strip_ansi questions.first[:desc]).to include('[none]')
+        expect(strip_ansi(questions.first[:desc])).to include('[paypal]')
+        expect(strip_ansi(questions.first[:desc])).to include('[stripe]')
+        expect(strip_ansi(questions.first[:desc])).not_to include('[bolt]')
+        expect(strip_ansi(questions.first[:desc])).to include('[braintree]')
+        expect(strip_ansi(questions.first[:desc])).to include('[none]')
       end
     end
   end
