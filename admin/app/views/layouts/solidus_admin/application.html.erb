@@ -4,7 +4,9 @@
     <%= stylesheet_link_tag "solidus_admin/application.css", "data-turbo-track": "reload" %>
   </head>
   <body>
-    <h1 class="text-4xl">Layout is rendered</h1>
-    <%= yield %>
+    <%= render SolidusAdmin::LayoutComponent.new do %>
+      <h1 class="text-4xl">Layout is rendered</h1>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

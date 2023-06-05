@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "tempfile"
+require "rails"
+require "solidus_admin"
 require "tailwindcss-rails"
 
 module SolidusAdmin
@@ -19,7 +22,7 @@ module SolidusAdmin
 
       system "#{::Tailwindcss::Engine.root.join("exe/tailwindcss")} \
          -i #{stylesheet_file.path} \
-         -o #{Rails.root.join("app/assets/builds/solidus_admin/tailwind.css")} \
+         -o #{root.join("app/assets/builds/solidus_admin/tailwind.css")} \
          -c #{config_file.path} \
          #{args}"
     ensure
@@ -28,7 +31,11 @@ module SolidusAdmin
     end
 
     def config_app_path
-      Rails.root.join("config", "solidus_admin", "tailwind.config.js.erb")
+      root.join("config", "solidus_admin", "tailwind.config.js.erb")
+    end
+
+    def root
+      Rails.root || ::SolidusAdmin::Engine.root
     end
 
     def config_engine_path
@@ -36,7 +43,7 @@ module SolidusAdmin
     end
 
     def stylesheet_app_path
-      Rails.root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
+      root.join("app", "assets", "stylesheets", "solidus_admin", "application.tailwind.css.erb")
     end
 
     def stylesheet_engine_path

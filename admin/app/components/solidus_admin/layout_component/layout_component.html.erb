@@ -1,0 +1,31 @@
+<div
+  data-controller="solidus-admin--layout-component--layout-component"
+  class="
+    grid grid-cols-4 gap-4
+    md:grid-cols-12 md:gap-7
+  "
+>
+
+  <!-- nav sidebar -->
+  <div class="
+    col-span-1
+    md:col-span-2
+    bg-gray-100
+    border-r border-gray-200
+    py-4 px-4
+    md:py-7 md:px-7
+  ">
+    <%= "NAVBAR COMPONENT GOES HERE" %>
+  </div>
+
+  <!-- main content -->
+  <main class="
+    col-span-3
+    md:col-span-10
+    py-4 px-4
+    md:py-7 md:px-7
+    outline-red-500 outline-solid outline-2
+  ">
+    <%= content %>
+  </main>  
+</div>

@@ -2,3 +2,4 @@
 
 require 'solidus_admin/version'
 require 'solidus_admin/engine'
+require 'solidus_admin/configuration'

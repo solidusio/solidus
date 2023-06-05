@@ -3,7 +3,7 @@ namespace :solidus_admin do
     require "solidus_admin/tailwindcss"
 
     desc "Build Solidus Admin's Tailwind's css"
-    task build: :environment do
+    task :build do
       SolidusAdmin::Tailwindcss.run
     end
 
@@ -18,7 +18,7 @@ namespace :solidus_admin do
       - `bin/rails solidus_admin:tailwindcss:override_stylesheet` is run
       - The override files are updated
     DESC
-    task watch: :environment do
+    task :watch do
       SolidusAdmin::Tailwindcss.run("-w")
     end
 
@@ -27,7 +27,7 @@ namespace :solidus_admin do
 
       It copies the config file from the engine to the app, so it can be customized.
     DESC
-    task override_config: :environment do
+    task :override_config do
       SolidusAdmin::Tailwindcss.copy_file(
         SolidusAdmin::Tailwindcss.config_engine_path,
         SolidusAdmin::Tailwindcss.config_app_path
@@ -39,7 +39,7 @@ namespace :solidus_admin do
 
       It copies the stylesheet file from the engine to the app, so it can be customized.
     DESC
-    task override_stylesheet: :environment do
+    task :override_stylesheet do
       SolidusAdmin::Tailwindcss.copy_file(
         SolidusAdmin::Tailwindcss.stylesheet_engine_path,
         SolidusAdmin::Tailwindcss.stylesheet_app_path
