@@ -154,6 +154,8 @@ module Spree
       find_by! number: value
     end
 
+    delegate :recalculate, to: :recalculator
+
     delegate :name, to: :bill_address, prefix: true, allow_nil: true
     alias_method :billing_name, :bill_address_name
 
@@ -263,10 +265,6 @@ module Spree
     end
     alias_method :updater, :recalculator
     deprecate updater: :recalculator, deprecator: Spree::Deprecation
-
-    def recalculate
-      recalculator.recalculate
-    end
 
     def assign_billing_to_shipping_address
       self.ship_address = bill_address if bill_address
