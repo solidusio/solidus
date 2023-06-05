@@ -328,6 +328,9 @@ nav.menu {
       z-index: 1;
       cursor: pointer;
 
+      // Move the select back to the left so it catches clicks
+      transform: translateX(-3rem);
+
       &:focus {
         box-shadow: none;
       }
