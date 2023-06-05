@@ -220,6 +220,19 @@ commands:
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
 
 jobs:
+  lint_code:
+    docker:
+      - image: cimg/ruby:3.1
+    steps:
+      - checkout
+      - run: 'bundle install'
+      - run:
+          name: Check with rubocop
+          command: |
+            bundle exec rubocop --parallel --format junit --out "$PWD/test-results/rubocop-results.xml" --format progress
+      - store_test_results:
+          path: test-results
+
   solidus_installer:
     executor:
       name: sqlite
@@ -308,6 +321,7 @@ jobs:
 workflows:
   build:
     jobs:
+      - lint_code
       - solidus_installer
 
       # Only test with coverage support with the default versions

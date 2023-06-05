@@ -79,4 +79,41 @@ RSpec.describe Spree::BackendConfiguration do
       end
     end
   end
+
+  describe '#theme_path' do
+    it 'returns the default theme path' do
+      subject.themes = { foo: 'foo-theme-path' }
+      subject.theme = :foo
+
+      expect(subject.theme_path).to eq('foo-theme-path')
+    end
+
+    it 'returns the default theme path when the theme is a string' do
+      subject.themes = { foo: 'foo-theme-path' }
+      subject.theme = 'foo'
+
+      expect(subject.theme_path).to eq('foo-theme-path')
+    end
+
+    it 'returns the fallback theme path when the default theme is missing' do
+      subject.themes = { foo: 'foo-theme-path', classic: 'classic-theme-path' }
+      subject.theme = :bar
+
+      expect{ subject.theme_path }.to raise_error(KeyError)
+    end
+
+    it 'gives priority to the user defined theme' do
+      subject.themes = { foo: 'foo-theme-path', user: 'user-theme-path' }
+      subject.theme = :foo
+
+      expect(subject.theme_path(:user)).to eq('user-theme-path')
+    end
+
+    it 'raises an error if the user theme is missing' do
+      subject.themes = { foo: 'foo-theme-path', classic: 'classic-theme-path' }
+      subject.theme = :foo
+
+      expect{ subject.theme_path(:bar) }.to raise_error(KeyError)
+    end
+  end
 end

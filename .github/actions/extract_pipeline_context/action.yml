@@ -25,6 +25,9 @@ outputs:
   candidate_patch_branch:
     description: "Candidate patch branch"
     value: ${{ steps.extraction.outputs.candidate_patch_branch }}
+  candidate_next_patch_dev_version:
+    description: "Candidate next patch dev version"
+    value: ${{ steps.extraction.outputs.candidate_next_patch_dev_version }}
   next_candidate_tag:
     description: "Next candidate tag"
     value: ${{ steps.extraction.outputs.next_candidate_tag }}

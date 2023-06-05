@@ -540,9 +540,7 @@ module Spree
     def canceled_by(user)
       transaction do
         cancel!
-        # rubocop:disable Rails/SkipsModelValidations
         update_column(:canceler_id, user.id)
-        # rubocop:enable Rails/SkipsModelValidations
       end
     end
 
@@ -833,9 +831,7 @@ module Spree
       cancel_payments!
 
       send_cancel_email
-      # rubocop:disable Rails/SkipsModelValidations
       update_column(:canceled_at, Time.current)
-      # rubocop:enable Rails/SkipsModelValidations
       recalculate
     end
 
