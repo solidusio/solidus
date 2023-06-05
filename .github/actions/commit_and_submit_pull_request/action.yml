@@ -5,6 +5,11 @@ inputs:
     description: "Message for both the created commit and PR"
     required: true
     type: string
+  base:
+    description: "Base branch for the PR"
+    required: true
+    type: string
+    default: ${{ github.ref_name }}
   labels:
     description: "List of labels to apply to the PR"
     required: true
@@ -23,7 +28,7 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        branch="github-actions/${{ github.run_id }}-${{ github.run_attempt }}"
+        branch="github-actions/${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
         git checkout -b $branch
         git commit -a -m "${{ inputs.message }}"
         git push --set-upstream origin $branch
@@ -34,6 +39,6 @@ runs:
       run: |
         gh pr create \
           --repo ${{ github.repository }} \
-          --base ${{ github.ref_name }} \
+          --base ${{ inputs.base }} \
           --fill \
           `for label in $(echo ${{ inputs.labels }}); do echo --label $label; done`
