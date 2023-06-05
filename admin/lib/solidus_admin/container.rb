@@ -23,6 +23,8 @@ module SolidusAdmin
     end
 
     # Returns all the registered components for a given namespace.
+    #
+    # @api private
     def self.within_namespace(namespace)
       keys.filter_map do
         _1.start_with?("#{namespace}#{config.namespace_separator}") && resolve(_1)

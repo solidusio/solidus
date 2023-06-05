@@ -12,6 +12,10 @@ module SolidusAdmin
           register("second_item", MainNavItem.new(title: "Second item", position: "20"))
           register("third_item", MainNavItem.new(title: "Third item", position: "30"))
         end
+
+        container.register("main_nav_items") do
+          Container.within_namespace("main_nav")
+        end
       end
     end
   end
