@@ -24,6 +24,7 @@ puts <<~MSG
     Candidate version: #{context.candidate_version}
     Candidate minor version: #{context.candidate_minor_version}
     Candidate patch branch: #{context.candidate_patch_branch}
+    Candidate next patch dev version: #{context.candidate_next_patch_dev_version}
     Next candidate tag: #{context.next_candidate_tag}
     Next candidate dev version: #{context.next_candidate_dev_version}
 
@@ -36,6 +37,7 @@ open(stream, 'a') do |s|
   s.puts "candidate_version=#{context.candidate_version}"
   s.puts "candidate_minor_version=#{context.candidate_minor_version}"
   s.puts "candidate_patch_branch=#{context.candidate_patch_branch}"
+  s.puts "candidate_next_patch_dev_version=#{context.candidate_next_patch_dev_version}"
   s.puts "next_candidate_tag=#{context.next_candidate_tag}"
   s.puts "next_candidate_dev_version=#{context.next_candidate_dev_version}"
 end
