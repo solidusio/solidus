@@ -258,12 +258,14 @@ module Spree
       end || store&.default_cart_tax_location
     end
 
-    def updater
-      @updater ||= Spree::OrderUpdater.new(self)
+    def recalculator
+      @recalculator ||= Spree::Config.order_recalculator_class.new(self)
     end
+    alias_method :updater, :recalculator
+    deprecate updater: :recalculator, deprecator: Spree::Deprecation
 
     def recalculate
-      updater.update
+      recalculator.recalculate
     end
 
     def assign_billing_to_shipping_address
@@ -397,7 +399,7 @@ module Spree
 
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
-      updater.update_shipment_state
+      recalculator.update_shipment_state
       save!
     end
 
@@ -742,13 +744,13 @@ module Spree
       all_adjustments.each(&:finalize!)
 
       # update payment and shipment(s) states, and save
-      updater.update_payment_state
+      recalculator.update_payment_state
       shipments.each do |shipment|
         shipment.update_state
         shipment.finalize!
       end
 
-      updater.update_shipment_state
+      recalculator.update_shipment_state
       save!
 
       touch :completed_at

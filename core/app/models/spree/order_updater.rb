@@ -16,7 +16,7 @@ module Spree
     # This method should never do anything to the Order that results in a save call on the
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
-    def update
+    def recalculate
       order.transaction do
         update_item_count
         update_shipment_amounts
@@ -30,6 +30,8 @@ module Spree
         persist_totals
       end
     end
+    alias_method :update, :recalculate
+    deprecate update: :recalculate, deprecator: Spree::Deprecation
 
     # Updates the +shipment_state+ attribute according to the following logic:
     #

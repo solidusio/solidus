@@ -470,7 +470,7 @@ RSpec.describe Spree::Order, type: :model do
           si.update(backorderable: false)
         end
 
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
         order.save!
       end
 
@@ -494,7 +494,7 @@ RSpec.describe Spree::Order, type: :model do
         allow(order).to receive(:ensure_available_shipping_rates) { true }
         order.line_items << FactoryBot.create(:line_item)
 
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
         order.save!
       end
 
@@ -533,7 +533,7 @@ RSpec.describe Spree::Order, type: :model do
           order.line_items << FactoryBot.create(:line_item)
           order.store = FactoryBot.create(:store)
 
-          Spree::OrderUpdater.new(order).update
+          Spree::OrderUpdater.new(order).recalculate
 
           order.save!
         end
@@ -558,7 +558,7 @@ RSpec.describe Spree::Order, type: :model do
         allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryBot.create(:line_item)
         order.create_proposed_shipments
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
 
         order.save!
       end
@@ -591,7 +591,7 @@ RSpec.describe Spree::Order, type: :model do
         allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryBot.create(:line_item)
         order.create_proposed_shipments
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
       end
 
       it "transitions to the payment state" do
