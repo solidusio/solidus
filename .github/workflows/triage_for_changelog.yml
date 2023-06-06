@@ -13,6 +13,7 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           sync-labels: true
+          dot: true
   ensure:
     uses: "./.github/workflows/ensure_changelog_label.yml"
     needs: "triage"
