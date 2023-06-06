@@ -22,6 +22,7 @@ module SolidusFriendlyPromotions
         end || adjustable.adjustments.build(source: self)
         adjustment.label = adjustment_label(adjustable)
         adjustment.amount = compute_amount(adjustable)
+        adjustment.order = adjustable.order
         adjustment
       end
 

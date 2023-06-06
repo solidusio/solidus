@@ -26,6 +26,7 @@ module SolidusFriendlyPromotions
 
       line_item.promo_total = chosen_adjustments.sum(&:amount)
       line_item.adjustments = non_promotion_adjustments + chosen_adjustments
+      line_item
     end
   end
 end
