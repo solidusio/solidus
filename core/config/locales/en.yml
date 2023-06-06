@@ -1598,7 +1598,6 @@ en:
     gateway_config_unavailable: Gateway unavailable for environment
     gateway_error: Gateway Error
     general: General
-    general_settings: Store
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
     group_size: Group size
