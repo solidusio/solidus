@@ -12,7 +12,6 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:edit, :general_settings) }
     it { is_expected.to be_able_to(:read, Spree::TaxCategory) }
     it { is_expected.to be_able_to(:read, Spree::TaxRate) }
     it { is_expected.to be_able_to(:read, Spree::Zone) }
@@ -27,7 +26,6 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.to be_able_to(:read, Spree::RefundReason) }
     it { is_expected.to be_able_to(:read, Spree::ReimbursementType) }
     it { is_expected.to be_able_to(:read, Spree::ReturnReason) }
-    it { is_expected.to be_able_to(:admin, :general_settings) }
     it { is_expected.to be_able_to(:admin, Spree::TaxCategory) }
     it { is_expected.to be_able_to(:admin, Spree::TaxRate) }
     it { is_expected.to be_able_to(:admin, Spree::Zone) }
@@ -45,7 +43,6 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:edit, :general_settings) }
     it { is_expected.not_to be_able_to(:read, Spree::TaxCategory) }
     it { is_expected.not_to be_able_to(:read, Spree::TaxRate) }
     it { is_expected.not_to be_able_to(:read, Spree::Zone) }
@@ -60,7 +57,6 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.not_to be_able_to(:read, Spree::RefundReason) }
     it { is_expected.not_to be_able_to(:read, Spree::ReimbursementType) }
     it { is_expected.not_to be_able_to(:read, Spree::ReturnReason) }
-    it { is_expected.not_to be_able_to(:admin, :general_settings) }
     it { is_expected.not_to be_able_to(:admin, Spree::TaxCategory) }
     it { is_expected.not_to be_able_to(:admin, Spree::TaxRate) }
     it { is_expected.not_to be_able_to(:admin, Spree::Zone) }

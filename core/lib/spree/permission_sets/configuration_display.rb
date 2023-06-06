@@ -4,7 +4,6 @@ module Spree
   module PermissionSets
     class ConfigurationDisplay < PermissionSets::Base
       def activate!
-          can [:edit, :admin], :general_settings
           can [:read, :admin], Spree::TaxCategory
           can [:read, :admin], Spree::TaxRate
           can [:read, :admin], Spree::Zone

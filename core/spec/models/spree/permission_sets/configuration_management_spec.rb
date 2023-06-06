@@ -12,7 +12,6 @@ RSpec.describe Spree::PermissionSets::ConfigurationManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:manage, :general_settings) }
     it { is_expected.to be_able_to(:manage, Spree::TaxCategory) }
     it { is_expected.to be_able_to(:manage, Spree::TaxRate) }
     it { is_expected.to be_able_to(:manage, Spree::Zone) }
@@ -30,7 +29,6 @@ RSpec.describe Spree::PermissionSets::ConfigurationManagement do
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:manage, :general_settings) }
     it { is_expected.not_to be_able_to(:manage, Spree::TaxCategory) }
     it { is_expected.not_to be_able_to(:manage, Spree::TaxRate) }
     it { is_expected.not_to be_able_to(:manage, Spree::Zone) }
