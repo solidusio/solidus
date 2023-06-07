@@ -2,6 +2,15 @@
 
 module Spree
   module PermissionSets
+    # Full permissions for user management.
+    #
+    # This permission set grants full control over all user and
+    # related resources, including:
+    #
+    # - Users
+    # - Store credits
+    # - Roles
+    # - API keys
     class UserManagement < PermissionSets::Base
       def activate!
         can [:admin, :read, :create, :update, :save_in_address_book, :remove_from_address_book, :addresses, :orders, :items], Spree.user_class

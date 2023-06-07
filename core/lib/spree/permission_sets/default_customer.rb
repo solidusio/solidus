@@ -2,6 +2,35 @@
 
 module Spree
   module PermissionSets
+    # Permissions for e-commerce customers.
+    #
+    # This permission set is always added to the `:default` role, which in turn
+    # is the default role for all users without any explicit roles.
+    #
+    # Permissions include reading and updating orders when the ability's user
+    # has been assigned as the order's user, unless the order is already
+    # completed. Same is true for guest checkout orders.
+    #
+    # It grants read-only permissions for the following resources typically used
+    # during a checkout process:
+    #
+    # - Zones
+    # - Countries
+    # - States
+    # - Taxons
+    # - Taxonomies
+    # - Products
+    # - Properties
+    # - Product properties
+    # - Variants
+    # - Option types
+    # - Option values
+    # - Stock items
+    # - Stock locations
+    #
+    # Abilities with this role can also create refund authorizations for orders
+    # with the same user, as well as reading and updating the user record and
+    # their associated cards.
     class DefaultCustomer < PermissionSets::Base
       def activate!
         can :read, Country

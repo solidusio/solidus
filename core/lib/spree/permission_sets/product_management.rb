@@ -2,6 +2,22 @@
 
 module Spree
   module PermissionSets
+    # Full permissions for product management.
+    #
+    # This permission set grants full control over all product and related resources,
+    # including:
+    #
+    # - Products
+    # - Images
+    # - Variants
+    # - Option values
+    # - Product properties
+    # - Option types
+    # - Properties
+    # - Taxonomies
+    # - Taxons
+    # - Classifications
+    # - Prices
     class ProductManagement < PermissionSets::Base
       def activate!
         can :manage, Spree::Classification

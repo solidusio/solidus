@@ -2,6 +2,16 @@
 
 module Spree
   module PermissionSets
+    # Full permissions for promotion management.
+    #
+    # This permission set grants full control over all promotion and related resources,
+    # including:
+    #
+    # - Promotions
+    # - Promotion rules
+    # - Promotion actions
+    # - Promotion categories
+    # - Promotion codes
     class PromotionManagement < PermissionSets::Base
       def activate!
         can :manage, Spree::Promotion
