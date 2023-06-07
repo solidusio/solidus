@@ -4,7 +4,6 @@ module Spree
   module PermissionSets
     class ConfigurationManagement < PermissionSets::Base
       def activate!
-        can :manage, :general_settings
         can :manage, Spree::TaxCategory
         can :manage, Spree::TaxRate
         can :manage, Spree::Zone
