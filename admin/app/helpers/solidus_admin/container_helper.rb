@@ -9,6 +9,8 @@ module SolidusAdmin
     end
 
     def component(name)
+      name = name.tr('/', '.')
+
       container.resolve("components.#{name}.component")
     end
   end
