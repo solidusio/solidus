@@ -312,7 +312,7 @@ Style/FrozenStringLiteralComment:
   EnforcedStyle: always
   Exclude:
     - '*/lib/generators/**/*'
-    - 'bin/**/*'
+    - '**/bin/**/*'
     - '*/db/migrate/**/*'
 
 # json.() is idiomatic in jbuilder files
