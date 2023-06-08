@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  # Menu item within a {MainNavComponent}
-  class MainNavItem::Component < BaseComponent
+  # Menu item within a {Sidebar}
+  class Sidebar::Item::Component < BaseComponent
     with_collection_parameter :item
 
     def initialize(item:)
