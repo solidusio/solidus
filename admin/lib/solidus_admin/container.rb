@@ -16,9 +16,9 @@ module SolidusAdmin
   class Container < Dry::System::Container
     configure do |config|
       config.root = Pathname(__FILE__).dirname.join("../..").realpath
-      config.component_dirs.add("app/components") do |dir|
+      config.component_dirs.add("app/components/solidus_admin") do |dir|
         dir.loader = System::Loaders::HostOverridableConstant.method(:call).curry["components"]
-        dir.namespaces.add "solidus_admin", key: nil
+        dir.namespaces.add nil, const: "solidus_admin", key: "components"
       end
     end
 
