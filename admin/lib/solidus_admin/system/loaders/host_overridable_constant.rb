@@ -21,8 +21,6 @@ module SolidusAdmin
       #
       # @api private
       class HostOverridableConstant < Dry::System::Loader
-        DIR_SEPARATOR = "/"
-
         RUBY_EXT = ".rb"
 
         # @param [String] namespace
@@ -65,7 +63,7 @@ module SolidusAdmin
             component
               .identifier
               .namespaced(from: namespace, to: nil)
-              .key_with_separator(DIR_SEPARATOR)
+              .key_with_separator(File::SEPARATOR)
           end
         end
       end
