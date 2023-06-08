@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe <%= class_name %>::Component, type: :component do
+  pending "add some examples to (or delete) #{__FILE__}"
+
+  # it "renders something useful" do
+  #   render_inline(described_class.new(<%= attributes.map { |attr| "#{attr.name}: #{attr.name.to_s.inspect}" }.join(", ") %>))
+  #
+  #   expect(page).to have_text "Hello, components!"
+  #   expect(page).to have_css '.value'
+  # end
+end
