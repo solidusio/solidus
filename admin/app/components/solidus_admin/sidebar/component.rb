@@ -6,7 +6,7 @@ module SolidusAdmin
     def initialize(
       logo_path: SolidusAdmin::Config.logo_path,
       items: container["main_nav_items"],
-      item_component: component("main_nav_item")
+      item_component: component("sidebar/item")
     )
       @logo_path = logo_path
       @items = items
