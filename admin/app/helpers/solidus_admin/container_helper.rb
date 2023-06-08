@@ -9,7 +9,7 @@ module SolidusAdmin
     end
 
     def component(name)
-      container.resolve("#{name}_component")
+      container.resolve("components.#{name}.component")
     end
   end
 end

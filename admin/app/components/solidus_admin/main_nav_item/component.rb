@@ -2,7 +2,7 @@
 
 module SolidusAdmin
   # Menu item within a {MainNavComponent}
-  class MainNavItemComponent < BaseComponent
+  class MainNavItem::Component < BaseComponent
     with_collection_parameter :item
 
     attr_reader :item
