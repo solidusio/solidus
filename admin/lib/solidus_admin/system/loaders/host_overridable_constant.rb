@@ -10,19 +10,24 @@ module SolidusAdmin
       # ```ruby
       # config.component_dirs.add "app/components" do |dir|
       #  dir.loader = SolidusAdmin::System::Loaders::HostOverridableConstant.method(:call).curry["components"]
+      #  dir.namespaces.add nil, const: "solidus_admin", key: "components"
       # end
       # ```
       #
       # When `Container["foo"]` is given and the loader is used:
       #
-      # - It will return a `MyApp::SolidusAdmin::Foo` constant if `app/components/my_app/solidus_admin/foo.rb` exists.
+      # - It will return a `MyApp::SolidusAdmin::Foo` constant if `app/components/my_app/components/solidus_admin/foo.rb` exists.
       # - Otherwise, it will return the resolved constant from the engine.
       #
       # @api private
       class HostOverridableConstant < Dry::System::Loader
+        DIR_SEPARATOR = "/"
+
+        RUBY_EXT = ".rb"
+
         # @param [String] namespace
         def self.call(namespace, component, *_args)
-          return override_constant(component) if override_path(namespace, component).exist?
+          return override_constant(component, namespace) if override_path(namespace, component).exist?
 
           require!(component)
           constant(component)
@@ -47,12 +52,20 @@ module SolidusAdmin
                 namespace,
                 application_name.underscore,
                 "solidus_admin",
-                "#{component.identifier.key}.rb"
+                component_segment(component, namespace).concat(RUBY_EXT)
               )
           end
 
-          def override_constant(component)
-            "#{application_name}::SolidusAdmin::#{component.identifier.key.camelize}".constantize
+          def override_constant(component, namespace)
+            "#{application_name}::SolidusAdmin::#{component_segment(component, namespace).classify}".constantize
+          end
+
+          # "components.foo.component" => "foo/component"
+          def component_segment(component, namespace)
+            component
+              .identifier
+              .namespaced(from: namespace, to: nil)
+              .key_with_separator(DIR_SEPARATOR)
           end
         end
       end

@@ -2,9 +2,9 @@
 
 module SolidusAdmin
   # Renders the main navigation of Solidus Admin.
-  class MainNavComponent < BaseComponent
+  class MainNav::Component < BaseComponent
     include Import[
-      "main_nav_item_component",
+      main_nav_item_component: "components.main_nav_item.component",
       items: "main_nav_items"
     ]
 
