@@ -7,5 +7,9 @@ module SolidusAdmin
   class BaseComponent < ViewComponent::Base
     include ViewComponent::InlineTemplate
     include SolidusAdmin::ContainerHelper
+
+    def identifier
+      @identifier ||= module_parent.to_s.underscore.dasherize.gsub(%r{/}, '--')
+    end
   end
 end
