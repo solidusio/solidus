@@ -1,0 +1,13 @@
+Description:
+
+    Creates a SolidusAdmin component.
+
+Example:
+
+    $ bin/rails generate solidus_admin:component my_namespace/my_module_name my_attribute
+
+          create  app/components/my_namespace/my_module_name/component.rb
+          create  app/components/my_namespace/my_module_name/component.html.erb
+          create  app/components/my_namespace/my_module_name/component.yml
+          create  app/components/my_namespace/my_module_name/component.js
+          create  spec/components/my_namespace/my_module_name/component_spec.rb
