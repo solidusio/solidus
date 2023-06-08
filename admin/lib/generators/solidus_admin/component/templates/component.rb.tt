@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+class <%= class_name %>::Component < ApplicationComponent
+<%- if initialize_signature -%>
+  def initialize(<%= initialize_signature %>)
+    <%= initialize_body %>
+  end
+<%- end -%>
+end
