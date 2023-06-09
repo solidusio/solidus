@@ -334,6 +334,14 @@ module Spree
 
     class_name_attribute :shipping_rate_selector_class, default: 'Spree::Stock::ShippingRateSelector'
 
+    # Allows implementing custom cancellations recalculation.
+    # @!attribute [rw] cancellations_recalculator_class
+    # @ see Spree::UnitCancel::OrderCancellationsRecalculator
+    # @return [Class] a class that conforms to the API of the
+    #   standard cancellations recalculator class,
+    #   `Spree::UnitCancel::OrderCancellationsRecalculator`
+    class_name_attribute :cancellations_recalculator_class, default: 'Spree::UnitCancel::OrderCancellationsRecalculator'
+
     # Allows providing your own class for calculating taxes on a shipping rate.
     #
     # @!attribute [rw] shipping_rate_tax_calculator_class

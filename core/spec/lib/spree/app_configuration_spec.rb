@@ -36,6 +36,10 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.promotion_adjuster_class).to eq Spree::Promotion::OrderAdjustmentsRecalculator
   end
 
+  it "uses unit cancel recalculation class by default" do
+    expect(prefs.cancellations_recalculator_class).to eq Spree::UnitCancel::OrderCancellationsRecalculator
+  end
+
   it "has a getter for the pricing options class provided by the variant price selector class" do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
