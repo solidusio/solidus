@@ -3,25 +3,19 @@
 module SolidusAdmin
   # Renders the main navigation of Solidus Admin.
   class MainNav::Component < BaseComponent
-    include Import[
-      main_nav_item_component: "components.main_nav_item.component",
-      items: "main_nav_items"
-    ]
+    def initialize(items: container["main_nav_items"], item_component: component("main_nav_item"))
+      @items = items
+      @item_component = item_component
+    end
 
     erb_template <<~ERB
       <nav>
-        <%=
-          render main_nav_item_component.with_collection(
-            sorted_items
-          )
-        %>
+        <%= render @item_component.with_collection(items) %>
       </nav>
     ERB
 
-    private
-
-    def sorted_items
-      items.sort_by(&:position)
+    def items
+      @items.sort_by(&:position)
     end
   end
 end
