@@ -5,15 +5,13 @@ module SolidusAdmin
   class MainNavItem::Component < BaseComponent
     with_collection_parameter :item
 
-    attr_reader :item
-
     def initialize(item:)
       @item = item
     end
 
     erb_template <<~ERB
       <a href="#">
-        <%= item.title %>
+        <%= @item.title %>
       </a>
     ERB
   end
