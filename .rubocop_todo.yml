@@ -243,12 +243,6 @@ Lint/EmptyConditionalBody:
   Exclude:
     - 'core/lib/spree/preferences/statically_configurable.rb'
 
-# Offense count: 2
-Lint/MissingSuper:
-  Exclude:
-    - 'core/lib/spree/deprecation.rb'
-    - 'core/lib/spree/preferences/configuration.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Lint/ParenthesesAsGroupedExpression:

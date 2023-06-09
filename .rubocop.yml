@@ -334,3 +334,9 @@ Naming/MemoizedInstanceVariableName:
 
 Lint/SuppressedException:
   Enabled: false
+
+Lint/MissingSuper:
+  Exclude:
+    - '*/app/components/**/*' # components need pristine initializer methods
+    - 'core/lib/spree/deprecation.rb' # this is a known class that doesn't require super
+    - 'core/lib/spree/preferences/configuration.rb' # this class has no superclass defining `self.inherited`
