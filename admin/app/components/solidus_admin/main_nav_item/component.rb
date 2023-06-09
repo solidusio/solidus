@@ -9,7 +9,6 @@ module SolidusAdmin
 
     def initialize(item:)
       @item = item
-      super
     end
 
     erb_template <<~ERB
