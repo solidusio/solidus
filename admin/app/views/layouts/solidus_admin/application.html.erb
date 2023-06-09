@@ -3,9 +3,23 @@
   <head>
     <%= stylesheet_link_tag "solidus_admin/application.css", "data-turbo-track": "reload" %>
   </head>
-  <body>
-    <h1 class="text-4xl">Layout is rendered</h1>
-    <%= render component("main_nav").new %>
-    <%= yield %>
+  <body class="
+    grid grid-cols-4 gap-4
+    lg:grid-cols-12 lg:gap-7
+  ">
+    <aside class="
+      col-start-1 col-end-2
+      lg:col-start-1 lg:col-end-3
+      bg-gray-100
+      h-screen
+    "><%= render component("main_nav").new %></aside>
+
+    <main class="
+      col-start-2 col-end-4
+      lg:col-start-3 lg:col-end-12
+    ">
+      <h1 class="text-4xl">Layout is rendered</h1>
+      <%= yield %>
+    </main>
   </body>
 </html>
