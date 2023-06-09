@@ -4,7 +4,7 @@ require "dry/system"
 require "dry/system/container"
 require "dry/system/component"
 require "view_component"
-require "solidus_admin/system/loaders/host_overridable_constant"
+require "solidus_admin/loaders/host_overridable_constant"
 
 module SolidusAdmin
   # Global registry for host-injectable components.

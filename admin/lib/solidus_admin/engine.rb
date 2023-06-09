@@ -46,7 +46,7 @@ module SolidusAdmin
     end
 
     initializer "solidus_admin.main_nav_items_provider" do
-      require "solidus_admin/system/providers/main_nav"
+      require "solidus_admin/providers/main_nav"
 
       Container.start("main_nav")
     end
