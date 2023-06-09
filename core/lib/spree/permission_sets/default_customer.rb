@@ -2,6 +2,9 @@
 
 module Spree
   module PermissionSets
+    # Permissions for e-commerce visitors
+    #
+    # This set of permissions is automatically applied to the `:default` role
     class DefaultCustomer < PermissionSets::Base
       def activate!
         can :read, Country

@@ -27,7 +27,7 @@ module Spree
                   name: "Test User",
                   number: "4111 1111 1111 1111",
                   expiry: "09 / #{Time.current.year + 1}",
-                verification_value: "123"
+                  verification_value: "123"
                 }
               }
             }
@@ -168,43 +168,25 @@ module Spree
           let(:order) { payment.order }
 
           context 'the user is authorized' do
-            class CaptureAllowedAbility
-              include CanCan::Ability
-
-              def initialize(_user)
-                can :capture, Spree::Payment
-              end
-            end
-
-            before do
-              Spree::Ability.register_ability(CaptureAllowedAbility)
-            end
-
             it 'allows the action' do
+              expect(controller.current_ability).to receive(:can?).and_call_original.exactly(4).times
+              expect(controller.current_ability).to receive(:can?).with(:fire, order).and_return(true)
+
               expect {
                 post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param })
               }.to change { payment.reload.state }.from('checkout').to('completed')
             end
+          end
 
-            context 'the user is not authorized' do
-              class CaptureNotAllowedAbility
-                include CanCan::Ability
+          context 'the user is not authorized' do
+            it 'does not allow the action' do
+              expect(controller.current_ability).to receive(:can?).and_call_original.exactly(4).times
+              expect(controller.current_ability).to receive(:can?).with(:fire, order).and_return(false)
 
-                def initialize(_user)
-                  cannot :capture, Spree::Payment
-                end
-              end
-
-              before do
-                Spree::Ability.register_ability(CaptureNotAllowedAbility)
-              end
-
-              it 'does not allow the action' do
-                expect {
-                  post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param })
-                }.to_not change { payment.reload.state }
-                expect(flash[:error]).to eq('Authorization Failure')
-              end
+              expect {
+                post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param })
+              }.to_not change { payment.reload.state }
+              expect(flash[:error]).to eq('Authorization Failure')
             end
           end
         end

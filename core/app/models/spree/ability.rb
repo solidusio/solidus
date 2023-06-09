@@ -38,6 +38,18 @@ module Spree
     # Before, this was the only way to extend this ability. Permission sets have been added since.
     # It is recommended to use them instead for extension purposes if possible.
     def register_extension_abilities
+      Spree::Deprecation.warn <<~MSG, caller_locations[1, 1] if Ability.abilities.any?
+        Registering abilities is deprecated and will be removed in the next major version.
+        Please, use permission sets instead (https://guides.solidus.io/advanced-solidus/permission-management)
+
+        The following methods will be removed from `Spree::Ability`:
+
+        - .abilities
+        - .abilities=
+        - .register_ability
+        - .remove_ability
+      MSG
+
       Ability.abilities.each do |clazz|
         ability = clazz.send(:new, user)
         merge(ability)

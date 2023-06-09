@@ -35,8 +35,10 @@ RSpec.describe Spree::Ability, type: :model do
         end
       end
 
-      Spree::Ability.register_ability(foo_ability)
-      expect(Spree::Ability.new(user).abilities).not_to be_empty
+      Spree::Deprecation.silence do
+        Spree::Ability.register_ability(foo_ability)
+        expect(Spree::Ability.new(user).abilities).not_to be_empty
+      end
     end
 
     it 'should apply the registered abilities permissions' do
@@ -51,8 +53,12 @@ RSpec.describe Spree::Ability, type: :model do
         end
       end
 
-      Spree::Ability.register_ability(foo_ability)
-      expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, id: 1))).to be true
+      Spree::Deprecation.silence do
+        Spree::Ability.register_ability(foo_ability)
+        result = Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, id: 1))
+
+        expect(result).to be true
+      end
     end
   end
 
@@ -94,17 +100,14 @@ RSpec.describe Spree::Ability, type: :model do
       it 'should be able to admin on the order and shipment pages' do
         user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
 
-        bar_ability = Class.new do
-          include CanCan::Ability
-
-          def initialize(user)
-            if user.has_spree_role? 'bar'
-              can [:admin, :index, :show], Spree::Order
-              can [:admin, :manage], Spree::Shipment
-            end
+        bar_permission_set = Class.new(Spree::PermissionSets::Base) do
+          def activate!
+            can [:admin, :index, :show], Spree::Order
+            can [:admin, :manage], Spree::Shipment
           end
         end
-        Spree::Ability.register_ability(bar_ability)
+        stub_const 'Spree::PermissionSets::Bar', bar_permission_set
+        Spree::Config.roles.assign_permissions :bar, ['Spree::PermissionSets::Bar']
 
         expect(ability).not_to be_able_to :admin, resource
 
@@ -128,6 +131,8 @@ RSpec.describe Spree::Ability, type: :model do
         # It can create new users if is has access to the :admin, User!!
 
         # TODO: change the Ability class so only users and customers get the extra premissions?
+      ensure
+        Spree::Config.roles.roles.delete('bar')
       end
     end
 
