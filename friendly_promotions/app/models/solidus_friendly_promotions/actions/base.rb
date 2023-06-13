@@ -19,10 +19,9 @@ module SolidusFriendlyPromotions
       def adjust(adjustable)
         adjustment = adjustable.adjustments.detect do |adjustment|
           adjustment.source == self
-        end || adjustable.adjustments.build(source: self)
+        end || adjustable.adjustments.build(source: self, order: adjustable.order)
         adjustment.label = adjustment_label(adjustable)
         adjustment.amount = compute_amount(adjustable)
-        adjustment.order = adjustable.order
         adjustment
       end
 
