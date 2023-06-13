@@ -24,8 +24,8 @@ module SolidusFriendlyPromotions
       }
       validate :preferred_tiers_content
 
-      def compute(object)
-        order = object.is_a?(Spree::Order) ? object : object.order
+      def compute_item(object)
+        order = object.order
 
         _base, percent = preferred_tiers.sort.reverse.detect do |value, _|
           order.item_total >= value
@@ -38,6 +38,8 @@ module SolidusFriendlyPromotions
           0
         end
       end
+      alias_method :compute_shipment, :compute_item
+      alias_method :compute_line_item, :compute_item
 
       private
 

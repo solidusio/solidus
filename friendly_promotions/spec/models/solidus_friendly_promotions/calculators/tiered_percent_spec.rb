@@ -147,8 +147,11 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
       end
     end
 
-    context "with an order" do
-      subject { calculator.compute(order) }
+    context "with a shipment" do
+      let(:shipment) { Spree::Shipment.new(order: order, amount: shipping_cost) }
+      let(:shipping_cost) { 10 }
+
+      subject { calculator.compute(shipment) }
 
       let(:line_item_count) { 1 }
 
@@ -160,12 +163,12 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
 
         context "when amount falls within the second tier" do
           let(:line_item_count) { 2 }
-          it { is_expected.to eq 3.0 }
+          it { is_expected.to eq 1.5 }
         end
 
         context "when amount falls within the third tier" do
           let(:line_item_count) { 3 }
-          it { is_expected.to eq 6.0 }
+          it { is_expected.to eq 2.0 }
         end
       end
 
@@ -179,11 +182,13 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
 
         context "when amount falls within the second tier" do
           let(:price) { 20 }
+          let(:shipping_cost) { 20 }
           it { is_expected.to eq 3.0 }
         end
 
         context "when amount falls within the third tier" do
           let(:price) { 30 }
+          let(:shipping_cost) { 30 }
           it { is_expected.to eq 6.0 }
         end
       end
