@@ -12,8 +12,13 @@ module SolidusAdmin
     class_option :spec, type: :boolean, default: true
 
     def create_component_files
+      template "component.html.erb", destination(".html.erb")
+      unless options["html"]
+        say_status :inline, destination(".html.erb"), :blue
+        @inline_html = File.read(destination(".html.erb"))
+        shell.mute { remove_file(destination(".html.erb")) }
+      end
       template "component.rb", destination(".rb")
-      template "component.html.erb", destination(".html.erb") if options["html"]
       template "component.yml", destination(".yml") if options["i18n"]
       template "component.js", destination(".js") if options["js"]
       template "component_spec.rb", destination("_spec.rb", root: "spec/components") if options["spec"]
@@ -71,6 +76,10 @@ module SolidusAdmin
         (stimulus_html if options["js"]),
         (i18n_html if options["i18n"]),
       ].compact.join("\n  ")
+    end
+
+    def inline_html(indent: '')
+      @inline_html.gsub!(/^/, indent).strip
     end
   end
 end

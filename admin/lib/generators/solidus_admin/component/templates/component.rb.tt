@@ -6,4 +6,9 @@ class <%= class_name %>::Component < ApplicationComponent
     <%= initialize_body %>
   end
 <%- end -%>
+<% unless options['html'] %>
+  erb_template <<~ERB
+    <%= inline_html indent: '    ' %>
+  ERB
+<%- end -%>
 end
