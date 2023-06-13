@@ -3,6 +3,9 @@ name: "Ensure Changelog label"
 on:
   pull_request:
     types: ["labeled", "unlabeled"]
+    branches:
+      - main
+      - v*
   workflow_call:
 
 jobs:
