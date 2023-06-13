@@ -22,7 +22,7 @@ module SolidusFriendlyPromotions
         end
       end
 
-      chosen_adjustments = Spree::Config.promotion_chooser_class.new(line_item).call(possible_adjustments)
+      chosen_adjustments = SolidusFriendlyPromotions.config.promotion_chooser_class.new(line_item).call(possible_adjustments)
 
       line_item.promo_total = chosen_adjustments.sum(&:amount)
       line_item.adjustments = non_promotion_adjustments + chosen_adjustments

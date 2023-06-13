@@ -23,9 +23,11 @@ module SolidusFriendlyPromotions
         end
       end
 
-      chosen_adjustments = Spree::Config.promotion_chooser_class.new(shipment).call(possible_adjustments)
+      chosen_adjustments = SolidusFriendlyPromotions.config.promotion_chooser_class.new(shipment).call(possible_adjustments)
+
       shipment.promo_total = chosen_adjustments.sum(&:amount)
       shipment.adjustments = non_promotion_adjustments + chosen_adjustments
+      shipment
     end
   end
 end

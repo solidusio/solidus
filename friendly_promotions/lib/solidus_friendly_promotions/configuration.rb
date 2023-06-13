@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  class Configuration
-    # Define here the settings for this extension, e.g.:
-    #
-    # attr_accessor :my_setting
+  class Configuration < Spree::Preferences::Configuration
+    class_name_attribute :promotion_chooser_class, default: "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
   end
 
   class << self
