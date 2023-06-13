@@ -4,7 +4,7 @@ module Spree
   class BackendConfiguration < Preferences::Configuration
     # An item which should be drawn in the admin menu
     class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :sections, :url, :match_path
+      attr_reader :icon, :label, :partial, :condition, :sections, :match_path
 
       attr_accessor :position
 
@@ -21,8 +21,9 @@ module Spree
       # @param url [String] A url where this link should send the user to
       # @param position [Integer] The position in which the menu item should render
       #   nil will cause the item to render last
-      # @param match_path [String, Regexp] (nil) If the {url} to determine the active tab is ambigous
-      #   you can pass a String or Regexp to identify this menu item
+      # @param match_path [String, Regexp, callable] (nil) If the {url} to determine the active tab is ambigous
+      #   you can pass a String, Regexp or callable to identify this menu item. The callable
+      #   accepts a request object and returns a Boolean value.
       def initialize(
         sections,
         icon,
@@ -42,6 +43,14 @@ module Spree
         @url = url
         @position = position
         @match_path = match_path
+      end
+
+      def url
+        if @url.respond_to?(:call)
+          @url.call
+        else
+          @url
+        end
       end
     end
   end
