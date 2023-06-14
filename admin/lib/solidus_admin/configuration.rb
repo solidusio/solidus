@@ -38,6 +38,15 @@ module SolidusAdmin
     #
     # Recompile with `bin/rails solidus_admin:tailwindcss:build` after changing this list.
     preference :tailwind_stylesheets, :array, default: []
+
+    preference :importmap_cache_sweepers, :array, default: [
+      SolidusAdmin::Engine.root.join("app", "assets", "javascripts"),
+      SolidusAdmin::Engine.root.join("app", "javascript"),
+    ]
+
+    preference :importmap_paths, :array, default: [
+      SolidusAdmin::Engine.root.join("config", "importmap.rb"),
+    ]
   end
 end
 
