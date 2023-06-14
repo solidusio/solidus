@@ -12,7 +12,7 @@ module SolidusAdmin
     end
 
     initializer "solidus_admin.assets" do |app|
-      app.config.assets.precompile += %w[solidus_admin/application.css]
+      app.config.assets.precompile += %w[solidus_admin_manifest.js]
     end
 
     initializer "solidus_admin.main_nav_items_provider" do
