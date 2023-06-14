@@ -17,7 +17,7 @@ module SolidusFriendlyPromotions
         return 0 unless preferred_currency.casecmp(line_item.currency).zero?
         distributable_line_items = eligible_line_items(line_item.order)
         return 0 unless line_item.in?(distributable_line_items)
-        Spree::DistributedAmountsHandler.new(
+        DistributedAmountsHandler.new(
           distributable_line_items,
           preferred_amount
         ).amount(line_item)
