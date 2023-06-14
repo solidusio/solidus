@@ -10,4 +10,18 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustShipment do
 
     it { is_expected.to eq("Discount matching shipments") }
   end
+
+  describe ".available_calculators" do
+    subject { described_class.available_calculators }
+
+    it do
+      is_expected.to contain_exactly(
+        SolidusFriendlyPromotions::Calculators::FlatRate,
+        SolidusFriendlyPromotions::Calculators::FlexiRate,
+        SolidusFriendlyPromotions::Calculators::Percent,
+        SolidusFriendlyPromotions::Calculators::TieredFlatRate,
+        SolidusFriendlyPromotions::Calculators::TieredPercent,
+      )
+    end
+  end
 end
