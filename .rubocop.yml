@@ -314,6 +314,7 @@ Style/FrozenStringLiteralComment:
     - '*/lib/generators/**/*'
     - '**/bin/**/*'
     - '*/db/migrate/**/*'
+    - '*/config/importmap.rb'
 
 # json.() is idiomatic in jbuilder files
 Style/LambdaCall:
