@@ -13,4 +13,12 @@ Rails.application.config.to_prepare do
     SolidusFriendlyPromotions::Calculators::TieredFlatRate,
     SolidusFriendlyPromotions::Calculators::TieredPercent,
   ]
+  SolidusFriendlyPromotions::Actions::AdjustLineItem.available_calculators += [
+    SolidusFriendlyPromotions::Calculators::DistributedAmount,
+    SolidusFriendlyPromotions::Calculators::FlatRate,
+    SolidusFriendlyPromotions::Calculators::FlexiRate,
+    SolidusFriendlyPromotions::Calculators::Percent,
+    SolidusFriendlyPromotions::Calculators::TieredFlatRate,
+    SolidusFriendlyPromotions::Calculators::TieredPercent,
+  ]
 end
