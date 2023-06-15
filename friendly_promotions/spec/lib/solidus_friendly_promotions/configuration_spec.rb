@@ -30,4 +30,22 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
 
     it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
   end
+
+  describe ".order_rules" do
+    subject { config.order_rules }
+
+    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+  end
+
+  describe ".line_item_rules" do
+    subject { config.line_item_rules }
+
+    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+  end
+
+  describe ".shipment_rules" do
+    subject { config.line_item_rules }
+
+    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+  end
 end

@@ -9,6 +9,10 @@ module SolidusFriendlyPromotions
     add_class_set :line_item_discount_calculators
     add_class_set :shipment_discount_calculators
 
+    add_class_set :order_rules
+    add_class_set :line_item_rules
+    add_class_set :shipment_rules
+
     class_name_attribute :promotion_chooser_class, default: "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
   end
 
