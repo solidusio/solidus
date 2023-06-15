@@ -8,6 +8,11 @@ module SolidusAdmin
   # Ensure requiring this file after the Rails application has been created,
   # as some defaults depend on the application context.
   class Configuration < Spree::Preferences::Configuration
+    # Path to the logo used in the admin interface.
+    #
+    # It needs to be a path to an image file accessible by Sprockets.
+    preference :logo_path, :string, default: "solidus_admin/solidus_logo.svg"
+
     # The list of paths were Tailwind CSS classes are used.
     #
     # You can modify this list to include your own paths:
