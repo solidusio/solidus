@@ -38,7 +38,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "when current state is address" do
       before do
-        order.ensure_updated_shipments
+        order.check_shipments_and_restart_checkout
         order.next!
         expect(order.all_adjustments).to be_empty
         expect(order.state).to eq "address"

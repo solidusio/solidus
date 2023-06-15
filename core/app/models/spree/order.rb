@@ -502,18 +502,18 @@ module Spree
       recalculate
     end
 
-    # Clean shipments and make order back to address state
-    #
-    # At some point the might need to force the order to transition from address
-    # to delivery again so that proper updated shipments are created.
-    # e.g. customer goes back from payment step and changes order items
-    def ensure_updated_shipments
+    # Clean shipments and make order back to address state (or to whatever state
+    # is set by restart_checkout_flow in case of state machine modifications)
+    def check_shipments_and_restart_checkout
       if !completed? && shipments.all?(&:pending?)
         shipments.destroy_all
         update_column(:shipment_total, 0)
         restart_checkout_flow
       end
     end
+
+    alias_method :ensure_updated_shipments, :check_shipments_and_restart_checkout
+    deprecate ensure_updated_shipments: :check_shipments_and_restart_checkout, deprecator: Spree::Deprecation
 
     def restart_checkout_flow
       return if state == 'cart'
