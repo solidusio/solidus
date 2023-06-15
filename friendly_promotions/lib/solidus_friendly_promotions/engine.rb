@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
 
-    isolate_namespace ::Spree
+    isolate_namespace ::SolidusFriendlyPromotions
 
     engine_name "solidus_friendly_promotions"
 

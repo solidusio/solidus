@@ -33,6 +33,8 @@ RSpec.configure do |config|
     config.extend Spree::TestingSupport::AuthorizationHelpers::Request, type: :system
   end
 
+  config.include SolidusFriendlyPromotions::Engine.routes.url_helpers, type: :request
+
   config.before do
     Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
   end

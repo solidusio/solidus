@@ -26,6 +26,13 @@ module SolidusFriendlyPromotions
         run "bin/rails railties:install:migrations FROM=solidus_friendly_promotions"
       end
 
+      def mount_engine
+        inject_into_file "config/routes.rb",
+          "  mount SolidusFriendlyPromotions::Engine => '/'\n",
+          before: %r{  mount Spree::Core::Engine.*},
+          verbose: true
+      end
+
       def run_migrations
         run_migrations = options[:auto_run_migrations] || ["", "y", "Y"].include?(ask("Would you like to run the migrations now? [Y/n]")) # rubocop:disable Layout/LineLength
         if run_migrations

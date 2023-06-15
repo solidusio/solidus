@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-Spree::Core::Engine.routes.draw do
-  # Add your extension routes here
+SolidusFriendlyPromotions::Engine.routes.draw do
+  namespace :admin do
+    resources :promotions, only: :index
+  end
 end
