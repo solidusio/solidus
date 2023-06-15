@@ -8,7 +8,7 @@ module SolidusAdmin
       def install_solidus_core_support
         route <<~RUBY
           mount SolidusAdmin::Engine, at: '/admin', constraints: ->(req) {
-            req.cookies['solidus_admin'] == 'true'
+            req.cookies['solidus_admin'] != 'false'
           }
         RUBY
       end
