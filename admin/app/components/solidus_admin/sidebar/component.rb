@@ -3,7 +3,11 @@
 module SolidusAdmin
   # Renders the sidebar
   class Sidebar::Component < BaseComponent
-    def initialize(main_nav_component: component('main_nav'))
+    def initialize(
+      solidus_logo_component: component('solidus_logo'),
+      main_nav_component: component('main_nav')
+    )
+      @solidus_logo_component = solidus_logo_component
       @main_nav_component = main_nav_component
     end
 
@@ -14,6 +18,7 @@ module SolidusAdmin
         bg-gray-100
         h-screen
       ">
+        <%= render @solidus_logo_component.new %>
         <%= render @main_nav_component.new %>
       </aside>
     ERB
