@@ -2,6 +2,24 @@
 
 module Spree
   module PermissionSets
+    # Read and write permissions for e-commerce settings.
+    #
+    # Roles with this permission set will have full control over:
+    #
+    # - Tax categories
+    # - Tax rates
+    # - Zones
+    # - Countries
+    # - States
+    # - Payment methods
+    # - Taxonomies
+    # - Shipping methods
+    # - Shipping categories
+    # - Stock locations
+    # - Stock movements
+    # - Refund reasons
+    # - Reimbursement types
+    # - Return reasons
     class ConfigurationManagement < PermissionSets::Base
       def activate!
         can :manage, Spree::TaxCategory

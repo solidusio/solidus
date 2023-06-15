@@ -370,6 +370,17 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  describe "#ensure_updated_shipments" do
+    let(:order) { create(:order) }
+    let(:subject) { order.ensure_updated_shipments }
+
+    it "is deprecated" do
+      expect(Spree::Deprecation).to receive(:warn).with(/ensure_updated_shipments is deprecated.*use check_shipments_and_restart_checkout instead/, any_args)
+
+      subject
+    end
+  end
+
   context "ensure shipments will be updated" do
     subject(:order) { create :order }
     before do
@@ -384,30 +395,30 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         it "destroys current shipments" do
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
           expect(order.shipments).to be_empty
         end
 
-        it "puts order back in address state" do
-          order.ensure_updated_shipments
+        it "puts order back in cart state" do
+          order.check_shipments_and_restart_checkout
           expect(order.state).to eql "cart"
         end
 
         it "resets shipment_total" do
           order.update_column(:shipment_total, 5)
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
           expect(order.shipment_total).to eq(0)
         end
 
         it "does nothing if any shipments are ready" do
           shipment = create(:shipment, order: subject, state: "ready")
-          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments.pluck(:id) }
+          expect { subject.check_shipments_and_restart_checkout }.not_to change { subject.reload.shipments.pluck(:id) }
           expect { shipment.reload }.not_to raise_error
         end
 
         it "does nothing if any shipments are shipped" do
           shipment = create(:shipment, order: subject, state: "shipped")
-          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments.pluck(:id) }
+          expect { subject.check_shipments_and_restart_checkout }.not_to change { subject.reload.shipments.pluck(:id) }
           expect { shipment.reload }.not_to raise_error
         end
       end
@@ -420,18 +431,18 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       it "destroys current shipments" do
-        order.ensure_updated_shipments
+        order.check_shipments_and_restart_checkout
         expect(order.shipments).to be_empty
       end
 
       it "resets shipment_total" do
         order.update_column(:shipment_total, 5)
-        order.ensure_updated_shipments
+        order.check_shipments_and_restart_checkout
         expect(order.shipment_total).to eq(0)
       end
 
       it "puts the order in the cart state" do
-        order.ensure_updated_shipments
+        order.check_shipments_and_restart_checkout
         expect(order.state).to eq "cart"
       end
     end
@@ -446,19 +457,19 @@ RSpec.describe Spree::Order, type: :model do
 
       it "does not destroy the current shipments" do
         expect {
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         }.not_to change { order.shipments }
       end
 
       it "does not reset the shipment total" do
         expect {
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         }.not_to change { order.shipment_total }
       end
 
       it "does not put the order back in the address state" do
         expect {
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         }.not_to change { order.state }
       end
     end
@@ -470,15 +481,15 @@ RSpec.describe Spree::Order, type: :model do
         order.shipments.create!
 
         expect {
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         }.not_to change { order.shipment_total }
 
         expect {
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         }.not_to change { order.shipments }
 
         expect {
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         }.not_to change { order.state }
       end
     end
