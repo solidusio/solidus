@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
+require 'spree/core/environment_extension'
+
 module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration
+    include Spree::Core::EnvironmentExtension
+
+    add_class_set :line_item_discount_calculators
+    add_class_set :shipment_discount_calculators
+
     class_name_attribute :promotion_chooser_class, default: "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
   end
 
