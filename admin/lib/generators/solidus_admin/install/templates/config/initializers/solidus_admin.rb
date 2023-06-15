@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 SolidusAdmin::Config.configure do |config|
+  # Path to the logo used in the admin interface.
+  #
+  # It needs to be a path to an image file accessible by Sprockets.
+  # config.logo_path = "my_own_logo.svg"
+
   # Add custom paths for TailwindCSS to scan for styles. By default, it already
   # includes the following paths:
   #
