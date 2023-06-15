@@ -8,7 +8,7 @@ test "$DB" = "sqlite" && export DB="sqlite3"
 if [ -z "$SOLIDUS_BRANCH" ]
 then
   echo "~~> Use 'export SOLIDUS_BRANCH=[master|v3.2|...]' to control the Solidus branch"
-  SOLIDUS_BRANCH="master"
+  SOLIDUS_BRANCH="main"
 fi
 echo "~~> Using branch $SOLIDUS_BRANCH of solidus"
 
@@ -47,6 +47,7 @@ cat <<RUBY >> Gemfile
 gem 'solidus', github: 'solidusio/solidus', branch: '$SOLIDUS_BRANCH'
 gem 'rails-i18n'
 gem 'solidus_i18n'
+gem 'solidus_auth_devise'
 
 gem '$extension_name', path: '..'
 
