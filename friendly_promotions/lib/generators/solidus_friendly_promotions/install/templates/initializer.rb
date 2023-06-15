@@ -18,4 +18,25 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
     "SolidusFriendlyPromotions::Calculators::TieredPercent",
   ]
+
+  config.order_rules = [
+    "SolidusFriendlyPromotions::Rules::FirstOrder",
+    "SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince",
+    "SolidusFriendlyPromotions::Rules::ItemTotal",
+    "SolidusFriendlyPromotions::Rules::NthOrder",
+    "SolidusFriendlyPromotions::Rules::OneUsePerUser",
+    "SolidusFriendlyPromotions::Rules::OptionValue",
+    "SolidusFriendlyPromotions::Rules::Product",
+    "SolidusFriendlyPromotions::Rules::Store",
+    "SolidusFriendlyPromotions::Rules::Taxon",
+    "SolidusFriendlyPromotions::Rules::UserLoggedIn",
+    "SolidusFriendlyPromotions::Rules::UserRole",
+    "SolidusFriendlyPromotions::Rules::User",
+  ]
+  config.line_item_rules = [
+    "SolidusFriendlyPromotions::Rules::LineItemOptionValue",
+    "SolidusFriendlyPromotions::Rules::LineItemProduct",
+    "SolidusFriendlyPromotions::Rules::LineItemTaxon",
+  ]
+  config.shipment_rules = []
 end
