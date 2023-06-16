@@ -1,3 +1,5 @@
+# Remember to restart your application after editing this file.
+
 # Stimulus & Turbo
 pin "@hotwired/stimulus", to: "stimulus.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
