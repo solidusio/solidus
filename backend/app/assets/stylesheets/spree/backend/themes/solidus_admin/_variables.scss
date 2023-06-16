@@ -1,0 +1,204 @@
+
+// -------------------------------------------------------------
+//   Variables used in all other files
+//--------------------------------------------------------------
+
+// Fonts
+//--------------------------------------------------------------
+$font-size-pill: 11px;
+$label-font-size: 12px;
+
+// Colors
+//--------------------------------------------------------------
+
+// Primary palette
+$theme-solidus-red: #ef3023;
+$theme-black: #222222;
+$theme-graphite: #c7ccc7;
+$theme-graphite-light: #d8dad8;
+$theme-sand: #f5f3f0;
+$theme-white: #ffffff;
+
+// Secondary palette
+$theme-yellow: #fdc071;
+$theme-orange: #f68050;
+$theme-blue: #2554b1;
+$theme-moss: #2d3925;
+$theme-forest: #096756;
+$theme-midnight: #163449;
+$theme-pink: #f6d7e2;
+$theme-plum: #3a0e31;
+$theme-sky: #cbdff1;
+$theme-seafoam: #c1e0de;
+$theme-dune: #e6bf9b;
+
+// UI Red
+$theme-red-100: #f8d6d3;
+$theme-red-200: #f1ada7;
+$theme-red-300: #ea8980;
+$theme-red-400: #e36054;
+$theme-red-500: #dc3728;
+$theme-red-600: #b12c20;
+$theme-red-700: #862219;
+$theme-red-800: #561610;
+$theme-red-900: #2b0b08;
+
+// Grayscale
+$theme-gray-15: #fafafa;
+$theme-gray-25: #f5f5f5;
+$theme-gray-50: #f0f0f0;
+$theme-gray-100: #dedede;
+$theme-gray-200: #cfcfcf;
+$theme-gray-300: #bababa;
+$theme-gray-400: #a3a3a3;
+$theme-gray-500: #737373;
+$theme-gray-600: #616161;
+$theme-gray-700: #4a4a4a;
+$theme-gray-800: #333333;
+
+// Basic color palette for admin
+
+$color-dark: $theme-gray-800;
+$color-dark-dark: $theme-gray-600;
+$color-dark-light: $theme-gray-500;
+$color-dark-accent: $theme-gray-200;
+
+$color-primary: $theme-black;
+$color-primary-light: $theme-gray-100;
+
+$color-light: $theme-gray-15;
+$color-light-dark: $theme-gray-50;
+$color-light-accent: $theme-gray-100;
+
+$color-white: $theme-white;
+
+$color-red: $theme-red-600;
+$color-yellow: $theme-yellow;
+$color-green: $theme-forest;
+
+// Basic accents for admin
+$box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+
+// Body base colors
+$color-border: $color-light-dark;
+$color-disabled: $color-dark-light;
+
+// Basic navigation colors
+$color-header-bg: $theme-white;
+$color-sidebar-bg: $color-light;
+$color-sidebar-border: $color-border;
+$color-navbar: $color-dark;
+$color-navbar-bg: $color-light;
+$color-navbar-active: $theme-solidus-red;
+$color-navbar-active-bg: $theme-gray-25;
+$color-navbar-submenu: $color-dark-light;
+$color-navbar-submenu-bg: $color-light;
+$color-navbar-submenu-active: $color-primary;
+$color-navbar-footer: $color-dark;
+$color-navbar-footer-bg: $color-light;
+$color-navbar-footer-active: $color-primary;
+$color-icon-navbar: $color-dark-light;
+
+$color-navbar-hover-bg: $theme-gray-25;
+$color-navbar-hover: $color-dark;
+
+// Basic Tabs colors
+$color-tab: $color-dark-light;
+$color-tab-bg: $color-light;
+$color-tab-border: $color-border;
+$color-tab-active: $color-primary;
+$color-tab-active-bg: $color-white;
+$color-tab-active-border: $color-white;
+
+// Basic flash colors
+$color-success: $color-green;
+$color-notice: $color-yellow;
+$color-error: $color-red;
+
+// Breadcrumb custom variable
+
+$breadcrumb-color: $color-dark-light;
+
+// Color for spinner
+$color-spinner: $color-white;
+
+// Style Guide
+$color-style-guide-code: darken($color-light, 10%);
+$color-style-guide-link: darken($color-light, 65%);
+$color-style-guide-nav: $color-light;
+$color-style-guide-nav-border: darken($color-light, 5%);
+$color-style-guide-nav-link: darken($color-light, 65%);
+$color-style-guide-nav-link-hover: darken($color-light, 5%);
+$color-style-guide-section-border: darken($color-light, 10%);
+$color-style-guide-swatch-border: darken($color-light, 10%);
+$color-style-guide-table-border: $theme-sky;
+
+// Table colors
+$color-tbl-odd: $color-white;
+$color-tbl-even: $color-light;
+$color-tbl-thead: $color-light;
+
+// Pill colors
+//
+// For now these are custom assigned colors just for this section. As we go
+// about updating other areas of the admin we will likely want to pull these
+// colors out into better named variables.
+$color-pill-text: $theme-gray-800;
+$color-pill-neutral: $theme-gray-100;
+$color-pill-neutral-text: $color-pill-text;
+$color-pill-complete: $theme-sky;
+$color-pill-complete-text: $color-pill-text;
+$color-pill-active: $theme-seafoam;
+$color-pill-active-text: $color-pill-text;
+$color-pill-inactive: $color-pill-neutral;
+$color-pill-inactive-text: $theme-gray-600;
+$color-pill-pending: $theme-yellow;
+$color-pill-pending-text: $color-pill-text;
+$color-pill-warning: $theme-orange;
+$color-pill-warning-text: $color-pill-text;
+$color-pill-error: $theme-red-300;
+$color-pill-error-text: $color-pill-text;
+
+// Available states
+$states: (
+  active,
+  address,
+  awaiting_return,
+  backorder,
+  balance_due,
+  canceled,
+  cart,
+  checkout,
+  complete,
+  completed,
+  confirm,
+  credit_owed,
+  delivery,
+  error,
+  failed,
+  inactive,
+  paid,
+  payment,
+  pending,
+  ready,
+  returned,
+  shipped,
+  void
+);
+
+// Sidebar
+//--------------------------------------------------------------
+$width-sidebar: 240px;
+$width-sidebar-flyout: 225px;
+$width-sidebar-collapsed: 52px;
+$sidebar-transition: 250ms ease-in;
+$border-sidebar: 1px solid $color-sidebar-border;
+
+// Main
+//--------------------------------------------------------------
+$main-header-height: 84px;
+
+$content-wrapper-bg: $color-white;
+$admin-body-bg: $color-white;
+
+$link-hover-color: $theme-solidus-red;

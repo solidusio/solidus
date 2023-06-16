@@ -10,11 +10,12 @@ module Spree
     #   @return [Hash] A hash containing the themes that are available for the admin panel
     preference :themes, :hash, default: {
       classic: 'spree/backend/all',
+      solidus_admin: 'spree/backend/themes/solidus_admin'
     }
 
     # @!attribute [rw] theme
     #   @return [String] Default admin theme name
-    versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.1.0.a" => "classic" }
+    versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.1.0.a" => "solidus_admin" }
 
     def theme_path(user_theme = nil)
       user_theme ? themes.fetch(user_theme.to_sym) : themes.fetch(theme.to_sym)
