@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require "view_component/test_helpers"
+require "view_component/system_test_helpers"
+
+require "capybara/rspec"
+
 if ENV["COVERAGE"]
   require 'simplecov'
   if ENV["COVERAGE_DIR"]
@@ -88,6 +93,9 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
