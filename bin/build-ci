@@ -26,6 +26,7 @@ class Project
   end
 
   ALL = [
+    new('admin', weight: 215),
     new('api', weight: 50),
     new('backend', weight: 215),
     new('backend', test_type: :teaspoon, title: "backend JS", weight: 15),
