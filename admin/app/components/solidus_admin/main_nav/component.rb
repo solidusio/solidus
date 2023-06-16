@@ -9,7 +9,7 @@ module SolidusAdmin
     end
 
     erb_template <<~ERB
-      <nav>
+      <nav data-controller="main-nav">
         <%= render @item_component.with_collection(items) %>
       </nav>
     ERB
