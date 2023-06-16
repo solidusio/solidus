@@ -39,7 +39,10 @@ module SolidusAdmin
     end
 
     initializer "solidus_admin.importmap.assets" do |app|
-      app.config.assets.paths << SolidusAdmin::Engine.root.join("app/javascript")
+      app.config.assets.paths += [
+        SolidusAdmin::Engine.root.join("app/javascript"),
+        SolidusAdmin::Engine.root.join("app/components"),
+      ]
     end
 
     initializer "solidus_admin.main_nav_items_provider" do
