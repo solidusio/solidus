@@ -104,9 +104,6 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.include BaseFeatureHelper, type: :feature
-  config.include BaseFeatureHelper, type: :system
-
   config.include FactoryBot::Syntax::Methods
 
   config.include Spree::TestingSupport::Preferences
