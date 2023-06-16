@@ -21,9 +21,7 @@ DummyApp.setup(
   lib_name: 'solidus_admin'
 )
 
-require 'rails-controller-testing'
-require 'rspec-activemodel-mocks'
-require 'rspec/rails'
+require "rspec/rails"
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -32,19 +30,6 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require 'database_cleaner'
 
 require 'spree/testing_support/factory_bot'
-require 'spree/testing_support/partial_double_verification'
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/flaky'
-require 'spree/testing_support/flash'
-require 'spree/testing_support/url_helpers'
-require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/capybara_ext'
-require 'spree/testing_support/precompiled_assets'
-require 'spree/testing_support/translations'
-require 'spree/testing_support/job_helpers'
-require 'spree/testing_support/blacklist_urls'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
@@ -76,8 +61,6 @@ Rails.application.config.i18n.raise_on_missing_translations = true
 
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 
-ActiveJob::Base.queue_adapter = :test
-
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
@@ -94,7 +77,6 @@ RSpec.configure do |config|
   # examples within a transaction, comment the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-  config.fixture_path = "spec/fixtures"
 
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
@@ -106,13 +88,6 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
-  config.include Spree::TestingSupport::Preferences
-  config.include Spree::TestingSupport::UrlHelpers
-  config.include Spree::TestingSupport::ControllerRequests, type: :controller
-  config.include Spree::TestingSupport::Flash
-  config.include Spree::TestingSupport::Translations
-  config.include Spree::TestingSupport::JobHelpers
-  config.include Spree::TestingSupport::BlacklistUrls
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
