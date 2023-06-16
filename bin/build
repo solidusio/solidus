@@ -15,6 +15,11 @@ fi
 
 bin/setup
 
+echo "***************************"
+echo "* Testing Solidus Admin *"
+echo "***************************"
+bin/rspec admin/spec
+
 echo "***********************"
 echo "* Testing Solidus API *"
 echo "***********************"

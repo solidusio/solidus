@@ -3,6 +3,7 @@
 ROOT = File.expand_path('..', __dir__)
 
 LIBS = %w[
+  admin
   api
   backend
   core
