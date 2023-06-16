@@ -47,6 +47,7 @@ module SolidusAdmin
     preference :importmap_cache_sweepers, :array, default: [
       SolidusAdmin::Engine.root.join("app", "assets", "javascripts"),
       SolidusAdmin::Engine.root.join("app", "javascript"),
+      SolidusAdmin::Engine.root.join("app", "components"),
     ]
 
     preference :importmap_paths, :array, default: [
