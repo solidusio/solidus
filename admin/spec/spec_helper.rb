@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require "view_component/test_helpers"
-require "view_component/system_test_helpers"
-
-require "capybara/rspec"
-
+# SIMPLECOV
 if ENV["COVERAGE"]
   require 'simplecov'
   if ENV["COVERAGE_DIR"]
@@ -15,34 +11,29 @@ if ENV["COVERAGE"]
   SimpleCov.start('rails')
 end
 
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
-ENV["RAILS_ENV"] ||= 'test'
-
 require 'solidus_admin'
+
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
+# SOLIDUS DUMMY APP
 require 'spree/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_admin'
 )
 
+# RAILS
 require "rspec/rails"
+ENV["RAILS_ENV"] ||= 'test'
+Rails.application.config.i18n.raise_on_missing_translations = true
 
-# Requires supporting files with custom matchers and macros, etc,
-# in ./support/ and its subdirectories.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
-
-require 'database_cleaner'
-
-require 'spree/testing_support/factory_bot'
-
+# CAPYBARA & SELENIUM
+require "capybara/rspec"
 require 'capybara-screenshot/rspec'
-Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
-Capybara.exact = true
-
 require "selenium/webdriver"
 require 'webdrivers'
-
+Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
+Capybara.exact = true
 Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
   browser_options.args << '--headless'
@@ -59,14 +50,19 @@ Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
   browser_options.args << '--window-size=1240,1400'
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
-
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
-
-Rails.application.config.i18n.raise_on_missing_translations = true
-
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 
+# DATABASE CLEANER
+require 'database_cleaner'
+
+# FACTORY BOT
+require 'spree/testing_support/factory_bot'
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
+
+# VIEW COMPONENTS
+require "view_component/test_helpers"
+require "view_component/system_test_helpers"
 
 RSpec.configure do |config|
   config.color = true
@@ -78,9 +74,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, comment the following line or assign false
-  # instead of true.
   config.use_transactional_fixtures = true
 
   config.before :suite do
@@ -91,11 +84,12 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.include Capybara::RSpecMatchers, type: :component
+
   config.include FactoryBot::Syntax::Methods
 
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
-  config.include Capybara::RSpecMatchers, type: :component
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
