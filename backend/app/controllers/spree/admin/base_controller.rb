@@ -8,6 +8,8 @@ module Spree
 
       before_action :authorize_admin
 
+      respond_to :html
+
       private
 
       # Overrides ControllerHelpers::Common
