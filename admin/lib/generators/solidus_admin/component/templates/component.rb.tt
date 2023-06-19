@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class <%= class_name %>::Component < ApplicationComponent
+class <%= File.join(*[namespaced_path, file_path].compact).classify %>::Component < SolidusAdmin::BaseComponent
 <%- if initialize_signature -%>
   def initialize(<%= initialize_signature %>)
     <%= initialize_body %>
