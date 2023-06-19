@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-app_root = File.expand_path "#{__dir__}/../sandbox"
+app_name = File.executable?("#{__dir__}/../#{ARGV.first}/bin/rails") ? ARGV.shift : 'sandbox'
+app_root = File.expand_path "#{__dir__}/../#{app_name}"
 
 unless File.exist? app_root
   system "#{__dir__}/sandbox" or begin
@@ -15,4 +16,3 @@ Dir.chdir app_root
 require 'bundler'
 
 exec Bundler.unbundled_env, 'bin/rails', *ARGV
-
