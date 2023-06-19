@@ -7,7 +7,7 @@ module SolidusAdmin
     include SolidusAdmin::ContainerHelper
 
     def stimulus_id
-      @stimulus_id ||= module_parent.to_s.underscore.dasherize.gsub(%r{/}, '--')
+      @stimulus_id ||= self.class.module_parent.to_s.underscore.dasherize.gsub(%r{/}, '--')
     end
   end
 end
