@@ -7,6 +7,10 @@ module Spree
 
     validates_uniqueness_of :name, case_sensitive: true
 
+    def permission_sets
+      Spree::Config.roles.roles[name]&.permission_sets
+    end
+
     def admin?
       name == "admin"
     end

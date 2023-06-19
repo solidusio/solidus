@@ -1,0 +1,15 @@
+<div class=" <%= stimulus_id %> ">
+  <header class="mb-[24px]">
+    <div class="text-[20px] font-[600] leading-[24px]">
+      <%= Spree::Role.model_name.human.pluralize %>
+    </div>
+  </header>
+
+  <%= render component("ui.table").new(
+    columns: [
+      component("ui.table").column(Spree::Role.human_attribute_name(:name)) { _1.name },
+      component("ui.table").column(Spree::Role.human_attribute_name(:permissions)) { render_permission_sets(_1.permission_sets) },
+    ],
+    rows: @roles,
+  ) %>
+</div>
