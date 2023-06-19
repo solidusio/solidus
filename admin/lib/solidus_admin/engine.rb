@@ -12,6 +12,11 @@ module SolidusAdmin
       require "solidus_admin/configuration"
     end
 
+    initializer "solidus_admin.inflections" do
+      # Support for UI as an acronym
+      ActiveSupport::Inflector.inflections { |inflect| inflect.acronym 'UI' }
+    end
+
     initializer "solidus_admin.importmap" do
       SolidusAdmin::Config.importmap_paths.each { |path| SolidusAdmin.importmap.draw(path) }
     end
