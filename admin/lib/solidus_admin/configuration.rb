@@ -23,16 +23,16 @@ module SolidusAdmin
     #
     # @see https://tailwindcss.com/docs/configuration#content
     preference :tailwind_content, :array, default: [
-      SolidusAdmin::Engine.root.join("public/*.html"),
       SolidusAdmin::Engine.root.join("app/helpers/**/*.rb"),
       SolidusAdmin::Engine.root.join("app/assets/javascripts/**/*.js"),
-      SolidusAdmin::Engine.root.join("app/views/**/*.{erb,haml,html,slim}"),
-      SolidusAdmin::Engine.root.join("app/components/**/*.rb"),
+      SolidusAdmin::Engine.root.join("app/views/**/*.erb"),
+      SolidusAdmin::Engine.root.join("app/components/**/*.{rb,erb,js}"),
+
       Rails.root.join("public/solidus_admin/*.html"),
       Rails.root.join("app/helpers/solidus_admin/**/*.rb"),
       Rails.root.join("app/assets/javascripts/solidus_admin/**/*.js"),
       Rails.root.join("app/views/solidus_admin/**/*.{erb,haml,html,slim}"),
-      Rails.root.join("app/components/solidus_admin/**/*.rb")
+      Rails.root.join("app/components/solidus_admin/**/*.{rb,erb,haml,html,slim,js}")
     ]
 
     # List of Tailwind CSS files to be combined into the final stylesheet.
