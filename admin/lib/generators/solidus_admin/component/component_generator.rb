@@ -11,6 +11,13 @@ module SolidusAdmin
     class_option :js, type: :boolean, default: true
     class_option :spec, type: :boolean, default: true
 
+    def setup_inflections
+      # This is needed because the generator won't run the initialization process,
+      # in order to ensure that UI is not rendered as Ui we need to setup inflections
+      # manually.
+      SolidusAdmin::Engine.initializers.find { _1.name =~ /inflections/ }.run
+    end
+
     def create_component_files
       template "component.html.erb", destination(".html.erb")
       unless options["html"]
