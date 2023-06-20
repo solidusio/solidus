@@ -10,4 +10,9 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItem do
 
     it { is_expected.to eq("Discount matching line items") }
   end
+
+  describe ".to_partial_path" do
+    subject { described_class.new.to_partial_path }
+    it { is_expected.to eq("solidus_friendly_promotions/admin/promotions/actions/adjust_line_item") }
+  end
 end

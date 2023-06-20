@@ -38,6 +38,10 @@ module SolidusFriendlyPromotions
           promotion_name: promotion.name,
         )
       end
+
+      def to_partial_path
+        "solidus_friendly_promotions/admin/promotions/actions/#{model_name.element}"
+      end
     end
   end
 end
