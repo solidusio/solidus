@@ -4,11 +4,13 @@ module SolidusAdmin
   # Renders the sidebar
   class Sidebar::Component < BaseComponent
     def initialize(
-      solidus_logo_component: component('solidus_logo'),
-      main_nav_component: component('main_nav')
+      logo_path: SolidusAdmin::Config.logo_path,
+      items: container["main_nav_items"],
+      item_component: component("main_nav_item")
     )
-      @solidus_logo_component = solidus_logo_component
-      @main_nav_component = main_nav_component
+      @logo_path = logo_path
+      @items = items
+      @item_component = item_component
     end
 
     erb_template <<~ERB
@@ -18,9 +20,15 @@ module SolidusAdmin
         bg-gray-100
         h-screen
       ">
-        <%= render @solidus_logo_component.new %>
-        <%= render @main_nav_component.new %>
+        <%= image_tag @logo_path, alt: "Solidus" %>
+        <nav data-controller="main-nav">
+          <%= render @item_component.with_collection(items) %>
+        </nav>
       </aside>
     ERB
+
+    def items
+      @items.sort_by(&:position)
+    end
   end
 end
