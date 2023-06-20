@@ -38,7 +38,7 @@ module SolidusFriendlyPromotions
 
       def validate_promotion_action_type
         requested_type = params[:action_type]
-        promotion_action_types = Rails.application.config.spree.promotions.actions
+        promotion_action_types = SolidusFriendlyPromotions.config.actions
         @promotion_action_type = promotion_action_types.detect do |klass|
           klass.name == requested_type
         end

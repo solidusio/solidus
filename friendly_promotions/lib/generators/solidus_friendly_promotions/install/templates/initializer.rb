@@ -54,4 +54,9 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Rules::LineItemTaxon",
   ]
   config.shipment_rules = []
+
+  config.actions = [
+    "SolidusFriendlyPromotions::Actions::AdjustLineItem",
+    "SolidusFriendlyPromotions::Actions::AdjustShipment",
+  ]
 end
