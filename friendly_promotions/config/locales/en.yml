@@ -2,6 +2,26 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  solidus_friendly_promotions:
+    new_promotion: New Promotion
+    current_promotion_usage: 'Current Usage: %{count}'
+    admin:
+      promotions:
+          actions:
+            calculator_label: Calculated by
+          activations_edit:
+            auto: All orders will attempt to use this promotion
+            multiple_codes_html: This promotion uses %{count} promotion codes
+            single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
+          activations_new:
+            auto: Apply to all orders
+            multiple_codes: Multiple promotion codes
+            single_code: Single promotion code
+          form:
+            activation: Activation
+            expires_at_placeholder: Never
+            general: General
+            starts_at_placeholder: Immediately
   activerecord:
     models:
       solidus_friendly_promotions/actions/adjust_shipment: Discount matching shipments
