@@ -18,4 +18,11 @@ SolidusAdmin::Config.configure do |config|
 
   # Append custom stylesheets to be compiled by TailwindCSS.
   # config.tailwind_stylesheets << Rails.root.join("app/my/custom/path/style.css")
+
+  # Add custom folder paths to watch for changes to trigger a cache sweep forcing a
+  # regeneration of the importmap.
+  # config.importmap_cache_sweepers << Rails.root.join("app/javascript/my_admin_components")
+
+  # Add custom paths to importmap files to be loaded.
+  # config.importmap_paths << Rails.root.join("config/solidus_admin_importmap.rb")
 end
