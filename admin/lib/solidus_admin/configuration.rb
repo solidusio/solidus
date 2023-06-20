@@ -44,12 +44,18 @@ module SolidusAdmin
     # Recompile with `bin/rails solidus_admin:tailwindcss:build` after changing this list.
     preference :tailwind_stylesheets, :array, default: []
 
+    # List of paths to watch for changes to trigger a cache sweep forcing a regeneration of the importmap.
+    #
+    # @see https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
     preference :importmap_cache_sweepers, :array, default: [
       SolidusAdmin::Engine.root.join("app", "assets", "javascripts"),
       SolidusAdmin::Engine.root.join("app", "javascript"),
       SolidusAdmin::Engine.root.join("app", "components"),
     ]
 
+    # List of paths to importmap files to be loaded.
+    #
+    # @see https://github.com/rails/importmap-rails#composing-import-maps
     preference :importmap_paths, :array, default: [
       SolidusAdmin::Engine.root.join("config", "importmap.rb"),
     ]
