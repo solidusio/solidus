@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class FirstRepeatPurchaseSince < ::Spree::PromotionRule
+    class FirstRepeatPurchaseSince < Base
       preference :days_ago, :integer, default: 365
       validates :preferred_days_ago, numericality: {only_integer: true, greater_than: 0}
 

@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class OptionValue < ::Spree::PromotionRule
+    class OptionValue < Base
       preference :eligible_values, :hash
 
       def applicable?(promotable)

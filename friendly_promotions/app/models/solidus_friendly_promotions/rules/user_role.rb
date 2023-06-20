@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class UserRole < ::Spree::PromotionRule
+    class UserRole < Base
       preference :role_ids, :array, default: []
 
       MATCH_POLICIES = %w[any all]

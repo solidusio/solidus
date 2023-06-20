@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class Store < ::Spree::PromotionRule
+    class Store < Base
       has_many :promotion_rule_stores, class_name: "Spree::PromotionRuleStore",
         foreign_key: :promotion_rule_id,
         dependent: :destroy

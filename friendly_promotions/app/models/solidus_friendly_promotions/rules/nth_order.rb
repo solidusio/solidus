@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class NthOrder < ::Spree::PromotionRule
+    class NthOrder < Base
       preference :nth_order, :integer, default: 2
       # It does not make sense to have this apply to the first order using preferred_nth_order == 1
       # Instead we could use the first_order rule

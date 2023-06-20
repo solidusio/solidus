@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class OneUsePerUser < ::Spree::PromotionRule
+    class OneUsePerUser < Base
       def applicable?(promotable)
         promotable.is_a?(Spree::Order)
       end

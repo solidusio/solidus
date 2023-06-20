@@ -7,6 +7,11 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstOrder, type: :model do
   let(:order) { mock_model(Spree::Order, user: nil, email: nil) }
   let(:user) { mock_model(Spree::LegacyUser) }
 
+  describe ".to_partial_path" do
+    subject { rule.to_partial_path }
+    it { is_expected.to eq("solidus_friendly_promotions/admin/promotions/rules/first_order") }
+  end
+
   context "without a user or email" do
     it { expect(rule).to be_eligible(order) }
     it "does not set an error message" do

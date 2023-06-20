@@ -6,7 +6,7 @@ module SolidusFriendlyPromotions
     # require all or any of the products to be present.  Valid products
     # either come from assigned product group or are assingned directly to
     # the rule.
-    class Product < ::Spree::PromotionRule
+    class Product < Base
       has_many :product_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id,
         class_name: "Spree::ProductPromotionRule"
       has_many :products, class_name: "Spree::Product", through: :product_promotion_rules
