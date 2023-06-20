@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-6">
+    <div class="field">
+      <%= Spree::Promotion::Rules::NthOrder.human_attribute_name(:form_text) %>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="field">
+      <%= number_field_tag "#{param_prefix}[preferred_nth_order]", promotion_rule.preferred_nth_order, class: 'fullwidth' %>
+    </div>
+  </div>
+</div>

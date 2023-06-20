@@ -1,0 +1,12 @@
+<div class="form-group">
+  <%= label_tag "#{param_prefix}_preferred_role_ids", t('spree.user_role_rule.choose_roles') %>
+  <%= select_tag "#{param_prefix}[preferred_role_ids]",
+    options_from_collection_for_select(
+      Spree::Role.all, :id, :name, promotion_rule.preferred_role_ids
+    ), class: 'select2 fullwidth', multiple: true %>
+</div>
+<div class="form-group">
+  <label>
+    <%= t('spree.user_role_rule.label', select: select_tag("#{param_prefix}[preferred_match_policy]", options_for_select(Spree::Promotion::Rules::UserRole::MATCH_POLICIES.map{ |s| [t("spree.user_role_rule.match_#{s}"),s] }, promotion_rule.preferred_match_policy), { class: 'custom-select'})).html_safe %>
+  </label>
+</div>

@@ -1,0 +1,13 @@
+<div class="field promo-rule-option-values">
+  <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
+  <div class="row">
+    <div class="col-6"><%= label_tag nil, Spree::Product.model_name.human %></div>
+    <div class="col-6"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
+  </div>
+
+  <%= content_tag :div, nil, class: "js-promo-rule-option-values",
+    data: { :'original-option-values' => promotion_rule.preferred_eligible_values } %>
+
+  <button class="button js-add-promo-rule-option-value"><%= t('spree.actions.add') %></button>
+
+</div>
