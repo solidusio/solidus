@@ -3,8 +3,16 @@
 
 en:
   solidus_friendly_promotions:
-    new_promotion: New Promotion
+    create_promotion_code: Create promotion code
     current_promotion_usage: 'Current Usage: %{count}'
+    discount_rules: Promotion Rules
+    download_promotion_codes_list: Download codes list
+    new_promotion: New Promotion
+    new_promotion_category: New Promotion Category
+    new_promotion_code_batch: New Promotion Code Batch
+    no_rules_addes: No Rules Added
+    promotion_successfully_created: Promotion has been successfully created!
+    view_promotion_codes_list: View codes list
     admin:
       promotions:
           actions:
