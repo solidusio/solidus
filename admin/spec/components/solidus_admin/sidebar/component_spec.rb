@@ -3,19 +3,17 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::Sidebar::Component, type: :component do
-  it "renders the logo component" do
-    logo_component = mock_component { erb_template "Logo" }
+  it "renders the solidus logo" do
+    render_inline(described_class.new)
 
-    render_inline(described_class.new(solidus_logo_component: logo_component))
-
-    expect(page).to have_content("Logo")
+    expect(page).to have_css("img[src*='solidus_admin/solidus_logo']")
   end
 
-  it "renders the main navigation component" do
-    main_nav_component = mock_component { erb_template "Main navigation" }
+  it "renders the main navigation" do
+    render_inline(described_class.new)
 
-    render_inline(described_class.new(main_nav_component: main_nav_component))
+    render_inline(described_class.new)
 
-    expect(page).to have_content("Main navigation")
+    expect(page).to have_css("nav[data-controller='main-nav']")
   end
 end
