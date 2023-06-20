@@ -90,7 +90,6 @@ RSpec.configure do |config|
 
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
-  config.include SolidusAdmin::ComponentHelpers, type: :component
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
