@@ -14,12 +14,8 @@ module SolidusFriendlyPromotions
         template "initializer.rb", "config/initializers/solidus_friendly_promotions.rb"
       end
 
-      def add_javascripts
-        append_file "vendor/assets/javascripts/spree/backend/all.js", "//= require spree/backend/solidus_friendly_promotions\n"
-      end
-
-      def add_stylesheets
-        inject_into_file "vendor/assets/stylesheets/spree/backend/all.css", " *= require spree/backend/solidus_friendly_promotions\n", before: %r{\*/}, verbose: true # rubocop:disable Layout/LineLength
+      def add_turbo_rails
+        run "bin/rails turbo:install"
       end
 
       def add_migrations
