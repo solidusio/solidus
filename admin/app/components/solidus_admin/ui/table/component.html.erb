@@ -1,0 +1,43 @@
+<div
+  class="
+    <%= stimulus_id %>
+    rounded-lg
+    border
+    border-gray-100
+    border-gray-100
+    overflow-hidden
+  "
+  data-controller="<%= stimulus_id %>"
+>
+  <table class=" table-auto w-full border-collapse ">
+    <thead class="bg-gray-15 color-gray-100">
+      <tr>
+        <% @columns.each do |column| %>
+          <th
+            class="
+              border-b
+              border-gray-100
+              py-[12px]
+              px-[16px]
+              text-[#4f4f4f]
+              text-left
+              text-[14px]
+              font-[600]
+              line-[120%]
+            "
+          ><%= column.name %></th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody class="bg-white text-[14px] line-[150%] text-black">
+      <% @rows.each do |row| %>
+        <tr class="border-b border-gray-100">
+          <% @columns.each do |column| %>
+            <td class="py-[8px] px-[16px] "><%= column.content.call(row) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
