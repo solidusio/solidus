@@ -44,6 +44,7 @@ module Spree
       #   * :label to override link text, otherwise based on the first resource name (translated)
       #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
+      #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
       def tab(*args, &_block)
         options = { label: args.first.to_s }
 
@@ -66,6 +67,8 @@ module Spree
 
         selected = if options[:match_path].is_a? Regexp
           request.fullpath =~ options[:match_path]
+        elsif options[:match_path].respond_to?(:call)
+          options[:match_path].call(request)
         elsif options[:match_path]
           request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
         else
