@@ -7,6 +7,12 @@
 
   <%= render(
     component("ui/table").build_for(@products, model_class: Spree::Product) do |t|
+      t.column("", class_name: "w-[40px]") do |product|
+        link_to(
+          image_tag(product.gallery.images.first.url(:small), class: "h-[40px] w-[40px] max-w-[40px]"),
+          spree.edit_admin_product_path(product),
+        )
+      end
       t.column(:name) { link_to _1.name, spree.edit_admin_product_path(_1) }
       t.column(:price) { _1.master.display_price.to_html }
     end

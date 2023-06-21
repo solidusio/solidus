@@ -10,6 +10,12 @@
   data-controller="<%= stimulus_id %>"
 >
   <table class=" table-auto w-full border-collapse ">
+    <colgroup>
+      <% @columns.each do |column| %>
+        <col class="<%= column.class_name %>">
+      <% end %>
+    </colgroup>
+
     <thead class="bg-gray-15 color-gray-100">
       <tr>
         <% @columns.each do |column| %>
