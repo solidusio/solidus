@@ -18,6 +18,23 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     link_to product.name, spree.edit_admin_product_path(product)
   end
 
+  def stock_column(product)
+    stock_info =
+      case (on_hand = product.total_on_hand)
+      when Float::INFINITY
+        content_tag :span, t('.stock.in_stock', on_hand: t('.stock.infinity')), class: 'text-forest'
+      when 1..Float::INFINITY
+        content_tag :span, t('.stock.in_stock', on_hand: on_hand), class: 'text-forest'
+      else
+        content_tag :span, t('.stock.in_stock', on_hand: on_hand), class: 'text-red-500'
+      end
+
+    variant_info =
+      t('.for_variants', count: product.variants.count)
+
+    safe_join([stock_info, variant_info], ' ')
+  end
+
   def price_column(product)
     product.master.display_price.to_html
   end
