@@ -11,16 +11,16 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     new(rows: rows, **args).tap(&block)
   end
 
-  def column(name, &block)
+  def column(name, class_name: nil, &block)
     name =
       case name
       when Symbol then @model_class.human_attribute_name(name)
       else name
       end
 
-    @columns << Column.new(name: name, content: block)
+    @columns << Column.new(name: name, content: block, class_name: class_name)
   end
 
-  Column = Struct.new(:name, :content, keyword_init: true)
+  Column = Struct.new(:name, :content, :class_name, keyword_init: true)
   private_constant :Column
 end
