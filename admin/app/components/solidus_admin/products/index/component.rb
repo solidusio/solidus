@@ -18,6 +18,14 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     link_to product.name, spree.edit_admin_product_path(product)
   end
 
+  def status_column(product)
+    if product.available?
+      render component('ui/badge').new(name: t('.status.available'), color: :green)
+    else
+      render component('ui/badge').new(name: t('.status.discontinued'), color: :red)
+    end
+  end
+
   def stock_column(product)
     stock_info =
       case (on_hand = product.total_on_hand)
