@@ -44,6 +44,14 @@
           <% end %>
         </tr>
       <% end %>
+
+      <% if @rows.empty? && @model_class %>
+        <tr>
+          <td colspan="<%= @columns.size %>" class="text-center py-[16px] text-[14px] line-[150%] text-black bg-white">
+            <%= t('.no_resources_found', resources: @model_class.model_name.human.pluralize) %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
