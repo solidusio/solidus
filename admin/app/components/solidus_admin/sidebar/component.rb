@@ -14,10 +14,11 @@ class SolidusAdmin::Sidebar::Component < SolidusAdmin::BaseComponent
 
   erb_template <<~ERB
     <aside class="
+      border-r border-r-gray-100
       col-start-1 col-end-2
       lg:col-start-1 lg:col-end-3
-      bg-gray-100
       h-screen
+      p-[16px]
     ">
       <%= image_tag @logo_path, alt: "Solidus" %>
       <nav data-controller="main-nav">
