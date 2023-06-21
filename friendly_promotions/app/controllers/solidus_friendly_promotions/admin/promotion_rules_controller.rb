@@ -2,11 +2,16 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionRulesController < Spree::Admin::BaseController
+    class PromotionRulesController < Spree::Admin::ResourceController
       helper 'spree/promotion_rules'
 
-      before_action :load_promotion, only: [:create, :destroy]
-      before_action :validate_promotion_rule_type, only: :create
+      before_action :load_promotion, only: [:create, :destroy, :update, :new]
+      before_action :validate_promotion_rule_type, only: [:create, :new]
+
+      def new
+        @promotion_rule = @promotion.promotion_rules.build(type: @promotion_rule_type)
+        render layout: false
+      end
 
       def create
         @promotion_rule = @promotion_rule_type.new(promotion_rule_params)
@@ -14,10 +19,7 @@ module SolidusFriendlyPromotions
         if @promotion_rule.save
           flash[:success] = t('spree.successfully_created', resource: t('spree.promotion_rule'))
         end
-        respond_to do |format|
-          format.html { redirect_to spree.edit_admin_promotion_path(@promotion) }
-          format.js   { render layout: false }
-        end
+        redirect_to location_after_save
       end
 
       def destroy
@@ -25,13 +27,14 @@ module SolidusFriendlyPromotions
         if @promotion_rule.destroy
           flash[:success] = t('spree.successfully_removed', resource: t('spree.promotion_rule'))
         end
-        respond_to do |format|
-          format.html { redirect_to spree.edit_admin_promotion_path(@promotion) }
-          format.js   { render layout: false }
-        end
+        redirect_to location_after_save
       end
 
       private
+
+      def location_after_save
+        solidus_friendly_promotions.edit_admin_promotion_path(@promotion)
+      end
 
       def load_promotion
         @promotion = Spree::Promotion.find(params[:promotion_id])
@@ -43,7 +46,7 @@ module SolidusFriendlyPromotions
 
       def validate_promotion_rule_type
         requested_type = params[:promotion_rule].delete(:type)
-        promotion_rule_types = Rails.application.config.spree.promotions.rules
+        promotion_rule_types = SolidusFriendlyPromotions.config.order_rules
         @promotion_rule_type = promotion_rule_types.detect do |klass|
           klass.name == requested_type
         end

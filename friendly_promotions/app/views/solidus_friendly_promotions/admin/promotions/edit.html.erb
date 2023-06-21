@@ -1,0 +1,38 @@
+<% admin_layout "full-width" %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), solidus_friendly_promotions.admin_promotions_path) %>
+<% admin_breadcrumb(@promotion.name) %>
+
+<%= content_for :head do %>
+  <%= javascript_importmap_tags "@hotwired/turbo-rails" %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <% if can?(:show, Spree::PromotionCode) %>
+      <%= link_to t('solidus_friendly_promotions.view_promotion_codes_list'), solidus_friendly_promotions.admin_promotion_promotion_codes_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
+
+      <%= link_to t('solidus_friendly_promotions.download_promotion_codes_list'), solidus_friendly_promotions.admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), class: 'btn btn-primary' %>
+    <% end %>
+
+    <% if can?(:show, Spree::PromotionCodeBatch) %>
+      <%= link_to plural_resource_name(Spree::PromotionCodeBatch), solidus_friendly_promotions.admin_promotion_promotion_code_batches_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
+    <% end %>
+  </li>
+<% end %>
+
+<%= form_for @promotion, url: object_url, method: :put do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <% if can?(:update, @promotion) %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+  <% end %>
+<% end %>
+
+<fieldset>
+  <legend align="center"><%= t('.order_rules') %></legend>
+
+    <div id="rules" class="filter_list">
+      <%= render partial: 'promotion_rule', collection: @promotion.rules, locals: {} %>
+      <%= render "new_rule_form", level: :order %>
+    </div>
+</fieldset>

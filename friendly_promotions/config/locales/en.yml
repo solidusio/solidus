@@ -30,6 +30,8 @@ en:
             expires_at_placeholder: Never
             general: General
             starts_at_placeholder: Immediately
+          edit:
+            order_rules: Order Rules
   activerecord:
     models:
       solidus_friendly_promotions/actions/adjust_shipment: Discount matching shipments

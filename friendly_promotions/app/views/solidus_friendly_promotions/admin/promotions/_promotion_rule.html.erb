@@ -1,0 +1,18 @@
+
+<div class="promotion_rule promotion-block" id="<%= dom_id promotion_rule %>">
+  <%= form_tag solidus_friendly_promotions.admin_promotion_promotion_rule_path(@promotion, promotion_rule), method: :patch do %>
+    <h6 class='promotion-title'><%= promotion_rule.class.human_attribute_name(:description) %></h6>
+    <% if  can?(:destroy, promotion_rule) %>
+      <%= link_to_with_icon 'trash', '', spree.admin_promotion_promotion_rule_path(@promotion, promotion_rule), method: :delete, class: 'delete' %>
+    <% end %>
+    <% param_prefix = "promotion[promotion_rules_attributes][#{promotion_rule.id}]" %>
+    <%= hidden_field_tag "#{param_prefix}[id]", promotion_rule.id %>
+    <%= render partial: "spree/shared/error_messages", locals: { target: promotion_rule } %>
+    <%= render partial: promotion_rule.to_partial_path, locals: { promotion_rule: promotion_rule, param_prefix: "promotion_rule" } %>
+    <div class="row">
+      <div class="col-12">
+        <%= button_tag "Update", class: "btn btn-secondary float-right" if promotion_rule.preferences.any? %>
+      </div>
+    </div>
+  <% end %>
+</div>

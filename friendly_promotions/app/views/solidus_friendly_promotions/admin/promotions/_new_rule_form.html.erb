@@ -1,0 +1,18 @@
+<%= turbo_frame_tag @promotion, "new_promotion_rule" do %>
+  <div class="promotion_rule promotion-block">
+    <%= form_tag solidus_friendly_promotions.new_admin_promotion_promotion_rule_path(@promotion), method: :get, remote: false do %>
+      <% if can?(:update, @promotion) %>
+        <div class="field">
+          <%= label_tag :promotion_rule_type, Spree::PromotionRule.human_attribute_name(:type) %>
+        <div class="input-group">
+          <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion, level), include_blank: t(:choose_promotion_rule, scope: 'spree'), class: 'custom-select fullwidth', required: true) %>
+          <%= hidden_field_tag("level", level) %>
+          <div class="input-group-append">
+            <%= button_tag t('spree.actions.add'), class: 'btn btn-secondary' %>
+          </div>
+        </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
