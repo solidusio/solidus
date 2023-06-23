@@ -4,7 +4,7 @@
     <%= link_to_with_icon 'trash', '', spree.edit_admin_promotion_path(@promotion), class: 'delete' %>
     <%= render 'type_select' %>
     <% if @promotion_action.respond_to?(:calculator) %>
-      <%= render 'calculator_select', path: solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion) %>
+      <%= render 'calculator_select', path: solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion), promotion_action: @promotion_action %>
       <% if @promotion_action.calculator %>
         <%=
           form_with(
