@@ -1,0 +1,8 @@
+en:
+  status:
+    available: 'Available'
+    discontinued: 'Discontinued'
+  stock:
+    infinity: '∞'
+    in_stock: '%{on_hand} in stock'
+  for_variants: 'for %{count} variants'
