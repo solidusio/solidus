@@ -5,6 +5,9 @@
 
 <%= content_for :head do %>
   <%= javascript_importmap_tags "@hotwired/turbo-rails" %>
+  <script type="application/javascript">
+    Turbo.session.drive = false
+  </script>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -32,19 +35,9 @@
 <fieldset>
   <legend align="center"><%= t(:actions, scope: :solidus_friendly_promotions) %></legend>
 
-  <%= render partial: 'promotion_action', collection: @promotion.actions, locals: {} %>
+  <%= render partial: 'solidus_friendly_promotions/admin/promotion_actions/promotion_action', collection: @promotion.actions, locals: {} %>
 
-  <% [:line_item, :shipment].each do |level| %>
-    <%= render "new_action_form", level: level %>
+  <%= turbo_frame_tag @promotion, "new_promotion_action" do %>
+    <%= link_to t(:add_action, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion), class: 'btn btn-secondary' %>
   <% end %>
-</fieldset>
-
-
-<fieldset>
-  <legend align="center"><%= t('.order_rules') %></legend>
-
-    <div id="rules" class="filter_list">
-      <%= render partial: 'promotion_rule', collection: @promotion.rules, locals: {} %>
-      <%= render "new_rule_form", level: :order %>
-    </div>
 </fieldset>

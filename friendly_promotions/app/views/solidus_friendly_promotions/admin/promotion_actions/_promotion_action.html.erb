@@ -1,0 +1,34 @@
+<%= turbo_frame_tag @promotion, promotion_action do %>
+  <div class="promotion_action promotion-block">
+    <h6 class='promotion-title'> <%= promotion_action.model_name.human %></h6>
+    <% if can?(:destroy, promotion_action) %>
+      <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.admin_promotion_promotion_action_path(@promotion, promotion_action), method: :delete, class: 'delete' %>
+    <% end %>
+      <%= form_with model: promotion_action, scope: :promotion_action, url: solidus_friendly_promotions.edit_admin_promotion_promotion_action_path(@promotion, promotion_action), method: :get do |form| %>
+        <%= form.label :calculator_type %>
+        <%=
+          form.select :calculator_type,
+            options_for_promotion_action_calculator_types(form.object),
+            {
+              include_blank: t(:choose_promotion_action_calculator, scope: 'solidus_friendly_shipping')
+            },
+            class: 'custom-select fullwidth',
+            onchange: 'this.form.requestSubmit()'
+        %>
+      <% end %>
+      <%=
+        form_with(
+        model: promotion_action,
+        scope: :promotion_action,
+        url: solidus_friendly_promotions.admin_promotion_promotion_action_path(@promotion, promotion_action),
+        data: { turbo: false }
+      ) do |form| %>
+        <%= render 'solidus_friendly_promotions/admin/promotion_actions/form', form: form %>
+      <div class="row">
+        <div class="col-12">
+          <%= button_tag "Update", class: "btn btn-secondary float-right" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

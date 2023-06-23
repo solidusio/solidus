@@ -21,12 +21,6 @@ module SolidusFriendlyPromotions
           rule.class.name.demodulize.underscore.ends_with?(level.to_s)
         end
       end
-
-      def options_for_promotion_action_calculator_types(level)
-        calculators = SolidusFriendlyPromotions.config.send("#{level}_discount_calculators")
-        options = calculators.map { |calculator| [calculator.model_name.human, calculator.name] }
-        options_for_select(options)
-      end
     end
   end
 end

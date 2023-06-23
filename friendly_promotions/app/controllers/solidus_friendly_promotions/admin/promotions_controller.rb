@@ -6,6 +6,7 @@ module SolidusFriendlyPromotions
       before_action :load_data
 
       helper 'solidus_friendly_promotions/admin/promotion_rules'
+      helper 'solidus_friendly_promotions/admin/promotion_actions'
 
       def create
         @promotion = Spree::Promotion.new(permitted_resource_params)

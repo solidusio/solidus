@@ -6,6 +6,10 @@ module SolidusFriendlyPromotions
       def can_adjust?(object)
         object.is_a? Spree::Shipment
       end
+
+      def available_calculators
+        SolidusFriendlyPromotions.config.shipment_discount_calculators
+      end
     end
   end
 end

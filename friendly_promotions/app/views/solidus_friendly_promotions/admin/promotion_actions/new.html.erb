@@ -1,26 +1,26 @@
 <%= turbo_frame_tag @promotion, "new_promotion_action" do %>
-  <%= form_tag solidus_friendly_promotions.admin_promotion_promotion_actions_path(@promotion) do %>
-    <div class="promotion_action promotion-block">
-      <h6 class='promotion-title'> <%= @promotion_action.class.human_attribute_name(:description) %></h6>
-      <%= link_to_with_icon 'trash', '', spree.edit_admin_promotion_path(@promotion), class: 'delete' %>
-      <%= render partial: "spree/shared/error_messages", locals: { target: @promotion_action } %>
-      <%= hidden_field_tag "promotion_action[type]", @promotion_action.class.name %>
-      <%= hidden_field_tag "promotion_action[calculator_attributes][type]", @promotion_action.calculator.class.name %>
-      <% type_name = @promotion_action.calculator.type.demodulize.underscore %>
-      <% param_prefix = "promotion_action" %>
-      <% if lookup_context.exists?("fields",
-          ["spree/admin/promotions/calculators/#{type_name}"], true) %>
-        <%= render "spree/admin/promotions/calculators/#{type_name}/fields",
-          calculator: @promotion_action.calculator, prefix: param_prefix %>
-      <% else %>
-        <%= render "spree/admin/promotions/calculators/default_fields",
-          calculator: @promotion_action.calculator, prefix: param_prefix %>
+  <div class="promotion_action promotion-block">
+    <h6 class='promotion-title'> <%= t(:add_action, scope: :solidus_friendly_promotions) %></h6>
+    <%= link_to_with_icon 'trash', '', spree.edit_admin_promotion_path(@promotion), class: 'delete' %>
+    <%= render 'type_select' %>
+    <% if @promotion_action.respond_to?(:calculator) %>
+      <%= render 'calculator_select', path: solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion) %>
+      <% if @promotion_action.calculator %>
+        <%=
+          form_with(
+            model: @promotion_action,
+            scope: :promotion_action,
+            url: solidus_friendly_promotions.admin_promotion_promotion_actions_path(@promotion),
+            data: { turbo: false }
+          ) do |form| %>
+          <%= render 'form', form: form %>
+          <div class="row">
+            <div class="col-12">
+              <%= button_tag "Add", class: "btn btn-secondary float-right" %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
-      <div class="row">
-        <div class="col-12">
-          <%= button_tag "Add", class: "btn btn-secondary float-right", data: { "turbo-frame" => "_top" } %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% end %>

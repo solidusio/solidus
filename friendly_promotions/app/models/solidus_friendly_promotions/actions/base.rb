@@ -42,6 +42,10 @@ module SolidusFriendlyPromotions
       def to_partial_path
         "solidus_friendly_promotions/admin/promotions/actions/#{model_name.element}"
       end
+
+      def available_calculators
+        raise NotImplementedError
+      end
     end
   end
 end
