@@ -3,7 +3,6 @@
 module SolidusAdmin
   # BaseComponent is the base class for all components in Solidus Admin.
   class BaseComponent < ViewComponent::Base
-    include ViewComponent::InlineTemplate
     include SolidusAdmin::ContainerHelper
 
     def stimulus_id
