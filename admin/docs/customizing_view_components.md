@@ -67,17 +67,17 @@ running `Rails.application.class.module_parent_name`).
 
 ### Replacing a component's template
 
-> ⓘ This is not possible yet because of
-> https://github.com/ViewComponent/view_component/issues/411, but it would
-> probably be worth trying to find a way to make it work. Otherwise, we can
-> describe how to override the `erb_template` call.
-
 In the most typical case, you'll only need to replace the template used by a
-component. You can do that by creating a new template with a maching path in
-your application. For example, to replace the main nav template, you can create:
+component. You can do that by creating a new component with a maching path in
+your application, inheriting from the default one. Then, you can create a new
+template for it. For example, to replace the main nav template:
 
 ```erb
-<%# app/components/my_application/solidus_admin/main_nav/template.html.erb %>
+# app/components/my_application/solidus_admin/main_nav/component.rb %>
+class MyApplication::SolidusAdmin::MainNav::Component < ::SolidusAdmin::MainNav::Component
+end
+
+<%# app/components/my_application/solidus_admin/main_nav/component.html.erb %>
 <nav class="my_own_classes">
   <%=
     render main_nav_item_component.with_collection(
@@ -94,7 +94,7 @@ component. You can easily do that by rendering the Solidus Admin component and
 adding your markup before or after it.
 
 ```erb
-<%# app/components/my_application/solidus_admin/main_nav/template.html.erb %>
+<%# app/components/my_application/solidus_admin/main_nav/component.html.erb %>
 <h1>MY STORE ADMINISTRATION</h1>
 <%= render SolidusAdmin::MainNav::Component.new %>
 ```

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
+  include ViewComponent::InlineTemplate
+
   COLORS = {
     graphite_light: "text-black bg-graphiteLight",
     red: 'text-red-500 bg-red-100',
