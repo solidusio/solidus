@@ -2,6 +2,8 @@
 
 # Menu item within a {Sidebar}
 class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
+  include ViewComponent::InlineTemplate
+
   with_collection_parameter :item
 
   def initialize(item:)
