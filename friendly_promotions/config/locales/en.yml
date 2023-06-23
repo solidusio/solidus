@@ -5,8 +5,8 @@ en:
   solidus_friendly_promotions:
     actions: Actions
     add_action:
-      line_item: Add line item discount
-      shipment: Add shipment discount
+      line_item: Add line item discount action
+      shipment: Add shipment discount action
     create_promotion_code: Create promotion code
     current_promotion_usage: 'Current Usage: %{count}'
     discount_rules: Promotion Rules
