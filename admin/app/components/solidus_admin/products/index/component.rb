@@ -5,8 +5,6 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     @products = products
   end
 
-  # @!visibility private
-
   def image_column(product)
     image = product.gallery.images.first or return
 
