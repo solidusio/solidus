@@ -1,0 +1,30 @@
+<%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(:base_percent)}",
+  name: "#{prefix}[calculator_attributes][preferred_base_percent]",
+  value: calculator.preferred_base_percent, label: t('spree.base_percent') %>
+
+<div class="field">
+  <%= label_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    t('spree.currency')
+  ) %>
+  <%= select_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    options_for_select(
+      Spree::Config.available_currencies,
+      calculator.preferred_currency || Spree::Config[:currency]
+    ),
+    { class: 'custom-select fullwidth' }
+  ) %>
+</div>
+
+<div class="field">
+  <%= label_tag nil, t('spree.tiers') %>
+  <div class="js-tiered-calculator">
+    <%= content_tag :div, nil, class: "js-tiers", data: {
+      'original-tiers' => Hash[calculator.preferred_tiers.sort],
+      'form-prefix' => prefix,
+      'calculator' => 'tiered_percent'
+    } %>
+    <a class="button js-add-tier"><%= t('spree.actions.add') %></a>
+  </div>
+</div>

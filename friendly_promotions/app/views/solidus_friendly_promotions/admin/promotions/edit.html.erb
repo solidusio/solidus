@@ -28,6 +28,17 @@
   <% end %>
 <% end %>
 
+
+<fieldset>
+  <legend align="center"><%= t(:actions, scope: :solidus_friendly_promotions) %></legend>
+
+  <% [:line_item, :shipment].each do |level| %>
+    <%= render partial: 'promotion_action', collection: promotion_actions_by_level(@promotion, level), locals: {} %>
+    <%= render "new_action_form", level: level %>
+  <% end %>
+</fieldset>
+
+
 <fieldset>
   <legend align="center"><%= t('.order_rules') %></legend>
 

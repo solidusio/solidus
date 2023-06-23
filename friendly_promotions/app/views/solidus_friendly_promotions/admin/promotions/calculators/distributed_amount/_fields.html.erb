@@ -1,0 +1,56 @@
+<div class="field">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_amount %>
+    <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :preferred_amount, currency_attr: :preferred_currency %>
+  <% end %>
+</div>
+
+<div class="field">
+  <p>
+    <%= admin_hint(
+      calculator.model_name.human,
+      """
+        <p>
+          This amount will be distributed to line items weighted relative to
+          their price. More expensive line items will receive a greater share
+          of the adjustment.
+        </p>
+
+        <p>
+          For example, with three line items and a preferred amount of $15 we
+          would end up with the following distribution:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Price</th>
+              <th>Weighted Adj.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Socks</td>
+              <td>$5</td>
+              <td>-$1.5</td>
+            </tr>
+            <tr>
+              <td>Shoes</td>
+              <td>$30</td>
+              <td>-$9</td>
+            </tr>
+            <tr>
+              <td>Slippers</td>
+              <td>$15</td>
+              <td>-$4.5</td>
+            </tr>
+          </tbody>
+        </table>
+      """
+    ) %>
+
+    This amount will be the <strong>total</strong> discount spread amongst all
+    of the line items.
+  </p>
+</div>
