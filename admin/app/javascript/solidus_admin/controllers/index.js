@@ -10,5 +10,5 @@ eagerLoadControllersFrom("solidus_admin/controllers", application)
 // import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
 // lazyLoadControllersFrom("controllers", application)
 
-import { eagerLoadComponentsFrom } from "./components"
-eagerLoadComponentsFrom("solidus_admin", application)
+import { eagerLoadComponents } from "./components"
+eagerLoadComponents(application, { under: "solidus_admin", suffix: "/component" })
