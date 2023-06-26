@@ -18,6 +18,8 @@ function registerComponent(path, under, application, suffix) {
     .replace(/\//g, "--")
     .replace(/_/g, "-")
 
+  application.logDebugActivity(name, 'registerComponent', { path, under, suffix })
+
   if (!(name in registeredControllers)) {
     import(path)
       .then(module => registerController(name, module, application))
