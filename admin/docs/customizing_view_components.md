@@ -29,30 +29,8 @@ a series of patterns are followed consistently:
   on the instance variable instead of resolving the component in-line. Because
   of that, switching a nested component only requires modifying its
   initializer.
-- Those components given on initialization are always defaulted to its expected
-  value resolved from the container. That means that callers don't need to
-  provide them explicitly, and that they can be replaced by custom components.
 - In any case, Solidus Admin components initializers only take keyword
   arguments.
-
-A picture is worth a thousand words, so let's depict how this works with an
-example:
-
-```ruby
-# app/components/solidus_admin/foo/component.rb
-class SolidusAdmin::Foo::Component < SolidusAdmin::BaseComponent
-  def initialize(bar_component: component('bar'))
-    @bar_component = bar_component
-  end
-  
-  erb_template <<~ERB
-    <div>
-      <%= render @bar_component.new %>
-    </div>
-  ERB
-end
-# render component('foo').new
-```
 
 ## Customizing components
 
@@ -72,18 +50,16 @@ component. You can do that by creating a new component with a maching path in
 your application, inheriting from the default one. Then, you can create a new
 template for it. For example, to replace the main nav template:
 
-```erb
+```rb
 # app/components/my_application/solidus_admin/main_nav/component.rb %>
 class MyApplication::SolidusAdmin::MainNav::Component < ::SolidusAdmin::MainNav::Component
 end
+```
 
+```erb
 <%# app/components/my_application/solidus_admin/main_nav/component.html.erb %>
 <nav class="my_own_classes">
-  <%=
-    render main_nav_item_component.with_collection(
-      sorted_items
-    )
-  %>
+  <%= render component("main_nav/item").with_collection(sorted_items) %>
 </nav>
 ```
 
@@ -133,6 +109,17 @@ Solidus Admin container instead of using an implicit path:
 Rails.application.config.to_prepare do
   SolidusAdmin::Container['components.main_nav.component'] = OtherNamespace::NavComponent
 end
+```
+
+#### Replacing a component locally to another component
+
+If you need to replace a component only inside another component, you can do
+that by calling `with_components` on the component instance and passing a hash
+with the replacement component class as the value:
+
+```erb
+<%# app/components/my_application/solidus_admin/main_nav/component.html.erb %>
+<%= render component("main_nav").with_components("main_nav/item" => MyMainNavItem) %>
 ```
 
 ### Tweaking a component

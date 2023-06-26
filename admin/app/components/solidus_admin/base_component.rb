@@ -12,5 +12,18 @@ module SolidusAdmin
     def spree
       @spree ||= Spree::Core::Engine.routes.url_helpers
     end
+
+    def with_components(overrides)
+      @local_component_overrides ||= {}.with_indifferent_access
+      @local_component_overrides.merge!(overrides)
+
+      self
+    end
+
+    def component(name)
+      return super unless @local_component_overrides&.key?(name)
+
+      @local_component_overrides[name]
+    end
   end
 end

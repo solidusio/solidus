@@ -15,4 +15,23 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
       Spree::Core::Engine.routes.clear!
     end
   end
+
+  describe "with_components" do
+    it "allows overriding components" do
+      component = described_class.new
+      replacement_component = Class.new(described_class)
+      component.with_components(foo: replacement_component)
+
+      expect(component.component(:foo)).to eq(replacement_component)
+      expect(component.component("foo")).to eq(replacement_component)
+    end
+
+    it "falls back to the original component if not overridden" do
+      component = described_class.new.with_components(bar: "baz")
+      default_component = Class.new(described_class)
+      allow(SolidusAdmin::Container).to receive(:resolve).with("components.foo.bar.component").and_return(default_component)
+
+      expect(component.component('foo/bar')).to eq(default_component)
+    end
+  end
 end
