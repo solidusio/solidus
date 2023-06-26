@@ -28,6 +28,6 @@
     </p>
   <% end %>
   <nav data-controller="main-nav">
-    <%= render @item_component.with_collection(items) %>
+    <%= render component("sidebar/item").with_collection(items) %>
   </nav>
 </aside>

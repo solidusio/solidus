@@ -5,12 +5,10 @@ class SolidusAdmin::Sidebar::Component < SolidusAdmin::BaseComponent
   def initialize(
     store:,
     logo_path: SolidusAdmin::Config.logo_path,
-    items: container["main_nav_items"],
-    item_component: component("sidebar/item")
+    items: container["main_nav_items"]
   )
     @logo_path = logo_path
     @items = items
-    @item_component = item_component
     @store = store
   end
 
