@@ -12,5 +12,9 @@ module SolidusAdmin
     def spree
       @spree ||= Spree::Core::Engine.routes.url_helpers
     end
+
+    def solidus_admin
+      @solidus_admin ||= SolidusAdmin::Engine.routes.url_helpers
+    end
   end
 end
