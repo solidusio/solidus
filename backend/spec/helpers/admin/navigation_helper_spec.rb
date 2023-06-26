@@ -68,6 +68,22 @@ describe Spree::Admin::NavigationHelper, type: :helper do
           tab = helper.tab(:orders, match_path: /shady$|shady\//)
           expect(tab).not_to include('class="selected"')
         end
+
+        context "when the match_path is a callable" do
+          subject { helper.tab(:orders, match_path: match_path) }
+
+          context "when the callable returns false" do
+            let(:match_path) { ->(_request) { false } }
+
+            it { is_expected.not_to include('class="selected"') }
+          end
+
+          context "when the callable returns true" do
+            let(:match_path) { ->(_request) { true } }
+
+            it { is_expected.to include('class="selected"') }
+          end
+        end
       end
     end
 
