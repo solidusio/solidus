@@ -10,9 +10,18 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
 
       component = described_class.new
 
-      expect(component.spree).to respond_to(:foo_bar_path)
+      expect(component.spree.foo_bar_path).to eq("/foo/bar")
     ensure
       Spree::Core::Engine.routes.clear!
+    end
+  end
+
+  describe "#solidus_admin" do
+    it "gives access to solidus_admin routing helpers" do
+      allow(SolidusAdmin::Engine.routes.url_helpers).to receive(:foo_path).and_return("/foo/bar")
+      component = described_class.new
+
+      expect(component.solidus_admin.foo_path).to eq("/foo/bar")
     end
   end
 end
