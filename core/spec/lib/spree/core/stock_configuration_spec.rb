@@ -17,7 +17,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.coordinator_class = MyCoordinator.to_s
 
       expect(subject).to be MyCoordinator
-
     ensure
       Object.send(:remove_const, :MyCoordinator)
     end
@@ -35,7 +34,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.estimator_class = MyEstimator.to_s
 
       expect(subject).to be MyEstimator
-
     ensure
       Object.send(:remove_const, :MyEstimator)
     end
@@ -53,7 +51,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.location_filter_class = MyFilter.to_s
 
       expect(subject).to be MyFilter
-
     ensure
       Object.send(:remove_const, :MyFilter)
     end
@@ -71,7 +68,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.location_sorter_class = MySorter.to_s
 
       expect(subject).to be MySorter
-
     ensure
       Object.send(:remove_const, :MySorter)
     end
@@ -89,7 +85,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.allocator_class = MyAllocator.to_s
 
       expect(subject).to be MyAllocator
-
     ensure
       Object.send(:remove_const, :MyAllocator)
     end
@@ -107,7 +102,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.inventory_unit_builder_class = MyInventoryUnitBuilder.to_s
 
       expect(subject).to be MyInventoryUnitBuilder
-
     ensure
       Object.send(:remove_const, :MyInventoryUnitBuilder)
     end
@@ -127,7 +121,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.availability_validator_class = MyAvailabilityValidator.to_s
 
       expect(subject).to be MyAvailabilityValidator
-
     ensure
       Object.send(:remove_const, :MyAvailabilityValidator)
     end
@@ -147,7 +140,6 @@ RSpec.describe Spree::Core::StockConfiguration do
       stock_configuration.inventory_validator_class = MyInventoryValidator.to_s
 
       expect(subject).to be MyInventoryValidator
-
     ensure
       Object.send(:remove_const, :MyInventoryValidator)
     end
