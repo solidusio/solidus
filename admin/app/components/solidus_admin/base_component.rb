@@ -5,9 +5,14 @@ module SolidusAdmin
   class BaseComponent < ViewComponent::Base
     include SolidusAdmin::ContainerHelper
 
-    def stimulus_id
-      @stimulus_id ||= self.class.module_parent.to_s.underscore.dasherize.gsub(%r{/}, '--')
+    def self.stimulus_id
+      @stimulus_id ||= name.underscore
+        .sub(/^solidus_admin\/(.*)\/component$/, '\1')
+        .gsub("/", "--")
+        .tr("_", "-")
     end
+
+    delegate :stimulus_id, to: :class
 
     def spree
       @spree ||= Spree::Core::Engine.routes.url_helpers
