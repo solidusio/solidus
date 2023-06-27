@@ -3,12 +3,14 @@
 module SolidusAdmin
   # Encapsulates the data for a main nav item.
   class MainNavItem
-    attr_reader :title, :position
+    attr_reader :key, :icon, :position
 
-    # @param title [String]
+    # @param key [String]
+    # @param icon [String]
     # @param position [Integer]
-    def initialize(title:, position:)
-      @title = title
+    def initialize(key:, icon:, position:)
+      @key = key
+      @icon = icon
       @position = position
     end
   end
