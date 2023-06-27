@@ -24,4 +24,13 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
       expect(component.solidus_admin.foo_path).to eq("/foo/bar")
     end
   end
+
+  describe ".stimulus_id" do
+    it "returns the stimulus id for the component" do
+      stub_const("SolidusAdmin::Foo::Bar::Component", Class.new(described_class))
+
+      expect(SolidusAdmin::Foo::Bar::Component.stimulus_id).to eq("foo--bar")
+      expect(SolidusAdmin::Foo::Bar::Component.new.stimulus_id).to eq("foo--bar")
+    end
+  end
 end
