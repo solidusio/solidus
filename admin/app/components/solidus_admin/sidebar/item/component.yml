@@ -1,0 +1,8 @@
+en:
+  main_nav:
+    orders: Orders
+    products: Products
+    promotions: Promotions
+    stock: Stock
+    users: Users
+    settings: Settings
