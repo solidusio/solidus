@@ -190,6 +190,16 @@ RSpec.describe Spree::Taxon, type: :model do
         taxon = taxonomy.root.children.create!(name: 'First child', taxonomy: taxonomy)
         expect(taxon).to be_valid
         expect(taxonomy.taxons.many?).to eq(true)
+        second_taxon = taxonomy.root.children.create!(name: 'Second child', taxonomy: taxonomy)
+        expect(second_taxon).to be_valid
+        expect(taxonomy.root.children.many?).to eq(true)
+      end
+
+      # Regression test https://github.com/solidusio/solidus/issues/5187
+      it "does not invalidate the root taxon after having children taxons" do
+        taxonomy.root.children.create!(name: 'New node', taxonomy: taxonomy)
+        expect(taxonomy.taxons.many?).to eq(true)
+        expect(taxonomy.root).to be_valid
       end
     end
 
