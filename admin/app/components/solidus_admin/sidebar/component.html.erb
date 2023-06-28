@@ -28,6 +28,8 @@
     </p>
   <% end %>
   <nav data-controller="main-nav" class="mt-2">
-    <%= render @item_component.with_collection(items) %>
+    <ul>
+      <%= render @item_component.with_collection(items) %>
+    </ul>
   </nav>
 </aside>

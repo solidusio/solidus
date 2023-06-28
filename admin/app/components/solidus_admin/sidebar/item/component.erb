@@ -1,17 +1,17 @@
-<%# 
-Arbitrary Tailwind background images is not working:
-https://github.com/tailwindlabs/tailwindcss/discussions/6617
-%>
-<div class="
-    py-2 px-3 mb-1
-    bg-no-repeat bg-left bg-origin-content
-  " style="background-image: url('<%= image_path(@item.icon) %>')">
-  <a href="#" class="
-    pl-[1.81rem]
-    text-sm text-black
-    font-sans font-bold
-  ">
-    <%= name %>
-  </a>
-</div>
-
+<li>
+  <div class="
+      py-2 px-3 mb-1
+      bg-no-repeat bg-left bg-origin-content
+      "
+      <%= background_image_style_attribute %>
+  >
+    <a href="#" class="
+      pl-[1.81rem]
+      font-sans text-sm
+      <%= link_level_classes %>
+    ">
+      <%= name %>
+    </a>
+  </div>
+  <%= nested_items %>
+</li>
