@@ -2,10 +2,10 @@
 <% calculator = promotion_action.calculator %>
 <% type_name = calculator.type.demodulize.underscore %>
 <% if lookup_context.exists?("fields",
-  ["solidus_friendly_promotions/admin/promotions/calculators/#{type_name}"], true) %>
-<%= render "solidus_friendly_promotions/admin/promotions/calculators/#{type_name}/fields",
+  ["solidus_friendly_promotions/admin/promotion_actions/calculators/#{type_name}"], true) %>
+<%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/#{type_name}/fields",
   calculator: calculator, prefix: param_prefix %>
 <% else %>
-<%= render "solidus_friendly_promotions/admin/promotions/calculators/default_fields",
+<%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/default_fields",
   calculator: calculator, prefix: param_prefix %>
 <% end %>
