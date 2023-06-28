@@ -4,10 +4,7 @@
 <% admin_breadcrumb(@promotion.name) %>
 
 <%= content_for :head do %>
-  <%= javascript_importmap_tags "@hotwired/turbo-rails" %>
-  <script type="application/javascript">
-    Turbo.session.drive = false
-  </script>
+  <%= javascript_importmap_tags "solidus_friendly_promotions", importmap: SolidusFriendlyPromotions.importmap %>
 <% end %>
 
 <% content_for :page_actions do %>
