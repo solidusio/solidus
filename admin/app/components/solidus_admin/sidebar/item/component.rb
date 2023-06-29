@@ -12,14 +12,24 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     t(".main_nav.#{@item.key}")
   end
 
-  # Arbitrary Tailwind background images is not working:
-  # https://github.com/tailwindlabs/tailwindcss/discussions/6617
-  def background_image_style_attribute
-    return unless @item.icon
+  def icon
+    common_classes = "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] text-sm"
 
-    "style=\"background-image: url('".html_safe +
-      image_path(@item.icon) +
-      "')\"".html_safe
+    if @item.icon
+      url = image_path(@item.icon)
+      tag.span(
+        "&nbsp;",
+        class: "#{common_classes} align-text-bottom bg-black group-hover:bg-red-500",
+        style: <<~CSS,
+          mask: url(#{url}) 100% 100% no-repeat;
+          -webkit-mask: url(#{url}) 100% 100% no-repeat;
+        CSS
+      )
+    else
+      tag.span(
+        class: common_classes
+      )
+    end
   end
 
   def link_level_classes
