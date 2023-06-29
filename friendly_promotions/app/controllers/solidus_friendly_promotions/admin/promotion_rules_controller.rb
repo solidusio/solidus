@@ -2,14 +2,18 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionRulesController < Spree::Admin::ResourceController
+    class PromotionRulesController < Spree::Admin::BaseController
       helper 'spree/promotion_rules'
 
+      before_action :validate_level, only: [:new, :edit, :create]
       before_action :load_promotion, only: [:create, :destroy, :update, :new]
-      before_action :validate_promotion_rule_type, only: [:create, :new]
+      before_action :validate_promotion_rule_type, only: [:create]
 
       def new
-        @promotion_rule = @promotion.promotion_rules.build(type: @promotion_rule_type)
+        if params.dig(:promotion_rule, :type)
+          validate_promotion_rule_type
+          @promotion_rule = @promotion.promotion_rules.build(type: @promotion_rule_type)
+        end
         render layout: false
       end
 
@@ -46,7 +50,7 @@ module SolidusFriendlyPromotions
 
       def validate_promotion_rule_type
         requested_type = params[:promotion_rule].delete(:type)
-        promotion_rule_types = SolidusFriendlyPromotions.config.order_rules
+        promotion_rule_types = SolidusFriendlyPromotions.config.send("#{@level}_rules")
         @promotion_rule_type = promotion_rule_types.detect do |klass|
           klass.name == requested_type
         end
@@ -56,6 +60,16 @@ module SolidusFriendlyPromotions
             format.html { redirect_to spree.edit_admin_promotion_path(@promotion) }
             format.js   { render layout: false }
           end
+        end
+      end
+
+      def validate_level
+        requested_level = params[:level].to_s
+        if requested_level.in?(["order", "line_item", "shipment"])
+          @level = requested_level
+        else
+          @level = "order"
+          flash.now[:error] = t(:invalid_promotion_rule_level, scope: :solidus_friendly_promotions)
         end
       end
 

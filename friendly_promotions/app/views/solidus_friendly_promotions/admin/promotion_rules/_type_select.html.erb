@@ -1,0 +1,20 @@
+<%= form_with(
+    model: @promotion_rule || Spree::PromotionRule.new(promotion: @promotion),
+    scope: :promotion_rule,
+    url: solidus_friendly_promotions.new_admin_promotion_promotion_rule_path(@promotion),
+    method: :get
+  ) do |form| %>
+  <%= hidden_field_tag :level, @level %>
+  <%= form.label :type %>
+  <%= admin_hint t('spree.adjustment_type'), t(:promotions, scope: [:spree, :hints, "spree/calculator"]) %>
+  <%=
+    form.select :type,
+      options_for_promotion_rule_types(form.object, level),
+      {
+        include_blank: t(:choose_promotion_rule, scope: 'solidus_friendly_shipping')
+      },
+      class: 'custom-select fullwidth',
+      onchange: 'this.form.requestSubmit()',
+      required: true
+  %>
+<% end %>

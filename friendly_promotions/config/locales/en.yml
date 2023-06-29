@@ -4,7 +4,14 @@
 en:
   solidus_friendly_promotions:
     actions: Actions
-    add_action: Add action
+    add_action: New Action
+    add_rule: New Rule
+    order_rules: Order Rules
+    line_item_rules: Line Item Rules
+    shipment_rules: Shipment Rules
+    line_item_actions: Line Item Actions
+    shipment_actions: Shipment Actions
+    invalid_promotion_rule_level: Invalid Promotion Rule Level. Must be one of "order", "shipment", or "line_item"
     create_promotion_code: Create promotion code
     current_promotion_usage: 'Current Usage: %{count}'
     discount_rules: Promotion Rules
@@ -15,6 +22,24 @@ en:
     no_rules_addes: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
     view_promotion_codes_list: View codes list
+    promotion_rules:
+      line_item_product:
+        match_policies:
+          include: Line item's product is one of the chosen products
+          exclude: Line item's product is not one of the chosen products
+      line_item_taxon:
+        match_policies:
+          include: Line item's product has one of the chosen taxons
+          exclude: Line item's product does not have one of the chosen taxons
+    product_rule:
+      choose_products: Choose products
+      label: Order must contain %{select} of these products
+      match_all: all
+      match_any: at least one
+      match_none: none
+      product_source:
+        group: From product group
+        manual: Manually choose
     crud:
       add: Add
       destroy: Delete

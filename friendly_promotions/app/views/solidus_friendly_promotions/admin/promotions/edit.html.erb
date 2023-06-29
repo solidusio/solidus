@@ -30,11 +30,38 @@
 
 
 <fieldset>
-  <legend align="center"><%= t(:actions, scope: :solidus_friendly_promotions) %></legend>
+  <legend align="center"><%= t(:order_rules, scope: :solidus_friendly_promotions) %></legend>
 
-  <%= render partial: 'solidus_friendly_promotions/admin/promotion_actions/promotion_action', collection: @promotion.actions, locals: {} %>
+  <%= render partial: 'solidus_friendly_promotions/admin/promotion_rules/promotion_rule', collection: promotion_rules_by_level(@promotion, :order), locals: { level: :order } %>
 
-  <%= turbo_frame_tag @promotion, "new_promotion_action" do %>
-    <%= link_to t(:add_action, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion), class: 'btn btn-secondary' %>
+  <%= turbo_frame_tag @promotion, "new_order_promotion_rule" do %>
+    <%= link_to t(:add_rule, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_rule_path(@promotion, level: :order), class: 'btn btn-secondary' %>
   <% end %>
 </fieldset>
+
+<div class="row">
+  <% [:line_item, :shipment].each do |level| %>
+  <div class="col-6">
+    <fieldset>
+      <legend align="center"><%= t("#{level}_actions", scope: :solidus_friendly_promotions) %></legend>
+
+      <%= render partial: 'solidus_friendly_promotions/admin/promotion_actions/promotion_action', collection: promotion_actions_by_level(@promotion, level), locals: {} %>
+
+      <%= turbo_frame_tag @promotion, "new_#{level}_promotion_action" do %>
+        <%= link_to t(:add_action, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion), class: 'btn btn-secondary' %>
+      <% end %>
+    </fieldset>
+  </div>
+  <div class="col-6">
+    <fieldset>
+      <legend align="center"><%= t("#{level}_rules", scope: :solidus_friendly_promotions) %></legend>
+
+      <%= render partial: 'solidus_friendly_promotions/admin/promotion_rules/promotion_rule', collection: promotion_rules_by_level(@promotion, level), locals: { level: level } %>
+
+      <%= turbo_frame_tag @promotion, "new_#{level}_promotion_rule" do %>
+        <%= link_to t(:add_rule, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_rule_path(@promotion, level: level), class: 'btn btn-secondary' %>
+      <% end %>
+    </fieldset>
+  </div>
+  <% end %>
+</div>

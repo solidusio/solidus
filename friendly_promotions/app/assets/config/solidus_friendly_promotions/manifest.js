@@ -2,3 +2,4 @@
 //= link solidus_friendly_promotions/controllers/application.js
 //= link solidus_friendly_promotions/controllers/index.js
 //= link solidus_friendly_promotions/controllers/calculator_tiers_controller.js
+//= link solidus_friendly_promotions/controllers/flash_controller.js
