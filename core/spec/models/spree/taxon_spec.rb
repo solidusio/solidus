@@ -194,16 +194,27 @@ RSpec.describe Spree::Taxon, type: :model do
   context "validations" do
     context "taxonomy_id validations" do
       let(:taxonomy) { create(:taxonomy) }
-      let(:taxon) { taxonomy.taxons.create(name: 'New node') }
 
       it "ensures that only one root can be created" do
+        taxon = taxonomy.taxons.create(name: 'New node')
         expect(taxon).to be_invalid
         expect(taxon.errors.full_messages).to match_array(["Taxonomy can only have one root Taxon"])
       end
 
-      it "allows for multiple taxons under taxonomy" do
-        expect(taxon.update(parent_id: taxonomy.root.id)).to eq(true)
+      it "allows for multiple taxons under a taxonomy" do
+        taxon = taxonomy.root.children.create!(name: 'First child', taxonomy: taxonomy)
+        expect(taxon).to be_valid
         expect(taxonomy.taxons.many?).to eq(true)
+        second_taxon = taxonomy.root.children.create!(name: 'Second child', taxonomy: taxonomy)
+        expect(second_taxon).to be_valid
+        expect(taxonomy.root.children.many?).to eq(true)
+      end
+
+      # Regression test https://github.com/solidusio/solidus/issues/5187
+      it "does not invalidate the root taxon after having children taxons" do
+        taxonomy.root.children.create!(name: 'New node', taxonomy: taxonomy)
+        expect(taxonomy.taxons.many?).to eq(true)
+        expect(taxonomy.root).to be_valid
       end
     end
 
