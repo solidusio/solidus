@@ -19,12 +19,15 @@
 
 <div class="field">
   <%= label_tag nil, t('spree.tiers') %>
-  <div class="js-tiered-calculator">
-    <%= content_tag :div, nil, class: "js-tiers", data: {
-      'original-tiers' => Hash[calculator.preferred_tiers.sort],
-      'form-prefix' => prefix,
-      'calculator' => 'tiered_flat_rate'
-    } %>
-    <a class="button js-add-tier"><%= t('spree.actions.add') %></a>
+  <div data-controller="calculator-tiers">
+    <template data-calculator-tiers-target="template">
+      <%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/tiered_flat_rate/tier_fields", tier: [nil, nil], form: form %>
+    </template>
+    <% form.object.calculator.preferred_tiers.each do |tier| %>
+      <%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/tiered_flat_rate/tier_fields", tier: tier, form: form %>
+    <% end %>
+    <div class="mb-3" data-calculator-tiers-target="links">
+      <%= link_to "Add Tier", "#", class: "btn btn-outline-primary", data: { action: "click->calculator-tiers#add_association" } %>
+    </div>
   </div>
 </div>
