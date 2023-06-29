@@ -26,6 +26,15 @@ module SolidusFriendlyPromotions
         redirect_to location_after_save
       end
 
+      def update
+        @promotion_rule = @promotion.promotion_rules.find(params[:id])
+        @promotion_rule.assign_attributes(promotion_rule_params)
+        if @promotion_rule.save
+          flash[:success] = t('spree.successfully_updated', resource: t('spree.promotion_rule'))
+        end
+        redirect_to location_after_save
+      end
+
       def destroy
         @promotion_rule = @promotion.promotion_rules.find(params[:id])
         if @promotion_rule.destroy
