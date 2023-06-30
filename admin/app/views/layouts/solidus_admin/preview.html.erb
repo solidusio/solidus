@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= stylesheet_link_tag "solidus_admin/application.css", "inter-font", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
+  </head>
+  <body class="p-3">
+    <%= yield %>
+  </body>
+</html>

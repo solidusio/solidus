@@ -27,5 +27,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'importmap-rails', '~> 1.2', '>= 1.2.1'
   s.add_dependency 'solidus_core', s.version
   s.add_dependency 'tailwindcss-rails', '~> 2.0'
-  s.add_dependency 'view_component', '~> 3.0'
+  s.add_dependency 'view_component', '~> 3.3'
 end
