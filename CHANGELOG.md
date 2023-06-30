@@ -1,3 +1,50 @@
+## Solidus v4.1.0 (2023-06-29)
+
+## Solidus Core
+* Don't gsub attachment comment during solidus installation by @RyanofWoods in https://github.com/solidusio/solidus/pull/5087
+* Update Taxon PaperClip attributes on attachment destroy by @RyanofWoods in https://github.com/solidusio/solidus/pull/5086
+* Remove frontend related code from the core dummy app by @kennyadsl in https://github.com/solidusio/solidus/pull/5058
+* Make Spree::MigrationHelpers Ruby 3.0 compatible by @RyanofWoods in https://github.com/solidusio/solidus/pull/5072
+* Relax rubocop version requirement and add it to the CI by @elia in https://github.com/solidusio/solidus/pull/5075
+* Allow changing the order recalculator by @mamhoff in https://github.com/solidusio/solidus/pull/5110
+* Ensure to return false on Paperclip attachment destroy failure by @RyanofWoods in https://github.com/solidusio/solidus/pull/5101
+* Prefer delegating recalculate without a method by @kennyadsl in https://github.com/solidusio/solidus/pull/5120
+* Move install generator spec in the proper directory by @kennyadsl in https://github.com/solidusio/solidus/pull/5114
+* Remove references to legacy :general_settings resource by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5128
+* Document available permission sets by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5141
+* Rename Order#ensure_updated_shipments method by @spaghetticode in https://github.com/solidusio/solidus/pull/4173
+* Fix solidus_core making use of responders API by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5158
+* Allow running bin/rails from Solidus engines by @elia in https://github.com/solidusio/solidus/pull/5164
+* Fix rubocop violation enabled by a rubocop bugfix by @elia in https://github.com/solidusio/solidus/pull/5183
+* Fix Taxon taxonomy id validation regression by @RyanofWoods in https://github.com/solidusio/solidus/pull/5189
+
+## Solidus Backend
+* Remove the blue_steel theme by @elia in https://github.com/solidusio/solidus/pull/5084
+* Relax rubocop version requirement and add it to the CI by @elia in https://github.com/solidusio/solidus/pull/5075
+* Add support for admin themes by @elia in https://github.com/solidusio/solidus/pull/5091
+* Improve the CSS of the admin locale selection and login nav by @elia in https://github.com/solidusio/solidus/pull/5113
+* Fix locale selection with a hidden admin navbar by @elia in https://github.com/solidusio/solidus/pull/5119
+* Remove references to legacy :general_settings resource by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5128
+* Get fresh data for update_positions by @julienanne in https://github.com/solidusio/solidus/pull/5040
+* [backend] Disable customer returns buttons after first click by @AlessioRocco in https://github.com/solidusio/solidus/pull/3550
+* Add a new admin theme by @elia in https://github.com/solidusio/solidus/pull/5092
+* Fix solidus_core making use of responders API by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5158
+* Allow running bin/rails from Solidus engines by @elia in https://github.com/solidusio/solidus/pull/5164
+* Allow lambda in menu item :match_path option and URL by @mamhoff in https://github.com/solidusio/solidus/pull/5152
+
+## Solidus API
+* Relax rubocop version requirement and add it to the CI by @elia in https://github.com/solidusio/solidus/pull/5075
+* Allow running bin/rails from Solidus engines by @elia in https://github.com/solidusio/solidus/pull/5164
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.0...v4.1.0
+
+
 ## Solidus v4.0.0 (2023-05-04)
 
 ## Solidus Core
