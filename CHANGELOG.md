@@ -1,3 +1,24 @@
+## Solidus v3.4.3 (2023-06-30)
+
+## Solidus Core
+* [v3.4] Don't gsub attachment comment during solidus installation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5089
+* [v3.4] Fix Taxon taxonomy id validation regression by @RyanofWoods in https://github.com/solidusio/solidus/pull/5190
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.4.2...v3.4.3
+
+
 ## Solidus v3.4.2 (2023-05-04)
 
 ## Solidus Core
