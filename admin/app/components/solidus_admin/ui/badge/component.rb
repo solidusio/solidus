@@ -12,12 +12,18 @@ class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
     yellow: 'text-yellow bg-[#feecd4]',
   }.freeze
 
-  def initialize(name:, color: :graphite_light)
+  SIZES = {
+    s: 'leading-[16px] px-[8px] py-[2px] text-[12px] font-[500]',
+    m: 'leading-[20px] px-[12px] py-[2px] text-[14px] font-[500]',
+    l: 'leading-[24px] px-[12px] py-[2px] text-[16px] font-[500]',
+  }.freeze
+
+  def initialize(name:, color: :graphite_light, size: :m)
     @name = name
 
     @class_name = [
       'inline-flex items-center rounded-full', # layout
-      'leading-[20px] px-[12px] py-[2px] text-[14px] font-[500]', # size
+      SIZES.fetch(size.to_sym), # size
       COLORS.fetch(color.to_sym), # color
     ].join(' ')
   end
