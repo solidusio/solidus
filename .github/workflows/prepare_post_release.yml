@@ -52,6 +52,7 @@ jobs:
             ${{ github.repository }} \
             ${{ steps.pipeline_context.outputs.candidate_tag }}
       - name: "Create backport label"
+        if: github.ref_name == 'main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
