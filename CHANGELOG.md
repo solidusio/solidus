@@ -1,3 +1,24 @@
+## Solidus v4.0.1 (2023-06-30)
+
+## Solidus Core
+* [v4.0] Don't gsub attachment comment during solidus installation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5090
+* [v4.0] Make Spree::MigrationHelpers Ruby 3.0 compatible by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5098
+* [v4.0] Fix Taxon taxonomy id validation regression @github-actions[bot] in https://github.com/solidusio/solidus/pull/5191
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.0...v4.0.1
+
 ## Solidus v4.0.0 (2023-05-04)
 
 ## Solidus Core
