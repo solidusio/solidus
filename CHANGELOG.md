@@ -1,3 +1,23 @@
+## Solidus v3.2.8 (2023-06-30)
+
+## Solidus Core
+* [v3.2] Make Spree::MigrationHelpers Ruby 3.0 compatible by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5094
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.7...v3.2.8
+
+
 ## Solidus v3.2.7 (2023-04-27)
 
 ## Solidus Core
