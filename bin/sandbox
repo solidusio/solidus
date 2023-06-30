@@ -95,6 +95,7 @@ fi
 unbundled bin/rails db:drop db:create
 
 echo "~~~> Running the solidus:install generator"
+export SOLIDUS_ADMIN_LOOKBOOK=true
 unbundled bin/rails generate solidus:install --auto-accept $@
 
 echo "
