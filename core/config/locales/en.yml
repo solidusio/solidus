@@ -1432,6 +1432,7 @@ en:
     coupon_code_not_present: The coupon code you are trying to remove is not present on this order.
     coupon_code_removed: The coupon code was successfully removed from this order.
     coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
+    covered_by_store_credit: Your order is fully covered by store credits, no additional payment method is required.
     create: Create
     create_a_new_account: Create a new account
     create_one: Create One.
