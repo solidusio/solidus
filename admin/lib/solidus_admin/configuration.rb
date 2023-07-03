@@ -90,20 +90,20 @@ module SolidusAdmin
 
     # The method used to authenticate the user in the admin interface, it's expected to redirect the user to the login method
     # in case the authentication fails.
-    preference :authentication_method, :string, default: nil
+    preference :authentication_method, :string, default: :authenticate_solidus_backend_user!
 
     # The method used to retrieve the current user in the admin interface.
-    preference :current_user_method, :string, default: nil
+    preference :current_user_method, :string, default: :spree_current_user
 
     # The path used to logout the user in the admin interface.
-    preference :logout_link_path, :string, default: nil
+    preference :logout_link_path, :string, default: :admin_logout_path
 
     # The HTTP method used to logout the user in the admin interface.
-    preference :logout_link_method, :string, default: nil
+    preference :logout_link_method, :string, default: :delete
 
     # A module that will be included in the BaseController to add authentication support
     # methods, can be `nil` if no module is needed.
-    preference :authentication_adapter, :string, default: nil
+    preference :authentication_adapter, :string, default: 'SolidusAdmin::AuthAdapters::Backend'
   end
 end
 
