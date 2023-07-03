@@ -13,7 +13,7 @@ require dummy_env
 
 # Requires factories and other useful helpers defined in spree_core.
 require "solidus_dev_support/rspec/feature_helper"
-
+require "shoulda-matchers"
 # Explicitly load activemodel mocks
 require "rspec-activemodel-mocks"
 
@@ -37,5 +37,12 @@ RSpec.configure do |config|
 
   config.before do
     Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end

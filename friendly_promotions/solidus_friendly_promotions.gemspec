@@ -35,4 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "solidus_dev_support", "~> 2.6"
   spec.add_development_dependency "importmap-rails", "~> 1.2"
   spec.add_development_dependency "rspec-activemodel-mocks", "~> 1.0"
+  spec.add_development_dependency "shoulda-matchers", "~> 5.3"
 end
