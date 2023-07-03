@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
-RSpec.describe <%= class_name %>::Component, type: :component do
+RSpec.describe <%= File.join(*[namespaced_path, file_path].compact).classify %>::Component, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do
