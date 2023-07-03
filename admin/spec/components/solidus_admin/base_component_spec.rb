@@ -25,6 +25,20 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
     end
   end
 
+  describe "#solidus_admin_with_fallbacks" do
+    it "gives access to solidus_admin routing helpers with fallbacks to spree ones" do
+      allow(SolidusAdmin::Engine.routes.url_helpers).to receive(:foo_path).and_return("/foo")
+      allow(Spree::Core::Engine.routes.url_helpers).to receive(:admin_bar_path).and_return("/bar")
+
+      component = described_class.new
+
+      aggregate_failures do
+        expect(component.solidus_admin_with_fallbacks.foo_path).to eq("/foo")
+        expect(component.solidus_admin_with_fallbacks.bar_path).to eq("/bar")
+      end
+    end
+  end
+
   describe ".stimulus_id" do
     it "returns the stimulus id for the component" do
       stub_const("SolidusAdmin::Foo::Bar::Component", Class.new(described_class))

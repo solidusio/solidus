@@ -15,27 +15,36 @@ module SolidusAdmin
     #  @return [Integer] the position of this item relative to its parent
     attr_reader :position
 
+    # @!attribute [r] route
+    # @return [Symbol, Proc] the route to use for this item. When a symbol
+    #  is given, it will be called on the url helpers. When a proc is given,
+    #  it will be called with the url helpers as the first argument.
+    attr_reader :route
+
     # @api private
     attr_reader :children, :top_level
 
-    def initialize(key:, position:, icon: nil, children: [], top_level: true)
+    def initialize(key:, position:, route:, icon: nil, children: [], top_level: true)
       @key = key
       @icon = icon
       @position = position
       @children = children
       @top_level = top_level
+      @route = route
     end
 
     # @return [MainNavItem] adds a child to this item (returning a new instance)
-    def with_child(key:, position:, icon: nil, children: [])
+    def with_child(key:, route:, position:, icon: nil, children: [])
       self.class.new(
         key: self.key,
+        route: self.route,
         icon: self.icon,
         position: self.position,
         top_level: top_level,
         children: self.children + [
           self.class.new(
             key: key,
+            route: route,
             position: position,
             icon: icon,
             children: children,
@@ -48,6 +57,17 @@ module SolidusAdmin
     # @return [Boolean] whether this item has any children
     def children?
       @children.any?
+    end
+
+    # @param url_helpers [Module] the url helpers to use for generating the path
+    # @return [String] the path for this item
+    def path(url_helpers)
+      case @route
+      when Symbol
+        url_helpers.public_send(@route)
+      when Proc
+        @route.call(url_helpers)
+      end
     end
   end
 end
