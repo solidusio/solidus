@@ -6,6 +6,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   let(:promotion) { described_class.new }
 
   it { is_expected.to belong_to(:category).optional }
+  it { is_expected.to have_many :rules }
 
   describe "validations" do
     before :each do
