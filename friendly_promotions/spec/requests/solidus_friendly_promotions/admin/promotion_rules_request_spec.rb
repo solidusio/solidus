@@ -11,7 +11,9 @@ describe SolidusFriendlyPromotions::Admin::PromotionRulesController, type: :requ
     end
 
     it "can create a promotion rule of a valid type" do
-      post solidus_friendly_promotions.admin_promotion_promotion_rules_path(promotion_id: promotion.id, promotion_rule: { type: "Spree::Promotion::Rules::Product" } )
+      post solidus_friendly_promotions.admin_promotion_promotion_rules_path(promotion_id: promotion.id), params: {
+        promotion_rule: { type: "SolidusFriendlyPromotions::Rules::Product" }
+      }
       expect(response).to be_redirect
       expect(response).to redirect_to solidus_friendly_promotions.edit_admin_promotion_path(promotion)
       expect(promotion.rules.count).to eq(1)
