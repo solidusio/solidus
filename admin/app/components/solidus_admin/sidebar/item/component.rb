@@ -4,8 +4,9 @@
 class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   with_collection_parameter :item
 
-  def initialize(item:)
+  def initialize(item:, url_helpers: solidus_admin_with_fallbacks)
     @item = item
+    @url_helpers = url_helpers
   end
 
   def name
@@ -32,6 +33,10 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     end
   end
 
+  def path
+    @item.path(@url_helpers)
+  end
+
   def link_level_classes
     if @item.top_level
       "text-black font-bold"
@@ -44,7 +49,7 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     return unless @item.children?
 
     tag.nav do
-      render self.class.with_collection(@item.children)
+      render self.class.with_collection(@item.children, url_helpers: @url_helpers)
     end
   end
 end
