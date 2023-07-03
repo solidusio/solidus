@@ -3,7 +3,9 @@
 require "spec_helper"
 
 RSpec.describe <%= File.join(*[namespaced_path, file_path].compact).classify %>::Component, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "renders the overview preview" do
+    render_preview(:overview)
+  end
 
   # it "renders something useful" do
   #   render_inline(described_class.new(<%= attributes.map { |attr| "#{attr.name}: #{attr.name.to_s.inspect}" }.join(", ") %>))
