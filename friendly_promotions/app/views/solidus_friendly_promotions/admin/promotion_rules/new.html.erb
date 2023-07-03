@@ -14,11 +14,6 @@
         <%= hidden_field_tag :level, @level %>
         <%= hidden_field_tag "promotion_rule[type]", @promotion_rule.class.name %>
         <%= render @promotion_rule, promotion_rule: @promotion_rule, param_prefix: "promotion_rule", form: form %>
-        <div class="row mt-2">
-          <div class="col-12">
-            <%= button_tag "Add", class: "btn btn-secondary float-right", data: { "turbo-frame" => "_top" } %>
-          </div>
-        </div>
       <% end %>
     </div>
   <% end %>

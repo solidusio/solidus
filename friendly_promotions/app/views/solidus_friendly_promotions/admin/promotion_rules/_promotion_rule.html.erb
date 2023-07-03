@@ -12,10 +12,5 @@
     <%= hidden_field_tag "#{param_prefix}[id]", promotion_rule.id %>
     <%= render partial: "spree/shared/error_messages", locals: { target: promotion_rule } %>
     <%= render promotion_rule, promotion_rule: promotion_rule, param_prefix: "promotion_rule", form: form %>
-    <div class="row">
-      <div class="col-12">
-        <%= button_tag "Update", class: "btn btn-secondary float-right" if promotion_rule.preferences.any? %>
-      </div>
-    </div>
   <% end %>
 </div>

@@ -7,3 +7,9 @@
     <%= t('spree.taxon_rule.label', select: select_tag("#{param_prefix}[preferred_match_policy]", options_for_select(Spree::Promotion::Rules::Taxon::MATCH_POLICIES.map{|s| [t("spree.taxon_rule.match_#{s}"),s] }, promotion_rule.preferred_match_policy), {class: 'select_taxon custom-select'})).html_safe %>
   </label>
 </div>
+
+<div class="row">
+  <div class="col-12">
+    <%= form.submit(t((form.object.persisted? ? :update : :add), scope: [:solidus_friendly_promotions, :crud]), class: "btn btn-secondary float-right") %>
+  </div>
+</div>
