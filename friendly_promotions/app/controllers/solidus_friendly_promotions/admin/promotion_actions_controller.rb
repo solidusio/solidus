@@ -4,6 +4,7 @@ module SolidusFriendlyPromotions
   module Admin
     class PromotionActionsController < Spree::Admin::ResourceController
       before_action :load_promotion
+      before_action :validate_level, only: :new
       before_action :validate_promotion_action_type, only: [:create]
 
       helper 'solidus_friendly_promotions/admin/promotion_actions'
@@ -66,6 +67,16 @@ module SolidusFriendlyPromotions
 
       def load_promotion
         @promotion = Spree::Promotion.find(params[:promotion_id])
+      end
+
+      def validate_level
+        requested_level = params[:level].to_s
+        if requested_level.in?(["line_item", "shipment"])
+          @level = requested_level
+        else
+          @level = "line_item"
+          flash.now[:error] = t(:invalid_promotion_rule_level, scope: :solidus_friendly_promotions)
+        end
       end
 
       def validate_promotion_action_type
