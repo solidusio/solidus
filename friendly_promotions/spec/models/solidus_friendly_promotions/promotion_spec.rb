@@ -3,11 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
-  let(:promotion) { SolidusFriendlyPromotions::Promotion.new }
+  let(:promotion) { described_class.new }
+
+  it { is_expected.to belong_to(:category).optional }
 
   describe "validations" do
     before :each do
-      @valid_promotion = SolidusFriendlyPromotions::Promotion.new name: "A promotion"
+      @valid_promotion = described_class.new name: "A promotion"
     end
 
     it "valid_promotion is valid" do
