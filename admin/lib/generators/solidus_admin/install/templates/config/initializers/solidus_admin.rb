@@ -25,4 +25,19 @@ SolidusAdmin::Config.configure do |config|
 
   # Add custom paths to importmap files to be loaded.
   # config.importmap_paths << Rails.root.join("config/solidus_admin_importmap.rb")
+  #
+  # Configure the main navigation.
+  # See SolidusAdmin::MainNavItem for more details.
+  # config.main_nav do |main_nav|
+  #   main_nav.add(
+  #     key: :my_custom_link,
+  #     route: :my_custom_link_path,
+  #     icon: "solidus_admin/price-tag-3-line.svg",
+  #     position: 80
+  #   ).with_child(
+  #     key: :my_custom_child_link,
+  #     route: :my_custom_child_link_path,
+  #     position: 10
+  #   )
+  # end
 end
