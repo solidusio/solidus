@@ -3,7 +3,11 @@
 require 'geared_pagination'
 
 module SolidusAdmin
-  class BaseController < Spree::BaseController
+  class BaseController < ApplicationController
+    include ActiveStorage::SetCurrent
+    include ::SolidusAdmin::Auth
+    include Spree::Core::ControllerHelpers::Store
+
     include ::GearedPagination::Controller
 
     layout 'solidus_admin/application'
