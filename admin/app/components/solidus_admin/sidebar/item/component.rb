@@ -20,7 +20,7 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
       url = image_path(@item.icon)
       tag.span(
         "&nbsp;",
-        class: "#{common_classes} align-text-bottom bg-black group-hover:bg-red-500",
+        class: "#{common_classes} align-text-bottom bg-black group-hover:bg-red-500 group-[.active]:fill-red-500",
         style: <<~CSS,
           mask: url(#{url}) 100% 100% no-repeat;
           -webkit-mask: url(#{url}) 100% 100% no-repeat;
@@ -37,6 +37,24 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     @item.path(@url_helpers)
   end
 
+  def item_active_classes
+    return unless active?
+
+    "active"
+  end
+
+  def link_active_classes
+    return unless active?
+
+    "text-red-500 bg-gray-50"
+  end
+
+  def nested_nav_active_classes
+    return if active?
+
+    "hidden"
+  end
+
   def link_level_classes
     if @item.top_level
       "text-black font-bold"
@@ -48,8 +66,14 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   def nested_items
     return unless @item.children?
 
-    tag.nav do
+    tag.nav(
+      class: nested_nav_active_classes
+    ) do
       render self.class.with_collection(@item.children, url_helpers: @url_helpers)
     end
+  end
+
+  def active?
+    @item.active?(@url_helpers, request.fullpath)
   end
 end
