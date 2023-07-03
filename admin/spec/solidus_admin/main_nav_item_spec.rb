@@ -91,4 +91,45 @@ RSpec.describe SolidusAdmin::MainNavItem do
       end
     end
   end
+
+  describe "#active?" do
+    it "returns true when the path matches the current request path" do
+      item = described_class.new(key: "foo", route: :foo_path, position: 1)
+      url_helpers = Module.new do
+        def self.foo_path
+          "/foo"
+        end
+      end
+
+      expect(
+        item.active?(url_helpers, "/foo")
+      ).to be(true)
+    end
+
+    it "returns true when the path matches the current request base path" do
+      item = described_class.new(key: "foo", route: :foo_path, position: 1)
+      url_helpers = Module.new do
+        def self.foo_path
+          "/foo"
+        end
+      end
+
+      expect(
+        item.active?(url_helpers, "/foo?bar=baz")
+      ).to be(true)
+    end
+
+    it "returns false when the path does not match the current request base path" do
+      item = described_class.new(key: "foo", route: :foo_path, position: 1)
+      url_helpers = Module.new do
+        def self.foo_path
+          "/foo"
+        end
+      end
+
+      expect(
+        item.active?(url_helpers, "/bar")
+      ).to be(false)
+    end
+  end
 end

@@ -69,5 +69,18 @@ module SolidusAdmin
         @route.call(url_helpers)
       end
     end
+
+    # Returns whether the item should be marked as active
+    #
+    # An item is considered active if its base path (that is, the path without
+    # any query parameters) matches the given full path.
+    #
+    # @param url_helpers [Module] the url helpers to use for generating the path
+    # @param fullpath [String] the full path of the current request
+    # @return [Boolean]
+    def active?(url_helpers, fullpath)
+      (path(url_helpers) == fullpath.gsub(/\?.*$/, '')) ||
+        children.any? { |child| child.active?(url_helpers, fullpath) }
+    end
   end
 end
