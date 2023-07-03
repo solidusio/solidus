@@ -5,9 +5,17 @@
     <div class="col-6"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
   </div>
 
-  <%= content_tag :div, nil, class: "js-promo-rule-option-values",
-    data: { :'original-option-values' => promotion_rule.preferred_eligible_values } %>
-
-  <button class="button js-add-promo-rule-option-value"><%= t('spree.actions.add') %></button>
-
+  <div class="field">
+    <div data-controller="product-option-values">
+      <template data-product-option-values-target="template">
+        <%= render "solidus_friendly_promotions/admin/promotions/rules/line_item_option_value/option_value_fields", product_option_values: [nil, []], form: form %>
+      </template>
+      <% form.object.preferred_eligible_values.each do |product_option_values| %>
+        <%= render "solidus_friendly_promotions/admin/promotions/rules/line_item_option_value/option_value_fields", product_option_values: product_option_values, form: form %>
+      <% end %>
+      <div class="mb-3" data-product-option-values-target="links">
+        <%= link_to "Add Row", "#", class: "btn btn-outline-primary", data: { action: "click->product-option-values#add_row" } %>
+      </div>
+    </div>
+  </div>
 </div>
