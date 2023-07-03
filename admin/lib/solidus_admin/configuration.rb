@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spree/preferences/configuration'
+require 'solidus_admin/configuration/main_nav'
 
 module SolidusAdmin
   # Configuration for the admin interface.
@@ -60,6 +61,26 @@ module SolidusAdmin
     preference :importmap_paths, :array, default: [
       SolidusAdmin::Engine.root.join("config", "importmap.rb"),
     ]
+
+    # Gives access to the main navigation configuration
+    #
+    # @example
+    #  SolidusAdmin::Config.main_nav do |main_nav|
+    #    main_nav.add(
+    #      key: :my_custom_link,
+    #      route: :products_path,
+    #      icon: "solidus_admin/price-tag-3-line.svg",
+    #      position: 80
+    #    )
+    # end
+    #
+    # @return [SolidusAdmin::Configuration::MainNav]
+    # @yieldparam [SolidusAdmin::Configuration::MainNav] main_nav
+    def main_nav
+      (@main_nav ||= MainNav.new).tap do
+        yield(_1) if block_given?
+      end
+    end
   end
 end
 
