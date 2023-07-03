@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
       if order.update(params)
         unless order.completed?
           order.line_items = order.line_items.select { |li| li.quantity > 0 }
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
         end
         reload_totals
         true
@@ -20,7 +20,7 @@ module SolidusFriendlyPromotions
 
     def after_add_or_remove(line_item, options = {})
       shipment = options[:shipment]
-      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
+      shipment.present? ? shipment.update_amounts : order.check_shipments_and_restart_checkout
       reload_totals
       line_item
     end

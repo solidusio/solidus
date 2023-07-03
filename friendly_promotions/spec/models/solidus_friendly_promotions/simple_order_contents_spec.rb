@@ -23,8 +23,8 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
     context 'given a shipment' do
       let!(:shipment) { create(:shipment, order: order) }
 
-      it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
-        expect(subject.order).to_not receive(:ensure_updated_shipments)
+      it "ensure shipment calls update_amounts instead of order calling check_shipments_and_restart_checkout" do
+        expect(subject.order).to_not receive(:check_shipments_and_restart_checkout)
         expect(shipment).to receive(:update_amounts).at_least(:once)
         subject.add(variant, 1, shipment: shipment)
       end
@@ -54,7 +54,7 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
 
     context 'not given a shipment' do
       it "ensures updated shipments" do
-        expect(subject.order).to receive(:ensure_updated_shipments)
+        expect(subject.order).to receive(:check_shipments_and_restart_checkout)
         subject.add(variant)
       end
     end
@@ -159,10 +159,10 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
     end
 
     context 'given a shipment' do
-      it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
+      it "ensure shipment calls update_amounts instead of order calling check_shipments_and_restart_checkout" do
         subject.add(variant, 1)
         shipment = create(:shipment)
-        expect(subject.order).to_not receive(:ensure_updated_shipments)
+        expect(subject.order).to_not receive(:check_shipments_and_restart_checkout)
         expect(shipment).to receive(:update_amounts)
         subject.remove(variant, 1, shipment: shipment)
       end
@@ -171,7 +171,7 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
     context 'not given a shipment' do
       it "ensures updated shipments" do
         subject.add(variant, 1)
-        expect(subject.order).to receive(:ensure_updated_shipments)
+        expect(subject.order).to receive(:check_shipments_and_restart_checkout)
         subject.remove(variant)
       end
     end
@@ -214,10 +214,10 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
 
   context "#remove_line_item" do
     context 'given a shipment' do
-      it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
+      it "ensure shipment calls update_amounts instead of order calling check_shipments_and_restart_checkout" do
         line_item = subject.add(variant, 1)
         shipment = create(:shipment)
-        expect(subject.order).to_not receive(:ensure_updated_shipments)
+        expect(subject.order).to_not receive(:check_shipments_and_restart_checkout)
         expect(shipment).to receive(:update_amounts)
         subject.remove_line_item(line_item, shipment: shipment)
       end
@@ -226,7 +226,7 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
     context 'not given a shipment' do
       it "ensures updated shipments" do
         line_item = subject.add(variant, 1)
-        expect(subject.order).to receive(:ensure_updated_shipments)
+        expect(subject.order).to receive(:check_shipments_and_restart_checkout)
         subject.remove_line_item(line_item)
       end
     end
@@ -288,7 +288,7 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
     end
 
     it "ensures updated shipments" do
-      expect(subject.order).to receive(:ensure_updated_shipments)
+      expect(subject.order).to receive(:check_shipments_and_restart_checkout)
       subject.update_cart params
     end
   end
