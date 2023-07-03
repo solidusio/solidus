@@ -3,4 +3,5 @@
   class="text-4xl"
 ><a href="#" data-action="hello#greet">Account</a></h1>
 
-<h2 class="text-3xl underline">Your account info</h1>
+<p>Logged in as <%= current_solidus_admin_user.email %></p>
+<p><%= button_to "Log out", solidus_admin_logout_path, method: solidus_admin_logout_method, class: 'underline' %></p>
