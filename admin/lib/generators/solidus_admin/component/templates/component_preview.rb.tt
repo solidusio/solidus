@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+# @component <%= component_registry_id.inspect %>
+class <%= File.join(*[namespaced_path, file_path].compact).classify %>::ComponentPreview < ViewComponent::Preview
+  layout "solidus_admin/preview"
+  include SolidusAdmin::ContainerHelper
+
+  def overview
+    render_with_template(locals: { name: name, component: component(<%= component_registry_id.inspect %>) })
+  end
+
+  <%= preview_playground_yard_tags %>
+  def playground<%= preview_signature %>
+    <%= preview_playground_body %>
+  end
+end
