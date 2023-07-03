@@ -56,4 +56,27 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
       page.find("a", text: "Options")[:class]
     )
   end
+
+  it "syles active items differently from the others" do
+    inactive_item = SolidusAdmin::MainNavItem
+                    .new(key: "orders", route: :orders_path, position: 1)
+    active_item = SolidusAdmin::MainNavItem
+                  .new(key: "products", route: :products_path, position: 1)
+    inactive_component = described_class.new(
+      item: inactive_item,
+      url_helpers: url_helpers(orders: "/admin/orders")
+    )
+    active_component = described_class.new(
+      item: active_item,
+      url_helpers: url_helpers(products: "/admin/products")
+    )
+    allow_any_instance_of(ActionDispatch::Request).to receive(:fullpath).and_return("/admin/products")
+
+    render_inline(inactive_component)
+    inactive_classes = page.find("a", text: "Orders")[:class]
+    render_inline(active_component)
+    active_classes = page.find("a", text: "Products")[:class]
+
+    expect(inactive_classes).not_to eq(active_classes)
+  end
 end
