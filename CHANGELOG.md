@@ -1,3 +1,24 @@
+## Solidus v3.3.3 (2023-06-30)
+
+## Solidus Core
+* [v3.3] Don't gsub attachment comment during solidus installation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5088
+* [v3.3] Make Spree::MigrationHelpers Ruby 3.0 compatible by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5096
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.3.2...v3.3.3
+
+
 ## Solidus v3.3.2 (2023-04-27)
 
 ## Solidus Core
