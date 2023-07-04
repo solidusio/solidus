@@ -3,7 +3,9 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
-  let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(rule_options) }
+  it { is_expected.to have_many(:products) }
+
+  let(:rule) { described_class.new(rule_options) }
   let(:rule_options) { {} }
 
   context "#eligible?(order)" do

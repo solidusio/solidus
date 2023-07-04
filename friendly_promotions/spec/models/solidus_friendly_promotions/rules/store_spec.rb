@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Store, type: :model do
+  it { is_expected.to have_many(:stores) }
+
   let(:rule) { described_class.new }
 
   context "#eligible?(order)" do

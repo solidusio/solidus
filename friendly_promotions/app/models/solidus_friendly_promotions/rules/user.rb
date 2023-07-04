@@ -3,10 +3,8 @@
 module SolidusFriendlyPromotions
   module Rules
     class User < Rule
-      has_many :promotion_rule_users, class_name: "Spree::PromotionRuleUser",
-        foreign_key: :promotion_rule_id,
-        dependent: :destroy
-      has_many :users, through: :promotion_rule_users, class_name: Spree::UserClassHandle.new
+      has_many :rules_users, inverse_of: :rule, dependent: :destroy
+      has_many :users, through: :rules_users, class_name: Spree::UserClassHandle.new
 
       def preload_relations
         [:users]

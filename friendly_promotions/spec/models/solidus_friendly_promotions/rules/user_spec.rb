@@ -3,7 +3,8 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::User, type: :model do
-  let(:rule) { SolidusFriendlyPromotions::Rules::User.new }
+  it {  is_expected.to have_many(:users) }
+  let(:rule) { described_class.new }
 
   context "#eligible?(order)" do
     let(:order) { Spree::Order.new }

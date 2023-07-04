@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
+  it { is_expected.to have_many(:taxons) }
+
   let(:taxon) { create :taxon, name: "first" }
   let(:taxon2) { create :taxon, name: "second" }
   let(:order) { create :order_with_line_items }

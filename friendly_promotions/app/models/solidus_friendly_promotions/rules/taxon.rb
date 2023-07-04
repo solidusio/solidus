@@ -3,9 +3,8 @@
 module SolidusFriendlyPromotions
   module Rules
     class Taxon < Rule
-      has_many :promotion_rule_taxons, class_name: "Spree::PromotionRuleTaxon", foreign_key: :promotion_rule_id,
-        dependent: :destroy
-      has_many :taxons, through: :promotion_rule_taxons, class_name: "Spree::Taxon"
+      has_many :rules_taxons, inverse_of: :rule, dependent: :destroy
+      has_many :taxons, through: :rules_taxons, class_name: "Spree::Taxon"
 
       def preload_relations
         [:taxons]
