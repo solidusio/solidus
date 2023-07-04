@@ -9,7 +9,7 @@ class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
     green: 'text-forest bg-seafoam',
     blue: 'text-blue bg-sky',
     black: 'text-white bg-black',
-    yellow: 'text-yellow bg-[#feecd4]',
+    yellow: 'text-orange bg-papayaWhip',
   }.freeze
 
   SIZES = {
