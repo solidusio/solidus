@@ -8,7 +8,7 @@ module SolidusAdmin
     attr_reader :key
 
     # @!attribute [r] icon
-    #  @return [String] asset path to an icon for this item
+    #  @return [String] icon from RemixIcon to use for this item
     attr_reader :icon
 
     # @!attribute [r] position
