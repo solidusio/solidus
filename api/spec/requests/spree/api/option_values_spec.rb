@@ -25,6 +25,18 @@ module Spree::Api
       end
     end
 
+    context "filtering by product" do
+      let(:product) { create(:product, option_types: [product_option_value.option_type]) }
+      let(:product_option_value) { create(:option_value, presentation: "BLACK") }
+      let!(:variant) { create(:variant, product: product, option_values: [product_option_value]) }
+
+      it "can filter by product" do
+        get spree.api_option_values_path(q: { variants_product_id_eq: product.id } )
+        expect(json_response.count).to eq(1)
+        expect(json_response.first["presentation"]).to eq("BLACK")
+      end
+    end
+
     context "for a particular option type" do
       let(:resource_scoping) { { option_type_id: option_type.id } }
 
