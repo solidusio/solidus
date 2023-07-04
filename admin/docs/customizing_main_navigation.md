@@ -9,7 +9,7 @@ SolidusAdmin::Config.configure do |config|
     main_nav.add(
       key: :my_custom_link,
       route: :my_custom_link_path,
-      icon: "solidus_admin/my_custom_link.svg",
+      icon: "24-hours-fill",
       position: 80
     )
   end
@@ -18,7 +18,7 @@ end
 
 - The key you provide will be used to translate the link's label under the
 `solidus_admin.main_nav.#{key}` key. 
-- Icon needs to be a path to a SVG file accessible from the asset pipeline.
+- Icon needs to be an icon name from [Remixicon](https://remixicon.com/).
 - Position tells Solidus where to place the link in the main navigation. The
  default items are placed with 10 points of difference between them.
 
@@ -31,7 +31,7 @@ SolidusAdmin::Config.configure do |config|
     main_nav.add(
       key: :my_custom_link,
       route: :my_custom_link_path,
-      icon: "solidus_admin/my_custom_link.svg",
+      icon: "24-hours-fill",
       position: 80,
       children: [
         {
