@@ -9,7 +9,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::LineItemTaxon, type: :model do
   let(:product) { order.products.first }
 
   let(:rule) do
-    described_class.create!(promotion: create(:promotion))
+    described_class.create!(promotion: create(:friendly_promotion))
   end
 
   describe "#eligible?" do

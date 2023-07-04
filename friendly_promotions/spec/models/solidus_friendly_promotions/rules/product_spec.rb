@@ -107,9 +107,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
     context "with an invalid match policy" do
       let(:rule) do
         SolidusFriendlyPromotions::Rules::Product.create!(
-          promotion: create(:promotion),
-          product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: product)
+          promotion: create(:friendly_promotion),
+          products_rules: [
+            SolidusFriendlyPromotions::ProductsRule.new(product: product)
           ]
         ).tap do |rule|
           rule.preferred_match_policy = "invalid"

@@ -9,7 +9,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OneUsePerUser, type: :model do
     subject { rule.eligible?(order) }
     let(:order) { double Spree::Order, user: user }
     let(:user) { double Spree::LegacyUser }
-    let(:promotion) { stub_model Spree::Promotion, used_by?: used_by }
+    let(:promotion) { stub_model SolidusFriendlyPromotions::Promotion, used_by?: used_by }
     let(:used_by) { false }
 
     before { rule.promotion = promotion }

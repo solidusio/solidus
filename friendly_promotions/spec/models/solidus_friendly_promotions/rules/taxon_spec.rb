@@ -11,7 +11,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
   let(:product) { order.products.first }
 
   let(:rule) do
-    SolidusFriendlyPromotions::Rules::Taxon.create!(promotion: create(:promotion))
+    SolidusFriendlyPromotions::Rules::Taxon.create!(promotion: create(:friendly_promotion))
   end
 
   context "#eligible?(order)" do
