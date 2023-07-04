@@ -2,7 +2,10 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusFriendlyPromotions::Actions::Base do
+RSpec.describe SolidusFriendlyPromotions::Action do
+  it { is_expected.to belong_to(:promotion) }
+  it { is_expected.to have_one(:calculator) }
+
   it { is_expected.to respond_to :adjust }
   it { is_expected.to respond_to :can_adjust? }
 

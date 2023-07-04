@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Actions
-    class AdjustLineItem < Base
+    class AdjustLineItem < Action
       def can_adjust?(object)
         object.is_a? Spree::LineItem
       end

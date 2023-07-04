@@ -4,6 +4,7 @@ module SolidusFriendlyPromotions
   class Promotion < Spree::Base
     belongs_to :category, optional: true
     has_many :rules
+    has_many :actions
 
     validates :name, presence: true
     validates :path, uniqueness: { allow_blank: true, case_sensitive: true }
