@@ -13,9 +13,9 @@ class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
   }.freeze
 
   SIZES = {
-    s: 'leading-[16px] px-[8px] py-[2px] text-[12px] font-[500]',
-    m: 'leading-[20px] px-[12px] py-[2px] text-[14px] font-[500]',
-    l: 'leading-[24px] px-[12px] py-[2px] text-[16px] font-[500]',
+    s: 'leading-4 px-2 py-0.5 text-3 font-[500]',
+    m: 'leading-5 px-3 py-0.5 text-3.5 font-[500]',
+    l: 'leading-6 px-3 py-0.5 text-4 font-[500]',
   }.freeze
 
   def initialize(name:, color: :graphite_light, size: :m)
