@@ -5,6 +5,8 @@ module SolidusFriendlyPromotions
     belongs_to :category, optional: true
     has_many :rules
     has_many :actions
+    has_many :codes
+    has_many :code_batches
 
     validates :name, presence: true
     validates :path, uniqueness: { allow_blank: true, case_sensitive: true }

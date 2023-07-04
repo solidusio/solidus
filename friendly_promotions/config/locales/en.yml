@@ -69,6 +69,13 @@ en:
             starts_at_placeholder: Immediately
           edit:
             order_rules: Order Rules
+    code_batch_mailer:
+      code_batch_errored:
+        message: 'Promotion code batch errored (%{error}) for promotion: '
+        subject: Promotion code batch errored
+      code_batch_finished:
+        message: 'All %{number_of_codes} codes have been created for promotion: '
+        subject: Promotion code batch finished
   activerecord:
     models:
       solidus_friendly_promotions/actions/adjust_shipment: Discount matching shipments
@@ -136,3 +143,9 @@ en:
         description: Available only to logged in users
       solidus_friendly_promotions/rules/user_role:
         description: Order includes User with specified Role(s)
+    errors:
+      models:
+        solidus_friendly_promotions/code:
+          attributes:
+            base:
+              disallowed_with_apply_automatically: Could not create promotion code on promotion that apply automatically
