@@ -44,11 +44,15 @@ module SolidusFriendlyPromotions
       end
 
       def promotion_includes
-        [:promotion_actions]
+        [:actions]
+      end
+
+      def model_class
+        SolidusFriendlyPromotions::Promotion
       end
 
       def load_data
-        @promotion_categories = Spree::PromotionCategory.order(:name)
+        @promotion_categories = Category.order(:name)
       end
 
       def location_after_save
