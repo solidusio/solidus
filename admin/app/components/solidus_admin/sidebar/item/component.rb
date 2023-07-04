@@ -16,19 +16,14 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   def icon
     common_classes = "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] text-sm"
 
-    if @item.icon
-      url = image_path(@item.icon)
-      tag.span(
-        "&nbsp;",
-        class: "#{common_classes} align-text-bottom bg-black group-hover:bg-red-500 group-[.active]:fill-red-500",
-        style: <<~CSS,
-          mask: url(#{url}) 100% 100% no-repeat;
-          -webkit-mask: url(#{url}) 100% 100% no-repeat;
-        CSS
-      )
-    else
-      tag.span(
-        class: common_classes
+    return tag.span(class: common_classes) unless @item.icon
+
+    href = image_path("solidus_admin/remixicon.symbol.svg") + "#ri-#{@item.icon}"
+    tag.svg(
+      class: "#{common_classes} align-text-bottom fill-black group-hover:fill-red-500 group-[.active]:fill-red-500"
+    ) do
+      tag.use(
+        "xlink:href": href
       )
     end
   end
