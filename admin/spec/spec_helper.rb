@@ -64,6 +64,12 @@ Spree::TestingSupport::FactoryBot.add_paths_and_load!
 require "view_component/test_helpers"
 require "view_component/system_test_helpers"
 
+# GENERATORS
+require "rails/version"
+require "rails/generators"
+require "rails/generators/app_base"
+require "rails/generators/testing/behaviour"
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
@@ -90,6 +96,15 @@ RSpec.configure do |config|
 
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
+
+  config.include Rails::Generators::Testing::Behaviour, type: :generator
+  config.include FileUtils, type: :generator
+  config.before type: :generator do
+    self.generator_class = described_class
+    self.destination_root = SolidusAdmin::Engine.root.join('tmp')
+    ::Rails::Generators.namespace = SolidusAdmin
+    prepare_destination
+  end
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
