@@ -25,7 +25,6 @@ $.fn.optionValueAutocomplete = function (options) {
       url: Spree.pathFor('api/option_values'),
       datatype: 'json',
       data: function (term, page) {
-        // Note: This doesn't work. variants_product_id isn't an allowed filter
         var productId = typeof(productSelect) !== 'undefined' ? $(productSelect).select2('val') : null;
         return {
           q: {
