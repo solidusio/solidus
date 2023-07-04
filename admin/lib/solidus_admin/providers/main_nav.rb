@@ -11,7 +11,7 @@ module SolidusAdmin
           main_nav.add(
             key: "orders",
             route: :orders_path,
-            icon: "solidus_admin/inbox-line.svg",
+            icon: "inbox-line",
             position: 10
           )
 
@@ -19,7 +19,7 @@ module SolidusAdmin
             .add(
               key: "products",
               route: :products_path,
-              icon: "solidus_admin/price-tag-3-line.svg",
+              icon: "price-tag-3-line",
               position: 20,
               children: [
                 {
@@ -33,28 +33,28 @@ module SolidusAdmin
           main_nav.add(
             key: "promotions",
             route: :promotions_path,
-            icon: "solidus_admin/megaphone-line.svg",
+            icon: "megaphone-line",
             position: 30
           )
 
           main_nav.add(
             key: "stock",
             route: :stock_items_path,
-            icon: "solidus_admin/stack-line.svg",
+            icon: "stack-line",
             position: 40
           )
 
           main_nav.add(
             key: "users",
             route: :users_path,
-            icon: "solidus_admin/user-line.svg",
+            icon: "user-line",
             position: 50
           )
 
           main_nav.add(
             key: "settings",
             route: :stores_path,
-            icon: "solidus_admin/settings-line.svg",
+            icon: "settings-line",
             position: 60
           )
         end
