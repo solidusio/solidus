@@ -23,11 +23,11 @@
             class="
               border-b
               border-gray-100
-              py-[12px]
-              px-[16px]
+              py-3
+              px-4
               text-[#4f4f4f]
               text-left
-              text-[14px]
+              text-3.5
               font-[600]
               line-[120%]
             "
@@ -36,18 +36,18 @@
       </tr>
     </thead>
 
-    <tbody class="bg-white text-[14px] line-[150%] text-black">
+    <tbody class="bg-white text-3.5 line-[150%] text-black">
       <% @rows.each do |row| %>
         <tr class="border-b border-gray-100">
           <% @columns.each do |column| %>
-            <td class="py-[8px] px-[16px] "><%= column.content.call(row) %></td>
+            <td class="py-2 px-4 "><%= column.content.call(row) %></td>
           <% end %>
         </tr>
       <% end %>
 
       <% if @rows.empty? && @model_class %>
         <tr>
-          <td colspan="<%= @columns.size %>" class="text-center py-[16px] text-[14px] line-[150%] text-black bg-white">
+          <td colspan="<%= @columns.size %>" class="text-center py-4 text-3.5 line-[150%] text-black bg-white">
             <%= t('.no_resources_found', resources: @model_class.model_name.human.pluralize) %>
           </td>
         </tr>
