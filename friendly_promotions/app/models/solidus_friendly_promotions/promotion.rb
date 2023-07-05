@@ -17,5 +17,31 @@ module SolidusFriendlyPromotions
     self.allowed_ransackable_associations = ['codes']
     self.allowed_ransackable_attributes = %w[name path promotion_category_id]
     self.allowed_ransackable_scopes = %i[active]
+
+
+    # All orders that have been discounted using this promotion
+    def discounted_orders
+      Spree::Order.
+        joins(:all_adjustments).
+        where(
+          spree_adjustments: {
+            source_type: "SolidusFriendlyPromotions::Action",
+            source_id: actions.map(&:id),
+            eligible: true
+          }
+        ).distinct
+    end
+
+    # Number of times the code has been used overall
+    #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
+    # @return [Integer] usage count
+    def usage_count(excluded_orders: [])
+      discounted_orders.
+        complete.
+        where.not(id: [excluded_orders.map(&:id)]).
+        where.not(spree_orders: { state: :canceled }).
+        count
+    end
   end
 end

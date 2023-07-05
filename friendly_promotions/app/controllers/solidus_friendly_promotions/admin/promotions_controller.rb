@@ -9,15 +9,15 @@ module SolidusFriendlyPromotions
       helper 'solidus_friendly_promotions/admin/promotion_actions'
 
       def create
-        @promotion = Spree::Promotion.new(permitted_resource_params)
+        @promotion = model_class.new(permitted_resource_params)
         @promotion.codes.new(value: params[:single_code]) if params[:single_code].present?
 
-        if params[:promotion_code_batch]
-          @promotion_code_batch = @promotion.promotion_code_batches.new(promotion_code_batch_params)
+        if params[:code_batch]
+          @code_batch = @promotion.code_batches.new(code_batch_params)
         end
 
         if @promotion.save
-          @promotion_code_batch.process if @promotion_code_batch
+          @code_batch.process if @code_batch
           flash[:success] = t('solidus_friendly_promotions.promotion_successfully_created')
           redirect_to location_after_save
         else
