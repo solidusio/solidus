@@ -201,12 +201,13 @@ module Spree
     # Determines the appropriate +state+ according to the following logic:
     #
     # canceled   if all of the inventory units are canceled
-    # shipped    if all of the inventory units are either shipped or canceled
+    # shipped    if already shipped (ie. does not change the state) or all of
+    #            the inventory units are either shipped or canceled
     # pending    unless order is complete and +order.payment_state+ is +paid+
     # ready      all other cases
     def determine_state(order)
-      return 'canceled' if inventory_units_canceled? || order.canceled?
-      return 'shipped' if shipped?
+      return 'canceled' if order.canceled? || inventory_units_canceled?
+      return 'shipped' if shipped? || inventory_units_shipped_or_canceled?
       return 'pending' unless order.can_ship?
 
       can_transition_from_pending_to_ready? ? 'ready' : 'pending'
