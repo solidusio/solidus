@@ -5,7 +5,7 @@ require 'spec_helper'
 describe SolidusFriendlyPromotions::Admin::PromotionActionsController, type: :request do
   stub_authorization!
 
-  let!(:promotion) { create(:promotion) }
+  let!(:promotion) { create(:friendly_promotion) }
 
   it "can create a promotion action of a valid type" do
     post solidus_friendly_promotions.admin_promotion_promotion_actions_path(promotion_id: promotion.id), params: {

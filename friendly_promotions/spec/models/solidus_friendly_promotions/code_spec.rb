@@ -7,7 +7,7 @@ RSpec.describe SolidusFriendlyPromotions::Code do
     subject { promotion_code.save }
 
     describe '#normalize_code' do
-      let(:promotion) { create(:promotion, code: code) }
+      let(:promotion) { create(:friendly_promotion, code: code) }
 
       before { subject }
 
@@ -98,7 +98,7 @@ RSpec.describe SolidusFriendlyPromotions::Code do
     context "with an order-level adjustment" do
       let(:promotion) do
         FactoryBot.create(
-          :promotion,
+          :friendly_promotion,
           :with_order_adjustment,
           code: "discount",
           per_code_usage_limit: usage_limit
@@ -116,7 +116,7 @@ RSpec.describe SolidusFriendlyPromotions::Code do
     context "with an item-level adjustment" do
       let(:promotion) do
         FactoryBot.create(
-          :promotion,
+          :friendly_promotion,
           :with_line_item_adjustment,
           code: "discount",
           per_code_usage_limit: usage_limit
@@ -151,7 +151,7 @@ RSpec.describe SolidusFriendlyPromotions::Code do
   describe "#usage_count" do
     let(:promotion) do
       FactoryBot.create(
-        :promotion,
+        :friendly_promotion,
         :with_order_adjustment,
         code: "discount"
       )
@@ -190,7 +190,7 @@ RSpec.describe SolidusFriendlyPromotions::Code do
   describe "completing multiple orders with the same code", slow: true do
     let(:promotion) do
       FactoryBot.create(
-        :promotion,
+        :friendly_promotion,
         :with_order_adjustment,
         code: "discount",
         per_code_usage_limit: 1,
@@ -242,9 +242,9 @@ RSpec.describe SolidusFriendlyPromotions::Code do
   end
 
   it "cannot create promotion code on apply automatically promotion" do
-    promotion = create(:promotion, apply_automatically: true)
+    promotion = create(:friendly_promotion, apply_automatically: true)
     expect {
-      create(:promotion_code, promotion: promotion)
+      create(:friendly_promotion_code, promotion: promotion)
     }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Could not create promotion code on promotion that apply automatically"
   end
 end

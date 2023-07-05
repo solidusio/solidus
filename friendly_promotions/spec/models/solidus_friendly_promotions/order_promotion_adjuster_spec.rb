@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe SolidusFriendlyPromotions::OrderPromotionAdjuster, type: :model do
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
-  let(:promotion) { create(:promotion, apply_automatically: true) }
+  let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
   subject { described_class.new(order) }
@@ -24,7 +24,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderPromotionAdjuster, type: :model d
       end
 
       context "for a non-sale promotion" do
-        let(:promotion) { create(:promotion, apply_automatically: false) }
+        let(:promotion) { create(:friendly_promotion, apply_automatically: false) }
 
         it "doesn't connect the promotion to the order" do
           expect {

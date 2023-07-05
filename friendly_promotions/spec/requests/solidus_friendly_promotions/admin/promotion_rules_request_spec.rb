@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe SolidusFriendlyPromotions::Admin::PromotionRulesController, type: :request do
-  let!(:promotion) { create(:promotion) }
+  let!(:promotion) { create(:friendly_promotion) }
 
   context "when the user is authorized" do
     stub_authorization! do |_u|
@@ -29,8 +29,9 @@ describe SolidusFriendlyPromotions::Admin::PromotionRulesController, type: :requ
 
   context "when the user is not authorized" do
     it "redirects the user to login" do
-      post solidus_friendly_promotions.admin_promotion_promotion_rules_path(promotion_id: promotion.id, promotion_rule: { type: "Spree::Promotion::Rules::Product" })
-
+      post solidus_friendly_promotions.admin_promotion_promotion_rules_path(promotion_id: promotion.id), params: {
+        promotion_rule: { type: "SolidusFriendlyPromotions::Rules::Product" }
+      }
       expect(response).to redirect_to('/admin/login')
     end
   end
