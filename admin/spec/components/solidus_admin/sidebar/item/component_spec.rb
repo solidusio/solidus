@@ -3,21 +3,18 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
-  def url_helpers(routes)
-    Module.new.tap do
-      _1.module_eval do
-        routes.each do |name, path|
-          define_singleton_method("#{name}_path") { path }
-        end
-      end
-    end
+  def url_helpers(solidus_admin: {}, spree: {})
+    double(
+      solidus_admin: double(**solidus_admin),
+      spree: double(**spree)
+    )
   end
 
   it "renders the item" do
     item = SolidusAdmin::MainNavItem.new(key: "orders", route: :orders_path, position: 1)
     component = described_class.new(
       item: item,
-      url_helpers: url_helpers(orders: "/admin/orders")
+      url_helpers: url_helpers(solidus_admin: { orders_path: "/admin/foo" })
     )
 
     render_inline(component)
@@ -31,7 +28,7 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
            .with_child(key: "option_types", route: :option_types_path, position: 1)
     component = described_class.new(
       item: item,
-      url_helpers: url_helpers(products: "/admin/products", option_types: "/admin/option_types")
+      url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products", option_types_path: "/admin/option_types" })
     )
 
     render_inline(component)
@@ -45,7 +42,7 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
            .with_child(key: "option_types", route: :option_types_path, position: 1)
     component = described_class.new(
       item: item,
-      url_helpers: url_helpers(products: "/admin/products", option_types: "/admin/option_types")
+      url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products", option_types_path: "/admin/option_types" })
     )
 
     render_inline(component)
@@ -64,11 +61,11 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
                   .new(key: "products", route: :products_path, position: 1)
     inactive_component = described_class.new(
       item: inactive_item,
-      url_helpers: url_helpers(orders: "/admin/orders")
+      url_helpers: url_helpers(solidus_admin: { orders_path: "/admin/orders" })
     )
     active_component = described_class.new(
       item: active_item,
-      url_helpers: url_helpers(products: "/admin/products")
+      url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products" })
     )
     allow_any_instance_of(ActionDispatch::Request).to receive(:fullpath).and_return("/admin/products")
 
