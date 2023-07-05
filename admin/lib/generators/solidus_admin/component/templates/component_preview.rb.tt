@@ -2,11 +2,10 @@
 
 # @component <%= component_registry_id.inspect %>
 class <%= File.join(*[namespaced_path, file_path].compact).classify %>::ComponentPreview < ViewComponent::Preview
-  layout "solidus_admin/preview"
-  include SolidusAdmin::ContainerHelper
+  include SolidusAdmin::Preview
 
   def overview
-    render_with_template(locals: { component: component(<%= component_registry_id.inspect %>) })
+    render_with_template
   end
 
   <%= preview_playground_yard_tags %>
