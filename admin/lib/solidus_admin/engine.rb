@@ -12,6 +12,12 @@ module SolidusAdmin
       require "solidus_admin/configuration"
     end
 
+    config.autoload_paths << SolidusAdmin::Engine.root.join("spec/components/previews")
+
+    initializer "solidus_admin.view_component" do |app|
+      app.config.view_component.preview_paths << SolidusAdmin::Engine.root.join("spec/components/previews").to_s
+    end
+
     initializer "solidus_admin.inflections" do
       # Support for UI as an acronym
       ActiveSupport::Inflector.inflections { |inflect| inflect.acronym 'UI' }
