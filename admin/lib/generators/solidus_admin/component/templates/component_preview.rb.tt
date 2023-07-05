@@ -6,7 +6,7 @@ class <%= File.join(*[namespaced_path, file_path].compact).classify %>::Componen
   include SolidusAdmin::ContainerHelper
 
   def overview
-    render_with_template(locals: { name: name, component: component(<%= component_registry_id.inspect %>) })
+    render_with_template(locals: { component: component(<%= component_registry_id.inspect %>) })
   end
 
   <%= preview_playground_yard_tags %>
