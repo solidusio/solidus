@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-RSpec.describe SolidusFriendlyPromotions::Category, type: :model do
+RSpec.describe SolidusFriendlyPromotions::PromotionCategory, type: :model do
   it { is_expected.to have_many :promotions }
 
   describe 'validation' do
     let(:name) { 'Nom' }
-    subject { SolidusFriendlyPromotions::Category.new name: name }
+    subject { described_class.new name: name }
 
     context 'when all required attributes are specified' do
       it { is_expected.to be_valid }

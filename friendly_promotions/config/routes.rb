@@ -2,6 +2,8 @@
 
 SolidusFriendlyPromotions::Engine.routes.draw do
   namespace :admin do
+    resources :promotion_categories, except: [:show]
+
     resources :promotions do
       resources :promotion_rules
       resources :promotion_actions
@@ -10,6 +12,5 @@ SolidusFriendlyPromotions::Engine.routes.draw do
         get '/download', to: "promotion_code_batches#download", defaults: { format: "csv" }
       end
     end
-    resources :promotion_categories, except: [:show]
   end
 end

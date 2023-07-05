@@ -52,7 +52,7 @@ module SolidusFriendlyPromotions
       end
 
       def load_data
-        @promotion_categories = Category.order(:name)
+        @promotion_categories = PromotionCategory.order(:name)
       end
 
       def location_after_save

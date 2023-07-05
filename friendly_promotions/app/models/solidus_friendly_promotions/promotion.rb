@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   class Promotion < Spree::Base
-    belongs_to :category, optional: true
+    belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory", foreign_key: :promotion_category_id, optional: true
     has_many :rules
     has_many :actions
     has_many :codes
