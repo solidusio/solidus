@@ -5,13 +5,15 @@
     </div>
   </header>
 
-  <%= render(
-    component("ui/table").build_for(@products, model_class: Spree::Product) do |t|
-      t.column("", class_name: "w-10") { image_column(_1) }
-      t.column(:name) { name_column(_1) }
-      t.column(:status) { status_column(_1) }
-      t.column(:price) { price_column(_1) }
-      t.column(:stock) { stock_column(_1) }
-    end
+  <%= render component("ui/table").new(
+    rows: @products,
+    model_class: Spree::Product,
+    columns: [
+      { header: "", data: -> { image_column(_1) }, class_name: "w-10" },
+      { header: :name, data: -> { name_column(_1) } },
+      { header: :status, data: -> { status_column(_1) } },
+      { header: :price, data: -> { price_column(_1) } },
+      { header: :stock, data: -> { stock_column(_1) } }
+    ]
   ) %>
 </div>
