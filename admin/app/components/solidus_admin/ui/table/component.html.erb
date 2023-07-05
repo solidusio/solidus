@@ -31,7 +31,7 @@
               font-[600]
               line-[120%]
             "
-          ><%= column.name %></th>
+          ><%= render_header_cell column.name %></th>
         <% end %>
       </tr>
     </thead>
@@ -40,7 +40,7 @@
       <% @rows.each do |row| %>
         <tr class="border-b border-gray-100">
           <% @columns.each do |column| %>
-            <td class="py-2 px-4 "><%= column.content.call(row) %></td>
+            <td class="py-2 px-4 "><%= render_data_cell(column.content, row) %></td>
           <% end %>
         </tr>
       <% end %>

@@ -20,9 +20,9 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
 
   def status_column(product)
     if product.available?
-      render component('ui/badge').new(name: t('.status.available'), color: :green)
+      component('ui/badge').new(name: t('.status.available'), color: :green)
     else
-      render component('ui/badge').new(name: t('.status.discontinued'), color: :red)
+      component('ui/badge').new(name: t('.status.discontinued'), color: :red)
     end
   end
 
