@@ -6,7 +6,7 @@ RSpec.describe "Promotion System" do
   context "A promotion that creates line item adjustments" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:pants) { create(:product, name: "Pants") }
-    let(:promotion) { create(:promotion, name: "20% off Shirts", apply_automatically: true) }
+    let(:promotion) { create(:friendly_promotion, name: "20% off Shirts", apply_automatically: true) }
     let(:order) { create(:order) }
 
     before do

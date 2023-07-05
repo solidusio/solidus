@@ -30,10 +30,10 @@ module SolidusFriendlyPromotions
 
     def possible_promotions
       promos = connected_order_promotions | sale_promotions
-      promos.flat_map(&:promotion_actions).group_by(&:preload_relations).each do |preload_relations, actions|
+      promos.flat_map(&:actions).group_by(&:preload_relations).each do |preload_relations, actions|
         preload(records: actions, associations: preload_relations)
       end
-      promos.flat_map(&:promotion_rules).group_by(&:preload_relations).each do |preload_relations, rules|
+      promos.flat_map(&:rules).group_by(&:preload_relations).each do |preload_relations, rules|
         preload(records: rules, associations: preload_relations)
       end
       promos.reject { |promotion| promotion.usage_limit_exceeded?(excluded_orders: [order]) }
@@ -48,13 +48,13 @@ module SolidusFriendlyPromotions
     end
 
     def sale_promotions
-      Spree::Promotion.where(apply_automatically: true).active.includes(promotion_includes)
+      SolidusFriendlyPromotions::Promotion.where(apply_automatically: true).active.includes(promotion_includes)
     end
 
     def promotion_includes
       [
-        :promotion_rules,
-        :promotion_actions,
+        :rules,
+        :actions,
       ]
     end
   end
