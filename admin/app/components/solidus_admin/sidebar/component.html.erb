@@ -2,7 +2,7 @@
   border-r border-r-gray-100
   col-start-1 col-end-2
   lg:col-start-1 lg:col-end-3
-  bg-white
+  bg-gray-15
   h-screen
   p-4
 ">
@@ -27,7 +27,9 @@
       <%= @store.url %>
     </p>
   <% end %>
-  <nav data-controller="main-nav">
-    <%= render @item_component.with_collection(items) %>
+  <nav data-controller="main-nav" class="mt-2">
+    <ul>
+      <%= render @item_component.with_collection(items) %>
+    </ul>
   </nav>
 </aside>
