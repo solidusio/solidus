@@ -16,9 +16,11 @@ module SolidusAdmin
     attr_reader :position
 
     # @!attribute [r] route
-    # @return [Symbol, Proc] the route to use for this item. When a symbol
-    #  is given, it will be called on the url helpers. When a proc is given,
-    #  it will be called with the url helpers as the first argument.
+    # @return [Symbol, Proc] the route to use for this item. When a symbol is
+    #   given, it will be called on the solidus_admin url helpers. When a proc is
+    #   given, it will be evaluated in a context that has access to the
+    #   solidus url helpers.
+    # @see #path
     attr_reader :route
 
     # @api private
@@ -59,14 +61,15 @@ module SolidusAdmin
       @children.any?
     end
 
-    # @param url_helpers [Module] the url helpers to use for generating the path
+    # @param url_helpers [#solidus_admin, #spree] context object giving access
+    #   to url helpers
     # @return [String] the path for this item
     def path(url_helpers)
       case @route
       when Symbol
-        url_helpers.public_send(@route)
+        url_helpers.solidus_admin.public_send(@route)
       when Proc
-        @route.call(url_helpers)
+        url_helpers.instance_exec(&@route)
       end
     end
 
@@ -75,7 +78,8 @@ module SolidusAdmin
     # An item is considered active if its base path (that is, the path without
     # any query parameters) matches the given full path.
     #
-    # @param url_helpers [Module] the url helpers to use for generating the path
+    # @param url_helpers [#solidus_admin, #spree] context object giving access
+    #   to url helpers
     # @param fullpath [String] the full path of the current request
     # @return [Boolean]
     def active?(url_helpers, fullpath)
