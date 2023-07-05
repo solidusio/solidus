@@ -10,7 +10,7 @@ module SolidusAdmin
         SolidusAdmin::Config.main_nav do |main_nav|
           main_nav.add(
             key: "orders",
-            route: :orders_path,
+            route: -> { spree.admin_orders_path },
             icon: "inbox-line",
             position: 10
           )
@@ -24,7 +24,7 @@ module SolidusAdmin
               children: [
                 {
                   key: "option_types",
-                  route: :option_types_path,
+                  route: -> { spree.admin_option_types_path },
                   position: 10
                 }
               ]
@@ -32,28 +32,28 @@ module SolidusAdmin
 
           main_nav.add(
             key: "promotions",
-            route: :promotions_path,
+            route: -> { spree.admin_promotions_path },
             icon: "megaphone-line",
             position: 30
           )
 
           main_nav.add(
             key: "stock",
-            route: :stock_items_path,
+            route: -> { spree.admin_stock_items_path },
             icon: "stack-line",
             position: 40
           )
 
           main_nav.add(
             key: "users",
-            route: :users_path,
+            route: -> { spree.admin_users_path },
             icon: "user-line",
             position: 50
           )
 
           main_nav.add(
             key: "settings",
-            route: :stores_path,
+            route: -> { spree.admin_stores_path },
             icon: "settings-line",
             position: 60
           )

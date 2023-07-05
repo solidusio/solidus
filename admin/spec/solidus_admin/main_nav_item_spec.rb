@@ -3,6 +3,13 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::MainNavItem do
+  def url_helpers(solidus_admin: {}, spree: {})
+    double(
+      solidus_admin: double(**solidus_admin),
+      spree: double(**spree)
+    )
+  end
+
   describe "#with_child" do
     it "returns a new instance" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
@@ -66,26 +73,18 @@ RSpec.describe SolidusAdmin::MainNavItem do
 
   describe "#path" do
     context "when the route is a symbol" do
-      it "calls that method on the url_helpers" do
+      it "calls that method on the solidus_admin url_helpers" do
         item = described_class.new(key: "foo", route: :foo_path, position: 1)
-        url_helpers = Module.new do
-          def self.foo_path
-            "/foo"
-          end
-        end
+        url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
         expect(item.path(url_helpers)).to eq("/foo")
       end
     end
 
     context "when the route is a Proc" do
-      it "yields the url_helpers to it" do
-        item = described_class.new(key: "foo", route: -> { _1.foo_path }, position: 1)
-        url_helpers = Module.new do
-          def self.foo_path
-            "/foo"
-          end
-        end
+      it "evaluates it in the url helpers context" do
+        item = described_class.new(key: "foo", route: -> { solidus_admin.foo_path }, position: 1)
+        url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
         expect(item.path(url_helpers)).to eq("/foo")
       end
@@ -95,11 +94,7 @@ RSpec.describe SolidusAdmin::MainNavItem do
   describe "#active?" do
     it "returns true when the path matches the current request path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = Module.new do
-        def self.foo_path
-          "/foo"
-        end
-      end
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
       expect(
         item.active?(url_helpers, "/foo")
@@ -108,11 +103,7 @@ RSpec.describe SolidusAdmin::MainNavItem do
 
     it "returns true when the path matches the current request base path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = Module.new do
-        def self.foo_path
-          "/foo"
-        end
-      end
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
       expect(
         item.active?(url_helpers, "/foo?bar=baz")
@@ -121,11 +112,7 @@ RSpec.describe SolidusAdmin::MainNavItem do
 
     it "returns false when the path does not match the current request base path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = Module.new do
-        def self.foo_path
-          "/foo"
-        end
-      end
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
       expect(
         item.active?(url_helpers, "/bar")

@@ -4,7 +4,10 @@
 class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   with_collection_parameter :item
 
-  def initialize(item:, url_helpers: solidus_admin_with_fallbacks)
+  def initialize(
+    item:,
+    url_helpers: Struct.new(:spree, :solidus_admin).new(spree, solidus_admin)
+  )
     @item = item
     @url_helpers = url_helpers
   end
