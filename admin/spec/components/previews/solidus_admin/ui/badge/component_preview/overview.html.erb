@@ -1,19 +1,19 @@
 <table>
   <tr>
     <td></td>
-    <% component::SIZES.keys.each do |size| %>
+    <% current_component::SIZES.keys.each do |size| %>
       <td class="px-3 py-1 text-gray-500 text-center"><%= size.to_s.humanize %></td>
     <% end %>
   </tr>
-  <% component::COLORS.keys.each do |color| %>
+  <% current_component::COLORS.keys.each do |color| %>
     <tr>
       <td class="font-bold px-3 py-1"><%= color.to_s.humanize %></td>
     </tr>
     <tr>
       <td class="text-gray-500 px-3 py-1">None</td>
-      <% component::SIZES.keys.each do |size| %>
+      <% current_component::SIZES.keys.each do |size| %>
         <td class="px-3 py-1">
-          <%= render component.new(name: name, color: color, size: size) %>
+          <%= render current_component.new(name: name, color: color, size: size) %>
         </td>
       <% end %>
     </tr>
