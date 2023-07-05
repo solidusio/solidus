@@ -101,7 +101,7 @@ RSpec.configure do |config|
   config.include FileUtils, type: :generator
   config.before type: :generator do
     self.generator_class = described_class
-    self.destination_root = SolidusAdmin::Engine.root.join('tmp')
+    self.destination_root = SolidusAdmin::Engine.root.join('../tmp/solidus_admin_generators')
     ::Rails::Generators.namespace = SolidusAdmin
     prepare_destination
   end
