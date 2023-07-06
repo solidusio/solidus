@@ -7,6 +7,21 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Store, type: :model do
 
   let(:rule) { described_class.new }
 
+  describe "store_ids=" do
+    let!(:promotion) { create(:friendly_promotion) }
+    let!(:unimportant_store) { create(:store) }
+    let!(:store) { create(:store) }
+    let(:rule) { promotion.rules.build(type: described_class.to_s) }
+
+    subject { rule.store_ids = [store.id] }
+
+    it "creates a valid rule with a store" do
+      subject
+      expect(rule).to be_valid
+      expect(rule.stores).to include(store)
+    end
+  end
+
   context "#eligible?(order)" do
     let(:order) { Spree::Order.new }
 
