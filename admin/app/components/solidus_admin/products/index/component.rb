@@ -8,8 +8,10 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   # @!visibility private
 
   def image_column(product)
+    image = product.gallery.images.first or return
+
     link_to(
-      image_tag(product.gallery.images.first.url(:small), class: 'h-10 w-10 max-w-min'),
+      image_tag(image.url(:small), class: 'h-10 w-10 max-w-min'),
       spree.edit_admin_product_path(product),
     )
   end
