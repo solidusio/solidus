@@ -6,6 +6,18 @@ RSpec.describe SolidusFriendlyPromotions::Rules::User, type: :model do
   it {  is_expected.to have_many(:users) }
   let(:rule) { described_class.new }
 
+  describe "user_ids=" do
+    let(:promotion) { create(:friendly_promotion) }
+    let(:user) { create(:user) }
+    let(:rule) { promotion.rules.new }
+
+    subject { rule.user_ids = [user.id] }
+
+    it "creates a valid rule with a user" do
+      expect(rule).to be_valid
+    end
+  end
+
   context "#eligible?(order)" do
     let(:order) { Spree::Order.new }
 
