@@ -3,6 +3,7 @@
 require "view_component"
 require "solidus_admin/container"
 require "solidus_admin/importmap_reloader"
+require "solidus_admin/preview"
 
 module SolidusAdmin
   class Engine < ::Rails::Engine
@@ -16,6 +17,14 @@ module SolidusAdmin
 
     initializer "solidus_admin.view_component" do |app|
       app.config.view_component.preview_paths << SolidusAdmin::Engine.root.join("spec/components/previews").to_s
+
+      app.config.to_prepare do
+        preview_controller_class = app.config.view_component.preview_controller.constantize
+
+        # This is needed to make the preview controller have access to the same
+        # set of helpers that are available to the Preview class.
+        preview_controller_class.include SolidusAdmin::Preview::ControllerHelper
+      end
     end
 
     initializer "solidus_admin.inflections" do
