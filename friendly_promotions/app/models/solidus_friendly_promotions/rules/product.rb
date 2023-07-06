@@ -6,9 +6,9 @@ module SolidusFriendlyPromotions
     # require all or any of the products to be present.  Valid products
     # either come from assigned product group or are assingned directly to
     # the rule.
-    class Product < Rule
-      has_many :products_rules, inverse_of: :rule, dependent: :destroy
-      has_many :products, class_name: "Spree::Product", through: :products_rules
+    class Product < PromotionRule
+      has_many :products_promotion_rules, inverse_of: :promotion_rule, dependent: :destroy
+      has_many :products, class_name: "Spree::Product", through: :products_promotion_rules
 
       def preload_relations
         [:products]

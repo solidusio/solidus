@@ -44,7 +44,7 @@ module SolidusFriendlyPromotions
     end
 
     def connected_order_promotions
-      order.promotions.active.includes(promotion_includes)
+      order.friendly_promotions.active.includes(promotion_includes)
     end
 
     def sale_promotions

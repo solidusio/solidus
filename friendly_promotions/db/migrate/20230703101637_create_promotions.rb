@@ -1,6 +1,6 @@
 class CreatePromotions < ActiveRecord::Migration[7.0]
   def change
-    create_table :solidus_friendly_promotions_promotions do |t|
+    create_table :friendly_promotions do |t|
       t.string :description
       t.datetime :expires_at, precision: nil
       t.datetime :starts_at, precision: nil

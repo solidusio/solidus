@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class LineItemTaxon < Rule
+    class LineItemTaxon < PromotionRule
       has_many :promotion_rule_taxons, class_name: "Spree::PromotionRuleTaxon", foreign_key: :promotion_rule_id,
         dependent: :destroy
       has_many :taxons, through: :promotion_rule_taxons, class_name: "Spree::Taxon"

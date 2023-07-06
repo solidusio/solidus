@@ -2,37 +2,18 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionActionsController < Spree::Admin::ResourceController
-      before_action :load_promotion
-      before_action :validate_level, only: :new
-      before_action :validate_promotion_action_type, only: [:create]
-
-      helper 'solidus_friendly_promotions/admin/promotion_actions'
+    class PromotionActionsController < Spree::Admin::BaseController
+      before_action :load_promotion, only: [:create, :destroy, :new]
+      before_action :validate_promotion_action_type, only: :create
 
       def new
-        if params.dig(:promotion_action, :type)
-          validate_promotion_action_type
-        end
-        @promotion_action = @promotion.promotion_actions.build(
-          type: @promotion_action_type,
-        )
-        if @promotion_action.respond_to?(:calculator_type) && params.dig(:promotion_action, :calculator_type)
-          @promotion_action.calculator_type = params.dig(:promotion_action, :calculator_type)
-        end
-        render layout: false
-      end
-
-      def edit
-        if @promotion_action.calculator.class.name != params.dig(:promotion_action, :calculator_type)
-          @promotion_action.calculator = permitted_resource_params[:calculator_type].constantize.new
-        end
         render layout: false
       end
 
       def create
         @promotion_action = @promotion_action_type.new(permitted_resource_params)
         @promotion_action.promotion = @promotion
-        if @promotion_action.save
+        if @promotion_action.save(validate: false)
           flash[:success] = t('spree.successfully_created', resource: t('spree.promotion_action'))
           redirect_to location_after_save, format: :html
         else

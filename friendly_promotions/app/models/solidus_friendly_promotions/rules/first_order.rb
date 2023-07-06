@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class FirstOrder < Rule
+    class FirstOrder < PromotionRule
       attr_reader :user, :email
 
       def applicable?(promotable)

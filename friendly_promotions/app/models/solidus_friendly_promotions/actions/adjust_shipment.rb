@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Actions
-    class AdjustShipment < Action
+    class AdjustShipment < PromotionAction
       def can_adjust?(object)
         object.is_a? Spree::Shipment
       end

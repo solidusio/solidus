@@ -2,9 +2,9 @@
 
 module SolidusFriendlyPromotions
   module Rules
-    class Store < Rule
-      has_many :rules_stores, inverse_of: :rule, dependent: :destroy
-      has_many :stores, through: :rules_stores, class_name: "Spree::Store"
+    class Store < PromotionRule
+      has_many :promotion_rules_stores, inverse_of: :promotion_rule, dependent: :destroy
+      has_many :stores, through: :promotion_rules_stores, class_name: "Spree::Store"
 
       def preload_relations
         [:stores]

@@ -85,6 +85,17 @@ module SolidusFriendlyPromotions
       def promotion_rule_params
         params[:promotion_rule].permit!
       end
+
+      def promotion_rule_types
+        case params.dig(:level)
+        when "order"
+          SolidusFriendlyPromotions.config.order_rules
+        when "line_item"
+          SolidusFriendlyPromotions.config.line_item_rules
+        when "shipment"
+          SolidusFriendlyPromotions.config.shipment_rules
+        end
+      end
     end
   end
 end

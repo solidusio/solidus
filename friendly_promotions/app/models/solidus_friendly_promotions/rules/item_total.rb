@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
     #
     # To add extra operators please override `self.operators_map` or any other helper method.
     # To customize the error message you can also override `ineligible_message`.
-    class ItemTotal < Rule
+    class ItemTotal < PromotionRule
       preference :amount, :decimal, default: 100.00
       preference :currency, :string, default: -> { Spree::Config[:currency] }
       preference :operator, :string, default: "gt"

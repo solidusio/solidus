@@ -108,8 +108,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
       let(:rule) do
         SolidusFriendlyPromotions::Rules::Product.create!(
           promotion: create(:friendly_promotion),
-          products_rules: [
-            SolidusFriendlyPromotions::ProductsRule.new(product: product)
+          products_promotion_rules: [
+            SolidusFriendlyPromotions::ProductsPromotionRule.new(product: product)
           ]
         ).tap do |rule|
           rule.preferred_match_policy = "invalid"

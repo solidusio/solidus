@@ -145,7 +145,7 @@ en:
         description: Order includes User with specified Role(s)
     errors:
       models:
-        solidus_friendly_promotions/code:
+        solidus_friendly_promotions/promotion_code:
           attributes:
             base:
               disallowed_with_apply_automatically: Could not create promotion code on promotion that apply automatically
