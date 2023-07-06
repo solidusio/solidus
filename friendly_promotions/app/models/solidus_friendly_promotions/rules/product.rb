@@ -7,8 +7,12 @@ module SolidusFriendlyPromotions
     # either come from assigned product group or are assingned directly to
     # the rule.
     class Product < PromotionRule
-      has_many :products_promotion_rules, inverse_of: :promotion_rule, dependent: :destroy
-      has_many :products, class_name: "Spree::Product", through: :products_promotion_rules
+      has_many :products_promotion_rules,
+        dependent: :destroy,
+        foreign_key: :promotion_rule_id,
+        class_name: 'SolidusFriendlyPromotions::ProductsPromotionRule'
+      has_many :products, class_name: 'Spree::Product', through: :products_promotion_rules
+
 
       def preload_relations
         [:products]
