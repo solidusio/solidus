@@ -84,7 +84,8 @@ module SolidusAdmin
     def preview_playground_yard_tags
       return if attributes.blank?
 
-      attributes.map { |attr| "@param #{attr.name} [String]" }.join("\n  ")
+      # See https://lookbook.build/guide/previews/params#input-types
+      attributes.map { |attr| "# @param #{attr.name} text" }.join("\n  ")
     end
 
     def preview_playground_body
