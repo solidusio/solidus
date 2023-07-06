@@ -22,6 +22,13 @@ DummyApp.setup(
   lib_name: 'solidus_admin'
 )
 
+# Calling `draw` will completely rewrite the routes defined in the dummy app,
+# so we need to include the main solidus route.
+DummyApp::Application.routes.draw do
+  mount SolidusAdmin::Engine, at: '/admin'
+  mount Spree::Core::Engine, at: '/'
+end
+
 # RAILS
 require "rspec/rails"
 ENV["RAILS_ENV"] ||= 'test'
