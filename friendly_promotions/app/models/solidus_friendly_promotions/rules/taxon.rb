@@ -3,8 +3,9 @@
 module SolidusFriendlyPromotions
   module Rules
     class Taxon < PromotionRule
-      has_many :promotion_rules_taxons, inverse_of: :promotion_rule, dependent: :destroy
-      has_many :taxons, through: :promotion_rules_taxons, class_name: "Spree::Taxon"
+      has_many :promotion_rules_taxons, class_name: 'SolidusFriendlyPromotions::PromotionRulesTaxon', foreign_key: :promotion_rule_id,
+          dependent: :destroy
+      has_many :taxons, through: :promotion_rules_taxons, class_name: 'Spree::Taxon'
 
       def preload_relations
         [:taxons]
@@ -47,12 +48,15 @@ module SolidusFriendlyPromotions
       end
 
       def taxon_ids_string
-        taxons.pluck(:id).join(",")
+        taxon_ids.join(",")
       end
 
       def taxon_ids_string=(taxon_ids)
-        taxon_ids = taxon_ids.to_s.split(",").map(&:strip)
-        self.taxons = Spree::Taxon.find(taxon_ids)
+        self.taxon_ids = taxon_ids.to_s.split(",").map(&:strip)
+      end
+
+      def updateable?
+        true
       end
 
       private

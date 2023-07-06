@@ -14,6 +14,22 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
     SolidusFriendlyPromotions::Rules::Taxon.create!(promotion: create(:friendly_promotion))
   end
 
+  describe "taxon_ids_string=" do
+    let!(:promotion) { create(:friendly_promotion) }
+    let!(:taxon_1) { create(:taxon) }
+    let!(:taxon_2) { create(:taxon) }
+    let(:rule) { promotion.rules.build(type: described_class.to_s) }
+
+    subject { rule.assign_attributes("taxon_ids_string" => taxon_2.id.to_s) }
+
+    it "creates a valid rule with a taxon" do
+      subject
+      expect(rule).to be_valid
+      rule.save!
+      expect(rule.reload.taxons).to include(taxon_2)
+    end
+  end
+
   context "#eligible?(order)" do
     context "with any match policy" do
       before do
