@@ -14,6 +14,13 @@
         <%= hidden_field_tag :level, @level %>
         <%= hidden_field_tag "promotion_rule[type]", @promotion_rule.class.name %>
         <%= render @promotion_rule, promotion_rule: @promotion_rule, param_prefix: "promotion_rule", form: form %>
+
+        <div class="row">
+          <div class="col-12">
+            <%= form.submit(t(:add, scope: [:solidus_friendly_promotions, :crud]), class: "btn btn-secondary float-right") %>
+          </div>
+        </div>
+
       <% end %>
     </div>
   <% end %>

@@ -64,5 +64,27 @@ module SolidusFriendlyPromotions
         usage_count(excluded_orders: excluded_orders) >= usage_limit
       end
     end
+
+    def not_expired?
+      !expired?
+    end
+
+    def not_started?
+      !started?
+    end
+    def started?
+      starts_at.nil? || starts_at < Time.current
+    end
+    def active?
+      started? && not_expired? && actions.present?
+    end
+
+    def not_expired?
+      !expired?
+    end
+
+    def expired?
+      expires_at.present? && expires_at < Time.current
+    end
   end
 end

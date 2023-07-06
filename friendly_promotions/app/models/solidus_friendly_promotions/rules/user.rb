@@ -25,6 +25,10 @@ module SolidusFriendlyPromotions
       def user_ids_string=(user_ids)
         self.user_ids = user_ids.to_s.split(",").map(&:strip)
       end
+
+      def updateable?
+        true
+      end
     end
   end
 end

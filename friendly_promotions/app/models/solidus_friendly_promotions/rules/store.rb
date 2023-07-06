@@ -17,6 +17,10 @@ module SolidusFriendlyPromotions
       def eligible?(order, _options = {})
         stores.none? || stores.include?(order.store)
       end
+
+      def updateable?
+        true
+      end
     end
   end
 end

@@ -2,9 +2,3 @@
   <label><%= t('spree.user_rule.choose_users') %></label><br>
   <input type='hidden' name='<%= param_prefix %>[user_ids_string]' class='user_picker fullwidth' value='<%= promotion_rule.user_ids.join(",") %>'>
 </div>
-
-<div class="row">
-  <div class="col-12">
-    <%= form.submit(t((form.object.persisted? ? :update : :add), scope: [:solidus_friendly_promotions, :crud]), class: "btn btn-secondary float-right") %>
-  </div>
-</div>

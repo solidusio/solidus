@@ -22,7 +22,7 @@ class AddRuleTables < ActiveRecord::Migration[7.0]
     end
 
     create_table :friendly_promotion_rules_stores do |t|
-      t.references :store, index: true, null: false, foreign_key: { to_table: :spree_users }
+      t.references :store, index: true, null: false, foreign_key: { to_table: :spree_stores }
       t.references :promotion_rule, index: true, null: false
 
       t.timestamps

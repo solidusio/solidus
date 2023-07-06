@@ -12,5 +12,13 @@
     <%= hidden_field_tag "#{param_prefix}[id]", promotion_rule.id %>
     <%= render partial: "spree/shared/error_messages", locals: { target: promotion_rule } %>
     <%= render promotion_rule, promotion_rule: promotion_rule, param_prefix: "promotion_rule", form: form %>
+
+    <% if promotion_rule.updateable? %>
+      <div class="row">
+        <div class="col-12">
+          <%= form.submit(t(:update, scope: [:solidus_friendly_promotions, :crud]), class: "btn btn-secondary float-right") %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>

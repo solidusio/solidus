@@ -36,6 +36,10 @@ module SolidusFriendlyPromotions
         self.product_ids = product_ids.to_s.split(",").map(&:strip)
       end
 
+      def updateable?
+        true
+      end
+
       private
 
       def inverse?

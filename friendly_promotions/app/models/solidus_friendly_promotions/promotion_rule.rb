@@ -32,6 +32,10 @@ module SolidusFriendlyPromotions
       "solidus_friendly_promotions/admin/promotion_rules/rules/#{model_name.element}"
     end
 
+    def updateable?
+      preferences.any?
+    end
+
     private
 
     def unique_per_promotion

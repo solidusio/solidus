@@ -41,6 +41,10 @@ module SolidusFriendlyPromotions
         self.taxons = Spree::Taxon.find(taxon_ids)
       end
 
+      def updateable?
+        true
+      end
+
       private
 
       # ids of taxons rules and taxons rules children
