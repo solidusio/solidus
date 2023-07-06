@@ -5,6 +5,13 @@ require 'rails_helper'
 RSpec.describe Spree::StoreSelector::ByServerName do
   describe "#store" do
     subject { described_class.new(request).store }
+    let(:request) { double(headers: {}, env: { "SERVER_NAME" => "www.example.com" } ) }
+
+    context "with no match" do
+      it "returns a new store with current domain as the url" do
+        expect(subject).to be_a_new(Spree::Store).with(url: "www.example.com")
+      end
+    end
 
     context "with a default" do
       let(:request) { double(headers: {}, env: {}) }

@@ -25,7 +25,7 @@ module Spree
         store = Spree::Store.where(url: server_name).or(Store.where(default: true)).order(default: :asc).first
 
         # Provide a fallback, mostly for legacy/testing purposes
-        store || Spree::Store.new
+        store || Spree::Store.new(url: server_name)
       end
     end
   end
