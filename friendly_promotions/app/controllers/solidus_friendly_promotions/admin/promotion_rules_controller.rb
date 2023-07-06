@@ -12,7 +12,7 @@ module SolidusFriendlyPromotions
       def new
         if params.dig(:promotion_rule, :type)
           validate_promotion_rule_type
-          @promotion_rule = @promotion.promotion_rules.build(type: @promotion_rule_type)
+          @promotion_rule = @promotion.rules.build(type: @promotion_rule_type)
         end
         render layout: false
       end
@@ -50,11 +50,11 @@ module SolidusFriendlyPromotions
       end
 
       def load_promotion
-        @promotion = Spree::Promotion.find(params[:promotion_id])
+        @promotion = SolidusFriendlyPromotions::Promotion.find(params[:promotion_id])
       end
 
       def model_class
-        Spree::PromotionRule
+        SolidusFriendlyPromotions::PromotionRule
       end
 
       def validate_promotion_rule_type

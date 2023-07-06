@@ -1,5 +1,5 @@
 <%= form_with(
-    model: @promotion_rule || Spree::PromotionRule.new(promotion: @promotion),
+    model: @promotion_rule || SolidusFriendlyPromotions::PromotionRule.new(promotion: @promotion),
     scope: :promotion_rule,
     url: solidus_friendly_promotions.new_admin_promotion_promotion_rule_path(@promotion),
     method: :get
