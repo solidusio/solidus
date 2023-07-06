@@ -3,6 +3,10 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::Sidebar::Component, type: :component do
+  it "renders the overview preview" do
+    render_preview(:overview)
+  end
+
   it "renders the solidus logo" do
     component = described_class.new(
       store: build(:store),
