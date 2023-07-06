@@ -69,11 +69,11 @@ en:
             starts_at_placeholder: Immediately
           edit:
             order_rules: Order Rules
-    code_batch_mailer:
-      code_batch_errored:
+    promotion_code_batch_mailer:
+      promotion_code_batch_errored:
         message: 'Promotion code batch errored (%{error}) for promotion: '
         subject: Promotion code batch errored
-      code_batch_finished:
+      promotion_code_batch_finished:
         message: 'All %{number_of_codes} codes have been created for promotion: '
         subject: Promotion code batch finished
   activerecord:

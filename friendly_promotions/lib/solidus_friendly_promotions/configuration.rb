@@ -16,7 +16,7 @@ module SolidusFriendlyPromotions
     add_class_set :actions
 
     class_name_attribute :promotion_chooser_class, default: "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
-    class_name_attribute :code_batch_mailer_class, default: "SolidusFriendlyPromotions::CodeBatchMailer"
+    class_name_attribute :promotion_code_batch_mailer_class, default: "SolidusFriendlyPromotions::PromotionCodeBatchMailer"
   end
 
   class << self

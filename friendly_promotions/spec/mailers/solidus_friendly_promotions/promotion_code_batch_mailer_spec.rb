@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-RSpec.describe SolidusFriendlyPromotions::CodeBatchMailer, type: :mailer do
+RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchMailer, type: :mailer do
   let(:promotion) { create(:friendly_promotion, name: "Promotion Test") }
   let(:code_batch) do
-    SolidusFriendlyPromotions::CodeBatch.create!(
+    SolidusFriendlyPromotions::PromotionCodeBatch.create!(
       promotion_id: promotion.id,
       base_code: "test",
       number_of_codes: 10,
@@ -13,8 +13,8 @@ RSpec.describe SolidusFriendlyPromotions::CodeBatchMailer, type: :mailer do
     )
   end
 
-  describe "#code_batch_finished" do
-    subject { described_class.code_batch_finished(code_batch) }
+  describe "#promotion_code_batch_finished" do
+    subject { described_class.promotion_code_batch_finished(code_batch) }
 
     it "sends the email to the email attached to the promotion code batch " do
       expect(subject.to).to eq([code_batch.email])
@@ -29,9 +29,9 @@ RSpec.describe SolidusFriendlyPromotions::CodeBatchMailer, type: :mailer do
     end
   end
 
-  describe "#code_batch_errored" do
+  describe "#promotion_code_batch_errored" do
     before { code_batch.update(error: "Test error") }
-    subject { described_class.code_batch_errored(code_batch) }
+    subject { described_class.promotion_code_batch_errored(code_batch) }
 
     it "sends the email to the email attached to the promotion code batch " do
       expect(subject.to).to eq([code_batch.email])
