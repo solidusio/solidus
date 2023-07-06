@@ -18,8 +18,9 @@ module SolidusFriendlyPromotions
       end
 
       def create
-        @promotion_rule = @promotion_rule_type.new(promotion_rule_params)
-        @promotion_rule.promotion = @promotion
+        @promotion_rule = @promotion.rules.build(
+          promotion_rule_params.merge(type: @promotion_rule_type.to_s)
+        )
         if @promotion_rule.save
           flash[:success] = t('spree.successfully_created', resource: t('spree.promotion_rule'))
         end
@@ -83,7 +84,7 @@ module SolidusFriendlyPromotions
       end
 
       def promotion_rule_params
-        params[:promotion_rule].permit!
+        params[:promotion_rule].try(:permit!) || {}
       end
 
       def promotion_rule_types
