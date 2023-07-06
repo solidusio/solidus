@@ -44,7 +44,10 @@ module SolidusFriendlyPromotions
     end
 
     def connected_order_promotions
-      order.friendly_promotions.active.includes(promotion_includes)
+      eligible_connected_promotion_ids = order.friendly_order_promotions.select do |order_promotion|
+        order_promotion.promotion_code.nil? || !order_promotion.promotion_code.usage_limit_exceeded?(excluded_orders: [order])
+      end.map(&:promotion_id)
+      order.friendly_promotions.active.where(id: eligible_connected_promotion_ids).includes(promotion_includes)
     end
 
     def sale_promotions

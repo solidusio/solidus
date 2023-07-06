@@ -75,7 +75,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
           context "on a different order" do
             before do
               FactoryBot.create(
-                :completed_order_with_promotion,
+                :completed_order_with_friendly_promotion,
                 promotion: promotion
               )
               code.adjustments.update_all(eligible: true)
@@ -106,7 +106,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       end
       let(:promotable) do
         FactoryBot.create(
-          :completed_order_with_promotion,
+          :completed_order_with_friendly_promotion,
           promotion: promotion
         )
       end
@@ -119,15 +119,11 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
           :friendly_promotion,
           :with_line_item_adjustment,
           code: "discount",
-          per_code_usage_limit: usage_limit
+          per_code_usage_limit: usage_limit,
         )
       end
       before do
-        promotion.actions.first.perform({
-          order: order,
-          promotion: promotion,
-          promotion_code: code
-        })
+        order.recalculate
       end
       context "when there are multiple line items" do
         let(:order) { FactoryBot.create(:order_with_line_items, line_items_count: 2) }
@@ -160,15 +156,25 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
 
     subject { code.usage_count }
 
+
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
-      before { promotion.activate(order: order, promotion_code: code) }
+
+      before do
+        order.friendly_order_promotions.create(
+          promotion: promotion,
+          promotion_code: code
+        )
+        order.recalculate
+      end
+
       it { is_expected.to eq 0 }
     end
+
     context "when the code is applied to a complete order" do
       let!(:order) do
         FactoryBot.create(
-          :completed_order_with_promotion,
+          :completed_order_with_friendly_promotion,
           promotion: promotion
         )
       end
@@ -176,7 +182,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
         it { is_expected.to eq 1 }
       end
       context "and the promo is ineligible" do
-        before { order.adjustments.promotion.update_all(eligible: false) }
+        before { order.all_adjustments.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
       context "and the order is canceled" do
@@ -198,28 +204,41 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       )
     end
     let(:code) { promotion.codes.first }
+
     let(:order) do
       FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
         FactoryBot.create(:payment, amount: 30, order: order)
-        promotion.activate(order: order, promotion_code: code)
       end
     end
-    let(:promo_adjustment) { order.adjustments.promotion.first }
+
+    let(:promo_adjustment) { order.all_adjustments.friendly_promotion.first }
+
     before do
+      order.friendly_order_promotions.create!(
+        order: order,
+        promotion: promotion,
+        promotion_code: SolidusFriendlyPromotions::PromotionCode.find_by(value: "discount")
+      )
+      order.recalculate
       order.next! until order.can_complete?
 
       FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
         FactoryBot.create(:payment, amount: 30, order: order)
-        promotion.activate(order: order, promotion_code: code)
+        order.friendly_order_promotions.create!(
+          order: order,
+          promotion: promotion,
+          promotion_code: SolidusFriendlyPromotions::PromotionCode.find_by(value: "discount")
+        )
+        order.recalculate
         order.next! until order.can_complete?
         order.complete!
       end
     end
 
-    it "makes the promotion ineligible" do
+    it "makes the adjustment disappear" do
       expect{
         order.complete
-      }.to change{ promo_adjustment.reload.eligible }.to(false)
+      }.to change { order.all_adjustments.friendly_promotion }.to([])
     end
 
     it "adjusts the promo_total" do

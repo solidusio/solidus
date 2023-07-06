@@ -4,7 +4,7 @@ module SolidusFriendlyPromotions
   class PromotionCode < Spree::Base
     belongs_to :promotion, inverse_of: :codes
     belongs_to :promotion_code_batch, inverse_of: :promotion_codes, optional: true
-    has_many :adjustments
+    has_many :adjustments, class_name: "Spree::Adjustment"
 
     before_validation :normalize_code
 
@@ -32,8 +32,8 @@ module SolidusFriendlyPromotions
         discounted_orders.
         complete.
         where.not(spree_orders: { state: :canceled }).
-        joins(:order_promotions).
-        where(spree_orders_promotions: { promotion_code_id: self.id }).
+        joins(:friendly_order_promotions).
+        where(friendly_order_promotions: { promotion_code_id: self.id }).
         where.not(id: excluded_orders.map(&:id)).
         count
     end

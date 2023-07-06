@@ -36,7 +36,7 @@ module SolidusFriendlyPromotions
         joins(:all_adjustments).
         where(
           spree_adjustments: {
-            source_type: "SolidusFriendlyPromotions::Action",
+            source_type: "SolidusFriendlyPromotions::PromotionAction",
             source_id: actions.map(&:id),
             eligible: true
           }

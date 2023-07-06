@@ -10,7 +10,7 @@ module SolidusFriendlyPromotions
 
     def call(line_item)
       return unless line_item.variant.product.promotionable?
-      non_promotion_adjustments = line_item.adjustments.reject(&:promotion?)
+      non_promotion_adjustments = line_item.adjustments.reject(&:friendly_promotion?)
 
       eligible_promotions = PromotionEligibility.new(promotable: line_item, possible_promotions: promotions).call
 
