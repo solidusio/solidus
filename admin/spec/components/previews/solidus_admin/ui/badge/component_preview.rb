@@ -4,12 +4,12 @@
 class SolidusAdmin::UI::Badge::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
-  # @param name [String]
+  # @param name text
   def overview(name: "Label")
     render_with_template(locals: { name: name })
   end
 
-  # @param name [String]
+  # @param name text
   # @param color select :color_options
   # @param size select :size_options
   def playground(name: "Label", color: :green, size: :m)
