@@ -1,4 +1,4 @@
-<%= turbo_frame_tag @promotion, "new_#{@level}_promotion_action" do %>
+<%= turbo_frame_tag @promotion, "new_promotion_action" do %>
   <div class="promotion_action promotion-block">
     <h6 class='promotion-title'> <%= t(:add_action, scope: :solidus_friendly_promotions) %></h6>
     <%= link_to_with_icon 'trash', '', spree.edit_admin_promotion_path(@promotion), class: 'delete' %>

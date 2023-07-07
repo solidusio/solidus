@@ -12,7 +12,7 @@ module SolidusFriendlyPromotions
       def options_for_promotion_action_types(promotion_action)
         actions = SolidusFriendlyPromotions.config.actions
         options = actions.map { |action| [action.model_name.human, action.name] }
-        options_for_select(options, promotion_action.type.to_s)
+        options_for_select(options, promotion_action&.type&.to_s)
       end
 
       def promotion_actions_by_level(promotion, level)

@@ -3,15 +3,24 @@
 module SolidusFriendlyPromotions
   module Admin
     class PromotionActionsController < Spree::Admin::BaseController
-      before_action :load_promotion, only: [:create, :destroy, :new]
+      before_action :validate_level, only: :new
+      before_action :load_promotion, only: [:create, :destroy, :new, :update]
       before_action :validate_promotion_action_type, only: :create
 
       def new
+        if params.dig(:promotion_action, :type)
+          validate_promotion_action_type
+          @promotion_action = @promotion.actions.build(type: @promotion_action_type)
+
+          if params.dig(:promotion_action, :calculator_type)
+            @promotion_action.calculator_type = params[:promotion_action][:calculator_type]
+          end
+        end
         render layout: false
       end
 
       def create
-        @promotion_action = @promotion_action_type.new(permitted_resource_params)
+        @promotion_action = @promotion_action_type.new(promotion_action_params)
         @promotion_action.promotion = @promotion
         if @promotion_action.save(validate: false)
           flash[:success] = t('spree.successfully_created', resource: t('spree.promotion_action'))
@@ -22,8 +31,8 @@ module SolidusFriendlyPromotions
       end
 
       def update
-        @promotion_action = @promotion.promotion_actions.find(params[:id])
-        @promotion_action.assign_attributes(permitted_resource_params)
+        @promotion_action = @promotion.actions.find(params[:id])
+        @promotion_action.assign_attributes(promotion_action_params)
         if @promotion_action.save
           flash[:success] = t('spree.successfully_updated', resource: t('spree.promotion_action'))
           redirect_to location_after_save, format: :html
@@ -33,7 +42,7 @@ module SolidusFriendlyPromotions
       end
 
       def destroy
-        @promotion_action = @promotion.promotion_actions.find(params[:id])
+        @promotion_action = @promotion.actions.find(params[:id])
         if @promotion_action.discard
           flash[:success] = t('spree.successfully_removed', resource: t('spree.promotion_action'))
         end
@@ -47,7 +56,7 @@ module SolidusFriendlyPromotions
       end
 
       def load_promotion
-        @promotion = Spree::Promotion.find(params[:promotion_id])
+        @promotion = SolidusFriendlyPromotions::Promotion.find(params[:promotion_id])
       end
 
       def validate_level
@@ -58,6 +67,11 @@ module SolidusFriendlyPromotions
           @level = "line_item"
           flash.now[:error] = t(:invalid_promotion_rule_level, scope: :solidus_friendly_promotions)
         end
+      end
+
+
+      def promotion_action_params
+        params[:promotion_action].try(:permit!) || {}
       end
 
       def validate_promotion_action_type
