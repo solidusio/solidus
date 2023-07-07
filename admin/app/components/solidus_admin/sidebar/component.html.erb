@@ -27,7 +27,7 @@
   <% end %>
   <nav data-controller="main-nav" class="mt-2">
     <ul>
-      <%= render @item_component.with_collection(items) %>
+      <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
     </ul>
   </nav>
 </aside>

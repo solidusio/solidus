@@ -10,6 +10,10 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
     )
   end
 
+  it "renders the overview preview" do
+    render_preview(:overview)
+  end
+
   it "renders the item" do
     item = SolidusAdmin::MainNavItem.new(key: "orders", route: :orders_path, position: 1)
     component = described_class.new(
@@ -61,13 +65,14 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
                   .new(key: "products", route: :products_path, position: 1)
     inactive_component = described_class.new(
       item: inactive_item,
-      url_helpers: url_helpers(solidus_admin: { orders_path: "/admin/orders" })
+      url_helpers: url_helpers(solidus_admin: { orders_path: "/admin/orders" }),
+      fullpath: "/admin/products"
     )
     active_component = described_class.new(
       item: active_item,
-      url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products" })
+      url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products" }),
+      fullpath: "/admin/products"
     )
-    allow_any_instance_of(ActionDispatch::Request).to receive(:fullpath).and_return("/admin/products")
 
     render_inline(inactive_component)
     inactive_classes = page.find("a", text: "Orders")[:class]
