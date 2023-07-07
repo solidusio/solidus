@@ -6,7 +6,7 @@
       form.select :calculator_type,
         options_for_promotion_action_calculator_types(form.object),
         {
-          include_blank: t(:choose_promotion_action_calculator, scope: 'solidus_friendly_shipping')
+          include_blank: t(:choose_promotion_action_calculator, scope: 'solidus_friendly_promotions')
         },
         class: 'custom-select fullwidth',
         onchange: 'this.form.requestSubmit()',

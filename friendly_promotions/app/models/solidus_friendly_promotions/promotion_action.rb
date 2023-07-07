@@ -42,8 +42,8 @@ module SolidusFriendlyPromotions
 
     def adjustment_label(adjustable)
       I18n.t(
-        "spree.adjustment_labels.#{adjustable.class.name.demodulize.underscore}",
-        promotion: Spree::Promotion.model_name.human,
+        "solidus_friendly_promotions.adjustment_labels.#{adjustable.class.name.demodulize.underscore}",
+        promotion: SolidusFriendlyPromotions::Promotion.model_name.human,
         promotion_name: promotion.name,
       )
     end

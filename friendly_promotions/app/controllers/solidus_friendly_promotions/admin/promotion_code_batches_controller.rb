@@ -3,14 +3,14 @@
 module SolidusFriendlyPromotions
   module Admin
     class PromotionCodeBatchesController < Spree::Admin::ResourceController
-      belongs_to 'spree/promotion'
+      belongs_to 'solidus_friendly_promotions/promotion'
 
       create.after :build_promotion_code_batch
 
       def download
         require "csv"
 
-        @promotion_code_batch = Spree::PromotionCodeBatch.find(
+        @promotion_code_batch = SolidusFriendlyPromotions::PromotionCodeBatch.find(
           params[:promotion_code_batch_id]
         )
 

@@ -4,6 +4,10 @@
 en:
   solidus_friendly_promotions:
     actions: Actions
+    adjustment_labels:
+      line_item: "%{promotion} (%{promotion_name})"
+      shipment: "%{promotion} (%{promotion_name})"
+    adjustment_type: Adjustment type
     add_action: New Action
     add_rule: New Rule
     order_rules: Order Rules
@@ -12,6 +16,8 @@ en:
     line_item_actions: Line Item Actions
     shipment_actions: Shipment Actions
     invalid_promotion_rule_level: Invalid Promotion Rule Level. Must be one of "order", "shipment", or "line_item"
+    invalid_promotion_action: Invalid promotion action.
+    invalid_promotion_rule: Invalid promotion rule.
     create_promotion_code: Create promotion code
     current_promotion_usage: 'Current Usage: %{count}'
     discount_rules: Promotion Rules
@@ -21,6 +27,7 @@ en:
     new_promotion_code_batch: New Promotion Code Batch
     no_rules_addes: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
+    promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
     view_promotion_codes_list: View codes list
     promotion_rules:
       line_item_product:
@@ -31,6 +38,9 @@ en:
         match_policies:
           include: Line item's product has one of the chosen taxons
           exclude: Line item's product does not have one of the chosen taxons
+    hints:
+      solidus_friendly_promotions/calculator:
+        promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
     product_rule:
       choose_products: Choose products
       label: Order must contain %{select} of these products

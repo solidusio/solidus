@@ -11,7 +11,7 @@
     form.select :type,
       options_for_promotion_rule_types(form.object, level),
       {
-        include_blank: t(:choose_promotion_rule, scope: 'solidus_friendly_shipping')
+        include_blank: t(:choose_promotion_rule, scope: 'solidus_friendly_promotions')
       },
       class: 'custom-select fullwidth',
       onchange: 'this.form.requestSubmit()',

@@ -6,8 +6,8 @@ module SolidusFriendlyPromotions
   module Admin
     class PromotionCodesController < Spree::Admin::ResourceController
       def index
-        @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
-        @promotion_codes = @promotion.promotion_codes.order(:value)
+        @promotion = SolidusFriendlyPromotions::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
+        @promotion_codes = @promotion.codes.order(:value)
 
         respond_to do |format|
           format.html do
@@ -22,22 +22,22 @@ module SolidusFriendlyPromotions
       end
 
       def new
-        @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
+        @promotion = SolidusFriendlyPromotions::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         if @promotion.apply_automatically
-          flash[:error] = t('activerecord.errors.models.spree/promotion_code.attributes.base.disallowed_with_apply_automatically')
-          redirect_to admin_promotion_promotion_codes_url(@promotion)
+          flash[:error] = t('activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base.disallowed_with_apply_automatically')
+          redirect_to solidus_friendly_promotions.admin_promotion_promotion_codes_url(@promotion)
         else
-          @promotion_code = @promotion.promotion_codes.build
+          @promotion_code = @promotion.codes.build
         end
       end
 
       def create
-        @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
-        @promotion_code = @promotion.promotion_codes.build(value: params[:promotion_code][:value])
+        @promotion = SolidusFriendlyPromotions::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
+        @promotion_code = @promotion.codes.build(value: params[:promotion_code][:value])
 
         if @promotion_code.save
           flash[:success] = flash_message_for(@promotion_code, :successfully_created)
-          redirect_to admin_promotion_promotion_codes_url(@promotion)
+          redirect_to solidus_friendly_promotions.admin_promotion_promotion_codes_url(@promotion)
         else
           flash.now[:error] = @promotion_code.errors.full_messages.to_sentence
           render_after_create_error

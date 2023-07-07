@@ -1,7 +1,7 @@
 <%= turbo_frame_tag @promotion, "new_promotion_action" do %>
   <div class="promotion_action promotion-block">
     <h6 class='promotion-title'> <%= t(:add_action, scope: :solidus_friendly_promotions) %></h6>
-    <%= link_to_with_icon 'trash', '', spree.edit_admin_promotion_path(@promotion), class: 'delete' %>
+    <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.edit_admin_promotion_path(@promotion), class: 'delete' %>
     <%= render 'type_select' %>
     <% if @promotion_action.respond_to?(:calculator) %>
       <%= render 'calculator_select', path: solidus_friendly_promotions.new_admin_promotion_promotion_action_path(@promotion), promotion_action: @promotion_action %>
