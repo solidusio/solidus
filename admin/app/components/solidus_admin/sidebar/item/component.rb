@@ -4,12 +4,17 @@
 class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   with_collection_parameter :item
 
+  # @param item [SolidusAdmin::MainNavItem
+  # @param fullpath [String] the current path
+  # @param url_helpers [#solidus_admin, #spree] context for generating paths
   def initialize(
     item:,
+    fullpath: "#",
     url_helpers: Struct.new(:spree, :solidus_admin).new(spree, solidus_admin)
   )
     @item = item
     @url_helpers = url_helpers
+    @fullpath = fullpath
   end
 
   def name
@@ -59,11 +64,11 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     tag.nav(
       class: nested_nav_active_classes
     ) do
-      render self.class.with_collection(@item.children, url_helpers: @url_helpers)
+      render self.class.with_collection(@item.children, url_helpers: @url_helpers, fullpath: @fullpath)
     end
   end
 
   def active?
-    @item.active?(@url_helpers, request.fullpath)
+    @item.active?(@url_helpers, @fullpath)
   end
 end
