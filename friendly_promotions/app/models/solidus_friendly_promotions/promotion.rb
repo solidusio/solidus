@@ -13,8 +13,11 @@ module SolidusFriendlyPromotions
     validates :usage_limit, numericality: { greater_than: 0, allow_nil: true }
     validates :per_code_usage_limit, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
     validates :description, length: { maximum: 255 }
+    validate :apply_automatically_disallowed_with_paths
 
     scope :active, -> { has_actions.started_and_unexpired }
+    scope :advertised, -> { where(advertise: true) }
+    scope :coupons, -> { joins(:codes).distinct }
     scope :started_and_unexpired, -> do
       table = arel_table
       time = Time.current
@@ -55,6 +58,15 @@ module SolidusFriendlyPromotions
         count
     end
 
+    def used_by?(user, excluded_orders = [])
+      discounted_orders.
+        complete.
+        where.not(id: excluded_orders.map(&:id)).
+        where(user: user).
+        where.not(spree_orders: { state: :canceled }).
+        exists?
+    end
+
     # Whether the promotion has exceeded its usage restrictions.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
@@ -72,11 +84,17 @@ module SolidusFriendlyPromotions
     def not_started?
       !started?
     end
+
     def started?
       starts_at.nil? || starts_at < Time.current
     end
+
     def active?
       started? && not_expired? && actions.present?
+    end
+
+    def inactive?
+      !active?
     end
 
     def not_expired?
@@ -85,6 +103,18 @@ module SolidusFriendlyPromotions
 
     def expired?
       expires_at.present? && expires_at < Time.current
+    end
+
+    def products
+      rules.where(type: "SolidusFriendlyPromotions::Rules::Product").flat_map(&:products).uniq
+    end
+
+    private
+
+    def apply_automatically_disallowed_with_paths
+      return unless apply_automatically
+
+      errors.add(:apply_automatically, :disallowed_with_path) if path.present?
     end
   end
 end

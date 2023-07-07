@@ -13,7 +13,7 @@ module SolidusFriendlyPromotions
     include Spree::AdjustmentSource
 
     belongs_to :promotion, inverse_of: :actions
-    has_many :adjustments, as: :source
+    has_many :adjustments, class_name: "Spree::Adjustment", as: :source
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
 
