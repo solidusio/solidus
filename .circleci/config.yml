@@ -90,7 +90,7 @@ commands:
     steps:
       - run:
           name: Run Tests
-          command: ./bin/build-ci test
+          command: ./bin/build-ci
 
       - store_artifacts:
           path: /tmp/test-artifacts
