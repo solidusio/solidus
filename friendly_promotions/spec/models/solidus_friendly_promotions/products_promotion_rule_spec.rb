@@ -3,6 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe SolidusFriendlyPromotions::ProductsPromotionRule do
-  it { is_expected.to belong_to(:product) }
-  it { is_expected.to belong_to(:promotion_rule) }
+  it { is_expected.to belong_to(:product).optional }
+  it { is_expected.to belong_to(:promotion_rule).optional }
 end

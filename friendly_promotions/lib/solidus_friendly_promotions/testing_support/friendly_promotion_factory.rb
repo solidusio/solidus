@@ -13,16 +13,6 @@ FactoryBot.define do
       end
     end
 
-    trait :with_action do
-      transient do
-        promotion_action_class { SolidusFriendlyPromotions::Actions::AdjustLineItem }
-      end
-
-      after(:create) do |promotion, evaluator|
-        promotion.actions << evaluator.promotion_action_class.new
-      end
-    end
-
     trait :with_adjustable_action do
       transient do
         preferred_amount { 10 }
