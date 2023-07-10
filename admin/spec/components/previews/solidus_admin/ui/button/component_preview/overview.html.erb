@@ -1,0 +1,27 @@
+<% current_component::SCHEMES.keys.each do |scheme| %>
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      <%= scheme.to_s.humanize %>
+    </h6>
+
+    <table>
+      <tr>
+        <td></td>
+        <% current_component::SIZES.keys.each do |size| %>
+          <td class="px-3 py-1 text-gray-500 text-center text-[16px]"><%= size.to_s.humanize %></td>
+        <% end %>
+      </tr>
+      <% %i[default disabled].each do |state| %>
+        <tr>
+          <td class="font-bold px-3 py-1"><%= state.to_s.humanize %></td>
+          <% current_component::SIZES.keys.each do |size| %>
+            <td class="px-3 py-1 text-center">
+              <%= render current_component.new(size: size, scheme: scheme, text: text, disabled: state == :disabled) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+<% end %>
