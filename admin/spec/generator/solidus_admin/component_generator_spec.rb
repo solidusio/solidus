@@ -30,7 +30,7 @@ RSpec.describe SolidusAdmin::ComponentGenerator, type: :generator do
         .and include(%{# @param baz text})
 
       expect(engine_path('spec/components/previews/solidus_admin/ui/foo/component_preview/overview.html.erb').read)
-        .to include(%{<%= render component.new(bar: "bar", baz: "baz") %>})
+        .to include(%{<%= render current_component.new(bar: "bar", baz: "baz") %>})
     end
   end
 
