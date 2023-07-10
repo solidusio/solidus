@@ -2,14 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
+@layer base {
+  .body-tiny {
+    @apply font-sans font-normal text-xs leading-5;
+  }
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+  .body-tiny-bold {
+    @apply font-sans font-semibold text-xs leading-5;
+  }
+
+  .body-small {
+    @apply font-sans font-normal text-sm leading-6;
+  }
+
+  .body-small-bold {
+    @apply font-sans font-semibold text-sm leading-6;
+  }
+
+  .body-text {
+    @apply font-sans font-normal text-base leading-6;
+  }
+
+  .body-text-bold {
+    @apply font-sans font-semibold text-base leading-6;
+  }
+
+  .body-title {
+    @apply font-sans font-semibold text-xl leading-5;
   }
 }
-
-*/
 
 <%= SolidusAdmin::Config.tailwind_stylesheets.map { File.read(_1) }.join("\n") %>
