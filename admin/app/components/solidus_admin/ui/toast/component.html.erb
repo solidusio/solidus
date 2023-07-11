@@ -1,0 +1,21 @@
+<div
+  class="
+    rounded inline-block px-3 py-2
+    <%= SCHEMES.fetch(@scheme.to_sym) %>
+  "
+  data-controller="<%= stimulus_id %>"
+  data-<%= stimulus_id %>-closing-class="transform opacity-0 transition duration-500"
+  data-<%= stimulus_id %>-transition-value="500"
+>
+  <%= icon_tag(@icon, class_names: 'inline-block mr-3') if @icon %>
+
+  <p class="inline-block body-tiny-bold"><%= @text %></p>
+
+  <button
+    class="inline-block ml-3 align-text-bottom"
+    title="<%= t('.close_text') %>"
+    data-action="<%= stimulus_id %>#close"
+  >
+    <%= icon_tag('close-line') %>
+  </button>
+</div>
