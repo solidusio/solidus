@@ -1,0 +1,18 @@
+<table>
+  <tr>
+    <td></td>
+    <% current_component::SIZES.keys.each do |size| %>
+      <td class="px-3 py-1 text-gray-500 text-center text-[16px]"><%= size.to_s.humanize %></td>
+    <% end %>
+  </tr>
+  <% %i[default active disabled].each do |state| %>
+    <tr>
+      <td class="font-bold px-3 py-1"><%= state.to_s.humanize %></td>
+      <% current_component::SIZES.keys.each do |size| %>
+        <td class="px-3 py-1 text-center">
+          <%= render current_component.new(size: size, text: text, disabled: state == :disabled, active: state == :active) %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
