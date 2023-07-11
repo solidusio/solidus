@@ -1,9 +1,9 @@
 <aside class="
+  flex flex-col
   border-r border-r-gray-100
   col-start-1 col-end-2
   lg:col-start-1 lg:col-end-3
   bg-gray-15
-  h-screen
   p-4
 ">
   <%= image_tag @logo_path, alt: "Solidus" %>
@@ -30,4 +30,5 @@
       <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
     </ul>
   </nav>
+  <%= render @account_nav_component.new %>
 </aside>
