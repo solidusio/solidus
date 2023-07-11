@@ -17,7 +17,7 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   end
 
   def icon
-    common_classes = "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] text-sm"
+    common_classes = "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small"
 
     return tag.span(class: common_classes) unless @item.icon
 
@@ -55,9 +55,9 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
 
   def link_level_classes
     if @item.top_level
-      "text-black font-bold"
+      "body-small-bold text-black"
     else
-      "text-gray-600"
+      "body-small text-gray-600"
     end
   end
 
