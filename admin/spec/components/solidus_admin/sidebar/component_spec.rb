@@ -39,4 +39,21 @@ RSpec.describe SolidusAdmin::Sidebar::Component, type: :component do
 
     expect(page).to have_css("nav[data-controller='main-nav']")
   end
+
+  it "renders the account nav component" do
+    account_nav_component = mock_component do
+      def call
+        "account nav"
+      end
+    end
+    component = described_class.new(
+      store: build(:store),
+      items: [],
+      account_nav_component: account_nav_component
+    )
+
+    render_inline(component)
+
+    expect(page).to have_content("account nav")
+  end
 end
