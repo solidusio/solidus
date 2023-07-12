@@ -7,9 +7,19 @@
   "
   data-controller="<%= stimulus_id %>"
 >
-  <div class="h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 flex">
+  <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 flex" %>
+
+  <div class="<%= toolbar_classes %>">
     <%= render component('ui/tab').new(text: "All", active: true, scheme: :secondary, href: "") %>
   </div>
+
+  <% if @batch_actions %>
+    <div class="<%= toolbar_classes %>">
+      <% @batch_actions.each do |batch_action| %>
+        <%= render_batch_action_button(batch_action) %>
+      <% end %>
+    </div>
+  <% end %>
 
   <table class="table-fixed w-full border-collapse">
     <colgroup>

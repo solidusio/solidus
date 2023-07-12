@@ -37,6 +37,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def render_batch_action_button(batch_action)
+    render component('ui/button').new(
+      icon: batch_action.icon,
+      text: batch_action.display_name,
+      scheme: :secondary,
+    )
+  end
+
   def render_header_cell(cell)
     cell =
       case cell
