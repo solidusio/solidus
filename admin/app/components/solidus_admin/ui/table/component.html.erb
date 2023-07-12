@@ -19,6 +19,17 @@
         <%= render_batch_action_button(batch_action) %>
       <% end %>
     </div>
+
+    <div class="bg-white border-b border-gray-100 justify-start items-center gap-0 flex">
+      <div class="py-3 px-4">
+        <%= render_header_cell(selectable_column.header) %>
+      </div>
+
+      <div class="py-3 px-4">
+        <span>0</span>
+        <%= t('.rows_selected') %>.
+      </div>
+    </div>
   <% end %>
 
   <table class="table-auto w-full border-collapse">
