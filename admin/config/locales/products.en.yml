@@ -2,3 +2,9 @@ en:
   solidus_admin:
     products:
       title: "Products"
+      destroy:
+        success: "Products were successfully removed."
+      discontinue:
+        success: "Products were successfully discontinued."
+      activate:
+        success: "Products were successfully activated."
