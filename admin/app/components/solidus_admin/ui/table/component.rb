@@ -28,17 +28,36 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def selectable_column
     @selectable_column ||= Column.new(
       header: -> {
-        component('ui/forms/checkbox').new
+        component('ui/forms/checkbox').new(
+          form: batch_actions_form_id,
+        )
       },
       data: ->(data) {
-        component('ui/forms/checkbox').new
+        component('ui/forms/checkbox').new(
+          name: "id[]",
+          form: batch_actions_form_id,
+          value: data.id,
+        )
       },
       class_name: 'w-[52px]',
     )
   end
 
+  def batch_actions_form_id
+    @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{SecureRandom.hex}"
+  end
+
   def render_batch_action_button(batch_action)
     render component('ui/button').new(
+      name: request_forgery_protection_token,
+      value: form_authenticity_token(form_options: {
+        action: batch_action.action,
+        method: batch_action.method,
+      }),
+      formaction: batch_action.action,
+      formmethod: batch_action.method,
+      form: batch_actions_form_id,
+      type: :submit,
       icon: batch_action.icon,
       text: batch_action.display_name,
       scheme: :secondary,
