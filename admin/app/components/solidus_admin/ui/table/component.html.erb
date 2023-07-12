@@ -9,6 +9,10 @@
   "
   data-controller="<%= stimulus_id %>"
 >
+  <div class="h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 flex">
+    <%= render component('ui/tab').new(text: "All", active: true, scheme: :secondary, href: "") %>
+  </div>
+
   <table class=" table-auto w-full border-collapse ">
     <colgroup>
       <% @columns.each do |column| %>
