@@ -25,6 +25,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       header: -> {
         component('ui/forms/checkbox').new(
           form: batch_actions_form_id,
+          "data-action": "#{stimulus_id}#selectAllRows",
+          "data-#{stimulus_id}-target": "headerCheckbox",
         )
       },
       data: ->(data) {
@@ -32,6 +34,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           name: "id[]",
           form: batch_actions_form_id,
           value: data.id,
+          "data-action": "#{stimulus_id}#selectRow",
+          "data-#{stimulus_id}-target": "checkbox",
         )
       },
       class_name: 'w-[20px]',

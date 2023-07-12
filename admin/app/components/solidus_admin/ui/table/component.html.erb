@@ -9,27 +9,29 @@
 >
   <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 flex" %>
 
-  <div class="<%= toolbar_classes %>">
+  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
     <%= render component('ui/tab').new(text: "All", active: true, scheme: :secondary, href: "") %>
   </div>
 
   <% if @batch_actions %>
     <%= form_tag '', id: batch_actions_form_id %>
 
-    <div class="<%= toolbar_classes %>">
-      <% @batch_actions.each do |batch_action| %>
-        <%= render_batch_action_button(batch_action) %>
-      <% end %>
-    </div>
-
-    <div class="bg-white border-b border-gray-100 justify-start items-center gap-0 flex">
-      <div class="py-3 px-4">
-        <%= render_header_cell(selectable_column.header) %>
+    <div data-<%= stimulus_id %>-target="batchToolbar" class="hidden">
+      <div class="<%= toolbar_classes %>">
+        <% @batch_actions.each do |batch_action| %>
+          <%= render_batch_action_button(batch_action) %>
+        <% end %>
       </div>
 
-      <div class="py-3 px-4">
-        <span>0</span>
-        <%= t('.rows_selected') %>.
+      <div class="bg-white border-b border-gray-100 justify-start items-center gap-0 flex">
+        <div class="py-3 px-4">
+          <%= render_header_cell(selectable_column.header) %>
+        </div>
+
+        <div class="py-3 px-4">
+          <span data-<%= stimulus_id %>-target="selectedRowsCount">0</span>
+          <%= t('.rows_selected') %>.
+        </div>
       </div>
     </div>
   <% end %>
@@ -41,7 +43,10 @@
       <% end %>
     </colgroup>
 
-    <thead class="bg-gray-15 color-gray-100">
+    <thead
+      class="bg-gray-15 color-gray-100"
+      data-<%= stimulus_id %>-target="tableHeader"
+    >
       <tr>
         <% @columns.each do |column| %>
           <%= render_header_cell(column.header) %>
