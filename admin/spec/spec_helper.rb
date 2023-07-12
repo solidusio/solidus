@@ -103,6 +103,7 @@ RSpec.configure do |config|
 
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
+  config.include SolidusAdmin::ComponentHelpers, type: :component
 
   config.include Rails::Generators::Testing::Behaviour, type: :generator
   config.include FileUtils, type: :generator
