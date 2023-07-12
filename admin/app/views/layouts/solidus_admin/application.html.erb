@@ -5,19 +5,28 @@
     <%= stylesheet_link_tag "solidus_admin/application.css", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
   </head>
-  <body class="
-    grid grid-cols-4
-    lg:grid-cols-12
-    bg-gray-15
-  ">
-    <%= render component("sidebar").new(store: current_store) %>
 
-    <main class="
-      col-start-2 col-end-4
-      lg:col-start-3 lg:col-end-12
-      py-6 px-4
+  <body>
+    <div class="fixed right-3 bottom-3 flex flex-col gap-3">
+      <% flash.each do |key, message| %>
+        <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
+      <% end %>
+    </div>
+
+    <div class="
+      grid grid-cols-4
+      lg:grid-cols-12
+      bg-gray-15
     ">
-      <%= yield %>
-    </main>
+      <%= render component("sidebar").new(store: current_store) %>
+
+      <main class="
+        col-start-2 col-end-4
+        lg:col-start-3 lg:col-end-12
+        py-6 px-4
+      ">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>
