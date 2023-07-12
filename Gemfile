@@ -47,10 +47,6 @@ group :backend do
   gem 'webrick', require: false
 end
 
-group :admin do
-  gem 'tailwindcss-rails', '~> 2.0', require: false
-end
-
 group :utils do
   gem 'pry'
   gem 'launchy', require: false
