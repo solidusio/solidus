@@ -21,6 +21,20 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @pagination_component = pagination_component
     @model_class = page.records.model
     @rows = page.records
+
+    @columns.unshift selectable_column if batch_actions.present?
+  end
+
+  def selectable_column
+    @selectable_column ||= Column.new(
+      header: -> {
+        component('ui/forms/checkbox').new
+      },
+      data: ->(data) {
+        component('ui/forms/checkbox').new
+      },
+      class_name: 'w-[52px]',
+    )
   end
 
   def render_header_cell(cell)
