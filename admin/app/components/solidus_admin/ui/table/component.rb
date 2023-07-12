@@ -45,7 +45,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     )
   end
 
-  def render_header_cell(cell)
+  def render_header_cell(cell, **attrs)
     cell =
       case cell
       when Symbol
@@ -67,7 +67,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       font-semibold
       vertical-align-middle
       leading-none
-    })
+    }, **attrs)
   end
 
   def render_data_cell(cell, data)
