@@ -14,9 +14,8 @@ When using the component generator from within the admin folder it will generate
 instead of the sandbox application.
 
 ```bash
-cd admin
 # the `solidus_admin/` namespace is added by default
-bin/rails g solidus_admin:component foo
+bin/rails admin g solidus_admin:component foo
       create  app/components/solidus_admin/foo/component.rb
       create  app/components/solidus_admin/foo/component.html.erb
       create  app/components/solidus_admin/foo/component.yml
