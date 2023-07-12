@@ -4,14 +4,15 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param page [GearedPagination::Page] The pagination page object.
   # @param path [Proc] A callable object that generates the path for pagination links.
   # @param columns [Array<Hash>] The array of column definitions.
-  # @option columns [Symbol] :header The column header.
-  # @option columns [Symbol|Proc] :data The data accessor for the column.
+  # @option columns [Symbol|Proc|String] :header The column header.
+  # @option columns [Symbol|Proc|String] :data The data accessor for the column.
   # @option columns [String] :class_name (optional) The class name for the column.
   # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
-  def initialize(page:, path: nil, columns: [], pagination_component: component("ui/table/pagination"))
+  def initialize(page:, path: nil, columns: [], batch_actions: [], pagination_component: component("ui/table/pagination"))
     @page = page
     @path = path
     @columns = columns.map { Column.new(**_1) }
+    @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @pagination_component = pagination_component
     @model_class = page.records.model
     @rows = page.records
@@ -83,5 +84,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
-  private_constant :Column
+  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  private_constant :Column, :BatchAction
 end
