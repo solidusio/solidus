@@ -20,15 +20,7 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     common_classes = "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small"
 
     return tag.span(class: common_classes) unless @item.icon
-
-    href = image_path("solidus_admin/remixicon.symbol.svg") + "#ri-#{@item.icon}"
-    tag.svg(
-      class: "#{common_classes} align-text-bottom fill-black group-hover:fill-red-500 group-[.active]:fill-red-500"
-    ) do
-      tag.use(
-        "xlink:href": href
-      )
-    end
+    icon_tag(@item.icon, class: "#{common_classes} align-text-bottom fill-black group-hover:fill-red-500 group-[.active]:fill-red-500")
   end
 
   def path
