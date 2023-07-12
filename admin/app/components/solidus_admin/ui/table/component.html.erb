@@ -36,6 +36,18 @@
       </tr>
     </thead>
 
+    <% if @batch_actions %>
+      <thead
+        data-<%= stimulus_id %>-target="batchHeader"
+        class="bg-white color-black text-xs leading-none text-left"
+      >
+        <tr>
+          <%= render_header_cell(selectable_column.header) %>
+          <%= render_header_cell(content_tag(:div, " #{t('.rows_selected')}."), colspan: @columns.count - 1) %>
+        </div>
+      </thead>
+    <% end %>
+
     <tbody class="bg-white text-3.5 line-[150%] text-black">
       <% @rows.each do |row| %>
         <tr class="border-b border-gray-100">
