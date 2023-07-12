@@ -7,11 +7,17 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @option columns [Symbol|Proc|#to_s] :header The column header.
   # @option columns [Symbol|Proc|#to_s] :data The data accessor for the column.
   # @option columns [String] :class_name (optional) The class name for the column.
+  # @param batch_actions [Array<Hash>] The array of batch action definitions.
+  # @option batch_actions [String] :display_name The batch action display name.
+  # @option batch_actions [String] :icon The batch action icon.
+  # @option batch_actions [String] :action The batch action path.
+  # @option batch_actions [String] :method The batch action HTTP method for the provided path.
   # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
-  def initialize(page:, path: nil, columns: [], pagination_component: component("ui/table/pagination"))
+  def initialize(page:, path: nil, columns: [], batch_actions: [], pagination_component: component("ui/table/pagination"))
     @page = page
     @path = path
     @columns = columns.map { Column.new(**_1) }
+    @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @pagination_component = pagination_component
     @model_class = page.records.model
     @rows = page.records
@@ -78,5 +84,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
-  private_constant :Column
+  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  private_constant :Column, :BatchAction
 end
