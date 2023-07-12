@@ -1,2 +1,3 @@
 en:
   no_resources_found: "No %{resources} found"
+  rows_selected: 'selected'
