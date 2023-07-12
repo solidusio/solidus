@@ -7,6 +7,26 @@
 
   <%= render component("ui/table").new(
     page: @page,
+    batch_actions: [
+      {
+        display_name: t('.batch_actions.delete'),
+        action: solidus_admin.products_path,
+        method: :delete,
+        icon: 'delete-bin-7-line',
+      },
+      {
+        display_name: t('.batch_actions.discontinue'),
+        action: solidus_admin.discontinue_products_path,
+        method: :put,
+        icon: 'pause-circle-line',
+      },
+      {
+        display_name: t('.batch_actions.activate'),
+        action: solidus_admin.activate_products_path,
+        method: :put,
+        icon: 'play-circle-line',
+      },
+    ],
     columns: [
       {
         class_name: "w-[72px]",
