@@ -3,6 +3,14 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::LayoutHelper, :helper do
+  describe '#current_locale' do
+    it "returns the current locale" do
+      expect(
+        helper.current_locale(backend: double(locale: :en))
+      ).to eq(:en)
+    end
+  end
+
   describe '#solidus_admin_title' do
     it "includes the store name" do
       expect(
