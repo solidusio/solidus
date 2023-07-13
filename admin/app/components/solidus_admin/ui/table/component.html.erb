@@ -1,9 +1,7 @@
 <div
   class="
-    <%= stimulus_id %>
     rounded-lg
     border
-    border-gray-100
     border-gray-100
     overflow-hidden
   "
@@ -39,7 +37,10 @@
 
       <% if @rows.empty? && @model_class %>
         <tr>
-          <td colspan="<%= @columns.size %>" class="text-center py-4 text-3.5 line-[150%] text-black bg-white">
+          <td
+            colspan="<%= @columns.size %>"
+            class="text-center py-4 text-3.5 line-[150%] text-black bg-white"
+          >
             <%= t('.no_resources_found', resources: @model_class.model_name.human.pluralize) %>
           </td>
         </tr>
