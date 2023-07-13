@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "tailwindcss-rails"
+require "fileutils"
 
 module SolidusAdmin
   # @api private
@@ -8,23 +9,20 @@ module SolidusAdmin
     module_function
 
     def run(args = "")
-      config_file = compile_to_tempfile(
+      config_file_path = compile_to_tempfile(
         [config_app_path, config_engine_path].find(&:exist?),
         "tailwind.config.js"
       )
-      stylesheet_file = compile_to_tempfile(
+      stylesheet_file_path = compile_to_tempfile(
         [stylesheet_app_path, stylesheet_engine_path].find(&:exist?),
         "application.tailwind.css"
       )
 
       system "#{::Tailwindcss::Engine.root.join('exe/tailwindcss')} \
-         -i #{stylesheet_file.path} \
+         -i #{stylesheet_file_path} \
          -o #{Rails.root.join('app/assets/builds/solidus_admin/tailwind.css')} \
-         -c #{config_file.path} \
+         -c #{config_file_path} \
          #{args}"
-    ensure
-      config_file&.close && config_file&.unlink
-      stylesheet_file&.close && stylesheet_file&.unlink
     end
 
     def config_app_path
@@ -43,13 +41,12 @@ module SolidusAdmin
       SolidusAdmin::Engine.root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css.erb")
     end
 
-    def compile_to_tempfile(path, name)
-      Tempfile.new(name).tap do |file|
-        path
-          .then { File.read(_1) }
-          .then { |content| ERB.new(content) }
-          .then { |erb| erb.result }
-          .then { |compiled_content| file.write(compiled_content) && file.rewind }
+    def compile_to_tempfile(erb_path, name)
+      Rails.root.join("tmp/solidus_admin/#{name}").tap do |file|
+        content = ERB.new(File.read(erb_path)).result
+
+        file.dirname.mkpath
+        file.write(content)
       end
     end
 
