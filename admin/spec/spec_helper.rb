@@ -77,6 +77,10 @@ require "rails/generators"
 require "rails/generators/app_base"
 require "rails/generators/testing/behaviour"
 
+# AXE - ACCESSIBILITY
+require 'axe-rspec'
+require 'axe-capybara'
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
