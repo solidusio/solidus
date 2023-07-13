@@ -3,6 +3,21 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::BaseComponent, type: :component do
+  describe "#icon_tag" do
+    it "renders a remixicon svg" do
+      component = mock_component do
+        def call
+          icon_tag("user-line")
+        end
+      end.new
+
+      render_inline(component)
+
+      svg = page.find("svg use")["xlink:href"]
+      expect(svg).to match(/#ri-user-line/)
+    end
+  end
+
   describe "#spree" do
     it "gives access to spree routing helpers" do
       allow(Spree::Core::Engine.routes.url_helpers).to receive(:foo_path).and_return("/foo/bar")
