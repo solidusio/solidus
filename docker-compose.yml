@@ -41,6 +41,7 @@ services:
       MYSQL_HISTFILE: "/home/solidus_user/history/mysql_history"
       RAILS_ENV: development
       ACTIVE_STORAGE_VARIANT_PROCESSOR: "vips"
+      BINDING: "0.0.0.0"
     ports:
       - "${SANDBOX_PORT:-3000}:${SANDBOX_PORT:-3000}"
     volumes:
