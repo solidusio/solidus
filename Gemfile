@@ -47,6 +47,11 @@ group :backend do
   gem 'webrick', require: false
 end
 
+group :admin do
+  gem 'axe-core-rspec', '~> 4.7', require: false
+  gem 'axe-core-capybara', '~> 4.7', require: false
+end
+
 group :utils do
   gem 'pry'
   gem 'launchy', require: false
