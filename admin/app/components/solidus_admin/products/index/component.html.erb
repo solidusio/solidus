@@ -1,8 +1,8 @@
 <div class="<%= stimulus_id %>">
   <header class="mb-6">
-    <div class="body-title">
+    <h1 class="body-title">
       <%= Spree::Product.model_name.human.pluralize %>
-    </div>
+    </h1>
   </header>
 
   <%= render component("ui/table").new(
