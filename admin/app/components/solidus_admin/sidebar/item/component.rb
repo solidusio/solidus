@@ -61,7 +61,7 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   def nested_items
     return unless @item.children?
 
-    tag.nav(
+    tag.ul(
       class: nested_nav_active_classes
     ) do
       render self.class.with_collection(@item.children, url_helpers: @url_helpers, fullpath: @fullpath)
