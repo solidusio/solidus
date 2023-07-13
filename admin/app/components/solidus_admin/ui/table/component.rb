@@ -7,12 +7,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @columns = columns.map { Column.new(**_1) }
   end
 
-  def render_cell(cell)
+  def render_cell(tag, cell, **attrs)
     # Allow component instances as cell content
-    if cell.respond_to?(:render_in)
-      cell.render_in(self)
-    else
-      cell
+    content_tag(tag, **attrs) do
+      if cell.respond_to?(:render_in)
+        cell.render_in(self)
+      else
+        cell
+      end
     end
   end
 
@@ -25,7 +27,19 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         cell.call
       end
 
-    render_cell(cell)
+    cell_tag = cell.blank? ? :td : :th
+
+    render_cell(cell_tag, cell, class: <<~CLASSES)
+      border-b
+      border-gray-100
+      py-3
+      px-4
+      text-[#4f4f4f]
+      text-left
+      text-3.5
+      font-[600]
+      line-[120%]
+    CLASSES
   end
 
   def render_data_cell(cell, data)
@@ -37,7 +51,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         cell.call(data)
       end
 
-    render_cell(cell)
+    render_cell(:td, cell, class: "py-2 px-4")
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
