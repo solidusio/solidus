@@ -1,7 +1,6 @@
 # Solidus Friendly Promotions
 
-[![CircleCI](https://circleci.com/gh/solidusio-contrib/solidus_friendly_promotions.svg?style=shield)](https://circleci.com/gh/solidusio-contrib/solidus_friendly_promotions)
-[![codecov](https://codecov.io/gh/solidusio-contrib/solidus_friendly_promotions/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio-contrib/solidus_friendly_promotions)
+[![CircleCI](https://circleci.com/gh/friendlycart/solidus_friendly_promotions.svg?style=shield)](https://circleci.com/gh/friendlycart/solidus_friendly_promotions)
 
 This extension replaces Solidus core's promotion system. It is intended as both a research project and a working alternative to how promotions work in core.
 
