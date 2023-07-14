@@ -152,7 +152,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
 
   it "should allow creation of new object with all the attributes" do
     attributes = { preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1 }
-    calculator = Spree::Calculator::FlexiRate.new(attributes)
+    calculator = described_class.new(attributes)
     expect(calculator).to have_attributes(attributes)
   end
 end
