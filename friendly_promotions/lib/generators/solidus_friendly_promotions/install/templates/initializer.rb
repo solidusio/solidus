@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Replace solidus core's order contents and promotion adjuster classes with ours.
+Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
+Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderPromotionAdjuster"
+
 # Replace the promotions menu from core with ours
 Spree::Backend::Config.configure do |config|
   config.menu_items = Spree::Backend::Config.menu_items.map do |item|
