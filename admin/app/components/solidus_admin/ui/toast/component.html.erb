@@ -1,7 +1,7 @@
 <div
   class="
     rounded inline-block px-3 py-2
-    <%= SCHEMES.fetch(@scheme.to_sym) %>
+    <%= SCHEMES.fetch(@scheme.to_sym).join(' ') %>
   "
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-closing-class="transform opacity-0 transition duration-500"
