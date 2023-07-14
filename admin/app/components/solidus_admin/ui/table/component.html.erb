@@ -19,19 +19,7 @@
     <thead class="bg-gray-15 color-gray-100">
       <tr>
         <% @columns.each do |column| %>
-          <th
-            class="
-              border-b
-              border-gray-100
-              py-3
-              px-4
-              text-[#4f4f4f]
-              text-left
-              text-3.5
-              font-[600]
-              line-[120%]
-            "
-          ><%= render_header_cell(column.header) %></th>
+          <%= render_header_cell(column.header) %>
         <% end %>
       </tr>
     </thead>
@@ -40,7 +28,7 @@
       <% @rows.each do |row| %>
         <tr class="border-b border-gray-100">
           <% @columns.each do |column| %>
-            <td class="py-2 px-4 "><%= render_data_cell(column.data, row) %></td>
+            <%= render_data_cell(column.data, row) %>
           <% end %>
         </tr>
       <% end %>
