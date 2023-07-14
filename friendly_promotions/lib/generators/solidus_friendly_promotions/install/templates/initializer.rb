@@ -20,8 +20,10 @@ Spree::Backend::Config.configure do |config|
 end
 
 SolidusFriendlyPromotions.configure do |config|
-  # TODO: Remember to change this with the actual preferences you have implemented!
-  # config.sample_preference = 'sample_value'
+  # This class chooses which promotion should apply to a line item in case
+  # that more than one promotion is eligible.
+  config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
+
   config.shipment_discount_calculators = [
     "SolidusFriendlyPromotions::Calculators::FlatRate",
     "SolidusFriendlyPromotions::Calculators::FlexiRate",

@@ -11,11 +11,6 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::DistributedAmount, type: 
   let(:order) { create(:order_with_line_items, line_items_attributes: line_items_attributes) }
   let(:currency) { "USD" }
 
-  before do
-    Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderPromotionAdjuster"
-    Spree::Config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
-  end
-
   context 'applied to an order' do
     let(:line_items_attributes) { [{ price: 20 }, { price: 30 }, { price: 100 }] }
     before do

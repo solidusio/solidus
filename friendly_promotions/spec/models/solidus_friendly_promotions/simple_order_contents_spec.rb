@@ -86,11 +86,6 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
       let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
       let(:calculator) { SolidusFriendlyPromotions::Calculators::FlatRate.new(preferred_amount: 10) }
 
-      before do
-        Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderPromotionAdjuster"
-        Spree::Config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
-      end
-
       context "one active line item promotion" do
         let!(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, calculator: calculator) }
 

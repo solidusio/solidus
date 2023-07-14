@@ -34,10 +34,6 @@ RSpec.configure do |config|
   end
 
   config.include SolidusFriendlyPromotions::Engine.routes.url_helpers, type: :request
-
-  config.before do
-    Spree::Config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
-  end
 end
 
 Shoulda::Matchers.configure do |config|

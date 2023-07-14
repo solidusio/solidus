@@ -10,7 +10,6 @@ RSpec.describe "Promotion System" do
     let(:order) { create(:order) }
 
     before do
-      Spree::Config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
       promotion.rules << rule
       promotion.actions << action
       order.contents.add(shirt.master, 1)
