@@ -17,6 +17,10 @@ module SolidusFriendlyPromotions
 
     class_name_attribute :promotion_chooser_class, default: "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
     class_name_attribute :promotion_code_batch_mailer_class, default: "SolidusFriendlyPromotions::PromotionCodeBatchMailer"
+
+    # @!attribute [rw] promotions_per_page
+    #   @return [Integer] Promotions to show per-page in the admin (default: +25+)
+    preference :promotions_per_page, :integer, default: 25
   end
 
   class << self

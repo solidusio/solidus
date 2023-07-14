@@ -24,6 +24,9 @@ SolidusFriendlyPromotions.configure do |config|
   # that more than one promotion is eligible.
   config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
 
+  # How many promotions should be displayed on the index page in the admin.
+  config.promotions_per_page = 25
+
   config.shipment_discount_calculators = [
     "SolidusFriendlyPromotions::Calculators::FlatRate",
     "SolidusFriendlyPromotions::Calculators::FlexiRate",
