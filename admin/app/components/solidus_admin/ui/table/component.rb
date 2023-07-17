@@ -2,13 +2,15 @@
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param page [GearedPagination::Page] The pagination page object.
+  # @param path [Proc] A callable object that generates the path for pagination links.
   # @param columns [Array<Hash>] The array of column definitions.
   # @option columns [Symbol] :header The column header.
   # @option columns [Symbol|Proc] :data The data accessor for the column.
   # @option columns [String] :class_name (optional) The class name for the column.
-  # @param pagination_component [Class] The pagination component class (default: component("ui/pagination")).
-  def initialize(page:, columns: [], pagination_component: component("ui/pagination"))
+  # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
+  def initialize(page:, path: nil, columns: [], pagination_component: component("ui/table/pagination"))
     @page = page
+    @path = path
     @columns = columns.map { Column.new(**_1) }
     @pagination_component = pagination_component
     @model_class = page.records.model
@@ -77,7 +79,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def render_pagination_component
-    @pagination_component.new(page: @page).render_in(self)
+    @pagination_component.new(page: @page, path: @path).render_in(self)
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
