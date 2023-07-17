@@ -31,9 +31,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     # Allow component instances as cell content
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
-    cell_tag = cell.blank? ? :td : :th
-
-    content_tag(cell_tag, cell, class: %{
+    content_tag(:th, cell, class: %{
       border-b
       border-gray-100
       px-4
