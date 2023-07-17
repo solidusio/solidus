@@ -9,21 +9,24 @@ jobs:
       ruby_version: '3.1'
     steps:
       - browser-tools/install-browser-tools
-      - solidusio_extensions/run-tests
+      - solidusio_extensions/run-tests:
+        working_directory: '~/project/solidus_friendly_promotions'
   run-specs-with-postgres:
     executor:
       name: solidusio_extensions/postgres
       ruby_version: '3.2'
     steps:
       - browser-tools/install-browser-tools
-      - solidusio_extensions/run-tests
+      - solidusio_extensions/run-tests:
+        working_directory: '~/project/solidus_friendly_promotions'
   run-specs-with-sqlite:
     executor:
       name: solidusio_extensions/sqlite
       ruby_version: '3.0'
     steps:
       - browser-tools/install-browser-tools
-      - solidusio_extensions/run-tests
+      - solidusio_extensions/run-tests:
+        working_directory: '~/project/solidus_friendly_promotions'
 workflows:
   Run specs on supported Solidus versions:
     jobs:
