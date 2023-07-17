@@ -6,14 +6,14 @@
   </header>
 
   <%= render component("ui/table").new(
-    rows: @products,
-    model_class: Spree::Product,
+    page: @page,
     columns: [
       { header: "", data: -> { image_column(_1) }, class_name: "w-10" },
       { header: :name, data: -> { name_column(_1) } },
       { header: :status, data: -> { status_column(_1) } },
       { header: :price, data: -> { price_column(_1) } },
       { header: :stock, data: -> { stock_column(_1) } }
-    ]
-  ) %>
+     ]
+   )
+  %>
 </div>
