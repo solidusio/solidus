@@ -13,7 +13,7 @@
     <%= render component('ui/tab').new(text: "All", active: true, scheme: :secondary, href: "") %>
   </div>
 
-  <table class=" table-auto w-full border-collapse ">
+  <table class="table-auto w-full border-collapse">
     <colgroup>
       <% @columns.each do |column| %>
         <col class="<%= column.class_name %>">
@@ -45,5 +45,7 @@
         </tr>
       <% end %>
     </tbody>
+
+    <%= render_table_footer %>
   </table>
 </div>
