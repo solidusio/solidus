@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe SolidusFriendlyPromotions::OrderPromotionAdjuster, type: :model do
+RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
   let(:promotion) { create(:friendly_promotion, apply_automatically: true) }

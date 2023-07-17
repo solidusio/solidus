@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  class OrderPromotionAdjuster
+  class FriendlyPromotionDiscounter
     attr_reader :order, :promotions
 
     def initialize(order)
@@ -10,22 +10,23 @@ module SolidusFriendlyPromotions
     end
 
     def call
-      adjust_line_items
-      adjust_shipments
-      order.promo_total = (order.line_items + order.shipments).sum { |item| item.promo_total }
-      order
+      OrderDiscounts.new(
+        order_id: order.id,
+        line_item_discounts: adjust_line_items,
+        shipment_discounts: adjust_shipments
+      )
     end
 
     private
 
     def adjust_line_items
-      line_item_adjuster = LineItemAdjuster.new(promotions: promotions)
-      order.line_items.each { |line_item| line_item_adjuster.call(line_item) }
+      line_item_adjuster = LineItemDiscounter.new(promotions: promotions)
+      order.line_items.flat_map { |line_item| line_item_adjuster.call(line_item) }
     end
 
     def adjust_shipments
-      shipment_adjuster = ShipmentAdjuster.new(promotions: promotions)
-      order.shipments.each { |shipment| shipment_adjuster.call(shipment) }
+      shipment_adjuster = ShipmentDiscounter.new(promotions: promotions)
+      order.shipments.flat_map { |shipment| shipment_adjuster.call(shipment) }
     end
 
     def possible_promotions

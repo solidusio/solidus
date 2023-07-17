@@ -13,5 +13,9 @@ module SolidusFriendlyPromotions
   class ItemDiscount
     include ActiveModel::Model
     attr_accessor :item_id, :label, :source, :amount
+
+    def ==(other)
+      item_id == other.item_id && label == other.label && source == other.source && amount == other.amount
+    end
   end
 end

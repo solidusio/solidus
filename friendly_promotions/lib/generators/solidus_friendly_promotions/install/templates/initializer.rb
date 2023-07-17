@@ -2,7 +2,7 @@
 
 # Replace solidus core's order contents and promotion adjuster classes with ours.
 Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
-Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderPromotionAdjuster"
+Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderDiscounter"
 
 # Replace the promotions menu from core with ours
 Spree::Backend::Config.configure do |config|
@@ -22,10 +22,14 @@ end
 SolidusFriendlyPromotions.configure do |config|
   # This class chooses which promotion should apply to a line item in case
   # that more than one promotion is eligible.
-  config.promotion_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
+  config.discount_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
 
   # How many promotions should be displayed on the index page in the admin.
   config.promotions_per_page = 25
+
+  config.discounters = [
+    "SolidusFriendlyPromotions::FriendlyPromotionDiscounter"
+  ]
 
   config.shipment_discount_calculators = [
     "SolidusFriendlyPromotions::Calculators::FlatRate",

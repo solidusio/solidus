@@ -21,17 +21,17 @@ module SolidusFriendlyPromotions
       [:calculator]
     end
 
-    def can_adjust?(object)
+    def can_discount?(object)
       raise NotImplementedError
     end
 
-    def adjust(adjustable)
-      adjustment = adjustable.adjustments.detect do |adjustment|
-        adjustment.source == self
-      end || adjustable.adjustments.build(source: self, order: adjustable.order)
-      adjustment.label = adjustment_label(adjustable)
-      adjustment.amount = compute_amount(adjustable)
-      adjustment
+    def discount(adjustable)
+      ItemDiscount.new(
+        item_id: adjustable.id,
+        label: adjustment_label(adjustable),
+        amount: compute_amount(adjustable),
+        source: self
+      )
     end
 
     # Ensure a negative amount which does not exceed the object's amount

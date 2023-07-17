@@ -20,7 +20,7 @@ RSpec.describe "Promotion System" do
       let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt]) }
 
       context "with an line item level action" do
-        let(:calculator) { Spree::Calculator::PercentOnLineItem.new(preferred_percent: 20) }
+        let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
         let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator) }
 
         it "creates one line item level adjustment" do
@@ -37,7 +37,7 @@ RSpec.describe "Promotion System" do
       let(:rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
 
       context "with an line item level action" do
-        let(:calculator) { Spree::Calculator::PercentOnLineItem.new(preferred_percent: 20) }
+        let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
         let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator) }
 
         it "creates one line item level adjustment" do

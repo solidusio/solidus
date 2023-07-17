@@ -15,7 +15,7 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
 
   describe ".promotion_chooser_class" do
     it "is the promotion chooser" do
-      expect(subject.promotion_chooser_class).to eq(SolidusFriendlyPromotions::PromotionAdjustmentChooser)
+      expect(subject.discount_chooser_class).to eq(SolidusFriendlyPromotions::PromotionAdjustmentChooser)
     end
   end
 

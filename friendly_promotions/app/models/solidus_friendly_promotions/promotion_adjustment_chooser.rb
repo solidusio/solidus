@@ -10,8 +10,8 @@ module SolidusFriendlyPromotions
 
     def call(adjustments)
       Array.wrap(
-        adjustments.select(&:eligible?).min_by do |adjustment|
-          [adjustment.amount, -adjustment.id.to_i]
+        adjustments.min_by do |adjustment|
+          [adjustment.amount, -adjustment.source&.id.to_i]
         end
       )
     end
