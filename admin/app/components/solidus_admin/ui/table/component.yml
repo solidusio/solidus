@@ -1,3 +1,5 @@
 en:
   no_resources_found: "No %{resources} found"
   rows_selected: 'selected'
+  select_all: 'Select all'
+  select_row: 'Select row'
