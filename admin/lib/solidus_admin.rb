@@ -7,6 +7,8 @@ require 'solidus_admin/engine'
 
 require 'importmap-rails'
 require 'tailwindcss-rails'
+require 'turbo-rails'
+require 'stimulus-rails'
 
 module SolidusAdmin
   singleton_class.attr_accessor :importmap
