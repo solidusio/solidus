@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= current_locale %>">
   <head>
+    <%= favicon_link_tag 'favicon.ico' %>
     <title><%= solidus_admin_title %></title>
     <%= stylesheet_link_tag "solidus_admin/application.css", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
