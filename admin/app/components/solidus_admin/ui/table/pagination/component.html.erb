@@ -1,0 +1,29 @@
+<div>
+  <nav aria-label="pagination">
+    <ul class="flex items-center">
+      <li>
+        <% if @page.first? %>
+          <span class="<%= link_classes(rounded: :left) %>">
+            <%= icon_tag("arrow-left-s-line", class: "fill-current text-grey-400 w-5 h-5") %>
+          </span>
+        <% else %>
+          <%= link_to @path.call(@page.number - 1), class: link_classes(rounded: :left) do %>
+            <%= icon_tag("arrow-left-s-line", class: "w-5 h-5") %>
+          <% end %>
+        <% end %>
+      </li>
+
+      <li>
+        <% if @page.last? %>
+          <span class="<%= link_classes(rounded: :right) %>">
+            <%= icon_tag("arrow-right-s-line", class: "fill-current text-grey-400 w-5 h-5") %>
+          </span>
+        <% else %>
+          <%= link_to @path.call(@page.next_param), class: link_classes(rounded: :right) do %>
+            <%= icon_tag("arrow-right-s-line", class: "w-5 h-5") %>
+          <% end %>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+</div>
