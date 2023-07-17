@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
-  def initialize(page:)
+  def initialize(
+    page:,
+    badge_component: component('ui/badge'),
+    table_component: component('ui/table')
+  )
     @page = page
+
+    @badge_component = badge_component
+    @table_component = table_component
   end
 
   def image_column(product)
@@ -21,9 +28,9 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
 
   def status_column(product)
     if product.available?
-      component('ui/badge').new(name: t('.status.available'), color: :green)
+      @badge_component.new(name: t('.status.available'), color: :green)
     else
-      component('ui/badge').new(name: t('.status.discontinued'), color: :red)
+      @badge_component.new(name: t('.status.discontinued'), color: :red)
     end
   end
 
