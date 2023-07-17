@@ -1,10 +1,18 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  def initialize(rows:, model_class:, columns: [])
-    @rows = rows
-    @model_class = model_class
+  # @param page [GearedPagination::Page] The pagination page object.
+  # @param columns [Array<Hash>] The array of column definitions.
+  # @option columns [Symbol] :header The column header.
+  # @option columns [Symbol|Proc] :data The data accessor for the column.
+  # @option columns [String] :class_name (optional) The class name for the column.
+  # @param pagination_component [Class] The pagination component class (default: component("ui/pagination")).
+  def initialize(page:, columns: [], pagination_component: component("ui/pagination"))
+    @page = page
     @columns = columns.map { Column.new(**_1) }
+    @pagination_component = pagination_component
+    @model_class = page.records.model
+    @rows = page.records
   end
 
   def render_cell(tag, cell, **attrs)
@@ -52,6 +60,24 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       end
 
     render_cell(:td, cell, class: "py-2 px-4")
+  end
+
+  def render_table_footer
+    if @pagination_component
+      tag.tfoot do
+        tag.tr do
+          tag.td(colspan: @columns.size, class: "py-4") do
+            tag.div(class: "flex justify-center") do
+              render_pagination_component
+            end
+          end
+        end
+      end
+    end
+  end
+
+  def render_pagination_component
+    @pagination_component.new(page: @page).render_in(self)
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
