@@ -62,6 +62,12 @@ module SolidusAdmin
       SolidusAdmin::Engine.root.join("config", "importmap.rb"),
     ]
 
+    # @!attribute [rw] products_per_page
+    #   @return [Integer] The number of products to display per page in the admin interface.
+    #                     This preference determines the pagination limit for the product listing.
+    #                     The default value is fetched from the Spree core configuration and currently set to 10.
+    preference :products_per_page, :integer, default: Spree::Config[:admin_products_per_page]
+
     # Gives access to the main navigation configuration
     #
     # @example
