@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# @component "ui/pagination"
-class SolidusAdmin::UI::Pagination::ComponentPreview < ViewComponent::Preview
+# @component "ui/table/pagination"
+class SolidusAdmin::UI::Table::Pagination::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
   def overview

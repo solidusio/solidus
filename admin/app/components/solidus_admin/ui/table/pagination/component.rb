@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::UI::Pagination::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::UI::Table::Pagination::Component < SolidusAdmin::BaseComponent
   # @param page [GearedPagination::Page] The Geared Pagination page object
   # @param path [Proc] (optional) A callable object that generates the path,
   #                         e.g. ->(page_number){ products_path(page: page_number) }
