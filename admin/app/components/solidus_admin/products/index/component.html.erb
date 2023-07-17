@@ -10,7 +10,7 @@
     columns: [
       {
         class_name: "w-[72px]",
-        header: "",
+        header: tag.span('aria-label': t('.product_image'), role: 'text'),
         data: -> { image_column(_1) },
       },
       { header: :name, data: -> { name_column(_1) } },
