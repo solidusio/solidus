@@ -13,14 +13,14 @@ module SolidusFriendlyPromotions
 
       @order.line_items.each do |item|
         all_line_item_discounts = all_order_discounts.flat_map(&:line_item_discounts)
-        item_discounts = all_line_item_discounts.select { |element| element.item_id == item.id }
+        item_discounts = all_line_item_discounts.select { |element| element.item == item }
         chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(item).call(item_discounts)
         update_adjustments(item, chosen_item_discounts)
       end
 
       @order.shipments.each do |item|
         all_shipment_discounts = all_order_discounts.flat_map(&:shipment_discounts)
-        item_discounts = all_shipment_discounts.select { |element| element.item_id == item.id }
+        item_discounts = all_shipment_discounts.select { |element| element.item == item }
         chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(item).call(item_discounts)
         update_adjustments(item, chosen_item_discounts)
       end

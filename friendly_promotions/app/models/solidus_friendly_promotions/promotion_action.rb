@@ -27,7 +27,7 @@ module SolidusFriendlyPromotions
 
     def discount(adjustable)
       ItemDiscount.new(
-        item_id: adjustable.id,
+        item: adjustable,
         label: adjustment_label(adjustable),
         amount: compute_amount(adjustable),
         source: self

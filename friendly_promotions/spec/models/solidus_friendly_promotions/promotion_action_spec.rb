@@ -32,7 +32,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
     it "returs an discount to the adjustable" do
       expect(subject).to eq(
         SolidusFriendlyPromotions::ItemDiscount.new(
-          item_id: adjustable.id,
+          item: adjustable,
           label: "Promotion (20 Perzent off)",
           source: action,
           amount: -1
