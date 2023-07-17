@@ -81,11 +81,11 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         @model_class.human_attribute_name(cell)
       when Proc
         cell.call
+      else
+        cell
       end
 
-    cell_tag = cell.blank? ? :td : :th
-
-    render_cell(cell_tag, cell, class: <<~CLASSES)
+    render_cell(:th, cell, class: %w[
       border-b
       border-gray-100
       py-3
@@ -95,7 +95,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       text-3.5
       font-[600]
       line-[120%]
-    CLASSES
+    ].join(" "))
   end
 
   def render_data_cell(cell, data)
@@ -105,6 +105,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         data.public_send(cell)
       when Proc
         cell.call(data)
+      else
+        cell
       end
 
     render_cell(:td, cell, class: "py-2 px-4")

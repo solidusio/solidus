@@ -1,4 +1,5 @@
 en:
+  product_image: 'Image'
   status:
     available: 'Available'
     discontinued: 'Discontinued'
