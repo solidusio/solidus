@@ -11,7 +11,7 @@
   <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 visible:flex hidden:hidden" %>
 
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
-    <%= render component('ui/tab').new(text: "All", active: true, scheme: :secondary, href: "") %>
+    <%= render @tab_component.new(text: "All", active: true, scheme: :secondary, href: "") %>
   </div>
 
   <% if @batch_actions %>
