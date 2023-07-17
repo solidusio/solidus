@@ -25,6 +25,7 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
 
     render component("ui/table").new(
       page: page,
+      path: ->(_page_number) { "#" },
       columns: [
         { header: :id, data: -> { _1.id.to_s } },
         { header: :name, data: -> { _1.name } },
