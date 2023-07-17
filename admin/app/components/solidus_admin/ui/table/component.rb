@@ -3,24 +3,43 @@
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param page [GearedPagination::Page] The pagination page object.
   # @param path [Proc] A callable object that generates the path for pagination links.
+  #
   # @param columns [Array<Hash>] The array of column definitions.
   # @option columns [Symbol|Proc|#to_s] :header The column header.
   # @option columns [Symbol|Proc|#to_s] :data The data accessor for the column.
   # @option columns [String] :class_name (optional) The class name for the column.
+  #
   # @param batch_actions [Array<Hash>] The array of batch action definitions.
   # @option batch_actions [String] :display_name The batch action display name.
   # @option batch_actions [String] :icon The batch action icon.
   # @option batch_actions [String] :action The batch action path.
   # @option batch_actions [String] :method The batch action HTTP method for the provided path.
+  #
   # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
-  def initialize(page:, path: nil, columns: [], batch_actions: [], pagination_component: component("ui/table/pagination"))
+  # @param checkbox_componnent [Class] The checkbox component class (default: component("ui/forms/checkbox")).
+  # @param button_component [Class] The button component class (default: component("ui/button")).
+  # @param tab_component [Class] The tab component class (default: component("ui/tab")).
+  def initialize(
+    page:,
+    path: nil,
+    columns: [],
+    batch_actions: [],
+    pagination_component: component("ui/table/pagination"),
+    checkbox_componnent: component("ui/forms/checkbox"),
+    button_component: component("ui/button"),
+    tab_component: component("ui/tab")
+  )
     @page = page
     @path = path
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
-    @pagination_component = pagination_component
     @model_class = page.records.model
     @rows = page.records
+
+    @pagination_component = pagination_component
+    @checkbox_componnent = checkbox_componnent
+    @button_component = button_component
+    @tab_component = tab_component
 
     @columns.unshift selectable_column if batch_actions.present?
   end
@@ -28,7 +47,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def selectable_column
     @selectable_column ||= Column.new(
       header: -> {
-        component('ui/forms/checkbox').new(
+        @checkbox_componnent.new(
           form: batch_actions_form_id,
           "data-action": "#{stimulus_id}#selectAllRows",
           "data-#{stimulus_id}-target": "headerCheckbox",
@@ -36,7 +55,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         )
       },
       data: ->(data) {
-        component('ui/forms/checkbox').new(
+        @checkbox_componnent.new(
           name: "id[]",
           form: batch_actions_form_id,
           value: data.id,
@@ -54,7 +73,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def render_batch_action_button(batch_action)
-    render component('ui/button').new(
+    render @button_component.new(
       name: request_forgery_protection_token,
       value: form_authenticity_token(form_options: {
         action: batch_action.action,
