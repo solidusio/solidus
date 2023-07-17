@@ -71,6 +71,20 @@ module Spree
             )
           end
         end
+
+        context "with specific stock location" do
+          let(:stock_location) { variant_1.stock_locations.first }
+
+          before do
+            variant_2.stock_items.delete_all
+          end
+
+          it "filters variants by stock locations" do
+            get :index, params: { stock_location_id: stock_location.id }
+            expect(assigns(:variants)).to include variant_1
+            expect(assigns(:variants)).not_to include variant_2
+          end
+        end
       end
     end
   end
