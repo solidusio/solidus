@@ -25,7 +25,7 @@
       <%= @store.url %>
     </p>
   <% end %>
-  <nav data-controller="main-nav" class="mt-2">
+  <nav data-controller="main-nav" class="mt-2" aria-label="main-nav">
     <ul>
       <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
     </ul>
