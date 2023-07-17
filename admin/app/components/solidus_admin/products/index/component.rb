@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
-  def initialize(products:)
-    @products = products
+  def initialize(page:)
+    @page = page
   end
 
   def image_column(product)
