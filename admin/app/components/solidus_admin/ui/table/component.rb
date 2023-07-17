@@ -32,6 +32,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           form: batch_actions_form_id,
           "data-action": "#{stimulus_id}#selectAllRows",
           "data-#{stimulus_id}-target": "headerCheckbox",
+          "aria-label": t('.select_all'),
         )
       },
       data: ->(data) {
@@ -41,6 +42,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           value: data.id,
           "data-action": "#{stimulus_id}#selectRow",
           "data-#{stimulus_id}-target": "checkbox",
+          "aria-label": t('.select_row'),
         )
       },
       class_name: 'w-[52px]',
