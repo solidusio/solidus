@@ -70,5 +70,11 @@ module SolidusAdmin
 
       Container.start("main_nav")
     end
+
+    initializer "solidus_admin.products_index_provider" do
+      require "solidus_admin/providers/products/index"
+
+      Container.start("products.index")
+    end
   end
 end

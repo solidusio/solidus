@@ -25,7 +25,7 @@
 
       <div class="bg-white border-b border-gray-100 justify-start items-center gap-0 flex">
         <div class="py-3 px-4">
-          <%= render_header_cell(selectable_column.header) %>
+          <%= render_header_cell(selectable_column) %>
         </div>
 
         <div class="py-3 px-4">
@@ -39,7 +39,7 @@
   <table class="table-auto w-full border-collapse">
     <colgroup>
       <% @columns.each do |column| %>
-        <col class="<%= column.class_name %>">
+        <col class="<%= @column_classes[column.name] %>">
       <% end %>
     </colgroup>
 
@@ -49,7 +49,7 @@
     >
       <tr>
         <% @columns.each do |column| %>
-          <%= render_header_cell(column.header) %>
+          <%= render_header_cell(column) %>
         <% end %>
       </tr>
     </thead>
@@ -58,7 +58,7 @@
       <% @rows.each do |row| %>
         <tr class="border-b border-gray-100">
           <% @columns.each do |column| %>
-            <%= render_data_cell(column.data, row) %>
+            <%= render_data_cell(column, row) %>
           <% end %>
         </tr>
       <% end %>

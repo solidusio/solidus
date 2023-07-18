@@ -2,6 +2,7 @@
 
 require 'spree/preferences/configuration'
 require 'solidus_admin/configuration/main_nav'
+require 'solidus_admin/configuration/products'
 
 module SolidusAdmin
   # Configuration for the admin interface.
@@ -86,6 +87,10 @@ module SolidusAdmin
       (@main_nav ||= MainNav.new).tap do
         yield(_1) if block_given?
       end
+    end
+
+    def products
+      @products ||= Products.new
     end
   end
 end

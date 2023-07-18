@@ -27,17 +27,10 @@
         icon: 'play-circle-line',
       },
     ],
-    columns: [
-      {
-        class_name: "w-10",
-        header: tag.span('aria-label': t('.product_image'), role: 'text'),
-        data: -> { image_column(_1) },
-      },
-      { header: :name, data: -> { name_column(_1) } },
-      { header: :status, data: -> { status_column(_1) } },
-      { header: :price, data: -> { price_column(_1) } },
-      { header: :stock, data: -> { stock_column(_1) } }
-     ]
+    columns: @columns,
+    column_classes: {
+      image: "w-10"
+    }
    )
   %>
 </div>
