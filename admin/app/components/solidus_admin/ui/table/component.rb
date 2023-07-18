@@ -58,7 +58,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     # Allow component instances as cell content
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
-    content_tag(:td, cell, class: "py-2 px-4")
+    content_tag(:td, content_tag(:div, cell, class: "flex items-center gap-1.5"), class: "py-2 px-4 h-10 vertical-align-middle leading-none")
   end
 
   def render_table_footer
