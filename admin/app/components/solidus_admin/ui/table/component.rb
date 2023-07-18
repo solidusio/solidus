@@ -36,13 +36,11 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     content_tag(cell_tag, cell, class: %{
       border-b
       border-gray-100
-      py-3
       px-4
-      text-[#4f4f4f]
-      text-left
-      text-3.5
-      font-[600]
-      line-[120%]
+      h-9
+      font-semibold
+      vertical-align-middle
+      leading-none
     })
   end
 
