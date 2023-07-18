@@ -8,7 +8,11 @@
   <%= render component("ui/table").new(
     page: @page,
     columns: [
-      { header: "", data: -> { image_column(_1) }, class_name: "w-10" },
+      {
+        class_name: "w-[72px]",
+        header: "",
+        data: -> { image_column(_1) },
+      },
       { header: :name, data: -> { name_column(_1) } },
       { header: :status, data: -> { status_column(_1) } },
       { header: :price, data: -> { price_column(_1) } },
