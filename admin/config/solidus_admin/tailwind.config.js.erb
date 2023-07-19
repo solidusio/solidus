@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   content: [
@@ -82,5 +83,7 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
+    plugin(({ addVariant }) => addVariant('hidden', '&([hidden])')),
+    plugin(({ addVariant }) => addVariant('visible', '&:not([hidden])')),
   ]
 }
