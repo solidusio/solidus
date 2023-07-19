@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <div class="fixed right-3 bottom-3 flex flex-col gap-3">
+    <div class="fixed right-3 bottom-3 flex flex-col gap-3" role="alert">
       <% flash.each do |key, message| %>
         <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
       <% end %>
