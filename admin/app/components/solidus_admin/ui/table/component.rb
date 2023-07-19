@@ -3,8 +3,6 @@ require "solidus_admin/column"
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  attr_reader :model_class
-
   # @param page [GearedPagination::Page] The pagination page object.
   # @param path [Proc] A callable object that generates the path for pagination links.
   # @param columns [Array<Hash>] The array of column definitions.
@@ -39,7 +37,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           "aria-label": t('.select_row'),
         )
       },
-      render_context: self
+      render_context: self,
+      position: 0
     ).tap { |column| @column_classes[column.name] = 'w-[20px]' }
   end
 

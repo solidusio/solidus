@@ -8,27 +8,32 @@ module SolidusAdmin
           columns.add(
             name: :image,
             header: :image,
-            data: -> { [_1.id, _1.gallery.images.first] }
+            data: -> { [_1.id, _1.gallery.images.first] },
+            position: 10
           )
           columns.add(
             name: :name,
             header: :name,
-            data: -> { [_1.id, _1.name] }
+            data: -> { [_1.id, _1.name] },
+            position: 20
           )
           columns.add(
             name: :status,
             header: :status,
-            data: -> { _1.available? }
+            data: -> { _1.available? },
+            position: 30
           )
           columns.add(
             name: :stock,
             header: :stock,
-            data: -> { [_1.total_on_hand, _1.variants.count] }
+            data: -> { [_1.total_on_hand, _1.variants.count] },
+            position: 40
           )
           columns.add(
             name: :price,
             header: :price,
-            data: -> { _1.master.display_price }
+            data: -> { _1.master.display_price },
+            position: 50
           )
         end
 

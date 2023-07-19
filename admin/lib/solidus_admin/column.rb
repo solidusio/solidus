@@ -2,11 +2,12 @@
 
 module SolidusAdmin
   class Column
-    attr_reader :name, :header, :model_class_name
+    attr_reader :name, :header, :model_class_name, :position
 
     def initialize(
       name:,
       header:,
+      position:,
       model_class_name: nil,
       data: :itself,
       renderer: ->(data) { send(:"#{name}_column", *data) },
@@ -21,6 +22,7 @@ module SolidusAdmin
     )
       @name = name
       @header = header
+      @position = position
       @data = data
       @renderer = renderer
       @header_renderer = header_renderer
@@ -57,6 +59,7 @@ module SolidusAdmin
         renderer: @renderer,
         header_renderer: @header_renderer,
         model_class_name: @model_class_name,
+        position: @position,
         render_context: render_context
       )
     end

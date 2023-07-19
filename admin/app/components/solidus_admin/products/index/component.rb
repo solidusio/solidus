@@ -3,7 +3,7 @@
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def initialize(page:, columns: container["products.index"])
     @page = page
-    @columns = columns.map { _1.ensure_render_context(self) }
+    @columns = columns.map { _1.ensure_render_context(self) }.sort_by(&:position)
   end
 
   def image_header

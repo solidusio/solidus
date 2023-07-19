@@ -25,8 +25,8 @@ module SolidusAdmin
         # Adds a new column to the products index table
         #
         # @return [SolidusAdmin::Column]
-        def add(name:, header:, data: nil, renderer: nil)
-          args = { name: name, header: header, model_class_name: "Spree::Product" }
+        def add(name:, header:, data: nil, renderer: nil, position: 100)
+          args = { name: name, header: header, model_class_name: "Spree::Product", position: position }
                  .tap { _1[:data] = data unless data.nil? }
                  .tap { _1[:renderer] = renderer unless renderer.nil? }
                  .tap { _1[:render_context] = render_context unless renderer.nil? }
