@@ -19,9 +19,7 @@ RSpec.describe SolidusAdmin::LayoutHelper, :helper do
     end
 
     it "includes the translated controller base name" do
-      expect(
-        helper.solidus_admin_title(store_name: "My Store", controller_name: "orders")
-      ).to include("Orders")
+      expect(helper.solidus_admin_title(store_name: "My Store", controller_name: 'products')).to eq("My Store - Products")
     end
   end
 end
