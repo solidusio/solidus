@@ -28,9 +28,10 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
       path: ->(_page_number) { "#" },
       columns: [
         { header: :id, data: -> { _1.id.to_s } },
-        { header: :name, data: -> { _1.name } },
+        { header: :name, data: :name },
         { header: -> { "Availability at #{Time.current}" }, data: -> { "#{time_ago_in_words _1.available_on} ago" } },
         { header: -> { component("ui/badge").new(name: "$$$") }, data: -> { component("ui/badge").new(name: _1.display_price, color: :green) } },
+        { header: "Generated at", data: Time.current.to_s },
       ]
     )
   end
