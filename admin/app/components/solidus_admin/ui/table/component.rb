@@ -17,17 +17,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @rows = page.records
   end
 
-  def render_cell(tag, cell, **attrs)
-    # Allow component instances as cell content
-    content_tag(tag, **attrs) do
-      if cell.respond_to?(:render_in)
-        cell.render_in(self)
-      else
-        cell
-      end
-    end
-  end
-
   def render_header_cell(cell)
     cell =
       case cell
@@ -37,9 +26,12 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         cell.call
       end
 
+    # Allow component instances as cell content
+    cell = cell.render_in(self) if cell.respond_to?(:render_in)
+
     cell_tag = cell.blank? ? :td : :th
 
-    render_cell(cell_tag, cell, class: <<~CLASSES)
+    content_tag(cell_tag, cell, class: %{
       border-b
       border-gray-100
       py-3
@@ -49,7 +41,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       text-3.5
       font-[600]
       line-[120%]
-    CLASSES
+    })
   end
 
   def render_data_cell(cell, data)
@@ -61,7 +53,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         cell.call(data)
       end
 
-    render_cell(:td, cell, class: "py-2 px-4")
+    # Allow component instances as cell content
+    cell = cell.render_in(self) if cell.respond_to?(:render_in)
+
+    content_tag(:td, cell, class: "py-2 px-4")
   end
 
   def render_table_footer
