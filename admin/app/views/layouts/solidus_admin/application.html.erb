@@ -7,7 +7,7 @@
     <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
   </head>
 
-  <body>
+  <body class="bg-gray-15">
     <%= render component("skip_link").new(href: "#main") %>
     <div class="fixed right-3 bottom-3 flex flex-col gap-3" role="alert">
       <% flash.each do |key, message| %>
@@ -15,19 +15,12 @@
       <% end %>
     </div>
 
-    <div class="
-      grid grid-cols-4
-      lg:grid-cols-12
-      bg-gray-15
-      h-screen
-    ">
-      <%= render component("sidebar").new(store: current_store) %>
+    <div class="flex gap-0 h-screen">
+      <div class="flex min-w-[240px] border-r border-r-gray-100">
+        <%= render component("sidebar").new(store: current_store) %>
+      </div>
 
-      <main id="main" class="
-        col-start-2 col-end-4
-        lg:col-start-3 lg:col-end-12
-        py-6 px-4
-      ">
+      <main id="main" class="flex-grow">
         <%= yield %>
       </main>
     </div>
