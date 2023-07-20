@@ -37,7 +37,7 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_content("Options")
+    expect(page).to have_content("Option Types")
   end
 
   it "syles top level items differently from nested items" do
@@ -54,7 +54,7 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
     expect(
       page.find("a", text: "Products")[:class]
     ).not_to eq(
-      page.find("a", text: "Options")[:class]
+      page.find("a", text: "Option Types")[:class]
     )
   end
 
