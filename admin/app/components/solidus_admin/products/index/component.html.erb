@@ -1,8 +1,18 @@
-<div class="<%= stimulus_id %>">
-  <header class="mb-6">
+<div class="<%= stimulus_id %> px-4">
+  <header class="py-6 flex items-center">
     <h1 class="body-title">
       <%= Spree::Product.model_name.human.pluralize %>
     </h1>
+
+    <div class="ml-auto">
+      <%= render @button_component.new(
+        tag: :a,
+        text: t('.add_product'),
+        href: spree.new_admin_product_path,
+        icon: "plus-line",
+        classes: "ml-auto"
+      ) %>
+    </div>
   </header>
 
   <%= render @table_component.new(

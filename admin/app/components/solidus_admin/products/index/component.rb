@@ -4,12 +4,14 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def initialize(
     page:,
     badge_component: component('ui/badge'),
-    table_component: component('ui/table')
+    table_component: component('ui/table'),
+    button_component: component("ui/button")
   )
     @page = page
 
     @badge_component = badge_component
     @table_component = table_component
+    @button_component = button_component
   end
 
   def image_column(product)
