@@ -7,17 +7,70 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @option columns [Symbol|Proc|#to_s] :header The column header.
   # @option columns [Symbol|Proc|#to_s] :data The data accessor for the column.
   # @option columns [String] :class_name (optional) The class name for the column.
+  # @param batch_actions [Array<Hash>] The array of batch action definitions.
+  # @option batch_actions [String] :display_name The batch action display name.
+  # @option batch_actions [String] :icon The batch action icon.
+  # @option batch_actions [String] :action The batch action path.
+  # @option batch_actions [String] :method The batch action HTTP method for the provided path.
   # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
-  def initialize(page:, path: nil, columns: [], pagination_component: component("ui/table/pagination"))
+  def initialize(page:, path: nil, columns: [], batch_actions: [], pagination_component: component("ui/table/pagination"))
     @page = page
     @path = path
     @columns = columns.map { Column.new(**_1) }
+    @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @pagination_component = pagination_component
     @model_class = page.records.model
     @rows = page.records
+
+    @columns.unshift selectable_column if batch_actions.present?
   end
 
-  def render_header_cell(cell)
+  def selectable_column
+    @selectable_column ||= Column.new(
+      header: -> {
+        component('ui/forms/checkbox').new(
+          form: batch_actions_form_id,
+          "data-action": "#{stimulus_id}#selectAllRows",
+          "data-#{stimulus_id}-target": "headerCheckbox",
+          "aria-label": t('.select_all'),
+        )
+      },
+      data: ->(data) {
+        component('ui/forms/checkbox').new(
+          name: "id[]",
+          form: batch_actions_form_id,
+          value: data.id,
+          "data-action": "#{stimulus_id}#selectRow",
+          "data-#{stimulus_id}-target": "checkbox",
+          "aria-label": t('.select_row'),
+        )
+      },
+      class_name: 'w-[52px]',
+    )
+  end
+
+  def batch_actions_form_id
+    @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{SecureRandom.hex}"
+  end
+
+  def render_batch_action_button(batch_action)
+    render component('ui/button').new(
+      name: request_forgery_protection_token,
+      value: form_authenticity_token(form_options: {
+        action: batch_action.action,
+        method: batch_action.method,
+      }),
+      formaction: batch_action.action,
+      formmethod: batch_action.method,
+      form: batch_actions_form_id,
+      type: :submit,
+      icon: batch_action.icon,
+      text: batch_action.display_name,
+      scheme: :secondary,
+    )
+  end
+
+  def render_header_cell(cell, **attrs)
     cell =
       case cell
       when Symbol
@@ -39,7 +92,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       font-semibold
       vertical-align-middle
       leading-none
-    })
+    }, **attrs)
   end
 
   def render_data_cell(cell, data)
@@ -78,5 +131,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
-  private_constant :Column
+  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  private_constant :Column, :BatchAction
 end

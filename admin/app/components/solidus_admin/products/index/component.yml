@@ -7,3 +7,7 @@ en:
     infinity: '∞'
     in_stock: '%{on_hand} in stock'
   for_variants: 'for %{count} variants'
+  batch_actions:
+    delete: 'Delete'
+    discontinue: 'Discontinue'
+    activate: 'Activate'
