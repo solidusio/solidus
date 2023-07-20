@@ -2,8 +2,18 @@ en:
   main_nav:
     orders: Orders
     products: Products
+    option_types: Option Types
+    property_types: Property Types
+    taxonomies: Taxonomies
+    taxons: Display Order
     promotions: Promotions
+    promotion_categories: Promotion Categories
     stock: Stock
     users: Users
     settings: Settings
-    option_types: Options
+    stores: Stores
+    payment_methods: Payments
+    tax_categories: Taxes
+    refund_reasons: Refunds and Returns
+    shipping_methods: Shipping
+    zones: Zones
