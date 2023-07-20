@@ -2,7 +2,7 @@ $color-navbar-hover-bg: $color-navbar-bg !default;
 $color-navbar-hover: $color-navbar !default;
 
 .solidus-admin--nav {
-  background-color: $color-white;
+  background-color: $color-light;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -14,6 +14,7 @@ $color-navbar-hover: $color-navbar !default;
   display: flex;
   flex-direction: column;
   max-height: 100vh;
+  border-right: $color-light-accent 1px solid;
 
   @media print {
     display: none
@@ -51,11 +52,11 @@ $color-navbar-hover: $color-navbar !default;
   }
 
   &--store-link {
-    display: block;
+    display: flex;
     width: 100%;
     border: $border-color 1px solid;
     border-radius: $border-radius;
-    padding: 6px (8px - 1px);
+    padding: 6px 8px;
     text-align: left;
 
     &:hover {
@@ -70,14 +71,17 @@ $color-navbar-hover: $color-navbar !default;
     }
 
     &--name {
+      line-height: 24px;
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 600;
       color: $color-dark;
       display: block;
     }
 
     &--url {
+      line-height: 20px;
       font-size: 12px;
+      font-weight: 400;
       color: $color-dark-light;
       display: block;
     }
@@ -97,9 +101,9 @@ $color-navbar-hover: $color-navbar !default;
       margin: 0;
       display: block;
       font-size: 14px;
-      line-height: 16.8px;
+      line-height: 24px;
       font-weight: 600;
-      padding: 8px 12px;
+      padding: 2px 12px;
       width: 100%;
       border-radius: $border-radius;
       color: $color-primary;
@@ -107,7 +111,7 @@ $color-navbar-hover: $color-navbar !default;
       &::before {
         margin-right: 12px;
         display: inline-block;
-        width: 16px;
+        width: 18px;
         padding: 0;
       }
 
