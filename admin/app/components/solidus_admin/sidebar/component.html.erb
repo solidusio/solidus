@@ -1,26 +1,21 @@
 <aside class="
   flex flex-col
   bg-gray-15
-  p-8
+  p-4
+  w-full
 ">
-  <%= image_tag @logo_path, alt: "", class: "py-3 px-2" %>
-  <%= link_to @store.url,
-        class: "
-          block
-          mt-4 px-2 py-0.5
-          border border-gray-100 rounded-sm shadow-sm
-          bg-arrow-right-up-line bg-right-top bg-no-repeat bg-origin-content
-        " do %>
-    <p class="
-      body-small-bold text-black
-    ">
-      <%= @store.name %>
-    </p>
-    <p class="
-      body-tiny text-gray-500
-    ">
-      <%= @store.url %>
-    </p>
+  <%= link_to @store.url, class: "py-3 px-2 text-left flex" do %>
+    <%= image_tag @logo_path, alt: "", class: "max-h-7" %>
+  <% end %>
+
+  <%= link_to @store.url, class: "flex mt-4 mb-2 px-2 py-1.5 border border-gray-100 rounded-sm shadow-sm" do %>
+    <div class="flex-grow">
+      <p class="body-small-bold text-black"><%= @store.name %></p>
+      <p class="body-tiny text-gray-500"><%= @store.url %></p>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10.6693 6.27614L4.93158 12.0139L3.98877 11.0711L9.7265 5.33333H4.66932V4H12.0026V11.3333H10.6693V6.27614Z" fill="#A3A3A3"/>
+    </svg>
   <% end %>
   <nav data-controller="main-nav" class="mt-2">
     <ul>
