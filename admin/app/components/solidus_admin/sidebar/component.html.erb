@@ -4,13 +4,13 @@
   col-start-1 col-end-2
   lg:col-start-1 lg:col-end-3
   bg-gray-15
-  p-4
+  p-8
 ">
-  <%= image_tag @logo_path, alt: "Solidus" %>
+  <%= image_tag @logo_path, alt: "Solidus", class: "py-3 px-2" %>
   <%= link_to @store.url,
         class: "
           block
-          mt-4 px-2 py-1.5
+          mt-4 px-2 py-0.5
           border border-gray-100 rounded-sm shadow-sm
           bg-arrow-right-up-line bg-right-top bg-no-repeat bg-origin-content
         " do %>
