@@ -4,8 +4,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param page [GearedPagination::Page] The pagination page object.
   # @param path [Proc] A callable object that generates the path for pagination links.
   # @param columns [Array<Hash>] The array of column definitions.
-  # @option columns [Symbol] :header The column header.
-  # @option columns [Symbol|Proc] :data The data accessor for the column.
+  # @option columns [Symbol|Proc|#to_s] :header The column header.
+  # @option columns [Symbol|Proc|#to_s] :data The data accessor for the column.
   # @option columns [String] :class_name (optional) The class name for the column.
   # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
   def initialize(page:, path: nil, columns: [], pagination_component: component("ui/table/pagination"))
@@ -17,17 +17,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @rows = page.records
   end
 
-  def render_cell(tag, cell, **attrs)
-    # Allow component instances as cell content
-    content_tag(tag, **attrs) do
-      if cell.respond_to?(:render_in)
-        cell.render_in(self)
-      else
-        cell
-      end
-    end
-  end
-
   def render_header_cell(cell)
     cell =
       case cell
@@ -35,21 +24,22 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         @model_class.human_attribute_name(cell)
       when Proc
         cell.call
+      else
+        cell
       end
 
-    cell_tag = cell.blank? ? :td : :th
+    # Allow component instances as cell content
+    cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
-    render_cell(cell_tag, cell, class: <<~CLASSES)
+    content_tag(:th, cell, class: %{
       border-b
       border-gray-100
-      py-3
       px-4
-      text-[#4f4f4f]
-      text-left
-      text-3.5
-      font-[600]
-      line-[120%]
-    CLASSES
+      h-9
+      font-semibold
+      vertical-align-middle
+      leading-none
+    })
   end
 
   def render_data_cell(cell, data)
@@ -59,9 +49,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         data.public_send(cell)
       when Proc
         cell.call(data)
+      else
+        cell
       end
 
-    render_cell(:td, cell, class: "py-2 px-4")
+    # Allow component instances as cell content
+    cell = cell.render_in(self) if cell.respond_to?(:render_in)
+
+    content_tag(:td, content_tag(:div, cell, class: "flex items-center gap-1.5"), class: "py-2 px-4 h-10 vertical-align-middle leading-none")
   end
 
   def render_table_footer
