@@ -40,7 +40,8 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     ],
   }
 
-  def initialize(text: nil, class_name: nil, size: :m, scheme: :primary, **attributes)
+  def initialize(tag: :button, text: nil, class_name: nil, size: :m, scheme: :primary, **attributes)
+    @tag = tag
     @text = text
     @attributes = attributes
 
@@ -53,6 +54,6 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
   end
 
   def call
-    content_tag(:button, @text, class: @class_name, **@attributes)
+    content_tag(@tag, @text, class: @class_name, **@attributes)
   end
 end
