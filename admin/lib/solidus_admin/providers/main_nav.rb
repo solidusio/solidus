@@ -26,6 +26,21 @@ module SolidusAdmin
                   key: "option_types",
                   route: -> { spree.admin_option_types_path },
                   position: 10
+                },
+                {
+                  key: "property_types",
+                  route: -> { spree.admin_properties_path },
+                  position: 20
+                },
+                {
+                  key: "taxonomies",
+                  route: -> { spree.admin_taxonomies_path },
+                  position: 30
+                },
+                {
+                  key: "taxons",
+                  route: -> { spree.admin_taxons_path },
+                  position: 40
                 }
               ]
             )
@@ -34,7 +49,14 @@ module SolidusAdmin
             key: "promotions",
             route: -> { spree.admin_promotions_path },
             icon: "megaphone-line",
-            position: 30
+            position: 30,
+            children: [
+              {
+                key: "promotion_categories",
+                route: -> { spree.admin_promotion_categories_path },
+                position: 10
+              }
+            ]
           )
 
           main_nav.add(
@@ -55,7 +77,34 @@ module SolidusAdmin
             key: "settings",
             route: -> { spree.admin_stores_path },
             icon: "settings-line",
-            position: 60
+            position: 60,
+            children: [
+              {
+                key: "payment_methods",
+                route: -> { spree.admin_payment_methods_path },
+                position: 20
+              },
+              {
+                key: "tax_categories",
+                route: -> { spree.admin_tax_categories_path },
+                position: 30
+              },
+              {
+                key: "refund_reasons",
+                route: -> { spree.admin_refund_reasons_path },
+                position: 40
+              },
+              {
+                key: "shipping_methods",
+                route: -> { spree.admin_shipping_methods_path },
+                position: 50
+              },
+              {
+                key: "zones",
+                route: -> { spree.admin_zones_path },
+                position: 60
+              }
+            ]
           )
         end
 
