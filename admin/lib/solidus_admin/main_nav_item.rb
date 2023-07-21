@@ -73,17 +73,31 @@ module SolidusAdmin
       end
     end
 
+    # Returns whether the item should be marked as current
+    #
+    # An item is considered the current one if its base path (that is, the path
+    # without any query parameters) matches the given full path.
+    #
+    # @param url_helpers [#solidus_admin, #spree] context object giving access
+    #  to url helpers
+    # @param fullpath [String] the full path of the current request
+    # @return [Boolean]
+    def current?(url_helpers, fullpath)
+      path(url_helpers) == fullpath.gsub(/\?.*$/, '')
+    end
+
     # Returns whether the item should be marked as active
     #
-    # An item is considered active if its base path (that is, the path without
-    # any query parameters) matches the given full path.
+    # An item is considered active when it is the current item or any of its
+    # children is active.
     #
     # @param url_helpers [#solidus_admin, #spree] context object giving access
     #   to url helpers
     # @param fullpath [String] the full path of the current request
     # @return [Boolean]
+    # @see #current?
     def active?(url_helpers, fullpath)
-      (path(url_helpers) == fullpath.gsub(/\?.*$/, '')) ||
+      current?(url_helpers, fullpath) ||
         children.any? { |child| child.active?(url_helpers, fullpath) }
     end
   end
