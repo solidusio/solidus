@@ -12,4 +12,12 @@ export default class extends Controller {
     )
     this.linksTarget.classList.toggle("hidden")
   }
+
+  // Hide the links and mark the button as inactive
+  hideLinks() {
+    this.buttonTarget.classList.remove(
+      this.activeClass,
+    )
+    this.linksTarget.classList.add("hidden")
+  }
 }
