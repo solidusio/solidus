@@ -71,4 +71,8 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
   def active?
     @item.active?(@url_helpers, @fullpath)
   end
+
+  def aria_current
+    @item.current?(@url_helpers, @fullpath) ? "page" : "false"
+  end
 end
