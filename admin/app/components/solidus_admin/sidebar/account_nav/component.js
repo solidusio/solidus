@@ -5,19 +5,33 @@ export default class extends Controller {
 
   static classes = ["active"]
 
-  // Toggle the visibility of the links and mark the button as active
   toggleLinks() {
+    // Toggle button's active state
     this.buttonTarget.classList.toggle(
       this.activeClass,
     )
+    // Toggle aria-expanded state
+    this.buttonTarget.setAttribute(
+      "aria-expanded",
+      this.buttonTarget.classList.contains(
+        this.activeClass,
+      ),
+    )
+    // Toggle links' visibility
     this.linksTarget.classList.toggle("hidden")
   }
 
-  // Hide the links and mark the button as inactive
   hideLinks() {
+    // Remove button's active state
     this.buttonTarget.classList.remove(
       this.activeClass,
     )
+    // Set aria-expanded to false
+    this.buttonTarget.setAttribute(
+      "aria-expanded",
+      "false"
+    )
+    // Hide the links
     this.linksTarget.classList.add("hidden")
   }
 }
