@@ -7,7 +7,7 @@
   data-<%= stimulus_id %>-closing-class="transform opacity-0 transition duration-500"
   data-<%= stimulus_id %>-transition-value="500"
 >
-  <%= icon_tag(@icon, class_names: 'inline-block mr-3') if @icon %>
+  <%= icon_tag(@icon, class: 'inline-block w-[1.125rem] h-[1.125rem] mr-3 fill-current') if @icon %>
 
   <p class="inline-block body-tiny-bold"><%= @text %></p>
 
@@ -16,6 +16,6 @@
     title="<%= t('.close_text') %>"
     data-action="<%= stimulus_id %>#close"
   >
-    <%= icon_tag('close-line') %>
+    <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current") %>
   </button>
 </div>
