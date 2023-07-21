@@ -91,13 +91,13 @@ RSpec.describe SolidusAdmin::MainNavItem do
     end
   end
 
-  describe "#active?" do
+  describe "#current?" do
     it "returns true when the path matches the current request path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
       url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
       expect(
-        item.active?(url_helpers, "/foo")
+        item.current?(url_helpers, "/foo")
       ).to be(true)
     end
 
@@ -106,11 +106,42 @@ RSpec.describe SolidusAdmin::MainNavItem do
       url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
       expect(
-        item.active?(url_helpers, "/foo?bar=baz")
+        item.current?(url_helpers, "/foo?bar=baz")
       ).to be(true)
     end
 
     it "returns false when the path does not match the current request base path" do
+      item = described_class.new(key: "foo", route: :foo_path, position: 1)
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+
+      expect(
+        item.current?(url_helpers, "/bar")
+      ).to be(false)
+    end
+  end
+
+  describe "#active?" do
+    it "returns true when it's the current item" do
+      item = described_class.new(key: "foo", route: :foo_path, position: 1)
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+
+      expect(
+        item.active?(url_helpers, "/foo")
+      ).to be(true)
+    end
+
+    it "returns true when one of its children is active" do
+      item = described_class.new(
+        key: "foo", route: :foo_path, position: 1, children: [described_class.new(key: "bar", route: :bar_path, position: 1)]
+      )
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo", bar_path: "/bar" })
+
+      expect(
+        item.active?(url_helpers, "/bar")
+      ).to be(true)
+    end
+
+    it "returns false otherwise" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
       url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
 
