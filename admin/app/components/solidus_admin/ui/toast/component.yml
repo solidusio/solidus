@@ -1,2 +1,4 @@
 en:
+  default_label: Information
+  error_label: Error
   close_text: "Close"
