@@ -8,6 +8,7 @@
   </head>
 
   <body>
+    <%= render component("skip_link").new(href: "#main") %>
     <div class="fixed right-3 bottom-3 flex flex-col gap-3" role="alert">
       <% flash.each do |key, message| %>
         <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
@@ -22,7 +23,7 @@
     ">
       <%= render component("sidebar").new(store: current_store) %>
 
-      <main class="
+      <main id="main" class="
         col-start-2 col-end-4
         lg:col-start-3 lg:col-end-12
         py-6 px-4
