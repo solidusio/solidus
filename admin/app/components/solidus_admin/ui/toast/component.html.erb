@@ -6,8 +6,11 @@
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-closing-class="transform opacity-0 transition duration-500"
   data-<%= stimulus_id %>-transition-value="500"
+  role="dialog"
+  aria-label="<%= t(".#{@scheme}_label") %>"
+  aria-live="polite"
 >
-  <%= icon_tag(@icon, class: 'inline-block w-[1.125rem] h-[1.125rem] mr-3 fill-current') if @icon %>
+  <%= icon_tag(@icon, class: 'inline-block w-[1.125rem] h-[1.125rem] mr-3 fill-current', "aria-hidden" => true) if @icon %>
 
   <p class="inline-block body-tiny-bold"><%= @text %></p>
 
@@ -15,7 +18,9 @@
     class="inline-block ml-3 align-text-bottom"
     title="<%= t('.close_text') %>"
     data-action="<%= stimulus_id %>#close"
+    aria-label="<%= t('.close_text') %>"
+    data-target="<%= stimulus_id %>.closeButton"
   >
-    <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current") %>
+    <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current", "aria-hidden" => true) %>
   </button>
 </div>
