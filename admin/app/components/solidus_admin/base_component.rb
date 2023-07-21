@@ -14,7 +14,7 @@ module SolidusAdmin
     def icon_tag(name, **attrs)
       href = image_path("solidus_admin/remixicon.symbol.svg") + "#ri-#{name}"
       tag.svg(
-        class: attrs[:class],
+        **attrs
       ) do
         tag.use(
           "xlink:href": href
