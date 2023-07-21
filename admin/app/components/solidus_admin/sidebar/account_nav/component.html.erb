@@ -7,6 +7,7 @@
     click-><%= stimulus_id %>#toggleLinks
     "
     data-<%= stimulus_id %>-target="button"
+    aria-expanded="false" aria-controls="account-menu"
     class="
       flex gap-1.5
       p-3 mt-2
@@ -20,6 +21,7 @@
     </span>
   </button>
   <ul data-<%= stimulus_id %>-target="links"
+    id="account-menu"
     class="
       hidden
       p-2
