@@ -1,29 +1,9 @@
-<nav class="mt-auto w-48"
+<nav class="flex flex-col-reverse w-48 mt-auto"
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-active-class="bg-gray-25"
   aria-label="<%= t('.account.account') %>"
 >
-  <ul data-<%= stimulus_id %>-target="links"
-    class="
-      hidden
-      p-2
-      body-small text-black
-      border border-gray-100 rounded-lg shadow-base
-    ">
-    <li class="h-8 flex items-center hover:bg-gray-25">
-      <%= link_to @account_path do %>
-        <%= icon_tag("user-3-line", class: "inline-block align-text-bottom w-[0.83rem] h-[1.09rem] mx-2 fill-current") %>
-        <%= t('.account.account') %>
-      <% end %>
-    </li>
-    <li class="h-8 flex items-center hover:bg-gray-25">
-      <%= link_to @logout_path, method: @logout_method do %>
-        <%= icon_tag("logout-box-line", class: "inline-block align-text-bottom w-[0.98rem] h-[1.04rem] mx-2 fill-current") %>
-        <%= t('.account.logout') %>
-      <% end %>
-    </li>
-  </ul>
-  <p data-action="
+  <button data-action="
     click-><%= stimulus_id %>#toggleLinks
     "
     data-<%= stimulus_id %>-target="button"
@@ -37,6 +17,30 @@
     <%= icon_tag("user-smile-fill", class: "inline-block align-text-bottom shrink-0 w-6 h-6 rounded-[4.81rem] mr-[1.5] body-small fill-yellow bg-black") %>
     <span class="overflow-hidden whitespace-nowrap text-ellipsis">
       <%= @user_label %>
-    </span class="">
-  </p>
+    </span>
+  </button>
+  <ul data-<%= stimulus_id %>-target="links"
+    class="
+      hidden
+      p-2
+      body-small text-black
+      border border-gray-100 rounded-lg shadow-base
+    ">
+    <li class="h-8 flex items-center hover:bg-gray-25">
+      <%= link_to @account_path do %>
+        <%= icon_tag("user-3-line", class: "inline-block align-text-bottom w-[0.83rem] h-[1.09rem] mx-2 fill-current") %>
+        <%= t('.account.account') %>
+      <% end %>
+    </li>
+    <li class="h-8 flex items-center hover:bg-gray-25"
+      data-action="
+        focusout-><%= stimulus_id %>#hideLinks
+      "
+    >
+      <%= link_to @logout_path, method: @logout_method do %>
+        <%= icon_tag("logout-box-line", class: "inline-block align-text-bottom w-[0.98rem] h-[1.04rem] mx-2 fill-current") %>
+        <%= t('.account.logout') %>
+      <% end %>
+    </li>
+  </ul>
 </nav>
