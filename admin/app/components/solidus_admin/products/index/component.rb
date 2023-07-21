@@ -21,6 +21,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
       image_tag(image.url(:small), class: 'h-10 w-10 max-w-min rounded border border-gray-100', alt: ''),
       spree.edit_admin_product_path(product),
       class: 'inline-flex overflow-hidden',
+      tabindex: -1,
     )
   end
 
