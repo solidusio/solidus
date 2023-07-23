@@ -31,14 +31,14 @@ RSpec.describe Spree::UnitCancel do
   end
 
   describe '#compute_amount' do
-    subject { unit_cancel.compute_amount(line_item) }
+    subject(:amount) { unit_cancel.compute_amount }
 
     let(:line_item) { inventory_unit.line_item }
-    let!(:inventory_unit2) { create(:inventory_unit, line_item: inventory_unit.line_item) }
+    let!(:inventory_unit2) { create :inventory_unit, line_item: inventory_unit.line_item }
 
     context "all inventory on the line item are not canceled" do
       it "divides the line item total by the inventory units size" do
-        expect(subject).to eq(-5.0)
+        expect(amount).to eq(-5.0)
       end
     end
 
@@ -52,14 +52,6 @@ RSpec.describe Spree::UnitCancel do
       it "raises an error if dividing by 0" do
         inventory_unit.cancel!
         expect { subject }.to raise_error ZeroDivisionError, "Line Item does not have any inventory units available to cancel"
-      end
-    end
-
-    context "it is called with a line item that doesnt belong to the inventory unit" do
-      let(:line_item) { create(:line_item) }
-
-      it "raises an error" do
-        expect { subject }.to raise_error RuntimeError, "Adjustable does not match line item"
       end
     end
 
