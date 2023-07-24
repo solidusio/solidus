@@ -22,5 +22,7 @@
       <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
     </ul>
   </nav>
-  <%= render @account_nav_component.new %>
+  <nav class="mt-auto">
+    <%= render @account_nav_component.new %>
+  </nav>
 </aside>
