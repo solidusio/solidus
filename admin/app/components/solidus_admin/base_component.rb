@@ -13,6 +13,10 @@ module SolidusAdmin
     # @see https://remixicon.com/
     def icon_tag(name, **attrs)
       href = image_path("solidus_admin/remixicon.symbol.svg") + "#ri-#{name}"
+
+      # Hide the icon from screen readers by default.
+      attrs['aria-hidden'] = true unless attrs.key?('aria-hidden')
+
       tag.svg(
         **attrs
       ) do

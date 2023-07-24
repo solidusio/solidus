@@ -4,11 +4,11 @@
       <li>
         <% if @page.first? %>
           <span class="<%= link_classes(rounded: :left) %>", "aria-label"=<%= t(".prev") %>, "aria-disabled"=true>
-            <%= icon_tag("arrow-left-s-line", class: "fill-current text-grey-400 w-5 h-5", "aria-hidden" => true) %>
+            <%= icon_tag("arrow-left-s-line", class: "fill-current text-grey-400 w-5 h-5") %>
           </span>
         <% else %>
           <%= link_to @path.call(@page.number - 1), class: link_classes(rounded: :left), "aria-label" => t(".prev") do %>
-            <%= icon_tag("arrow-left-s-line", class: "w-5 h-5", "aria-hidden" => true) %>
+            <%= icon_tag("arrow-left-s-line", class: "w-5 h-5") %>
           <% end %>
         <% end %>
       </li>
@@ -16,11 +16,11 @@
       <li>
         <% if @page.last? %>
           <span class="<%= link_classes(rounded: :right) %>", "aria-label"=<%= t(".next") %>, "aria-disabled"=true>
-            <%= icon_tag("arrow-right-s-line", class: "fill-current text-grey-400 w-5 h-5", "aria-hidden" => true) %>
+            <%= icon_tag("arrow-right-s-line", class: "fill-current text-grey-400 w-5 h-5") %>
           </span>
         <% else %>
           <%= link_to @path.call(@page.next_param), class: link_classes(rounded: :right), "aria-label" => t(".next") do %>
-            <%= icon_tag("arrow-right-s-line", class: "w-5 h-5", "aria-hidden" => true) %>
+            <%= icon_tag("arrow-right-s-line", class: "w-5 h-5") %>
           <% end %>
         <% end %>
       </li>
