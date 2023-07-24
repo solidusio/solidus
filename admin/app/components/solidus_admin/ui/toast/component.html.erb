@@ -10,7 +10,7 @@
   aria-label="<%= t(".#{@scheme}_label") %>"
   aria-live="polite"
 >
-  <%= icon_tag(@icon, class: 'inline-block w-[1.125rem] h-[1.125rem] mr-3 fill-current', "aria-hidden" => true) if @icon %>
+  <%= icon_tag(@icon, class: 'inline-block w-[1.125rem] h-[1.125rem] mr-3 fill-current') if @icon %>
 
   <p class="inline-block body-tiny-bold"><%= @text %></p>
 
@@ -21,6 +21,6 @@
     aria-label="<%= t('.close_text') %>"
     data-target="<%= stimulus_id %>.closeButton"
   >
-    <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current", "aria-hidden" => true) %>
+    <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current") %>
   </button>
 </div>

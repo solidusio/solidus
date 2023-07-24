@@ -25,7 +25,7 @@ class SolidusAdmin::Sidebar::Item::Component < SolidusAdmin::BaseComponent
     common_classes = "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small"
 
     return tag.span(class: common_classes) unless @item.icon
-    icon_tag(@item.icon, class: "#{common_classes} align-text-bottom fill-current", "aria-hidden" => true)
+    icon_tag(@item.icon, class: "#{common_classes} align-text-bottom fill-current")
   end
 
   def path
