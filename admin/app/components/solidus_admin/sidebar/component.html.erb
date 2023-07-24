@@ -1,4 +1,4 @@
-<aside class="
+<nav class="
   flex flex-col
   bg-gray-15
   p-4
@@ -17,12 +17,12 @@
       <path d="M10.6693 6.27614L4.93158 12.0139L3.98877 11.0711L9.7265 5.33333H4.66932V4H12.0026V11.3333H10.6693V6.27614Z" fill="#A3A3A3"/>
     </svg>
   <% end %>
-  <nav data-controller="main-nav" class="mt-2">
+  <div data-controller="main-nav" class="mt-2">
     <ul>
       <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
     </ul>
-  </nav>
-  <nav class="mt-auto">
+  </div>
+  <div class="mt-auto">
     <%= render @account_nav_component.new %>
-  </nav>
-</aside>
+  </div>
+</nav>
