@@ -10,7 +10,7 @@
     aria-expanded="false" aria-controls="account-menu"
     class="
       flex gap-1.5
-      p-3 mt-2
+      p-3 mt-2 rounded
       body-small-bold text-gray-500
       hover:bg-gray-25
       cursor-pointer
@@ -28,13 +28,13 @@
       body-small text-black
       border border-gray-100 rounded-lg shadow-base
     ">
-    <li class="h-8 flex items-center hover:bg-gray-25">
+    <li class="h-8 flex items-center hover:bg-gray-25 rounded">
       <%= link_to @account_path do %>
         <%= icon_tag("user-3-line", class: "inline-block align-text-bottom w-[0.83rem] h-[1.09rem] mx-2 fill-current", "aria-hidden"=>true) %>
         <%= t('.account.account') %>
       <% end %>
     </li>
-    <li class="h-8 flex items-center hover:bg-gray-25"
+    <li class="h-8 flex items-center hover:bg-gray-25 rounded"
       data-action="
         focusout-><%= stimulus_id %>#hideLinks
       "
