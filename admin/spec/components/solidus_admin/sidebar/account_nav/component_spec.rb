@@ -14,7 +14,7 @@ RSpec.describe SolidusAdmin::Sidebar::AccountNav::Component, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_link("Account", href: "/admin/account")
+    expect(page).to have_link("Account", href: "/admin/account", visible: :any)
   end
 
   it "renders link to logout" do
@@ -24,7 +24,7 @@ RSpec.describe SolidusAdmin::Sidebar::AccountNav::Component, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_link("Logout", href: "/admin/logout")
+    expect(page).to have_link("Logout", href: "/admin/logout", visible: :any)
   end
 
   it "renders user lanel" do
