@@ -52,15 +52,29 @@ RSpec.describe "Promotion System" do
   end
 
   context "with a shipment-level rule" do
-    let!(:ups_ground) { create(:shipping_method) }
-    let!(:dhl_saver) { create(:shipping_method) }
+    let!(:address) { create(:address) }
+    let(:shipping_zone) { create(:global_zone) }
+    let(:store) { create(:store) }
+    let!(:ups_ground) { create(:shipping_method, zones: [shipping_zone], cost: 23) }
+    let!(:dhl_saver) { create(:shipping_method, zones: [shipping_zone], cost: 37) }
+    let(:variant) { create(:variant, price: 13) }
     let(:promotion) { create(:friendly_promotion, name: "20 percent off UPS Ground", apply_automatically: true) }
     let(:rule) { SolidusFriendlyPromotions::Rules::ShippingMethod.new(preferred_shipping_method_ids: [ups_ground.id]) }
-    let(:order) { create(:order_with_line_items, shipping_method: shipping_method) }
+    let(:order) { Spree::Order.create!(store: store) }
 
     before do
       promotion.rules << rule
       promotion.actions << action
+
+      order.contents.add(variant, 1)
+      order.ship_address = address
+      order.bill_address = address
+
+      order.create_proposed_shipments
+
+      order.shipments.first.selected_shipping_rate_id = order.shipments.first.shipping_rates.detect { |r| r.shipping_method == shipping_method }.id
+
+      order.recalculate
     end
 
     context "with a line item level action" do
@@ -70,12 +84,13 @@ RSpec.describe "Promotion System" do
 
       it "creates adjustments" do
         expect(order.adjustments).to be_empty
-        expect(order.total).to eq(108.00)
-        expect(order.item_total).to eq(10)
-        expect(order.item_total_before_tax).to eq(8)
-        expect(order.promo_total).to eq(-2)
+        expect(order.total).to eq(33.40)
+        expect(order.item_total).to eq(13)
+        expect(order.item_total_before_tax).to eq(10.40)
+        expect(order.promo_total).to eq(-2.60)
         expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
         expect(order.shipments.flat_map(&:adjustments)).to be_empty
+        expect(order.shipments.flat_map(&:shipping_rates).flat_map(&:discounts)).to be_empty
       end
     end
 
@@ -87,11 +102,13 @@ RSpec.describe "Promotion System" do
         let(:shipping_method) { ups_ground }
         it "creates adjustments" do
           expect(order.adjustments).to be_empty
-          expect(order.total).to eq(90)
-          expect(order.item_total).to eq(10)
-          expect(order.item_total_before_tax).to eq(10)
+          expect(order.total).to eq(31.40)
+          expect(order.item_total).to eq(13)
+          expect(order.item_total_before_tax).to eq(13)
+          expect(order.promo_total).to eq(-4.6)
           expect(order.line_items.flat_map(&:adjustments)).to be_empty
           expect(order.shipments.flat_map(&:adjustments)).not_to be_empty
+          expect(order.shipments.flat_map(&:shipping_rates).flat_map(&:discounts)).not_to be_empty
         end
       end
 
@@ -100,12 +117,13 @@ RSpec.describe "Promotion System" do
 
         it "creates no adjustments" do
           expect(order.adjustments).to be_empty
-          expect(order.total).to eq(110)
-          expect(order.item_total).to eq(10)
-          expect(order.item_total_before_tax).to eq(10)
+          expect(order.total).to eq(50)
+          expect(order.item_total).to eq(13)
+          expect(order.item_total_before_tax).to eq(13)
           expect(order.promo_total).to eq(0)
           expect(order.line_items.flat_map(&:adjustments)).to be_empty
           expect(order.shipments.flat_map(&:adjustments)).to be_empty
+          expect(order.shipments.flat_map(&:shipping_rates).flat_map(&:discounts)).not_to be_empty
         end
       end
     end

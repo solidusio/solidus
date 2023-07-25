@@ -25,6 +25,15 @@ module SolidusFriendlyPromotions
         update_adjustments(item, chosen_item_discounts)
       end
 
+      @order.shipments.flat_map(&:shipping_rates).each do |item|
+        all_item_discounts = all_order_discounts.flat_map(&:shipping_rate_discounts)
+        item_discounts = all_item_discounts.select { |element| element.item == item }
+        chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(item).call(item_discounts)
+        item.discounts = chosen_item_discounts.map do |discount|
+          SolidusFriendlyPromotions::ShippingRateDiscount.new(shipping_rate: item, amount: discount.amount, label: discount.label)
+        end
+      end
+
       @order.promo_total = (order.line_items + order.shipments).sum { |item| item.promo_total }
       @order
     end

@@ -14,7 +14,8 @@ module SolidusFriendlyPromotions
       OrderDiscounts.new(
         order_id: order.id,
         line_item_discounts: adjust_line_items,
-        shipment_discounts: adjust_shipments
+        shipment_discounts: adjust_shipments,
+        shipping_rate_discounts: adjust_shipping_rates
       )
     end
 
@@ -28,6 +29,10 @@ module SolidusFriendlyPromotions
 
     def adjust_shipments
       order.shipments.flat_map { |shipment| item_discounter.call(shipment) }
+    end
+
+    def adjust_shipping_rates
+      order.shipments.flat_map(&:shipping_rates).flat_map { |rate| item_discounter.call(rate) }
     end
 
     def possible_promotions

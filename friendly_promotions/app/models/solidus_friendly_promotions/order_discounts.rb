@@ -13,6 +13,6 @@ module SolidusFriendlyPromotions
   #   discount data for the order's shipments
   class OrderDiscounts
     include ActiveModel::Model
-    attr_accessor :order_id, :line_item_discounts, :shipment_discounts
+    attr_accessor :order_id, :line_item_discounts, :shipment_discounts, :shipping_rate_discounts
   end
 end
