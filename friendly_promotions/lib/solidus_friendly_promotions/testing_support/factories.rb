@@ -10,6 +10,7 @@ require "solidus_friendly_promotions/testing_support/friendly_promotion_category
 require "solidus_friendly_promotions/testing_support/friendly_promotion_factory"
 require "solidus_friendly_promotions/testing_support/friendly_order_promotion_factory"
 require "solidus_friendly_promotions/testing_support/friendly_order_factory"
+require "solidus_friendly_promotions/testing_support/friendly_shipping_rate_discount_factory"
 
 FactoryBot.define do
 end
