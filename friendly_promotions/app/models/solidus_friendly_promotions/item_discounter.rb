@@ -8,17 +8,17 @@ module SolidusFriendlyPromotions
       @promotions = promotions
     end
 
-    def call(line_item)
+    def call(item)
       eligible_promotions = PromotionEligibility.new(
-        promotable: line_item,
+        promotable: item,
         possible_promotions: promotions
       ).call
 
       eligible_promotions.flat_map do |promotion|
         promotion.actions.select do |action|
-          action.can_discount?(line_item)
+          action.can_discount?(item)
         end.map do |action|
-          action.discount(line_item)
+          action.discount(item)
         end
       end
     end
