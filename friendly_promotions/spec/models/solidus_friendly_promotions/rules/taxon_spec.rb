@@ -8,24 +8,23 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
   end
   let(:product) { order.products.first }
   let(:order) { create :order_with_line_items }
-  let(:taxon2) { create :taxon, name: "second" }
-  let(:taxon) { create :taxon, name: "first" }
+  let(:taxon_one) { create :taxon, name: "first" }
+  let(:taxon_two) { create :taxon, name: "second" }
 
   it { is_expected.to have_many(:taxons) }
 
   describe "taxon_ids_string=" do
-    subject { rule.assign_attributes("taxon_ids_string" => taxon_2.id.to_s) }
+    subject { rule.assign_attributes("taxon_ids_string" => taxon_two.id.to_s) }
 
     let!(:promotion) { create(:friendly_promotion) }
-    let!(:taxon_1) { create(:taxon) }
-    let!(:taxon_2) { create(:taxon) }
+
     let(:rule) { promotion.rules.build(type: described_class.to_s) }
 
     it "creates a valid rule with a taxon" do
       subject
       expect(rule).to be_valid
       rule.save!
-      expect(rule.reload.taxons).to include(taxon_2)
+      expect(rule.reload.taxons).to include(taxon_two)
     end
   end
 
@@ -36,20 +35,21 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
       end
 
       it "is eligible if order does have any prefered taxon" do
-        product.taxons << taxon
-        rule.taxons << taxon
+        product.taxons << taxon_one
+        rule.taxons << taxon_one
         expect(rule).to be_eligible(order)
       end
 
       context "when order does not have any prefered taxon" do
-        before { rule.taxons << taxon2 }
+        before { rule.taxons << taxon_two }
 
         it { expect(rule).not_to be_eligible(order) }
 
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first)
-            .to eq "You need to add a product from an applicable category before applying this coupon code."
+          expect(rule.eligibility_errors.full_messages.first).to eq(
+            "You need to add a product from an applicable category before applying this coupon code."
+          )
         end
 
         it "sets an error code" do
@@ -61,9 +61,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
 
       context "when a product has a taxon child of a taxon rule" do
         before do
-          taxon.children << taxon2
-          product.taxons << taxon2
-          rule.taxons << taxon
+          taxon_one.children << taxon_two
+          product.taxons << taxon_two
+          rule.taxons << taxon_one
         end
 
         it { expect(rule).to be_eligible(order) }
@@ -76,23 +76,24 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
       end
 
       it "is eligible order has all prefered taxons" do
-        product.taxons << taxon2
-        order.products.last.taxons << taxon
+        product.taxons << taxon_two
+        order.products.last.taxons << taxon_one
 
-        rule.taxons = [taxon, taxon2]
+        rule.taxons = [taxon_one, taxon_two]
 
         expect(rule).to be_eligible(order)
       end
 
       context "when order does not have all prefered taxons" do
-        before { rule.taxons << taxon }
+        before { rule.taxons << taxon_one }
 
         it { expect(rule).not_to be_eligible(order) }
 
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first)
-            .to eq "You need to add a product from all applicable categories before applying this coupon code."
+          expect(rule.eligibility_errors.full_messages.first).to eq(
+            "You need to add a product from all applicable categories before applying this coupon code."
+          )
         end
 
         it "sets an error code" do
@@ -103,15 +104,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
       end
 
       context "when a product has a taxon child of a taxon rule" do
-        let(:taxon3) { create :taxon }
+        let(:taxon_three) { create :taxon }
 
         before do
-          taxon.children << taxon2
-          taxon.save!
-          taxon.reload
+          taxon_one.children << taxon_two
+          taxon_one.save!
+          taxon_one.reload
 
-          product.taxons = [taxon2, taxon3]
-          rule.taxons = [taxon, taxon3]
+          product.taxons = [taxon_two, taxon_three]
+          rule.taxons = [taxon_one, taxon_three]
         end
 
         it { expect(rule).to be_eligible(order) }
@@ -124,15 +125,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
       end
 
       context "none of the order's products are in listed taxon" do
-        before { rule.taxons << taxon2 }
+        before { rule.taxons << taxon_two }
 
         it { expect(rule).to be_eligible(order) }
       end
 
       context "one of the order's products is in a listed taxon" do
         before do
-          order.products.first.taxons << taxon
-          rule.taxons << taxon
+          order.products.first.taxons << taxon_one
+          rule.taxons << taxon_one
         end
 
         it "is not eligible" do
@@ -141,8 +142,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
 
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first)
-            .to eq "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
+          expect(rule.eligibility_errors.full_messages.first).to eq(
+            "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
+          )
         end
 
         it "sets an error code" do
@@ -155,8 +157,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
 
     context "with an invalid match policy" do
       before do
-        order.products.first.taxons << taxon
-        rule.taxons << taxon
+        order.products.first.taxons << taxon_one
+        rule.taxons << taxon_one
         rule.preferred_match_policy = "invalid"
         rule.save!(validate: false)
       end
