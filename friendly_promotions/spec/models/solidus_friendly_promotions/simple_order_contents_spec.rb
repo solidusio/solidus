@@ -9,7 +9,6 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
   let(:order) { create(:order) }
   let(:variant) { create(:variant) }
   let!(:stock_location) { variant.stock_locations.first }
-  let(:stock_location_2) { create(:stock_location) }
 
   describe "#add" do
     context 'given quantity is not explicitly provided' do
@@ -112,11 +111,8 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
       end
 
       context 'when the order has a taxable address' do
-        before do
-          expect(order.tax_address.country_id).to be_present
-        end
-
         it 'creates a tax adjustment' do
+          expect(order.tax_address.country_id).to be_present
           order_contents.add(variant)
           line_item = order.find_line_item_by_variant(variant)
           expect(line_item.adjustments.tax.count).to eq(1)
@@ -126,10 +122,10 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
       context 'when the order does not have a taxable address' do
         before do
           order.update!(ship_address: nil, bill_address: nil)
-          expect(order.tax_address.country_id).to be_nil
         end
 
         it 'creates a tax adjustment' do
+          expect(order.tax_address.country_id).to be_nil
           order_contents.add(variant)
           line_item = order.find_line_item_by_variant(variant)
           expect(line_item.adjustments.tax.count).to eq(0)
