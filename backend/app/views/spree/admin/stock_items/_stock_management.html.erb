@@ -1,6 +1,6 @@
 <% admin_layout "full-width" %>
 
-<%= paginate @variants, theme: "solidus_admin" %>
+<%= paginate variants, theme: "solidus_admin" %>
 
 <table class="index stock-table" id="listing_product_stock">
   <colgroup>
@@ -71,18 +71,30 @@
               <col style="width: 15%">
             </colgroup>
             <% variant.stock_items.each do |item| %>
-              <% if @stock_item_stock_locations.include?(item.stock_location) %>
-                <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>" data-track-inventory="<%= variant.should_track_inventory? %>" data-can-edit="<%= can?(:edit, Spree::StockItem) %>" data-variant-sku="<%= variant.sku %>">
-                  <%# This is rendered in JS %>
-                </tr>
-              <% end %>
+              <tr
+                class="js-edit-stock-item stock-item-edit-row"
+                data-variant-id="<%= variant.id %>"
+                data-stock-item="<%= item.to_json %>"
+                data-stock-location-name="<%= item.stock_location.name %>"
+                data-track-inventory="<%= variant.should_track_inventory? %>"
+                data-can-edit="<%= can?(:admin, Spree::StockItem) %>"
+                data-variant-sku="<%= variant.sku %>"
+              >
+                <%# This is rendered in JS %>
+              </tr>
             <% end %>
-            <% locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
+            <% locations_without_items = stock_locations - variant.stock_items.flat_map(&:stock_location) %>
             <% if locations_without_items.any? && can?(:create, Spree::StockItem) %>
               <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
                 <form>
                   <td class='location-name-cell'>
-                    <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), class: 'custom-select', prompt: t('spree.add_to_stock_location'), id: "variant-stock-location-#{variant.id}" %>
+                    <%= select_tag(
+                      :stock_location_id,
+                      options_from_collection_for_select(locations_without_items, :id, :name),
+                      class: 'custom-select',
+                      prompt: t('spree.add_to_stock_location'),
+                      id: "variant-stock-location-#{variant.id}",
+                    ) %>
                   </td>
                   <td class="align-center">
                     <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
@@ -104,4 +116,4 @@
   <% end %>
 </table>
 
-<%= paginate @variants, theme: "solidus_admin" %>
+<%= paginate variants, theme: "solidus_admin" %>

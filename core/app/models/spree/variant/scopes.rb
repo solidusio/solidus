@@ -10,6 +10,10 @@ module Spree
             order(Arel.sql("COALESCE((SELECT COUNT(*) FROM  #{Spree::LineItem.quoted_table_name} GROUP BY #{Spree::LineItem.quoted_table_name}.variant_id HAVING #{Spree::LineItem.quoted_table_name}.variant_id = #{Spree::Variant.quoted_table_name}.id), 0) DESC"))
           }
 
+          scope :by_stock_location, ->(stock_location_id) {
+            joins(:stock_locations).where(spree_stock_locations: { id: stock_location_id })
+          }
+
           class << self
             # Returns variants that match a given option value
             #

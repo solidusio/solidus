@@ -73,17 +73,6 @@ describe "Product Stock", type: :feature do
       end
     end
 
-    context "when the admin user can't edit stock items" do
-      custom_authorization! do |_user|
-        cannot :edit, Spree::StockItem
-      end
-
-      it "doesn't allow editing", js: true do
-        click_link "Product Stock"
-        expect(first("input[type='number']")).to be_disabled
-      end
-    end
-
     def adjust_count_on_hand(variant_id, count_on_hand)
       within("tr#spree_variant_#{variant_id}") do
         find(:css, "input[type='number']").set(count_on_hand)

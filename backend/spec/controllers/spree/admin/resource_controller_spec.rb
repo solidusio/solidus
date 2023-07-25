@@ -22,10 +22,12 @@ describe Spree::Admin::WidgetsController, type: :controller do
     # Database
     class CreateWidgets < ActiveRecord::Migration[5.1]
       def change
-        create_table(:widgets) do |t|
-          t.string :name
-          t.integer :position
-          t.timestamps null: false
+        unless table_exists?(:widgets)
+          create_table(:widgets) do |t|
+            t.string :name
+            t.integer :position
+            t.timestamps null: false
+          end
         end
       end
     end
@@ -288,6 +290,15 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
       expect(response).to redirect_to('/admin/widgets')
       expect(flash[:error]).to eql('Product is not found')
+    end
+  end
+
+  describe "#routes_proxy" do
+    subject { controller.send(:routes_proxy) }
+
+    it "forwards to the #spree routing proxy" do
+      expect(controller).to receive(:spree).and_call_original
+      expect(subject).to be_a(ActionDispatch::Routing::RoutesProxy)
     end
   end
 end

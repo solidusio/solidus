@@ -4,7 +4,14 @@
       <div class="field-block col-3">
         <div class="field">
           <%= label_tag nil, Spree::StockLocation.model_name.human %>
-          <%= select_tag :stock_location_id, options_from_collection_for_select(stock_locations, :id, :name, params[:stock_location_id]), { include_blank: t('spree.all'), class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location') } %>
+          <%= select_tag(
+            :stock_location_id,
+            options_from_collection_for_select(stock_locations, :id, :name, params[:stock_location_id]),
+            include_blank: t('spree.all'),
+            class: 'select2 fullwidth',
+            "data-placeholder" => t('spree.select_a_stock_location'),
+            multiple: true,
+          ) %>
         </div>
       </div>
       <div class="<%= if content_for?(:sidebar) then 'col-6' else 'col-9' end %>">

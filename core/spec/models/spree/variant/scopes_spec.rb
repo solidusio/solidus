@@ -7,7 +7,7 @@ RSpec.describe "Variant scopes", type: :model do
   let!(:variant_1) { create(:variant, product: product) }
   let!(:variant_2) { create(:variant, product: product) }
 
-  context ".with_prices" do
+  describe ".with_prices" do
     context "when searching for the default pricing options" do
       it "finds all variants" do
         expect(Spree::Variant.with_prices).to contain_exactly(product.master, variant_1, variant_2)
@@ -44,7 +44,7 @@ RSpec.describe "Variant scopes", type: :model do
     end
   end
 
-  it ".descend_by_popularity" do
+  specify ".descend_by_popularity" do
     # Requires a product with at least two variants, where one has a higher number of
     # orders than the other
     Spree::LineItem.delete_all # FIXME leaky database - too many line_items
@@ -52,7 +52,21 @@ RSpec.describe "Variant scopes", type: :model do
     expect(Spree::Variant.descend_by_popularity.first).to eq(variant_1)
   end
 
-  context "finding by option values" do
+  describe ".by_stock_location" do
+    let!(:stock_location_1) { create(:stock_location) }
+    let!(:stock_location_2) { create(:stock_location) }
+
+    it "finds variants by stock location" do
+      variants = Spree::Variant.where(id: [variant_1.id, variant_2.id]) # exclude the master variant
+      variant_1.stock_items.where.not(stock_location_id: stock_location_1.id).delete_all
+      variant_2.stock_items.where.not(stock_location_id: stock_location_2.id).delete_all
+
+      expect(variants.by_stock_location(stock_location_1.id)).to contain_exactly(variant_1)
+      expect(variants.by_stock_location(stock_location_2.id)).to contain_exactly(variant_2)
+    end
+  end
+
+  describe ".has_option" do
     let!(:option_type) { create(:option_type, name: "bar") }
     let!(:option_value_1) do
       option_value = create(:option_value, name: "foo", option_type: option_type)
@@ -68,26 +82,30 @@ RSpec.describe "Variant scopes", type: :model do
 
     let!(:product_variants) { product.variants_including_master }
 
-    it "by objects" do
+    it "finds by option value objects" do
       variants = product_variants.has_option(option_type, option_value_1)
+
       expect(variants).to include(variant_1)
       expect(variants).not_to include(variant_2)
     end
 
-    it "by names" do
+    it "finds by option value names" do
       variants = product_variants.has_option("bar", "foo")
+
       expect(variants).to include(variant_1)
       expect(variants).not_to include(variant_2)
     end
 
-    it "by ids" do
+    it "finds by option value ids" do
       variants = product_variants.has_option(option_type.id, option_value_1.id)
+
       expect(variants).to include(variant_1)
       expect(variants).not_to include(variant_2)
     end
 
-    it "by mixed conditions" do
+    it "finds by option value with mixed conditions" do
       variants = product_variants.has_option(option_type.id, "foo", option_value_2)
+
       expect(variants).to be_empty
     end
   end
