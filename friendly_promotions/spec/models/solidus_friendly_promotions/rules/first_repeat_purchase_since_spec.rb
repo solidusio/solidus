@@ -20,8 +20,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince do
   end
 
   describe "eligible?" do
-    let(:instance) { described_class.new }
     subject { instance.eligible?(order) }
+
+    let(:instance) { described_class.new }
 
     before do
       instance.preferred_days_ago = 365
@@ -40,6 +41,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince do
       context "when the user has completed orders" do
         let(:order_completion_date_1) { 1.day.ago }
         let(:order_completion_date_2) { 1.day.ago }
+
         before do
           old_order_1 = create :completed_order_with_totals, user: user
           old_order_1.update(completed_at: order_completion_date_1)

@@ -6,7 +6,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::LineItemProduct, type: :model d
   let(:rule) { described_class.new(rule_options) }
   let(:rule_options) { {} }
 
-  context "#eligible?(line_item)" do
+  describe "#eligible?(line_item)" do
+    subject { rule.eligible?(line_item, {}) }
+
     let(:rule_line_item) { Spree::LineItem.new(product: rule_product) }
     let(:other_line_item) { Spree::LineItem.new(product: other_product) }
 
@@ -14,19 +16,19 @@ RSpec.describe SolidusFriendlyPromotions::Rules::LineItemProduct, type: :model d
     let(:rule_product) { mock_model(Spree::Product) }
     let(:other_product) { mock_model(Spree::Product) }
 
-    it "should be eligible if there are no products" do
+    it "is eligible if there are no products" do
       expect(rule).to be_eligible(rule_line_item)
     end
 
-    subject { rule.eligible?(line_item, {}) }
-
     context "for product in rule" do
       let(:line_item) { rule_line_item }
+
       it { is_expected.to be_truthy }
     end
 
     context "for product not in rule" do
       let(:line_item) { other_line_item }
+
       it { is_expected.to be_falsey }
     end
 
@@ -35,11 +37,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::LineItemProduct, type: :model d
 
       context "for product in rule" do
         let(:line_item) { rule_line_item }
+
         it { is_expected.to be_falsey }
       end
 
       context "for product not in rule" do
         let(:line_item) { other_line_item }
+
         it { is_expected.to be_truthy }
       end
     end

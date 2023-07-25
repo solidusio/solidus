@@ -25,7 +25,7 @@ module SolidusFriendlyPromotions
       def mount_engine
         inject_into_file "config/routes.rb",
           "  mount SolidusFriendlyPromotions::Engine => '/'\n",
-          before: %r{  mount Spree::Core::Engine.*},
+          before: /  mount Spree::Core::Engine.*/,
           verbose: true
       end
 

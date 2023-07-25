@@ -3,17 +3,17 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::ShippingMethod, type: :model do
-  it { is_expected.to respond_to(:preferred_shipping_method_ids) }
-
   let(:rule) { described_class.new }
 
+  it { is_expected.to respond_to(:preferred_shipping_method_ids) }
+
   describe "preferred_shipping_methods_ids=" do
+    subject { rule.preferred_shipping_method_ids = [ups_ground.id] }
+
     let!(:promotion) { create(:friendly_promotion) }
     let(:ups_ground) { create(:shipping_method) }
     let(:dhl_saver) { create(:shipping_method) }
     let(:rule) { promotion.rules.build(type: described_class.to_s) }
-
-    subject { rule.preferred_shipping_method_ids = [ups_ground.id] }
 
     it "creates a valid rule with a shipping method" do
       subject
@@ -23,12 +23,12 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ShippingMethod, type: :model do
   end
 
   describe "#eligible?" do
+    subject { rule.eligible?(promotable) }
+
     let!(:promotion) { create(:friendly_promotion) }
     let(:ups_ground) { create(:shipping_method) }
     let(:dhl_saver) { create(:shipping_method) }
     let(:rule) { promotion.rules.build(type: described_class.to_s, preferred_shipping_method_ids: [ups_ground.id]) }
-
-    subject { rule.eligible?(promotable) }
 
     context "with a shipment" do
       context "when the shipment has the right shipping method selected" do

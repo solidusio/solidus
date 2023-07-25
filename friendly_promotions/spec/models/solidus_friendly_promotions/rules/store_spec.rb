@@ -3,17 +3,17 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Store, type: :model do
-  it { is_expected.to have_many(:stores) }
-
   let(:rule) { described_class.new }
 
+  it { is_expected.to have_many(:stores) }
+
   describe "store_ids=" do
+    subject { rule.store_ids = [store.id] }
+
     let!(:promotion) { create(:friendly_promotion) }
     let!(:unimportant_store) { create(:store) }
     let!(:store) { create(:store) }
     let(:rule) { promotion.rules.build(type: described_class.to_s) }
-
-    subject { rule.store_ids = [store.id] }
 
     it "creates a valid rule with a store" do
       subject
@@ -22,7 +22,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Store, type: :model do
     end
   end
 
-  context "#eligible?(order)" do
+  describe "#eligible?(order)" do
     let(:order) { Spree::Order.new }
 
     it "is eligible if no stores are provided" do

@@ -3,15 +3,17 @@
 require 'spec_helper'
 
 RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
+  subject { described_class.new(order) }
+
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
   let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
-  subject { described_class.new(order) }
-
   context "adjusting line items" do
-    let!(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, calculator: calculator) }
+    let!(:action) do
+      SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, calculator: calculator)
+    end
     let(:adjustable) { line_item }
 
     context "promotion with no rules" do
@@ -41,7 +43,9 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
     end
 
     context "promotion includes item involved" do
-      let!(:rule) { SolidusFriendlyPromotions::Rules::Product.create(products: [line_item.product], promotion: promotion) }
+      let!(:rule) do
+        SolidusFriendlyPromotions::Rules::Product.create(products: [line_item.product], promotion: promotion)
+      end
 
       context "creates the adjustment" do
         it "creates the adjustment" do
@@ -53,7 +57,13 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
     end
 
     context "promotion has item total rule" do
-      let!(:rule) { SolidusFriendlyPromotions::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion: promotion) }
+      let!(:rule) do
+        SolidusFriendlyPromotions::Rules::ItemTotal.create(
+          preferred_operator: 'gt',
+          preferred_amount: 50,
+          promotion: promotion
+        )
+      end
 
       before do
         # Makes the order eligible for this promotion

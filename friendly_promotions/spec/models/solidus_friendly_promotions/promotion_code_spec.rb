@@ -68,10 +68,13 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       context "when there is a usage limit" do
         context "and the limit is not exceeded" do
           let(:usage_limit) { 10 }
+
           it { is_expected.to be_falsy }
         end
+
         context "and the limit is exceeded" do
           let(:usage_limit) { 1 }
+
           context "on a different order" do
             before do
               FactoryBot.create(
@@ -80,15 +83,19 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
               )
               code.adjustments.update_all(eligible: true)
             end
+
             it { is_expected.to be_truthy }
           end
+
           context "on the same order" do
             it { is_expected.to be_falsy }
           end
         end
       end
+
       context "when there is no usage limit" do
         let(:usage_limit) { nil }
+
         it { is_expected.to be_falsy }
       end
     end
@@ -110,6 +117,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
           promotion: promotion
         )
       end
+
       it_behaves_like "it should"
     end
 
@@ -122,29 +130,39 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
           per_code_usage_limit: usage_limit,
         )
       end
+
       before do
         order.recalculate
       end
+
       context "when there are multiple line items" do
         let(:order) { FactoryBot.create(:order_with_line_items, line_items_count: 2) }
+
         describe "the first item" do
           let(:promotable) { order.line_items.first }
+
           it_behaves_like "it should"
         end
+
         describe "the second item" do
           let(:promotable) { order.line_items.last }
+
           it_behaves_like "it should"
         end
       end
+
       context "when there is a single line item" do
         let(:order) { FactoryBot.create(:order_with_line_items) }
         let(:promotable) { order.line_items.first }
+
         it_behaves_like "it should"
       end
     end
   end
 
   describe "#usage_count" do
+    subject { code.usage_count }
+
     let(:promotion) do
       FactoryBot.create(
         :friendly_promotion,
@@ -153,9 +171,6 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       )
     end
     let(:code) { promotion.codes.first }
-
-    subject { code.usage_count }
-
 
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
@@ -178,15 +193,20 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
           promotion: promotion
         )
       end
+
       context "and the promo is eligible" do
         it { is_expected.to eq 1 }
       end
+
       context "and the promo is ineligible" do
         before { order.all_adjustments.update_all(eligible: false) }
+
         it { is_expected.to eq 0 }
       end
+
       context "and the order is canceled" do
         before { order.cancel! }
+
         it { is_expected.to eq 0 }
         it { expect(order.state).to eq 'canceled' }
       end
@@ -217,7 +237,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       order.friendly_order_promotions.create!(
         order: order,
         promotion: promotion,
-        promotion_code: SolidusFriendlyPromotions::PromotionCode.find_by(value: "discount")
+        promotion_code: described_class.find_by(value: "discount")
       )
       order.recalculate
       order.next! until order.can_complete?
@@ -227,7 +247,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
         order.friendly_order_promotions.create!(
           order: order,
           promotion: promotion,
-          promotion_code: SolidusFriendlyPromotions::PromotionCode.find_by(value: "discount")
+          promotion_code: described_class.find_by(value: "discount")
         )
         order.recalculate
         order.next! until order.can_complete?
@@ -264,6 +284,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
     promotion = create(:friendly_promotion, apply_automatically: true)
     expect {
       create(:friendly_promotion_code, promotion: promotion)
-    }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Could not create promotion code on promotion that apply automatically"
+    }.to raise_error ActiveRecord::RecordInvalid,
+      "Validation failed: Could not create promotion code on promotion that apply automatically"
   end
 end

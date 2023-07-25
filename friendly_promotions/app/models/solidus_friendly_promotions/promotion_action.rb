@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spree/preferences/persistable'
 
 module SolidusFriendlyPromotions
@@ -36,7 +37,7 @@ module SolidusFriendlyPromotions
 
     # Ensure a negative amount which does not exceed the object's amount
     def compute_amount(adjustable)
-      promotion_amount = calculator.compute(adjustable) || BigDecimal(0)
+      promotion_amount = calculator.compute(adjustable) || BigDecimal('0')
       [adjustable.amount, promotion_amount.abs].min * -1
     end
 

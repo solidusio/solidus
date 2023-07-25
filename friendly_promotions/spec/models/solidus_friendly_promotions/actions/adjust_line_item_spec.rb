@@ -13,6 +13,7 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItem do
 
   describe ".to_partial_path" do
     subject { described_class.new.to_partial_path }
+
     it { is_expected.to eq("solidus_friendly_promotions/admin/promotion_actions/actions/adjust_line_item") }
   end
 end

@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
   let(:rule) do
-    SolidusFriendlyPromotions::Rules::ItemTotal.new(
+    described_class.new(
       preferred_amount: preferred_amount,
       preferred_operator: preferred_operator
     )
@@ -19,7 +19,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
     context "item total is greater than preferred amount" do
       let(:item_total) { 51 }
 
-      it "should be eligible when item total is greater than preferred amount" do
+      it "is eligible when item total is greater than preferred amount" do
         expect(rule).to be_eligible(order)
       end
 
@@ -44,6 +44,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
         expect(rule.eligibility_errors.full_messages.first)
           .to eq "This coupon code can't be applied to orders less than or equal to $50.00."
       end
+
       it "sets an error code" do
         rule.eligible?(order)
         expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -63,6 +64,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
         expect(rule.eligibility_errors.full_messages.first)
           .to eq "This coupon code can't be applied to orders less than or equal to $50.00."
       end
+
       it "sets an error code" do
         rule.eligible?(order)
         expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -77,7 +79,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
     context "total is greater than preferred amount" do
       let(:item_total) { 51 }
 
-      it "should be eligible when item total is greater than preferred amount" do
+      it "is eligible when item total is greater than preferred amount" do
         expect(rule).to be_eligible(order)
       end
 
@@ -93,7 +95,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
     context "item total is equal to preferred amount" do
       let(:item_total) { 50 }
 
-      it "should be eligible" do
+      it "is eligible" do
         expect(rule).to be_eligible(order)
       end
 
@@ -118,6 +120,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ItemTotal, type: :model do
         expect(rule.eligibility_errors.full_messages.first)
           .to eq "This coupon code can't be applied to orders less than $50.00."
       end
+
       it "sets an error code" do
         rule.eligible?(order)
         expect(rule.eligibility_errors.details[:base].first[:error_code])

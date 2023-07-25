@@ -6,7 +6,7 @@ RSpec.describe Spree::ShippingRate do
   let(:subject) { build(:shipping_rate) }
 
   describe '#display_price' do
-    before(:each) { subject.amount = 5 }
+    before { subject.amount = 5 }
 
     it 'returns formatted amount' do
       expect(subject.display_price).to eq('$5.00')
@@ -14,9 +14,9 @@ RSpec.describe Spree::ShippingRate do
   end
 
   describe "#total_before_tax" do
-    let(:shipping_rate) { build(:shipping_rate, cost: 4) }
-
     subject { shipping_rate.total_before_tax }
+
+    let(:shipping_rate) { build(:shipping_rate, cost: 4) }
 
     it { is_expected.to eq(4) }
 
@@ -29,17 +29,17 @@ RSpec.describe Spree::ShippingRate do
   end
 
   describe "#display_total_before_tax" do
-    let(:shipping_rate) { build(:shipping_rate, cost: 10) }
-
     subject { shipping_rate.display_total_before_tax }
+
+    let(:shipping_rate) { build(:shipping_rate, cost: 10) }
 
     it { is_expected.to eq(Spree::Money.new("10.00")) }
   end
 
   describe "#display_promo_total" do
-    let(:shipping_rate) { build(:shipping_rate) }
-
     subject { shipping_rate.display_promo_total }
+
+    let(:shipping_rate) { build(:shipping_rate) }
 
     it { is_expected.to eq(Spree::Money.new("0")) }
   end

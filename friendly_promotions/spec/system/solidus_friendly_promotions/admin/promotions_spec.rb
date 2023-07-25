@@ -6,10 +6,21 @@ RSpec.describe "Promotions admin", type: :system do
   stub_authorization!
 
   describe "#index" do
-    let!(:promotion1) { create(:friendly_promotion, :with_adjustable_action, name: "name1", code: "code1", path: "path1") }
-    let!(:promotion2) { create(:friendly_promotion, :with_adjustable_action, name: "name2", code: "code2", path: "path2") }
+    let!(:promotion1) do
+      create(:friendly_promotion, :with_adjustable_action, name: "name1", code: "code1", path: "path1")
+    end
+    let!(:promotion2) do
+      create(:friendly_promotion, :with_adjustable_action, name: "name2", code: "code2", path: "path2")
+    end
     let!(:promotion3) do
-      create(:friendly_promotion, :with_adjustable_action, name: "name3", code: "code3", path: "path3", expires_at: Date.yesterday)
+      create(
+        :friendly_promotion,
+        :with_adjustable_action,
+        name: "name3",
+        code: "code3",
+        path: "path3",
+        expires_at: Date.yesterday
+      )
     end
     let!(:category) { create :friendly_promotion_category }
 
@@ -22,7 +33,10 @@ RSpec.describe "Promotions admin", type: :system do
 
     it "shows promotion categories" do
       visit solidus_friendly_promotions.admin_promotions_path
-      expect(page).to have_select(SolidusFriendlyPromotions::PromotionCategory.model_name.human, options: ["All", category.name])
+      expect(page).to have_select(
+        SolidusFriendlyPromotions::PromotionCategory.model_name.human,
+        options: ["All", category.name]
+      )
     end
 
     context "search" do

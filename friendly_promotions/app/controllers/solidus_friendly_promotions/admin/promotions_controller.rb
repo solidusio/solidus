@@ -17,7 +17,7 @@ module SolidusFriendlyPromotions
         end
 
         if @promotion.save
-          @code_batch.process if @code_batch
+          @code_batch&.process
           flash[:success] = t('solidus_friendly_promotions.promotion_successfully_created')
           redirect_to location_after_save
         else
@@ -30,15 +30,16 @@ module SolidusFriendlyPromotions
 
       def collection
         return @collection if @collection
+
         params[:q] ||= HashWithIndifferentAccess.new
         params[:q][:s] ||= 'id desc'
 
         @collection = super
         @search = @collection.ransack(params[:q])
         @collection = @search.result(distinct: true).
-          includes(promotion_includes).
-          page(params[:page]).
-          per(params[:per_page] || SolidusFriendlyPromotions.config.promotions_per_page)
+                      includes(promotion_includes).
+                      page(params[:page]).
+                      per(params[:per_page] || SolidusFriendlyPromotions.config.promotions_per_page)
 
         @collection
       end

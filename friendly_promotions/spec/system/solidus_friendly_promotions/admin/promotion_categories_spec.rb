@@ -13,7 +13,7 @@ describe 'Promotion Categories', type: :system do
     end
 
     context "listing promotion categories" do
-      it "should list the existing promotion categories" do
+      it "lists the existing promotion categories" do
         within_row(1) do
           expect(column_text(1)).to eq("name1")
           expect(column_text(2)).to eq("code1")
@@ -33,14 +33,14 @@ describe 'Promotion Categories', type: :system do
       click_on "New Promotion Category"
     end
 
-    it "should allow an admin to create a new promotion category" do
+    it "allows an admin to create a new promotion category" do
       fill_in "promotion_category_name", with: "promotion test"
       fill_in "promotion_category_code", with: "prtest"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
 
-    it "should not allow admin to create promotion category when invalid data" do
+    it "does not allow admin to create promotion category when invalid data" do
       fill_in "promotion_category_name", with: ""
       fill_in "promotion_category_code", with: "prtest"
       click_button "Create"
@@ -49,20 +49,20 @@ describe 'Promotion Categories', type: :system do
   end
 
   context "edit" do
-    before(:each) do
+    before do
       create(:friendly_promotion_category, name: 'name1')
       visit solidus_friendly_promotions.admin_promotion_categories_path
       within_row(1) { click_icon :edit }
     end
 
-    it "should allow an admin to edit an existing promotion category" do
+    it "allows an admin to edit an existing promotion category" do
       fill_in "promotion_category_name", with: "name 99"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
       expect(page).to have_content("name 99")
     end
 
-    it "should show validation errors" do
+    it "shows validation errors" do
       fill_in "promotion_category_name", with: ""
       click_button "Update"
       expect(page).to have_content("Name can't be blank")
@@ -70,12 +70,12 @@ describe 'Promotion Categories', type: :system do
   end
 
   context "delete" do
-    before(:each) do
+    before do
       create(:friendly_promotion_category, name: 'name1')
       visit solidus_friendly_promotions.admin_promotion_categories_path
     end
 
-    it "should allow an admin to delete an existing promotion category", js: true do
+    it "allows an admin to delete an existing promotion category", js: true do
       accept_alert do
         click_icon :trash
       end

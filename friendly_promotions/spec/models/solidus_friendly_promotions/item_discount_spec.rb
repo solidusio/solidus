@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe SolidusFriendlyPromotions::ItemDiscount do
   it { is_expected.to respond_to(:item) }
   it { is_expected.to respond_to(:source) }

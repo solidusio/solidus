@@ -4,16 +4,16 @@ module SolidusFriendlyPromotions
   module Rules
     class Taxon < PromotionRule
       has_many :promotion_rules_taxons, class_name: 'SolidusFriendlyPromotions::PromotionRulesTaxon', foreign_key: :promotion_rule_id,
-          dependent: :destroy
+        dependent: :destroy
       has_many :taxons, through: :promotion_rules_taxons, class_name: 'Spree::Taxon'
 
       def preload_relations
         [:taxons]
       end
 
-      MATCH_POLICIES = %w[any all none]
+      MATCH_POLICIES = %w[any all none].freeze
 
-      validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
+      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
       def applicable?(promotable)
@@ -34,11 +34,19 @@ module SolidusFriendlyPromotions
           end
         when "any"
           unless order_taxons.where(id: rule_taxon_ids_with_children).exists?
-            eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons), error_code: :no_matching_taxons)
+            eligibility_errors.add(
+              :base,
+              eligibility_error_message(:no_matching_taxons),
+              error_code: :no_matching_taxons
+            )
           end
         when "none"
           if order_taxons.where(id: rule_taxon_ids_with_children).exists?
-            eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon), error_code: :has_excluded_taxon)
+            eligibility_errors.add(
+              :base,
+              eligibility_error_message(:has_excluded_taxon),
+              error_code: :has_excluded_taxon
+            )
           end
         else
           raise "unexpected match policy: #{preferred_match_policy.inspect}"
@@ -63,8 +71,10 @@ module SolidusFriendlyPromotions
 
       # All taxons in an order
       def taxons_in_order(order)
-        Spree::Taxon.joins(products: {variants_including_master: :line_items})
-          .where(spree_line_items: {order_id: order.id}).distinct
+        Spree::Taxon.
+          joins(products: { variants_including_master: :line_items }).
+          where(spree_line_items: { order_id: order.id }).
+          distinct
       end
 
       # ids of taxons rules and taxons rules children

@@ -13,61 +13,70 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
 
     context "when base percent is less than zero" do
       before { calculator.preferred_base_percent = -1 }
+
       it { is_expected.to be false }
     end
 
     context "when base percent is greater than 100" do
       before { calculator.preferred_base_percent = 110 }
+
       it { is_expected.to be false }
     end
 
     context "when tiers is a hash" do
       context "and the key is not a positive number" do
         before { calculator.preferred_tiers = { "nope" => 20 } }
+
         it { is_expected.to be false }
       end
 
       context "and one of the values is not a percent" do
         before { calculator.preferred_tiers = { 10 => 110 } }
+
         it { is_expected.to be false }
       end
 
       context "and the key is an integer" do
         before { calculator.preferred_tiers = { 20 => 20 } }
+
         it "converts successfully" do
-          is_expected.to be true
+          expect(subject).to be true
           expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
         end
       end
 
       context "and the key is a float" do
         before { calculator.preferred_tiers = { 20.5 => 20.5 } }
+
         it "converts successfully" do
-          is_expected.to be true
+          expect(subject).to be true
           expect(calculator.preferred_tiers).to eq({ BigDecimal('20.5') => BigDecimal('20.5') })
         end
       end
 
       context "and the key is a string number" do
         before { calculator.preferred_tiers = { "20" => 20 } }
+
         it "converts successfully" do
-          is_expected.to be true
+          expect(subject).to be true
           expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
         end
       end
 
       context "and the key is a numeric string with spaces" do
         before { calculator.preferred_tiers = { "  20 " => 20 } }
+
         it "converts successfully" do
-          is_expected.to be true
+          expect(subject).to be true
           expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
         end
       end
 
       context "and the key is a string number with decimals" do
         before { calculator.preferred_tiers = { "20.5" => "20.5" } }
+
         it "converts successfully" do
-          is_expected.to be true
+          expect(subject).to be true
           expect(calculator.preferred_tiers).to eq({ BigDecimal('20.5') => BigDecimal('20.5') })
         end
       end
@@ -95,22 +104,26 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
     end
 
     context "with a line item" do
-      let(:line_item) { order.line_items.first }
       subject { calculator.compute(line_item) }
+
+      let(:line_item) { order.line_items.first }
 
       context "for multiple line items" do
         context "when amount falls within the first tier" do
           let(:line_item_count) { 1 }
+
           it { is_expected.to eq 1.0 }
         end
 
         context "when amount falls within the second tier" do
           let(:line_item_count) { 2 }
+
           it { is_expected.to eq 1.5 }
         end
 
         context "when amount falls within the third tier" do
           let(:line_item_count) { 3 }
+
           it { is_expected.to eq 2.0 }
         end
       end
@@ -120,16 +133,19 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
 
         context "when amount falls within the first tier" do
           let(:price) { 10 }
+
           it { is_expected.to eq 1.0 }
         end
 
         context "when amount falls within the second tier" do
           let(:price) { 20 }
+
           it { is_expected.to eq 3.0 }
         end
 
         context "when amount falls within the third tier" do
           let(:price) { 30 }
+
           it { is_expected.to eq 6.0 }
         end
       end
@@ -138,6 +154,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
         let(:preferred_currency) { "JPY" }
         let(:line_item_count) { 1 }
         let(:price) { 15 }
+
         it { is_expected.to eq 0 }
 
         it "rounds based on currency" do
@@ -148,26 +165,28 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
     end
 
     context "with a shipment" do
-      let(:shipment) { Spree::Shipment.new(order: order, amount: shipping_cost) }
-      let(:shipping_cost) { 10 }
-
       subject { calculator.compute(shipment) }
 
+      let(:shipment) { Spree::Shipment.new(order: order, amount: shipping_cost) }
       let(:line_item_count) { 1 }
+      let(:shipping_cost) { 10 }
 
       context "for multiple line items" do
         context "when amount falls within the first tier" do
           let(:line_item_count) { 1 }
+
           it { is_expected.to eq 1.0 }
         end
 
         context "when amount falls within the second tier" do
           let(:line_item_count) { 2 }
+
           it { is_expected.to eq 1.5 }
         end
 
         context "when amount falls within the third tier" do
           let(:line_item_count) { 3 }
+
           it { is_expected.to eq 2.0 }
         end
       end
@@ -177,24 +196,28 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercent, type: :mod
 
         context "when amount falls within the first tier" do
           let(:price) { 10 }
+
           it { is_expected.to eq 1.0 }
         end
 
         context "when amount falls within the second tier" do
           let(:price) { 20 }
           let(:shipping_cost) { 20 }
+
           it { is_expected.to eq 3.0 }
         end
 
         context "when amount falls within the third tier" do
           let(:price) { 30 }
           let(:shipping_cost) { 30 }
+
           it { is_expected.to eq 6.0 }
         end
       end
 
       context "when the order's currency does not match the calculator" do
         let(:preferred_currency) { "CAD" }
+
         it { is_expected.to eq 0 }
       end
     end

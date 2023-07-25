@@ -7,6 +7,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OneUsePerUser, type: :model do
 
   describe "#eligible?(order)" do
     subject { rule.eligible?(order) }
+
     let(:order) { double Spree::Order, user: user }
     let(:user) { double Spree::LegacyUser }
     let(:promotion) { stub_model SolidusFriendlyPromotions::Promotion, used_by?: used_by }
@@ -19,11 +20,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OneUsePerUser, type: :model do
         let(:used_by) { true }
 
         it { is_expected.to be false }
+
         it "sets an error message" do
           subject
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "This coupon code can only be used once per user."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -38,12 +41,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OneUsePerUser, type: :model do
 
     context "when the order is not assigned to a user" do
       let(:user) { nil }
+
       it { is_expected.to be false }
+
       it "sets an error message" do
         subject
         expect(rule.eligibility_errors.full_messages.first)
           .to eq "You need to login before applying this coupon code."
       end
+
       it "sets an error code" do
         rule.eligible?(order)
         expect(rule.eligibility_errors.details[:base].first[:error_code])

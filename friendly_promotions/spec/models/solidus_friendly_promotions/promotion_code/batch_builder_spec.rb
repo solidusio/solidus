@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::PromotionCode::BatchBuilder do
+  subject { described_class.new(code_batch, options) }
+
   let(:promotion) { create(:friendly_promotion) }
   let(:base_code) { "abc" }
   let(:options) { {} }
@@ -15,8 +17,6 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode::BatchBuilder do
       email: "test@email.com"
     )
   end
-
-  subject { described_class.new(code_batch, options) }
 
   describe "#build_promotion_codes" do
     context "with a failed build" do

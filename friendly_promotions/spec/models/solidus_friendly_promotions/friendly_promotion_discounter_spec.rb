@@ -4,13 +4,18 @@ require 'spec_helper'
 
 RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
   describe "selecting promotions" do
-    let(:order) { create(:order) }
     subject { described_class.new(order) }
 
+    let(:order) { create(:order) }
+
     let!(:active_promotion) { create(:friendly_promotion, :with_adjustable_action, apply_automatically: true) }
-    let!(:inactive_promotion) { create(:friendly_promotion, :with_adjustable_action, expires_at: 2.days.ago, apply_automatically: true) }
+    let!(:inactive_promotion) do
+      create(:friendly_promotion, :with_adjustable_action, expires_at: 2.days.ago, apply_automatically: true)
+    end
     let!(:connectable_promotion) { create(:friendly_promotion, :with_adjustable_action) }
-    let!(:connectable_inactive_promotion) { create(:friendly_promotion, :with_adjustable_action, expires_at: 2.days.ago) }
+    let!(:connectable_inactive_promotion) do
+      create(:friendly_promotion, :with_adjustable_action, expires_at: 2.days.ago)
+    end
 
     context "no promo is connected to the order" do
       it "checks only active promotions" do

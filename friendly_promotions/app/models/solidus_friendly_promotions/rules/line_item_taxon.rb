@@ -7,9 +7,9 @@ module SolidusFriendlyPromotions
         dependent: :destroy
       has_many :taxons, through: :promotion_rule_taxons, class_name: "Spree::Taxon"
 
-      MATCH_POLICIES = %w[include exclude]
+      MATCH_POLICIES = %w[include exclude].freeze
 
-      validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
+      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
       def applicable?(promotable)

@@ -2,7 +2,6 @@
 
 module SolidusFriendlyPromotions
   class SimpleOrderContents < Spree::OrderContents
-
     def update_cart(params)
       if order.update(params)
         unless order.completed?

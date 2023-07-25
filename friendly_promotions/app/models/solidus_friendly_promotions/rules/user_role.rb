@@ -5,7 +5,7 @@ module SolidusFriendlyPromotions
     class UserRole < PromotionRule
       preference :role_ids, :array, default: []
 
-      MATCH_POLICIES = %w[any all]
+      MATCH_POLICIES = %w[any all].freeze
       preference :match_policy, default: MATCH_POLICIES.first
 
       def applicable?(promotable)
@@ -14,6 +14,7 @@ module SolidusFriendlyPromotions
 
       def eligible?(order, _options = {})
         return false unless order.user
+
         if all_match_policy?
           match_all_roles?(order)
         else

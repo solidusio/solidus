@@ -3,24 +3,23 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
+  let(:rule) do
+    described_class.create!(promotion: create(:friendly_promotion))
+  end
+  let(:product) { order.products.first }
+  let(:order) { create :order_with_line_items }
+  let(:taxon2) { create :taxon, name: "second" }
+  let(:taxon) { create :taxon, name: "first" }
+
   it { is_expected.to have_many(:taxons) }
 
-  let(:taxon) { create :taxon, name: "first" }
-  let(:taxon2) { create :taxon, name: "second" }
-  let(:order) { create :order_with_line_items }
-  let(:product) { order.products.first }
-
-  let(:rule) do
-    SolidusFriendlyPromotions::Rules::Taxon.create!(promotion: create(:friendly_promotion))
-  end
-
   describe "taxon_ids_string=" do
+    subject { rule.assign_attributes("taxon_ids_string" => taxon_2.id.to_s) }
+
     let!(:promotion) { create(:friendly_promotion) }
     let!(:taxon_1) { create(:taxon) }
     let!(:taxon_2) { create(:taxon) }
     let(:rule) { promotion.rules.build(type: described_class.to_s) }
-
-    subject { rule.assign_attributes("taxon_ids_string" => taxon_2.id.to_s) }
 
     it "creates a valid rule with a taxon" do
       subject
@@ -30,7 +29,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
     end
   end
 
-  context "#eligible?(order)" do
+  describe "#eligible?(order)" do
     context "with any match policy" do
       before do
         rule.update!(preferred_match_policy: "any")
@@ -44,12 +43,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
 
       context "when order does not have any prefered taxon" do
         before { rule.taxons << taxon2 }
+
         it { expect(rule).not_to be_eligible(order) }
+
         it "sets an error message" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "You need to add a product from an applicable category before applying this coupon code."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -84,12 +86,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
 
       context "when order does not have all prefered taxons" do
         before { rule.taxons << taxon }
+
         it { expect(rule).not_to be_eligible(order) }
+
         it "sets an error message" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "You need to add a product from all applicable categories before applying this coupon code."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -120,6 +125,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
 
       context "none of the order's products are in listed taxon" do
         before { rule.taxons << taxon2 }
+
         it { expect(rule).to be_eligible(order) }
       end
 
@@ -128,14 +134,17 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
           order.products.first.taxons << taxon
           rule.taxons << taxon
         end
-        it "should not be eligible" do
+
+        it "is not eligible" do
           expect(rule).not_to be_eligible(order)
         end
+
         it "sets an error message" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])

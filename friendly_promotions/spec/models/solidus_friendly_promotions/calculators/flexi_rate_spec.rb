@@ -11,11 +11,14 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
       preferred_max_items: max_items
     )
   end
+  let(:line_item) do
+    mock_model(
+      Spree::LineItem, quantity: quantity
+    )
+  end
   let(:first_item) { 0 }
   let(:additional_item) { 0 }
   let(:max_items) { 0 }
-
-  it_behaves_like 'a calculator with a description'
 
   let(:line_item) do
     mock_model(
@@ -23,27 +26,34 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
     )
   end
 
+  it_behaves_like 'a calculator with a description'
+
   context "compute" do
     subject { calculator.compute(line_item) }
+
     context "with all amounts 0" do
       context "with quantity 0" do
         let(:quantity) { 0 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 1" do
         let(:quantity) { 1 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 2" do
         let(:quantity) { 2 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 10" do
         let(:quantity) { 10 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
     end
 
@@ -52,22 +62,26 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
 
       context "with quantity 0" do
         let(:quantity) { 0 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 1" do
         let(:quantity) { 1 }
-        it { should eq 1.23 }
+
+        it { is_expected.to eq 1.23 }
       end
 
       context "with quantity 2" do
         let(:quantity) { 2 }
-        it { should eq 1.23 }
+
+        it { is_expected.to eq 1.23 }
       end
 
       context "with quantity 10" do
         let(:quantity) { 10 }
-        it { should eq 1.23 }
+
+        it { is_expected.to eq 1.23 }
       end
     end
 
@@ -76,22 +90,26 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
 
       context "with quantity 0" do
         let(:quantity) { 0 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 1" do
         let(:quantity) { 1 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 2" do
         let(:quantity) { 2 }
-        it { should eq 1.23 }
+
+        it { is_expected.to eq 1.23 }
       end
 
       context "with quantity 10" do
         let(:quantity) { 10 }
-        it { should eq 11.07 }
+
+        it { is_expected.to eq 11.07 }
       end
     end
 
@@ -101,22 +119,26 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
 
       context "with quantity 0" do
         let(:quantity) { 0 }
-        it { should eq 0 }
+
+        it { is_expected.to eq 0 }
       end
 
       context "with quantity 1" do
         let(:quantity) { 1 }
-        it { should eq 1.13 }
+
+        it { is_expected.to eq 1.13 }
       end
 
       context "with quantity 2" do
         let(:quantity) { 2 }
-        it { should eq 3.24 }
+
+        it { is_expected.to eq 3.24 }
       end
 
       context "with quantity 10" do
         let(:quantity) { 10 }
-        it { should eq 20.12 }
+
+        it { is_expected.to eq 20.12 }
       end
 
       context "with max_items 5" do
@@ -124,33 +146,38 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
 
         context "with quantity 0" do
           let(:quantity) { 0 }
-          it { should eq 0 }
+
+          it { is_expected.to eq 0 }
         end
 
         context "with quantity 1" do
           let(:quantity) { 1 }
-          it { should eq 1.13 }
+
+          it { is_expected.to eq 1.13 }
         end
 
         context "with quantity 2" do
           let(:quantity) { 2 }
-          it { should eq 3.24 }
+
+          it { is_expected.to eq 3.24 }
         end
 
         context "with quantity 5" do
           let(:quantity) { 5 }
-          it { should eq 9.57 }
+
+          it { is_expected.to eq 9.57 }
         end
 
         context "with quantity 10" do
           let(:quantity) { 10 }
-          it { should eq 9.57 }
+
+          it { is_expected.to eq 9.57 }
         end
       end
     end
   end
 
-  it "should allow creation of new object with all the attributes" do
+  it "allows creation of new object with all the attributes" do
     attributes = { preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1 }
     calculator = described_class.new(attributes)
     expect(calculator).to have_attributes(attributes)

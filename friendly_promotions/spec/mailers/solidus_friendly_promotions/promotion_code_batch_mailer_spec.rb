@@ -30,8 +30,9 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchMailer, type: :maile
   end
 
   describe "#promotion_code_batch_errored" do
-    before { code_batch.update(error: "Test error") }
     subject { described_class.promotion_code_batch_errored(code_batch) }
+
+    before { code_batch.update(error: "Test error") }
 
     it "sends the email to the email attached to the promotion code batch " do
       expect(subject.to).to eq([code_batch.email])

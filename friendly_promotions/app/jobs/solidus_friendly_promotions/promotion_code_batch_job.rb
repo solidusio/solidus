@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  class PromotionCodeBatchJob < ActiveJob::Base
+  class PromotionCodeBatchJob < ApplicationJob
     queue_as :default
 
     def perform(promotion_code_batch)
@@ -11,16 +11,16 @@ module SolidusFriendlyPromotions
 
       if promotion_code_batch.email?
         SolidusFriendlyPromotions.config.promotion_code_batch_mailer_class
-          .promotion_code_batch_finished(promotion_code_batch)
-          .deliver_now
+                                 .promotion_code_batch_finished(promotion_code_batch)
+                                 .deliver_now
       end
-    rescue StandardError => error
+    rescue StandardError => e
       if promotion_code_batch.email?
         SolidusFriendlyPromotions.config.promotion_code_batch_mailer_class
-          .promotion_code_batch_errored(promotion_code_batch)
-          .deliver_now
+                                 .promotion_code_batch_errored(promotion_code_batch)
+                                 .deliver_now
       end
-      raise error
+      raise e
     end
   end
 end

@@ -14,7 +14,7 @@ module SolidusFriendlyPromotions
         items_count = object.quantity
         items_count = [items_count, preferred_max_items].min unless preferred_max_items.zero?
 
-        return BigDecimal(0) if items_count == 0
+        return BigDecimal('0') if items_count == 0
 
         additional_items_count = items_count - 1
         preferred_first_item + preferred_additional_item * additional_items_count

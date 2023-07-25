@@ -18,9 +18,9 @@ module SolidusFriendlyPromotions
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
     # @return true or false
     def usage_limit_exceeded?(excluded_orders: [])
-      if usage_limit
-        usage_count(excluded_orders: excluded_orders) >= usage_limit
-      end
+      return unless usage_limit
+
+      usage_count(excluded_orders: excluded_orders) >= usage_limit
     end
 
     # Number of times the code has been used overall
@@ -33,7 +33,7 @@ module SolidusFriendlyPromotions
         complete.
         where.not(spree_orders: { state: :canceled }).
         joins(:friendly_order_promotions).
-        where(friendly_order_promotions: { promotion_code_id: self.id }).
+        where(friendly_order_promotions: { promotion_code_id: id }).
         where.not(id: excluded_orders.map(&:id)).
         count
     end

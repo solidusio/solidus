@@ -15,12 +15,12 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
 
   describe "#process" do
     context "with a pending code batch" do
-      it "should call the worker" do
+      it "calls the worker" do
         expect { subject.process }
           .to have_enqueued_job(SolidusFriendlyPromotions::PromotionCodeBatchJob)
       end
 
-      it "should update the state to processing" do
+      it "updates the state to processing" do
         subject.process
 
         expect(subject.state).to eq("processing")
@@ -30,7 +30,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
     context "with a processing batch" do
       before { subject.update_attribute(:state, "processing") }
 
-      it "should raise an error" do
+      it "raises an error" do
         expect{ subject.process }.to raise_error described_class::CantProcessStartedBatch
       end
     end
@@ -38,7 +38,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
     context "with a completed batch" do
       before { subject.update_attribute(:state, "completed") }
 
-      it "should raise an error" do
+      it "raises an error" do
         expect{ subject.process }.to raise_error described_class::CantProcessStartedBatch
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
     context "with a failed batch" do
       before { subject.update_attribute(:state, "failed") }
 
-      it "should raise an error" do
+      it "raises an error" do
         expect{ subject.process }.to raise_error described_class::CantProcessStartedBatch
       end
     end

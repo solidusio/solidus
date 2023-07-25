@@ -4,7 +4,7 @@ module SolidusFriendlyPromotions
   module Rules
     # A rule to apply a promotion only to line items with or without a chosen product
     class LineItemProduct < PromotionRule
-      MATCH_POLICIES = %w[include exclude]
+      MATCH_POLICIES = %w[include exclude].freeze
 
       has_many :product_promotion_rules,
         dependent: :destroy,

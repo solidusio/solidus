@@ -20,8 +20,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::NthOrder do
   end
 
   describe "eligible?" do
-    let(:instance) { described_class.new }
     subject { instance.eligible?(order) }
+
+    let(:instance) { described_class.new }
 
     before do
       instance.preferred_nth_order = 2

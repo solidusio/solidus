@@ -8,6 +8,7 @@ Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderDiscou
 Spree::Backend::Config.configure do |config|
   config.menu_items = Spree::Backend::Config.menu_items.map do |item|
     next item unless item.url == :admin_promotions_path
+
     Spree::BackendConfiguration::MenuItem.new(
       [:promotions, :promotion_categories],
       'bullhorn',

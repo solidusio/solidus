@@ -3,51 +3,55 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::UserRole, type: :model do
+  subject { rule }
+
   let(:rule) { described_class.new(preferred_role_ids: roles_for_rule.map(&:id)) }
   let(:user) { create(:user, spree_roles: roles_for_user) }
   let(:roles_for_rule) { [] }
   let(:roles_for_user) { [] }
 
-  subject { rule }
-
   shared_examples "eligibility" do
     context "no roles on rule" do
-      let(:roles_for_user) { [create(:role)] }
-      it "should not be eligible" do
-        expect(rule).to_not be_eligible(order)
+      let(:roles_for_user) { create_list(:role, 1) }
+
+      it "is not eligible" do
+        expect(rule).not_to be_eligible(order)
       end
     end
 
     context "no roles on user" do
-      let(:roles_for_rule) { [create(:role)] }
-      it "should not be eligible" do
-        expect(rule).to_not be_eligible(order)
+      let(:roles_for_rule) { create_list(:role, 1) }
+
+      it "is not eligible" do
+        expect(rule).not_to be_eligible(order)
       end
     end
 
     context "mismatched roles" do
-      let(:roles_for_user) { [create(:role)] }
-      let(:roles_for_rule) { [create(:role)] }
-      it "should not be eligible" do
-        expect(rule).to_not be_eligible(order)
+      let(:roles_for_user) { create_list(:role, 1) }
+      let(:roles_for_rule) { create_list(:role, 1) }
+
+      it "is not eligible" do
+        expect(rule).not_to be_eligible(order)
       end
     end
 
     context "matching all roles" do
-      let(:roles_for_user) { [create(:role), create(:role)] }
+      let(:roles_for_user) { create_list(:role, 2) }
       let(:roles_for_rule) { roles_for_user }
-      it "should be eligible" do
+
+      it "is eligible" do
         expect(rule).to be_eligible(order)
       end
     end
   end
 
-  context "#eligible?(order)" do
+  describe "#eligible?(order)" do
     context "order with no user" do
       let(:order) { Spree::Order.new }
 
-      it "should not be eligible" do
-        expect(rule).to_not be_eligible(order)
+      it "is not eligible" do
+        expect(rule).not_to be_eligible(order)
       end
     end
 
@@ -63,7 +67,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::UserRole, type: :model do
           let(:shared_role) { create(:role) }
           let(:roles_for_user) { [create(:role), shared_role] }
           let(:roles_for_rule) { [create(:role), shared_role] }
-          it "should be eligible" do
+
+          it "is eligible" do
             expect(rule).to be_eligible(order)
           end
         end
@@ -78,8 +83,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::UserRole, type: :model do
           let(:shared_role) { create(:role) }
           let(:roles_for_user) { [create(:role), shared_role] }
           let(:roles_for_rule) { [create(:role), shared_role] }
-          it "should not be eligible" do
-            expect(rule).to_not be_eligible(order)
+
+          it "is not eligible" do
+            expect(rule).not_to be_eligible(order)
           end
         end
       end

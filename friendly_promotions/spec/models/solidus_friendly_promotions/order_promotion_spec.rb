@@ -6,6 +6,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderPromotion do
   subject do
     order_promotion
   end
+
   let(:promotion) { build(:friendly_promotion) }
   let(:order_promotion) { build(:friendly_order_promotion, promotion: promotion) }
 

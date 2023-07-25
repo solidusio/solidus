@@ -9,7 +9,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   it { is_expected.to have_many :rules }
 
   describe "validations" do
-    before :each do
+    before do
       @valid_promotion = described_class.new name: "A promotion"
     end
 
@@ -43,12 +43,12 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe ".coupons" do
+    subject { described_class.coupons }
+
     let(:promotion_code) { create(:friendly_promotion_code) }
     let!(:promotion_with_code) { promotion_code.promotion }
     let!(:another_promotion_code) { create(:friendly_promotion_code, promotion: promotion_with_code) }
     let!(:promotion_without_code) { create(:friendly_promotion) }
-
-    subject { described_class.coupons }
 
     it "returns only distinct promotions with a code associated" do
       expect(subject).to eq [promotion_with_code]
@@ -109,13 +109,13 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     context "when set to true" do
       before { subject.apply_automatically = true }
 
-      it "should remain valid" do
+      it "remains valid" do
         expect(subject).to be_valid
       end
 
       it "invalidates the promotion when it has a path" do
         subject.path = "foo"
-        expect(subject).to_not be_valid
+        expect(subject).not_to be_valid
         expect(subject.errors).to include(:apply_automatically)
       end
     end
@@ -128,10 +128,13 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       context "when there is a usage limit" do
         context "and the limit is not exceeded" do
           let(:usage_limit) { 10 }
+
           it { is_expected.to be_falsy }
         end
+
         context "and the limit is exceeded" do
           let(:usage_limit) { 1 }
+
           context "on a different order" do
             before do
               FactoryBot.create(
@@ -140,15 +143,19 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
               )
               promotion.actions.first.adjustments.update_all(eligible: true)
             end
+
             it { is_expected.to be_truthy }
           end
+
           context "on the same order" do
             it { is_expected.to be_falsy }
           end
         end
       end
+
       context "when there is no usage limit" do
         let(:usage_limit) { nil }
+
         it { is_expected.to be_falsy }
       end
     end
@@ -162,6 +169,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
           usage_limit: usage_limit
         )
       end
+
       before do
         order.friendly_order_promotions.create(
           promotion_code: promotion.codes.first,
@@ -169,26 +177,35 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         )
         order.recalculate
       end
+
       context "when there are multiple line items" do
         let(:order) { FactoryBot.create(:order_with_line_items, line_items_count: 2) }
+
         describe "the first item" do
           let(:promotable) { order.line_items.first }
+
           it_behaves_like "it should"
         end
+
         describe "the second item" do
           let(:promotable) { order.line_items.last }
+
           it_behaves_like "it should"
         end
       end
+
       context "when there is a single line item" do
         let(:order) { FactoryBot.create(:order_with_line_items) }
         let(:promotable) { order.line_items.first }
+
         it_behaves_like "it should"
       end
     end
   end
 
   describe "#usage_count" do
+    subject { promotion.usage_count }
+
     let(:promotion) do
       FactoryBot.create(
         :friendly_promotion,
@@ -197,10 +214,9 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       )
     end
 
-    subject { promotion.usage_count }
-
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
+
       before do
         order.friendly_order_promotions.create(
           promotion_code: promotion.codes.first,
@@ -208,8 +224,10 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         )
         order.recalculate
       end
+
       it { is_expected.to eq 0 }
     end
+
     context "when the code is applied to a complete order" do
       let!(:order) do
         FactoryBot.create(
@@ -217,50 +235,54 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
           promotion: promotion
         )
       end
+
       context "and the promo is eligible" do
         it { is_expected.to eq 1 }
       end
+
       context "and the promo is ineligible" do
         before { order.all_adjustments.friendly_promotion.update_all(eligible: false) }
+
         it { is_expected.to eq 0 }
       end
+
       context "and the order is canceled" do
         before { order.cancel! }
+
         it { is_expected.to eq 0 }
         it { expect(order.state).to eq 'canceled' }
       end
     end
   end
 
-
-  context "#inactive" do
+  describe "#inactive" do
     let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
 
-    it "should not be exipired" do
+    it "is not exipired" do
       expect(promotion).not_to be_inactive
     end
 
-    it "should be inactive if it hasn't started yet" do
+    it "is inactive if it hasn't started yet" do
       promotion.starts_at = Time.current + 1.day
       expect(promotion).to be_inactive
     end
 
-    it "should be inactive if it has already ended" do
+    it "is inactive if it has already ended" do
       promotion.expires_at = Time.current - 1.day
       expect(promotion).to be_inactive
     end
 
-    it "should not be inactive if it has started already" do
+    it "is not inactive if it has started already" do
       promotion.starts_at = Time.current - 1.day
       expect(promotion).not_to be_inactive
     end
 
-    it "should not be inactive if it has not ended yet" do
+    it "is not inactive if it has not ended yet" do
       promotion.expires_at = Time.current + 1.day
       expect(promotion).not_to be_inactive
     end
 
-    it "should not be inactive if current time is within starts_at and expires_at range" do
+    it "is not inactive if current time is within starts_at and expires_at range" do
       promotion.starts_at = Time.current - 1.day
       promotion.expires_at = Time.current + 1.day
       expect(promotion).not_to be_inactive
@@ -268,103 +290,119 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe '#not_started?' do
-    let(:promotion) { SolidusFriendlyPromotions::Promotion.new(starts_at: starts_at) }
     subject { promotion.not_started? }
+
+    let(:promotion) { described_class.new(starts_at: starts_at) }
 
     context 'no starts_at date' do
       let(:starts_at) { nil }
+
       it { is_expected.to be_falsey }
     end
 
     context 'when starts_at date is in the past' do
       let(:starts_at) { Time.current - 1.day }
+
       it { is_expected.to be_falsey }
     end
 
     context 'when starts_at date is not already reached' do
       let(:starts_at) { Time.current + 1.day }
+
       it { is_expected.to be_truthy }
     end
   end
 
   describe '#started?' do
-    let(:promotion) { SolidusFriendlyPromotions::Promotion.new(starts_at: starts_at) }
     subject { promotion.started? }
+
+    let(:promotion) { described_class.new(starts_at: starts_at) }
 
     context 'when no starts_at date' do
       let(:starts_at) { nil }
+
       it { is_expected.to be_truthy }
     end
 
     context 'when starts_at date is in the past' do
       let(:starts_at) { Time.current - 1.day }
+
       it { is_expected.to be_truthy }
     end
 
     context 'when starts_at date is not already reached' do
       let(:starts_at) { Time.current + 1.day }
+
       it { is_expected.to be_falsey }
     end
   end
 
   describe '#expired?' do
-    let(:promotion) { SolidusFriendlyPromotions::Promotion.new(expires_at: expires_at) }
     subject { promotion.expired? }
+
+    let(:promotion) { described_class.new(expires_at: expires_at) }
 
     context 'when no expires_at date' do
       let(:expires_at) { nil }
+
       it { is_expected.to be_falsey }
     end
 
     context 'when expires_at date is not already reached' do
       let(:expires_at) { Time.current + 1.day }
+
       it { is_expected.to be_falsey }
     end
 
     context 'when expires_at date is in the past' do
       let(:expires_at) { Time.current - 1.day }
+
       it { is_expected.to be_truthy }
     end
   end
 
   describe '#not_expired?' do
-    let(:promotion) { SolidusFriendlyPromotions::Promotion.new(expires_at: expires_at) }
     subject { promotion.not_expired? }
+
+    let(:promotion) { described_class.new(expires_at: expires_at) }
 
     context 'when no expired_at date' do
       let(:expires_at) { nil }
+
       it { is_expected.to be_truthy }
     end
 
     context 'when expires_at date is not already reached' do
       let(:expires_at) { Time.current + 1.day }
+
       it { is_expected.to be_truthy }
     end
 
     context 'when expires_at date is in the past' do
       let(:expires_at) { Time.current - 1.day }
+
       it { is_expected.to be_falsey }
     end
   end
 
-  context "#active" do
-    it "shouldn't be active if it has started already" do
+  describe "#active" do
+    it "is not active if it has started already" do
       promotion.starts_at = Time.current - 1.day
       expect(promotion.active?).to eq(false)
     end
 
-    it "shouldn't be active if it has not ended yet" do
+    it "is not active if it has not ended yet" do
       promotion.expires_at = Time.current + 1.day
       expect(promotion.active?).to eq(false)
     end
 
-    it "shouldn't be active if current time is within starts_at and expires_at range" do
+    it "is not active if current time is within starts_at and expires_at range" do
       promotion.starts_at = Time.current - 1.day
       promotion.expires_at = Time.current + 1.day
       expect(promotion.active?).to eq(false)
     end
 
-    it "shouldn't be active if there are no start and end times set" do
+    it "is not active if there are no start and end times set" do
       promotion.starts_at = nil
       promotion.expires_at = nil
       expect(promotion.active?).to eq(false)
@@ -373,23 +411,23 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     context 'when promotion has an action' do
       let(:promotion) { create(:promotion, :with_action, name: "name1") }
 
-      it "should be active if it has started already" do
+      it "is active if it has started already" do
         promotion.starts_at = Time.current - 1.day
         expect(promotion.active?).to eq(true)
       end
 
-      it "should be active if it has not ended yet" do
+      it "is active if it has not ended yet" do
         promotion.expires_at = Time.current + 1.day
         expect(promotion.active?).to eq(true)
       end
 
-      it "should be active if current time is within starts_at and expires_at range" do
+      it "is active if current time is within starts_at and expires_at range" do
         promotion.starts_at = Time.current - 1.day
         promotion.expires_at = Time.current + 1.day
         expect(promotion.active?).to eq(true)
       end
 
-      it "should be active if there are no start and end times set" do
+      it "is active if there are no start and end times set" do
         promotion.starts_at = nil
         promotion.expires_at = nil
         expect(promotion.active?).to eq(true)
@@ -397,7 +435,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
-  context "#products" do
+  describe "#products" do
     let(:promotion) { create(:friendly_promotion) }
 
     context "when it has product rules with products associated" do
@@ -409,13 +447,13 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         promotion_rule.save
       end
 
-      it "should have products" do
+      it "has products" do
         expect(promotion.reload.products.size).to eq(1)
       end
     end
 
     context "when there's no product rule associated" do
-      it "should not have products but still return an empty array" do
+      it "does not have products but still return an empty array" do
         expect(promotion.products).to be_blank
       end
     end
@@ -469,6 +507,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
         context 'when the only matching order is the excluded order' do
           let(:excluded_order) { order }
+
           it { is_expected.to be false }
         end
       end

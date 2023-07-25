@@ -2,7 +2,8 @@
 
 module SolidusFriendlyPromotions
   class Promotion < Spree::Base
-    belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory", foreign_key: :promotion_category_id, optional: true
+    belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory",
+      foreign_key: :promotion_category_id, optional: true
     has_many :rules, class_name: "SolidusFriendlyPromotions::PromotionRule"
     has_many :actions, class_name: "SolidusFriendlyPromotions::PromotionAction"
     has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode"
@@ -72,9 +73,9 @@ module SolidusFriendlyPromotions
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
     # @return true or false
     def usage_limit_exceeded?(excluded_orders: [])
-      if usage_limit
-        usage_count(excluded_orders: excluded_orders) >= usage_limit
-      end
+      return unless usage_limit
+
+      usage_count(excluded_orders: excluded_orders) >= usage_limit
     end
 
     def not_expired?

@@ -5,8 +5,9 @@ require 'csv'
 module SolidusFriendlyPromotions
   module Admin
     class PromotionCodesController < Spree::Admin::ResourceController
+      before_action :load_promotion
+
       def index
-        @promotion = SolidusFriendlyPromotions::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         @promotion_codes = @promotion.codes.order(:value)
 
         respond_to do |format|
@@ -22,9 +23,9 @@ module SolidusFriendlyPromotions
       end
 
       def new
-        @promotion = SolidusFriendlyPromotions::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         if @promotion.apply_automatically
-          flash[:error] = t('activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base.disallowed_with_apply_automatically')
+          flash[:error] =
+            t('activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base.disallowed_with_apply_automatically')
           redirect_to solidus_friendly_promotions.admin_promotion_promotion_codes_url(@promotion)
         else
           @promotion_code = @promotion.codes.build
@@ -32,7 +33,6 @@ module SolidusFriendlyPromotions
       end
 
       def create
-        @promotion = SolidusFriendlyPromotions::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         @promotion_code = @promotion.codes.build(value: params[:promotion_code][:value])
 
         if @promotion_code.save
@@ -42,6 +42,14 @@ module SolidusFriendlyPromotions
           flash.now[:error] = @promotion_code.errors.full_messages.to_sentence
           render_after_create_error
         end
+      end
+
+      private
+
+      def load_promotion
+        @promotion = SolidusFriendlyPromotions::Promotion.
+                     accessible_by(current_ability, :show).
+                     find(params[:promotion_id])
       end
     end
   end

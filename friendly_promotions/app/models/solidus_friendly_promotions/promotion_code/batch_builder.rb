@@ -4,13 +4,14 @@ module SolidusFriendlyPromotions
   class PromotionCode < Spree::Base
     class BatchBuilder
       attr_reader :promotion_code_batch, :options
+
       delegate :promotion, :number_of_codes, :base_code, to: :promotion_code_batch
 
       DEFAULT_OPTIONS = {
         random_code_length: 6,
         batch_size: 1000,
         sample_characters: ('a'..'z').to_a + (2..9).to_a.map(&:to_s)
-      }
+      }.freeze
 
       def initialize(promotion_code_batch, options = {})
         @promotion_code_batch = promotion_code_batch
@@ -21,12 +22,12 @@ module SolidusFriendlyPromotions
       def build_promotion_codes
         generate_random_codes
         promotion_code_batch.update!(state: "completed")
-      rescue StandardError => error
+      rescue StandardError => e
         promotion_code_batch.update!(
-          error: error.inspect,
+          error: e.inspect,
           state: "failed"
         )
-        raise error
+        raise e
       end
 
       private

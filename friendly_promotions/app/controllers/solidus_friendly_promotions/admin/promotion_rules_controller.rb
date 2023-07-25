@@ -22,7 +22,8 @@ module SolidusFriendlyPromotions
           promotion_rule_params.merge(type: @promotion_rule_type.to_s)
         )
         if @promotion_rule.save
-          flash[:success] = t('spree.successfully_created', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
+          flash[:success] =
+            t('spree.successfully_created', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
         end
         redirect_to location_after_save
       end
@@ -31,7 +32,8 @@ module SolidusFriendlyPromotions
         @promotion_rule = @promotion.rules.find(params[:id])
         @promotion_rule.assign_attributes(promotion_rule_params)
         if @promotion_rule.save
-          flash[:success] = t('spree.successfully_updated', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
+          flash[:success] =
+            t('spree.successfully_updated', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
         end
         redirect_to location_after_save
       end
@@ -39,7 +41,8 @@ module SolidusFriendlyPromotions
       def destroy
         @promotion_rule = @promotion.rules.find(params[:id])
         if @promotion_rule.destroy
-          flash[:success] = t('spree.successfully_removed', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
+          flash[:success] =
+            t('spree.successfully_removed', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
         end
         redirect_to location_after_save
       end
@@ -64,12 +67,12 @@ module SolidusFriendlyPromotions
         @promotion_rule_type = promotion_rule_types.detect do |klass|
           klass.name == requested_type
         end
-        if !@promotion_rule_type
-          flash[:error] = t('solidus_friendly_promotions.invalid_promotion_rule')
-          respond_to do |format|
-            format.html { redirect_to solidus_friendly_promotions.edit_admin_promotion_path(@promotion) }
-            format.js   { render layout: false }
-          end
+        return if @promotion_rule_type
+
+        flash[:error] = t('solidus_friendly_promotions.invalid_promotion_rule')
+        respond_to do |format|
+          format.html { redirect_to solidus_friendly_promotions.edit_admin_promotion_path(@promotion) }
+          format.js   { render layout: false }
         end
       end
 
@@ -88,7 +91,7 @@ module SolidusFriendlyPromotions
       end
 
       def promotion_rule_types
-        case params.dig(:level)
+        case params[:level]
         when "order"
           SolidusFriendlyPromotions.config.order_rules
         when "line_item"

@@ -9,19 +9,17 @@ module SolidusFriendlyPromotions
     has_many :promotion_codes, dependent: :destroy
 
     validates :number_of_codes, numericality: { greater_than: 0 }
-    validates_presence_of :base_code, :number_of_codes
+    validates :base_code, :number_of_codes, presence: true
 
     def finished?
       state == "completed"
     end
 
     def process
-      if state == "pending"
-        update!(state: "processing")
-        PromotionCodeBatchJob.perform_later(self)
-      else
-        raise CantProcessStartedBatch.new("Batch #{id} already started")
-      end
+      raise CantProcessStartedBatch, "Batch #{id} already started" unless state == "pending"
+
+      update!(state: "processing")
+      PromotionCodeBatchJob.perform_later(self)
     end
   end
 end

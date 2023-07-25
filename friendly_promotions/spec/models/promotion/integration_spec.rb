@@ -72,7 +72,9 @@ RSpec.describe "Promotion System" do
 
       order.create_proposed_shipments
 
-      order.shipments.first.selected_shipping_rate_id = order.shipments.first.shipping_rates.detect { |r| r.shipping_method == shipping_method }.id
+      order.shipments.first.selected_shipping_rate_id = order.shipments.first.shipping_rates.detect do |r|
+        r.shipping_method == shipping_method
+      end.id
 
       order.recalculate
     end
@@ -100,6 +102,7 @@ RSpec.describe "Promotion System" do
 
       context "when the order is eligible" do
         let(:shipping_method) { ups_ground }
+
         it "creates adjustments" do
           expect(order.adjustments).to be_empty
           expect(order.total).to eq(31.40)

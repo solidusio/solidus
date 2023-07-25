@@ -3,27 +3,27 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
+  let(:rule_options) { {} }
+  let(:rule) { described_class.new(rule_options) }
+
   it { is_expected.to have_many(:products) }
 
-  let(:rule) { described_class.new(rule_options) }
-  let(:rule_options) { {} }
-
-  context "#eligible?(order)" do
+  describe "#eligible?(order)" do
     let(:order) { Spree::Order.new }
-
-    it "should be eligible if there are no products" do
-      allow(rule).to receive_messages(eligible_products: [])
-      expect(rule).to be_eligible(order)
-    end
 
     before do
       3.times { |i| instance_variable_set("@product#{i}", mock_model(Spree::Product)) }
     end
 
+    it "is eligible if there are no products" do
+      allow(rule).to receive_messages(eligible_products: [])
+      expect(rule).to be_eligible(order)
+    end
+
     context "with 'any' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "any") }
 
-      it "should be eligible if any of the products is in eligible products" do
+      it "is eligible if any of the products is in eligible products" do
         allow(rule).to receive_messages(order_products: [@product1, @product2])
         allow(rule).to receive_messages(eligible_products: [@product2, @product3])
         expect(rule).to be_eligible(order)
@@ -34,12 +34,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
           allow(rule).to receive_messages(order_products: [@product1])
           allow(rule).to receive_messages(eligible_products: [@product2, @product3])
         end
+
         it { expect(rule).not_to be_eligible(order) }
+
         it "sets an error message" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "You need to add an applicable product before applying this coupon code."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -51,7 +54,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
     context "with 'all' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "all") }
 
-      it "should be eligible if all of the eligible products are ordered" do
+      it "is eligible if all of the eligible products are ordered" do
         allow(rule).to receive_messages(order_products: [@product3, @product2, @product1])
         allow(rule).to receive_messages(eligible_products: [@product2, @product3])
         expect(rule).to be_eligible(order)
@@ -62,12 +65,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
           allow(rule).to receive_messages(order_products: [@product1, @product2])
           allow(rule).to receive_messages(eligible_products: [@product1, @product2, @product3])
         end
+
         it { expect(rule).not_to be_eligible(order) }
+
         it "sets an error message" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "This coupon code can't be applied because you don't have all of the necessary products in your cart."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -79,7 +85,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
     context "with 'none' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "none") }
 
-      it "should be eligible if none of the order's products are in eligible products" do
+      it "is eligible if none of the order's products are in eligible products" do
         allow(rule).to receive_messages(order_products: [@product1])
         allow(rule).to receive_messages(eligible_products: [@product2, @product3])
         expect(rule).to be_eligible(order)
@@ -90,12 +96,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
           allow(rule).to receive_messages(order_products: [@product1, @product2])
           allow(rule).to receive_messages(eligible_products: [@product2, @product3])
         end
+
         it { expect(rule).not_to be_eligible(order) }
+
         it "sets an error message" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first)
             .to eq "Your cart contains a product that prevents this coupon code from being applied."
         end
+
         it "sets an error code" do
           rule.eligible?(order)
           expect(rule.eligibility_errors.details[:base].first[:error_code])
@@ -106,7 +115,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
 
     context "with an invalid match policy" do
       let(:rule) do
-        SolidusFriendlyPromotions::Rules::Product.create!(
+        described_class.create!(
           promotion: create(:friendly_promotion),
           products_promotion_rules: [
             SolidusFriendlyPromotions::ProductsPromotionRule.new(product: product)

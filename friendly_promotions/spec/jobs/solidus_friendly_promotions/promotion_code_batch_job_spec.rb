@@ -11,6 +11,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
       email: email
     )
   end
+
   context "with a successful build" do
     before do
       allow(SolidusFriendlyPromotions::PromotionCodeBatchMailer)
@@ -30,6 +31,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
         end
       end
     end
+
     context 'with a custom join character' do
       let(:code_batch) do
         SolidusFriendlyPromotions::PromotionCodeBatch.create!(
@@ -40,6 +42,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
           join_characters: '-'
         )
       end
+
       it 'uses the custom join characters', :aggregate_failures do
         subject.perform(code_batch)
         codes.each do |code|
@@ -47,6 +50,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
         end
       end
     end
+
     context "with an email address" do
       it "sends an email" do
         subject.perform(code_batch)
@@ -54,12 +58,14 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
           .to have_received(:promotion_code_batch_finished)
       end
     end
+
     context "with no email address" do
       let(:email) { nil }
+
       it "sends an email" do
         subject.perform(code_batch)
         expect(SolidusFriendlyPromotions::PromotionCodeBatchMailer)
-          .to_not have_received(:promotion_code_batch_finished)
+          .not_to have_received(:promotion_code_batch_finished)
       end
     end
   end
@@ -87,9 +93,10 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
 
     context "with no email address" do
       let(:email) { nil }
+
       it "sends an email" do
         expect(SolidusFriendlyPromotions::PromotionCodeBatchMailer)
-          .to_not have_received(:promotion_code_batch_errored)
+          .not_to have_received(:promotion_code_batch_errored)
       end
     end
   end
