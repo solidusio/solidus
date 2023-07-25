@@ -10,10 +10,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
 
   describe "#eligible?(order)" do
     let(:order) { Spree::Order.new }
-
-    before do
-      3.times { |i| instance_variable_set("@product#{i}", mock_model(Spree::Product)) }
-    end
+    let(:product_one) { build(:product) }
+    let(:product_two) { build(:product) }
+    let(:product_three) { build(:product) }
 
     it "is eligible if there are no products" do
       allow(rule).to receive_messages(eligible_products: [])
@@ -24,15 +23,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
       let(:rule_options) { super().merge(preferred_match_policy: "any") }
 
       it "is eligible if any of the products is in eligible products" do
-        allow(rule).to receive_messages(order_products: [@product1, @product2])
-        allow(rule).to receive_messages(eligible_products: [@product2, @product3])
+        allow(rule).to receive_messages(order_products: [product_one, product_two])
+        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         expect(rule).to be_eligible(order)
       end
 
       context "when none of the products are eligible products" do
         before do
-          allow(rule).to receive_messages(order_products: [@product1])
-          allow(rule).to receive_messages(eligible_products: [@product2, @product3])
+          allow(rule).to receive_messages(order_products: [product_one])
+          allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         end
 
         it { expect(rule).not_to be_eligible(order) }
@@ -55,23 +54,24 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
       let(:rule_options) { super().merge(preferred_match_policy: "all") }
 
       it "is eligible if all of the eligible products are ordered" do
-        allow(rule).to receive_messages(order_products: [@product3, @product2, @product1])
-        allow(rule).to receive_messages(eligible_products: [@product2, @product3])
+        allow(rule).to receive_messages(order_products: [product_three, product_two, product_one])
+        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         expect(rule).to be_eligible(order)
       end
 
       context "when any of the eligible products is not ordered" do
         before do
-          allow(rule).to receive_messages(order_products: [@product1, @product2])
-          allow(rule).to receive_messages(eligible_products: [@product1, @product2, @product3])
+          allow(rule).to receive_messages(order_products: [product_one, product_two])
+          allow(rule).to receive_messages(eligible_products: [product_one, product_two, product_three])
         end
 
         it { expect(rule).not_to be_eligible(order) }
 
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first)
-            .to eq "This coupon code can't be applied because you don't have all of the necessary products in your cart."
+          expect(rule.eligibility_errors.full_messages.first).to eq(
+            "This coupon code can't be applied because you don't have all of the necessary products in your cart."
+          )
         end
 
         it "sets an error code" do
@@ -86,15 +86,15 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
       let(:rule_options) { super().merge(preferred_match_policy: "none") }
 
       it "is eligible if none of the order's products are in eligible products" do
-        allow(rule).to receive_messages(order_products: [@product1])
-        allow(rule).to receive_messages(eligible_products: [@product2, @product3])
+        allow(rule).to receive_messages(order_products: [product_one])
+        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         expect(rule).to be_eligible(order)
       end
 
       context "when any of the order's products are in eligible products" do
         before do
-          allow(rule).to receive_messages(order_products: [@product1, @product2])
-          allow(rule).to receive_messages(eligible_products: [@product2, @product3])
+          allow(rule).to receive_messages(order_products: [product_one, product_two])
+          allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         end
 
         it { expect(rule).not_to be_eligible(order) }

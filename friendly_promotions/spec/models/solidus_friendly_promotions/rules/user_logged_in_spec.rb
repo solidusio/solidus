@@ -9,7 +9,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::UserLoggedIn, type: :model do
     let(:order) { Spree::Order.new }
 
     it "is eligible if order has an associated user" do
-      user = double("User")
+      user = Spree::LegacyUser.new
       allow(order).to receive_messages(user: user)
 
       expect(rule).to be_eligible(order)
