@@ -16,7 +16,7 @@ module SolidusFriendlyPromotions
         possible_promotions: promotions
       ).call
 
-      possible_adjustments = eligible_promotions.flat_map do |promotion|
+      eligible_promotions.flat_map do |promotion|
         promotion.actions.select do |action|
           action.can_discount?(line_item)
         end.map do |action|
