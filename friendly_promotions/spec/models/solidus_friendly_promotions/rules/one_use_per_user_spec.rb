@@ -8,8 +8,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OneUsePerUser, type: :model do
   describe "#eligible?(order)" do
     subject { rule.eligible?(order) }
 
-    let(:order) { double Spree::Order, user: user }
-    let(:user) { double Spree::LegacyUser }
+    let(:order) { instance_double("Spree::Order", user: user) }
+    let(:user) { instance_double("Spree::LegacyUser") }
     let(:promotion) { stub_model SolidusFriendlyPromotions::Promotion, used_by?: used_by }
     let(:used_by) { false }
 
