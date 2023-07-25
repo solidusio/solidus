@@ -24,8 +24,10 @@ module SolidusFriendlyPromotions
 
       def new
         if @promotion.apply_automatically
-          flash[:error] =
-            t('activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base.disallowed_with_apply_automatically')
+          flash[:error] = t(
+            :disallowed_with_apply_automatically,
+            scope: 'activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base'
+          )
           redirect_to solidus_friendly_promotions.admin_promotion_promotion_codes_url(@promotion)
         else
           @promotion_code = @promotion.codes.build
