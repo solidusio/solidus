@@ -2,11 +2,12 @@
 
 module SolidusFriendlyPromotions
   class FriendlyPromotionDiscounter
-    attr_reader :order, :promotions
+    attr_reader :order, :promotions, :item_discounter
 
     def initialize(order)
       @order = order
       @promotions = PromotionEligibility.new(promotable: order, possible_promotions: possible_promotions).call
+      @item_discounter = ItemDiscounter.new(promotions: promotions)
     end
 
     def call
@@ -20,13 +21,13 @@ module SolidusFriendlyPromotions
     private
 
     def adjust_line_items
-      line_item_adjuster = LineItemDiscounter.new(promotions: promotions)
-      order.line_items.flat_map { |line_item| line_item_adjuster.call(line_item) }
+      order.line_items.select do |line_item|
+        line_item.variant.product.promotionable?
+      end.flat_map { |line_item| item_discounter.call(line_item) }
     end
 
     def adjust_shipments
-      shipment_adjuster = ShipmentDiscounter.new(promotions: promotions)
-      order.shipments.flat_map { |shipment| shipment_adjuster.call(shipment) }
+      order.shipments.flat_map { |shipment| item_discounter.call(shipment) }
     end
 
     def possible_promotions

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  class LineItemDiscounter
+  class ItemDiscounter
     attr_reader :promotions
 
     def initialize(promotions:)
@@ -9,8 +9,6 @@ module SolidusFriendlyPromotions
     end
 
     def call(line_item)
-      return [] unless line_item.variant.product.promotionable?
-
       eligible_promotions = PromotionEligibility.new(
         promotable: line_item,
         possible_promotions: promotions
