@@ -70,11 +70,12 @@ RSpec.describe "Promotion System" do
 
       it "creates adjustments" do
         expect(order.adjustments).to be_empty
-        expect(order.total).to eq(139.98)
-        expect(order.item_total).to eq(49.98)
-        expect(order.item_total_before_tax).to eq(39.98)
-        expect(order.promo_total).to eq(-10)
-        expect(order.line_items.flat_map(&:adjustments).length).to eq(3)
+        expect(order.total).to eq(108.00)
+        expect(order.item_total).to eq(10)
+        expect(order.item_total_before_tax).to eq(8)
+        expect(order.promo_total).to eq(-2)
+        expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
+        expect(order.shipments.flat_map(&:adjustments)).to be_empty
       end
     end
 
