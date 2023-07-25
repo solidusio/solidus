@@ -50,4 +50,63 @@ RSpec.describe "Promotion System" do
       end
     end
   end
+
+  context "with a shipment-level rule" do
+    let!(:ups_ground) { create(:shipping_method) }
+    let!(:dhl_saver) { create(:shipping_method) }
+    let(:promotion) { create(:friendly_promotion, name: "20 percent off UPS Ground", apply_automatically: true) }
+    let(:rule) { SolidusFriendlyPromotions::Rules::ShippingMethod.new(preferred_shipping_method_ids: [ups_ground.id]) }
+    let(:order) { create(:order_with_line_items, shipping_method: shipping_method) }
+
+    before do
+      promotion.rules << rule
+      promotion.actions << action
+    end
+
+    context "with a line item level action" do
+      let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
+      let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator) }
+      let(:shipping_method) { ups_ground }
+
+      it "creates adjustments" do
+        expect(order.adjustments).to be_empty
+        expect(order.total).to eq(139.98)
+        expect(order.item_total).to eq(49.98)
+        expect(order.item_total_before_tax).to eq(39.98)
+        expect(order.promo_total).to eq(-10)
+        expect(order.line_items.flat_map(&:adjustments).length).to eq(3)
+      end
+    end
+
+    context "with a shipment level action" do
+      let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
+      let(:action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: calculator) }
+
+      context "when the order is eligible" do
+        let(:shipping_method) { ups_ground }
+        it "creates adjustments" do
+          expect(order.adjustments).to be_empty
+          expect(order.total).to eq(90)
+          expect(order.item_total).to eq(10)
+          expect(order.item_total_before_tax).to eq(10)
+          expect(order.line_items.flat_map(&:adjustments)).to be_empty
+          expect(order.shipments.flat_map(&:adjustments)).not_to be_empty
+        end
+      end
+
+      context "when the order is not eligible" do
+        let(:shipping_method) { dhl_saver }
+
+        it "creates no adjustments" do
+          expect(order.adjustments).to be_empty
+          expect(order.total).to eq(110)
+          expect(order.item_total).to eq(10)
+          expect(order.item_total_before_tax).to eq(10)
+          expect(order.promo_total).to eq(0)
+          expect(order.line_items.flat_map(&:adjustments)).to be_empty
+          expect(order.shipments.flat_map(&:adjustments)).to be_empty
+        end
+      end
+    end
+  end
 end
