@@ -1,0 +1,23 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0 flex">
+    <span class="flex-grow">All icons</span>
+    <div class="text-sm ml-auto">
+      <label class="flex gap-1 items-center">
+        <%= render current_component.new(name: 'search-2-line', class: 'w-8 h-8 fill-current') %>
+        <input autofocus class="form-input rounded-full text-sm" type="search" oninput="
+          if (query = new RegExp(this.value || '.', 'i'))
+            Array.from(
+              document.querySelector('.all-icons').children
+            ).forEach((i) => { i.toggleAttribute('hidden', !query.test(i.title)) })
+        ">
+      </label>
+    </div>
+  </h6>
+
+
+  <div class="flex gap-4 flex-wrap all-icons mt-10">
+    <% current_component::NAMES.each do |name| %>
+      <div title="<%= name %>" class="w-6 h-6"><%= render current_component.new(name: name, class: 'w-full h-full', title: name) %></div>
+    <% end %>
+  </div>
+</div>
