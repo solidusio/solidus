@@ -9,9 +9,10 @@ module SolidusFriendlyPromotions
     end
 
     def call(shipment)
-      eligible_promotions = promotions.select do |promotion|
-        PromotionEligibility.new(promotable: shipment, possible_promotions: promotions).call
-      end
+      eligible_promotions = PromotionEligibility.new(
+        promotable: shipment,
+        possible_promotions: promotions
+      ).call
 
       possible_adjustments = eligible_promotions.flat_map do |promotion|
         promotion.actions.select do |action|
