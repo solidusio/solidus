@@ -1,0 +1,7 @@
+<div class="form-group">
+  <%= label_tag "#{param_prefix}_preferred_shipping_method_ids", SolidusFriendlyShipping::Rules::ShippingMethod.human_attribute_name(:preferred_shipping_method_ids) %>
+  <%= select_tag "#{param_prefix}[preferred_shipping_method_ids]",
+    options_from_collection_for_select(
+      Spree::ShippingMethod.all, :id, :name, promotion_rule.preferred_shipping_method_ids
+    ), class: 'select2 fullwidth', multiple: true %>
+</div>
