@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SolidusFriendlyPromotions::Admin::PromotionRulesController, type: :request do
+describe "Admin::PromotionRules", type: :request do
   let!(:promotion) { create(:friendly_promotion) }
 
   context "when the user is authorized" do

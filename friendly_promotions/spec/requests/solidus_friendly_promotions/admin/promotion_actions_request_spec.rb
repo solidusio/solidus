@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SolidusFriendlyPromotions::Admin::PromotionActionsController, type: :request do
+describe "Admin::PromotionActions", type: :request do
   stub_authorization!
 
   let!(:promotion) { create(:friendly_promotion) }
