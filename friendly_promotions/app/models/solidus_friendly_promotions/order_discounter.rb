@@ -73,8 +73,8 @@ module SolidusFriendlyPromotions
     # @param [SolidusFriendlyPromotions::ItemDiscount] tax_item calculated discounts for an item
     # @return [Spree::Adjustment] the created or updated tax adjustment
     def update_adjustment(item, discount_item)
-      adjustment = item.adjustments.detect do |adjustment|
-        adjustment.source == discount_item.source
+      adjustment = item.adjustments.detect do |item_adjustment|
+        item_adjustment.source == discount_item.source
       end
 
       adjustment ||= item.adjustments.new(
