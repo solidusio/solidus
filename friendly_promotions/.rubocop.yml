@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - solidus_dev_support/rubocop
 
@@ -9,7 +11,7 @@ RSpec/MultipleExpectations:
   Max: 10
 
 RSpec/MultipleMemoizedHelpers:
-  Max: 10
+  Max: 12
 
 RSpec/NamedSubject:
   Enabled: false
