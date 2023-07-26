@@ -2,6 +2,7 @@
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param rows [ActiveRecord::Relation] The collection of records to display.
+  # @param search_key [Symbol] The key for searching.
   # @param base_search_url [String] The base URL for searching.
   #
   # @param columns [Array<Hash>] The array of column definitions.
@@ -22,6 +23,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
     rows:,
+    search_key:,
     base_search_url:,
     columns: [],
     batch_actions: [],
@@ -34,6 +36,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @model_class = rows.model
     @rows = rows
+    @search_key = search_key
     @base_search_url = base_search_url
     @footer = footer
 

@@ -11,12 +11,26 @@
   <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 visible:flex hidden:hidden" %>
 
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
-    <div class="flex-grow">
+    <%= form_with(
+      url: @base_search_url,
+      method: :get,
+      class: 'flex-grow',
+    ) do |form| %>
       <label class="bg-white rounded border border-gray-300 items-center gap-1 px-3 py-1.5 inline-flex w-full justify-start">
         <%= render component('ui/icon').new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
-        <input type="search" placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>" class="w-full placeholder:text-gray-400">
+        <input
+          name="q[<%= @search_key %>]"
+          type="search"
+          placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
+          class="w-full placeholder:text-gray-400"
+          data-<%= stimulus_id %>-target="searchField"
+        >
+        <button type="reset">
+          <%= render component('ui/icon').new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
+          <span class="sr-only"><%= t('.clear') %></span>
+        </button>
       </label>
-    </div>
+    <% end %>
 
     <div class="ml-4">
       <%= render @button_component.new(
@@ -43,10 +57,12 @@
   <% if @batch_actions %>
     <%= form_tag '', id: batch_actions_form_id %>
 
-    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar">
-      <% @batch_actions.each do |batch_action| %>
-        <%= render_batch_action_button(batch_action) %>
-      <% end %>
+    <div class="<%= toolbar_classes %> visible:flex hidden:hidden" data-<%= stimulus_id %>-target="batchToolbar" hidden>
+      <div class="flex items-center gap-x-2">
+        <% @batch_actions.each do |batch_action| %>
+          <%= render_batch_action_button(batch_action) %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 

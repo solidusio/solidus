@@ -7,17 +7,19 @@ export default class extends Controller {
     "batchToolbar",
     "scopesToolbar",
     "searchToolbar",
+    "searchField",
     "defaultHeader",
     "batchHeader",
     "selectedRowsCount",
   ]
+
   static classes = ["selectedRow"]
   static values = {
     mode: { type: String, default: "scopes" },
   }
 
   connect() {
-    this.modeValue = "scopes"
+    if (this.searchFieldTarget.value !== "") this.modeValue = "search"
 
     this.render()
   }
@@ -27,7 +29,13 @@ export default class extends Controller {
     this.render()
   }
 
+  clearSearch() {
+    this.searchFieldTarget.value = ""
+  }
+
   cancelSearch(event) {
+    this.clearSearch()
+
     this.modeValue = "scopes"
     this.render()
   }

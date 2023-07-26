@@ -63,7 +63,7 @@ module SolidusAdmin
     end
 
     def search_key
-      SolidusAdmin::Config[:product_search_key]
+      :name_or_variants_including_master_sku_cont
     end
   end
 end

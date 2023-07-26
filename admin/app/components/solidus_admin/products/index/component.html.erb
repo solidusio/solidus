@@ -17,6 +17,7 @@
 
   <%= render @table_component.new(
     rows: @rows,
+    search_key: @search_key,
     base_search_url: solidus_admin.products_path,
     footer: render(@pagination_component.new(
       prev_link: prev_link,

@@ -17,9 +17,7 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
       model_class.new(id: n, name: "Product #{n}", price: n * 10.0, available_on: n.days.ago)
     end
 
-    page = Struct.new(:records, :number, :next_param, :first?, :last?).new(rows, 1, '#', true, false)
-
-    page.records.define_singleton_method(:model) do
+    rows.define_singleton_method(:model) do
       model_class
     end
 
