@@ -263,40 +263,66 @@ RSpec.describe Spree::OrderContents, type: :model do
   context "update cart" do
     let!(:shirt) { subject.add variant, 1 }
 
-    let(:params) do
-      { line_items_attributes: {
-        "0" => { id: shirt.id, quantity: 3 }
-      } }
-    end
-
-    it "changes item quantity" do
-      subject.update_cart params
-      expect(shirt.reload.quantity).to eq 3
-    end
-
-    it "updates order totals" do
-      expect {
-        subject.update_cart params
-      }.to change { subject.order.total }
-    end
-
-    context "submits item quantity 0" do
+    context "with a multi-level nested params hash" do
       let(:params) do
         { line_items_attributes: {
-          "0" => { id: shirt.id, quantity: 0 }
+          "0" => { id: shirt.id, quantity: 3 }
         } }
       end
 
-      it "removes item from order" do
+      it "changes item quantity" do
+        subject.update_cart params
+        expect(shirt.reload.quantity).to eq 3
+      end
+
+      it "updates order totals" do
         expect {
           subject.update_cart params
-        }.to change { subject.order.line_items.count }
+        }.to change { subject.order.total }
+      end
+
+      context "submits item quantity 0" do
+        let(:params) do
+          { line_items_attributes: {
+            "0" => { id: shirt.id, quantity: 0 }
+          } }
+        end
+
+        it "removes item from order" do
+          expect {
+            subject.update_cart params
+          }.to change { subject.order.line_items.count }.from(1).to(0)
+        end
+      end
+
+      it "ensures updated shipments" do
+        expect(subject.order).to receive(:check_shipments_and_restart_checkout)
+        subject.update_cart params
       end
     end
 
-    it "ensures updated shipments" do
-      expect(subject.order).to receive(:check_shipments_and_restart_checkout)
-      subject.update_cart params
+    context "with a single-level nested params hash" do
+      let(:params) do
+        { line_items_attributes: {
+          id: shirt.id, quantity: new_quantity
+        } }
+      end
+      let(:new_quantity) { 3 }
+
+      it "changes item quantity" do
+        subject.update_cart params
+        expect(shirt.reload.quantity).to eq 3
+      end
+
+      context "submits item quantity 0" do
+        let(:new_quantity) { 0 }
+
+        it "removes item from order" do
+          expect {
+            subject.update_cart params
+          }.to change { subject.order.line_items.count }.from(1).to(0)
+        end
+      end
     end
   end
 

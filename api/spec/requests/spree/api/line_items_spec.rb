@@ -95,11 +95,25 @@ module Spree::Api
         expect(response.status).to eq(201)
       end
 
-      it "default quantity to 1 if none is given" do
+      it "sets default quantity to 1 if none is given" do
         post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param } }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response[:quantity]).to eq 1
+      end
+
+      it "sets default quantity to 1 if empty values are given" do
+        post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param, quantity: '' } }
+        expect(response.status).to eq(201)
+        expect(json_response).to have_attributes(attributes)
+        expect(json_response[:quantity]).to eq 1
+      end
+
+      it "allows to explicitly set quantity to 0" do
+        post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param, quantity: 0 } }
+        expect(response.status).to eq(201)
+        expect(json_response).to have_attributes(attributes)
+        expect(json_response[:quantity]).to eq 0
       end
 
       it "increases a line item's quantity if it exists already" do

@@ -35,9 +35,10 @@ module Spree
     end
 
     def update_cart(params)
+      params = destroy_non_positive_line_items(params)
+
       if order.update(params)
         unless order.completed?
-          order.line_items = order.line_items.select { |li| li.quantity > 0 }
           # Update totals, then check if the order is eligible for any cart promotions.
           # If we do not update first, then the item total will be wrong and ItemTotal
           # promotion rules would not be triggered.
@@ -81,6 +82,20 @@ module Spree
 
     def reload_totals
       @order.recalculate
+    end
+
+    def destroy_non_positive_line_items(params)
+      line_items_to_destroy_ids = []
+      # Could be a single LineItem or multiple via nesting
+      if id = params[:line_items_attributes][:id].present?
+        line_items_to_destroy_ids << id if params[:line_items_attributes][:quantity].to_i <= 0
+      else
+        params[:line_items_attributes].reject! do |_index, attributes|
+          line_items_to_destroy_ids << attributes[:id] if attributes[:quantity].to_i <= 0
+        end
+      end
+      order.line_items.where(id: line_items_to_destroy_ids).destroy_all
+      params
     end
 
     def add_to_line_item(variant, quantity, options = {})
