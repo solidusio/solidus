@@ -3,12 +3,17 @@
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def initialize(
     page:,
+    search_key:,
+    query_params: nil,
     badge_component: component('ui/badge'),
     table_component: component('ui/table'),
     pagination_component: component('ui/table/pagination'),
     button_component: component("ui/button")
   )
     @page = page
+    @rows = page.records
+    @query_params = query_params
+    @search_key = search_key
 
     @badge_component = badge_component
     @table_component = table_component

@@ -1,1 +1,6 @@
-<%= render component('products/index').new(page: @page) %>
+<%= render component('products/index').new(
+      page: @page,
+      query_params: @query_params,
+      search_key: @search_key
+    )
+%>
