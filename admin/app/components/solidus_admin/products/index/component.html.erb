@@ -18,7 +18,7 @@
   <%= render @table_component.new(
     model_class: Spree::Product,
     rows: @page.records,
-    search_key: :name_or_variants_including_master_sku_cont,
+    search_key: SolidusAdmin::Config[:product_search_key],
     search_url: solidus_admin.products_path,
     batch_actions: [
       {
