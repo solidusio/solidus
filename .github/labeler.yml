@@ -4,6 +4,8 @@
   - "backend/**/*"
 "changelog:solidus_api":
   - "api/**/*"
+"changelog:solidus_admin":
+  - "admin/**/*"
 "changelog:solidus_sample":
   - "sample/**/*"
 "changelog:solidus":
@@ -16,6 +18,7 @@
     - "!core/**/*"
     - "!backend/**/*"
     - "!api/**/*"
+    - "!admin/**/*"
     - "!sample/**/*"
     - "!lib/**/*"
     - "!README.md"
