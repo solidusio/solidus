@@ -16,7 +16,7 @@ class CreatePromotionCodeBatches < ActiveRecord::Migration[7.0]
     add_column(
       :friendly_promotion_codes,
       :promotion_code_batch_id,
-      :integer
+      :bigint
     )
 
     add_foreign_key(
