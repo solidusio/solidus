@@ -16,7 +16,13 @@
           <td class="font-bold px-3 py-1"><%= state.to_s.humanize %></td>
           <% current_component::SIZES.keys.each do |size| %>
             <td class="px-3 py-1 text-center">
-              <%= render current_component.new(size: size, scheme: scheme, text: text, disabled: state == :disabled) %>
+              <%= render current_component.new(
+                size: size,
+                scheme: scheme,
+                text: text,
+                icon: ('search-line' if show_icon),
+                disabled: state == :disabled
+              ) %>
             </td>
           <% end %>
         </tr>
@@ -31,5 +37,11 @@
     As a link
   </h6>
 
-  <%= render current_component.new(tag: :a, href: "#", text: "I'm a link!") %>
+  <%= render current_component.new(
+    tag: :a,
+    href: "#",
+    text: "I'm a link!",
+    class: 'cursor-default',
+    icon: ('link' if show_icon),
+  ) %>
 </div>
