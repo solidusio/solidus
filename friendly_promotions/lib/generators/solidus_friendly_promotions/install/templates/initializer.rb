@@ -23,7 +23,7 @@ end
 SolidusFriendlyPromotions.configure do |config|
   # This class chooses which promotion should apply to a line item in case
   # that more than one promotion is eligible.
-  config.discount_chooser_class = "SolidusFriendlyPromotions::PromotionAdjustmentChooser"
+  config.discount_chooser_class = "SolidusFriendlyPromotions::DiscountChooser"
 
   # How many promotions should be displayed on the index page in the admin.
   config.promotions_per_page = 25
