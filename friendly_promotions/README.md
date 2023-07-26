@@ -8,9 +8,9 @@ The basic architecture is very similar to the one in core Solidus, but with a fe
 
 ## Architecture
 
-This extension centralizes promotion handling in the order updater. A service class, the `SolidusFriendlyShipping::OrderPromotionAdjuster` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
+This extension centralizes promotion handling in the order updater. A service class, the `SolidusFriendlyPromotions::OrderDiscounter` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
 
-In core, Promotion adjustments get recalculated twice on every change to the cart; once in `Spree::OrderContents#after_add_or_remove` and in `Spree::OrderUpdater#update_promotions`. To make things more complicated, `Spree::OrderContents` leverages the `Spree::PromotionHandler#cart`, while the order updater goes through `Spree::Adjustment#recalculate`.
+In Solidus Core, Promotion adjustments get recalculated twice on every change to the cart; once in `Spree::OrderContents#after_add_or_remove` and in `Spree::OrderUpdater#update_promotions`. To make things more complicated, `Spree::OrderContents` leverages the `Spree::PromotionHandler#cart`, while the order updater goes through `Spree::Adjustment#recalculate`.
 
 The design decision here is to make the code path easier to follow, and consequently to make it more performant ("Make it easy, then make it fast").
 
@@ -18,7 +18,7 @@ The design decision here is to make the code path easier to follow, and conseque
 
 ### Promotion Rules
 
-Promotion rules can be applicable to either `Spree::Order`, `Spree::LineItem`, or `Spree::Shipment` objects. If they are applicable, they will be asked for eligibility. Rules applicable to orders are processed first. If a promotion has a rule that makes it inapplicable for an order, line items and shipments will not be adjusted.
+Promotion rules can be applicable to either `Spree::Order`, `Spree::LineItem`, or `Spree::Shipment` objects. If they are applicable, they will be asked for eligibility. Rules applicable to orders are processed first. If a promotion has a rule that makes it ineligible for an order, line items and shipments will not be adjusted. If there are no rules that are applicable, the promotion will be considered eligible.
 
 ### Promotion Actions
 
