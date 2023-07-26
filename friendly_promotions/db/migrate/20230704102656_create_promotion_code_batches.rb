@@ -13,12 +13,6 @@ class CreatePromotionCodeBatches < ActiveRecord::Migration[7.0]
       t.timestamps precision: 6
     end
 
-    add_foreign_key(
-      :friendly_promotion_code_batches,
-      :friendly_promotions,
-      column: :promotion_id
-    )
-
     add_column(
       :friendly_promotion_codes,
       :promotion_code_batch_id,
