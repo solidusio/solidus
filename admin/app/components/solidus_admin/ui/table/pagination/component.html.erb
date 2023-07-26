@@ -1,29 +1,24 @@
-<div>
-  <nav aria-label="pagination">
-    <ul class="flex items-center">
-      <li>
-        <% if @prev_link.blank? %>
-          <span class="<%= link_classes(rounded: :left) %>", "aria-label"=<%= t(".prev") %>, "aria-disabled"=true>
-            <%= icon_tag("arrow-left-s-line", class: "fill-current text-grey-400 w-5 h-5") %>
-          </span>
-        <% else %>
-          <%= link_to @prev_link, class: link_classes(rounded: :left), "aria-label" => t(".prev") do %>
-            <%= icon_tag("arrow-left-s-line", class: "w-5 h-5") %>
-          <% end %>
-        <% end %>
-      </li>
-
-      <li>
-        <% if @next_link.blank? %>
-          <span class="<%= link_classes(rounded: :right) %>", "aria-label"=<%= t(".next") %>, "aria-disabled"=true>
-            <%= icon_tag("arrow-right-s-line", class: "fill-current text-grey-400 w-5 h-5") %>
-          </span>
-        <% else %>
-          <%= link_to @next_link, class: link_classes(rounded: :right), "aria-label" => t(".next") do %>
-            <%= icon_tag("arrow-right-s-line", class: "w-5 h-5") %>
-          <% end %>
-        <% end %>
-      </li>
-    </ul>
-  </nav>
-</div>
+<nav aria-label="pagination" class="flex items-center">
+  <%= render component('ui/button').new(
+    icon: 'arrow-left-s-line',
+    class: 'rounded-tr-none rounded-br-none border-r-0',
+    scheme: :secondary,
+    size: :s,
+    tag: :a,
+    href: @prev_link,
+    'aria-disabled': @prev_link.blank?,
+    rel: 'prev',
+    text: content_tag(:span, t('.previous'), class: 'sr-only'),
+  ) -%>
+  <%= render component('ui/button').new(
+    icon: 'arrow-right-s-line',
+    class: 'rounded-tl-none rounded-bl-none',
+    scheme: :secondary,
+    size: :s,
+    tag: :a,
+    href: @next_link,
+    'aria-disabled': @next_link.blank?,
+    rel: 'next',
+    text: content_tag(:span, t('.next'), class: 'sr-only'),
+  ) %>
+</nav>
