@@ -112,17 +112,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def render_header_cell(cell, **attrs)
-    cell =
-      case cell
-      when Symbol
-        @model_class.human_attribute_name(cell)
-      when Proc
-        cell.call
-      else
-        cell
-      end
-
-    # Allow component instances as cell content
+    cell = cell.call if cell.respond_to?(:call)
+    cell = @model_class.human_attribute_name(cell) if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
     content_tag(:th, cell, class: %{
@@ -137,17 +128,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def render_data_cell(cell, data)
-    cell =
-      case cell
-      when Symbol
-        data.public_send(cell)
-      when Proc
-        cell.call(data)
-      else
-        cell
-      end
-
-    # Allow component instances as cell content
+    cell = cell.call(data) if cell.respond_to?(:call)
+    cell = data.public_send(cell) if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
     content_tag(:td, content_tag(:div, cell, class: "flex items-center gap-1.5"), class: "py-2 px-4 h-10 vertical-align-middle leading-none")
