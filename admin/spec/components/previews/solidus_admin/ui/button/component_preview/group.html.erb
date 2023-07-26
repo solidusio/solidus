@@ -1,0 +1,18 @@
+<%= render current_component.new(
+  tag: :a,
+  rel: 'prev',
+  href: '#',
+  icon: 'arrow-left-s-line',
+  class: 'rounded-tr-none rounded-br-none border-r-0',
+  scheme: :secondary,
+  size: :s
+) -%>
+<%= render current_component.new(
+  tag: :a,
+  rel: 'next',
+  icon: 'arrow-right-s-line',
+  class: 'rounded-tl-none rounded-bl-none',
+  scheme: :secondary,
+  size: :s,
+  'aria-disabled': true
+) %>
