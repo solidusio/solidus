@@ -16,10 +16,11 @@
   </header>
 
   <%= render @table_component.new(
-    page: @page,
+    rows: @rows,
+    base_search_url: solidus_admin.products_path,
     footer: render(@pagination_component.new(
-      prev_link: @page.first? ? nil : solidus_admin.products_path(page: @page.number - 1),
-      next_link: @page.last? ? nil : solidus_admin.products_path(page: @page.number + 1)
+      prev_link: prev_link,
+      next_link: next_link
     )),
     batch_actions: [
       {

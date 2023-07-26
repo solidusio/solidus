@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  # @param page [GearedPagination::Page] The pagination page object.
+  # @param rows [ActiveRecord::Relation] The collection of records to display.
+  # @param base_search_url [String] The base URL for searching.
   #
   # @param columns [Array<Hash>] The array of column definitions.
   # @option columns [Symbol|Proc|#to_s] :header The column header.
@@ -20,7 +21,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param button_component [Class] The button component class (default: component("ui/button")).
   # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
-    page:,
+    rows:,
+    base_search_url:,
     columns: [],
     batch_actions: [],
     footer: nil,
@@ -28,11 +30,11 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     button_component: component("ui/button"),
     tab_component: component("ui/tab")
   )
-    @page = page
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
-    @model_class = page.records.model
-    @rows = page.records
+    @model_class = rows.model
+    @rows = rows
+    @base_search_url = base_search_url
     @footer = footer
 
     @checkbox_componnent = checkbox_componnent

@@ -23,6 +23,6 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
       model_class
     end
 
-    render_with_template(locals: { page: page, rows: rows })
+    render_with_template(locals: { rows: rows })
   end
 end
