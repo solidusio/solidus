@@ -18,6 +18,10 @@ class SolidusAdmin::UI::Button::ComponentPreview < ViewComponent::Preview
     render component("ui/button").new(size: size, scheme: scheme, text: text, icon: icon.presence)
   end
 
+  def group
+    render_with_template
+  end
+
   private
 
   def icon_options
