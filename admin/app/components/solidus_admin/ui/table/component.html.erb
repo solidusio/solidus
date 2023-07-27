@@ -78,6 +78,17 @@
       <% end %>
     </tbody>
 
-    <%= render_table_footer %>
+    <% if @footer.present? %>
+      <tfoot>
+        <tr>
+          <td colspan="<%= @columns.size %>" class="py-4">
+            <div class="flex justify-center">
+              <%= @footer %>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    <% end %>
+
   </table>
 </div>
