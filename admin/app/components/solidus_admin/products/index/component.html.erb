@@ -17,6 +17,10 @@
 
   <%= render @table_component.new(
     page: @page,
+    footer: render(@pagination_component.new(
+      prev_link: @page.first? ? nil : solidus_admin.products_path(page: @page.number - 1),
+      next_link: @page.last? ? nil : solidus_admin.products_path(page: @page.number + 1)
+    )),
     batch_actions: [
       {
         display_name: t('.batch_actions.delete'),
