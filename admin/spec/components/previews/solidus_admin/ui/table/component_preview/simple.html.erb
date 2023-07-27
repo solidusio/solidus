@@ -1,6 +1,9 @@
 <%= render current_component.new(
   page: page,
-  path: ->(_page_number) { "#" },
+  footer: render(component("ui/table/pagination").new(
+    prev_link: nil,
+    next_link: '#2',
+  )),
   columns: [
     { header: :id, data: -> { _1.id.to_s } },
     { header: :name, data: :name },

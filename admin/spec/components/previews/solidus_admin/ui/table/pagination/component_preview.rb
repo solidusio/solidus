@@ -5,32 +5,15 @@ class SolidusAdmin::UI::Table::Pagination::ComponentPreview < ViewComponent::Pre
   include SolidusAdmin::Preview
 
   def overview
-    render_with_template(
-      locals: {
-        page: page_proc,
-        path: path_proc
-      }
-    )
+    render_with_template
   end
 
-  # @param left toggle
-  # @param right toggle
-  def playground(left: false, right: false)
+  # @param prev_link
+  # @param next_link
+  def playground(prev_link: '#1', next_link: '#2')
     render current_component.new(
-      page: page_proc.call(left, right),
-      path: path_proc
+      prev_link: prev_link.presence,
+      next_link: next_link.presence,
     )
-  end
-
-  private
-
-  def page_proc
-    lambda { |left, right|
-      Struct.new(:number, :next_param, :first?, :last?).new(1, '#', !left, !right)
-    }
-  end
-
-  def path_proc
-    ->(_page_number) { "#" }
   end
 end
