@@ -1,5 +1,5 @@
 <nav aria-label="pagination" class="flex items-center">
-  <%= render component('ui/button').new(
+  <%= render @button_component.new(
     icon: 'arrow-left-s-line',
     class: 'rounded-tr-none rounded-br-none border-r-0',
     scheme: :secondary,
@@ -10,7 +10,7 @@
     rel: 'prev',
     text: content_tag(:span, t('.previous'), class: 'sr-only'),
   ) -%>
-  <%= render component('ui/button').new(
+  <%= render @button_component.new(
     icon: 'arrow-right-s-line',
     class: 'rounded-tl-none rounded-bl-none',
     scheme: :secondary,
