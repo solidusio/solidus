@@ -150,7 +150,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       end
 
       context 'when availability should be considered' do
-        let(:stock_item) { variant.stock_items.last }
+        let(:stock_item) { variant.stock_items.max_by(&:id) }
 
         before do
           variant.stock_items.update_all backorderable: false

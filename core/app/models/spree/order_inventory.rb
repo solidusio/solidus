@@ -61,10 +61,12 @@ module Spree
 
       potential_shipments.detect do |shipment|
         shipment.include?(variant)
-      end || potential_shipments.detect do |shipment|
-        stock_item = variant.stock_items.detect { |stock_item| stock_item.stock_location == shipment.stock_location }
-        if stock_item
-          stock_item.backorderable? || stock_item.count_on_hand >= quantity
+      end || begin
+        stock_items = variant.stock_items.sort_by(&:id) # cache stock items to avoid N+1
+
+        potential_shipments.detect do |shipment|
+          stock_item = stock_items.detect { |stock_item| stock_item.stock_location == shipment.stock_location }
+          stock_item.backorderable? || stock_item.count_on_hand >= quantity if stock_item
         end
       end || potential_shipments.detect do |shipment|
         variant.stock_location_ids.include?(shipment.stock_location_id)
