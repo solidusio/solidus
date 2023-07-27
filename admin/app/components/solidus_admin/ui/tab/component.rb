@@ -7,17 +7,13 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
     l: %w[h-12 px-4 body-text-bold],
   }
 
-  TAG_NAMES = {
-    a: :a,
-    button: :button,
-  }
-
-  def initialize(text:, size: :m, tag: :a, **attributes)
-    @tag = tag
+  def initialize(text:, size: :m, current: false, disabled: false, **attributes)
     @text = text
     @size = size
     @attributes = attributes
 
+    @attributes[:'aria-current'] = current
+    @attributes[:'aria-disabled'] = disabled
     @attributes[:class] = [
       %w[
         rounded justify-start items-center inline-flex py-1.5 cursor-pointer
@@ -39,7 +35,7 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
 
   def call
     content_tag(
-      TAG_NAMES.fetch(@tag.to_sym),
+      :a,
       @text,
       **@attributes
     )

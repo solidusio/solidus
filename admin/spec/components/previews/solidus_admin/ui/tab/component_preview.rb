@@ -11,9 +11,9 @@ class SolidusAdmin::UI::Tab::ComponentPreview < ViewComponent::Preview
 
   # @param text text
   # @param size select { choices: [s, m, l] }
-  # @param active toggle
+  # @param current toggle
   # @param disabled toggle
-  def playground(text: "Tab", size: :m, active: false, disabled: false)
-    render current_component.new(text: text, size: size, active: active, disabled: disabled)
+  def playground(text: "Tab", size: :m, current: false, disabled: false)
+    render current_component.new(text: text, size: size, current: current, disabled: disabled)
   end
 end
