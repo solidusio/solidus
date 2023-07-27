@@ -2,7 +2,6 @@
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param page [GearedPagination::Page] The pagination page object.
-  # @param path [Proc] A callable object that generates the path for pagination links.
   #
   # @param columns [Array<Hash>] The array of column definitions.
   # @option columns [Symbol|Proc|#to_s] :header The column header.
@@ -15,28 +14,27 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @option batch_actions [String] :action The batch action path.
   # @option batch_actions [String] :method The batch action HTTP method for the provided path.
   #
-  # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
+  # @param footer [String] The content for the footer, e.g. pagination links.
+  #
   # @param checkbox_componnent [Class] The checkbox component class (default: component("ui/forms/checkbox")).
   # @param button_component [Class] The button component class (default: component("ui/button")).
   # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
     page:,
-    path: nil,
     columns: [],
     batch_actions: [],
-    pagination_component: component("ui/table/pagination"),
+    footer: nil,
     checkbox_componnent: component("ui/forms/checkbox"),
     button_component: component("ui/button"),
     tab_component: component("ui/tab")
   )
     @page = page
-    @path = path
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @model_class = page.records.model
     @rows = page.records
+    @footer = footer
 
-    @pagination_component = pagination_component
     @checkbox_componnent = checkbox_componnent
     @button_component = button_component
     @tab_component = tab_component
@@ -129,24 +127,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
     content_tag(:td, content_tag(:div, cell, class: "flex items-center gap-1.5"), class: "py-2 px-4 h-10 vertical-align-middle leading-none")
-  end
-
-  def render_table_footer
-    if @pagination_component
-      tag.tfoot do
-        tag.tr do
-          tag.td(colspan: @columns.size, class: "py-4") do
-            tag.div(class: "flex justify-center") do
-              render_pagination_component
-            end
-          end
-        end
-      end
-    end
-  end
-
-  def render_pagination_component
-    @pagination_component.new(page: @page, path: @path).render_in(self)
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
