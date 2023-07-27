@@ -23,6 +23,7 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
       active:text-white active:bg-gray-800
       focus:text-white focus:bg-gray-700
       disabled:text-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed
+      aria-disabled:text-gray-400 aria-disabled:bg-gray-100 aria-disabled:cursor-not-allowed
     ],
     secondary: %w[
       text-gray-700 bg-white border border-1 border-gray-200
@@ -30,6 +31,7 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
       active:bg-gray-100
       focus:bg-gray-50
       disabled:text-gray-300 disabled:bg-white border-gray-200 disabled:cursor-not-allowed
+      aria-disabled:text-gray-300 aria-disabled:bg-white border-gray-200 aria-disabled:cursor-not-allowed
     ],
     ghost: %w[
       text-gray-700 bg-transparent
@@ -37,6 +39,7 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
       active:bg-gray-100
       focus:bg-gray-50 focus:ring-gray-300 focus:ring-2
       disabled:text-gray-300 disabled:bg-transparent border-gray-300 disabled:cursor-not-allowed
+      aria-disabled:text-gray-300 aria-disabled:bg-transparent border-gray-300 aria-disabled:cursor-not-allowed
     ],
   }
 
