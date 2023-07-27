@@ -17,12 +17,8 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
     @text = text
     @size = size
     @attributes = attributes
-  end
 
-  def call
-    class_name = [
-      @attributes.delete(:class),
-      SIZES.fetch(@size.to_sym),
+    @attributes[:class] = [
       %w[
         rounded justify-start items-center inline-flex py-1.5 cursor-pointer
         bg-transparent text-gray-500
@@ -36,12 +32,15 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
         disabled:bg-gray-100 disabled:text-gray-400
         aria-disabled:bg-gray-100 aria-disabled:text-gray-400
       ],
+      SIZES.fetch(@size.to_sym),
+      @attributes.delete(:class),
     ].join(" ")
+  end
 
+  def call
     content_tag(
       TAG_NAMES.fetch(@tag.to_sym),
       @text,
-      class: class_name,
       **@attributes
     )
   end
