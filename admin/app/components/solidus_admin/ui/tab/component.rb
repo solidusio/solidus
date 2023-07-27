@@ -12,12 +12,10 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
     button: :button,
   }
 
-  def initialize(text:, size: :m, tag: :a, disabled: false, active: false, **attributes)
+  def initialize(text:, size: :m, tag: :a, **attributes)
     @tag = tag
     @text = text
     @size = size
-    @active = active
-    @disabled = disabled
     @attributes = attributes
   end
 
@@ -33,16 +31,12 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
         focus:bg-gray-25 focus:text-gray-700
 
         active:bg-gray-50 active:text-black
-        data-[ui-active]:bg-gray-50 data-[ui-active]:text-black
+        aria-current:bg-gray-50 aria-current:text-black
 
         disabled:bg-gray-100 disabled:text-gray-400
-        data-[ui-disabled]:bg-gray-100 data-[ui-disabled]:text-gray-400
-      ]
+        aria-disabled:bg-gray-100 aria-disabled:text-gray-400
+      ],
     ].join(" ")
-
-    @attributes["data-ui-active"] = true if @active
-    @attributes["data-ui-disabled"] = true if @disabled
-    @attributes[:disabled] = true if @disabled && @tag == :button
 
     content_tag(
       TAG_NAMES.fetch(@tag.to_sym),
