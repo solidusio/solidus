@@ -171,14 +171,21 @@ RSpec.describe Spree::OrderInventory, type: :model do
         end
 
         context 'when there is not enough availability at any stock location' do
+          before { stock_item.set_count_on_hand 0 }
+
           it 'falls-back selecting first non-shipped shipment that leaves from same stock_location' do
-            shipment = subject.send(:determine_target_shipment, 1)
+            required_quantity = 1
+            shipment = subject.send(:determine_target_shipment, required_quantity)
             shipment.reload
 
-            expect(shipment.shipped?).to be false
-            expect(shipment.inventory_units_for(variant)).to be_empty
-            expect(variant.stock_location_ids.include?(shipment.stock_location_id)).to be true
-            expect(shipment.stock_location).not_to eql stock_item.stock_location
+            aggregate_failures do
+              expect(stock_item.count_on_hand).to eq(0)
+              expect(stock_item.backorderable?).to eq(false)
+              expect(shipment.shipped?).to be false
+              expect(shipment.inventory_units_for(variant)).to be_empty
+              expect(variant.stock_location_ids.include?(shipment.stock_location_id)).to be true
+              expect(shipment.stock_location).not_to eql stock_item.stock_location
+            end
           end
         end
       end
