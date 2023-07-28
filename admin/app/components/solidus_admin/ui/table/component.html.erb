@@ -10,8 +10,34 @@
 >
   <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 visible:flex hidden:hidden" %>
 
+  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
+    <div class="flex-grow">
+      <label class="bg-white rounded border border-gray-300 items-center gap-1 px-3 py-1.5 inline-flex w-full justify-start">
+        <%= render component('ui/icon').new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
+        <input type="search" placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>" class="w-full placeholder:text-gray-400">
+      </label>
+    </div>
+
+    <div class="ml-4">
+      <%= render @button_component.new(
+        text: t('.cancel'),
+        scheme: :ghost,
+        "data-action": "#{stimulus_id}#cancelSearch",
+      ) %>
+    </div>
+  </div>
+
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
-    <%= render @tab_component.new(text: "All", current: true, href: "") %>
+    <div class="flex-grow">
+      <%= render @tab_component.new(text: "All", current: true, href: "") %>
+    </div>
+
+    <%= render @button_component.new(
+      'aria-label': t('.filter'),
+      icon: "filter-3-line",
+      scheme: :secondary,
+      "data-action": "#{stimulus_id}#showSearch",
+    ) %>
   </div>
 
   <% if @batch_actions %>

@@ -6,6 +6,7 @@ export default class extends Controller {
     "headerCheckbox",
     "batchToolbar",
     "scopesToolbar",
+    "searchToolbar",
     "defaultHeader",
     "batchHeader",
     "selectedRowsCount",
@@ -18,6 +19,16 @@ export default class extends Controller {
   connect() {
     this.modeValue = "scopes"
 
+    this.render()
+  }
+
+  showSearch(event) {
+    this.modeValue = "search"
+    this.render()
+  }
+
+  cancelSearch(event) {
+    this.modeValue = "scopes"
     this.render()
   }
 
@@ -41,6 +52,7 @@ export default class extends Controller {
   render() {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
+    this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
     this.batchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
