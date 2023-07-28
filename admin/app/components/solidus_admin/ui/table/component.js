@@ -1,7 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["checkbox", "headerCheckbox", "batchToolbar", "scopesToolbar", "defaultHeader", "batchHeader", "selectedRowsCount"]
+  static targets = [
+    "checkbox",
+    "headerCheckbox",
+    "batchToolbar",
+    "scopesToolbar",
+    "defaultHeader",
+    "batchHeader",
+    "selectedRowsCount",
+  ]
   static classes = ["selectedRow"]
   static values = {
     mode: { type: String, default: "scopes" },
@@ -39,7 +47,9 @@ export default class extends Controller {
     this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
 
     // Update the rows background color
-    this.checkboxTargets.filter((checkbox) => checkbox.closest('tr').classList.toggle(this.selectedRowClass, checkbox.checked))
+    this.checkboxTargets.filter((checkbox) =>
+      checkbox.closest("tr").classList.toggle(this.selectedRowClass, checkbox.checked),
+    )
 
     // Update the selected rows count
     this.selectedRowsCountTarget.textContent = `${selectedRows.length}`
