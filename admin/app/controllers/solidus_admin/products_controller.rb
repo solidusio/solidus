@@ -3,11 +3,9 @@
 module SolidusAdmin
   class ProductsController < SolidusAdmin::BaseController
     def index
-      @search_key = search_key
-      @query_params = product_params[:q]
-      @q = Spree::Product.ransack(@query_params)
-
-      @products = @q.result(distinct: true).order(created_at: :desc, id: :desc)
+      @search_key = :name_or_variants_including_master_sku_cont
+      @query_params = params[:q].permit!
+      @products = Spree::Product.ransack(@query_params).result(distinct: true).order(created_at: :desc, id: :desc)
 
       set_page_and_extract_portion_from(
         @products,
@@ -54,16 +52,6 @@ module SolidusAdmin
 
       flash[:notice] = t('.success')
       redirect_to products_path, status: :see_other
-    end
-
-    private
-
-    def product_params
-      params.permit(:page, q: [search_key])
-    end
-
-    def search_key
-      :name_or_variants_including_master_sku_cont
     end
   end
 end

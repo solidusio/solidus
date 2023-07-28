@@ -9,6 +9,7 @@ export default class extends Controller {
     "scopesToolbar",
     "searchToolbar",
     "searchField",
+    "searchForm",
     "defaultHeader",
     "batchHeader",
     "selectedRowsCount",
@@ -29,7 +30,6 @@ export default class extends Controller {
 
   connect() {
     if (this.searchFieldTarget.value !== "") this.modeValue = "search"
-
     this.render()
   }
 
@@ -74,8 +74,10 @@ export default class extends Controller {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
     this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+
     this.batchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
+
     this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
     this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
 

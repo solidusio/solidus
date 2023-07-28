@@ -14,9 +14,11 @@
     <%= form_with(
       url: @base_search_url,
       method: :get,
-      class: 'flex-grow',
-      "data-#{stimulus_id}-target": "searchForm",
-      "data-turbo-frame": table_frame_id,
+      html: {
+        class: 'flex-grow',
+        "data-#{stimulus_id}-target": "searchForm",
+        "data-turbo-frame": table_frame_id,
+      },
     ) do |form| %>
       <label class="bg-white rounded border border-gray-300 items-center gap-1 px-3 py-1.5 inline-flex w-full justify-start">
         <%= render component('ui/icon').new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
@@ -24,8 +26,9 @@
           name="q[<%= @search_key %>]"
           type="search"
           placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
-          class="w-full placeholder:text-gray-400"
+          class="w-full placeholder:text-gray-400 appearance-none"
           data-<%= stimulus_id %>-target="searchField"
+          data-action="<%= stimulus_id %>#search"
         >
         <button type="reset">
           <%= render component('ui/icon').new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
