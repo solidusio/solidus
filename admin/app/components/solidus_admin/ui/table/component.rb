@@ -42,6 +42,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @columns.unshift selectable_column if batch_actions.present?
   end
 
+  def resource_plural_name
+    @model_class.model_name.human.pluralize
+  end
+
   def selectable_column
     @selectable_column ||= Column.new(
       header: -> {
