@@ -72,7 +72,7 @@
             colspan="<%= @columns.size %>"
             class="text-center py-4 text-3.5 line-[150%] text-black bg-white"
           >
-            <%= t('.no_resources_found', resources: @model_class.model_name.human.pluralize) %>
+            <%= t('.no_resources_found', resources: resource_plural_name) %>
           </td>
         </tr>
       <% end %>
