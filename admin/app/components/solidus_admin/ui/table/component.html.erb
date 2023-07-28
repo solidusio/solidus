@@ -10,8 +10,53 @@
 >
   <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 visible:flex hidden:hidden" %>
 
+  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
+    <%= form_with(
+      url: '',
+      method: :get,
+      html: {
+        class: 'flex-grow',
+        "data-#{stimulus_id}-target": "searchForm",
+      },
+    ) do |form| %>
+      <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
+        <%= render @icon_component.new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
+        <span class="sr-only">
+          <%= t('.search_placeholder', resources: resource_plural_name) %>
+        </span>
+        <input
+          type="text"
+          placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
+          class="w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
+          data-<%= stimulus_id %>-target="searchField"
+        >
+        <button class="absolute right-0 mr-3" data-action="<%= stimulus_id %>#clearSearch">
+          <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
+          <span class="sr-only"><%= t('.clear') %></span>
+        </button>
+      </label>
+    <% end %>
+
+    <div class="ml-4">
+      <%= render @button_component.new(
+        text: t('.cancel'),
+        scheme: :ghost,
+        "data-action": "#{stimulus_id}#cancelSearch",
+      ) %>
+    </div>
+  </div>
+
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
-    <%= render @tab_component.new(text: "All", current: true, href: "") %>
+    <div class="flex-grow">
+      <%= render @tab_component.new(text: "All", current: true, href: "") %>
+    </div>
+
+    <%= render @button_component.new(
+      'aria-label': t('.filter'),
+      icon: "filter-3-line",
+      scheme: :secondary,
+      "data-action": "#{stimulus_id}#showSearch",
+    ) %>
   </div>
 
   <% if @batch_actions %>
