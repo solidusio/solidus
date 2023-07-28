@@ -75,6 +75,12 @@ module Spree
         ActionMailer::Base.preview_path = app.config.action_mailer.preview_path
       end
 
+      initializer "spree.deprecator" do |app|
+        if app.respond_to?(:deprecators)
+          app.deprecators[:spree] = Spree.deprecator
+        end
+      end
+
       config.after_initialize do
         Spree::Config.check_load_defaults_called('Spree::Config')
         Spree::Config.static_model_preferences.validate!
