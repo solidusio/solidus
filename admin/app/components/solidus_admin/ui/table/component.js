@@ -6,10 +6,14 @@ export default class extends Controller {
     "headerCheckbox",
     "batchToolbar",
     "scopesToolbar",
+    "searchToolbar",
+    "searchField",
+    "searchForm",
     "defaultHeader",
     "batchHeader",
     "selectedRowsCount",
   ]
+
   static classes = ["selectedRow"]
   static values = {
     mode: { type: String, default: "scopes" },
@@ -21,9 +25,28 @@ export default class extends Controller {
     this.render()
   }
 
+  showSearch(event) {
+    this.modeValue = "search"
+    this.render()
+  }
+
+  clearSearch() {
+    this.searchFieldTarget.value = ''
+    this.searchFormTarget.requestSubmit()
+  }
+
+  cancelSearch() {
+    this.clearSearch()
+
+    this.modeValue = "scopes"
+    this.render()
+  }
+
   selectRow(event) {
     if (this.checkboxTargets.some((checkbox) => checkbox.checked)) {
       this.modeValue = "batch"
+    } else if (this.searchFieldTarget.value !== '') {
+      this.modeValue = "search"
     } else {
       this.modeValue = "scopes"
     }
@@ -32,7 +55,14 @@ export default class extends Controller {
   }
 
   selectAllRows(event) {
-    this.modeValue = event.target.checked ? "batch" : "scopes"
+    if (this.modeValue = event.target.checked) {
+      this.modeValue = "batch"
+    } else if (this.searchFieldTarget.value !== '') {
+      this.modeValue = "search"
+    } else {
+      this.modeValue = "scopes"
+    }
+
     this.checkboxTargets.forEach((checkbox) => (checkbox.checked = event.target.checked))
 
     this.render()
@@ -41,10 +71,12 @@ export default class extends Controller {
   render() {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
+    this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
     this.batchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
-    this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
+
+    this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue === "batch")
 
     // Update the rows background color
     this.checkboxTargets.filter((checkbox) =>
