@@ -264,7 +264,7 @@ module Spree
       @recalculator ||= Spree::Config.order_recalculator_class.new(self)
     end
     alias_method :updater, :recalculator
-    deprecate updater: :recalculator, deprecator: Spree::Deprecation
+    deprecate updater: :recalculator, deprecator: Spree.deprecator
 
     def assign_billing_to_shipping_address
       self.ship_address = bill_address if bill_address
@@ -513,7 +513,7 @@ module Spree
     end
 
     alias_method :ensure_updated_shipments, :check_shipments_and_restart_checkout
-    deprecate ensure_updated_shipments: :check_shipments_and_restart_checkout, deprecator: Spree::Deprecation
+    deprecate ensure_updated_shipments: :check_shipments_and_restart_checkout, deprecator: Spree.deprecator
 
     def restart_checkout_flow
       return if state == 'cart'
