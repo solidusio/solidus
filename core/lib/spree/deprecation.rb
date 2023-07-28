@@ -35,9 +35,9 @@ module Spree
   # variable via +request+ method and execute the same method on non-proxy
   # instance variable.
   #
-  # Default deprecator is <tt>Spree::Deprecation</tt>.
+  # Default deprecator is <tt>Spree.deprecator</tt>.
   class DeprecatedInstanceVariableProxy < ActiveSupport::Deprecation::DeprecationProxy
-    def initialize(instance, method_or_var, var = "@#{method}", deprecator = Spree::Deprecation, message = nil)
+    def initialize(instance, method_or_var, var = "@#{method}", deprecator = Spree.deprecator, message = nil)
       @instance = instance
       @method_or_var = method_or_var
       @var = var

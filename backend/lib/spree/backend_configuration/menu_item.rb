@@ -9,11 +9,11 @@ module Spree
       def sections # rubocop:disable Style/TrivialAccessors
         @sections
       end
-      deprecate sections: :label, deprecator: Spree::Deprecation
+      deprecate sections: :label, deprecator: Spree.deprecator
 
       attr_accessor :position # rubocop:disable Layout/EmptyLinesAroundAttributeAccessor
-      deprecate position: nil, deprecator: Spree::Deprecation
-      deprecate "position=": nil, deprecator: Spree::Deprecation
+      deprecate position: nil, deprecator: Spree.deprecator
+      deprecate "position=": nil, deprecator: Spree.deprecator
 
       # @param icon [String] The icon to draw for this menu item
       # @param condition [Proc] A proc which returns true if this menu item
@@ -41,8 +41,8 @@ module Spree
         if args.length == 2
           sections, icon = args
           label ||= sections.first.to_s
-          Spree::Deprecation.warn "Passing sections to #{self.class.name} is deprecated. Please pass a label instead."
-          Spree::Deprecation.warn "Passing icon to #{self.class.name} is deprecated. Please use the keyword argument instead."
+          Spree.deprecator.warn "Passing sections to #{self.class.name} is deprecated. Please pass a label instead."
+          Spree.deprecator.warn "Passing icon to #{self.class.name} is deprecated. Please use the keyword argument instead."
         elsif args.any?
           raise ArgumentError, "wrong number of arguments (given #{args.length}, expected 0..2)"
         end
@@ -50,7 +50,7 @@ module Spree
         if partial.present? && children.blank?
           # We only show the deprecation if there are no children, because if there are children,
           # then the menu item is already future-proofed.
-          Spree::Deprecation.warn "Passing a partial to #{self.class.name} is deprecated. Please use the children keyword argument instead."
+          Spree.deprecator.warn "Passing a partial to #{self.class.name} is deprecated. Please use the children keyword argument instead."
         end
 
         @condition = condition || -> { true }

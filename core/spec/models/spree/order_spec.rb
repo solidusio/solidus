@@ -375,7 +375,7 @@ RSpec.describe Spree::Order, type: :model do
     let(:subject) { order.ensure_updated_shipments }
 
     it "is deprecated" do
-      expect(Spree::Deprecation).to receive(:warn).with(/ensure_updated_shipments is deprecated.*use check_shipments_and_restart_checkout instead/, any_args)
+      expect(Spree.deprecator).to receive(:warn).with(/ensure_updated_shipments is deprecated.*use check_shipments_and_restart_checkout instead/, any_args)
 
       subject
     end

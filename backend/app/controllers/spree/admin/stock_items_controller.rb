@@ -45,7 +45,7 @@ module Spree
           view_context,
           :@stock_locations,
           :stock_item_stock_locations,
-          Spree::Deprecation,
+          Spree.deprecator,
           "Please, do not use @stock_item_stock_locations anymore in the views, use @stock_locations",
         )
         @variant_display_attributes = self.class.variant_display_attributes

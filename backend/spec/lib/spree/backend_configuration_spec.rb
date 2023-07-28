@@ -118,7 +118,7 @@ RSpec.describe Spree::BackendConfiguration do
   describe "deprecated behavior" do
     describe "loading *_TABS constants" do
       it "warns about the deprecation" do
-        expect(Spree::Deprecation).to receive(:warn).with(a_string_matching(/Spree::BackendConfiguration::\*_TABS is deprecated\./))
+        expect(Spree.deprecator).to receive(:warn).with(a_string_matching(/Spree::BackendConfiguration::\*_TABS is deprecated\./))
 
         described_class::ORDER_TABS
       end

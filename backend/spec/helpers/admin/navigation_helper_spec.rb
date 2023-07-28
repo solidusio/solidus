@@ -28,7 +28,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
         without_partial_double_verification do
           allow(helper).to receive(:admin_orders_path).and_return("/admin/orders")
         end
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Spree.deprecator).to receive(:warn)
           .with("Passing a route to #tab is deprecated. Please pass a url instead.")
         expect(helper.tab(label: :orders, route: :admin_orders)).to include('href="/admin/orders"')
       end

@@ -30,7 +30,7 @@ module Spree
           MSG
         end
       end
-      deprecate :check_version, deprecator: Spree::Deprecation
+      deprecate :check_version, deprecator: Spree.deprecator
 
       def self.add_definitions!
         ::FactoryBot.definition_file_paths.unshift(*definition_file_paths).uniq!
