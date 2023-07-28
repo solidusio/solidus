@@ -28,6 +28,7 @@ module SolidusAdmin::Preview
 
     included do
       helper ActionView::Helpers
+      helper SolidusAdmin::ContainerHelper
       helper_method :current_component
     end
 
