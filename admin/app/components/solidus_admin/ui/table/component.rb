@@ -18,6 +18,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   #
   # @param checkbox_componnent [Class] The checkbox component class (default: component("ui/forms/checkbox")).
   # @param button_component [Class] The button component class (default: component("ui/button")).
+  # @param icon_component [Class] The icon component class (default: component("ui/icon")).
   # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
     page:,
@@ -26,6 +27,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     footer: nil,
     checkbox_componnent: component("ui/forms/checkbox"),
     button_component: component("ui/button"),
+    icon_component: component("ui/icon"),
     tab_component: component("ui/tab")
   )
     @page = page
@@ -37,6 +39,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
 
     @checkbox_componnent = checkbox_componnent
     @button_component = button_component
+    @icon_component = icon_component
     @tab_component = tab_component
 
     @columns.unshift selectable_column if batch_actions.present?
