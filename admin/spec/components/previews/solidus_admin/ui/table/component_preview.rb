@@ -14,9 +14,11 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
   def simple
     render current_component.new(
       model_class: Spree::Product,
-      rows: Array.new(10) {
+      rows: Array.new(10) { |n|
         Spree::Product.new(id: n, name: "Product #{n}", price: n * 10.0, available_on: n.days.ago)
       },
+      search_key: :no_key,
+      search_url: '#',
       columns: [
         { header: :id, data: -> { _1.id.to_s } },
         { header: :name, data: :name },
