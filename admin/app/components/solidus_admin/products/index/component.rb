@@ -16,6 +16,14 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     @pagination_component = pagination_component
   end
 
+  def prev_page_link
+    @page.first? ? nil : solidus_admin.url_for(host: request.host, port: request.port, **request.params, page: @page.number - 1)
+  end
+
+  def next_page_link
+    @page.last? ? nil : solidus_admin.url_for(host: request.host, port: request.port, **request.params, page: @page.next_param)
+  end
+
   def image_column(product)
     image = product.gallery.images.first or return
 
