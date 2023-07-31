@@ -18,6 +18,8 @@
   <%= render @table_component.new(
     model_class: Spree::Product,
     rows: @page.records,
+    search_key: :name_or_variants_including_master_sku_cont,
+    search_url: solidus_admin.products_path,
     batch_actions: [
       {
         display_name: t('.batch_actions.delete'),
@@ -49,8 +51,8 @@
       { header: :price, data: -> { price_column(_1) } },
       { header: :stock, data: -> { stock_column(_1) } }
      ],
-     prev_page_link: @page.first? ? nil : solidus_admin.products_path(page: @page.number - 1),
-     next_page_link: @page.last? ? nil : solidus_admin.products_path(page: @page.number + 1),
+     prev_page_link: prev_page_link,
+     next_page_link: next_page_link,
    )
   %>
 </div>
