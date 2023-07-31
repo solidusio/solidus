@@ -8,7 +8,7 @@
     <%= image_tag @logo_path, alt: t('.visit_store'), class: "max-h-7" %>
   <% end %>
 
-  <%= link_to @store.url, class: "flex mt-4 mb-2 px-2 py-1.5 border border-gray-100 rounded-sm shadow-sm" do %>
+  <%= link_to @store.url, target: :_blank, class: "flex mt-4 mb-2 px-2 py-1.5 border border-gray-100 rounded-sm shadow-sm" do %>
     <div class="flex-grow">
       <p class="body-small-bold text-black"><%= @store.name %></p>
       <p class="body-tiny text-gray-500"><%= @store.url %></p>
