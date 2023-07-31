@@ -4,6 +4,7 @@ module SolidusAdmin
   # BaseComponent is the base class for all components in Solidus Admin.
   class BaseComponent < ViewComponent::Base
     include SolidusAdmin::ContainerHelper
+    include Turbo::FramesHelper
 
     def icon_tag(name, **attrs)
       render component("ui/icon").new(name: name, **attrs)
