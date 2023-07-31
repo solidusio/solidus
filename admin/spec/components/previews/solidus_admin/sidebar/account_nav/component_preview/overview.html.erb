@@ -1,16 +1,29 @@
-<div class="flex h-screen">
-  <div class="flex h-4/5">
-    <div class="self-end">
-      <%= render current_component.new(
-        user_label: "Alice Doe"
-      ) %>
-    </div>
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Short name
+  </h6>
+
+  <div class="w-[17.78rem] pt-20 rounded border-dotted border-2 border-gray-300">
+    <%= render current_component.new(
+      user_label: "Alice Doe",
+      account_path: "#account",
+      logout_path: "#logout",
+      logout_method: :delete
+    ) %>
   </div>
-  <div class="flex h-4/5">
-    <div class="self-end">
-      <%= render current_component.new(
-        user_label: "Alice Supercalifragilisticexpialidocious"
-      ) %>
-    </div>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Long name
+  </h6>
+
+  <div class="w-[17.78rem] pt-20 rounded border-dotted border-2 border-gray-300">
+    <%= render current_component.new(
+      user_label: "Alice Supercalifragilisticexpialidocious",
+      account_path: "#account",
+      logout_path: "#logout",
+      logout_method: :delete
+    ) %>
   </div>
 </div>

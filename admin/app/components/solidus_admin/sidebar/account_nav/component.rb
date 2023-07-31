@@ -6,7 +6,7 @@ class SolidusAdmin::Sidebar::AccountNav::Component < SolidusAdmin::BaseComponent
   # @param account_path [String]
   # @param logout_path [String]
   # @param logout_method [Symbol]
-  def initialize(user_label: "Alice Doe", account_path: "#", logout_path: "#", logout_method: :delete)
+  def initialize(user_label:, account_path:, logout_path:, logout_method:)
     @user_label = user_label
     @account_path = account_path
     @logout_path = logout_path
