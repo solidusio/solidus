@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { debounce } from "solidus_admin/utils"
 
 export default class extends Controller {
   static targets = [
@@ -19,6 +20,14 @@ export default class extends Controller {
     mode: { type: String, default: "scopes" },
   }
 
+  initialize() {
+    // Debounced search function.
+    // This method submits the search form after a delay of 200ms.
+    // If the function is called again within this delay, the previous call is cleared,
+    // effectively ensuring the form is only submitted 200ms after the last call (e.g., user stops typing).
+    this.search = debounce(this.search.bind(this), 200)
+  }
+
   connect() {
     if (this.searchFieldTarget.value !== "") this.modeValue = "search"
 
@@ -30,9 +39,13 @@ export default class extends Controller {
     this.render()
   }
 
+  search() {
+    this.searchFormTarget.requestSubmit()
+  }
+
   clearSearch() {
     this.searchFieldTarget.value = ''
-    this.searchFormTarget.requestSubmit()
+    this.search()
   }
 
   cancelSearch() {
