@@ -21,6 +21,11 @@
     </ul>
   </div>
   <div class="mt-auto">
-    <%= render @account_nav_component.new %>
+    <%= render @account_nav_component.new(
+      user_label: helpers.current_solidus_admin_user.email,
+      account_path: solidus_admin.account_path,
+      logout_path: helpers.solidus_admin_logout_path,
+      logout_method: helpers.solidus_admin_logout_method,
+    ) %>
   </div>
 </nav>
