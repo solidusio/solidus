@@ -68,6 +68,7 @@ require 'spree/testing_support/factory_bot'
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 # VIEW COMPONENTS
+Rails.application.config.view_component.test_controller = "SolidusAdmin::BaseController"
 require "view_component/test_helpers"
 require "view_component/system_test_helpers"
 
