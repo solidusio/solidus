@@ -90,6 +90,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{SecureRandom.hex}"
   end
 
+  def table_frame_id
+    @table_frame_id ||= "#{stimulus_id}--table-frame"
+  end
+
   def render_batch_action_button(batch_action)
     render @button_component.new(
       name: request_forgery_protection_token,

@@ -16,7 +16,10 @@
       method: :get,
       html: {
         class: 'flex-grow',
+        "data-turbo-frame": table_frame_id,
+        "data-turbo-action": "replace",
         "data-#{stimulus_id}-target": "searchForm",
+        "data-action": "reset->#{stimulus_id}#search",
       },
     ) do |form| %>
       <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
@@ -31,6 +34,7 @@
           placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
           class="w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
           data-<%= stimulus_id %>-target="searchField"
+          data-action="<%= stimulus_id %>#search"
         >
         <button class="absolute right-0 mr-3" data-action="<%= stimulus_id %>#clearSearch">
           <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
@@ -68,74 +72,77 @@
     <% end %>
   </div>
 
-  <table class="table-fixed w-full border-collapse">
-    <colgroup>
-      <% @columns.each do |column| %>
-        <col class="<%= column.class_name %>">
-      <% end %>
-    </colgroup>
-
-    <thead
-      class="bg-gray-15 text-gray-700 text-left text-small"
-      data-<%= stimulus_id %>-target="defaultHeader"
-    >
-      <tr>
+  <%= turbo_frame_tag table_frame_id, target: "_top" do %>
+    <table class="table-fixed w-full border-collapse">
+      <colgroup>
         <% @columns.each do |column| %>
-          <%= render_header_cell(column.header) %>
+          <col class="<%= column.class_name %>">
         <% end %>
-      </tr>
-    </thead>
+      </colgroup>
 
-    <% if @batch_actions %>
       <thead
-        data-<%= stimulus_id %>-target="batchHeader"
-        class="bg-white color-black text-xs leading-none text-left"
+        class="bg-gray-15 text-gray-700 text-left text-small"
+        data-<%= stimulus_id %>-target="defaultHeader"
       >
         <tr>
-          <%= render_header_cell(selectable_column.header) %>
-          <%= render_header_cell(content_tag(:div, safe_join([
-            content_tag(:span, "0", "data-#{stimulus_id}-target": "selectedRowsCount"),
-            " #{t('.rows_selected')}.",
-          ])), colspan: @columns.count - 1) %>
-        </div>
-      </thead>
-    <% end %>
-
-    <tbody class="bg-white text-3.5 line-[150%] text-black">
-      <% @rows.each do |row| %>
-        <tr class="border-b border-gray-100">
           <% @columns.each do |column| %>
-            <%= render_data_cell(column.data, row) %>
+            <%= render_header_cell(column.header) %>
           <% end %>
         </tr>
+      </thead>
+
+      <% if @batch_actions %>
+        <thead
+          data-<%= stimulus_id %>-target="batchHeader"
+          class="bg-white color-black text-xs leading-none text-left"
+          hidden
+        >
+          <tr>
+            <%= render_header_cell(selectable_column.header) %>
+            <%= render_header_cell(content_tag(:div, safe_join([
+              content_tag(:span, "0", "data-#{stimulus_id}-target": "selectedRowsCount"),
+              " #{t('.rows_selected')}.",
+            ])), colspan: @columns.count - 1) %>
+          </div>
+        </thead>
       <% end %>
 
-      <% if @rows.empty? && @model_class %>
-        <tr>
-          <td
-            colspan="<%= @columns.size %>"
-            class="text-center py-4 text-3.5 line-[150%] text-black bg-white"
-          >
-            <%= t('.no_resources_found', resources: resource_plural_name) %>
-          </td>
-        </tr>
+      <tbody class="bg-white text-3.5 line-[150%] text-black">
+        <% @rows.each do |row| %>
+          <tr class="border-b border-gray-100">
+            <% @columns.each do |column| %>
+              <%= render_data_cell(column.data, row) %>
+            <% end %>
+          </tr>
+        <% end %>
+
+        <% if @rows.empty? && @model_class %>
+          <tr>
+            <td
+              colspan="<%= @columns.size %>"
+              class="text-center py-4 text-3.5 line-[150%] text-black bg-white"
+            >
+              <%= t('.no_resources_found', resources: resource_plural_name) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+
+      <% if @prev_page_link || @next_page_link %>
+        <tfoot>
+          <tr>
+            <td colspan="<%= @columns.size %>" class="py-4">
+              <div class="flex justify-center">
+                <%= render @pagination_component.new(
+                  prev_link: @prev_page_link,
+                  next_link: @next_page_link
+                ) %>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
       <% end %>
-    </tbody>
 
-    <% if @prev_page_link || @next_page_link %>
-      <tfoot>
-        <tr>
-          <td colspan="<%= @columns.size %>" class="py-4">
-            <div class="flex justify-center">
-              <%= render @pagination_component.new(
-                prev_link: @prev_page_link,
-                next_link: @next_page_link
-              ) %>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
-    <% end %>
-
-  </table>
+    </table>
+  <% end %>
 </div>

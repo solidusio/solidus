@@ -9,6 +9,8 @@
     'aria-disabled': @prev_link.blank?,
     rel: 'prev',
     text: content_tag(:span, t('.previous'), class: 'sr-only'),
+    "data-turbo-frame": "_self",
+    "data-turbo-action": "advance",
   ) -%>
   <%= render @button_component.new(
     icon: 'arrow-right-s-line',
@@ -20,5 +22,7 @@
     'aria-disabled': @next_link.blank?,
     rel: 'next',
     text: content_tag(:span, t('.next'), class: 'sr-only'),
+    "data-turbo-frame": "_self",
+    "data-turbo-action": "advance",
   ) %>
 </nav>
