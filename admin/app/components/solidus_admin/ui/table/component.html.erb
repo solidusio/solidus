@@ -12,7 +12,7 @@
 
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
     <%= form_with(
-      url: '',
+      url: @search_url,
       method: :get,
       html: {
         class: 'flex-grow',
@@ -25,6 +25,8 @@
           <%= t('.search_placeholder', resources: resource_plural_name) %>
         </span>
         <input
+          name="q[<%= @search_key %>]"
+          value="<%= params.dig(:q, @search_key) %>"
           type="text"
           placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
           class="w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
