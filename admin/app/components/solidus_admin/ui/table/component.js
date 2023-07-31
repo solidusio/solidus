@@ -20,7 +20,7 @@ export default class extends Controller {
   }
 
   connect() {
-    this.modeValue = "scopes"
+    if (this.searchFieldTarget.value !== "") this.modeValue = "search"
 
     this.render()
   }

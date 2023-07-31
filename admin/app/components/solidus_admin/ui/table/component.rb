@@ -3,6 +3,8 @@
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param model_class [ActiveModel::Translation] The model class used for translations.
   # @param rows [Array] The collection of objects that will be passed to columns for display.
+  # @param search_key [Symbol] The key for searching.
+  # @param search_url [String] The base URL for searching.
   #
   # @param columns [Array<Hash>] The array of column definitions.
   # @option columns [Symbol|Proc|#to_s] :header The column header.
@@ -26,6 +28,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def initialize(
     model_class:,
     rows:,
+    search_key:,
+    search_url:,
     columns: [],
     batch_actions: [],
     prev_page_link: nil,
@@ -40,6 +44,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @model_class = model_class
     @rows = rows
+    @search_key = search_key
+    @search_url = search_url
     @prev_page_link = prev_page_link
     @next_page_link = next_page_link
 

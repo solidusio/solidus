@@ -3,8 +3,13 @@
 module SolidusAdmin
   class ProductsController < SolidusAdmin::BaseController
     def index
+      products = Spree::Product
+        .order(created_at: :desc, id: :desc)
+        .ransack(params[:q])
+        .result(distinct: true)
+
       set_page_and_extract_portion_from(
-        Spree::Product.order(created_at: :desc, id: :desc),
+        products,
         per_page: SolidusAdmin::Config[:products_per_page]
       )
     end
