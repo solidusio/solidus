@@ -27,12 +27,25 @@ module SolidusAdmin::Preview
     extend ActiveSupport::Concern
 
     included do
+      include SolidusAdmin::Auth
       helper ActionView::Helpers
       helper SolidusAdmin::ContainerHelper
       helper_method :current_component
     end
 
     private
+
+    def spree_current_user
+      Spree::LegacyUser.new(email: "admin@example.com")
+    end
+
+    def authenticate_solidus_backend_user!
+      # noop
+    end
+
+    def admin_logout_path
+      "/logout"
+    end
 
     def current_component
       @current_component ||= begin
