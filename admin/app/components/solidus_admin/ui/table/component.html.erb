@@ -59,15 +59,12 @@
     ) %>
   </div>
 
-  <% if @batch_actions %>
+  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar">
     <%= form_tag '', id: batch_actions_form_id %>
-
-    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar">
-      <% @batch_actions.each do |batch_action| %>
-        <%= render_batch_action_button(batch_action) %>
-      <% end %>
-    </div>
-  <% end %>
+    <% @batch_actions.each do |batch_action| %>
+      <%= render_batch_action_button(batch_action) %>
+    <% end %>
+  </div>
 
   <table class="table-fixed w-full border-collapse">
     <colgroup>
