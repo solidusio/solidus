@@ -13,9 +13,7 @@
       <p class="body-small-bold text-black"><%= @store.name %></p>
       <p class="body-tiny text-gray-500"><%= @store.url %></p>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M10.6693 6.27614L4.93158 12.0139L3.98877 11.0711L9.7265 5.33333H4.66932V4H12.0026V11.3333H10.6693V6.27614Z" fill="#A3A3A3"/>
-    </svg>
+    <%= render @icon_component.new(name: 'arrow-right-up-line', class: 'w-4 h-4 fill-gray-400') %>
   <% end %>
   <div data-controller="main-nav" class="mt-2">
     <ul>
