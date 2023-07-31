@@ -16,11 +16,8 @@
   </header>
 
   <%= render @table_component.new(
-    page: @page,
-    footer: render(@pagination_component.new(
-      prev_link: @page.first? ? nil : solidus_admin.products_path(page: @page.number - 1),
-      next_link: @page.last? ? nil : solidus_admin.products_path(page: @page.number + 1)
-    )),
+    model_class: Spree::Product,
+    rows: @page.records,
     batch_actions: [
       {
         display_name: t('.batch_actions.delete'),
@@ -51,7 +48,9 @@
       { header: :status, data: -> { status_column(_1) } },
       { header: :price, data: -> { price_column(_1) } },
       { header: :stock, data: -> { stock_column(_1) } }
-     ]
+     ],
+     prev_page_link: @page.first? ? nil : solidus_admin.products_path(page: @page.number - 1),
+     next_page_link: @page.last? ? nil : solidus_admin.products_path(page: @page.number + 1),
    )
   %>
 </div>
