@@ -102,10 +102,11 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.include Capybara::RSpecMatchers, type: :component
-
   config.include FactoryBot::Syntax::Methods
 
+  config.include SolidusAdmin::FeatureHelpers, type: :feature
+
+  config.include Capybara::RSpecMatchers, type: :component
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include SolidusAdmin::ComponentHelpers, type: :component
