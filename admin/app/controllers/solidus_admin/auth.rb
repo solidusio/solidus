@@ -22,7 +22,7 @@ module SolidusAdmin::Auth
   end
 
   def solidus_admin_logout_path
-    send SolidusAdmin::Config.logout_link_path
+    SolidusAdmin::Config.logout_link_path
   end
 
   def solidus_admin_logout_method

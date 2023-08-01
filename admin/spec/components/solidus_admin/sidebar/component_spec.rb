@@ -3,12 +3,7 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::Sidebar::Component, type: :component do
-  before do
-    allow(vc_test_controller).to receive(:spree_current_user).and_return(build(:user))
-    without_partial_double_verification do
-      allow(vc_test_controller.spree).to receive(:admin_logout_path).and_return('/logout')
-    end
-  end
+  before { allow(vc_test_controller).to receive(:spree_current_user).and_return(build(:user)) }
 
   it "renders the overview preview" do
     render_preview(:overview)
