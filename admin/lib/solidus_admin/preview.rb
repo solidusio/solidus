@@ -43,10 +43,6 @@ module SolidusAdmin::Preview
       # noop
     end
 
-    def admin_logout_path
-      "/logout"
-    end
-
     def current_component
       @current_component ||= begin
         # Lookbook sets the @preview instance variable with a PreviewEntity instance, while ViewComponent uses the preview class.
