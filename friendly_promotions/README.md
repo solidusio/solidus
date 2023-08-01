@@ -56,7 +56,7 @@ bin/rails generate solidus_friendly_promotions:install
 This will create the tables for this extension. It will also replace the promotion administration system under
 `/admin/promotions` with a new one that needs `turbo-rails`.
 
-It will also create an initializer within which Solidus is configured to use this extension's `SimpleOrderContents` and `OrderPromotionAdjuster` classes. Feel free to override with your own implementations!
+It will also create an initializer within which Solidus is configured to use this extension's `SimpleOrderContents` and `OrderDiscounter` classes. Feel free to override with your own implementations!
 
 ## Usage
 
