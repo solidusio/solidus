@@ -103,7 +103,7 @@ module SolidusAdmin
     preference :current_user_method, :string, default: :spree_current_user
 
     # The path used to logout the user in the admin interface.
-    preference :logout_link_path, :string, default: :admin_logout_path
+    preference :logout_link_path, :string, default: '/admin/logout'
 
     # The HTTP method used to logout the user in the admin interface.
     preference :logout_link_method, :string, default: :delete
