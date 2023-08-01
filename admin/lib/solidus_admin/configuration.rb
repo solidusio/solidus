@@ -68,6 +68,13 @@ module SolidusAdmin
     #                     The default value is fetched from the Spree core configuration and currently set to 10.
     preference :products_per_page, :integer, default: Spree::Config[:admin_products_per_page]
 
+    # @!attribute [rw] product_search_key
+    #   @return [String] The key to use when searching for products in the admin interface.
+    #                    This preference determines the product attribute to use for search.
+    #                    By default, it is set to 'name_or_variants_including_master_sku_cont',
+    #                    meaning it will search by product name or product variants sku.
+    preference :product_search_key, :string, default: :name_or_variants_including_master_sku_cont
+
     # Gives access to the main navigation configuration
     #
     # @example

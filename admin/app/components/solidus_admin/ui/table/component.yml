@@ -3,3 +3,6 @@ en:
   rows_selected: 'selected'
   select_all: 'Select all'
   select_row: 'Select row'
+  filter: 'Filter'
+  search_placeholder: 'Search all %{resources}'
+  clear: Clear

@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  # @param page [GearedPagination::Page] The pagination page object.
+  # @param model_class [ActiveModel::Translation] The model class used for translations.
+  # @param rows [Array] The collection of objects that will be passed to columns for display.
+  # @param search_key [Symbol] The key for searching.
+  # @param search_url [String] The base URL for searching.
   #
   # @param columns [Array<Hash>] The array of column definitions.
   # @option columns [Symbol|Proc|#to_s] :header The column header.
@@ -14,32 +17,49 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @option batch_actions [String] :action The batch action path.
   # @option batch_actions [String] :method The batch action HTTP method for the provided path.
   #
-  # @param footer [String] The content for the footer, e.g. pagination links.
+  # @param prev_page_link [String, nil] The link to the previous page.
+  # @param next_page_link [String, nil] The link to the next page.
   #
+  # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
   # @param checkbox_componnent [Class] The checkbox component class (default: component("ui/forms/checkbox")).
   # @param button_component [Class] The button component class (default: component("ui/button")).
+  # @param icon_component [Class] The icon component class (default: component("ui/icon")).
   # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
-    page:,
+    model_class:,
+    rows:,
+    search_key:,
+    search_url:,
     columns: [],
     batch_actions: [],
-    footer: nil,
+    prev_page_link: nil,
+    next_page_link: nil,
+    pagination_component: component("ui/table/pagination"),
     checkbox_componnent: component("ui/forms/checkbox"),
     button_component: component("ui/button"),
+    icon_component: component("ui/icon"),
     tab_component: component("ui/tab")
   )
-    @page = page
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
-    @model_class = page.records.model
-    @rows = page.records
-    @footer = footer
+    @model_class = model_class
+    @rows = rows
+    @search_key = search_key
+    @search_url = search_url
+    @prev_page_link = prev_page_link
+    @next_page_link = next_page_link
 
+    @pagination_component = pagination_component
     @checkbox_componnent = checkbox_componnent
     @button_component = button_component
+    @icon_component = icon_component
     @tab_component = tab_component
 
     @columns.unshift selectable_column if batch_actions.present?
+  end
+
+  def resource_plural_name
+    @model_class.model_name.human.pluralize
   end
 
   def selectable_column
@@ -68,6 +88,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
 
   def batch_actions_form_id
     @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{SecureRandom.hex}"
+  end
+
+  def table_frame_id
+    @table_frame_id ||= "#{stimulus_id}--table-frame"
   end
 
   def render_batch_action_button(batch_action)
