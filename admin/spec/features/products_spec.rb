@@ -3,10 +3,7 @@
 require 'spec_helper'
 
 describe "Products", type: :feature do
-  before do
-    user = create(:admin_user, email: 'admin@example.com')
-    allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(user)
-  end
+  before { sign_in create(:admin_user, email: 'admin@example.com') }
 
   it "lists products", :js do
     create(:product, name: "Just a product", price: 19.99)
