@@ -107,10 +107,6 @@ module SolidusAdmin
 
     # The HTTP method used to logout the user in the admin interface.
     preference :logout_link_method, :string, default: :delete
-
-    # A module that will be included in the BaseController to add authentication support
-    # methods, can be `nil` if no module is needed.
-    preference :authentication_adapter, :string, default: 'SolidusAdmin::AuthAdapters::Backend'
   end
 end
 
