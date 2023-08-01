@@ -4,10 +4,6 @@ module SolidusAdmin::Auth
   extend ActiveSupport::Concern
 
   included do
-    if ::SolidusAdmin::Config.authentication_adapter
-      include ::SolidusAdmin::Config.authentication_adapter.constantize
-    end
-
     before_action :authenticate_solidus_admin_user!
 
     helper_method :current_solidus_admin_user
