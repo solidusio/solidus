@@ -17,6 +17,12 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @option batch_actions [String] :action The batch action path.
   # @option batch_actions [String] :method The batch action HTTP method for the provided path.
   #
+  #
+  # @param filters [Array<Hash>] The array of filter definitions.
+  # @option filters [String] :name The filter's name.
+  # @option filters [Any] :value The filter's value.
+  # @option filters [String] :label The filter's label.
+  #
   # @param prev_page_link [String, nil] The link to the previous page.
   # @param next_page_link [String, nil] The link to the next page.
   #
@@ -32,6 +38,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     search_url:,
     columns: [],
     batch_actions: [],
+    filters: [],
     prev_page_link: nil,
     next_page_link: nil,
     pagination_component: component("ui/table/pagination"),
@@ -42,6 +49,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   )
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
+    @filters = filters.map { Filter.new(**_1) }
     @model_class = model_class
     @rows = rows
     @search_key = search_key
@@ -94,6 +102,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @table_frame_id ||= "#{stimulus_id}--table-frame"
   end
 
+  def search_form_id
+    @search_form_id ||= "#{stimulus_id}--search-form"
+  end
+
   def render_batch_action_button(batch_action)
     render @button_component.new(
       name: request_forgery_protection_token,
@@ -137,5 +149,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
   BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
-  private_constant :Column, :BatchAction
+  Filter = Struct.new(:name, :value, :label, keyword_init: true)
+  private_constant :Column, :BatchAction, :Filter
 end

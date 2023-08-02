@@ -10,6 +10,7 @@ export default class extends Controller {
     "searchToolbar",
     "searchField",
     "searchForm",
+    "filterToolbar",
     "defaultHeader",
     "batchHeader",
     "selectedRowsCount",
@@ -85,11 +86,16 @@ export default class extends Controller {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
     this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+
+    if (this.hasFilterToolbarTarget) {
+      this.filterToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+    }
+
     this.batchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
-    this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
-
     this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue === "batch")
+
+    this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
 
     // Update the rows background color
     this.checkboxTargets.filter((checkbox) =>

@@ -15,6 +15,7 @@
       url: @search_url,
       method: :get,
       html: {
+        id: search_form_id,
         class: 'flex-grow',
         "data-turbo-frame": table_frame_id,
         "data-turbo-action": "replace",
@@ -51,6 +52,24 @@
       ) %>
     </div>
   </div>
+
+  <% if @filters.any? %>
+    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="filterToolbar">
+      <div class="font-semibold text-gray-700 text-sm px-2"><%= t('.refine_search') %>:</div>
+      <% @filters.each do |filter| %>
+        <label class="flex gap-2 px-2">
+          <%= render component('ui/forms/checkbox').new(
+            name: filter[:name],
+            value: filter[:value],
+            size: :s,
+            form: search_form_id,
+            'data-action': "#{stimulus_id}#search",
+          ) %>
+          <span class="text-gray-700 leading-none text-sm self-center"><%= filter[:label] %></span>
+        </label>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
     <div class="flex-grow">
