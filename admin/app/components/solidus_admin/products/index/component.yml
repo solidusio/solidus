@@ -12,3 +12,5 @@ en:
     delete: 'Delete'
     discontinue: 'Discontinue'
     activate: 'Activate'
+  filters:
+    with_deleted: Include deleted
