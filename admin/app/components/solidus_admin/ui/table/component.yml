@@ -5,4 +5,5 @@ en:
   select_row: 'Select row'
   filter: 'Filter'
   search_placeholder: 'Search all %{resources}'
+  refine_search: 'Refine Search'
   clear: Clear
