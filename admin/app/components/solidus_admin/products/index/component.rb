@@ -48,7 +48,13 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   end
 
   def filters
-    []
+    [
+      {
+        name: 'q[with_discarded]',
+        value: true,
+        label: t('.filters.with_deleted'),
+      },
+    ]
   end
 
   def columns
