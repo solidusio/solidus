@@ -47,6 +47,10 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def filters
+    []
+  end
+
   def columns
     [
       image_column,
