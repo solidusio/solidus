@@ -85,6 +85,13 @@ $color-navbar-hover: $color-navbar !default;
       color: $color-dark-light;
       display: block;
     }
+
+    svg {
+      fill: $solidus-admin-gray-400;
+      height: 16px;
+      width: 100%;
+      max-width: 16px;
+    }
   }
 
   &--menu {
