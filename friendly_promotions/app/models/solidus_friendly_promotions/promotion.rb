@@ -16,12 +16,11 @@ module SolidusFriendlyPromotions
     validates :description, length: { maximum: 255 }
     validate :apply_automatically_disallowed_with_paths
 
-    scope :active, -> { has_actions.started_and_unexpired }
+    scope :active, ->(time = Time.current) { has_actions.started_and_unexpired(time) }
     scope :advertised, -> { where(advertise: true) }
     scope :coupons, -> { joins(:codes).distinct }
-    scope :started_and_unexpired, -> do
+    scope :started_and_unexpired, ->(time = Time.current) do
       table = arel_table
-      time = Time.current
 
       where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))

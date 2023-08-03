@@ -73,6 +73,24 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         expect(subject).to match [promotion]
       end
     end
+
+    context 'when called with a time that is not current' do
+      subject { described_class.active(4.days.ago) }
+
+      let(:promotion) do
+        create(
+          :friendly_promotion,
+          :with_adjustable_action,
+          starts_at: 5.days.ago,
+          expires_at: 3.days.ago,
+          name: "name1"
+        )
+      end
+
+      it 'returns promotion that was active then' do
+        expect(subject).to match [promotion]
+      end
+    end
   end
 
   describe '.has_actions' do
