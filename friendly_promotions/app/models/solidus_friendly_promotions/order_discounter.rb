@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
     end
 
     def call
-      all_order_discounts = SolidusFriendlyPromotions.config.discounters.map do |discounter|
+      all_order_discounts = SolidusFriendlyPromotions.config.discounters.filter_map do |discounter|
         discounter.new(order).call
       end
 

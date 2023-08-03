@@ -52,4 +52,33 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       end
     end
   end
+
+  context "promotions in the past" do
+    let(:order)  { create(:order, completed_at: 7.days.ago) }
+    let(:currently_active_promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: 1.hour.ago) }
+    let(:past_promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: 1.year.ago, expires_at: 11.months.ago) }
+    let(:order_promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: 8.days.ago, expires_at: 6.days.ago) }
+
+    before do
+      order.friendly_promotions << past_promotion
+      order.friendly_promotions << order_promotion
+      order.friendly_promotions << currently_active_promotion
+    end
+
+    subject { described_class.new(order) }
+
+    it "only evaluates the past promotion that was active when the order was completed" do
+      expect(subject.promotions).to eq([order_promotion])
+    end
+  end
+
+  context "shipped orders" do
+    let(:order) { create(:order, shipment_state: "shipped") }
+
+    subject { described_class.new(order).call }
+
+    it "returns false" do
+      expect(subject).to be false
+    end
+  end
 end

@@ -11,6 +11,8 @@ module SolidusFriendlyPromotions
     end
 
     def call
+      return nil if order.shipped?
+
       OrderDiscounts.new(
         order_id: order.id,
         line_item_discounts: adjust_line_items,
@@ -54,11 +56,15 @@ module SolidusFriendlyPromotions
       eligible_connected_promotion_ids = order.friendly_order_promotions.select do |order_promotion|
         order_promotion.promotion_code.nil? || !order_promotion.promotion_code.usage_limit_exceeded?(excluded_orders: [order])
       end.map(&:promotion_id)
-      order.friendly_promotions.active.where(id: eligible_connected_promotion_ids).includes(promotion_includes)
+      order.friendly_promotions.active(reference_time).where(id: eligible_connected_promotion_ids).includes(promotion_includes)
     end
 
     def sale_promotions
-      SolidusFriendlyPromotions::Promotion.where(apply_automatically: true).active.includes(promotion_includes)
+      SolidusFriendlyPromotions::Promotion.where(apply_automatically: true).active(reference_time).includes(promotion_includes)
+    end
+
+    def reference_time
+      order.completed_at || Time.current
     end
 
     def promotion_includes
