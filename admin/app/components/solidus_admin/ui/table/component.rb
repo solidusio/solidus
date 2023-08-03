@@ -87,7 +87,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def batch_actions_form_id
-    @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{SecureRandom.hex}"
+    @batch_actions_form_id ||= "#{stimulus_id}--batch-actions"
   end
 
   def table_frame_id
