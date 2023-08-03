@@ -27,7 +27,7 @@ module SolidusAdmin::Preview
     extend ActiveSupport::Concern
 
     included do
-      include SolidusAdmin::Auth
+      include SolidusAdmin::ControllerHelpers::Auth
       helper ActionView::Helpers
       helper SolidusAdmin::ContainerHelper
       helper_method :current_component

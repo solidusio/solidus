@@ -5,13 +5,13 @@ require 'geared_pagination'
 module SolidusAdmin
   class BaseController < ApplicationController
     include ActiveStorage::SetCurrent
-    include ::SolidusAdmin::Auth
     include Spree::Core::ControllerHelpers::Store
     include Spree::Admin::SetsUserLanguageLocaleKey
+    include GearedPagination::Controller
 
+    include SolidusAdmin::ControllerHelpers::Auth
     include SolidusAdmin::AuthAdapters::Backend if defined?(Spree::Backend)
 
-    include ::GearedPagination::Controller
 
     before_action :set_locale
 
