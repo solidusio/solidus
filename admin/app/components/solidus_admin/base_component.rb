@@ -10,6 +10,18 @@ module SolidusAdmin
       render component("ui/icon").new(name: name, **attrs)
     end
 
+    def missing_translation(key, options)
+      keys = I18n.normalize_keys(options[:locale] || I18n.locale, key, options[:scope])
+
+      logger.debug "  [#{self.class}] Missing translation: #{keys.join('.')}"
+
+      if options[:locale] != :en
+        t(key, **options, locale: :en)
+      else
+        "translation missing: #{keys.join('.')}"
+      end
+    end
+
     def self.stimulus_id
       @stimulus_id ||= name.underscore
         .sub(/^solidus_admin\/(.*)\/component$/, '\1')
