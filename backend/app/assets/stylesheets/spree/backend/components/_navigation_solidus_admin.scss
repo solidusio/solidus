@@ -17,7 +17,7 @@ $color-navbar-hover: $color-navbar !default;
   border-right: $color-light-accent 1px solid;
 
   @media print {
-    display: none
+    display: none;
   }
 
   &--section {
@@ -31,7 +31,7 @@ $color-navbar-hover: $color-navbar !default;
     }
   }
 
-  >nav {
+  > nav {
     flex-grow: 1;
   }
 
@@ -96,8 +96,8 @@ $color-navbar-hover: $color-navbar !default;
       padding: 1px 0;
     }
 
-    li>a,
-    li>label {
+    li > a,
+    li > label {
       margin: 0;
       display: block;
       font-size: 14px;
@@ -119,13 +119,13 @@ $color-navbar-hover: $color-navbar !default;
       align-items: baseline;
     }
 
-    li.selected>a {
+    li.selected > a {
       background: $color-navbar-active-bg;
       color: $color-navbar-active;
     }
 
-    li:not(.selected):hover>a,
-    li:not(.selected):hover>label {
+    li:not(.selected):hover > a,
+    li:not(.selected):hover > label {
       background: $color-navbar-hover-bg;
       color: $color-navbar-hover;
     }
@@ -143,7 +143,7 @@ $color-navbar-hover: $color-navbar !default;
       }
     }
 
-    li:not(.selected)>ul {
+    li:not(.selected) > ul {
       display: none;
     }
   }
