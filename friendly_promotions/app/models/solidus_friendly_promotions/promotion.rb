@@ -78,32 +78,32 @@ module SolidusFriendlyPromotions
       usage_count(excluded_orders: excluded_orders) >= usage_limit
     end
 
-    def not_expired?
-      !expired?
+    def not_expired?(time = Time.current)
+      !expired?(time)
     end
 
-    def not_started?
-      !started?
+    def not_started?(time = Time.current)
+      !started?(time)
     end
 
-    def started?
-      starts_at.nil? || starts_at < Time.current
+    def started?(time = Time.current)
+      starts_at.nil? || starts_at < time
     end
 
-    def active?
-      started? && not_expired? && actions.present?
+    def active?(time = Time.current)
+      started?(time) && not_expired?(time) && actions.present?
     end
 
-    def inactive?
-      !active?
+    def inactive?(time = Time.current)
+      !active?(time)
     end
 
-    def not_expired?
-      !expired?
+    def not_expired?(time = Time.current)
+      !expired?(time)
     end
 
-    def expired?
-      expires_at.present? && expires_at < Time.current
+    def expired?(time = Time.current)
+      expires_at.present? && expires_at < time
     end
 
     def products

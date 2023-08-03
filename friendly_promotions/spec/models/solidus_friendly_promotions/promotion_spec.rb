@@ -409,7 +409,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
 
     context 'when promotion has an action' do
-      let(:promotion) { create(:promotion, :with_action, name: "name1") }
+      let(:promotion) { create(:friendly_promotion, :with_adjustable_action, name: "name1") }
 
       it "is active if it has started already" do
         promotion.starts_at = Time.current - 1.day
@@ -431,6 +431,28 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         promotion.starts_at = nil
         promotion.expires_at = nil
         expect(promotion.active?).to eq(true)
+      end
+
+      context "when called with a time" do
+        subject { promotion.active?(1.day.ago) }
+
+        context "if promo was active a day ago" do
+          before do
+            promotion.starts_at = 2.days.ago
+            promotion.expires_at = 1.hour.ago
+          end
+
+          it { is_expected.to be true }
+        end
+
+        context "if promo was not active a day ago" do
+          before do
+            promotion.starts_at = 1.hour.ago
+            promotion.expires_at = 1.day.from_now
+          end
+
+          it { is_expected.to be false }
+        end
       end
     end
   end
