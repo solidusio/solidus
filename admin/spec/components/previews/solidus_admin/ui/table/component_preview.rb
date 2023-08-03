@@ -13,6 +13,7 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
   # All these ways to header and data cells can be mixed and matched.
   def simple
     render current_component.new(
+      id: 'simple-list',
       model_class: Spree::Product,
       rows: Array.new(10) { |n|
         Spree::Product.new(id: n, name: "Product #{n}", price: n * 10.0, available_on: n.days.ago)
