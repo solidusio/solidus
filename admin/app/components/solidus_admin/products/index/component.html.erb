@@ -16,6 +16,7 @@
   </header>
 
   <%= render @table_component.new(
+    id: 'products-list',
     model_class: Spree::Product,
     rows: @page.records,
     search_key: SolidusAdmin::Config[:product_search_key],

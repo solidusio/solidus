@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
+  # @param id [String] A unique identifier for the table component.
   # @param model_class [ActiveModel::Translation] The model class used for translations.
   # @param rows [Array] The collection of objects that will be passed to columns for display.
   # @param search_key [Symbol] The key for searching.
@@ -32,6 +33,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param icon_component [Class] The icon component class (default: component("ui/icon")).
   # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
+    id:,
     model_class:,
     rows:,
     search_key:,
@@ -50,6 +52,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @filters = filters.map { Filter.new(**_1) }
+    @id = id
     @model_class = model_class
     @rows = rows
     @search_key = search_key
@@ -95,15 +98,15 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def batch_actions_form_id
-    @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{SecureRandom.hex}"
+    @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{@id}"
   end
 
   def table_frame_id
-    @table_frame_id ||= "#{stimulus_id}--table-frame"
+    @table_frame_id ||= "#{stimulus_id}--table-frame-#{@id}"
   end
 
   def search_form_id
-    @search_form_id ||= "#{stimulus_id}--search-form"
+    @search_form_id ||= "#{stimulus_id}--search-form-#{@id}"
   end
 
   def render_batch_action_button(batch_action)
