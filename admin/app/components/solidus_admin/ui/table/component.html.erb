@@ -33,11 +33,14 @@
           value="<%= params.dig(:q, @search_key) %>"
           type="text"
           placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
-          class="w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
+          class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
           data-<%= stimulus_id %>-target="searchField"
           data-action="<%= stimulus_id %>#search"
         >
-        <button class="absolute right-0 mr-3" data-action="<%= stimulus_id %>#clearSearch">
+        <button
+          class="absolute right-0 mr-3 peer-placeholder-shown:hidden"
+          data-action="<%= stimulus_id %>#clearSearch"
+        >
           <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
           <span class="sr-only"><%= t('.clear') %></span>
         </button>
