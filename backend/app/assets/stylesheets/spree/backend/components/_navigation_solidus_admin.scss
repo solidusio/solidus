@@ -37,7 +37,6 @@ $color-navbar-hover: $color-navbar !default;
   }
 
   &--logo {
-    height: $main-header-height - (16px * 2);
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -47,8 +46,6 @@ $color-navbar-hover: $color-navbar !default;
 
     img {
       max-height: $main-header-height - (16px * 2) - (12px * 2);
-      max-width: calc(100% - (8px * 2));
-      object-fit: contain;
     }
   }
 
@@ -101,12 +98,13 @@ $color-navbar-hover: $color-navbar !default;
     text-align: left;
 
     li {
-      padding: 1px 0;
+      padding: 0;
     }
 
     li > a,
     li > label {
       margin: 0;
+      margin-bottom: 2px;
       display: block;
       font-size: 14px;
       line-height: 24px;
@@ -115,16 +113,16 @@ $color-navbar-hover: $color-navbar !default;
       width: 100%;
       border-radius: $border-radius;
       color: $color-primary;
+      gap: 12px;
+      display: flex;
+      align-items: center;
 
-      &::before {
-        margin-right: 12px;
+      &::before, svg {
         display: inline-block;
         width: 18px;
+        height: 18px;
         padding: 0;
       }
-
-      display: flex;
-      align-items: baseline;
     }
 
     li.selected > a {
@@ -140,12 +138,11 @@ $color-navbar-hover: $color-navbar !default;
 
     ul {
       padding: 0;
-      padding-left: 12px + 16px;
       margin: 0;
       list-style: none;
 
       li a {
-        padding-left: 12px;
+        padding-left: 12px + 18px + 12px;
         font-weight: 400;
         color: $color-dark-dark;
       }
