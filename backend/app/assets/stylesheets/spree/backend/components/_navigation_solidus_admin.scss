@@ -37,7 +37,6 @@ $color-navbar-hover: $color-navbar !default;
   }
 
   &--logo {
-    height: $main-header-height - (16px * 2);
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -47,8 +46,6 @@ $color-navbar-hover: $color-navbar !default;
 
     img {
       max-height: $main-header-height - (16px * 2) - (12px * 2);
-      max-width: calc(100% - (8px * 2));
-      object-fit: contain;
     }
   }
 
