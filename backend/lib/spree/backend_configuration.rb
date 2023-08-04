@@ -74,7 +74,7 @@ module Spree
       @menu_items ||= [
         MenuItem.new(
           label: :orders,
-          icon: admin_updated_navbar ? 'inbox' : 'shopping-cart',
+          icon: admin_updated_navbar ? 'ri-inbox-line' : 'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
           match_path: %r{/(
             adjustments|
@@ -90,7 +90,7 @@ module Spree
         ),
         MenuItem.new(
           label: :products,
-          icon: admin_updated_navbar ? 'tag' : 'th-large',
+          icon: admin_updated_navbar ? 'ri-price-tag-3-line' : 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu',
           data_hook: :admin_product_sub_tabs,
@@ -123,7 +123,7 @@ module Spree
         ),
         MenuItem.new(
           label: :promotions,
-          icon: 'bullhorn',
+          icon: admin_updated_navbar ? 'ri-megaphone-line' : 'bullhorn',
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
@@ -142,21 +142,21 @@ module Spree
         MenuItem.new(
           condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
-          icon: admin_updated_navbar ? 'tasks' : 'cubes',
+          icon: admin_updated_navbar ? 'ri-stack-line' : 'cubes',
           match_path: %r{/(stock_items)},
           condition: -> { can?(:admin, Spree::StockItem) },
           url: :admin_stock_items_path,
         ),
         MenuItem.new(
           label: :users,
-          icon: admin_updated_navbar ? 'user-o' : 'user',
+          icon: admin_updated_navbar ? 'ri-user-line' : 'user',
           match_path: %r{/(users|store_credits)},
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
         ),
         MenuItem.new(
           label: :settings,
-          icon: admin_updated_navbar ? 'cog' : 'wrench',
+          icon: admin_updated_navbar ? 'ri-settings-line' : 'wrench',
           data_hook: :admin_settings_sub_tabs,
           partial: 'spree/admin/shared/settings_sub_menu',
           condition: -> { can? :admin, Spree::Store },
