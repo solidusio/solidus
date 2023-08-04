@@ -42,18 +42,22 @@ module Spree
       # Make an admin tab that covers one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
-      #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
-      def tab(*args, &_block)
-        options = { label: args.first.to_s }
+      def tab(*args, &block)
+        block_content = capture(&block) if block_given?
 
-        if args.last.is_a?(Hash)
-          options = options.merge(args.pop)
+        options = args.pop if args.last.is_a?(Hash)
+
+        if args.any?
+          warn "[DEPRECATION] Passing resources to #{self.class.name} is deprecated. Please pass a label instead."
         end
-        options[:route] ||= "admin_#{args.first}"
 
-        destination_url = options[:url] || spree.send("#{options[:route]}_path")
+        if options.key?(:route)
+          warn "[DEPRECATION] Passing a route to #{self.class.name} is deprecated. Please pass a url instead."
+        end
+
+        destination_url = options[:url] || spree.send("admin_#{options[:label]}_path")
         label = t(options[:label], scope: [:spree, :admin, :tab])
 
         css_classes = []
@@ -65,22 +69,12 @@ module Spree
           link = link_to(label, destination_url)
         end
 
-        selected = if options[:match_path].is_a? Regexp
-          request.fullpath =~ options[:match_path]
-        elsif options[:match_path].respond_to?(:call)
-          options[:match_path].call(request)
-        elsif options[:match_path]
-          request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
-        else
-          request.fullpath.starts_with?(destination_url) ||
-            args.include?(controller.controller_name.to_sym)
-        end
-        css_classes << 'selected' if selected
+        css_classes << 'selected' if options[:selected]
 
         if options[:css_class]
           css_classes << options[:css_class]
         end
-        content_tag('li', link + (yield if block_given?), class: css_classes.join(' ') )
+        content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
 
       def link_to_clone(resource, options = {})
