@@ -15,7 +15,7 @@
         <%= icon_tag(@item.icon, class: "inline-block w-full h-full fill-current") %>
       <% end %>
     </i>
-    <%= t(".main_nav.#{@item.key}") %>
+    <%= @item.name %>
   </a>
 
   <% if @item.children? %>
