@@ -7,13 +7,6 @@ en:
     taxonomies: Taxonomies
     taxons: Display Order
     promotions: Promotions
-    promotion_categories: Promotion Categories
     stock: Stock
     users: Users
     settings: Settings
-    stores: Stores
-    payment_methods: Payments
-    tax_categories: Taxes
-    refund_reasons: Refunds and Returns
-    shipping_methods: Shipping
-    zones: Zones
