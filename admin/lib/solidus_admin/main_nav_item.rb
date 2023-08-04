@@ -35,6 +35,10 @@ module SolidusAdmin
       @route = route
     end
 
+    def name
+      I18n.t("solidus_admin.main_nav.#{key}", default: key.to_s.humanize)
+    end
+
     # @return [MainNavItem] adds a child to this item (returning a new instance)
     def with_child(key:, route:, position:, icon: nil, children: [])
       self.class.new(
