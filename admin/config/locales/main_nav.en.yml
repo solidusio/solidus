@@ -1,0 +1,13 @@
+en:
+  solidus_admin:
+    main_nav:
+      orders: Orders
+      products: Products
+      option_types: Option Types
+      property_types: Property Types
+      taxonomies: Taxonomies
+      taxons: Display Order
+      promotions: Promotions
+      stock: Stock
+      users: Users
+      settings: Settings
