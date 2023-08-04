@@ -82,20 +82,20 @@ module Spree
       @menu_items ||= [
         MenuItem.new(
           ORDER_TABS,
-          admin_updated_navbar ? 'inbox' : 'shopping-cart',
+          admin_updated_navbar ? 'ri-inbox-line' : 'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
           position: 0
         ),
         MenuItem.new(
           PRODUCT_TABS,
-          admin_updated_navbar ? 'tag' : 'th-large',
+          admin_updated_navbar ? 'ri-price-tag-3-line' : 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu',
           position: 1
         ),
         MenuItem.new(
           PROMOTION_TABS,
-          'bullhorn',
+          admin_updated_navbar ? 'ri-megaphone-line' : 'bullhorn',
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
@@ -103,7 +103,7 @@ module Spree
         ),
         MenuItem.new(
           STOCK_TABS,
-          admin_updated_navbar ? 'tasks' : 'cubes',
+          admin_updated_navbar ? 'ri-stack-line' : 'cubes',
           condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
           url: :admin_stock_items_path,
@@ -112,14 +112,14 @@ module Spree
         ),
         MenuItem.new(
           USER_TABS,
-          admin_updated_navbar ? 'user-o' : 'user',
+          admin_updated_navbar ? 'ri-user-line' : 'user',
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
           position: 4
         ),
         MenuItem.new(
           CONFIGURATION_TABS,
-          admin_updated_navbar ? 'cog' : 'wrench',
+          admin_updated_navbar ? 'ri-settings-line' : 'wrench',
           condition: -> {
             can?(:admin, Spree::Store) ||
             can?(:admin, Spree::AdjustmentReason) ||
