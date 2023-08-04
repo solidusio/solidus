@@ -1,16 +1,26 @@
-<li class="group <%= item_active_classes %>">
-  <a href="<%= path %>"
+<li class="group <%= "active" if active? %>">
+  <a
+    href="<%= path %>"
+    aria-current="<%= @item.current?(@url_helpers, @fullpath) ? "page" : "false" %>"
     class="
       block
       py-0.5 px-3 mb-0.5 rounded
       hover:text-red-500 hover:bg-gray-50
-      <%= link_active_classes %>
-      <%= link_level_classes %>
+      <%= "text-red-500 bg-gray-50" if active? %>
+      <%= @item.top_level ? "body-small-bold text-black" : "body-small text-gray-600" %>
     "
-    aria-current="<%= aria_current %>"
   >
-      <%= icon %>
-      <%= name %>
+    <% if @item.icon %>
+      <%= icon_tag(@item.icon, class: "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small align-text-bottom fill-current") %>
+    <% else %>
+      <span class="inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small"></span>
+    <% end %>
+    <%= t(".main_nav.#{@item.key}") %>
   </a>
-  <%= nested_items %>
+
+  <% if @item.children? %>
+    <ul class="<%= "hidden" unless active? %>">
+      <%= render self.class.with_collection(@item.children, url_helpers: @url_helpers, fullpath: @fullpath) %>
+    </ul>
+  <% end %>
 </li>
