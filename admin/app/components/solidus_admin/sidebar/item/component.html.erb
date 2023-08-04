@@ -3,18 +3,18 @@
     href="<%= path %>"
     aria-current="<%= @item.current?(@url_helpers, @fullpath) ? "page" : "false" %>"
     class="
-      block
+      flex gap-3 items-center
       py-0.5 px-3 mb-0.5 rounded
       hover:text-red-500 hover:bg-gray-50
       <%= "text-red-500 bg-gray-50" if active? %>
       <%= @item.top_level ? "body-small-bold text-black" : "body-small text-gray-600" %>
     "
   >
-    <% if @item.icon %>
-      <%= icon_tag(@item.icon, class: "inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small align-text-bottom fill-current") %>
-    <% else %>
-      <span class="inline-block w-[1.125rem] h-[1.125rem] mr-[0.68rem] body-small"></span>
-    <% end %>
+    <i class="w-[1.125rem] h-[1.125rem] body-small flex">
+      <% if @item.icon %>
+        <%= icon_tag(@item.icon, class: "inline-block w-full h-full fill-current") %>
+      <% end %>
+    </i>
     <%= t(".main_nav.#{@item.key}") %>
   </a>
 

@@ -4,18 +4,19 @@
   p-4
   w-full
 ">
-  <%= link_to @store.url, class: "py-3 px-2 text-left flex" do %>
+  <%= link_to @store.url, class: "py-3 px-2 text-left flex mb-4" do %>
     <%= image_tag @logo_path, alt: t('.visit_store'), class: "max-h-7" %>
   <% end %>
 
-  <%= link_to @store.url, target: :_blank, class: "flex mt-4 mb-2 px-2 py-1.5 border border-gray-100 rounded-sm shadow-sm" do %>
+  <%= link_to @store.url, target: :_blank, class: "flex mb-4 px-2 py-1.5 border border-gray-100 rounded-sm shadow-sm" do %>
     <div class="flex-grow">
       <p class="body-small-bold text-black"><%= @store.name %></p>
       <p class="body-tiny text-gray-500"><%= @store.url %></p>
     </div>
     <%= render @icon_component.new(name: 'arrow-right-up-line', class: 'w-4 h-4 fill-gray-400') %>
   <% end %>
-  <div data-controller="main-nav" class="mt-2">
+
+  <div data-controller="main-nav">
     <ul>
       <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
     </ul>
