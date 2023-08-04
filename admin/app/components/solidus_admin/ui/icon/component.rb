@@ -20,6 +20,6 @@ class SolidusAdmin::UI::Icon::Component < SolidusAdmin::BaseComponent
 
   def call
     href = "#{image_path('solidus_admin/remixicon.symbol.svg')}#ri-#{@name}"
-    content_tag(:svg, content_tag(:use, nil, "xlink:href": href), **@attrs)
+    tag.svg(tag.use("xlink:href": href), **@attrs)
   end
 end
