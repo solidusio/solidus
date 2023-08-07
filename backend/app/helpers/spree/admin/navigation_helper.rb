@@ -47,17 +47,21 @@ module Spree
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
       def tab(*args, &block)
         block_content = capture(&block) if block_given?
-        options = { label: args.first.to_s }
+        options = args.last.is_a?(Hash) ? args.pop : {}
+        css_classes = Array(options[:css_class])
 
-        if args.last.is_a?(Hash)
-          options = options.merge(args.pop)
+        if args.any?
+          Spree::Deprecation.warn "Passing resources to #{self.class.name} is deprecated. Please use the `label:` and `match_path:` options instead."
+          options[:label] ||= args.first
+          options[:route] ||= "admin_#{args.first}"
+          selected = args.include?(controller.controller_name.to_sym)
         end
-        options[:route] ||= "admin_#{args.first}"
+
+        options[:route] ||= "admin_#{options[:label]}"
 
         destination_url = options[:url] || spree.send("#{options[:route]}_path")
         label = t(options[:label], scope: [:spree, :admin, :tab])
 
-        css_classes = []
 
         if options[:icon]
           link = link_to_with_icon(options[:icon], label, destination_url)
@@ -66,21 +70,19 @@ module Spree
           link = link_to(label, destination_url)
         end
 
-        selected = if options[:match_path].is_a? Regexp
-          request.fullpath =~ options[:match_path]
-        elsif options[:match_path].respond_to?(:call)
-          options[:match_path].call(request)
-        elsif options[:match_path]
-          request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
-        else
-          request.fullpath.starts_with?(destination_url) ||
-            args.include?(controller.controller_name.to_sym)
-        end
+        selected ||=
+          if options[:match_path].is_a? Regexp
+            request.fullpath =~ options[:match_path]
+          elsif options[:match_path].respond_to?(:call)
+            options[:match_path].call(request)
+          elsif options[:match_path]
+            request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
+          else
+            request.fullpath.starts_with?(destination_url)
+          end
+
         css_classes << 'selected' if selected
 
-        if options[:css_class]
-          css_classes << options[:css_class]
-        end
         content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
 

@@ -4,12 +4,15 @@ module Spree
   class BackendConfiguration < Preferences::Configuration
     # An item which should be drawn in the admin menu
     class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :sections, :match_path
+      attr_reader :icon, :label, :partial, :condition, :match_path
+
+      def sections # rubocop:disable Style/TrivialAccessors
+        @sections
+      end
+      deprecate sections: :label, deprecator: Spree::Deprecation
 
       attr_accessor :position
 
-      # @param sections [Array<Symbol>] The sections which are contained within
-      #   this admin menu section.
       # @param icon [String] The icon to draw for this menu item
       # @param condition [Proc] A proc which returns true if this menu item
       #   should be drawn. If nil, it will be replaced with a proc which always
@@ -25,8 +28,8 @@ module Spree
       #   you can pass a String, Regexp or callable to identify this menu item. The callable
       #   accepts a request object and returns a Boolean value.
       def initialize(
-        sections,
-        icon,
+        *args,
+        icon: nil,
         condition: nil,
         label: nil,
         partial: nil,
@@ -34,11 +37,19 @@ module Spree
         position: nil,
         match_path: nil
       )
+        if args.length == 2
+          sections, icon = args
+          label ||= sections.first.to_s
+          Spree::Deprecation.warn "Passing sections to #{self.class.name} is deprecated. Please pass a label instead."
+          Spree::Deprecation.warn "Passing icon to #{self.class.name} is deprecated. Please use the keyword argument instead."
+        elsif args.any?
+          raise ArgumentError, "wrong number of arguments (given #{args.length}, expected 0..2)"
+        end
 
         @condition = condition || -> { true }
         @sections = sections
         @icon = icon
-        @label = label || sections.first
+        @label = label
         @partial = partial
         @url = url
         @position = position

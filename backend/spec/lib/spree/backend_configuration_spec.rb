@@ -15,7 +15,7 @@ RSpec.describe Spree::BackendConfiguration do
 
       # Regression for https://github.com/solidusio/solidus/issues/2950
       it 'has match_path set to /stock_items' do
-        expect(stock_menu_item.match_path).to eq('/stock_items')
+        expect(stock_menu_item.match_path).to eq(%r{/(stock_items)})
       end
     end
 

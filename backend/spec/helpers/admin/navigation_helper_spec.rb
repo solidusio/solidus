@@ -8,26 +8,33 @@ describe Spree::Admin::NavigationHelper, type: :helper do
   end
 
   describe "#tab" do
-    context "creating an admin tab" do
+    context "deprecated usage", :silence_deprecations do
+      it "should capitalize the first letter of each word in the tab's label (deprecated)", :silence_deprecations do
+        subject = helper.tab(:orders)
+        expect(subject).to include("Orders")
+      end
+
+      it "should be selected if the controller matches" do
+        allow(controller).to receive(:controller_name).and_return("orders")
+        expect(helper.tab(:orders)).to include('class="selected"')
+      end
+
+      it "should not be selected if the controller does not match" do
+        allow(controller).to receive(:controller_name).and_return("bonobos")
+        expect(helper.tab(:orders)).not_to include('class="selected"')
+      end
+    end
+
+    context "creating an admin tab", :focus do
       it "should capitalize the first letter of each word in the tab's label" do
-        admin_tab = helper.tab(:orders)
+        admin_tab = helper.tab(label: :orders)
         expect(admin_tab).to include("Orders")
       end
     end
 
     describe "selection" do
       context "when match_path option is not supplied" do
-        subject(:tab) { helper.tab(:orders) }
-
-        it "should be selected if the controller matches" do
-          allow(controller).to receive(:controller_name).and_return("orders")
-          expect(subject).to include('class="selected"')
-        end
-
-        it "should not be selected if the controller does not match" do
-          allow(controller).to receive(:controller_name).and_return("bonobos")
-          expect(subject).not_to include('class="selected"')
-        end
+        subject(:tab) { helper.tab(label: :orders) }
 
         it "should be selected if the current path" do
           allow(helper).to receive(:request).and_return(double(ActionDispatch::Request, fullpath: "/admin/orders"))
@@ -47,30 +54,30 @@ describe Spree::Admin::NavigationHelper, type: :helper do
 
         it "should be selected if the fullpath matches" do
           allow(controller).to receive(:controller_name).and_return("bonobos")
-          tab = helper.tab(:orders, match_path: '/orders')
+          tab = helper.tab(label: :orders, match_path: '/orders')
           expect(tab).to include('class="selected"')
         end
 
         it "should be selected if the fullpath matches a regular expression" do
           allow(controller).to receive(:controller_name).and_return("bonobos")
-          tab = helper.tab(:orders, match_path: /orders$|orders\//)
+          tab = helper.tab(label: :orders, match_path: /orders$|orders\//)
           expect(tab).to include('class="selected"')
         end
 
         it "should not be selected if the fullpath does not match" do
           allow(controller).to receive(:controller_name).and_return("bonobos")
-          tab = helper.tab(:orders, match_path: '/shady')
+          tab = helper.tab(label: :orders, match_path: '/shady')
           expect(tab).not_to include('class="selected"')
         end
 
         it "should not be selected if the fullpath does not match a regular expression" do
           allow(controller).to receive(:controller_name).and_return("bonobos")
-          tab = helper.tab(:orders, match_path: /shady$|shady\//)
+          tab = helper.tab(label: :orders, match_path: /shady$|shady\//)
           expect(tab).not_to include('class="selected"')
         end
 
         context "when the match_path is a callable" do
-          subject { helper.tab(:orders, match_path: match_path) }
+          subject { helper.tab(label: :orders, match_path: match_path) }
 
           context "when the callable returns false" do
             let(:match_path) { ->(_request) { false } }
@@ -88,7 +95,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
     end
 
     it "should accept a block of content to append" do
-      admin_tab = helper.tab(:orders){ 'foo' }
+      admin_tab = helper.tab(label: :orders){ 'foo' }
       expect(admin_tab).to end_with("foo</li>")
     end
   end

@@ -53,9 +53,12 @@ module Spree
     #
     # Spree::Backend::Config.configure do |config|
     #   config.menu_items << config.class::MenuItem.new(
-    #     [:section],
-    #     'icon-name',
-    #     url: 'https://solidus.io/'
+    #     label: :my_reports,
+    #     icon: 'file-text-o', # see https://fontawesome.com/v4/icons/
+    #     url: :my_admin_reports_path,
+    #     condition: -> { can?(:admin, MyReports) },
+    #     partial: 'spree/admin/shared/my_reports_sub_menu',
+    #     match_path: '/reports',
     #   )
     # end
     #
@@ -75,45 +78,49 @@ module Spree
     def menu_items
       @menu_items ||= [
         MenuItem.new(
-          ORDER_TABS,
-          'shopping-cart',
+          label: :orders,
+          icon: 'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
+          match_path: %r{/(#{ORDER_TABS.join('|')})},
           position: 0
         ),
         MenuItem.new(
-          PRODUCT_TABS,
-          'th-large',
+          label: :products,
+          icon: 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
+          match_path: %r{/(#{PRODUCT_TABS.join('|')})},
           partial: 'spree/admin/shared/product_sub_menu',
           position: 1
         ),
         MenuItem.new(
-          PROMOTION_TABS,
-          'bullhorn',
+          label: :promotions,
+          icon: 'bullhorn',
+          match_path: %r{/(#{PROMOTION_TABS.join('|')})},
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
           position: 2
         ),
         MenuItem.new(
-          STOCK_TABS,
-          'cubes',
-          condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
+          icon: 'cubes',
+          match_path: %r{/(#{STOCK_TABS.join('|')})},
+          condition: -> { can?(:admin, Spree::StockItem) },
           url: :admin_stock_items_path,
-          match_path: '/stock_items',
           position: 3
         ),
         MenuItem.new(
-          USER_TABS,
-          'user',
+          label: :users,
+          icon: 'user',
+          match_path: %r{/(#{USER_TABS.join('|')})},
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
           position: 4
         ),
         MenuItem.new(
-          CONFIGURATION_TABS,
-          'wrench',
+          label: :settings,
+          icon: 'wrench',
+          match_path: %r{/(#{CONFIGURATION_TABS.join('|')})},
           condition: -> {
             can?(:admin, Spree::Store) ||
             can?(:admin, Spree::AdjustmentReason) ||
@@ -128,7 +135,6 @@ module Spree
             can?(:admin, Spree::ReturnReason) ||
             can?(:admin, Spree::Zone)
           },
-          label: :settings,
           partial: 'spree/admin/shared/settings_sub_menu',
           url: :admin_stores_path,
           position: 5
