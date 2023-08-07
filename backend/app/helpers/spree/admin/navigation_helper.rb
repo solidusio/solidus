@@ -46,7 +46,7 @@ module Spree
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
       #   * :selected to explicitly control whether the tab is active
       def tab(*args, &block)
-        options = args.last.is_a?(Hash) ? args.pop : {}
+        options = args.last.is_a?(Hash) ? args.pop.dup : {}
         css_classes = Array(options[:css_class])
 
         if options.key?(:route)
