@@ -16,6 +16,10 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     @pagination_component = pagination_component
   end
 
+  def title
+    Spree::Product.model_name.human.pluralize
+  end
+
   def prev_page_link
     @page.first? ? nil : solidus_admin.url_for(host: request.host, port: request.port, **request.params, page: @page.number - 1)
   end
