@@ -23,6 +23,15 @@ describe Spree::Admin::NavigationHelper, type: :helper do
         allow(controller).to receive(:controller_name).and_return("bonobos")
         expect(helper.tab(:orders)).not_to include('class="selected"')
       end
+
+      it "supports a :route option" do
+        without_partial_double_verification do
+          allow(helper).to receive(:admin_orders_path).and_return("/admin/orders")
+        end
+        expect(Spree::Deprecation).to receive(:warn)
+          .with("Passing a route to #tab is deprecated. Please pass a url instead.")
+        expect(helper.tab(label: :orders, route: :admin_orders)).to include('href="/admin/orders"')
+      end
     end
 
     context "creating an admin tab", :focus do
