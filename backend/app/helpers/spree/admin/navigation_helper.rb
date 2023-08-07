@@ -45,7 +45,8 @@ module Spree
       #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
-      def tab(*args, &_block)
+      def tab(*args, &block)
+        block_content = capture(&block) if block_given?
         options = { label: args.first.to_s }
 
         if args.last.is_a?(Hash)
@@ -80,7 +81,7 @@ module Spree
         if options[:css_class]
           css_classes << options[:css_class]
         end
-        content_tag('li', link + (yield if block_given?), class: css_classes.join(' ') )
+        content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
 
       def link_to_clone(resource, options = {})
