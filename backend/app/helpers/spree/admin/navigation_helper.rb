@@ -45,6 +45,7 @@ module Spree
       #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
+      #   * :selected to explicitly control whether the tab is active
       def tab(*args, &block)
         block_content = capture(&block) if block_given?
         options = args.last.is_a?(Hash) ? args.pop : {}
@@ -54,14 +55,13 @@ module Spree
           Spree::Deprecation.warn "Passing resources to #{self.class.name} is deprecated. Please use the `label:` and `match_path:` options instead."
           options[:label] ||= args.first
           options[:route] ||= "admin_#{args.first}"
-          selected = args.include?(controller.controller_name.to_sym)
+          options[:selected] = args.include?(controller.controller_name.to_sym)
         end
 
         options[:route] ||= "admin_#{options[:label]}"
 
         destination_url = options[:url] || spree.send("#{options[:route]}_path")
         label = t(options[:label], scope: [:spree, :admin, :tab])
-
 
         if options[:icon]
           link = link_to_with_icon(options[:icon], label, destination_url)
@@ -70,7 +70,7 @@ module Spree
           link = link_to(label, destination_url)
         end
 
-        selected ||=
+        options[:selected] ||=
           if options[:match_path].is_a? Regexp
             request.fullpath =~ options[:match_path]
           elsif options[:match_path].respond_to?(:call)
@@ -81,7 +81,7 @@ module Spree
             request.fullpath.starts_with?(destination_url)
           end
 
-        css_classes << 'selected' if selected
+        css_classes << 'selected' if options[:selected]
 
         content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
