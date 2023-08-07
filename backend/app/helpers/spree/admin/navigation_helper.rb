@@ -46,7 +46,6 @@ module Spree
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
       #   * :selected to explicitly control whether the tab is active
       def tab(*args, &block)
-        block_content = capture(&block) if block_given?
         options = args.last.is_a?(Hash) ? args.pop : {}
         css_classes = Array(options[:css_class])
 
@@ -65,13 +64,6 @@ module Spree
         options[:url] ||= spree.send("admin_#{options[:label]}_path")
         label = t(options[:label], scope: [:spree, :admin, :tab])
 
-        if options[:icon]
-          link = link_to_with_icon(options[:icon], label, options[:url])
-          css_classes << 'tab-with-icon'
-        else
-          link = link_to(label, options[:url])
-        end
-
         options[:selected] ||=
           if options[:match_path].is_a? Regexp
             request.fullpath =~ options[:match_path]
@@ -85,6 +77,13 @@ module Spree
 
         css_classes << 'selected' if options[:selected]
 
+        if options[:icon]
+          link = link_to_with_icon(options[:icon], label, options[:url])
+          css_classes << 'tab-with-icon'
+        else
+          link = link_to(label, options[:url])
+        end
+        block_content = capture(&block) if block_given?
         content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
 
