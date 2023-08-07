@@ -21,7 +21,7 @@ module Spree
       #   menu item.
       # @param partial [String] A partial to draw within this menu item for use
       #   in declaring a submenu
-      # @param url [String] A url where this link should send the user to
+      # @param url [String|Symbol] A url where this link should send the user to or a Symbol representing a route name
       # @param position [Integer] The position in which the menu item should render
       #   nil will cause the item to render last
       # @param match_path [String, Regexp, callable] (nil) If the {url} to determine the active tab is ambigous
@@ -59,9 +59,19 @@ module Spree
       def url
         if @url.respond_to?(:call)
           @url.call
+        elsif @url.is_a?(Symbol)
+          spree.public_send(@url)
+        elsif @url.nil?
+          spree.send("admin_#{@label}_path")
         else
           @url
         end
+      end
+
+      private
+
+      def spree
+        Spree::Core::Engine.routes.url_helpers
       end
     end
   end

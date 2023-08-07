@@ -23,7 +23,9 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
 
     context "when url is a symbol" do
       let(:url) { :admin_promotions_path }
-      it { is_expected.to eq(:admin_promotions_path) }
+      it "treats it as a route name" do
+        is_expected.to eq("/admin/promotions")
+      end
     end
 
     context "if url is a lambda" do
