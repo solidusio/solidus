@@ -8,7 +8,8 @@ class SolidusAdmin::Sidebar::Component < SolidusAdmin::BaseComponent
     items: container["main_nav_items"],
     icon_component: component("ui/icon"),
     item_component: component("sidebar/item"),
-    account_nav_component: component("sidebar/account_nav")
+    account_nav_component: component("sidebar/account_nav"),
+    switch_component: component("ui/forms/switch")
   )
     @logo_path = logo_path
     @items = items
@@ -17,6 +18,7 @@ class SolidusAdmin::Sidebar::Component < SolidusAdmin::BaseComponent
     @icon_component = icon_component
     @item_component = item_component
     @account_nav_component = account_nav_component
+    @switch_component = switch_component
   end
 
   def items
