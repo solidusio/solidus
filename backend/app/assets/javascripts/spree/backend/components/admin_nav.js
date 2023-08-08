@@ -21,4 +21,22 @@ Spree.ready(function() {
   if (document.body.classList.contains('admin-nav-hidden')) {
     $(adminNavToggle).removeClass('fa-chevron-circle-left').addClass('fa-chevron-circle-right');
   }
+
+  let solidusAdminSwitch = document.querySelector("#solidus-admin-switch");
+
+  if (solidusAdminSwitch) {
+    let cookies = new Map(document.cookie.split(';').map((cookie) => cookie.trim().split('=')))
+    let label = document.querySelector("#solidus-admin-switch-label");
+
+    solidusAdminSwitch.checked = cookies.get("solidus_admin") === 'false'
+    label.textContent = solidusAdminSwitch.checked ? label.dataset.adminLabel : label.dataset.legacyLabel
+
+    solidusAdminSwitch.addEventListener("change", function(e) {
+      let value = !solidusAdminSwitch.checked;
+
+      document.cookie = `solidus_admin=${value}`;
+
+      location.reload();
+    });
+  }
 });

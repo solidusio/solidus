@@ -1,6 +1,7 @@
 $color-navbar-hover-bg: $color-navbar-bg !default;
 $color-navbar-hover: $color-navbar !default;
 @import "spree/backend/themes/solidus_admin/colors";
+@import 'spree/backend/components/switch_solidus_admin';
 
 .solidus-admin--nav {
   background-color: $color-light;
