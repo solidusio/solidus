@@ -1,7 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  connect() {
-    console.log(`The main-nav has been loaded!`)
+  static values = {
+    cookie: String
+  }
+
+  setCookie(event) {
+    let value = !event.currentTarget.checked
+
+    document.cookie = `${this.cookieValue}=${value};`
+    location.reload()
   }
 }
