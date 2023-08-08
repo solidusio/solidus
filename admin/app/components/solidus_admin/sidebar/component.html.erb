@@ -16,11 +16,10 @@
     <%= render @icon_component.new(name: 'arrow-right-up-line', class: 'w-4 h-4 fill-gray-400') %>
   <% end %>
 
-  <div data-controller="main-nav">
-    <ul>
-      <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
-    </ul>
-  </div>
+  <ul>
+    <%= render @item_component.with_collection(items, fullpath: request.fullpath) %>
+  </ul>
+
   <div class="mt-auto">
     <%= render @account_nav_component.new(
       user_label: helpers.current_solidus_admin_user.email,
