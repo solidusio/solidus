@@ -17,7 +17,7 @@ RSpec.describe SolidusAdmin::Sidebar::Component, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css("img[src*='solidus_admin/solidus_logo']")
+    expect(page).to have_css("img[src*='logo/solidus']")
   end
 
   it "renders the store link" do
