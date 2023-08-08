@@ -56,12 +56,24 @@ module Spree
         @match_path = match_path
       end
 
+      def match_path?(request)
+        if match_path.is_a? Regexp
+          request.fullpath =~ match_path
+        elsif match_path.respond_to?(:call)
+          match_path.call(request)
+        elsif match_path
+          request.fullpath.starts_with?("#{spree.admin_path}#{match_path}")
+        else
+          request.fullpath.to_s.starts_with?(url.to_s)
+        end
+      end
+
       def url
         if @url.respond_to?(:call)
           @url.call
         elsif @url.is_a?(Symbol)
           spree.public_send(@url)
-        elsif @url.nil?
+        elsif @url.nil? && @label
           spree.send("admin_#{@label}_path")
         else
           @url

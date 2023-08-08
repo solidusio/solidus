@@ -3,13 +3,33 @@
 require 'spec_helper'
 
 RSpec.describe Spree::BackendConfiguration::MenuItem do
-  describe '#match_path' do
-    subject do
-      described_class.new(match_path: '/stock_items').match_path
+  describe '#match_path?' do
+    it 'matches a string using the admin path prefix' do
+      described_class.new(match_path: '/stock_items')
+      request = double(ActionDispatch::Request, fullpath: '/admin/stock_items/1/edit')
+
+      expect(subject.match_path?(request)).to be true
     end
 
-    it 'can be read' do
-      is_expected.to eq('/stock_items')
+    it 'matches a proc accepting the request object' do
+      request = double(ActionDispatch::Request, fullpath: '/foo/bar/baz')
+      subject = described_class.new(match_path: -> { _1.fullpath.include? '/bar/' })
+
+      expect(subject.match_path?(request)).to be true
+    end
+
+    it 'matches a regexp' do
+      described_class.new(match_path: %r{/bar/})
+      request = double(ActionDispatch::Request, fullpath: '/foo/bar/baz')
+
+      expect(subject.match_path?(request)).to be true
+    end
+
+    it 'matches the item url as the fullpath prefix' do
+      described_class.new(url: '/foo/bar')
+      request = double(ActionDispatch::Request, fullpath: '/foo/bar/baz')
+
+      expect(subject.match_path?(request)).to be true
     end
   end
 
