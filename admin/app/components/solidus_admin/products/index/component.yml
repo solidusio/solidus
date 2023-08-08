@@ -14,3 +14,5 @@ en:
     activate: 'Activate'
   filters:
     with_deleted: Include deleted
+  give_feedback: 'Give feedback'
+  feedback_description: 'We are constantly trying to improve. Please let us know what you think about this admin page.'
