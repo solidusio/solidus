@@ -7,3 +7,4 @@ en:
   search_placeholder: 'Search all %{resources}'
   refine_search: 'Refine Search'
   clear: Clear
+  cancel: Cancel
