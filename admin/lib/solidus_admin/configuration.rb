@@ -12,7 +12,8 @@ module SolidusAdmin
     # Path to the logo used in the admin interface.
     #
     # It needs to be a path to an image file accessible by Sprockets.
-    preference :logo_path, :string, default: "solidus_admin/solidus_logo.svg"
+    # The default value is the Solidus logo that lives in the solidus_core gem.
+    preference :logo_path, :string, default: "logo/solidus.svg"
 
     # The list of paths were Tailwind CSS classes are used.
     #
