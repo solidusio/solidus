@@ -4,13 +4,12 @@
       <%= title %>
     </h1>
 
-    <div class="ml-auto">
+    <div class="ml-auto flex gap-2">
       <%= render @button_component.new(
         tag: :a,
         text: t('.add_product'),
         href: spree.new_admin_product_path,
         icon: "add-line",
-        classes: "ml-auto"
       ) %>
     </div>
   </header>
