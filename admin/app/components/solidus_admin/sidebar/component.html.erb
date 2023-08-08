@@ -3,7 +3,7 @@
   bg-gray-15
   p-4
   w-full
-">
+" data-controller="<%= stimulus_id %>" data-<%= stimulus_id %>-cookie-value="solidus_admin">
   <%= link_to @store.url, class: "py-3 px-2 text-left flex mb-4" do %>
     <%= image_tag @logo_path, alt: t('.visit_store'), class: "max-h-7" %>
   <% end %>
@@ -21,6 +21,14 @@
   </ul>
 
   <div class="mt-auto">
+    <div class="group mb-3">
+      <label class="flex gap-3 items-center py-0.5 px-3 pb-0.5 rounded hover:text-red-500 hover:bg-gray-50 body-small-bold text-black cursor-pointer">
+        <%= t('solidus_admin.main_nav.legacy_label') %>
+        <div class="flex items-center">
+          <%= render @switch_component.new(size: :s, checked: false, 'data-action': "#{stimulus_id}#setCookie:prevent") %>
+        </div>
+      </label>
+    </div>
     <%= render @account_nav_component.new(
       user_label: helpers.current_solidus_admin_user.email,
       account_path: solidus_admin.account_path,
