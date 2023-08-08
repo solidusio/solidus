@@ -32,22 +32,12 @@ module Spree
         }
       }
 
-    ORDER_TABS         ||= [:orders, :payments, :creditcard_payments,
-                            :shipments, :credit_cards, :return_authorizations,
-                            :customer_returns, :adjustments, :customer_details]
-    PRODUCT_TABS       ||= [:products, :option_types, :properties,
-                            :variants, :product_properties, :taxonomies,
-                            :taxons]
-    CONFIGURATION_TABS ||= [:stores, :tax_categories,
-                            :tax_rates, :zones,
-                            :payment_methods, :shipping_methods,
-                            :shipping_categories, :stock_locations,
-                            :refund_reasons, :reimbursement_types,
-                            :return_reasons, :adjustment_reasons,
-                            :store_credit_reasons]
-    PROMOTION_TABS     ||= [:promotions, :promotion_categories]
-    STOCK_TABS         ||= [:stock_items]
-    USER_TABS          ||= [:users, :store_credits]
+    autoload :ORDER_TABS, 'spree/backend_configuration/deprecated_tab_constants'
+    autoload :PRODUCT_TABS, 'spree/backend_configuration/deprecated_tab_constants'
+    autoload :CONFIGURATION_TABS, 'spree/backend_configuration/deprecated_tab_constants'
+    autoload :PROMOTION_TABS, 'spree/backend_configuration/deprecated_tab_constants'
+    autoload :STOCK_TABS, 'spree/backend_configuration/deprecated_tab_constants'
+    autoload :USER_TABS, 'spree/backend_configuration/deprecated_tab_constants'
 
     # Items can be added to the menu by using code like the following:
     #
@@ -81,21 +71,39 @@ module Spree
           label: :orders,
           icon: 'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
-          match_path: %r{/(#{ORDER_TABS.join('|')})},
+          match_path: %r{/(
+            adjustments|
+            credit_cards|
+            creditcard_payments|
+            customer_details|
+            customer_returns|
+            orders|
+            payments|
+            return_authorizations|
+            shipments
+          )}x,
           position: 0
         ),
         MenuItem.new(
           label: :products,
           icon: 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
-          match_path: %r{/(#{PRODUCT_TABS.join('|')})},
+          match_path: %r{/(
+            option_types|
+            product_properties|
+            products|
+            properties|
+            taxonomies|
+            taxons|
+            variants
+          )}x,
           partial: 'spree/admin/shared/product_sub_menu',
           position: 1
         ),
         MenuItem.new(
           label: :promotions,
           icon: 'bullhorn',
-          match_path: %r{/(#{PROMOTION_TABS.join('|')})},
+          match_path: %r{/(promotions|promotion_categories)},
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
@@ -104,7 +112,7 @@ module Spree
         MenuItem.new(
           label: :stock,
           icon: 'cubes',
-          match_path: %r{/(#{STOCK_TABS.join('|')})},
+          match_path: %r{/(stock_items)},
           condition: -> { can?(:admin, Spree::StockItem) },
           url: :admin_stock_items_path,
           position: 3
@@ -112,7 +120,7 @@ module Spree
         MenuItem.new(
           label: :users,
           icon: 'user',
-          match_path: %r{/(#{USER_TABS.join('|')})},
+          match_path: %r{/(users|store_credits)},
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
           position: 4
@@ -120,7 +128,21 @@ module Spree
         MenuItem.new(
           label: :settings,
           icon: 'wrench',
-          match_path: %r{/(#{CONFIGURATION_TABS.join('|')})},
+          match_path: %r{/(
+            adjustment_reasons|
+            payment_methods|
+            refund_reasons|
+            reimbursement_types|
+            return_reasons|
+            shipping_categories|
+            shipping_methods|
+            stock_locations|
+            store_credit_reasons|
+            stores|
+            tax_categories|
+            tax_rates|
+            zones
+          )}x,
           condition: -> {
             can?(:admin, Spree::Store) ||
             can?(:admin, Spree::AdjustmentReason) ||
