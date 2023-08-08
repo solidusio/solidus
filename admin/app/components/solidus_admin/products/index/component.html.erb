@@ -4,7 +4,18 @@
       <%= title %>
     </h1>
 
-    <div class="ml-auto flex gap-2">
+    <div class="ml-auto flex gap-2 items-center">
+      <span class="max-w-xs text-xs text-right text-gray-600 hidden lg:block">
+        <%= t(".feedback_description") %>
+      </span>
+      <%= render @button_component.new(
+        tag: :a,
+        text: t(".give_feedback"),
+        href: "https://solidus.io/feedback?category=solidus-admin",
+        icon: "feedback-line",
+        scheme: :secondary,
+        target: :_blank,
+      ) %>
       <%= render @button_component.new(
         tag: :a,
         text: t('.add_product'),
