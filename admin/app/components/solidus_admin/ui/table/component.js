@@ -38,6 +38,7 @@ export default class extends Controller {
   showSearch(event) {
     this.modeValue = "search"
     this.render()
+    this.searchFieldTarget.focus()
   }
 
   search() {
