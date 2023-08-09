@@ -32,8 +32,9 @@
           <input
             name="q[<%= @search_key %>]"
             value="<%= params.dig(:q, @search_key) %>"
+            type="search"
             placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
-            class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
+            class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300 search-cancel:appearance-none"
             data-<%= stimulus_id %>-target="searchField"
             data-action="<%= stimulus_id %>#search"
           >
