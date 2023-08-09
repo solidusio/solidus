@@ -10,81 +10,82 @@
 >
   <% toolbar_classes = "h-14 p-2 bg-white border-b border-gray-100 justify-start items-center gap-2 visible:flex hidden:hidden" %>
 
-  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
-    <%= form_with(
-      url: @search_url,
-      method: :get,
-      html: {
-        id: search_form_id,
-        class: 'flex-grow',
-        "data-turbo-frame": table_frame_id,
-        "data-turbo-action": "replace",
-        "data-#{stimulus_id}-target": "searchForm",
-        "data-action": "reset->#{stimulus_id}#search",
-      },
-    ) do |form| %>
-      <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
-        <%= render @icon_component.new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
-        <span class="sr-only">
-          <%= t('.search_placeholder', resources: resource_plural_name) %>
-        </span>
-        <input
-          name="q[<%= @search_key %>]"
-          value="<%= params.dig(:q, @search_key) %>"
-          type="text"
-          placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
-          class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
-          data-<%= stimulus_id %>-target="searchField"
-          data-action="<%= stimulus_id %>#search"
-        >
-        <button
-          class="absolute right-0 mr-3 peer-placeholder-shown:hidden"
-          data-action="<%= stimulus_id %>#clearSearch"
-        >
-          <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
-          <span class="sr-only"><%= t('.clear') %></span>
-        </button>
-      </label>
-    <% end %>
-
-    <div class="ml-4">
-      <%= render @button_component.new(
-        text: t('.cancel'),
-        scheme: :ghost,
-        "data-action": "#{stimulus_id}#cancelSearch",
-      ) %>
-    </div>
-  </div>
-
-  <% if @filters.any? %>
-    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="filterToolbar">
-      <div class="font-semibold text-gray-700 text-sm px-2"><%= t('.refine_search') %>:</div>
-      <% @filters.each do |filter| %>
-        <label class="flex gap-2 px-2">
-          <%= render component('ui/forms/checkbox').new(
-            name: filter[:name],
-            value: filter[:value],
-            size: :s,
-            form: search_form_id,
-            'data-action': "#{stimulus_id}#search",
-          ) %>
-          <span class="text-gray-700 leading-none text-sm self-center"><%= filter[:label] %></span>
+  <div role="search">
+    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
+      <%= form_with(
+        url: @search_url,
+        method: :get,
+        html: {
+          id: search_form_id,
+          class: 'flex-grow',
+          "data-turbo-frame": table_frame_id,
+          "data-turbo-action": "replace",
+          "data-#{stimulus_id}-target": "searchForm",
+          "data-action": "reset->#{stimulus_id}#search",
+        },
+      ) do |form| %>
+        <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
+          <%= render @icon_component.new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
+          <span class="sr-only">
+            <%= t('.search_placeholder', resources: resource_plural_name) %>
+          </span>
+          <input
+            name="q[<%= @search_key %>]"
+            value="<%= params.dig(:q, @search_key) %>"
+            placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
+            class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300"
+            data-<%= stimulus_id %>-target="searchField"
+            data-action="<%= stimulus_id %>#search"
+          >
+          <button
+            class="absolute right-0 mr-3 peer-placeholder-shown:hidden"
+            data-action="<%= stimulus_id %>#clearSearch"
+          >
+            <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
+            <span class="sr-only"><%= t('.clear') %></span>
+          </button>
         </label>
       <% end %>
-    </div>
-  <% end %>
 
-  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
-    <div class="flex-grow">
-      <%= render @tab_component.new(text: "All", current: true, href: "") %>
+      <div class="ml-4">
+        <%= render @button_component.new(
+          text: t('.cancel'),
+          scheme: :ghost,
+          "data-action": "#{stimulus_id}#cancelSearch",
+        ) %>
+      </div>
     </div>
 
-    <%= render @button_component.new(
-      'aria-label': t('.filter'),
-      icon: "filter-3-line",
-      scheme: :secondary,
-      "data-action": "#{stimulus_id}#showSearch",
-    ) %>
+    <% if @filters.any? %>
+      <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="filterToolbar">
+        <div class="font-semibold text-gray-700 text-sm px-2"><%= t('.refine_search') %>:</div>
+        <% @filters.each do |filter| %>
+          <label class="flex gap-2 px-2">
+            <%= render component('ui/forms/checkbox').new(
+              name: filter[:name],
+              value: filter[:value],
+              size: :s,
+              form: search_form_id,
+              'data-action': "#{stimulus_id}#search",
+            ) %>
+            <span class="text-gray-700 leading-none text-sm self-center"><%= filter[:label] %></span>
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
+      <div class="flex-grow">
+        <%= render @tab_component.new(text: "All", current: true, href: "") %>
+      </div>
+
+      <%= render @button_component.new(
+        'aria-label': t('.filter'),
+        icon: "filter-3-line",
+        scheme: :secondary,
+        "data-action": "#{stimulus_id}#showSearch",
+      ) %>
+    </div>
   </div>
 
   <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar" aria-label="<%= t(".batch_actions") %>">
