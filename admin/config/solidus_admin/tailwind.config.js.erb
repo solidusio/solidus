@@ -88,5 +88,6 @@ module.exports = {
     require('@tailwindcss/container-queries'),
     plugin(({ addVariant }) => addVariant('hidden', '&([hidden])')),
     plugin(({ addVariant }) => addVariant('visible', '&:not([hidden])')),
+    plugin(({ addVariant }) => addVariant('search-cancel', '&::-webkit-search-cancel-button')),
   ]
 }
