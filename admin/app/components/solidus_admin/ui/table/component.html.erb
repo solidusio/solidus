@@ -26,9 +26,6 @@
       ) do |form| %>
         <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
           <%= render @icon_component.new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
-          <span class="sr-only">
-            <%= t('.search_placeholder', resources: resource_plural_name) %>
-          </span>
           <input
             name="q[<%= @search_key %>]"
             value="<%= params.dig(:q, @search_key) %>"
@@ -37,13 +34,14 @@
             class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300 search-cancel:appearance-none"
             data-<%= stimulus_id %>-target="searchField"
             data-action="<%= stimulus_id %>#search"
+            aria-label="<%= t('.search_placeholder', resources: resource_plural_name) %>"
           >
           <button
             class="absolute right-0 mr-3 peer-placeholder-shown:hidden"
             data-action="<%= stimulus_id %>#clearSearch"
+            aria-label="<%= t('.clear') %>"
           >
             <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
-            <span class="sr-only"><%= t('.clear') %></span>
           </button>
         </label>
       <% end %>
