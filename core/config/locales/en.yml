@@ -638,8 +638,8 @@ en:
         one: Product
         other: Products
       spree/product_property:
-        one: Product Property
-        other: Product Properties
+        one: Product Field
+        other: Product Fields
       spree/promotion:
         one: Promotion
         other: Promotions
@@ -803,9 +803,9 @@ en:
     add_new_header: Add New Header
     add_new_style: Add New Style
     add_one: Add One
-    add_option_value: Add Option Value
+    add_option_value: Add Product Variants
     add_product: Add Product
-    add_product_properties: Add Product Properties
+    add_product_properties: Add Product Fields
     add_rule_of_type: Add rule of type
     add_state: Add State
     add_stock: Add Stock
@@ -952,14 +952,14 @@ en:
         checkout: Refunds and Returns
         configuration: Configuration
         display_order: Display Order
-        option_types: Option Types
+        option_types: Product Variants
         orders: Orders
         overview: Overview
         payments: Payments
         products: Products
         promotion_categories: Promotion Categories
         promotions: Promotions
-        properties: Property Types
+        properties: Products Fields
         rma: RMA
         settings: Settings
         shipping: Shipping
@@ -967,7 +967,7 @@ en:
         stock_items: Store Stock
         stores: Stores
         taxes: Taxes
-        taxonomies: Taxonomies
+        taxonomies: Categories
         taxons: Taxons
         users: Users
         zones: Zones
@@ -1797,7 +1797,7 @@ en:
     new_customer: New Customer
     new_customer_return: New Customer Return
     new_image: New Image
-    new_option_type: New Option Type
+    new_option_type: New Product Variant
     new_order: New Order
     new_order_completed: New Order Completed
     new_payment: New Payment
@@ -1806,7 +1806,7 @@ en:
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
     new_promotion_code_batch: New Promotion Code Batch
-    new_property: New Property Type
+    new_property: New Product Field
     new_refund: New Refund
     new_refund_reason: New Refund Reason
     new_return_authorization: New RMA
@@ -1823,7 +1823,7 @@ en:
     new_tax_category: New Tax Category
     new_tax_rate: New Tax Rate
     new_taxon: New Taxon
-    new_taxonomy: New Taxonomy
+    new_taxonomy: New Category
     new_tracker: New Analytics Tracker
     new_user: New User
     new_variant: New Variant
