@@ -5,10 +5,23 @@
         icon: menu_item.icon,
         label: menu_item.label,
         url: menu_item.url,
-        match_path: menu_item.match_path,
+        selected: menu_item.match_path?(request) || menu_item.children.any? { _1.match_path?(request) },
       ) do
     %>
-      <%- render partial: menu_item.partial if menu_item.partial %>
+      <% if menu_item.render_partial? %>
+        <%- render partial: menu_item.partial %>
+      <% elsif menu_item.children.present? %>
+        <ul class="admin-subnav" data-hook="<%= menu_item.data_hook %>">
+          <%- menu_item.children.each do |child| %>
+            <%= tab(
+              icon: child.icon,
+              label: child.label,
+              url: child.url,
+              selected: child.match_path?(request),
+            ) if instance_exec(&child.condition) %>
+          <% end %>
+        </ul>
+      <% end %>
     <%- end %>
   <% end %>
 <% end %>

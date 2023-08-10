@@ -4,7 +4,7 @@ module Spree
   class BackendConfiguration < Preferences::Configuration
     # An item which should be drawn in the admin menu
     class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :match_path
+      attr_reader :icon, :label, :partial, :children, :condition, :data_hook, :match_path
 
       def sections # rubocop:disable Style/TrivialAccessors
         @sections
@@ -19,8 +19,7 @@ module Spree
       #   returns true.
       # @param label [Symbol] The translation key for a label to use for this
       #   menu item.
-      # @param partial [String] A partial to draw within this menu item for use
-      #   in declaring a submenu
+      # @param children [Array<Spree::BackendConfiguration::MenuItem>] An array
       # @param url [String|Symbol] A url where this link should send the user to or a Symbol representing a route name
       # @param position [Integer] The position in which the menu item should render
       #   nil will cause the item to render last
@@ -33,8 +32,10 @@ module Spree
         condition: nil,
         label: nil,
         partial: nil,
+        children: [],
         url: nil,
         position: nil,
+        data_hook: nil,
         match_path: nil
       )
         if args.length == 2
@@ -46,14 +47,28 @@ module Spree
           raise ArgumentError, "wrong number of arguments (given #{args.length}, expected 0..2)"
         end
 
+        if partial.present? && children.blank?
+          # We only show the deprecation if there are no children, because if there are children,
+          # then the menu item is already future-proofed.
+          Spree::Deprecation.warn "Passing a partial to #{self.class.name} is deprecated. Please use the children keyword argument instead."
+        end
+
         @condition = condition || -> { true }
         @sections = sections
         @icon = icon
         @label = label
         @partial = partial
+        @children = children
         @url = url
         @position = position
+        @data_hook = data_hook
         @match_path = match_path
+      end
+
+      def render_partial?
+        return false if partial.blank?
+
+        children.blank? || Spree::Backend::Config.prefer_menu_item_partials
       end
 
       def match_path?(request)

@@ -32,6 +32,10 @@ module Spree
         }
       }
 
+    # @!attribute [rw] prefer_menu_item_partials
+    #   @return [Boolean] Whether or not to prefer menu item partials when both a partial and children are present.
+    preference :prefer_menu_item_partials, :boolean, default: false
+
     autoload :ORDER_TABS, 'spree/backend_configuration/deprecated_tab_constants'
     autoload :PRODUCT_TABS, 'spree/backend_configuration/deprecated_tab_constants'
     autoload :CONFIGURATION_TABS, 'spree/backend_configuration/deprecated_tab_constants'
@@ -98,7 +102,34 @@ module Spree
             variants
           )}x,
           partial: 'spree/admin/shared/product_sub_menu',
-          position: 1
+          position: 1,
+          data_hook: :admin_product_sub_tabs,
+          children: [
+            MenuItem.new(
+              label: :products,
+              condition: -> { can? :admin, Spree::Product },
+              match_path: '/products',
+            ),
+            MenuItem.new(
+              label: :option_types,
+              condition: -> { can? :admin, Spree::OptionType },
+              match_path: '/option_types',
+            ),
+            MenuItem.new(
+              label: :properties,
+              condition: -> { can? :admin, Spree::Property },
+            ),
+            MenuItem.new(
+              label: :taxonomies,
+              condition: -> { can? :admin, Spree::Taxonomy },
+            ),
+            MenuItem.new(
+              url: :admin_taxons_path,
+              condition: -> { can? :admin, Spree::Taxon },
+              label: :display_order,
+              match_path: '/taxons',
+            ),
+          ],
         ),
         MenuItem.new(
           label: :promotions,
@@ -107,7 +138,18 @@ module Spree
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
-          position: 2
+          data_hook: :admin_promotion_sub_tabs,
+          position: 2,
+          children: [
+            MenuItem.new(
+              label: :promotions,
+              condition: -> { can?(:admin, Spree::Promotion) },
+            ),
+            MenuItem.new(
+              label: :promotion_categories,
+              condition: -> { can?(:admin, Spree::PromotionCategory) },
+            ),
+          ],
         ),
         MenuItem.new(
           label: :stock,
@@ -115,7 +157,7 @@ module Spree
           match_path: %r{/(stock_items)},
           condition: -> { can?(:admin, Spree::StockItem) },
           url: :admin_stock_items_path,
-          position: 3
+          position: 3,
         ),
         MenuItem.new(
           label: :users,
@@ -123,7 +165,7 @@ module Spree
           match_path: %r{/(users|store_credits)},
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
-          position: 4
+          position: 4,
         ),
         MenuItem.new(
           label: :settings,
@@ -143,6 +185,7 @@ module Spree
             tax_rates|
             zones
           )}x,
+          data_hook: :admin_settings_sub_tabs,
           condition: -> {
             can?(:admin, Spree::Store) ||
             can?(:admin, Spree::AdjustmentReason) ||
@@ -159,7 +202,52 @@ module Spree
           },
           partial: 'spree/admin/shared/settings_sub_menu',
           url: :admin_stores_path,
-          position: 5
+          position: 5,
+          children: [
+            MenuItem.new(
+              label: :stores,
+              condition: -> { can? :admin, Spree::Store },
+              url: :admin_stores_path,
+            ),
+            MenuItem.new(
+              label: :payments,
+              condition: -> { can? :admin, Spree::PaymentMethod },
+              url: :admin_payment_methods_path,
+            ),
+
+            MenuItem.new(
+              label: :taxes,
+              condition: -> { can?(:admin, Spree::TaxCategory) || can?(:admin, Spree::TaxRate) },
+              url: :admin_tax_categories_path,
+              match_path: %r(tax_categories|tax_rates),
+            ),
+            MenuItem.new(
+              label: :checkout,
+              condition: -> {
+                can?(:admin, Spree::RefundReason) ||
+                can?(:admin, Spree::ReimbursementType) ||
+                can?(:show, Spree::ReturnReason) ||
+                can?(:show, Spree::AdjustmentReason)
+              },
+              url: :admin_refund_reasons_path,
+              match_path: %r(refund_reasons|reimbursement_types|return_reasons|adjustment_reasons|store_credit_reasons)
+            ),
+            MenuItem.new(
+              label: :shipping,
+              condition: -> {
+                can?(:admin, Spree::ShippingMethod) ||
+                  can?(:admin, Spree::ShippingCategory) ||
+                  can?(:admin, Spree::StockLocation)
+              },
+              url: :admin_shipping_methods_path,
+              match_path: %r(shipping_methods|shipping_categories|stock_locations),
+            ),
+            MenuItem.new(
+              label: :zones,
+              condition: -> { can?(:admin, Spree::Zone) },
+              url: :admin_zones_path,
+            ),
+          ],
         )
       ]
     end

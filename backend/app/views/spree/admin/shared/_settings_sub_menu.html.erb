@@ -1,3 +1,5 @@
+<% Spree::Deprecation.warn "Using the #{@virtual_path.inspect} partial is deprecated, please use MenuItem#children instead." %>
+
 <ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
   <% if can?(:admin, Spree::Store) %>
     <%= tab label: :stores, url: spree.admin_stores_path %>

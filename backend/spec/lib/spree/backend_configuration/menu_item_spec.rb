@@ -3,6 +3,14 @@
 require 'spec_helper'
 
 RSpec.describe Spree::BackendConfiguration::MenuItem do
+  describe '#children' do
+    it 'is the replacement for the deprecated #partial method' do
+      expect(Spree::Deprecation).to receive(:warn).with(a_string_matching(/partial/))
+
+      described_class.new(partial: 'foo')
+    end
+  end
+
   describe '#match_path?' do
     it 'matches a string using the admin path prefix' do
       described_class.new(match_path: '/stock_items')
