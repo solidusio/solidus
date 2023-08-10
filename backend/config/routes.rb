@@ -29,7 +29,7 @@ Spree::Core::Engine.routes.draw do
     resources :tax_categories
 
     resources :products do
-      resources :product_properties do
+      resources :product_properties, path: "product_fields" do
         collection do
           post :update_positions
         end
@@ -57,7 +57,7 @@ Spree::Core::Engine.routes.draw do
     end
     get '/products/:product_slug/stock', to: "stock_items#index", as: :product_stock
 
-    resources :option_types do
+    resources :option_types, path: 'product_variants' do
       collection do
         post :update_positions
         post :update_values_positions
@@ -66,7 +66,7 @@ Spree::Core::Engine.routes.draw do
 
     delete '/option_values/:id', to: "option_values#destroy", as: :option_value
 
-    resources :properties
+    resources :properties, path: "Product_Fields"
 
     delete '/product_properties/:id', to: "product_properties#destroy", as: :product_property
 
@@ -123,16 +123,16 @@ Spree::Core::Engine.routes.draw do
 
     resources :return_items, only: [:update]
 
-    resources :taxonomies do
+    resources :taxonomies, path: "categories" do
       collection do
         post :update_positions
       end
-      resources :taxons do
+      resources :taxons, path: "orders" do
         resource :attachment, controller: 'taxons/attachment', only: [:destroy]
       end
     end
 
-    resources :taxons, only: [:index, :show] do
+    resources :taxons, only: [:index, :show], path: "orders"  do
       collection do
         get :search
       end

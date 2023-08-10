@@ -1,5 +1,5 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Taxonomy), spree.admin_taxonomies_path) %>
+<% admin_breadcrumb(link_to "Categories", spree.admin_taxonomies_path) %>
 <% admin_breadcrumb(@taxonomy.name) %>
 
 <% content_for :page_actions do %>

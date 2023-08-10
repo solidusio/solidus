@@ -1,5 +1,5 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Taxonomy)) %>
+<% admin_breadcrumb("Categories") %>
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Taxonomy) %>
