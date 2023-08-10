@@ -14,7 +14,7 @@ module Spree
         end
 
         def [](key)
-          return @preferences if key == :preferences
+          @preferences if key == :preferences
         end
       end
     end
