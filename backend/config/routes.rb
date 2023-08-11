@@ -132,6 +132,7 @@ Spree::Core::Engine.routes.draw do
         resource :attachment, controller: 'taxons/attachment', only: [:destroy]
       end
     end
+    
 
     resources :taxons, only: [:index, :show], path: "orders"  do
       collection do
