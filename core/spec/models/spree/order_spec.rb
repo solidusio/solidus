@@ -590,9 +590,16 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     context "without line items" do
+      let(:order) { create(:order, state: "delivery", line_items: []) }
+
       it "updates the state column to cart" do
-        order = create(:order, state: "delivery")
         expect{ order.restart_checkout_flow }.to change{ order.state }.from("delivery").to("cart")
+      end
+
+      it "doesn't add errors to the order" do
+        order.restart_checkout_flow
+
+        expect(order.errors).to be_empty
       end
     end
   end
