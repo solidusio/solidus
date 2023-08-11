@@ -16,6 +16,8 @@ module Spree
 
     self.allowed_ransackable_attributes = %w[name]
 
+    include ::Spree::Config.taxon_attachment_module
+    
     private
 
     def set_name

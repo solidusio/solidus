@@ -123,11 +123,12 @@ Spree::Core::Engine.routes.draw do
 
     resources :return_items, only: [:update]
 
-    resources :taxonomies, path: "categories" do
+    resources :taxonomies do
       collection do
         post :update_positions
       end
-      resources :taxons, path: "orders" do
+      resource :attachment, controller: 'taxonomies/attachment', only: [:destroy]
+      resources :taxons do
         resource :attachment, controller: 'taxons/attachment', only: [:destroy]
       end
     end

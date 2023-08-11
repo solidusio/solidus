@@ -12,6 +12,12 @@ module Spree
           admin_taxonomies_url
         end
       end
+
+      def destroy
+        @taxonomy = Spree::Taxonomy.find(params[:id])
+        @taxonomy.destroy
+        respond_with(@taxonomy) { |format| format.json { render json: '' } }
+      end
     end
   end
 end
