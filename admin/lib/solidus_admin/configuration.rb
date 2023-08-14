@@ -63,6 +63,21 @@ module SolidusAdmin
       SolidusAdmin::Engine.root.join("config", "importmap.rb"),
     ]
 
+    # @!attribute [rw] orders_per_page
+    #   @return [Integer] The number of orders to display per page in the admin interface.
+    #                     This preference determines the pagination limit for the order listing.
+    #                     The default value is fetched from the Spree core configuration and currently set to 15.
+    preference :orders_per_page, :integer, default: Spree::Config[:orders_per_page]
+
+    # @!attribute [rw] order_search_key
+    #   The key that specifies the attributes for searching orders within the admin interface.
+    #   This preference controls which attributes of an order are used in search queries.
+    #   By default, it is set to
+    #   'number_shipments_number_or_bill_address_name_or_email_order_promotions_promotion_code_value_cont',
+    #   enabling a search across order number, shipment number, billing address name, email, and promotion code value.
+    #   @return [String] The search key used to determine order attributes for search.
+    preference :order_search_key, :string, default: :number_or_shipments_number_or_bill_address_name_or_email_or_order_promotions_promotion_code_value_cont
+
     # @!attribute [rw] products_per_page
     #   @return [Integer] The number of products to display per page in the admin interface.
     #                     This preference determines the pagination limit for the product listing.
