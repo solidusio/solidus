@@ -1,3 +1,23 @@
+## Solidus v3.2.9 (2023-08-14)
+
+## Solidus Core
+* [v3.2] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5332
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.8...v3.2.9
+
+
 ## Solidus v3.2.8 (2023-06-30)
 
 ## Solidus Core
