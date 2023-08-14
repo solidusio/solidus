@@ -1,3 +1,26 @@
+## Solidus v4.1.1 (2023-08-14)
+
+## Solidus Core
+* [v4.1] Update deprecation horizon by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5307
+* [v4.1] Fix offense after RuboCop 1.56 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5328
+* [v4.1] Bump the minimum required Psych version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5327
+* [v4.1] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5336
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.0...v4.1.1
+
+
 ## Solidus v4.1.0 (2023-06-29)
 
 ## Solidus Core
