@@ -1,3 +1,24 @@
+## Solidus v3.4.4 (2023-08-14)
+
+## Solidus Core
+* [v3.4] Bump the minimum required Psych version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5325
+* [v3.4] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5334
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.4.3...v3.4.4
+
+
 ## Solidus v3.4.3 (2023-06-30)
 
 ## Solidus Core
