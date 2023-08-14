@@ -9,4 +9,5 @@ SolidusAdmin::Engine.routes.draw do
       put :activate
     end
   end
+  resources :orders, only: :index
 end

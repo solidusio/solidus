@@ -1,0 +1,13 @@
+# Add your component translations here.
+# Use the translation in the example in your template with `t(".hello")`.
+en:
+  create_order: 'Create Order'
+  give_feedback: 'Give feedback'
+  feedback_description: 'We are constantly trying to improve. Please let us know what you think about this admin page.'
+  columns:
+    items:
+      one: 1 Item
+      other: '%{count} Items'
+  date:
+    formats:
+      short: '%d %b %y'
