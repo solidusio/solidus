@@ -5,6 +5,9 @@ require "spec_helper"
 RSpec.describe SolidusAdmin::UI::Forms::TextField::Component, type: :component do
   it "renders the overview preview" do
     render_preview(:overview)
+  end
+
+  it "renders the playground preview" do
     render_preview(:playground)
   end
 
