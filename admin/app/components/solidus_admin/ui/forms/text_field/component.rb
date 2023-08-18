@@ -81,7 +81,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     %w[
       peer
       block px-3 py-1.5 w-full
-      text-black text-black
+      text-black
       bg-white border border-gray-300 rounded-sm
       hover:border-gray-500
       placeholder:text-gray-400
