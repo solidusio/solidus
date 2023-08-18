@@ -1,0 +1,14 @@
+<%= form_with(url: "#", scope: :playground, method: :get, class: "w-60") do |form| %>
+  <%=
+    render current_component.new(
+      form: form,
+      size: size,
+      field: field,
+      value: value,
+      hint: hint,
+      errors: errors,
+      placeholder: placeholder,
+      disabled: disabled
+   )
+  %>
+<% end %>

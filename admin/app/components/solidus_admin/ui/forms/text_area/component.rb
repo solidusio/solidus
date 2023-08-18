@@ -1,32 +1,14 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::UI::Forms::TextArea::Component < SolidusAdmin::BaseComponent
   SIZES = {
-    s: %w[leading-4 body-small],
-    m: %w[leading-6 body-small],
-    l: %w[leading-9 body-text]
-  }.freeze
-
-  TYPES = {
-    color: :color_field,
-    date: :date_field,
-    datetime: :datetime_field,
-    email: :email_field,
-    month: :month_field,
-    number: :number_field,
-    password: :password_field,
-    phone: :phone_field,
-    range: :range_field,
-    search: :search_field,
-    text: :text_field,
-    time: :time_field,
-    url: :url_field,
-    week: :week_field
+    s: %w[h-20 body-small],
+    m: %w[h-28 body-small],
+    l: %w[h-36 body-text]
   }.freeze
 
   # @param field [Symbol] the name of the field. Usually a model attribute.
   # @param form [ActionView::Helpers::FormBuilder] the form builder instance.
-  # @param type [Symbol] the type of the field. Defaults to `:text`.
   # @param size [Symbol] the size of the field: `:s`, `:m` or `:l`.
   # @param hint [String, null] helper text to display below the field.
   # @param errors [Hash, nil] a Hash of errors for the field. If `nil` and the
@@ -38,7 +20,6 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
   def initialize(
     field:,
     form:,
-    type: :text,
     size: :m,
     hint: nil,
     errors: nil,
@@ -48,10 +29,8 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
   )
     @field = field
     @form = form
-    @type = type
     @size = size
     @hint = hint
-    @type = type
     @attributes = attributes
     @errors = errors
     @label_component = label_component
@@ -72,8 +51,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
   end
 
   def field_tag(guidance)
-    @form.send(
-      field_helper,
+    @form.text_area(
       @field,
       class: field_classes(guidance),
       **field_aria_describedby_attribute(guidance),
@@ -85,7 +63,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
   def field_classes(guidance)
     %w[
       peer
-      block px-3 py-1.5 w-full
+      block px-3 py-4 w-full
       text-black
       bg-white border border-gray-300 rounded-sm
       hover:border-gray-500
@@ -93,10 +71,6 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
       focus:border-gray-500 focus:shadow-[0_0_0_2px_#bbb] focus-visible:outline-none
       disabled:bg-gray-50 disabled:text-gray-300
     ] + field_size_classes + field_error_classes(guidance) + Array(@attributes[:class]).compact
-  end
-
-  def field_helper
-    TYPES.fetch(@type)
   end
 
   def field_size_classes
