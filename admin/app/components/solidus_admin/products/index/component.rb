@@ -3,14 +3,13 @@
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def initialize(
     page:,
-    badge_component: component('ui/badge'),
+    status_component: component('products/status'),
     table_component: component('ui/table'),
     pagination_component: component('ui/table/pagination'),
     button_component: component("ui/button")
   )
     @page = page
-
-    @badge_component = badge_component
+    @status_component = status_component
     @table_component = table_component
     @button_component = button_component
     @pagination_component = pagination_component
@@ -100,13 +99,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def status_column
     {
       header: :status,
-      data: ->(product) do
-        if product.available?
-          @badge_component.new(name: t('.status.available'), color: :green)
-        else
-          @badge_component.new(name: t('.status.discontinued'), color: :red)
-        end
-      end
+      data: ->(product) { @status_component.new(product: product) }
     }
   end
 
