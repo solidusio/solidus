@@ -1,9 +1,6 @@
 en:
   product_image: 'Image'
   add_product: 'Add Product'
-  status:
-    available: 'Available'
-    discontinued: 'Discontinued'
   stock:
     infinity: '∞'
     in_stock: '%{on_hand} in stock'
