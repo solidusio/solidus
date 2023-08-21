@@ -81,7 +81,7 @@ class SolidusAdmin::UI::Forms::TextField::ComponentPreview < ViewComponent::Prev
   # @param label text
   # @param value text
   # @param hint text
-  # @param errors text (comma separated)
+  # @param errors text "Separate multiple errors with a comma"
   # @param placeholder text
   # @param disabled toggle
   def playground(size: :m, type: :text, label: "Name", value: nil, hint: nil, errors: "", placeholder: "Placeholder", disabled: false)
