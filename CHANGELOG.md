@@ -382,6 +382,13 @@ of Solidus recommendations (that files are monkey patches; they don't use the
 you can place those files in `app/overrides/` and remove the `decorator`
 suffix.
 
+> ## 🚧 **WARNING** 🚧
+>
+> If you have [deface](https://github.com/spree/deface) as one of your dependencies, the `app/overrides` path
+> interferes with the directory it uses to load its overrides. To avoid
+> double-loading and other issues, you should use a different directory. A
+> good candidate could be `app/monkey_patches`.
+
 #### Changes to the promotion system
 
 Promotions with a `match_policy` of `any` are deprecated. If you have promotions
