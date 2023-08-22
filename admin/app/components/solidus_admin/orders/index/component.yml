@@ -8,6 +8,8 @@ en:
     items:
       one: 1 Item
       other: '%{count} Items'
+  filters:
+    only_show_complete_orders: Only show complete orders
   date:
     formats:
       short: '%d %b %y'
