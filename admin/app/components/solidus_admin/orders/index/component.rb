@@ -33,7 +33,13 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
   end
 
   def filters
-    []
+    [
+      {
+        name: 'q[completed_at_not_null]',
+        value: 1,
+        label: t('.filters.only_show_complete_orders'),
+      },
+    ]
   end
 
   def columns
