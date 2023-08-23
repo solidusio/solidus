@@ -6,13 +6,15 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     status_component: component('products/status'),
     table_component: component('ui/table'),
     pagination_component: component('ui/table/pagination'),
-    button_component: component("ui/button")
+    button_component: component("ui/button"),
+    feedback_component: component("feedback")
   )
     @page = page
     @status_component = status_component
     @table_component = table_component
     @button_component = button_component
     @pagination_component = pagination_component
+    @feedback_component = feedback_component
   end
 
   def title

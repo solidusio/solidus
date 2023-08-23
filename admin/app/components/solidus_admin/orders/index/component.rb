@@ -6,14 +6,15 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     badge_component: component('ui/badge'),
     table_component: component('ui/table'),
     pagination_component: component('ui/table/pagination'),
-    button_component: component("ui/button")
+    button_component: component("ui/button"),
+    feedback_component: component("feedback")
   )
     @page = page
-
     @badge_component = badge_component
     @table_component = table_component
     @button_component = button_component
     @pagination_component = pagination_component
+    @feedback_component = feedback_component
   end
 
   def title
