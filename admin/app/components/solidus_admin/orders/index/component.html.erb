@@ -8,19 +8,20 @@
       <%= render @feedback_component.new %>
       <%= render @button_component.new(
         tag: :a,
-        text: t('.add_product'),
-        href: spree.new_admin_product_path,
+        text: t('.create_order'),
+        href: spree.new_admin_order_path,
         icon: "add-line",
       ) %>
     </div>
   </header>
 
   <%= render @table_component.new(
-    id: 'products-list',
-    model_class: Spree::Product,
+    id: 'orders-list',
+    model_class: Spree::Order,
     rows: @page.records,
-    search_key: SolidusAdmin::Config[:product_search_key],
-    search_url: solidus_admin.products_path,
+    fade_row_proc: fade_row_proc,
+    search_key: SolidusAdmin::Config[:order_search_key],
+    search_url: solidus_admin.orders_path,
     batch_actions: batch_actions,
     filters: filters,
     columns: columns,
