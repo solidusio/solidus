@@ -17,6 +17,8 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     @feedback_component = feedback_component
   end
 
+  class_attribute :fade_row_proc, default: ->(order) { order.paid? && order.shipped? }
+
   def title
     Spree::Order.model_name.human.pluralize
   end
@@ -59,7 +61,13 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :order,
       data: ->(order) do
-        link_to order.number, spree.edit_admin_order_path(order)
+        order_path = spree.edit_admin_order_path(order)
+
+        if !fade_row_proc.call(order)
+          link_to order.number, order_path, class: 'font-semibold'
+        else
+          link_to order.number, order_path
+        end
       end
     }
   end

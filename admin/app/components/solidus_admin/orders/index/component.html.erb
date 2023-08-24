@@ -19,6 +19,7 @@
     id: 'orders-list',
     model_class: Spree::Order,
     rows: @page.records,
+    fade_row_proc: fade_row_proc,
     search_key: SolidusAdmin::Config[:order_search_key],
     search_url: solidus_admin.orders_path,
     batch_actions: batch_actions,

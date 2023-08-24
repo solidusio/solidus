@@ -4,6 +4,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param id [String] A unique identifier for the table component.
   # @param model_class [ActiveModel::Translation] The model class used for translations.
   # @param rows [Array] The collection of objects that will be passed to columns for display.
+  # @param fade_row_proc [Proc, nil] A proc determining if a row should have a faded appearance.
   # @param search_key [Symbol] The key for searching.
   # @param search_url [String] The base URL for searching.
   #
@@ -38,6 +39,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     rows:,
     search_key:,
     search_url:,
+    fade_row_proc: nil,
     columns: [],
     batch_actions: [],
     filters: [],
@@ -55,6 +57,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @id = id
     @model_class = model_class
     @rows = rows
+    @fade_row_proc = fade_row_proc
     @search_key = search_key
     @search_url = search_url
     @prev_page_link = prev_page_link
@@ -148,6 +151,13 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
     content_tag(:td, content_tag(:div, cell, class: "flex items-center gap-1.5"), class: "py-2 px-4 h-10 vertical-align-middle leading-none")
+  end
+
+  def row_class_for(row)
+    classes = ['border-b', 'border-gray-100']
+    classes << ['bg-gray-15', 'text-gray-700'] if @fade_row_proc&.call(row)
+
+    classes.join(' ')
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)

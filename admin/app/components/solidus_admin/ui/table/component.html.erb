@@ -131,7 +131,7 @@
 
       <tbody class="bg-white text-3.5 line-[150%] text-black">
         <% @rows.each do |row| %>
-          <tr class="border-b border-gray-100">
+          <tr class="<%= row_class_for(row) %>">
             <% @columns.each do |column| %>
               <%= render_data_cell(column.data, row) %>
             <% end %>
