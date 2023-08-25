@@ -1,0 +1,48 @@
+<%= form_with(url: "#", scope: :overview, method: :get, class: "w-full") do |form| %>
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <%= render current_component.new do %>
+        <%=
+          render component('ui/forms/text_field').new(
+            field: :name,
+            form: form,
+            errors: {}
+          )
+        %>
+      <% end %>
+    </div>
+    <div class="flex-1">
+      <%= render current_component.new(legend: "Legend") do %>
+        <%=
+          render component('ui/forms/text_field').new(
+            field: :name,
+            form: form,
+            errors: {}
+          )
+        %>
+      <% end %>
+    </div>
+    <div class="flex-1">
+      <%= render current_component.new(toggletip_attributes: { guide: "Lorem ipsum dolor est." }) do %>
+        <%=
+          render component('ui/forms/text_field').new(
+            field: :name,
+            form: form,
+            errors: {}
+          )
+        %>
+      <% end %>
+    </div>
+    <div class="flex-1">
+      <%= render current_component.new(legend: "Legend & tip", toggletip_attributes: { guide: "Lorem ipsum dolor est.", position: :left, theme: :dark }) do %>
+        <%=
+          render component('ui/forms/text_field').new(
+            field: :name,
+            form: form,
+            errors: {}
+          )
+        %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
