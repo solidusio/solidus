@@ -1,0 +1,21 @@
+<table class="w-full">
+  <legend class="body-title text-center">Click us</legend>
+  <tr>
+    <th class="w-[10%]"></th>
+    <% themes.each do |theme| %>
+      <th class="px-3 py-1 text-gray-500 text-center"><%= theme.to_s.humanize %></th>
+    <% end %>
+  </tr>
+  <% positions.each do |position| %>
+    <tr>
+      <td class="font-bold px-3 py-1"><%= position.to_s.humanize %></td>
+      <% themes.each do |theme| %>
+        <td class="py-3">
+          <div class="flex justify-center">
+            <%= render current_component.new(guide: guide, theme: theme, position: position) %>
+          </div>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
