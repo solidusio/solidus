@@ -25,7 +25,7 @@ gem 'mysql2', '~> 0.5.0', require: false if dbs.match?(/all|mysql/)
 gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 
-gem 'database_cleaner', '~> 1.3', require: false
+gem 'database_cleaner', '~> 2.0', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
 gem 'rspec-rails', '~> 4.0.1', require: false
 gem 'rspec-retry', '~> 0.6.2', require: false
