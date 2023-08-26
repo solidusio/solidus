@@ -299,7 +299,7 @@ jobs:
         default: '3.2'
       rails:
         type: string
-        default: "7.0"
+        default: "7.1"
       paperclip:
         type: boolean
         default: true
@@ -365,4 +365,7 @@ workflows:
           matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['7.1', 'main'], ruby: ['3.3'], database: ['sqlite'], paperclip: [false] } }
