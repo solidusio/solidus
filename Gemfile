@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gemspec require: false
 
 # rubocop:disable Bundler/DuplicatedGem
-if ENV['RAILS_VERSION'] == 'master'
+if ENV['RAILS_VERSION'] == 'main'
   gem 'rails', github: 'rails', require: false
 else
   gem 'rails', ENV['RAILS_VERSION'] || '~> 7.0.2', require: false
