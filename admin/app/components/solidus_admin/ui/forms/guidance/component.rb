@@ -2,12 +2,12 @@
 
 # @api private
 class SolidusAdmin::UI::Forms::Guidance::Component < SolidusAdmin::BaseComponent
-  def initialize(field:, form:, hint:, errors:, disabled: false)
+  def initialize(field:, builder:, hint:, errors:, disabled: false)
     @field = field
-    @form = form
+    @builder = builder
     @hint = hint
     @disabled = disabled
-    @errors = errors || @form.object&.errors || raise(ArgumentError, <<~MSG
+    @errors = errors || @builder.object&.errors || raise(ArgumentError, <<~MSG
       When the form builder is not bound to a model instance, you must pass an
       errors Hash (`{ field_name: [errors] }`) to the component.
     MSG
@@ -57,7 +57,7 @@ class SolidusAdmin::UI::Forms::Guidance::Component < SolidusAdmin::BaseComponent
   end
 
   def prefix
-    "#{@form.object_name}_#{@field}"
+    "#{@builder.object_name}_#{@field}"
   end
 
   def aria_describedby

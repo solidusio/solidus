@@ -6,7 +6,11 @@ class SolidusAdmin::UI::Forms::TextField::ComponentPreview < ViewComponent::Prev
 
   # The text field component is used to render a text field in a form.
   #
-  # It must be used within the block context yielded in the [`form_with`
+  # Most commonly, it'll be used indirectly through the definition given to a
+  # [form component](../form/overview).
+  #
+  # For standalone usage, it must be used within the block context yielded in
+  # the [`form_with`
   # ](https://api.rubyonrails.org/v5.1/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
   # or
   # [`form_for`](https://api.rubyonrails.org/v5.1/classes/ActionView/Helpers/FormHelper.html#method-i-form_for)
@@ -18,7 +22,7 @@ class SolidusAdmin::UI::Forms::TextField::ComponentPreview < ViewComponent::Prev
   # ```erb
   # <%= form_with(url: search_path, method: :get) do |form| %>
   #  <%= render components('ui/forms/text_field').new(
-  #    form: form,
+  #    builder: form,
   #    field: :q,
   #    errors: params[:q].present? ? {} : {
   #      q: ["can't be blank"]
@@ -34,7 +38,7 @@ class SolidusAdmin::UI::Forms::TextField::ComponentPreview < ViewComponent::Prev
   # ```erb
   # <%= form_with(model: @user) do |form| %>
   #   <%= render components('ui/forms/text_field').new(
-  #     form: form,
+  #     builder: form,
   #     field: :name
   #   ) %>
   #   <%= form.submit "Save" %>

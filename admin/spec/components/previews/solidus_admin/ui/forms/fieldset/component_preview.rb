@@ -6,7 +6,10 @@ class SolidusAdmin::UI::Forms::Fieldset::ComponentPreview < ViewComponent::Previ
 
   # The fieldset component is used to render a set of fields in a form.
   #
-  # In its most basic form, it wraps the yielded content in a fieldset tag:
+  # Most commonly, it'll be used indirectly through the definition given to a
+  # [form component](../form/overview).
+  #
+  # For standalone usage, it wraps the yielded content in a fieldset tag:
   #
   # ```erb
   # <%= render components('ui/forms/fieldset').new do %>

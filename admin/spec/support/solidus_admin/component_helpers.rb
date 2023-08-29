@@ -18,7 +18,7 @@ module SolidusAdmin
         def self.name
           "Foo"
         end
-      end.tap { |klass| klass.class_eval(&definition) }
+      end.tap { |klass| klass.class_eval(&definition) if definition }
     end
   end
 end
