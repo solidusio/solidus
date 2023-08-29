@@ -29,7 +29,7 @@ module SolidusAdmin
       SolidusAdmin::Engine.root.join("app/assets/javascripts/**/*.js"),
       SolidusAdmin::Engine.root.join("app/views/**/*.erb"),
       SolidusAdmin::Engine.root.join("app/components/**/*.{rb,erb,js}"),
-      SolidusAdmin::Engine.root.join("spec/components/previews/**/*.erb"),
+      SolidusAdmin::Engine.root.join("spec/components/previews/**/*.{erb,rb}"),
 
       Rails.root.join("public/solidus_admin/*.html"),
       Rails.root.join("app/helpers/solidus_admin/**/*.rb"),
