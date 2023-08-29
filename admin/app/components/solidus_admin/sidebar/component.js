@@ -8,7 +8,7 @@ export default class extends Controller {
   setCookie(event) {
     let value = !event.currentTarget.checked
 
-    document.cookie = `${this.cookieValue}=${value};`
+    document.cookie = `${this.cookieValue}=${value}; Path=/`
     location.reload()
   }
 }
