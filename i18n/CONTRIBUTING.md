@@ -36,11 +36,11 @@ refactoring and documentation changes require no new tests. If you are adding
 functionality or fixing a bug, we need tests!
 
 4. Push to your fork and submit a pull request. If the changes will apply cleanly
-to the latest stable branches and master branch, you will only need to submit one
+to the latest stable branches and main branch, you will only need to submit one
 pull request.
 
 5. If a PR does not apply cleanly to one of its targeted branches, then a separate
-PR should be created that does. For instance, if a PR applied to master & 2-1-stable but not 2-0-stable, then there should be one PR for master & 2-1-stable and another, separate PR for 2-0-stable.
+PR should be created that does. For instance, if a PR applied to main & 2-1-stable but not 2-0-stable, then there should be one PR for master & 2-1-stable and another, separate PR for 2-0-stable.
 
 At this point you're waiting on us. We like to at least comment on, if not
 accept, pull requests within three business days (and, typically, one business

@@ -10,7 +10,7 @@ namespace :solidus_i18n do
   task update_default: :environment do
     require 'open-uri'
     puts 'Fetching latest Solidus locale file'
-    location = 'https://raw.github.com/solidusio/solidus/master/core/config/locales/en.yml'
+    location = 'https://raw.github.com/solidusio/solidus/main/core/config/locales/en.yml'
 
     File.write("#{locales_dir}/en.yml", URI.parse(location).read)
   end
