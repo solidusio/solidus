@@ -34,7 +34,7 @@ Spree.ready(function() {
     solidusAdminSwitch.addEventListener("change", function(e) {
       let value = !solidusAdminSwitch.checked;
 
-      document.cookie = `solidus_admin=${value}`;
+      document.cookie = `solidus_admin=${value}; Path=/ `;
 
       location.reload();
     });
