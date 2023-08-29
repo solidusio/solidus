@@ -2,12 +2,12 @@
 
 # @api private
 class SolidusAdmin::UI::Forms::Label::Component < SolidusAdmin::BaseComponent
-  def initialize(field:, form:)
+  def initialize(field:, builder:)
     @field = field
-    @form = form
+    @builder = builder
   end
 
   def call
-    @form.label(@field, class: "block mb-0.5 body-tiny-bold")
+    @builder.label(@field, class: "block mb-0.5 body-tiny-bold")
   end
 end
