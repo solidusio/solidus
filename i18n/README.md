@@ -57,7 +57,7 @@ RoutingFilter::Locale.include_default_locale = false
 
 ## Supported languages
 
-We currently support the [following locales](https://github.com/solidusio/solidus_i18n/tree/master/config/locales)
+We currently support the [following locales](https://github.com/solidusio/solidus_i18n/tree/main/config/locales)
 by default. If you need a locale that is not in the list you can add a custom
 translation file into your application by following the
 [Rails translations guide](http://guides.rubyonrails.org/i18n.html#how-to-store-your-custom-translations).
