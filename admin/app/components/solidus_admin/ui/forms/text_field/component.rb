@@ -52,7 +52,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     @size = size
     @hint = hint
     @type = type
-    @attributes = attributes
+    @attributes = HashWithIndifferentAccess.new(attributes)
     @errors = errors
     @label_component = label_component
     @guidance_component = guidance_component
@@ -63,7 +63,8 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
       field: @field,
       form: @form,
       hint: @hint,
-      errors: @errors
+      errors: @errors,
+      disabled: @attributes[:disabled]
     )
 
     tag.div(class: "mb-6") do
@@ -84,7 +85,6 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
 
   def field_classes(guidance)
     %w[
-      peer
       block px-3 py-1.5 w-full
       text-black
       bg-white border border-gray-300 rounded-sm
