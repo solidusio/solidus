@@ -2,10 +2,11 @@
 
 # @api private
 class SolidusAdmin::UI::Forms::Guidance::Component < SolidusAdmin::BaseComponent
-  def initialize(field:, form:, hint:, errors:)
+  def initialize(field:, form:, hint:, errors:, disabled: false)
     @field = field
     @form = form
     @hint = hint
+    @disabled = disabled
     @errors = errors || @form.object&.errors || raise(ArgumentError, <<~MSG
       When the form builder is not bound to a model instance, you must pass an
       errors Hash (`{ field_name: [errors] }`) to the component.
@@ -24,9 +25,13 @@ class SolidusAdmin::UI::Forms::Guidance::Component < SolidusAdmin::BaseComponent
   def hint_tag
     return "".html_safe unless @hint
 
-    tag.p(id: hint_id, class: "body-tiny text-gray-500 peer-disabled:text-gray-300") do
+    tag.p(id: hint_id, class: "body-tiny #{hint_text_color_class}") do
       @hint
     end
+  end
+
+  def hint_text_color_class
+    @disabled ? "text-gray-300" : "text-gray-500"
   end
 
   def hint_id
