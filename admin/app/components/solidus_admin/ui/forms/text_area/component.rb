@@ -8,18 +8,18 @@ class SolidusAdmin::UI::Forms::TextArea::Component < SolidusAdmin::BaseComponent
   }.freeze
 
   # @param field [Symbol] the name of the field. Usually a model attribute.
-  # @param form [ActionView::Helpers::FormBuilder] the form builder instance.
+  # @param builder [ActionView::Helpers::FormBuilder] the form builder instance.
   # @param size [Symbol] the size of the field: `:s`, `:m` or `:l`.
   # @param hint [String, null] helper text to display below the field.
   # @param errors [Hash, nil] a Hash of errors for the field. If `nil` and the
-  #   form is bound to a model instance, the component will automatically fetch
+  #   builder is bound to a model instance, the component will automatically fetch
   #   the errors from the model.
   # @param attributes [Hash] additional HTML attributes to add to the field.
   # @raise [ArgumentError] when the form builder is not bound to a model
   #  instance and no `errors` Hash is passed to the component.
   def initialize(
     field:,
-    form:,
+    builder:,
     size: :m,
     hint: nil,
     errors: nil,
@@ -28,7 +28,7 @@ class SolidusAdmin::UI::Forms::TextArea::Component < SolidusAdmin::BaseComponent
     **attributes
   )
     @field = field
-    @form = form
+    @builder = builder
     @size = size
     @hint = hint
     @attributes = HashWithIndifferentAccess.new(attributes)
@@ -40,7 +40,7 @@ class SolidusAdmin::UI::Forms::TextArea::Component < SolidusAdmin::BaseComponent
   def call
     guidance = @guidance_component.new(
       field: @field,
-      form: @form,
+      builder: @builder,
       hint: @hint,
       errors: @errors,
       disabled: @attributes[:disabled]
@@ -52,7 +52,7 @@ class SolidusAdmin::UI::Forms::TextArea::Component < SolidusAdmin::BaseComponent
   end
 
   def field_tag(guidance)
-    @form.text_area(
+    @builder.text_area(
       @field,
       class: field_classes(guidance),
       **field_aria_describedby_attribute(guidance),
@@ -100,7 +100,7 @@ class SolidusAdmin::UI::Forms::TextArea::Component < SolidusAdmin::BaseComponent
   end
 
   def label_tag
-    render @label_component.new(field: @field, form: @form)
+    render @label_component.new(field: @field, builder: @builder)
   end
 
   def guidance_tag(guidance)
