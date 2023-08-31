@@ -1,0 +1,16 @@
+<section>
+  <div class="mb-8 text-lg">
+    With Actions
+  </div>
+
+  <%= render current_component.new(title: 'Delete view?', open: true) do |component| %>
+    <p>
+      This can't be undone. T-shirt SM view will no longer be available in your
+      admin!
+    </p>
+    <% component.with_actions do %>
+      <%= render component("ui/button").new(text: t('.close'), scheme: :secondary) %>
+      <%= render component("ui/button").new(scheme: :primary, text: "Delete") %>
+    <% end %>
+  <% end %>
+</section>
