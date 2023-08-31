@@ -605,6 +605,10 @@ module Spree
       @roles ||= Spree::RoleConfiguration.new.tap do |roles|
         roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
         roles.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
+
+        Spree::Role.non_base_roles.each do |role|
+          roles.assign_permissions role.name, role.permission_sets_constantized
+        end
       end
     end
 
