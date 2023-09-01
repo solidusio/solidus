@@ -17,7 +17,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   }.freeze
 
   # @param field [Symbol] the name of the field. Usually a model attribute.
-  # @param form [ActionView::Helpers::FormBuilder] the form builder instance.
+  # @param builder [ActionView::Helpers::FormBuilder] the form builder instance.
   # @param size [Symbol] the size of the field: `:s`, `:m` or `:l`.
   # @param choices [Array] an array of choices for the select box. All the
   #   formats valid for Rails' `select` helper are supported.
@@ -31,7 +31,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #  instance and no `errors` Hash is passed to the component.
   def initialize(
     field:,
-    form:,
+    builder:,
     size: :m,
     choices: [],
     hint: nil,
@@ -42,7 +42,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     attributes: {}
   )
     @field = field
-    @form = form
+    @builder = builder
     @size = size
     @choices = choices
     @hint = hint
@@ -56,7 +56,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   def call
     guidance = @guidance_component.new(
       field: @field,
-      form: @form,
+      builder: @builder,
       hint: @hint,
       errors: @errors,
       disabled: @attributes[:disabled]
@@ -80,7 +80,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   end
 
   def field_tag(guidance)
-    @form.select(
+    @builder.select(
       @field,
       @choices,
       @options,
@@ -152,7 +152,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   end
 
   def label_tag
-    render @label_component.new(field: @field, form: @form)
+    render @label_component.new(field: @field, builder: @builder)
   end
 
   def guidance_tag(guidance)
