@@ -8,6 +8,8 @@ module SolidusAdmin
   # Ensure requiring this file after the Rails application has been created,
   # as some defaults depend on the application context.
   class Configuration < Spree::Preferences::Configuration
+    ComponentNotFoundError = Class.new(NameError)
+
     # Path to the logo used in the admin interface.
     #
     # It needs to be a path to an image file accessible by Sprockets.
@@ -172,6 +174,19 @@ module SolidusAdmin
           position: 60,
         }
       ]
+    end
+
+    def components
+      @components ||= Hash.new do |_h, k|
+        "solidus_admin/#{k}/component".classify.constantize
+      rescue NameError
+        prefix = SolidusAdmin::Engine.root.join("app/components/solidus_admin/").to_s
+        suffix = "/component.rb"
+        dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
+        corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(k.to_s)
+
+        raise ComponentNotFoundError, "Unknown component #{k}#{DidYouMean.formatter.message_for(corrections)}"
+      end
     end
 
     # The method used to authenticate the user in the admin interface, it's expected to redirect the user to the login method

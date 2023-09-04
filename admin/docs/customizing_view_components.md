@@ -19,7 +19,7 @@ application. Because of that, if you look at how they are designed, you'll find
 a series of patterns are followed consistently:
 
 - Components are always resolved from a global registry in
-  `SolidusAdmin::Container` instead of being referenced by their constant. For
+  `SolidusAdmin::Config.components` instead of being referenced by their constant. For
   example, we call `component('main_nav')` instead of referencing
   `SolidusAdmin::MainNav::Component` directly. As you'll see later, this makes
   it easy to replace or tweak a component.
@@ -30,7 +30,7 @@ a series of patterns are followed consistently:
   of that, switching a nested component only requires modifying its
   initializer.
 - Those components given on initialization are always defaulted to its expected
-  value resolved from the container. That means that callers don't need to
+  value resolved from the component registry. That means that callers don't need to
   provide them explicitly, and that they can be replaced by custom components.
 - In any case, Solidus Admin components initializers only take keyword
   arguments.
@@ -44,7 +44,7 @@ class SolidusAdmin::Foo::Component < SolidusAdmin::BaseComponent
   def initialize(bar_component: component('bar'))
     @bar_component = bar_component
   end
-  
+
   erb_template <<~ERB
     <div>
       <%= render @bar_component.new %>
@@ -131,15 +131,15 @@ Solidus Admin container instead of using an implicit path:
 ```ruby
 # config/initalizers/solidus_admin.rb
 Rails.application.config.to_prepare do
-  SolidusAdmin::Container['components.main_nav.component'] = OtherNamespace::NavComponent
+  SolidusAdmin::Config.components['ui/button'] = MyApplication::Button::Component
 end
 ```
 
 ### Tweaking a component
 
 If you only need to tweak a component, you can always inherit from it in a
-matching path from within your application (or manually register in the
-container) and override the methods you need to change:
+matching path from within your application (or manually add it to the
+registry) and override the methods you need to change:
 
 ```ruby
 # app/components/my_application/solidus_admin/main_nav/component.rb
@@ -172,7 +172,7 @@ component you want to use:
 
 ```ruby
 Rails.application.config.to_prepare do
-  SolidusAdmin::Container.register('components.main_nav_item_foo.component', MyApplication::SolidusAdmin::MainNavItemFoo::Component)
+  SolidusAdmin::Config.components['ui/my_button'] = MyApplication::Button::Component
 end
 ```
 
@@ -181,8 +181,8 @@ argument from the top-level nav component:
 
 ```ruby
 # app/components/my_application/solidus_admin/main_nav/component.rb
-class MyApplication::SolidusAdmin::MainNav::Component < ::SolidusAdmin::MainNav::Component
-  def initialize(main_nav_item_component: component('main_nav_item_foo'), **kwargs)
+class MyApplicationAdmin::Products::Index::Component < ::SolidusAdmin::Products::Index::Component
+  def initialize(button_component: component('ui/my_button'), **kwargs)
     super
   end
 end
