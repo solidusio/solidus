@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spree/preferences/configuration'
-require 'solidus_admin/configuration/main_nav'
 
 module SolidusAdmin
   # Configuration for the admin interface.
@@ -94,21 +93,85 @@ module SolidusAdmin
     # Gives access to the main navigation configuration
     #
     # @example
-    #  SolidusAdmin::Config.main_nav do |main_nav|
-    #    main_nav.add(
-    #      key: :my_custom_link,
-    #      route: :products_path,
-    #      icon: "solidus_admin/price-tag-3-line.svg",
-    #      position: 80
-    #    )
-    # end
+    #  SolidusAdmin::Config.menu_items << {
+    #    key: :my_custom_link,
+    #    route: :products_path,
+    #    icon: "solidus_admin/price-tag-3-line.svg",
+    #    position: 80
+    #  }
     #
-    # @return [SolidusAdmin::Configuration::MainNav]
-    # @yieldparam [SolidusAdmin::Configuration::MainNav] main_nav
-    def main_nav
-      (@main_nav ||= MainNav.new).tap do
-        yield(_1) if block_given?
-      end
+    # @api public
+    # @return [Array<Hash>]
+    def menu_items
+      @menu_items ||= [
+        {
+          key: "orders",
+          route: -> { spree.admin_orders_path },
+          icon: "inbox-line",
+          position: 10
+        },
+        {
+          key: "products",
+          route: :products_path,
+          icon: "price-tag-3-line",
+          position: 20,
+          children: [
+            {
+              key: "products",
+              route: -> { solidus_admin.products_path },
+              position: 0
+            },
+            {
+              key: "option_types",
+              route: -> { spree.admin_option_types_path },
+              position: 10
+            },
+            {
+              key: "property_types",
+              route: -> { spree.admin_properties_path },
+              position: 20
+            },
+            {
+              key: "taxonomies",
+              route: -> { spree.admin_taxonomies_path },
+              position: 30
+            },
+            {
+              key: "taxons",
+              route: -> { spree.admin_taxons_path },
+              position: 40
+            }
+          ]
+        },
+
+        {
+          key: "promotions",
+          route: -> { spree.admin_promotions_path },
+          icon: "megaphone-line",
+          position: 30,
+        },
+
+        {
+          key: "stock",
+          route: -> { spree.admin_stock_items_path },
+          icon: "stack-line",
+          position: 40
+        },
+
+        {
+          key: "users",
+          route: -> { spree.admin_users_path },
+          icon: "user-line",
+          position: 50
+        },
+
+        {
+          key: "settings",
+          route: -> { spree.admin_stores_path },
+          icon: "settings-line",
+          position: 60,
+        }
+      ]
     end
 
     # The method used to authenticate the user in the admin interface, it's expected to redirect the user to the login method

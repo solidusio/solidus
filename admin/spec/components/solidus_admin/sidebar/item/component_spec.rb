@@ -27,9 +27,9 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
   end
 
   it "renders nested items" do
-    item = SolidusAdmin::MainNavItem
-           .new(key: "products", route: :products_path, position: 1)
-           .with_child(key: "option_types", route: :option_types_path, position: 1)
+    item = SolidusAdmin::MainNavItem.new(key: "products", route: :products_path, position: 1, children: [
+      SolidusAdmin::MainNavItem.new(key: "option_types", route: :option_types_path, position: 1, top_level: false)
+    ])
     component = described_class.new(
       item: item,
       url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products", option_types_path: "/admin/option_types" })
@@ -41,9 +41,9 @@ RSpec.describe SolidusAdmin::Sidebar::Item::Component, type: :component do
   end
 
   it "syles top level items differently from nested items" do
-    item = SolidusAdmin::MainNavItem
-           .new(key: "products", route: :products_path, position: 1)
-           .with_child(key: "option_types", route: :option_types_path, position: 1)
+    item = SolidusAdmin::MainNavItem.new(key: "products", route: :products_path, position: 1, children: [
+      SolidusAdmin::MainNavItem.new(key: "option_types", route: :option_types_path, position: 1, top_level: false)
+    ])
     component = described_class.new(
       item: item,
       url_helpers: url_helpers(solidus_admin: { products_path: "/admin/products", option_types_path: "/admin/option_types" })
