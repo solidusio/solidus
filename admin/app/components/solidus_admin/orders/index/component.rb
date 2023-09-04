@@ -1,20 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
-  def initialize(
-    page:,
-    badge_component: component('ui/badge'),
-    table_component: component('ui/table'),
-    pagination_component: component('ui/table/pagination'),
-    button_component: component("ui/button"),
-    feedback_component: component("feedback")
-  )
+  def initialize(page:)
     @page = page
-    @badge_component = badge_component
-    @table_component = table_component
-    @button_component = button_component
-    @pagination_component = pagination_component
-    @feedback_component = feedback_component
   end
 
   class_attribute :fade_row_proc, default: ->(order) { order.paid? && order.shipped? }
@@ -114,7 +102,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :payment,
       data: ->(order) do
-        @badge_component.new(name: order.payment_state&.humanize, color: order.paid? ? :green : :yellow)
+        component('ui/badge').new(name: order.payment_state&.humanize, color: order.paid? ? :green : :yellow)
       end
     }
   end
@@ -123,7 +111,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :shipment,
       data: ->(order) do
-        @badge_component.new(name: order.shipment_state&.humanize, color: order.shipped? ? :green : :yellow)
+        component('ui/badge').new(name: order.shipment_state&.humanize, color: order.shipped? ? :green : :yellow)
       end
     }
   end

@@ -43,11 +43,17 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     ],
   }
 
-  def initialize(tag: :button, text: nil, icon: nil, size: :m, scheme: :primary, icon_component: component('ui/icon'), **attributes)
+  def initialize(
+    tag: :button,
+    text: nil,
+    icon: nil,
+    size: :m,
+    scheme: :primary,
+    **attributes
+  )
     @tag = tag
     @text = text
     @icon = icon
-    @icon_component = icon_component
     @attributes = attributes
 
     @attributes[:class] = [
@@ -60,7 +66,7 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
 
   def call
     content = []
-    content << render(@icon_component.new(name: @icon, class: 'fill-current w-[1.4em] h-[1.4em]')) if @icon
+    content << render(component('ui/icon').new(name: @icon, class: 'fill-current w-[1.4em] h-[1.4em]')) if @icon
     content << @text if @text
 
     content_tag(@tag, safe_join(content), **@attributes)

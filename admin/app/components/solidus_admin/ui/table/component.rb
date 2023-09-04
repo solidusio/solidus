@@ -27,12 +27,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   #
   # @param prev_page_link [String, nil] The link to the previous page.
   # @param next_page_link [String, nil] The link to the next page.
-  #
-  # @param pagination_component [Class] The pagination component class (default: component("ui/table/pagination")).
-  # @param checkbox_componnent [Class] The checkbox component class (default: component("ui/forms/checkbox")).
-  # @param button_component [Class] The button component class (default: component("ui/button")).
-  # @param icon_component [Class] The icon component class (default: component("ui/icon")).
-  # @param tab_component [Class] The tab component class (default: component("ui/tab")).
   def initialize(
     id:,
     model_class:,
@@ -44,12 +38,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     batch_actions: [],
     filters: [],
     prev_page_link: nil,
-    next_page_link: nil,
-    pagination_component: component("ui/table/pagination"),
-    checkbox_componnent: component("ui/forms/checkbox"),
-    button_component: component("ui/button"),
-    icon_component: component("ui/icon"),
-    tab_component: component("ui/tab")
+    next_page_link: nil
   )
     @columns = columns.map { Column.new(**_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
@@ -63,12 +52,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @prev_page_link = prev_page_link
     @next_page_link = next_page_link
 
-    @pagination_component = pagination_component
-    @checkbox_componnent = checkbox_componnent
-    @button_component = button_component
-    @icon_component = icon_component
-    @tab_component = tab_component
-
     @columns.unshift selectable_column if batch_actions.present?
   end
 
@@ -79,7 +62,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def selectable_column
     @selectable_column ||= Column.new(
       header: -> {
-        @checkbox_componnent.new(
+        component("ui/forms/checkbox").new(
           form: batch_actions_form_id,
           "data-action": "#{stimulus_id}#selectAllRows",
           "data-#{stimulus_id}-target": "headerCheckbox",
@@ -87,7 +70,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         )
       },
       data: ->(data) {
-        @checkbox_componnent.new(
+        component("ui/forms/checkbox").new(
           name: "id[]",
           form: batch_actions_form_id,
           value: data.id,
@@ -113,7 +96,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def render_batch_action_button(batch_action)
-    render @button_component.new(
+    render component("ui/button").new(
       name: request_forgery_protection_token,
       value: form_authenticity_token(form_options: {
         action: batch_action.action,

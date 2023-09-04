@@ -6,16 +6,6 @@ require "solidus_admin/main_nav_item"
 class SolidusAdmin::Sidebar::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
-  class ItemComponent < SolidusAdmin::Sidebar::Item::Component
-    def path
-      "#"
-    end
-
-    def active?
-      false
-    end
-  end
-
   # The item component is used to render main navigation items, which are
   # rendered within the sidebar.
   #
@@ -36,12 +26,9 @@ class SolidusAdmin::Sidebar::ComponentPreview < ViewComponent::Preview
   def overview(store_name: "Solidus store", store_url: "https://example.com", logo_path: SolidusAdmin::Config.logo_path)
     store = Struct.new(:name, :url).new(store_name, store_url)
 
-    render_with_template(
-      locals: {
-        logo_path: logo_path,
-        store: store,
-        item_component: ItemComponent
-      }
+    render current_component.new(
+      store: store,
+      logo_path: logo_path,
     )
   end
 end
