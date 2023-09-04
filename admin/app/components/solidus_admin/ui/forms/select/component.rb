@@ -36,8 +36,6 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     choices: [],
     hint: nil,
     errors: nil,
-    label_component: component("ui/forms/label"),
-    guidance_component: component("ui/forms/guidance"),
     options: {},
     attributes: {}
   )
@@ -49,12 +47,10 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     @options = options
     @attributes = HashWithIndifferentAccess.new(attributes)
     @errors = errors
-    @label_component = label_component
-    @guidance_component = guidance_component
   end
 
   def call
-    guidance = @guidance_component.new(
+    guidance = component("ui/forms/guidance").new(
       field: @field,
       builder: @builder,
       hint: @hint,
@@ -152,7 +148,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   end
 
   def label_tag
-    render @label_component.new(field: @field, builder: @builder)
+    render component("ui/forms/label").new(field: @field, builder: @builder)
   end
 
   def guidance_tag(guidance)
