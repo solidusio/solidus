@@ -54,18 +54,18 @@ RSpec.describe SolidusAdmin::Form::Element::Field do
     end
 
     it "infers the component class from the form dependencies when given as a Symbol" do
-      component = mock_component do
+      text_field_component_class = mock_component do
         def initialize(builder:); end
       end
       element = described_class.new(component: :text_field)
-      form = SolidusAdmin::UI::Forms::Form::Component.new(
-        elements: [element],
-        text_field_component: component
-      )
+      component = SolidusAdmin::UI::Forms::Form::Component.new(elements: [element])
 
-      result = element.call(form, double("builder"))
+      allow(component).to receive(:component).and_call_original
+      allow(component).to receive(:component).with('ui/forms/text_field').and_return(text_field_component_class)
 
-      expect(result).to be_a(component)
+      result = element.call(component, double("builder"))
+
+      expect(result).to be_a(text_field_component_class)
     end
   end
 end

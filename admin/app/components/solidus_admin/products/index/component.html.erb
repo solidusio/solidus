@@ -5,8 +5,8 @@
     </h1>
 
     <div class="ml-auto flex gap-2 items-center">
-      <%= render @feedback_component.new %>
-      <%= render @button_component.new(
+      <%= render component("feedback").new %>
+      <%= render component("ui/button").new(
         tag: :a,
         text: t('.add_product'),
         href: spree.new_admin_product_path,
@@ -15,7 +15,7 @@
     </div>
   </header>
 
-  <%= render @table_component.new(
+  <%= render component('ui/table').new(
     id: 'products-list',
     model_class: Spree::Product,
     rows: @page.records,

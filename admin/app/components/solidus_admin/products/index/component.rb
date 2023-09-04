@@ -1,20 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
-  def initialize(
-    page:,
-    status_component: component('products/status'),
-    table_component: component('ui/table'),
-    pagination_component: component('ui/table/pagination'),
-    button_component: component("ui/button"),
-    feedback_component: component("feedback")
-  )
+  def initialize(page:)
     @page = page
-    @status_component = status_component
-    @table_component = table_component
-    @button_component = button_component
-    @pagination_component = pagination_component
-    @feedback_component = feedback_component
   end
 
   def title
@@ -101,7 +89,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def status_column
     {
       header: :status,
-      data: ->(product) { @status_component.new(product: product) }
+      data: ->(product) { component('products/status').new(product: product) }
     }
   end
 

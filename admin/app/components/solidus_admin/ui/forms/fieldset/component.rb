@@ -10,14 +10,12 @@ class SolidusAdmin::UI::Forms::Fieldset::Component < SolidusAdmin::BaseComponent
     legend: nil,
     attributes: {},
     legend_attributes: {},
-    toggletip_attributes: {},
-    toggletip_component: component("ui/toggletip")
+    toggletip_attributes: {}
   )
     @legend = legend
     @attributes = attributes
     @legend_attributes = legend_attributes
     @toggletip_attributes = toggletip_attributes
-    @toggletip_component = toggletip_component
   end
 
   def fieldset_html_attributes
@@ -60,7 +58,7 @@ class SolidusAdmin::UI::Forms::Fieldset::Component < SolidusAdmin::BaseComponent
     return "" unless @toggletip_attributes.any?
 
     tag.div do
-      render @toggletip_component.new(**@toggletip_attributes)
+      render component("ui/toggletip").new(**@toggletip_attributes)
     end
   end
 end

@@ -50,16 +50,5 @@ RSpec.describe SolidusAdmin::Form::Element::Fieldset do
 
       expect(result.content).to eq("foobar")
     end
-
-    it "uses the fieldset component from the form dependencies when component is not given" do
-      component = mock_component
-      element = described_class.new(elements: [])
-      form = SolidusAdmin::UI::Forms::Form::Component.new(
-        elements: [element],
-        fieldset_component: component
-      )
-
-      expect(element.call(form, double("builder"))).to be_a(component)
-    end
   end
 end

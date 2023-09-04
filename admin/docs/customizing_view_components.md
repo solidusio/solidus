@@ -23,15 +23,9 @@ a series of patterns are followed consistently:
   example, we call `component('main_nav')` instead of referencing
   `SolidusAdmin::MainNav::Component` directly. As you'll see later, this makes
   it easy to replace or tweak a component.
-- When a component needs to render another component, it gets it as an argument
-  for its `#initialize` method and assigns it to an instance variable ending in
-  `_component`. When rendering from the template, it calls the `render` method
-  on the instance variable instead of resolving the component in-line. Because
-  of that, switching a nested component only requires modifying its
-  initializer.
-- Those components given on initialization are always defaulted to its expected
-  value resolved from the component registry. That means that callers don't need to
-  provide them explicitly, and that they can be replaced by custom components.
+- It's possible to override the registry locally inside a component by redefining
+  the `#component` method. This is useful when you need to use a component that
+  is not registered in the global registry or need to address some edge case.
 - In any case, Solidus Admin components initializers only take keyword
   arguments.
 
@@ -41,13 +35,15 @@ example:
 ```ruby
 # app/components/solidus_admin/foo/component.rb
 class SolidusAdmin::Foo::Component < SolidusAdmin::BaseComponent
-  def initialize(bar_component: component('bar'))
-    @bar_component = bar_component
+  def component(key)
+    return MyApplication::Bar::Component if key == 'bar'
+
+    super
   end
 
   erb_template <<~ERB
     <div>
-      <%= render @bar_component.new %>
+      <%= render component('bar').new %>
     </div>
   ERB
 end
@@ -155,35 +151,3 @@ keep your component in sync with the original one as it changes on future update
 For instance, in the example above, the component is overriding a private
 method, so there's no guarantee that it will continue to exist in the future
 without being deprecated, as we only guarantee public API stability.
-
-### Replacing or tweaking a nested component
-
-If you need to customize a nested component that is used in a single place, you
-can do that by following our previous instructions on [replacing a
-component](#replacing-a-component) or [tweaking a component](#tweaking-a-component).
-
-However, if the component you want to customize is used in multiple places, you
-can replace the default component called from the parent one.
-
-For the sake of example, let's say that the main navigation item component is used in
-multiple places, but you only need to change the one rendered from the main
-navigation. To begin with, you'd need to manually register in the container the
-component you want to use:
-
-```ruby
-Rails.application.config.to_prepare do
-  SolidusAdmin::Config.components['ui/my_button'] = MyApplication::Button::Component
-end
-```
-
-Then, you can change the default value of the `main_nav_item_component`
-argument from the top-level nav component:
-
-```ruby
-# app/components/my_application/solidus_admin/main_nav/component.rb
-class MyApplicationAdmin::Products::Index::Component < ::SolidusAdmin::Products::Index::Component
-  def initialize(button_component: component('ui/my_button'), **kwargs)
-    super
-  end
-end
-```

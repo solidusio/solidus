@@ -7,13 +7,12 @@ class SolidusAdmin::Products::Status::Component < SolidusAdmin::BaseComponent
   }.freeze
 
   # @param product [Spree::Product]
-  def initialize(product:, badge_component: component('ui/badge'))
+  def initialize(product:)
     @product = product
-    @badge_component = badge_component
   end
 
   def call
-    render @badge_component.new(
+    render component('ui/badge').new(
       name: t(".#{status}"),
       color: COLORS.fetch(status)
     )
