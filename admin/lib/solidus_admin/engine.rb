@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "view_component"
-require "solidus_admin/container"
 require "solidus_admin/importmap_reloader"
 require "solidus_admin/main_nav_item"
 require "solidus_admin/preview"

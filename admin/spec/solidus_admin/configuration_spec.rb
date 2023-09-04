@@ -17,4 +17,16 @@ RSpec.describe SolidusAdmin::Configuration do
       expect(config.menu_items).to be(config.menu_items)
     end
   end
+
+  describe "#components" do
+    it "returns a component class given a key" do
+      config = described_class.new
+      expect(config.components["ui/button"]).to eq(SolidusAdmin::UI::Button::Component)
+    end
+
+    it "suggests the correct name if a typo is found" do
+      config = described_class.new
+      expect{ config.components["ui/buton"] }.to raise_error("Unknown component ui/buton\nDid you mean?  ui/button")
+    end
+  end
 end
