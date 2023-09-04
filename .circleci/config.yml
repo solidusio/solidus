@@ -71,10 +71,10 @@ commands:
             ruby -v > .ruby-version
       - restore_cache:
           keys:
-            - solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}
-            - solidus-gems-v3-{{checksum ".ruby-version"}}-main
-            - solidus-gems-v3-{{checksum ".ruby-version"}}
+            - solidus-gems-v4-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - solidus-gems-v4-{{checksum ".ruby-version"}}-{{ .Branch }}
+            - solidus-gems-v4-{{checksum ".ruby-version"}}-main
+            - solidus-gems-v4-{{checksum ".ruby-version"}}
 
       - run: |
           bundle config set path 'vendor/bundle'
@@ -82,7 +82,7 @@ commands:
           bundle clean
 
       - save_cache:
-          key: solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: solidus-gems-v4-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
@@ -172,7 +172,7 @@ commands:
             test -d my_app || gem install rails solidus
             test -d my_app || rails new my_app --skip-git
       - save_cache:
-          key: solidus-installer-v7-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+          key: solidus-installer-v8-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
           paths:
             - /tmp/my_app
             - /home/circleci/.rubygems
