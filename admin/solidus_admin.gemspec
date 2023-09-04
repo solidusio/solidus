@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 3.0.0'
   s.required_rubygems_version = '>= 1.8.23'
 
-  s.add_dependency 'dry-system', '~> 1.0'
   s.add_dependency 'geared_pagination', '~> 1.1'
   s.add_dependency 'importmap-rails', '~> 1.2', '>= 1.2.1'
   s.add_dependency 'solidus_backend', s.version
