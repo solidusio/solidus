@@ -1,7 +1,7 @@
 <%= form_with(url: "#", scope: :playground, method: :get, class: "w-60") do |form| %>
   <%=
     render current_component.new(
-      form: form,
+      builder: form,
       size: size,
       choices: choices,
       field: field,
