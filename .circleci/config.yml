@@ -145,11 +145,15 @@ commands:
       - run:
           name: "Cleanup & check rails version"
           command: |
+            sudo gem update --system
+            gem install bundler -v"~> 2.4"
             gem environment path
             rm -rf /tmp/my_app /tmp/.ruby-versions # cleanup previous runs
             rm -rf /tmp/my_app /tmp/.gems-versions # cleanup previous runs
 
             ruby -v >> /tmp/.ruby-versions
+            gem --version >> /tmp/.gems-versions
+            bundle --version >> /tmp/.gems-versions
             gem search -eq rails >> /tmp/.gems-versions # get the latest rails from rubygems
             gem search -eq solidus >> /tmp/.gems-versions # get the latest solidus from rubygems
 
