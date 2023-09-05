@@ -29,7 +29,7 @@ module SolidusAdmin::Preview
     included do
       include SolidusAdmin::ControllerHelpers::Auth
       helper ActionView::Helpers
-      helper SolidusAdmin::ContainerHelper
+      helper SolidusAdmin::ComponentsHelper
       helper_method :current_component
     end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  module ContainerHelper
+  module ComponentsHelper
     def component(name)
       SolidusAdmin::Config.components[name]
     end
