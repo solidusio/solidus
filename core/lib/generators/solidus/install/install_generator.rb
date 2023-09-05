@@ -159,7 +159,6 @@ module Solidus
     end
 
     def install_solidus_admin
-      bundle_command 'add solidus_admin' unless has_gem?('solidus_admin')
       generate 'solidus_admin:install'
     end
 
