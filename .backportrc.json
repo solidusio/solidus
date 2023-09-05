@@ -1,0 +1,4 @@
+{
+  "prTitle": "[{{targetBranch}}] {{sourcePullRequest.title}}",
+  "copySourcePRLabels": true
+}
