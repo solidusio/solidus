@@ -1826,6 +1826,7 @@ en:
     new_taxonomy: New Category
     new_tracker: New Analytics Tracker
     new_user: New User
+    new_role: New User Role
     new_variant: New Variant
     new_zone: New Zone
     next: Next
@@ -1927,6 +1928,7 @@ en:
       awaiting_return: Awaiting return
       canceled: Canceled
       cart: Cart
+      role: Users Role
       complete: Complete
       confirm: Confirm
       delivery: Delivery

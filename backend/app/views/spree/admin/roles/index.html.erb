@@ -1,0 +1,43 @@
+<style>
+.roles_main{
+  margin-top: 40px;
+}
+</style>
+
+<% admin_breadcrumb("User Role") %>
+
+<% content_for :page_actions do %>
+  <% if can?(:admin, Spree.user_class) && can?(:create, Spree.user_class) %>
+    <li>
+      <%= link_to t('spree.new_role'), new_admin_role_url, id: 'admin_new_user_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<table class="index roles_main" id="listing_users" data-hook>
+  <colgroup>
+    <col style="width: 50%">
+    <col style="width: 50%">
+  </colgroup>
+  <thead>
+    <tr data-hook="admin_users_index_headers">
+      <th class="align-left">Name</th>
+      <th class="actions">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr data-hook="">
+        <td><%= role.name %></td>
+       <td data-hook="admin_users_index_row_actions" class="actions">
+          <% if can?(:edit, role) %>
+            <%= link_to_edit role, no_text: true, url: edit_admin_role_path(role)  %>
+          <% end %>
+          <% if can?(:destroy, role) %>
+            <%= link_to_delete role, no_text: true, url: spree.admin_role_path(role) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
