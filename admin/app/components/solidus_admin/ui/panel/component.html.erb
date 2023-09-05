@@ -1,0 +1,36 @@
+<div
+  class="
+    bg-white
+    rounded-lg
+    shadow-sm
+    border
+    border-gray-100
+    flex-col
+    justify-start
+    items-start
+    gap-6
+    inline-flex
+    w-full
+    py-6
+  "
+  data-controller="<%= stimulus_id %>"
+>
+  <% if @title %>
+    <h6 class="mt-0 px-6 w-full">
+      <span class="body-title"><%= @title %></span>
+      <%= render component('ui/toggletip').new(guide: @title_hint, position: :left) if @title_hint %>
+    </h6>
+  <% end %>
+
+  <% if content&.present? %>
+    <div class="px-6 w-full">
+      <%= content %>
+    </div>
+  <% end %>
+
+  <% if actions? %>
+    <div class="flex gap-2 items-center border-t border-gray-100 px-6 pt-6 w-full">
+      <%= actions %>
+    </div>
+  <% end %>
+</div>
