@@ -10,10 +10,11 @@ module SolidusAdmin
 
     include SolidusAdmin::ControllerHelpers::Auth
     include SolidusAdmin::ControllerHelpers::Locale
+    include SolidusAdmin::ComponentsHelper
     include SolidusAdmin::AuthAdapters::Backend if defined?(Spree::Backend)
 
     layout 'solidus_admin/application'
-    helper 'solidus_admin/container'
+    helper 'solidus_admin/components'
     helper 'solidus_admin/layout'
   end
 end
