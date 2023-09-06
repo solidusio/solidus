@@ -23,7 +23,7 @@
       <% end %>
     </div>
     <div class="flex-1">
-      <%= render current_component.new(toggletip_attributes: { guide: "Lorem ipsum dolor est." }) do %>
+      <%= render current_component.new(toggletip_attributes: { text: "Lorem ipsum dolor est." }) do %>
         <%=
           render component('ui/forms/text_field').new(
             field: :name,
@@ -34,7 +34,7 @@
       <% end %>
     </div>
     <div class="flex-1">
-      <%= render current_component.new(legend: "Legend & tip", toggletip_attributes: { guide: "Lorem ipsum dolor est.", position: :left, theme: :dark }) do %>
+      <%= render current_component.new(legend: "Legend & tip", toggletip_attributes: { text: "Lorem ipsum dolor est.", position: :left, theme: :dark }) do %>
         <%=
           render component('ui/forms/text_field').new(
             field: :name,
