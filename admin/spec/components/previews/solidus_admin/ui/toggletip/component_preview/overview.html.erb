@@ -12,7 +12,7 @@
       <% themes.each do |theme| %>
         <td class="py-3">
           <div class="flex justify-center">
-            <%= render current_component.new(guide: guide, theme: theme, position: position) %>
+            <%= render current_component.new(text: text, theme: theme, position: position) %>
           </div>
         </td>
       <% end %>

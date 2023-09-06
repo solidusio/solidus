@@ -35,7 +35,7 @@ class SolidusAdmin::UI::Forms::Fieldset::ComponentPreview < ViewComponent::Previ
   # <%= render components('ui/forms/fieldset').new(
   #   legend: "My fieldset",
   #   toggletip_attributes: {
-  #     guide: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  #     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   #     position: :right
   #   }
   # ) do %>

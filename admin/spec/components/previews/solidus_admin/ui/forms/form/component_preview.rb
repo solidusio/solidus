@@ -66,7 +66,7 @@ class SolidusAdmin::UI::Forms::Form::ComponentPreview < ViewComponent::Preview
   #           )
   #         ],
   #         legend: "Product details",
-  #         toggletip_attributes: { guide: "Minimal info", position: :right }
+  #         toggletip_attributes: { text: "Minimal info", position: :right }
   #       )
   #     ]
   #   )
