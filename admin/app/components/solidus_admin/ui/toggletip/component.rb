@@ -54,16 +54,21 @@ class SolidusAdmin::UI::Toggletip::Component < SolidusAdmin::BaseComponent
     }
   }.freeze
 
-  # @param guide [String] The toggletip text
+  # @param text [String] The toggletip text
   # @param position [Symbol] The position of the arrow in relation to the
   #   toggletip. The latter will be positioned accordingly in relation to the
   #   help icon. Defaults to `:up`. See `POSITIONS` for available options.
   # @param theme [Symbol] The theme of the toggletip. Defaults to `:light`. See
   #   `THEMES` for available options.
-  def initialize(guide:, position: :up, theme: :light)
-    @guide = guide
+  def initialize(text:, position: :down, theme: :light, **attributes)
+    @text = text || guide
     @position = position
     @theme = theme
+    @attributes = attributes
+    @attributes[:class] = [
+      "relative inline-block",
+      @attributes[:class],
+    ].join(" ")
   end
 
   def icon_theme_classes
