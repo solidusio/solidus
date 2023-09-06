@@ -15,9 +15,11 @@
       <% end %>
     </div>
 
-    <div class="flex gap-0 h-screen">
-      <div class="flex min-w-[240px] border-r border-r-gray-100">
-        <%= render component("sidebar").new(store: current_store) %>
+    <div class="flex gap-0">
+      <div class="min-w-[240px] border-r border-r-gray-100 relative">
+        <div class="min-h-screen top-0 sticky flex">
+          <%= render component("sidebar").new(store: current_store) %>
+        </div>
       </div>
 
       <main id="main" class="flex-grow">
