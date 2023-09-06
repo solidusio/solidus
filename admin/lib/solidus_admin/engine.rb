@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "view_component"
-require "solidus_admin/container"
 require "solidus_admin/importmap_reloader"
+require "solidus_admin/main_nav_item"
 require "solidus_admin/preview"
 
 module SolidusAdmin
@@ -63,12 +63,6 @@ module SolidusAdmin
         SolidusAdmin::Engine.root.join("app/javascript"),
         SolidusAdmin::Engine.root.join("app/components"),
       ]
-    end
-
-    initializer "solidus_admin.main_nav_items_provider" do
-      require "solidus_admin/providers/main_nav"
-
-      Container.start("main_nav")
     end
   end
 end

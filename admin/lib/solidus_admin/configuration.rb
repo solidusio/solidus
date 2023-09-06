@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spree/preferences/configuration'
-require 'solidus_admin/configuration/main_nav'
 
 module SolidusAdmin
   # Configuration for the admin interface.
@@ -9,6 +8,8 @@ module SolidusAdmin
   # Ensure requiring this file after the Rails application has been created,
   # as some defaults depend on the application context.
   class Configuration < Spree::Preferences::Configuration
+    ComponentNotFoundError = Class.new(NameError)
+
     # Path to the logo used in the admin interface.
     #
     # It needs to be a path to an image file accessible by Sprockets.
@@ -94,20 +95,97 @@ module SolidusAdmin
     # Gives access to the main navigation configuration
     #
     # @example
-    #  SolidusAdmin::Config.main_nav do |main_nav|
-    #    main_nav.add(
-    #      key: :my_custom_link,
-    #      route: :products_path,
-    #      icon: "solidus_admin/price-tag-3-line.svg",
-    #      position: 80
-    #    )
-    # end
+    #  SolidusAdmin::Config.menu_items << {
+    #    key: :my_custom_link,
+    #    route: :products_path,
+    #    icon: "solidus_admin/price-tag-3-line.svg",
+    #    position: 80
+    #  }
     #
-    # @return [SolidusAdmin::Configuration::MainNav]
-    # @yieldparam [SolidusAdmin::Configuration::MainNav] main_nav
-    def main_nav
-      (@main_nav ||= MainNav.new).tap do
-        yield(_1) if block_given?
+    # @api public
+    # @return [Array<Hash>]
+    def menu_items
+      @menu_items ||= [
+        {
+          key: "orders",
+          route: -> { spree.admin_orders_path },
+          icon: "inbox-line",
+          position: 10
+        },
+        {
+          key: "products",
+          route: :products_path,
+          icon: "price-tag-3-line",
+          position: 20,
+          children: [
+            {
+              key: "products",
+              route: -> { solidus_admin.products_path },
+              position: 0
+            },
+            {
+              key: "option_types",
+              route: -> { spree.admin_option_types_path },
+              position: 10
+            },
+            {
+              key: "property_types",
+              route: -> { spree.admin_properties_path },
+              position: 20
+            },
+            {
+              key: "taxonomies",
+              route: -> { spree.admin_taxonomies_path },
+              position: 30
+            },
+            {
+              key: "taxons",
+              route: -> { spree.admin_taxons_path },
+              position: 40
+            }
+          ]
+        },
+
+        {
+          key: "promotions",
+          route: -> { spree.admin_promotions_path },
+          icon: "megaphone-line",
+          position: 30,
+        },
+
+        {
+          key: "stock",
+          route: -> { spree.admin_stock_items_path },
+          icon: "stack-line",
+          position: 40
+        },
+
+        {
+          key: "users",
+          route: -> { spree.admin_users_path },
+          icon: "user-line",
+          position: 50
+        },
+
+        {
+          key: "settings",
+          route: -> { spree.admin_stores_path },
+          icon: "settings-line",
+          position: 60,
+        }
+      ]
+    end
+
+    def components
+      @components ||= Hash.new do |_h, k|
+        "solidus_admin/#{k}/component".classify.constantize
+      rescue NameError
+        prefix = SolidusAdmin::Engine.root.join("app/components/solidus_admin/").to_s
+        suffix = "/component.rb"
+        dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
+        corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(k.to_s)
+
+        raise ComponentNotFoundError, "Unknown component #{k}#{DidYouMean.formatter.message_for(corrections)}"
       end
     end
 

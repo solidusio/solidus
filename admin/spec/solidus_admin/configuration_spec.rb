@@ -4,21 +4,29 @@ require "spec_helper"
 require "solidus_admin/configuration"
 
 RSpec.describe SolidusAdmin::Configuration do
-  describe "#main_nav" do
-    it "returns the main navigation configuration" do
-      expect(described_class.new.main_nav).to be_a(described_class::MainNav)
+  describe "#menu_items" do
+    it "returns an array of hashes" do
+      expect(described_class.new.menu_items).to be_an(Array)
+      expect(described_class.new.menu_items).not_to be_empty
+      expect(described_class.new.menu_items.first).to be_a(Hash)
     end
 
     it "returns the same instance every time" do
       config = described_class.new
 
-      expect(config.main_nav).to be(config.main_nav)
+      expect(config.menu_items).to be(config.menu_items)
+    end
+  end
+
+  describe "#components" do
+    it "returns a component class given a key" do
+      config = described_class.new
+      expect(config.components["ui/button"]).to eq(SolidusAdmin::UI::Button::Component)
     end
 
-    it "yields the main navigation configuration" do
-      described_class.new.main_nav do |main_nav|
-        expect(main_nav).to be_a(described_class::MainNav)
-      end
+    it "suggests the correct name if a typo is found" do
+      config = described_class.new
+      expect{ config.components["ui/buton"] }.to raise_error("Unknown component ui/buton\nDid you mean?  ui/button")
     end
   end
 end
