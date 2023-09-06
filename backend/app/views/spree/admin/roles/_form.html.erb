@@ -1,0 +1,25 @@
+<style>
+.role_form{
+  display: flex;
+  flex-direction: column;
+}
+.role_btn{
+  color: white;
+  background: black;
+  padding: 8px 15px;
+}
+</style>
+<div data-hook="admin_user_form_fields" class="row">
+  <div class="col-6">
+   
+<%= form_for [:admin, @role] do |f| %>
+  <div class="field role_form">
+    <%= f.label :Role_Name %>
+    <%= f.text_field :name,  required: true%>
+  </div>
+<div>
+  <%= f.submit class:"role_btn" %>
+  </div>
+<% end %>
+  </div>
+</div>

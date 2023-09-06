@@ -48,6 +48,7 @@ module Spree
     PROMOTION_TABS     ||= [:promotions, :promotion_categories]
     STOCK_TABS         ||= [:stock_items]
     USER_TABS          ||= [:users, :store_credits]
+    ROLES              ||= [:roles]
 
     # Items can be added to the menu by using code like the following:
     #
@@ -132,6 +133,13 @@ module Spree
           partial: 'spree/admin/shared/settings_sub_menu',
           url: :admin_stores_path,
           position: 5
+        ),
+        MenuItem.new(
+          [:ROLES], # This is the new menu item
+          'user',        # Icon name (you can change it)
+          condition: -> { can?(:admin, :Roles) }, # Add your condition here
+          url: :admin_roles_path, # Set the correct URL path
+          position: 6 # Position of the menu item
         )
       ]
     end

@@ -1,0 +1,10 @@
+<% admin_breadcrumb(link_to ("Role"), spree.admin_roles_path) %>
+<% admin_breadcrumb(t('spree.new_role')) %>
+
+<div data-hook="admin_user_new_form_header">
+
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @user } %>
+</div>
+<%= render 'form' %>
+
+
