@@ -1,6 +1,6 @@
 // Import and register all your controllers from the importmap under controllers/*
 
-import { application } from "./application"
+import { application } from "solidus_admin/controllers/application"
 
 // Eager load all controllers defined in the import map under controllers/**/*_controller
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
@@ -10,5 +10,5 @@ eagerLoadControllersFrom("solidus_admin/controllers", application)
 // import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
 // lazyLoadControllersFrom("controllers", application)
 
-import { eagerLoadComponents } from "./components"
+import { eagerLoadComponents } from "solidus_admin/controllers/components"
 eagerLoadComponents(application, { under: "solidus_admin", suffix: "/component" })
