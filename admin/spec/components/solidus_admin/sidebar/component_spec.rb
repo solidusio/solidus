@@ -40,8 +40,9 @@ RSpec.describe SolidusAdmin::Sidebar::Component, type: :component do
     component = described_class.new(
       store: build(:store),
       items: [],
-      account_nav_component: account_nav_component
     )
+    allow(component).to receive(:component).and_call_original
+    allow(component).to receive(:component).with('sidebar/account_nav').and_return(account_nav_component)
 
     render_inline(component)
 

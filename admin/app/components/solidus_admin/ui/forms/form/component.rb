@@ -13,17 +13,8 @@ class SolidusAdmin::UI::Forms::Form::Component < SolidusAdmin::BaseComponent
   #  - {SolidusAdmin::Form::Elements::HTML}
   # @param attributes [Hash] Attributes to pass to the Rails `form_with` helper,
   #  which is used to render the form.
-  def initialize(
-    elements:,
-    fieldset_component: component("ui/forms/fieldset"),
-    text_field_component: component("ui/forms/text_field"),
-    text_area_component: component("ui/forms/text_area"),
-    **attributes
-  )
+  def initialize(elements:, **attributes)
     @elements = elements
-    @fieldset_component = fieldset_component
-    @text_field_component = text_field_component
-    @text_area_component = text_area_component
     @attributes = attributes
   end
 
@@ -31,9 +22,9 @@ class SolidusAdmin::UI::Forms::Form::Component < SolidusAdmin::BaseComponent
   #  classes dependencies given on initialization.
   def dependencies
     {
-      fieldset: @fieldset_component,
-      text_field: @text_field_component,
-      text_area: @text_area_component
+      fieldset: component("ui/forms/fieldset"),
+      text_field: component("ui/forms/text_field"),
+      text_area: component("ui/forms/text_area")
     }
   end
 

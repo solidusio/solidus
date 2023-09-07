@@ -25,7 +25,7 @@
         },
       ) do |form| %>
         <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
-          <%= render @icon_component.new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
+          <%= render component("ui/icon").new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
           <input
             name="q[<%= @search_key %>]"
             value="<%= params.dig(:q, @search_key) %>"
@@ -41,13 +41,13 @@
             data-action="<%= stimulus_id %>#clearSearch"
             aria-label="<%= t('.clear') %>"
           >
-            <%= render @icon_component.new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
+            <%= render component("ui/icon").new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
           </button>
         </label>
       <% end %>
 
       <div class="ml-4">
-        <%= render @button_component.new(
+        <%= render component("ui/button").new(
           text: t('.cancel'),
           scheme: :ghost,
           "data-action": "#{stimulus_id}#cancelSearch",
@@ -75,10 +75,10 @@
 
     <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
       <div class="flex-grow">
-        <%= render @tab_component.new(text: "All", current: true, href: "") %>
+        <%= render component("ui/tab").new(text: "All", current: true, href: "") %>
       </div>
 
-      <%= render @button_component.new(
+      <%= render component("ui/button").new(
         'aria-label': t('.filter'),
         icon: "filter-3-line",
         scheme: :secondary,
@@ -155,7 +155,7 @@
           <tr>
             <td colspan="<%= @columns.size %>" class="py-4 bg-white">
               <div class="flex justify-center">
-                <%= render @pagination_component.new(
+                <%= render component('ui/table/pagination').new(
                   prev_link: @prev_page_link,
                   next_link: @next_page_link
                 ) %>

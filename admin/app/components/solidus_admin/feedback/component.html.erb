@@ -1,7 +1,7 @@
 <span class="max-w-xs text-xs text-right text-gray-600 hidden lg:block">
   <%= t(".feedback_description") %>
 </span>
-<%= render @button_component.new(
+<%= render component("ui/button").new(
   tag: :a,
   text: t(".give_feedback"),
   href: "https://solidus.io/feedback?category=solidus-admin",
