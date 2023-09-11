@@ -77,8 +77,8 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
     subject { described_class.new(order).call }
 
-    it "returns false" do
-      expect(subject).to be false
+    it "returns nil" do
+      expect(subject).to be nil
     end
   end
 end
