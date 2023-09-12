@@ -19,7 +19,7 @@
     title="<%= t('.close_text') %>"
     data-action="<%= stimulus_id %>#close"
     aria-label="<%= t('.close_text') %>"
-    data-target="<%= stimulus_id %>.closeButton"
+    data-<%= stimulus_id %>-target="closeButton"
   >
     <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current") %>
   </button>
