@@ -96,6 +96,15 @@ RSpec.describe SolidusAdmin::MainNavItem do
       ).to be(true)
     end
 
+    it "returns true when the match_path proc is present and matches" do
+      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      item = described_class.new(
+        key: "foo", route: :foo_path, position: 1, match_path: ->(path) { path.start_with?("/bar") }
+      )
+
+      expect(item.active?(url_helpers, "/bar")).to be(true)
+    end
+
     it "returns false otherwise" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
       url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
