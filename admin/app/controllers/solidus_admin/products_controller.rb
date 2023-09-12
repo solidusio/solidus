@@ -12,6 +12,10 @@ module SolidusAdmin
         products,
         per_page: SolidusAdmin::Config[:products_per_page]
       )
+
+      respond_to do |format|
+        format.html { render component('products/index').new(page: @page) }
+      end
     end
 
     def destroy
