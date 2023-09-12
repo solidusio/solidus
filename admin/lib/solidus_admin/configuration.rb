@@ -121,6 +121,7 @@ module SolidusAdmin
             {
               key: "products",
               route: -> { solidus_admin.products_path },
+              match_path: -> { _1.start_with?("/admin/products/") },
               position: 0
             },
             {
