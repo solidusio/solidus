@@ -31,7 +31,8 @@ class ::Spree::PromotionCode::BatchBuilder
   private
 
   def generate_random_codes
-    created_codes = 0
+    created_codes = promotion_code_batch.promotion_codes.count
+
     batch_size = @options[:batch_size]
 
     while created_codes < number_of_codes
