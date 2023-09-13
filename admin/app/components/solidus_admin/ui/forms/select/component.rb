@@ -36,6 +36,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     choices: [],
     hint: nil,
     errors: nil,
+    toggletip: nil,
     options: {},
     attributes: {}
   )
@@ -44,6 +45,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     @size = size
     @choices = choices
     @hint = hint
+    @toggletip = toggletip
     @options = options
     @attributes = HashWithIndifferentAccess.new(attributes)
     @errors = errors
@@ -58,8 +60,10 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
       disabled: @attributes[:disabled]
     )
 
+    toggletip_tag = @toggletip.present? ? render(component('ui/toggletip').new(text: @toggletip)) : ''
+
     tag.div(class: "mb-6") do
-      label_tag + field_wrapper_tag(guidance) + guidance_tag(guidance)
+      tag.div(label_tag + toggletip_tag, class: "flex gap-1") + field_tag(guidance) + guidance_tag(guidance)
     end
   end
 
