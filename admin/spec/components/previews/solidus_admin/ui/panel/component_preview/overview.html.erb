@@ -1,0 +1,63 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Content only
+  </h6>
+
+  <%= render current_component.new do %>
+    <label>
+      SKU:
+      ABC-123
+    </label>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With title
+  </h6>
+
+  <%= render current_component.new(title: "SEO") do %>
+    <label>
+      SKU:
+      ABC-123
+    </label>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With title and hint
+  </h6>
+
+  <%= render current_component.new(title: "SEO", title_hint: "Search Engine Optimization") do %>
+    <label>
+      SKU:
+      ABC-123
+    </label>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With title, hint, and actions
+  </h6>
+
+  <%= render current_component.new(title: "SEO", title_hint: "Search Engine Optimization") do |panel| %>
+    <label>
+      SKU:
+      ABC-123
+    </label>
+
+    <% panel.with_actions do %>
+      foo action
+    <% end %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With no content
+  </h6>
+
+  <%= render current_component.new(title: "SEO", title_hint: "Search Engine Optimization").with_actions_content("foo action") %>
+</div>
