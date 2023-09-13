@@ -37,7 +37,7 @@ RSpec.describe Spree::Variant::VatPriceGenerator do
 
     # We need to remove the price for FR from the database so it is created in memory, and then run VatPriceGenerator twice to trigger the duplicate price issue.
     it "will not build duplicate prices on multiple runs" do
-      variant.prices.where(country_iso: "FR").each(&:destroy)
+      variant.prices.where(country_iso: "FR").find_each(&:destroy)
       variant.reload
       described_class.new(variant).run
       expect { subject }.not_to change { variant.prices.size }

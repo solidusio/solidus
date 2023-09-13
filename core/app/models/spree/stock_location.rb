@@ -121,7 +121,7 @@ module Spree
 
     def ensure_one_default
       if default
-        Spree::StockLocation.where(default: true).where.not(id: id).each do |stock_location|
+        Spree::StockLocation.where(default: true).where.not(id: id).find_each do |stock_location|
           stock_location.default = false
           stock_location.save!
         end

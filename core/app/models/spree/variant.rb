@@ -397,7 +397,7 @@ module Spree
     end
 
     def create_stock_items
-      StockLocation.where(propagate_all_variants: true).each do |stock_location|
+      StockLocation.where(propagate_all_variants: true).find_each do |stock_location|
         stock_location.propagate_variant(self)
       end
     end

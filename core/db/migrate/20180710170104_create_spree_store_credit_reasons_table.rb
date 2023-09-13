@@ -17,7 +17,7 @@ class CreateSpreeStoreCreditReasonsTable < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    StoreCreditUpdateReason.all.each do |update_reason|
+    StoreCreditUpdateReason.all.find_each do |update_reason|
       StoreCreditReason.create!(name: update_reason.name)
     end
 
@@ -45,7 +45,7 @@ class CreateSpreeStoreCreditReasonsTable < ActiveRecord::Migration[5.1]
       end
     end
 
-    StoreCreditReason.all.each do |store_credit_reason|
+    StoreCreditReason.all.find_each do |store_credit_reason|
       StoreCreditUpdateReason.create!(name: store_credit_reason.name)
     end
 
