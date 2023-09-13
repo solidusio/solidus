@@ -9,6 +9,7 @@ module SolidusAdmin
   # as some defaults depend on the application context.
   class Configuration < Spree::Preferences::Configuration
     ComponentNotFoundError = Class.new(NameError)
+    ENGINE_ROOT = File.expand_path("#{__dir__}/../..")
 
     # Path to the logo used in the admin interface.
     #
@@ -26,18 +27,18 @@ module SolidusAdmin
     #
     # @see https://tailwindcss.com/docs/configuration#content
     preference :tailwind_content, :array, default: [
-      SolidusAdmin::Engine.root.join("app/helpers/**/*.rb"),
-      SolidusAdmin::Engine.root.join("app/assets/javascripts/**/*.js"),
-      SolidusAdmin::Engine.root.join("app/views/**/*.erb"),
-      SolidusAdmin::Engine.root.join("app/components/**/*.{rb,erb,js}"),
-      SolidusAdmin::Engine.root.join("spec/components/previews/**/*.{erb,rb}"),
+      "#{ENGINE_ROOT}/app/helpers/**/*.rb",
+      "#{ENGINE_ROOT}/app/assets/javascripts/**/*.js",
+      "#{ENGINE_ROOT}/app/views/**/*.erb",
+      "#{ENGINE_ROOT}/app/components/**/*.{rb,erb,js}",
+      "#{ENGINE_ROOT}/spec/components/previews/**/*.{erb,rb}",
 
       Rails.root&.join("public/solidus_admin/*.html"),
       Rails.root&.join("app/helpers/solidus_admin/**/*.rb"),
       Rails.root&.join("app/assets/javascripts/solidus_admin/**/*.js"),
       Rails.root&.join("app/views/solidus_admin/**/*.{erb,haml,html,slim}"),
       Rails.root&.join("app/components/solidus_admin/**/*.{rb,erb,haml,html,slim,js}")
-    ]
+    ].compact
 
     # List of Tailwind CSS files to be combined into the final stylesheet.
     #
@@ -52,16 +53,16 @@ module SolidusAdmin
     #
     # @see https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
     preference :importmap_cache_sweepers, :array, default: [
-      SolidusAdmin::Engine.root.join("app", "assets", "javascripts"),
-      SolidusAdmin::Engine.root.join("app", "javascript"),
-      SolidusAdmin::Engine.root.join("app", "components"),
+      "#{ENGINE_ROOT}/app/assets/javascripts",
+      "#{ENGINE_ROOT}/app/javascript",
+      "#{ENGINE_ROOT}/app/components",
     ]
 
     # List of paths to importmap files to be loaded.
     #
     # @see https://github.com/rails/importmap-rails#composing-import-maps
     preference :importmap_paths, :array, default: [
-      SolidusAdmin::Engine.root.join("config", "importmap.rb"),
+      "#{ENGINE_ROOT}/config/importmap.rb",
     ]
 
     # @!attribute [rw] orders_per_page
@@ -181,7 +182,7 @@ module SolidusAdmin
       @components ||= Hash.new do |_h, k|
         "solidus_admin/#{k}/component".classify.constantize
       rescue NameError
-        prefix = SolidusAdmin::Engine.root.join("app/components/solidus_admin/").to_s
+        prefix = "#{ENGINE_ROOT}/app/components/solidus_admin/"
         suffix = "/component.rb"
         dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
         corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(k.to_s)
