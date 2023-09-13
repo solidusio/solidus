@@ -93,6 +93,14 @@ module SolidusAdmin
     #                    meaning it will search by product name or product variants sku.
     preference :product_search_key, :string, default: :name_or_variants_including_master_sku_cont
 
+    preference :storefront_product_path_proc, :proc, default: ->(_version) {
+      ->(product) { "/products/#{product.slug}" }
+    }
+
+    def storefront_product_path(product)
+      storefront_product_path_proc.call(product)
+    end
+
     # Gives access to the main navigation configuration
     #
     # @example
