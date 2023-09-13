@@ -12,7 +12,7 @@ describe Spree::Admin::BaseHelper, type: :helper do
     end
 
     it "should return a formatted date when date is present" do
-      date = "2013-08-14".to_time
+      date = Time.zone.parse("2013-08-14")
       expect(datepicker_field_value(date)).to eq("2013/08/14")
     end
   end
