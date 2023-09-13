@@ -48,9 +48,7 @@
       ABC-123
     </label>
 
-    <% panel.with_actions do %>
-      foo action
-    <% end %>
+    <% panel.with_action(name: "Foo", href: "#foo") %>
   <% end %>
 </div>
 
@@ -59,5 +57,7 @@
     With no content
   </h6>
 
-  <%= render current_component.new(title: "SEO", title_hint: "Search Engine Optimization").with_actions_content("foo action") %>
+  <%= render current_component.new(title: "SEO", title_hint: "Search Engine Optimization") do |panel| %>
+    <% panel.with_action(name: "Foo", href: "#foo") %>
+  <% end %>
 </div>
