@@ -90,7 +90,7 @@ describe "Order Details", type: :feature, js: true do
 
             product.stock_items.where.not(stock_location_id: stock_location_ids).discard_all
 
-            product.stock_items.where(stock_location_id: stock_location_ids).each do |stock_item|
+            product.stock_items.where(stock_location_id: stock_location_ids).find_each do |stock_item|
               stock_item.set_count_on_hand 1
             end
 
