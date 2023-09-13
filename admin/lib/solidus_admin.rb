@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
-require 'solidus_core'
-require 'solidus_backend'
-require 'solidus_admin/version'
-require 'solidus_admin/engine'
-
-require 'importmap-rails'
-require 'tailwindcss-rails'
-require 'turbo-rails'
-require 'stimulus-rails'
+require "solidus_core"
+require "solidus_backend"
 
 module SolidusAdmin
-  singleton_class.attr_accessor :importmap
+  require "solidus_admin/version"
+  require "solidus_admin/importmap"
+  require "solidus_admin/main_nav_item"
+  require "solidus_admin/preview"
+  require "solidus_admin/tailwindcss"
 
-  self.importmap = Importmap::Map.new
+  require "solidus_admin/configuration"
+  require "solidus_admin/engine"
 end
