@@ -39,13 +39,15 @@ class ::Spree::PromotionCode::BatchBuilder
       new_codes = Array.new(max_codes_to_generate) { generate_random_code }.uniq
       codes_for_current_batch = get_unique_codes(new_codes)
 
-      codes_for_current_batch.each do |value|
+      codes_for_current_batch = codes_for_current_batch.map do |value|
         Spree::PromotionCode.create!(
           value: value,
           promotion: promotion,
           promotion_code_batch: promotion_code_batch
         )
-      end
+      rescue ActiveRecord::RecordInvalid
+        nil
+      end.compact
       created_codes += codes_for_current_batch.size
     end
   end
