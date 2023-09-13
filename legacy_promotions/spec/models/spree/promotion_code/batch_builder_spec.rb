@@ -72,6 +72,25 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
         subject.build_promotion_codes
         expect(promotion.codes.size).to eq(number_of_codes)
       end
+
+      context "when promotion_code creation returns an error" do
+        before do
+          @raise_exception = true
+          allow(Spree::PromotionCode).to receive(:create!) do
+            if @raise_exception
+              @raise_exception = false
+              raise(ActiveRecord::RecordInvalid)
+            else
+              create(:promotion_code, promotion: promotion)
+            end
+          end
+        end
+
+        it "creates the correct number of codes anyway" do
+          subject.build_promotion_codes
+          expect(promotion.codes.size).to eq(number_of_codes)
+        end
+      end
     end
   end
 
