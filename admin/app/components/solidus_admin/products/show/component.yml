@@ -4,4 +4,14 @@ en:
   duplicate: "Duplicate"
   view: "View online"
   delete: "Delete"
+  none: "None"
+  manage_images: "Manage images"
+  manage_properties: "Manage product specifications"
+  manage_stock: "Manage stock"
   delete_confirmation: "Are you sure you want to delete this product?"
+  hints:
+    available_on_html: This sets the availability date for the product. If this value is not set, or it is set to a date in the future, then the product is not available on the storefront.
+    discontinue_on_html: This sets the discontinue date for the product. If this value is set to a date, then the product is not available on the storefront from that day on anymore.
+    promotionable_html: 'This determines whether or not promotions can apply to this product.<br>Default: Checked'
+    shipping_category_html: 'This determines what kind of shipping this product requires.<br> Default: Default'
+    tax_category_html: 'This determines what kind of taxation is applied to this product.<br> Default: %{default_tax_category}'
