@@ -69,7 +69,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
 
         link_to(
           image_tag(image.url(:small), class: 'h-10 w-10 max-w-min rounded border border-gray-100', alt: product.name),
-          spree.edit_admin_product_path(product),
+          solidus_admin.product_path(product),
           class: 'inline-flex overflow-hidden',
           tabindex: -1,
         )
@@ -81,7 +81,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :name,
       data: ->(product) do
-        link_to product.name, spree.edit_admin_product_path(product)
+        link_to product.name, solidus_admin.product_path(product)
       end
     }
   end
