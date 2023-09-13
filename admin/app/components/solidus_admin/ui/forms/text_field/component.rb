@@ -63,7 +63,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
       disabled: @attributes[:disabled]
     )
 
-    tag.div(class: "mb-6") do
+    tag.div(class: "w-full mb-6") do
       label_tag + field_tag(guidance) + guidance_tag(guidance)
     end
   end
@@ -81,6 +81,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
 
   def field_classes(guidance)
     %w[
+      form-input
       block px-3 py-1.5 w-full
       text-black
       bg-white border border-gray-300 rounded-sm

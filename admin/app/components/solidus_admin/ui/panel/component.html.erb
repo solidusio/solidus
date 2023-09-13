@@ -18,7 +18,7 @@
   <% if @title %>
     <h6 class="mt-0 px-6 w-full">
       <span class="body-title"><%= @title %></span>
-      <%= render component('ui/toggletip').new(guide: @title_hint, position: :left) if @title_hint %>
+      <%= render component('ui/toggletip').new(text: @title_hint, position: :left) if @title_hint %>
     </h6>
   <% end %>
 

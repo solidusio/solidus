@@ -3,17 +3,29 @@
 class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
   SIZES = {
     s: %w[
-      h-7 px-1.5 py-1
+      h-7 w-7 p-1
       text-xs font-semibold leading-none
     ],
     m: %w[
-      h-9 px-3 py-1.5
+      h-9 w-9 p-1.5
       text-sm font-semibold leading-none
     ],
     l: %w[
-      h-12 px-4 py-2
+      h-12 w-12 p-2
       text-base font-semibold leading-none
     ],
+  }
+
+  TEXT_PADDINGS = {
+    s: %w[px-1.5 w-auto],
+    m: %w[px-3 w-auto],
+    l: %w[px-4 w-auto],
+  }
+
+  ICON_SIZES = {
+    s: %w[w-[1.4em] h-[1.4em]],
+    m: %w[w-[1.35em] h-[1.35em]],
+    l: %w[w-[1.5em] h-[1.5em]],
   }
 
   SCHEMES = {
@@ -57,16 +69,22 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     @attributes = attributes
 
     @attributes[:class] = [
-      'justify-start items-center gap-1 inline-flex rounded',
+      'justify-start items-center justify-center gap-1 inline-flex rounded',
       SIZES.fetch(size.to_sym),
+      (TEXT_PADDINGS.fetch(size.to_sym) if @text),
       SCHEMES.fetch(scheme.to_sym),
       @attributes[:class],
     ].join(' ')
+
+    @icon_classes = [
+      'fill-current',
+      ICON_SIZES.fetch(size.to_sym),
+    ]
   end
 
   def call
     content = []
-    content << render(component('ui/icon').new(name: @icon, class: 'fill-current w-[1.4em] h-[1.4em]')) if @icon
+    content << render(component('ui/icon').new(name: @icon, class: @icon_classes)) if @icon
     content << @text if @text
 
     content_tag(@tag, safe_join(content), **@attributes)
