@@ -26,13 +26,22 @@ module SolidusAdmin
     # @api private
     attr_reader :children, :top_level
 
-    def initialize(key:, position:, route:, icon: nil, children: [], top_level: true)
+    def initialize(
+      key:,
+      position:,
+      route:,
+      match_path: nil,
+      icon: nil,
+      children: [],
+      top_level: true
+    )
       @key = key
       @icon = icon
       @position = position
       @children = children
       @top_level = top_level
       @route = route
+      @match_path = match_path
     end
 
     def name
@@ -81,6 +90,7 @@ module SolidusAdmin
     # @see #current?
     def active?(url_helpers, fullpath)
       current?(url_helpers, fullpath) ||
+        @match_path&.call(fullpath) ||
         children.any? { |child| child.active?(url_helpers, fullpath) }
     end
   end

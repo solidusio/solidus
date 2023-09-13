@@ -179,6 +179,7 @@ en:
         price: Master Price
         promotionable: Promotable
         shipping_category: Shipping Category
+        sku: Master SKU
         slug: Slug
         tax_category: Tax Category
         weight: Weight
