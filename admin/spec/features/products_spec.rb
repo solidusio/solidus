@@ -6,7 +6,7 @@ describe "Products", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
   it "lists products", :js do
-    product = create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
+    create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
 
     visit "/admin/products"
 
@@ -14,9 +14,10 @@ describe "Products", type: :feature do
     expect(page).to have_content("$19.99")
     expect(page).to be_axe_clean
 
-    click_on product.name
+    click_on "Just a product"
 
     expect(page).to have_current_path("/admin/products/just-a-prod")
+    expect(page).to have_content("Manage images")
   end
 
   it "can delete multiple products at once", js: true do
