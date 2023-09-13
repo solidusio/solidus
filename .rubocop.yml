@@ -339,3 +339,7 @@ Lint/MissingSuper:
   Exclude:
     - 'core/lib/spree/deprecation.rb' # this is a known class that doesn't require super
     - 'core/lib/spree/preferences/configuration.rb' # this class has no superclass defining `self.inherited`
+
+Rails/FindEach:
+  Exclude:
+    - 'db/migrate/**/*'
