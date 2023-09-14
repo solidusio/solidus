@@ -87,7 +87,7 @@
     </div>
   </div>
 
-  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar" aria-label="<%= t(".batch_actions") %>">
+  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar" aria-role="toolbar" aria-label="<%= t(".batch_actions") %>">
     <%= form_tag '', id: batch_actions_form_id %>
     <% @batch_actions.each do |batch_action| %>
       <%= render_batch_action_button(batch_action) %>
