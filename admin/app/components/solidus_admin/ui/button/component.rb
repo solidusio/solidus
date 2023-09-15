@@ -45,6 +45,14 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
       disabled:text-gray-300 disabled:bg-white disabled:cursor-not-allowed
       aria-disabled:text-gray-300 aria-disabled:bg-white aria-disabled:cursor-not-allowed
     ],
+    danger: %w[
+      text-red-500 bg-white border border-1 border-red-500
+      hover:bg-red-500 hover:border-red-600 hover:text-white
+      active:bg-red-600 active:border-red-700 active:text-white
+      focus:bg-red-50 focus:bg-red-500 focus:border-red-600 focus:text-white
+      disabled:text-red-300 disabled:bg-white disabled:border-red-200 disabled:cursor-not-allowed
+      aria-disabled:text-red-300 aria-disabled:bg-white aria-disabled:border-red-200 aria-disabled:cursor-not-allowed
+    ],
     ghost: %w[
       text-gray-700 bg-transparent
       hover:bg-gray-50
