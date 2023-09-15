@@ -1,0 +1,26 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With just the label
+  </h6>
+
+  <%= render current_component.new(
+    label: "Greeting",
+  ) do %>
+    <%= render component('ui/forms/input').new(value: "Hello world!") %>
+  <% end %>
+</div>
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With hint,
+    tip and error
+  </h6>
+
+  <%= render current_component.new(
+    label: "Greeting",
+    hint: "A brief explanation",
+    tip: "More in-detail information about this filed",
+    error: "The second letter should be lowecase",
+  ) do %>
+    <%= render component('ui/forms/input').new(value: "HEllo world!", error: "The second letter should be lowecase") %>
+  <% end %>
+</div>
