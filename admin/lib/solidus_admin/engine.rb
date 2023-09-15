@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
+require "stimulus-rails"
+require "turbo-rails"
 require "view_component"
-require "solidus_admin/importmap_reloader"
-require "solidus_admin/main_nav_item"
-require "solidus_admin/preview"
 
 module SolidusAdmin
   class Engine < ::Rails::Engine
@@ -37,7 +36,7 @@ module SolidusAdmin
     end
 
     initializer "solidus_admin.importmap.reloader" do |app|
-      ImportmapReloader.new.tap do |reloader|
+      Importmap::Reloader.new.tap do |reloader|
         reloader.execute
         app.reloaders << reloader
         app.reloader.to_run { reloader.execute }

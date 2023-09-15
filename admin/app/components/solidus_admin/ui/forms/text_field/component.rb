@@ -42,6 +42,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     size: :m,
     hint: nil,
     errors: nil,
+    toggletip: nil,
     **attributes
   )
     @field = field
@@ -50,6 +51,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     @size = size
     @hint = hint
     @type = type
+    @toggletip = toggletip
     @attributes = HashWithIndifferentAccess.new(attributes)
     @errors = errors
   end
@@ -63,8 +65,10 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
       disabled: @attributes[:disabled]
     )
 
+    toggletip_tag = @toggletip.present? ? render(component('ui/toggletip').new(text: @toggletip)) : ''
+
     tag.div(class: "w-full mb-6") do
-      label_tag + field_tag(guidance) + guidance_tag(guidance)
+      tag.div(label_tag + toggletip_tag, class: "flex gap-1") + field_tag(guidance) + guidance_tag(guidance)
     end
   end
 

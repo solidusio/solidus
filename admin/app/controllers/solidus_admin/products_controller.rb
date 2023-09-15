@@ -2,6 +2,34 @@
 
 module SolidusAdmin
   class ProductsController < SolidusAdmin::BaseController
+    def edit
+      redirect_to action: :show
+    end
+
+    def show
+      @product = Spree::Product.friendly.find(params[:id])
+
+      respond_to do |format|
+        format.html { render component('products/show').new(product: @product) }
+      end
+    end
+
+    def update
+      @product = Spree::Product.friendly.find(params[:id])
+
+      if @product.update(params.require(:product).permit!)
+        flash[:success] = t('spree.successfully_updated', resource: [
+          Spree::Product.model_name.human,
+          @product.name.inspect,
+        ].join(' '))
+
+        redirect_to action: :show, status: :see_other
+      else
+        flash.now[:error] = @product.errors.full_messages.join(", ")
+        render action: :show, status: :unprocessable_entity
+      end
+    end
+
     def index
       products = Spree::Product
         .order(created_at: :desc, id: :desc)
