@@ -24,17 +24,6 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     week: :week_field
   }.freeze
 
-  # @param field [Symbol] the name of the field. Usually a model attribute.
-  # @param builder [ActionView::Helpers::FormBuilder] the form builder instance.
-  # @param type [Symbol] the type of the field. Defaults to `:text`.
-  # @param size [Symbol] the size of the field: `:s`, `:m` or `:l`.
-  # @param hint [String, null] helper text to display below the field.
-  # @param errors [Hash, nil] a Hash of errors for the field. If `nil` and the
-  #   builder is bound to a model instance, the component will automatically fetch
-  #   the errors from the model.
-  # @param attributes [Hash] additional HTML attributes to add to the field.
-  # @raise [ArgumentError] when the form builder is not bound to a model
-  #  instance and no `errors` Hash is passed to the component.
   def initialize(
     field:,
     builder:,
@@ -42,7 +31,7 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     size: :m,
     hint: nil,
     errors: nil,
-    toggletip: nil,
+    tip: nil,
     **attributes
   )
     @field = field
@@ -51,86 +40,38 @@ class SolidusAdmin::UI::Forms::TextField::Component < SolidusAdmin::BaseComponen
     @size = size
     @hint = hint
     @type = type
-    @toggletip = toggletip
+    @tip = tip
     @attributes = HashWithIndifferentAccess.new(attributes)
-    @errors = errors
+    @errors = errors || @builder.object&.errors
   end
 
   def call
-    guidance = component("ui/forms/guidance").new(
-      field: @field,
-      builder: @builder,
+    @attributes[:class] = [
+      %w[
+        form-input
+        block px-3 py-1.5 w-full
+        text-black
+        bg-white border border-gray-300 rounded-sm
+        hover:border-gray-500
+        placeholder:text-gray-400
+        focus:border-gray-500 focus:shadow-[0_0_0_2px_#bbb] focus-visible:outline-none
+        disabled:bg-gray-50 disabled:text-gray-300
+      ],
+      SIZES.fetch(@size),
+      (%w[border-red-400 text-red-400] if @errors.present?),
+      @attributes[:class],
+    ].compact.join(" ")
+
+    render component("ui/forms/field").new(
+      label: @builder.object.class.human_attribute_name(@field),
       hint: @hint,
-      errors: @errors,
-      disabled: @attributes[:disabled]
-    )
-
-    toggletip_tag = @toggletip.present? ? render(component('ui/toggletip').new(text: @toggletip)) : ''
-
-    tag.div(class: "w-full mb-6") do
-      tag.div(label_tag + toggletip_tag, class: "flex gap-1") + field_tag(guidance) + guidance_tag(guidance)
-    end
-  end
-
-  def field_tag(guidance)
-    @builder.send(
-      field_helper,
+      tip: @tip,
+      error: helpers.safe_join(@errors.messages_for(@field), tag.br).presence,
+      **@attributes
+    ).with_content(@builder.send(
+      TYPES.fetch(@type),
       @field,
-      class: field_classes(guidance),
-      **field_aria_describedby_attribute(guidance),
-      **field_error_attributes(guidance),
-      **@attributes.except(:class)
-    )
-  end
-
-  def field_classes(guidance)
-    %w[
-      form-input
-      block px-3 py-1.5 w-full
-      text-black
-      bg-white border border-gray-300 rounded-sm
-      hover:border-gray-500
-      placeholder:text-gray-400
-      focus:border-gray-500 focus:shadow-[0_0_0_2px_#bbb] focus-visible:outline-none
-      disabled:bg-gray-50 disabled:text-gray-300
-    ] + field_size_classes + field_error_classes(guidance) + Array(@attributes[:class]).compact
-  end
-
-  def field_helper
-    TYPES.fetch(@type)
-  end
-
-  def field_size_classes
-    SIZES.fetch(@size)
-  end
-
-  def field_aria_describedby_attribute(guidance)
-    return {} unless guidance.needed?
-
-    {
-      "aria-describedby": guidance.aria_describedby
-    }
-  end
-
-  def field_error_classes(guidance)
-    return [] unless guidance.errors?
-
-    %w[border-red-400 text-red-400]
-  end
-
-  def field_error_attributes(guidance)
-    return {} unless guidance.errors?
-
-    {
-      "aria-invalid": true
-    }
-  end
-
-  def label_tag
-    render component("ui/forms/label").new(field: @field, builder: @builder)
-  end
-
-  def guidance_tag(guidance)
-    render guidance
+      @attributes,
+    ))
   end
 end

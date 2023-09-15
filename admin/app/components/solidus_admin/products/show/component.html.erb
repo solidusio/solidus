@@ -59,7 +59,7 @@
 
         <%= render component('ui/panel').new(title: 'Pricing') do %>
           <%= render component("ui/forms/text_field").new(field: :price, builder: f) %>
-          <div class="flex gap-4 items-grow">
+          <div class="flex gap-4 justify-items-stretch">
             <%= render component("ui/forms/text_field").new(field: :cost_price, builder: f) %>
             <%= render component("ui/forms/text_field").new(field: :cost_currency, builder: f) %>
           </div>
@@ -77,19 +77,17 @@
         <%= render component('ui/panel').new(title: 'Shipping') do %>
           <%= render component("ui/forms/select").new(
             field: :shipping_category_id,
-            toggletip: t(".hints.shipping_category_html"),
+            tip: t(".hints.shipping_category_html"),
             choices:
-              [[t(".none"), nil]] +
-                Spree::ShippingCategory.order(:name).pluck(:name, :id),
+              [[t(".none"), nil]] + Spree::ShippingCategory.order(:name).pluck(:name, :id),
             builder: f
           ) %>
           <%= render component("ui/forms/select").new(
             field: :tax_category_id,
-            toggletip:
-              t(
-                ".hints.tax_category_html",
-                default_tax_category: Spree::TaxCategory.default&.name
-              ),
+            tip: t(
+              ".hints.tax_category_html",
+              default_tax_category: Spree::TaxCategory.default&.name
+            ),
             choices:
               [[t(".none"), nil]] + Spree::TaxCategory.order(:name).pluck(:name, :id),
             builder: f
@@ -97,16 +95,12 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: "Options") do %>
-          <%= render component("ui/forms/label").new(field: :option_type_ids, builder: f) %>
-          <%= f.select(
-            :option_type_ids,
-            option_type_options,
-            { include_hidden: false },
-            {
-              multiple: true,
-              size: option_type_options.size,
-              class: "w-full padding-2 border border-gray-200 rounded overflow-y-auto"
-            }
+          <%= render component("ui/forms/select").new(
+            field: :option_type_ids,
+            choices: option_type_options,
+            builder: f,
+            multiple: true,
+            "size" => option_type_options.size,
           ) %>
         <% end %>
 
@@ -122,14 +116,12 @@
         <%= render component('ui/panel').new(title: "Publishing") do %>
           <%= render component("ui/forms/text_field").new(
             field: :available_on,
-            toggletip: t(".hints.available_on_html"),
-            builder: f,
+            tip: t(".hints.available_on_html"), builder: f,
             type: :date
           ) %>
           <%= render component("ui/forms/text_field").new(
             field: :discontinue_on,
-            toggletip: t(".hints.discontinue_on_html"),
-            builder: f,
+            tip: t(".hints.discontinue_on_html"), builder: f,
             type: :date
           ) %>
 
@@ -147,12 +139,12 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: "Product organization") do %>
-          <%= render component("ui/forms/label").new(field: :taxon_ids, builder: f) %>
-          <%= f.select(
-            :taxon_ids,
-            taxon_options,
-            { include_hidden: false },
-            { multiple: true, size: taxon_options.size, class: "w-full" }
+          <%= render component("ui/forms/select").new(
+            field: :taxon_ids,
+            choices: taxon_options,
+            builder: f,
+            multiple: true,
+            "size" => taxon_options.size,
           ) %>
         <% end %>
       </aside>
