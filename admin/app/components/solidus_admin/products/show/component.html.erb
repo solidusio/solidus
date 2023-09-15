@@ -165,8 +165,7 @@
         <%= render component("ui/button").new(
           tag: :button,
           text: t(".delete"),
-          scheme: :secondary,
-          class: "border-red-500 text-red-500 hover:bg-red-500 hover:text-white",
+          scheme: :danger,
           "data-action": "click->#{stimulus_id}#confirmDelete",
           "data-#{stimulus_id}-message-param": t(".delete_confirmation"),
         ) %>
