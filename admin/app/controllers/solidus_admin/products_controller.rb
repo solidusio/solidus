@@ -26,7 +26,10 @@ module SolidusAdmin
         redirect_to action: :show, status: :see_other
       else
         flash.now[:error] = @product.errors.full_messages.join(", ")
-        render action: :show, status: :unprocessable_entity
+
+        respond_to do |format|
+          format.html { render component('products/show').new(product: @product), status: :unprocessable_entity }
+        end
       end
     end
 
