@@ -9,7 +9,11 @@
     <%= render component('ui/toggletip').new(text: @tip) if @tip.present? %>
   </div>
 
-  <%= content %>
+  <% if @input_attributes.present? %>
+    <%= render component('ui/forms/input').new(**@input_attributes) %>
+  <% else %>
+    <%= content %>
+  <% end %>
 
   <% if @hint.present? || @error.present? %>
     <div class="
@@ -18,7 +22,7 @@
       flex gap-1 flex-col
     ">
       <%= tag.span @hint if @hint.present? %>
-      <%= tag.span @error, class: "text-red-400" if @error.present? %>
+      <%= tag.span safe_join(@error, tag.br), class: "text-red-400" if @error.present? %>
     </div>
   <% end %>
 </label>

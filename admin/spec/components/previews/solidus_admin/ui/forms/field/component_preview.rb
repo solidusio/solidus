@@ -11,7 +11,9 @@ class SolidusAdmin::UI::Forms::Field::ComponentPreview < ViewComponent::Preview
   # @param hint text
   # @param tip text
   # @param error text
-  def playground(hint: "hint", tip: "tip", error: "error")
-    render component("ui/forms/field").new(hint: hint, tip: tip, error: error)
+  def playground(label: "My field", hint: "hint", tip: "tip", error: "error")
+    render component("ui/forms/field").new(label: label, hint: hint, tip: tip, error: error, input_attributes: {
+      tag: :input, value: "My value", error: error
+    })
   end
 end

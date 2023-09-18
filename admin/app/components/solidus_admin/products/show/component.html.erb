@@ -36,18 +36,15 @@
     <div class="flex gap-4 items-start pb-4">
       <div class="justify-center items-start gap-4 flex flex-col w-full">
         <%= render component('ui/panel').new do %>
-          <%= render component("ui/forms/text_field").new(field: :name, builder: f) %>
-          <%= render component("ui/forms/text_field").new(field: :slug, builder: f) %>
-          <%= render component("ui/forms/text_area").new(field: :description, builder: f) %>
+          <%= render component("ui/forms/field").text_field(f, :name) %>
+          <%= render component("ui/forms/field").text_field(f, :slug) %>
+          <%= render component("ui/forms/field").text_area(f, :description) %>
         <% end %>
 
         <%= render component('ui/panel').new(title: 'SEO', title_hint: 'Search Engine Optimization') do %>
-          <%= render component("ui/forms/text_field").new(field: :meta_title, builder: f) %>
-          <%= render component("ui/forms/text_field").new(
-            field: :meta_description,
-            builder: f
-          ) %>
-          <%= render component("ui/forms/text_area").new(field: :meta_keywords, builder: f) %>
+          <%= render component("ui/forms/field").text_field(f, :meta_title) %>
+          <%= render component("ui/forms/field").text_field(f, :meta_description) %>
+          <%= render component("ui/forms/field").text_area(f, :meta_keywords) %>
         <% end %>
 
         <%= render component('ui/panel').new(title: "Media") do |panel| %>
@@ -58,15 +55,15 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: 'Pricing') do %>
-          <%= render component("ui/forms/text_field").new(field: :price, builder: f) %>
+          <%= render component("ui/forms/field").text_field(f, :price) %>
           <div class="flex gap-4 justify-items-stretch">
-            <%= render component("ui/forms/text_field").new(field: :cost_price, builder: f) %>
-            <%= render component("ui/forms/text_field").new(field: :cost_currency, builder: f) %>
+            <%= render component("ui/forms/field").text_field(f, :cost_price) %>
+            <%= render component("ui/forms/field").text_field(f, :cost_currency) %>
           </div>
         <% end %>
 
         <%= render component('ui/panel').new(title: 'Stock') do |panel| %>
-          <%= render component("ui/forms/text_field").new(field: :sku, builder: f) %>
+          <%= render component("ui/forms/field").text_field(f, :sku) %>
 
           <% panel.with_action(
             name: t(".manage_stock"),
@@ -75,30 +72,28 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: 'Shipping') do %>
-          <%= render component("ui/forms/select").new(
-            field: :shipping_category_id,
+          <%= render component("ui/forms/field").select(
+            f,
+            :shipping_category_id,
+            [[t(".none"), nil]] + Spree::ShippingCategory.order(:name).pluck(:name, :id),
             tip: t(".hints.shipping_category_html"),
-            choices:
-              [[t(".none"), nil]] + Spree::ShippingCategory.order(:name).pluck(:name, :id),
-            builder: f
           ) %>
-          <%= render component("ui/forms/select").new(
-            field: :tax_category_id,
+          <%= render component("ui/forms/field").select(
+            f,
+            :tax_category_id,
+            [[t(".none"), nil]] + Spree::TaxCategory.order(:name).pluck(:name, :id),
             tip: t(
               ".hints.tax_category_html",
               default_tax_category: Spree::TaxCategory.default&.name
             ),
-            choices:
-              [[t(".none"), nil]] + Spree::TaxCategory.order(:name).pluck(:name, :id),
-            builder: f
           ) %>
         <% end %>
 
         <%= render component('ui/panel').new(title: "Options") do %>
-          <%= render component("ui/forms/select").new(
-            field: :option_type_ids,
-            choices: option_type_options,
-            builder: f,
+          <%= render component("ui/forms/field").select(
+            f,
+            :option_type_ids,
+            option_type_options,
             multiple: true,
             "size" => option_type_options.size,
           ) %>
@@ -114,16 +109,8 @@
 
       <aside class="justify-center items-start gap-4 flex flex-col w-full max-w-sm">
         <%= render component('ui/panel').new(title: "Publishing") do %>
-          <%= render component("ui/forms/text_field").new(
-            field: :available_on,
-            tip: t(".hints.available_on_html"), builder: f,
-            type: :date
-          ) %>
-          <%= render component("ui/forms/text_field").new(
-            field: :discontinue_on,
-            tip: t(".hints.discontinue_on_html"), builder: f,
-            type: :date
-          ) %>
+          <%= render component("ui/forms/field").text_field(f, :available_on, tip: t(".hints.available_on_html"), type: :date) %>
+          <%= render component("ui/forms/field").text_field(f, :discontinue_on, tip: t(".hints.discontinue_on_html"), type: :date) %>
 
           <label class="flex gap-2 items-center">
             <%= render component("ui/forms/checkbox").new(
@@ -139,13 +126,7 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: "Product organization") do %>
-          <%= render component("ui/forms/select").new(
-            field: :taxon_ids,
-            choices: taxon_options,
-            builder: f,
-            multiple: true,
-            "size" => taxon_options.size,
-          ) %>
+          <%= render component("ui/forms/field").select(f, :taxon_ids, taxon_options, multiple: true, "size" => taxon_options.size) %>
         <% end %>
       </aside>
     </div>
