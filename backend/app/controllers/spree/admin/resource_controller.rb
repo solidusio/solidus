@@ -59,7 +59,11 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     @object.attributes = permitted_resource_params
     if @object.save
       invoke_callbacks(:create, :after)
-      flash[:success] = flash_message_for(@object, :successfully_created)
+      if params[:product].present? && params[:product].key?("is_pending") && params[:product]["is_pending"] == "true"
+        flash[:success] = "Your Post has been sent for approval"
+      else
+        flash[:success] = flash_message_for(@object, :successfully_created)
+      end
       respond_with(@object) do |format|
         format.html { redirect_to location_after_save }
         format.js   { render layout: false }

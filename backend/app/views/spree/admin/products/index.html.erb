@@ -2,11 +2,13 @@
 
 <% admin_breadcrumb(plural_resource_name(Spree::Product)) %>
 
+
 <% content_for :page_actions do %>
   <li>
-    <%= link_to t('spree.new_product'), new_object_url, class: 'btn btn-primary' %>
+    <%= link_to t('spree.new_product') , new_object_url, class: 'btn btn-primary' %>
   </li>
 <% end if can?(:create, Spree::Product) %>
+
 
 <% content_for :table_filter_title do %>
   <%= t('spree.search') %>
@@ -56,39 +58,50 @@
 
 <div id="new_product_wrapper" data-hook></div>
 
-<%= paginate @collection, theme: "solidus_admin" %>
+<% if spree_current_user.has_spree_role?("seller")%>
+  <% @admin_collection = @collection.where(is_pending: true).or(@collection.where(is_approved: true)).or(@collection.where(is_rejected: true)) %>
+<% else %>
+  <% @admin_collection = @collection %>
+<% end %>
 
-<% if @collection.any? %>
+<%= paginate @admin_collection, theme: "solidus_admin" %>
+
+<% if @admin_collection.any? %>
   <table class="index" id="listing_products">
-    <colgroup>
-       <col style="width: 15%;">
-       <col style="width: 5%;">
-       <col style="width: 50%;">
-       <col style="width: 15%;">
-       <col style="width: 15%;">
-    </colgroup>
     <thead>
       <tr data-hook="admin_products_index_headers">
-        <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
-        <th></th>
-        <th><%= sort_link @search,:name, Spree::Product.human_attribute_name(:name), { default_order: "desc" }, {title: 'admin_products_listing_name_title'} %></th>
-        <th class="align-right"><%= sort_link @search,:master_default_price_amount, Spree::Product.human_attribute_name(:price), {}, {title: 'admin_products_listing_price_title'} %></th>
-        <th data-hook="admin_products_index_header_actions" class="actions"></th>
+        <th class="text-center"><%= Spree::Variant.human_attribute_name(:sku) %></th>
+        <th class="text-center">Image</th>
+        <th class="text-center"><%= sort_link @search,:name, Spree::Product.human_attribute_name(:name), { default_order: "desc" }, {title: 'admin_products_listing_name_title'} %></th>
+        <th class="text-center" class="align-right"><%= sort_link @search,:master_default_price_amount, Spree::Product.human_attribute_name(:price), {}, {title: 'admin_products_listing_price_title'} %></th>
+        <th class="text-center">Status</th>
+        <th data-hook="admin_products_index_header_actions" class="text-center actions">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <% @collection.each do |product| %>
+      <% @admin_collection.each do |product| %>
           <tr <%== "style='color: red;'" if product.deleted? %> id="<%= spree_dom_id product %>" data-hook="admin_products_index_rows">
-            <td><%= product.sku %></td>
+            <td class="text-center"><%= product.sku %></td>
             <td class="align-center">
               <%= render 'spree/admin/shared/image', image: product.gallery.images.first, size: :mini %>
             </td>
-            <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
-            <td class="align-right"><%= product.display_price&.to_html %></td>
-            <td class="actions" data-hook="admin_products_index_row_actions">
+            <td class="text-center"><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
+            <td class="text-center"><%= product.display_price&.to_html %></td>
+            <td class="text-center">
+              <% if product.is_pending == true %>
+                Pending
+              <% elsif (product.is_approved == true || nil) || (product.is_pending == nil) || (product.is_rejected == nil) %>
+                Approved
+              <% elsif product.is_rejected == true %>
+                Rejected
+              <% end %>
+            </td>
+            <td class="actions text-center" data-hook="admin_products_index_row_actions">
               <%= link_to_edit product, no_text: true, class: 'edit' if can?(:edit, product) && !product.deleted? %>
               &nbsp;
-              <%= link_to_clone product, no_text: true, class: 'clone' if can?(:clone, product) %>
+              <% if !spree_current_user.has_spree_role?("seller")%>
+                <%= link_to_clone product, no_text: true, class: 'clone' if can?(:clone, product) %>
+              <% end %>
               &nbsp;
               <%= link_to_delete product, no_text: true if can?(:destroy, product) && !product.deleted? %>
             </td>
@@ -104,4 +117,4 @@
   </div>
 <% end %>
 
-<%= paginate @collection, theme: "solidus_admin" %>
+<%= paginate @admin_collection, theme: "solidus_admin" %>

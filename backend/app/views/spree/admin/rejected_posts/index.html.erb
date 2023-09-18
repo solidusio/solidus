@@ -1,0 +1,148 @@
+<% admin_breadcrumb("Rejected Posts") %>
+
+<table class="index" id="listing_products">
+  <thead>
+    <tr data-hook="admin_products_index_headers">
+      <th class="text-center">ID</th>
+      <th class="text-center">Image</th>
+      <th class="text-center">Title</th>
+      <th class="text-center" class="align-right">Master Price</th>
+      <th class="text-center" class="align-right">Reason</th>
+      <th class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @rejected_posts.each do |product| %>
+    <tr data-product-id=<%= product.id %>>
+      <td class="text-center"><%= product.id %></td>
+      <td class="align-center">
+        <%= render 'spree/admin/shared/image', image: product.gallery.images.first, size: :mini %>
+      </td>
+      <td class="text-center"><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
+      <td class="text-center align-right"><%= product.display_price&.to_html %></td>
+      <td class="text-center align-right"><%= product.reason %></td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <% if !spree_current_user.has_spree_role?("seller") %>
+            <div class="mr-2">
+              <button class="approve-button" data-product-id="<%= product.id %>">Approve</button>
+            </div>
+          <% end %>
+          <% if spree_current_user.has_spree_role?("seller") %>
+            <div class="mr-2">
+              <button class="pending-button" data-product-id="<%= product.id %>">Re-Apply</button>
+            </div>
+          <% end %>
+          <div>
+            <button class="withdraw-button" data-product-id="<%= product.id %>">Withdraw</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reasonModalLabel">Enter Reason of Re-Apply</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="reasonForm">
+          <div class="form-group">
+            <label for="reasonInput">Reason:</label>
+            <input type="text" class="form-control" id="reasonInput" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $(document).on("click", ".approve-button", function() {
+    var productId = $(this).data("product-id");
+
+    $.ajax({
+      type: "PATCH",
+      contentType: "application/json; charset=utf-8",
+      url: "/admin/rejected_posts/" + productId + "/approve",
+      dataType: "json",
+      success: function(result) {
+        if (result.success) {
+          // Remove the approved product row from the table
+          $("tr[data-product-id='" + productId + "']").remove();
+        } else {
+          window.alert("Approval failed!");
+        }
+      },
+      error: function() {
+        window.alert("Something went wrong!");
+      }
+    });
+  });
+
+  $(document).on("click", ".pending-button", function() {
+    var productId = $(this).data("product-id");
+
+    // Show the modal
+    $("#reasonModal").modal("show");
+
+    $("#reasonForm").submit(function(e) {
+      e.preventDefault();
+
+      var reason = $("#reasonInput").val();
+
+      $.ajax({
+        type: "PATCH",
+        contentType: "application/json; charset=utf-8",
+        url: "/admin/rejected_posts/" + productId + "/pending",
+        data: JSON.stringify({ reason: reason }),
+        dataType: "json",
+        success: function(result) {
+          if (result.success) {
+            // Remove the approved product row from the table
+            $("tr[data-product-id='" + productId + "']").remove();
+            // Close the modal
+            $("#reasonModal").modal("hide");
+          } else {
+            window.alert("Approval failed!");
+          }
+        },
+        error: function() {
+          window.alert("Something went wrong!");
+        }
+      });
+    });
+  });
+
+  $(document).on("click", ".withdraw-button", function() {
+    var productId = $(this).data("product-id");
+
+    $.ajax({
+      type: "PATCH",
+      contentType: "application/json; charset=utf-8",
+      url: "/admin/rejected_posts/" + productId + "/withdraw",
+      dataType: "json",
+      success: function(result) {
+        if (result.success) {
+          // Remove the approved product row from the table
+          $("tr[data-product-id='" + productId + "']").remove();
+        } else {
+          window.alert("Approval failed!");
+        }
+      },
+      error: function() {
+        window.alert("Something went wrong!");
+      }
+    });
+  });
+</script>

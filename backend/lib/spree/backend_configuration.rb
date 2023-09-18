@@ -35,9 +35,11 @@ module Spree
     ORDER_TABS         ||= [:orders, :payments, :creditcard_payments,
                             :shipments, :credit_cards, :return_authorizations,
                             :customer_returns, :adjustments, :customer_details]
+
     PRODUCT_TABS       ||= [:products, :option_types, :properties,
                             :variants, :product_properties, :taxonomies,
                             :taxons]
+
     CONFIGURATION_TABS ||= [:stores, :tax_categories,
                             :tax_rates, :zones,
                             :payment_methods, :shipping_methods,
@@ -49,6 +51,9 @@ module Spree
     STOCK_TABS         ||= [:stock_items]
     USER_TABS          ||= [:users, :store_credits]
     ROLES              ||= [:roles]
+    PENDING_POSTS      ||= [:pending_posts]
+    APPROVED_POSTS     ||= [:approved_posts]
+    REJECTED_POSTS     ||= [:rejected_posts]
 
     # Items can be added to the menu by using code like the following:
     #
@@ -107,7 +112,7 @@ module Spree
         ),
         MenuItem.new(
           USER_TABS,
-          'user',
+          'users',
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
           position: 4
@@ -135,11 +140,32 @@ module Spree
           position: 5
         ),
         MenuItem.new(
-          [:ROLES], # This is the new menu item
-          'user',        # Icon name (you can change it)
+          ROLES, # This is the new menu item
+          'user-circle',        # Icon name (you can change it)
           condition: -> { can?(:admin, :Roles) }, # Add your condition here
           url: :admin_roles_path, # Set the correct URL path
           position: 6 # Position of the menu item
+        ),
+        MenuItem.new(
+          PENDING_POSTS, # This is the new menu item
+          'hourglass',        # Icon name (you can change it)
+          condition: -> { true },
+          url: :admin_pending_posts_path, # Set the correct URL path
+          position: 7 # Position of the menu item,
+        ),
+        MenuItem.new(
+          APPROVED_POSTS, # This is the new menu item
+          'check',        # Icon name (you can change it)
+          condition: -> { true },
+          url: :admin_approved_posts_path, # Set the correct URL path
+          position: 8 # Position of the menu item,
+        ),
+        MenuItem.new(
+          REJECTED_POSTS, # This is the new menu item
+          'ban',        # Icon name (you can change it)
+          condition: -> { true },
+          url: :admin_rejected_posts_path, # Set the correct URL path
+          position: 9 # Position of the menu item,
         )
       ]
     end

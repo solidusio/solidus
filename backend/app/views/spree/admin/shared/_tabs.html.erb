@@ -6,7 +6,7 @@
         icon: menu_item.icon,
         label: menu_item.label,
         url: menu_item.url.is_a?(Symbol) ? spree.public_send(menu_item.url) : menu_item.url,
-        match_path: menu_item.match_path,
+        match_path: menu_item.match_path
       ) do
     %>
       <%- render partial: menu_item.partial if menu_item.partial %>

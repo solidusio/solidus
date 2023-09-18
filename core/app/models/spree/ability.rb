@@ -27,10 +27,26 @@ module Spree
     end
 
     def initialize(current_user)
-      @user = current_user || Spree.user_class.new
-
-      activate_permission_sets
-      register_extension_abilities
+      @user = current_user || Spree.user_class.new # guest user (not logged in)
+      if @user.has_spree_role?('admin')
+        activate_permission_sets
+        register_extension_abilities
+      elsif @user.has_spree_role?('seller')
+        can :manage, Spree::Classification
+        can :manage, Spree::Image
+        can :manage, Spree::OptionType
+        can :manage, Spree::OptionValue
+        can :manage, Spree::Price
+        can :manage, Spree::Product
+        can :manage, Spree::ProductProperty
+        can :manage, Spree::Property
+        can :manage, Spree::Taxon
+        can :manage, Spree::Taxonomy
+        can :manage, Spree::Variant
+        can :manage, :pending_posts
+        can :manage, :approved_posts
+        can :manage, :rejected_posts
+      end
     end
 
     private
