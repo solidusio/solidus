@@ -209,6 +209,9 @@
           <%= f.error_message_on :tax_category %>
         <% end %>
       </div>
+      <% if spree_current_user.has_spree_role?('seller') %>
+        <%= f.hidden_field :is_pending, value: true %>
+      <% end %>
     </div>
 
   </div>

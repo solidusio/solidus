@@ -13,6 +13,29 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
+    resources :pending_posts do
+      member do
+        patch :approve
+        patch :reject
+        patch :withdraw
+      end
+    end
+
+    resources :approved_posts do
+      member do
+        patch :reject
+        patch :withdraw
+      end
+    end
+
+    resources :rejected_posts do
+      member do
+        patch :approve
+        patch :pending
+        patch :withdraw
+      end
+    end
+
     resources :promotions do
       resources :promotion_rules
       resources :promotion_actions
