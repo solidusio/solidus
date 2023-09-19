@@ -8,10 +8,10 @@ module SolidusAdmin
     include Spree::Core::ControllerHelpers::Store
     include GearedPagination::Controller
 
-    include SolidusAdmin::ControllerHelpers::Auth
+    include SolidusAdmin::ControllerHelpers::Authentication
     include SolidusAdmin::ControllerHelpers::Locale
     include SolidusAdmin::ComponentsHelper
-    include SolidusAdmin::AuthAdapters::Backend if defined?(Spree::Backend)
+    include SolidusAdmin::AuthenticationAdapters::Backend if defined?(Spree::Backend)
 
     layout 'solidus_admin/application'
     helper 'solidus_admin/components'
