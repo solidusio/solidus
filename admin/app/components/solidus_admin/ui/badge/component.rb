@@ -22,7 +22,7 @@ class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
     @name = name
 
     @class_name = [
-      'inline-flex items-center rounded-full', # layout
+      'inline-flex items-center rounded-full whitespace-nowrap', # layout
       SIZES.fetch(size.to_sym), # size
       COLORS.fetch(color.to_sym), # color
     ].join(' ')
