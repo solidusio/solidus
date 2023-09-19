@@ -61,7 +61,7 @@ class SolidusAdmin::UI::Toggletip::Component < SolidusAdmin::BaseComponent
   # @param theme [Symbol] The theme of the toggletip. Defaults to `:light`. See
   #   `THEMES` for available options.
   def initialize(text:, position: :down, theme: :light, **attributes)
-    @text = text || guide
+    @text = text
     @position = position
     @theme = theme
     @attributes = attributes
