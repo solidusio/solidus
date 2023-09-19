@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SolidusAdmin::AuthAdapters::Backend
+module SolidusAdmin::AuthenticationAdapters::Backend
   extend ActiveSupport::Concern
 
   included do
