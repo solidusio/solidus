@@ -40,6 +40,10 @@ describe "Product", type: :feature do
     within('header') { click_button "Save" }
 
     expect(page).to have_content("Just a product (updated)")
+    fill_in "Name", with: ""
+    within('header') { click_button "Save" }
+
+    expect(page).to have_content("Name can't be blank")
     expect(page).to be_axe_clean
   end
 end
