@@ -59,7 +59,7 @@
 <div id="new_product_wrapper" data-hook></div>
 
 <% if spree_current_user.has_spree_role?("seller")%>
-  <% @admin_collection = @collection.where(is_pending: true).or(@collection.where(is_approved: true)).or(@collection.where(is_rejected: true)) %>
+  <% @admin_collection = @collection.where(is_pending: true, spree_user_id: spree_current_user.id).or(@collection.where(is_approved: true, spree_user_id: spree_current_user.id)).or(@collection.where(is_rejected: true, spree_user_id: spree_current_user.id)) %>
 <% else %>
   <% @admin_collection = @collection %>
 <% end %>

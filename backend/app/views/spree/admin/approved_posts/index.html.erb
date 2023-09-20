@@ -7,32 +7,51 @@
       <th class="text-center">Image</th>
       <th class="text-center">Title</th>
       <th class="text-center" class="align-right">Master Price</th>
+      <% if !spree_current_user.has_spree_role?("seller") %>
+        <th class="text-center" class="align-right">Seller</th>
+      <% end %>
       <th class="text-center">Action</th>
     </tr>
   </thead>
   <tbody>
-  <% @approved_posts.each do |product| %>
-    <tr data-product-id=<%= product.id %>>
-      <td class="text-center"><%= product.id %></td>
-      <td class="align-center">
-        <%= render 'spree/admin/shared/image', image: product.gallery.images.first, size: :mini %>
-      </td>
-      <td class="text-center"><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
-      <td class="text-center align-right"><%= product.display_price&.to_html %></td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <% if !spree_current_user.has_spree_role?("seller") %>
-            <div class="mr-2">
-              <button class="reject-button" data-product-id="<%= product.id %>">Reject</button>
+    <% if spree_current_user.has_spree_role?("seller") %>
+      <% @approved_posts_list = @approved_posts.where(spree_user_id: spree_current_user.id) %>
+    <% else %>
+      <% @approved_posts_list = @approved_posts %>
+    <% end %>
+
+    <% @approved_posts_list.each do |product| %>
+      <tr data-product-id=<%= product.id %>>
+        <td class="text-center"><%= product.id %></td>
+        <td class="align-center">
+          <%= render 'spree/admin/shared/image', image: product.gallery.images.first, size: :mini %>
+        </td>
+        <td class="text-center"><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
+        <td class="text-center align-right"><%= product.display_price&.to_html %></td>
+        <% if !spree_current_user.has_spree_role?("seller") %>
+          <td class="text-center" class="align-right">
+            <% product_seller = Spree::User.find_by(id: product.spree_user_id) %>
+            <% if product_seller&.full_name.present? %>
+              <%= product_seller&.full_name %>
+            <% else %>
+              <%= "Admin" %>
+            <% end %>
+          </td>
+        <% end %>
+        <td>
+          <div class="d-flex justify-content-center">
+            <% if !spree_current_user.has_spree_role?("seller") %>
+              <div class="mr-2">
+                <button class="reject-button" data-product-id="<%= product.id %>">Reject</button>
+              </div>
+            <% end %>
+            <div>
+              <button class="withdraw-button" data-product-id="<%= product.id %>">Withdraw</button>
             </div>
-          <% end %>
-          <div>
-            <button class="withdraw-button" data-product-id="<%= product.id %>">Withdraw</button>
           </div>
-        </div>
-      </td>
-    </tr>
-  <% end %>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 

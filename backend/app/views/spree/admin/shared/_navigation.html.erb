@@ -7,6 +7,9 @@
         <span class="text"><%= t('spree.minimize_menu') %></span>
       <% end %>
       <%= render partial: 'spree/admin/shared/locale_selection' %>
+      <div class="px-4">
+        <a href="/" style="font-weight: 600;"><i class="fa fa-home mr-4"></i>Homepage</a>
+      </div>
       <% if lookup_context.exists?('spree/admin/shared/_navigation_footer') %>
         <%= render partial: 'spree/admin/shared/navigation_footer' %>
       <% else %>

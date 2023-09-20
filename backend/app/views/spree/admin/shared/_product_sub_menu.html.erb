@@ -11,7 +11,9 @@
   <% if can? :admin, Spree::Taxonomy %>
     <%= tab :taxonomies %>
   <% end %>
-  <% if can? :admin, Spree::Taxon %>
-    <%= tab :taxons, label: :display_order, match_path: '/taxons' %>
+  <% if !spree_current_user.has_spree_role?("seller") %>
+    <% if can? :admin, Spree::Taxon %>
+      <%= tab :taxons, label: :display_order, match_path: '/taxons' %>
+    <% end %>
   <% end %>
 </ul>

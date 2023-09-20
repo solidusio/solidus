@@ -1,11 +1,13 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
 <% admin_breadcrumb("Categories") %>
 
-<% content_for :page_actions do %>
-  <% if can?(:create, Spree::Taxonomy) %>
-    <li>
-      <%= link_to t('spree.new_taxonomy'), spree.new_admin_taxonomy_url, id: 'admin_new_taxonomy_link', class: 'btn btn-primary' %>
-    </li>
+<% if !spree_current_user.has_spree_role?("seller") %>
+  <% content_for :page_actions do %>
+    <% if can?(:create, Spree::Taxonomy) %>
+      <li>
+        <%= link_to t('spree.new_taxonomy'), spree.new_admin_taxonomy_url, id: 'admin_new_taxonomy_link', class: 'btn btn-primary' %>
+      </li>
+    <% end %>
   <% end %>
 <% end %>
 

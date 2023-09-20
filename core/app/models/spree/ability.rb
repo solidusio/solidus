@@ -39,10 +39,10 @@ module Spree
         can :manage, Spree::Price
         can :manage, Spree::Product
         can :manage, Spree::ProductProperty
+        can :manage, Spree::Variant
         can :manage, Spree::Property
         can :manage, Spree::Taxon
         can :manage, Spree::Taxonomy
-        can :manage, Spree::Variant
         can :manage, :pending_posts
         can :manage, :approved_posts
         can :manage, :rejected_posts

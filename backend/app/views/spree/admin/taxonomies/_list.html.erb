@@ -1,33 +1,36 @@
 <table class="index sortable" id='listing_taxonomies' data-hook data-sortable-link="<%= update_positions_admin_taxonomies_url %>">
-  <colgroup>
-    <col style="width: 10%">
-    <col style="width: 75%">
-    <col style="width: 15%">
-  </colgroup>
   <thead>
     <tr data-hook="taxonomies_header">
-      <th></th>
+      <% if !spree_current_user.has_spree_role?("seller") %>
+        <th></th>
+      <% end %>
       <th><%= Spree::Taxonomy.human_attribute_name(:name) %></th>
-      <th class="actions"></th>
+      <% if !spree_current_user.has_spree_role?("seller") %>
+        <th class="actions"></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% @taxonomies.each do |taxonomy| %>
       <tr id="<%= spree_dom_id taxonomy %>" data-hook="taxonomies_row">
-        <td>
-          <% if can?(:update_positions, Spree::Taxonomy) %>
-            <span class="handle"></span>
-          <% end %>
-        </td>
+        <% if !spree_current_user.has_spree_role?("seller") %>
+          <td>
+            <% if can?(:update_positions, Spree::Taxonomy) %>
+              <span class="handle"></span>
+            <% end %>
+          </td>
+        <% end %>
         <td><%= taxonomy.name %></td>
-        <td class="actions">
-          <% if can?(:update, taxonomy) %>
-            <%= link_to_edit taxonomy, no_text: true %>
-          <% end %>
-          <% if can?(:destroy, taxonomy) %>
-            <%= link_to_delete taxonomy, no_text: true %>
-          <% end %>
-        </td>
+        <% if !spree_current_user.has_spree_role?("seller") %>
+          <td class="actions">
+            <% if can?(:update, taxonomy) %>
+              <%= link_to_edit taxonomy, no_text: true %>
+            <% end %>
+            <% if can?(:destroy, taxonomy) %>
+              <%= link_to_delete taxonomy, no_text: true %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

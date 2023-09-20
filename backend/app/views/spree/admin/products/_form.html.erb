@@ -212,6 +212,7 @@
       <% if spree_current_user.has_spree_role?('seller') %>
         <%= f.hidden_field :is_pending, value: true %>
       <% end %>
+      <%= f.hidden_field :spree_user_id, value: spree_current_user.id %>
     </div>
 
   </div>

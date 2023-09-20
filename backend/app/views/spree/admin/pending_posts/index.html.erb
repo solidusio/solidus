@@ -7,12 +7,22 @@
       <th class="text-center">Image</th>
       <th class="text-center">Title</th>
       <th class="text-center" class="align-right">Master Price</th>
+      <% if !spree_current_user.has_spree_role?("seller") %>
+        <th class="text-center" class="align-right">Seller</th>
+      <% end %>
       <th class="text-center" class="align-right">Re-Apply Reason</th>
       <th class="text-center">Action</th>
     </tr>
   </thead>
   <tbody>
-  <% @pending_posts.each do |product| %>
+
+  <% if spree_current_user.has_spree_role?("seller") %>
+    <% @pending_posts_list = @pending_posts.where(spree_user_id: spree_current_user.id) %>
+  <% else %>
+    <% @pending_posts_list = @pending_posts %>
+  <% end %>
+
+  <% @pending_posts_list.each do |product| %>
     <tr data-product-id=<%= product.id %>>
       <td class="text-center"><%= product.id %></td>
       <td class="align-center">
@@ -20,6 +30,16 @@
       </td>
       <td class="text-center"><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
       <td class="text-center align-right"><%= product.display_price&.to_html %></td>
+      <% if !spree_current_user.has_spree_role?("seller") %>
+        <td class="text-center" class="align-right">
+          <% product_seller = Spree::User.find_by(id: product.spree_user_id) %>
+          <% if product_seller&.full_name.present? %>
+            <%= product_seller&.full_name %>
+          <% else %>
+            <%= "Admin" %>
+          <% end %>
+        </td>
+      <% end %>
       <td class="text-center align-right"><%= product.reason %></td>
 
       <td>
