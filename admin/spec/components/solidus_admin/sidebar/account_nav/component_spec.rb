@@ -22,8 +22,10 @@ RSpec.describe SolidusAdmin::Sidebar::AccountNav::Component, type: :component do
 
       # Links are hidden within a <details> element
       expect(page).to have_link("Account", href: "/admin/account", visible: :any)
-      expect(page).to have_link("Logout", href: "/admin/logout", visible: :any)
-      expect(page.find_link("Logout", visible: :any)["data-method"]).to eq("delete")
+      within('form[action="/admin/logout"]') do
+        expect(page).to have_button("Logout", visible: :any)
+        expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
+      end
     end
   end
 end
