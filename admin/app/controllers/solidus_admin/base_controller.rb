@@ -9,6 +9,7 @@ module SolidusAdmin
     include GearedPagination::Controller
 
     include SolidusAdmin::ControllerHelpers::Authentication
+    include SolidusAdmin::ControllerHelpers::Authorization
     include SolidusAdmin::ControllerHelpers::Locale
     include SolidusAdmin::ComponentsHelper
     include SolidusAdmin::AuthenticationAdapters::Backend if defined?(Spree::Backend)

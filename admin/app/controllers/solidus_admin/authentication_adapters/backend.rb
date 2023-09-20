@@ -11,20 +11,9 @@ module SolidusAdmin::AuthenticationAdapters::Backend
   private
 
   def authenticate_solidus_backend_user!
-    if respond_to?(:model_class, true) && model_class
-      record = model_class
-    else
-      record = controller_name.to_sym
-    end
-    authorize! :admin, record
-    authorize! action_name.to_sym, record
-  rescue CanCan::AccessDenied
-    instance_exec(&Spree::Admin::BaseController.unauthorized_redirect)
-  end
+    return if spree_current_user
 
-  # Needs to be overriden so that we use Spree's Ability rather than anyone else's.
-  def current_ability
-    @current_ability ||= Spree::Ability.new(spree_current_user)
+    instance_exec(&Spree::Admin::BaseController.unauthorized_redirect)
   end
 
   def store_location
