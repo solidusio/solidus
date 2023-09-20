@@ -58,7 +58,7 @@
       <% end %>
     </li>
     <li class="h-8 flex items-center hover:bg-gray-25 rounded">
-      <%= link_to @logout_path, method: @logout_method, class: 'flex gap-2 items-center px-2' do %>
+      <%= button_to @logout_path, method: @logout_method, class: 'flex gap-2 items-center px-2' do %>
         <%= icon_tag("logout-box-line", class: "w-5 h-5 fill-current shrink") %>
         <span><%= t('.logout') %></span>
       <% end %>
