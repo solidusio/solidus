@@ -94,9 +94,7 @@ fi
 unbundled bin/rails db:drop db:create
 
 echo "~~~> Running the solidus:install generator"
-unbundled bin/rails generate solidus:install \
-  --auto-accept \
-  $@
+unbundled bin/rails generate solidus:install --auto-accept $@
 
 echo "
 🚀 This app is intended for test purposes. If you're interested in running
