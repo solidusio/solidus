@@ -58,11 +58,6 @@ module Spree
     #
     # @!attribute menu_items
     #   @return [Array<Spree::BackendConfiguration::MenuItem>]
-    #
-    # Positioning can be determined by setting the position attribute to
-    # an Integer or nil. Menu Items will be rendered with smaller lower values
-    # first and higher values last. A position value of nil will cause the menu
-    # item to be rendered at the end of the list.
     attr_writer :menu_items
 
     # Return the menu items which should be drawn in the menu
@@ -86,14 +81,12 @@ module Spree
             return_authorizations|
             shipments
           )}x,
-          position: 0
         ),
         MenuItem.new(
           label: :products,
           icon: 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu',
-          position: 1,
           data_hook: :admin_product_sub_tabs,
           children: [
             MenuItem.new(
@@ -129,7 +122,6 @@ module Spree
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
           data_hook: :admin_promotion_sub_tabs,
-          position: 2,
           children: [
             MenuItem.new(
               label: :promotions,
@@ -147,7 +139,6 @@ module Spree
           match_path: %r{/(stock_items)},
           condition: -> { can?(:admin, Spree::StockItem) },
           url: :admin_stock_items_path,
-          position: 3,
         ),
         MenuItem.new(
           label: :users,
@@ -155,7 +146,6 @@ module Spree
           match_path: %r{/(users|store_credits)},
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
-          position: 4,
         ),
         MenuItem.new(
           label: :settings,
@@ -164,7 +154,6 @@ module Spree
           partial: 'spree/admin/shared/settings_sub_menu',
           condition: -> { can? :admin, Spree::Store },
           url: :admin_stores_path,
-          position: 5,
           children: [
             MenuItem.new(
               label: :stores,

@@ -11,7 +11,9 @@ module Spree
       end
       deprecate sections: :label, deprecator: Spree::Deprecation
 
-      attr_accessor :position
+      attr_accessor :position # rubocop:disable Layout/EmptyLinesAroundAttributeAccessor
+      deprecate position: nil, deprecator: Spree::Deprecation
+      deprecate "position=": nil, deprecator: Spree::Deprecation
 
       # @param icon [String] The icon to draw for this menu item
       # @param condition [Proc] A proc which returns true if this menu item
@@ -21,8 +23,6 @@ module Spree
       #   menu item.
       # @param children [Array<Spree::BackendConfiguration::MenuItem>] An array
       # @param url [String|Symbol] A url where this link should send the user to or a Symbol representing a route name
-      # @param position [Integer] The position in which the menu item should render
-      #   nil will cause the item to render last
       # @param match_path [String, Regexp, callable] (nil) If the {url} to determine the active tab is ambigous
       #   you can pass a String, Regexp or callable to identify this menu item. The callable
       #   accepts a request object and returns a Boolean value.
@@ -60,9 +60,10 @@ module Spree
         @partial = partial
         @children = children
         @url = url
-        @position = position
         @data_hook = data_hook
         @match_path = match_path
+
+        self.position = position if position # Use the setter to deprecate
       end
 
       def render_in?(view_context)

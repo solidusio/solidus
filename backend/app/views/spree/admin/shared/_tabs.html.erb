@@ -1,4 +1,4 @@
-<% Spree::Backend::Config.menu_items.sort_by { |item| item.position || Float::INFINITY }.each do |menu_item| %>
+<% Spree::Backend::Config.menu_items.each do |menu_item| %>
   <% if menu_item.render_in?(self) %>
     <%=
       tab(
