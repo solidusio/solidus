@@ -92,15 +92,6 @@ module Spree
           label: :products,
           icon: 'th-large',
           condition: -> { can?(:admin, Spree::Product) },
-          match_path: %r{/(
-            option_types|
-            product_properties|
-            products|
-            properties|
-            taxonomies|
-            taxons|
-            variants
-          )}x,
           partial: 'spree/admin/shared/product_sub_menu',
           position: 1,
           data_hook: :admin_product_sub_tabs,
@@ -134,7 +125,6 @@ module Spree
         MenuItem.new(
           label: :promotions,
           icon: 'bullhorn',
-          match_path: %r{/(promotions|promotion_categories)},
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
@@ -170,37 +160,9 @@ module Spree
         MenuItem.new(
           label: :settings,
           icon: 'wrench',
-          match_path: %r{/(
-            adjustment_reasons|
-            payment_methods|
-            refund_reasons|
-            reimbursement_types|
-            return_reasons|
-            shipping_categories|
-            shipping_methods|
-            stock_locations|
-            store_credit_reasons|
-            stores|
-            tax_categories|
-            tax_rates|
-            zones
-          )}x,
           data_hook: :admin_settings_sub_tabs,
-          condition: -> {
-            can?(:admin, Spree::Store) ||
-            can?(:admin, Spree::AdjustmentReason) ||
-            can?(:admin, Spree::PaymentMethod) ||
-            can?(:admin, Spree::RefundReason) ||
-            can?(:admin, Spree::ReimbursementType) ||
-            can?(:admin, Spree::ShippingCategory) ||
-            can?(:admin, Spree::ShippingMethod) ||
-            can?(:admin, Spree::StockLocation) ||
-            can?(:admin, Spree::TaxCategory) ||
-            can?(:admin, Spree::TaxRate) ||
-            can?(:admin, Spree::ReturnReason) ||
-            can?(:admin, Spree::Zone)
-          },
           partial: 'spree/admin/shared/settings_sub_menu',
+          condition: -> { can? :admin, Spree::Store },
           url: :admin_stores_path,
           position: 5,
           children: [

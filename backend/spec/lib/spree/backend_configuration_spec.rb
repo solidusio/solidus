@@ -23,20 +23,18 @@ RSpec.describe Spree::BackendConfiguration do
       let(:menu_item) { subject.find { |item| item.label == :settings } }
       let(:view) { double("view") }
 
-      it 'is shown if any of its submenus are present' do
-        allow(view).to receive(:can?).and_return(true, false)
+      describe '#render_in?' do
+        it 'is shown if any of its submenus are present' do
+          allow(view).to receive(:can?).and_return(true, false)
 
-        result = view.instance_exec(&menu_item.condition)
+          expect(menu_item.render_in?(view)).to eq(true)
+        end
 
-        expect(result).to eq(true)
-      end
+        it 'is not shown if none of its submenus are present' do
+          expect(view).to receive(:can?).exactly(13).times.and_return(false)
 
-      it 'is not shown if none of its submenus are present' do
-        expect(view).to receive(:can?).exactly(12).times.and_return(false)
-
-        result = view.instance_exec(&menu_item.condition)
-
-        expect(result).to eq(false)
+          expect(menu_item.render_in?(view)).to eq(false)
+        end
       end
     end
   end

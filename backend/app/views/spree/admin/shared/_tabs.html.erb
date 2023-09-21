@@ -1,5 +1,5 @@
 <% Spree::Backend::Config.menu_items.sort_by { |item| item.position || Float::INFINITY }.each do |menu_item| %>
-  <% if instance_exec(&menu_item.condition) %>
+  <% if menu_item.render_in?(self) %>
     <%=
       tab(
         icon: menu_item.icon,
@@ -18,7 +18,7 @@
               label: child.label,
               url: child.url,
               selected: child.match_path?(request),
-            ) if instance_exec(&child.condition) %>
+            ) if child.render_in?(self) %>
           <% end %>
         </ul>
       <% end %>

@@ -65,6 +65,11 @@ module Spree
         @match_path = match_path
       end
 
+      def render_in?(view_context)
+        view_context.instance_exec(&@condition) ||
+          children.any? { |child| child.render_in?(view_context) }
+      end
+
       def render_partial?
         return false if partial.blank?
 
