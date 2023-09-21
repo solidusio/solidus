@@ -1,22 +1,31 @@
 $color-navbar-hover-bg: $color-navbar-bg !default;
 $color-navbar-hover: $color-navbar !default;
 @import "spree/backend/themes/solidus_admin/colors";
-@import 'spree/backend/components/switch_solidus_admin';
+@import "spree/backend/components/switch_solidus_admin";
 
 .solidus-admin--nav {
   background-color: $color-light;
-  position: absolute;
+  position: sticky;
   top: 0;
   bottom: 0;
   left: 0;
+  margin-left: -$width-sidebar;
   z-index: $zindex-sticky;
   width: $width-sidebar;
   padding: 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  min-height: 100vh;
   border-right: $color-light-accent 1px solid;
+
+  &--wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 240px;
+  }
 
   @media print {
     display: none;
@@ -118,7 +127,8 @@ $color-navbar-hover: $color-navbar !default;
       display: flex;
       align-items: center;
 
-      &::before, svg {
+      &::before,
+      svg {
         display: inline-block;
         width: 18px;
         height: 18px;

@@ -1,27 +1,28 @@
 <% default_store = Spree::Store.default %>
 
-<aside class="solidus-admin--nav">
-  <header class="solidus-admin--nav--section">
-    <%= link_to spree.admin_path, class: 'solidus-admin--nav--logo' do %>
-      <%= image_tag(Spree::Config[:admin_interface_logo]) %>
-    <%- end %>
+<div class="solidus-admin--nav--wrapper">
+  <aside class="solidus-admin--nav">
+    <header class="solidus-admin--nav--section">
+      <%= link_to spree.admin_path, class: 'solidus-admin--nav--logo' do %>
+        <%= image_tag(Spree::Config[:admin_interface_logo]) %>
+      <%- end %>
 
-    <%= link_to "//#{default_store.url}", target: '_blank', class: 'solidus-admin--nav--store-link' do %>
-      <div style="flex-grow: 1">
-        <span class="solidus-admin--nav--store-link--name"><%= default_store.name %></span>
-        <span class="solidus-admin--nav--store-link--url"><%= default_store.url %></span>
-      </div>
-      <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-arrow-right-up-line"></use></svg>
-    <% end %>
-  </header>
+      <%= link_to "//#{default_store.url}", target: '_blank', class: 'solidus-admin--nav--store-link' do %>
+        <div style="flex-grow: 1">
+          <span class="solidus-admin--nav--store-link--name"><%= default_store.name %></span>
+          <span class="solidus-admin--nav--store-link--url"><%= default_store.url %></span>
+        </div>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-arrow-right-up-line"></use></svg>
+      <% end %>
+    </header>
 
-  <nav class="solidus-admin--nav--section">
-    <ul class="solidus-admin--nav--menu">
-      <%= render 'spree/admin/shared/tabs' %>
-    </ul>
-  </nav>
+    <nav class="solidus-admin--nav--section">
+      <ul class="solidus-admin--nav--menu">
+        <%= render 'spree/admin/shared/tabs' %>
+      </ul>
+    </nav>
 
-  <footer class="solidus-admin--nav--section">
+    <footer class="solidus-admin--nav--section">
     <ul class="solidus-admin--nav--menu">
       <li class="tab-with-icon">
         <label class="icon_link with-tip">
@@ -35,62 +36,63 @@
         </label>
       </li>
     </ul>
-    <% if spree_current_user %>
-      <details class="solidus-admin--nav--footer" aria-label="Account">
-        <summary>
-          <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-user-smile-fill"></use></svg>
-          <div>
-            <%= spree_current_user&.email || "Test user" %>
-          </div>
-        </summary>
+      <% if spree_current_user %>
+        <details class="solidus-admin--nav--footer" aria-label="Account">
+          <summary>
+            <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-user-smile-fill"></use></svg>
+            <div>
+              <%= spree_current_user&.email || "Test user" %>
+            </div>
+          </summary>
 
-        <ul>
-          <% if (available_locales = Spree.i18n_available_locales).any? %>
-            <li>
-              <label>
-                <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-global-line"></use></svg>
-                <select class="js-locale-selection">
-                  <%= options_for_select(
-                    available_locales
-                      .map do |locale|
-                        [
-                          t(
-                            "spree.i18n.this_file_language",
-                            locale: locale,
-                            default: locale.to_s,
-                            fallback: false
-                          ),
-                          locale
-                        ]
-                      end
-                      .sort,
-                    selected: I18n.locale
-                  ) %>
-                </select>
-                <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
-              </label>
-            </li>
-          <% end %>
+          <ul>
+            <% if (available_locales = Spree.i18n_available_locales).any? %>
+              <li>
+                <label>
+                  <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-global-line"></use></svg>
+                  <select class="js-locale-selection">
+                    <%= options_for_select(
+                      available_locales
+                        .map do |locale|
+                          [
+                            t(
+                              "spree.i18n.this_file_language",
+                              locale: locale,
+                              default: locale.to_s,
+                              fallback: false
+                            ),
+                            locale
+                          ]
+                        end
+                        .sort,
+                      selected: I18n.locale
+                    ) %>
+                  </select>
+                  <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
+                </label>
+              </li>
+            <% end %>
 
-          <% if can?(:admin, spree_current_user) %>
-            <li data-hook="user-account-link">
-              <%= link_to(spree.edit_admin_user_path(spree_current_user)) do %>
-                <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-user-3-line"></use></svg>
-                <span><%= t('spree.my_account') %></span>
-              <% end %>
-            </li>
-          <% end %>
+            <% if can?(:admin, spree_current_user) %>
+              <li data-hook="user-account-link">
+                <%= link_to(spree.edit_admin_user_path(spree_current_user)) do %>
+                  <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-user-3-line"></use></svg>
+                  <span><%= t('spree.my_account') %></span>
+                <% end %>
+              </li>
+            <% end %>
 
-          <% if spree.respond_to? :admin_logout_path %>
-            <li data-hook="user-logout-link">
-              <%= link_to spree.admin_logout_path, method: Devise.sign_out_via, rel: "nofollow" do %>
-                <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-logout-box-line"></use></svg>
-                <span><%= t("spree.logout") %></span>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </details>
-      <% end %>
-  </footer>
-</aside>
+            <% if spree.respond_to? :admin_logout_path %>
+              <li data-hook="user-logout-link">
+                <%= link_to spree.admin_logout_path, method: Devise.sign_out_via, rel: "nofollow" do %>
+                  <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-logout-box-line"></use></svg>
+                  <span><%= t("spree.logout") %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </details>
+        <% end %>
+    </footer>
+  </aside>
+</div>

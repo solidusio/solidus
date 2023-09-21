@@ -190,6 +190,15 @@ nav.menu {
       left: 1em;
       transform: translateX(-50%);
     }
+
+    svg {
+      position: absolute;
+      margin-left: -2.2em;
+      fill: currentColor;
+      height: 1.4em;
+      width: 1.4em;
+      vertical-align: -0.3em;
+    }
   }
 
   // until .fa usage is corrected
