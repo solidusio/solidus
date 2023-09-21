@@ -23,19 +23,22 @@
     </nav>
 
     <footer class="solidus-admin--nav--section">
-    <ul class="solidus-admin--nav--menu">
-      <li class="tab-with-icon">
-        <label class="icon_link with-tip">
-          <span
-            id="solidus-admin-switch-label"
-            class="text"
-            data-legacy-label="<%= 'solidus_admin.main_nav.legacy_label'.then { t(_1, default: t(_1, locale: :en)) } %>"
-            data-admin-label="<%= 'solidus_admin.main_nav.admin_label'.then { t(_1, default: t(_1, locale: :en)) } %>"
-          ></span>
-          <span><input type="checkbox" id="solidus-admin-switch" class="solidus-admin--nav--switch"/></span>
-        </label>
-      </li>
-    </ul>
+      <% if defined? SolidusAdmin %>
+        <ul class="solidus-admin--nav--menu">
+          <li class="tab-with-icon">
+            <label class="icon_link with-tip">
+              <span
+                id="solidus-admin-switch-label"
+                class="text"
+                data-legacy-label="<%= 'solidus_admin.main_nav.legacy_label'.then { t(_1, default: t(_1, locale: :en)) } %>"
+                data-admin-label="<%= 'solidus_admin.main_nav.admin_label'.then { t(_1, default: t(_1, locale: :en)) } %>"
+              ></span>
+              <span><input type="checkbox" id="solidus-admin-switch" class="solidus-admin--nav--switch"/></span>
+            </label>
+          </li>
+        </ul>
+      <% end %>
+
       <% if spree_current_user %>
         <details class="solidus-admin--nav--footer" aria-label="Account">
           <summary>
