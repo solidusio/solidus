@@ -4,53 +4,107 @@ module Spree
   class BackendConfiguration < Preferences::Configuration
     # An item which should be drawn in the admin menu
     class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :sections, :match_path
+      attr_reader :icon, :label, :partial, :children, :condition, :data_hook, :match_path
 
-      attr_accessor :position
+      def sections # rubocop:disable Style/TrivialAccessors
+        @sections
+      end
+      deprecate sections: :label, deprecator: Spree::Deprecation
 
-      # @param sections [Array<Symbol>] The sections which are contained within
-      #   this admin menu section.
+      attr_accessor :position # rubocop:disable Layout/EmptyLinesAroundAttributeAccessor
+      deprecate position: nil, deprecator: Spree::Deprecation
+      deprecate "position=": nil, deprecator: Spree::Deprecation
+
       # @param icon [String] The icon to draw for this menu item
       # @param condition [Proc] A proc which returns true if this menu item
       #   should be drawn. If nil, it will be replaced with a proc which always
       #   returns true.
       # @param label [Symbol] The translation key for a label to use for this
       #   menu item.
-      # @param partial [String] A partial to draw within this menu item for use
-      #   in declaring a submenu
-      # @param url [String] A url where this link should send the user to
-      # @param position [Integer] The position in which the menu item should render
-      #   nil will cause the item to render last
+      # @param children [Array<Spree::BackendConfiguration::MenuItem>] An array
+      # @param url [String|Symbol] A url where this link should send the user to or a Symbol representing a route name
       # @param match_path [String, Regexp, callable] (nil) If the {url} to determine the active tab is ambigous
       #   you can pass a String, Regexp or callable to identify this menu item. The callable
       #   accepts a request object and returns a Boolean value.
       def initialize(
-        sections,
-        icon,
+        *args,
+        icon: nil,
         condition: nil,
         label: nil,
         partial: nil,
+        children: [],
         url: nil,
         position: nil,
+        data_hook: nil,
         match_path: nil
       )
+        if args.length == 2
+          sections, icon = args
+          label ||= sections.first.to_s
+          Spree::Deprecation.warn "Passing sections to #{self.class.name} is deprecated. Please pass a label instead."
+          Spree::Deprecation.warn "Passing icon to #{self.class.name} is deprecated. Please use the keyword argument instead."
+        elsif args.any?
+          raise ArgumentError, "wrong number of arguments (given #{args.length}, expected 0..2)"
+        end
+
+        if partial.present? && children.blank?
+          # We only show the deprecation if there are no children, because if there are children,
+          # then the menu item is already future-proofed.
+          Spree::Deprecation.warn "Passing a partial to #{self.class.name} is deprecated. Please use the children keyword argument instead."
+        end
 
         @condition = condition || -> { true }
         @sections = sections
         @icon = icon
-        @label = label || sections.first
+        @label = label
         @partial = partial
+        @children = children
         @url = url
-        @position = position
+        @data_hook = data_hook
         @match_path = match_path
+
+        self.position = position if position # Use the setter to deprecate
+      end
+
+      def render_in?(view_context)
+        view_context.instance_exec(&@condition) ||
+          children.any? { |child| child.render_in?(view_context) }
+      end
+
+      def render_partial?
+        return false if partial.blank?
+
+        children.blank? || Spree::Backend::Config.prefer_menu_item_partials
+      end
+
+      def match_path?(request)
+        if match_path.is_a? Regexp
+          request.fullpath =~ match_path
+        elsif match_path.respond_to?(:call)
+          match_path.call(request)
+        elsif match_path
+          request.fullpath.starts_with?("#{spree.admin_path}#{match_path}")
+        else
+          request.fullpath.to_s.starts_with?(url.to_s)
+        end
       end
 
       def url
         if @url.respond_to?(:call)
           @url.call
+        elsif @url.is_a?(Symbol)
+          spree.public_send(@url)
+        elsif @url.nil? && @label
+          spree.send("admin_#{@label}_path")
         else
           @url
         end
+      end
+
+      private
+
+      def spree
+        Spree::Core::Engine.routes.url_helpers
       end
     end
   end

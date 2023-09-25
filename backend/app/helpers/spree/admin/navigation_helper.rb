@@ -42,45 +42,49 @@ module Spree
       # Make an admin tab that covers one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
-      #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
-      def tab(*args, &_block)
-        options = { label: args.first.to_s }
+      #   * :selected to explicitly control whether the tab is active
+      def tab(*args, &block)
+        options = args.last.is_a?(Hash) ? args.pop.dup : {}
+        css_classes = Array(options[:css_class])
 
-        if args.last.is_a?(Hash)
-          options = options.merge(args.pop)
+        if options.key?(:route)
+          Spree::Deprecation.warn "Passing a route to #tab is deprecated. Please pass a url instead."
+          options[:url] ||= spree.send("#{options[:route]}_path")
         end
-        options[:route] ||= "admin_#{args.first}"
 
-        destination_url = options[:url] || spree.send("#{options[:route]}_path")
+        if args.any?
+          Spree::Deprecation.warn "Passing resources to #tab is deprecated. Please use the `label:` and `match_path:` options instead."
+          options[:label] ||= args.first
+          options[:url] ||= spree.send("admin_#{args.first}_path")
+          options[:selected] = args.include?(controller.controller_name.to_sym)
+        end
+
+        options[:url] ||= spree.send("admin_#{options[:label]}_path")
         label = t(options[:label], scope: [:spree, :admin, :tab])
 
-        css_classes = []
+        options[:selected] ||=
+          if options[:match_path].is_a? Regexp
+            request.fullpath =~ options[:match_path]
+          elsif options[:match_path].respond_to?(:call)
+            options[:match_path].call(request)
+          elsif options[:match_path]
+            request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
+          else
+            request.fullpath.starts_with?(options[:url])
+          end
+
+        css_classes << 'selected' if options[:selected]
 
         if options[:icon]
-          link = link_to_with_icon(options[:icon], label, destination_url)
+          link = link_to_with_icon(options[:icon], label, options[:url])
           css_classes << 'tab-with-icon'
         else
-          link = link_to(label, destination_url)
+          link = link_to(label, options[:url])
         end
-
-        selected = if options[:match_path].is_a? Regexp
-          request.fullpath =~ options[:match_path]
-        elsif options[:match_path].respond_to?(:call)
-          options[:match_path].call(request)
-        elsif options[:match_path]
-          request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
-        else
-          request.fullpath.starts_with?(destination_url) ||
-            args.include?(controller.controller_name.to_sym)
-        end
-        css_classes << 'selected' if selected
-
-        if options[:css_class]
-          css_classes << options[:css_class]
-        end
-        content_tag('li', link + (yield if block_given?), class: css_classes.join(' ') )
+        block_content = capture(&block) if block_given?
+        content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
 
       def link_to_clone(resource, options = {})

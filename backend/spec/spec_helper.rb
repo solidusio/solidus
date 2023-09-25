@@ -45,6 +45,7 @@ require 'spree/testing_support/precompiled_assets'
 require 'spree/testing_support/translations'
 require 'spree/testing_support/job_helpers'
 require 'spree/testing_support/blacklist_urls'
+require 'spree/testing_support/silence_deprecations'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']

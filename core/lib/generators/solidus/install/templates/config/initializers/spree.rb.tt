@@ -57,9 +57,12 @@ Spree::Backend::Config.configure do |config|
   # a new menu item:
   #
   # config.menu_items << config.class::MenuItem.new(
-  #   [:section],
-  #   'icon-name',
-  #   url: 'https://solidus.io/'
+  #   label: :my_reports,
+  #   icon: 'file-text-o', # see https://fontawesome.com/v4/icons/
+  #   url: :my_admin_reports_path,
+  #   condition: -> { can?(:admin, MyReports) },
+  #   partial: 'spree/admin/shared/my_reports_sub_menu',
+  #   match_path: '/reports',
   # )
 
   # Custom frontend product path

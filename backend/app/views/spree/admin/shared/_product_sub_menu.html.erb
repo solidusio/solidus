@@ -1,17 +1,19 @@
+<% Spree::Deprecation.warn "Using the #{@virtual_path.inspect} partial is deprecated, please use MenuItem#children instead." %>
+
 <ul class="admin-subnav" data-hook="admin_product_sub_tabs">
   <% if can? :admin, Spree::Product %>
-    <%= tab :products, match_path: '/products' %>
+    <%= tab label: :products, match_path: '/products' %>
   <% end %>
   <% if can? :admin, Spree::OptionType %>
-    <%= tab :option_types, match_path: '/option_types' %>
+    <%= tab label: :option_types, match_path: '/option_types' %>
   <% end %>
   <% if can? :admin, Spree::Property %>
-    <%= tab :properties %>
+    <%= tab label: :properties %>
   <% end %>
   <% if can? :admin, Spree::Taxonomy %>
-    <%= tab :taxonomies %>
+    <%= tab label: :taxonomies %>
   <% end %>
   <% if can? :admin, Spree::Taxon %>
-    <%= tab :taxons, label: :display_order, match_path: '/taxons' %>
+    <%= tab url: spree.admin_taxons_path, label: :display_order, match_path: '/taxons' %>
   <% end %>
 </ul>

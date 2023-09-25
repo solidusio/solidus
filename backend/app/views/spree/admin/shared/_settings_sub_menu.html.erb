@@ -1,26 +1,28 @@
+<% Spree::Deprecation.warn "Using the #{@virtual_path.inspect} partial is deprecated, please use MenuItem#children instead." %>
+
 <ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
   <% if can?(:admin, Spree::Store) %>
-    <%= tab :stores, label: :stores, url: spree.admin_stores_path %>
+    <%= tab label: :stores, url: spree.admin_stores_path %>
   <% end %>
 
   <% if can?(:admin, Spree::PaymentMethod) %>
-    <%= tab :payments, url: spree.admin_payment_methods_path %>
+    <%= tab label: :payments, url: spree.admin_payment_methods_path %>
   <% end %>
 
   <% if can?(:admin, Spree::TaxCategory) || can?(:admin, Spree::TaxRate) %>
-    <%= tab :taxes, url: spree.admin_tax_categories_path, match_path: %r(tax_categories|tax_rates) %>
+    <%= tab label: :taxes, url: spree.admin_tax_categories_path, match_path: %r(tax_categories|tax_rates) %>
   <% end %>
 
   <% if can?(:admin, Spree::RefundReason) || can?(:admin, Spree::ReimbursementType) ||
     can?(:show, Spree::ReturnReason) || can?(:show, Spree::AdjustmentReason) %>
-    <%= tab :checkout, url: spree.admin_refund_reasons_path, match_path: %r(refund_reasons|reimbursement_types|return_reasons|adjustment_reasons|store_credit_reasons) %>
+    <%= tab label: :checkout, url: spree.admin_refund_reasons_path, match_path: %r(refund_reasons|reimbursement_types|return_reasons|adjustment_reasons|store_credit_reasons) %>
   <% end %>
 
   <% if can?(:admin, Spree::ShippingMethod) || can?(:admin, Spree::ShippingCategory) || can?(:admin, Spree::StockLocation) %>
-    <%= tab :shipping, url: spree.admin_shipping_methods_path, match_path: %r(shipping_methods|shipping_categories|stock_locations) %>
+    <%= tab label: :shipping, url: spree.admin_shipping_methods_path, match_path: %r(shipping_methods|shipping_categories|stock_locations) %>
   <% end %>
 
   <% if can?(:admin, Spree::Zone) %>
-    <%= tab :zones, url: spree.admin_zones_path %>
+    <%= tab label: :zones, url: spree.admin_zones_path %>
   <% end %>
 </ul>

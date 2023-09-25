@@ -15,7 +15,7 @@ RSpec.describe Spree::BackendConfiguration do
 
       # Regression for https://github.com/solidusio/solidus/issues/2950
       it 'has match_path set to /stock_items' do
-        expect(stock_menu_item.match_path).to eq('/stock_items')
+        expect(stock_menu_item.match_path).to eq(%r{/(stock_items)})
       end
     end
 
@@ -23,20 +23,18 @@ RSpec.describe Spree::BackendConfiguration do
       let(:menu_item) { subject.find { |item| item.label == :settings } }
       let(:view) { double("view") }
 
-      it 'is shown if any of its submenus are present' do
-        allow(view).to receive(:can?).and_return(true, false)
+      describe '#render_in?' do
+        it 'is shown if any of its submenus are present' do
+          allow(view).to receive(:can?).and_return(true, false)
 
-        result = view.instance_exec(&menu_item.condition)
+          expect(menu_item.render_in?(view)).to eq(true)
+        end
 
-        expect(result).to eq(true)
-      end
+        it 'is not shown if none of its submenus are present' do
+          expect(view).to receive(:can?).exactly(13).times.and_return(false)
 
-      it 'is not shown if none of its submenus are present' do
-        expect(view).to receive(:can?).exactly(12).times.and_return(false)
-
-        result = view.instance_exec(&menu_item.condition)
-
-        expect(result).to eq(false)
+          expect(menu_item.render_in?(view)).to eq(false)
+        end
       end
     end
   end
@@ -114,6 +112,16 @@ RSpec.describe Spree::BackendConfiguration do
       subject.theme = :foo
 
       expect{ subject.theme_path(:bar) }.to raise_error(KeyError)
+    end
+  end
+
+  describe "deprecated behavior" do
+    describe "loading *_TABS constants" do
+      it "warns about the deprecation" do
+        expect(Spree::Deprecation).to receive(:warn).with(a_string_matching(/Spree::BackendConfiguration::\*_TABS is deprecated\./))
+
+        described_class::ORDER_TABS
+      end
     end
   end
 end
