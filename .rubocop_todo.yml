@@ -259,8 +259,6 @@ Lint/ShadowingOuterLocalVariable:
   Exclude:
     - "core/app/models/spree/order_inventory.rb"
     - "core/lib/generators/solidus/install/install_generator.rb"
-    - "dev_tools/lib/solidus/release_drafter.rb"
-    - "dev_tools/lib/solidus/release_drafter/client.rb"
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
@@ -276,14 +274,12 @@ Lint/UnusedBlockArgument:
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
 Lint/UnusedMethodArgument:
   Exclude:
-    - "dev_tools/spec/lib/solidus/release_drafter_spec.rb"
 
 # Offense count: 1
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:
   Exclude:
-    - "dev_tools/lib/solidus/release_drafter.rb"
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
