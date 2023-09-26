@@ -16,3 +16,6 @@ DummyApp::RakeTasks.new(
 )
 
 task test_app: 'db:reset'
+
+# Namespace release tags, e.g. 'solidus_admin/v1.2.3'
+Bundler::GemHelper.tag_prefix = 'solidus_admin/'
