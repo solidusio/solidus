@@ -4,8 +4,8 @@ module SolidusFriendlyPromotions
   module Admin
     class PromotionActionsController < Spree::Admin::BaseController
       before_action :validate_level, only: :new
-      before_action :load_promotion, only: [:create, :destroy, :new, :update]
-      before_action :validate_promotion_action_type, only: :create
+      before_action :load_promotion, only: [:create, :destroy, :new, :update, :edit]
+      before_action :validate_promotion_action_type, only: [:create, :edit]
 
       def new
         if params.dig(:promotion_action, :type)
@@ -29,6 +29,14 @@ module SolidusFriendlyPromotions
         else
           render :new, layout: false
         end
+      end
+
+      def edit
+        @promotion_action = @promotion.actions.find(params[:id])
+        if params.dig(:promotion_action, :calculator_type)
+          @promotion_action.calculator_type = params[:promotion_action][:calculator_type]
+        end
+        render layout: false
       end
 
       def update
