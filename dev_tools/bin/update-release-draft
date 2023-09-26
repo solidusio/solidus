@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'bundler'
-
-Bundler.setup(:release)
+require 'bundler/setup'
 require_relative '../lib/solidus/release_drafter'
 
 github_token = ARGV[0]

@@ -61,6 +61,11 @@ group :utils do
   gem 'rubocop-rails', '~> 2.9', require: false
 end
 
+group :release do
+  gem 'octokit', '~> 7.1', require: false
+  gem 'faraday-retry', '~> 2.0', require: false
+end
+
 gem 'rspec_junit_formatter', require: false, group: :ci
 
 # Documentation

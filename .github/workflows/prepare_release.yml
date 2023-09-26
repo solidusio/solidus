@@ -19,9 +19,9 @@ jobs:
           last_minor: ${{ inputs.last_minor }}
       - uses: ruby/setup-ruby@v1
         env:
-          BUNDLE_GEMFILE: "dev_tools/Gemfile"
+          BUNDLE_ONLY: "release"
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
           bundler-cache: true
       - name: "Bump version"
         run: |
