@@ -22,3 +22,10 @@ bin/rails admin g solidus_admin:component foo
       create  app/components/solidus_admin/foo/component.js
       create  spec/components/solidus_admin/foo/component_spec.rb
 ```
+
+## Releasing
+
+1. Update the version in `lib/solidus_admin/version.rb`
+2. Commit the changes with the message `Release v1.2.3`
+3. `cd admin; bundle exec rake release`
+4. Manually release on GitHub
