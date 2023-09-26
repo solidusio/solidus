@@ -140,7 +140,6 @@ module Spree
           ],
         ),
         MenuItem.new(
-          condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
           icon: admin_updated_navbar ? 'ri-stack-line' : 'cubes',
           match_path: %r{/(stock_items)},
