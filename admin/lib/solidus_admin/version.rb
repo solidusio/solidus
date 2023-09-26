@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/core/version'
-
 module SolidusAdmin
-  VERSION = Spree.solidus_version
+  VERSION = "0.0.1"
 end
