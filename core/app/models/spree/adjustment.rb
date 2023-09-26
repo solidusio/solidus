@@ -48,6 +48,8 @@ module Spree
     scope :is_included, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
 
+    singleton_class.deprecate :return_authorization, deprecator: Spree::Deprecation
+
     extend DisplayMoney
     money_methods :amount
 
