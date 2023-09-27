@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Promotion Categories', type: :system do
+describe "Promotion Categories", type: :system do
   stub_authorization!
 
   context "index" do
     before do
-      create(:friendly_promotion_category, name: 'name1', code: 'code1')
-      create(:friendly_promotion_category, name: 'name2', code: 'code2')
+      create(:friendly_promotion_category, name: "name1", code: "code1")
+      create(:friendly_promotion_category, name: "name2", code: "code2")
       visit solidus_friendly_promotions.admin_promotion_categories_path
     end
 
@@ -50,7 +50,7 @@ describe 'Promotion Categories', type: :system do
 
   context "edit" do
     before do
-      create(:friendly_promotion_category, name: 'name1')
+      create(:friendly_promotion_category, name: "name1")
       visit solidus_friendly_promotions.admin_promotion_categories_path
       within_row(1) { click_icon :edit }
     end
@@ -71,7 +71,7 @@ describe 'Promotion Categories', type: :system do
 
   context "delete" do
     before do
-      create(:friendly_promotion_category, name: 'name1')
+      create(:friendly_promotion_category, name: "name1")
       visit solidus_friendly_promotions.admin_promotion_categories_path
     end
 

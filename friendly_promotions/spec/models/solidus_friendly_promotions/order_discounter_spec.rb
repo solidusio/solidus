@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
   subject { described_class.new(order) }
@@ -59,7 +59,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
     context "promotion has item total rule" do
       let!(:rule) do
         SolidusFriendlyPromotions::Rules::ItemTotal.create(
-          preferred_operator: 'gt',
+          preferred_operator: "gt",
           preferred_amount: 50,
           promotion: promotion
         )

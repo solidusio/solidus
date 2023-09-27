@@ -10,8 +10,8 @@ module SolidusFriendlyPromotions
       has_many :products_promotion_rules,
         dependent: :destroy,
         foreign_key: :promotion_rule_id,
-        class_name: 'SolidusFriendlyPromotions::ProductsPromotionRule'
-      has_many :products, class_name: 'Spree::Product', through: :products_promotion_rules
+        class_name: "SolidusFriendlyPromotions::ProductsPromotionRule"
+      has_many :products, class_name: "Spree::Product", through: :products_promotion_rules
 
       def preload_relations
         [:products]
@@ -19,7 +19,7 @@ module SolidusFriendlyPromotions
 
       MATCH_POLICIES = %w[any all none].freeze
 
-      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
+      validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 

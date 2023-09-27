@@ -24,7 +24,7 @@ module SolidusFriendlyPromotions
         @promotion_action.promotion = @promotion
         if @promotion_action.save(validate: false)
           flash[:success] =
-            t('spree.successfully_created', resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
+            t("spree.successfully_created", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
           redirect_to location_after_save, format: :html
         else
           render :new, layout: false
@@ -44,7 +44,7 @@ module SolidusFriendlyPromotions
         @promotion_action.assign_attributes(promotion_action_params)
         if @promotion_action.save
           flash[:success] =
-            t('spree.successfully_updated', resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
+            t("spree.successfully_updated", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
           redirect_to location_after_save, format: :html
         else
           render :edit
@@ -55,7 +55,7 @@ module SolidusFriendlyPromotions
         @promotion_action = @promotion.actions.find(params[:id])
         if @promotion_action.discard
           flash[:success] =
-            t('spree.successfully_removed', resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
+            t("spree.successfully_removed", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
         end
         redirect_to location_after_save, format: :html
       end
@@ -92,10 +92,10 @@ module SolidusFriendlyPromotions
         end
         return if @promotion_action_type
 
-        flash[:error] = t('solidus_friendly_promotions.invalid_promotion_action')
+        flash[:error] = t("solidus_friendly_promotions.invalid_promotion_action")
         respond_to do |format|
           format.html { redirect_to solidus_friendly_promotions.edit_admin_promotion_path(@promotion) }
-          format.js   { render layout: false }
+          format.js { render layout: false }
         end
       end
     end

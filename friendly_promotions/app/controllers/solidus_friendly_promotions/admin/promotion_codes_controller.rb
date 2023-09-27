@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
 module SolidusFriendlyPromotions
   module Admin
@@ -26,7 +26,7 @@ module SolidusFriendlyPromotions
         if @promotion.apply_automatically
           flash[:error] = t(
             :disallowed_with_apply_automatically,
-            scope: 'activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base'
+            scope: "activerecord.errors.models.solidus_friendly_promotions/promotion_code.attributes.base"
           )
           redirect_to solidus_friendly_promotions.admin_promotion_promotion_codes_url(@promotion)
         else
@@ -49,9 +49,9 @@ module SolidusFriendlyPromotions
       private
 
       def load_promotion
-        @promotion = SolidusFriendlyPromotions::Promotion.
-                     accessible_by(current_ability, :show).
-                     find(params[:promotion_id])
+        @promotion = SolidusFriendlyPromotions::Promotion
+          .accessible_by(current_ability, :show)
+          .find(params[:promotion_id])
       end
     end
   end

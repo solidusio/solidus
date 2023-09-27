@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core/environment_extension'
+require "spree/core/environment_extension"
 
 module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'shared_examples/calculator_shared_examples'
+require "spec_helper"
+require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusFriendlyPromotions::Calculators::FlatRate, type: :model do
   subject { calculator.compute(line_item) }
@@ -15,7 +15,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlatRate, type: :model do
     )
   end
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   context "compute" do
     describe "when preferred currency matches order" do

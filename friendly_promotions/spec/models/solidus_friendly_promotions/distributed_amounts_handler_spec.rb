@@ -18,7 +18,7 @@ RSpec.describe SolidusFriendlyPromotions::DistributedAmountsHandler, type: :mode
     let(:total_amount) { 15 }
 
     context "when there is only one line item" do
-      let(:line_items_attributes) { [{ price: 100 }] }
+      let(:line_items_attributes) { [{price: 100}] }
       let(:line_item) { order.line_items.first }
 
       it "applies the entire amount to the line item" do
@@ -28,7 +28,7 @@ RSpec.describe SolidusFriendlyPromotions::DistributedAmountsHandler, type: :mode
 
     context "when there are multiple line items" do
       let(:line_items_attributes) do
-        [{ price: 50 }, { price: 50 }, { price: 50 }]
+        [{price: 50}, {price: 50}, {price: 50}]
       end
 
       context "and the line items are equally priced" do
@@ -63,7 +63,7 @@ RSpec.describe SolidusFriendlyPromotions::DistributedAmountsHandler, type: :mode
 
       context "and the line items do not have equal subtotal amounts" do
         let(:line_items_attributes) do
-          [{ price: 50, quantity: 3 }, { price: 50, quantity: 1 }, { price: 50, quantity: 2 }]
+          [{price: 50, quantity: 3}, {price: 50, quantity: 1}, {price: 50, quantity: 2}]
         end
 
         it "distributes the total amount relative to the item's price" do

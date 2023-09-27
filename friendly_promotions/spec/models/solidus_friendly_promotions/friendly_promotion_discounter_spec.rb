@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
   describe "selecting promotions" do
@@ -19,9 +19,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
     context "no promo is connected to the order" do
       it "checks only active promotions" do
-        expect(SolidusFriendlyPromotions::PromotionEligibility).to receive(:new).
-          with(promotable: order, possible_promotions: [active_promotion]).
-          and_call_original
+        expect(SolidusFriendlyPromotions::PromotionEligibility).to receive(:new)
+          .with(promotable: order, possible_promotions: [active_promotion])
+          .and_call_original
         subject
       end
     end
@@ -32,9 +32,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       end
 
       it "checks active and connected promotions" do
-        expect(SolidusFriendlyPromotions::PromotionEligibility).to receive(:new).
-          with(promotable: order, possible_promotions: array_including(active_promotion, connectable_promotion)).
-          and_call_original
+        expect(SolidusFriendlyPromotions::PromotionEligibility).to receive(:new)
+          .with(promotable: order, possible_promotions: array_including(active_promotion, connectable_promotion))
+          .and_call_original
         subject
       end
     end
@@ -45,16 +45,16 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       end
 
       it "does not check connected inactive promotions" do
-        expect(SolidusFriendlyPromotions::PromotionEligibility).to receive(:new).
-          with(promotable: order, possible_promotions: array_including(active_promotion)).
-          and_call_original
+        expect(SolidusFriendlyPromotions::PromotionEligibility).to receive(:new)
+          .with(promotable: order, possible_promotions: array_including(active_promotion))
+          .and_call_original
         subject
       end
     end
   end
 
   context "promotions in the past" do
-    let(:order)  { create(:order, completed_at: 7.days.ago) }
+    let(:order) { create(:order, completed_at: 7.days.ago) }
     let(:currently_active_promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: 1.hour.ago) }
     let(:past_promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: 1.year.ago, expires_at: 11.months.ago) }
     let(:order_promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: 8.days.ago, expires_at: 6.days.ago) }

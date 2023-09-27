@@ -9,6 +9,6 @@ class CreatePromotionCategories < ActiveRecord::Migration[7.0]
 
     add_reference :friendly_promotions,
       :promotion_category,
-      foreign_key: { to_table: :friendly_promotion_categories }
+      foreign_key: {to_table: :friendly_promotion_categories}
   end
 end

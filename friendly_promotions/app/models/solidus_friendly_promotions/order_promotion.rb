@@ -6,9 +6,9 @@ module SolidusFriendlyPromotions
   # 1. A promotion that a user attempted to apply to their order
   # 2. The specific code that they used
   class OrderPromotion < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order'
-    belongs_to :promotion, class_name: 'SolidusFriendlyPromotions::Promotion'
-    belongs_to :promotion_code, class_name: 'SolidusFriendlyPromotions::PromotionCode', optional: true
+    belongs_to :order, class_name: "Spree::Order"
+    belongs_to :promotion, class_name: "SolidusFriendlyPromotions::Promotion"
+    belongs_to :promotion_code, class_name: "SolidusFriendlyPromotions::PromotionCode", optional: true
 
     validates :promotion_code, presence: true, if: :require_promotion_code?
 

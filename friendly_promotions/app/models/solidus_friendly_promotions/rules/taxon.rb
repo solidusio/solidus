@@ -3,9 +3,9 @@
 module SolidusFriendlyPromotions
   module Rules
     class Taxon < PromotionRule
-      has_many :promotion_rules_taxons, class_name: 'SolidusFriendlyPromotions::PromotionRulesTaxon', foreign_key: :promotion_rule_id,
+      has_many :promotion_rules_taxons, class_name: "SolidusFriendlyPromotions::PromotionRulesTaxon", foreign_key: :promotion_rule_id,
         dependent: :destroy
-      has_many :taxons, through: :promotion_rules_taxons, class_name: 'Spree::Taxon'
+      has_many :taxons, through: :promotion_rules_taxons, class_name: "Spree::Taxon"
 
       def preload_relations
         [:taxons]
@@ -13,7 +13,7 @@ module SolidusFriendlyPromotions
 
       MATCH_POLICIES = %w[any all none].freeze
 
-      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
+      validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
       def applicable?(promotable)
@@ -71,10 +71,10 @@ module SolidusFriendlyPromotions
 
       # All taxons in an order
       def taxons_in_order(order)
-        Spree::Taxon.
-          joins(products: { variants_including_master: :line_items }).
-          where(spree_line_items: { order_id: order.id }).
-          distinct
+        Spree::Taxon
+          .joins(products: {variants_including_master: :line_items})
+          .where(spree_line_items: {order_id: order.id})
+          .distinct
       end
 
       # ids of taxons rules and taxons rules children

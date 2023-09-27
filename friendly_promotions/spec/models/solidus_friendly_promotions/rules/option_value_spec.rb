@@ -9,8 +9,8 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
     subject { rule.preferred_eligible_values }
 
     it "assigns a nicely formatted hash" do
-      rule.preferred_eligible_values = { "5" => "1,2", "6" => "1" }
-      expect(subject).to eq({ 5 => [1, 2], 6 => [1] })
+      rule.preferred_eligible_values = {"5" => "1,2", "6" => "1"}
+      expect(subject).to eq({5 => [1, 2], 6 => [1]})
     end
   end
 
@@ -39,9 +39,9 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
 
     context "when there are any applicable line items" do
       before do
-        rule.preferred_eligible_values = { line_item.product.id => [
+        rule.preferred_eligible_values = {line_item.product.id => [
           line_item.variant.option_values.pick(:id)
-        ] }
+        ]}
       end
 
       it { is_expected.to be true }
@@ -49,7 +49,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
 
     context "when there are no applicable line items" do
       before do
-        rule.preferred_eligible_values = { 99 => [99] }
+        rule.preferred_eligible_values = {99 => [99]}
       end
 
       it { is_expected.to be false }

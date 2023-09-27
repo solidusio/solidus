@@ -4,7 +4,7 @@ module SolidusFriendlyPromotions
   module Rules
     class User < PromotionRule
       has_many :promotion_rules_users,
-        class_name: 'SolidusFriendlyPromotions::PromotionRulesUser',
+        class_name: "SolidusFriendlyPromotions::PromotionRulesUser",
         foreign_key: :promotion_rule_id,
         dependent: :destroy
       has_many :users, through: :promotion_rules_users, class_name: Spree::UserClassHandle.new

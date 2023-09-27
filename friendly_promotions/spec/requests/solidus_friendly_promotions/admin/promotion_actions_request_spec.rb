@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Admin::PromotionActions", type: :request do
   stub_authorization!
@@ -11,7 +11,7 @@ describe "Admin::PromotionActions", type: :request do
     post solidus_friendly_promotions.admin_promotion_promotion_actions_path(promotion_id: promotion.id), params: {
       promotion_action: {
         type: "SolidusFriendlyPromotions::Actions::AdjustLineItem",
-        calculator_attributes: { type: "SolidusFriendlyPromotions::Calculators::FlatRate" }
+        calculator_attributes: {type: "SolidusFriendlyPromotions::Calculators::FlatRate"}
       }
     }
     expect(response).to be_redirect
@@ -21,7 +21,7 @@ describe "Admin::PromotionActions", type: :request do
 
   it "can not create a promotion action of an invalid type" do
     post solidus_friendly_promotions.admin_promotion_promotion_actions_path(promotion_id: promotion.id), params: {
-      promotion_action: { type: "Spree::InvalidType" }
+      promotion_action: {type: "Spree::InvalidType"}
     }
     expect(response).to be_redirect
     expect(response).to redirect_to spree.edit_admin_promotion_path(promotion)

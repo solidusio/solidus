@@ -13,7 +13,7 @@ Spree::Backend::Config.configure do |config|
     if item.respond_to?(:children)
       Spree::BackendConfiguration::MenuItem.new(
         label: :promotions,
-        icon: 'bullhorn',
+        icon: "bullhorn",
         condition: -> { can?(:admin, SolidusFriendlyPromotions::Promotion) },
         url: -> { SolidusFriendlyPromotions::Engine.routes.url_helpers.admin_promotions_path },
         data_hook: :admin_promotion_sub_tabs,
@@ -21,20 +21,20 @@ Spree::Backend::Config.configure do |config|
           Spree::BackendConfiguration::MenuItem.new(
             label: :promotions,
             url: -> { SolidusFriendlyPromotions::Engine.routes.url_helpers.admin_promotions_path },
-            condition: -> { can?(:admin, SolidusFriendlyPromotions::Promotion) },
+            condition: -> { can?(:admin, SolidusFriendlyPromotions::Promotion) }
           ),
           Spree::BackendConfiguration::MenuItem.new(
             label: :promotion_categories,
             url: -> { SolidusFriendlyPromotions::Engine.routes.url_helpers.admin_promotion_categories_path },
-            condition: -> { can?(:admin, SolidusFriendlyPromotions::PromotionCategory) },
-          ),
-        ],
+            condition: -> { can?(:admin, SolidusFriendlyPromotions::PromotionCategory) }
+          )
+        ]
       )
     else
       Spree::BackendConfiguration::MenuItem.new(
         [:promotions, :promotion_categories],
-        'bullhorn',
-        partial: 'spree/admin/shared/promotion_sub_menu',
+        "bullhorn",
+        partial: "spree/admin/shared/promotion_sub_menu",
         condition: -> { can?(:admin, Spree::Promotion) },
         url: -> { SolidusFriendlyPromotions::Engine.routes.url_helpers.admin_promotions_path },
         position: 2
@@ -60,7 +60,7 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Calculators::FlexiRate",
     "SolidusFriendlyPromotions::Calculators::Percent",
     "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
-    "SolidusFriendlyPromotions::Calculators::TieredPercent",
+    "SolidusFriendlyPromotions::Calculators::TieredPercent"
   ]
   config.line_item_discount_calculators = [
     "SolidusFriendlyPromotions::Calculators::DistributedAmount",
@@ -68,7 +68,7 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Calculators::FlexiRate",
     "SolidusFriendlyPromotions::Calculators::Percent",
     "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
-    "SolidusFriendlyPromotions::Calculators::TieredPercent",
+    "SolidusFriendlyPromotions::Calculators::TieredPercent"
   ]
 
   config.order_rules = [
@@ -83,19 +83,19 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Rules::Taxon",
     "SolidusFriendlyPromotions::Rules::UserLoggedIn",
     "SolidusFriendlyPromotions::Rules::UserRole",
-    "SolidusFriendlyPromotions::Rules::User",
+    "SolidusFriendlyPromotions::Rules::User"
   ]
   config.line_item_rules = [
     "SolidusFriendlyPromotions::Rules::LineItemOptionValue",
     "SolidusFriendlyPromotions::Rules::LineItemProduct",
-    "SolidusFriendlyPromotions::Rules::LineItemTaxon",
+    "SolidusFriendlyPromotions::Rules::LineItemTaxon"
   ]
   config.shipment_rules = [
-    "SolidusFriendlyPromotions::Rules::ShippingMethod",
+    "SolidusFriendlyPromotions::Rules::ShippingMethod"
   ]
 
   config.actions = [
     "SolidusFriendlyPromotions::Actions::AdjustLineItem",
-    "SolidusFriendlyPromotions::Actions::AdjustShipment",
+    "SolidusFriendlyPromotions::Actions::AdjustShipment"
   ]
 end

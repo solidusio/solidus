@@ -70,7 +70,7 @@ module SolidusFriendlyPromotions
     def promotion_includes
       [
         :rules,
-        :actions,
+        :actions
       ]
     end
   end

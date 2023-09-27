@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'shared_examples/calculator_shared_examples'
+require "spec_helper"
+require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model do
   let(:calculator) do
@@ -26,7 +26,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
     )
   end
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   context "compute" do
     subject { calculator.compute(line_item) }
@@ -178,7 +178,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::FlexiRate, type: :model d
   end
 
   it "allows creation of new object with all the attributes" do
-    attributes = { preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1 }
+    attributes = {preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1}
     calculator = described_class.new(attributes)
     expect(calculator).to have_attributes(attributes)
   end

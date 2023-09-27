@@ -31,7 +31,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "processing") }
 
       it "raises an error" do
-        expect{ subject.process }.to raise_error described_class::CantProcessStartedBatch
+        expect { subject.process }.to raise_error described_class::CantProcessStartedBatch
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "completed") }
 
       it "raises an error" do
-        expect{ subject.process }.to raise_error described_class::CantProcessStartedBatch
+        expect { subject.process }.to raise_error described_class::CantProcessStartedBatch
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "failed") }
 
       it "raises an error" do
-        expect{ subject.process }.to raise_error described_class::CantProcessStartedBatch
+        expect { subject.process }.to raise_error described_class::CantProcessStartedBatch
       end
     end
   end

@@ -8,10 +8,10 @@ module SolidusFriendlyPromotions
 
     before_validation :normalize_code
 
-    validates :value, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :value, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     validate :promotion_not_apply_automatically, on: :create
 
-    self.allowed_ransackable_attributes = ['value']
+    self.allowed_ransackable_attributes = ["value"]
 
     # Whether the promotion code has exceeded its usage restrictions
     #
@@ -28,14 +28,14 @@ module SolidusFriendlyPromotions
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
     def usage_count(excluded_orders: [])
-      promotion.
-        discounted_orders.
-        complete.
-        where.not(spree_orders: { state: :canceled }).
-        joins(:friendly_order_promotions).
-        where(friendly_order_promotions: { promotion_code_id: id }).
-        where.not(id: excluded_orders.map(&:id)).
-        count
+      promotion
+        .discounted_orders
+        .complete
+        .where.not(spree_orders: {state: :canceled})
+        .joins(:friendly_order_promotions)
+        .where(friendly_order_promotions: {promotion_code_id: id})
+        .where.not(id: excluded_orders.map(&:id))
+        .count
     end
 
     def usage_limit

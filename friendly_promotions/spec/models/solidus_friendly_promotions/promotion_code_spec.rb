@@ -1,59 +1,59 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::PromotionCode do
-  context 'callbacks' do
+  context "callbacks" do
     subject { promotion_code.save }
 
-    describe '#normalize_code' do
+    describe "#normalize_code" do
       let(:promotion) { create(:friendly_promotion, code: code) }
 
       before { subject }
 
-      context 'when no other code with the same value exists' do
+      context "when no other code with the same value exists" do
         let(:promotion_code) { promotion.codes.first }
 
-        context 'with mixed case' do
-          let(:code) { 'NewCoDe' }
+        context "with mixed case" do
+          let(:code) { "NewCoDe" }
 
-          it 'downcases the value before saving' do
-            expect(promotion_code.value).to eq('newcode')
+          it "downcases the value before saving" do
+            expect(promotion_code.value).to eq("newcode")
           end
         end
 
-        context 'with extra spacing' do
-          let(:code) { ' new code ' }
+        context "with extra spacing" do
+          let(:code) { " new code " }
 
-          it 'removes surrounding whitespace' do
-            expect(promotion_code.value).to eq 'new code'
+          it "removes surrounding whitespace" do
+            expect(promotion_code.value).to eq "new code"
           end
         end
       end
 
-      context 'when another code with the same value exists' do
+      context "when another code with the same value exists" do
         let(:promotion_code) { promotion.codes.build(value: code) }
 
-        context 'with mixed case' do
-          let(:code) { 'NewCoDe' }
+        context "with mixed case" do
+          let(:code) { "NewCoDe" }
 
-          it 'does not save the record and marks it as invalid' do
+          it "does not save the record and marks it as invalid" do
             expect(promotion_code.valid?).to eq false
 
             expect(promotion_code.errors.messages[:value]).to contain_exactly(
-              'has already been taken'
+              "has already been taken"
             )
           end
         end
 
-        context 'with extra spacing' do
-          let(:code) { ' new code ' }
+        context "with extra spacing" do
+          let(:code) { " new code " }
 
-          it 'does not save the record and marks it as invalid' do
+          it "does not save the record and marks it as invalid" do
             expect(promotion_code.valid?).to eq false
 
             expect(promotion_code.errors.messages[:value]).to contain_exactly(
-              'has already been taken'
+              "has already been taken"
             )
           end
         end
@@ -127,7 +127,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
           :friendly_promotion,
           :with_line_item_adjustment,
           code: "discount",
-          per_code_usage_limit: usage_limit,
+          per_code_usage_limit: usage_limit
         )
       end
 
@@ -208,7 +208,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
         before { order.cancel! }
 
         it { is_expected.to eq 0 }
-        it { expect(order.state).to eq 'canceled' }
+        it { expect(order.state).to eq "canceled" }
       end
     end
   end
@@ -256,27 +256,27 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
     end
 
     it "makes the adjustment disappear" do
-      expect{
+      expect {
         order.complete
       }.to change { order.all_adjustments.friendly_promotion }.to([])
     end
 
     it "adjusts the promo_total" do
-      expect{
+      expect {
         order.complete
       }.to change(order, :promo_total).by(10)
     end
 
     it "increases the total to remove the promo" do
-      expect{
+      expect {
         order.complete
       }.to change(order, :total).from(30).to(40)
     end
 
     it "resets the state of the order" do
-      expect{
+      expect {
         order.complete
-      }.to change{ order.reload.state }.from("confirm").to("address")
+      }.to change { order.reload.state }.from("confirm").to("address")
     end
   end
 

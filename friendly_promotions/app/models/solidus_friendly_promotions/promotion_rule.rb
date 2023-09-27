@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
+require "spree/preferences/persistable"
 
 module SolidusFriendlyPromotions
   class PromotionRule < Spree::Base
@@ -45,7 +45,7 @@ module SolidusFriendlyPromotions
     end
 
     def eligibility_error_message(key, options = {})
-      I18n.t(key, **{ scope: [:spree, :eligibility_errors, :messages] }.merge(options))
+      I18n.t(key, **{scope: [:spree, :eligibility_errors, :messages]}.merge(options))
     end
   end
 end

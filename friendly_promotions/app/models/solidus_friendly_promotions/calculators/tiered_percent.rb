@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/calculator'
+require_dependency "spree/calculator"
 
 module SolidusFriendlyPromotions
   module Calculators
@@ -46,15 +46,15 @@ module SolidusFriendlyPromotions
       def cast_to_d(value)
         value.to_s.to_d
       rescue ArgumentError
-        BigDecimal('0')
+        BigDecimal("0")
       end
 
       def preferred_tiers_content
         if preferred_tiers.is_a? Hash
-          unless preferred_tiers.keys.all?{ |key| key.is_a?(Numeric) && key > 0 }
+          unless preferred_tiers.keys.all? { |key| key.is_a?(Numeric) && key > 0 }
             errors.add(:base, :keys_should_be_positive_number)
           end
-          unless preferred_tiers.values.all?{ |key| key.is_a?(Numeric) && key >= 0 && key <= 100 }
+          unless preferred_tiers.values.all? { |key| key.is_a?(Numeric) && key >= 0 && key <= 100 }
             errors.add(:base, :values_should_be_percent)
           end
         else

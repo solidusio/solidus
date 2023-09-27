@@ -14,7 +14,7 @@ module SolidusFriendlyPromotions
       if promo_total_changed?
         restart_checkout_flow
         recalculate
-        errors.add(:base, I18n.t('solidus_friendly_promotions.promotion_total_changed_before_complete'))
+        errors.add(:base, I18n.t("solidus_friendly_promotions.promotion_total_changed_before_complete"))
       end
 
       super

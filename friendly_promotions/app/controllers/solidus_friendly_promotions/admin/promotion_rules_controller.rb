@@ -3,7 +3,7 @@
 module SolidusFriendlyPromotions
   module Admin
     class PromotionRulesController < Spree::Admin::BaseController
-      helper 'spree/promotion_rules'
+      helper "spree/promotion_rules"
 
       before_action :validate_level, only: [:new, :create]
       before_action :load_promotion, only: [:create, :destroy, :update, :new]
@@ -23,7 +23,7 @@ module SolidusFriendlyPromotions
         )
         if @promotion_rule.save
           flash[:success] =
-            t('spree.successfully_created', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
+            t("spree.successfully_created", resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
         end
         redirect_to location_after_save
       end
@@ -33,7 +33,7 @@ module SolidusFriendlyPromotions
         @promotion_rule.assign_attributes(promotion_rule_params)
         if @promotion_rule.save
           flash[:success] =
-            t('spree.successfully_updated', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
+            t("spree.successfully_updated", resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
         end
         redirect_to location_after_save
       end
@@ -42,7 +42,7 @@ module SolidusFriendlyPromotions
         @promotion_rule = @promotion.rules.find(params[:id])
         if @promotion_rule.destroy
           flash[:success] =
-            t('spree.successfully_removed', resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
+            t("spree.successfully_removed", resource: SolidusFriendlyPromotions::PromotionRule.model_name.human)
         end
         redirect_to location_after_save
       end
@@ -69,10 +69,10 @@ module SolidusFriendlyPromotions
         end
         return if @promotion_rule_type
 
-        flash[:error] = t('solidus_friendly_promotions.invalid_promotion_rule')
+        flash[:error] = t("solidus_friendly_promotions.invalid_promotion_rule")
         respond_to do |format|
           format.html { redirect_to solidus_friendly_promotions.edit_admin_promotion_path(@promotion) }
-          format.js   { render layout: false }
+          format.js { render layout: false }
         end
       end
 

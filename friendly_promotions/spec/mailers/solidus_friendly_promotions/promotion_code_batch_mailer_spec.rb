@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchMailer, type: :mailer do
   let(:promotion) { create(:friendly_promotion, name: "Promotion Test") }

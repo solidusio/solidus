@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
   let(:email) { "test@email.com" }
   let(:code_batch) do
@@ -23,8 +23,8 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
       SolidusFriendlyPromotions::PromotionCode.pluck(:value)
     end
 
-    context 'with the default join character' do
-      it 'uses the default join characters', :aggregate_failures do
+    context "with the default join character" do
+      it "uses the default join characters", :aggregate_failures do
         subject.perform(code_batch)
         codes.each do |code|
           expect(code).to match(/^test_/)
@@ -32,18 +32,18 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCodeBatchJob, type: :job do
       end
     end
 
-    context 'with a custom join character' do
+    context "with a custom join character" do
       let(:code_batch) do
         SolidusFriendlyPromotions::PromotionCodeBatch.create!(
           promotion: create(:friendly_promotion),
           base_code: "test",
           number_of_codes: 10,
           email: email,
-          join_characters: '-'
+          join_characters: "-"
         )
       end
 
-      it 'uses the custom join characters', :aggregate_failures do
+      it "uses the custom join characters", :aggregate_failures do
         subject.perform(code_batch)
         codes.each do |code|
           expect(code).to match(/^test-/)

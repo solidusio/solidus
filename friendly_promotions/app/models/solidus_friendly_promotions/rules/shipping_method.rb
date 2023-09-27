@@ -10,7 +10,7 @@ module SolidusFriendlyPromotions
       end
 
       def eligible?(promotable)
-        promotable.shipping_method&.id.in?(preferred_shipping_method_ids.map(&:to_i))
+        promotable.shipping_method&.id&.in?(preferred_shipping_method_ids.map(&:to_i))
       end
 
       def updateable?

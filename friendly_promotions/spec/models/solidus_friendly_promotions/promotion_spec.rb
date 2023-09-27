@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   let(:promotion) { described_class.new }
@@ -55,7 +55,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
-  describe '.active' do
+  describe ".active" do
     subject { described_class.active }
 
     let(:promotion) { create(:friendly_promotion, starts_at: Date.yesterday, name: "name1") }
@@ -66,15 +66,15 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       expect(subject).to be_empty
     end
 
-    context 'when promotion has an action' do
+    context "when promotion has an action" do
       let(:promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: Date.yesterday, name: "name1") }
 
-      it 'returns promotion with action' do
+      it "returns promotion with action" do
         expect(subject).to match [promotion]
       end
     end
 
-    context 'when called with a time that is not current' do
+    context "when called with a time that is not current" do
       subject { described_class.active(4.days.ago) }
 
       let(:promotion) do
@@ -87,13 +87,13 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         )
       end
 
-      it 'returns promotion that was active then' do
+      it "returns promotion that was active then" do
         expect(subject).to match [promotion]
       end
     end
   end
 
-  describe '.has_actions' do
+  describe ".has_actions" do
     subject { described_class.has_actions }
 
     let(:promotion) { create(:friendly_promotion, starts_at: Date.yesterday, name: "name1") }
@@ -104,14 +104,14 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       expect(subject).to be_empty
     end
 
-    context 'when promotion has two actions' do
+    context "when promotion has two actions" do
       let(:promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: Date.yesterday, name: "name1") }
 
       before do
         promotion.actions << SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: SolidusFriendlyPromotions::Calculators::Percent.new)
       end
 
-      it 'returns distinct promotion' do
+      it "returns distinct promotion" do
         expect(subject).to match [promotion]
       end
     end
@@ -268,7 +268,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         before { order.cancel! }
 
         it { is_expected.to eq 0 }
-        it { expect(order.state).to eq 'canceled' }
+        it { expect(order.state).to eq "canceled" }
       end
     end
   end
@@ -307,96 +307,96 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
-  describe '#not_started?' do
+  describe "#not_started?" do
     subject { promotion.not_started? }
 
     let(:promotion) { described_class.new(starts_at: starts_at) }
 
-    context 'no starts_at date' do
+    context "no starts_at date" do
       let(:starts_at) { nil }
 
       it { is_expected.to be_falsey }
     end
 
-    context 'when starts_at date is in the past' do
+    context "when starts_at date is in the past" do
       let(:starts_at) { Time.current - 1.day }
 
       it { is_expected.to be_falsey }
     end
 
-    context 'when starts_at date is not already reached' do
+    context "when starts_at date is not already reached" do
       let(:starts_at) { Time.current + 1.day }
 
       it { is_expected.to be_truthy }
     end
   end
 
-  describe '#started?' do
+  describe "#started?" do
     subject { promotion.started? }
 
     let(:promotion) { described_class.new(starts_at: starts_at) }
 
-    context 'when no starts_at date' do
+    context "when no starts_at date" do
       let(:starts_at) { nil }
 
       it { is_expected.to be_truthy }
     end
 
-    context 'when starts_at date is in the past' do
+    context "when starts_at date is in the past" do
       let(:starts_at) { Time.current - 1.day }
 
       it { is_expected.to be_truthy }
     end
 
-    context 'when starts_at date is not already reached' do
+    context "when starts_at date is not already reached" do
       let(:starts_at) { Time.current + 1.day }
 
       it { is_expected.to be_falsey }
     end
   end
 
-  describe '#expired?' do
+  describe "#expired?" do
     subject { promotion.expired? }
 
     let(:promotion) { described_class.new(expires_at: expires_at) }
 
-    context 'when no expires_at date' do
+    context "when no expires_at date" do
       let(:expires_at) { nil }
 
       it { is_expected.to be_falsey }
     end
 
-    context 'when expires_at date is not already reached' do
+    context "when expires_at date is not already reached" do
       let(:expires_at) { Time.current + 1.day }
 
       it { is_expected.to be_falsey }
     end
 
-    context 'when expires_at date is in the past' do
+    context "when expires_at date is in the past" do
       let(:expires_at) { Time.current - 1.day }
 
       it { is_expected.to be_truthy }
     end
   end
 
-  describe '#not_expired?' do
+  describe "#not_expired?" do
     subject { promotion.not_expired? }
 
     let(:promotion) { described_class.new(expires_at: expires_at) }
 
-    context 'when no expired_at date' do
+    context "when no expired_at date" do
       let(:expires_at) { nil }
 
       it { is_expected.to be_truthy }
     end
 
-    context 'when expires_at date is not already reached' do
+    context "when expires_at date is not already reached" do
       let(:expires_at) { Time.current + 1.day }
 
       it { is_expected.to be_truthy }
     end
 
-    context 'when expires_at date is in the past' do
+    context "when expires_at date is in the past" do
       let(:expires_at) { Time.current - 1.day }
 
       it { is_expected.to be_falsey }
@@ -426,7 +426,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       expect(promotion.active?).to eq(false)
     end
 
-    context 'when promotion has an action' do
+    context "when promotion has an action" do
       let(:promotion) { create(:friendly_promotion, :with_adjustable_action, name: "name1") }
 
       it "is active if it has started already" do
@@ -508,7 +508,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
-  describe '#used_by?' do
+  describe "#used_by?" do
     subject { promotion.used_by? user, [excluded_order] }
 
     let(:promotion) { create :friendly_promotion, :with_adjustable_action }
@@ -521,7 +521,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       order.save!
     end
 
-    context 'when the user has used this promo' do
+    context "when the user has used this promo" do
       before do
         order.friendly_order_promotions.create(
           promotion: promotion
@@ -531,10 +531,10 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         order.save!
       end
 
-      context 'when the order is complete' do
+      context "when the order is complete" do
         it { is_expected.to be true }
 
-        context 'when the promotion was not eligible' do
+        context "when the promotion was not eligible" do
           let(:adjustment) { order.all_adjustments.first }
 
           before do
@@ -545,14 +545,14 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
           it { is_expected.to be false }
         end
 
-        context 'when the only matching order is the excluded order' do
+        context "when the only matching order is the excluded order" do
           let(:excluded_order) { order }
 
           it { is_expected.to be false }
         end
       end
 
-      context 'when the order is not complete' do
+      context "when the order is not complete" do
         let(:order) { create :order, user: user }
 
         # The before clause above sets the completed at
@@ -563,7 +563,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       end
     end
 
-    context 'when the user has not used this promo' do
+    context "when the user has not used this promo" do
       it { is_expected.to be false }
     end
   end

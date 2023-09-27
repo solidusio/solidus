@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
+require "spree/preferences/persistable"
 
 module SolidusFriendlyPromotions
   # Base class for all types of promotion action.
@@ -37,7 +37,7 @@ module SolidusFriendlyPromotions
 
     # Ensure a negative amount which does not exceed the object's amount
     def compute_amount(adjustable)
-      promotion_amount = calculator.compute(adjustable) || BigDecimal('0')
+      promotion_amount = calculator.compute(adjustable) || BigDecimal("0")
       [adjustable.amount, promotion_amount.abs].min * -1
     end
 
@@ -45,7 +45,7 @@ module SolidusFriendlyPromotions
       I18n.t(
         "solidus_friendly_promotions.adjustment_labels.#{adjustable.class.name.demodulize.underscore}",
         promotion: SolidusFriendlyPromotions::Promotion.model_name.human,
-        promotion_name: promotion.name,
+        promotion_name: promotion.name
       )
     end
 

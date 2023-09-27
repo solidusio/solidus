@@ -5,11 +5,11 @@ require "spec_helper"
 RSpec.describe Spree::ShippingRate do
   let(:subject) { build(:shipping_rate) }
 
-  describe '#display_price' do
+  describe "#display_price" do
     before { subject.amount = 5 }
 
-    it 'returns formatted amount' do
-      expect(subject.display_price).to eq('$5.00')
+    it "returns formatted amount" do
+      expect(subject.display_price).to eq("$5.00")
     end
   end
 
