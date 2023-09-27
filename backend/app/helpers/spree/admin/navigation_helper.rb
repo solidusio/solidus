@@ -119,12 +119,25 @@ module Spree
       end
 
       def link_to_with_icon(icon_name, text, url, options = {})
-        options[:class] = (options[:class].to_s + " fa fa-#{icon_name} icon_link with-tip").strip
+        options[:class] = "#{options[:class]} icon_link with-tip".strip
+
+        if icon_name.starts_with?('ri-')
+          svg_map = image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg')
+          icon_tag = tag.svg(
+            tag.use('xlink:href': "#{svg_map}##{icon_name}"),
+            'aria-hidden': true,
+            style: "fill: currentColor;",
+          )
+        else
+          options[:class] << " fa fa-#{icon_name}"
+          icon_tag = ''.html_safe
+        end
+
         options[:class] += ' no-text' if options[:no_text]
         options[:title] = text if options[:no_text]
         text = options[:no_text] ? '' : content_tag(:span, text, class: 'text')
         options.delete(:no_text)
-        link_to(text, url, options)
+        link_to(icon_tag + text, url, options)
       end
 
       def solidus_icon(icon_name)

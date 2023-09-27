@@ -1,3 +1,5 @@
+@import "./navigation_solidus_admin";
+
 $padding-x-navbar: 26px;
 $padding-y-navbar: 13px;
 $padding-y-navbar-submenu: 9px;
@@ -187,6 +189,15 @@ nav.menu {
       position: absolute;
       left: 1em;
       transform: translateX(-50%);
+    }
+
+    svg {
+      position: absolute;
+      margin-left: -2.2em;
+      fill: currentColor;
+      height: 1.4em;
+      width: 1.4em;
+      vertical-align: -0.3em;
     }
   }
 

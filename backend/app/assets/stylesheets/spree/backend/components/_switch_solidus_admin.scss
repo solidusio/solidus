@@ -1,0 +1,48 @@
+@import "spree/backend/themes/solidus_admin/colors";
+
+.solidus-admin--nav--switch {
+  appearance: none;
+	cursor: pointer;
+	width: 2.5rem;
+	height: 1.5rem;
+	background: $solidus-admin-gray-200;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    background-color: $solidus-admin-gray-300;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+  }
+
+  &:checked {
+    background: $solidus-admin-gray-500;
+    &:after {
+      left: 2.375rem;
+      transform: translatex(-100%);
+    }
+
+    &:hover {
+      background: $solidus-admin-gray-700;
+    }
+  }
+
+  &:active:after {
+    width: 1.5rem;
+  }
+}

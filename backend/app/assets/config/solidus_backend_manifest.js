@@ -5,4 +5,5 @@
 
 //= link solidus_admin/select2_locales
 
-//= link_directory ../stylesheets/spree/backend/themes .css
+//= link spree/backend/themes/classic.css
+//= link spree/backend/themes/solidus_admin.css

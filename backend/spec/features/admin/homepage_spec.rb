@@ -12,7 +12,7 @@ describe "Homepage", type: :feature do
       end
 
       it "should have a link to overview" do
-        within(".admin-nav-header") { expect(page).to have_link(nil, href: "/admin") }
+        within_nav { expect(page).to have_link(nil, href: "/admin") }
       end
 
       it "should have a link to orders" do
