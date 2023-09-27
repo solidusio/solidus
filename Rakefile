@@ -52,6 +52,8 @@ task :clean do
   end
 end
 
+SOLIDUS_GEM_NAMES = %w[core api backend frontend sample]
+
 namespace :gem do
   def version
     require_relative 'core/lib/spree/core/version'
@@ -59,7 +61,7 @@ namespace :gem do
   end
 
   def for_each_gem
-    %w(core api backend frontend sample).each do |gem_name|
+    SOLIDUS_GEM_NAMES.each do |gem_name|
       print_title(gem_name)
       yield "pkg/solidus_#{gem_name}-#{version}.gem"
     end
@@ -72,7 +74,7 @@ namespace :gem do
     pkgdir = File.expand_path('pkg', __dir__)
     FileUtils.mkdir_p pkgdir
 
-    %w(core api backend frontend sample).each do |gem_name|
+    SOLIDUS_GEM_NAMES.each do |gem_name|
       Dir.chdir(gem_name) do
         sh "gem build solidus_#{gem_name}.gemspec"
         mv "solidus_#{gem_name}-#{version}.gem", pkgdir
