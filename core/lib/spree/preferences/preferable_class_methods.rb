@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/deprecation'
 require 'spree/encryptor'
 
 module Spree::Preferences

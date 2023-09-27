@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Spree::Deprecation.warn(
+Spree.deprecator.warn(
   "Spree::BackendConfiguration::*_TABS is deprecated. Please use Spree::BackendConfiguration::MenuItem(match_path:) instead."
 )
 

@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Spree::BackendConfiguration::MenuItem do
   describe '#children' do
     it 'is the replacement for the deprecated #partial method' do
-      expect(Spree::Deprecation).to receive(:warn).with(a_string_matching(/partial/))
+      expect(Spree.deprecator).to receive(:warn).with(a_string_matching(/partial/))
 
       described_class.new(partial: 'foo')
     end
@@ -67,8 +67,8 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
   describe "deprecated behavior" do
     describe "passing `sections` and `icon` sequentially" do
       it "warns about the deprecation" do
-        expect(Spree::Deprecation).to receive(:warn).with(a_string_matching(/sections/))
-        expect(Spree::Deprecation).to receive(:warn).with(a_string_matching(/icon/))
+        expect(Spree.deprecator).to receive(:warn).with(a_string_matching(/sections/))
+        expect(Spree.deprecator).to receive(:warn).with(a_string_matching(/icon/))
 
         described_class.new([:foo, :bar], 'icon')
       end

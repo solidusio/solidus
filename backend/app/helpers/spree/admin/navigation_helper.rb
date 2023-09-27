@@ -50,12 +50,12 @@ module Spree
         css_classes = Array(options[:css_class])
 
         if options.key?(:route)
-          Spree::Deprecation.warn "Passing a route to #tab is deprecated. Please pass a url instead."
+          Spree.deprecator.warn "Passing a route to #tab is deprecated. Please pass a url instead."
           options[:url] ||= spree.send("#{options[:route]}_path")
         end
 
         if args.any?
-          Spree::Deprecation.warn "Passing resources to #tab is deprecated. Please use the `label:` and `match_path:` options instead."
+          Spree.deprecator.warn "Passing resources to #tab is deprecated. Please use the `label:` and `match_path:` options instead."
           options[:label] ||= args.first
           options[:url] ||= spree.send("admin_#{args.first}_path")
           options[:selected] = args.include?(controller.controller_name.to_sym)

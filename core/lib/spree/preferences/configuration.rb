@@ -59,7 +59,7 @@ module Spree::Preferences
       return if load_defaults_called || !Spree::Core.has_install_generator_been_run?
 
       target_name = instance_constant_name || "#{self.class.name}.new"
-      Spree::Deprecation.warn <<~MSG
+      Spree.deprecator.warn <<~MSG
         It's recommended that you explicitly load the default configuration for
         your current Solidus version. You can do it by adding the following call
         to your Solidus initializer within the #{target_name} block:

@@ -17,7 +17,7 @@ RSpec.describe Spree::MigrationHelpers do
     context "when the column exists" do
       context "and the index does" do
         it "passes compatible arguments to index_exists?" do
-          expect { subject }.to_not raise_error(ArgumentError)
+          expect { subject }.to raise_error(NotImplementedError) # not ArgumentError
         end
       end
 
@@ -27,7 +27,7 @@ RSpec.describe Spree::MigrationHelpers do
         end
 
         it "passes compatible arguments to add_index" do
-          expect { subject }.to_not raise_error(ArgumentError)
+          expect { subject }.to raise_error(TypeError) # not ArgumentError
         end
       end
     end
