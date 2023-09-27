@@ -97,10 +97,6 @@ module SolidusFriendlyPromotions
       !active?(time)
     end
 
-    def not_expired?(time = Time.current)
-      !expired?(time)
-    end
-
     def expired?(time = Time.current)
       expires_at.present? && expires_at < time
     end
