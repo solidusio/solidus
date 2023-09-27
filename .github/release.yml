@@ -5,7 +5,6 @@ changelog:
   exclude:
     labels:
       - "changelog:skip"
-      - "changelog:repository"
   categories:
     - title: Solidus
       labels:
