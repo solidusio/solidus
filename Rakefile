@@ -52,7 +52,7 @@ task :clean do
   end
 end
 
-SOLIDUS_GEM_NAMES = %w[core api backend frontend sample]
+SOLIDUS_GEM_NAMES = %w[core api backend sample]
 
 namespace :gem do
   def version
