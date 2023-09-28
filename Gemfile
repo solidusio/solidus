@@ -48,6 +48,7 @@ group :backend do
 end
 
 group :admin do
+  gem 'solidus_admin', path: 'admin', require: false
   gem 'axe-core-rspec', '~> 4.7', require: false
   gem 'axe-core-capybara', '~> 4.7', require: false
 end

@@ -3,5 +3,4 @@
 require 'solidus_core'
 require 'solidus_api'
 require 'solidus_backend'
-require 'solidus_admin'
 require 'solidus_sample'
