@@ -21,7 +21,7 @@
           "data-turbo-frame": table_frame_id,
           "data-turbo-action": "replace",
           "data-#{stimulus_id}-target": "searchForm",
-          "data-action": "reset->#{stimulus_id}#search",
+          "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
         },
       ) do |form| %>
         <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
@@ -33,7 +33,6 @@
             placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
             class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300 search-cancel:appearance-none"
             data-<%= stimulus_id %>-target="searchField"
-            data-action="<%= stimulus_id %>#search"
             aria-label="<%= t('.search_placeholder', resources: resource_plural_name) %>"
           >
           <button
