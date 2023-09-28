@@ -29,6 +29,12 @@ module SolidusFriendlyPromotions
       joins(:actions).distinct
     end
 
+    enum lane: {
+      pre: 0,
+      default: 1,
+      post: 2
+    }
+
     self.allowed_ransackable_associations = ["codes"]
     self.allowed_ransackable_attributes = %w[name path promotion_category_id]
     self.allowed_ransackable_scopes = %i[active]
