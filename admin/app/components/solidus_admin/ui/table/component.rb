@@ -5,6 +5,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @param model_class [ActiveModel::Translation] The model class used for translations.
   # @param rows [Array] The collection of objects that will be passed to columns for display.
   # @param fade_row_proc [Proc, nil] A proc determining if a row should have a faded appearance.
+  # @param search_param [Symbol] The param for searching.
   # @param search_key [Symbol] The key for searching.
   # @param search_url [String] The base URL for searching.
   #
@@ -31,8 +32,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     id:,
     model_class:,
     rows:,
-    search_key:,
-    search_url:,
+    search_key:, search_url:, search_param: :q,
     fade_row_proc: nil,
     columns: [],
     batch_actions: [],
@@ -47,6 +47,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @model_class = model_class
     @rows = rows
     @fade_row_proc = fade_row_proc
+    @search_param = search_param
     @search_key = search_key
     @search_url = search_url
     @prev_page_link = prev_page_link
