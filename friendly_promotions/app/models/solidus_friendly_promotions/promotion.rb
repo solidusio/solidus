@@ -40,9 +40,13 @@ module SolidusFriendlyPromotions
     end
 
     def self.lane_options
-      lanes.map do |lane_name, _index|
+      ordered_lanes.map do |lane_name, _index|
         [human_enum_name(:lane, lane_name), lane_name]
       end
+    end
+
+    def self.ordered_lanes
+      lanes.sort_by(&:last).to_h
     end
 
     self.allowed_ransackable_associations = ["codes"]
