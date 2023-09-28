@@ -28,7 +28,8 @@ export default class extends Controller {
   }
 
   showSearch() {
-    if (this.isAnyCheckboxChecked()) this.dispatch('showSearch')
+    if (this.isAnyCheckboxChecked())
+      this.dispatch("showSearch")
   }
 
   filterOptions(event) {
@@ -39,7 +40,7 @@ export default class extends Controller {
   }
 
   search() {
-    this.dispatch('search')
+    this.dispatch("search")
     this.highlightFilter()
   }
 
