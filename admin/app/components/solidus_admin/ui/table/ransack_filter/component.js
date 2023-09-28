@@ -1,6 +1,16 @@
 import { Controller } from '@hotwired/stimulus'
+import { useClickOutside } from 'stimulus-use'
+
 export default class extends Controller {
   static targets = ['details', 'summary', 'option', 'checkbox', 'menu']
+
+  connect() {
+    useClickOutside(this)
+  }
+
+  clickOutside(event) {
+    this.detailsTarget.removeAttribute("open")
+  }
 
   search() {
     this.dispatch('search')
