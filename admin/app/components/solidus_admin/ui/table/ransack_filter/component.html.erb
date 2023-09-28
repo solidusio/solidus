@@ -49,6 +49,7 @@
               <%= render component('ui/forms/checkbox').new(
                    name: selection.option.name,
                    value: selection.option.value,
+                   checked: selection.checked,
                    size: :s,
                    form: @form,
                    "data-action": "#{stimulus_id}#search #{stimulus_id}#sortCheckboxes",

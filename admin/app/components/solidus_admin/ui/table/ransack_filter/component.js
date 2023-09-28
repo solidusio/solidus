@@ -1,15 +1,26 @@
 import { Controller } from '@hotwired/stimulus'
-import { useClickOutside } from 'stimulus-use'
+import { useClickOutside, useDebounce } from 'stimulus-use'
 
 export default class extends Controller {
   static targets = ['details', 'summary', 'option', 'checkbox', 'menu']
+  static debounces = ['init']
 
   connect() {
+    useDebounce(this, { wait: 50 })
     useClickOutside(this)
+    this.init()
   }
 
   clickOutside(event) {
     this.detailsTarget.removeAttribute("open")
+  }
+
+  init() {
+    this.showSearch()
+  }
+
+  showSearch() {
+    if (this.isAnyCheckboxChecked()) this.dispatch('showSearch')
   }
 
   filterOptions(event) {
@@ -33,5 +44,9 @@ export default class extends Controller {
     }).forEach(checkbox => {
       this.menuTarget.appendChild(checkbox.closest('div'))
     })
+  }
+
+  isAnyCheckboxChecked() {
+    return this.checkboxTargets.some(checkbox => checkbox.checked)
   }
 }

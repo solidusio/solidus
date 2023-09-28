@@ -29,7 +29,8 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
         label,
         build(:attribute, @attribute, opt_index),
         build(:predicate, @predicate, opt_index),
-        build(:option, value, opt_index)
+        build(:option, value, opt_index),
+        checked?(value)
       )
     end
   end
@@ -43,6 +44,15 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   def build(type, value, opt_index = nil)
     suffix = SUFFIXES[type] % { index: opt_index || @index }
     Attribute.new("#{@group}#{suffix}", value)
+  end
+
+  # Determines if a given value should be checked based on the params.
+  #
+  # @param value [String] The value of the checkbox.
+  # @return [Boolean] Returns true if the checkbox should be checked, false otherwise.
+  def checked?(value)
+    conditions = params.dig(:q, :g, @index.to_s, :c)
+    conditions && conditions.values.any? { |c| c[:v]&.include?(value.to_s) }
   end
 
   SUFFIXES = {
