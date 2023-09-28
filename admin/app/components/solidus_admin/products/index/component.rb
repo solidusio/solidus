@@ -41,13 +41,20 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   end
 
   def filters
-    [
+    Spree::OptionType.all.map do |option_type|
       {
-        name: 'q[with_discarded]',
-        value: true,
-        label: t('.filters.with_deleted'),
-      },
-    ]
+        presentation: option_type.presentation,
+        combinator: 'or',
+        attribute: "variants_option_values",
+        predicate: "in",
+        options: option_type.option_values.map do |option_value|
+          [
+            option_value.name,
+            option_value.id
+          ]
+        end
+      }
+    end
   end
 
   def columns
