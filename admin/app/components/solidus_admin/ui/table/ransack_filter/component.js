@@ -12,6 +12,13 @@ export default class extends Controller {
     this.detailsTarget.removeAttribute("open")
   }
 
+  filterOptions(event) {
+    const query = event.currentTarget.value.toLowerCase()
+    this.optionTargets.forEach((option) => {
+      option.style.display = option.textContent.toLowerCase().includes(query) ? 'block' : 'none'
+    })
+  }
+
   search() {
     this.dispatch('search')
   }
