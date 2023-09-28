@@ -5,4 +5,16 @@ export default class extends Controller {
   search() {
     this.dispatch('search')
   }
+
+  sortCheckboxes() {
+    const checkboxes = this.checkboxTargets
+
+    checkboxes.sort((a, b) => {
+      if (a.checked && !b.checked) return -1
+      if (!a.checked && b.checked) return 1
+      return 0
+    }).forEach(checkbox => {
+      this.menuTarget.appendChild(checkbox.closest('div'))
+    })
+  }
 }
