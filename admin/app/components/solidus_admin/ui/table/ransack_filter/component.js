@@ -1,6 +1,8 @@
 import { Controller } from '@hotwired/stimulus'
 import { useClickOutside, useDebounce } from 'stimulus-use'
 
+const BG_GRAY = 'bg-gray-100'
+
 export default class extends Controller {
   static targets = ['details', 'summary', 'option', 'checkbox', 'menu']
   static debounces = ['init']
@@ -16,7 +18,13 @@ export default class extends Controller {
   }
 
   init() {
+    this.highlightFilter()
     this.showSearch()
+  }
+
+  highlightFilter() {
+    const optionIsSelected = this.isAnyCheckboxChecked()
+    this.summaryTarget.classList.toggle(BG_GRAY, optionIsSelected)
   }
 
   showSearch() {
@@ -32,6 +40,7 @@ export default class extends Controller {
 
   search() {
     this.dispatch('search')
+    this.highlightFilter()
   }
 
   sortCheckboxes() {
