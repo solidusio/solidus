@@ -68,6 +68,14 @@
           data: { :'enable-time' => true, :'default-hour' => 0 }
         %>
       </div>
+      <div class="field">
+        <%= f.field_container :lane do %>
+          <%= f.label :lane %><br>
+          <%=
+            f.select(:lane, SolidusFriendlyPromotions::Promotion.lane_options, {}, { class: 'custom-select fullwidth' })
+          %>
+        <% end %>
+      </div>
     </div>
   </div>
 </fieldset>

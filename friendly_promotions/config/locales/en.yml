@@ -112,6 +112,11 @@ en:
       solidus_friendly_promotions/rules/user_logged_in: User Logged In
       solidus_friendly_promotions/rules/user_role: User Role(s)
     attributes:
+      solidus_friendly_promotions/promotion:
+        lanes:
+          pre: Pre
+          default: Default
+          post: Post
       solidus_friendly_promotions/actions/adjust_line_item:
         description: Creates a promotion credit on matching line items
       solidus_friendly_promotions/actions/adjust_shipment:

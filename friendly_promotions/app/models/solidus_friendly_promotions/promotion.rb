@@ -35,6 +35,16 @@ module SolidusFriendlyPromotions
       post: 2
     }
 
+    def self.human_enum_name(enum_name, enum_value)
+      I18n.t("activerecord.attributes.#{model_name.i18n_key}.#{enum_name.to_s.pluralize}.#{enum_value}")
+    end
+
+    def self.lane_options
+      lanes.map do |lane_name, _index|
+        [human_enum_name(:lane, lane_name), lane_name]
+      end
+    end
+
     self.allowed_ransackable_associations = ["codes"]
     self.allowed_ransackable_attributes = %w[name path promotion_category_id]
     self.allowed_ransackable_scopes = %i[active]
