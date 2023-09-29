@@ -10,20 +10,17 @@ module SolidusFriendlyPromotions
       @order = FriendlyPromotionDiscounter.new(order).call
 
       @order.line_items.each do |item|
-        chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(item).call(item.discounts)
-        update_adjustments(item, chosen_item_discounts)
+        update_adjustments(item.line_item, item.discounts)
       end
 
       @order.shipments.each do |item|
-        chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(item).call(item.discounts)
-        update_adjustments(item, chosen_item_discounts)
+        update_adjustments(item.shipment, item.discounts)
       end
 
-      @order.shipments.flat_map(&:shipping_rates).each do |item|
-        chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(item).call(item.discounts)
-        item.discounts = chosen_item_discounts.map do |discount|
+      @order.shipments.flat_map(&:shipping_rates).each do |shipping_rate|
+        shipping_rate.shipping_rate.discounts = shipping_rate.discounts.map do |discount|
           SolidusFriendlyPromotions::ShippingRateDiscount.new(
-            shipping_rate: item.shipping_rate,
+            shipping_rate: shipping_rate.shipping_rate,
             amount: discount.amount,
             label: discount.label
           )
