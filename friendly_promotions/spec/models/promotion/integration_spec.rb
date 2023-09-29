@@ -51,6 +51,49 @@ RSpec.describe "Promotion System" do
     end
   end
 
+  context "with two promotions that should stack", :pending do
+    let(:shirt) { create(:product, name: "Shirt", price: 30) }
+    let(:pants) { create(:product, name: "Pants", price: 40) }
+
+    let!(:distributed_amount_promo) do
+      create(:friendly_promotion,
+        :with_adjustable_action,
+        preferred_amount: 10.0,
+        apply_automatically: true,
+        lane: :post,
+        calculator_class: SolidusFriendlyPromotions::Calculators::DistributedAmount)
+    end
+    let(:shirts_rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
+    let(:shirts_calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
+    let(:shirts_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: shirts_calculator) }
+    let!(:shirts_promotion) do
+      create(
+        :friendly_promotion,
+        rules: [shirts_rule],
+        actions: [shirts_action],
+        name: "20% off shirts",
+        apply_automatically: true
+      )
+    end
+    let(:order) { create(:order) }
+
+    before do
+      order.contents.add(shirt.master, 1)
+      order.contents.add(pants.master, 1)
+    end
+
+    it "does all the right things" do
+      expect(order.adjustments).to be_empty
+      # shirt: 30 USD - 20% = 24 USD
+      # Remaining total: 64 USD
+      # 10 USD distributed off: 54 USD
+      expect(order.total).to eq(54.00)
+      expect(order.item_total).to eq(70.00)
+      expect(order.item_total_before_tax).to eq(54)
+      expect(order.line_items.flat_map(&:adjustments).length).to eq(3)
+    end
+  end
+
   context "with a shipment-level rule" do
     let!(:address) { create(:address) }
     let(:shipping_zone) { create(:global_zone) }
