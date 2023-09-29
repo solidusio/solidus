@@ -641,6 +641,58 @@ RSpec.describe Spree::Product, type: :model do
     end
   end
 
+  context "ransacker :variants_option_values" do
+    it "filters products based on option values of their variants" do
+      product_1 = create(:product)
+      option_value_1 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      expect(result).to contain_exactly(product_1)
+    end
+
+    it "returns multiple products for the same option value" do
+      product_1 = create(:product)
+      product_2 = create(:product)
+      option_value_1 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+      create(:variant, product: product_2, option_values: [option_value_1])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      expect(result).to contain_exactly(product_1, product_2)
+    end
+
+    it "returns no products if there is no match" do
+      non_existing_option_value_id = 99999
+      result = Spree::Product.ransack(variants_option_values_in: [non_existing_option_value_id]).result
+      expect(result).to be_empty
+    end
+
+    it "returns products that match any of the provided option value IDs" do
+      product_1 = create(:product)
+      product_2 = create(:product)
+      option_value_1 = create(:option_value)
+      option_value_2 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+      create(:variant, product: product_2, option_values: [option_value_2])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id, option_value_2.id]).result
+      expect(result).to contain_exactly(product_1, product_2)
+    end
+
+    it "doesn't return products that have other option values not in the query" do
+      product_1 = create(:product)
+      product_2 = create(:product)
+      option_value_1 = create(:option_value)
+      option_value_2 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+      create(:variant, product: product_2, option_values: [option_value_2])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      expect(result).not_to include(product_2)
+    end
+  end
+
   describe "ransack scopes" do
     context "available scope" do
       subject { described_class.ransack(available: true).result }
