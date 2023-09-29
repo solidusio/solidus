@@ -168,6 +168,7 @@ commands:
       - run:
           name: "Prepare the rails application"
           command: |
+            cp core/spec/solidus_install_coverage.rb /tmp/solidus_install_coverage.rb
             cd /tmp
             test -d my_app || (gem install rails -v "< 7.1" && gem install solidus)
             test -d my_app || rails new my_app --skip-git
@@ -180,9 +181,16 @@ commands:
           name: "Run `solidus:install` with `<<parameters.flags>>`"
           command: |
             cd /tmp/my_app
+            bundle add gem simplecov simplecov-cobertura --require=false
             bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             unset RAILS_ENV # avoid doing everything on the test environment
+            cat /tmp/solidus_install_coverage.rb >> config/boot.rb
             bin/rails generate solidus:install --auto-accept <<parameters.flags>>
+      - run:
+          name: Report Coverage
+          command: |
+            cd /tmp/my_app
+            bundle exec ruby /tmp/solidus_install_coverage.rb
 
   test_page:
     parameters:
@@ -251,6 +259,10 @@ jobs:
     executor:
       name: sqlite
       ruby: "3.0"
+    environment:
+      COVERAGE: "true"
+      COVERAGE_DIR: /tmp/coverage
+      DISABLE_ACTIVE_STORAGE: false
     steps:
       - checkout
       - run:
@@ -279,6 +291,8 @@ jobs:
           name: "Ensure solidus_frontend installer is run"
           command: |
             test -f /tmp/dummy_extension/spec/dummy/config/initializers/solidus_frontend.rb
+      - codecov/upload:
+          file: /tmp/coverage/coverage.xml
 
   test_solidus:
     parameters:
