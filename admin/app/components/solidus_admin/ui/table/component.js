@@ -78,6 +78,18 @@ export default class extends Controller {
     this.render()
   }
 
+  rowClicked(event) {
+    if (event.target.closest('a') || event.target.tagName === 'BUTTON' || event.target.type === 'checkbox') return
+
+    const row = event.currentTarget
+    const checkbox = this.checkboxTargets.find(selection => row.contains(selection))
+
+    if (checkbox) {
+        checkbox.checked = !checkbox.checked
+        this.selectRow()
+    }
+  }
+
   render() {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
