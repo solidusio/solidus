@@ -17,7 +17,7 @@ module SolidusAdmin::ControllerHelpers::Authorization
     subject = authorization_subject
 
     authorize! :admin, subject
-    authorize! action_name, subject
+    authorize! action_name.to_sym, subject
   end
 
   def authorization_subject
