@@ -1790,6 +1790,9 @@ en:
     name_contains: Name Contains
     name_on_card: Name on card
     name_or_sku: Name or SKU (enter at least first 4 characters of product name)
+    navigation:
+      switch_to_legacy: Switch to legacy admin
+      switch_to_solidus_admin: Switch to new admin
     negative_movement_absent_item: Cannot create negative movement for absent stock item.
     new: New
     new_adjustment: New Adjustment

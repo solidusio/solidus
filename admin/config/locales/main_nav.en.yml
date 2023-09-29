@@ -11,5 +11,3 @@ en:
       stock: Stock
       users: Users
       settings: Settings
-      legacy_label: Switch to legacy admin
-      admin_label: Switch to new admin
