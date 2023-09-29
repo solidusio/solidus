@@ -23,7 +23,7 @@
   <div class="mt-auto">
     <div class="group mb-3">
       <label class="flex gap-3 items-center py-0.5 px-3 pb-0.5 rounded hover:text-red-500 hover:bg-gray-50 body-small-bold text-black cursor-pointer">
-        <%= t('solidus_admin.main_nav.legacy_label') %>
+        <%= t('spree.navigation.switch_to_legacy') %>
         <div class="flex items-center">
           <%= render component("ui/forms/switch").new(size: :s, checked: false, 'data-action': "#{stimulus_id}#setCookie:prevent") %>
         </div>
