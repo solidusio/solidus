@@ -96,7 +96,7 @@ unbundled bin/rails db:drop db:create
 
 echo "~~~> Running the solidus:install generator"
 export SOLIDUS_ADMIN_LOOKBOOK=true
-unbundled bin/rails generate solidus:install --auto-accept $@
+unbundled bin/rails generate solidus:install --admin-preview --auto-accept $@
 
 echo "
 🚀 This app is intended for test purposes. If you're interested in running

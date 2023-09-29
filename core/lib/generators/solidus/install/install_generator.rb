@@ -34,7 +34,7 @@ module Solidus
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
     class_option :active_storage, type: :boolean, default: true, banner: 'Install ActiveStorage as image attachments handler for products and taxons'
-    class_option :admin_preview, type: :boolean, default: true, desc: 'Install the admin preview'
+    class_option :admin_preview, type: :boolean, default: false, desc: 'Install the admin preview'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
