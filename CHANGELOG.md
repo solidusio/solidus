@@ -1,3 +1,51 @@
+## Solidus v4.2.0 (2023-09-29)
+
+
+## Solidus Core
+
+* Allow filtering option values by variant for the Option Value promotion rule by @mamhoff in https://github.com/solidusio/solidus/pull/5200
+* Ensure `current_store` always comes with a `url` set by @elia in https://github.com/solidusio/solidus/pull/5224
+* Remove unused ActiveRecord join class `Spree::PromotionRuleRole` by @mamhoff in https://github.com/solidusio/solidus/pull/5217
+* Improving stock items management by @softr8 in https://github.com/solidusio/solidus/pull/3626
+* Load `stock_items` with a deterministic order in `OrderInventory#determine_target_shipment` by @elia in https://github.com/solidusio/solidus/pull/5288
+* Use the new Solidus logo by @elia in https://github.com/solidusio/solidus/pull/5314
+* Reorganize `Stock::SimpleCoordinator` for improved debugging by @BenMorganIO in https://github.com/solidusio/solidus/pull/5249
+* Bump the minimum required Psych version by @elia in https://github.com/solidusio/solidus/pull/5322
+* Fix `Order#restart_checkout_flow` for empty orders by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5330
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+* Cleanup `MenuItem` API and deprecate using partials for second level menus by @elia in https://github.com/solidusio/solidus/pull/5309
+* Deprecate the `Spree::Adjustment.return_authorization` scope by @mamhoff in https://github.com/solidusio/solidus/pull/5138
+* Update the `Spree::Backend` navigation menu to match the upcoming `SolidusAdmin` by @elia in https://github.com/solidusio/solidus/pull/5392
+* Deprecate `Spree::Deprecation` in favor of `Spree.deprecator` by @kennyadsl in https://github.com/solidusio/solidus/pull/5289
+* Enhance product model with `variants_option_values` ransacker by @rainerdema in https://github.com/solidusio/solidus/pull/5395
+* Add `SolidusAdmin`support by @elia in https://github.com/solidusio/solidus/pull/5068
+
+## Solidus Backend
+
+* Allow filtering option values by variant for the Option Value promotion rule by @mamhoff in https://github.com/solidusio/solidus/pull/5200
+* Improving stock items management by @softr8 in https://github.com/solidusio/solidus/pull/3626
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+* Cleanup `MenuItem` API and deprecate using partials for second level menus by @elia in https://github.com/solidusio/solidus/pull/5309
+* Update the `Spree::Backend` navigation menu to match the upcoming `SolidusAdmin` by @elia in https://github.com/solidusio/solidus/pull/5392
+* Deprecate `Spree::Deprecation` in favor of `Spree.deprecator` by @kennyadsl in https://github.com/solidusio/solidus/pull/5289
+* Add `SolidusAdmin` support by @elia in https://github.com/solidusio/solidus/pull/5068
+* Allow overriding the routes proxy in the `ResourceController` by @mamhoff in https://github.com/solidusio/solidus/pull/5219
+* Add Armenian language translations for `Select2` plugin by @arman-h in https://github.com/solidusio/solidus/pull/5285
+* Add Cilean Spanish language support for `Select2` plugin by @MauricioTRP in https://github.com/solidusio/solidus/pull/5377
+
+## Solidus API
+
+* Allow filtering option values by variant for the Option Value promotion rule by @mamhoff in https://github.com/solidusio/solidus/pull/5200
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+* Fix `Spree::Api:LineItemsController#create` handling of validation errors by @RyanofWoods in https://github.com/solidusio/solidus/pull/4177
+
+## Solidus Sample
+
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.0...v4.2.0
+
+
 ## Solidus v4.1.0 (2023-06-29)
 
 ## Solidus Core
