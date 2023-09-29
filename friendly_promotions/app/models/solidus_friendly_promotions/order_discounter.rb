@@ -7,28 +7,29 @@ module SolidusFriendlyPromotions
     end
 
     def call
-      @order = FriendlyPromotionDiscounter.new(order).call
+      discountable_order = FriendlyPromotionDiscounter.new(order).call
 
-      @order.line_items.each do |item|
-        update_adjustments(item.line_item, item.discounts)
+      discountable_order.line_items.each do |discountable_line_item|
+        update_adjustments(discountable_line_item.line_item, discountable_line_item.discounts)
       end
 
-      @order.shipments.each do |item|
-        update_adjustments(item.shipment, item.discounts)
+      discountable_order.shipments.each do |discountable_shipment|
+        update_adjustments(discountable_shipment.shipment, discountable_shipment.discounts)
       end
 
-      @order.shipments.flat_map(&:shipping_rates).each do |shipping_rate|
-        shipping_rate.shipping_rate.discounts = shipping_rate.discounts.map do |discount|
+      discountable_order.shipments.flat_map(&:shipping_rates).each do |discountable_shipping_rate|
+        spree_shipping_rate = discountable_shipping_rate.shipping_rate
+        spree_shipping_rate.discounts = discountable_shipping_rate.discounts.map do |discount|
           SolidusFriendlyPromotions::ShippingRateDiscount.new(
-            shipping_rate: shipping_rate.shipping_rate,
+            shipping_rate: spree_shipping_rate,
             amount: discount.amount,
             label: discount.label
           )
         end
       end
 
-      @order.promo_total = (order.line_items + order.shipments).sum(&:promo_total)
-      @order
+      order.promo_total = (order.line_items + order.shipments).sum(&:promo_total)
+      order
     end
 
     private
