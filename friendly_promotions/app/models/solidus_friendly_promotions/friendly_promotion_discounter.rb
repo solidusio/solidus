@@ -28,15 +28,24 @@ module SolidusFriendlyPromotions
     def adjust_line_items(item_discounter)
       order.line_items.select do |line_item|
         line_item.variant.product.promotionable?
-      end.flat_map { |line_item| item_discounter.call(line_item) }
+      end.flat_map do |line_item|
+        discounts = item_discounter.call(line_item)
+        line_item.discounts.concat(discounts)
+      end
     end
 
     def adjust_shipments(item_discounter)
-      order.shipments.flat_map { |shipment| item_discounter.call(shipment) }
+      order.shipments.flat_map do |shipment|
+        discounts = item_discounter.call(shipment)
+        shipment.discounts.concat(discounts)
+      end
     end
 
     def adjust_shipping_rates(item_discounter)
-      order.shipments.flat_map(&:shipping_rates).flat_map { |rate| item_discounter.call(rate) }
+      order.shipments.flat_map(&:shipping_rates).flat_map do |rate|
+        discounts = item_discounter.call(rate)
+        rate.discounts.concat(discounts)
+      end
     end
 
     def possible_promotions

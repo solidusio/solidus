@@ -27,7 +27,7 @@ module SolidusFriendlyPromotions
     end
 
     def discount(adjustable)
-      adjustable.discounts << ItemDiscount.new(
+      ItemDiscount.new(
         item: adjustable,
         label: adjustment_label(adjustable),
         amount: compute_amount(adjustable),

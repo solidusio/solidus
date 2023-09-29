@@ -31,15 +31,15 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
       allow(action).to receive(:compute_amount).and_return(-1)
     end
 
-    it "adds a discount to the discountable" do
-      expect { subject }.to change { discountable.discounts }.from([]).to([
+    it "returns an discount to the discountable" do
+      expect(subject).to eq(
         SolidusFriendlyPromotions::ItemDiscount.new(
           item: discountable,
           label: "Promotion (20 Perzent off)",
           source: action,
           amount: -1
         )
-      ])
+      )
     end
   end
 end
