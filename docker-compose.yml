@@ -27,7 +27,7 @@ services:
         NODE_VERSION: 14
         MYSQL_VERSION: "8.0"
         BUNDLER_VERSION: 2
-    image: solidus-4.2.0
+    image: solidus-4.3.0.dev
     command: bash -c "(bundle check || bundle) && bash -c 'echo Container initialized, see README.md for further steps.' && tail -f /dev/null"
     environment:
       CAPYBARA_DRIVER: selenium_chrome_headless_docker_friendly
