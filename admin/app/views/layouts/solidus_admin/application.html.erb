@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="<%= current_locale %>">
+  <head>
+    <%= favicon_link_tag 'solidus_admin/favicon.ico' %>
+    <title><%= solidus_admin_title %></title>
+    <%= stylesheet_link_tag "solidus_admin/application.css", "inter-font", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
+  </head>
+
+  <body class="bg-gray-15">
+    <%= render component("skip_link").new(href: "#main") %>
+    <div class="fixed right-3 bottom-3 flex flex-col gap-3" role="alert">
+      <% flash.each do |key, message| %>
+        <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
+      <% end %>
+    </div>
+
+    <div class="flex gap-0">
+      <div class="min-w-[240px] border-r border-r-gray-100 relative">
+        <div class="min-h-screen top-0 sticky flex">
+          <%= render component("sidebar").new(store: current_store) %>
+        </div>
+      </div>
+
+      <main id="main" class="flex-grow">
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

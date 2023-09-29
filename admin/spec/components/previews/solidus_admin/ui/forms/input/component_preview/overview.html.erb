@@ -1,0 +1,28 @@
+<section>
+  <h3>Input</h3>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
+    <%= render current_component.new(placeholder: "Placeholder") %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">Filled</h6>
+    <%= render current_component.new(value: "My value") %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">Error</h6>
+    <%= render current_component.new(value: "Bad value", error: "The value is wrong!") %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">Disabled</h6>
+    <%= render current_component.new(placeholder: "Placeholder", disabled: true) %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
+    <%= render current_component.new(value: "My value", disabled: true) %>
+  </div>
+</section>

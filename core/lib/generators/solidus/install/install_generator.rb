@@ -34,6 +34,7 @@ module Solidus
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
     class_option :active_storage, type: :boolean, default: true, banner: 'Install ActiveStorage as image attachments handler for products and taxons'
+    class_option :admin_preview, type: :boolean, default: false, desc: 'Install the admin preview'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
@@ -156,6 +157,14 @@ module Solidus
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
+    end
+
+    def install_solidus_admin
+      return unless options[:admin_preview]
+
+      say_status :installing, "SolidusAdmin", :blue
+      bundle_command 'add solidus_admin'
+      generate 'solidus_admin:install'
     end
 
     def install_subcomponents

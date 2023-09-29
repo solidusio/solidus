@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <% definitions.each_key do |status| %>
+        <th class="px-3 py-1 text-gray-500 text-center"><%= status.to_s.humanize %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% definitions.each_value do |component| %>
+        <th class="px-3 py-1"><%= render component %></th>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

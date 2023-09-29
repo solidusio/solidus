@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+# @component <%= component_registry_id.inspect %>
+class <%= File.join(*[namespaced_path, file_path].compact).classify %>::ComponentPreview < ViewComponent::Preview
+  include SolidusAdmin::Preview
+
+  def overview
+    render_with_template
+  end
+
+  <%= preview_playground_yard_tags %>
+  def playground<%= preview_signature %>
+    <%= preview_playground_body %>
+  end
+end

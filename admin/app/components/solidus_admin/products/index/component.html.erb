@@ -1,0 +1,30 @@
+<div class="<%= stimulus_id %> px-4">
+  <header class="py-6 flex items-center">
+    <h1 class="body-title">
+      <%= title %>
+    </h1>
+
+    <div class="ml-auto flex gap-2 items-center">
+      <%= render component("feedback").new %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        text: t('.add_product'),
+        href: spree.new_admin_product_path,
+        icon: "add-line",
+      ) %>
+    </div>
+  </header>
+
+  <%= render component('ui/table').new(
+    id: 'products-list',
+    model_class: Spree::Product,
+    rows: @page.records,
+    search_key: SolidusAdmin::Config[:product_search_key],
+    search_url: solidus_admin.products_path,
+    batch_actions: batch_actions,
+    filters: filters,
+    columns: columns,
+    prev_page_link: prev_page_link,
+    next_page_link: next_page_link,
+  ) %>
+</div>
