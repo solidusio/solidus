@@ -51,7 +51,7 @@ RSpec.describe "Promotion System" do
     end
   end
 
-  context "with two promotions that should stack", :pending do
+  context "with two promotions that should stack" do
     let(:shirt) { create(:product, name: "Shirt", price: 30) }
     let(:pants) { create(:product, name: "Pants", price: 40) }
 
