@@ -2,36 +2,40 @@
 
 module SolidusFriendlyPromotions
   class FriendlyPromotionDiscounter
-    attr_reader :order, :promotions, :item_discounter
+    attr_reader :order, :promotions
 
     def initialize(order)
       @order = Discountable::Order.new(order)
       @promotions = PromotionEligibility.new(promotable: order, possible_promotions: possible_promotions).call
-      @item_discounter = ItemDiscounter.new(promotions: promotions)
     end
 
     def call
       return nil if order.shipped?
 
-      adjust_line_items
-      adjust_shipments
-      adjust_shipping_rates
+      SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
+        lane_promotions = promotions.select { |promotion| promotion.lane == lane }
+        item_discounter = ItemDiscounter.new(promotions: lane_promotions)
+        adjust_line_items(item_discounter)
+        adjust_shipments(item_discounter)
+        adjust_shipping_rates(item_discounter)
+      end
+
       order
     end
 
     private
 
-    def adjust_line_items
+    def adjust_line_items(item_discounter)
       order.line_items.select do |line_item|
         line_item.variant.product.promotionable?
       end.flat_map { |line_item| item_discounter.call(line_item) }
     end
 
-    def adjust_shipments
+    def adjust_shipments(item_discounter)
       order.shipments.flat_map { |shipment| item_discounter.call(shipment) }
     end
 
-    def adjust_shipping_rates
+    def adjust_shipping_rates(item_discounter)
       order.shipments.flat_map(&:shipping_rates).flat_map { |rate| item_discounter.call(rate) }
     end
 
