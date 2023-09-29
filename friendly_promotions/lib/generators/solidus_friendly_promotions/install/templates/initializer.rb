@@ -51,10 +51,6 @@ SolidusFriendlyPromotions.configure do |config|
   # How many promotions should be displayed on the index page in the admin.
   config.promotions_per_page = 25
 
-  config.discounters = [
-    "SolidusFriendlyPromotions::FriendlyPromotionDiscounter"
-  ]
-
   config.shipment_discount_calculators = [
     "SolidusFriendlyPromotions::Calculators::FlatRate",
     "SolidusFriendlyPromotions::Calculators::FlexiRate",
