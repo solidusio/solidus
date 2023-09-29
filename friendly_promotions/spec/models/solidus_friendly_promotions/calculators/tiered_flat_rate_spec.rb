@@ -75,7 +75,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredFlatRate, type: :mo
         line_items_price: amount
       )
     end
-    let(:line_item) { order.line_items.first }
+    let(:line_item) { SolidusFriendlyPromotions::Discountable::LineItem.new(order.line_items.first, order: order) }
     let(:preferred_currency) { "USD" }
 
     before do
@@ -109,7 +109,8 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredFlatRate, type: :mo
     context "with a shipment" do
       subject { calculator.compute(shipment) }
 
-      let(:shipment) { Spree::Shipment.new(order: order, amount: shipping_cost) }
+      let(:spree_shipment) { Spree::Shipment.new(order: order, amount: shipping_cost) }
+      let(:shipment) { SolidusFriendlyPromotions::Discountable::Shipment.new(spree_shipment, order: order) }
       let(:line_item_count) { 1 }
       let(:amount) { 10 }
 

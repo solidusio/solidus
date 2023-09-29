@@ -38,7 +38,7 @@ module SolidusFriendlyPromotions
     # Ensure a negative amount which does not exceed the object's amount
     def compute_amount(adjustable)
       promotion_amount = calculator.compute(adjustable) || BigDecimal("0")
-      [adjustable.amount, promotion_amount.abs].min * -1
+      [adjustable.discountable_amount, promotion_amount.abs].min * -1
     end
 
     def adjustment_label(adjustable)

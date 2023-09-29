@@ -10,7 +10,7 @@ module SolidusFriendlyPromotions
       def compute(object)
         preferred_currency = object.order.currency
         currency_exponent = ::Money::Currency.find(preferred_currency).exponent
-        (object.amount * preferred_percent / 100).round(currency_exponent)
+        (object.discountable_amount * preferred_percent / 100).round(currency_exponent)
       end
     end
   end

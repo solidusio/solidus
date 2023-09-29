@@ -3,11 +3,15 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::DistributedAmountsHandler, type: :model do
-  let(:order) do
+  let(:spree_order) do
     FactoryBot.create(
       :order_with_line_items,
       line_items_attributes: line_items_attributes
     )
+  end
+
+  let(:order) do
+    SolidusFriendlyPromotions::Discountable::Order.new(spree_order)
   end
 
   let(:handler) {

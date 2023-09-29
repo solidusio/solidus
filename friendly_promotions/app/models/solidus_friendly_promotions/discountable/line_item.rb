@@ -15,7 +15,7 @@ module SolidusFriendlyPromotions
         __getobj__
       end
 
-      def discounted_amount
+      def discountable_amount
         amount + discounts.sum(&:amount)
       end
     end

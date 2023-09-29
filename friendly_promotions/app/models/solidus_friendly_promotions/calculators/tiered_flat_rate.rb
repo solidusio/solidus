@@ -22,7 +22,7 @@ module SolidusFriendlyPromotions
 
       def compute_item(object)
         _base, amount = preferred_tiers.sort.reverse.detect do |value, _|
-          object.amount >= value
+          object.discountable_amount >= value
         end
 
         if preferred_currency.casecmp(object.currency).zero?

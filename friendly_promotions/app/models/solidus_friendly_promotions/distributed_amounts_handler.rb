@@ -29,7 +29,7 @@ module SolidusFriendlyPromotions
     end
 
     def elligible_amounts
-      line_items.map(&:amount)
+      line_items.map(&:discountable_amount)
     end
 
     def subtotal

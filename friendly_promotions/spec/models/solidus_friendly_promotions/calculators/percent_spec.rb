@@ -7,7 +7,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::Percent, type: :model do
   context "compute" do
     let(:currency) { "USD" }
     let(:order) { double(currency: currency) }
-    let(:line_item) { double("LineItem", amount: 100, order: order) }
+    let(:line_item) { double("SolidusFriendlyPromotions::Discountable::LineItem", discountable_amount: 100, order: order) }
 
     before { subject.preferred_percent = 15 }
 

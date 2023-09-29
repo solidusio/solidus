@@ -14,8 +14,8 @@ RSpec.describe SolidusFriendlyPromotions::Discountable::LineItem do
     it { is_expected.to eq(discountable_order) }
   end
 
-  describe "#discounted_amount" do
-    subject(:discounted_amount) { discountable_line_item.discounted_amount }
+  describe "#discountable_amount" do
+    subject(:discountable_amount) { discountable_line_item.discountable_amount }
 
     context "with no discounts" do
       it { is_expected.to eq(20) }
