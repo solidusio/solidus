@@ -26,8 +26,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'geared_pagination', '~> 1.1'
   s.add_dependency 'importmap-rails', '~> 1.2', '>= 1.2.1'
-  s.add_dependency 'solidus_backend', Spree.solidus_version
-  s.add_dependency 'solidus_core', Spree.solidus_version
+  s.add_dependency 'solidus_backend', Spree.solidus_gem_version.approximate_recommendation
+  s.add_dependency 'solidus_core', Spree.solidus_gem_version.approximate_recommendation
   s.add_dependency 'stimulus-rails', '~> 1.2'
   s.add_dependency 'tailwindcss-rails', '~> 2.0'
   s.add_dependency 'turbo-rails', '~> 1.4'
