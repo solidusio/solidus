@@ -18,13 +18,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
     subject { rule.applicable?(promotable) }
 
     context "when promotable is an order" do
-      let(:promotable) { Spree::Order.new }
+      let(:promotable) { SolidusFriendlyPromotions::Discountable::Order.new(Spree::Order.new) }
 
       it { is_expected.to be true }
     end
 
     context "when promotable is not an order" do
-      let(:promotable) { Spree::LineItem.new }
+      let(:promotable) { SolidusFriendlyPromotions::Discountable::LineItem.new(Spree::LineItem.new, order: double) }
 
       it { is_expected.to be false }
     end

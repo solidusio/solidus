@@ -7,7 +7,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::NthOrder do
     subject { described_class.new.applicable?(promotable) }
 
     context "when the promotable is an order" do
-      let(:promotable) { Spree::Order.new }
+      let(:promotable) { SolidusFriendlyPromotions::Discountable::Order.new(Spree::Order.new) }
 
       it { is_expected.to be true }
     end

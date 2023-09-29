@@ -4,7 +4,7 @@ module SolidusFriendlyPromotions
   module Actions
     class AdjustLineItem < PromotionAction
       def can_discount?(object)
-        object.is_a? Spree::LineItem
+        object.is_a? Discountable::LineItem
       end
 
       def available_calculators

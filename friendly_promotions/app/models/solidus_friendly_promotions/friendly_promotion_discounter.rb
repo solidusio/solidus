@@ -5,7 +5,7 @@ module SolidusFriendlyPromotions
     attr_reader :order, :promotions, :item_discounter
 
     def initialize(order)
-      @order = order
+      @order = Discountable::Order.new(order)
       @promotions = PromotionEligibility.new(promotable: order, possible_promotions: possible_promotions).call
       @item_discounter = ItemDiscounter.new(promotions: promotions)
     end
@@ -13,12 +13,10 @@ module SolidusFriendlyPromotions
     def call
       return nil if order.shipped?
 
-      OrderDiscounts.new(
-        order_id: order.id,
-        line_item_discounts: adjust_line_items,
-        shipment_discounts: adjust_shipments,
-        shipping_rate_discounts: adjust_shipping_rates
-      )
+      adjust_line_items
+      adjust_shipments
+      adjust_shipping_rates
+      order
     end
 
     private

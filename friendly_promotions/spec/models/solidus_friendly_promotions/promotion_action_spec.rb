@@ -18,11 +18,12 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
   end
 
   describe "#discount" do
-    subject { action.discount(adjustable) }
+    subject { action.discount(discountable) }
 
     let(:variant) { create(:variant) }
     let(:order) { create(:order) }
-    let(:adjustable) { Spree::LineItem.new(order: order, variant: variant, price: 10) }
+    let(:discountable) { SolidusFriendlyPromotions::Discountable::LineItem.new(line_item, order: SolidusFriendlyPromotions::Discountable::Order.new(order)) }
+    let(:line_item) { Spree::LineItem.new(order: order, variant: variant, price: 10) }
     let(:promotion) { SolidusFriendlyPromotions::Promotion.new(name: "20 Perzent off") }
     let(:action) { described_class.new(promotion: promotion) }
 
@@ -30,15 +31,15 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
       allow(action).to receive(:compute_amount).and_return(-1)
     end
 
-    it "returs an discount to the adjustable" do
-      expect(subject).to eq(
+    it "adds a discount to the discountable" do
+      expect { subject }.to change { discountable.discounts }.from([]).to([
         SolidusFriendlyPromotions::ItemDiscount.new(
-          item: adjustable,
+          item: discountable,
           label: "Promotion (20 Perzent off)",
           source: action,
           amount: -1
         )
-      )
+      ])
     end
   end
 end

@@ -7,13 +7,13 @@ RSpec.describe SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince do
     subject { described_class.new.applicable?(promotable) }
 
     context "when the promotable is an order" do
-      let(:promotable) { Spree::Order.new }
+      let(:promotable) { SolidusFriendlyPromotions::Discountable::Order.new(Spree::Order.new) }
 
       it { is_expected.to be true }
     end
 
     context "when the promotable is not a order" do
-      let(:promotable) { Spree::LineItem.new }
+      let(:promotable) { SolidusFriendlyPromotions::Discountable::LineItem.new(Spree::LineItem.new, order: double) }
 
       it { is_expected.to be false }
     end

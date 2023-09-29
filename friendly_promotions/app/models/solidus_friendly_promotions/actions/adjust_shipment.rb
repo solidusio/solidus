@@ -4,7 +4,7 @@ module SolidusFriendlyPromotions
   module Actions
     class AdjustShipment < PromotionAction
       def can_discount?(object)
-        object.is_a?(Spree::Shipment) || object.is_a?(Spree::ShippingRate)
+        object.is_a?(Discountable::Shipment) || object.is_a?(Discountable::ShippingRate)
       end
 
       def available_calculators

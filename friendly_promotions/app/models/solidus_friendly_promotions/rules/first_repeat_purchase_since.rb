@@ -8,7 +8,7 @@ module SolidusFriendlyPromotions
 
       # This promotion is applicable to orders only.
       def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
+        promotable.is_a?(Discountable::Order)
       end
 
       # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.

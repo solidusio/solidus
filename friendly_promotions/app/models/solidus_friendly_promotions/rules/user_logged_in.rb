@@ -4,7 +4,7 @@ module SolidusFriendlyPromotions
   module Rules
     class UserLoggedIn < PromotionRule
       def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
+        promotable.is_a?(Discountable::Order)
       end
 
       def eligible?(order, _options = {})

@@ -6,7 +6,7 @@ module SolidusFriendlyPromotions
       preference :eligible_values, :hash
 
       def applicable?(promotable)
-        promotable.is_a?(Spree::LineItem)
+        promotable.is_a?(Discountable::LineItem)
       end
 
       def eligible?(line_item, _options = {})
