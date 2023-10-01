@@ -101,4 +101,4 @@ unbundled bin/rails generate solidus:install --admin-preview --auto-accept $@
 echo "
 🚀 This app is intended for test purposes. If you're interested in running
 🚀 Solidus in production, visit:
-🚀 https://guides.solidus.io/developers/getting-started/first-time-installation"
+🚀 https://guides.solidus.io/getting-started/installing-solidus"
