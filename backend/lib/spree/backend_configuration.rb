@@ -16,7 +16,7 @@ module Spree
 
     # @!attribute [rw] theme
     #   @return [String] Default admin theme name
-    versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.1.0.a" => "solidus_admin" }
+    versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.2.0" => "solidus_admin" }
 
     def theme_path(user_theme = nil)
       user_theme ? themes.fetch(user_theme.to_sym) : themes.fetch(theme.to_sym)
@@ -25,8 +25,7 @@ module Spree
     # @!attribute [rw] admin_updated_navbar
     #   @return [Boolean] Should the updated navbar be used in admin (default: +false+)
     #
-    # TODO: Update boundaries before merging to `main`
-    versioned_preference :admin_updated_navbar, :boolean, initial_value: false, boundaries: { "4.1.0.a" => true }
+    versioned_preference :admin_updated_navbar, :boolean, initial_value: false, boundaries: { "4.2.0" => true }
 
     preference :frontend_product_path,
       :proc,
@@ -40,7 +39,7 @@ module Spree
 
     # @!attribute [rw] prefer_menu_item_partials
     #   @return [Boolean] Whether or not to prefer menu item partials when both a partial and children are present.
-    preference :prefer_menu_item_partials, :boolean, default: false
+    versioned_preference :prefer_menu_item_partials, :boolean, initial_value: true, boundaries: { "4.2.0" => false }
 
     autoload :ORDER_TABS, 'spree/backend_configuration/deprecated_tab_constants'
     autoload :PRODUCT_TABS, 'spree/backend_configuration/deprecated_tab_constants'
