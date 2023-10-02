@@ -54,7 +54,7 @@ module Spree
         end
 
         @condition = condition || -> { true }
-        @sections = sections
+        @sections = sections || []
         @icon = icon
         @label = label
         @partial = partial
@@ -78,27 +78,26 @@ module Spree
       end
 
       def match_path?(request)
-        if match_path.is_a? Regexp
-          request.fullpath =~ match_path
-        elsif match_path.respond_to?(:call)
-          match_path.call(request)
-        elsif match_path
-          request.fullpath.starts_with?("#{spree.admin_path}#{match_path}")
-        else
-          request.fullpath.to_s.starts_with?(url.to_s)
-        end
+        matches =
+          if match_path.is_a? Regexp
+            request.fullpath =~ match_path
+          elsif match_path.respond_to?(:call)
+            match_path.call(request)
+          elsif match_path
+            request.fullpath.starts_with?("#{spree.admin_path}#{match_path}")
+          end
+        matches ||= request.fullpath.to_s.starts_with?(url.to_s) if url.present?
+        matches ||= @sections.include?(request.controller_class.controller_name.to_sym) if @sections.present?
+
+        matches
       end
 
       def url
-        if @url.respond_to?(:call)
-          @url.call
-        elsif @url.is_a?(Symbol)
-          spree.public_send(@url)
-        elsif @url.nil? && @label
-          spree.send("admin_#{@label}_path")
-        else
-          @url
-        end
+        url = @url.call if @url.respond_to?(:call)
+        url ||= spree.public_send(@url) if @url.is_a?(Symbol) && spree.respond_to?(@url)
+        url ||= spree.send("admin_#{@label}_path") if @url.nil? && @label && spree.respond_to?("admin_#{@label}_path")
+        url ||= @url.to_s
+        url
       end
 
       private
