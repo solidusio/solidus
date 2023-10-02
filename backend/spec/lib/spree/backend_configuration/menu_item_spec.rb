@@ -39,6 +39,26 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
 
       expect(subject.match_path?(request)).to be_truthy
     end
+
+    it 'matches the item on the (deprecated) sections against the controller name' do
+      allow(Spree.deprecator).to receive(:warn).with(a_string_matching(/icon/))
+      allow(Spree.deprecator).to receive(:warn).with(a_string_matching(/sections/))
+
+      subject = described_class.new([:foo, :bar], :baz_icon)
+      matching_request = double(
+        ActionDispatch::Request,
+        controller_class: double(ActionController::Base, controller_name: 'bar'),
+        fullpath: '/qux',
+      )
+      other_request = double(
+        ActionDispatch::Request,
+        controller_class: double(ActionController::Base, controller_name: 'baz'),
+        fullpath: '/qux',
+      )
+
+      expect(subject.match_path?(matching_request)).to be true
+      expect(subject.match_path?(other_request)).to be false
+    end
   end
 
   describe "#url" do
