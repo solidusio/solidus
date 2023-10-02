@@ -9,19 +9,18 @@ module SolidusFriendlyPromotions
     def call
       discountable_order = FriendlyPromotionDiscounter.new(order).call
 
-      discountable_order.line_items.each do |discountable_line_item|
-        update_adjustments(discountable_line_item.line_item, discountable_line_item.discounts)
+      discountable_order.line_items.each do |line_item|
+        update_adjustments(line_item, line_item.current_discounts)
       end
 
-      discountable_order.shipments.each do |discountable_shipment|
-        update_adjustments(discountable_shipment.shipment, discountable_shipment.discounts)
+      discountable_order.shipments.each do |shipment|
+        update_adjustments(shipment, shipment.current_discounts)
       end
 
-      discountable_order.shipments.flat_map(&:shipping_rates).each do |discountable_shipping_rate|
-        spree_shipping_rate = discountable_shipping_rate.shipping_rate
-        spree_shipping_rate.discounts = discountable_shipping_rate.discounts.map do |discount|
+      discountable_order.shipments.flat_map(&:shipping_rates).each do |shipping_rate|
+        shipping_rate.discounts = shipping_rate.current_discounts.map do |discount|
           SolidusFriendlyPromotions::ShippingRateDiscount.new(
-            shipping_rate: spree_shipping_rate,
+            shipping_rate: shipping_rate,
             amount: discount.amount,
             label: discount.label
           )
@@ -42,17 +41,18 @@ module SolidusFriendlyPromotions
     #
     # @private
     # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
-    # @param [Array<SolidusFriendlyPromotions::ItemDiscount>] taxed_items a list of calculated discounts for an item
+    # @param [Array<SolidusFriendlyPromotions::ItemDiscount>] item_discounts a list of calculated discounts for an item
     # @return [void]
-    def update_adjustments(item, taxed_items)
+    def update_adjustments(item, item_discounts)
       promotion_adjustments = item.adjustments.select(&:friendly_promotion?)
 
-      active_adjustments = taxed_items.map do |tax_item|
-        update_adjustment(item, tax_item)
+      active_adjustments = item_discounts.map do |item_discount|
+        update_adjustment(item, item_discount)
       end
       item.update(promo_total: active_adjustments.sum(&:amount))
       # Remove any tax adjustments tied to rates which no longer match.
       unmatched_adjustments = promotion_adjustments - active_adjustments
+
       item.adjustments.destroy(unmatched_adjustments)
     end
 

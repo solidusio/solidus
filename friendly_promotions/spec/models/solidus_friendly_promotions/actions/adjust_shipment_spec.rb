@@ -15,19 +15,19 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustShipment do
     subject { action.can_discount?(promotable) }
 
     context "with a line item" do
-      let(:promotable) { SolidusFriendlyPromotions::Discountable::LineItem.new(Spree::Order.new, order: double) }
+      let(:promotable) { Spree::Order.new }
 
       it { is_expected.to be false }
     end
 
     context "with a shipment" do
-      let(:promotable) { SolidusFriendlyPromotions::Discountable::Shipment.new(Spree::Shipment.new, order: double) }
+      let(:promotable) { Spree::Shipment.new }
 
       it { is_expected.to be true }
     end
 
     context "with a shipping rate" do
-      let(:promotable) { SolidusFriendlyPromotions::Discountable::ShippingRate.new(Spree::ShippingRate.new, shipment: double) }
+      let(:promotable) { Spree::ShippingRate.new }
 
       it { is_expected.to be true }
     end

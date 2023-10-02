@@ -22,8 +22,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
 
     let(:variant) { create(:variant) }
     let(:order) { create(:order) }
-    let(:discountable) { SolidusFriendlyPromotions::Discountable::LineItem.new(line_item, order: SolidusFriendlyPromotions::Discountable::Order.new(order)) }
-    let(:line_item) { Spree::LineItem.new(order: order, variant: variant, price: 10) }
+    let(:discountable) { Spree::LineItem.new(order: order, variant: variant, price: 10) }
     let(:promotion) { SolidusFriendlyPromotions::Promotion.new(name: "20 Perzent off") }
     let(:action) { described_class.new(promotion: promotion) }
 

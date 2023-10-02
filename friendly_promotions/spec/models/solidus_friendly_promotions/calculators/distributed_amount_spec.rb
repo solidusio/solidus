@@ -10,8 +10,7 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::DistributedAmount, type: 
   end
   let(:rules) { [] }
   let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.create(calculator: calculator) }
-  let(:spree_order) { create(:order_with_line_items, line_items_attributes: line_items_attributes) }
-  let(:order) { SolidusFriendlyPromotions::Discountable::Order.new(spree_order) }
+  let(:order) { create(:order_with_line_items, line_items_attributes: line_items_attributes) }
   let(:currency) { "USD" }
 
   context "applied to an order" do

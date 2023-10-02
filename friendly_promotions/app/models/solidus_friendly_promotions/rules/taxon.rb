@@ -17,7 +17,7 @@ module SolidusFriendlyPromotions
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
       def applicable?(promotable)
-        promotable.is_a?(Discountable::Order)
+        promotable.is_a?(Spree::Order)
       end
 
       def eligible?(order, _options = {})

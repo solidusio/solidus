@@ -5,12 +5,14 @@ module SolidusFriendlyPromotions
     attr_reader :order, :promotions
 
     def initialize(order)
-      @order = Discountable::Order.new(order)
+      @order = order
       @promotions = PromotionEligibility.new(promotable: order, possible_promotions: possible_promotions).call
     end
 
     def call
       return nil if order.shipped?
+
+      order.reset_current_discounts
 
       SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
         lane_promotions = promotions.select { |promotion| promotion.lane == lane }
@@ -19,7 +21,7 @@ module SolidusFriendlyPromotions
         shipment_discounts = adjust_shipments(item_discounter)
         shipping_rate_discounts = adjust_shipping_rates(item_discounter)
         (line_item_discounts + shipment_discounts + shipping_rate_discounts).each do |item, chosen_discounts|
-          item.discounts.concat(chosen_discounts)
+          item.current_discounts.concat(chosen_discounts)
         end
       end
 

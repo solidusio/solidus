@@ -29,7 +29,7 @@ module SolidusFriendlyPromotions
       end
 
       def applicable?(promotable)
-        promotable.is_a?(Discountable::Order)
+        promotable.is_a?(Spree::Order)
       end
 
       def eligible?(order, _options = {})

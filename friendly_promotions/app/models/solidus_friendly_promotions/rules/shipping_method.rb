@@ -6,7 +6,7 @@ module SolidusFriendlyPromotions
       preference :shipping_method_ids, type: :array, default: []
 
       def applicable?(promotable)
-        promotable.is_a?(Discountable::Shipment) || promotable.is_a?(Discountable::ShippingRate)
+        promotable.is_a?(Spree::Shipment) || promotable.is_a?(Spree::ShippingRate)
       end
 
       def eligible?(promotable)
