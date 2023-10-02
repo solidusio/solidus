@@ -20,6 +20,11 @@ module SolidusFriendlyPromotions
       super
     end
 
+    def reset_current_discounts
+      line_items.each(&:reset_current_discounts)
+      shipments.each(&:reset_current_discounts)
+    end
+
     Spree::Order.prepend self
   end
 end
