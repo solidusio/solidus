@@ -22,7 +22,8 @@ module SolidusFriendlyPromotions
     def promo_total
       discounts.sum(&:amount)
     end
+
+    Spree::ShippingRate.prepend SolidusFriendlyPromotions::DiscountableAmount
+    Spree::ShippingRate.prepend self
   end
 end
-
-Spree::ShippingRate.prepend(SolidusFriendlyPromotions::ShippingRateDecorator)

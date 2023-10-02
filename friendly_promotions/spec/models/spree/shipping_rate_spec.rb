@@ -43,4 +43,36 @@ RSpec.describe Spree::ShippingRate do
 
     it { is_expected.to eq(Spree::Money.new("0")) }
   end
+
+  describe "#discountable_amount" do
+    let(:discounts) { [] }
+    let(:shipping_rate) { Spree::ShippingRate.new(amount: 20, current_discounts: discounts) }
+
+    subject(:discountable_amount) { shipping_rate.discountable_amount }
+
+    it { is_expected.to eq(20) }
+
+    context "with a proposed discount" do
+      let(:discounts) do
+        [
+          SolidusFriendlyPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
+        ]
+      end
+
+      it { is_expected.to eq(18) }
+    end
+  end
+
+  describe "#reset_current_discounts" do
+    let(:shipping_rate) { Spree::ShippingRate.new }
+
+    subject { shipping_rate.reset_current_discounts }
+    before do
+      shipping_rate.current_discounts << SolidusFriendlyPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
+    end
+
+    it "resets the current discounts to an empty array" do
+      expect { subject }.to change { shipping_rate.current_discounts.length }.from(1).to(0)
+    end
+  end
 end
