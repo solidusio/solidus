@@ -1818,4 +1818,18 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe "order deletion" do
+    let(:order) { create(:order) }
+    let(:promotion) { create(:promotion) }
+
+    subject { order.destroy }
+    before do
+      order.promotions << promotion
+    end
+
+    it "deletes join table entries when deleting an order" do
+      expect { subject }.to change { Spree::OrderPromotion.count }.from(1).to(0)
+    end
+  end
 end
