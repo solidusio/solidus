@@ -46,8 +46,13 @@ module Spree
 
       def empty
         authorize! :update, @order, order_token
-        @order.empty!
-        respond_with(@order, default_template: :show)
+
+        if @order.complete?
+          invalid_resource!(@order)
+        else
+          @order.empty!
+          respond_with(@order, default_template: :show)
+        end
       end
 
       def index

@@ -137,39 +137,11 @@ describe "Order Details", type: :feature, js: true do
         expect(page).to have_field('quantity')
       end
 
-      it "can remove all items with empty cart" do
+      it "cannot remove all items with a completed order" do
+        # Wait for the cart contents to be loaded.
         expect(page).to have_content("spree t-shirt")
 
-        within("#item_total") do
-          expect(page).to have_content("$40.00")
-        end
-
-        within("#order_total") do
-          expect(page).to have_content("$40.00")
-        end
-
-        within("#order-total", text: 'Order Total') do
-          expect(page).to have_content("$40.00")
-        end
-
-        accept_confirm "Are you sure you want to delete this record?" do
-          click_on 'Empty Cart'
-        end
-
-        expect(page).not_to have_content("spree t-shirt")
-
-        # Should have a new item row
-        expect(page).to have_field('quantity')
-
-        within("#item_total") do
-          expect(page).to have_content("$0.00")
-        end
-
-        within("#order_total") do
-          expect(page).to have_content("$0.00")
-        end
-
-        expect(page).to have_css('#order-total', visible: false)
+        expect(page).to have_button("Empty Cart", disabled: true)
       end
 
       # Regression test for https://github.com/spree/spree/issues/3862
@@ -383,6 +355,29 @@ describe "Order Details", type: :feature, js: true do
               expect(page).not_to have_text 'Cart'
               expect(page).not_to have_selector('.fa-arrows-h')
               expect(page).not_to have_selector('.fa-trash')
+            end
+
+            context 'order has shipped' do
+              it 'disables empty cart' do
+                order = create(:order_ready_to_ship)
+
+                visit spree.cart_admin_order_path(order)
+                order.fulfill!
+
+                ## simulate shipping order in another tab
+                shipment = order.shipments.first
+                order.shipping.ship(
+                  inventory_units: shipment.inventory_units,
+                  stock_location: shipment.stock_location,
+                  address: order.ship_address,
+                  shipping_method: shipment.shipping_method
+                )
+
+                # Make an assertion here about page content to give the JS time
+                # to load before the next expectation.
+                expect(page).to have_content("Cart")
+                expect(page).to have_button("Empty Cart", disabled: true)
+              end
             end
           end
         end
