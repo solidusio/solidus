@@ -13,31 +13,51 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
 
   describe '#match_path?' do
     it 'matches a string using the admin path prefix' do
-      described_class.new(match_path: '/stock_items')
+      subject = described_class.new(match_path: '/stock_items')
       request = double(ActionDispatch::Request, fullpath: '/admin/stock_items/1/edit')
 
-      expect(subject.match_path?(request)).to be true
+      expect(subject.match_path?(request)).to be_truthy
     end
 
     it 'matches a proc accepting the request object' do
       request = double(ActionDispatch::Request, fullpath: '/foo/bar/baz')
       subject = described_class.new(match_path: -> { _1.fullpath.include? '/bar/' })
 
-      expect(subject.match_path?(request)).to be true
+      expect(subject.match_path?(request)).to be_truthy
     end
 
     it 'matches a regexp' do
-      described_class.new(match_path: %r{/bar/})
+      subject = described_class.new(match_path: %r{/bar/})
       request = double(ActionDispatch::Request, fullpath: '/foo/bar/baz')
 
-      expect(subject.match_path?(request)).to be true
+      expect(subject.match_path?(request)).to be_truthy
     end
 
     it 'matches the item url as the fullpath prefix' do
-      described_class.new(url: '/foo/bar')
+      subject = described_class.new(url: '/foo/bar')
       request = double(ActionDispatch::Request, fullpath: '/foo/bar/baz')
 
-      expect(subject.match_path?(request)).to be true
+      expect(subject.match_path?(request)).to be_truthy
+    end
+
+    it 'matches the item on the (deprecated) sections against the controller name' do
+      allow(Spree.deprecator).to receive(:warn).with(a_string_matching(/icon/))
+      allow(Spree.deprecator).to receive(:warn).with(a_string_matching(/sections/))
+
+      subject = described_class.new([:foo, :bar], :baz_icon)
+      matching_request = double(
+        ActionDispatch::Request,
+        controller_class: double(ActionController::Base, controller_name: 'bar'),
+        fullpath: '/qux',
+      )
+      other_request = double(
+        ActionDispatch::Request,
+        controller_class: double(ActionController::Base, controller_name: 'baz'),
+        fullpath: '/qux',
+      )
+
+      expect(subject.match_path?(matching_request)).to be true
+      expect(subject.match_path?(other_request)).to be false
     end
   end
 
