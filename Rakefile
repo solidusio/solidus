@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler'
+require 'bundler/gem_tasks'
 
 task default: :spec
 
@@ -52,53 +53,22 @@ task :clean do
   end
 end
 
-namespace :gem do
-  def version
-    require_relative 'core/lib/spree/core/version'
-    Spree.solidus_version
-  end
+SOLIDUS_GEM_NAMES = %w[core api backend sample]
 
-  def for_each_gem
-    %w(core api backend frontend sample).each do |gem_name|
-      print_title(gem_name)
-      yield "pkg/solidus_#{gem_name}-#{version}.gem"
-    end
-    print_title
-    yield "pkg/solidus-#{version}.gem"
-  end
-
-  desc "Build all solidus gems"
-  task :build do
-    pkgdir = File.expand_path('pkg', __dir__)
-    FileUtils.mkdir_p pkgdir
-
-    %w(core api backend frontend sample).each do |gem_name|
-      Dir.chdir(gem_name) do
-        sh "gem build solidus_#{gem_name}.gemspec"
-        mv "solidus_#{gem_name}-#{version}.gem", pkgdir
-      end
-    end
-
-    print_title
-    sh "gem build solidus.gemspec"
-    mv "solidus-#{version}.gem", pkgdir
-  end
-
-  desc "Install all solidus gems"
-  task install: :build do
-    for_each_gem do |gem_path|
-      Bundler.with_clean_env do
-        sh "gem install #{gem_path}"
-      end
+%w[build install].each do |task_name|
+  desc "Run rake #{task} for each Solidus gem"
+  task task_name do
+    SOLIDUS_GEM_NAMES.each do |gem_name|
+      cd(gem_name) { sh "rake #{task_name}" }
     end
   end
+end
 
-  desc "Release all gems to rubygems"
-  task release: :build do
-    sh "git tag -a -m \"Version #{version}\" v#{version}"
-
-    for_each_gem do |gem_path|
-      sh "gem push '#{gem_path}'"
-    end
+# We need to redefine release task to skip creating and pushing git tag
+Rake::Task["release"].clear
+desc "Build and push solidus gems to RubyGems"
+task "release" => ["build", "release:guard_clean", "release:rubygem_push"] do
+  SOLIDUS_GEM_NAMES.each do |gem_name|
+    cd(gem_name) { sh "rake release:rubygem_push" }
   end
 end
