@@ -399,6 +399,33 @@ describe "Order Details", type: :feature, js: true do
               expect(page).not_to have_selector('.fa-arrows-h')
               expect(page).not_to have_selector('.fa-trash')
             end
+
+            context 'and on the cart page the cart is emptied' do
+              it 'should show the empty cart page' do
+                order = create(:order_ready_to_ship)
+
+                visit spree.cart_admin_order_path(order)
+                order.fulfill!
+
+                ## simulate shipping order in another tab
+                shipment = order.shipments.first
+                order.shipping.ship(
+                  inventory_units: shipment.inventory_units,
+                  stock_location: shipment.stock_location,
+                  address: order.ship_address,
+                  shipping_method: shipment.shipping_method
+                )
+
+                click_on 'Empty Cart'
+
+                accept_alert 'Are you sure you want to delete this record?' do
+                  click_icon :ok
+                end
+
+                expect(page.current_path).to eq(spree.cart_admin_order_path(order))
+                expect(page).not_to have_content(order.line_items.first.variant.sku)
+              end
+            end
           end
         end
 
