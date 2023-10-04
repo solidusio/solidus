@@ -19,4 +19,18 @@ RSpec.describe Spree::Order do
       subject
     end
   end
+
+  describe "order deletion" do
+    let(:order) { create(:order) }
+    let(:promotion) { create(:friendly_promotion) }
+
+    subject { order.destroy }
+    before do
+      order.friendly_promotions << promotion
+    end
+
+    it "deletes join table entries when deleting an order" do
+      expect { subject }.to change { SolidusFriendlyPromotions::OrderPromotion.count }.from(1).to(0)
+    end
+  end
 end
