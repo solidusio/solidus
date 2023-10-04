@@ -25,6 +25,7 @@ en:
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
     new_promotion_code_batch: New Promotion Code Batch
+    legacy_promotions: Legacy Promotions
     no_rules_addes: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.

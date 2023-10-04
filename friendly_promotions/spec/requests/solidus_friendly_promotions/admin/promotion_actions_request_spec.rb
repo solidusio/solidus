@@ -15,7 +15,7 @@ describe "Admin::PromotionActions", type: :request do
       }
     }
     expect(response).to be_redirect
-    expect(response).to redirect_to spree.edit_admin_promotion_path(promotion)
+    expect(response).to redirect_to solidus_friendly_promotions.edit_admin_promotion_path(promotion)
     expect(promotion.actions.count).to eq(1)
   end
 
@@ -24,7 +24,7 @@ describe "Admin::PromotionActions", type: :request do
       promotion_action: {type: "Spree::InvalidType"}
     }
     expect(response).to be_redirect
-    expect(response).to redirect_to spree.edit_admin_promotion_path(promotion)
+    expect(response).to redirect_to solidus_friendly_promotions.edit_admin_promotion_path(promotion)
     expect(promotion.actions.count).to eq(0)
   end
 end
