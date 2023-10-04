@@ -59,6 +59,10 @@ module SolidusFriendlyPromotions
       def location_after_save
         solidus_friendly_promotions.edit_admin_promotion_url(@promotion)
       end
+
+      def routes_proxy
+        solidus_friendly_promotions
+      end
     end
   end
 end
