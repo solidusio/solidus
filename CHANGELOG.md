@@ -1,3 +1,24 @@
+## Solidus v4.2.1 (2023-10-04)
+
+## Solidus Core
+
+
+## Solidus Backend
+* [v4.2] Update backend configuration for solidus `v4.2` by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5407
+* [v4.2] Restore using `MenuItem#sections` for matching paths by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5409
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.0...v4.2.1
+
+
 ## Solidus v4.2.0 (2023-09-29)
 
 
