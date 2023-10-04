@@ -31,25 +31,13 @@
           "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
         },
       ) do |form| %>
-        <label class="items-center gap-1 p-0 inline-flex w-full justify-start relative">
-          <%= render component("ui/icon").new(name: 'search-line', class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3") %>
-          <input
-            name="<%= "#{@search_param}[#{@search_key}]" %>"
-            value="<%= params.dig(@search_param, @search_key) %>"
-            type="search"
-            placeholder="<%= t('.search_placeholder', resources: resource_plural_name) %>"
-            class="peer w-full placeholder:text-gray-400 py-1.5 px-10 bg-white rounded border border-gray-300 search-cancel:appearance-none"
-            data-<%= stimulus_id %>-target="searchField"
-            aria-label="<%= t('.search_placeholder', resources: resource_plural_name) %>"
-          >
-          <button
-            class="absolute right-0 mr-3 peer-placeholder-shown:hidden"
-            data-action="<%= stimulus_id %>#clearSearch"
-            aria-label="<%= t('.clear') %>"
-          >
-            <%= render component("ui/icon").new(name: 'close-circle-fill', class: "w-[1.4em] h-[1.4em] fill-gray-500") %>
-          </button>
-        </label>
+        <%= render component('ui/forms/search_field').new(
+          name: "#{@search_param}[#{@search_key}]",
+          value: params.dig(@search_param, @search_key),
+          placeholder: t('.search_placeholder', resources: resource_plural_name),
+          "data-#{stimulus_id}-target": "searchField",
+          "aria-label": t('.search_placeholder', resources: resource_plural_name)
+        ) %>
       <% end %>
 
       <div class="ml-4">

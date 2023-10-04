@@ -45,11 +45,6 @@ export default class extends Controller {
     this.searchFormTarget.requestSubmit()
   }
 
-  clearSearch() {
-    this.searchFieldTarget.value = ''
-    this.search()
-  }
-
   cancelSearch() {
     this.clearSearch()
 

@@ -32,6 +32,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
     datetime-local
     month
     week
+    search
     time
   ]).freeze
 
