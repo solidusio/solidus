@@ -73,7 +73,6 @@ group :utils do
   gem 'rubocop', '~> 0.75.0', require: false
   gem 'rubocop-performance', '~> 1.4', require: false
   gem 'rubocop-rails', '~> 2.3', require: false
-  gem 'gem-release', require: false
 end
 
 gem 'rspec_junit_formatter', require: false, group: :ci
