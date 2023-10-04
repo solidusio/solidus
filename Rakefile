@@ -54,10 +54,9 @@ task :clean do
 end
 
 SOLIDUS_GEM_NAMES = %w[core api backend sample]
-GEM_TASKS_NAME = %w[build install]
 
-GEM_TASKS_NAME.each do |task_name|
-  desc "Run rake gem:#{task} for each Solidus gem"
+%w[build install].each do |task_name|
+  desc "Run rake #{task} for each Solidus gem"
   task task_name do
     SOLIDUS_GEM_NAMES.each do |gem_name|
       cd(gem_name) { sh "rake #{task_name}" }
@@ -65,10 +64,12 @@ GEM_TASKS_NAME.each do |task_name|
   end
 end
 
-task :releasez do
-  require_relative 'core/lib/spree/core/version'
+# We need to redefine release task to skip creating and pushing git tag
+Rake::Task["release"].clear
+desc "Build and push solidus gems to RubyGems"
+task "release" => ["build", "release:guard_clean", "release:rubygem_push"] do
   SOLIDUS_GEM_NAMES.each do |gem_name|
-    sh "gem push #{gem_name}/pkg/solidus_#{gem_name}-#{Spree.solidus_version}.gem"
+    cd(gem_name) { sh "rake release:rubygem_push" }
   end
 end
 
