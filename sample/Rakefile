@@ -4,6 +4,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
 require 'spree/testing_support/dummy_app/rake_tasks'
+require 'bundler/gem_tasks'
 
 RSpec::Core::RakeTask.new
 task default: :spec
