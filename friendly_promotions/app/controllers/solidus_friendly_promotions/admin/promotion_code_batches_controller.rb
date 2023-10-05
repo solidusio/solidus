@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionCodeBatchesController < Spree::Admin::ResourceController
+    class PromotionCodeBatchesController < BaseController
       belongs_to "solidus_friendly_promotions/promotion"
 
       create.after :build_promotion_code_batch

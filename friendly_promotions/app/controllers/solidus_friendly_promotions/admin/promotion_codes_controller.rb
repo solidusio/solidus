@@ -4,7 +4,7 @@ require "csv"
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionCodesController < Spree::Admin::ResourceController
+    class PromotionCodesController < BaseController
       before_action :load_promotion
 
       def index
