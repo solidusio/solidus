@@ -10,7 +10,7 @@ gem 'solidus', github: 'solidusio/solidus', branch: branch
 if branch >= 'v3.2'
   gem 'solidus_frontend'
 elsif branch == 'main'
-  gem 'solidus_frontend', github: 'solidusio/solidus_frontend'
+  gem 'solidus_frontend', github: 'solidusio/solidus_frontend', branch: branch
 else
   gem 'solidus_frontend', github: 'solidusio/solidus', branch: branch
 end
