@@ -6,7 +6,7 @@
   ) do |form| %>
   <%= hidden_field_tag :level, @level %>
   <%= form.label :type %>
-  <%= admin_hint t('spree.adjustment_type'), t(:promotions, scope: [:spree, :hints, "spree/calculator"]) %>
+  <%= admin_hint SolidusFriendlyPromotions::PromotionRule.human_attribute_name(:type), t(:promotions, scope: [:solidus_friendly_promotions, :hints, "spree/calculator"]) %>
   <%=
     form.select :type,
       options_for_promotion_rule_types(form.object, level),

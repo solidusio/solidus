@@ -6,7 +6,7 @@
       <%= link_to t('solidus_friendly_promotions.new_promotion'), solidus_friendly_promotions.new_admin_promotion_path, class: 'btn btn-primary' %>
     </li>
     <li>
-      <%= link_to t('solidus_friendly_promotions.legacy_promotions'), spree.admin_promotions_path, class: 'btn btn-primary' %>
+      <%= link_to t('solidus_friendly_promotions.legacy_promotions'), solidus_friendly_promotions.admin_promotions_path, class: 'btn btn-primary' %>
     </li>
   <% end %>
 <% end %>
@@ -43,13 +43,13 @@
         <div class="col-2">
           <div class="field">
             <%= label_tag :q_promotion_category_id_eq, SolidusFriendlyPromotions::PromotionCategory.model_name.human %><br>
-            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t('spree.match_choices.all') }, { class: 'custom-select fullwidth' }) %>
+            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t('solidus_friendly_promotions.match_choices.all') }, { class: 'custom-select fullwidth' }) %>
           </div>
         </div>
 
         <div class="col-2">
           <div class="field">
-            <%= label_tag :active, t('spree.active') %><br>
+            <%= label_tag :active, SolidusFriendlyPromotions::Promotion.human_attribute_name(:active) %><br>
             <%= f.check_box :active, label: false, as: :boolean, checked_value: true %>
           </div>
         </div>
@@ -87,11 +87,11 @@
         <tr id="<%= spree_dom_id promotion %>">
           <td><%= promotion.name %></td>
           <td>
-            <%= (promotion.codes.size == 1) ? promotion.codes.pluck(:value).first : t('spree.number_of_codes', count: promotion.codes.size) %>
+            <%= (promotion.codes.size == 1) ? promotion.codes.pluck(:value).first : t('solidus_friendly_promotions.number_of_codes', count: promotion.codes.size) %>
           </td>
           <td>
             <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
-              <%= t(admin_promotion_status(promotion), scope: 'spree.admin.promotion_status') %>
+              <%= t(admin_promotion_status(promotion), scope: 'solidus_friendly_promotions.admin.promotion_status') %>
             </span>
           </td>
           <td>

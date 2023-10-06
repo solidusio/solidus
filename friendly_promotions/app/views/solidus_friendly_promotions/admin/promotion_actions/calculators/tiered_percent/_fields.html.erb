@@ -1,6 +1,7 @@
 <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(:base_percent)}",
   name: "#{prefix}[calculator_attributes][preferred_base_percent]",
-  value: calculator.preferred_base_percent, label: t('spree.base_percent') %>
+  value: calculator.preferred_base_percent,
+  label: calculator.class.human_attribute_name(:preferred_base_percent) %>
 
 <div class="field">
   <%= label_tag(
@@ -18,7 +19,7 @@
 </div>
 
 <div class="field">
-  <%= label_tag nil, t('spree.tiers') %>
+  <%= label_tag nil, calculator.class.human_attribute_name(:tiers)  %>
   <div data-controller="calculator-tiers">
     <template data-calculator-tiers-target="template">
       <%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/tiered_percent/tier_fields", tier: [nil, nil], form: form %>

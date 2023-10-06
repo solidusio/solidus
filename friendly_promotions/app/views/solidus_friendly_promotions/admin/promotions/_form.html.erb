@@ -20,7 +20,7 @@
           <%= f.field_container :category do %>
             <%= f.label :promotion_category_id, SolidusFriendlyPromotions::PromotionCategory.model_name.human %><br>
             <%=
-              f.collection_select(:promotion_category_id, @promotion_categories, :id, :name, { include_blank: t('spree.match_choices.none') },
+              f.collection_select(:promotion_category_id, @promotion_categories, :id, :name, { include_blank: t('solidus_friendly_promotions.match_choices.none') },
               { class: 'custom-select fullwidth' })
             %>
           <% end %>

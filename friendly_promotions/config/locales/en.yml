@@ -25,6 +25,7 @@ en:
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
     new_promotion_code_batch: New Promotion Code Batch
+    number_of_codes: Number of codes
     legacy_promotions: Legacy Promotions
     no_rules_addes: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
@@ -63,23 +64,28 @@ en:
       update: Update
     admin:
       promotions:
-          actions:
-            calculator_label: Calculated by
-          activations_edit:
-            auto: All orders will attempt to use this promotion
-            multiple_codes_html: This promotion uses %{count} promotion codes
-            single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
-          activations_new:
-            auto: Apply to all orders
-            multiple_codes: Multiple promotion codes
-            single_code: Single promotion code
-          form:
-            activation: Activation
-            expires_at_placeholder: Never
-            general: General
-            starts_at_placeholder: Immediately
-          edit:
-            order_rules: Order Rules
+        actions:
+          calculator_label: Calculated by
+        activations_edit:
+          auto: All orders will attempt to use this promotion
+          multiple_codes_html: This promotion uses %{count} promotion codes
+          single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
+        activations_new:
+          auto: Apply to all orders
+          multiple_codes: Multiple promotion codes
+          single_code: Single promotion code
+        form:
+          activation: Activation
+          expires_at_placeholder: Never
+          general: General
+          starts_at_placeholder: Immediately
+        edit:
+          order_rules: Order Rules
+        promotion_status:
+          active: Active
+          expired: Expired
+          inactive: Inactive
+          not_started: Not started
     promotion_code_batch_mailer:
       promotion_code_batch_errored:
         message: 'Promotion code batch errored (%{error}) for promotion: '
@@ -114,10 +120,13 @@ en:
       solidus_friendly_promotions/rules/user_role: User Role(s)
     attributes:
       solidus_friendly_promotions/promotion:
+        active: Active
         lanes:
           pre: Pre
           default: Default
           post: Post
+      solidus_friendly_promotions/promotion_action:
+        type: Action Type
       solidus_friendly_promotions/actions/adjust_line_item:
         description: Creates a promotion credit on matching line items
       solidus_friendly_promotions/actions/adjust_shipment:
@@ -126,8 +135,7 @@ en:
         description: Must be the customer's first order
       solidus_friendly_promotions/rules/first_repeat_purchase_since:
         description: Available only to user who have not purchased in a while
-        form_text: 'Apply this promotion to users whose last order was more than X
-          days ago: '
+        form_text: Apply this promotion to users whose last order was more than X days ago
       solidus_friendly_promotions/rules/item_total:
         description: Order total meets these criteria
       solidus_friendly_promotions/rules/landing_page:
@@ -159,6 +167,12 @@ en:
         description: Available only to logged in users
       solidus_friendly_promotions/rules/user_role:
         description: Order includes User with specified Role(s)
+      solidus_friendly_promotions/calculators/tiered_flat_rate:
+        preferred_base_amount: Base Amount
+        tiers: Tiers
+      solidus_friendly_promotions/calculators/tiered_percent:
+        preferred_base_percent: Base Percent
+        tiers: Tiers
     errors:
       models:
         solidus_friendly_promotions/promotion_code:
