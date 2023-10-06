@@ -5,8 +5,8 @@ en:
   solidus_friendly_promotions:
     actions: Actions
     adjustment_labels:
-      line_item: "%{promotion} (%{promotion_name})"
-      shipment: "%{promotion} (%{promotion_name})"
+      line_item: "%{promotion} (%{promotion_customer_label})"
+      shipment: "%{promotion} (%{promotion_customer_label})"
     adjustment_type: Adjustment type
     add_action: New Action
     add_rule: New Rule

@@ -45,7 +45,7 @@ module SolidusFriendlyPromotions
       I18n.t(
         "solidus_friendly_promotions.adjustment_labels.#{adjustable.class.name.demodulize.underscore}",
         promotion: SolidusFriendlyPromotions::Promotion.model_name.human,
-        promotion_name: promotion.name
+        promotion_customer_label: promotion.customer_label
       )
     end
 
