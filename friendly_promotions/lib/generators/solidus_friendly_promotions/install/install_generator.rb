@@ -14,10 +14,6 @@ module SolidusFriendlyPromotions
         template "initializer.rb", "config/initializers/solidus_friendly_promotions.rb"
       end
 
-      def add_turbo_rails
-        run "bin/rails turbo:install"
-      end
-
       def add_migrations
         run "bin/rails railties:install:migrations FROM=solidus_friendly_promotions"
       end
