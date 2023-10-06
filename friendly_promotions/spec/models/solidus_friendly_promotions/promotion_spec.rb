@@ -6,6 +6,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   let(:promotion) { described_class.new }
 
   it { is_expected.to belong_to(:category).optional }
+  it { is_expected.to respond_to(:customer_label) }
   it { is_expected.to have_many :rules }
 
   describe "lane" do
@@ -23,26 +24,11 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "validations" do
-    before do
-      @valid_promotion = described_class.new name: "A promotion"
-    end
+    subject(:promotion) { build(:friendly_promotion) }
 
-    it "valid_promotion is valid" do
-      expect(@valid_promotion).to be_valid
-    end
-
-    it "validates usage limit" do
-      @valid_promotion.usage_limit = -1
-      expect(@valid_promotion).not_to be_valid
-
-      @valid_promotion.usage_limit = 100
-      expect(@valid_promotion).to be_valid
-    end
-
-    it "validates name" do
-      @valid_promotion.name = nil
-      expect(@valid_promotion).not_to be_valid
-    end
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:customer_label) }
+    it { is_expected.to validate_numericality_of(:usage_limit).is_greater_than(0) }
   end
 
   describe ".advertised" do

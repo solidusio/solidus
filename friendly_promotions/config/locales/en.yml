@@ -121,6 +121,7 @@ en:
     attributes:
       solidus_friendly_promotions/promotion:
         active: Active
+        customer_label: Customer-facing label
         lanes:
           pre: Pre
           default: Default

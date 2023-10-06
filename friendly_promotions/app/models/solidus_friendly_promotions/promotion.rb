@@ -9,7 +9,7 @@ module SolidusFriendlyPromotions
     has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode"
     has_many :code_batches, class_name: "SolidusFriendlyPromotions::PromotionCodeBatch"
 
-    validates :name, presence: true
+    validates :name, :customer_label, presence: true
     validates :path, uniqueness: {allow_blank: true, case_sensitive: true}
     validates :usage_limit, numericality: {greater_than: 0, allow_nil: true}
     validates :per_code_usage_limit, numericality: {greater_than_or_equal_to: 0, allow_nil: true}

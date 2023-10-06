@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :friendly_promotion, class: "SolidusFriendlyPromotions::Promotion" do
     name { "Promo" }
+    customer_label { "Because we like you" }
 
     transient do
       code { nil }
