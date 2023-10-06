@@ -8,26 +8,32 @@ module Spree
     end
 
     def authorize(_money, credit_card, _options = {})
+      message_detail = " - #{__method__}"
+
       if VALID_CCS.include? credit_card.number
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, { message: FAILURE_MESSAGE }, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, { message: FAILURE_MESSAGE }, test: true)
       end
     end
 
     def purchase(_money, credit_card, _options = {})
+      message_detail = " - #{__method__}"
+
       if VALID_CCS.include? credit_card.number
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, message: FAILURE_MESSAGE, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, message: FAILURE_MESSAGE, test: true)
       end
     end
 
     def void(_response_code, options = {})
+      message_detail = " - #{__method__}"
+
       if options[:originator].completed?
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE)
       else
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE)
       end
     end
   end
