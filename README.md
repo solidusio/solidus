@@ -113,7 +113,7 @@ The storefront will be accessible at
 [http://localhost:3000/](http://localhost:3000/) and the admin can be found at
 [http://localhost:3000/admin/](http://localhost:3000/admin/).
 
-For information on how to customize your store, check out the [customization guides](https://guides.solidus.io/developers/customizations/overview.html).
+For information on how to customize your store, check out the [customization guides](https://guides.solidus.io/customization/customizing-your-storefront).
 
 ### Default Username/Password
 
