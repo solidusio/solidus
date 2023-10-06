@@ -1,7 +1,7 @@
 <%= turbo_frame_tag @promotion, "new_#{@level}_promotion_rule" do %>
   <div class="promotion_rule promotion-block">
     <h6 class='promotion-title'> <%= t(:add_rule, scope: :solidus_friendly_promotions) %></h6>
-    <%= link_to_with_icon 'trash', '', spree.edit_admin_promotion_path(@promotion), class: 'delete' %>
+    <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.edit_admin_promotion_path(@promotion), class: 'delete' %>
     <%= render 'type_select', level: @level %>
     <% flash.each do |severity, message| %>
       <%= content_tag(:div, "", data: { controller: :flash, severity: severity, message: message }) %>

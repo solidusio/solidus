@@ -1,5 +1,5 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), solidus_friendly_promotions.admin_promotions_path) %>
-<% admin_breadcrumb(link_to plural_resource_name(Spree::PromotionCategory), solidus_friendly_promotions.admin_promotion_categories_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(SolidusFriendlyPromotions::Promotion), solidus_friendly_promotions.admin_promotions_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(SolidusFriendlyPromotions::PromotionCategory), solidus_friendly_promotions.admin_promotion_categories_path) %>
 <% admin_breadcrumb(t('spree.new_promotion_category')) %>
 
 <%= form_for :promotion_category, url: collection_url do |f| %>

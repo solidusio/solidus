@@ -1,6 +1,6 @@
-<% admin_breadcrumb link_to plural_resource_name(Spree::Promotion), solidus_friendly_promotions.admin_promotions_path %>
+<% admin_breadcrumb link_to plural_resource_name(SolidusFriendlyPromotions::Promotion), solidus_friendly_promotions.admin_promotions_path %>
 <% admin_breadcrumb link_to(@promotion.name, solidus_friendly_promotions.edit_admin_promotion_path(@promotion)) %>
-<% admin_breadcrumb plural_resource_name(Spree::PromotionCode) %>
+<% admin_breadcrumb plural_resource_name(SolidusFriendlyPromotions::PromotionCode) %>
 
 <% content_for :page_actions do %>
   <li>

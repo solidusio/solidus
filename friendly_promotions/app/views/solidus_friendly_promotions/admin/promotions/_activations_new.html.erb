@@ -28,7 +28,7 @@
 
     <div data-activation-type="single_code">
       <div class="field">
-        <%= label_tag :single_code, Spree::PromotionCode.model_name.human, class: "required" %>
+        <%= label_tag :single_code, SolidusFriendlyPromotions::PromotionCode.model_name.human, class: "required" %>
         <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth", required: true %>
       </div>
     </div>

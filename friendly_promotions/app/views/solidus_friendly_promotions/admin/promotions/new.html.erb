@@ -1,6 +1,6 @@
 <% admin_layout "full-width" %>
 
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), solidus_friendly_promotions.admin_promotions_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(SolidusFriendlyPromotions::Promotion), solidus_friendly_promotions.admin_promotions_path) %>
 <% admin_breadcrumb(t('solidus_friendly_promotions.new_promotion')) %>
 
 <%= form_for @promotion, url: collection_url do |f| %>
