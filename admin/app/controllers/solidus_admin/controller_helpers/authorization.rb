@@ -5,6 +5,10 @@ module SolidusAdmin::ControllerHelpers::Authorization
 
   included do
     before_action :authorize_solidus_admin_user!
+
+    rescue_from CanCan::AccessDenied do
+      render 'unauthorized', status: :forbidden
+    end
   end
 
   private

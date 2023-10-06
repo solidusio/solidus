@@ -15,9 +15,21 @@ describe SolidusAdmin::BaseController, type: :controller do
       allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
-    it "redirects to unauthorized" do
+    it "redirects to unauthorized for no user" do
       get :index
       expect(response).to redirect_to '/unauthorized'
+    end
+
+    context "with a user without update permission" do
+      before do
+        user = create(:user, email: 'user@example.com')
+        allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(user)
+      end
+
+      it "redirects to unauthorized" do
+        get :index
+        expect(response).to have_http_status(:forbidden)
+      end
     end
   end
 
