@@ -1,0 +1,7 @@
+en:
+  solidus_admin:
+    errors:
+      authorization:
+        access_denied:
+          title: "Access Denied"
+          description: "You are not authorized to access this page."

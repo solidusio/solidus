@@ -5,6 +5,10 @@ module SolidusAdmin::ControllerHelpers::Authorization
 
   included do
     before_action :authorize_solidus_admin_user!
+
+    rescue_from CanCan::AccessDenied do
+      render 'unauthorized', status: :forbidden
+    end
   end
 
   private
@@ -17,7 +21,7 @@ module SolidusAdmin::ControllerHelpers::Authorization
     subject = authorization_subject
 
     authorize! :admin, subject
-    authorize! action_name, subject
+    authorize! action_name.to_sym, subject
   end
 
   def authorization_subject
