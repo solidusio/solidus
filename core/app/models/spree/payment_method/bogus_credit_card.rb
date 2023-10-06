@@ -33,7 +33,7 @@ module Spree
       if VALID_CCS.include?(credit_card.number) || (profile_id && profile_id.starts_with?('BGS-'))
         ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'D' })
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE  + message_detail, { message: FAILURE_MESSAGE + message_detail }, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, { message: FAILURE_MESSAGE + message_detail }, test: true)
       end
     end
 
