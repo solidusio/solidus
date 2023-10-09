@@ -2,6 +2,13 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  spree:
+    admin:
+      tab:
+        promotions: Promotions
+        promotion_categories: Promotion Categories
+        legacy_promotions: Legacy Promotions
+        legacy_promotion_categories: Legacy Promotion Categories
   solidus_friendly_promotions:
     actions: Actions
     adjustment_labels:
