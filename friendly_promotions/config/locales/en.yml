@@ -52,10 +52,11 @@ en:
         promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
     product_rule:
       choose_products: Choose products
-      label: Order must contain %{select} of these products
-      match_all: all
-      match_any: at least one
-      match_none: none
+      label: Order must contain %{select} these products
+      match_all: all of
+      match_any: at least one of
+      match_none: none of
+      match_only: only
       product_source:
         group: From product group
         manual: Manually choose

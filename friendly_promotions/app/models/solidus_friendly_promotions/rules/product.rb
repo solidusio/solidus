@@ -17,7 +17,7 @@ module SolidusFriendlyPromotions
         [:products]
       end
 
-      MATCH_POLICIES = %w[any all none].freeze
+      MATCH_POLICIES = %w[any all none only].freeze
 
       validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
@@ -47,6 +47,11 @@ module SolidusFriendlyPromotions
           end
         when "none"
           unless order_products(order).none? { |product| eligible_products.include?(product) }
+            eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product),
+              error_code: :has_excluded_product)
+          end
+        when "only"
+          unless order_products(order).all? { |product| eligible_products.include?(product) }
             eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product),
               error_code: :has_excluded_product)
           end

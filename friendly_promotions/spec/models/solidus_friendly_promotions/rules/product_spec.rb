@@ -113,6 +113,43 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
       end
     end
 
+    context "with 'only' match policy" do
+      let(:rule_options) { super().merge(preferred_match_policy: "only") }
+
+      it "is not eligible if none of the order's products are in eligible products" do
+        allow(rule).to receive_messages(order_products: [product_one])
+        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
+        expect(rule).not_to be_eligible(order)
+      end
+
+      it "is eligible if all of the order's products are in eligible products" do
+        allow(rule).to receive_messages(order_products: [product_one])
+        allow(rule).to receive_messages(eligible_products: [product_one])
+        expect(rule).to be_eligible(order)
+      end
+
+      context "when any of the order's products are in eligible products" do
+        before do
+          allow(rule).to receive_messages(order_products: [product_one, product_two])
+          allow(rule).to receive_messages(eligible_products: [product_two, product_three])
+        end
+
+        it { expect(rule).not_to be_eligible(order) }
+
+        it "sets an error message" do
+          rule.eligible?(order)
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "Your cart contains a product that prevents this coupon code from being applied."
+        end
+
+        it "sets an error code" do
+          rule.eligible?(order)
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :has_excluded_product
+        end
+      end
+    end
+
     context "with an invalid match policy" do
       let(:rule) do
         described_class.create!(
