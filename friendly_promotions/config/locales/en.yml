@@ -81,11 +81,11 @@ en:
           starts_at_placeholder: Immediately
         edit:
           order_rules: Order Rules
-        promotion_status:
-          active: Active
-          expired: Expired
-          inactive: Inactive
-          not_started: Not started
+      promotion_status:
+        active: Active
+        expired: Expired
+        inactive: Inactive
+        not_started: Not started
     promotion_code_batch_mailer:
       promotion_code_batch_errored:
         message: 'Promotion code batch errored (%{error}) for promotion: '
