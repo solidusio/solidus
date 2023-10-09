@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require "spree"
+require "solidus_core"
+require "solidus_backend"
+require "solidus_support"
 require "turbo-rails"
 require "importmap-rails"
 require "stimulus-rails"
