@@ -1,0 +1,8 @@
+<ul class="admin-subnav" data-hook="admin_promotion_sub_tabs">
+  <% if can? :admin, SolidusFriendlyPromotions::Promotion %>
+    <%= tab url: solidus_friendly_promotions.admin_promotions_path, label: :promotions %>
+  <% end %>
+  <% if can? :admin, SolidusFriendlyPromotions::PromotionCategory %>
+    <%= tab url: solidus_friendly_promotions.admin_promotion_categories_path, label: :promotion_categories %>
+  <% end %>
+</ul>
