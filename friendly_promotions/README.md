@@ -16,6 +16,21 @@ The design decision here is to make the code path easier to follow, and conseque
 
 `SolidusFriendlyShipping::Promotion` objects have rules and actions, just like `Spree::Promotion`. However, both rules and actions work slightly differently.
 
+### Promotion lanes
+
+Promotions get applied by "lane". Promotions within a lane conflict with each other, whereas promotions that do not share a lane will apply sequentially in the order of the lanes. By default these are "pre", "default" and "post", but you can configure this using the SolidusFriendlyPromotions initializer:
+
+```rb
+SolidusFriendlyPromotions.configure do |config|
+  config.preferred_lanes = {
+    pre: 0,
+    default: 1,
+    grogu: 2,
+    post: 3
+  }
+end
+```
+
 ### Promotion Rules
 
 Promotion rules can be applicable to either `Spree::Order`, `Spree::LineItem`, or `Spree::Shipment` objects. If they are applicable, they will be asked for eligibility. Rules applicable to orders are processed first. If a promotion has a rule that makes it ineligible for an order, line items and shipments will not be adjusted. If there are no rules that are applicable, the promotion will be considered eligible.

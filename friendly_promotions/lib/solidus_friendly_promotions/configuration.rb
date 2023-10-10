@@ -22,6 +22,12 @@ module SolidusFriendlyPromotions
     # @!attribute [rw] promotions_per_page
     #   @return [Integer] Promotions to show per-page in the admin (default: +25+)
     preference :promotions_per_page, :integer, default: 25
+
+    preference :lanes, :hash, default: {
+      pre: 0,
+      default: 1,
+      post: 2
+    }
   end
 
   class << self

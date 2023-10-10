@@ -29,11 +29,7 @@ module SolidusFriendlyPromotions
       joins(:actions).distinct
     end
 
-    enum lane: {
-      pre: 0,
-      default: 1,
-      post: 2
-    }
+    enum lane: SolidusFriendlyPromotions.config.preferred_lanes
 
     def self.human_enum_name(enum_name, enum_value)
       I18n.t("activerecord.attributes.#{model_name.i18n_key}.#{enum_name.to_s.pluralize}.#{enum_value}")
