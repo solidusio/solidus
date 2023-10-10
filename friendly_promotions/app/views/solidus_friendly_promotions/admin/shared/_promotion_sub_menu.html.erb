@@ -5,4 +5,10 @@
   <% if can? :admin, SolidusFriendlyPromotions::PromotionCategory %>
     <%= tab url: solidus_friendly_promotions.admin_promotion_categories_path, label: :promotion_categories %>
   <% end %>
+  <% if can? :admin, Spree::Promotion && Spree::Promotion.any? %>
+    <%= tab url: spree.admin_promotions_path, label: :legacy_promotions %>
+  <% end %>
+  <% if can? :admin, Spree::PromotionCategory && Spree::PromotionCategory.any? %>
+    <%= tab url: spree.admin_promotion_categories_path, label: :legacy_promotion_categories %>
+  <% end %>
 </ul>
