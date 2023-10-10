@@ -54,12 +54,17 @@ RSpec.describe "Promotion System" do
   context "with two promotions that should stack" do
     let(:shirt) { create(:product, name: "Shirt", price: 30) }
     let(:pants) { create(:product, name: "Pants", price: 40) }
+    let(:discounted_item_total_rule_amount) { 60 }
+    let(:discounted_item_total_rule) do
+      SolidusFriendlyPromotions::Rules::DiscountedItemTotal.new(preferred_amount: discounted_item_total_rule_amount)
+    end
 
     let!(:distributed_amount_promo) do
       create(:friendly_promotion,
         :with_adjustable_action,
         preferred_amount: 10.0,
         apply_automatically: true,
+        rules: [discounted_item_total_rule],
         lane: :post,
         calculator_class: SolidusFriendlyPromotions::Calculators::DistributedAmount)
     end
@@ -91,6 +96,21 @@ RSpec.describe "Promotion System" do
       expect(order.item_total).to eq(70.00)
       expect(order.item_total_before_tax).to eq(54)
       expect(order.line_items.flat_map(&:adjustments).length).to eq(3)
+    end
+
+    context "if the post lane promotion is ineligible" do
+      let(:discounted_item_total_rule_amount) { 68 }
+
+      it "does all the right things" do
+        expect(order.adjustments).to be_empty
+        # shirt: 30 USD - 20% = 24 USD
+        # Remaining total: 64 USD
+        # The 10 off promotion does not apply because now the order total is below 68
+        expect(order.total).to eq(64.00)
+        expect(order.item_total).to eq(70.00)
+        expect(order.item_total_before_tax).to eq(64)
+        expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
+      end
     end
   end
 

@@ -6,8 +6,7 @@ module SolidusFriendlyPromotions
 
     def initialize(order)
       @order = order
-      possible_promotions = PromotionLoader.new(order: order).call
-      @promotions = PromotionEligibility.new(promotable: order, possible_promotions: possible_promotions).call
+      @promotions = PromotionLoader.new(order: order).call
     end
 
     def call
@@ -16,7 +15,10 @@ module SolidusFriendlyPromotions
       order.reset_current_discounts
 
       SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
-        lane_promotions = promotions.select { |promotion| promotion.lane == lane }
+        lane_promotions = PromotionEligibility.new(
+          promotable: order,
+          possible_promotions: promotions.select { |promotion| promotion.lane == lane }
+        ).call
         item_discounter = ItemDiscounter.new(promotions: lane_promotions)
         line_item_discounts = adjust_line_items(item_discounter)
         shipment_discounts = adjust_shipments(item_discounter)
