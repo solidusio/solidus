@@ -26,9 +26,65 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
   def filters
     [
       {
-        name: 'q[completed_at_not_null]',
-        value: 1,
-        label: t('.filters.only_show_complete_orders'),
+        presentation: t('.filters.status'),
+        combinator: 'or',
+        attribute: "state",
+        predicate: "eq",
+        options: Spree::Order.state_machines[:state].states.map do |state|
+          [
+            state.value.titleize,
+            state.value
+          ]
+        end
+      },
+
+      {
+        presentation: t('.filters.shipment_state'),
+        combinator: 'or',
+        attribute: "shipment_state",
+        predicate: "eq",
+        options: %i[backorder canceled partial pending ready shipped].map do |option|
+          [
+            option.to_s.capitalize,
+            option
+          ]
+        end
+      },
+      {
+        presentation: t('.filters.payment_state'),
+        combinator: 'or',
+        attribute: "payment_state",
+        predicate: "eq",
+        options: %i[balance_due checkout completed credit_owed invalid paid pending processing void].map do |option|
+          [
+            option.to_s.titleize,
+            option
+          ]
+        end
+      },
+      {
+        presentation: t('.filters.variants'),
+        combinator: 'or',
+        attribute: "line_items_variant_id",
+        predicate: "in",
+        options: Spree::Variant.all.map do |variant|
+          [
+            variant.descriptive_name,
+            variant.id
+          ]
+        end
+      },
+      {
+        presentation: t('.filters.promotions'),
+        combinator: 'or',
+        attribute: "promotions_id",
+        predicate: "in",
+        options: Spree::Promotion.all.map do |promotion|
+          [
+            promotion.name,
+            promotion.id
+          ]
+        end
       },
     ]
   end

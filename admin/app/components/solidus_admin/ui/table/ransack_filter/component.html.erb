@@ -1,0 +1,73 @@
+<div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
+  <input type="hidden" form="<%= @form %>"
+         name="<%= @combinator.name %>"
+         value="<%= @combinator.value %>">
+
+  <details class="relative inline-block text-left" data-<%= stimulus_id %>-target="details">
+    <summary class="
+      inline-flex justify-center
+      rounded-full border border-gray-300
+      shadow-sm
+      px-3 py-2
+      text-sm font-medium text-gray-700
+      hover:bg-gray-50
+      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500
+      [&::marker]:hidden
+      [&::-webkit-details-marker]:hidden
+      cursor-default
+    " data-<%= stimulus_id %>-target="summary">
+      <%= @presentation %>
+      <%= render component("ui/icon").new(name: 'arrow-down-s-fill', class: "w-[1.4em] h-[1.4em]") %>
+    </summary>
+
+    <div class="
+      absolute
+      left-0 mt-2 w-56
+      rounded-md shadow-lg
+      bg-white
+      ring-1 ring-black ring-opacity-5
+    ">
+      <div class="relative">
+        <% if @selections.size > 6 %>
+          <div class="px-4 py-2 sticky top-0 z-50">
+            <input type="text"
+                   placeholder="<%= t('.search') %>"
+                   class="w-full px-2 py-1 border border-gray-300 rounded focus:border-indigo-500 focus:ring-indigo-500"
+                   data-action="input-><%= stimulus_id %>#filterOptions">
+          </div>
+        <% end %>
+        <div class="py-1 max-h-[240px] overflow-y-auto" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" data-<%= stimulus_id %>-target="menu">
+          <% if @selections.any? %>
+            <% @selections.each do |selection| %>
+              <div class="px-4 py-2" data-<%= stimulus_id %>-target="option">
+                <input type="hidden" form="<%= @form %>"
+                       name="<%= selection.attribute.name %>"
+                       value="<%= selection.attribute.value %>">
+                <input type="hidden" form="<%= @form %>"
+                       name="<%= selection.predicate.name %>"
+                       value="<%= selection.predicate.value %>">
+
+                <%= render component('ui/forms/checkbox').new(
+                     id: selection.id,
+                     name: selection.option.name,
+                     value: selection.option.value,
+                     checked: selection.checked,
+                     size: :s,
+                     form: @form,
+                     "data-action": "#{stimulus_id}#search #{stimulus_id}#sortCheckboxes",
+                     "data-#{stimulus_id}-target": "checkbox"
+                   ) %>
+
+                <%= label_tag selection.id, selection.presentation, class: "ml-2 text-sm text-gray-700" %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="px-4 py-2 text-sm text-gray-700">
+              <%= t('.no_filter_options') %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </details>
+</div>

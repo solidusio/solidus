@@ -75,10 +75,10 @@ module SolidusAdmin
     #   The key that specifies the attributes for searching orders within the admin interface.
     #   This preference controls which attributes of an order are used in search queries.
     #   By default, it is set to
-    #   'number_shipments_number_or_bill_address_name_or_email_order_promotions_promotion_code_value_cont',
-    #   enabling a search across order number, shipment number, billing address name, email, and promotion code value.
+    #   'number_or_shipments_number_or_bill_address_name_or_email_cont',
+    #   enabling a search across order number, shipment number, billing address name, email.
     #   @return [String] The search key used to determine order attributes for search.
-    preference :order_search_key, :string, default: :number_or_shipments_number_or_bill_address_name_or_email_or_order_promotions_promotion_code_value_cont
+    preference :order_search_key, :string, default: :number_or_shipments_number_or_bill_address_name_or_email_cont
 
     # @!attribute [rw] products_per_page
     #   @return [Integer] The number of products to display per page in the admin interface.
