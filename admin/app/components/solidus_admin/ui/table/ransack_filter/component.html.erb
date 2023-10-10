@@ -47,6 +47,7 @@
                      value="<%= selection.predicate.value %>">
 
               <%= render component('ui/forms/checkbox').new(
+                   id: selection.id,
                    name: selection.option.name,
                    value: selection.option.value,
                    checked: selection.checked,
@@ -56,7 +57,7 @@
                    "data-#{stimulus_id}-target": "checkbox"
                  ) %>
 
-              <%= label_tag nil, selection.presentation, class: "ml-2 text-sm text-gray-700" %>
+              <%= label_tag selection.id, selection.presentation, class: "ml-2 text-sm text-gray-700" %>
             </div>
           <% end %>
         </div>
