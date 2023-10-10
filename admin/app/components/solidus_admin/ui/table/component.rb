@@ -134,14 +134,13 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     cell = data.public_send(cell) if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
-    content_tag(:td, content_tag(:div, cell, class: "flex items-center gap-1.5"), class: "py-2 px-4 h-10 vertical-align-middle leading-none")
-  end
-
-  def row_class_for(row)
-    classes = ['border-b', 'border-gray-100']
-    classes << ['bg-gray-15', 'text-gray-700'] if @fade_row_proc&.call(row)
-
-    classes.join(' ')
+    tag.td(
+      tag.div(cell, class: "flex items-center gap-1.5"),
+      class: "
+        py-2 px-4 h-10 vertical-align-middle leading-none
+        [tr:last-child_&:first-child]:rounded-bl-lg [tr:last-child_&:last-child]:rounded-br-lg
+      ",
+    )
   end
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
