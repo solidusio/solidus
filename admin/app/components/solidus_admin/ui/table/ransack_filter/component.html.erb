@@ -37,27 +37,33 @@
           </div>
         <% end %>
         <div class="py-1 max-h-[240px] overflow-y-auto" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" data-<%= stimulus_id %>-target="menu">
-          <% @selections.each do |selection| %>
-            <div class="px-4 py-2" data-<%= stimulus_id %>-target="option">
-              <input type="hidden" form="<%= @form %>"
-                     name="<%= selection.attribute.name %>"
-                     value="<%= selection.attribute.value %>">
-              <input type="hidden" form="<%= @form %>"
-                     name="<%= selection.predicate.name %>"
-                     value="<%= selection.predicate.value %>">
+          <% if @selections.any? %>
+            <% @selections.each do |selection| %>
+              <div class="px-4 py-2" data-<%= stimulus_id %>-target="option">
+                <input type="hidden" form="<%= @form %>"
+                       name="<%= selection.attribute.name %>"
+                       value="<%= selection.attribute.value %>">
+                <input type="hidden" form="<%= @form %>"
+                       name="<%= selection.predicate.name %>"
+                       value="<%= selection.predicate.value %>">
 
-              <%= render component('ui/forms/checkbox').new(
-                   id: selection.id,
-                   name: selection.option.name,
-                   value: selection.option.value,
-                   checked: selection.checked,
-                   size: :s,
-                   form: @form,
-                   "data-action": "#{stimulus_id}#search #{stimulus_id}#sortCheckboxes",
-                   "data-#{stimulus_id}-target": "checkbox"
-                 ) %>
+                <%= render component('ui/forms/checkbox').new(
+                     id: selection.id,
+                     name: selection.option.name,
+                     value: selection.option.value,
+                     checked: selection.checked,
+                     size: :s,
+                     form: @form,
+                     "data-action": "#{stimulus_id}#search #{stimulus_id}#sortCheckboxes",
+                     "data-#{stimulus_id}-target": "checkbox"
+                   ) %>
 
-              <%= label_tag selection.id, selection.presentation, class: "ml-2 text-sm text-gray-700" %>
+                <%= label_tag selection.id, selection.presentation, class: "ml-2 text-sm text-gray-700" %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="px-4 py-2 text-sm text-gray-700">
+              <%= t('.no_filter_options') %>
             </div>
           <% end %>
         </div>
