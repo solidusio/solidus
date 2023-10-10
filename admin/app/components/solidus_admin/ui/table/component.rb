@@ -20,11 +20,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   # @option batch_actions [String] :action The batch action path.
   # @option batch_actions [String] :method The batch action HTTP method for the provided path.
   #
-  #
-  # @param filters [Array<Hash>] The array of filter definitions.
-  # @option filters [String] :name The filter's name.
-  # @option filters [Any] :value The filter's value.
-  # @option filters [String] :label The filter's label.
+  # @param filters [Array<Hash>] The list of filter configurations to render.
+  # @option filters [String] :presentation The display name of the filter dropdown.
+  # @option filters [String] :combinator The combining logic of the filter dropdown.
+  # @option filters [String] :attribute The database attribute this filter modifies.
+  # @option filters [String] :predicate The predicate used for this filter (e.g., "eq" for equals).
+  # @option filters [Array<Array>] :options An array of arrays, each containing two elements:
+  #     1. A human-readable presentation of the filter option (e.g., "Active").
+  #     2. The actual value used for filtering (e.g., "active").
   #
   # @param prev_page_link [String, nil] The link to the previous page.
   # @param next_page_link [String, nil] The link to the next page.
@@ -113,6 +116,19 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def render_ransack_filter_dropdown(filter, index)
+    render component("ui/table/ransack_filter").new(
+      presentation: filter.presentation,
+      search_param: @search_param,
+      combinator: filter.combinator,
+      attribute: filter.attribute,
+      predicate: filter.predicate,
+      options: filter.options,
+      form: search_form_id,
+      index: index,
+    )
+  end
+
   def render_header_cell(cell, **attrs)
     cell = cell.call if cell.respond_to?(:call)
     cell = @model_class.human_attribute_name(cell) if cell.is_a?(Symbol)
@@ -145,6 +161,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
 
   Column = Struct.new(:header, :data, :class_name, keyword_init: true)
   BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
-  Filter = Struct.new(:name, :value, :label, keyword_init: true)
+  Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
   private_constant :Column, :BatchAction, :Filter
 end

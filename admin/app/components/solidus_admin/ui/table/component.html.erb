@@ -6,6 +6,7 @@
   "
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-selected-row-class="bg-gray-15"
+  data-action="<%= component("ui/table/ransack_filter").stimulus_id %>:search-><%= stimulus_id %>#search"
 >
   <% toolbar_classes = "
     h-14 p-2 bg-white border-b border-gray-100
@@ -59,18 +60,8 @@
 
     <% if @filters.any? %>
       <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="filterToolbar">
-        <div class="font-semibold text-gray-700 text-sm px-2"><%= t('.refine_search') %>:</div>
-        <% @filters.each do |filter| %>
-          <label class="flex gap-2 px-2">
-            <%= render component('ui/forms/checkbox').new(
-              name: filter[:name],
-              value: filter[:value],
-              size: :s,
-              form: search_form_id,
-              'data-action': "#{stimulus_id}#search",
-            ) %>
-            <span class="text-gray-700 leading-none text-sm self-center"><%= filter[:label] %></span>
-          </label>
+        <% @filters.each_with_index do |filter, index| %>
+          <%= render_ransack_filter_dropdown(filter, index) %>
         <% end %>
       </div>
     <% end %>
