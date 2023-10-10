@@ -26,7 +26,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   def before_render
     @selections = @options.map.with_index do |(label, value), opt_index|
       Selection.new(
-        "#{stimulus_id}--#{label}-#{value}",
+        "#{stimulus_id}--#{label}-#{value}".parameterize,
         label,
         build(:attribute, @attribute, opt_index),
         build(:predicate, @predicate, opt_index),
