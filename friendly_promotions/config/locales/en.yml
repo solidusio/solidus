@@ -114,6 +114,7 @@ en:
       solidus_friendly_promotions/rules/first_order: First Order
       solidus_friendly_promotions/rules/first_repeat_purchase_since: First Repeat Purchase Since
       solidus_friendly_promotions/rules/item_total: Item Total
+      solidus_friendly_promotions/rules/discounted_item_total: Item Total after previous lanes
       solidus_friendly_promotions/rules/landing_page: Landing Page
       solidus_friendly_promotions/rules/nth_order: Nth Order
       solidus_friendly_promotions/rules/one_use_per_user: One Use Per User

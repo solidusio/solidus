@@ -21,6 +21,10 @@ module SolidusFriendlyPromotions
       super
     end
 
+    def discountable_item_total
+      line_items.sum(&:discountable_amount)
+    end
+
     def reset_current_discounts
       line_items.each(&:reset_current_discounts)
       shipments.each(&:reset_current_discounts)

@@ -83,6 +83,7 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Rules::FirstOrder",
     "SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince",
     "SolidusFriendlyPromotions::Rules::ItemTotal",
+    "SolidusFriendlyPromotions::Rules::DiscountedItemTotal",
     "SolidusFriendlyPromotions::Rules::NthOrder",
     "SolidusFriendlyPromotions::Rules::OneUsePerUser",
     "SolidusFriendlyPromotions::Rules::OptionValue",
