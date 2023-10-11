@@ -4,10 +4,10 @@ module SolidusFriendlyPromotions
   class Promotion < Spree::Base
     belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory",
       foreign_key: :promotion_category_id, optional: true
-    has_many :rules, class_name: "SolidusFriendlyPromotions::PromotionRule"
-    has_many :actions, class_name: "SolidusFriendlyPromotions::PromotionAction"
-    has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode"
-    has_many :code_batches, class_name: "SolidusFriendlyPromotions::PromotionCodeBatch"
+    has_many :rules, class_name: "SolidusFriendlyPromotions::PromotionRule", dependent: :destroy
+    has_many :actions, class_name: "SolidusFriendlyPromotions::PromotionAction", dependent: :nullify
+    has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode", dependent: :destroy
+    has_many :code_batches, class_name: "SolidusFriendlyPromotions::PromotionCodeBatch", dependent: :destroy
 
     validates :name, :customer_label, presence: true
     validates :path, uniqueness: {allow_blank: true, case_sensitive: true}

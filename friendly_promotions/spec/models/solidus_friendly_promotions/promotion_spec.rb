@@ -17,6 +17,18 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
+  describe "#destroy" do
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+
+    subject { promotion.destroy! }
+
+    it "destroys the promotion and nullifies the action" do
+      expect { subject }.to change { SolidusFriendlyPromotions::Promotion.count }.by(-1)
+      expect(SolidusFriendlyPromotions::PromotionAction.count).to eq(1)
+      expect(SolidusFriendlyPromotions::PromotionAction.first.promotion_id).to be nil
+    end
+  end
+
   describe ".ordered_lanes" do
     subject { described_class.ordered_lanes }
 
