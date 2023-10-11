@@ -1,0 +1,31 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    In Stock
+  </h6>
+
+  <%= render current_component.new(on_hand: 32, variants_count: 12) %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Infinite stock
+  </h6>
+
+  <%= render current_component.new(on_hand: Float::INFINITY, variants_count: 12) %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Out of stock
+  </h6>
+
+  <%= render current_component.new(on_hand: 0, variants_count: 12) %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Negative stock
+  </h6>
+
+  <%= render current_component.new(on_hand: -10, variants_count: 12) %>
+</div>

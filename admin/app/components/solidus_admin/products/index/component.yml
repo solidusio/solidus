@@ -1,10 +1,6 @@
 en:
   product_image: 'Image'
   add_product: 'Add Product'
-  stock:
-    infinity: '∞'
-    in_stock: '%{on_hand} in stock'
-  for_variants: 'for %{count} variants'
   batch_actions:
     delete: 'Delete'
     discontinue: 'Discontinue'
