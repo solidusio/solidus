@@ -158,7 +158,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :payment,
       data: ->(order) do
-        component('ui/badge').new(name: order.payment_state&.humanize, color: order.paid? ? :green : :yellow)
+        component('ui/badge').new(name: order.payment_state.humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
       end
     }
   end
@@ -167,7 +167,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :shipment,
       data: ->(order) do
-        component('ui/badge').new(name: order.shipment_state&.humanize, color: order.shipped? ? :green : :yellow)
+        component('ui/badge').new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
       end
     }
   end
