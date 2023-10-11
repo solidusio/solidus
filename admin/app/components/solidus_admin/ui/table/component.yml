@@ -7,5 +7,4 @@ en:
   search_placeholder: 'Search all %{resources}'
   refine_search: 'Refine Search'
   batch_actions: Batch actions
-  clear: Clear
   cancel: Cancel

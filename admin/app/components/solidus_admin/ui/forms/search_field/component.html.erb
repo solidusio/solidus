@@ -1,0 +1,20 @@
+<label
+  data-controller="<%= stimulus_id %>"
+  class="items-center gap-1 p-0 inline-flex w-full justify-start relative"
+>
+  <%= render component("ui/icon").new(
+    name: "search-line",
+    class: "w-[1.4em] h-[1.4em] fill-gray-500 absolute ml-3",
+  ) %>
+  <%= render component("ui/forms/input").new(**@attributes) %>
+  <button
+    class="absolute right-0 mr-3 peer-placeholder-shown:hidden"
+    data-action="<%= stimulus_id %>#clear"
+    aria-label="<%= t('.clear') %>"
+  >
+    <%= render component("ui/icon").new(
+      name: "close-circle-fill",
+      class: "w-[1.4em] h-[1.4em] fill-gray-500"
+    ) %>
+  </button>
+</label>
