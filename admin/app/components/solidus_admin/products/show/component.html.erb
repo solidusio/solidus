@@ -9,7 +9,7 @@
     ) %>
     <h1 class="flex items-center gap-2">
       <span class="body-title"><%= @product.name %></span>
-      <%= render component("products/status").new(product: @product) %>
+      <%= render component("products/status").from_product(@product) %>
     </h1>
 
     <div class="ml-auto flex gap-2 items-center">

@@ -96,7 +96,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def status_column
     {
       header: :status,
-      data: ->(product) { component('products/status').new(product: product) }
+      data: ->(product) { component('products/status').from_product(product) }
     }
   end
 

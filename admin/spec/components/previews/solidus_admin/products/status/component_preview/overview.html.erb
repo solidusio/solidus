@@ -1,16 +1,15 @@
-<table>
-  <thead>
-    <tr>
-      <% definitions.each_key do |status| %>
-        <th class="px-3 py-1 text-gray-500 text-center"><%= status.to_s.humanize %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <% definitions.each_value do |component| %>
-        <th class="px-3 py-1"><%= render component %></th>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Available
+  </h6>
+
+  <%= render current_component.new(status: :available) %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Discontinued
+  </h6>
+
+  <%= render current_component.new(status: :discontinued) %>
+</div>

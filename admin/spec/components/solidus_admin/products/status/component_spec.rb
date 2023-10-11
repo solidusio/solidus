@@ -11,17 +11,17 @@ RSpec.describe SolidusAdmin::Products::Status::Component, type: :component do
     it "returns :available when the product is available" do
       product = Spree::Product.new(available_on: Time.current)
 
-      component = described_class.new(product: product)
+      render_inline described_class.from_product(product)
 
-      expect(component.status).to eq(:available)
+      expect(rendered_content).to have_text("Available")
     end
 
     it "returns :discontinued when the product is not available" do
       product = Spree::Product.new(available_on: nil)
 
-      component = described_class.new(product: product)
+      render_inline described_class.from_product(product)
 
-      expect(component.status).to eq(:discontinued)
+      expect(rendered_content).to have_text("Discontinued")
     end
   end
 end
