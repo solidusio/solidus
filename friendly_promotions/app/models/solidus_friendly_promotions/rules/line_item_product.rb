@@ -9,7 +9,7 @@ module SolidusFriendlyPromotions
       has_many :product_promotion_rules,
         dependent: :destroy,
         foreign_key: :promotion_rule_id,
-        class_name: "Spree::ProductPromotionRule"
+        class_name: "SolidusFriendlyPromotions::ProductsPromotionRule"
       has_many :products,
         class_name: "Spree::Product",
         through: :product_promotion_rules
