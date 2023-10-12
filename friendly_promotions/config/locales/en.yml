@@ -157,6 +157,7 @@ en:
         description: Only one use per user
       solidus_friendly_promotions/rules/option_value:
         description: Order includes specified product(s) with matching option value(s)
+        preferred_line_item_applicable: Should also apply to line items
       solidus_friendly_promotions/rules/line_item_option_value:
         description: Line Item has specified product with matching option value
       solidus_friendly_promotions/rules/product:
