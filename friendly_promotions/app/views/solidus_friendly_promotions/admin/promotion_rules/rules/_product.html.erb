@@ -15,4 +15,11 @@
     <%= form.label :preferred_match_policy, t('solidus_friendly_promotions.product_rule.label', select: select).html_safe %>
     </label>
   </div>
+
+  <div class="field">
+    <%= form.label :preferred_line_item_applicable do %>
+      <%= form.check_box :preferred_line_item_applicable %>
+      <%= promotion_rule.class.human_attribute_name(:preferred_line_item_applicable) %>
+    <% end %>
+  </div>
 <% end %>
