@@ -5,7 +5,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     @page = page
   end
 
-  class_attribute :fade_row_proc, default: ->(order) { order.paid? && order.shipped? }
+  class_attribute :row_fade, default: ->(order) { order.paid? && order.shipped? }
 
   def title
     Spree::Order.model_name.human.pluralize
@@ -105,12 +105,10 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :order,
       data: ->(order) do
-        order_path = spree.edit_admin_order_path(order)
-
-        if !fade_row_proc.call(order)
-          link_to order.number, order_path, class: 'font-semibold'
+        if !row_fade.call(order)
+          content_tag :div, order.number, class: 'font-semibold'
         else
-          link_to order.number, order_path
+          content_tag :div, order.number
         end
       end
     }

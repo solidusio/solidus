@@ -116,8 +116,9 @@
       <tbody class="bg-white text-3.5 line-[150%] text-black">
         <% @rows.each do |row| %>
           <tr
-            class="border-b border-gray-100 last:border-0 <%= 'bg-gray-15 text-gray-700' if @fade_row_proc&.call(row) %>"
+            class="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer <%= 'bg-gray-15 text-gray-700' if @row_fade&.call(row) %>"
             data-action="click-><%= stimulus_id %>#rowClicked"
+            data-primary-url="<%= @row_url&.call(row) %>"
           >
             <% @columns.each do |column| %>
               <%= render_data_cell(column.data, row) %>
