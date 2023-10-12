@@ -188,14 +188,22 @@ module SolidusAdmin
 
     def components
       @components ||= Hash.new do |_h, k|
-        "solidus_admin/#{k}/component".classify.constantize
-      rescue NameError
-        prefix = "#{ENGINE_ROOT}/app/components/solidus_admin/"
-        suffix = "/component.rb"
-        dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
-        corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(k.to_s)
+        const_name = "solidus_admin/#{k}/component".classify
 
-        raise ComponentNotFoundError, "Unknown component #{k}#{DidYouMean.formatter.message_for(corrections)}"
+        unless Object.const_defined?(const_name)
+          prefix = "#{ENGINE_ROOT}/app/components/solidus_admin/"
+          suffix = "/component.rb"
+          dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
+          corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(k.to_s)
+
+          raise ComponentNotFoundError.new(
+            "Unknown component #{k}#{DidYouMean.formatter.message_for(corrections)}",
+            k.classify,
+            receiver: ::SolidusAdmin
+          )
+        end
+
+        const_name.constantize
       end
     end
 
