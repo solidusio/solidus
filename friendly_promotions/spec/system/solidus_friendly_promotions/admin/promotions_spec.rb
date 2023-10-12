@@ -89,7 +89,7 @@ RSpec.describe "Promotions admin", type: :system do
       click_button("Create")
       expect(page).to have_content("March 2023 Giveaway")
       promotion = SolidusFriendlyPromotions::Promotion.first
-      within("#promotion_#{promotion.id}_new_order_promotion_rule") do
+      within("#new_order_promotion_rule_promotion_#{promotion.id}") do
         click_link("New Rule")
         select("First Order", from: "Type")
         click_button("Add")
@@ -103,7 +103,7 @@ RSpec.describe "Promotions admin", type: :system do
       expect(page).not_to have_content("Must be the customer's first order")
       expect(promotion.rules).to be_empty
 
-      within("#promotion_#{promotion.id}_new_order_promotion_rule") do
+      within("#new_order_promotion_rule_promotion_#{promotion.id}") do
         click_link("New Rule")
         select("Item Total", from: "Type")
         fill_in("promotion_rule_preferred_amount", with: 200)
@@ -120,7 +120,7 @@ RSpec.describe "Promotions admin", type: :system do
         expect(find("#promotion_rule_preferred_amount").value).to eq("300.00")
       end
 
-      within("#promotion_#{promotion.id}_new_promotion_action") do
+      within("#new_promotion_action_promotion_#{promotion.id}") do
         click_link("New Action")
         select("Discount matching line items", from: "Type")
         select("Flat Rate", from: "Calculator type")
@@ -130,13 +130,13 @@ RSpec.describe "Promotions admin", type: :system do
       expect(page).to have_selector("h6", text: "Discount matching line items")
       action = promotion.actions.first
 
-      within("#promotion_#{promotion.id}_actions_adjust_line_item_#{action.id}") do
+      within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do
         fill_in("promotion_action_calculator_attributes_preferred_amount", with: 30)
         click_button("Update")
       end
       expect(action.reload.calculator.preferred_amount).to eq(30)
 
-      within("#promotion_#{promotion.id}_actions_adjust_line_item_#{action.id}") do
+      within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do
         find(".delete").click
       end
       expect(page).to have_content("Promotion action has been successfully removed!")

@@ -1,4 +1,4 @@
-<%= turbo_frame_tag @promotion, promotion_action do %>
+<%= turbo_frame_tag @promotion, dom_id(promotion_action) do %>
   <div class="promotion_action promotion-block">
     <h6 class='promotion-title'> <%= promotion_action.model_name.human %></h6>
 
