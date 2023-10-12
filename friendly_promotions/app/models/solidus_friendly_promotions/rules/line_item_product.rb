@@ -4,6 +4,8 @@ module SolidusFriendlyPromotions
   module Rules
     # A rule to apply a promotion only to line items with or without a chosen product
     class LineItemProduct < PromotionRule
+      include LineItemLevelRule
+
       MATCH_POLICIES = %w[include exclude].freeze
 
       has_many :product_promotion_rules,
@@ -15,10 +17,6 @@ module SolidusFriendlyPromotions
         through: :product_promotion_rules
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
-
-      def applicable?(promotable)
-        promotable.is_a?(Spree::LineItem)
-      end
 
       def eligible?(line_item, _options = {})
         if inverse?
@@ -34,10 +32,6 @@ module SolidusFriendlyPromotions
 
       def product_ids_string=(product_ids)
         self.product_ids = product_ids.to_s.split(",").map(&:strip)
-      end
-
-      def updateable?
-        true
       end
 
       private

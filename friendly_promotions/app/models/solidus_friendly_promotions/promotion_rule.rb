@@ -24,6 +24,10 @@ module SolidusFriendlyPromotions
       raise NotImplementedError, "eligible? should be implemented in a sub-class of SolidusFriendlyPromotions::Rule"
     end
 
+    def level
+      raise NotImplementedError, "level should be implemented in a sub-class of SolidusFriendlyPromotions::Rule"
+    end
+
     def eligibility_errors
       @eligibility_errors ||= ActiveModel::Errors.new(self)
     end

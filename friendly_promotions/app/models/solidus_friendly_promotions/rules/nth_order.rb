@@ -3,15 +3,12 @@
 module SolidusFriendlyPromotions
   module Rules
     class NthOrder < PromotionRule
+      include OrderLevelRule
+
       preference :nth_order, :integer, default: 2
       # It does not make sense to have this apply to the first order using preferred_nth_order == 1
       # Instead we could use the first_order rule
       validates :preferred_nth_order, numericality: {only_integer: true, greater_than: 1}
-
-      # This promotion is applicable to orders only.
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
-      end
 
       # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
       #

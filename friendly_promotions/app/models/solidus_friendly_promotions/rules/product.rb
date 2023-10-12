@@ -7,6 +7,8 @@ module SolidusFriendlyPromotions
     # either come from assigned product group or are assingned directly to
     # the rule.
     class Product < PromotionRule
+      include OrderLevelRule
+
       has_many :products_promotion_rules,
         dependent: :destroy,
         foreign_key: :promotion_rule_id,
@@ -80,10 +82,6 @@ module SolidusFriendlyPromotions
 
       def product_ids_string=(product_ids)
         self.product_ids = product_ids.to_s.split(",").map(&:strip)
-      end
-
-      def updateable?
-        true
       end
 
       private

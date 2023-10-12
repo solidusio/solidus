@@ -3,6 +3,8 @@
 module SolidusFriendlyPromotions
   module Rules
     class Store < PromotionRule
+      include OrderLevelRule
+
       has_many :promotion_rules_stores, class_name: "SolidusFriendlyPromotions::PromotionRulesStore",
         foreign_key: :promotion_rule_id,
         dependent: :destroy
@@ -10,10 +12,6 @@ module SolidusFriendlyPromotions
 
       def preload_relations
         [:stores]
-      end
-
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
       end
 
       def eligible?(order, _options = {})

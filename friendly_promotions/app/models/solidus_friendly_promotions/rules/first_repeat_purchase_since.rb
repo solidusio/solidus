@@ -3,13 +3,10 @@
 module SolidusFriendlyPromotions
   module Rules
     class FirstRepeatPurchaseSince < PromotionRule
+      include OrderLevelRule
+
       preference :days_ago, :integer, default: 365
       validates :preferred_days_ago, numericality: {only_integer: true, greater_than: 0}
-
-      # This promotion is applicable to orders only.
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
-      end
 
       # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
       #

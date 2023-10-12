@@ -3,6 +3,8 @@
 module SolidusFriendlyPromotions
   module Rules
     class User < PromotionRule
+      include OrderLevelRule
+
       has_many :promotion_rules_users,
         class_name: "SolidusFriendlyPromotions::PromotionRulesUser",
         foreign_key: :promotion_rule_id,
@@ -11,10 +13,6 @@ module SolidusFriendlyPromotions
 
       def preload_relations
         [:users]
-      end
-
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
       end
 
       def eligible?(order, _options = {})

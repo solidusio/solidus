@@ -3,11 +3,9 @@
 module SolidusFriendlyPromotions
   module Rules
     class LineItemOptionValue < PromotionRule
-      preference :eligible_values, :hash
+      include LineItemLevelRule
 
-      def applicable?(promotable)
-        promotable.is_a?(Spree::LineItem)
-      end
+      preference :eligible_values, :hash
 
       def eligible?(line_item, _options = {})
         pid = line_item.product.id

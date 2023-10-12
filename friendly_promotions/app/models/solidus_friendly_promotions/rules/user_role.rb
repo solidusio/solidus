@@ -3,14 +3,12 @@
 module SolidusFriendlyPromotions
   module Rules
     class UserRole < PromotionRule
+      include OrderLevelRule
+
       preference :role_ids, :array, default: []
 
       MATCH_POLICIES = %w[any all].freeze
       preference :match_policy, default: MATCH_POLICIES.first
-
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
-      end
 
       def eligible?(order, _options = {})
         return false unless order.user

@@ -3,6 +3,8 @@
 module SolidusFriendlyPromotions
   module Rules
     class Taxon < PromotionRule
+      include OrderLevelRule
+
       has_many :promotion_rules_taxons, class_name: "SolidusFriendlyPromotions::PromotionRulesTaxon", foreign_key: :promotion_rule_id,
         dependent: :destroy
       has_many :taxons, through: :promotion_rules_taxons, class_name: "Spree::Taxon"
@@ -16,9 +18,6 @@ module SolidusFriendlyPromotions
       validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
-      end
 
       def eligible?(order, _options = {})
         order_taxons = taxons_in_order(order)
