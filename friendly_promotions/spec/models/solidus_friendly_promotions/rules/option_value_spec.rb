@@ -14,28 +14,38 @@ RSpec.describe SolidusFriendlyPromotions::Rules::OptionValue do
     end
   end
 
-  describe "#applicable?" do
-    subject { rule.applicable?(promotable) }
-
-    context "when promotable is an order" do
-      let(:promotable) { Spree::Order.new }
-
-      it { is_expected.to be true }
-    end
-
-    context "when promotable is not an order" do
-      let(:promotable) { Spree::LineItem.new }
-
-      it { is_expected.to be false }
-    end
-  end
-
-  describe "#eligible?" do
+  describe "#eligible?(order)" do
     subject { rule.eligible?(promotable) }
 
     let(:variant) { create :variant }
     let(:line_item) { create :line_item, variant: variant }
     let(:promotable) { line_item.order }
+
+    context "when there are any applicable line items" do
+      before do
+        rule.preferred_eligible_values = {line_item.product.id => [
+          line_item.variant.option_values.pick(:id)
+        ]}
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when there are no applicable line items" do
+      before do
+        rule.preferred_eligible_values = {99 => [99]}
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#eligible?(line_item)" do
+    subject { rule.eligible?(promotable) }
+
+    let(:variant) { create :variant }
+    let(:line_item) { create :line_item, variant: variant }
+    let(:promotable) { line_item }
 
     context "when there are any applicable line items" do
       before do
