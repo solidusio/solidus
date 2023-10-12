@@ -170,6 +170,7 @@ en:
         description: Available only to the specified stores
       solidus_friendly_promotions/rules/taxon:
         description: Order includes products with specified taxon(s)
+        preferred_line_item_applicable: Should also apply to line items
       solidus_friendly_promotions/rules/line_item_taxon:
         description: Line Item has product with specified taxon(s)
         preferred_match_policy: Match Policy
