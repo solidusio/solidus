@@ -75,7 +75,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
         image = product.gallery.images.first or return
 
         link_to(
-          image_tag(image.url(:small), class: 'h-10 w-10 max-w-min rounded border border-gray-100', alt: product.name),
+          render(component('ui/thumbnail').new(src: image.url(:small), alt: product.name)),
           solidus_admin.product_path(product),
           class: 'inline-flex overflow-hidden',
           tabindex: -1,
