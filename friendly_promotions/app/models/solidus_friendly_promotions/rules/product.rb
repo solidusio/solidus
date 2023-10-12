@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
     # either come from assigned product group or are assingned directly to
     # the rule.
     class Product < PromotionRule
-      include OrderLevelRule
+      include LineItemApplicableOrderRule
 
       has_many :products_promotion_rules,
         dependent: :destroy,
@@ -24,19 +24,10 @@ module SolidusFriendlyPromotions
       validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
-      preference :line_item_applicable, :boolean, default: true
 
       # scope/association that is used to test eligibility
       def eligible_products
         products
-      end
-
-      def applicable?(promotable)
-        promotable.is_a?(Spree::Order) || preferred_line_item_applicable && promotable.is_a?(Spree::LineItem)
-      end
-
-      def eligible?(promotable)
-        send("#{promotable.class.name.demodulize.underscore}_eligible?", promotable)
       end
 
       def order_eligible?(order)
