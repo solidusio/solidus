@@ -358,10 +358,10 @@ workflows:
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.0'], database: ['mysql'], paperclip: [true] } }
+          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.0'], database: ['mysql'], paperclip: [true] } }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
