@@ -12,8 +12,13 @@ module SolidusFriendlyPromotions
 
       def promotion_rules_by_level(promotion, level)
         promotion.rules.select do |rule|
-          rule.class.in?(SolidusFriendlyPromotions.config.send("#{level}_rules").to_a)
+          rule.level == level || rule_applicable_by_preference(rule, level)
         end
+      end
+
+      def rule_applicable_by_preference(rule, level)
+        method_name = "preferred_#{level}_applicable"
+        rule.respond_to?(method_name) && rule.send(method_name)
       end
     end
   end
