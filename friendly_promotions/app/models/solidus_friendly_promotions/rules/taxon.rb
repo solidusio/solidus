@@ -3,7 +3,7 @@
 module SolidusFriendlyPromotions
   module Rules
     class Taxon < PromotionRule
-      include OrderLevelRule
+      include LineItemApplicableOrderRule
 
       has_many :promotion_rules_taxons, class_name: "SolidusFriendlyPromotions::PromotionRulesTaxon", foreign_key: :promotion_rule_id,
         dependent: :destroy
@@ -19,7 +19,7 @@ module SolidusFriendlyPromotions
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order)
         order_taxons = taxons_in_order(order)
 
         case preferred_match_policy
@@ -52,6 +52,19 @@ module SolidusFriendlyPromotions
         end
 
         eligibility_errors.empty?
+      end
+
+      def line_item_eligible?(line_item)
+        # The order level eligibility check happens first, and if none of the taxons
+        # are in the order, then no line items should be available to check.
+        raise "This should not happen" if preferred_match_policy == "none"
+
+        raise "unexpected match policy: #{preferred_match_policy.inspect}" unless preferred_match_policy.in?(MATCH_POLICIES)
+
+        Spree::Classification.where(
+          product_id: line_item.variant.product_id,
+          taxon_id: rule_taxon_ids_with_children
+        ).exists?
       end
 
       def taxon_ids_string
