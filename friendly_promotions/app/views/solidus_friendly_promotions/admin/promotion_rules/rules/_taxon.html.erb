@@ -1,9 +1,9 @@
 <% context = local_assigns[:context] || :order %>
 
 <% if context == :order %>
-<p>
-  <%= promotion_rule.class.human_attribute_name(:description) %>
-</p>
+  <p>
+    <%= promotion_rule.class.human_attribute_name(:description) %>
+  </p>
   <%= fields_for param_prefix, promotion_rule do |form| %>
     <div class="field taxons_rule_taxons">
       <%= form.label :taxon_ids_string, t('solidus_friendly_promotions.taxon_rule.choose_taxons') %>

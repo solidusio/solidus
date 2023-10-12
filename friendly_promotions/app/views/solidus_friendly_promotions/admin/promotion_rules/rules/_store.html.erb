@@ -1,3 +1,6 @@
+<p>
+  <%= promotion_rule.class.human_attribute_name(:description) %>
+</p>
 <div class="field">
   <label><%= t("solidus_friendly_promotions.store_rule.choose_stores" ) %></label>
   <%= select_tag "#{param_prefix}[store_ids][]",

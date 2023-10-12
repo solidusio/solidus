@@ -1,3 +1,6 @@
+<p>
+  <%= promotion_rule.class.human_attribute_name(:description) %>
+</p>
 <div class="form-group">
   <%= label_tag "#{param_prefix}_preferred_role_ids", t('solidus_friendly_promotions.user_role_rule.choose_roles') %>
   <%= select_tag "#{param_prefix}[preferred_role_ids]",

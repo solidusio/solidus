@@ -7,9 +7,6 @@
       <%= content_tag(:div, "", data: { controller: :flash, severity: severity, message: message }) %>
     <% end %>
     <% if @promotion_rule %>
-      <p class="pt-3">
-        <%= @promotion_rule.class.human_attribute_name(:description) %>
-      </p>
       <%= form_with model: @promotion_rule, scope: "promotion_rule", url: solidus_friendly_promotions.admin_promotion_promotion_rules_path(@promotion), data: { turbo: false } do |form| %>
         <%= hidden_field_tag :level, @level %>
         <%= hidden_field_tag "promotion_rule[type]", @promotion_rule.class.name %>
