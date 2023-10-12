@@ -17,7 +17,7 @@ RSpec.describe "Promotion System" do
     end
 
     context "with an order-level rule" do
-      let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt]) }
+      let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
 
       context "with an line item level action" do
         let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
