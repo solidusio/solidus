@@ -161,6 +161,7 @@ en:
         description: Line Item has specified product with matching option value
       solidus_friendly_promotions/rules/product:
         description: Order includes specified product(s)
+        preferred_line_item_applicable: Should also apply to line items
       solidus_friendly_promotions/rules/line_item_product:
         description: Line item matches specified product(s)
         preferred_match_policy: Match Policy

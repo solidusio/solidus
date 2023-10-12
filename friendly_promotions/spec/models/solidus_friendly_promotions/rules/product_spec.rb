@@ -8,6 +8,32 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
 
   it { is_expected.to have_many(:products) }
 
+  describe "#applicable?" do
+    let(:promotable) { Spree::Order.new }
+
+    subject { rule.applicable?(promotable) }
+
+    it { is_expected.to be true }
+
+    context "with a line item" do
+      let(:promotable) { Spree::LineItem.new }
+
+      it { is_expected.to be true }
+
+      context "with line item applicable set to false" do
+        let(:rule_options) { {preferred_line_item_applicable: false} }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "with a shipment" do
+      let(:promotable) { Spree::Shipment.new }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#eligible?(order)" do
     let(:order) { Spree::Order.new }
     let(:product_one) { build(:product) }
@@ -170,6 +196,33 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
           rule.eligible?(order)
         }.to raise_error('unexpected match policy: "invalid"')
       end
+    end
+  end
+
+  describe "#eligible?(line_item)" do
+    subject { rule.eligible?(line_item) }
+
+    let(:rule_line_item) { Spree::LineItem.new(product: rule_product) }
+    let(:other_line_item) { Spree::LineItem.new(product: other_product) }
+
+    let(:rule_options) { super().merge(products: [rule_product]) }
+    let(:rule_product) { mock_model(Spree::Product) }
+    let(:other_product) { mock_model(Spree::Product) }
+
+    it "is eligible if there are no products" do
+      expect(rule).to be_eligible(rule_line_item)
+    end
+
+    context "for product in rule" do
+      let(:line_item) { rule_line_item }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "for product not in rule" do
+      let(:line_item) { other_line_item }
+
+      it { is_expected.to be_falsey }
     end
   end
 end

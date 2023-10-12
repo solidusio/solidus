@@ -22,6 +22,7 @@ module SolidusFriendlyPromotions
       validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
+      preference :line_item_applicable, :boolean, default: true
 
       # scope/association that is used to test eligibility
       def eligible_products
@@ -29,10 +30,14 @@ module SolidusFriendlyPromotions
       end
 
       def applicable?(promotable)
-        promotable.is_a?(Spree::Order)
+        promotable.is_a?(Spree::Order) || preferred_line_item_applicable && promotable.is_a?(Spree::LineItem)
       end
 
-      def eligible?(order, _options = {})
+      def eligible?(promotable)
+        send("#{promotable.class.name.demodulize.underscore}_eligible?", promotable)
+      end
+
+      def order_eligible?(order)
         return true if eligible_products.empty?
 
         case preferred_match_policy
@@ -60,6 +65,13 @@ module SolidusFriendlyPromotions
         end
 
         eligibility_errors.empty?
+      end
+
+      def line_item_eligible?(line_item, _options = {})
+        # The order level eligibility check happens first, and if none of the products
+        # are in the order, then no line items should be available to check.
+        raise "This should not happen" if preferred_match_policy == "none"
+        product_ids.include?(line_item.variant.product_id)
       end
 
       def product_ids_string
