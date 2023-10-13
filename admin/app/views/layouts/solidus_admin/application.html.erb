@@ -9,12 +9,6 @@
 
   <body class="bg-gray-15">
     <%= render component("skip_link").new(href: "#main") %>
-    <div class="fixed right-3 bottom-3 flex flex-col gap-3" role="alert">
-      <% flash.each do |key, message| %>
-        <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
-      <% end %>
-    </div>
-
     <div class="flex gap-0">
       <div class="min-w-[240px] border-r border-r-gray-100 relative">
         <div class="min-h-screen top-0 sticky flex">
@@ -25,6 +19,12 @@
       <main id="main" class="flex-grow">
         <%= yield %>
       </main>
+    </div>
+
+    <div class="fixed inset-x-0 bottom-3 flex items-center justify-center flex-col gap-3" role="alert">
+      <% flash.each do |key, message| %>
+        <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
+      <% end %>
     </div>
   </body>
 </html>
