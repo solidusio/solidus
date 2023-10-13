@@ -39,6 +39,18 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
             subject.call
           }.to change { adjustable.adjustments.length }.by(0)
         end
+
+        context "for an line item that has an adjustment from the old promotion system" do
+          let(:old_promotion_action) { create(:promotion, :with_adjustable_action, apply_automatically: false).actions.first }
+          let!(:adjustment) { create(:adjustment, source: old_promotion_action, adjustable: line_item) }
+
+          it "removes the old adjustment from the line item" do
+            adjustable.reload
+            expect {
+              subject.call
+            }.to change { adjustable.reload.adjustments.length }.by(-1)
+          end
+        end
       end
     end
 

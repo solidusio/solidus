@@ -44,13 +44,13 @@ module SolidusFriendlyPromotions
     # @param [Array<SolidusFriendlyPromotions::ItemDiscount>] item_discounts a list of calculated discounts for an item
     # @return [void]
     def update_adjustments(item, item_discounts)
-      promotion_adjustments = item.adjustments.select(&:friendly_promotion?)
+      promotion_adjustments = item.adjustments.select(&:promotion?)
 
       active_adjustments = item_discounts.map do |item_discount|
         update_adjustment(item, item_discount)
       end
       item.update(promo_total: active_adjustments.sum(&:amount))
-      # Remove any tax adjustments tied to rates which no longer match.
+      # Remove any tax adjustments tied to promotion actions which no longer match.
       unmatched_adjustments = promotion_adjustments - active_adjustments
 
       item.adjustments.destroy(unmatched_adjustments)
