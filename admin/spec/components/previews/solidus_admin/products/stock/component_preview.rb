@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# @component "products/status"
-class SolidusAdmin::Products::Status::ComponentPreview < ViewComponent::Preview
+# @component "products/stock"
+class SolidusAdmin::Products::Stock::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
   def overview

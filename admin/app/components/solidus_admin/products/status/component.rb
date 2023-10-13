@@ -1,31 +1,23 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Products::Status::Component < SolidusAdmin::BaseComponent
-  COLORS = {
+  STATUSES = {
     available: :green,
     discontinued: :red
   }.freeze
 
-  # @param product [Spree::Product]
-  def initialize(product:)
-    @product = product
+  def self.from_product(product)
+    new(status: product.available? ? :available : :discontinued)
+  end
+
+  def initialize(status:)
+    @status = status
   end
 
   def call
     render component('ui/badge').new(
-      name: t(".#{status}"),
-      color: COLORS.fetch(status)
+      name: t(".#{@status}"),
+      color: STATUSES.fetch(@status)
     )
-  end
-
-  # @return [Symbol]
-  #   :available when the product is available
-  #   :discontinued when the product is not available
-  def status
-    if @product.available?
-      :available
-    else
-      :discontinued
-    end
   end
 end

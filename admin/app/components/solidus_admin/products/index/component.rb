@@ -96,29 +96,14 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def status_column
     {
       header: :status,
-      data: ->(product) { component('products/status').new(product: product) }
+      data: ->(product) { component('products/status').from_product(product) }
     }
   end
 
   def stock_column
     {
       header: :stock,
-      data: ->(product) do
-        stock_info =
-          case (on_hand = product.total_on_hand)
-          when Float::INFINITY
-            content_tag :span, t('.stock.in_stock', on_hand: t('.stock.infinity')), class: 'text-forest'
-          when 1..Float::INFINITY
-            content_tag :span, t('.stock.in_stock', on_hand: on_hand), class: 'text-forest'
-          else
-            content_tag :span, t('.stock.in_stock', on_hand: on_hand), class: 'text-red-500'
-          end
-
-        variant_info =
-          t('.for_variants', count: product.variants.count)
-
-        content_tag :div, safe_join([stock_info, variant_info], ' ')
-      end
+      data: ->(product) { component('products/stock').from_product(product) }
     }
   end
 
