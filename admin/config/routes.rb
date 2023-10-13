@@ -13,5 +13,5 @@ SolidusAdmin::Engine.routes.draw do
       put :activate
     end
   end
-  resources :orders, only: :index
+  resources :orders, only: [:index, :new, :create]
 end

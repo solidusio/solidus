@@ -17,5 +17,17 @@ module SolidusAdmin
         format.html { render component('orders/index').new(page: @page) }
       end
     end
+
+    def new
+      @order = Spree::Order.new(
+        created_by: current_solidus_admin_user,
+        frontend_viewable: false,
+        store_id: current_store.try(:id)
+      )
+
+      respond_to do |format|
+        format.html { render component('orders/new').new(order: @order) }
+      end
+    end
   end
 end
