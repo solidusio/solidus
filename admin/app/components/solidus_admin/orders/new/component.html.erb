@@ -1,0 +1,20 @@
+<div class="px-4 relative" data-controller="<%= stimulus_id %>">
+  <header class="py-6 flex items-center gap-4">
+    <%= render component("ui/button").new(
+      tag: :a,
+      title: t(".back"),
+      icon: "arrow-left-line",
+      scheme: :secondary,
+      href: solidus_admin.orders_path
+    ) %>
+    <h1 class="flex items-center gap-2">
+      <span class="body-title"><%= t(".create_order") %></span>
+    </h1>
+
+    <div class="ml-auto flex gap-2 items-center">
+      <%= render component("feedback").new %>
+      <%= render component("ui/button").new(tag: :button, scheme: :secondary, text: t(".discard"), form: form_id) %>
+      <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
+    </div>
+  </header>
+</div>
