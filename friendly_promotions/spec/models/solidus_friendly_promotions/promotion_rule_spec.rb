@@ -24,7 +24,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionRule do
 
   it "forces developer to implement eligible? method" do
     expect { bad_test_rule_class.new.eligible?("promotable") }.to raise_error NotImplementedError
-    expect { test_rule_class.new.eligible?("promotable") }.not_to raise_error NotImplementedError
+    expect { test_rule_class.new.eligible?("promotable") }.not_to raise_error
   end
 
   it "validates unique rules for a promotion" do
