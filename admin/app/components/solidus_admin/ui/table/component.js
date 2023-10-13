@@ -78,6 +78,33 @@ export default class extends Controller {
     this.render()
   }
 
+  rowClicked(event) {
+    if (event.target.closest('a') || event.target.tagName === 'BUTTON' || event.target.type === 'checkbox') return
+
+    const row = event.currentTarget
+
+    if (this.modeValue === 'batch') {
+      this.toggleCheckbox(row)
+    } else {
+      this.navigateToRow(row)
+    }
+  }
+
+  toggleCheckbox(row) {
+    const checkbox = this.checkboxTargets.find(selection => row.contains(selection))
+
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked
+      this.selectRow()
+    }
+  }
+
+  navigateToRow(row) {
+    const url = row.dataset.primaryUrl
+
+    if (url) window.location.href = url
+  }
+
   render() {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 

@@ -74,11 +74,11 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
       data: ->(product) do
         image = product.gallery.images.first or return
 
-        link_to(
-          render(component('ui/thumbnail').new(src: image.url(:small), alt: product.name)),
-          solidus_admin.product_path(product),
-          class: 'inline-flex overflow-hidden',
-          tabindex: -1,
+        render(
+          component('ui/thumbnail').new(
+            src: image.url(:small),
+            alt: product.name
+          )
         )
       end
     }
@@ -88,7 +88,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :name,
       data: ->(product) do
-        link_to product.name, solidus_admin.product_path(product)
+        content_tag :div, product.name
       end
     }
   end
