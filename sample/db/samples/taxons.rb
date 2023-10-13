@@ -4,21 +4,20 @@ Spree::Sample.load_sample("taxonomies")
 Spree::Sample.load_sample("products")
 
 categories = Spree::Taxonomy.find_by!(name: "Categories")
-brands = Spree::Taxonomy.find_by!(name: "Brand")
 
 products = {
-  solidus_tshirt: "Solidus T-Shirt",
-  solidus_long: "Solidus Long Sleeve",
-  solidus_tote: "Solidus Tote",
-  ruby_tote: "Ruby Tote",
-  solidus_snapback_cap: "Solidus Snapback Cap",
-  solidus_hoodie: "Solidus Hoodie Zip",
-  ruby_hoodie: "Ruby Hoodie",
-  ruby_hoodie_zip: "Ruby Hoodie Zip",
-  ruby_polo: "Ruby Polo",
-  solidus_mug: "Solidus Mug",
-  ruby_mug: "Ruby Mug",
-  solidus_womens_tshirt: "Solidus Women's T-Shirt"
+  solidus_bottles: "Solidus Water Bottle",
+  solidus_tote: "Solidus tote",
+  solidus_hoodie: "Solidus hoodie",
+  solidus_mug_set: "Solidus mug set",
+  solidus_hat: "Solidus winter hat",
+  solidus_sticker: "Solidus circle sticker",
+  solidus_notebook: "Solidus notebook",
+  solidus_tshirt: "Solidus t-shirt",
+  solidus_long_sleeve_tee: "Solidus long sleeve tee",
+  solidus_dark_tee: "Solidus dark tee",
+  solidus_canvas_tote: "Solidus canvas tote bag",
+  solidus_cap: "Solidus cap"
 }
 
 products.each do |key, name|
@@ -36,49 +35,42 @@ taxons = [
     parent: "Categories"
   },
   {
+    name: "Accessories",
+    taxonomy: categories,
+    parent: "Categories"
+  },
+  {
+    name: "Stickers",
+    taxonomy: categories,
+    parent: "Categories",
+    products: [
+      products[:solidus_sticker]
+    ]
+  },
+  {
     name: "Caps",
     taxonomy: categories,
-    parent: "Categories",
+    parent: "Clothing",
     products: [
-      products[:solidus_snapback_cap]
+      products[:solidus_hat],
+      products[:solidus_cap]
     ]
   },
   {
-    name: "Bags",
+    name: "Totes",
     taxonomy: categories,
-    parent: "Categories",
+    parent: "Accessories",
     products: [
       products[:solidus_tote],
-      products[:ruby_tote]
+      products[:solidus_canvas_tote]
     ]
   },
   {
-    name: "Mugs",
+    name: "Water Bottles",
     taxonomy: categories,
-    parent: "Categories",
+    parent: "Accessories",
     products: [
-      products[:solidus_mug],
-      products[:ruby_mug]
-    ]
-  },
-  {
-    name: "Shirts",
-    taxonomy: categories,
-    parent: "Clothing",
-    products: [
-      products[:solidus_long],
-      products[:ruby_polo],
-      products[:solidus_womens_tshirt]
-    ]
-  },
-  {
-    name: "Hoodie",
-    taxonomy: categories,
-    parent: "Clothing",
-    products: [
-      products[:solidus_hoodie],
-      products[:ruby_hoodie],
-      products[:ruby_hoodie_zip]
+      products[:solidus_bottles],
     ]
   },
   {
@@ -86,37 +78,17 @@ taxons = [
     taxonomy: categories,
     parent: "Clothing",
     products: [
-      products[:solidus_tshirt]
+      products[:solidus_tshirt],
+      products[:solidus_dark_tee],
+      products[:solidus_long_sleeve_tee]
     ],
   },
   {
-    name: "Brands",
-    taxonomy: brands
-  },
-  {
-    name: "Solidus",
-    taxonomy: brands,
-    parent: "Brand",
+    name: "Hoodies",
+    taxonomy: categories,
+    parent: "Clothing",
     products: [
-      products[:solidus_tshirt],
-      products[:solidus_long],
-      products[:solidus_snapback_cap],
       products[:solidus_hoodie],
-      products[:solidus_mug],
-      products[:solidus_tote],
-      products[:solidus_womens_tshirt]
-    ]
-  },
-  {
-    name: "Ruby",
-    taxonomy: brands,
-    parent: "Brand",
-    products: [
-      products[:ruby_hoodie],
-      products[:ruby_hoodie_zip],
-      products[:ruby_polo],
-      products[:ruby_mug],
-      products[:ruby_tote]
     ]
   }
 ]
