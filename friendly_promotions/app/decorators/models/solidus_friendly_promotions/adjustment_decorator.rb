@@ -14,6 +14,13 @@ module SolidusFriendlyPromotions
     def promotion?
       super || source_type == "SolidusFriendlyPromotions::PromotionAction"
     end
+
+    private
+
+    def require_promotion_code?
+      !friendly_promotion? && super
+    end
+
     Spree::Adjustment.prepend self
   end
 end
