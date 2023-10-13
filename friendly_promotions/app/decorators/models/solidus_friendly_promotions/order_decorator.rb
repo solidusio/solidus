@@ -17,8 +17,7 @@ module SolidusFriendlyPromotions
         recalculate
         errors.add(:base, I18n.t("solidus_friendly_promotions.promotion_total_changed_before_complete"))
       end
-
-      super
+      errors.empty?
     end
 
     def discountable_item_total
