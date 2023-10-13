@@ -288,7 +288,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   describe "#inactive" do
     let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
 
-    it "is not exipired" do
+    it "is not expired" do
       expect(promotion).not_to be_inactive
     end
 
@@ -577,6 +577,22 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
     context "when the user has not used this promo" do
       it { is_expected.to be false }
+    end
+  end
+
+  describe ".original_promotion" do
+    let(:spree_promotion) { create :promotion, :with_adjustable_action }
+    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_action }
+
+    subject { friendly_promotion.original_promotion }
+
+    it "can be migrated from spree" do
+      friendly_promotion.original_promotion = spree_promotion
+      expect(subject).to eq(spree_promotion)
+    end
+
+    it "is ok to be new" do
+      expect(subject).to be_nil
     end
   end
 end

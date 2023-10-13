@@ -41,4 +41,22 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
       )
     end
   end
+
+  describe ".original_promotion_action" do
+    let(:spree_promotion) { create :promotion, :with_adjustable_action }
+    let(:spree_promotion_action) { spree_promotion.actions.first }
+    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_action }
+    let(:friendly_promotion_action) { friendly_promotion.actions.first }
+
+    subject { friendly_promotion_action.original_promotion_action }
+
+    it "can be migrated from spree" do
+      friendly_promotion_action.original_promotion_action = spree_promotion_action
+      expect(subject).to eq(spree_promotion_action)
+    end
+
+    it "is ok to be new" do
+      expect(subject).to be_nil
+    end
+  end
 end

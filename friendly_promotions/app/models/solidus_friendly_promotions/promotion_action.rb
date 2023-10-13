@@ -14,6 +14,7 @@ module SolidusFriendlyPromotions
     include Spree::AdjustmentSource
 
     belongs_to :promotion, inverse_of: :actions
+    belongs_to :original_promotion_action, class_name: "Spree::PromotionAction", optional: true
     has_many :adjustments, class_name: "Spree::Adjustment", as: :source
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
