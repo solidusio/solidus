@@ -16,7 +16,7 @@ module SolidusFriendlyPromotions
       Spree::Promotion::Rules::OneUsePerUser =>
         SolidusFriendlyPromotions::Rules::OneUsePerUser,
       Spree::Promotion::Rules::Taxon =>
-        SolidusFriendlyPromotions::Rules::LineItemTaxon,
+        SolidusFriendlyPromotions::Rules::Taxon,
       Spree::Promotion::Rules::NthOrder =>
         SolidusFriendlyPromotions::Rules::NthOrder,
       Spree::Promotion::Rules::OptionValue =>
