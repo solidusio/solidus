@@ -20,14 +20,6 @@ module SolidusAdmin
         copy_file "config/initializers/solidus_admin.rb"
       end
 
-      def ignore_tailwind_build_files
-        append_file(".gitignore", "app/assets/builds/solidus_admin/") if File.exist?(Rails.root.join(".gitignore"))
-      end
-
-      def build_tailwind
-        rake "solidus_admin:tailwindcss:build"
-      end
-
       def install_lookbook
         return unless options[:lookbook]
 
