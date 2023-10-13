@@ -26,6 +26,6 @@ class SolidusAdmin::Products::Stock::Component < SolidusAdmin::BaseComponent
 
     variant_info = t('.for_variants', count: @variants_count)
 
-    tag.div safe_join([stock_info, variant_info], ' ')
+    tag.span safe_join([stock_info, variant_info], ' ')
   end
 end
