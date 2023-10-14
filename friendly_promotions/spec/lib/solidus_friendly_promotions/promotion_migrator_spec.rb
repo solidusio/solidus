@@ -26,4 +26,14 @@ RSpec.describe SolidusFriendlyPromotions::PromotionMigrator do
       expect(promotion_category.name).to eq("Sith")
     end
   end
+
+  context "when an existing promotion has promotion codes" do
+    let(:spree_promotion) { create(:promotion, code: "ANDOR LIFE") }
+
+    it "creates codes for the new promotion, identical to the previous one" do
+      expect { subject }.to change { SolidusFriendlyPromotions::PromotionCode.count }.by(1)
+      promotion_code = SolidusFriendlyPromotions::PromotionCode.first
+      expect(promotion_code.value).to eq("andor life")
+    end
+  end
 end
