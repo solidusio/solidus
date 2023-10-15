@@ -36,4 +36,19 @@ RSpec.describe SolidusFriendlyPromotions::PromotionMigrator do
       expect(promotion_code.value).to eq("andor life")
     end
   end
+
+  context "when an existing promotion has promotion codes with promotion code batches" do
+    let!(:promotion_code_batch) do
+      Spree::PromotionCodeBatch.new(promotion: spree_promotion, base_code: "DISNEY4LIFE", number_of_codes: 1)
+    end
+
+    let!(:promotion_code) { create(:promotion_code, promotion: spree_promotion, promotion_code_batch: promotion_code_batch) }
+    let(:spree_promotion) { create(:promotion) }
+
+    it "creates the promotion code batch copy" do
+      expect { subject }.to change { SolidusFriendlyPromotions::PromotionCodeBatch.count }.by(1)
+      promotion_code_batch = SolidusFriendlyPromotions::PromotionCodeBatch.first
+      expect(promotion_code_batch.base_code).to eq("DISNEY4LIFE")
+    end
+  end
 end

@@ -32,9 +32,18 @@ module SolidusFriendlyPromotions
             new_promotion_action.original_promotion_action = old_promotion_action
           end
         end
-        new_promotion.codes = promotion.codes.map do |old_code|
-          SolidusFriendlyPromotions::PromotionCode.new(
-            old_code.attributes
+        new_promotion.save!
+        promotion.promotion_code_batches.each do |old_pcb|
+          new_promotion.code_batches.detect { |pcb| old_pcb.base_code == pcb.base_code } || new_promotion.code_batches.build(
+            number_of_codes: old_pcb.number_of_codes,
+            base_code: old_pcb.base_code
+          )
+        end
+        promotion.codes.each do |old_code|
+          pcb = new_promotion.code_batches.detect { |pcb| pcb.base_code == old_code.promotion_code_batch&.base_code }
+          new_promotion.codes.build(
+            promotion_code_batch: pcb,
+            value: old_code.value
           )
         end
         new_promotion.save!
