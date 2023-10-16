@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   class PromotionCategory < Spree::Base
-    has_many :promotions
+    has_many :promotions, dependent: :nullify
 
     validates :name, presence: true
   end

@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   class PromotionMigrator
-    PROMOTION_IGNORED_ATTRIBUTES = ["id", "type"]
+    PROMOTION_IGNORED_ATTRIBUTES = ["id", "type", "promotion_category_id"]
 
     attr_reader :promotion_map
 
@@ -11,9 +11,17 @@ module SolidusFriendlyPromotions
     end
 
     def call
+      SolidusFriendlyPromotions::PromotionCategory.destroy_all
+      Spree::PromotionCategory.all.each do |promotion_category|
+        SolidusFriendlyPromotions::PromotionCategory.create!(promotion_category.attributes.except("id"))
+      end
+
       SolidusFriendlyPromotions::Promotion.destroy_all
       Spree::Promotion.all.each do |promotion|
         new_promotion = copy_promotion(promotion)
+        new_promotion.category = SolidusFriendlyPromotions::PromotionCategory.find_by(
+          name: promotion.promotion_category.name
+        ) if promotion.promotion_category&.name.present?
         new_promotion.rules = promotion.rules.flat_map do |old_promotion_rule|
           generate_new_promotion_rules(old_promotion_rule)
         end
@@ -28,7 +36,7 @@ module SolidusFriendlyPromotions
 
     def copy_promotion(old_promotion)
       SolidusFriendlyPromotions::Promotion.new(
-        old_promotion.attributes.except(*PROMOTION_IGNORED_ATTRIBUTES)
+        old_promotion.attributes.except(*PROMOTION_IGNORED_ATTRIBUTES).merge(customer_label: old_promotion.name)
       )
     end
 
