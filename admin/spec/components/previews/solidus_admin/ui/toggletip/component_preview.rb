@@ -2,31 +2,21 @@
 
 # @component "ui/toggletip"
 class SolidusAdmin::UI::Toggletip::ComponentPreview < ViewComponent::Preview
-  DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-
   include SolidusAdmin::Preview
 
   def overview
-    render_with_template(
-      locals: {
-        text: DUMMY_TEXT,
-        positions: current_component::POSITIONS.keys,
-        themes: current_component::THEMES.keys
-      }
-    )
+    render_with_template
   end
 
   # @param text text
   # @param position select :position_options
-  # @param theme select :theme_options
   # @param open toggle
-  def playground(text: DUMMY_TEXT, position: :down, theme: :light, open: false)
+  def playground(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", position: :above, open: false)
     render current_component.new(
       text: text,
       position: position,
-      theme: theme,
       open: open,
-      class: "m-80"
+      class: "m-40"
     )
   end
 
@@ -34,9 +24,5 @@ class SolidusAdmin::UI::Toggletip::ComponentPreview < ViewComponent::Preview
 
   def position_options
     current_component::POSITIONS.keys
-  end
-
-  def theme_options
-    current_component::THEMES.keys
   end
 end
