@@ -19,20 +19,21 @@
     "
     aria-label="<%= t('.get_help') %>"
   >
-    <%= icon_tag("question-fill", class: "w-[1rem] h-[1rem] #{icon_theme_classes}") %>
+    <%= icon_tag("question-fill", class: "w-[1rem] h-[1rem] fill-gray-800") %>
   </summary>
 
   <div
     class="
       absolute
       inline-block
-      w-[9rem]
+      w-48
       px-[0.75rem]
       body-tiny-bold
       rounded
       z-10
-      <%= bubble_position_classes %>
-      <%= bubble_theme_classes %>
+      text-white
+      bg-gray-800
+      <%= POSITIONS.fetch(@position)[:bubble] %>
     "
     data-<%= stimulus_id %>-target="bubble"
   >
@@ -43,7 +44,13 @@
         block
         bg-inherit
         py-[0.5rem]
-        <%= bubble_arrow_pseudo_element %>
+        before:content['']
+        before:absolute
+        before:w-[0.375rem]
+        before:h-[0.375rem]
+        before:rotate-45
+        before:bg-inherit
+        <%= POSITIONS.fetch(@position)[:arrow] %>
       "
       data-<%= stimulus_id %>-target="content"
     >

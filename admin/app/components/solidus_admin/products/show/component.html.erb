@@ -118,10 +118,7 @@
               checked: f.object.promotionable
             ) %>
             <span class="body-text-sm"><%= Spree::Product.human_attribute_name :promotionable %></span>
-            <%= render component("ui/toggletip").new(
-              text: t(".hints.promotionable_html"),
-              position: :left
-            ) %>
+            <%= render component("ui/toggletip").new(text: t(".hints.promotionable_html")) %>
           </label>
         <% end %>
 
