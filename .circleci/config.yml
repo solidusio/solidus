@@ -313,18 +313,6 @@ jobs:
       - setup
       - test_with_coverage
 
-  dev_tools:
-    docker:
-      - image: cimg/ruby:3.1
-    steps:
-      - checkout
-      - run:
-          name: "Test development tools"
-          command: |
-            cd dev_tools
-            bundle
-            bundle exec rspec
-
 workflows:
   build:
     jobs:
@@ -348,4 +336,3 @@ workflows:
       - test_solidus:
           name: *name
           matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
-      - dev_tools
