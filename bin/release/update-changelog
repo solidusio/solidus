@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '_helpers'
+
+candidate_tag = ARGV[0]
+
+warn "~~> Adding changelog entries for #{candidate_tag}..."
+
+release_title = "## Solidus #{candidate_tag} (#{Time.now.utc.strftime('%Y-%m-%d')})"
+release_body = OCTOKIT.releases('solidusio/solidus').find { _1.name == candidate_tag }.body
+
+changelog_path = "#{ROOT}/CHANGELOG.md"
+previous_changelog = File.read(changelog_path)
+
+File.write(
+  changelog_path,
+  [
+    release_title,
+    release_body,
+    previous_changelog
+  ].join("\n\n")
+)

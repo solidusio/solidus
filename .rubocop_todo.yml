@@ -140,7 +140,6 @@ Layout/FirstArgumentIndentation:
 Layout/HeredocIndentation:
   Exclude:
     - "core/solidus_core.gemspec"
-    - "dev_tools/lib/solidus/changelog_updater.rb"
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -277,7 +276,6 @@ Lint/UnusedBlockArgument:
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
 Lint/UnusedMethodArgument:
   Exclude:
-    - "dev_tools/spec/lib/solidus/changelog_updater_spec.rb"
     - "dev_tools/spec/lib/solidus/release_drafter_spec.rb"
 
 # Offense count: 1
@@ -534,8 +532,6 @@ Rails/TimeZone:
     - "core/spec/helpers/base_helper_spec.rb"
     - "core/spec/models/spree/order/outstanding_balance_integration_spec.rb"
     - "core/spec/models/spree/tax/taxation_integration_spec.rb"
-    - "dev_tools/lib/solidus/changelog_updater.rb"
-    - "dev_tools/spec/lib/solidus/changelog_updater_spec.rb"
 
 # Offense count: 1
 Security/Open:
