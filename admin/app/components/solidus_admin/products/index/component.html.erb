@@ -1,10 +1,7 @@
-<div class="<%= stimulus_id %> px-4">
-  <header class="py-6 flex items-center">
-    <h1 class="body-title">
-      <%= title %>
-    </h1>
-
-    <div class="ml-auto flex gap-2 items-center">
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title title %>
+    <%= page_header_actions do %>
       <%= render component("feedback").new %>
       <%= render component("ui/button").new(
         tag: :a,
@@ -12,8 +9,8 @@
         href: spree.new_admin_product_path,
         icon: "add-line",
       ) %>
-    </div>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= render component('ui/table').new(
     id: 'products-list',
@@ -28,4 +25,4 @@
     prev_page_link: prev_page_link,
     next_page_link: next_page_link,
   ) %>
-</div>
+<% end %>

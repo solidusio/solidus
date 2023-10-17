@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
+  include SolidusAdmin::Layout::PageHelpers
+
   def initialize(product:)
     @product = product
   end
