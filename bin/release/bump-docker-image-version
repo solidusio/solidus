@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'yaml'
+require_relative '_helpers'
+
+path = "#{ROOT}/docker-compose.yml"
+from = YAML.load_file(path).dig(*%w[services app image])
+to = "solidus-#{ARGV[0]}"
+
+warn "~~> Bumping docker image name & version from #{from} to #{to} in #{path}..."
+File.write(path, File.read(path).gsub(from, to))

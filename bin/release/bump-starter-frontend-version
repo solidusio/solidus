@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '_helpers'
+
+path = "#{ROOT}/core/lib/generators/solidus/install/app_templates/frontend/starter.rb"
+from = File.read(path)[%r{solidusio/solidus_starter_frontend/raw/(.+)/template.rb}, 1]
+to = ARGV[0]
+
+warn "~~> Bumping starter frontend version to install from #{from} to #{to} in #{path}"
+File.write(path, File.read(path).gsub(from, to))

@@ -28,22 +28,22 @@ jobs:
           bundler-cache: true
       - name: "Bump to the development version"
         run: |
-          cd dev_tools/ && bin/bump-to-dev-version \
+          bin/release/bump-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
       - name: "Bump previous solidus minor version"
         if: github.ref_name == 'main'
         run: |
-          cd dev_tools/ && bin/bump-previous-minor-version \
+          bin/release/bump-previous-minor-version \
             ${{ steps.pipeline_context.outputs.candidate_minor_version }}
       - name: "Bump to the development version in docker-compose"
         if: github.ref_name == 'main'
         run: |
-          cd dev_tools/ && bin/bump-docker-image-to-dev-version \
+          cd bin/release/bump-docker-image-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
       - name: "Bump installer starter frontend version"
         if: github.ref_name == 'main'
         run: |
-          cd dev_tools/ && bin/bump-starter-frontend-version \
+          bin/release/bump-starter-frontend-version \
             main
       - name: "Publish release draft & tag last commit"
         run: |
@@ -91,7 +91,7 @@ jobs:
         run: |
           candidate_patch_branch="${{ steps.pipeline_context.outputs.candidate_patch_branch }}"
           git checkout $candidate_patch_branch
-          cd dev_tools/ && bin/bump-patch-to-dev-version \
+          bin/release/bump-version \
             ${{ steps.pipeline_context.outputs.candidate_next_patch_dev_version }}
       - name: "Create PR for the patch branch"
         if: github.ref_name == 'main'
