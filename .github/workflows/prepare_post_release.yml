@@ -47,7 +47,7 @@ jobs:
             main
       - name: "Publish release draft & tag last commit"
         run: |
-          cd dev_tools/ && bin/publish-release \
+          bin/release/publish-release \
             ${{ github.token }} \
             ${{ github.repository }} \
             ${{ steps.pipeline_context.outputs.candidate_tag }}

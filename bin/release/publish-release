@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '_helpers'
+
+candidate_tag = ARGV.first
+
+warn "~~> Publishing release draft for #{candidate_tag}..."
+release = OCTOKIT.releases('solidusio/solidus').find { _1.name == candidate_tag }
+OCTOKIT.update_release(release.url, draft: false)
