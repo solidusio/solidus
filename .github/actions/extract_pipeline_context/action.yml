@@ -45,8 +45,4 @@ runs:
       name: "Extract context for the current pipeline"
       shell: bash
       run: |
-        cd dev_tools/ && bin/extract-pipeline-context \
-          $GITHUB_OUTPUT \
-          ${{ inputs.last_minor }} \
-          ${{ github.ref_name }} \
-          `git tag --list`
+        bin/release/extract-pipeline-context ${{ inputs.last_minor }} ${{ github.ref_name }} >> $GITHUB_OUTPUT
