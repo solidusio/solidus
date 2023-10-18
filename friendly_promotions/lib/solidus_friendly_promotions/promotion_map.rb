@@ -29,7 +29,7 @@ module SolidusFriendlyPromotions
         SolidusFriendlyPromotions::Rules::Store
     },
     actions: {
-      Spree::Promotion::Actions::CreateAdjustment => -> (old_action){
+      Spree::Promotion::Actions::CreateAdjustment => ->(old_action) {
         calculator = case old_action.calculator
         when Spree::Calculator::FlatRate
           SolidusFriendlyPromotions::Calculators::DistributedAmount.new(preferences: old_action.calculator.preferences)

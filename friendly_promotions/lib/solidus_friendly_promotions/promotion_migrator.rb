@@ -19,9 +19,11 @@ module SolidusFriendlyPromotions
       SolidusFriendlyPromotions::Promotion.destroy_all
       Spree::Promotion.all.each do |promotion|
         new_promotion = copy_promotion(promotion)
-        new_promotion.category = SolidusFriendlyPromotions::PromotionCategory.find_by(
-          name: promotion.promotion_category.name
-        ) if promotion.promotion_category&.name.present?
+        if promotion.promotion_category&.name.present?
+          new_promotion.category = SolidusFriendlyPromotions::PromotionCategory.find_by(
+            name: promotion.promotion_category.name
+          )
+        end
         new_promotion.rules = promotion.rules.flat_map do |old_promotion_rule|
           generate_new_promotion_rules(old_promotion_rule)
         end

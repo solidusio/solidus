@@ -32,13 +32,13 @@ Spree::Backend::Config.configure do |config|
             label: :legacy_promotions,
             condition: -> { can?(:admin, Spree::Promotion && Spree::Promotion.any?) },
             url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotions_path },
-            match_path: '/admin/promotions/'
+            match_path: "/admin/promotions/"
           ),
           Spree::BackendConfiguration::MenuItem.new(
             label: :legacy_promotion_categories,
             condition: -> { can?(:admin, Spree::PromotionCategory && Spree::Promotion.any?) },
             url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path },
-            match_path: '/admin/promotion_categories/'
+            match_path: "/admin/promotion_categories/"
           )
         ]
       )
