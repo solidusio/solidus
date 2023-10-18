@@ -2,12 +2,15 @@
 
 module SolidusFriendlyPromotions
   class OrderDiscounter
+    attr_reader :promotions
+
     def initialize(order)
       @order = order
+      @promotions = PromotionLoader.new(order: order).call
     end
 
     def call
-      discountable_order = FriendlyPromotionDiscounter.new(order).call
+      discountable_order = FriendlyPromotionDiscounter.new(order, promotions).call
 
       discountable_order.line_items.each do |line_item|
         update_adjustments(line_item, line_item.current_discounts)

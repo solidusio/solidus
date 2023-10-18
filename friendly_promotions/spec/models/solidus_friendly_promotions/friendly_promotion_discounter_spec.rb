@@ -4,9 +4,10 @@ require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
   context "shipped orders" do
+    let(:promotions) { [] }
     let(:order) { create(:order, shipment_state: "shipped") }
 
-    subject { described_class.new(order).call }
+    subject { described_class.new(order, promotions).call }
 
     it "returns the order unmodified" do
       expect(order).not_to receive(:reset_current_discounts)
@@ -20,7 +21,8 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
     let(:rules) { [product_rule] }
     let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, rules: rules, name: "20% off Shirts", apply_automatically: true) }
     let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
-    let(:discounter) { described_class.new(order, collect_eligibility_results: true) }
+    let(:promotions) { SolidusFriendlyPromotions::PromotionLoader.new(order: order).call }
+    let(:discounter) { described_class.new(order, promotions, collect_eligibility_results: true) }
 
     subject { discounter.call }
 

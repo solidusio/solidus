@@ -29,8 +29,8 @@ module SolidusFriendlyPromotions
             item: promotable,
             rule: applicable_rule,
             success: eligible,
-            code: eligible ? nil : (code || :unknown_error),
-            message: eligible ? nil : (message || I18n.t(:unknown_error, scope: [:solidus_friendly_promotions, :eligibility_errors]))
+            code: eligible ? nil : (code || :coupon_code_unknown_error),
+            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_friendly_promotions, :eligibility_errors]))
           )
         end
 

@@ -52,16 +52,17 @@ en:
       solidus_friendly_promotions/calculator:
         promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
     coupon_code: Coupon code
+    eligibility_results:
+      coupon_code_applied: The coupon code was successfully applied to your order.
+      coupon_code_removed: The coupon code was successfully removed from this order.
     eligibility_errors:
-      already_applied: The coupon code has already been applied to this order
-      applied: The coupon code was successfully applied to your order.
-      expired: The coupon code is expired
-      max_usage: Coupon code usage limit exceeded
-      not_eligible: This coupon code is not eligible for this order
-      not_found: The coupon code you entered doesn't exist. Please try again.
-      not_present: The coupon code you are trying to remove is not present on this order.
-      removed: The coupon code was successfully removed from this order.
-      unknown_error: This coupon code could not be applied to the cart at this time.
+      coupon_code_already_applied: The coupon code has already been applied to this order
+      coupon_code_expired: The coupon code is expired
+      coupon_code_max_usage: Coupon code usage limit exceeded
+      coupon_code_not_eligible: This coupon code is not eligible for this order
+      coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
+      coupon_code_not_present: The coupon code you are trying to remove is not present on this order.
+      coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
       solidus_friendly_promotions/rules/first_order:
         not_first_order: This coupon code can only be applied to your first order.
       solidus_friendly_promotions/rules/first_repeat_purchase_since:
