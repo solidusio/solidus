@@ -28,7 +28,9 @@ module SolidusFriendlyPromotions
           generate_new_promotion_rules(old_promotion_rule)
         end
         new_promotion.actions = promotion.actions.flat_map do |old_promotion_action|
-          generate_new_promotion_actions(old_promotion_action)
+          generate_new_promotion_actions(old_promotion_action).tap do |new_promotion_action|
+            new_promotion_action.original_promotion_action = old_promotion_action
+          end
         end
         new_promotion.save!
       end
@@ -38,7 +40,10 @@ module SolidusFriendlyPromotions
 
     def copy_promotion(old_promotion)
       SolidusFriendlyPromotions::Promotion.new(
-        old_promotion.attributes.except(*PROMOTION_IGNORED_ATTRIBUTES).merge(customer_label: old_promotion.name)
+        old_promotion.attributes.except(*PROMOTION_IGNORED_ATTRIBUTES).merge(
+          customer_label: old_promotion.name,
+          original_promotion: old_promotion
+        )
       )
     end
 
