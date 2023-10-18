@@ -123,7 +123,13 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: "Product organization") do %>
-          <%= render component("ui/forms/field").select(f, :taxon_ids, taxon_options, multiple: true, "size" => taxon_options.size) %>
+          <%= render component("ui/forms/field").select(
+            f,
+            :taxon_ids,
+            taxon_options,
+            multiple: true,
+            "size" => taxon_options.size, # use a string key to avoid setting the size of the component
+          ) %>
         <% end %>
       </aside>
     </div>
