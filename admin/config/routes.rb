@@ -13,5 +13,9 @@ SolidusAdmin::Engine.routes.draw do
       put :activate
     end
   end
-  resources :orders, only: [:index, :new, :create]
+  resources :orders, only: [:index] do
+    member do
+      get :cart, to: "orders#show"
+    end
+  end
 end

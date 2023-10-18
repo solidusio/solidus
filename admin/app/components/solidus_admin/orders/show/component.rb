@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Orders::New::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::Layout::PageHelpers
 
   def initialize(order:)

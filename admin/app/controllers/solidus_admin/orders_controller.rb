@@ -18,16 +18,19 @@ module SolidusAdmin
       end
     end
 
-    def new
-      @order = Spree::Order.new(
-        created_by: current_solidus_admin_user,
-        frontend_viewable: false,
-        store_id: current_store.try(:id)
-      )
+    def show
+      load_order
 
       respond_to do |format|
-        format.html { render component('orders/new').new(order: @order) }
+        format.html { render component('orders/show').new(order: @order) }
       end
+    end
+
+    private
+
+    def load_order
+      @order = Spree::Order.find_by!(number: params[:id])
+      authorize! action_name, @order
     end
   end
 end
