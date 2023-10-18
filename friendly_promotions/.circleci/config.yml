@@ -3,6 +3,15 @@ orbs:
   browser-tools: circleci/browser-tools@1.1
   solidusio_extensions: solidusio/extensions@volatile
 jobs:
+  lint:
+    executor:
+      name: solidusio_extensions/sqlite-memory
+      ruby_version: '3.0'
+    steps:
+      - checkout
+      - solidusio_extensions/test-branch:
+          command: bundle exec standardrb
+          command_verb: Check code style
   run-specs-with-mysql:
     executor:
       name: solidusio_extensions/mysql
@@ -36,6 +45,7 @@ jobs:
 workflows:
   Run specs on supported Solidus versions:
     jobs:
+      - lint
       - run-specs-with-postgres
       - run-specs-with-mysql
       - run-specs-with-sqlite
