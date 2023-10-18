@@ -11,6 +11,8 @@
 
   <% if @input_attributes.present? %>
     <%= render component('ui/forms/input').new(**@input_attributes) %>
+  <% elsif content.respond_to?(:render_in) %>
+    <%= render content %>
   <% else %>
     <%= content %>
   <% end %>
