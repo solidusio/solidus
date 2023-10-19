@@ -8,6 +8,13 @@ class SolidusAdmin::Products::Stock::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.from_variant(variant)
+    new(
+      on_hand: variant.total_on_hand,
+      variants_count: nil,
+    )
+  end
+
   def initialize(on_hand:, variants_count:)
     @on_hand = on_hand
     @variants_count = variants_count
@@ -24,8 +31,8 @@ class SolidusAdmin::Products::Stock::Component < SolidusAdmin::BaseComponent
         tag.span t('.stock.in_stock', on_hand: @on_hand), class: 'text-red-500'
       end
 
-    variant_info = t('.for_variants', count: @variants_count)
+    variant_info = t('.for_variants', count: @variants_count) if @variants_count
 
-    tag.div safe_join([stock_info, variant_info], ' ')
+    tag.span safe_join([stock_info, variant_info], ' ')
   end
 end
