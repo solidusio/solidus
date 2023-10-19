@@ -41,7 +41,7 @@
           <%= render component("ui/forms/field").text_area(f, :description) %>
         <% end %>
 
-        <%= render component('ui/panel').new(title: 'SEO', title_hint: 'Search Engine Optimization') do %>
+        <%= render component('ui/panel').new(title: 'SEO') do %>
           <%= render component("ui/forms/field").text_field(f, :meta_title) %>
           <%= render component("ui/forms/field").text_field(f, :meta_description) %>
           <%= render component("ui/forms/field").text_area(f, :meta_keywords) %>
@@ -109,8 +109,8 @@
 
       <aside class="justify-center items-start gap-4 flex flex-col w-full max-w-sm">
         <%= render component('ui/panel').new(title: "Publishing") do %>
-          <%= render component("ui/forms/field").text_field(f, :available_on, tip: t(".hints.available_on_html"), type: :date) %>
-          <%= render component("ui/forms/field").text_field(f, :discontinue_on, tip: t(".hints.discontinue_on_html"), type: :date) %>
+          <%= render component("ui/forms/field").text_field(f, :available_on, hint: t(".available_on_html"), type: :date) %>
+          <%= render component("ui/forms/field").text_field(f, :discontinue_on, hint: t(".discontinue_on_html"), type: :date) %>
 
           <label class="flex gap-2 items-center">
             <%= render component("ui/forms/checkbox").new(
