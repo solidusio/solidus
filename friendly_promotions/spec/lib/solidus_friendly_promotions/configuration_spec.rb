@@ -48,4 +48,16 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
 
     it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
   end
+
+  describe ".sync_order_promotions" do
+    subject { config.sync_order_promotions }
+
+    it { is_expected.to be true }
+
+    it "can be set to false" do
+      config.sync_order_promotions = false
+      expect(subject).to be false
+      config.sync_order_promotions = true
+    end
+  end
 end

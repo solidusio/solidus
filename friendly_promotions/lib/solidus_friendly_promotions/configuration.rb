@@ -4,6 +4,12 @@ require "spree/core/environment_extension"
 
 module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration
+    attr_accessor :sync_order_promotions
+
+    def initialize
+      @sync_order_promotions = true
+    end
+
     include Spree::Core::EnvironmentExtension
 
     add_class_set :line_item_discount_calculators
