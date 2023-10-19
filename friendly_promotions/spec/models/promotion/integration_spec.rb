@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "solidus_friendly_promotions/promotion_map"
+require "solidus_friendly_promotions/promotion_migrator"
 
 RSpec.describe "Promotion System" do
   context "A promotion that creates line item adjustments" do
@@ -111,6 +113,35 @@ RSpec.describe "Promotion System" do
         expect(order.item_total_before_tax).to eq(64)
         expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
       end
+    end
+  end
+
+  context "with a migrated spree_promotion that is attached to the current order" do
+    let(:shirt) { create(:variant) }
+    let(:spree_promotion) { create(:promotion, :with_adjustable_action, code: true) }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt}]) }
+
+    before do
+      promotion_code = spree_promotion.codes.first
+      order.order_promotions << Spree::OrderPromotion.new(
+        promotion_code: promotion_code,
+        promotion: spree_promotion
+      )
+      Spree::PromotionHandler::Cart.new(order).activate
+      expect(order.line_items.first.adjustments.first.source).to eq(spree_promotion.actions.first)
+      promotion_map = SolidusFriendlyPromotions::PROMOTION_MAP
+      SolidusFriendlyPromotions::PromotionMigrator.new(promotion_map).call
+      expect(SolidusFriendlyPromotions::Promotion.count).to eq(1)
+    end
+
+    subject { order.recalculate }
+
+    it "replaces existing adjustments with adjustments for the equivalent friendly promotion" do
+      expect { subject }.not_to change { order.all_adjustments.count }
+    end
+
+    it "does not change the amount of any adjustments" do
+      expect { subject }.not_to change { order.reload.all_adjustments.sum(&:amount) }
     end
   end
 
