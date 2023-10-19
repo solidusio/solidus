@@ -2,10 +2,11 @@
   class="
     flex items-center justify-between
     rounded inline-block px-3 py-2
+    transform translate-y-full opacity-0 transition-all duration-500
     <%= SCHEMES.fetch(@scheme.to_sym).join(' ') %>
   "
   data-controller="<%= stimulus_id %>"
-  data-<%= stimulus_id %>-closing-class="transform opacity-0 transition duration-500"
+  data-<%= stimulus_id %>-animation-class="translate-y-full opacity-0"
   data-<%= stimulus_id %>-transition-value="500"
   role="dialog"
   aria-label="<%= t(".#{@scheme}_label") %>"
