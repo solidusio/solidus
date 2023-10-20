@@ -2,11 +2,14 @@
 
 module SolidusFriendlyPromotions
   class FriendlyPromotionDiscounter
-    attr_reader :order, :promotions
+    attr_reader :order, :promotions, :eligibility_results
 
-    def initialize(order)
+    def initialize(order, collect_eligibility_results: false)
       @order = order
       @promotions = PromotionLoader.new(order: order).call
+      if collect_eligibility_results
+        @eligibility_results = EligibilityResults.new
+      end
     end
 
     def call
@@ -17,9 +20,10 @@ module SolidusFriendlyPromotions
       SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
         lane_promotions = PromotionsEligibility.new(
           promotable: order,
-          possible_promotions: promotions.select { |promotion| promotion.lane == lane }
+          possible_promotions: promotions.select { |promotion| promotion.lane == lane },
+          eligibility_results: eligibility_results
         ).call
-        item_discounter = ItemDiscounter.new(promotions: lane_promotions)
+        item_discounter = ItemDiscounter.new(promotions: lane_promotions, eligibility_results: eligibility_results)
         line_item_discounts = adjust_line_items(item_discounter)
         shipment_discounts = adjust_shipments(item_discounter)
         shipping_rate_discounts = adjust_shipping_rates(item_discounter)
