@@ -3,7 +3,7 @@
 class SolidusAdmin::UI::Toast::Component < SolidusAdmin::BaseComponent
   SCHEMES = {
     default: %w[
-      bg-fullBlack text-white
+      bg-full-black text-white
     ],
     error: %w[
       bg-red-500 text-white
