@@ -14,7 +14,7 @@ In Solidus Core, Promotion adjustments get recalculated twice on every change to
 
 The design decision here is to make the code path easier to follow, and consequently to make it more performant ("Make it easy, then make it fast").
 
-`SolidusFriendlyShipping::Promotion` objects have rules and actions, just like `Spree::Promotion`. However, both rules and actions work slightly differently.
+`SolidusFriendlyPromotions::Promotion` objects have rules and actions, just like `Spree::Promotion`. However, both rules and actions work slightly differently.
 
 ### Promotion lanes
 
