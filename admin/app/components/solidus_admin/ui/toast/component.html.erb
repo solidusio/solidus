@@ -1,21 +1,23 @@
 <div
   class="
+    flex items-center justify-between
     rounded inline-block px-3 py-2
+    transform translate-y-full opacity-0 transition-all duration-500
     <%= SCHEMES.fetch(@scheme.to_sym).join(' ') %>
   "
   data-controller="<%= stimulus_id %>"
-  data-<%= stimulus_id %>-closing-class="transform opacity-0 transition duration-500"
+  data-<%= stimulus_id %>-animation-class="translate-y-full opacity-0"
   data-<%= stimulus_id %>-transition-value="500"
   role="dialog"
   aria-label="<%= t(".#{@scheme}_label") %>"
   aria-live="polite"
 >
-  <%= icon_tag(@icon, class: 'inline-block w-[1.125rem] h-[1.125rem] mr-3 fill-current') if @icon %>
+  <%= icon_tag(@icon, class: 'w-[1.125rem] h-[1.125rem] mr-2 fill-current') if @icon %>
 
-  <p class="inline-block body-tiny-bold"><%= @text %></p>
+  <p class="body-tiny-bold leading-none"><%= @text %></p>
 
   <button
-    class="inline-block ml-3 align-text-bottom"
+    class="ml-2 align-text-bottom"
     title="<%= t('.close_text') %>"
     data-action="<%= stimulus_id %>#close"
     aria-label="<%= t('.close_text') %>"
