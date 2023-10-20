@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  class PromotionEligibility
+  class PromotionsEligibility
     attr_reader :promotable, :possible_promotions
 
     def initialize(promotable:, possible_promotions:)

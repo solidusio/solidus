@@ -9,7 +9,7 @@ module SolidusFriendlyPromotions
     end
 
     def call(item)
-      eligible_promotions = PromotionEligibility.new(
+      eligible_promotions = PromotionsEligibility.new(
         promotable: item,
         possible_promotions: promotions
       ).call

@@ -29,7 +29,7 @@ module SolidusFriendlyPromotions
 
       def eligible_line_items(order)
         order.line_items.reject do |line_item|
-          SolidusFriendlyPromotions::PromotionEligibility.new(
+          SolidusFriendlyPromotions::PromotionsEligibility.new(
             promotable: line_item,
             possible_promotions: [calculable.promotion]
           ).call.empty?

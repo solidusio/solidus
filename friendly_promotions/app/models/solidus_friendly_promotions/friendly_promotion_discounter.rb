@@ -15,7 +15,7 @@ module SolidusFriendlyPromotions
       order.reset_current_discounts
 
       SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
-        lane_promotions = PromotionEligibility.new(
+        lane_promotions = PromotionsEligibility.new(
           promotable: order,
           possible_promotions: promotions.select { |promotion| promotion.lane == lane }
         ).call
