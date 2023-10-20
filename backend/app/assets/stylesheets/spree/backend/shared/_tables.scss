@@ -38,6 +38,7 @@ table {
         text-align: center;
         border-bottom: none;
         vertical-align: middle;
+        color: $color-dark-light;
 
         &:before {
           padding: 0;
@@ -111,6 +112,10 @@ table {
 
   th a {
     color: $color-dark;
+
+    &:hover {
+      color: $color-dark-light;
+    }
   }
 
   tbody {

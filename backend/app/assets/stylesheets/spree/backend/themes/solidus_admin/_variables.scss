@@ -19,10 +19,10 @@ $color-dark-dark: $solidus-admin-gray-600;
 $color-dark-light: $solidus-admin-gray-500;
 $color-dark-accent: $solidus-admin-gray-200;
 
-$color-primary: $solidus-admin-black;
+$color-primary: $solidus-admin-gray-700;
 $color-primary-light: $solidus-admin-gray-100;
 
-$color-light: $solidus-admin-gray-15;
+$color-light: $solidus-admin-gray-25;
 $color-light-dark: $solidus-admin-gray-50;
 $color-light-accent: $solidus-admin-gray-100;
 
@@ -49,10 +49,10 @@ $color-navbar-active: $solidus-admin-solidus-red;
 $color-navbar-active-bg: $solidus-admin-gray-50;
 $color-navbar-submenu: $color-dark-light;
 $color-navbar-submenu-bg: $color-light;
-$color-navbar-submenu-active: $color-primary;
+$color-navbar-submenu-active: $solidus-admin-solidus-red;
 $color-navbar-footer: $color-dark;
 $color-navbar-footer-bg: $color-light;
-$color-navbar-footer-active: $color-primary;
+$color-navbar-footer-active: $solidus-admin-solidus-red;
 $color-icon-navbar: $color-dark-light;
 
 $color-navbar-hover-bg: $solidus-admin-gray-50;
@@ -61,7 +61,7 @@ $color-navbar-hover: $color-dark;
 // Basic Tabs colors
 $color-tab: $color-dark-light;
 $color-tab-bg: $color-light;
-$color-tab-border: $color-border;
+$color-tab-border: $color-light-accent;
 $color-tab-active: $color-primary;
 $color-tab-active-bg: $color-white;
 $color-tab-active-border: $color-white;
@@ -74,6 +74,7 @@ $color-error: $color-red;
 // Breadcrumb custom variable
 
 $breadcrumb-color: $color-dark-light;
+$breadcrumb-active-color: $color-dark;
 
 // Color for spinner
 $color-spinner: $color-white;
@@ -157,4 +158,14 @@ $main-header-height: 84px;
 $content-wrapper-bg: $color-white;
 $admin-body-bg: $color-white;
 
-$link-hover-color: $solidus-admin-solidus-red;
+// Links
+//--------------------------------------------------------------
+
+$link-color: $solidus-admin-blue;
+$link-hover-color: darken($solidus-admin-blue, 10%);
+
+// Pagination
+//--------------------------------------------------------------
+
+$pagination-color: $color-primary;
+$pagination-hover-color: $color-dark;
