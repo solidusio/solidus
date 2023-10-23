@@ -38,4 +38,20 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustShipment do
 
     it { is_expected.to eq(:shipment) }
   end
+
+  describe "#relevant_rules" do
+    let!(:promotion) { create(:friendly_promotion, actions: [action], rules: rules) }
+    let(:action) { described_class.new(calculator: calculator) }
+    let(:calculator) { SolidusFriendlyPromotions::Calculators::FlatRate.new(preferred_amount: 10) }
+    let(:order_rule) { SolidusFriendlyPromotions::Rules::FirstOrder.new }
+    let(:line_item_rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [product]) }
+    let(:product) { create(:product) }
+    let(:shipment_rule) { SolidusFriendlyPromotions::Rules::ShippingMethod.new(preferred_shipping_method_ids: [ups.id]) }
+    let(:ups) { create(:shipping_method) }
+    let(:rules) { [order_rule, line_item_rule, shipment_rule] }
+
+    subject { action.relevant_rules }
+
+    it { is_expected.to contain_exactly(order_rule, shipment_rule) }
+  end
 end

@@ -58,6 +58,12 @@ module SolidusFriendlyPromotions
       raise NotImplementedError
     end
 
+    def relevant_rules
+      promotion.rules.select do |rule|
+        rule.level.in?([:order, level].uniq)
+      end
+    end
+
     def available_calculators
       raise NotImplementedError
     end
