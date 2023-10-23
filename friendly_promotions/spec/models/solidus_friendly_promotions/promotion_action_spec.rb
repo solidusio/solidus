@@ -59,4 +59,12 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
       expect(subject).to be_nil
     end
   end
+
+  describe "#level" do
+    subject { described_class.new.level }
+
+    it "raises an error" do
+      expect { subject }.to raise_exception(NotImplementedError)
+    end
+  end
 end

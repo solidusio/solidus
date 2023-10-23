@@ -54,6 +54,10 @@ module SolidusFriendlyPromotions
       "solidus_friendly_promotions/admin/promotion_actions/actions/#{model_name.element}"
     end
 
+    def level
+      raise NotImplementedError
+    end
+
     def available_calculators
       raise NotImplementedError
     end

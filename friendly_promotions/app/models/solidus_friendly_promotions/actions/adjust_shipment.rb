@@ -10,6 +10,10 @@ module SolidusFriendlyPromotions
       def available_calculators
         SolidusFriendlyPromotions.config.shipment_discount_calculators
       end
+
+      def level
+        :shipment
+      end
     end
   end
 end

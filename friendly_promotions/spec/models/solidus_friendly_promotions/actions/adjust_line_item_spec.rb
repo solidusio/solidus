@@ -16,4 +16,10 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItem do
 
     it { is_expected.to eq("solidus_friendly_promotions/admin/promotion_actions/actions/adjust_line_item") }
   end
+
+  describe "#level" do
+    subject { described_class.new.level }
+
+    it { is_expected.to eq(:line_item) }
+  end
 end

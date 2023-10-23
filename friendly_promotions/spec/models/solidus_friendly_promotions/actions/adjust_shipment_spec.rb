@@ -32,4 +32,10 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustShipment do
       it { is_expected.to be true }
     end
   end
+
+  describe "#level" do
+    subject { described_class.new.level }
+
+    it { is_expected.to eq(:shipment) }
+  end
 end

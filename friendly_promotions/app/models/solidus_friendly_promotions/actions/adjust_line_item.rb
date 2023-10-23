@@ -10,6 +10,10 @@ module SolidusFriendlyPromotions
       def available_calculators
         SolidusFriendlyPromotions.config.line_item_discount_calculators
       end
+
+      def level
+        :line_item
+      end
     end
   end
 end
