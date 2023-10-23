@@ -13,6 +13,6 @@ class SolidusAdmin::UI::Toast::Component < SolidusAdmin::BaseComponent
   def initialize(text:, icon: nil, scheme: :default)
     @text = text
     @icon = icon
-    @scheme = scheme.to_sym
+    @scheme = scheme
   end
 end
