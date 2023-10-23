@@ -24,12 +24,24 @@ RSpec.describe SolidusFriendlyPromotions::Rules::LineItemProduct, type: :model d
       let(:line_item) { rule_line_item }
 
       it { is_expected.to be_truthy }
+
+      it "has no error message" do
+        subject
+        expect(rule.eligibility_errors.full_messages).to be_empty
+      end
     end
 
     context "for product not in rule" do
       let(:line_item) { other_line_item }
 
       it { is_expected.to be_falsey }
+
+      it "has the right error message" do
+        subject
+        expect(rule.eligibility_errors.full_messages.first).to eq(
+          "You need to add an applicable product before applying this coupon code."
+        )
+      end
     end
 
     context "if match policy is inverse" do
@@ -39,12 +51,24 @@ RSpec.describe SolidusFriendlyPromotions::Rules::LineItemProduct, type: :model d
         let(:line_item) { rule_line_item }
 
         it { is_expected.to be_falsey }
+
+        it "has the right error message" do
+          subject
+          expect(rule.eligibility_errors.full_messages.first).to eq(
+            "Your cart contains a product that prevents this coupon code from being applied."
+          )
+        end
       end
 
       context "for product not in rule" do
         let(:line_item) { other_line_item }
 
         it { is_expected.to be_truthy }
+
+        it "has no error message" do
+          subject
+          expect(rule.eligibility_errors.full_messages).to be_empty
+        end
       end
     end
   end
