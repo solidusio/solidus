@@ -25,6 +25,6 @@ class SolidusAdmin::UI::Button::ComponentPreview < ViewComponent::Preview
   private
 
   def icon_options
-    @icon_options ||= ['search-line'] + component('ui/icon')::NAMES.sample(10)
+    @icon_options ||= ['search-line'] + component('ui/icon')::NAMES.to_a.sample(10)
   end
 end

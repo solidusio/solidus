@@ -2,24 +2,8 @@
 
 class SolidusAdmin::UI::Forms::Switch::Component < SolidusAdmin::BaseComponent
   SIZES = {
-    s: '
-      w-8 h-5
-
-      after:w-4 after:h-4
-      after:top-0.5 after:left-0.5
-
-      active:after:w-4
-      after:checked:left-[1.875rem]
-    ',
-    m: '
-      w-10 h-6
-
-      after:w-5 after:h-5
-      after:top-0.5 after:left-0.5
-
-      active:after:w-5
-      after:checked:left-[2.375rem]
-    ',
+    s: 'w-8 h-5 after:w-4 after:h-4 after:checked:translate-x-3',
+    m: 'w-10 h-6 after:w-5 after:h-5 after:checked:translate-x-4',
   }.freeze
 
   def initialize(size: :m, **attributes)
@@ -32,14 +16,22 @@ class SolidusAdmin::UI::Forms::Switch::Component < SolidusAdmin::BaseComponent
       type: 'checkbox',
       class: "
         #{SIZES.fetch(@size)}
-        appearance-none	outline-0 cursor-pointer bg-gray-200 inline-block rounded-full relative
+        rounded-full after:rounded-full
+        appearance-none	inline-block relative p-0.5 cursor-pointer
 
-        after:content-[''] after:absolute after:bg-white
-        after:duration-300 after:rounded-full after:checked:-translate-x-full
+        outline-none
+        focus:ring focus:ring-gray-300 focus:ring-0.5 focus:ring-offset-1
+        active:ring active:ring-gray-300 active:ring-0.5 active:ring-offset-1
 
+        disabled:cursor-not-allowed
+        after:top-0 after:left-0
+        after:content-[''] after:block
+        after:transition-all after:duration-300 after:ease-in-out
+
+        bg-gray-200 after:bg-white
         hover:bg-gray-300
-        disabled:opacity-40 disabled:cursor-not-allowed
-        checked:bg-gray-500 checked:hover:bg-gray-700
+        checked:bg-gray-500 checked:hover:bg-gray-70
+        disabled:opacity-40
       ",
       **@attributes,
     )
