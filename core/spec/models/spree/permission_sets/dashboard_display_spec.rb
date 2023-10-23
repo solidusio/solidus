@@ -9,6 +9,7 @@ RSpec.describe Spree::PermissionSets::DashboardDisplay do
 
   context "when activated" do
     before do
+      Spree.Deprecator.warn 'The dashboard_display_spec.rb test is being deprecated.  Please update your source code.'
       described_class.new(ability).activate!
     end
 
@@ -17,6 +18,7 @@ RSpec.describe Spree::PermissionSets::DashboardDisplay do
   end
 
   context "when not activated" do
+    Spree.Deprecator.warn 'The dashboard_display_spec.rb test is being deprecated.  Please update your source code.'
     it { is_expected.not_to be_able_to(:admin, :dashboards) }
     it { is_expected.not_to be_able_to(:home, :dashboards) }
   end
