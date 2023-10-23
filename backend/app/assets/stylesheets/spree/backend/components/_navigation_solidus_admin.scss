@@ -129,7 +129,9 @@ $color-navbar-hover: $color-navbar !default;
 
       &::before,
       svg {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         width: 18px;
         height: 18px;
         padding: 0;
