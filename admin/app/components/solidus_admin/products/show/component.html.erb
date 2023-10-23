@@ -1,19 +1,10 @@
-<div class="px-4 relative" data-controller="<%= stimulus_id %>">
-  <header class="py-6 flex items-center gap-4">
-    <%= render component("ui/button").new(
-      tag: :a,
-      title: t(".back"),
-      icon: "arrow-left-line",
-      scheme: :secondary,
-      href: solidus_admin.products_path
-    ) %>
-    <h1 class="flex items-center gap-2">
-      <span class="body-title"><%= @product.name %></span>
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.products_path) %>
+    <%= page_header_title(@product.name) do %>
       <%= render component("products/status").from_product(@product) %>
-    </h1>
-
-    <div class="ml-auto flex gap-2 items-center">
-      <%= render component("feedback").new %>
+    <% end %>
+    <%= page_header_actions do %>
       <%= render component("ui/button").new(
         tag: :a,
         text: t(".duplicate"),
@@ -29,12 +20,12 @@
         scheme: :ghost
       ) %>
       <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
-    </div>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= form_for @product, url: solidus_admin.product_path(@product), html: { id: form_id } do |f| %>
-    <div class="flex gap-4 items-start pb-4">
-      <div class="justify-center items-start gap-4 flex flex-col w-full">
+    <%= page_with_sidebar do %>
+      <%= page_with_sidebar_main do %>
         <%= render component('ui/panel').new do %>
           <%= render component("ui/forms/field").text_field(f, :name) %>
           <%= render component("ui/forms/field").text_field(f, :slug) %>
@@ -105,9 +96,9 @@
             href: spree.admin_product_product_properties_path(@product)
           ) %>
         <% end %>
-      </div>
+      <% end %>
 
-      <aside class="justify-center items-start gap-4 flex flex-col w-full max-w-sm">
+      <%= page_with_sidebar_aside do %>
         <%= render component('ui/panel').new(title: "Publishing") do %>
           <%= render component("ui/forms/field").text_field(f, :available_on, hint: t(".available_on_html"), type: :date) %>
           <%= render component("ui/forms/field").text_field(f, :discontinue_on, hint: t(".discontinue_on_html"), type: :date) %>
@@ -125,12 +116,12 @@
         <%= render component('ui/panel').new(title: "Product organization") do %>
           <%= render component("ui/forms/field").select(f, :taxon_ids, taxon_options, multiple: true, "size" => taxon_options.size) %>
         <% end %>
-      </aside>
-    </div>
+      <% end %>
+    <% end %>
   <% end %>
 
-  <div class="mt-4 py-4 px-2 pb-8 border-t border-gray-100 flex">
-    <div class="flex gap-2 grow">
+  <%= page_footer do %>
+    <%= page_footer_actions do %>
       <%= form_for @product, url: solidus_admin.product_path(@product), method: :delete do %>
         <%= render component("ui/button").new(
           tag: :button,
@@ -140,7 +131,7 @@
           "data-#{stimulus_id}-message-param": t(".delete_confirmation"),
         ) %>
       <% end %>
-    </div>
+    <% end %>
     <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
-  </div>
-</div>
+  <% end %>
+<% end %>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
+  include SolidusAdmin::Layout::PageHelpers
+
   def initialize(page:)
     @page = page
   end

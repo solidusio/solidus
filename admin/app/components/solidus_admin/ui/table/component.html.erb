@@ -11,14 +11,8 @@
     <%= component("ui/table/ransack_filter").stimulus_id %>:showSearch-><%= stimulus_id %>#showSearch
   "
 >
-  <% toolbar_classes = "
-    h-14 p-2 bg-white border-b border-gray-100
-    justify-start items-center gap-2
-    visible:flex hidden:hidden
-    rounded-t-lg
-  " %>
   <div role="search">
-    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="searchToolbar">
+    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "searchToolbar") do %>
       <%= form_with(
         url: @search_url,
         method: :get,
@@ -47,17 +41,17 @@
           "data-action": "#{stimulus_id}#cancelSearch",
         ) %>
       </div>
-    </div>
+    <% end %>
 
     <% if @filters.any? %>
-      <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="filterToolbar">
+      <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "filterToolbar") do %>
         <% @filters.each_with_index do |filter, index| %>
           <%= render_ransack_filter_dropdown(filter, index) %>
         <% end %>
-      </div>
+      <% end %>
     <% end %>
 
-    <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="scopesToolbar">
+    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "scopesToolbar") do %>
       <div class="flex-grow">
         <%= render component("ui/tab").new(text: "All", current: true, href: "") %>
       </div>
@@ -68,15 +62,15 @@
         scheme: :secondary,
         "data-action": "#{stimulus_id}#showSearch",
       ) %>
-    </div>
+    <% end %>
   </div>
 
-  <div class="<%= toolbar_classes %>" data-<%= stimulus_id %>-target="batchToolbar" role="toolbar" aria-label="<%= t(".batch_actions") %>">
+  <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "batchToolbar", role: "toolbar", "aria-label": t(".batch_actions")) do %>
     <%= form_tag '', id: batch_actions_form_id %>
     <% @batch_actions.each do |batch_action| %>
       <%= render_batch_action_button(batch_action) %>
     <% end %>
-  </div>
+  <% end %>
 
   <%= turbo_frame_tag table_frame_id, target: "_top" do %>
     <table class="table-fixed w-full border-collapse">
