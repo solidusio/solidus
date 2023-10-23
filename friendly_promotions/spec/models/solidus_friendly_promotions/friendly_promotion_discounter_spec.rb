@@ -121,7 +121,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       end
     end
 
-    context "with a promotion with a line-item level action and a shipment-level action where only one action succeeds" do
+    context "where one action succeeds and another errors" do
       let(:usps) { create(:shipping_method) }
       let(:ups_ground) { create(:shipping_method) }
       let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}], shipping_method: ups_ground) }
@@ -152,6 +152,28 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       it "has no errors for this promo" do
         subject
         expect(discounter.eligibility_results.errors_for(promotion)).to be_empty
+      end
+    end
+
+    context "with an ineligible order-level rule" do
+      let(:mug) { create(:product) }
+      let(:order_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+      let(:line_item_rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [mug]) }
+      let(:rules) { [order_rule, line_item_rule] }
+
+      it "can tell us about success" do
+        subject
+        expect(discounter.eligibility_results.success?(promotion)).to be false
+      end
+
+      it "can tell us about all the errors", :pending do
+        subject
+        expect(discounter.eligibility_results.errors_for(promotion)).to eq(
+          [
+            "This coupon code could not be applied to the cart at this time.",
+            "You need to add an applicable product before applying this coupon code."
+          ]
+        )
       end
     end
   end
