@@ -26,6 +26,33 @@ module SolidusAdmin
       end
     end
 
+    def variants_for
+      load_order
+
+      # We need to eager load active storage attachments when using it
+      if Spree::Image.include?(Spree::Image::ActiveStorageAttachment)
+        image_includes = {
+          attachment_attachment: { blob: { variant_records: { image_attachment: :blob } } }
+        }
+      end
+
+      @variants = Spree::Variant
+        .where.not(id: @order.line_items.select(:variant_id))
+        .order(created_at: :desc, id: :desc)
+        .where(product_id: Spree::Product.ransack(params[:q]).result.select(:id))
+        .limit(10)
+        .eager_load(
+          :prices,
+          images: image_includes || {},
+          option_values: :option_type,
+          stock_items: :stock_location,
+        )
+
+      respond_to do |format|
+        format.html { render component('orders/cart/result').with_collection(@variants, order: @order), layout: false }
+      end
+    end
+
     private
 
     def load_order

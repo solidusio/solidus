@@ -1,0 +1,9 @@
+en:
+  solidus_admin:
+    line_items:
+      update:
+        success: "Quantity updated successfully"
+      create:
+        success: "Variant added to cart successfully"
+      destroy:
+        success: "Line item removed successfully"
