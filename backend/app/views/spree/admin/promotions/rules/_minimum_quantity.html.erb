@@ -1,0 +1,5 @@
+<div class="field">
+  <% field_name = "#{param_prefix}[preferred_minimum_quantity]" %>
+  <%= label_tag field_name, promotion_rule.model_name.human %>
+  <%= number_field_tag field_name, promotion_rule.preferred_minimum_quantity, class: "fullwidth", min: 1 %>
+</div>

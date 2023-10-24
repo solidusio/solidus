@@ -217,6 +217,8 @@ en:
         description: Order total meets these criteria
       spree/promotion/rules/landing_page:
         description: Customer must have visited the specified page
+      spree/promotion/rules/minimum_quantity:
+        description: Order contains minimum quantity of applicable items
       spree/promotion/rules/nth_order:
         description: Apply a promotion to every nth order a user has completed.
         form_text: 'Apply this promotion on the users Nth order: '
@@ -652,6 +654,7 @@ en:
       spree/promotion/rules/first_repeat_purchase_since: First Repeat Purchase Since
       spree/promotion/rules/item_total: Item Total
       spree/promotion/rules/landing_page: Landing Page
+      spree/promotion/rules/minimum_quantity: Minimum Quantity
       spree/promotion/rules/nth_order: Nth Order
       spree/promotion/rules/one_use_per_user: One Use Per User
       spree/promotion/rules/option_value: Option Value(s)
@@ -1533,6 +1536,9 @@ en:
         no_user_or_email_specified: You need to login or provide your email before applying this coupon code.
         no_user_specified: You need to login before applying this coupon code.
         not_first_order: This coupon code can only be applied to your first order.
+        quantity_less_than_minimum:
+          one: You need to add a least 1 applicable item to your order.
+          other: You need to add a least %{count} applicable items to your order.
     email: Email
     empty: Empty
     empty_cart: Empty Cart
