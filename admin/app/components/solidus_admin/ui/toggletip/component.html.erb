@@ -3,7 +3,6 @@
   <%= tag.attributes(**@attributes) %>
 >
   <summary
-    type="button"
     class="
       block
       w-[1rem]
@@ -12,9 +11,8 @@
       [&::marker]:hidden
       [&::-webkit-details-marker]:hidden
     "
-    data-<%= stimulus_id %>-target="button"
     data-action="
-      click:prevent-><%= stimulus_id %>#toggle
+      click-><%= stimulus_id %>#toggle
       keydown.esc@window-><%= stimulus_id %>#close
     "
     aria-label="<%= t('.get_help') %>"
@@ -52,7 +50,6 @@
         before:bg-inherit
         <%= POSITIONS.fetch(@position)[:arrow] %>
       "
-      data-<%= stimulus_id %>-target="content"
     >
       <%= @text %>
     </span>
