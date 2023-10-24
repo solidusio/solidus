@@ -8,8 +8,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
     subject { described_class.new(order).call }
 
-    it "returns nil" do
-      expect(subject).to be nil
+    it "returns the order unmodified" do
+      expect(order).not_to receive(:reset_current_discounts)
+      expect(subject).to eq(order)
     end
   end
 end

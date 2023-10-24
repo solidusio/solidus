@@ -10,7 +10,7 @@ module SolidusFriendlyPromotions
     end
 
     def call
-      return nil if order.shipped?
+      return order if order.shipped?
 
       order.reset_current_discounts
 
