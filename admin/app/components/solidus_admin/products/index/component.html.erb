@@ -2,7 +2,6 @@
   <%= page_header do %>
     <%= page_header_title title %>
     <%= page_header_actions do %>
-      <%= render component("feedback").new %>
       <%= render component("ui/button").new(
         tag: :a,
         text: t('.add_product'),
