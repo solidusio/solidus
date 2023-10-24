@@ -1,3 +1,7 @@
 .hint-tooltip {
   cursor: pointer;
+
+  i {
+    color: $color-dark-light;
+  }
 }

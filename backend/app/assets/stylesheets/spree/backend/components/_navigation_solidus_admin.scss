@@ -122,14 +122,16 @@ $color-navbar-hover: $color-navbar !default;
       padding: 2px 12px;
       width: 100%;
       border-radius: $border-radius;
-      color: $color-primary;
+      color: $solidus-admin-gray-800;
       gap: 12px;
       display: flex;
       align-items: center;
 
       &::before,
       svg {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         width: 18px;
         height: 18px;
         padding: 0;
