@@ -9,14 +9,16 @@
   data-<%= stimulus_id %>-initial-text-value="<%= t('.initial') %>"
   data-<%= stimulus_id %>-empty-text-value="<%= t('.empty') %>"
 >
-  <%= render component('ui/panel').new do |panel| %>
+  <%= render component('ui/panel').new(title: t('.title')) do |panel| %>
+    <div class="border-gray-100 border-t -mx-6"></div>
     <div>
       <div class="peer">
-      <%= render component("ui/forms/search_field").new(
-        "data-action": "#{stimulus_id}#search focus->#{stimulus_id}#showResults #{stimulus_id}#showResults",
-        placeholder: t(".search_placeholder"),
-        "data-#{stimulus_id}-target": "searchField",
-      ) %>
+        <%= render component("ui/forms/search_field").new(
+          "data-action":
+            "#{stimulus_id}#search focus->#{stimulus_id}#showResults #{stimulus_id}#showResults",
+          placeholder: t(".search_placeholder"),
+          "data-#{stimulus_id}-target": "searchField"
+        ) %>
       </div>
 
       <%# results popover %>

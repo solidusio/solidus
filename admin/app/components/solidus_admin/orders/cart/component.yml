@@ -1,6 +1,7 @@
 # Add your component translations here.
 # Use the translation in the example in your template with `t(".hello")`.
 en:
+  title: "Cart"
   search_placeholder: "Find a variant by name or SKU"
   loading: "Loading..."
   initial: "Type to search"
