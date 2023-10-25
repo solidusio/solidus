@@ -19,10 +19,11 @@ module SolidusFriendlyPromotions
 
       discountable_order.shipments.flat_map(&:shipping_rates).each do |shipping_rate|
         shipping_rate.discounts = shipping_rate.current_discounts.map do |discount|
-          SolidusFriendlyPromotions::ShippingRateDiscount.new(
+          SolidusFriendlyPromotions::ShippingRateDiscount.create!(
             shipping_rate: shipping_rate,
             amount: discount.amount,
-            label: discount.label
+            label: discount.label,
+            promotion_action: discount.source
           )
         end
       end

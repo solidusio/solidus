@@ -92,4 +92,15 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
       end
     end
   end
+
+  context "adjusting shipping rates" do
+    let!(:promotion) { create(:friendly_promotion, actions: [shipment_action], apply_automatically: true) }
+    let(:shipment_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: fifty_percent) }
+    let(:fifty_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 50) }
+    let(:order) { create(:order_with_line_items) }
+
+    it "creates shipping rate discounts" do
+      expect { subject.call }.to change { SolidusFriendlyPromotions::ShippingRateDiscount.count }
+    end
+  end
 end
