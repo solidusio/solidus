@@ -70,7 +70,7 @@ export default class extends Controller {
   }
 
   selectAllRows(event) {
-    if (this.modeValue = event.target.checked) {
+    if (event.target.checked) {
       this.modeValue = "batch"
     } else if (this.searchFieldTarget.value !== '') {
       this.modeValue = "search"

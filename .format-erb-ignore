@@ -1,0 +1,6 @@
+sandbox/**
+tmp/**
+**/generators/**
+
+# this file is using tail `if` checks which are not supported by erb-formatter
+backend/app/views/spree/admin/shared/_product_tabs.html.erb
