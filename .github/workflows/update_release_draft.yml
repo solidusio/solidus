@@ -20,16 +20,14 @@ jobs:
         uses: ./.github/actions/extract_pipeline_context
       - uses: ruby/setup-ruby@v1
         env:
-          BUNDLE_GEMFILE: "dev_tools/Gemfile"
+          BUNDLE_ONLY: "release"
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
           bundler-cache: true
       - name: "Save Release Draft"
         run: |
-          cd dev_tools/ && bin/update-release-draft \
-            ${{ github.token }} \
-            ${{ github.repository }} \
+          bin/release/update-release-draft \
+            --update \
+            --branch ${{ github.ref_name }} \
             ${{ steps.pipeline_context.outputs.current_diff_source_tag }} \
             ${{ steps.pipeline_context.outputs.candidate_tag }} \
-            ${{ github.ref_name }} \
-            ${{ github.event.number }}

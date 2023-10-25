@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../../core/lib/spree/core/version'
+
+path = "#{ROOT}/core/lib/spree/core/version.rb"
+from = Spree::VERSION
+to = ARGV[0]
+
+warn "~~> Bumping Spree::VERSION from #{from} to #{to} in #{path}"
+File.write(path, File.read(path).gsub(from, to))

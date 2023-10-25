@@ -19,30 +19,20 @@ jobs:
           last_minor: ${{ inputs.last_minor }}
       - uses: ruby/setup-ruby@v1
         env:
-          BUNDLE_GEMFILE: "dev_tools/Gemfile"
+          BUNDLE_ONLY: "release"
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
           bundler-cache: true
       - name: "Bump version"
-        run: |
-          cd dev_tools/ && bin/bump-version \
-            ${{ steps.pipeline_context.outputs.candidate_version }}
+        run: bin/release/bump-version ${{ steps.pipeline_context.outputs.candidate_version }}
       - name: "Bump docker image version"
         if: github.ref_name == 'main'
-        run: |
-          cd dev_tools/ && bin/bump-docker-image-version \
-            ${{ steps.pipeline_context.outputs.candidate_version }}
+        run: bin/release/bump-docker-image-version ${{ steps.pipeline_context.outputs.candidate_version }}
       - name: "Bump installer starter frontend version"
         if: github.ref_name == 'main'
-        run: |
-          cd dev_tools/ && bin/bump-starter-frontend-version \
-            ${{ steps.pipeline_context.outputs.candidate_patch_branch }}
+        run: bin/release/bump-starter-frontend-version ${{ steps.pipeline_context.outputs.candidate_patch_branch }}
       - name: "Update Changelog"
-        run: |
-          cd dev_tools/ && bin/update-changelog \
-            ${{ github.token }} \
-            ${{ github.repository }} \
-            ${{ steps.pipeline_context.outputs.candidate_tag }}
+        run: bin/release/update-changelog ${{ github.token }} ${{ github.repository }} ${{ steps.pipeline_context.outputs.candidate_tag }}
       - name: "Compute labels for the PR"
         id: pr_labels
         run: |

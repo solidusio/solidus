@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '_helpers'
+require_relative "#{ROOT}/core/lib/spree/core/version"
+
+path = "#{ROOT}/core/lib/spree/core/version.rb"
+from = Spree.previous_solidus_minor_version
+to = ARGV[0]
+
+warn "~~> Bumping Spree.previous_solidus_minor_version from #{from} to #{to} in #{path}"
+File.write(path, File.read(path).gsub(from, to))
