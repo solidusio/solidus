@@ -68,7 +68,7 @@ module Spree
         raise UnsupportedPaymentMethod, "Found invalid payment type '#{type_name}'.\n"\
           "This may happen after switching payment service provider, when payment methods "\
           "reference old types that are not supported any more.\n"\
-          "If that is the case, consider running 'rake payment_method:deprecate_unsupported_payment_methods' "\
+          "If that is the case, consider running 'rake payment_method:deactivate_unsupported_payment_methods' "\
           "to fix the issue."
       end
     end
