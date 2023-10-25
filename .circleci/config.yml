@@ -229,7 +229,7 @@ commands:
 jobs:
   lint_code:
     docker:
-      - image: cimg/ruby:3.1
+      - image: cimg/ruby:3.2-node
     steps:
       - checkout
       - run: 'bundle install'
@@ -237,6 +237,10 @@ jobs:
           name: Check with rubocop
           command: |
             bundle exec rubocop --parallel --format junit --out "$PWD/test-results/rubocop-results.xml" --format progress
+      - run:
+          name: Check JavaScript
+          command: |
+            npx -y eslint "**/*.js"
       - store_test_results:
           path: test-results
 
