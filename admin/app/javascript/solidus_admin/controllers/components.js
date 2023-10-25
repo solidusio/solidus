@@ -1,3 +1,5 @@
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+
 import "@hotwired/stimulus"
 
 const registeredControllers = {}
@@ -32,4 +34,4 @@ function registerController(name, module, application) {
     application.register(name, module.default)
     registeredControllers[name] = true
   }
-};
+}
