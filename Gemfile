@@ -17,6 +17,9 @@ end
 # and https://github.com/rails/sprockets-rails/issues/369
 gem 'sprockets', '~> 3'
 
+gem 'pry'
+gem 'launchy', require: false
+
 dbs = ENV['DB_ALL'] ? 'all' : ENV.fetch('DB', 'sqlite')
 gem 'mysql2', '~> 0.5.0', require: false if dbs.match?(/all|mysql/)
 gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
@@ -31,6 +34,8 @@ gem 'simplecov-cobertura', require: false
 gem 'rails-controller-testing', require: false
 gem 'puma', '< 6', require: false
 gem 'i18n-tasks', '~> 0.9', require: false
+gem 'rspec_junit_formatter', require: false
+gem 'yard', require: false
 
 # Ensure the requirement is also updated in core/lib/spree/testing_support/factory_bot.rb
 gem 'factory_bot_rails', '>= 4.8', require: false
@@ -53,10 +58,8 @@ group :admin do
   gem 'axe-core-capybara', '~> 4.7', require: false
 end
 
-group :utils do
+group :lint do
   gem 'erb-formatter', require: false
-  gem 'pry'
-  gem 'launchy', require: false
   gem 'rubocop', '~> 1', require: false
   gem 'rubocop-performance', '~> 1.4', require: false
   gem 'rubocop-rails', '~> 2.9', require: false
@@ -66,11 +69,6 @@ group :release do
   gem 'octokit', '~> 7.1', require: false
   gem 'faraday-retry', '~> 2.0', require: false
 end
-
-gem 'rspec_junit_formatter', require: false, group: :ci
-
-# Documentation
-gem 'yard', require: false, group: :docs
 
 custom_gemfile = File.expand_path('Gemfile-custom', __dir__)
 eval File.read(custom_gemfile), nil, custom_gemfile, 0 if File.exist?(custom_gemfile)

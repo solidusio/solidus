@@ -16,7 +16,7 @@ executors:
       SOLIDUS_RAISE_DEPRECATIONS: true
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
-      BUNDLE_WITHOUT: "utils"
+      BUNDLE_WITHOUT: "lint,release"
     docker:
       - image: &image cimg/ruby:<< parameters.ruby >>-browsers
 
@@ -230,6 +230,8 @@ jobs:
   lint_code:
     docker:
       - image: cimg/ruby:3.2-node
+        environment:
+          BUNDLE_ONLY: "lint"
     steps:
       - checkout
       - run: 'bundle install'
