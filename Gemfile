@@ -54,6 +54,7 @@ group :admin do
 end
 
 group :utils do
+  gem 'erb-formatter', require: false
   gem 'pry'
   gem 'launchy', require: false
   gem 'rubocop', '~> 1', require: false

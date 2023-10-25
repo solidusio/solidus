@@ -234,9 +234,17 @@ jobs:
       - checkout
       - run: 'bundle install'
       - run:
-          name: Check with rubocop
+          name: Check Ruby
           command: |
             bundle exec rubocop --parallel --format junit --out "$PWD/test-results/rubocop-results.xml" --format progress
+      - run:
+          name: Check ERB
+          command: |
+            # enable recursive globbing with "**"
+            shopt -s globstar
+
+            # we're only interested in errors
+            bundle exec erb-format **/*.html.erb > /dev/null
       - run:
           name: Check JavaScript
           command: |
