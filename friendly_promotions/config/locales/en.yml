@@ -14,6 +14,7 @@ en:
     adjustment_labels:
       line_item: "%{promotion} (%{promotion_customer_label})"
       shipment: "%{promotion} (%{promotion_customer_label})"
+      shipping_rate: "%{promotion} (%{promotion_customer_label})"
     adjustment_type: Adjustment type
     add_action: New Action
     add_rule: New Rule
@@ -34,7 +35,7 @@ en:
     new_promotion_code_batch: New Promotion Code Batch
     number_of_codes: Number of codes
     legacy_promotions: Legacy Promotions
-    no_rules_addes: No Rules Added
+    no_rules_added: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
     view_promotion_codes_list: View codes list
