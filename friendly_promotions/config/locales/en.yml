@@ -91,6 +91,10 @@ en:
       solidus_friendly_promotions/rules/user_logged_in:
         no_user_specified: You need to login before applying this coupon code.
       solidus_friendly_promotions/rules/user_role:
+      solidus_friendly_promotions/rules/minimum_quantity:
+        quantity_less_than_minimum:
+          one: "You need to add a least 1 applicable item to your order."
+          other: "You need to add a least %{count} applicable items to your order."
     product_rule:
       choose_products: Choose products
       label: Order must contain %{select} these products
@@ -157,6 +161,7 @@ en:
       solidus_friendly_promotions/rules/item_total: Item Total
       solidus_friendly_promotions/rules/discounted_item_total: Item Total after previous lanes
       solidus_friendly_promotions/rules/landing_page: Landing Page
+      solidus_friendly_promotions/rules/minimum_quantity: Minimum Quantity
       solidus_friendly_promotions/rules/nth_order: Nth Order
       solidus_friendly_promotions/rules/one_use_per_user: One Use Per User
       solidus_friendly_promotions/rules/option_value: Option Value(s)
@@ -201,6 +206,8 @@ en:
         preferred_line_item_applicable: Should also apply to line items
       solidus_friendly_promotions/rules/line_item_option_value:
         description: Line Item has specified product with matching option value
+      solidus_friendly_promotions/rules/minimum_quantity:
+        description: Order contains minimum quantity of applicable items
       solidus_friendly_promotions/rules/product:
         description: Order includes specified product(s)
         line_item_level_description: 'Line item matches the specified products:'
