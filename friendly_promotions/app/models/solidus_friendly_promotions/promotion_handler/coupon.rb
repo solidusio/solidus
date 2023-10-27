@@ -13,7 +13,7 @@ module SolidusFriendlyPromotions
 
       def apply
         if coupon_code.present?
-          if promotion.present? && promotion.active? && promotion.actions.exists?
+          if promotion.present? && promotion.active?
             handle_present_promotion
           elsif promotion_code&.promotion&.expired?
             set_error_code :coupon_code_expired
