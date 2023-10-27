@@ -41,6 +41,18 @@ module SolidusFriendlyPromotions
         self
       end
 
+      def successful?
+        success.present? && error.blank?
+      end
+
+      def promotion
+        @promotion ||= if promotion_code&.promotion&.active?
+          promotion_code.promotion
+        end
+      end
+
+      private
+
       def set_success_code(status_code)
         @status_code = status_code
         @success = I18n.t(status_code, scope: "solidus_friendly_promotions.eligibility_results")
@@ -50,18 +62,6 @@ module SolidusFriendlyPromotions
         @status_code = status_code
         @error = options[:error] || I18n.t(status_code, scope: "solidus_friendly_promotions.eligibility_errors")
       end
-
-      def promotion
-        @promotion ||= if promotion_code&.promotion&.active?
-          promotion_code.promotion
-        end
-      end
-
-      def successful?
-        success.present? && error.blank?
-      end
-
-      private
 
       def promotion_code
         @promotion_code ||= SolidusFriendlyPromotions::PromotionCode.where(value: coupon_code).first

@@ -25,7 +25,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
     describe "#set_success_code" do
       let(:status) { :coupon_code_applied }
-      subject { coupon.set_success_code status }
+      subject { coupon.send(:set_success_code, status) }
 
       it "should have status_code" do
         subject
@@ -39,7 +39,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
     end
 
     describe "#set_error_code" do
-      subject { coupon.set_error_code status }
+      subject { coupon.send(:set_error_code, status) }
 
       context "not found" do
         let(:status) { :coupon_code_not_found }
