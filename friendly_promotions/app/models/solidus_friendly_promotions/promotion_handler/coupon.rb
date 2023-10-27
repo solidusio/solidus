@@ -3,11 +3,12 @@
 module SolidusFriendlyPromotions
   module PromotionHandler
     class Coupon
-      attr_reader :order, :coupon_code
+      attr_reader :order, :coupon_code, :errors
       attr_accessor :error, :success, :status_code
 
       def initialize(order)
         @order = order
+        @errors = []
         @coupon_code = order&.coupon_code&.downcase
       end
 
@@ -61,6 +62,7 @@ module SolidusFriendlyPromotions
       def set_error_code(status_code, options = {})
         @status_code = status_code
         @error = options[:error] || I18n.t(status_code, scope: "solidus_friendly_promotions.eligibility_errors")
+        @errors = options[:errors] || [@error]
       end
 
       def promotion_code
@@ -89,9 +91,7 @@ module SolidusFriendlyPromotions
 
       def set_promotion_eligibility_error(promotion, results)
         eligibility_error = results.for(promotion).values.flatten.detect { |result| !result.success }
-
-        @status_code = eligibility_error.code
-        @error = eligibility_error.message
+        set_error_code(eligibility_error.code, error: eligibility_error.message, errors: results.errors_for(promotion))
       end
 
       def promotion_usage_limit_exceeded

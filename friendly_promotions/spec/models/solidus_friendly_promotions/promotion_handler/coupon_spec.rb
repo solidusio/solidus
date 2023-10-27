@@ -421,4 +421,31 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
       end
     end
   end
+
+  context "with multiple errors" do
+    let(:shirt) { create(:product) }
+    let(:hat) { create(:product) }
+    let(:order) { create(:order_with_line_items, coupon_code: "XMAS", line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
+    let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [hat], preferred_line_item_applicable: false) }
+    let(:nth_order_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+    let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
+    let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items) }
+    let(:actions) { [line_item_action] }
+    let(:rules) { [product_rule, nth_order_rule] }
+    let!(:promotion) { create(:friendly_promotion, actions: actions, rules: rules, name: "10% off Shirts and USPS Shipping") }
+    let!(:coupon) { create(:friendly_promotion_code, promotion: promotion, value: "XMAS") }
+    let(:handler) { described_class.new(order) }
+
+    subject { handler.apply }
+
+    it "is unsuccessful with multiple errors" do
+      subject
+      expect(handler.success).to be nil
+      expect(handler.error).to eq("You need to add an applicable product before applying this coupon code.")
+      expect(handler.errors).to eq([
+        "You need to add an applicable product before applying this coupon code.",
+        "This coupon code could not be applied to the cart at this time."
+      ])
+    end
+  end
 end
