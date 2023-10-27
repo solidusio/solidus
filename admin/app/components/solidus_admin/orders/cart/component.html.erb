@@ -3,118 +3,77 @@
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-products-url-value="<%= solidus_admin.variants_for_order_path(@order) %>"
   data-action="
-    keydown-><%= stimulus_id %>#selectResult
+    <%= component('ui/search_panel').stimulus_id %>:search-><%= stimulus_id %>#search
+    <%= component('ui/search_panel').stimulus_id %>:submit-><%= stimulus_id %>#selectResult
   "
-  data-<%= stimulus_id %>-loading-text-value="<%= t('.loading') %>"
-  data-<%= stimulus_id %>-initial-text-value="<%= t('.initial') %>"
-  data-<%= stimulus_id %>-empty-text-value="<%= t('.empty') %>"
 >
-  <%= render component('ui/panel').new(title: t('.title')) do |panel| %>
-    <div class="border-gray-100 border-t -mx-6"></div>
-    <div>
-      <div class="peer">
-        <%= render component("ui/forms/search_field").new(
-          "data-action":
-            "#{stimulus_id}#search focus->#{stimulus_id}#showResults #{stimulus_id}#showResults",
-          placeholder: t(".search_placeholder"),
-          "data-#{stimulus_id}-target": "searchField"
-        ) %>
-      </div>
-
-      <%# results popover %>
-      <details class="px-6 relative overflow-visible">
-        <summary class="hidden"></summary>
-        <div
-          class="
-            absolute
-            left-0
-            top-2
-            bg-white
-            z-30
-            w-full
-            rounded-lg
-            shadow
-            border
-            border-gray-100
-            p-2
-            flex-col
-            gap-1
-            max-h-screen
-            overflow-y-auto
-          "
-          data-<%= stimulus_id %>-target="results"
-        >
-        </div>
-      </details>
-
-    </div>
-
-    <%# line items table %>
-    <div class="rounded-b-lg -mx-6 -mb-6 overflow-hidden">
-      <table class="table-auto w-full">
-        <thead>
+  <%= render component('ui/search_panel').new(
+    title: t('.title'),
+    search_placeholder: t('.search_placeholder'),
+    id: :order_cart,
+  ) do |panel| %>
+    <table class="table-auto w-full" <%= :hidden if @order.line_items.empty? %>>
+      <thead>
+        <tr class="border-gray-100 border-t">
+          <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none">Product</th>
+          <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Quantity</th>
+          <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Price</th>
+          <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.line_items.each do |line_item| %>
           <tr class="border-gray-100 border-t">
-            <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none">Product</th>
-            <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Quantity</th>
-            <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Price</th>
-            <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only">Actions</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @order.line_items.each do |line_item| %>
-            <tr class="border-gray-100 border-t">
-              <td class="px-6 py-4">
-                <div class="flex gap-2 grow">
-                  <% variant = line_item.variant %>
-                  <%= render component("ui/thumbnail").new(
-                    src: (variant.images.first || variant.product.gallery.images.first)&.url(:small),
-                    alt: variant.name
-                  ) %>
-                  <div class="flex-col">
-                    <div class="leading-5 text-black body-small-bold"><%= variant.name %></div>
-                    <div class="leading-5 text-gray-500 body-small">
-                      SKU: <%= variant.sku %>
-                      <%= variant.options_text.presence&.prepend("- ") %>
-                    </div>
+            <td class="px-6 py-4">
+              <div class="flex gap-2 grow">
+                <% variant = line_item.variant %>
+                <%= render component("ui/thumbnail").new(
+                  src: (variant.images.first || variant.product.gallery.images.first)&.url(:small),
+                  alt: variant.name
+                ) %>
+                <div class="flex-col">
+                  <div class="leading-5 text-black body-small-bold"><%= variant.name %></div>
+                  <div class="leading-5 text-gray-500 body-small">
+                    SKU: <%= variant.sku %>
+                    <%= variant.options_text.presence&.prepend("- ") %>
                   </div>
                 </div>
-              </td>
-              <td class="px-6 py-4">
-                <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), html: {
-                  "data-controller": "readonly-when-submitting"
-                }) do |f| %>
-                  <%= render component("ui/forms/input").new(
-                    name: "#{f.object_name}[quantity]",
-                    type: :number,
-                    value: line_item.quantity,
-                    "aria-label": "Quantity",
-                    min: 0,
-                    class: "!w-16 inline-block",
-                    "data-action": "input->#{stimulus_id}#updateLineItem",
-                  ) %>
-                  <% render component("ui/button").new(type: :submit, text: "Update", class: "inline-block") %>
-                <% end %>
-              </td>
-              <td class="px-6 py-4">
-                <span class="text-gray-500 body-small"><%= line_item.single_money.to_html %></span>
-              </td>
-              <td class="px-6 py-4 text-right">
-                <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), method: :delete) do |f| %>
-                  <%= render component('ui/button').new(
-                    scheme: :ghost,
-                    size: :s,
-                    title: t("spree.delete"),
-                    icon: 'close-line',
-                    "data-controller": "confirm",
-                    "data-confirm-text-value": t("spree.are_you_sure"),
-                  ) %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), html: {
+                "data-controller": "readonly-when-submitting"
+              }) do |f| %>
+                <%= render component("ui/forms/input").new(
+                  name: "#{f.object_name}[quantity]",
+                  type: :number,
+                  value: line_item.quantity,
+                  "aria-label": "Quantity",
+                  min: 0,
+                  class: "!w-16 inline-block",
+                  "data-action": "input->#{stimulus_id}#updateLineItem",
+                ) %>
+                <% render component("ui/button").new(type: :submit, text: "Update", class: "inline-block") %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4">
+              <span class="text-gray-500 body-small"><%= line_item.single_money.to_html %></span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), method: :delete) do |f| %>
+                <%= render component('ui/button').new(
+                  scheme: :ghost,
+                  size: :s,
+                  title: t("spree.delete"),
+                  icon: 'close-line',
+                  "data-controller": "confirm",
+                  "data-confirm-text-value": t("spree.are_you_sure"),
+                ) %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 </div>

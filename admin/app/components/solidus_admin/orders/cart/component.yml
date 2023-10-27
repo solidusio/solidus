@@ -3,6 +3,3 @@
 en:
   title: "Cart"
   search_placeholder: "Find a variant by name or SKU"
-  loading: "Loading..."
-  initial: "Type to search"
-  empty: "No results"

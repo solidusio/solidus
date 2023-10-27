@@ -1,34 +1,26 @@
-<%= form_for(@order.line_items.build(variant: @variant), url: solidus_admin.order_line_items_path(@order), method: :post, html: {
-  "data-controller": "readonly-when-submitting #{stimulus_id}",
-  "data-action": "click->#{stimulus_id}#submit",
-  "data-#{component('orders/cart').stimulus_id}-target": "result",
-  class: "
-    rounded
-    p-2
-    items-center
-    flex
-    hover:bg-gray-25
-    aria-selected:bg-gray-25
-    cursor-pointer
-  "
-}) do |f| %>
-  <%= hidden_field_tag("#{f.object_name}[variant_id]", @variant.id) %>
-  <div class="flex gap-2 grow">
-    <%= render component("ui/thumbnail").new(
-      src: @image&.url(:small),
-      alt: @variant.name
-    ) %>
-    <div class="flex-col">
-      <div class="leading-5 text-black body-small-bold"><%= @variant.name %></div>
-      <div class="leading-5 text-gray-500 body-small">
-        SKU:
-        <%= @variant.sku %>
-        <%= @variant.options_text.presence&.prepend("- ") %>
+<%= render component('ui/search_panel/result').new do %>
+  <%= form_for(@order.line_items.build(variant: @variant), url: solidus_admin.order_line_items_path(@order), method: :post, html: {
+    "data-controller": "readonly-when-submitting",
+    class: "flex items-center",
+  }) do |f| %>
+    <%= hidden_field_tag("#{f.object_name}[variant_id]", @variant.id) %>
+    <div class="flex gap-2 grow">
+      <%= render component("ui/thumbnail").new(
+        src: @image&.url(:small),
+        alt: @variant.name
+      ) %>
+      <div class="flex-col">
+        <div class="leading-5 text-black body-small-bold"><%= @variant.name %></div>
+        <div class="leading-5 text-gray-500 body-small">
+          SKU:
+          <%= @variant.sku %>
+          <%= @variant.options_text.presence&.prepend("- ") %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="flex gap-2 items-center">
-    <span class="text-gray-500 body-small"><%= render component("products/stock").from_variant(@variant) %></span>
-    <span class="text-black body-small"><%= @variant.display_price.to_html %></span>
-  </div>
+    <div class="flex gap-2 items-center">
+      <span class="text-gray-500 body-small"><%= render component("products/stock").from_variant(@variant) %></span>
+      <span class="text-black body-small"><%= @variant.display_price.to_html %></span>
+    </div>
+  <% end %>
 <% end %>
