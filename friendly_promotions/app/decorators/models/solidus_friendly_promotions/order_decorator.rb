@@ -29,6 +29,14 @@ module SolidusFriendlyPromotions
       shipments.each(&:reset_current_discounts)
     end
 
+    def apply_shipping_promotions
+      if Spree::Config.promotion_adjuster_class <= SolidusFriendlyPromotions::OrderDiscounter
+        recalculate
+      else
+        super
+      end
+    end
+
     Spree::Order.prepend self
   end
 end

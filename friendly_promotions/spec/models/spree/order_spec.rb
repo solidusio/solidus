@@ -33,4 +33,27 @@ RSpec.describe Spree::Order do
       expect { subject }.to change { SolidusFriendlyPromotions::OrderPromotion.count }.from(1).to(0)
     end
   end
+
+  describe "#apply_shipping_promotions" do
+    let(:order) { build(:order) }
+    subject { order.apply_shipping_promotions }
+
+    it "does not call Spree::PromotionHandler::Shipping" do
+      expect(Spree::PromotionHandler::Shipping).not_to receive(:new)
+      subject
+    end
+
+    context "if solidus_friendly_promotions is not active" do
+      around do |example|
+        Spree::Config.promotion_adjuster_class = Spree::Promotion::OrderAdjustmentsRecalculator
+        example.run
+        Spree::Config.promotion_adjuster_class = SolidusFriendlyPromotions::OrderDiscounter
+      end
+
+      it "does call the promotion handler shipping" do
+        expect(Spree::PromotionHandler::Shipping).to receive(:new).and_call_original
+        subject
+      end
+    end
+  end
 end
