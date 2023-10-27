@@ -35,7 +35,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
       it "should have success message" do
         subject
-        expect(coupon.success).to eq(I18n.t(status, scope: "spree"))
+        expect(coupon.success).to eq "The coupon code was successfully applied to your order."
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
         it "has error message" do
           subject
-          expect(coupon.error).to eq(I18n.t(status, scope: "spree"))
+          expect(coupon.error).to eq "The coupon code you entered doesn't exist. Please try again."
         end
       end
 
@@ -66,7 +66,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
         it "has error message" do
           subject
-          expect(coupon.error).to eq(I18n.t(status, scope: "spree"))
+          expect(coupon.error).to eq "The coupon code you are trying to remove is not present on this order."
         end
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
       it "populates error message" do
         subject.apply
-        expect(subject.error).to eq I18n.t("spree.coupon_code_not_found")
+        expect(subject.error).to eq "The coupon code you entered doesn't exist. Please try again."
       end
     end
   end
@@ -122,7 +122,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
             subject.apply
             expect(subject.success).to be_present
             subject.apply
-            expect(subject.error).to eq I18n.t("spree.coupon_code_already_applied")
+            expect(subject.error).to eq "The coupon code has already been applied to this order"
           end
         end
 
@@ -218,7 +218,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
           subject.apply
           expect(subject.success).to be_present
           subject.apply
-          expect(subject.error).to eq I18n.t("spree.coupon_code_already_applied")
+          expect(subject.error).to eq "The coupon code has already been applied to this order"
         end
       end
     end
@@ -258,7 +258,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
           it "returns a coupon has already been applied error" do
             subject.apply
-            expect(subject.error).to eq I18n.t("spree.coupon_code_already_applied")
+            expect(subject.error).to eq "The coupon code has already been applied to this order"
           end
         end
 
@@ -276,7 +276,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
           it "returns a coupon failed to activate error" do
             subject.apply
-            expect(subject.error).to eq I18n.t("spree.coupon_code_unknown_error")
+            expect(subject.error).to eq "This coupon code could not be applied to the cart at this time."
           end
         end
 
@@ -295,7 +295,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
           it "returns a coupon is at max usage error" do
             subject.apply
-            expect(subject.error).to eq I18n.t("spree.coupon_code_max_usage")
+            expect(subject.error).to eq "Coupon code usage limit exceeded"
           end
         end
       end
@@ -403,7 +403,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
       it "successfully removes the coupon code from the order" do
         subject.remove
         expect(subject.error).to eq nil
-        expect(subject.success).to eq I18n.t("spree.coupon_code_removed")
+        expect(subject.success).to eq "The coupon code was successfully removed from this order."
         expect(order.reload.total).to eq(130)
       end
     end
@@ -417,7 +417,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
       it "returns an error" do
         subject.remove
         expect(subject.success).to eq nil
-        expect(subject.error).to eq I18n.t("spree.coupon_code_not_present")
+        expect(subject.error).to eq "The coupon code you are trying to remove is not present on this order."
         expect(order.reload.total).to eq(130)
       end
     end
