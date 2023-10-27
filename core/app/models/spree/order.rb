@@ -498,7 +498,7 @@ module Spree
     end
 
     def apply_shipping_promotions
-      Spree::PromotionHandler::Shipping.new(self).activate
+      Spree::Config.shipping_promotion_handler_class.new(self).activate
       recalculate
     end
 

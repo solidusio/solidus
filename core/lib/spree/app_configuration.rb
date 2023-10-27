@@ -373,6 +373,14 @@ module Spree
     #   Spree::PromotionHandler::Coupon.
     class_name_attribute :coupon_code_handler_class, default: 'Spree::PromotionHandler::Coupon'
 
+    # Allows providing a different shipping promotion handler.
+    # @!attribute [rw] shipping_promotion_handler_class
+    # @see Spree::PromotionHandler::Shipping
+    # @return [Class] an object that conforms to the API of
+    #   the standard shipping promotion handler class
+    #   Spree::PromotionHandler::Coupon.
+    class_name_attribute :shipping_promotion_handler_class, default: 'Spree::PromotionHandler::Shipping'
+
     # Allows providing your own Mailer for promotion code batch mailer.
     #
     # @!attribute [rw] promotion_code_batch_mailer_class

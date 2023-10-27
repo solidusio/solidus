@@ -40,6 +40,10 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.coupon_code_handler_class).to eq Spree::PromotionHandler::Coupon
   end
 
+  it "uses promotion handler shipping class by default" do
+    expect(prefs.shipping_promotion_handler_class).to eq Spree::PromotionHandler::Shipping
+  end
+
   it "has a getter for the pricing options class provided by the variant price selector class" do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
