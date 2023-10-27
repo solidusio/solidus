@@ -14,7 +14,6 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
 
   def expect_adjustment_creation(adjustable:, promotion:, promotion_code: nil)
     expect(adjustable.adjustments.map(&:source).map(&:promotion)).to include(promotion)
-    # expect(adjustable.adjustments.map(&:promotion_code)).to include(promotion_code)
   end
 
   it "returns self in apply" do
