@@ -104,4 +104,34 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode::BatchBuilder do
       end
     end
   end
+
+  context "when promotion_code creation returns an error" do
+    before do
+      @raise_exception = true
+      allow(SolidusFriendlyPromotions::PromotionCode).to receive(:create!) do
+        if @raise_exception
+          @raise_exception = false
+          raise(ActiveRecord::RecordInvalid)
+        else
+          create(:friendly_promotion_code, promotion: promotion)
+        end
+      end
+    end
+
+    it "creates the correct number of codes anyway" do
+      subject.build_promotion_codes
+      expect(promotion.codes.size).to eq(number_of_codes)
+    end
+  end
+
+  context "when same promotion_codes are already present" do
+    let(:number_of_codes) { 50 }
+    before do
+      create_list(:friendly_promotion_code, 11, promotion: promotion, promotion_code_batch: code_batch)
+    end
+
+    it "creates only the missing promotion_codes" do
+      expect { subject.build_promotion_codes }.to change { promotion.codes.size }.by(39)
+    end
+  end
 end
