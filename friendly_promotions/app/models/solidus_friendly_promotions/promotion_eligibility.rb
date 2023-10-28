@@ -2,12 +2,12 @@
 
 module SolidusFriendlyPromotions
   class PromotionEligibility
-    attr_reader :promotable, :promotion, :eligibility_results
+    attr_reader :promotable, :promotion, :collect_eligibility_results
 
-    def initialize(promotable:, promotion:, eligibility_results: nil)
+    def initialize(promotable:, promotion:, collect_eligibility_results:)
       @promotable = promotable
       @promotion = promotion
-      @eligibility_results = eligibility_results
+      @collect_eligibility_results = collect_eligibility_results
     end
 
     def call
@@ -18,14 +18,14 @@ module SolidusFriendlyPromotions
       applicable_rules.map do |applicable_rule|
         eligible = applicable_rule.eligible?(promotable)
 
-        break [false] if !eligible && !eligibility_results
+        break [false] if !eligible && !collect_eligibility_results
 
-        if eligibility_results
+        if collect_eligibility_results
           if applicable_rule.eligibility_errors.details[:base].first
             code = applicable_rule.eligibility_errors.details[:base].first[:error_code]
             message = applicable_rule.eligibility_errors.full_messages.first
           end
-          eligibility_results.add(
+          promotion.eligibility_results.add(
             item: promotable,
             rule: applicable_rule,
             success: eligible,

@@ -21,7 +21,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
     let(:rules) { [product_rule] }
     let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, rules: rules, name: "20% off Shirts", apply_automatically: true) }
     let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
-    let(:promotions) { SolidusFriendlyPromotions::PromotionLoader.new(order: order).call }
+    let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions, collect_eligibility_results: true) }
 
     subject { discounter.call }
@@ -29,16 +29,16 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
     it "will collect eligibility results" do
       subject
 
-      expect(discounter.eligibility_results.for(promotion).first.success).to be true
-      expect(discounter.eligibility_results.for(promotion).first.code).to be nil
-      expect(discounter.eligibility_results.for(promotion).first.rule).to eq(product_rule)
-      expect(discounter.eligibility_results.for(promotion).first.message).to be nil
-      expect(discounter.eligibility_results.for(promotion).first.item).to eq(order)
+      expect(promotion.eligibility_results.first.success).to be true
+      expect(promotion.eligibility_results.first.code).to be nil
+      expect(promotion.eligibility_results.first.rule).to eq(product_rule)
+      expect(promotion.eligibility_results.first.message).to be nil
+      expect(promotion.eligibility_results.first.item).to eq(order)
     end
 
     it "can tell us about success" do
       subject
-      expect(discounter.eligibility_results.success?(promotion)).to be true
+      expect(promotion.eligibility_results.success?).to be true
     end
 
     context "with two rules" do
@@ -48,26 +48,26 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       it "will collect eligibility results" do
         subject
 
-        expect(discounter.eligibility_results.for(promotion).first.success).to be true
-        expect(discounter.eligibility_results.for(promotion).first.code).to be nil
-        expect(discounter.eligibility_results.for(promotion).first.rule).to eq(product_rule)
-        expect(discounter.eligibility_results.for(promotion).first.message).to be nil
-        expect(discounter.eligibility_results.for(promotion).first.item).to eq(order)
-        expect(discounter.eligibility_results.for(promotion).last.success).to be false
-        expect(discounter.eligibility_results.for(promotion).last.rule).to eq(item_total_rule)
-        expect(discounter.eligibility_results.for(promotion).last.code).to eq :item_total_less_than_or_equal
-        expect(discounter.eligibility_results.for(promotion).last.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
-        expect(discounter.eligibility_results.for(promotion).last.item).to eq(order)
+        expect(promotion.eligibility_results.first.success).to be true
+        expect(promotion.eligibility_results.first.code).to be nil
+        expect(promotion.eligibility_results.first.rule).to eq(product_rule)
+        expect(promotion.eligibility_results.first.message).to be nil
+        expect(promotion.eligibility_results.first.item).to eq(order)
+        expect(promotion.eligibility_results.last.success).to be false
+        expect(promotion.eligibility_results.last.rule).to eq(item_total_rule)
+        expect(promotion.eligibility_results.last.code).to eq :item_total_less_than_or_equal
+        expect(promotion.eligibility_results.last.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
+        expect(promotion.eligibility_results.last.item).to eq(order)
       end
 
       it "can tell us about success" do
         subject
-        expect(discounter.eligibility_results.success?(promotion)).to be false
+        expect(promotion.eligibility_results.success?).to be false
       end
 
       it "has errors for this promo" do
         subject
-        expect(discounter.eligibility_results.errors_for(promotion)).to eq([
+        expect(promotion.eligibility_results.error_messages).to eq([
           "This coupon code can't be applied to orders less than or equal to $2,000.00."
         ])
       end
@@ -88,12 +88,12 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       it "can tell us about success" do
         subject
         # This is successful, because one of the line item rules matches
-        expect(discounter.eligibility_results.success?(promotion)).to be true
+        expect(promotion.eligibility_results.success?).to be true
       end
 
       it "has no errors for this promo" do
         subject
-        expect(discounter.eligibility_results.errors_for(promotion)).to be_empty
+        expect(promotion.eligibility_results.error_messages).to be_empty
       end
 
       context "with a second line item level rule" do
@@ -103,12 +103,12 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
         it "can tell us about success" do
           subject
-          expect(discounter.eligibility_results.success?(promotion)).to be false
+          expect(promotion.eligibility_results.success?).to be false
         end
 
         it "has errors for this promo" do
           subject
-          expect(discounter.eligibility_results.errors_for(promotion)).to eq([
+          expect(promotion.eligibility_results.error_messages).to eq([
             "You need to add an applicable product before applying this coupon code."
           ])
         end
@@ -122,7 +122,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       it "can tell us about success" do
         subject
         # This is successful, because the order has a shirt
-        expect(discounter.eligibility_results.success?(promotion)).to be false
+        expect(promotion.eligibility_results.success?).to be false
       end
     end
 
@@ -142,12 +142,12 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
       it "can tell us about success" do
         subject
-        expect(discounter.eligibility_results.success?(promotion)).to be true
+        expect(promotion.eligibility_results.success?).to be true
       end
 
       it "can tell us about errors" do
         subject
-        expect(discounter.eligibility_results.errors_for(promotion)).to eq(["This coupon code could not be applied to the cart at this time."])
+        expect(promotion.eligibility_results.error_messages).to eq(["This coupon code could not be applied to the cart at this time."])
       end
     end
 
@@ -156,7 +156,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
       it "has no errors for this promo" do
         subject
-        expect(discounter.eligibility_results.errors_for(promotion)).to be_empty
+        expect(promotion.eligibility_results.error_messages).to be_empty
       end
     end
 
@@ -168,12 +168,12 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
 
       it "can tell us about success" do
         subject
-        expect(discounter.eligibility_results.success?(promotion)).to be false
+        expect(promotion.eligibility_results.success?).to be false
       end
 
       it "can tell us about all the errors", :pending do
         subject
-        expect(discounter.eligibility_results.errors_for(promotion)).to eq(
+        expect(promotion.eligibility_results.error_messages).to eq(
           [
             "This coupon code could not be applied to the cart at this time.",
             "You need to add an applicable product before applying this coupon code."

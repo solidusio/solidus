@@ -77,7 +77,7 @@ module SolidusFriendlyPromotions
         active_promotions = SolidusFriendlyPromotions::PromotionLoader.new(order: order).call
         discounter = SolidusFriendlyPromotions::FriendlyPromotionDiscounter.new(order, active_promotions + [promotion], collect_eligibility_results: true)
         discounter.call
-        if discounter.eligibility_results.success?(promotion)
+        if promotion.eligibility_results.success?
           order.friendly_order_promotions.create!(
             promotion: promotion,
             promotion_code: promotion_code
@@ -85,13 +85,13 @@ module SolidusFriendlyPromotions
           order.recalculate
           set_success_code :coupon_code_applied
         else
-          set_promotion_eligibility_error(promotion, discounter.eligibility_results)
+          set_promotion_eligibility_error(promotion)
         end
       end
 
-      def set_promotion_eligibility_error(promotion, results)
-        eligibility_error = results.for(promotion).detect { |result| !result.success }
-        set_error_code(eligibility_error.code, error: eligibility_error.message, errors: results.errors_for(promotion))
+      def set_promotion_eligibility_error(promotion)
+        eligibility_error = promotion.eligibility_results.detect { |result| !result.success }
+        set_error_code(eligibility_error.code, error: eligibility_error.message, errors: promotion.eligibility_results.error_messages)
       end
 
       def promotion_usage_limit_exceeded

@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::EligibilityResults do
-  subject(:eligibility_results) { described_class.new }
+  subject(:eligibility_results) { described_class.new(promotion) }
 
   describe "#add" do
     let(:promotion) { create(:friendly_promotion) }
@@ -21,7 +21,7 @@ RSpec.describe SolidusFriendlyPromotions::EligibilityResults do
         message: rule.eligibility_errors.full_messages.first
       )
 
-      expect(eligibility_results.for(promotion)).to eq([
+      expect(eligibility_results.to_a).to eq([
         SolidusFriendlyPromotions::EligibilityResult.new(
           item: order,
           rule: rule,

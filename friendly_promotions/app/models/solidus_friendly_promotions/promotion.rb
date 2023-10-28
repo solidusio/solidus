@@ -123,6 +123,10 @@ module SolidusFriendlyPromotions
       rules.where(type: "SolidusFriendlyPromotions::Rules::Product").flat_map(&:products).uniq
     end
 
+    def eligibility_results
+      @eligibility_results ||= SolidusFriendlyPromotions::EligibilityResults.new(self)
+    end
+
     private
 
     def apply_automatically_disallowed_with_paths

@@ -2,14 +2,15 @@
 
 module SolidusFriendlyPromotions
   class EligibilityResults
-    attr_accessor :results_by_promotion
-    def initialize
-      @results_by_promotion = {}
+    include Enumerable
+    attr_reader :results, :promotion
+    def initialize(promotion)
+      @promotion = promotion
+      @results = []
     end
 
     def add(item:, rule:, success:, code:, message:)
-      results_by_promotion[rule.promotion] ||= []
-      results_by_promotion[rule.promotion] << EligibilityResult.new(
+      results << EligibilityResult.new(
         item: item,
         rule: rule,
         success: success,
@@ -18,28 +19,30 @@ module SolidusFriendlyPromotions
       )
     end
 
-    def for(promotion)
-      results_by_promotion[promotion]
-    end
-
-    def success?(promotion)
-      results_for_promotion = self.for(promotion)
-      return true unless results_for_promotion
+    def success?
+      return true if results.empty?
       promotion.actions.any? do |action|
         action.relevant_rules.all? do |rule|
-          results_for_rule = results_for_promotion.select { |result| result.rule == rule }
+          results_for_rule = results.select { |result| result.rule == rule }
           results_for_rule.any?(&:success)
         end
       end
     end
 
-    def errors_for(promotion)
-      results_for_promotion = self.for(promotion)
-      return [] unless results_for_promotion
-      results_for_promotion.group_by(&:rule).map do |rule, results|
+    def error_messages
+      return [] if results.empty?
+      results.group_by(&:rule).map do |rule, results|
         next if results.any?(&:success)
         results.detect { |r| !r.success }&.message
       end.compact
+    end
+
+    def each(&block)
+      results.each(&block)
+    end
+
+    def last
+      results.last
     end
   end
 end
