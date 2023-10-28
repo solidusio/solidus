@@ -21,16 +21,15 @@ RSpec.describe SolidusFriendlyPromotions::EligibilityResults do
         message: rule.eligibility_errors.full_messages.first
       )
 
-      expect(eligibility_results.for(promotion)).to eq({
-        rule => [
-          SolidusFriendlyPromotions::EligibilityResult.new(
-            item: order,
-            success: result,
-            code: rule.eligibility_errors.details[:base].first[:error_code],
-            message: rule.eligibility_errors.full_messages.first
-          )
-        ]
-      })
+      expect(eligibility_results.for(promotion)).to eq([
+        SolidusFriendlyPromotions::EligibilityResult.new(
+          item: order,
+          rule: rule,
+          success: result,
+          code: rule.eligibility_errors.details[:base].first[:error_code],
+          message: rule.eligibility_errors.full_messages.first
+        )
+      ])
     end
   end
 end

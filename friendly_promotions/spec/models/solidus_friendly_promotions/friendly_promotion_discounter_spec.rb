@@ -29,10 +29,11 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
     it "will collect eligibility results" do
       subject
 
-      expect(discounter.eligibility_results.for(promotion)[product_rule].first.success).to be true
-      expect(discounter.eligibility_results.for(promotion)[product_rule].first.code).to be nil
-      expect(discounter.eligibility_results.for(promotion)[product_rule].first.message).to be nil
-      expect(discounter.eligibility_results.for(promotion)[product_rule].first.item).to eq(order)
+      expect(discounter.eligibility_results.for(promotion).first.success).to be true
+      expect(discounter.eligibility_results.for(promotion).first.code).to be nil
+      expect(discounter.eligibility_results.for(promotion).first.rule).to eq(product_rule)
+      expect(discounter.eligibility_results.for(promotion).first.message).to be nil
+      expect(discounter.eligibility_results.for(promotion).first.item).to eq(order)
     end
 
     it "can tell us about success" do
@@ -47,14 +48,16 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
       it "will collect eligibility results" do
         subject
 
-        expect(discounter.eligibility_results.for(promotion)[product_rule].first.success).to be true
-        expect(discounter.eligibility_results.for(promotion)[product_rule].first.code).to be nil
-        expect(discounter.eligibility_results.for(promotion)[product_rule].first.message).to be nil
-        expect(discounter.eligibility_results.for(promotion)[product_rule].first.item).to eq(order)
-        expect(discounter.eligibility_results.for(promotion)[item_total_rule].first.success).to be false
-        expect(discounter.eligibility_results.for(promotion)[item_total_rule].first.code).to eq :item_total_less_than_or_equal
-        expect(discounter.eligibility_results.for(promotion)[item_total_rule].first.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
-        expect(discounter.eligibility_results.for(promotion)[item_total_rule].first.item).to eq(order)
+        expect(discounter.eligibility_results.for(promotion).first.success).to be true
+        expect(discounter.eligibility_results.for(promotion).first.code).to be nil
+        expect(discounter.eligibility_results.for(promotion).first.rule).to eq(product_rule)
+        expect(discounter.eligibility_results.for(promotion).first.message).to be nil
+        expect(discounter.eligibility_results.for(promotion).first.item).to eq(order)
+        expect(discounter.eligibility_results.for(promotion).last.success).to be false
+        expect(discounter.eligibility_results.for(promotion).last.rule).to eq(item_total_rule)
+        expect(discounter.eligibility_results.for(promotion).last.code).to eq :item_total_less_than_or_equal
+        expect(discounter.eligibility_results.for(promotion).last.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
+        expect(discounter.eligibility_results.for(promotion).last.item).to eq(order)
       end
 
       it "can tell us about success" do

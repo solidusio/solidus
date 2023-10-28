@@ -90,7 +90,7 @@ module SolidusFriendlyPromotions
       end
 
       def set_promotion_eligibility_error(promotion, results)
-        eligibility_error = results.for(promotion).values.flatten.detect { |result| !result.success }
+        eligibility_error = results.for(promotion).detect { |result| !result.success }
         set_error_code(eligibility_error.code, error: eligibility_error.message, errors: results.errors_for(promotion))
       end
 
