@@ -40,16 +40,21 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
     raise ArgumentError, "unsupported tag: #{tag}" unless %i[input textarea select].include?(tag)
 
     specialized_classes = []
+    readonly_classes = "read-only:bg-gray-15 focus:read-only:bg-gray-15 focus:read-only:ring-0
+      read-only:cursor-not-allowed read-only:focus:border-gray-300
+      read-only:hover:border-gray-300 read-only:hover:focus:border-gray-300"
 
     case tag
     when :input
       specialized_classes << "form-input"
+      specialized_classes << readonly_classes
       specialized_classes << HEIGHTS[size]
       if attributes[:type] && !TYPES.include?(attributes[:type])
         raise ArgumentError, "unsupported type attribute: #{attributes[:type]}"
       end
     when :textarea
       specialized_classes << "form-textarea"
+      specialized_classes << readonly_classes
       specialized_classes << MULTILINE_HEIGHTS[size]
     when :select
       if attributes[:multiple]
@@ -71,8 +76,6 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
         disabled:bg-gray-50 disabled:text-gray-500 disabled:placeholder:text-gray-300 disabled:cursor-not-allowed
         invalid:border-red-400 invalid:hover:border-red-400 invalid:text-red-400
         aria-invalid:border-red-400 aria-invalid:hover:border-red-400 aria-invalid:text-red-400
-        read-only:bg-gray-15 focus:read-only:bg-gray-15 focus:read-only:ring-0 read-only:cursor-not-allowed
-        read-only:focus:border-gray-300 read-only:hover:border-gray-300 read-only:hover:focus:border-gray-300
       ],
       SIZES[size],
       specialized_classes,
