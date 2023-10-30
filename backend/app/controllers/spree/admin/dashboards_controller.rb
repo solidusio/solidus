@@ -4,10 +4,7 @@ module Spree
   module Admin
     class DashboardsController < BaseController
       class << self
-        ActiveSupport::Deprecation.warn(
-          "The Dashboard controller is deprecated." \
-          "Please update your source code."
-        )
+         Spree.deprecator.warn "The Dashboards controller is deprecated. Please use the new admin dashboard."
       end
     end
   end

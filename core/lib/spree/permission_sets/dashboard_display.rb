@@ -9,7 +9,8 @@ module Spree
     # customizations.
     class DashboardDisplay < PermissionSets::Base
       def activate!
-          ActiveSupport::Deprecation.warn('The Spree::PermissionSets::DashboardDisplay module is being deprecated.  Please use the new admin dashboard.')
+          Spree.deprecator.warn "The Spree::PermissionSets::DashboardDisplay module is deprecated. " \
+            "Please use the new admin dashboard."
           can [:admin, :home], :dashboards
       end
     end
