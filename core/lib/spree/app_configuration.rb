@@ -365,6 +365,22 @@ module Spree
     #   Spree::OrderUpdater.
     class_name_attribute :order_recalculator_class, default: 'Spree::OrderUpdater'
 
+    # Allows providing a different coupon code handler.
+    # @!attribute [rw] coupon_code_handler_class
+    # @see Spree::PromotionHandler::Coupon
+    # @return [Class] an object that conforms to the API of
+    #   the standard coupon code handler class
+    #   Spree::PromotionHandler::Coupon.
+    class_name_attribute :coupon_code_handler_class, default: 'Spree::PromotionHandler::Coupon'
+
+    # Allows providing a different shipping promotion handler.
+    # @!attribute [rw] shipping_promotion_handler_class
+    # @see Spree::PromotionHandler::Shipping
+    # @return [Class] an object that conforms to the API of
+    #   the standard shipping promotion handler class
+    #   Spree::PromotionHandler::Coupon.
+    class_name_attribute :shipping_promotion_handler_class, default: 'Spree::PromotionHandler::Shipping'
+
     # Allows providing your own Mailer for promotion code batch mailer.
     #
     # @!attribute [rw] promotion_code_batch_mailer_class
