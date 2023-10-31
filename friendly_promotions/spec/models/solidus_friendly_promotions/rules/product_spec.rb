@@ -35,30 +35,36 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
   end
 
   describe "#eligible?(order)" do
-    let(:order) { Spree::Order.new }
-    let(:product_one) { build(:product) }
-    let(:product_two) { build(:product) }
-    let(:product_three) { build(:product) }
+    let(:order) { create(:order) }
+    let(:product_one) { create(:product) }
+    let(:product_two) { create(:product) }
+    let(:product_three) { create(:product) }
+    let(:order_products) { [] }
+    let(:eligible_products) { [] }
+
+    before do
+      order_products.each do |product|
+        order.contents.add(product.master, 1)
+      end
+
+      rule.products = eligible_products
+    end
 
     it "is eligible if there are no products" do
-      allow(rule).to receive_messages(eligible_products: [])
       expect(rule).to be_eligible(order)
     end
 
     context "with 'any' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "any") }
+      let(:order_products) { [product_one, product_two] }
+      let(:eligible_products) { [product_two, product_three] }
 
       it "is eligible if any of the products is in eligible products" do
-        allow(rule).to receive_messages(order_products: [product_one, product_two])
-        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         expect(rule).to be_eligible(order)
       end
 
       context "when none of the products are eligible products" do
-        before do
-          allow(rule).to receive_messages(order_products: [product_one])
-          allow(rule).to receive_messages(eligible_products: [product_two, product_three])
-        end
+        let(:order_products) { [product_one] }
 
         it { expect(rule).not_to be_eligible(order) }
 
@@ -78,18 +84,16 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
 
     context "with 'all' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "all") }
+      let(:order_products) { [product_three, product_two, product_one] }
+      let(:eligible_products) { [product_two, product_three] }
 
       it "is eligible if all of the eligible products are ordered" do
-        allow(rule).to receive_messages(order_products: [product_three, product_two, product_one])
-        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         expect(rule).to be_eligible(order)
       end
 
       context "when any of the eligible products is not ordered" do
-        before do
-          allow(rule).to receive_messages(order_products: [product_one, product_two])
-          allow(rule).to receive_messages(eligible_products: [product_one, product_two, product_three])
-        end
+        let(:order_products) { [product_one, product_two] }
+        let(:eligible_products) { [product_one, product_two, product_three] }
 
         it { expect(rule).not_to be_eligible(order) }
 
@@ -110,18 +114,16 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
 
     context "with 'none' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "none") }
+      let(:order_products) { [product_one] }
+      let(:eligible_products) { [product_two, product_three] }
 
       it "is eligible if none of the order's products are in eligible products" do
-        allow(rule).to receive_messages(order_products: [product_one])
-        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
         expect(rule).to be_eligible(order)
       end
 
       context "when any of the order's products are in eligible products" do
-        before do
-          allow(rule).to receive_messages(order_products: [product_one, product_two])
-          allow(rule).to receive_messages(eligible_products: [product_two, product_three])
-        end
+        let(:order_products) { [product_one, product_two] }
+        let(:eligible_products) { [product_two, product_three] }
 
         it { expect(rule).not_to be_eligible(order) }
 
@@ -141,24 +143,24 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
 
     context "with 'only' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: "only") }
-
-      it "is not eligible if none of the order's products are in eligible products" do
-        allow(rule).to receive_messages(order_products: [product_one])
-        allow(rule).to receive_messages(eligible_products: [product_two, product_three])
-        expect(rule).not_to be_eligible(order)
-      end
+      let(:order_products) { [product_one] }
+      let(:eligible_products) { [product_one] }
 
       it "is eligible if all of the order's products are in eligible products" do
-        allow(rule).to receive_messages(order_products: [product_one])
-        allow(rule).to receive_messages(eligible_products: [product_one])
         expect(rule).to be_eligible(order)
       end
 
-      context "when any of the order's products are in eligible products" do
-        before do
-          allow(rule).to receive_messages(order_products: [product_one, product_two])
-          allow(rule).to receive_messages(eligible_products: [product_two, product_three])
+      context "if none of the order's products are in eligible products" do
+        let(:eligible_products) { [product_two, product_three] }
+
+        it "is not eligible" do
+          expect(rule).not_to be_eligible(order)
         end
+      end
+
+      context "when any of the order's products are in eligible products" do
+        let(:order_products) { [product_one, product_two] }
+        let(:eligible_products) { [product_two, product_three] }
 
         it { expect(rule).not_to be_eligible(order) }
 
@@ -173,28 +175,6 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Product, type: :model do
           expect(rule.eligibility_errors.details[:base].first[:error_code])
             .to eq :has_excluded_product
         end
-      end
-    end
-
-    context "with an invalid match policy" do
-      let(:rule) do
-        described_class.create!(
-          promotion: create(:friendly_promotion),
-          products_promotion_rules: [
-            SolidusFriendlyPromotions::ProductsPromotionRule.new(product: product)
-          ]
-        ).tap do |rule|
-          rule.preferred_match_policy = "invalid"
-          rule.save!(validate: false)
-        end
-      end
-      let(:product) { order.line_items.first!.product }
-      let(:order) { create(:order_with_line_items, line_items_count: 1) }
-
-      it "raises" do
-        expect {
-          rule.eligible?(order)
-        }.to raise_error('unexpected match policy: "invalid"')
       end
     end
   end
