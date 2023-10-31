@@ -1,0 +1,24 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Default
+  </h6>
+
+  <script>
+    window.addEventListener('<%= current_component.stimulus_id %>:submit', (event) => {
+      alert(`selected: ${event.detail.resultTarget.innerText}`)
+    })
+    window.addEventListener('<%= current_component.stimulus_id %>:search', (event) => {
+      const {controller, query} = event.detail
+      const resultTemplate = `<%= render component('ui/search_panel/result').new.with_content("{{content}}") %>`
+      setTimeout(() => {
+        controller.resultsValue = [
+          resultTemplate.replace('{{content}}', `Result 1 for ${query}`),
+          resultTemplate.replace('{{content}}', `Result 2 for ${query}`),
+          resultTemplate.replace('{{content}}', `Result 3 for ${query}`),
+        ].join('')
+      }, 200);
+    })
+  </script>
+
+  <%= render current_component.new %>
+</div>

@@ -30,6 +30,10 @@
   .body-title {
     @apply font-sans font-semibold text-xl;
   }
+
+  .body-link {
+    @apply text-blue hover:underline;
+  }
 }
 
 <%= SolidusAdmin::Config.tailwind_stylesheets.map { File.read(_1) }.join("\n") %>

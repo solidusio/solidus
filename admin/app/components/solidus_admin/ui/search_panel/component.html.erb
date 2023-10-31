@@ -1,0 +1,58 @@
+<div
+  data-controller="<%= stimulus_id %>"
+  class="w-full relative overflow-visible"
+  data-action="
+    keydown.up-><%= stimulus_id %>#selectPrev
+    keydown.down-><%= stimulus_id %>#selectNext
+    keydown.enter-><%= stimulus_id %>#selectResult
+  "
+  data-<%= stimulus_id %>-loading-text-value="<%= t('.loading') %>"
+  data-<%= stimulus_id %>-initial-text-value="<%= t('.initial') %>"
+  data-<%= stimulus_id %>-empty-text-value="<%= t('.empty') %>"
+>
+  <%= render component('ui/panel').new(**@panel_args) do |panel| %>
+    <div class="border-gray-100 border-t -mx-6"></div>
+    <div>
+      <div class="peer">
+        <%= render component("ui/forms/search_field").new(
+          id: "#{stimulus_id}--search-field--#{@id}",
+          placeholder: @search_placeholder,
+          "data-action": "
+            #{stimulus_id}#search
+            #{stimulus_id}#showResults
+          ",
+          "data-#{stimulus_id}-target": "searchField",
+        ) %>
+      </div>
+
+      <details class="px-6 relative overflow-visible">
+        <summary class="hidden"></summary>
+        <div
+          class="
+            absolute
+            left-0
+            top-2
+            bg-white
+            z-30
+            w-full
+            rounded-lg
+            shadow
+            border
+            border-gray-100
+            p-2
+            flex-col
+            gap-1
+            max-h-screen
+            overflow-y-auto
+          "
+          data-<%= stimulus_id %>-target="results"
+        >
+        </div>
+      </details>
+    </div>
+
+    <div class="rounded-b-lg -mx-6 -mb-6 overflow-hidden">
+      <%= content %>
+    </div>
+  <% end %>
+</div>
