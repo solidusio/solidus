@@ -14,7 +14,7 @@ module Spree
     has_many :promotion_actions, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :actions, :promotion_actions
 
-    has_many :order_promotions, class_name: "Spree::OrderPromotion"
+    has_many :order_promotions, class_name: "Spree::OrderPromotion", inverse_of: :promotion, dependent: :destroy
     has_many :orders, through: :order_promotions
 
     has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion, dependent: :destroy
