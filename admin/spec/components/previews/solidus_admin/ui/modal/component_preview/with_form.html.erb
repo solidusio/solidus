@@ -1,0 +1,22 @@
+<section>
+  <div class="mb-8 text-lg">
+    With Form
+  </div>
+
+  <%= render current_component.new(id: 'formModal', title: 'Create user') do |component| %>
+    <%= form_with(url: "#", scope: :overview, method: :get) do |form| %>
+      <%= render component('ui/forms/field').new(label: "My field") do %>
+        <%= render component("ui/forms/input").new(type: :text) %>
+      <% end %>
+
+      <% component.with_actions do %>
+        <%= render component("ui/button").new(
+          scheme: :primary,
+          form: form.id,
+          type: :submit,
+          text: "Create"
+        ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</section>
