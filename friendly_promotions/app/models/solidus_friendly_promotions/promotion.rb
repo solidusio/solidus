@@ -9,6 +9,7 @@ module SolidusFriendlyPromotions
     has_many :actions, class_name: "SolidusFriendlyPromotions::PromotionAction", dependent: :nullify
     has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode", dependent: :destroy
     has_many :code_batches, class_name: "SolidusFriendlyPromotions::PromotionCodeBatch", dependent: :destroy
+    has_many :order_promotions, class_name: "SolidusFriendlyPromotions::OrderPromotion", dependent: :destroy
 
     validates :name, :customer_label, presence: true
     validates :path, uniqueness: {allow_blank: true, case_sensitive: true}

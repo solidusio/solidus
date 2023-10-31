@@ -8,6 +8,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   it { is_expected.to belong_to(:category).optional }
   it { is_expected.to respond_to(:customer_label) }
   it { is_expected.to have_many :rules }
+  it { is_expected.to have_many(:order_promotions).dependent(:destroy) }
 
   describe "lane" do
     it { is_expected.to respond_to(:lane) }
