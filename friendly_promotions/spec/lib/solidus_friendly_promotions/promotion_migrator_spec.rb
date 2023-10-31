@@ -51,4 +51,19 @@ RSpec.describe SolidusFriendlyPromotions::PromotionMigrator do
       expect(promotion_code_batch.base_code).to eq("DISNEY4LIFE")
     end
   end
+
+  context "if our rules and actions are missing from the promotion map" do
+    let(:promotion_map) do
+      {
+        rules: {},
+        actions: {}
+      }
+    end
+
+    it "still creates the promotion, but without rules or actions" do
+      subject
+      expect(Spree::Promotion.count).not_to be_zero
+      expect(SolidusFriendlyPromotions::Promotion.count).to eq(Spree::Promotion.count)
+    end
+  end
 end

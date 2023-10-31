@@ -28,10 +28,10 @@ module SolidusFriendlyPromotions
           generate_new_promotion_rules(old_promotion_rule)
         end
         new_promotion.actions = promotion.actions.flat_map do |old_promotion_action|
-          generate_new_promotion_actions(old_promotion_action).tap do |new_promotion_action|
+          generate_new_promotion_actions(old_promotion_action)&.tap do |new_promotion_action|
             new_promotion_action.original_promotion_action = old_promotion_action
           end
-        end
+        end.compact
         new_promotion.save!
         copy_promotion_code_batches(new_promotion)
         copy_promotion_codes(new_promotion)
@@ -79,7 +79,7 @@ module SolidusFriendlyPromotions
       promo_action_config = promotion_map[:actions][old_promotion_action.class]
       if promo_action_config.nil?
         puts("#{old_promotion_action.class} is not supported")
-        return []
+        return nil
       end
       promo_action_config.call(old_promotion_action)
     end
