@@ -51,16 +51,19 @@ Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderDiscou
 
 From a user's perspective, your promotions should work as before.
 
-Before you create new promotions, migrate the adjustments in your database:
+Before you create new promotions, migrate the adjustments and order promotions in your database:
 
 ```rb
 bundle exec rails solidus_friendly_promotions:migrate_adjustments:up
+bundle exec rails solidus_friendly_promotions:migrate_order_promotions:up
+
 ```
 
 Check your `spree_adjustments` table for correctness. If things went wrong, you should be able to roll back with
 
 ```rb
 bundle exec rails solidus_friendly_promotions:migrate_adjustments:down
+bundle exec rails solidus_friendly_promotions:migrate_order_promotions:down
 ```
 
 Both of these tasks only work if every promotion and promotion action have an equivalent in SolidusFrienndlyPromotions. Promotion Actions are connected to their originals using the `SolidusFriendlyPromotions#original_promotion_action_id`, Promotions are connected to their originals using the  `SolidusFriendlyPromotions#original_promotion_id`.
