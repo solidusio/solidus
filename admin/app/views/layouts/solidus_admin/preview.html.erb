@@ -5,6 +5,7 @@
     <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
   </head>
   <body class="p-3">
+    <%= render 'layouts/solidus_admin/tailwindcss_cdn' %>
     <%= yield %>
   </body>
 </html>

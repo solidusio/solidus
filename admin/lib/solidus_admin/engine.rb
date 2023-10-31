@@ -3,6 +3,7 @@
 require "stimulus-rails"
 require "turbo-rails"
 require "view_component"
+require "tailwindcss-rails"
 
 module SolidusAdmin
   class Engine < ::Rails::Engine

@@ -4,7 +4,6 @@ A Rails engine that provides an administrative interface to the Solidus ecommerc
 
 ## Development
 
-- [Customizing tailwind](docs/customizing_tailwind.md)
 - [Customizing view components](docs/customizing_view_components.md)
 - [Customizing the main navigation](docs/customizing_main_navigation.md)
 

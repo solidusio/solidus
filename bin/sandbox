@@ -41,7 +41,7 @@ echo "~~~> Removing the old sandbox"
 rm -rf ./sandbox
 
 echo "~~~> Creating a pristine Rails app"
-rails new sandbox \
+rails _7.0.8_ new sandbox \
   --database="$RAILSDB" \
   --skip-git \
   --skip-keeps \

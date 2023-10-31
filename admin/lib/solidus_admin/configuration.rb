@@ -17,38 +17,6 @@ module SolidusAdmin
     # The default value is the Solidus logo that lives in the solidus_core gem.
     preference :logo_path, :string, default: "logo/solidus.svg"
 
-    # The list of paths were Tailwind CSS classes are used.
-    #
-    # You can modify this list to include your own paths:
-    #
-    #    SolidusAdmin::Config.tailwind_content << Rails.root.join("app/my/custom/path")
-    #
-    # Recompile with `bin/rails solidus_admin:tailwindcss:build` after changing this list.
-    #
-    # @see https://tailwindcss.com/docs/configuration#content
-    preference :tailwind_content, :array, default: [
-      "#{ENGINE_ROOT}/app/helpers/**/*.rb",
-      "#{ENGINE_ROOT}/app/assets/javascripts/**/*.js",
-      "#{ENGINE_ROOT}/app/views/**/*.erb",
-      "#{ENGINE_ROOT}/app/components/**/*.{rb,erb,js}",
-      "#{ENGINE_ROOT}/spec/components/previews/**/*.{erb,rb}",
-
-      Rails.root&.join("public/solidus_admin/*.html"),
-      Rails.root&.join("app/helpers/solidus_admin/**/*.rb"),
-      Rails.root&.join("app/assets/javascripts/solidus_admin/**/*.js"),
-      Rails.root&.join("app/views/solidus_admin/**/*.{erb,haml,html,slim}"),
-      Rails.root&.join("app/components/solidus_admin/**/*.{rb,erb,haml,html,slim,js}")
-    ].compact
-
-    # List of Tailwind CSS files to be combined into the final stylesheet.
-    #
-    # You can modify this list to include your own files:
-    #
-    #   SolidusAdmin::Config.tailwind_stylesheets << Rails.root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css")
-    #
-    # Recompile with `bin/rails solidus_admin:tailwindcss:build` after changing this list.
-    preference :tailwind_stylesheets, :array, default: []
-
     # List of paths to watch for changes to trigger a cache sweep forcing a regeneration of the importmap.
     #
     # @see https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
