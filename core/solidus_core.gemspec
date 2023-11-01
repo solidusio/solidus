@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
 
   %w[
     actionmailer actionpack actionview activejob activemodel activerecord
-    activesupport railties
+    activestorage activesupport railties
   ].each do |rails_dep|
     s.add_dependency rails_dep, ['>= 7.0', '< 7.1']
   end
