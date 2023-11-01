@@ -15,6 +15,24 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
     end
   end
 
+  describe "discounting orders" do
+    let(:shirt) { create(:product, name: "Shirt") }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
+    let!(:promotion) { create(:friendly_promotion, :with_free_shipping, name: "20% off Shirts", apply_automatically: true) }
+    let(:promotions) { [promotion] }
+    let(:discounter) { described_class.new(order, promotions) }
+
+    subject { discounter.call }
+
+    before do
+      order.shipments.first.shipping_rates.first.update!(cost: nil)
+    end
+
+    it "does not blow up if the shipping rate cost is nil" do
+      expect { subject }.not_to raise_exception
+    end
+  end
+
   describe "collecting eligibility results" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }

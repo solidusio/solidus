@@ -49,7 +49,7 @@ module SolidusFriendlyPromotions
     end
 
     def adjust_shipping_rates(promotions)
-      order.shipments.flat_map(&:shipping_rates).map do |rate|
+      order.shipments.flat_map(&:shipping_rates).select(&:cost).map do |rate|
         discounts = generate_discounts(promotions, rate)
         chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(rate).call(discounts)
         [rate, chosen_item_discounts]
