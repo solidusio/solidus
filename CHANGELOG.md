@@ -1,3 +1,23 @@
+## Solidus v4.1.2 (2023-11-01)
+
+## Solidus Core
+* [v4.1] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5455
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.1...v4.1.2
+
+
 ## Solidus v4.1.1 (2023-08-14)
 
 ## Solidus Core
