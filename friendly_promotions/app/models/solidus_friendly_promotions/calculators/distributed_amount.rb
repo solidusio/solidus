@@ -29,11 +29,7 @@ module SolidusFriendlyPromotions
 
       def eligible_line_items(order)
         order.line_items.select do |line_item|
-          SolidusFriendlyPromotions::PromotionEligibility.new(
-            promotable: line_item,
-            promotion: calculable.promotion,
-            collect_eligibility_results: false
-          ).call
+          calculable.promotion.eligible_by_applicable_rules?(line_item)
         end
       end
     end

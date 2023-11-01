@@ -127,6 +127,34 @@ module SolidusFriendlyPromotions
       @eligibility_results ||= SolidusFriendlyPromotions::EligibilityResults.new(self)
     end
 
+    def eligible_by_applicable_rules?(promotable, collect_eligibility_results: false)
+      applicable_rules = rules.select do |rule|
+        rule.applicable?(promotable)
+      end
+
+      applicable_rules.map do |applicable_rule|
+        eligible = applicable_rule.eligible?(promotable)
+
+        break [false] if !eligible && !collect_eligibility_results
+
+        if collect_eligibility_results
+          if applicable_rule.eligibility_errors.details[:base].first
+            code = applicable_rule.eligibility_errors.details[:base].first[:error_code]
+            message = applicable_rule.eligibility_errors.full_messages.first
+          end
+          eligibility_results.add(
+            item: promotable,
+            rule: applicable_rule,
+            success: eligible,
+            code: eligible ? nil : (code || :coupon_code_unknown_error),
+            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_friendly_promotions, :eligibility_errors]))
+          )
+        end
+
+        eligible
+      end.all?
+    end
+
     private
 
     def apply_automatically_disallowed_with_paths

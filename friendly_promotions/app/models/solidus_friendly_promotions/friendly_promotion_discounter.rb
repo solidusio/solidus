@@ -58,7 +58,7 @@ module SolidusFriendlyPromotions
 
     def eligible_promotions_for_promotable(possible_promotions, promotable)
       possible_promotions.select do |candidate|
-        PromotionEligibility.new(promotable: promotable, promotion: candidate, collect_eligibility_results: collect_eligibility_results).call
+        candidate.eligible_by_applicable_rules?(promotable, collect_eligibility_results: collect_eligibility_results)
       end
     end
 
