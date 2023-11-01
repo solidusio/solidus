@@ -1,3 +1,23 @@
+## Solidus v4.2.2 (2023-11-01)
+
+## Solidus Core
+* [v4.2] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5456
+
+## Solidus Backend
+* [v4.2] Skip all the navbar hiding logic when using the new version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5424
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.1...v4.2.2
+
+
 ## Solidus v4.2.1 (2023-10-04)
 
 ## Solidus Core
