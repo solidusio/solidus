@@ -254,26 +254,33 @@ jobs:
       ruby: "3.0"
     steps:
       - checkout
-      - libvips
-
-      - install_solidus: { flags: "--sample=false --frontend=starter --authentication=devise" }
-      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
-      - run:
-          name: Ensure the correct PayPal is installed for SSF
-          command: |
-            cd /tmp/my_app
-            bundle list | grep 'solidus_paypal_commerce_platform (1.'
-
-      - install_solidus: { flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe" }
-      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
-
-      - install_dummy_app
-
-      - install_dummy_app: { extra_gems: "solidus_frontend" }
-      - run:
-          name: "Ensure solidus_frontend installer is run"
-          command: |
-            test -f /tmp/dummy_extension/spec/dummy/config/initializers/solidus_frontend.rb
+      - when:
+          condition:
+            or:
+              - equal: [main, << pipeline.git.branch >>]
+              - equal: [v4.2, << pipeline.git.branch >>]
+          steps:
+            - libvips
+            - install_solidus:
+                flags: "--sample=false --frontend=starter --authentication=devise"
+            - test_page:
+                expected_text: "The only eCommerce platform you’ll ever need."
+            - run:
+                name: Ensure the correct PayPal is installed for SSF
+                command: |
+                  cd /tmp/my_app
+                  bundle list | grep 'solidus_paypal_commerce_platform (1.'
+            - install_solidus:
+                flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe"
+            - test_page:
+                expected_text: "The only eCommerce platform you’ll ever need."
+            - install_dummy_app
+            - install_dummy_app:
+                extra_gems: "solidus_frontend"
+            - run:
+                name: "Ensure solidus_frontend installer is run"
+                command: |
+                  test -f /tmp/dummy_extension/spec/dummy/config/initializers/solidus_frontend.rb
 
   test_solidus:
     parameters:
