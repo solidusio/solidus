@@ -62,7 +62,28 @@ module SolidusFriendlyPromotions
           calculator: calculator
         )
       },
-      Spree::Promotion::Actions::CreateQuantityAdjustments => nil,
+      Spree::Promotion::Actions::CreateQuantityAdjustments => ->(old_action) {
+        preferences = old_action.calculator.preferences
+        calculator = case old_action.calculator
+        when Spree::Calculator::FlatRate
+          SolidusFriendlyPromotions::Calculators::FlatRate.new(preferences: preferences)
+        when Spree::Calculator::PercentOnLineItem
+          SolidusFriendlyPromotions::Calculators::Percent.new(preferences: preferences)
+        when Spree::Calculator::FlexiRate
+          SolidusFriendlyPromotions::Calculators::FlexiRate.new(preferences: preferences)
+        when Spree::Calculator::DistributedAmount
+          SolidusFriendlyPromotions::Calculators::DistributedAmount.new(preferences: preferences)
+        when Spree::Calculator::TieredFlatRate
+          SolidusFriendlyPromotions::Calculators::TieredFlatRate.new(preferences: preferences)
+        when Spree::Calculator::TieredPercent
+          SolidusFriendlyPromotions::Calculators::TieredPercent.new(preferences: preferences)
+        end
+
+        SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups.new(
+          preferred_group_size: old_action.preferred_group_size,
+          calculator: calculator
+        )
+      },
       Spree::Promotion::Actions::FreeShipping => ->(old_action) {
         SolidusFriendlyPromotions::Actions::AdjustShipment.new(
           calculator: SolidusFriendlyPromotions::Calculators::Percent.new(
