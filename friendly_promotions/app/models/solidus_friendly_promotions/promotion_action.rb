@@ -28,10 +28,12 @@ module SolidusFriendlyPromotions
     end
 
     def discount(adjustable)
+      amount = compute_amount(adjustable)
+      return if amount.zero?
       ItemDiscount.new(
         item: adjustable,
         label: adjustment_label(adjustable),
-        amount: compute_amount(adjustable),
+        amount: amount,
         source: self
       )
     end

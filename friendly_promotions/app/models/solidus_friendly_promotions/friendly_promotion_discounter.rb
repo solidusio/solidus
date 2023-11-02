@@ -69,7 +69,7 @@ module SolidusFriendlyPromotions
           action.can_discount?(item)
         end.map do |action|
           action.discount(item)
-        end
+        end.compact
       end
     end
   end

@@ -21,9 +21,7 @@ module SolidusFriendlyPromotions
       end
 
       discountable_order.shipments.flat_map(&:shipping_rates).each do |shipping_rate|
-        shipping_rate.discounts = shipping_rate.current_discounts.reject do |discount|
-          discount.amount.zero?
-        end.map do |discount|
+        shipping_rate.discounts = shipping_rate.current_discounts.map do |discount|
           SolidusFriendlyPromotions::ShippingRateDiscount.create!(
             shipping_rate: shipping_rate,
             amount: discount.amount,
@@ -52,9 +50,7 @@ module SolidusFriendlyPromotions
     def update_adjustments(item, item_discounts)
       promotion_adjustments = item.adjustments.select(&:promotion?)
 
-      active_adjustments = item_discounts.reject do |discount|
-        discount.amount.zero?
-      end.map do |item_discount|
+      active_adjustments = item_discounts.map do |item_discount|
         update_adjustment(item, item_discount)
       end
       item.update(promo_total: active_adjustments.sum(&:amount))

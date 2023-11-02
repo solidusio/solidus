@@ -22,13 +22,10 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
 
     let(:variant) { create(:variant) }
     let(:order) { create(:order) }
-    let(:discountable) { Spree::LineItem.new(order: order, variant: variant, price: 10) }
+    let(:discountable) { Spree::LineItem.new(order: order, variant: variant, price: 10, quantity: 1) }
     let(:promotion) { SolidusFriendlyPromotions::Promotion.new(customer_label: "20 Perzent off") }
-    let(:action) { described_class.new(promotion: promotion) }
-
-    before do
-      allow(action).to receive(:compute_amount).and_return(-1)
-    end
+    let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
+    let(:action) { described_class.new(promotion: promotion, calculator: calculator) }
 
     it "returns an discount to the discountable" do
       expect(subject).to eq(
@@ -36,9 +33,27 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
           item: discountable,
           label: "Promotion (20 Perzent off)",
           source: action,
-          amount: -1
+          amount: -2
         )
       )
+    end
+
+    context "if the calculator returns nil" do
+      before do
+        allow(calculator).to receive(:compute).and_return(nil)
+      end
+
+      it "returns nil" do
+        expect(subject).to be nil
+      end
+    end
+
+    context "if the calculator returns zero" do
+      let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 0) }
+
+      it "returns nil" do
+        expect(subject).to be nil
+      end
     end
   end
 
