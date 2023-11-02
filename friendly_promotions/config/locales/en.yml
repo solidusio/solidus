@@ -161,6 +161,7 @@ en:
     models:
       solidus_friendly_promotions/actions/adjust_shipment: Discount matching shipments
       solidus_friendly_promotions/actions/adjust_line_item: Discount matching line items
+      solidus_friendly_promotions/actions/adjust_line_item_quantity_groups: Discount matching line items based on quantity groups
       solidus_friendly_promotions/calculators/distributed_amount: Distributed Amount
       solidus_friendly_promotions/calculators/percent: Flat Percent
       solidus_friendly_promotions/calculators/flat_rate: Flat Rate

@@ -106,6 +106,7 @@ SolidusFriendlyPromotions.configure do |config|
 
   config.actions = [
     "SolidusFriendlyPromotions::Actions::AdjustLineItem",
+    "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups",
     "SolidusFriendlyPromotions::Actions::AdjustShipment"
   ]
 end
