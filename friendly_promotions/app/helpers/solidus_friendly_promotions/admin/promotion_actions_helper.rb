@@ -16,9 +16,7 @@ module SolidusFriendlyPromotions
       end
 
       def promotion_actions_by_level(promotion, level)
-        promotion.actions.select do |rule|
-          rule.class.name.demodulize.underscore.ends_with?(level.to_s)
-        end
+        promotion.actions.select { |action| action.level == level }
       end
     end
   end
