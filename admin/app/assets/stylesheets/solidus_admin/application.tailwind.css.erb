@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  summary {
+    &::marker,
+    &::-webkit-details-marker {
+      @apply hidden;
+    }
+
+    list-style: none;
+  }
+}
+
+@layer components {
   .body-tiny {
     @apply font-sans font-normal text-xs;
   }
