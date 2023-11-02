@@ -123,7 +123,7 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups 
           action.preferred_group_size = 3
         end
 
-        context "and 2x item A and 1x item B", :pending do
+        context "and 2x item A and 1x item B" do
           let(:line_one_options) { {quantity: 2} }
 
           describe "the adjustment for the first item" do
@@ -140,7 +140,7 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups 
           let(:line_one_options) { {quantity: 3} }
           let(:line_two_options) { {price: 20} }
 
-          describe "the adjustment for the first item", :pending do
+          describe "the adjustment for the first item" do
             let(:line_item) { order.line_items.first }
             it { is_expected.to eq(-3) }
           end
@@ -152,7 +152,7 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups 
       end
     end
 
-    context "with a tiered percentage based adjustment", :pending do
+    context "with a tiered percentage based adjustment" do
       let(:tiers) do
         {
           20 => 20,
