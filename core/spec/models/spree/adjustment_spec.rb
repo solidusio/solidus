@@ -128,6 +128,12 @@ RSpec.describe Spree::Adjustment, type: :model do
         let(:source) { promotion.actions.first! }
         let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 7) }
 
+        around do |example|
+          Spree.deprecator.silence do
+            example.run
+          end
+        end
+
         context 'when the promotion is eligible' do
           it 'updates the adjustment' do
             expect { subject }.to change { adjustment.amount }.from(5).to(-7)

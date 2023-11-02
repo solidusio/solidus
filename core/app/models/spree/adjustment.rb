@@ -132,6 +132,7 @@ module Spree
         eligible?
       end
     end
+    deprecate :calculate_eligibility, deprecator: Spree.deprecator
 
     private
 
