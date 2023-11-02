@@ -45,7 +45,7 @@ module Spree
 
         def set_current_order
           if spree_current_user && current_order
-            spree_current_user.orders.by_store(current_store).incomplete.where('id != ?', current_order.id).each do |order|
+            spree_current_user.orders.by_store(current_store).incomplete.where('id != ?', current_order.id).find_each do |order|
               current_order.merge!(order, spree_current_user)
             end
           end
