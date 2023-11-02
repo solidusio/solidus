@@ -1,3 +1,23 @@
+## Solidus v4.1.3 (2023-11-02)
+
+## Solidus Core
+* [v4.1] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5482
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.2...v4.1.3
+
+
 ## Solidus v4.1.2 (2023-11-01)
 
 ## Solidus Core
