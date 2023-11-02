@@ -3,25 +3,39 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
-  subject { described_class.new(order) }
+  subject(:discounter) { described_class.new(order) }
 
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
   let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
-  let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+  let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 10) }
 
   context "adjusting line items" do
-    let!(:action) do
+    let(:action) do
       SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, calculator: calculator)
     end
     let(:adjustable) { line_item }
+
+    subject do
+      action
+      discounter.call
+    end
 
     context "promotion with no rules" do
       context "creates the adjustment" do
         it "creates the adjustment" do
           expect {
-            subject.call
+            subject
           }.to change { adjustable.adjustments.length }.by(1)
+        end
+      end
+
+      context "with a calculator that returns zero" do
+        let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 0) }
+        it " will not create the adjustment" do
+          expect {
+            subject
+          }.not_to change { adjustable.adjustments.length }
         end
       end
 
@@ -30,13 +44,13 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
 
         it "doesn't connect the promotion to the order" do
           expect {
-            subject.call
+            subject
           }.to change { order.promotions.length }.by(0)
         end
 
         it "doesn't create an adjustment" do
           expect {
-            subject.call
+            subject
           }.to change { adjustable.adjustments.length }.by(0)
         end
 
@@ -47,7 +61,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
           it "removes the old adjustment from the line item" do
             adjustable.reload
             expect {
-              subject.call
+              subject
             }.to change { adjustable.reload.adjustments.length }.by(-1)
           end
         end
@@ -62,7 +76,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
       context "creates the adjustment" do
         it "creates the adjustment" do
           expect {
-            subject.call
+            subject
           }.to change { adjustable.adjustments.length }.by(1)
         end
       end
@@ -86,7 +100,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
       context "creates the adjustment" do
         it "creates the adjustment" do
           expect {
-            subject.call
+            subject
           }.to change { adjustable.adjustments.length }.by(1)
         end
       end
@@ -94,13 +108,55 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
   end
 
   context "adjusting shipping rates" do
-    let!(:promotion) { create(:friendly_promotion, actions: [shipment_action], apply_automatically: true) }
+    let(:promotion) { create(:friendly_promotion, actions: [shipment_action], apply_automatically: true) }
     let(:shipment_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: fifty_percent) }
     let(:fifty_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 50) }
     let(:order) { create(:order_with_line_items) }
 
+    subject do
+      promotion
+      discounter.call
+    end
+
     it "creates shipping rate discounts" do
-      expect { subject.call }.to change { SolidusFriendlyPromotions::ShippingRateDiscount.count }
+      expect { subject }.to change { SolidusFriendlyPromotions::ShippingRateDiscount.count }
+    end
+
+    context "if the promo is eligible but the calculcator returns 0" do
+      let(:shipment_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: zero_percent) }
+      let(:zero_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 0) }
+
+      it "will not create an adjustment on the shiping rate" do
+        expect do
+          subject
+        end.not_to change { order.shipments.first.shipping_rates.first.discounts.count }
+      end
+    end
+  end
+
+  context "adjusting shipments" do
+    let(:promotion) { create(:friendly_promotion, actions: [shipment_action], apply_automatically: true) }
+    let(:shipment_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: fifty_percent) }
+    let(:fifty_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 50) }
+    let(:order) { create(:order_with_line_items) }
+
+    it "creates an adjustment on the shipment" do
+      expect do
+        promotion
+        subject.call
+      end.to change { order.shipments.first.adjustments.count }
+    end
+
+    context "if the promo is eligible but the calculcator returns 0" do
+      let(:shipment_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: zero_percent) }
+      let(:zero_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 0) }
+
+      it "will not create an adjustment on the shipment" do
+        expect do
+          promotion
+          subject.call
+        end.not_to change { order.shipments.first.adjustments.count }
+      end
     end
   end
 end
