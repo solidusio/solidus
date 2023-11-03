@@ -26,6 +26,10 @@ module SolidusAdmin
       end
     end
 
+    def edit
+      redirect_to action: :show
+    end
+
     def variants_for
       load_order
 

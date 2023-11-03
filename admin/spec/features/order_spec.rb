@@ -11,7 +11,8 @@ describe "Order", type: :feature do
       create(:product, name: "Just another product", slug: 'just-another-prod', price: 29.99)
       create(:order, number: "R123456789", total: 19.99, state: "cart")
 
-      visit "/admin/orders/R123456789/cart"
+      visit "/admin/orders/R123456789/edit"
+      expect(page).to have_current_path("/admin/orders/R123456789")
 
       expect(page).to have_content("Order R123456789")
 

@@ -18,11 +18,10 @@ SolidusAdmin::Engine.routes.draw do
     get 'states', to: 'countries#states'
   end
 
-  resources :orders, only: [:index] do
+  resources :orders, only: [:index, :show, :edit] do
     resources :line_items, only: [:destroy, :create, :update]
 
     member do
-      get :cart, to: "orders#show"
       get :variants_for
     end
   end
