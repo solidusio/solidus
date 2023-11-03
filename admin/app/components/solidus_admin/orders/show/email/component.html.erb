@@ -1,0 +1,18 @@
+<div class="<%= stimulus_id %>">
+  <%= render component("orders/show").new(order: @order) %>
+  <%= render component("ui/modal").new(title: t(".title"), close_path: close_path) do |modal| %>
+    <%= form_for @order, url: close_path, html: { id: form_id} do |f| %>
+      <%= render component("ui/forms/field").text_field(f, :email) %>
+      <label class="body-small mt-4 block">
+        <%= t('.guest_checkout') %>:
+        <output class="body-small-bold"><%= @order.user ? t('.yes') : t('.no') %></output>
+        <%= render component('ui/toggletip').new(text: t('.guest_checkout_tip'), class: "align-middle") %>
+      </label>
+    <% end %>
+
+    <% modal.with_actions do %>
+      <%= render component("ui/button").new(tag: :a, scheme: :secondary, href: close_path, type: :submit, text: t('.cancel')) %>
+      <%= render component("ui/button").new(form: form_id, type: :submit, text: t('.submit')) %>
+    <% end %>
+  <% end %>
+</div>

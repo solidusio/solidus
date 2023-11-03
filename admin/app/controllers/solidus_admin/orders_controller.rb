@@ -2,6 +2,8 @@
 
 module SolidusAdmin
   class OrdersController < SolidusAdmin::BaseController
+    include Spree::Core::ControllerHelpers::StrongParameters
+
     def index
       orders = Spree::Order
         .order(created_at: :desc, id: :desc)
@@ -24,6 +26,21 @@ module SolidusAdmin
       respond_to do |format|
         format.html { render component('orders/show').new(order: @order) }
       end
+    end
+
+    def update
+      load_order
+
+      @order.assign_attributes(order_params)
+      @order.email ||= @order.user.email if @order.user && @order.user.changed?
+
+      if @order.save
+        flash[:notice] = t('.success')
+      else
+        flash[:error] = t('.error')
+      end
+
+      redirect_to spree.edit_admin_order_path(@order)
     end
 
     def edit
@@ -62,6 +79,10 @@ module SolidusAdmin
     def load_order
       @order = Spree::Order.find_by!(number: params[:id])
       authorize! action_name, @order
+    end
+
+    def order_params
+      params.require(:order).permit(:user_id, permitted_order_attributes)
     end
   end
 end

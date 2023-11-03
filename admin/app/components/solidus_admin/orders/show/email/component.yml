@@ -1,0 +1,8 @@
+en:
+  title: "Edit order email"
+  submit: "Save"
+  cancel: "Cancel"
+  guest_checkout: "Guest checkout"
+  guest_checkout_tip: "An order without an associated user account is considered a guest checkout."
+  "yes": "Yes"
+  "no": "No"

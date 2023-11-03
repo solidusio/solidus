@@ -2,11 +2,27 @@
 
 require 'spec_helper'
 
-describe "Order", type: :feature do
+describe "Order", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
+  it "allows changing the order email" do
+    create(:order, number: "R123456789", total: 19.99)
+
+    visit "/admin/orders/R123456789/edit"
+
+    expect(page).to have_content("Order R123456789")
+    find("summary", text: "Customer").click
+    click_on "Edit order email"
+    within("dialog") do
+      fill_in "Customer Email", with: "a@b.c"
+      click_on "Save"
+    end
+    expect(page).to have_content("Order was updated successfully")
+    expect(page).to have_content("Order contact email a@b.c", normalize_ws: true)
+  end
+
   context "in cart state" do
-    it "allows managing the cart", :js do
+    it "allows managing the cart" do
       create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
       create(:product, name: "Just another product", slug: 'just-another-prod', price: 29.99)
       create(:order, number: "R123456789", total: 19.99, state: "cart")
