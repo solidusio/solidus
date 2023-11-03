@@ -135,7 +135,9 @@ module Spree
     before_validation :set_currency
     before_validation :generate_order_number, on: :create
     before_validation :assign_billing_to_shipping_address, if: :use_billing?
+    before_validation :assign_shipping_to_billing_address, if: :use_shipping?
     attr_accessor :use_billing
+    attr_accessor :use_shipping
 
     before_create :create_token
     before_create :link_by_email
@@ -268,6 +270,11 @@ module Spree
 
     def assign_billing_to_shipping_address
       self.ship_address = bill_address if bill_address
+      true
+    end
+
+    def assign_shipping_to_billing_address
+      self.bill_address = ship_address if ship_address
       true
     end
 
@@ -858,6 +865,10 @@ module Spree
 
     def use_billing?
       use_billing.in?([true, 'true', '1'])
+    end
+
+    def use_shipping?
+      use_shipping.in?([true, 'true', '1'])
     end
 
     def set_currency
