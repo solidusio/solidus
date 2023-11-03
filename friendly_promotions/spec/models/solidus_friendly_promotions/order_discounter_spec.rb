@@ -30,7 +30,7 @@ RSpec.describe SolidusFriendlyPromotions::OrderDiscounter, type: :model do
         end
 
         it "does not keep the current discounts" do
-          subject.call
+          subject
           expect(adjustable.current_discounts).to be_empty
         end
       end
