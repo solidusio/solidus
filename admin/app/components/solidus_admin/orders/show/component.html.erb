@@ -1,4 +1,4 @@
-<%= page do %>
+<%= page("data-action": "turbo:before-cache@window->#{stimulus_id}#closeMenus") do %>
   <%= page_header do %>
     <%= page_header_back(solidus_admin.orders_path) %>
     <%= page_header_title(t('.title', number: @order.number)) %>
