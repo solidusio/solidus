@@ -104,6 +104,7 @@ en:
         additional_tax_total: Tax
         approved_at: Approved at
         approver_id: Approver
+        bill_address: Billing Address
         canceled_at: Canceled at
         canceler_id: Canceler
         checkout_complete: Checkout Complete
@@ -117,6 +118,7 @@ en:
         item_total: Item Total
         number: Number
         payment_state: Payment State
+        ship_address: Shipping Address
         shipment_state: Shipment State
         shipment_total: Ship Total
         special_instructions: Special Instructions
