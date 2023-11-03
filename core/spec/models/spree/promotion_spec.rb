@@ -939,4 +939,20 @@ RSpec.describe Spree::Promotion, type: :model do
       expect(order.adjustment_total).to eq(-10)
     end
   end
+
+  describe "promotion deletion" do
+    subject { promotion.destroy! }
+
+    let(:promotion) { create(:promotion) }
+    let(:order) { create(:order) }
+
+    before do
+      order.promotions << promotion
+    end
+
+    it "destroys associated order promotions" do
+      expect(Spree::OrderPromotion.count).to eq(1)
+      expect { subject }.to change { Spree::OrderPromotion.count }.from(1).to(0)
+    end
+  end
 end
