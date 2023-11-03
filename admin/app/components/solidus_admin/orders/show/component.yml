@@ -4,3 +4,4 @@ en:
   save: Save
   discard: Discard
   title: "Order %{number}"
+  customer: Customer

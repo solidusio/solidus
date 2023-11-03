@@ -8,5 +8,14 @@
     <% end %>
   <% end %>
 
-  <%= render component('orders/cart').new(order: @order) %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component("orders/cart").new(order: @order) %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component('ui/panel').new(title: t(".customer")) %>
+
+    <% end %>
+  <% end %>
 <% end %>
