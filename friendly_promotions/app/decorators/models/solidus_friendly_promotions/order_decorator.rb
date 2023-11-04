@@ -37,6 +37,10 @@ module SolidusFriendlyPromotions
       end
     end
 
+    def free_from_order_action?(line_item, _options)
+      !line_item.managed_by_order_action
+    end
+
     Spree::Order.prepend self
   end
 end

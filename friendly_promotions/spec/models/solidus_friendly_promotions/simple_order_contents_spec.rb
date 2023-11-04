@@ -17,6 +17,20 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
         expect(line_item.quantity).to eq(1)
         expect(order.line_items.size).to eq(1)
       end
+
+      context "if a line item with a promotion actions exists" do
+        let(:promotion) { create(:friendly_promotion) }
+        let(:promotion_action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.create!(calculator: hundred_percent, preferred_variant_id: variant.id, promotion: promotion) }
+        let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
+
+        before do
+          order.line_items.create!(variant: variant, managed_by_order_action: promotion_action, quantity: 1)
+        end
+
+        specify "creating a new line item with the same variant creates a separate item" do
+          expect { subject.add(variant) }.to change { order.line_items.length }.by(1)
+        end
+      end
     end
 
     context "given a shipment" do
