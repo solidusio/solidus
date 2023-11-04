@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Spree::LineItem do
+  it { is_expected.to belong_to(:managed_by_order_action).optional }
+
   describe "#discountable_amount" do
     let(:discounts) { [] }
     let(:line_item) { Spree::LineItem.new(price: 10, quantity: 2, current_discounts: discounts) }
