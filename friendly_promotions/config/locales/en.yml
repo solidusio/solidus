@@ -23,6 +23,7 @@ en:
     shipment_rules: Shipment Rules
     line_item_actions: Line Item Actions
     shipment_actions: Shipment Actions
+    order_actions: Order Actions
     invalid_promotion_rule_level: Invalid Promotion Rule Level. Must be one of "order", "shipment", or "line_item"
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
@@ -161,6 +162,7 @@ en:
     models:
       solidus_friendly_promotions/actions/adjust_shipment: Discount matching shipments
       solidus_friendly_promotions/actions/adjust_line_item: Discount matching line items
+      solidus_friendly_promotions/actions/create_discounted_item: Create discounted line item
       solidus_friendly_promotions/actions/adjust_line_item_quantity_groups: Discount matching line items based on quantity groups
       solidus_friendly_promotions/calculators/distributed_amount: Distributed Amount
       solidus_friendly_promotions/calculators/percent: Flat Percent
@@ -199,6 +201,8 @@ en:
         description: Creates a promotion credit on matching line items
       solidus_friendly_promotions/actions/adjust_shipment:
         description: Creates a promotion credit on matching shipments
+      solidus_friendly_promotions/actions/create_discounted_item:
+        description: Creates a discounted item
       solidus_friendly_promotions/rules/first_order:
         description: Must be the customer's first order
       solidus_friendly_promotions/rules/first_repeat_purchase_since:

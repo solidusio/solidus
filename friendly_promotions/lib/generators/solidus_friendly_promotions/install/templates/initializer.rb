@@ -86,6 +86,10 @@ SolidusFriendlyPromotions.configure do |config|
     "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups" => [
       "SolidusFriendlyPromotions::Calculators::FlatRate",
       "SolidusFriendlyPromotions::Calculators::Percent"
+    ],
+    "SolidusFriendlyPromotions::Actions::CreateDiscountedItem" => [
+      "SolidusFriendlyPromotions::Calculators::FlatRate",
+      "SolidusFriendlyPromotions::Calculators::Percent"
     ]
   )
 
@@ -117,6 +121,7 @@ SolidusFriendlyPromotions.configure do |config|
   config.actions = [
     "SolidusFriendlyPromotions::Actions::AdjustLineItem",
     "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups",
-    "SolidusFriendlyPromotions::Actions::AdjustShipment"
+    "SolidusFriendlyPromotions::Actions::AdjustShipment",
+    "SolidusFriendlyPromotions::Actions::CreateDiscountedItem"
   ]
 end

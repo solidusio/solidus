@@ -27,7 +27,6 @@ module SolidusFriendlyPromotions
           end
         end
         order.reset_current_discounts
-        order.promo_total = (order.line_items + order.shipments).sum(&:promo_total)
         order
       end
 

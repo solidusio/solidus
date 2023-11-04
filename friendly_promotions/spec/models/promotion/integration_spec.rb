@@ -53,7 +53,7 @@ RSpec.describe "Promotion System" do
             order.contents.remove(shirt.master)
           end
 
-          it "removes the discounted line item", :pending do
+          it "removes the discounted line item" do
             expect(order.adjustments).to be_empty
             expect(order.line_items.length).to eq(1)
             expect(order.promo_total).to eq(0)

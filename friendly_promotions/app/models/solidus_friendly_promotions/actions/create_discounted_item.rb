@@ -11,6 +11,11 @@ module SolidusFriendlyPromotions
         line_item.current_discounts << discount(line_item)
       end
 
+      def remove_from(order)
+        line_item = find_item(order)
+        order.line_items.destroy(line_item)
+      end
+
       private
 
       def find_item(order)
