@@ -33,6 +33,53 @@ RSpec.describe "Promotion System" do
           expect(order.line_items.flat_map(&:adjustments).length).to eq(2)
         end
       end
+
+      context "with an automation", :pending do
+        let(:goodie) { create(:variant, price: 4) }
+        let(:action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
+        let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
+
+        it "creates a new discounted line item" do
+          expect(order.adjustments).to be_empty
+          expect(order.line_items.count).to eq(3)
+          expect(order.total).to eq(39.98)
+          expect(order.item_total).to eq(43.98)
+          expect(order.item_total_before_tax).to eq(39.98)
+          expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
+        end
+
+        context "when the goodie becomes unavailable" do
+          before do
+            order.contents.remove(shirt.master)
+          end
+
+          it "removes the discounted line item" do
+            expect(order.adjustments).to be_empty
+            expect(order.line_items.length).to eq(1)
+            expect(order.promo_total).to eq(0)
+            expect(order.total).to eq(19.99)
+            expect(order.item_total).to eq(19.99)
+            expect(order.item_total_before_tax).to eq(19.99)
+            expect(order.line_items.flat_map(&:adjustments).length).to eq(0)
+          end
+        end
+
+        context "with a line-item level promotion in the lane before it" do
+          let!(:other_promotion) { create(:friendly_promotion, :with_adjustable_action, lane: :pre, apply_automatically: true) }
+
+          it "creates a new discounted line item" do
+            order.recalculate
+            expect(order.adjustments).to be_empty
+            expect(order.line_items.count).to eq(3)
+            expect(order.total).to eq(19.98)
+            expect(order.item_total).to eq(43.98)
+            expect(order.item_total_before_tax).to eq(19.98)
+            expect(order.line_items.flat_map(&:adjustments).length).to eq(3)
+            expect(order.line_items.detect { |line_item| line_item.managed_by_order_action == action }.adjustments.length).to eq(1)
+            expect(order.line_items.detect { |line_item| line_item.managed_by_order_action == action }.adjustments.first.amount).to eq(-4)
+          end
+        end
+      end
     end
 
     context "with a line-item level rule" do
