@@ -34,7 +34,7 @@ RSpec.describe "Promotion System" do
         end
       end
 
-      context "with an automation", :pending do
+      context "with an automation" do
         let(:goodie) { create(:variant, price: 4) }
         let(:action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
         let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
@@ -53,7 +53,7 @@ RSpec.describe "Promotion System" do
             order.contents.remove(shirt.master)
           end
 
-          it "removes the discounted line item" do
+          it "removes the discounted line item", :pending do
             expect(order.adjustments).to be_empty
             expect(order.line_items.length).to eq(1)
             expect(order.promo_total).to eq(0)

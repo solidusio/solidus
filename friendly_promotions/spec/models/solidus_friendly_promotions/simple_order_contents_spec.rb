@@ -18,8 +18,8 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
         expect(order.line_items.size).to eq(1)
       end
 
-      context "if a line item with a promotion actions exists" do
-        let(:promotion) { create(:friendly_promotion) }
+      context "if a line item managed by an automation exists" do
+        let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
         let(:promotion_action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.create!(calculator: hundred_percent, preferred_variant_id: variant.id, promotion: promotion) }
         let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
 

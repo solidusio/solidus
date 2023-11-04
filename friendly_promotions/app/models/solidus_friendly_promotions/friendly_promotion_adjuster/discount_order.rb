@@ -16,6 +16,7 @@ module SolidusFriendlyPromotions
 
         SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
           lane_promotions = eligible_promotions_for_promotable(promotions.select { |promotion| promotion.lane == lane }, order)
+          perform_order_actions(lane_promotions)
           line_item_discounts = adjust_line_items(lane_promotions)
           shipment_discounts = adjust_shipments(lane_promotions)
           shipping_rate_discounts = adjust_shipping_rates(lane_promotions)
@@ -29,9 +30,15 @@ module SolidusFriendlyPromotions
 
       private
 
+      def perform_order_actions(lane_promotions)
+        lane_promotions.each do |promotion|
+          promotion.actions.select { |action| action.level == :order }.each { |action| action.perform(order) }
+        end
+      end
+
       def adjust_line_items(promotions)
         order.line_items.select do |line_item|
-          line_item.variant.product.promotionable?
+          line_item.variant.product.promotionable? && !line_item.managed_by_automation
         end.map do |line_item|
           discounts = generate_discounts(promotions, line_item)
           chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(discounts).call
