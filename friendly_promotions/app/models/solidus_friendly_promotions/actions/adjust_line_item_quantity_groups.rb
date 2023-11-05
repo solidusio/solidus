@@ -79,7 +79,7 @@ module SolidusFriendlyPromotions
       private
 
       def actionable_line_items(order)
-        order.line_items.select do |item|
+        order.discountable_line_items.select do |item|
           promotion.rules.select do |rule|
             rule.applicable?(item)
           end.all? { |rule| rule.eligible?(item) }

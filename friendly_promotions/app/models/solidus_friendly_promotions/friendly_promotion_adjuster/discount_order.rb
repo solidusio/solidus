@@ -48,8 +48,8 @@ module SolidusFriendlyPromotions
       end
 
       def adjust_line_items(promotions)
-        order.line_items.select do |line_item|
-          line_item.variant.product.promotionable? && !line_item.managed_by_order_action
+        order.discountable_line_items.select do |line_item|
+          line_item.variant.product.promotionable?
         end.map do |line_item|
           discounts = generate_discounts(promotions, line_item)
           chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(discounts).call

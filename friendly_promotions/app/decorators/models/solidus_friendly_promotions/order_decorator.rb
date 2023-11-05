@@ -29,6 +29,13 @@ module SolidusFriendlyPromotions
       shipments.each(&:reset_current_discounts)
     end
 
+    # This helper method excludes line items that are managed by an order action for the benefit
+    # of calculators and actions that discount normal line items. Line items that are managed by an
+    # order actions handle their discounts themselves.
+    def discountable_line_items
+      line_items.reject(&:managed_by_order_action)
+    end
+
     def apply_shipping_promotions
       if Spree::Config.promotion_adjuster_class <= SolidusFriendlyPromotions::FriendlyPromotionAdjuster
         recalculate

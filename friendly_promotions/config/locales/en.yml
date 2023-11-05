@@ -257,3 +257,7 @@ en:
           attributes:
             base:
               disallowed_with_apply_automatically: Could not create promotion code on promotion that apply automatically
+        spree/line_item:
+          attributes:
+            quantity:
+              cannot_be_changed_for_automated_items: cannot be changed on a line item managed by a promotion action

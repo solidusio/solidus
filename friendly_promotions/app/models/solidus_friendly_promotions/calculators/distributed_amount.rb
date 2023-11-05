@@ -28,7 +28,7 @@ module SolidusFriendlyPromotions
       private
 
       def eligible_line_items(order)
-        order.line_items.select do |line_item|
+        order.discountable_line_items.select do |line_item|
           calculable.promotion.eligible_by_applicable_rules?(line_item)
         end
       end
