@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusFriendlyPromotions::PromotionLoader do
+RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::LoadPromotions do
   describe "selecting promotions" do
     subject { described_class.new(order: order).call }
 

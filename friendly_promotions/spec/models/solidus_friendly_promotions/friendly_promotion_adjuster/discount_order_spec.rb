@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionDiscounter do
+RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrder do
   context "shipped orders" do
     let(:promotions) { [] }
     let(:order) { create(:order, shipment_state: "shipped") }

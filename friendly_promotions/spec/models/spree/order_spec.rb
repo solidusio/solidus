@@ -47,7 +47,7 @@ RSpec.describe Spree::Order do
       around do |example|
         Spree::Config.promotion_adjuster_class = Spree::Promotion::OrderAdjustmentsRecalculator
         example.run
-        Spree::Config.promotion_adjuster_class = SolidusFriendlyPromotions::OrderDiscounter
+        Spree::Config.promotion_adjuster_class = SolidusFriendlyPromotions::FriendlyPromotionAdjuster
       end
 
       it "does call the promotion handler shipping" do

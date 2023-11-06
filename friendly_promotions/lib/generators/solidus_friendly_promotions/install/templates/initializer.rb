@@ -2,7 +2,7 @@
 
 # Replace solidus core's order contents and promotion adjuster classes with ours.
 Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
-Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderDiscounter"
+Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 
 # Replace the promotions menu from core with ours
 Spree::Backend::Config.configure do |config|

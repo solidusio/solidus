@@ -30,7 +30,7 @@ module SolidusFriendlyPromotions
     end
 
     def apply_shipping_promotions
-      if Spree::Config.promotion_adjuster_class <= SolidusFriendlyPromotions::OrderDiscounter
+      if Spree::Config.promotion_adjuster_class <= SolidusFriendlyPromotions::FriendlyPromotionAdjuster
         recalculate
       else
         super
