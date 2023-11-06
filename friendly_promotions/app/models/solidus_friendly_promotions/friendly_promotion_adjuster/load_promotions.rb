@@ -3,14 +3,14 @@
 module SolidusFriendlyPromotions
   class FriendlyPromotionAdjuster
     class LoadPromotions
-      def initialize(order:, additional_promotion: nil)
+      def initialize(order:, dry_run_promotion: nil)
         @order = order
-        @additional_promotion = additional_promotion
+        @dry_run_promotion = dry_run_promotion
       end
 
       def call
         promos = connected_order_promotions | sale_promotions
-        promos << additional_promotion if additional_promotion
+        promos << dry_run_promotion if dry_run_promotion
         promos.flat_map(&:actions).group_by(&:preload_relations).each do |preload_relations, actions|
           preload(records: actions, associations: preload_relations)
         end
@@ -22,7 +22,7 @@ module SolidusFriendlyPromotions
 
       private
 
-      attr_reader :order, :additional_promotion
+      attr_reader :order, :dry_run_promotion
 
       def preload(records:, associations:)
         ActiveRecord::Associations::Preloader.new(records: records, associations: associations).call

@@ -33,14 +33,14 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
     end
   end
 
-  describe "collecting eligibility results" do
+  describe "collecting eligibility results in a dry run" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
     let(:rules) { [product_rule] }
     let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, rules: rules, name: "20% off Shirts", apply_automatically: true) }
     let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
     let(:promotions) { [promotion] }
-    let(:discounter) { described_class.new(order, promotions, collect_eligibility_results: true) }
+    let(:discounter) { described_class.new(order, promotions, dry_run: true) }
 
     subject { discounter.call }
 

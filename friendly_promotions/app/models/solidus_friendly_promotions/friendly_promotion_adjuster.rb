@@ -4,17 +4,17 @@ module SolidusFriendlyPromotions
   class FriendlyPromotionAdjuster
     attr_reader :order, :promotions, :dry_run
 
-    def initialize(order, additional_promotion: nil)
+    def initialize(order, dry_run_promotion: nil)
       @order = order
-      @dry_run = !!additional_promotion
-      @promotions = LoadPromotions.new(order: order, additional_promotion: additional_promotion).call
+      @dry_run = !!dry_run_promotion
+      @promotions = LoadPromotions.new(order: order, dry_run_promotion: dry_run_promotion).call
     end
 
     def call
       order.reset_current_discounts
 
       return order if order.shipped?
-      discounted_order = DiscountOrder.new(order, promotions, collect_eligibility_results: dry_run).call
+      discounted_order = DiscountOrder.new(order, promotions, dry_run: dry_run).call
 
       PersistDiscountedOrder.new(discounted_order).call unless dry_run
 

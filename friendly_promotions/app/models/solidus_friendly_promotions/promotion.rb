@@ -127,7 +127,7 @@ module SolidusFriendlyPromotions
       @eligibility_results ||= SolidusFriendlyPromotions::EligibilityResults.new(self)
     end
 
-    def eligible_by_applicable_rules?(promotable, collect_eligibility_results: false)
+    def eligible_by_applicable_rules?(promotable, dry_run: false)
       applicable_rules = rules.select do |rule|
         rule.applicable?(promotable)
       end
@@ -135,9 +135,9 @@ module SolidusFriendlyPromotions
       applicable_rules.map do |applicable_rule|
         eligible = applicable_rule.eligible?(promotable)
 
-        break [false] if !eligible && !collect_eligibility_results
+        break [false] if !eligible && !dry_run
 
-        if collect_eligibility_results
+        if dry_run
           if applicable_rule.eligibility_errors.details[:base].first
             code = applicable_rule.eligibility_errors.details[:base].first[:error_code]
             message = applicable_rule.eligibility_errors.full_messages.first

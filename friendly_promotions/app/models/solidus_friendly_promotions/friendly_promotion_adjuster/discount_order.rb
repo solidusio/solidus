@@ -3,12 +3,12 @@
 module SolidusFriendlyPromotions
   class FriendlyPromotionAdjuster
     class DiscountOrder
-      attr_reader :order, :promotions, :collect_eligibility_results
+      attr_reader :order, :promotions, :dry_run
 
-      def initialize(order, promotions, collect_eligibility_results: false)
+      def initialize(order, promotions, dry_run: false)
         @order = order
         @promotions = promotions
-        @collect_eligibility_results = collect_eligibility_results
+        @dry_run = dry_run
       end
 
       def call
@@ -57,7 +57,7 @@ module SolidusFriendlyPromotions
 
       def eligible_promotions_for_promotable(possible_promotions, promotable)
         possible_promotions.select do |candidate|
-          candidate.eligible_by_applicable_rules?(promotable, collect_eligibility_results: collect_eligibility_results)
+          candidate.eligible_by_applicable_rules?(promotable, dry_run: dry_run)
         end
       end
 
