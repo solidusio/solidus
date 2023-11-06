@@ -5,6 +5,7 @@ module SolidusFriendlyPromotions
     class CreateDiscountedItem < PromotionAction
       include OrderLevelAction
       preference :variant_id, :integer
+      preference :quantity, :integer, default: 1
 
       def perform(order)
         line_item = find_item(order) || create_item(order)
@@ -23,7 +24,7 @@ module SolidusFriendlyPromotions
       end
 
       def create_item(order)
-        order.line_items.create!(quantity: 1, variant: variant, managed_by_order_action: self)
+        order.line_items.create!(quantity: preferred_quantity, variant: variant, managed_by_order_action: self)
       end
 
       def variant
