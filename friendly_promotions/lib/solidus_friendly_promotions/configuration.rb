@@ -5,9 +5,11 @@ require "spree/core/environment_extension"
 module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration
     attr_accessor :sync_order_promotions
+    attr_accessor :promotion_calculators
 
     def initialize
       @sync_order_promotions = true
+      @promotion_calculators = NestedClassSet.new
     end
 
     include Spree::Core::EnvironmentExtension

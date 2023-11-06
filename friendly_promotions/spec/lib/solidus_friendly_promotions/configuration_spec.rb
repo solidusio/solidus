@@ -19,16 +19,10 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
     end
   end
 
-  describe ".shipment_discount_calculators" do
-    subject { config.shipment_discount_calculators }
+  describe ".promotion_calculators" do
+    subject { config.promotion_calculators }
 
-    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
-  end
-
-  describe ".line_item_discount_calculators" do
-    subject { config.line_item_discount_calculators }
-
-    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+    it { is_expected.to be_a(SolidusFriendlyPromotions::NestedClassSet) }
   end
 
   describe ".order_rules" do

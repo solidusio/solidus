@@ -67,7 +67,7 @@ module SolidusFriendlyPromotions
     end
 
     def available_calculators
-      raise NotImplementedError
+      SolidusFriendlyPromotions.config.promotion_calculators[self.class] || (raise NotImplementedError)
     end
   end
 end

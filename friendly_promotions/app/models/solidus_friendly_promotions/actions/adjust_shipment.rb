@@ -7,10 +7,6 @@ module SolidusFriendlyPromotions
         object.is_a?(Spree::Shipment) || object.is_a?(Spree::ShippingRate)
       end
 
-      def available_calculators
-        SolidusFriendlyPromotions.config.shipment_discount_calculators
-      end
-
       def level
         :shipment
       end

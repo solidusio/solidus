@@ -63,21 +63,27 @@ SolidusFriendlyPromotions.configure do |config|
   # How many promotions should be displayed on the index page in the admin.
   config.promotions_per_page = 25
 
-  config.shipment_discount_calculators = [
-    "SolidusFriendlyPromotions::Calculators::FlatRate",
-    "SolidusFriendlyPromotions::Calculators::FlexiRate",
-    "SolidusFriendlyPromotions::Calculators::Percent",
-    "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
-    "SolidusFriendlyPromotions::Calculators::TieredPercent"
-  ]
-  config.line_item_discount_calculators = [
-    "SolidusFriendlyPromotions::Calculators::DistributedAmount",
-    "SolidusFriendlyPromotions::Calculators::FlatRate",
-    "SolidusFriendlyPromotions::Calculators::FlexiRate",
-    "SolidusFriendlyPromotions::Calculators::Percent",
-    "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
-    "SolidusFriendlyPromotions::Calculators::TieredPercent"
-  ]
+  config.promotion_calculators = SolidusFriendlyPromotions::NestedClassSet.new(
+    "SolidusFriendlyPromotions::Actions::AdjustShipment" => [
+      "SolidusFriendlyPromotions::Calculators::FlatRate",
+      "SolidusFriendlyPromotions::Calculators::FlexiRate",
+      "SolidusFriendlyPromotions::Calculators::Percent",
+      "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
+      "SolidusFriendlyPromotions::Calculators::TieredPercent"
+    ],
+    "SolidusFriendlyPromotions::Actions::AdjustLineItem" => [
+      "SolidusFriendlyPromotions::Calculators::DistributedAmount",
+      "SolidusFriendlyPromotions::Calculators::FlatRate",
+      "SolidusFriendlyPromotions::Calculators::FlexiRate",
+      "SolidusFriendlyPromotions::Calculators::Percent",
+      "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
+      "SolidusFriendlyPromotions::Calculators::TieredPercent"
+    ],
+    "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups" => [
+      "SolidusFriendlyPromotions::Calculators::FlatRate",
+      "SolidusFriendlyPromotions::Calculators::Percent"
+    ]
+  )
 
   config.order_rules = [
     "SolidusFriendlyPromotions::Rules::FirstOrder",
