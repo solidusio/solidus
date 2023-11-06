@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module SolidusAdmin::Layout::PageHelpers
-  def page(&block)
-    tag.div(capture(&block), class: "px-4 relative", "data-controller": stimulus_id)
+  def page(**attrs, &block)
+    tag.div(capture(&block), class: "px-4 relative", "data-controller": stimulus_id, **attrs)
   end
 
   def page_header_actions(&block)

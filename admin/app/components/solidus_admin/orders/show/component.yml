@@ -4,3 +4,18 @@ en:
   save: Save
   discard: Discard
   title: "Order %{number}"
+  customer: Customer
+  no_name: No name available
+  order_email: Order contact email
+  no_billing_address: No billing address
+  no_shipping_address: No shipping address
+  same_as_shipping: Same as shipping address
+
+  edit_email: "Edit order email"
+  edit_shipping: "Edit shipping address"
+  edit_billing: "Edit billing address"
+  remove_customer: "Remove customer"
+
+  orders_count:
+    one: "%{count} order"
+    other: "%{count} orders"

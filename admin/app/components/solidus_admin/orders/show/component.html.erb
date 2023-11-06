@@ -1,4 +1,4 @@
-<%= page do %>
+<%= page("data-action": "turbo:before-cache@window->#{stimulus_id}#closeMenus") do %>
   <%= page_header do %>
     <%= page_header_back(solidus_admin.orders_path) %>
     <%= page_header_title(t('.title', number: @order.number)) %>
@@ -8,5 +8,68 @@
     <% end %>
   <% end %>
 
-  <%= render component('orders/cart').new(order: @order) %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component("orders/cart").new(order: @order) %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component('ui/panel').new(title: panel_title_with_more_links(t(".customer"), [
+        link_to(t(".edit_email"), "#", class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
+        link_to(t(".edit_shipping"), "#", class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
+        link_to(t(".edit_billing"), "#", class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
+        link_to(t(".remove_customer"), "#", 'data-turbo-method': :delete, class: "p-2 hover:bg-gray-25 rounded-sm text-red-500"),
+      ])) do %>
+        <div class="flex flex-col -m-6 p-6 gap-6 border-t border-gray-100 mt-0">
+          <%# CUSTOMER %>
+          <% if @order.user %>
+            <div class="flex flex-col gap-2">
+              <div class="body-small-bold"><%= customer_name(@order.user) || tag.span(t('.no_name'), class: "text-gray-500") %></div>
+              <div class="body-small body-link"><%= link_to @order.user.email, spree.admin_user_path(@order.user) %></div>
+              <div class="body-small text-gray-500"><%= t(".orders_count", count: @order.user.orders.count) %></div>
+            </div>
+          <% end %>
+
+          <%# EMAIL %>
+          <% if @order.email %>
+            <div class="flex flex-col gap-2">
+              <span class="body-small-bold"><%= t('.order_email') %></span>
+              <div class="body-small"><%= @order.email %></div>
+            </div>
+          <% end %>
+
+          <%# SHIPPING %>
+          <div class="flex flex-col gap-2">
+            <span class="body-small-bold"><%= @order.class.human_attribute_name(:ship_address) %></span>
+            <div class="body-small">
+              <% if @order.ship_address %>
+                <%= format_address @order.ship_address %>
+              <% else %>
+                <span class="italic text-gray-500"><%= t('.no_shipping_address') %></span>
+              <% end %>
+            </div>
+          </div>
+
+          <%# BILLING %>
+          <div class="flex flex-col gap-2">
+            <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
+            <div class="body-small">
+              <% if @order.bill_address %>
+                <% if @order.bill_address == @order.ship_address %>
+                  <span class="text-gray-500"><%= t('.same_as_shipping') %></span>
+                <% else %>
+                  <%= format_address @order.bill_address %>
+                <% end %>
+              <% else %>
+                <span class="italic text-gray-500"><%= t('.no_billing_address') %></span>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+
+      <% end %>
+
+    <% end %>
+  <% end %>
 <% end %>
