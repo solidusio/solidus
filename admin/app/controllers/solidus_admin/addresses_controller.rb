@@ -14,6 +14,7 @@ module SolidusAdmin
       address.country_id ||= default_country_id if address.country.nil?
 
       respond_to do |format|
+        format.html { render component('orders/show/address').new(order: @order, type: address_type) }
       end
     end
 
@@ -24,6 +25,7 @@ module SolidusAdmin
         flash.now[:error] = @order.errors[:base].join(", ") if @order.errors[:base].any?
 
         respond_to do |format|
+          format.html { render component('orders/show/address').new(order: @order, type: address_type), status: :unprocessable_entity }
         end
       end
     end
