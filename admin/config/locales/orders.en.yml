@@ -2,3 +2,5 @@ en:
   solidus_admin:
     orders:
       title: "Orders"
+      update:
+        success: "Order was updated successfully"

@@ -18,8 +18,9 @@ SolidusAdmin::Engine.routes.draw do
     get 'states', to: 'countries#states'
   end
 
-  resources :orders, only: [:index, :show, :edit] do
+  resources :orders, only: [:index, :show, :edit, :update] do
     resources :line_items, only: [:destroy, :create, :update]
+    resource :customer
 
     member do
       get :variants_for

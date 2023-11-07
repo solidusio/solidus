@@ -15,10 +15,10 @@
 
     <%= page_with_sidebar_aside do %>
       <%= render component('ui/panel').new(title: panel_title_with_more_links(t(".customer"), [
-        link_to(t(".edit_email"), "#", class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
+        link_to(t(".edit_email"), solidus_admin.order_customer_path(@order), class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
         link_to(t(".edit_shipping"), "#", class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
         link_to(t(".edit_billing"), "#", class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
-        link_to(t(".remove_customer"), "#", 'data-turbo-method': :delete, class: "p-2 hover:bg-gray-25 rounded-sm text-red-500"),
+        link_to(t(".remove_customer"), solidus_admin.order_customer_path(@order), 'data-turbo-method': :delete, class: "p-2 hover:bg-gray-25 rounded-sm text-red-500"),
       ])) do %>
         <div class="flex flex-col -m-6 p-6 gap-6 border-t border-gray-100 mt-0">
           <%# CUSTOMER %>
