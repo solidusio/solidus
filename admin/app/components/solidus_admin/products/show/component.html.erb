@@ -1,6 +1,6 @@
 <%= page do %>
   <%= page_header do %>
-    <%= page_header_back(solidus_admin.products_path) %>
+    <%= page_header_back(products_path) %>
     <%= page_header_title(@product.name) do %>
       <%= render component("products/status").from_product(@product) %>
     <% end %>
@@ -23,7 +23,7 @@
     <% end %>
   <% end %>
 
-  <%= form_for @product, url: solidus_admin.product_path(@product), html: { id: form_id } do |f| %>
+  <%= form_for @product, url: product_path(@product), html: { id: form_id } do |f| %>
     <%= page_with_sidebar do %>
       <%= page_with_sidebar_main do %>
         <%= render component('ui/panel').new do %>
@@ -128,7 +128,7 @@
 
   <%= page_footer do %>
     <%= page_footer_actions do %>
-      <%= form_for @product, url: solidus_admin.product_path(@product), method: :delete do %>
+      <%= form_for @product, url: product_path(@product), method: :delete do %>
         <%= render component("ui/button").new(
           tag: :button,
           text: t(".delete"),

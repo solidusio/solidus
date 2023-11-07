@@ -21,7 +21,7 @@
     row_fade: row_fade,
     row_url: ->(order) { spree.edit_admin_order_path(order) },
     search_key: SolidusAdmin::Config[:order_search_key],
-    search_url: solidus_admin.orders_path,
+    search_url: orders_path,
     batch_actions: batch_actions,
     filters: filters,
     columns: columns,

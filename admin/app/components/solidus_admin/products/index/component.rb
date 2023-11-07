@@ -23,19 +23,19 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     [
       {
         display_name: t('.batch_actions.delete'),
-        action: solidus_admin.products_path,
+        action: products_path,
         method: :delete,
         icon: 'delete-bin-7-line',
       },
       {
         display_name: t('.batch_actions.discontinue'),
-        action: solidus_admin.discontinue_products_path,
+        action: discontinue_products_path,
         method: :put,
         icon: 'pause-circle-line',
       },
       {
         display_name: t('.batch_actions.activate'),
-        action: solidus_admin.activate_products_path,
+        action: activate_products_path,
         method: :put,
         icon: 'play-circle-line',
       },

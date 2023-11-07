@@ -1,7 +1,7 @@
 <div
   class="w-full relative overflow-visible"
   data-controller="<%= stimulus_id %>"
-  data-<%= stimulus_id %>-products-url-value="<%= solidus_admin.variants_for_order_path(@order) %>"
+  data-<%= stimulus_id %>-products-url-value="<%= variants_for_order_path(@order) %>"
   data-action="
     <%= component('ui/search_panel').stimulus_id %>:search-><%= stimulus_id %>#search
     <%= component('ui/search_panel').stimulus_id %>:submit-><%= stimulus_id %>#selectResult
@@ -41,7 +41,7 @@
               </div>
             </td>
             <td class="px-6 py-4">
-              <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), html: {
+              <%= form_for(line_item, url: order_line_item_path(@order, line_item), html: {
                 "data-controller": "readonly-when-submitting"
               }) do |f| %>
                 <%= render component("ui/forms/input").new(
@@ -60,7 +60,7 @@
               <span class="text-gray-500 body-small"><%= line_item.single_money.to_html %></span>
             </td>
             <td class="px-6 py-4 text-right">
-              <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), method: :delete) do |f| %>
+              <%= form_for(line_item, url: order_line_item_path(@order, line_item), method: :delete) do |f| %>
                 <%= render component('ui/button').new(
                   scheme: :ghost,
                   size: :s,

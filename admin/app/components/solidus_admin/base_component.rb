@@ -38,5 +38,10 @@ module SolidusAdmin
     def solidus_admin
       @solidus_admin ||= SolidusAdmin::Engine.routes.url_helpers
     end
+
+    def self.inherited(child)
+      super
+      child.include SolidusAdmin::Engine.routes.url_helpers
+    end
   end
 end

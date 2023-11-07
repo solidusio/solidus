@@ -1,0 +1,12 @@
+<div class="<%= stimulus_id %>">
+  <%= render component("orders/show").new(order: @order) %>
+  <%= render component("ui/modal").new(title: t(".title"), close_path: order_path(@order)) do |modal| %>
+    <%= form_for @order, url: order_path(@order), html: { id: form_id} do |f| %>
+      <%= render component("ui/forms/field").text_field(f, :email) %>
+    <% end %>
+
+    <% modal.with_actions do %>
+      <%= render component("ui/button").new(form: form_id, type: :submit, text: "Update") %>
+    <% end %>
+  <% end %>
+</div>

@@ -31,7 +31,7 @@
     </div>
     <%= render component("sidebar/account_nav").new(
       user_label: helpers.current_solidus_admin_user.email,
-      account_path: solidus_admin.account_path,
+      account_path: account_path,
       logout_path: helpers.solidus_admin_logout_path,
       logout_method: helpers.solidus_admin_logout_method,
     ) %>
