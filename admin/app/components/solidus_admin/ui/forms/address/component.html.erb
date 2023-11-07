@@ -25,6 +25,7 @@
       :state_id,
       state_options,
       value: @form.object.try(:state_id),
+      disabled: @form.object.country&.states&.empty?,
       "data-#{stimulus_id}-target": "state"
     ) %>
 

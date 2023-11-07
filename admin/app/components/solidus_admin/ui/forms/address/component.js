@@ -18,12 +18,17 @@ export default class extends Controller {
 
     stateSelect.innerHTML = ""
 
-    data.forEach(state => {
-      const option = document.createElement("option")
+    if (data.length === 0) {
+      stateSelect.disabled = true
+    } else {
+      stateSelect.disabled = false
 
-      option.value = state.id
-      option.innerText = state.name
-      stateSelect.appendChild(option)
-    })
+      data.forEach((state) => {
+        const option = document.createElement("option")
+        option.value = state.id
+        option.innerText = state.name
+        stateSelect.appendChild(option)
+      })
+    }
   }
 }
