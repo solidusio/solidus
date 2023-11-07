@@ -23,7 +23,7 @@
     <%= render component("ui/forms/field").select(
       @form,
       :state_id,
-      [],
+      state_options,
       value: @form.object.try(:state_id),
       "data-#{stimulus_id}-target": "state"
     ) %>

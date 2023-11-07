@@ -3,10 +3,6 @@ import { Controller } from '@hotwired/stimulus'
 export default class extends Controller {
   static targets = ["country", "state"]
 
-  connect() {
-    this.loadStates()
-  }
-
   loadStates() {
     const countryId = this.countryTarget.value
 
