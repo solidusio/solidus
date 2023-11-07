@@ -49,7 +49,7 @@ module SolidusFriendlyPromotions
     end
 
     def eligibility_error_message(key, options = {})
-      I18n.t(key, **{scope: [:solidus_friendly_promotions, :eligibility_errors, self.class.name.underscore]}.merge(options))
+      I18n.t(key, scope: [:solidus_friendly_promotions, :eligibility_errors, self.class.name.underscore], **options)
     end
   end
 end
