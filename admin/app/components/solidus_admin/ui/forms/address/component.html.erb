@@ -6,9 +6,9 @@
     <%= render component("ui/forms/field").text_field(@form, :name) %>
     <%= render component("ui/forms/field").text_field(@form, :address1) %>
     <%= render component("ui/forms/field").text_field(@form, :address2) %>
-    <div class="flex w-full space-x-4">
-      <%= render component("ui/forms/field").text_field(@form, :city, class: "flex-1") %>
-      <%= render component("ui/forms/field").text_field(@form, :zipcode, class: "flex-1") %>
+    <div class="flex gap-4 w-full">
+      <%= render component("ui/forms/field").text_field(@form, :city) %>
+      <%= render component("ui/forms/field").text_field(@form, :zipcode) %>
     </div>
 
     <%= render component("ui/forms/field").select(
