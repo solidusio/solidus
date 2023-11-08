@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# @component "ui/search_panel"
-class SolidusAdmin::UI::SearchPanel::ComponentPreview < ViewComponent::Preview
+# @component "ui/forms/search"
+class SolidusAdmin::UI::Forms::Search::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
   def overview

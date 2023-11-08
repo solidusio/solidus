@@ -9,7 +9,7 @@
     })
     window.addEventListener('<%= current_component.stimulus_id %>:search', (event) => {
       const {controller, query} = event.detail
-      const resultTemplate = `<%= render component('ui/search_panel/result').new.with_content("{{content}}") %>`
+      const resultTemplate = `<%= render component('ui/forms/search/result').new.with_content("{{content}}") %>`
       setTimeout(() => {
         controller.resultsValue = [
           resultTemplate.replace('{{content}}', `Result 1 for ${query}`),

@@ -19,8 +19,8 @@
         link_to(t(".edit_shipping"), solidus_admin.new_order_ship_address_path(@order), class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
         link_to(t(".edit_billing"), solidus_admin.new_order_bill_address_path(@order), class: "p-2 hover:bg-gray-25 rounded-sm text-black"),
         @order.user && button_to(t(".remove_customer"), solidus_admin.order_customer_path(@order), method: :delete, class: "p-2 hover:bg-gray-25 rounded-sm text-red-500"),
-      ].compact)) do %>
-        <div class="flex flex-col -m-6 p-6 gap-6 border-t border-gray-100 mt-0">
+      ].compact)) do |panel| %>
+        <% panel.with_section(class: 'flex flex-col gap-6') do %>
           <%# CUSTOMER %>
           <% if @order.user %>
             <div class="flex flex-col gap-2">
@@ -62,8 +62,7 @@
             </div>
           <% end %>
 
-        </div>
-
+        <% end %>
       <% end %>
 
     <% end %>

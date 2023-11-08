@@ -1,4 +1,4 @@
-<%= render component('ui/search_panel/result').new do %>
+<%= render component('ui/forms/search/result').new do %>
   <%= form_for(@order.line_items.build(variant: @variant), url: solidus_admin.order_line_items_path(@order), method: :post, html: {
     "data-controller": "readonly-when-submitting",
     class: "flex items-center",

@@ -46,7 +46,7 @@ describe "Order", :js, type: :feature do
 
       expect(page).to have_content("Order R123456789")
 
-      search_field = find("[data-#{SolidusAdmin::UI::SearchPanel::Component.stimulus_id}-target='searchField']")
+      search_field = find("[data-#{SolidusAdmin::UI::Forms::Search::Component.stimulus_id}-target='searchField']")
       search_field.set "another"
 
       expect(page).not_to have_content("Just a product")
