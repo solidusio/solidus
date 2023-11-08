@@ -35,18 +35,21 @@
         </div>
 
         <div class="col-2">
+          <div class="date-range-filter field">
+            <%= label_tag :q_active, SolidusFriendlyPromotions::Promotion.human_attribute_name(:active) %>
+            <%= f.text_field :active, value: params[:q][:active],
+                             class: 'datepicker datepicker-from fullwidth',
+                             data: { :'enable-time' => true, :'default-hour' => 0 } %>
+          </div>
+        </div>
+
+        <div class="col-2">
           <div class="field">
             <%= label_tag :q_promotion_category_id_eq, SolidusFriendlyPromotions::PromotionCategory.model_name.human %><br>
             <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t('solidus_friendly_promotions.match_choices.all') }, { class: 'custom-select fullwidth' }) %>
           </div>
         </div>
 
-        <div class="col-2">
-          <div class="field">
-            <%= label_tag :active, SolidusFriendlyPromotions::Promotion.human_attribute_name(:active) %><br>
-            <%= f.check_box :active, label: false, as: :boolean, checked_value: true %>
-          </div>
-        </div>
       </div>
 
       <div class="clearfix"></div>
