@@ -34,7 +34,7 @@ en:
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
     new_promotion_code_batch: New Promotion Code Batch
-    number_of_codes: Number of codes
+    number_of_codes: "%{count} codes"
     legacy_promotions: Legacy Promotions
     no_rules_added: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
