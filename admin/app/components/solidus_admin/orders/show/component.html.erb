@@ -39,32 +39,28 @@
           <% end %>
 
           <%# SHIPPING %>
-          <div class="flex flex-col gap-2">
-            <span class="body-small-bold"><%= @order.class.human_attribute_name(:ship_address) %></span>
-            <div class="body-small">
-              <% if @order.ship_address %>
+          <% if @order.ship_address %>
+            <div class="flex flex-col gap-2">
+              <span class="body-small-bold"><%= @order.class.human_attribute_name(:ship_address) %></span>
+              <div class="body-small">
                 <%= format_address @order.ship_address %>
-              <% else %>
-                <span class="italic text-gray-500"><%= t('.no_shipping_address') %></span>
-              <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
 
           <%# BILLING %>
-          <div class="flex flex-col gap-2">
-            <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
-            <div class="body-small">
-              <% if @order.bill_address %>
+          <% if @order.bill_address %>
+            <div class="flex flex-col gap-2">
+              <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
+              <div class="body-small">
                 <% if @order.bill_address == @order.ship_address %>
                   <span class="text-gray-500"><%= t('.same_as_shipping') %></span>
                 <% else %>
                   <%= format_address @order.bill_address %>
                 <% end %>
-              <% else %>
-                <span class="italic text-gray-500"><%= t('.no_billing_address') %></span>
-              <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
 
         </div>
 
