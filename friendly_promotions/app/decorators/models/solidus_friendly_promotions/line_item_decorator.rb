@@ -3,16 +3,22 @@
 module SolidusFriendlyPromotions
   module LineItemDecorator
     def self.prepended(base)
+      base.attr_accessor :quantity_setter
       base.belongs_to :managed_by_order_action, class_name: "SolidusFriendlyPromotions::PromotionAction", optional: true
       base.validate :validate_managed_quantity_same, on: :update
+      base.after_save :reset_quantity_setter
     end
 
     private
 
     def validate_managed_quantity_same
-      if managed_by_order_action && quantity_changed?
+      if managed_by_order_action && quantity_changed? && quantity_setter != managed_by_order_action
         errors.add(:quantity, :cannot_be_changed_for_automated_items)
       end
+    end
+
+    def reset_quantity_setter
+      @quantity_setter = nil
     end
 
     Spree::LineItem.prepend self

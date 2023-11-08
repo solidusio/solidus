@@ -38,6 +38,7 @@ RSpec.describe "Promotion System" do
         let(:goodie) { create(:variant, price: 4) }
         let(:action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
         let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
+        let(:rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: true) }
 
         it "creates a new discounted line item" do
           expect(order.adjustments).to be_empty
@@ -46,6 +47,21 @@ RSpec.describe "Promotion System" do
           expect(order.item_total).to eq(43.98)
           expect(order.item_total_before_tax).to eq(39.98)
           expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
+        end
+
+        context "when a second base item is added" do
+          before do
+            order.contents.add(shirt.master)
+          end
+
+          it "creates a new discounted line item" do
+            expect(order.adjustments).to be_empty
+            expect(order.line_items.count).to eq(3)
+            expect(order.total).to eq(59.97)
+            expect(order.item_total).to eq(67.97)
+            expect(order.item_total_before_tax).to eq(59.97)
+            expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
+          end
         end
 
         context "when the goodie becomes unavailable" do
