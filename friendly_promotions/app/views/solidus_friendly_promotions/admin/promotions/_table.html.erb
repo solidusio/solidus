@@ -8,6 +8,7 @@
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:uses) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:starts_at) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:expires_at) %></th>
+      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:lane) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -34,6 +35,9 @@
         </td>
         <td>
           <%= promotion.expires_at.to_fs(:long) if promotion.expires_at %>
+        </td>
+        <td>
+          <%= SolidusFriendlyPromotions::Promotion.human_enum_name(:lane, promotion.lane) %>
         </td>
         <td class="actions">
           <% if can?(:edit, promotion) %>
