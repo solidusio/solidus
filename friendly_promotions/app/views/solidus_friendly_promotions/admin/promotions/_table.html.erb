@@ -1,12 +1,12 @@
 <table class="index">
   <thead>
     <tr>
-      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:name) %></th>
+      <th><%= sort_link @search, :name %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:code) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:status) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:usage) %></th>
-      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:starts_at) %></th>
-      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:expires_at) %></th>
+      <th><%= sort_link @search, :starts_at %></th>
+      <th><%= sort_link @search, :expires_at %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:lane) %></th>
       <th class="actions"></th>
     </tr>
