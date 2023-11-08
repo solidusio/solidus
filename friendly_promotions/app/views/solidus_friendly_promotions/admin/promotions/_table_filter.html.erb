@@ -13,6 +13,13 @@
           </div>
         </div>
 
+        <div class="col-4">
+          <div class="field">
+            <%= label_tag :q_customer_label_cont, SolidusFriendlyPromotions::Promotion.human_attribute_name(:customer_label) %>
+            <%= f.text_field :customer_label_cont, tabindex: 1 %>
+          </div>
+        </div>
+
         <div class="col-2">
           <div class="field">
             <%= label_tag :q_codes_value_cont, SolidusFriendlyPromotions::Promotion.human_attribute_name(:code) %>
