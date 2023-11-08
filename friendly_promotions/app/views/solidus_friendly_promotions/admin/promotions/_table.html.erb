@@ -4,8 +4,7 @@
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:name) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:code) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:status) %></th>
-      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:usage_limit) %></th>
-      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:uses) %></th>
+      <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:usage) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:starts_at) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:expires_at) %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:lane) %></th>
@@ -25,11 +24,8 @@
           </span>
         </td>
         <td>
-          <%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit %>
-        </td>
-        <td>
           <% if promotion.usage_limit.nil? %>
-            ∞
+            <%= promotion.discounted_orders.exists? ? t(:say_yes, scope: :spree) : t(:say_no, scope: :spree) %>
           <% else %>
             <%= promotion.usage_count %> / <%= promotion.usage_limit %>
           <% end %>
