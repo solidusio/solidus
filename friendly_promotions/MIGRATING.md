@@ -90,7 +90,7 @@ end
 would become:
 
 ```rb
-class MyNewRule < SolidusFriendlyShipping::PromotionRule
+class MyNewRule < SolidusFriendlyPromotions::PromotionRule
   include LineItemLevelRule
   def eligible?(promotable)
     promotable.quantity > 3
