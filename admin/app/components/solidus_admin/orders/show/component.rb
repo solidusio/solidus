@@ -21,7 +21,7 @@ class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
       address.address2,
       address.city,
       address.zipcode,
-      address.state.name,
+      address.state&.name,
       tag.br,
       address.country.name,
       tag.br,

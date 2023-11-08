@@ -6754,6 +6754,8 @@ components:
           type: string
         use_billing:
           type: boolean
+        use_shipping:
+          type: boolean
         bill_address_attributes:
           $ref: '#/components/schemas/address-input'
         ship_address_attributes:

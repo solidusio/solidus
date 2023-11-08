@@ -140,6 +140,7 @@ module Spree
 
     @@checkout_address_attributes = [
       :use_billing,
+      :use_shipping,
       :email,
       bill_address_attributes: address_attributes,
       ship_address_attributes: address_attributes

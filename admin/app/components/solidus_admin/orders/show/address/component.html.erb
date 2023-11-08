@@ -1,0 +1,44 @@
+<div class="<%= stimulus_id %>">
+  <%= render component("orders/show").new(order: @order) %>
+  <%= render component("ui/modal").new(title: t(".title.#{@type}"), close_path: solidus_admin.order_path(@order)) do |modal| %>
+    <%= form_for @order, url: solidus_admin.send("order_#{@type}_address_path", @order), html: { id: form_id } do |form| %>
+      <div class="w-full flex flex-col mb-4">
+        <h2 class="text-sm mb-4 font-semibold"><%= t(".subtitle.#{@type}") %></h2>
+        <div class="w-full flex gap-4">
+          <%= form.fields_for :"#{@type}_address" do |address_form| %>
+            <%= render component('ui/forms/address').new(form: address_form, disabled: false) %>
+          <% end %>
+        </div>
+
+        <label class="flex gap-2 items-center">
+          <%= form.hidden_field use_attribute, value: '0', id: false %>
+
+          <%= render component("ui/forms/checkbox").new(
+            name: "#{form.object_name}[#{use_attribute}]",
+            checked: form.object.send("#{@type}_address").new_record? || form.object.bill_address == form.object.ship_address,
+            value: '1'
+          ) %>
+
+          <span class="body-text-sm">
+            <%= t(".use_this_address.#{@type}") %>
+          </span>
+        </label>
+      </div>
+    <% end %>
+
+    <% modal.with_actions do %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        scheme: :secondary,
+        text: t(".cancel"),
+        href: solidus_admin.order_path(@order)
+      ) %>
+
+      <%= render component("ui/button").new(
+        tag: :button,
+        text: t(".save"),
+        form: form_id
+      ) %>
+    <% end %>
+  <% end %>
+</div>

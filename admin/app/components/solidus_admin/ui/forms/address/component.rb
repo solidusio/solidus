@@ -5,4 +5,9 @@ class SolidusAdmin::UI::Forms::Address::Component < SolidusAdmin::BaseComponent
     @form = form
     @disabled = disabled
   end
+
+  def state_options
+    return [] unless @form.object.country
+    @form.object.country.states.map { |s| [s.name, s.id] }
+  end
 end
