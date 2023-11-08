@@ -48,7 +48,7 @@ module SolidusFriendlyPromotions
     end
 
     self.allowed_ransackable_associations = ["codes"]
-    self.allowed_ransackable_attributes = %w[name customer_label path promotion_category_id lane]
+    self.allowed_ransackable_attributes = %w[name customer_label path promotion_category_id lane updated_at]
     self.allowed_ransackable_scopes = %i[active]
 
     # All orders that have been discounted using this promotion

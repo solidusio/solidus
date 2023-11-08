@@ -32,7 +32,7 @@ module SolidusFriendlyPromotions
         return @collection if @collection
 
         params[:q] ||= HashWithIndifferentAccess.new
-        params[:q][:s] ||= "id desc"
+        params[:q][:s] ||= "updated_at desc"
 
         @collection = super
         @search = @collection.ransack(params[:q])

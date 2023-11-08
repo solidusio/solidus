@@ -8,6 +8,7 @@
       <th><%= sort_link @search, :starts_at %></th>
       <th><%= sort_link @search, :expires_at %></th>
       <th><%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:lane) %></th>
+      <th><%= sort_link @search, :updated_at %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -37,6 +38,9 @@
         </td>
         <td>
           <%= SolidusFriendlyPromotions::Promotion.human_enum_name(:lane, promotion.lane) %>
+        </td>
+        <td>
+          <%= l(promotion.updated_at) %>
         </td>
         <td class="actions">
           <% if can?(:edit, promotion) %>
