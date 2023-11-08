@@ -191,6 +191,7 @@ en:
       solidus_friendly_promotions/promotion:
         active: Active
         customer_label: Customer-facing label
+        usage: Usage
         lanes:
           pre: Pre
           default: Default

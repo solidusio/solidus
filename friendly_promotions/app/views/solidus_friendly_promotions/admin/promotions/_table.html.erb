@@ -28,8 +28,11 @@
           <%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit %>
         </td>
         <td>
-          <%= promotion.usage_count %>
-        </td>
+          <% if promotion.usage_limit.nil? %>
+            ∞
+          <% else %>
+            <%= promotion.usage_count %> / <%= promotion.usage_limit %>
+          <% end %>
         <td>
           <%= promotion.starts_at.to_fs(:long) if promotion.starts_at %>
         </td>
