@@ -1,0 +1,7 @@
+en:
+  solidus_admin:
+    customers:
+      title: "Customers"
+      destroy:
+        success: "Customer was removed successfully"
+        error: "Customer could not be removed"
