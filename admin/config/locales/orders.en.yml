@@ -4,6 +4,7 @@ en:
       title: "Orders"
       update:
         success: "Order was updated successfully"
+        error: "Order could not be updated"
     addresses:
       title: "Addresses"
       update:
