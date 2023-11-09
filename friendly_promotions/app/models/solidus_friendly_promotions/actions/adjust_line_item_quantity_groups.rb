@@ -58,7 +58,7 @@ module SolidusFriendlyPromotions
         adjustment_amount = adjustment_amount.abs
 
         order = line_item.order
-        line_items = actionable_line_items(order)
+        line_items = promotion.applicable_line_items(order)
 
         item_units = line_items.sort_by do |line_item|
           [-line_item.quantity, line_item.id]
@@ -77,14 +77,6 @@ module SolidusFriendlyPromotions
       end
 
       private
-
-      def actionable_line_items(order)
-        order.discountable_line_items.select do |item|
-          promotion.rules.select do |rule|
-            rule.applicable?(item)
-          end.all? { |rule| rule.eligible?(item) }
-        end
-      end
 
       ##
       # Used specifically for PercentOnLineItem calculator. That calculator uses

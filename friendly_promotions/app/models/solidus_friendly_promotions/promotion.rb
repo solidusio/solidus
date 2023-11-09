@@ -155,6 +155,12 @@ module SolidusFriendlyPromotions
       end.all?
     end
 
+    def applicable_line_items(order)
+      order.discountable_line_items.select do |line_item|
+        eligible_by_applicable_rules?(line_item)
+      end
+    end
+
     private
 
     def apply_automatically_disallowed_with_paths

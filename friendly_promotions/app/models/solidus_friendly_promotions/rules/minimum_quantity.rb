@@ -27,13 +27,7 @@ module SolidusFriendlyPromotions
       # @param order [Spree::Order] the order we want to check eligibility on
       # @return [Boolean] true if promotion is eligible, false otherwise
       def eligible?(order)
-        applicable_line_items = order.line_items.select do |line_item|
-          promotion.rules.select do |rule|
-            rule.applicable?(line_item)
-          end.all? { _1.eligible?(line_item) }
-        end
-
-        if applicable_line_items.sum(&:quantity) < preferred_minimum_quantity
+        if promotion.applicable_line_items(order).sum(&:quantity) < preferred_minimum_quantity
           eligibility_errors.add(
             :base,
             eligibility_error_message(:quantity_less_than_minimum, count: preferred_minimum_quantity),
