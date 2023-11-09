@@ -203,7 +203,9 @@ en:
       solidus_friendly_promotions/actions/adjust_shipment:
         description: Creates a promotion credit on matching shipments
       solidus_friendly_promotions/actions/create_discounted_item:
-        description: Creates a discounted item
+        description: Creates a discounted item with the quantity the applicable line items.
+        preferred_quantity: Quantity per applicable line item quantity
+        preferred_necessary_quantity: Number of items needed for a discounted item
       solidus_friendly_promotions/rules/first_order:
         description: Must be the customer's first order
       solidus_friendly_promotions/rules/first_repeat_purchase_since:
