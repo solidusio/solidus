@@ -35,12 +35,10 @@ class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
         tag.span(
           safe_join([
             title,
-            component("ui/button").new(
-              icon: "more-line",
-              scheme: :ghost,
-              tag: :span,
+            component("ui/icon").new(
+              name: "more-line",
               alt: t("spree.edit"),
-              class: "cursor-pointer"
+              class: "cursor-pointer w-[22px] h-[22px]"
             ).render_in(self),
           ]),
           class: 'flex items-center justify-between text-black',
