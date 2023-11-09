@@ -5,6 +5,8 @@ require_dependency "spree/calculator"
 module SolidusFriendlyPromotions
   module Calculators
     class TieredPercent < Spree::Calculator
+      include PromotionCalculator
+
       preference :base_percent, :decimal, default: 0
       preference :tiers, :hash, default: {}
       preference :currency, :string, default: -> { Spree::Config[:currency] }

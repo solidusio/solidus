@@ -5,6 +5,8 @@ require_dependency "spree/calculator"
 module SolidusFriendlyPromotions
   module Calculators
     class Percent < Spree::Calculator
+      include PromotionCalculator
+
       preference :percent, :decimal, default: 0
 
       def compute(object)

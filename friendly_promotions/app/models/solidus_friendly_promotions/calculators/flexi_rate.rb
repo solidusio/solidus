@@ -5,6 +5,8 @@ require_dependency "spree/calculator"
 module SolidusFriendlyPromotions
   module Calculators
     class FlexiRate < Spree::Calculator
+      include PromotionCalculator
+
       preference :first_item, :decimal, default: 0
       preference :additional_item, :decimal, default: 0
       preference :max_items, :integer, default: 0

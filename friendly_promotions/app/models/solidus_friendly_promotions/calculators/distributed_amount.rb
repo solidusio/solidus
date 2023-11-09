@@ -9,6 +9,8 @@ require_dependency "spree/calculator"
 module SolidusFriendlyPromotions
   module Calculators
     class DistributedAmount < Spree::Calculator
+      include PromotionCalculator
+
       preference :amount, :decimal, default: 0
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
