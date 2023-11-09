@@ -170,6 +170,7 @@ en:
       solidus_friendly_promotions/calculators/flexi_rate: Flexible Rate
       solidus_friendly_promotions/calculators/tiered_flat_rate: Tiered Flat Rate
       solidus_friendly_promotions/calculators/tiered_percent: Tiered Percent
+      solidus_friendly_promotions/calculators/tiered_percent_on_eligible_item_quantity: Tiered Percent based on eligible item quantity
       solidus_friendly_promotions/rules/first_order: First Order
       solidus_friendly_promotions/rules/first_repeat_purchase_since: First Repeat Purchase Since
       solidus_friendly_promotions/rules/item_total: Item Total
@@ -253,7 +254,11 @@ en:
         preferred_base_amount: Base Amount
         tiers: Tiers
       solidus_friendly_promotions/calculators/tiered_percent:
-        description: Percent Tiers based on order's item total
+        description: Tiered percentage based on order's item total
+        preferred_base_percent: Base Percent
+        tiers: Tiers
+      solidus_friendly_promotions/calculators/tiered_percent_on_eligible_item_quantity:
+        description: Tiered percentage based on eligible item quantity
         preferred_base_percent: Base Percent
         tiers: Tiers
       solidus_friendly_promotions/calculators/flat_rate:

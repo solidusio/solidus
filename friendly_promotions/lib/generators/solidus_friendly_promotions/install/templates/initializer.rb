@@ -73,7 +73,8 @@ SolidusFriendlyPromotions.configure do |config|
       "SolidusFriendlyPromotions::Calculators::FlexiRate",
       "SolidusFriendlyPromotions::Calculators::Percent",
       "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
-      "SolidusFriendlyPromotions::Calculators::TieredPercent"
+      "SolidusFriendlyPromotions::Calculators::TieredPercent",
+      "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ],
     "SolidusFriendlyPromotions::Actions::AdjustLineItem" => [
       "SolidusFriendlyPromotions::Calculators::DistributedAmount",
@@ -81,15 +82,18 @@ SolidusFriendlyPromotions.configure do |config|
       "SolidusFriendlyPromotions::Calculators::FlexiRate",
       "SolidusFriendlyPromotions::Calculators::Percent",
       "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
-      "SolidusFriendlyPromotions::Calculators::TieredPercent"
+      "SolidusFriendlyPromotions::Calculators::TieredPercent",
+      "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ],
     "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups" => [
       "SolidusFriendlyPromotions::Calculators::FlatRate",
-      "SolidusFriendlyPromotions::Calculators::Percent"
+      "SolidusFriendlyPromotions::Calculators::Percent",
+      "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ],
     "SolidusFriendlyPromotions::Actions::CreateDiscountedItem" => [
       "SolidusFriendlyPromotions::Calculators::FlatRate",
-      "SolidusFriendlyPromotions::Calculators::Percent"
+      "SolidusFriendlyPromotions::Calculators::Percent",
+      "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ]
   )
 
