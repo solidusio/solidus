@@ -17,7 +17,7 @@ Spree::Backend::Config.configure do |config|
     if item.respond_to?(:children)
       Spree::BackendConfiguration::MenuItem.new(
         label: :promotions,
-        icon: "bullhorn",
+        icon: config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
         condition: -> { can?(:admin, SolidusFriendlyPromotions::Promotion) },
         url: -> { SolidusFriendlyPromotions::Engine.routes.url_helpers.admin_promotions_path },
         data_hook: :admin_promotion_sub_tabs,
