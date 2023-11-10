@@ -14,53 +14,56 @@
     <% end %>
 
     <%= page_with_sidebar_aside do %>
-      <%= render component('ui/panel').new(title: t(".customer")) do |panel| %>
+      <%= render component('ui/panel').new do |panel| %>
         <% panel.with_menu t(".edit_email"), solidus_admin.order_customer_path(@order) %>
         <% panel.with_menu t(".edit_shipping"), solidus_admin.new_order_ship_address_path(@order) %>
         <% panel.with_menu t(".edit_billing"), solidus_admin.new_order_bill_address_path(@order) %>
         <% panel.with_menu t(".remove_customer"), solidus_admin.order_customer_path(@order), method: :delete, class: "text-red-500" if @order.user %>
 
         <% panel.with_section(class: 'flex flex-col gap-6') do %>
-          <%# CUSTOMER %>
-          <% if @order.user %>
-            <div class="flex flex-col gap-2">
-              <div class="body-small-bold"><%= customer_name(@order.user) || tag.span(t('.no_name'), class: "text-gray-500") %></div>
+          <div class="flex flex-col gap-2">
+            <span class="body-small-bold"><%= t(".customer") %></span>
+            <% if @order.user %>
+              <div class="body-small"><%= customer_name(@order.user) || tag.span(t('.no_name'), class: "text-gray-500") %></div>
               <div class="body-small body-link"><%= link_to @order.user.email, spree.admin_user_path(@order.user) %></div>
               <div class="body-small text-gray-500"><%= t(".orders_count", count: @order.user.orders.complete.count) %></div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
 
-          <%# EMAIL %>
-          <% if @order.email %>
-            <div class="flex flex-col gap-2">
-              <span class="body-small-bold"><%= t('.order_email') %></span>
-              <div class="body-small"><%= @order.email %></div>
+          <div class="flex flex-col gap-2">
+            <span class="body-small-bold"><%= t('.order_email') %></span>
+            <div class="body-small">
+              <% if @order.email? %>
+                <%= @order.email %>
+              <% else %>
+                <%= link_to(t(".add_email"), solidus_admin.order_customer_path(@order), class: "body-link") %>
+              <% end %>
             </div>
-          <% end %>
+          </div>
 
-          <%# SHIPPING %>
-          <% if @order.ship_address %>
-            <div class="flex flex-col gap-2">
-              <span class="body-small-bold"><%= @order.class.human_attribute_name(:ship_address) %></span>
-              <div class="body-small">
+          <div class="flex flex-col gap-2">
+            <span class="body-small-bold"><%= @order.class.human_attribute_name(:ship_address) %></span>
+            <div class="body-small">
+              <% if @order.ship_address %>
                 <%= format_address @order.ship_address %>
-              </div>
+              <% else %>
+                <%= link_to t(".add_shipping"), solidus_admin.new_order_ship_address_path(@order), class: 'body-link' %>
+              <% end %>
             </div>
-          <% end %>
+          </div>
 
-          <%# BILLING %>
-          <% if @order.bill_address %>
-            <div class="flex flex-col gap-2">
-              <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
-              <div class="body-small">
-                <% if @order.bill_address == @order.ship_address %>
-                  <span class="text-gray-500"><%= t('.same_as_shipping') %></span>
-                <% else %>
-                  <%= format_address @order.bill_address %>
-                <% end %>
-              </div>
+          <div class="flex flex-col gap-2">
+            <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
+            <div class="body-small">
+              <% if @order.bill_address.blank? %>
+                <%= link_to t(".add_billing"), solidus_admin.new_order_bill_address_path(@order), class: 'body-link' %>
+              <% elsif @order.bill_address == @order.ship_address %>
+                <span class="text-gray-500"><%= t('.same_as_shipping') %></span>
+              <% else %>
+                <%= format_address @order.bill_address %>
+              <% end %>
             </div>
-          <% end %>
+          </div>
 
         <% end %>
       <% end %>
