@@ -10,14 +10,50 @@
     items-start
     inline-flex
     w-full
+    relative
   "
   data-controller="<%= stimulus_id %>"
 >
+  <% if menus? %>
+    <details class="absolute top-0 right-0 m-6">
+      <summary title="<%= t(".more") %>">
+        <%= render component("ui/icon").new(
+          name: "more-line",
+          class: "cursor-pointer w-[22px] h-[22px] hover:fill-gray-500 [[open]_&]:fill-gray-500"
+        ) %>
+      </summary>
+      <div
+        class="
+          body-small
+          absolute
+          border
+          border-gray-100
+          mt-0.5
+          right-0
+          flex
+          min-w-[10rem]
+          flex-col
+          p-2
+          rounded-sm
+          shadow-lg
+          bg-white
+          z-10
+        "
+      >
+        <% menus.each do |menu| %>
+          <%= menu %>
+        <% end %>
+      </div>
+    </details>
+  <% end %>
+
   <% if @title %>
-    <h2 class="mt-0 p-6 w-full">
-      <span class="body-title"><%= @title %></span>
-      <%= render component('ui/toggletip').new(text: @title_hint) if @title_hint %>
-    </h2>
+    <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
+      <h2>
+        <span class="body-title"><%= @title %></span>
+        <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
+      </h2>
+    </section>
   <% end %>
 
   <% sections.each do |section| %>
@@ -25,14 +61,16 @@
   <% end %>
 
   <% if content.present? %>
-    <div class="p-6 w-full flex flex-col gap-6 <%= 'pt-0' if @title.present? && !sections? %>">
+    <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
       <%= content %>
-    </div>
+    </section>
   <% end %>
 
   <% if action? %>
-    <div class="flex gap-2 items-center border-t border-gray-100 p-6 w-full">
-      <%= action %>
-    </div>
+    <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
+      <div class="flex justify-between items-center">
+        <%= action %>
+      </div>
+    </section>
   <% end %>
 </div>

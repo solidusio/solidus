@@ -17,6 +17,7 @@ describe "Order", :js, type: :feature do
     open_customer_menu
     expect(page).not_to have_content("Remove customer")
     expect(order.reload.user).to be_nil
+    expect(page).to be_axe_clean
   end
 
   it "allows changing the order email" do
@@ -33,6 +34,7 @@ describe "Order", :js, type: :feature do
     end
     expect(page).to have_content("Order was updated successfully")
     expect(page).to have_content("Order contact email a@b.c", normalize_ws: true)
+    expect(page).to be_axe_clean
   end
 
   context "in cart state" do
@@ -76,6 +78,6 @@ describe "Order", :js, type: :feature do
   private
 
   def open_customer_menu
-    find("summary", text: "Customer").click
+    find("summary[title='More']").click
   end
 end
