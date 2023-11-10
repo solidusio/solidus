@@ -6,7 +6,8 @@ module SolidusFriendlyPromotions
   class PromotionRule < Spree::Base
     include Spree::Preferences::Persistable
 
-    belongs_to :promotion
+    belongs_to :promotion, optional: true
+    belongs_to :action, class_name: "SolidusFriendlyPromotions::PromotionAction", optional: true
 
     scope :of_type, ->(type) { where(type: type) }
 

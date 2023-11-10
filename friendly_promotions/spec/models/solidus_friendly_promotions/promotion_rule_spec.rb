@@ -3,6 +3,7 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::PromotionRule do
+  it { is_expected.to belong_to(:action).optional }
   let(:bad_test_rule_class) { Class.new(SolidusFriendlyPromotions::PromotionRule) }
   let(:test_rule_class) do
     Class.new(SolidusFriendlyPromotions::PromotionRule) do
