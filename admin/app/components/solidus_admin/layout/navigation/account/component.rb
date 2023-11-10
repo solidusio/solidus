@@ -12,4 +12,13 @@ class SolidusAdmin::Layout::Navigation::Account::Component < SolidusAdmin::BaseC
     @logout_path = logout_path
     @logout_method = logout_method
   end
+
+  def locale_options_for_select(available_locales)
+    available_locales.map do |locale|
+      [
+        t("spree.i18n.this_file_language", locale: locale, default: locale.to_s, fallback: false),
+        locale,
+      ]
+    end.sort
+  end
 end
