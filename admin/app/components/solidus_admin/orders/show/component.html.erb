@@ -27,6 +27,8 @@
               <div class="body-small"><%= customer_name(@order.user) || tag.span(t('.no_name'), class: "text-gray-500") %></div>
               <div class="body-small body-link"><%= link_to @order.user.email, spree.admin_user_path(@order.user) %></div>
               <div class="body-small text-gray-500"><%= t(".orders_count", count: @order.user.orders.complete.count) %></div>
+            <% else %>
+              <%= render component('orders/show/customer_search').new(order: @order) %>
             <% end %>
           </div>
 

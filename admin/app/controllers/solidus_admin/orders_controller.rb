@@ -74,6 +74,22 @@ module SolidusAdmin
       end
     end
 
+    def customers_for
+      load_order
+
+      @users = Spree.user_class
+        .where.not(id: @order.user_id)
+        .order(created_at: :desc, id: :desc)
+        .ransack(params[:q])
+        .result(distinct: true)
+        .includes(:default_user_bill_address, :default_user_ship_address)
+        .limit(10)
+
+      respond_to do |format|
+        format.html { render component('orders/show/customer_search/result').with_collection(@users, order: @order), layout: false }
+      end
+    end
+
     private
 
     def load_order
