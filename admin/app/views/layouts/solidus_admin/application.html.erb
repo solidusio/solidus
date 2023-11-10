@@ -8,11 +8,11 @@
   </head>
 
   <body class="bg-gray-15">
-    <%= render component("skip_link").new(href: "#main") %>
+    <%= render component("layout/skip_link").new(href: "#main") %>
     <div class="flex gap-0">
       <div class="min-w-[240px] border-r border-r-gray-100 relative">
         <div class="min-h-screen top-0 sticky flex">
-          <%= render component("sidebar").new(store: current_store) %>
+          <%= render component("layout/navigation").new(store: current_store) %>
         </div>
       </div>
 

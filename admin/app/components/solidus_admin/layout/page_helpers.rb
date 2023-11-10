@@ -7,7 +7,7 @@ module SolidusAdmin::Layout::PageHelpers
 
   def page_header_actions(&block)
     tag.div(safe_join([
-      render(component("feedback").new),
+      render(component("layout/feedback").new),
       capture(&block),
     ]), class: "flex gap-2 items-center")
   end
