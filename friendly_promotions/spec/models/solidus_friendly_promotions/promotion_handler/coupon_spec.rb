@@ -441,11 +441,15 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
     it "is unsuccessful with multiple errors" do
       subject
       expect(handler.success).to be nil
-      expect(handler.error).to eq("You need to add an applicable product before applying this coupon code.")
-      expect(handler.errors).to eq([
+      # Promotion rules are not ordered, so it can be either of these errors.
+      expect(handler.error).to be_in([
         "You need to add an applicable product before applying this coupon code.",
         "This coupon code could not be applied to the cart at this time."
       ])
+      expect(handler.errors).to contain_exactly(
+        "You need to add an applicable product before applying this coupon code.",
+        "This coupon code could not be applied to the cart at this time."
+      )
     end
   end
 end
