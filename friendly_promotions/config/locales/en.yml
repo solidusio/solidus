@@ -146,6 +146,8 @@ en:
           starts_at_placeholder: Immediately
         edit:
           order_rules: Order Rules
+        calculator:
+          add_tier: Add tier
       promotion_status:
         active: Active
         expired: Expired
