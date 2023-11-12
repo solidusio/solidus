@@ -574,6 +574,16 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe 'acts_as_list' do
+    it 'sets variant position by acts_as_list' do
+      expect(variant.product.master.position).to eq 1
+      expect(variant.position).to eq 2
+
+      multi_variant = create(:variant, product: variant.product)
+      expect(multi_variant.position).to eq 3
+    end
+  end
+
   describe '#in_stock?' do
     before do
       stub_spree_preferences(track_inventory_levels: true)
