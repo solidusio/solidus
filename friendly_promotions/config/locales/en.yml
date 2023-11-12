@@ -269,6 +269,42 @@ en:
         description: Provides a discount calculated by percent of the discountable amount of the item being discounted
       solidus_friendly_promotions/calculators/distributed_amount:
         description: Distributed the configured amount among all eligible line items of the order
+        explanation: |
+          <p>
+            This amount will be distributed to line items weighted relative to
+            their price. More expensive line items will receive a greater share
+            of the adjustment.
+          </p>
+          <p>
+            For example, with three line items and a preferred amount of $15 we
+            would end up with the following distribution:
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Price</th>
+                <th>Weighted Adj.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Socks</td>
+                <td>$5</td>
+                <td>-$1.5</td>
+              </tr>
+              <tr>
+                <td>Shoes</td>
+                <td>$30</td>
+                <td>-$9</td>
+              </tr>
+              <tr>
+                <td>Slippers</td>
+                <td>$15</td>
+                <td>-$4.5</td>
+              </tr>
+            </tbody>
+          </table>
 
     errors:
       models:
