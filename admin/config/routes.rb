@@ -26,6 +26,7 @@ SolidusAdmin::Engine.routes.draw do
 
     member do
       get :variants_for
+      get :customers_for
     end
   end
 end

@@ -5,13 +5,28 @@ require 'spec_helper'
 describe "Order", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
+  it "allows detaching a customer from an order" do
+    order = create(:order, number: "R123456789", user: create(:user))
+
+    visit "/admin/orders/R123456789"
+
+    open_customer_menu
+    click_on "Remove customer"
+
+    expect(page).to have_content("Customer was removed successfully")
+    open_customer_menu
+    expect(page).not_to have_content("Remove customer")
+    expect(order.reload.user).to be_nil
+    expect(page).to be_axe_clean
+  end
+
   it "allows changing the order email" do
     create(:order, number: "R123456789", total: 19.99)
 
     visit "/admin/orders/R123456789/edit"
 
     expect(page).to have_content("Order R123456789")
-    find("summary", text: "Customer").click
+    open_customer_menu
     click_on "Edit order email"
     within("dialog") do
       fill_in "Customer Email", with: "a@b.c"
@@ -19,6 +34,7 @@ describe "Order", :js, type: :feature do
     end
     expect(page).to have_content("Order was updated successfully")
     expect(page).to have_content("Order contact email a@b.c", normalize_ws: true)
+    expect(page).to be_axe_clean
   end
 
   context "in cart state" do
@@ -32,7 +48,7 @@ describe "Order", :js, type: :feature do
 
       expect(page).to have_content("Order R123456789")
 
-      search_field = find("[data-#{SolidusAdmin::UI::SearchPanel::Component.stimulus_id}-target='searchField']")
+      search_field = find("[data-#{SolidusAdmin::UI::Forms::Search::Component.stimulus_id}-target='searchField']")
       search_field.set "another"
 
       expect(page).not_to have_content("Just a product")
@@ -57,5 +73,11 @@ describe "Order", :js, type: :feature do
       expect(Spree::Order.last.line_items.count).to eq(0)
       expect(page).to be_axe_clean
     end
+  end
+
+  private
+
+  def open_customer_menu
+    find("summary[title='More']").click
   end
 end

@@ -1,4 +1,21 @@
 <div class="mb-8">
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      Full
+    </h6>
+
+    <%= render current_component.new(title: "SEO") do |panel| %>
+      <% panel.with_menu("Foo", "#foo") %>
+      <% panel.with_menu("Bar", "#bar") %>
+      <% panel.with_section do %><label>SKU:ABC-123</label><% end %>
+      <% panel.with_section do %><label>SKU:ABC-123</label><% end %>
+      <% panel.with_section do %><label>SKU:ABC-123</label><% end %>
+      <% panel.with_section do %><label>SKU:ABC-123</label><% end %>
+      <% panel.with_action(name: "Foo", href: "#foo") %>
+    <% end %>
+  </div>
+
+
   <h6 class="text-gray-500 mb-3 mt-0">
     Content only
   </h6>
@@ -59,5 +76,15 @@
 
   <%= render current_component.new(title: "SEO") do |panel| %>
     <% panel.with_action(name: "Foo", href: "#foo") %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With a menu
+  </h6>
+
+  <%= render current_component.new(title: "SEO") do |panel| %>
+    <% panel.with_menu("Foo", "#foo") %>
   <% end %>
 </div>

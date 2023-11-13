@@ -5,7 +5,7 @@
       <%= render component("ui/forms/field").text_field(f, :email) %>
       <label class="body-small mt-4 block">
         <%= t('.guest_checkout') %>:
-        <output class="body-small-bold"><%= @order.user ? t('.yes') : t('.no') %></output>
+        <output class="body-small-bold"><%= @order.user ? t('.no') : t('.yes') %></output>
         <%= render component('ui/toggletip').new(text: t('.guest_checkout_tip'), class: "align-middle") %>
       </label>
     <% end %>

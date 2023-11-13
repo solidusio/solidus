@@ -1,0 +1,14 @@
+<div
+  class="w-full relative overflow-visible"
+  data-controller="<%= stimulus_id %>"
+  data-<%= stimulus_id %>-customers-url-value="<%= solidus_admin.customers_for_order_path(@order) %>"
+  data-action="
+    <%= component('ui/forms/search').stimulus_id %>:search-><%= stimulus_id %>#search
+    <%= component('ui/forms/search').stimulus_id %>:submit-><%= stimulus_id %>#submit
+  "
+>
+  <%= render component("ui/forms/search").new(
+    placeholder: t(".placeholder"),
+    id: :order_customer
+  ) %>
+</div>
