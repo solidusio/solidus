@@ -21,7 +21,7 @@
       </main>
     </div>
 
-    <div class="fixed inset-x-0 bottom-3 flex items-center justify-center flex-col gap-3" role="alert">
+    <div class="fixed inset-x-0 bottom-3 flex items-center justify-center flex-col gap-3 pointer-events-none" role="alert">
       <% flash.each do |key, message| %>
         <%= render component("ui/toast").new(text: message, scheme: key == :error ? :error : :default) %>
       <% end %>
