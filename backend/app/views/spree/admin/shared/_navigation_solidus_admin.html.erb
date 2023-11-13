@@ -49,32 +49,7 @@
           </summary>
 
           <ul>
-            <% if (available_locales = Spree.i18n_available_locales).any? %>
-              <li>
-                <label>
-                  <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-global-line"></use></svg>
-                  <select class="js-locale-selection">
-                    <%= options_for_select(
-                      available_locales
-                        .map do |locale|
-                          [
-                            t(
-                              "spree.i18n.this_file_language",
-                              locale: locale,
-                              default: locale.to_s,
-                              fallback: false
-                            ),
-                            locale
-                          ]
-                        end
-                        .sort,
-                      selected: I18n.locale
-                    ) %>
-                  </select>
-                  <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
-                </label>
-              </li>
-            <% end %>
+            <%= render 'spree/admin/shared/locale_selection_solidus_admin' %>
 
             <% if can?(:admin, spree_current_user) %>
               <li data-hook="user-account-link">

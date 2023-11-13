@@ -1,0 +1,17 @@
+<% available_locale_options_for_select = Spree.i18n_available_locales.map {
+  [I18n.t('spree.i18n.this_file_language', locale: _1, default: _1.to_s, fallback: false), _1]
+}.sort %>
+
+<% if available_locale_options_for_select.size > 1 %>
+  <li>
+    <%= form_tag(admin_set_locale_path(format: :html), method: :put, style: "width: 100%;") do %>
+      <label>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-global-line"></use></svg>
+        <select name="switch_to_locale" onchange="this.form.requestSubmit()">
+          <%= options_for_select(available_locale_options_for_select, selected: I18n.locale) %>
+        </select>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
+      </label>
+    <% end %>
+  </li>
+<% end %>

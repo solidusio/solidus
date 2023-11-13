@@ -301,7 +301,8 @@ nav.menu {
 }
 
 .admin-navbar-selection {
-  margin: 0 1.5em;
+  padding: 0 1.5em;
+  width: 100%;
   position: relative;
   overflow: hidden;
   display: inline-flex;
@@ -323,7 +324,7 @@ nav.menu {
     padding: .5rem 0 .5rem .25rem;
   }
 
-   .admin-nav-hidden & {
+  .admin-nav-hidden & {
     position: relative;
 
     select {
