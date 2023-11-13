@@ -27,6 +27,6 @@ module SolidusAdmin::ControllerHelpers::Locale
   end
 
   def set_locale
-    I18n.locale = user_locale
+    I18n.locale = I18n.locale_available?(user_locale) ? user_locale : I18n.default_locale
   end
 end
