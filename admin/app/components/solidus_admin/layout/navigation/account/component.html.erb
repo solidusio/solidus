@@ -27,15 +27,11 @@
 
     <% if (available_locales = Spree.i18n_available_locales).any? %>
       <li class="h-8 flex items-center hover:bg-gray-25 rounded">
-        <%= form_tag request.fullpath, method: :get do %>
-          <label class="flex gap-2 items-center px-2">
-            <%= icon_tag("global-line", class: "w-full max-w-[20px] h-5 fill-current shrink") %>
-            <select class="w-full appearance-none grow bg-transparent outline-none" onchange="this.form.requestSubmit()" name="switch_to_locale">
-              <%= options_for_select(locale_options_for_select(available_locales), selected: I18n.locale) %>
-            </select>
-            <%= icon_tag("expand-up-down-line", class: "w-full max-w-[20px] h-5 fill-current shrink") %>
-          </label>
-        <% end %>
+        <%= autosubmit_select_tag(
+          "switch_to_locale",
+          options_for_select(locale_options_for_select(available_locales), selected: I18n.locale),
+          icon: 'global-line',
+        ) %>
       </li>
     <% end %>
 
