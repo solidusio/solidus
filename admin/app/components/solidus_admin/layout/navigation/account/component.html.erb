@@ -36,6 +36,26 @@
       </li>
     <% end %>
 
+    <li class="h-8 items-center hover:bg-gray-25 rounded dark:hidden flex">
+      <%= autosubmit_select_tag(
+        "switch_to_theme",
+        options_for_select(theme_options_for_select, session[:admin_light_theme]),
+        icon: 'sun-line',
+      ) do %>
+        <%= hidden_field_tag(:system_theme, :light) %>
+      <% end %>
+    </li>
+
+    <li class="h-8 items-center hover:bg-gray-25 rounded hidden dark:flex">
+      <%= autosubmit_select_tag(
+        "switch_to_theme",
+        options_for_select(theme_options_for_select, session[:admin_dark_theme]),
+        icon: 'moon-line',
+      ) do %>
+        <%= hidden_field_tag(:system_theme, :dark) %>
+      <% end %>
+    </li>
+
     <li class="h-8 flex items-center hover:bg-gray-25 rounded">
       <%= link_to @account_path, class: 'flex gap-2 items-center px-2' do %>
         <%= icon_tag("user-3-line", class: "w-5 h-5 fill-current shrink") %>

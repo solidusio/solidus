@@ -219,6 +219,26 @@ module SolidusAdmin
 
     # The HTTP method used to logout the user in the admin interface.
     preference :logout_link_method, :string, default: :delete
+
+    # @!attribute [rw] themes
+    #   @return [Hash] A hash containing the themes that are available for the admin panel
+    preference :themes, :hash, default: {
+      solidus: 'solidus_admin/application',
+      solidus_dark: 'solidus_admin/dark',
+      solidus_dimmed: 'solidus_admin/dimmed',
+    }
+
+    # @!attribute [rw] theme
+    #   @return [String] Default admin theme name
+    preference :theme, :string, default: 'solidus'
+
+    # @!attribute [rw] dark_theme
+    #   @return [String] Default admin theme name
+    preference :dark_theme, :string, default: 'solidus_dark'
+
+    def theme_path(user_theme)
+      themes.fetch(user_theme&.to_sym, themes[theme.to_sym])
+    end
   end
 end
 

@@ -14,7 +14,7 @@ describe "Accounts", type: :feature do
     expect(current_path).to eq("/admin/users/#{user.id}/edit")
   end
 
-  it "can change locale", :js do
+  it "can change locale and theme", :js do
     I18n.config.available_locales_set << :"en-UK"
     I18n.config.available_locales_set << "en-UK"
     I18n.backend.store_translations('en-UK', spree: { i18n: { this_file_language: "English (UK)" } })
@@ -30,5 +30,8 @@ describe "Accounts", type: :feature do
     expect(page).to have_content("English (UK)")
     select "English (US)", from: 'switch_to_locale'
     expect(page).to have_content("English (US)")
+
+    within('.dark\:hidden') { select "Solidus dark", from: "switch_to_theme" }
+    expect(page).to have_content("Solidus dark")
   end
 end

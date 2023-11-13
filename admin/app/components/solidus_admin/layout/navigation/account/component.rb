@@ -22,6 +22,10 @@ class SolidusAdmin::Layout::Navigation::Account::Component < SolidusAdmin::BaseC
     end.sort
   end
 
+  def theme_options_for_select
+    SolidusAdmin::Config.themes.keys.map { |theme| [theme.to_s.humanize, theme] }.sort
+  end
+
   def autosubmit_select_tag(name, options, icon:, &block)
     form_tag(request.fullpath, method: :get, 'data-turbo': false, class: "w-full") do
       safe_join([

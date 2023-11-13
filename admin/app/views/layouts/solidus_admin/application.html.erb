@@ -3,7 +3,9 @@
   <head>
     <%= favicon_link_tag 'solidus_admin/favicon.ico' %>
     <title><%= solidus_admin_title %></title>
-    <%= stylesheet_link_tag "solidus_admin/application.css", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag SolidusAdmin::Config.theme_path(session[:admin_light_theme]), media: '(prefers-color-scheme: light)', "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag SolidusAdmin::Config.theme_path(session[:admin_dark_theme]), media: '(prefers-color-scheme: dark)', "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
   </head>
 
