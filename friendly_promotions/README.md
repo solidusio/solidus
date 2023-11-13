@@ -57,7 +57,7 @@ Promotion categories simply allow admins to group promotion actions. They have n
 Add solidus_friendly_promotions to your Gemfile:
 
 ```ruby
-gem 'solidus_friendly_promotions', github: 'friendlycart/solidus_friendly_promotion', branch: 'main'
+gem 'solidus_friendly_promotions', github: 'friendlycart/solidus_friendly_promotions', branch: 'main'
 ```
 
 Once this project is out of the research phase, a proper gem release will follow.
