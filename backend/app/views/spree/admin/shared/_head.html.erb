@@ -6,7 +6,8 @@
 <title><%= admin_page_title %></title>
 
 <%= favicon_link_tag 'favicon.ico' %>
-<%= stylesheet_link_tag Spree::Backend::Config.theme_path, media: 'all', data: {turbolinks_track: 'reload'} %>
+<%= stylesheet_link_tag Spree::Backend::Config.theme_path(session[:admin_light_theme]), media: '(prefers-color-scheme: light)', data: {turbolinks_track: 'reload'} %>
+<%= stylesheet_link_tag Spree::Backend::Config.theme_path(session[:admin_dark_theme]), media: '(prefers-color-scheme: dark)', data: {turbolinks_track: 'reload'} %>
 <%= javascript_include_tag 'spree/backend/all', data: {turbolinks_track: 'reload'} %>
 
 <%- if Rails.env.test? %>

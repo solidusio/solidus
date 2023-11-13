@@ -19,6 +19,20 @@ $color-navbar-hover: $color-navbar !default;
   min-height: 100vh;
   border-right: $color-light-accent 1px solid;
 
+  .dark-only {
+    display: none;
+    @media (prefers-color-scheme: dark) {
+      display: block;
+    }
+  }
+
+  .light-only {
+    display: none;
+    @media (prefers-color-scheme: light) {
+      display: block;
+    }
+  }
+
   &--wrapper {
     position: absolute;
     top: 0;

@@ -122,6 +122,22 @@ nav.menu {
   @media print {
     display: none
   }
+
+
+  .dark-only {
+    display: none;
+    @media (prefers-color-scheme: dark) {
+      display: block;
+    }
+  }
+
+  .light-only {
+    display: block;
+    @media (prefers-color-scheme: dark) {
+      display: none;
+    }
+  }
+
 }
 
 .admin-nav-header {

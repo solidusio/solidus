@@ -11,15 +11,24 @@ module Spree
     #   @return [Hash] A hash containing the themes that are available for the admin panel
     preference :themes, :hash, default: {
       classic: 'spree/backend/all',
+      classic_dark: 'spree/backend/themes/classic_dark',
+      classic_dark_dimmed: 'spree/backend/themes/classic_dimmed',
+      solidus: 'spree/backend/themes/solidus_admin',
+      solidus_dark: 'spree/backend/themes/solidus_admin_dark',
+      solidus_dimmed: 'spree/backend/themes/solidus_admin_dimmed',
       solidus_admin: 'spree/backend/themes/solidus_admin'
     }
 
     # @!attribute [rw] theme
     #   @return [String] Default admin theme name
-    versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.2.0" => "solidus_admin" }
+    versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.2.0" => "solidus_admin", "4.4.0" => "solidus" }
 
-    def theme_path(user_theme = nil)
-      user_theme ? themes.fetch(user_theme.to_sym) : themes.fetch(theme.to_sym)
+    # @!attribute [rw] dark_theme
+    #   @return [String] Dark admin theme name
+    versioned_preference :dark_theme, :string, initial_value: 'classic', boundaries: { "4.2.0" => "solidus_admin", "4.4.0" => 'solidus_dark' }
+
+    def theme_path(user_theme)
+      themes.fetch(user_theme&.to_sym, themes.fetch(theme.to_sym))
     end
 
     # @!attribute [rw] admin_updated_navbar
