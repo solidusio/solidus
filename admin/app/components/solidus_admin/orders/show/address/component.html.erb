@@ -10,7 +10,7 @@
           </h2>
 
           <% if @user&.addresses&.any? %>
-            <details class="text-black text-sm" data-controller="details-click-outside">
+            <details class="text-black text-sm" data-controller="details-click-outside" data-<%= stimulus_id %>-target="addresses">
               <summary
                 class="text-left flex cursor-pointer select-none"
                 data-action="keydown.esc-><%= stimulus_id %>#close"
@@ -24,6 +24,7 @@
                   <%= tag.a(
                         href: solidus_admin.send("order_#{@type}_address_path", @order, address_id: address.id),
                         class: 'block text-black text-sm hover:bg-gray-50 p-2 mx-2 w-auto rounded-lg',
+                        'data-action': "#{stimulus_id}#close",
                       ) do %>
                     <%= format_address(address) %>
                   <% end %>
