@@ -16,6 +16,10 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
     @form_id ||= "#{stimulus_id}--form-#{@type}-#{@order.id}"
   end
 
+  def address_frame_id
+    @table_frame_id ||= "#{stimulus_id}--#{@type}-address-frame-#{@order.id}"
+  end
+
   def use_attribute
     case @type
     when 'ship'

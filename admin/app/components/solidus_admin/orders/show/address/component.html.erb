@@ -25,6 +25,7 @@
                         href: solidus_admin.send("order_#{@type}_address_path", @order, address_id: address.id),
                         class: 'block text-black text-sm hover:bg-gray-50 p-2 mx-2 w-auto rounded-lg',
                         'data-action': "#{stimulus_id}#close",
+                        'data-turbo-frame': address_frame_id
                       ) do %>
                     <%= format_address(address) %>
                   <% end %>
@@ -35,7 +36,9 @@
         </div>
 
         <div class="w-full flex gap-4">
-          <%= render component('ui/forms/address').new(address: @address, name: "order[#{@type}_address_attributes]") %>
+          <%= turbo_frame_tag address_frame_id do %>
+            <%= render component('ui/forms/address').new(address: @address, name: "order[#{@type}_address_attributes]") %>
+          <% end %>
         </div>
 
         <label class="flex gap-2 items-center">
