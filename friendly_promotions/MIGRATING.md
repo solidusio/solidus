@@ -23,7 +23,7 @@ For the time being, comment out the following lines:
 
 ```rb
 # Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
-# Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderDiscounter"
+# Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 ```
 
 This makes sure that the behavior of the current promotion system does not change - yet.
@@ -46,7 +46,7 @@ Now, change `config/initializers/solidus_friendly_promotions.rb` to use your new
 # Stops running the stock `Spree::PromotionHandler::Cart`
 Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
 # Adjusts all items in an order according to the currently eligible promotions
-Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::OrderDiscounter"
+Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 ```
 
 From a user's perspective, your promotions should work as before.
