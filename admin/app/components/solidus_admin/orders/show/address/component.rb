@@ -5,9 +5,10 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
 
   VALID_TYPES = ['ship', 'bill'].freeze
 
-  def initialize(order:, type: 'ship')
+  def initialize(order:, address:, type: 'ship')
     @order = order
     @type = validate_address_type(type)
+    @address = address
   end
 
   def form_id

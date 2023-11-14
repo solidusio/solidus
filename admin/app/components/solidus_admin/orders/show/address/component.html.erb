@@ -5,9 +5,7 @@
       <div class="w-full flex flex-col mb-4">
         <h2 class="text-sm mb-4 font-semibold"><%= t(".subtitle.#{@type}") %></h2>
         <div class="w-full flex gap-4">
-          <%= form.fields_for :"#{@type}_address" do |address_form| %>
-            <%= render component('ui/forms/address').new(form: address_form, disabled: false) %>
-          <% end %>
+          <%= render component('ui/forms/address').new(address: @address, name: "order[#{@type}_address_attributes]") %>
         </div>
 
         <label class="flex gap-2 items-center">
