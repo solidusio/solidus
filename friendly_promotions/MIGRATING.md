@@ -68,6 +68,10 @@ bundle exec rails solidus_friendly_promotions:migrate_order_promotions:down
 
 Both of these tasks only work if every promotion and promotion action have an equivalent in SolidusFrienndlyPromotions. Promotion Actions are connected to their originals using the `SolidusFriendlyPromotions#original_promotion_action_id`, Promotions are connected to their originals using the  `SolidusFriendlyPromotions#original_promotion_id`.
 
+## Solidus Starter Frontend (and other custom frontends)
+
+Stores that have a custom coupon codes controller, such as Solidus' starter frontend, have to change the coupon promotion handler to the one from this gem. If you are on a very recent Solidus version, you can change any reference to `Spree::PromotionHandler::Coupon` to `Spree::Config.coupon_code_handler_class`. If your version of Solidus does not have that method yet, replace `Spree::PromotionHandler::Coupon` with `SolidusFriendlyPromotions::PromotionHandler::Coupon`
+
 ## Migrating custom rules and actions
 
 If you have custom promotion rules or actions, you need to create new promotion rules and actions.
