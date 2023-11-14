@@ -14,6 +14,7 @@ module SolidusAdmin
         format.html do
           render component('orders/show/address').new(
             order: @order,
+            user: @order.user,
             address: address,
             type: address_type,
           )
@@ -35,6 +36,7 @@ module SolidusAdmin
           format.html do
             render component('orders/show/address').new(
               order: @order,
+              user: @order.user,
               address: @order.send("#{address_type}_address"),
               type: address_type,
               status: :unprocessable_entity,

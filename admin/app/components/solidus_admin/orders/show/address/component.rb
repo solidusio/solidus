@@ -5,10 +5,11 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
 
   VALID_TYPES = ['ship', 'bill'].freeze
 
-  def initialize(order:, address:, type: 'ship')
+  def initialize(order:, address:, user: nil, type: 'ship')
     @order = order
-    @type = validate_address_type(type)
+    @user = user
     @address = address
+    @type = validate_address_type(type)
   end
 
   def form_id
@@ -22,6 +23,23 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
     when 'bill'
       'use_billing'
     end
+  end
+
+  def format_address(address)
+    safe_join([
+      address.name,
+      tag.br,
+      address.address1,
+      tag.br,
+      address.address2,
+      address.city,
+      address.zipcode,
+      address.state&.name,
+      tag.br,
+      address.country.name,
+      tag.br,
+      address.phone,
+    ], " ")
   end
 
   def validate_address_type(type)

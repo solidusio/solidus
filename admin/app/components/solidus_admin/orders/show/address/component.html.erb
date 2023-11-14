@@ -1,9 +1,38 @@
-<div class="<%= stimulus_id %>">
+<div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
   <%= render component("orders/show").new(order: @order) %>
+
   <%= render component("ui/modal").new(title: t(".title.#{@type}"), close_path: solidus_admin.order_path(@order)) do |modal| %>
     <%= form_for @order, url: solidus_admin.send("order_#{@type}_address_path", @order), html: { id: form_id } do |form| %>
       <div class="w-full flex flex-col mb-4">
-        <h2 class="text-sm mb-4 font-semibold"><%= t(".subtitle.#{@type}") %></h2>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-sm font-semibold">
+            <%= t(".subtitle.#{@type}") %>
+          </h2>
+
+          <% if @user&.addresses&.any? %>
+            <details class="text-black text-sm" data-controller="details-click-outside">
+              <summary
+                class="text-left flex cursor-pointer select-none"
+                data-action="keydown.esc-><%= stimulus_id %>#close"
+              >
+                <%= t(".select_address") %>
+                <%= render component("ui/icon").new(name: 'arrow-down-s-fill', class: 'w-5 h-5') %>
+              </summary>
+
+              <div class="absolute mr-4 right-0 bg-white border border-gray-100 rounded-lg py-2 mt-1 shadow-lg z-10 min-w-[16rem] max-h-[26rem] overflow-y-auto">
+                <% @user.addresses.each do |address| %>
+                  <%= tag.a(
+                        href: solidus_admin.send("order_#{@type}_address_path", @order, address_id: address.id),
+                        class: 'block text-black text-sm hover:bg-gray-50 p-2 mx-2 w-auto rounded-lg',
+                      ) do %>
+                    <%= format_address(address) %>
+                  <% end %>
+                <% end %>
+              </div>
+            </details>
+          <% end %>
+        </div>
+
         <div class="w-full flex gap-4">
           <%= render component('ui/forms/address').new(address: @address, name: "order[#{@type}_address_attributes]") %>
         </div>
