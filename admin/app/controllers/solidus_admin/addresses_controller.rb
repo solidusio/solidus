@@ -50,7 +50,8 @@ module SolidusAdmin
 
     def find_address
       if params[:address_id].present? && @order.user
-        @order.user.addresses.find(params[:address_id])
+        address = @order.user.addresses.find_by(id: params[:address_id])
+        @order.send("#{address_type}_address=", address) if address
       else
         @order.send("#{address_type}_address")
       end
