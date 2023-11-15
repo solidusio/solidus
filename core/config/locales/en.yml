@@ -1141,6 +1141,7 @@ en:
     choose_a_taxon_to_sort_products_for: Choose a taxon to sort products for
     choose_currency: Choose Currency
     choose_dashboard_locale: Choose Dashboard Locale
+    choose_dashboard_theme: Choose Dashboard Theme
     choose_location: Choose Location
     choose_promotion_action: Choose Action
     choose_promotion_rule: Choose Rule
@@ -2347,6 +2348,7 @@ en:
         subject: Test Mail
     test_mode: Test Mode
     thank_you_for_your_order: Thank you for your business. Please print out a copy of this confirmation page for your records.
+    theme_changed: Theme Changed
     there_are_no_items_for_this_order: There are no items for this order. Please add an item to the order to continue.
     there_were_problems_with_the_following_fields: There were problems with the following fields
     this_order_has_already_received_a_refund: This order has already received a refund

@@ -6,6 +6,7 @@ Spree::Core::Engine.routes.draw do
     get '/search/products', to: "search#products", as: :search_products
 
     put '/locale/set', to: 'locale#set', defaults: { format: :json }, as: :set_locale
+    put '/theme/set', to: 'theme#set', defaults: { format: :json }, as: :set_theme
 
     resources :dashboards, only: [] do
       collection do
