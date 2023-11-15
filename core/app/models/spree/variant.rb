@@ -73,7 +73,6 @@ module Spree
     validates_uniqueness_of :sku, allow_blank: true, case_sensitive: true, conditions: -> { where(deleted_at: nil) }, if: :enforce_unique_sku?
 
     after_create :create_stock_items
-    after_create :set_position
     after_create :set_master_out_of_stock, unless: :is_master?
 
     after_save :clear_in_stock_cache
@@ -404,10 +403,6 @@ module Spree
 
     def build_vat_prices
       Spree::Config.variant_vat_prices_generator_class.new(self).run
-    end
-
-    def set_position
-      update_column(:position, product.variants.maximum(:position).to_i + 1)
     end
 
     def in_stock_cache_key
