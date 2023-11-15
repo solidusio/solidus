@@ -18,7 +18,7 @@ module SolidusAdmin::ControllerHelpers::Locale
       session[set_user_language_locale_key] = requested_locale
 
       flash[:notice] = t('spree.locale_changed')
-      redirect_to url_for(request.params.except(:switch_to_locale))
+      redirect_to params.except(:switch_to_locale).permit!.to_h.merge(account_menu_open: true)
     end
   end
 
@@ -27,6 +27,6 @@ module SolidusAdmin::ControllerHelpers::Locale
   end
 
   def set_locale
-    I18n.locale = user_locale
+    I18n.locale = I18n.locale_available?(user_locale) ? user_locale : I18n.default_locale
   end
 end

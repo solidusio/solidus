@@ -4,7 +4,7 @@
 class SolidusAdmin::Layout::Navigation::Item::Component < SolidusAdmin::BaseComponent
   with_collection_parameter :item
 
-  # @param item [SolidusAdmin::MainNavItem
+  # @param item [SolidusAdmin::MainNavItem]
   # @param fullpath [String] the current path
   # @param url_helpers [#solidus_admin, #spree] context for generating paths
   def initialize(
