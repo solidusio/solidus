@@ -1,7 +1,8 @@
 <details
-  data-controller="details-click-outside"
+  data-controller="<%= stimulus_id %>"
   class="relative w-full"
   aria-label="<%= t('.account') %>"
+  data-action="keydown.escape-><%= stimulus_id %>#close"
   <%= :open if params[:account_menu_open] %>
 >
   <summary

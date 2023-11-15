@@ -15,36 +15,10 @@
   data-controller="<%= stimulus_id %>"
 >
   <% if menus? %>
-    <details class="absolute top-0 right-0 m-6">
-      <summary title="<%= t(".more") %>">
-        <%= render component("ui/icon").new(
-          name: "more-line",
-          class: "cursor-pointer w-[22px] h-[22px] hover:fill-gray-500 [[open]_&]:fill-gray-500"
-        ) %>
-      </summary>
-      <div
-        class="
-          body-small
-          absolute
-          border
-          border-gray-100
-          mt-0.5
-          right-0
-          flex
-          min-w-[10rem]
-          flex-col
-          p-2
-          rounded-sm
-          shadow-lg
-          bg-white
-          z-10
-        "
-      >
-        <% menus.each do |menu| %>
-          <%= menu %>
-        <% end %>
-      </div>
-    </details>
+    <%= render component('ui/dropdown').new(
+      size: :s,
+      class: "absolute top-0 right-0 m-6",
+    ).with_content(safe_join(menus)) %>
   <% end %>
 
   <% if @title %>
