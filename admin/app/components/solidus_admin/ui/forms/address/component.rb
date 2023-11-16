@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Forms::Address::Component < SolidusAdmin::BaseComponent
-  def initialize(form:, disabled: false)
-    @form = form
+  def initialize(address:, name:, disabled: false)
+    @address = address
+    @name = name
     @disabled = disabled
   end
 
   def state_options
-    return [] unless @form.object.country
-    @form.object.country.states.map { |s| [s.name, s.id] }
+    return [] unless @address.country
+    @address.country.states.map { |s| [s.name, s.id] }
   end
 end

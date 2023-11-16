@@ -7,15 +7,23 @@ module SolidusAdmin
     before_action :load_order
     before_action :validate_address_type
 
-    def new
-      address = @order.send("#{address_type}_address")
-      @order.send("build_#{address_type}_address", country_id: default_country_id) if address.nil?
-      address ||= @order.send("#{address_type}_address")
-      address.country_id ||= default_country_id if address.country.nil?
+    def show
+      address = find_address || build_new_address
 
       respond_to do |format|
-        format.html { render component('orders/show/address').new(order: @order, type: address_type) }
+        format.html do
+          render component('orders/show/address').new(
+            order: @order,
+            user: @order.user,
+            address: address,
+            type: address_type,
+          )
+        end
       end
+    end
+
+    def edit
+      redirect_to action: :show
     end
 
     def update
@@ -25,12 +33,35 @@ module SolidusAdmin
         flash.now[:error] = @order.errors[:base].join(", ") if @order.errors[:base].any?
 
         respond_to do |format|
-          format.html { render component('orders/show/address').new(order: @order, type: address_type), status: :unprocessable_entity }
+          format.html do
+            render component('orders/show/address').new(
+              order: @order,
+              user: @order.user,
+              address: @order.send("#{address_type}_address"),
+              type: address_type,
+              status: :unprocessable_entity,
+            )
+          end
         end
       end
     end
 
     private
+
+    def find_address
+      if params[:address_id].present? && @order.user
+        address = @order.user.addresses.find_by(id: params[:address_id])
+        @order.send("#{address_type}_address=", address) if address
+      else
+        @order.send("#{address_type}_address")
+      end
+    end
+
+    def build_new_address
+      @order.send("build_#{address_type}_address", country_id: default_country_id).tap do |address|
+        address.country_id ||= default_country_id if address.country.nil?
+      end
+    end
 
     def address_type
       params[:type].presence_in(%w[bill ship])

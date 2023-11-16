@@ -16,8 +16,8 @@
     <%= page_with_sidebar_aside do %>
       <%= render component('ui/panel').new do |panel| %>
         <% panel.with_menu t(".edit_email"), solidus_admin.order_customer_path(@order) %>
-        <% panel.with_menu t(".edit_shipping"), solidus_admin.new_order_ship_address_path(@order) %>
-        <% panel.with_menu t(".edit_billing"), solidus_admin.new_order_bill_address_path(@order) %>
+        <% panel.with_menu t(".edit_shipping"), solidus_admin.edit_order_ship_address_path(@order) %>
+        <% panel.with_menu t(".edit_billing"), solidus_admin.edit_order_bill_address_path(@order) %>
         <% panel.with_menu t(".remove_customer"), solidus_admin.order_customer_path(@order), method: :delete, class: "text-red-500" if @order.user %>
 
         <% panel.with_section(class: 'flex flex-col gap-6') do %>
@@ -49,7 +49,7 @@
               <% if @order.ship_address %>
                 <%= format_address @order.ship_address %>
               <% else %>
-                <%= link_to t(".add_shipping"), solidus_admin.new_order_ship_address_path(@order), class: 'body-link' %>
+                <%= link_to t(".add_shipping"), solidus_admin.edit_order_ship_address_path(@order), class: 'body-link' %>
               <% end %>
             </div>
           </div>
@@ -58,7 +58,7 @@
             <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
             <div class="body-small">
               <% if @order.bill_address.blank? %>
-                <%= link_to t(".add_billing"), solidus_admin.new_order_bill_address_path(@order), class: 'body-link' %>
+                <%= link_to t(".add_billing"), solidus_admin.edit_order_bill_address_path(@order), class: 'body-link' %>
               <% elsif @order.bill_address == @order.ship_address %>
                 <span class="text-gray-500"><%= t('.same_as_shipping') %></span>
               <% else %>

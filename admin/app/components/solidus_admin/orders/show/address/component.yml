@@ -4,6 +4,7 @@ en:
   save: Save
   cancel: Cancel
   back: Back
+  select_address: Select address
   title:
     ship: Edit Shipping Address
     bill: Edit Billing Address

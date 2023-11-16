@@ -11,6 +11,7 @@ class SolidusAdmin::Orders::Show::Address::ComponentPreview < ViewComponent::Pre
     render_with_template(
       locals: {
         order: order,
+        address: order.send("#{type}_address"),
         type: type
       }
     )
@@ -19,7 +20,7 @@ class SolidusAdmin::Orders::Show::Address::ComponentPreview < ViewComponent::Pre
   # @param type select :type_options
   def playground(type: "ship")
     order = fake_order(type)
-    render current_component.new(order: order, type: type)
+    render current_component.new(order: order, address: order.send("#{type}_address"), type: type)
   end
 
   private
