@@ -1,0 +1,6 @@
+[
+  { "label": "Weight", "value": "2kg" },
+  { "label": "Dimensions", "value": "10x20x30 cm" },
+  { "label": "Color", "value": "Red", "class": "text-red-500" },
+  { "label": "Material", "value": "Aluminum" }
+]

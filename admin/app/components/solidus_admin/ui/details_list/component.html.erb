@@ -1,0 +1,10 @@
+<div class="<%= stimulus_id %>">
+  <ul class="text-sm">
+    <% @items.each do |item| %>
+      <li class="flex justify-between py-2 <%= item[:class] %>">
+        <span><%= item[:label] %></span>
+        <span><%= item[:value] %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>
