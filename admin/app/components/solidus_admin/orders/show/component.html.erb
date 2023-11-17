@@ -11,6 +11,7 @@
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
       <%= render component("orders/cart").new(order: @order) %>
+      <%= render component("orders/show/summary").new(order: @order) %>
     <% end %>
 
     <%= page_with_sidebar_aside do %>
