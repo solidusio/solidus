@@ -58,9 +58,7 @@ module SolidusAdmin
     end
 
     def build_new_address
-      @order.send("build_#{address_type}_address", country_id: default_country_id).tap do |address|
-        address.country_id ||= default_country_id if address.country.nil?
-      end
+      @order.send("build_#{address_type}_address", country: default_country)
     end
 
     def address_type
@@ -74,10 +72,10 @@ module SolidusAdmin
       end
     end
 
-    def default_country_id
-      @default_country_id ||= begin
+    def default_country
+      @default_country ||= begin
         country = Spree::Country.default
-        country.id if Spree::Country.available.exists?(id: country.id)
+        country if Spree::Country.available.exists?(id: country.id)
       end
     end
 
