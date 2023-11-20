@@ -7,23 +7,25 @@ class SolidusAdmin::UI::Thumbnail::Component < SolidusAdmin::BaseComponent
     l: 'h-20 w-20',
   }.freeze
 
-  def initialize(size: :m, **attributes)
+  def initialize(icon: nil, size: :m, **attributes)
+    @icon = icon
     @size = size
     @attributes = attributes
   end
 
   def call
-    tag.div(
-      tag.img(
-        **@attributes,
-        class: "object-contain h-full w-full",
-      ),
-      class: "
-        #{SIZES[@size]}
-        rounded border border-gray-100
-        bg-white overflow-hidden
-        #{@attributes[:class]}
-      "
-    )
+    icon = if @icon
+      icon_tag(@icon, class: "bg-gray-25 fill-gray-700 #{SIZES[@size]} p-2")
+    else
+      tag.img(**@attributes, class: "object-contain #{SIZES[@size]}")
+    end
+
+    tag.div(icon, class: "
+      #{SIZES[@size]}
+      rounded border border-gray-100
+      bg-white overflow-hidden
+      content-box
+      #{@attributes[:class]}
+    ")
   end
 end
