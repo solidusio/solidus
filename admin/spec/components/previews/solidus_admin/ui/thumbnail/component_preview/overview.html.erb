@@ -1,45 +1,76 @@
-<div class="mb-8">
-  <h6 class="text-gray-500 mb-3 mt-0">
-    Empty
-  </h6>
-  <% current_component::SIZES.keys.each do |size| %>
-    (size: <%= size.inspect %>)
-    <%= render current_component.new(size: size) %>
-  <% end %>
+<div class="flex gap-4">
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      Empty
+    </h6>
+    <% current_component::SIZES.keys.each do |size| %>
+      (size: <%= size.inspect %>)
+      <%= render current_component.new(size: size) %>
+    <% end %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      Square
+    </h6>
+
+    <% current_component::SIZES.keys.each do |size| %>
+      (size: <%= size.inspect %>)
+      <%= render current_component.new(size: size, src: "https://placekitten.com/200/200") %>
+      <%= render current_component.new(size: size, src: "https://placekitten.com/20/20") %>
+    <% end %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      Portrait
+    </h6>
+
+    <% current_component::SIZES.keys.each do |size| %>
+      (size: <%= size.inspect %>)
+      <%= render current_component.new(size: size, src: "https://placekitten.com/200/286") %>
+      <%= render current_component.new(size: size, src: "https://placekitten.com/20/28") %>
+    <% end %>
+  </div>
+
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      Landscape
+    </h6>
+
+    <% current_component::SIZES.keys.each do |size| %>
+      (size: <%= size.inspect %>)
+      <%= render current_component.new(size: size, src: "https://placekitten.com/280/200") %>
+      <%= render current_component.new(size: size, src: "https://placekitten.com/28/20") %>
+    <% end %>
+  </div>
 </div>
 
-<div class="mb-8">
-  <h6 class="text-gray-500 mb-3 mt-0">
-    Square
-  </h6>
+<h2 class="text-lg">Auto thumbnail</h2>
+<div class="flex gap-4">
+  <% product = Spree::Product.new(name: "A good product") %>
+  <% attachment = Object.new.tap { def _1.url(*) "https://placekitten.com/280/200"; end }  %>
+  <% image = Spree::Image.new.tap { _1.define_singleton_method(:attachment) { attachment } } %>
+  <% [
+    Spree::PromotionAction.new,
+    Spree::UnitCancel.new,
+    Spree::TaxRate.new,
+    image,
+    Spree::LineItem.new(variant: Spree::Variant.new(images: [image], product: product)),
+    Spree::Variant.new(images: [image], product: product),
+    Spree::Order.new,
+    Spree::Shipment.new,
+    Object.new,
+  ].each do |object| %>
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0 font-mono">
+        <%= object.class.name %>
+      </h6>
 
-  <% current_component::SIZES.keys.each do |size| %>
-    (size: <%= size.inspect %>)
-    <%= render current_component.new(size: size, src: "https://placekitten.com/200/200") %>
-    <%= render current_component.new(size: size, src: "https://placekitten.com/20/20") %>
-  <% end %>
-</div>
-
-<div class="mb-8">
-  <h6 class="text-gray-500 mb-3 mt-0">
-    Portrait
-  </h6>
-
-  <% current_component::SIZES.keys.each do |size| %>
-    (size: <%= size.inspect %>)
-    <%= render current_component.new(size: size, src: "https://placekitten.com/200/286") %>
-    <%= render current_component.new(size: size, src: "https://placekitten.com/20/28") %>
-  <% end %>
-</div>
-
-<div class="mb-8">
-  <h6 class="text-gray-500 mb-3 mt-0">
-    Landscape
-  </h6>
-
-  <% current_component::SIZES.keys.each do |size| %>
-    (size: <%= size.inspect %>)
-    <%= render current_component.new(size: size, src: "https://placekitten.com/280/200") %>
-    <%= render current_component.new(size: size, src: "https://placekitten.com/28/20") %>
+      <% current_component::SIZES.keys.each do |size| %>
+        (size: <%= size.inspect %>)
+        <%= render current_component.for(object, size: size) %>
+      <% end %>
+    </div>
   <% end %>
 </div>

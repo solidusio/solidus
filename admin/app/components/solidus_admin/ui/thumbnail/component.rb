@@ -28,4 +28,19 @@ class SolidusAdmin::UI::Thumbnail::Component < SolidusAdmin::BaseComponent
       #{@attributes[:class]}
     ")
   end
+
+  def self.for(record, **attrs)
+    case record
+    when Spree::PromotionAction then new(icon: "megaphone-line", **attrs)
+    when Spree::UnitCancel then new(icon: "close-circle-line", **attrs)
+    when Spree::TaxRate then new(icon: "percent-line", **attrs)
+    when Spree::LineItem then self.for(record.variant, **attrs)
+    when Spree::Product then self.for((record.images.first || record.master.images.first), **attrs)
+    when Spree::Variant then self.for((record.images.first || record.product), **attrs)
+    when Spree::Image then new(src: record.attachment&.url(:small), alt: record.alt, **attrs)
+    when Spree::Order then new(icon: "shopping-bag-line", **attrs)
+    when Spree::Shipment then new(icon: "truck-line", **attrs)
+    else new(icon: "question-line", **attrs)
+    end
+  end
 end
