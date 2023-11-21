@@ -38,7 +38,7 @@
 
           <%= render component("ui/forms/checkbox").new(
             name: "#{form.object_name}[#{use_attribute}]",
-            checked: form.object.send("#{@type}_address").new_record? || form.object.bill_address == form.object.ship_address,
+            checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address),
             value: '1'
           ) %>
 
