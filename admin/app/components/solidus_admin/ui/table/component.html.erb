@@ -76,7 +76,7 @@
     <table class="table-fixed w-full border-collapse">
       <colgroup>
         <% @columns.each do |column| %>
-          <col class="<%= column.class_name %>">
+          <col <%= tag.attributes(**column.col) if column.col %>">
         <% end %>
       </colgroup>
 
@@ -117,7 +117,7 @@
             <% end %>
           >
             <% @columns.each do |column| %>
-              <%= render_data_cell(column.data, row) %>
+              <%= render_data_cell(column, row) %>
             <% end %>
           </tr>
         <% end %>

@@ -45,7 +45,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     prev_page_link: nil,
     next_page_link: nil
   )
-    @columns = columns.map { Column.new(**_1) }
+    @columns = columns.map { Column.new(wrap: true, **_1) }
     @batch_actions = batch_actions.map { BatchAction.new(**_1) }
     @filters = filters.map { Filter.new(**_1) }
     @id = id
@@ -86,7 +86,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           "aria-label": t('.select_row'),
         )
       },
-      class_name: 'w-[52px]',
+      col: { class: 'w-[52px]' },
     )
   end
 
@@ -148,21 +148,20 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     }, **attrs)
   end
 
-  def render_data_cell(cell, data)
+  def render_data_cell(column, data)
+    cell = column.data
     cell = cell.call(data) if cell.respond_to?(:call)
     cell = data.public_send(cell) if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
+    cell = tag.div(cell, class: "flex items-center gap-1.5 justify-start overflow-hidden") if column.wrap
 
-    tag.td(
-      tag.div(cell, class: "flex items-center gap-1.5"),
-      class: "
-        py-2 px-4 h-10 vertical-align-middle leading-none
-        [tr:last-child_&:first-child]:rounded-bl-lg [tr:last-child_&:last-child]:rounded-br-lg
-      ",
-    )
+    tag.td(cell, class: "
+      py-2 px-4 h-10 vertical-align-middle leading-none
+      [tr:last-child_&:first-child]:rounded-bl-lg [tr:last-child_&:last-child]:rounded-br-lg
+    ")
   end
 
-  Column = Struct.new(:header, :data, :class_name, keyword_init: true)
+  Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
   BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
   private_constant :Column, :BatchAction, :Filter
