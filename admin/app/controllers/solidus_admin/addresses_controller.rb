@@ -37,8 +37,7 @@ module SolidusAdmin
               user: @order.user,
               address: @order.send("#{address_type}_address"),
               type: address_type,
-              status: :unprocessable_entity,
-            )
+            ), status: :unprocessable_entity
           end
         end
       end
