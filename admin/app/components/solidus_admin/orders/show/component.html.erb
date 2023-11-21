@@ -12,6 +12,12 @@
     <%= page_with_sidebar_main do %>
       <%= render component("orders/cart").new(order: @order) %>
       <%= render component("orders/show/summary").new(order: @order) %>
+
+      <%= render component('ui/panel').new(title: t('.shipments')) do %>
+        <% @order.shipments.each do |shipment| %>
+          <%= render component("orders/show/shipment").new(shipment: @shipment) %>
+        <% end %>
+      <% end %>
     <% end %>
 
     <%= page_with_sidebar_aside do %>

@@ -1,0 +1,7 @@
+en:
+  inventory_states:
+    backordered: Backordered
+    canceled: Canceled
+    on_hand: On hand
+    returned: Returned
+    shipped: Shipped
