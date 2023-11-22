@@ -4,18 +4,16 @@ module SolidusAdmin
   class AddressesController < BaseController
     include Spree::Core::ControllerHelpers::StrongParameters
 
-    before_action :load_order
+    before_action :load_order, :load_address
     before_action :validate_address_type
 
     def show
-      address = find_address || build_new_address
-
       respond_to do |format|
         format.html do
           render component('orders/show/address').new(
             order: @order,
             user: @order.user,
-            address: address,
+            address: @address,
             type: address_type,
           )
         end
@@ -39,8 +37,7 @@ module SolidusAdmin
               user: @order.user,
               address: @order.send("#{address_type}_address"),
               type: address_type,
-              status: :unprocessable_entity,
-            )
+            ), status: :unprocessable_entity
           end
         end
       end
@@ -48,18 +45,15 @@ module SolidusAdmin
 
     private
 
-    def find_address
+    def load_address
       if params[:address_id].present? && @order.user
-        address = @order.user.addresses.find_by(id: params[:address_id])
-        @order.send("#{address_type}_address=", address) if address
+        @address =
+          @order.user.addresses.find_by(id: params[:address_id]) ||
+          @order.user.addresses.build(country: default_country)
       else
-        @order.send("#{address_type}_address")
-      end
-    end
-
-    def build_new_address
-      @order.send("build_#{address_type}_address", country_id: default_country_id).tap do |address|
-        address.country_id ||= default_country_id if address.country.nil?
+        @address =
+          @order.public_send("#{address_type}_address") ||
+          @order.public_send("build_#{address_type}_address", country: default_country)
       end
     end
 
@@ -74,10 +68,10 @@ module SolidusAdmin
       end
     end
 
-    def default_country_id
-      @default_country_id ||= begin
+    def default_country
+      @default_country ||= begin
         country = Spree::Country.default
-        country.id if Spree::Country.available.exists?(id: country.id)
+        country if Spree::Country.available.exists?(id: country.id)
       end
     end
 

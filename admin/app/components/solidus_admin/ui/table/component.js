@@ -84,14 +84,13 @@ export default class extends Controller {
   }
 
   rowClicked(event) {
-    if (event.target.closest('a') || event.target.tagName === 'BUTTON' || event.target.type === 'checkbox') return
+    // If the user clicked on a link, button, input or summary, skip the row url visit
+    if (event.target.closest("td").contains(event.target.closest("a,select,textarea,button,input,summary"))) return
 
-    const row = event.currentTarget
-
-    if (this.modeValue === 'batch') {
-      this.toggleCheckbox(row)
+    if (this.modeValue === "batch") {
+      this.toggleCheckbox(event.currentTarget)
     } else {
-      this.navigateToRow(row)
+      window.Turbo.visit(event.params.url)
     }
   }
 
@@ -102,12 +101,6 @@ export default class extends Controller {
       checkbox.checked = !checkbox.checked
       this.selectRow()
     }
-  }
-
-  navigateToRow(row) {
-    const url = row.dataset.primaryUrl
-
-    if (url) window.location.href = url
   }
 
   render() {

@@ -3,6 +3,7 @@
     flex items-center justify-between
     rounded px-3 py-2
     transform translate-y-full opacity-0 transition-all duration-500
+    pointer-events-auto
     <%= SCHEMES.fetch(@scheme.to_sym).join(' ') %>
   "
   data-controller="<%= stimulus_id %>"

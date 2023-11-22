@@ -18,7 +18,7 @@ SolidusAdmin::Engine.routes.draw do
     get 'states', to: 'countries#states'
   end
 
-  resources :orders, only: [:index, :show, :edit, :update] do
+  resources :orders, except: [:destroy] do
     resources :line_items, only: [:destroy, :create, :update]
     resource :customer
     resource :ship_address, only: [:show, :edit, :update], controller: "addresses", type: "ship"

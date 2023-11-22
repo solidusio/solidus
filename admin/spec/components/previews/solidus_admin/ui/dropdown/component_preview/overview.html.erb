@@ -1,0 +1,35 @@
+<div class="mb-8 relative">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    More icon, direction right
+  </h6>
+
+  <%= render current_component.new(direction: :right) do %>
+    <%= link_to "Link 1", "#" %>
+    <%= link_to "Link 2", "#" %>
+    <%= link_to "Link 3", "#" %>
+    <%= link_to "Link 4", "#" %>
+  <% end %>
+</div>
+
+<div class="mb-8 relative">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    With text, direction right
+  </h6>
+
+  <%= render current_component.new(direction: :right, text: "Select address") do %>
+    <%= link_to "Address 1", "#" %>
+    <%= link_to "Address 2", "#" %>
+    <%= link_to "Address 3", "#" %>
+    <%= link_to "Address 4", "#" %>
+  <% end %>
+</div>
+
+<div class="mb-8 relative">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Small size, long content
+  </h6>
+
+  <%= render current_component.new(direction: :right, size: :s) do %>
+    <%= link_to "Address 1 Address 2 Address 3 Address 4", "#" %>
+  <% end %>
+</div>

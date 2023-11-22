@@ -16,6 +16,6 @@ class SolidusAdmin::UI::Icon::ComponentPreview < ViewComponent::Preview
   private
 
   def name_options
-    @name_options ||= current_component::NAMES.sample(10)
+    @name_options ||= current_component::NAMES.to_a.sample(10)
   end
 end

@@ -9,6 +9,7 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
     @order = order
     @user = user
     @address = address
+    @addresses = user&.addresses.to_a.reject(&:new_record?)
     @type = validate_address_type(type)
   end
 

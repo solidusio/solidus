@@ -21,9 +21,9 @@ class SolidusAdmin::UI::Panel::Component < SolidusAdmin::BaseComponent
 
   renders_many :menus, ->(name, url, **args) do
     if args[:method]
-      button_to(name, url, **args, class: "p-2 hover:bg-gray-25 rounded-sm text-black #{args[:class]}")
+      button_to(name, url, **args)
     else
-      link_to(name, url, **args, class: "p-2 hover:bg-gray-25 rounded-sm text-black #{args[:class]}")
+      link_to(name, url, **args)
     end
   end
 

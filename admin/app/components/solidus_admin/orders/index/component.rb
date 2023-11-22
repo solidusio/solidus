@@ -125,7 +125,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
 
   def customer_column
     {
-      class_name: "w-[400px]",
+      col: { class: "w-[400px]" },
       header: :customer,
       data: ->(order) do
         customer_email = order.user&.email

@@ -20,6 +20,16 @@ module SolidusAdmin
       end
     end
 
+    def new
+      order = Spree::Order.create!(
+        created_by: current_solidus_admin_user,
+        frontend_viewable: false,
+        store_id: current_store.try(:id)
+      )
+
+      redirect_to order_url(order), status: :see_other
+    end
+
     def show
       load_order
 
