@@ -1,4 +1,9 @@
 en:
+  product: Product
+  quantity: Quantity
+  total: Total Price
+  actions: Actions
+  none: No tracking details provided
   inventory_states:
     backordered: Backordered
     canceled: Canceled

@@ -1,25 +1,29 @@
 <div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
   <div class="rounded p-2">
-    <%= render component('ui/panel').new(title: @shipment.number) do |panel| %>
+    <%= render component('ui/panel').new do |panel| %>
+      <% panel.with_section(wide: true, high: true) do %>
+        <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
+          <h2>
+            <span class="text-xl">
+              #<%= @index %>: <%= @shipment.number %> from <%= @shipment.stock_location.name %> <%= render component('ui/badge').new(name: @shipment.state.titleize) %>
+            </span>
+          </h2>
+        </section>
+      <% end %>
+
       <% panel.with_section(wide: true, high: true) do %>
         <div class="rounded-b-lg overflow-hidden">
           <table class="table-auto w-full">
             <thead>
               <tr>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none">Product</th>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Quantity</th>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16 whitespace-nowrap">Total Price</th>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only">Actions</span></th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none"><%= t(".product") %></th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><%= t(".quantity") %></th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16 whitespace-nowrap"><%= t(".total") %></th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only"><%= t(".actions") %></span></th>
               </tr>
             </thead>
             <tbody>
-              <%
-                shipment_manifest = Spree::ShippingManifest.new(
-                  inventory_units: @shipment.last.inventory_units.where(carton_id: nil),
-                ).items.sort_by { |item| item.line_item.created_at }
-              %>
-
-              <% shipment_manifest.each do |item| %>
+              <% manifest.each do |item| %>
                 <tr class="border-gray-100 border-t">
                   <td class="px-6 py-4">
                     <div class="flex gap-2 grow">
@@ -63,19 +67,28 @@
               <% end %>
               <tr class="border-gray-100 border-t">
                 <td colspan="4" class="px-6 py-4">
-                  <%= form_for(@shipment, url: '#') do |f| %>
-                    <%= render component("ui/forms/field").select(
-                      f,
-                      :shipping_method,
-                      Spree::ShippingMethod.order(:name).pluck(:name, :id),
-                      class: "mb-4"
-                    ) %>
+                  <ul class="text-sm">
+                    <li class="flex justify-between py-1.5">
+                      <label class="flex flex-col w-full">
+                        <span class="text-gray-700 body-tiny-bold body-text-xs-semibold">
+                          <%= @shipment.class.human_attribute_name(:shipping_method) %>
+                        </span>
+                        <%= @shipment.shipping_method.name %> - <%= @shipment.display_cost %>
+                      </label>
 
-                    <%= render component("ui/forms/field").text_field(
-                      f,
-                      :tracking
-                    ) %>
-                  <% end %>
+                      <%= render component("ui/icon").new(name: 'edit-line', class: 'w-5 h-5 cursor-pointer') %>
+                    </li>
+                    <li class="flex justify-between py-1.5">
+                      <label class="flex flex-col w-full py-1.5">
+                        <span class="text-gray-700 body-tiny-bold body-text-xs-semibold">
+                          <%= @shipment.class.human_attribute_name(:tracking) %>
+                        </span>
+                        <%= @shipment.tracking || t(".none") %>
+                      </label>
+
+                      <%= render component("ui/icon").new(name: 'edit-line', class: 'w-5 h-5 cursor-pointer') %>
+                    </li>
+                  </ul>
                 </td>
               </tr>
             </tbody>
