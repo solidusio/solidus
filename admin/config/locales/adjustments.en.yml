@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    adjustments:
+      title: "Adjustments"
+      lock:
+        success: "Locked successfully"
+      unlock:
+        success: "Unlocked successfully"
+      destroy:
+        success: "Deleted successfully"

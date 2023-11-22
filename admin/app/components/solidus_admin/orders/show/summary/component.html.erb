@@ -6,7 +6,7 @@
         { label: t('.taxes'), value: number_to_currency(@order.additional_tax_total) },
         { label: t('.shipping'), value: number_to_currency(@order.shipment_total) },
         { label: link_to(t('.add_promo_code'), '#', class: "body-link"), value: number_to_currency(@order.promo_total) },
-        { label: link_to(t('.adjustments'), '#', class: "body-link"), value: number_to_currency(@order.adjustment_total) },
+        { label: link_to(t('.adjustments'), solidus_admin.order_adjustments_path(@order), class: "body-link"), value: number_to_currency(@order.adjustment_total) },
         { label: t('.total'), value: number_to_currency(@order.total), class: 'font-semibold' }
       ]
     ) %>

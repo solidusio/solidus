@@ -26,6 +26,14 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :orders, except: [
     :destroy, :index
   ], constraints: ->{ SolidusAdmin::Config.enable_alpha_features? } do
+    resources :adjustments, only: [:index] do
+      collection do
+        delete :destroy
+        put :lock
+        put :unlock
+      end
+    end
+
     resources :line_items, only: [:destroy, :create, :update]
     resource :customer
     resource :ship_address, only: [:show, :edit, :update], controller: "addresses", type: "ship"
