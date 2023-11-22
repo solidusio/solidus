@@ -1,7 +1,6 @@
 # Solidus Internationalization
 
 [![CircleCI](https://circleci.com/gh/solidusio/solidus_i18n.svg?style=svg)](https://circleci.com/gh/solidusio/solidus_i18n)
-[![Code Climate](https://codeclimate.com/github/solidusio/solidus_i18n/badges/gpa.svg)](https://codeclimate.com/github/solidusio/solidus_i18n)
 [![Gem Version](https://badge.fury.io/rb/solidus_i18n.svg)](https://badge.fury.io/rb/solidus_i18n)
 
 This is the Internationalization project for [Solidus](https://solidus.io)
@@ -22,9 +21,9 @@ selectors and which is now built in to Solidus 2.6+. Configuration for
 Add the following to your `Gemfile`:
 
 ```ruby
-gem 'solidus_i18n', '~> 2.0'
-gem 'rails-i18n', '~> 5.1'
-gem 'kaminari-i18n', '~> 0.5.0'
+gem 'solidus_i18n'
+gem 'rails-i18n'
+gem 'kaminari-i18n'
 ```
 
 ## Locale in URL
@@ -35,7 +34,7 @@ This is still supported (maybe even recommended) but requires some additional co
 1. Add this gem to your `Gemfile`, then run `bundle install`
 
 ``` ruby
-gem 'routing-filter', '~> 0.6.0'
+gem 'routing-filter'
 ```
 
 2. Add `filter :locale` to your `config/routes.rb`
