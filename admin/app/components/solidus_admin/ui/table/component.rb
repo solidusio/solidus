@@ -126,7 +126,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     cell = cell.call(data) if cell.respond_to?(:call)
     cell = data.public_send(cell) if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
-    cell = tag.div(cell, class: "flex items-center gap-1.5 justify-start overflow-hidden") if column.wrap
+    cell = tag.div(cell, class: "flex items-center gap-1.5 justify-start overflow-x-hidden") if column.wrap
 
     tag.td(cell, class: "
       py-2 px-4 h-10 vertical-align-middle leading-none
