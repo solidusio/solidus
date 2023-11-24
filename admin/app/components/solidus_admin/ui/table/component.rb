@@ -132,4 +132,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     ")
   end
 
+
+  def initial_mode
+    @initial_mode ||= params.dig(@search_param, @search_key) ? "search" : "scopes"
+  end
 end
