@@ -20,7 +20,6 @@
         html: {
           id: search_form_id,
           class: 'flex-grow',
-          "data-turbo-frame": table_frame_id,
           "data-turbo-action": "replace",
           "data-#{stimulus_id}-target": "searchForm",
           "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
@@ -87,83 +86,81 @@
     <% end %>
   <% end %>
 
-  <%= turbo_frame_tag table_frame_id, target: "_top" do %>
-    <table class="table-fixed w-full border-collapse">
-      <colgroup>
-        <% @data.columns.each do |column| %>
-          <col <%= tag.attributes(**column.col) if column.col %>">
-        <% end %>
-      </colgroup>
+  <table class="table-fixed w-full border-collapse">
+    <colgroup>
+      <% @data.columns.each do |column| %>
+        <col <%= tag.attributes(**column.col) if column.col %>">
+      <% end %>
+    </colgroup>
 
+    <thead
+      class="bg-gray-15 text-gray-700 text-left text-small"
+      data-<%= stimulus_id %>-target="defaultHeader"
+    >
+      <tr>
+        <% @data.columns.each do |column| %>
+          <%= render_header_cell(column.header) %>
+        <% end %>
+      </tr>
+    </thead>
+
+    <% if @data.batch_actions %>
       <thead
-        class="bg-gray-15 text-gray-700 text-left text-small"
-        data-<%= stimulus_id %>-target="defaultHeader"
+        data-<%= stimulus_id %>-target="batchHeader"
+        class="bg-white color-black text-xs leading-none text-left"
+        hidden
       >
         <tr>
-          <% @data.columns.each do |column| %>
-            <%= render_header_cell(column.header) %>
-          <% end %>
+          <%= render_header_cell(selectable_column.header) %>
+          <%= render_header_cell(content_tag(:div, safe_join([
+            content_tag(:span, "0", "data-#{stimulus_id}-target": "selectedRowsCount"),
+            " #{t('.rows_selected')}.",
+          ])), colspan: @data.columns.count - 1) %>
         </tr>
       </thead>
+    <% end %>
 
-      <% if @data.batch_actions %>
-        <thead
-          data-<%= stimulus_id %>-target="batchHeader"
-          class="bg-white color-black text-xs leading-none text-left"
-          hidden
+    <tbody class="bg-white text-3.5 line-[150%] text-black">
+      <% @data.rows.each do |row| %>
+        <tr
+          class="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer <%= 'bg-gray-15 text-gray-700' if @data.fade&.call(row) %>"
+          <% if @data.url %>
+            data-action="click-><%= stimulus_id %>#rowClicked"
+            data-<%= stimulus_id %>-url-param="<%= @data.url.call(row) %>"
+          <% end %>
         >
-          <tr>
-            <%= render_header_cell(selectable_column.header) %>
-            <%= render_header_cell(content_tag(:div, safe_join([
-              content_tag(:span, "0", "data-#{stimulus_id}-target": "selectedRowsCount"),
-              " #{t('.rows_selected')}.",
-            ])), colspan: @data.columns.count - 1) %>
-          </tr>
-        </thead>
+          <% @data.columns.each do |column| %>
+            <%= render_data_cell(column, row) %>
+          <% end %>
+        </tr>
       <% end %>
 
-      <tbody class="bg-white text-3.5 line-[150%] text-black">
-        <% @data.rows.each do |row| %>
-          <tr
-            class="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer <%= 'bg-gray-15 text-gray-700' if @data.fade&.call(row) %>"
-            <% if @data.url %>
-              data-action="click-><%= stimulus_id %>#rowClicked"
-              data-<%= stimulus_id %>-url-param="<%= @data.url.call(row) %>"
-            <% end %>
+      <% if @data.rows.empty? && @data.plural_name %>
+        <tr>
+          <td
+            colspan="<%= @data.columns.size %>"
+            class="text-center py-4 text-3.5 line-[150%] text-black bg-white rounded-b-lg"
           >
-            <% @data.columns.each do |column| %>
-              <%= render_data_cell(column, row) %>
-            <% end %>
-          </tr>
-        <% end %>
-
-        <% if @data.rows.empty? && @data.plural_name %>
-          <tr>
-            <td
-              colspan="<%= @data.columns.size %>"
-              class="text-center py-4 text-3.5 line-[150%] text-black bg-white rounded-b-lg"
-            >
-              <%= t('.no_resources_found', resources: @data.plural_name) %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-
-      <% if @data.prev || @data.next %>
-        <tfoot>
-          <tr>
-            <td colspan="<%= @data.columns.size %>" class="py-4 bg-white rounded-b-lg border-t border-gray-100">
-              <div class="flex justify-center">
-                <%= render component('ui/table/pagination').new(
-                  prev_link: @data.prev,
-                  next_link: @data.next
-                ) %>
-              </div>
-            </td>
-          </tr>
-        </tfoot>
+            <%= t('.no_resources_found', resources: @data.plural_name) %>
+          </td>
+        </tr>
       <% end %>
+    </tbody>
 
-    </table>
-  <% end %>
+    <% if @data.prev || @data.next %>
+      <tfoot>
+        <tr>
+          <td colspan="<%= @data.columns.size %>" class="py-4 bg-white rounded-b-lg border-t border-gray-100">
+            <div class="flex justify-center">
+              <%= render component('ui/table/pagination').new(
+                prev_link: @data.prev,
+                next_link: @data.next
+              ) %>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    <% end %>
+
+  </table>
 </div>

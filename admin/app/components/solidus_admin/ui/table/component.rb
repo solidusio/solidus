@@ -84,10 +84,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @batch_actions_form_id ||= "#{stimulus_id}--batch-actions-#{@id}"
   end
 
-  def table_frame_id
-    @table_frame_id ||= "#{stimulus_id}--table-frame-#{@id}"
-  end
-
   def search_form_id
     @search_form_id ||= "#{stimulus_id}--search-form-#{@id}"
   end
