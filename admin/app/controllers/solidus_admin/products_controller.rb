@@ -2,6 +2,24 @@
 
 module SolidusAdmin
   class ProductsController < SolidusAdmin::BaseController
+    include SolidusAdmin::ControllerHelpers::Search
+
+    def index
+      products = apply_search_to(
+        Spree::Product.order(created_at: :desc, id: :desc),
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(
+        products,
+        per_page: SolidusAdmin::Config[:products_per_page]
+      )
+
+      respond_to do |format|
+        format.html { render component('products/index').new(page: @page) }
+      end
+    end
+
     def edit
       redirect_to action: :show
     end
@@ -30,22 +48,6 @@ module SolidusAdmin
         respond_to do |format|
           format.html { render component('products/show').new(product: @product), status: :unprocessable_entity }
         end
-      end
-    end
-
-    def index
-      products = Spree::Product
-        .order(created_at: :desc, id: :desc)
-        .ransack(params[:q])
-        .result(distinct: true)
-
-      set_page_and_extract_portion_from(
-        products,
-        per_page: SolidusAdmin::Config[:products_per_page]
-      )
-
-      respond_to do |format|
-        format.html { render component('products/index').new(page: @page) }
       end
     end
 

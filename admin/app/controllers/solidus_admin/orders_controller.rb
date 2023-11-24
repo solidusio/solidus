@@ -3,12 +3,13 @@
 module SolidusAdmin
   class OrdersController < SolidusAdmin::BaseController
     include Spree::Core::ControllerHelpers::StrongParameters
+    include SolidusAdmin::ControllerHelpers::Search
 
     def index
-      orders = Spree::Order
-        .order(created_at: :desc, id: :desc)
-        .ransack(params[:q])
-        .result(distinct: true)
+      orders = apply_search_to(
+        Spree::Order.order(created_at: :desc, id: :desc),
+        param: :q,
+      )
 
       set_page_and_extract_portion_from(
         orders,
