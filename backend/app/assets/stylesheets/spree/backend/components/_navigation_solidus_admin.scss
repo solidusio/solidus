@@ -4,7 +4,7 @@ $color-navbar-hover: $color-navbar !default;
 @import "spree/backend/components/switch_solidus_admin";
 
 .solidus-admin--nav {
-  background-color: $color-light;
+  background-color: $solidus-admin-gray-15;
   position: sticky;
   top: 0;
   bottom: 0;
@@ -93,7 +93,7 @@ $color-navbar-hover: $color-navbar !default;
     }
 
     &--name {
-      line-height: 24px;
+      line-height: 20px;
       font-size: 14px;
       font-weight: 600;
       color: $color-dark;
@@ -101,7 +101,7 @@ $color-navbar-hover: $color-navbar !default;
     }
 
     &--url {
-      line-height: 20px;
+      line-height: 16px;
       font-size: 12px;
       font-weight: 400;
       color: $color-dark-light;
@@ -120,6 +120,7 @@ $color-navbar-hover: $color-navbar !default;
     padding: 0;
     list-style: none;
     text-align: left;
+    margin-bottom: 12px;
 
     li {
       padding: 0;
@@ -150,6 +151,10 @@ $color-navbar-hover: $color-navbar !default;
         height: 18px;
         padding: 0;
       }
+    }
+
+    li > label > span {
+      line-height: 20px;
     }
 
     li.selected > a {
