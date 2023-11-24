@@ -1,65 +1,36 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  # @param id [String] A unique identifier for the table component.
-  # @param model_class [ActiveModel::Translation] The model class used for translations.
-  # @param rows [Array] The collection of objects that will be passed to columns for display.
-  # @param row_fade [Proc, nil] A proc determining if a row should have a faded appearance.
-  # @param row_url [Proc, nil] A proc that takes a row object as a parameter and returns the URL to navigate to when the row is clicked.
-  # @param search_param [Symbol] The param for searching.
-  # @param search_key [Symbol] The key for searching.
-  # @param search_url [String] The base URL for searching.
-  #
-  # @param columns [Array<Hash>] The array of column definitions.
-  # @option columns [Symbol|Proc|#to_s] :header The column header.
-  # @option columns [Symbol|Proc|#to_s] :data The data accessor for the column.
-  # @option columns [String] :class_name (optional) The class name for the column.
-  #
-  # @param batch_actions [Array<Hash>] The array of batch action definitions.
-  # @option batch_actions [String] :display_name The batch action display name.
-  # @option batch_actions [String] :icon The batch action icon.
-  # @option batch_actions [String] :action The batch action path.
-  # @option batch_actions [String] :method The batch action HTTP method for the provided path.
-  #
-  # @param filters [Array<Hash>] The list of filter configurations to render.
-  # @option filters [String] :presentation The display name of the filter dropdown.
-  # @option filters [String] :combinator The combining logic of the filter dropdown.
-  # @option filters [String] :attribute The database attribute this filter modifies.
-  # @option filters [String] :predicate The predicate used for this filter (e.g., "eq" for equals).
-  # @option filters [Array<Array>] :options An array of arrays, each containing two elements:
-  #     1. A human-readable presentation of the filter option (e.g., "Active").
-  #     2. The actual value used for filtering (e.g., "active").
-  #
-  # @param prev_page_link [String, nil] The link to the previous page.
-  # @param next_page_link [String, nil] The link to the next page.
-  def initialize(
-    id:,
-    model_class:,
-    rows:,
-    search_key:, search_url:, search_param: :q,
-    row_fade: nil,
-    row_url: nil,
-    columns: [],
-    batch_actions: [],
-    filters: [],
-    prev_page_link: nil,
-    next_page_link: nil
-  )
-    @columns = columns.map { Column.new(wrap: true, **_1) }
-    @batch_actions = batch_actions.map { BatchAction.new(**_1) }
-    @filters = filters.map { Filter.new(**_1) }
-    @id = id
-    @model_class = model_class
-    @rows = rows
-    @row_fade = row_fade
-    @row_url = row_url
-    @search_param = search_param
-    @search_key = search_key
-    @search_url = search_url
-    @prev_page_link = prev_page_link
-    @next_page_link = next_page_link
+  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
+  Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
+  private_constant :BatchAction, :Column, :Filter
 
-    @columns.unshift selectable_column if batch_actions.present?
+  Data = Struct.new(:rows, :class, :url, :prev, :next, :columns, :fade, :batch_actions, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  Search = Struct.new(:name, :value, :url, :searchbar_key, :filters, :scopes, keyword_init: true)
+
+  def initialize(id:, data:, search: nil)
+    @id = id
+    @data = Data.new(**data)
+    @search = Search.new(**search)
+
+    # Data
+    @columns = @data.columns.map { Column.new(wrap: true, **_1) }
+    @columns.unshift selectable_column if @data.batch_actions.present?
+    @batch_actions = @data.batch_actions&.map { BatchAction.new(**_1) }
+    @model_class = data[:class]
+    @rows = @data.rows
+    @row_fade = @data.fade
+    @row_url = @data.url
+    @prev_page_link = @data.prev
+    @next_page_link = @data.next
+
+    # Search
+    @filters = @search.filters.map { Filter.new(**_1) }
+    @search_param = @search.name
+    @search_params = @search.value
+    @search_key = @search.searchbar_key
+    @search_url = @search.url
   end
 
   def resource_plural_name
@@ -161,8 +132,4 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     ")
   end
 
-  Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
-  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
-  Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
-  private_constant :Column, :BatchAction, :Filter
 end

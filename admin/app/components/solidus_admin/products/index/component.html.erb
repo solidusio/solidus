@@ -13,15 +13,21 @@
 
   <%= render component('ui/table').new(
     id: 'products-list',
-    model_class: Spree::Product,
-    rows: @page.records,
-    row_url: ->(product) { solidus_admin.product_path(product) },
-    search_key: SolidusAdmin::Config[:product_search_key],
-    search_url: solidus_admin.products_path,
-    batch_actions: batch_actions,
-    filters: filters,
-    columns: columns,
-    prev_page_link: prev_page_link,
-    next_page_link: next_page_link,
+    data: {
+      class: Spree::Product,
+      rows: @page.records,
+      url: ->(product) { solidus_admin.product_path(product) },
+      prev: prev_page_link,
+      next: next_page_link,
+      columns: columns,
+      batch_actions: batch_actions,
+    },
+    search: {
+      name: :q,
+      value: params[:q],
+      url: solidus_admin.products_path,
+      searchbar_key: SolidusAdmin::Config[:product_search_key],
+      filters: filters,
+    },
   ) %>
 <% end %>

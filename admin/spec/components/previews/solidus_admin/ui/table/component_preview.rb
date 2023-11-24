@@ -14,21 +14,25 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
   def simple
     render current_component.new(
       id: 'simple-list',
-      model_class: Spree::Product,
-      rows: Array.new(10) { |n|
-        Spree::Product.new(id: n, name: "Product #{n}", price: n * 10.0, available_on: n.days.ago)
+      data: {
+        class: Spree::Product,
+        rows: Array.new(10) { |n|
+          Spree::Product.new(id: n, name: "Product #{n}", price: n * 10.0, available_on: n.days.ago)
+        },
+        columns: [
+          { header: :id, data: -> { _1.id.to_s } },
+          { header: :name, data: :name },
+          { header: -> { "Availability at #{Time.current}" }, data: -> { "#{time_ago_in_words _1.available_on} ago" } },
+          { header: -> { component("ui/badge").new(name: "$$$") }, data: -> { component("ui/badge").new(name: _1.display_price, color: :green) } },
+          { header: "Generated at", data: Time.current.to_s },
+        ],
+        prev: nil,
+        next: '#2',
       },
-      search_key: :no_key,
-      search_url: '#',
-      columns: [
-        { header: :id, data: -> { _1.id.to_s } },
-        { header: :name, data: :name },
-        { header: -> { "Availability at #{Time.current}" }, data: -> { "#{time_ago_in_words _1.available_on} ago" } },
-        { header: -> { component("ui/badge").new(name: "$$$") }, data: -> { component("ui/badge").new(name: _1.display_price, color: :green) } },
-        { header: "Generated at", data: Time.current.to_s },
-      ],
-      prev_page_link: nil,
-      next_page_link: '#2',
+      search: {
+        name: :no_key,
+        url: '#',
+      },
     )
   end
 end
