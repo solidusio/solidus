@@ -15,3 +15,9 @@ en:
   date:
     formats:
       short: '%d %b %y'
+  scopes:
+    all_orders: All
+    canceled: Canceled
+    complete: Complete
+    returned: Returned
+    in_progress: In Progress

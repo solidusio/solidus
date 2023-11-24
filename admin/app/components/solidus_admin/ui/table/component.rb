@@ -4,7 +4,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
   Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
-  private_constant :BatchAction, :Column, :Filter
+  Scope = Struct.new(:name, :label, :default, keyword_init: true)
+  private_constant :BatchAction, :Column, :Filter, :Scope
 
   Data = Struct.new(:rows, :class, :url, :prev, :next, :columns, :fade, :batch_actions, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   Search = Struct.new(:name, :value, :url, :searchbar_key, :filters, :scopes, keyword_init: true)
@@ -27,6 +28,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
 
     # Search
     @filters = @search.filters.map { Filter.new(**_1) }
+    @scopes = @search.scopes.map { Scope.new(**_1) }
     @search_param = @search.name
     @search_params = @search.value
     @search_key = @search.searchbar_key
@@ -132,6 +134,13 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     ")
   end
 
+  def current_scope_name
+    @current_scope_name ||= params.dig(@search_param, :scope).presence || @scopes.find(&:default)&.name&.to_s
+  end
+
+  def scope_param_name
+    @scope_param_name ||= "#{@search_param}[scope]"
+  end
 
   def initial_mode
     @initial_mode ||= params.dig(@search_param, @search_key) ? "search" : "scopes"

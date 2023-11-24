@@ -32,6 +32,7 @@
       searchbar_key: SolidusAdmin::Config[:order_search_key],
       url: solidus_admin.orders_path(scope: params[:scope]),
       filters: filters,
+      scopes: scopes,
     },
   ) %>
 </div>

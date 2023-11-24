@@ -23,6 +23,16 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     []
   end
 
+  def scopes
+    [
+      { label: t('.scopes.complete'), name: 'completed', default: true },
+      { label: t('.scopes.in_progress'), name: 'in_progress' },
+      { label: t('.scopes.returned'), name: 'returned' },
+      { label: t('.scopes.canceled'), name: 'canceled' },
+      { label: t('.scopes.all_orders'), name: 'all' },
+    ]
+  end
+
   def filters
     [
       {

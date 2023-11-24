@@ -4,6 +4,9 @@ module SolidusAdmin
   class ProductsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
+    search_scope(:all, default: true)
+    search_scope(:deleted) { _1.with_discarded.discarded }
+
     def index
       products = apply_search_to(
         Spree::Product.order(created_at: :desc, id: :desc),

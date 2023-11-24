@@ -9,6 +9,7 @@ describe "Orders", type: :feature do
     create(:order, number: "R123456789", total: 19.99)
 
     visit "/admin/orders"
+    click_on "In Progress"
 
     expect(page).to have_content("R123456789")
     expect(page).to have_content("$19.99")

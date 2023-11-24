@@ -26,6 +26,7 @@
           "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
         },
       ) do |form| %>
+        <%= hidden_field_tag scope_param_name, current_scope_name %>
         <%= render component('ui/forms/search_field').new(
           name: "#{@search_param}[#{@search_key}]",
           value: params.dig(@search_param, @search_key),
@@ -54,7 +55,19 @@
 
     <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "scopesToolbar", hidden: initial_mode != "scopes") do %>
       <div class="flex-grow">
-        <%= render component("ui/tab").new(text: "All", current: true, href: "") %>
+        <%= form_with(url: @search_url, method: :get) do %>
+          <% @scopes.each do |scope| %>
+            <%= render component("ui/tab").new(
+              tag: :button,
+              type: :submit,
+              text: scope.label,
+              current: current_scope_name == scope.name.to_s,
+              name: scope_param_name,
+              value: scope.name,
+            ) %>
+            <%#= render component("ui/tab").new(text: scope.label, current: current, href: scope.path) %>
+          <% end %>
+        <% end %>
       </div>
 
       <%= render component("ui/button").new(
