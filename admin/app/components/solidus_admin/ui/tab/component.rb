@@ -23,11 +23,11 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
         hover:bg-gray-75 hover:text-gray-700
         focus:bg-gray-25 focus:text-gray-700
 
-        active:bg-gray-50 active:text-black
+        active:bg-gray-75 active:text-black
         aria-current:bg-gray-50 aria-current:text-black
 
-        disabled:bg-gray-100 disabled:text-gray-400
-        aria-disabled:bg-gray-100 aria-disabled:text-gray-400
+        disabled:bg-gray-75 disabled:text-gray-400
+        aria-disabled:bg-gray-75 aria-disabled:text-gray-400
       ],
       SIZES.fetch(@size.to_sym),
       @attributes.delete(:class),
