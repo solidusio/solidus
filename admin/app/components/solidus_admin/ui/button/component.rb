@@ -34,32 +34,32 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
       hover:text-white hover:bg-gray-600
       active:text-white active:bg-gray-800
       focus:text-white focus:bg-gray-700
-      disabled:text-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed
-      aria-disabled:text-gray-400 aria-disabled:bg-gray-100 aria-disabled:aria-disabled:cursor-not-allowed
+      disabled:text-gray-400 disabled:bg-gray-100
+      aria-disabled:text-gray-400 aria-disabled:bg-gray-100
     },
     secondary: %{
       text-gray-700 bg-white border border-1 border-gray-200
       hover:bg-gray-50
       active:bg-gray-100
       focus:bg-gray-50
-      disabled:text-gray-300 disabled:bg-white disabled:cursor-not-allowed
-      aria-disabled:text-gray-300 aria-disabled:bg-white aria-disabled:cursor-not-allowed
+      disabled:text-gray-300 disabled:bg-white
+      aria-disabled:text-gray-300 aria-disabled:bg-white
     },
     danger: %{
       text-red-500 bg-white border border-1 border-red-500
       hover:bg-red-500 hover:border-red-600 hover:text-white
       active:bg-red-600 active:border-red-700 active:text-white
       focus:bg-red-50 focus:bg-red-500 focus:border-red-600 focus:text-white
-      disabled:text-red-300 disabled:bg-white disabled:border-red-200 disabled:cursor-not-allowed
-      aria-disabled:text-red-300 aria-disabled:bg-white aria-disabled:border-red-200 aria-disabled:cursor-not-allowed
+      disabled:text-red-300 disabled:bg-white disabled:border-red-200
+      aria-disabled:text-red-300 aria-disabled:bg-white aria-disabled:border-red-200
     },
     ghost: %{
       text-gray-700 bg-transparent
       hover:bg-gray-50
       active:bg-gray-100
       focus:bg-gray-50 focus:ring-gray-300 focus:ring-2
-      disabled:text-gray-300 disabled:bg-transparent disabled:border-gray-300 disabled:cursor-not-allowed
-      aria-disabled:text-gray-300 aria-disabled:bg-transparent aria-disabled:border-gray-300 aria-disabled:cursor-not-allowed
+      disabled:text-gray-300 disabled:bg-transparent disabled:border-gray-300
+      aria-disabled:text-gray-300 aria-disabled:bg-transparent aria-disabled:border-gray-300
     },
   }
 

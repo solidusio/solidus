@@ -16,16 +16,23 @@
 
   <%= render component('ui/table').new(
     id: 'orders-list',
-    model_class: Spree::Order,
-    rows: @page.records,
-    row_fade: row_fade,
-    row_url: ->(order) { spree.edit_admin_order_path(order) },
-    search_key: SolidusAdmin::Config[:order_search_key],
-    search_url: solidus_admin.orders_path,
-    batch_actions: batch_actions,
-    filters: filters,
-    columns: columns,
-    prev_page_link: prev_page_link,
-    next_page_link: next_page_link,
+    data: {
+      class: Spree::Order,
+      rows: @page.records,
+      fade: row_fade,
+      url: ->(order) { spree.edit_admin_order_path(order) },
+      batch_actions: batch_actions,
+      columns: columns,
+      prev: prev_page_link,
+      next: next_page_link,
+    },
+    search: {
+      name: :q,
+      value: params[:q],
+      searchbar_key: SolidusAdmin::Config[:order_search_key],
+      url: solidus_admin.orders_path(scope: params[:scope]),
+      filters: filters,
+      scopes: scopes,
+    },
   ) %>
 </div>

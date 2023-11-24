@@ -23,6 +23,16 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     []
   end
 
+  def scopes
+    [
+      { label: t('.scopes.complete'), name: 'completed', default: true },
+      { label: t('.scopes.in_progress'), name: 'in_progress' },
+      { label: t('.scopes.returned'), name: 'returned' },
+      { label: t('.scopes.canceled'), name: 'canceled' },
+      { label: t('.scopes.all_orders'), name: 'all' },
+    ]
+  end
+
   def filters
     [
       {
@@ -92,6 +102,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
   def columns
     [
       number_column,
+      state_column,
       date_column,
       customer_column,
       total_column,
@@ -110,6 +121,21 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
         else
           content_tag :div, order.number
         end
+      end
+    }
+  end
+
+  def state_column
+    {
+      header: :state,
+      data: ->(order) do
+        color = {
+          'complete' => :green,
+          'returned' => :red,
+          'canceled' => :blue,
+          'cart' => :graphite_light,
+        }[order.state] || :yellow
+        component('ui/badge').new(name: order.state.humanize, color: color)
       end
     }
   end

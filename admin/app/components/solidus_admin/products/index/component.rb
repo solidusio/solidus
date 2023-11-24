@@ -59,6 +59,13 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     end
   end
 
+  def scopes
+    [
+      { name: :all, label: t('.scopes.all'), default: true },
+      { name: :deleted, label: t('.scopes.deleted') },
+    ]
+  end
+
   def columns
     [
       image_column,

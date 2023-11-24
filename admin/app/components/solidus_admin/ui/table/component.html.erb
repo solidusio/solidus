@@ -6,31 +6,34 @@
   "
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-selected-row-class="bg-gray-15"
+  data-<%= stimulus_id %>-mode-value="<%= initial_mode %>"
   data-action="
     <%= component("ui/table/ransack_filter").stimulus_id %>:search-><%= stimulus_id %>#search
     <%= component("ui/table/ransack_filter").stimulus_id %>:showSearch-><%= stimulus_id %>#showSearch
   "
 >
   <div role="search">
-    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "searchToolbar") do %>
+    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "searchToolbar", hidden: initial_mode != "search") do %>
       <%= form_with(
-        url: @search_url,
+        url: @search.url,
         method: :get,
         html: {
           id: search_form_id,
           class: 'flex-grow',
-          "data-turbo-frame": table_frame_id,
           "data-turbo-action": "replace",
           "data-#{stimulus_id}-target": "searchForm",
           "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
         },
       ) do |form| %>
+        <%= hidden_field_tag @search.scope_param_name, @search.current_scope.name if @search.scopes.present? %>
         <%= render component('ui/forms/search_field').new(
-          name: "#{@search_param}[#{@search_key}]",
-          value: params.dig(@search_param, @search_key),
-          placeholder: t('.search_placeholder', resources: resource_plural_name),
+          name: @search.searchbar_param_name,
+          value: @search.value[@search.searchbar_key],
+          placeholder: t('.search_placeholder', resources: @data.plural_name),
+          "aria-label": t('.search_placeholder', resources: @data.plural_name),
           "data-#{stimulus_id}-target": "searchField",
-          "aria-label": t('.search_placeholder', resources: resource_plural_name)
+          "data-turbo-permanent": "true",
+          id: "#{stimulus_id}-search-field-#{@id}",
         ) %>
       <% end %>
 
@@ -43,17 +46,28 @@
       </div>
     <% end %>
 
-    <% if @filters.any? %>
-      <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "filterToolbar") do %>
-        <% @filters.each_with_index do |filter, index| %>
+    <% if @search.filters.any? %>
+      <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "filterToolbar", hidden: initial_mode != "search") do %>
+        <% @search.filters.each_with_index do |filter, index| %>
           <%= render_ransack_filter_dropdown(filter, index) %>
         <% end %>
       <% end %>
     <% end %>
 
-    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "scopesToolbar") do %>
+    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "scopesToolbar", hidden: initial_mode != "scopes") do %>
       <div class="flex-grow">
-        <%= render component("ui/tab").new(text: "All", current: true, href: "") %>
+        <%= form_with(url: @search.url, method: :get) do %>
+          <% @search.scopes.each do |scope| %>
+            <%= render component("ui/tab").new(
+              tag: :button,
+              type: :submit,
+              text: scope.label,
+              current: scope == @search.current_scope,
+              name: @search.scope_param_name,
+              value: scope.name,
+            ) %>
+          <% end %>
+        <% end %>
       </div>
 
       <%= render component("ui/button").new(
@@ -65,90 +79,88 @@
     <% end %>
   </div>
 
-  <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "batchToolbar", role: "toolbar", "aria-label": t(".batch_actions")) do %>
+  <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "batchToolbar", role: "toolbar", "aria-label": t(".batch_actions"), hidden: true) do %>
     <%= form_tag '', id: batch_actions_form_id %>
-    <% @batch_actions.each do |batch_action| %>
+    <% @data.batch_actions.each do |batch_action| %>
       <%= render_batch_action_button(batch_action) %>
     <% end %>
   <% end %>
 
-  <%= turbo_frame_tag table_frame_id, target: "_top" do %>
-    <table class="table-fixed w-full border-collapse">
-      <colgroup>
-        <% @columns.each do |column| %>
-          <col <%= tag.attributes(**column.col) if column.col %>">
-        <% end %>
-      </colgroup>
+  <table class="table-fixed w-full border-collapse">
+    <colgroup>
+      <% @data.columns.each do |column| %>
+        <col <%= tag.attributes(**column.col) if column.col %>">
+      <% end %>
+    </colgroup>
 
+    <thead
+      class="bg-gray-15 text-gray-700 text-left text-small"
+      data-<%= stimulus_id %>-target="defaultHeader"
+    >
+      <tr>
+        <% @data.columns.each do |column| %>
+          <%= render_header_cell(column.header) %>
+        <% end %>
+      </tr>
+    </thead>
+
+    <% if @data.batch_actions %>
       <thead
-        class="bg-gray-15 text-gray-700 text-left text-small"
-        data-<%= stimulus_id %>-target="defaultHeader"
+        data-<%= stimulus_id %>-target="batchHeader"
+        class="bg-white color-black text-xs leading-none text-left"
+        hidden
       >
         <tr>
-          <% @columns.each do |column| %>
-            <%= render_header_cell(column.header) %>
-          <% end %>
+          <%= render_header_cell(selectable_column.header) %>
+          <%= render_header_cell(content_tag(:div, safe_join([
+            content_tag(:span, "0", "data-#{stimulus_id}-target": "selectedRowsCount"),
+            " #{t('.rows_selected')}.",
+          ])), colspan: @data.columns.count - 1) %>
         </tr>
       </thead>
+    <% end %>
 
-      <% if @batch_actions %>
-        <thead
-          data-<%= stimulus_id %>-target="batchHeader"
-          class="bg-white color-black text-xs leading-none text-left"
-          hidden
+    <tbody class="bg-white text-3.5 line-[150%] text-black">
+      <% @data.rows.each do |row| %>
+        <tr
+          class="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer <%= 'bg-gray-15 text-gray-700' if @data.fade&.call(row) %>"
+          <% if @data.url %>
+            data-action="click-><%= stimulus_id %>#rowClicked"
+            data-<%= stimulus_id %>-url-param="<%= @data.url.call(row) %>"
+          <% end %>
         >
-          <tr>
-            <%= render_header_cell(selectable_column.header) %>
-            <%= render_header_cell(content_tag(:div, safe_join([
-              content_tag(:span, "0", "data-#{stimulus_id}-target": "selectedRowsCount"),
-              " #{t('.rows_selected')}.",
-            ])), colspan: @columns.count - 1) %>
-          </tr>
-        </thead>
+          <% @data.columns.each do |column| %>
+            <%= render_data_cell(column, row) %>
+          <% end %>
+        </tr>
       <% end %>
 
-      <tbody class="bg-white text-3.5 line-[150%] text-black">
-        <% @rows.each do |row| %>
-          <tr
-            class="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer <%= 'bg-gray-15 text-gray-700' if @row_fade&.call(row) %>"
-            <% if @row_url %>
-              data-action="click-><%= stimulus_id %>#rowClicked"
-              data-<%= stimulus_id %>-url-param="<%= @row_url.call(row) %>"
-            <% end %>
+      <% if @data.rows.empty? && @data.plural_name %>
+        <tr>
+          <td
+            colspan="<%= @data.columns.size %>"
+            class="text-center py-4 text-3.5 line-[150%] text-black bg-white rounded-b-lg"
           >
-            <% @columns.each do |column| %>
-              <%= render_data_cell(column, row) %>
-            <% end %>
-          </tr>
-        <% end %>
-
-        <% if @rows.empty? && @model_class %>
-          <tr>
-            <td
-              colspan="<%= @columns.size %>"
-              class="text-center py-4 text-3.5 line-[150%] text-black bg-white rounded-b-lg"
-            >
-              <%= t('.no_resources_found', resources: resource_plural_name) %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-
-      <% if @prev_page_link || @next_page_link %>
-        <tfoot>
-          <tr>
-            <td colspan="<%= @columns.size %>" class="py-4 bg-white rounded-b-lg border-t border-gray-100">
-              <div class="flex justify-center">
-                <%= render component('ui/table/pagination').new(
-                  prev_link: @prev_page_link,
-                  next_link: @next_page_link
-                ) %>
-              </div>
-            </td>
-          </tr>
-        </tfoot>
+            <%= t('.no_resources_found', resources: @data.plural_name) %>
+          </td>
+        </tr>
       <% end %>
+    </tbody>
 
-    </table>
-  <% end %>
+    <% if @data.prev || @data.next %>
+      <tfoot>
+        <tr>
+          <td colspan="<%= @data.columns.size %>" class="py-4 bg-white rounded-b-lg border-t border-gray-100">
+            <div class="flex justify-center">
+              <%= render component('ui/table/pagination').new(
+                prev_link: @data.prev,
+                next_link: @data.next
+              ) %>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    <% end %>
+
+  </table>
 </div>

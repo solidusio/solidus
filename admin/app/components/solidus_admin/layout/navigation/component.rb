@@ -15,6 +15,12 @@ class SolidusAdmin::Layout::Navigation::Component < SolidusAdmin::BaseComponent
     @store = store
   end
 
+  def before_render
+    url = @store.url
+    url = "https://#{url}" unless url.start_with?("http")
+    @store_url = url
+  end
+
   def items
     @items.sort_by(&:position)
   end

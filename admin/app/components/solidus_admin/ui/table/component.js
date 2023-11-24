@@ -29,12 +29,6 @@ export default class extends Controller {
     this.search = debounce(this.search.bind(this), 200)
   }
 
-  connect() {
-    if (this.searchFieldTarget.value !== "") this.modeValue = "search"
-
-    this.render()
-  }
-
   showSearch(event) {
     this.modeValue = "search"
     this.render()
@@ -51,10 +45,18 @@ export default class extends Controller {
   }
 
   cancelSearch() {
-    this.clearSearch()
+    this.resetFilters()
+    this.search()
+  }
 
-    this.modeValue = "scopes"
-    this.render()
+  resetFilters() {
+    if (!this.hasFilterToolbarTarget) return
+
+    for (const fieldset of this.filterToolbarTarget.querySelectorAll('fieldset')) {
+      fieldset.setAttribute('disabled', true)
+    }
+    this.searchFieldTarget.setAttribute('disabled', true)
+    this.searchFormTarget.submit()
   }
 
   selectRow(event) {

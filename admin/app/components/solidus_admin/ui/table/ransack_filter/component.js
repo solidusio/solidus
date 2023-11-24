@@ -11,6 +11,7 @@ export default class extends Controller {
     useDebounce(this, { wait: 50 })
     useClickOutside(this)
     this.init()
+    this.updateHiddenInputs()
   }
 
   clickOutside(event) {
@@ -42,6 +43,15 @@ export default class extends Controller {
   search() {
     this.dispatch("search")
     this.highlightFilter()
+  }
+
+  updateHiddenInputs() {
+    this.checkboxTargets.forEach((checkbox) => {
+      const hiddenElements = checkbox.parentElement.querySelectorAll("input[type='hidden']")
+      checkbox.checked
+        ? hiddenElements.forEach(e => e.removeAttribute("disabled"))
+        : hiddenElements.forEach(e => e.setAttribute("disabled", true))
+    })
   }
 
   sortCheckboxes() {
