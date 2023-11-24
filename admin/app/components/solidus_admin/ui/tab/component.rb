@@ -7,7 +7,8 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
     l: %w[h-12 px-4 body-text-bold],
   }
 
-  def initialize(text:, size: :m, current: false, disabled: false, **attributes)
+  def initialize(text:, tag: :a, size: :m, current: false, disabled: false, **attributes)
+    @tag = tag
     @text = text
     @size = size
     @attributes = attributes
@@ -35,7 +36,7 @@ class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
 
   def call
     content_tag(
-      :a,
+      @tag,
       @text,
       **@attributes
     )
