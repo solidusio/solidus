@@ -1,0 +1,14 @@
+en:
+  promotion_image: 'Image'
+  add: 'Add Promotion'
+  batch_actions:
+    delete: 'Delete'
+  scopes:
+    active: Active
+    draft: Draft
+    future: Future
+    expired: Expired
+    all: All
+  status:
+    active: Active
+    inactive: Inactive

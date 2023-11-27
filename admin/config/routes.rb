@@ -36,4 +36,10 @@ SolidusAdmin::Engine.routes.draw do
       delete :destroy
     end
   end
+
+  resources :promotions, only: [:index] do
+    collection do
+      delete :destroy
+    end
+  end
 end
