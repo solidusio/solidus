@@ -25,7 +25,7 @@ describe "Products", type: :feature do
     create(:product, name: "Another product", price: 29.99)
 
     visit "/admin/products"
-    find('main tbody tr:nth-child(2)').find('input').check
+    select_row("Just a product")
     click_button "Delete"
 
     expect(page).to have_content("Products were successfully removed.", wait: 5)
