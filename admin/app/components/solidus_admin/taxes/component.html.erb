@@ -1,0 +1,23 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title safe_join([
+      tag.div(t(".title")),
+      tag.div(t(".subtitle"), class: "body-small text-gray-500"),
+    ]) %>
+  <% end %>
+
+  <%= page_header do %>
+    <% title = capture do %>
+      <%= render(component('ui/button').new(tag: :a, scheme: :ghost, text: Spree::TaxCategory.model_name.human.pluralize, href: solidus_admin.tax_categories_path, "aria-current": true)) %>
+      <%= render(component('ui/button').new(tag: :a, scheme: :ghost, text: Spree::TaxRate.model_name.human.pluralize, href: spree.admin_tax_rates_path, current: false)) %>
+    <% end %>
+
+    <%= page_header_title title %>
+
+    <%= page_header_actions do %>
+      <%= actions %>
+    <% end %>
+  <% end %>
+
+  <%= content %>
+<% end %>
