@@ -152,6 +152,11 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def initial_mode
-    @initial_mode ||= @search.value[@search.searchbar_key] ? "search" : "scopes"
+    @initial_mode ||=
+      if @search.value[@search.searchbar_key] || @search.scopes.none?
+        "search"
+      else
+        "scopes"
+      end
   end
 end

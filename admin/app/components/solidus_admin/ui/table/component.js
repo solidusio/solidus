@@ -64,8 +64,10 @@ export default class extends Controller {
       this.modeValue = "batch"
     } else if (this.searchFieldTarget.value !== '') {
       this.modeValue = "search"
-    } else {
+    } else if (this.hasScopesToolbarTarget) {
       this.modeValue = "scopes"
+    } else {
+      this.modeValue = "search"
     }
 
     this.render()
@@ -76,8 +78,10 @@ export default class extends Controller {
       this.modeValue = "batch"
     } else if (this.searchFieldTarget.value !== '') {
       this.modeValue = "search"
-    } else {
+    } else if (this.hasScopesToolbarTarget) {
       this.modeValue = "scopes"
+    } else {
+      this.modeValue = "search"
     }
 
     this.checkboxTargets.forEach((checkbox) => (checkbox.checked = event.target.checked))
@@ -118,7 +122,8 @@ export default class extends Controller {
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue === "batch")
 
-    this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
+    if (this.hasScopesToolbarTarget)
+      this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
 
     // Update the rows background color
     this.checkboxTargets.filter((checkbox) =>
