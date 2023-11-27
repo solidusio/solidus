@@ -186,6 +186,41 @@ module SolidusAdmin
       ]
     end
 
+    def import_menu_items_from_backend!
+      menu_item_to_hash = ->(item, index) do
+        route =
+          if item.url.is_a?(Symbol)
+            -> { solidus_admin.public_send(item.url) }
+          elsif item.url.is_a?(String)
+            -> { item.url }
+          elsif item.url.is_a?(Proc)
+            item.url
+          elsif item.url.nil?
+            -> { spree.public_send(:"admin_#{item.label}_path") }
+          else
+            raise ArgumentError, "Unknown url type #{item.url.class}"
+          end
+
+        icon =
+          case item.icon
+          when /^ri-/
+            item.icon.delete_prefix("ri-")
+          when String
+            'record-circle-line' # fallback on a generic icon
+          end
+
+        {
+          position: index,
+          key: item.label,
+          icon: icon,
+          route: route,
+          children: item.children.map.with_index(&menu_item_to_hash)
+        }
+      end
+
+      @menu_items = Spree::Backend::Config.menu_items.map.with_index(&menu_item_to_hash)
+    end
+
     def components
       @components ||= Hash.new do |_h, k|
         const_name = "solidus_admin/#{k}/component".classify

@@ -17,7 +17,7 @@ module SolidusAdmin
       end
 
       def copy_initializer
-        copy_file "config/initializers/solidus_admin.rb"
+        template 'config/initializers/solidus_admin.rb.tt', 'config/initializers/solidus_admin.rb'
       end
 
       def ignore_tailwind_build_files
