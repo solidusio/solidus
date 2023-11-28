@@ -16,5 +16,17 @@ module SolidusAdmin
       allow_any_instance_of(SolidusAdmin::BaseController).to receive(:current_ability).and_return(ability)
       allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_ability).and_return(ability)
     end
+
+    def find_row(text)
+      find('table tbody tr', text: text)
+    end
+
+    def find_row_checkbox(text)
+      find_row(text).find('td:first-child input[type="checkbox"]')
+    end
+
+    def select_row(text)
+      find_row_checkbox(text).check
+    end
   end
 end

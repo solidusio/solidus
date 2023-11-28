@@ -4,19 +4,19 @@
     <%= page_header_actions do %>
       <%= render component("ui/button").new(
         tag: :a,
-        text: t('.add_product'),
-        href: spree.new_admin_product_path,
+        text: t('.add'),
+        href: spree.new_admin_user_path,
         icon: "add-line",
       ) %>
     <% end %>
   <% end %>
 
   <%= render component('ui/table').new(
-    id: 'products-list',
+    id: stimulus_id,
     data: {
-      class: Spree::Product,
+      class: Spree.user_class,
       rows: @page.records,
-      url: ->(product) { solidus_admin.product_path(product) },
+      url: ->(user) { spree.admin_user_path(user) },
       prev: prev_page_path,
       next: next_page_path,
       columns: columns,
@@ -25,8 +25,8 @@
     search: {
       name: :q,
       value: params[:q],
-      url: solidus_admin.products_path,
-      searchbar_key: SolidusAdmin::Config[:product_search_key],
+      url: solidus_admin.users_path,
+      searchbar_key: :email_cont,
       filters: filters,
       scopes: scopes,
     },

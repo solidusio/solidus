@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    users:
+      title: "Users"
+      destroy:
+        success: "Users were successfully removed."

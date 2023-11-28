@@ -11,12 +11,12 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     Spree::Order.model_name.human.pluralize
   end
 
-  def prev_page_link
-    @page.first? ? nil : solidus_admin.url_for(host: request.host, port: request.port, **request.params, page: @page.number - 1)
+  def prev_page_path
+    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
   end
 
-  def next_page_link
-    @page.last? ? nil : solidus_admin.url_for(host: request.host, port: request.port, **request.params, page: @page.next_param)
+  def next_page_path
+    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
   end
 
   def batch_actions
