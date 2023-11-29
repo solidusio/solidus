@@ -33,6 +33,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'responders'
   s.add_dependency 'sassc-rails'
 
-  s.add_dependency 'autoprefixer-rails', '~> 10.2', '>= 10.2.5.1'
   s.add_dependency 'handlebars_assets', '~> 0.23'
 end
