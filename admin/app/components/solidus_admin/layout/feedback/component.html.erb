@@ -1,11 +1,15 @@
-<span class="max-w-xs text-xs text-right text-gray-600 hidden lg:block">
-  <%= t(".feedback_description") %>
-</span>
-<%= render component("ui/button").new(
-  tag: :a,
-  text: t(".give_feedback"),
-  href: "https://solidus.io/feedback?category=solidus-admin",
-  icon: "feedback-line",
-  scheme: :secondary,
-  target: :_blank,
-) %>
+<%= link_to(
+  "https://solidus.io/feedback?category=solidus-admin",
+  class: 'whitespace-nowrap flex flex-col items-center gap-2 text-gray-500 text-small hover:text-black',
+  target: '_blank',
+) do %>
+
+  <span>
+    <%= render component("ui/badge").new(name: "beta", size: :s, color: :blue) %>
+    <span class="underline"><%= t(".give_feedback") %></span>
+  </span>
+
+  <span class="body-small text-center">
+    <%= t(".feedback_description_html") %>
+  </span>
+<% end %>
