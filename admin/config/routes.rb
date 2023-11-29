@@ -49,7 +49,7 @@ SolidusAdmin::Engine.routes.draw do
     end
   end
 
-  resources :option_types do
+  resources :option_types, only: [:index] do
     collection do
       delete :destroy
     end

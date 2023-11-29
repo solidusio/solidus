@@ -1,0 +1,28 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title title %>
+    <%= page_header_actions do %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        text: t('.create_option_type'),
+        href: spree.new_admin_option_type_path,
+        icon: "add-line",
+      ) %>
+    <% end %>
+  <% end %>
+
+  <%= render component('ui/table').new(
+    id: 'option-types-list',
+    data: {
+      class: Spree::OptionType,
+      rows: @option_types,
+      url: ->(option_type) { spree.edit_admin_option_type_path(option_type) },
+      columns: columns,
+      batch_actions: batch_actions,
+    },
+    sortable: {
+      url: ->(option_type) { solidus_admin.move_option_type_path(option_type) },
+      param: 'position',
+    },
+  ) %>
+<% end %>

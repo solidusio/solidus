@@ -4,6 +4,14 @@ module SolidusAdmin
   class OptionTypesController < SolidusAdmin::BaseController
     before_action :load_option_type, only: [:move]
 
+    def index
+      @option_types = Spree::OptionType.all
+
+      respond_to do |format|
+        format.html { render component('option_types/index').new(option_types: @option_types) }
+      end
+    end
+
     def move
       @option_type.insert_at(params[:position].to_i)
 
