@@ -42,4 +42,10 @@ SolidusAdmin::Engine.routes.draw do
       delete :destroy
     end
   end
+
+  resources :properties, only: [:index] do
+    collection do
+      delete :destroy
+    end
+  end
 end
