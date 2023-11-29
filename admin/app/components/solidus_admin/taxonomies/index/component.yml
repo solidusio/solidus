@@ -1,0 +1,4 @@
+en:
+  batch_actions:
+    delete: 'Delete'
+  create_taxonomy: Create Taxonomy

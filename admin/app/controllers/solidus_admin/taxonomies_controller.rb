@@ -4,6 +4,14 @@ module SolidusAdmin
   class TaxonomiesController < SolidusAdmin::BaseController
     before_action :load_taxonomy, only: [:move]
 
+    def index
+      @taxonomies = Spree::Taxonomy.all
+
+      respond_to do |format|
+        format.html { render component('taxonomies/index').new(taxonomies: @taxonomies) }
+      end
+    end
+
     def move
       @taxonomy.insert_at(params[:position].to_i)
 

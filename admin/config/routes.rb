@@ -58,7 +58,7 @@ SolidusAdmin::Engine.routes.draw do
     end
   end
 
-  resources :taxonomies do
+  resources :taxonomies, only: [:index] do
     collection do
       delete :destroy
     end
