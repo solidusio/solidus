@@ -57,4 +57,10 @@ SolidusAdmin::Engine.routes.draw do
       patch :move
     end
   end
+
+  resources :promotion_categories, only: [:index] do
+    collection do
+      delete :destroy
+    end
+  end
 end
