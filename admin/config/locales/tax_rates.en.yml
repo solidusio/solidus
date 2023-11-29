@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    tax_rates:
+      title: "Tax Rates"
+      destroy:
+        success: "Tax rates were successfully removed."

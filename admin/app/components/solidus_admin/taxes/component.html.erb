@@ -8,8 +8,9 @@
 
   <%= page_header do %>
     <% title = capture do %>
-      <%= render(component('ui/button').new(tag: :a, scheme: :ghost, text: Spree::TaxCategory.model_name.human.pluralize, href: solidus_admin.tax_categories_path, "aria-current": true)) %>
-      <%= render(component('ui/button').new(tag: :a, scheme: :ghost, text: Spree::TaxRate.model_name.human.pluralize, href: spree.admin_tax_rates_path, current: false)) %>
+      <% tabs.each do %>
+        <%= render(component('ui/button').new(tag: :a, scheme: :ghost, **_1)) %>
+      <% end %>
     <% end %>
 
     <%= page_header_title title %>

@@ -69,4 +69,10 @@ SolidusAdmin::Engine.routes.draw do
       delete :destroy
     end
   end
+
+  resources :tax_rates, only: [:index] do
+    collection do
+      delete :destroy
+    end
+  end
 end
