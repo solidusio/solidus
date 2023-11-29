@@ -12,72 +12,74 @@
     <%= component("ui/table/ransack_filter").stimulus_id %>:showSearch-><%= stimulus_id %>#showSearch
   "
 >
-  <div role="search">
-    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "searchToolbar", hidden: initial_mode != "search") do %>
-      <%= form_with(
-        url: @search.url,
-        method: :get,
-        html: {
-          id: search_form_id,
-          class: 'flex-grow',
-          "data-turbo-action": "replace",
-          "data-#{stimulus_id}-target": "searchForm",
-          "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
-        },
-      ) do |form| %>
-        <%= hidden_field_tag @search.scope_param_name, @search.current_scope.name if @search.scopes.present? %>
-        <%= render component('ui/forms/search_field').new(
-          name: @search.searchbar_param_name,
-          value: @search.value[@search.searchbar_key],
-          placeholder: t('.search_placeholder', resources: @data.plural_name),
-          "aria-label": t('.search_placeholder', resources: @data.plural_name),
-          "data-#{stimulus_id}-target": "searchField",
-          "data-turbo-permanent": "true",
-          id: "#{stimulus_id}-search-field-#{@id}",
-        ) %>
-      <% end %>
-
-      <div class="ml-4">
-        <%= render component("ui/button").new(
-          text: t('.cancel'),
-          scheme: :ghost,
-          "data-action": "#{stimulus_id}#cancelSearch",
-        ) %>
-      </div>
-    <% end %>
-
-    <% if @search.filters.any? %>
-      <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "filterToolbar", hidden: initial_mode != "search") do %>
-        <% @search.filters.each_with_index do |filter, index| %>
-          <%= render_ransack_filter_dropdown(filter, index) %>
+  <% if @search %>
+    <div role="search">
+      <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "searchToolbar", hidden: initial_mode != "search") do %>
+        <%= form_with(
+          url: @search.url,
+          method: :get,
+          html: {
+            id: search_form_id,
+            class: 'flex-grow',
+            "data-turbo-action": "replace",
+            "data-#{stimulus_id}-target": "searchForm",
+            "data-action": "input->#{stimulus_id}#search change->#{stimulus_id}#search",
+          },
+        ) do |form| %>
+          <%= hidden_field_tag @search.scope_param_name, @search.current_scope.name if @search.scopes.present? %>
+          <%= render component('ui/forms/search_field').new(
+            name: @search.searchbar_param_name,
+            value: @search.value[@search.searchbar_key],
+            placeholder: t('.search_placeholder', resources: @data.plural_name),
+            "aria-label": t('.search_placeholder', resources: @data.plural_name),
+            "data-#{stimulus_id}-target": "searchField",
+            "data-turbo-permanent": "true",
+            id: "#{stimulus_id}-search-field-#{@id}",
+          ) %>
         <% end %>
-      <% end %>
-    <% end %>
 
-    <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "scopesToolbar", hidden: initial_mode != "scopes") do %>
-      <div class="flex-grow">
-        <%= form_with(url: @search.url, method: :get) do %>
-          <% @search.scopes.each do |scope| %>
-            <%= render component("ui/tab").new(
-              tag: :button,
-              type: :submit,
-              text: scope.label,
-              current: scope == @search.current_scope,
-              name: @search.scope_param_name,
-              value: scope.name,
-            ) %>
+        <div class="ml-4">
+          <%= render component("ui/button").new(
+            text: t('.cancel'),
+            scheme: :ghost,
+            "data-action": "#{stimulus_id}#cancelSearch",
+          ) %>
+        </div>
+      <% end %>
+
+      <% if @search.filters.any? %>
+        <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "filterToolbar", hidden: initial_mode != "search") do %>
+          <% @search.filters.each_with_index do |filter, index| %>
+            <%= render_ransack_filter_dropdown(filter, index) %>
           <% end %>
         <% end %>
-      </div>
+      <% end %>
 
-      <%= render component("ui/button").new(
-        'aria-label': t('.filter'),
-        icon: "filter-3-line",
-        scheme: :secondary,
-        "data-action": "#{stimulus_id}#showSearch",
-      ) %>
-    <% end %>
-  </div>
+      <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "scopesToolbar", hidden: initial_mode != "scopes") do %>
+        <div class="flex-grow">
+          <%= form_with(url: @search.url, method: :get) do %>
+            <% @search.scopes.each do |scope| %>
+              <%= render component("ui/tab").new(
+                tag: :button,
+                type: :submit,
+                text: scope.label,
+                current: scope == @search.current_scope,
+                name: @search.scope_param_name,
+                value: scope.name,
+              ) %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%= render component("ui/button").new(
+          'aria-label': t('.filter'),
+          icon: "filter-3-line",
+          scheme: :secondary,
+          "data-action": "#{stimulus_id}#showSearch",
+        ) %>
+      <% end %>
+    </div>
+  <% end %>
 
   <%= render component("ui/table/toolbar").new("data-#{stimulus_id}-target": "batchToolbar", role: "toolbar", "aria-label": t(".batch_actions"), hidden: true) do %>
     <%= form_tag '', id: batch_actions_form_id %>

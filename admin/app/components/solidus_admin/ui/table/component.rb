@@ -53,7 +53,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     @id = id
     @data = Data.new(**data)
     @data.columns.unshift selectable_column if @data.batch_actions.present?
-    @search = Search.new(**search)
+    @search = Search.new(**search) if search
   end
 
   def selectable_column
@@ -152,6 +152,6 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def initial_mode
-    @initial_mode ||= @search.value[@search.searchbar_key] ? "search" : "scopes"
+    @initial_mode ||= @search && @search.value[@search.searchbar_key] ? "search" : "scopes"
   end
 end

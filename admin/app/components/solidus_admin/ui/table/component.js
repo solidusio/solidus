@@ -62,7 +62,7 @@ export default class extends Controller {
   selectRow(event) {
     if (this.checkboxTargets.some((checkbox) => checkbox.checked)) {
       this.modeValue = "batch"
-    } else if (this.searchFieldTarget.value !== '') {
+    } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
       this.modeValue = "search"
     } else {
       this.modeValue = "scopes"
@@ -74,7 +74,7 @@ export default class extends Controller {
   selectAllRows(event) {
     if (event.target.checked) {
       this.modeValue = "batch"
-    } else if (this.searchFieldTarget.value !== '') {
+    } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
       this.modeValue = "search"
     } else {
       this.modeValue = "scopes"
@@ -108,7 +108,9 @@ export default class extends Controller {
   render() {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
-    this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+    if (this.hasSearchFieldTarget) {
+      this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+    }
 
     if (this.hasFilterToolbarTarget) {
       this.filterToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
