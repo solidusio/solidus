@@ -19,3 +19,13 @@
     </tr>
   <% end %>
 </table>
+
+<div class="mt-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Predefined values
+  </h6>
+
+  <% [current_component.yes, current_component.no].each do |component| %>
+    <%= render component %>
+  <% end %>
+</div>
