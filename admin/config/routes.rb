@@ -58,6 +58,15 @@ SolidusAdmin::Engine.routes.draw do
     end
   end
 
+  resources :taxonomies do
+    collection do
+      delete :destroy
+    end
+    member do
+      patch :move
+    end
+  end
+
   resources :promotion_categories, only: [:index] do
     collection do
       delete :destroy
