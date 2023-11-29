@@ -120,7 +120,9 @@ export default class extends Controller {
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue === "batch")
 
-    this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
+    if (this.hasScopesToolbarTarget) {
+      this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
+    }
 
     // Update the rows background color
     this.checkboxTargets.filter((checkbox) =>
