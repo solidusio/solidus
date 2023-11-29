@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    properties:
+      title: "Properties"
+      destroy:
+        success: "Properties were successfully removed."
