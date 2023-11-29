@@ -1,0 +1,4 @@
+en:
+  batch_actions:
+    delete: 'Delete'
+  create_option_type: Create Option Type

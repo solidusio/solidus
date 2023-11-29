@@ -48,4 +48,13 @@ SolidusAdmin::Engine.routes.draw do
       delete :destroy
     end
   end
+
+  resources :option_types, only: [:index] do
+    collection do
+      delete :destroy
+    end
+    member do
+      patch :move
+    end
+  end
 end

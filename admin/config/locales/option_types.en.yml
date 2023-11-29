@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    option_types:
+      title: "Option Types"
+      destroy:
+        success: "Option Types were successfully removed."
