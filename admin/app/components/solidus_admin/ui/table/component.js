@@ -13,12 +13,14 @@ export default class extends Controller {
     "filterToolbar",
     "defaultHeader",
     "batchHeader",
+    "tableBody",
     "selectedRowsCount",
   ]
 
   static classes = ["selectedRow"]
   static values = {
     mode: { type: String, default: "scopes" },
+    sortable: { type: Boolean, default: false },
   }
 
   initialize() {
@@ -128,6 +130,13 @@ export default class extends Controller {
     this.checkboxTargets.filter((checkbox) =>
       checkbox.closest("tr").classList.toggle(this.selectedRowClass, checkbox.checked),
     )
+
+    // Determine if sortable should be enabled
+    if (this.sortableValue && this.modeValue !== "batch" && this.modeValue !== "search") {
+      this.tableBodyTarget.setAttribute('data-controller', 'sortable');
+    } else {
+      this.tableBodyTarget.removeAttribute('data-controller');
+    }
 
     // Update the selected rows count
     this.selectedRowsCountTarget.textContent = `${selectedRows.length}`
