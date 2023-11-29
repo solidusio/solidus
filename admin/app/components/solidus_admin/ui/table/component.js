@@ -150,7 +150,8 @@ export default class extends Controller {
       checkbox.indeterminate = false
       checkbox.checked = false
 
-      if (selectedRows.length === this.checkboxTargets.length) checkbox.checked = true
+      if (this.checkboxTargets.length > 0 && selectedRows.length === this.checkboxTargets.length)
+        checkbox.checked = true
       else if (selectedRows.length > 0) checkbox.indeterminate = true
     })
   }
