@@ -13,12 +13,14 @@ export default class extends Controller {
     "filterToolbar",
     "defaultHeader",
     "batchHeader",
+    "tableBody",
     "selectedRowsCount",
   ]
 
   static classes = ["selectedRow"]
   static values = {
     mode: { type: String, default: "scopes" },
+    sortable: { type: Boolean, default: false },
   }
 
   initialize() {
@@ -62,7 +64,7 @@ export default class extends Controller {
   selectRow(event) {
     if (this.checkboxTargets.some((checkbox) => checkbox.checked)) {
       this.modeValue = "batch"
-    } else if (this.searchFieldTarget.value !== '') {
+    } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
       this.modeValue = "search"
     } else {
       this.modeValue = "scopes"
@@ -74,7 +76,7 @@ export default class extends Controller {
   selectAllRows(event) {
     if (event.target.checked) {
       this.modeValue = "batch"
-    } else if (this.searchFieldTarget.value !== '') {
+    } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
       this.modeValue = "search"
     } else {
       this.modeValue = "scopes"
@@ -108,7 +110,9 @@ export default class extends Controller {
   render() {
     const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
 
-    this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+    if (this.hasSearchFieldTarget) {
+      this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
+    }
 
     if (this.hasFilterToolbarTarget) {
       this.filterToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
@@ -118,12 +122,21 @@ export default class extends Controller {
     this.batchHeaderTarget.toggleAttribute("hidden", this.modeValue !== "batch")
     this.defaultHeaderTarget.toggleAttribute("hidden", this.modeValue === "batch")
 
-    this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
+    if (this.hasScopesToolbarTarget) {
+      this.scopesToolbarTarget.toggleAttribute("hidden", this.modeValue !== "scopes")
+    }
 
     // Update the rows background color
     this.checkboxTargets.filter((checkbox) =>
       checkbox.closest("tr").classList.toggle(this.selectedRowClass, checkbox.checked),
     )
+
+    // Determine if sortable should be enabled
+    if (this.sortableValue && this.modeValue !== "batch" && this.modeValue !== "search") {
+      this.tableBodyTarget.setAttribute('data-controller', 'sortable');
+    } else {
+      this.tableBodyTarget.removeAttribute('data-controller');
+    }
 
     // Update the selected rows count
     this.selectedRowsCountTarget.textContent = `${selectedRows.length}`
