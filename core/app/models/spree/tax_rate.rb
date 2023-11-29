@@ -113,6 +113,10 @@ module Spree
       )
     end
 
+    def display_amount
+      amount_for_adjustment_label
+    end
+
     private
 
     def amount_for_adjustment_label
