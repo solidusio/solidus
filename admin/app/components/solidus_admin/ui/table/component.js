@@ -46,18 +46,12 @@ export default class extends Controller {
     this.search()
   }
 
-  cancelSearch() {
-    this.resetFilters()
-    this.search()
-  }
-
-  resetFilters() {
-    if (!this.hasFilterToolbarTarget) return
-
-    for (const fieldset of this.filterToolbarTarget.querySelectorAll('fieldset')) {
-      fieldset.setAttribute('disabled', true)
+  resetSearchAndFilters() {
+    if (this.hasFilterToolbarTarget) {
+      this.filterToolbarTarget.querySelectorAll('fieldset').forEach(fieldset => fieldset.disabled = true)
     }
-    this.searchFieldTarget.setAttribute('disabled', true)
+
+    this.searchFieldTarget.disabled = true
     this.searchFormTarget.submit()
   }
 

@@ -44,7 +44,7 @@
             <%= render component("ui/button").new(
               text: t('.cancel'),
               scheme: :ghost,
-              "data-action": "#{stimulus_id}#cancelSearch",
+              "data-action": "#{stimulus_id}#resetSearchAndFilters",
             ) %>
           </div>
         <% end %>
