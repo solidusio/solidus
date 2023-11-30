@@ -28,7 +28,7 @@ module SolidusAdmin
     end
 
     def show
-      @product = Spree::Product.friendly.find(params[:id])
+      @product = Spree::Product.with_discarded.friendly.find(params[:id])
 
       respond_to do |format|
         format.html { render component('products/show').new(product: @product) }
