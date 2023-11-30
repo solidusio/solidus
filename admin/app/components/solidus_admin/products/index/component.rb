@@ -79,7 +79,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
   def image_column
     {
       col: { class: "w-[72px]" },
-      header: tag.span('aria-label': t('.product_image'), role: 'text'),
+      header: tag.span('aria-label': t('.image'), role: 'text'),
       data: ->(product) do
         image = product.gallery.images.first or return
 
