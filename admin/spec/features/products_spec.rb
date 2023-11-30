@@ -59,10 +59,13 @@ describe "Products", type: :feature do
     click_button "Activate"
 
     expect(page).to have_content("Products were successfully activated.", wait: 5)
-    expect(page).to have_content("Just a product")
-    expect(page).to have_content("Another product")
-    expect(page).not_to have_content("Discontinued")
-    expect(page).to have_content("Available").twice
+    within('tbody') do
+      expect(page).to have_content("Just a product")
+      expect(page).to have_content("Another product")
+      expect(page).not_to have_content("Discontinued")
+      expect(page).to have_content("Available").twice
+    end
+
     expect(page).to be_axe_clean
   end
 end
