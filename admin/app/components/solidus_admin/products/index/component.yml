@@ -1,6 +1,6 @@
 en:
-  product_image: 'Image'
-  add_product: 'Add Product'
+  image: 'Image'
+  add: 'Add new'
   batch_actions:
     delete: 'Delete'
     discontinue: 'Discontinue'
@@ -9,4 +9,8 @@ en:
     with_deleted: Include deleted
   scopes:
     all: All
+    available: Available
+    discontinued: Discontinued
+    in_stock: In stock
+    out_of_stock: Out of stock
     deleted: Deleted

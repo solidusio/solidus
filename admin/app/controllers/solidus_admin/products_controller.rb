@@ -6,6 +6,10 @@ module SolidusAdmin
 
     search_scope(:all, default: true)
     search_scope(:deleted) { _1.with_discarded.discarded }
+    search_scope(:discontinued) { _1.where(discontinue_on: ...Time.current) }
+    search_scope(:available) { _1.available }
+    search_scope(:in_stock) { _1.where(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
+    search_scope(:out_of_stock) { _1.where.not(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
 
     def index
       products = apply_search_to(
@@ -28,7 +32,7 @@ module SolidusAdmin
     end
 
     def show
-      @product = Spree::Product.friendly.find(params[:id])
+      @product = Spree::Product.with_discarded.friendly.find(params[:id])
 
       respond_to do |format|
         format.html { render component('products/show').new(product: @product) }

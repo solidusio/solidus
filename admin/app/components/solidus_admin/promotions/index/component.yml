@@ -1,6 +1,6 @@
 en:
   promotion_image: 'Image'
-  add: 'Add Promotion'
+  add: 'Add new'
   batch_actions:
     delete: 'Delete'
   scopes:
