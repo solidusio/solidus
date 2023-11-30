@@ -26,7 +26,19 @@ class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
     ].join(' ')
   end
 
+  def self.yes
+    new(name: :yes, color: :green, size: :m)
+  end
+
+  def self.no
+    new(name: :no, color: :graphite_light, size: :m)
+  end
+
+  def name
+    @name.is_a?(Symbol) ? t(".#{@name}") : @name
+  end
+
   erb_template <<~ERB
-    <div class="<%= @class_name %>"><%= @name %></div>
+    <div class="<%= @class_name %>"><%= name %></div>
   ERB
 end

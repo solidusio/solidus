@@ -12,7 +12,9 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     def initialize(**args)
       super
 
-      self.columns = columns.map { |column| Column.new(wrap: false, **column) }
+      self.columns = columns.map do |column|
+        column.is_a?(Symbol) ? Column.new(wrap: false, header: column, data: column) : Column.new(wrap: false, **column)
+      end
       self.batch_actions = batch_actions.to_a.map { |action| BatchAction.new(**action) }
     end
 
@@ -154,6 +156,11 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def initial_mode
-    @initial_mode ||= @search && @search.value[@search.searchbar_key] ? "search" : "scopes"
+    @initial_mode ||=
+      if @search && (@search.value[@search.searchbar_key] || @search.scopes.none?)
+        "search"
+      else
+        "scopes"
+      end
   end
 end

@@ -201,6 +201,15 @@ module SolidusAdmin
             raise ArgumentError, "Unknown url type #{item.url.class}"
           end
 
+        match_path =
+          case item.match_path
+          when Regexp then -> { _1 =~ item.match_path }
+          when Proc then item.match_path
+          when String then -> { _1.start_with?("/admin#{item.match_path}") }
+          when nil then -> { _1.start_with?(route.call) }
+          else raise ArgumentError, "Unknown match_path type #{item.match_path.class}"
+          end
+
         icon =
           case item.icon
           when /^ri-/
@@ -214,7 +223,8 @@ module SolidusAdmin
           key: item.label,
           icon: icon,
           route: route,
-          children: item.children.map.with_index(&menu_item_to_hash)
+          children: item.children.map.with_index(&menu_item_to_hash),
+          match_path: match_path,
         }
       end
 

@@ -66,8 +66,10 @@ export default class extends Controller {
       this.modeValue = "batch"
     } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
       this.modeValue = "search"
-    } else {
+    } else if (this.hasScopesToolbarTarget) {
       this.modeValue = "scopes"
+    } else {
+      this.modeValue = "search"
     }
 
     this.render()
@@ -78,8 +80,10 @@ export default class extends Controller {
       this.modeValue = "batch"
     } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
       this.modeValue = "search"
-    } else {
+    } else if (this.hasScopesToolbarTarget) {
       this.modeValue = "scopes"
+    } else {
+      this.modeValue = "search"
     }
 
     this.checkboxTargets.forEach((checkbox) => (checkbox.checked = event.target.checked))
@@ -146,7 +150,8 @@ export default class extends Controller {
       checkbox.indeterminate = false
       checkbox.checked = false
 
-      if (selectedRows.length === this.checkboxTargets.length) checkbox.checked = true
+      if (this.checkboxTargets.length > 0 && selectedRows.length === this.checkboxTargets.length)
+        checkbox.checked = true
       else if (selectedRows.length > 0) checkbox.indeterminate = true
     })
   }
