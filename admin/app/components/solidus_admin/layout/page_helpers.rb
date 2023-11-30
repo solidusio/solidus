@@ -2,12 +2,12 @@
 
 module SolidusAdmin::Layout::PageHelpers
   def page(**attrs, &block)
-    tag.div(capture(&block), class: "px-4 relative", "data-controller": stimulus_id, **attrs)
+    tag.div(capture(&block), class: "px-4 relative", "data-controller": stimulus_id, **attrs) +
+      tag.div(render(component("layout/feedback").new), class: "flex justify-center py-10")
   end
 
   def page_header_actions(&block)
     tag.div(safe_join([
-      render(component("layout/feedback").new),
       capture(&block),
     ]), class: "flex gap-2 items-center")
   end
