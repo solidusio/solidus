@@ -31,6 +31,17 @@ export default class extends Controller {
     this.search = debounce(this.search.bind(this), 200)
   }
 
+  // Determine if sortable should be enabled
+  modeValueChanged() {
+    const shouldSetSortable = this.sortableValue && this.modeValue !== "batch" && this.modeValue !== "search"
+
+    if (shouldSetSortable) {
+      this.tableBodyTarget.setAttribute('data-controller', 'sortable')
+    } else {
+      this.tableBodyTarget.removeAttribute('data-controller')
+    }
+  }
+
   showSearch(event) {
     this.modeValue = "search"
     this.render()
@@ -46,18 +57,12 @@ export default class extends Controller {
     this.search()
   }
 
-  cancelSearch() {
-    this.resetFilters()
-    this.search()
-  }
-
-  resetFilters() {
-    if (!this.hasFilterToolbarTarget) return
-
-    for (const fieldset of this.filterToolbarTarget.querySelectorAll('fieldset')) {
-      fieldset.setAttribute('disabled', true)
+  resetSearchAndFilters() {
+    if (this.hasFilterToolbarTarget) {
+      this.filterToolbarTarget.querySelectorAll('fieldset').forEach(fieldset => fieldset.disabled = true)
     }
-    this.searchFieldTarget.setAttribute('disabled', true)
+
+    this.searchFieldTarget.disabled = true
     this.searchFormTarget.submit()
   }
 
@@ -134,13 +139,6 @@ export default class extends Controller {
     this.checkboxTargets.filter((checkbox) =>
       checkbox.closest("tr").classList.toggle(this.selectedRowClass, checkbox.checked),
     )
-
-    // Determine if sortable should be enabled
-    if (this.sortableValue && this.modeValue !== "batch" && this.modeValue !== "search") {
-      this.tableBodyTarget.setAttribute('data-controller', 'sortable');
-    } else {
-      this.tableBodyTarget.removeAttribute('data-controller');
-    }
 
     // Update the selected rows count
     this.selectedRowsCountTarget.textContent = `${selectedRows.length}`

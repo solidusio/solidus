@@ -42,6 +42,8 @@ module Spree
 
     include Spree::Preferences::StaticallyConfigurable
 
+    self.allowed_ransackable_attributes = %w[name description]
+
     # Custom ModelName#human implementation to ensure we don't refer to
     # subclasses as just "PaymentMethod"
     class ModelName < ActiveModel::Name
