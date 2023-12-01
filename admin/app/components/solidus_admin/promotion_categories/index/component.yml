@@ -1,4 +1,4 @@
 en:
   batch_actions:
     delete: 'Delete'
-  create_promotion_category: Create Promotion Category
+  add: 'Add new'
