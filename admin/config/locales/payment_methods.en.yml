@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    payment_methods:
+      title: "Payment Methods"
+      destroy:
+        success: "Payment Methods were successfully removed."

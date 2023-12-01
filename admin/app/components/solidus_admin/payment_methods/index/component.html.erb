@@ -1,0 +1,35 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title title %>
+    <%= page_header_actions do %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        text: t('.add'),
+        href: spree.new_admin_payment_method_path,
+        icon: "add-line",
+      ) %>
+    <% end %>
+  <% end %>
+
+  <%= render component('ui/table').new(
+    id: stimulus_id,
+    data: {
+      class: Spree::PaymentMethod,
+      rows: @payment_methods,
+      url: ->(payment_method) { spree.edit_admin_payment_method_path(payment_method) },
+      columns: columns,
+      batch_actions: batch_actions,
+    },
+    search: {
+      name: :q,
+      value: params[:q],
+      url: solidus_admin.payment_methods_path,
+      searchbar_key: :name_or_description_cont,
+      scopes: scopes,
+    },
+    sortable: {
+      url: ->(payment_method) { solidus_admin.move_payment_method_path(payment_method) },
+      param: 'position',
+    },
+  ) %>
+<% end %>
