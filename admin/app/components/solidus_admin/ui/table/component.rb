@@ -39,6 +39,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       scopes.find(&:default)
     end
 
+    def on_default_scope?
+      current_scope == default_scope
+    end
+
     def scope_param_name
       "#{name}[scope]"
     end
@@ -162,5 +166,9 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       else
         "scopes"
       end
+  end
+
+  def should_enable_sortable?
+    @sortable && @search&.on_default_scope?
   end
 end

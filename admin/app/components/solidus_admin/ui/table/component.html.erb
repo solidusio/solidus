@@ -7,7 +7,7 @@
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-selected-row-class="bg-gray-15"
   data-<%= stimulus_id %>-mode-value="<%= initial_mode %>"
-  data-<%= stimulus_id %>-sortable-value="<%= @sortable.present? %>"
+  data-<%= stimulus_id %>-sortable-value="<%= should_enable_sortable? %>"
   data-action="
     <%= component("ui/table/ransack_filter").stimulus_id %>:search-><%= stimulus_id %>#search
     <%= component("ui/table/ransack_filter").stimulus_id %>:showSearch-><%= stimulus_id %>#showSearch
@@ -130,7 +130,7 @@
     <tbody
       class="bg-white text-3.5 line-[150%] text-black"
       data-<%= stimulus_id %>-target="tableBody"
-      <%= "data-controller=sortable" if @sortable&.url %>
+      <%= "data-controller=sortable" if should_enable_sortable? %>
       <%= "data-sortable-param-value=#{@sortable.param}" if @sortable&.param %>
       <%= "data-sortable-handle-value=#{@sortable.handle}" if @sortable&.handle %>
       <%= "data-sortable-animation-value=#{@sortable.animation}" if @sortable&.animation %>
