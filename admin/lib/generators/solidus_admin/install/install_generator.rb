@@ -9,7 +9,7 @@ module SolidusAdmin
 
       def install_solidus_core_support
         route <<~RUBY
-          mount SolidusAdmin::Engine, at: '/admin', constraints: ->(req) {
+          mount SolidusAdmin::Engine, at: '#{solidus_mount_point}admin', constraints: ->(req) {
             req.cookies['solidus_admin'] != 'false' &&
             req.params['solidus_admin'] != 'false'
           }
@@ -37,7 +37,15 @@ module SolidusAdmin
           gem "actioncable"
         end
 
-        route "mount Lookbook::Engine, at: '/lookbook' if Rails.env.development?"
+        route "mount Lookbook::Engine, at: '#{solidus_mount_point}lookbook' if Rails.env.development?"
+      end
+
+      private
+
+      def solidus_mount_point
+        mount_point = Spree::Core::Engine.routes.find_script_name({})
+        mount_point += "/" unless mount_point.end_with?("/")
+        mount_point
       end
     end
   end
