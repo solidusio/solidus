@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
 SolidusAdmin::Engine.routes.draw do
-  resource :account, only: :show
+  require "solidus_admin/admin_resources"
+  extend SolidusAdmin::AdminResources
 
-  resources(
-    :products,
-    only: [:index, :show, :edit, :update],
-    constraints: ->{ _1.path != "/admin/products/new" },
-  ) do
+  resource :account, only: :show
+  resources :countries, only: [] do
+    get 'states', to: 'countries#states'
+  end
+
+  # Needs a constraint to avoid interpreting "new" as a product's slug
+  admin_resources :products, only: [
+    :index, :show, :edit, :update, :destroy
+  ], constraints: ->{ _1.path != "/admin/products/new" } do
     collection do
-      delete :destroy
       put :discontinue
       put :activate
     end
   end
 
-  resources :countries, only: [] do
-    get 'states', to: 'countries#states'
-  end
-
-  resources :orders, except: [:destroy] do
+  admin_resources :orders, except: [:destroy] do
     resources :line_items, only: [:destroy, :create, :update]
     resource :customer
     resource :ship_address, only: [:show, :edit, :update], controller: "addresses", type: "ship"
@@ -31,66 +31,13 @@ SolidusAdmin::Engine.routes.draw do
     end
   end
 
-  resources :users, only: [:index] do
-    collection do
-      delete :destroy
-    end
-  end
-
-  resources :promotions, only: [:index] do
-    collection do
-      delete :destroy
-    end
-  end
-
-  resources :properties, only: [:index] do
-    collection do
-      delete :destroy
-    end
-  end
-
-  resources :option_types, only: [:index] do
-    collection do
-      delete :destroy
-    end
-    member do
-      patch :move
-    end
-  end
-
-  resources :taxonomies, only: [:index] do
-    collection do
-      delete :destroy
-    end
-    member do
-      patch :move
-    end
-  end
-
-  resources :promotion_categories, only: [:index] do
-    collection do
-      delete :destroy
-    end
-  end
-
-  resources :tax_categories, only: [:index] do
-    collection do
-      delete :destroy
-    end
-  end
-
-  resources :tax_rates, only: [:index] do
-    collection do
-      delete :destroy
-    end
-  end
-
-  resources :payment_methods, only: [:index] do
-    collection do
-      delete :destroy
-    end
-    member do
-      patch :move
-    end
-  end
+  admin_resources :users, only: [:index, :destroy]
+  admin_resources :promotions, only: [:index, :destroy]
+  admin_resources :properties, only: [:index, :destroy]
+  admin_resources :option_types, only: [:index, :destroy], sortable: true
+  admin_resources :taxonomies, only: [:index, :destroy], sortable: true
+  admin_resources :promotion_categories, only: [:index, :destroy]
+  admin_resources :tax_categories, only: [:index, :destroy]
+  admin_resources :tax_rates, only: [:index, :destroy]
+  admin_resources :payment_methods, only: [:index, :destroy], sortable: true
 end
