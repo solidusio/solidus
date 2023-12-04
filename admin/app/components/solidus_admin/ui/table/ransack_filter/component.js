@@ -29,8 +29,9 @@ export default class extends Controller {
   }
 
   showSearch() {
-    if (this.isAnyCheckboxChecked())
-      this.dispatch("showSearch")
+    if (this.isAnyCheckboxChecked()) {
+      this.dispatch("showSearch", { detail: { avoidFocus: true } })
+    }
   }
 
   filterOptions(event) {
