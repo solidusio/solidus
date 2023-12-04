@@ -50,7 +50,8 @@ Spree::ShippingMethod.create!([
   }
 ])
 
-{
+# The just below rubocop:disable directive will be removed once https://github.com/rubocop/rubocop/issues/12441 is resolved.
+{ # rubocop:disable Style/HashEachMethods
   "UPS Ground (USD)" => [5, "USD"],
   "UPS Ground (EU)" => [5, "USD"],
   "UPS One Day (USD)" => [15, "USD"],

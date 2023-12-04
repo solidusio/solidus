@@ -73,7 +73,7 @@ module Spree
 
         unless promotion.eligible?(order, promotion_code: promotion_code)
           set_promotion_eligibility_error_code(promotion)
-          return (error || ineligible_for_this_order)
+          return error || ineligible_for_this_order
         end
 
         # If any of the actions for the promotion return `true`,
