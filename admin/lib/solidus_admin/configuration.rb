@@ -93,6 +93,12 @@ module SolidusAdmin
     #                    meaning it will search by product name or product variants sku.
     preference :product_search_key, :string, default: :name_or_variants_including_master_sku_cont
 
+    # @!attribute [rw] low_stock_value
+    #   @return [Integer] The low stock value determines the threshold at which products are considered low in stock.
+    #                     Products with a count_on_hand less than or equal to this value will be considered low in stock.
+    #                     Default: 10
+    preference :low_stock_value, :integer, default: 10
+
     preference :storefront_product_path_proc, :proc, default: ->(_version) {
       ->(product) { "/products/#{product.slug}" }
     }

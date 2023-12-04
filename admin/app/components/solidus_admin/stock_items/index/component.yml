@@ -1,0 +1,10 @@
+en:
+  filters:
+    stock_locations: Stock Locations
+    variants: Variants
+  scopes:
+    all_stock_items: All
+    back_orderable: Back Orderable
+    out_of_stock: Out Of Stock
+    low_stock: Low Stock
+    in_stock: In Stock
