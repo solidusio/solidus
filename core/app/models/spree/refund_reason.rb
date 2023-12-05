@@ -8,6 +8,8 @@ module Spree
 
     has_many :refunds
 
+    self.allowed_ransackable_attributes = %w[name code]
+
     def self.return_processing_reason
       find_by!(name: RETURN_PROCESSING_REASON, mutable: false)
     end
