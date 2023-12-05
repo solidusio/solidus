@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    zones:
+      title: "Zones"
+      destroy:
+        success: "Zones were successfully removed."
