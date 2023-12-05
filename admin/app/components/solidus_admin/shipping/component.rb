@@ -11,6 +11,7 @@ class SolidusAdmin::Shipping::Component < SolidusAdmin::BaseComponent
   def tabs
     {
       Spree::ShippingMethod => solidus_admin.shipping_methods_path,
+      Spree::ShippingCategory => solidus_admin.shipping_categories_path,
     }
   end
 end

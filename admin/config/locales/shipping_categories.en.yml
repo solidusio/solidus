@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    shipping_categories:
+      title: "Shipping Categories"
+      destroy:
+        success: "Shipping categories were successfully removed."
