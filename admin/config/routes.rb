@@ -46,4 +46,5 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :stock_locations, only: [:index, :destroy]
   admin_resources :stores, only: [:index, :destroy]
   admin_resources :zones, only: [:index, :destroy]
+  admin_resources :refund_reasons, only: [:index, :destroy]
 end

@@ -10,5 +10,8 @@ class SolidusAdmin::RefundsAndReturns::Component < SolidusAdmin::BaseComponent
 
   def tabs
     {}
+    {
+      Spree::RefundReason => solidus_admin.refund_reasons_path,
+    }
   end
 end

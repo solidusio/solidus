@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    refund_reasons:
+      title: "Refund Reasons"
+      destroy:
+        success: "Refund Reasons were successfully removed."
