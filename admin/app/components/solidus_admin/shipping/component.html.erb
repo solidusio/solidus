@@ -1,0 +1,30 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title safe_join([
+      tag.div(t(".title")),
+      tag.div(t(".subtitle"), class: "body-small text-gray-500"),
+    ]) %>
+  <% end %>
+
+  <%= page_header do %>
+    <% title = capture do %>
+      <% tabs.each do |tab_class, href|%>
+        <%= render component('ui/button').new(
+          tag: :a,
+          scheme: :ghost,
+          href: href,
+          text: tab_class.model_name.human.pluralize,
+          "aria-current" => tab_class == @current_class,
+        ) %>
+      <% end %>
+    <% end %>
+
+    <%= page_header_title title %>
+
+    <%= page_header_actions do %>
+      <%= actions %>
+    <% end %>
+  <% end %>
+
+  <%= content %>
+<% end %>

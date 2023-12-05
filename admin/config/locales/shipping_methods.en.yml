@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    shipping_methods:
+      title: "Shipping Methods"
+      destroy:
+        success: "Shipping methods were successfully removed."
