@@ -13,6 +13,7 @@ class SolidusAdmin::RefundsAndReturns::Component < SolidusAdmin::BaseComponent
     {
       Spree::RefundReason => solidus_admin.refund_reasons_path,
       Spree::ReimbursementType => solidus_admin.reimbursement_types_path,
+      Spree::ReturnReason => solidus_admin.return_reasons_path,
     }
   end
 end
