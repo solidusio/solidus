@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    stock_locations:
+      title: "Stock Locations"
+      destroy:
+        success: "Stock locations were successfully removed."

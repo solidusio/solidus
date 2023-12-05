@@ -1,0 +1,6 @@
+en:
+  active: 'Active'
+  inactive: 'Inactive'
+  add: 'Add new'
+  batch_actions:
+    delete: 'Delete'
