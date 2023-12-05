@@ -1,0 +1,25 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title title %>
+  <% end %>
+
+  <%= render component('ui/table').new(
+    id: stimulus_id,
+    data: {
+      class: Spree::StockItem,
+      rows: @page.records,
+      prev: prev_page_path,
+      next: next_page_path,
+      columns: columns,
+      batch_actions: batch_actions,
+    },
+    search: {
+      name: :q,
+      value: params[:q],
+      url: solidus_admin.stock_items_path,
+      searchbar_key: :variant_product_name_or_variant_sku_or_variant_option_values_name_or_variant_option_values_presentation_cont,
+      filters: filters,
+      scopes: scopes,
+    },
+  ) %>
+<% end %>

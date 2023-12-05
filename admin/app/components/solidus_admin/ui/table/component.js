@@ -42,10 +42,11 @@ export default class extends Controller {
     }
   }
 
-  showSearch(event) {
+  showSearch({ detail: { avoidFocus } }) {
     this.modeValue = "search"
     this.render()
-    this.searchFieldTarget.focus()
+
+    if (!avoidFocus) this.searchFieldTarget.focus()
   }
 
   search() {

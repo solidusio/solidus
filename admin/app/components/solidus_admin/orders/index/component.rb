@@ -47,7 +47,6 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
           ]
         end
       },
-
       {
         presentation: t('.filters.shipment_state'),
         combinator: 'or',

@@ -21,6 +21,7 @@ module Spree
     after_touch { variant.touch }
 
     self.allowed_ransackable_attributes = ['count_on_hand', 'stock_location_id']
+    self.allowed_ransackable_associations = %w[variant]
 
     # @return [Array<Spree::InventoryUnit>] the backordered inventory units
     #   associated with this stock item
