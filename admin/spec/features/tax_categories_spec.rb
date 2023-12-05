@@ -18,7 +18,7 @@ describe "Tax categories", :js, type: :feature do
     click_on "Delete"
     expect(page).to have_content("Tax categories were successfully removed.")
     expect(page).not_to have_content("Clothing")
-    expect(Spree.user_class.count).to eq(1)
+    expect(Spree::TaxCategory.count).to eq(1)
     expect(page).to be_axe_clean
   end
 end
