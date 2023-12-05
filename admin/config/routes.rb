@@ -44,4 +44,5 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :shipping_methods, only: [:index, :destroy]
   admin_resources :shipping_categories, only: [:index, :destroy]
   admin_resources :stock_locations, only: [:index, :destroy]
+  admin_resources :stores, only: [:index, :destroy]
 end
