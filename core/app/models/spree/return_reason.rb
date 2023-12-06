@@ -6,6 +6,8 @@ module Spree
 
     has_many :return_authorizations
 
+    self.allowed_ransackable_attributes = %w[name]
+
     def self.reasons_for_return_items(return_items)
       # Only allow an inactive reason if it's already associated to a return item
       active | return_items.map(&:return_reason).compact
