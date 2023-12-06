@@ -10,6 +10,8 @@ on:
 
 jobs:
   update:
+    env:
+      BUNDLE_ONLY: "release"
     runs-on: ubuntu-latest
     if: |
       (github.event.pull_request.merged == true) &&
@@ -17,8 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
-        env:
-          BUNDLE_ONLY: "release"
         with:
           ruby-version: "3.2"
           bundler-cache: true
