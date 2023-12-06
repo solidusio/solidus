@@ -2,7 +2,10 @@
 
 module Spree
   class RefundReason < Spree::Base
-    include Spree::NamedType
+    scope :active, -> { where(active: true) }
+    default_scope -> { order(arel_table[:name].lower) }
+
+    validates :name, presence: true, uniqueness: { case_sensitive: false, allow_blank: true }
 
     RETURN_PROCESSING_REASON = 'Return processing'
 
