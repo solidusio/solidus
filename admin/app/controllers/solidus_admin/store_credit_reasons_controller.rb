@@ -6,7 +6,7 @@ module SolidusAdmin
 
     def index
       store_credit_reasons = apply_search_to(
-        Spree::StoreCreditReason.order(id: :desc),
+        Spree::StoreCreditReason.unscoped.order(id: :desc),
         param: :q,
       )
 

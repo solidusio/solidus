@@ -6,7 +6,7 @@ module SolidusAdmin
 
     def index
       reimbursement_types = apply_search_to(
-        Spree::ReimbursementType.order(id: :desc),
+        Spree::ReimbursementType.unscoped.order(id: :desc),
         param: :q,
       )
 

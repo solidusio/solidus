@@ -6,7 +6,7 @@ module SolidusAdmin
 
     def index
       refund_reasons = apply_search_to(
-        Spree::RefundReason.order(id: :desc),
+        Spree::RefundReason.unscoped.order(id: :desc),
         param: :q,
       )
 
