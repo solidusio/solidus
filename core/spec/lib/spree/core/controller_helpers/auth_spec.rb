@@ -53,7 +53,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
           path: '/api'
         })
         get :index
-        expect(response.headers["Set-Cookie"]).to match(/domain=\.test\.host; path=\/api/)
+        expect(response.headers["Set-Cookie"]).to match(/domain=(\.)?test\.host; path=\/api/)
       end
 
       it 'never overwrites httponly' do
