@@ -39,6 +39,7 @@ module Solidus
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
+    class_option :mount_point, type: :string, desc: "Indicates where Solidus should be mounted. Defaults to '/'"
 
     class_option :frontend, type: :string, enum: FRONTENDS.map { _1[:name] }, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS.map { _1[:name] }, default: nil, desc: "Indicates which authentication system to install."
@@ -87,6 +88,36 @@ module Solidus
       ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
     end
 
+    def install_routes
+      if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
+        say_status :route_exist, CORE_MOUNT_ROUTE, :blue
+      else
+        say_status :installing, "solidus routes"
+        mount_point = options[:mount_point] || ask_with_default(
+          desc: 'Where would you like to mount Solidus? (E.g. "/store" or "/shop")',
+          default: '/',
+        )
+
+        shell.mute do
+          route <<~RUBY
+            # This line mounts Solidus's routes at the root of your application.
+            #
+            # Unless you manually picked only a subset of Solidus components, this will mount routes for:
+            #   - solidus_backend
+            #   - solidus_api
+            # This means, any requests to URLs such as /admin/products, will go to Spree::Admin::ProductsController.
+            #
+            # If you are using the Starter Frontend as your frontend, be aware that all the storefront routes are defined
+            # separately in this file and are not part of the Solidus::Core::Engine engine.
+            #
+            # If you would like to change where this engine is mounted, simply change the :at option to something different.
+            # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
+            #{CORE_MOUNT_ROUTE}, at: '#{mount_point}'
+          RUBY
+        end
+      end
+    end
+
     def add_files
       template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
     end
@@ -132,21 +163,6 @@ module Solidus
     def create_database
       say_status :creating, "database"
       rake 'db:create'
-    end
-
-    def install_routes
-      if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
-        say_status :route_exist, CORE_MOUNT_ROUTE, :blue
-      else
-        route <<~RUBY
-          # This line mounts Solidus's routes at the root of your application.
-          # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
-          # If you would like to change where this engine is mounted, simply change the :at option to something different.
-          #
-          # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
-          #{CORE_MOUNT_ROUTE}, at: '/'
-        RUBY
-      end
     end
 
     def run_migrations
@@ -207,6 +223,27 @@ module Solidus
       super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
     ensure
       Bundler.reset_paths!
+    end
+
+    def ask_with_default(desc:, default:)
+      if options[:auto_accept]
+        say_status :using, "#{default} (default)"
+        return default
+      end
+
+      default_label = " (#{set_color :default, :bold}: \"#{default}\")" if default
+
+      say_status :question, "#{desc}#{default_label}.", :yellow
+      answer = ask(set_color("answer:".rjust(13), :blue, :bold)).to_s.downcase.presence
+
+      case answer
+      when nil
+        say_status :using, "#{default} (default)"
+        default
+      else
+        say_status :using, answer
+        answer
+      end
     end
 
     def ask_with_description(desc:, limited_to:, default:)
