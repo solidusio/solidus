@@ -13,16 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - id: pipeline_context
-        uses: ./.github/actions/extract_pipeline_context
-        with:
-          last_minor: ${{ inputs.last_minor }}
       - uses: ruby/setup-ruby@v1
         env:
           BUNDLE_ONLY: "release"
         with:
           ruby-version: "3.2"
           bundler-cache: true
+      - id: pipeline_context
+        uses: ./.github/actions/extract_pipeline_context
+        with:
+          last_minor: ${{ inputs.last_minor }}
       - name: "Bump version"
         run: bin/release/bump-version ${{ steps.pipeline_context.outputs.candidate_version }}
       - name: "Bump docker image version"

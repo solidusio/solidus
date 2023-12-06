@@ -16,16 +16,16 @@ jobs:
         contains(github.event.pull_request.labels.*.name, 'release:generate')
     steps:
       - uses: actions/checkout@v3
-      - id: pipeline_context
-        uses: ./.github/actions/extract_pipeline_context
-        with:
-          last_minor: ${{ contains(github.event.pull_request.labels.*.name, 'release:generate-last_minor') }}
       - uses: ruby/setup-ruby@v1
         env:
           BUNDLE_ONLY: "release"
         with:
           ruby-version: "3.2"
           bundler-cache: true
+      - id: pipeline_context
+        uses: ./.github/actions/extract_pipeline_context
+        with:
+          last_minor: ${{ contains(github.event.pull_request.labels.*.name, 'release:generate-last_minor') }}
       - name: "Bump to the development version"
         run: |
           bin/release/bump-version \
