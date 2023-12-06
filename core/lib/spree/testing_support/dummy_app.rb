@@ -82,7 +82,11 @@ module DummyApp
     config.secret_key_base = 'SECRET_TOKEN'
 
     # Set the preview path within the dummy app:
-    config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    if ActionMailer::Base.respond_to? :preview_paths # Rails 7.1+
+      config.action_mailer.preview_paths << File.expand_path('dummy_app/mailer_previews', __dir__)
+    else
+      config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    end
 
     config.active_record.dump_schema_after_migration = false
 
