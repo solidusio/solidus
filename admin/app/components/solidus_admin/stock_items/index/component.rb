@@ -78,7 +78,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::BaseComponent
   def image_column
     {
       col: { class: "w-[72px]" },
-      header: tag.span('aria-label': t('.image'), role: 'text'),
+      header: tag.span('aria-label': Spree::Image.model_name.human, role: 'text'),
       data: ->(stock_item) do
         image = stock_item.variant.gallery.images.first or return
 
