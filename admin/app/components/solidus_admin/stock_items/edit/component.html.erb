@@ -58,6 +58,14 @@
           checked: f.object.backorderable?,
           include_hidden: true,
         ) %>
+
+        <% if params[:q] %>
+          <%= f.hidden_field :q, value: params[:q].to_json, id: false %>
+        <% end %>
+
+        <% if params[:page] %>
+          <%= f.hidden_field :page, value: params[:page], id: false %>
+        <% end %>
       </div>
     <% end %>
 
