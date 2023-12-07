@@ -1,0 +1,81 @@
+<div
+  data-controller="<%= stimulus_id %>"
+  data-<%= stimulus_id %>-initial-count-on-hand-value="<%= @stock_item.count_on_hand_was || @stock_item.count_on_hand %>"
+  data-action="input-><%= stimulus_id %>#updateCountOnHand"
+>
+  <%= render component("ui/modal").new(title: t(".title"), close_path: solidus_admin.stock_items_path(page: params[:page], q: permitted_query_params)) do |modal| %>
+    <%= form_for @stock_item, url: solidus_admin.stock_item_path(@stock_item), html: { id: form_id } do |f| %>
+      <div class="flex flex-col gap-6 pb-4">
+        <div class="flex gap-4">
+          <%= link_to spree.edit_admin_product_variant_path(
+            @stock_item.variant.product,
+            @stock_item.variant,
+          ), class: 'hover:bg-gray-25 rounded p-1 w-1/2 border border-gray-100' do %>
+            <%= render component("ui/resource_item").new(
+              thumbnail:
+                (
+                  @stock_item.variant.images.first ||
+                    @stock_item.variant.product.gallery.images.first
+                )&.url(:small),
+              title: @stock_item.variant.name,
+              subtitle:
+                "#{@stock_item.variant.sku}#{@stock_item.variant.options_text.presence&.prepend(" - ")}",
+            ) %>
+          <% end %>
+          <%= link_to spree.edit_admin_stock_location_path(@stock_item.stock_location), class: 'hover:bg-gray-25 rounded p-1 w-1/2 border border-gray-100' do %>
+            <%= render component("ui/resource_item").new(
+              title: @stock_item.stock_location.name,
+              subtitle: "#{Spree::StockLocation.model_name.human} #{@stock_item.stock_location.code}",
+            ) %>
+          <% end %>
+        </div>
+
+        <%= render component("ui/forms/field").text_field(
+          f,
+          :count_on_hand,
+          disabled: true,
+          value: @stock_item.count_on_hand_was || @stock_item.count_on_hand,
+          "data-#{stimulus_id}-target": 'countOnHand',
+        ) %>
+        <%= render component("ui/forms/field").new(
+          label: t(".quantity_adjustment"),
+          hint: t(".quantity_adjustment_hint_html"),
+        ) do %>
+          <%= render component("ui/forms/input").new(
+            value: params[:quantity_adjustment] || 0,
+            name: :quantity_adjustment,
+            type: :number,
+            step: 1,
+            "data-#{stimulus_id}-target": 'quantityAdjustment',
+          ) %>
+        <% end %>
+
+        <%= render component("ui/forms/switch_field").new(
+          name: "#{f.object_name}[backorderable]",
+          label: Spree::StockItem.human_attribute_name(:backorderable),
+          error: f.object.errors[:backorderable],
+          hint: t(".backorderable_hint_html"),
+          checked: f.object.backorderable?,
+          include_hidden: true,
+        ) %>
+      </div>
+    <% end %>
+
+    <% modal.with_actions do %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        scheme: :secondary,
+        text: t(".cancel"),
+        href: solidus_admin.stock_items_path(page: params[:page], q: params[:q]),
+      ) %>
+
+      <%= render component("ui/button").new(
+        tag: :button,
+        text: t(".submit"),
+        form: form_id,
+      ) %>
+    <% end %>
+  <% end %>
+
+  <%= render component("stock_items/index").new(page: @page) %>
+</div>

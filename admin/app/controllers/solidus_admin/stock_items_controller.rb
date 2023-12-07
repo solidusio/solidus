@@ -19,6 +19,9 @@ module SolidusAdmin
     end
 
     def edit
+      respond_to do |format|
+        format.html { render component('stock_items/edit').new(stock_item: @stock_item, page: @page) }
+      end
     end
 
     def update
@@ -29,6 +32,9 @@ module SolidusAdmin
       if @stock_item.save
         redirect_to solidus_admin.stock_items_path, status: :see_other
       else
+        respond_to do |format|
+          format.html { render component('stock_items/edit').new(stock_item: @stock_item, page: @page), status: :unprocessable_entity }
+        end
       end
     end
 

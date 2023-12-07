@@ -3,7 +3,8 @@
     <%= page_header_title title %>
   <% end %>
 
-  <%= render component('ui/table').new(
+  <%=
+  render component('ui/table').new(
     id: stimulus_id,
     data: {
       class: Spree::StockItem,
@@ -12,10 +13,11 @@
       next: next_page_path,
       columns: columns,
       batch_actions: batch_actions,
+      url: -> { solidus_admin.edit_stock_item_path(_1, page: params[:page], q: permitted_query_params) },
     },
     search: {
       name: :q,
-      value: params[:q],
+      value: permitted_query_params,
       url: solidus_admin.stock_items_path,
       searchbar_key: :variant_product_name_or_variant_sku_or_variant_option_values_name_or_variant_option_values_presentation_cont,
       filters: filters,

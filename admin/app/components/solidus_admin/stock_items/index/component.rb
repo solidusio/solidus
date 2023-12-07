@@ -172,4 +172,9 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::BaseComponent
       end
     }
   end
+
+  def permitted_query_params
+    return params[:q].permit! if params[:q].respond_to?(:permit)
+    {}
+  end
 end
