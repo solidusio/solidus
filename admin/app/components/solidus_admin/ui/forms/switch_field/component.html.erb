@@ -1,0 +1,20 @@
+<label class="flex flex-wrap items-center gap-2 w-full border border-gray-100 rounded px-4 py-2">
+  <div class="flex gap-1 items-center grow py-2">
+    <span class="text-gray-700 body-tiny-bold body-text-bold"><%= @label %></span>
+
+    <%= render component("ui/toggletip").new(text: @tip) if @tip.present? %>
+  </div>
+
+  <%= render component("ui/forms/switch").new(**@attributes) %>
+
+  <% if @hint.present? || @error.present? %>
+    <div
+      class="
+        w-full body-small [:disabled~&]:text-gray-300 text-gray-500 flex gap-1 flex-col pt-2 pb-4
+      "
+    >
+      <%= tag.span @hint if @hint.present? %>
+      <%= tag.span safe_join(@error, tag.br), class: "text-red-400" if @error.present? %>
+    </div>
+  <% end %>
+</label>
