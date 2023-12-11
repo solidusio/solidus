@@ -27,6 +27,7 @@ executors:
       <<: *environment
       DB: postgresql
       DB_HOST: localhost
+      DB_USERNAME: root
     docker:
       - image: *image
       - image: jhawthorn/circleci-postgres-fast

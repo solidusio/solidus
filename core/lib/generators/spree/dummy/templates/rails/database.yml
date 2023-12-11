@@ -1,113 +1,61 @@
-<% db = case ENV['DB']
-        when 'mysql'
-          'mysql'
-        when 'postgres', 'postgresql'
-          'postgres'
-        when 'sqlite', '', nil
-          'sqlite'
-        else
-          raise "Invalid DB specified: #{ENV['DB']}"
-        end %>
-<% db_host = case db
-             when 'mysql'
-               ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
-             when 'postgres'
-               ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
-             else
-               ENV['DB_HOST']
-             end %>
-<% db_username = ENV['DB_USERNAME'] %>
-<% db_password = ENV['DB_PASSWORD'] %>
+<%
+  adapter =
+    case ENV['DB']
+    when 'mysql2', 'mysql' then 'mysql2'
+    when 'postgresql', 'postgres' then 'postgresql'
+    when 'sqlite3', 'sqlite', '', nil then 'sqlite3'
+    else raise "Invalid DB specified " + ENV['DB'].inspect
+    end
 
-<% case ENV['DB']
-  when 'mysql' %>
+  db_host =
+    case adapter
+    when 'mysql2' then ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
+    when 'postgres' then ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
+    else ENV['DB_HOST']
+    end
+
+  db_username = ENV['DB_USERNAME']
+  db_password = ENV['DB_PASSWORD'] %>
+
+default:
+  adapter: <%= adapter %>
+  <% unless db_username.blank? %>username: <%= db_username %><% end %>
+  <% unless db_password.blank? %>password: <%= db_password %><% end %>
+  <% unless db_host.blank? %>host: <%= db_host %><% end %>
+  <% if adapter == 'mysql2' %>encoding: utf8<% end %>
+  <% if adapter == 'postgresql' %>min_messages: warning<% end %>
+
+<% if adapter == 'mysql2' %>
 development:
-  adapter: mysql2
+  <<: *default
   database: <%= options[:lib_name] %>_solidus_development
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  encoding: utf8
 test:
-  adapter: mysql2
+  <<: *default
   database: <%= options[:lib_name] %>_solidus_test
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  encoding: utf8
 production:
-  adapter: mysql2
+  <<: *default
   database: <%= options[:lib_name] %>_solidus_production
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  encoding: utf8
-<% when 'postgres', 'postgresql' %>
+
+<% elsif adapter == 'postgresql' %>
 development:
-  adapter: postgresql
+  <<: *default
   database: <%= options[:lib_name] %>_solidus_development
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  min_messages: warning
 test:
-  adapter: postgresql
+  <<: *default
   database: <%= options[:lib_name] %>_solidus_test
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  min_messages: warning
 production:
-  adapter: postgresql
+  <<: *default
   database: <%= options[:lib_name] %>_solidus_production
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  min_messages: warning
-<% when 'sqlite', '', nil %>
+
+<% elsif adapter == 'sqlite3' %>
 development:
-  adapter: sqlite3
+  <<: *default
   database: db/solidus_development.sqlite3
 test:
-  adapter: sqlite3
+  <<: *default
   database: db/solidus_test.sqlite3
 production:
-  adapter: sqlite3
+  <<: *default
   database: db/solidus_production.sqlite3
+
 <% end %>
