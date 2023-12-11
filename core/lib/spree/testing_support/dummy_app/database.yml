@@ -1,54 +1,45 @@
-<% db = case ENV['DB']
-        when 'mysql'
-          'mysql'
-        when 'postgres', 'postgresql'
-          'postgres'
-        when 'sqlite', '', nil
-          'sqlite'
-        else
-          raise "Invalid DB specified: #{ENV['DB']}"
-        end %>
-<% db_host = case db
-             when 'mysql'
-               ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
-             when 'postgres'
-               ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
-             else
-               ENV['DB_HOST']
-             end %>
-<% db_prefix = ENV['LIB_NAME'].presence || "solidus" %>
-<% db_username = ENV['DB_USERNAME'] %>
-<% db_password = ENV['DB_PASSWORD'] %>
-<% case db
-when 'mysql' %>
+<%
+  adapter =
+    case ENV['DB']
+    when 'mysql2', 'mysql' then 'mysql2'
+    when 'postgresql', 'postgres' then 'postgresql'
+    when 'sqlite3', 'sqlite', '', nil then 'sqlite3'
+    else raise "Invalid DB specified " + ENV['DB'].inspect
+    end
+
+  db_host =
+    case adapter
+    when 'mysql' then ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
+    when 'postgres' then ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
+    else ENV['DB_HOST']
+    end
+
+  db_prefix = ENV['LIB_NAME'].presence || "solidus"
+  db_username = ENV['DB_USERNAME']
+  db_password = ENV['DB_PASSWORD'] %>
+
+default: &default
+  adapter: <%= adapter %>
+  <% unless db_username.blank? %>username: <%= db_username %><% end %>
+  <% unless db_password.blank? %>password: <%= db_password %><% end %>
+  <% unless db_host.blank? %>host: <%= db_host %><% end %>
+  <% if adapter == 'mysql2' %>encoding: utf8<% end %>
+  <% if adapter == 'postgresql' %>min_messages: warning<% end %>
+
+<% if adapter == 'mysql2' %>
 test:
-  adapter: mysql2
+  <<: *default
   database: <%= db_prefix %>_test
-  <% unless db_username.blank? %>
-  username: <%= db_username %>
-  <% end %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  encoding: utf8
-<% when 'postgres' %>
+
+<% elsif adapter == 'postgresql' %>
 test:
-  adapter: postgresql
+  <<: *default
   database: <%= db_prefix %>_test
-  username: <%= db_username.presence || "postgres" %>
-  <% unless db_password.blank? %>
-  password: <%= db_password %>
-  <% end %>
-  <% unless db_host.blank? %>
-  host: <%= db_host %>
-  <% end %>
-  min_messages: warning
-<% when 'sqlite' %>
+
+<% elsif adapter == 'sqlite3' %>
 test:
-  adapter: sqlite3
+  <<: *default
   database: db/<%= db_prefix %>_test.sqlite3
   timeout: 10000
+
 <% end %>
