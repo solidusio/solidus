@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUNDLE_ONLY: "release"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1

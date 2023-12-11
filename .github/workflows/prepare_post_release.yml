@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUNDLE_ONLY: "release"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: |
       github.event.pull_request.merged == true &&
         contains(github.event.pull_request.labels.*.name, 'release:generate')
