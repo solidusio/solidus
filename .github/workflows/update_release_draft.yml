@@ -15,8 +15,10 @@ jobs:
     env:
       BUNDLE_ONLY: "release"
     if: |
-      (github.event.pull_request.merged == true) &&
-        !contains(github.event.pull_request.labels.*.name, 'changelog:skip')
+      (github.event_name == 'workflow_dispatch') || (
+        (github.event.pull_request.merged == true) &&
+          !contains(github.event.pull_request.labels.*.name, 'changelog:skip')
+      )
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
