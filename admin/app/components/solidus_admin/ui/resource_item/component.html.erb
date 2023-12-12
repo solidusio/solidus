@@ -1,0 +1,10 @@
+<div class="flex gap-2 grow">
+  <%= render component("ui/thumbnail").new(
+    src: @thumbnail,
+    alt: @title,
+  ) if @thumbnail %>
+  <div class="flex-col">
+    <div class="leading-5 text-black body-small-bold"><%= @title %></div>
+    <div class="leading-5 text-gray-500 body-small"><%= @subtitle %></div>
+  </div>
+</div>

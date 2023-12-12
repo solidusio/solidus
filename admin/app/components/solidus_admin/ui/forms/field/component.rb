@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
+  extend SolidusAdmin::ComponentsHelper
+
   def initialize(label:, hint: nil, tip: nil, error: nil, input_attributes: nil, **attributes)
     @label = label
     @hint = hint
@@ -67,6 +69,25 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         error: (errors.to_sentence.capitalize if errors),
         **attributes,
       }
+    )
+  end
+
+  def self.toggle(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
+    object_name, object, label, errors = extract_form_details(form, object, method)
+
+    new(
+      label: label,
+      hint: hint,
+      tip: tip,
+      error: errors,
+    ).with_content(
+      component('ui/forms/switch').new(
+        name: "#{object_name}[#{method}]",
+        size: size,
+        checked: object.public_send(method),
+        include_hidden: true,
+        **attributes,
+      )
     )
   end
 

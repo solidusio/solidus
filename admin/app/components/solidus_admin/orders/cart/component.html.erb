@@ -30,20 +30,11 @@
             <% @order.line_items.each do |line_item| %>
               <tr class="border-gray-100 border-t">
                 <td class="px-6 py-4">
-                  <div class="flex gap-2 grow">
-                    <% variant = line_item.variant %>
-                    <%= render component("ui/thumbnail").new(
-                      src: (variant.images.first || variant.product.gallery.images.first)&.url(:small),
-                      alt: variant.name
-                    ) %>
-                    <div class="flex-col">
-                      <div class="leading-5 text-black body-small-bold"><%= variant.name %></div>
-                      <div class="leading-5 text-gray-500 body-small">
-                        SKU: <%= variant.sku %>
-                        <%= variant.options_text.presence&.prepend("- ") %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render component("ui/resource_item").new(
+                    thumbnail: (line_item.variant.images.first || line_item.variant.product.gallery.images.first)&.url(:small),
+                    title: line_item.variant.name,
+                    subtitle: "#{line_item.variant.sku}#{line_item.variant.options_text.presence&.prepend("- ")}",
+                  ) %>
                 </td>
                 <td class="px-6 py-4">
                   <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), html: {

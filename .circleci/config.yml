@@ -323,7 +323,7 @@ jobs:
       - setup
       - test
 
-  test_with_coverage:
+  test_solidus_with_coverage:
     parameters:
       database:
         type: string
@@ -350,7 +350,7 @@ workflows:
       - solidus_installer
 
       # Only test with coverage support with the default versions
-      - test_with_coverage:
+      - test_solidus_with_coverage:
           post-steps:
             - codecov/upload:
                 file: $COVERAGE_FILE

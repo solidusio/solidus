@@ -71,13 +71,14 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::BaseComponent
       stock_location_column,
       back_orderable_column,
       count_on_hand_column,
+      stock_movements_column,
     ]
   end
 
   def image_column
     {
       col: { class: "w-[72px]" },
-      header: tag.span('aria-label': t('.image'), role: 'text'),
+      header: tag.span('aria-label': Spree::Image.model_name.human, role: 'text'),
       data: ->(stock_item) do
         image = stock_item.variant.gallery.images.first or return
 
@@ -127,8 +128,29 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::BaseComponent
   def stock_location_column
     {
       header: :stock_location,
-      data: ->(stock_item) do
-        link_to stock_item.stock_location.name, spree.admin_stock_location_stock_movements_path(stock_item.stock_location.id, q: { variant_sku_eq: stock_item.variant.sku })
+      data: ->(stock_item) { stock_item.stock_location.name },
+    }
+  end
+
+  # Cache the stock movement counts to avoid N+1 queries
+  def stock_movement_counts
+    @stock_movement_counts ||= Spree::StockMovement.where(stock_item_id: @page.records.ids).group(:stock_item_id).count
+  end
+
+  def stock_movements_column
+    {
+      header: :stock_movements,
+      data: -> do
+        count = stock_movement_counts[_1.id] || 0
+
+        link_to(
+          "#{count} #{Spree::StockMovement.model_name.human(count: count).downcase}",
+          spree.admin_stock_location_stock_movements_path(
+            _1.stock_location.id,
+            q: { variant_sku_eq: _1.variant.sku },
+          ),
+          class: 'body-link'
+        )
       end
     }
   end
@@ -149,5 +171,10 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::BaseComponent
         content_tag :div, stock_item.count_on_hand
       end
     }
+  end
+
+  def permitted_query_params
+    return params[:q].permit! if params[:q].respond_to?(:permit)
+    {}
   end
 end
