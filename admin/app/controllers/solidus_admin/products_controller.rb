@@ -17,10 +17,7 @@ module SolidusAdmin
         param: :q,
       )
 
-      set_page_and_extract_portion_from(
-        products,
-        per_page: SolidusAdmin::Config[:products_per_page]
-      )
+      set_page_and_extract_portion_from(products)
 
       respond_to do |format|
         format.html { render component('products/index').new(page: @page) }
