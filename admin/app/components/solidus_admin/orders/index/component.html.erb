@@ -29,7 +29,7 @@
     search: {
       name: :q,
       value: params[:q],
-      searchbar_key: SolidusAdmin::Config[:order_search_key],
+      searchbar_key: :number_or_shipments_number_or_bill_address_name_or_email_cont,
       url: solidus_admin.orders_path(scope: params[:scope]),
       filters: filters,
       scopes: scopes,
