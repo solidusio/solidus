@@ -119,7 +119,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :price,
       data: ->(product) do
-        content_tag :div, product.master.display_price.to_html
+        content_tag :div, product.master.display_price&.to_html
       end
     }
   end
