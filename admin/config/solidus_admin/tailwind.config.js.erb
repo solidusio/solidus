@@ -89,8 +89,13 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-    plugin(({ addVariant }) => addVariant('hidden', '&([hidden])')),
-    plugin(({ addVariant }) => addVariant('visible', '&:not([hidden])')),
-    plugin(({ addVariant }) => addVariant('search-cancel', '&::-webkit-search-cancel-button')),
-  ]
+    plugin(({ addVariant }) => {
+      // Support the "hidden" attribute
+      addVariant('hidden', '&([hidden])')
+      addVariant('visible', '&:not([hidden])')
+
+      // Support the "search-cancel" pseudo-element
+      addVariant('search-cancel', '&::-webkit-search-cancel-button')
+    }),
+  ],
 }
