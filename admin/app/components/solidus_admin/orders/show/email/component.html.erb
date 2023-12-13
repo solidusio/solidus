@@ -3,9 +3,9 @@
   <%= render component("ui/modal").new(title: t(".title"), close_path: close_path) do |modal| %>
     <%= form_for @order, url: close_path, html: { id: form_id} do |f| %>
       <%= render component("ui/forms/field").text_field(f, :email) %>
-      <label class="body-small mt-4 block">
+      <label class="font-normal text-sm mt-4 block">
         <%= t('.guest_checkout') %>:
-        <output class="body-small-bold"><%= @order.user ? t('.no') : t('.yes') %></output>
+        <output class="font-semibold text-sm"><%= @order.user ? t('.no') : t('.yes') %></output>
         <%= render component('ui/toggletip').new(text: t('.guest_checkout_tip'), class: "align-middle") %>
       </label>
     <% end %>

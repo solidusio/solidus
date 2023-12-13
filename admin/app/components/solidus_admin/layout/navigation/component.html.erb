@@ -10,8 +10,8 @@
 
   <%= link_to @store_url, target: :_blank, class: "flex mb-4 px-2 py-1.5 border border-gray-100 rounded-sm shadow-sm" do %>
     <div class="flex-grow flex flex-col gap-0.5">
-      <p class="body-small-bold text-black"><%= @store.name %></p>
-      <p class="body-tiny text-gray-500"><%= @store.url %></p>
+      <p class="font-semibold text-sm text-black"><%= @store.name %></p>
+      <p class="font-normal text-xs text-gray-500"><%= @store.url %></p>
     </div>
     <%= render component("ui/icon").new(name: 'arrow-right-up-line', class: 'w-4 h-4 fill-gray-400') %>
   <% end %>
@@ -22,7 +22,7 @@
 
   <div class="mt-auto">
     <div class="group mb-3">
-      <label class="flex gap-3 items-center py-0.5 px-3 pb-0.5 rounded hover:text-red-500 hover:bg-gray-50 body-small-bold text-black cursor-pointer">
+      <label class="flex gap-3 items-center py-0.5 px-3 pb-0.5 rounded hover:text-red-500 hover:bg-gray-50 font-semibold text-sm text-black cursor-pointer">
         <%= t('spree.navigation.switch_to_legacy') %>
         <div class="flex items-center">
           <%= render component("ui/forms/switch").new(size: :s, checked: false, 'data-action': "#{stimulus_id}#setCookie:prevent") %>

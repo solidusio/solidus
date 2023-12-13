@@ -20,10 +20,10 @@
         <table class="table-auto w-full" <%= :hidden if @order.line_items.empty? %>>
           <thead>
             <tr>
-              <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none">Product</th>
-              <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Quantity</th>
-              <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Price</th>
-              <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only">Actions</span></th>
+              <th class="text-left font-semibold text-sm text-gray-800 bg-gray-15 px-6 py-3 leading-none">Product</th>
+              <th class="text-left font-semibold text-sm text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Quantity</th>
+              <th class="text-left font-semibold text-sm text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">Price</th>
+              <th class="text-left font-semibold text-sm text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +53,7 @@
                   <% end %>
                 </td>
                 <td class="px-6 py-4">
-                  <span class="text-gray-500 body-small"><%= line_item.single_money.to_html %></span>
+                  <span class="text-gray-500 font-normal text-sm"><%= line_item.single_money.to_html %></span>
                 </td>
                 <td class="px-6 py-4 text-right">
                   <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), method: :delete) do |f| %>

@@ -23,19 +23,19 @@
 
         <% panel.with_section(class: 'flex flex-col gap-6') do %>
           <div class="flex flex-col gap-2">
-            <span class="body-small-bold"><%= t(".customer") %></span>
+            <span class="font-semibold text-sm"><%= t(".customer") %></span>
             <% if @order.user %>
-              <div class="body-small"><%= customer_name(@order.user) || tag.span(t('.no_name'), class: "text-gray-500") %></div>
-              <div class="body-small body-link"><%= link_to @order.user.email, spree.admin_user_path(@order.user) %></div>
-              <div class="body-small text-gray-500"><%= t(".orders_count", count: @order.user.orders.complete.count) %></div>
+              <div class="font-normal text-sm"><%= customer_name(@order.user) || tag.span(t('.no_name'), class: "text-gray-500") %></div>
+              <div class="font-normal text-sm body-link"><%= link_to @order.user.email, spree.admin_user_path(@order.user) %></div>
+              <div class="font-normal text-sm text-gray-500"><%= t(".orders_count", count: @order.user.orders.complete.count) %></div>
             <% else %>
               <%= render component('orders/show/customer_search').new(order: @order) %>
             <% end %>
           </div>
 
           <div class="flex flex-col gap-2">
-            <span class="body-small-bold"><%= t('.order_email') %></span>
-            <div class="body-small">
+            <span class="font-semibold text-sm"><%= t('.order_email') %></span>
+            <div class="font-normal text-sm">
               <% if @order.email? %>
                 <%= @order.email %>
               <% else %>
@@ -45,8 +45,8 @@
           </div>
 
           <div class="flex flex-col gap-2">
-            <span class="body-small-bold"><%= @order.class.human_attribute_name(:ship_address) %></span>
-            <div class="body-small">
+            <span class="font-semibold text-sm"><%= @order.class.human_attribute_name(:ship_address) %></span>
+            <div class="font-normal text-sm">
               <% if @order.ship_address %>
                 <%= format_address @order.ship_address %>
               <% else %>
@@ -56,8 +56,8 @@
           </div>
 
           <div class="flex flex-col gap-2">
-            <span class="body-small-bold"><%= @order.class.human_attribute_name(:bill_address) %></span>
-            <div class="body-small">
+            <span class="font-semibold text-sm"><%= @order.class.human_attribute_name(:bill_address) %></span>
+            <div class="font-normal text-sm">
               <% if @order.bill_address.blank? %>
                 <%= link_to t(".add_billing"), solidus_admin.edit_order_bill_address_path(@order), class: 'body-link' %>
               <% elsif @order.bill_address == @order.ship_address %>

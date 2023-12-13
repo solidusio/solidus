@@ -20,7 +20,8 @@ class SolidusAdmin::UI::Dropdown::Component < SolidusAdmin::BaseComponent
     @attributes[:"data-controller"] = "#{stimulus_id} #{attributes[:"data-controller"]}"
     @attributes[:"data-action"] = "turbo:before-cache@window->#{stimulus_id}#close #{attributes[:"data-action"]}"
     @attributes[:class] = "
-      #{@size == :m ? 'body-text' : 'body-small'}
+      font-normal
+      #{@size == :m ? 'text-base' : 'text-sm'}
       #{@attributes[:class]}
     "
   end

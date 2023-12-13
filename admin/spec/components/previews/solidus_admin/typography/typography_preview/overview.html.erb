@@ -1,16 +1,16 @@
 <%
-  %w[
-    body-tiny
-    body-tiny-bold
-    body-small
-    body-small-bold
-    body-text
-    body-text-bold
-    body-title
+  [
+    'font-normal text-xs',
+    'font-semibold text-xs',
+    'font-normal text-sm',
+    'font-semibold text-sm',
+    'font-normal text-base',
+    'font-semibold text-base',
+    'font-semibold text-xl',
   ].each do |klass_name|
 %>
   <div class="mb-3">
-    <h1 class="body-small text-gray-500"><%= klass_name %></h1>
+    <h1 class="font-normal text-sm text-gray-500"><%= klass_name %></h1>
     <p class="<%= klass_name %>">
       The quick brown fox jumps over the lazy dog.
     </p>

@@ -2,8 +2,7 @@
   <div class="flex gap-1 items-center">
     <span class="
       text-gray-700
-      body-tiny-bold
-      body-text-xs-semibold
+      font-semibold text-xs
     "><%= @label %></span>
 
     <%= render component('ui/toggletip').new(text: @tip) if @tip.present? %>
@@ -19,7 +18,7 @@
 
   <% if @hint.present? || @error.present? %>
     <div class="
-      body-tiny
+      font-normal text-xs
       [:disabled~&]:text-gray-300 text-gray-500
       flex gap-1 flex-col
     ">

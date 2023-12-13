@@ -16,7 +16,7 @@ class SolidusAdmin::Layout::SkipLink::Component < SolidusAdmin::BaseComponent
               inline-block
               focus:p-2
               focus:absolute
-              body-small
+              font-normal text-sm
               text-white
               bg-black
             }

@@ -2,9 +2,9 @@
 
 class SolidusAdmin::UI::Tab::Component < SolidusAdmin::BaseComponent
   SIZES = {
-    s: %w[h-7 px-1.5 body-small-bold],
-    m: %w[h-9 px-3 body-small-bold],
-    l: %w[h-12 px-4 body-text-bold],
+    s: %w[h-7 px-1.5 font-semibold text-sm],
+    m: %w[h-9 px-3 font-semibold text-sm],
+    l: %w[h-12 px-4 font-semibold text-base],
   }
 
   def initialize(text:, tag: :a, size: :m, current: false, disabled: false, **attributes)

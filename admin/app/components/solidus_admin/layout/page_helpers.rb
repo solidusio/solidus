@@ -24,7 +24,7 @@ module SolidusAdmin::Layout::PageHelpers
 
   def page_header_title(title, &block)
     tag.h1(safe_join([
-      tag.span(title, class: "body-title"),
+      tag.span(title, class: "font-semibold text-xl"),
       (capture(&block) if block_given?) || "",
     ]), class: "flex-1 text-2xl font-bold")
   end
