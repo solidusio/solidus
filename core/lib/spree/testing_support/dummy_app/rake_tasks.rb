@@ -38,10 +38,7 @@ namespace :db do
     # railties:install:migrations and then db:migrate.
     # Migrations should be run one directory at a time
     ActiveRecord::Migrator.migrations_paths.each do |path|
-      ActiveRecord::MigrationContext.new(
-        [path],
-        ActiveRecord::SchemaMigration
-      ).migrate
+      ActiveRecord::MigrationContext.new([path]).migrate
     end
 
     ActiveRecord::Base.clear_cache!
