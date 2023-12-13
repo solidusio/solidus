@@ -76,12 +76,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
         combinator: 'or',
         attribute: "promotions_id",
         predicate: "in",
-        options: Spree::Promotion.all.map do |promotion|
-          [
-            promotion.name,
-            promotion.id
-          ]
-        end
+        options: Spree::Promotion.all.pluck(:name, :id),
       },
     ]
   end

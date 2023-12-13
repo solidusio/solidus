@@ -49,12 +49,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
         combinator: 'or',
         attribute: "variants_option_values",
         predicate: "in",
-        options: option_type.option_values.map do |option_value|
-          [
-            option_value.name,
-            option_value.id
-          ]
-        end
+        options: option_type.option_values.pluck(:name, :id),
       }
     end
   end
