@@ -89,7 +89,7 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-    plugin(({ addVariant, addBase }) => {
+    plugin(({ addVariant, addBase, addComponents, theme }) => {
       // Support the "hidden" attribute
       addVariant('hidden', '&([hidden])')
       addVariant('visible', '&:not([hidden])')
@@ -102,6 +102,16 @@ module.exports = {
         'summary::-webkit-details-marker': { display: 'none' },
         'summary::marker': { display: 'none' },
         'summary': { listStyle: 'none' },
+      })
+
+      // Add a text style for links
+      addComponents({
+        '.body-link': {
+          color: theme('colors.blue'),
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        },
       })
     }),
   ],
