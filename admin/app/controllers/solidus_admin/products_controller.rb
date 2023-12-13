@@ -13,11 +13,14 @@ module SolidusAdmin
 
     def index
       products = apply_search_to(
-        Spree::Product.order(created_at: :desc, id: :desc),
+        Spree::Product.includes(:master, variants: :default_price),
         param: :q,
       )
 
-      set_page_and_extract_portion_from(products)
+      set_page_and_extract_portion_from(
+        products,
+        ordered_by: { updated_at: :desc, id: :desc },
+      )
 
       respond_to do |format|
         format.html { render component('products/index').new(page: @page) }
