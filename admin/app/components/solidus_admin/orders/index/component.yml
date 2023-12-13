@@ -10,7 +10,6 @@ en:
     status: Status
     shipment_state: Shipment State
     payment_state: Payment State
-    variants: Variants
     promotions: Promotions
   date:
     formats:
