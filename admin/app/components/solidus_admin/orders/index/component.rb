@@ -72,18 +72,6 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
         end
       },
       {
-        presentation: t('.filters.variants'),
-        combinator: 'or',
-        attribute: "line_items_variant_id",
-        predicate: "in",
-        options: Spree::Variant.all.map do |variant|
-          [
-            variant.descriptive_name,
-            variant.id
-          ]
-        end
-      },
-      {
         presentation: t('.filters.promotions'),
         combinator: 'or',
         attribute: "promotions_id",
