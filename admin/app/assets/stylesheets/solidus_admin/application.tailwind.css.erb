@@ -2,49 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  summary {
-    &::marker,
-    &::-webkit-details-marker {
-      @apply hidden;
-    }
-
-    list-style: none;
-  }
-}
-
-@layer components {
-  .body-tiny {
-    @apply font-sans font-normal text-xs;
-  }
-
-  .body-tiny-bold {
-    @apply font-sans font-semibold text-xs;
-  }
-
-  .body-small {
-    @apply font-sans font-normal text-sm;
-  }
-
-  .body-small-bold {
-    @apply font-sans font-semibold text-sm;
-  }
-
-  .body-text {
-    @apply font-sans font-normal text-base;
-  }
-
-  .body-text-bold {
-    @apply font-sans font-semibold text-base;
-  }
-
-  .body-title {
-    @apply font-sans font-semibold text-xl;
-  }
-
-  .body-link {
-    @apply text-blue hover:underline;
-  }
-}
-
 <%= SolidusAdmin::Config.tailwind_stylesheets.map { File.read(_1) }.join("\n") %>

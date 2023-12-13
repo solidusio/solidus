@@ -7,10 +7,10 @@
       py-1 px-3 rounded
       hover:text-red-500 hover:bg-gray-50
       <%= "text-red-500 bg-gray-50" if active? %>
-      <%= @item.top_level ? "body-small-bold text-black" : "body-small text-gray-600" %>
+      <%= @item.top_level ? "font-semibold text-sm text-black" : "font-normal text-sm text-gray-600" %>
     "
   >
-    <i class="w-[1.125rem] h-[1.125rem] body-small flex">
+    <i class="w-[1.125rem] h-[1.125rem] font-normal text-sm flex">
       <% if @item.icon %>
         <%= icon_tag(@item.icon, class: "inline-block w-full h-full fill-current") %>
       <% end %>

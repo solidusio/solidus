@@ -8,8 +8,8 @@
       <button type="submit" class="flex gap-2 grow items-center">
         <%= render component("ui/icon").new(name: "user-line", class: 'w-5 h-5 m-2') %>
         <div  class="flex-col text-left">
-          <div class="leading-5 text-black body-small-bold"><%= @name %></div>
-          <div class="leading-5 text-gray-500 body-small"><%= @customer.email %></div>
+          <div class="leading-5 text-black font-semibold text-sm"><%= @name %></div>
+          <div class="leading-5 text-gray-500 font-normal text-sm"><%= @customer.email %></div>
         </div>
       </button>
     <% end %>

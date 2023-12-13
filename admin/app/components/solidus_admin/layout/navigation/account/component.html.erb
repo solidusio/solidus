@@ -9,11 +9,11 @@
     class="
       flex gap-1.5
       p-3 mt-2 rounded
-      body-small-bold text-gray-500
+      font-semibold text-sm text-gray-500
       hover:bg-gray-25 [[open]_>_&]:bg-gray-25
       cursor-pointer
     ">
-    <%= icon_tag("user-smile-fill", class: "inline-block align-text-bottom shrink-0 w-6 h-6 rounded-[4.81rem] body-small fill-yellow bg-black") %>
+    <%= icon_tag("user-smile-fill", class: "inline-block align-text-bottom shrink-0 w-6 h-6 rounded-[4.81rem] font-normal text-sm fill-yellow bg-black") %>
     <span class="overflow-hidden whitespace-nowrap text-ellipsis leading-6">
       <%= @user_label %>
     </span>
@@ -22,7 +22,7 @@
   <ul
     class="
       p-2 mb-1 absolute bottom-full left-0 w-full
-      body-small text-black bg-white
+      font-normal text-sm text-black bg-white
       border border-gray-100 rounded-lg
       shadow-base
     ">

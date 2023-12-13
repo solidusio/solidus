@@ -2,9 +2,9 @@
 
 class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
   SIZES = {
-    s: "form-control-sm px-3 py-1.5 body-small",
-    m: "form-control-md px-3 py-1.5 body-small",
-    l: "form-control-lg px-3 py-1.5 body-text"
+    s: "form-control-sm px-3 py-1.5 font-normal text-sm",
+    m: "form-control-md px-3 py-1.5 font-normal text-sm",
+    l: "form-control-lg px-3 py-1.5 font-normal text-base"
   }.freeze
 
   HEIGHTS = {

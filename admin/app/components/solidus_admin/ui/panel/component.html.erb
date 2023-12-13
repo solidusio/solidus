@@ -24,7 +24,7 @@
   <% if @title %>
     <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
       <h2>
-        <span class="body-title"><%= @title %></span>
+        <span class="font-semibold text-xl"><%= @title %></span>
         <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
       </h2>
     </section>
