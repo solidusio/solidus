@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  summary {
-    &::marker,
-    &::-webkit-details-marker {
-      @apply hidden;
-    }
-
-    list-style: none;
-  }
-}
-
 @layer components {
   .body-link {
     @apply text-blue hover:underline;
