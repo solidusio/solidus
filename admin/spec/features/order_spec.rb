@@ -3,7 +3,10 @@
 require 'spec_helper'
 
 describe "Order", :js, type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before do
+    allow(SolidusAdmin::Config).to receive(:enable_alpha_features?) { true }
+    sign_in create(:admin_user, email: 'admin@example.com')
+  end
 
   it "allows detaching a customer from an order" do
     order = create(:order, number: "R123456789", user: create(:user))

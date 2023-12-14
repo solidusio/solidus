@@ -3,7 +3,10 @@
 require 'spec_helper'
 
 describe "Products", type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before do
+    allow(SolidusAdmin::Config).to receive(:enable_alpha_features?) { true }
+    sign_in create(:admin_user, email: 'admin@example.com')
+  end
 
   it "lists products", :js do
     create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
