@@ -71,6 +71,13 @@ module SolidusAdmin
     #                     Default: 10
     preference :low_stock_value, :integer, default: 10
 
+    # @!attribute [rw] enable_alpha_features?
+    #   @return [Boolean] Determines whether alpha features are enabled or disabled in the application.
+    #                     Setting this to `true` enables access to alpha stage features that might still be in testing or development.
+    #                     Use with caution, as these features may not be fully stable or complete.
+    #                     Default: false
+    preference :enable_alpha_features?, :boolean, default: false
+
     preference :storefront_product_path_proc, :proc, default: ->(_version) {
       ->(product) { "/products/#{product.slug}" }
     }
