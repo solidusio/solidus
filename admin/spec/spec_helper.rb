@@ -41,6 +41,7 @@ require "selenium/webdriver"
 require 'webdrivers'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 Capybara.exact = true
+Capybara.disable_animation = true
 Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
   browser_options.args << '--headless'

@@ -7,6 +7,32 @@ require 'rspec/core/rake_task'
 require 'spree/testing_support/dummy_app/rake_tasks'
 require 'bundler/gem_tasks'
 
+namespace :tailwindcss do
+  tailwindcss_command = [
+    "tailwindcss",
+    "--content",
+    "#{__dir__}/{app/helpers,app/views,app/components,app/assets/javascripts,spec/components/previews}/**/*",
+    "--config",
+    "#{__dir__}/config/tailwind.config.js",
+    "--input",
+    "#{__dir__}/app/assets/stylesheets/solidus_admin/application.tailwind.css",
+    "--output",
+    "#{__dir__}/app/assets/builds/solidus_admin/tailwind.css",
+  ]
+
+  desc 'Build Tailwind CSS'
+  task :build do
+    sh tailwindcss_command.shelljoin
+  end
+
+  desc 'Watch Tailwind CSS'
+  task :watch do
+    sh (tailwindcss_command + ['--watch']).shelljoin
+  end
+end
+
+task build: 'tailwindcss:build'
+
 RSpec::Core::RakeTask.new
 task default: :spec
 
