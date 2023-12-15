@@ -17,7 +17,7 @@
   db_username = ENV['DB_USERNAME']
   db_password = ENV['DB_PASSWORD'] %>
 
-default:
+default: &default
   adapter: <%= adapter %>
   <% unless db_username.blank? %>username: <%= db_username %><% end %>
   <% unless db_password.blank? %>password: <%= db_password %><% end %>
