@@ -33,19 +33,19 @@ Spree.config do |config|
   # Custom logo for the admin
   # config.admin_interface_logo = "logo/solidus.svg"
 
-  # Gateway credentials can be configured statically here and referenced from
+  # Payment gateway credentials can be configured statically here and referenced from
   # the admin. They can also be fully configured from the admin.
   #
-  # Please note that you need to use the solidus_stripe gem to have
-  # Stripe working: https://github.com/solidusio-contrib/solidus_stripe
+  # Please note that the example below requires the `solidus_stripe` ~> 5.0 gem
+  # in order to work properly (see https://github.com/solidusio-contrib/solidus_stripe).
   #
   # config.static_model_preferences.add(
-  #   Spree::PaymentMethod::StripeCreditCard,
-  #   'stripe_env_credentials',
-  #   secret_key: ENV['STRIPE_SECRET_KEY'],
-  #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
-  #   server: Rails.env.production? ? 'production' : 'test',
-  #   test_mode: !Rails.env.production?
+  #   'SolidusStripe::PaymentMethod',
+  #   'solidus_stripe_env_credentials',
+  #   api_key: ENV.fetch('SOLIDUS_STRIPE_API_KEY'),
+  #   publishable_key: ENV.fetch('SOLIDUS_STRIPE_PUBLISHABLE_KEY'),
+  #   test_mode: ENV.fetch('SOLIDUS_STRIPE_API_KEY').start_with?('sk_test_'),
+  #   webhook_endpoint_signing_secret: ENV.fetch('SOLIDUS_STRIPE_WEBHOOK_SIGNING_SECRET')
   # )
 end
 
