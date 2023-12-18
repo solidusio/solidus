@@ -46,6 +46,45 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
         end
       end
 
+      context "with a shipping promotion" do
+        let(:admin_user) { create(:admin_user) }
+
+        let(:order) { create(:order_with_line_items, line_items_count: 1, line_items_price: 10, user: admin_user) }
+
+        let(:promotion) { create(:promotion, :with_free_shipping) }
+        let!(:promotion_rule) do
+          rule = Spree::Promotion::Rules::UserRole.create!(
+            promotion: promotion,
+            preferred_role_ids: admin_user.spree_roles.ids,
+            preferred_match_policy: "all"
+          )
+          promotion.rules << rule
+          promotion.save!
+          rule
+        end
+
+        let(:shipment) { order.shipments.first }
+
+        before do
+          promotion.activate(order: order)
+          order.recalculate
+
+          # Spree::Promotion::Rules::UserRole only for admin role
+          # So we make the user not an admin
+          # and expect the subject will mark as non eligible the shipment adjustment
+          admin_user.spree_roles = []
+          admin_user.save!
+        end
+
+        it 'updates the promotion adjustments eligible attribute' do
+          expect {
+            subject
+          }.to change {
+            shipment.adjustments.first.eligible
+          }.from(true).to(false)
+        end
+      end
+
       context 'promotion chooser customization' do
         before do
           class Spree::TestPromotionChooser
