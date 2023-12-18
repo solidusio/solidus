@@ -345,3 +345,8 @@ Lint/MissingSuper:
 Rails/FindEach:
   Exclude:
     - 'db/migrate/**/*'
+
+# Since we're writing library code we can't assume that
+# tasks should load the rails environment loaded.
+Rails/RakeEnvironment:
+  Enabled: false
