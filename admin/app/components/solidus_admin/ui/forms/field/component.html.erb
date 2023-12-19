@@ -23,7 +23,7 @@
       flex gap-1 flex-col
     ">
       <%= tag.span @hint if @hint.present? %>
-      <%= tag.span safe_join(@error, tag.br), class: "text-red-400" if @error.present? %>
+      <%= tag.span safe_join(@error, tag.br), class: "text-red-600" if @error.present? %>
     </div>
   <% end %>
 </label>
