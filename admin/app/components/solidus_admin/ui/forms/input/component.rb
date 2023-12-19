@@ -74,8 +74,8 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
         hover:border-gray-500
         focus:ring focus:ring-gray-300 focus:ring-0.5 focus:bg-white focus:ring-offset-0 [&:focus-visible]:outline-none
         disabled:bg-gray-50 disabled:text-gray-500 disabled:placeholder:text-gray-300 disabled:cursor-not-allowed
-        invalid:border-red-400 invalid:hover:border-red-400 invalid:text-red-400
-        aria-invalid:border-red-400 aria-invalid:hover:border-red-400 aria-invalid:text-red-400
+        invalid:border-red-600 invalid:hover:border-red-600 invalid:text-red-600
+        aria-invalid:border-red-600 aria-invalid:hover:border-red-600 aria-invalid:text-red-600
       ],
       SIZES[size],
       specialized_classes,
