@@ -42,8 +42,8 @@ group :backend do
   gem 'webdrivers', require: false
 
   # JavaScript testing
-  gem 'teaspoon', github: 'jejacks0n/teaspoon', require: false
-  gem 'teaspoon-mocha', github: 'jejacks0n/teaspoon', require: false
+  gem 'teaspoon', require: false
+  gem 'teaspoon-mocha', require: false
   gem 'webrick', require: false
 end
 
