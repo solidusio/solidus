@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "solidus_admin/main_nav_item"
+require "solidus_admin/menu_item"
 
 # @component "layout/navigation/item"
 class SolidusAdmin::Layout::Navigation::Item::ComponentPreview < ViewComponent::Preview
@@ -14,7 +14,7 @@ class SolidusAdmin::Layout::Navigation::Item::ComponentPreview < ViewComponent::
   # @param key text { description: "ID also used for i18n" }
   # @param icon text { description: "RemixIcon name (https://remixicon.com/)" }
   def overview(active: false, key: "orders", icon: "inbox-line")
-    item = SolidusAdmin::MainNavItem.new(
+    item = SolidusAdmin::MenuItem.new(
       key: key,
       icon: icon,
       position: 1,

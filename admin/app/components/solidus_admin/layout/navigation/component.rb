@@ -9,8 +9,8 @@ class SolidusAdmin::Layout::Navigation::Component < SolidusAdmin::BaseComponent
   )
     @logo_path = logo_path
     @items = items.map do |attrs|
-      children = attrs[:children].to_a.map { SolidusAdmin::MainNavItem.new(**_1, top_level: false) }
-      SolidusAdmin::MainNavItem.new(**attrs, children: children, top_level: true)
+      children = attrs[:children].to_a.map { SolidusAdmin::MenuItem.new(**_1, top_level: false) }
+      SolidusAdmin::MenuItem.new(**attrs, children: children, top_level: true)
     end
     @store = store
   end

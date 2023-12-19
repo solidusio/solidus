@@ -1,6 +1,6 @@
 en:
   solidus_admin:
-    main_nav:
+    menu_item:
       orders: Orders
       products: Products
       option_types: Option Types

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "solidus_admin/main_nav_item"
+require "solidus_admin/menu_item"
 
 class SolidusAdmin::Typography::TypographyPreview < ViewComponent::Preview
   layout "solidus_admin/preview"

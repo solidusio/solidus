@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "solidus_admin/main_nav_item"
+require "solidus_admin/menu_item"
 
 # @component "layout/navigation"
 class SolidusAdmin::Layout::Navigation::ComponentPreview < ViewComponent::Preview
@@ -9,11 +9,11 @@ class SolidusAdmin::Layout::Navigation::ComponentPreview < ViewComponent::Previe
   # The item component is used to render main navigation items, which are
   # rendered within the sidebar.
   #
-  # It needs to be passed a {SolidusAdmin::MainNavItem} instance, which
+  # It needs to be passed a {SolidusAdmin::MenuItem} instance, which
   # represents the data for a main navigation item.
   #
   # ```ruby
-  # item = SolidusAdmin::MainNavItem.new(
+  # item = SolidusAdmin::MenuItem.new(
   #   key: :overview,
   #   position: 80
   # )

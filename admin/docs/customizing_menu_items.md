@@ -1,6 +1,6 @@
 # Customizing the main navigation
 
-You are allowed to add your custom links to the main navigation. To do so, you can access `SolidusAdmin::Config.main_nav` in an initializer:
+You are allowed to add your custom links to the main navigation. To do so, you can access `SolidusAdmin::Config.menu_items` in an initializer:
 
 ```ruby
 # config/initializers/solidus_admin.rb
@@ -13,7 +13,7 @@ SolidusAdmin::Config.menu_items << {
 ```
 
 - The key you provide will be used to translate the link's label under the
-`solidus_admin.main_nav.#{key}` key.
+`solidus_admin.menu_item.#{key}` key.
 - Icon needs to be an icon name from [Remixicon](https://remixicon.com/).
 - Position tells Solidus where to place the link in the main navigation. The
  default items are placed with 10 points of difference between them.
