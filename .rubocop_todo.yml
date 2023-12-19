@@ -460,16 +460,6 @@ Rails/Present:
     - "core/spec/models/spree/stock/availability_validator_spec.rb"
 
 # Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Include.
-# Include: **/Rakefile, **/*.rake
-Rails/RakeEnvironment:
-  Exclude:
-    - "Rakefile"
-    - "backend/Rakefile"
-    - "core/Rakefile"
-
-# Offense count: 8
 # This cop supports safe autocorrection (--autocorrect).
 Rails/RedundantForeignKey:
   Exclude:

@@ -1,10 +1,12 @@
 {
   "extends": "eslint:recommended",
   "ignorePatterns": [
+    "*tailwind.config.js",
     "**/spec",
     "**/vendor",
     "**/node_modules",
     "sandbox",
+    "coverage",
     "core/doc",
     "tmp"
   ],

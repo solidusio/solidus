@@ -1,27 +1,28 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
+const adminRoot = __dirname.replace(/\/config$/, '')
 
 module.exports = {
   content: [
-    <%= SolidusAdmin::Config.tailwind_content.map { "'#{_1}'" }.join(",\n    ") %>
+    `${adminRoot}/{app/helpers,app/views,app/components,app/assets/javascripts,spec/components/previews}/**/*`,
   ],
   theme: {
     extend: {
       aria: {
-        'current': 'current="true"',
+        current: 'current="true"',
       },
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         transparent: "transparent",
         current: "currentColor",
 
         // Primary palette
-        'solidus-red': "#ef3023",
+        "solidus-red": "#ef3023",
         black: "#222222",
         graphite: "#c7ccc7",
-        'graphite-light': "#d8dad8",
+        "graphite-light": "#d8dad8",
         sand: "#f5f3f0",
         white: "#ffffff",
 
@@ -37,10 +38,10 @@ module.exports = {
         sky: "#cbdff1",
         seafoam: "#c1e0de",
         dune: "#e6bf9b",
-        'full-black': "#000000",
+        "full-black": "#000000",
 
         // Extra colors (not part of the original palette)
-        'papaya-whip': "#f9e3d9",
+        "papaya-whip": "#f9e3d9",
 
         // UI Red
         red: {
@@ -71,45 +72,45 @@ module.exports = {
         },
       },
       borderRadius: {
-        sm: '4px',
+        sm: "4px",
       },
       backgroundImage: {
-        'arrow-right-up-line': "url('solidus_admin/arrow_right_up_line.svg')",
-        'arrow-down-s-fill-gray-700': "url('solidus_admin/arrow_down_s_fill_gray_700.svg')",
-        'arrow-down-s-fill-red-400': "url('solidus_admin/arrow_down_s_fill_red_400.svg')",
+        "arrow-right-up-line": "url('solidus_admin/arrow_right_up_line.svg')",
+        "arrow-down-s-fill-gray-700": "url('solidus_admin/arrow_down_s_fill_gray_700.svg')",
+        "arrow-down-s-fill-red-400": "url('solidus_admin/arrow_down_s_fill_red_400.svg')",
       },
       boxShadow: {
-        sm: '0px 1px 2px 0px rgba(0, 0, 0, 0.04)',
-        base: '0px 4px 8px 0px rgba(0, 0, 0, 0.08), 0px 2px 4px -1px rgba(0, 0, 0, 0.04)'
+        sm: "0px 1px 2px 0px rgba(0, 0, 0, 0.04)",
+        base: "0px 4px 8px 0px rgba(0, 0, 0, 0.08), 0px 2px 4px -1px rgba(0, 0, 0, 0.04)",
       },
     },
   },
   plugins: [
-    require('@tailwindcss/forms')({ strategy: 'class' }),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/container-queries'),
+    require("@tailwindcss/forms")({ strategy: "class" }),
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/container-queries"),
     plugin(({ addVariant, addBase, addComponents, theme }) => {
       // Support the "hidden" attribute
-      addVariant('hidden', '&([hidden])')
-      addVariant('visible', '&:not([hidden])')
+      addVariant("hidden", "&([hidden])")
+      addVariant("visible", "&:not([hidden])")
 
       // Support the "search-cancel" pseudo-element
-      addVariant('search-cancel', '&::-webkit-search-cancel-button')
+      addVariant("search-cancel", "&::-webkit-search-cancel-button")
 
       // Reset the <summary> marker
       addBase({
-        'summary::-webkit-details-marker': { display: 'none' },
-        'summary::marker': { display: 'none' },
-        'summary': { listStyle: 'none' },
+        "summary::-webkit-details-marker": { display: "none" },
+        "summary::marker": { display: "none" },
+        summary: { listStyle: "none" },
       })
 
       // Add a text style for links
       addComponents({
-        '.body-link': {
-          color: theme('colors.blue'),
-          '&:hover': {
-            textDecoration: 'underline',
+        ".body-link": {
+          color: theme("colors.blue"),
+          "&:hover": {
+            textDecoration: "underline",
           },
         },
       })
