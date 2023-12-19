@@ -63,7 +63,7 @@ RSpec.describe Spree::Refund, type: :model do
       expect { subject }.to change { refund.perform_response }.from(nil)
 
       expect(refund.perform_response).to be_a(ActiveMerchant::Billing::Response)
-      expect(refund.perform_response.message).to eq(Spree::PaymentMethod::BogusCreditCard::SUCCESS_MESSAGE)
+      expect(refund.perform_response.message).to include(Spree::PaymentMethod::BogusCreditCard::SUCCESS_MESSAGE)
     end
 
     it "sets a transaction_id" do

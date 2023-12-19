@@ -29,39 +29,44 @@ module Spree
 
     def authorize(_money, credit_card, _options = {})
       profile_id = credit_card.gateway_customer_profile_id
+      message_detail = " - #{__method__}"
       if VALID_CCS.include?(credit_card.number) || (profile_id && profile_id.starts_with?('BGS-'))
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'D' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'D' })
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, { message: FAILURE_MESSAGE }, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, { message: FAILURE_MESSAGE + message_detail }, test: true)
       end
     end
 
     def purchase(_money, credit_card, _options = {})
       profile_id = credit_card.gateway_customer_profile_id
+      message_detail = " - #{__method__}"
       if VALID_CCS.include?(credit_card.number) || (profile_id && profile_id.starts_with?('BGS-'))
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'M' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'M' })
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, message: FAILURE_MESSAGE, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, message: FAILURE_MESSAGE + message_detail, test: true)
       end
     end
 
     def credit(_money, _credit_card, _response_code, _options = {})
-      ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+      message_detail = " - #{__method__}"
+      ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE)
     end
 
     def capture(_money, authorization, _gateway_options)
+      message_detail = " - #{__method__}"
       if authorization == '12345'
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true)
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true)
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, error: FAILURE_MESSAGE, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, error: FAILURE_MESSAGE + message_detail, test: true)
       end
     end
 
     def void(_response_code, _credit_card, options = {})
+      message_detail = " - #{__method__}"
       if options[:originator].completed?
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE)
       else
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE)
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE)
       end
     end
 
