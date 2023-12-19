@@ -15,7 +15,7 @@ RSpec.describe SolidusAdmin::Layout::Navigation::Item::Component, type: :compone
   end
 
   it "renders the item" do
-    item = SolidusAdmin::MainNavItem.new(key: "orders", route: :orders_path, position: 1)
+    item = SolidusAdmin::MenuItem.new(key: "orders", route: :orders_path, position: 1)
     component = described_class.new(
       item: item,
       url_helpers: url_helpers(solidus_admin: { orders_path: "/admin/foo" })
@@ -27,8 +27,8 @@ RSpec.describe SolidusAdmin::Layout::Navigation::Item::Component, type: :compone
   end
 
   it "renders nested items" do
-    item = SolidusAdmin::MainNavItem.new(key: "products", route: :products_path, position: 1, children: [
-      SolidusAdmin::MainNavItem.new(key: "option_types", route: :option_types_path, position: 1, top_level: false)
+    item = SolidusAdmin::MenuItem.new(key: "products", route: :products_path, position: 1, children: [
+      SolidusAdmin::MenuItem.new(key: "option_types", route: :option_types_path, position: 1, top_level: false)
     ])
     component = described_class.new(
       item: item,
@@ -41,8 +41,8 @@ RSpec.describe SolidusAdmin::Layout::Navigation::Item::Component, type: :compone
   end
 
   it "syles top level items differently from nested items" do
-    item = SolidusAdmin::MainNavItem.new(key: "products", route: :products_path, position: 1, children: [
-      SolidusAdmin::MainNavItem.new(key: "option_types", route: :option_types_path, position: 1, top_level: false)
+    item = SolidusAdmin::MenuItem.new(key: "products", route: :products_path, position: 1, children: [
+      SolidusAdmin::MenuItem.new(key: "option_types", route: :option_types_path, position: 1, top_level: false)
     ])
     component = described_class.new(
       item: item,
@@ -59,9 +59,9 @@ RSpec.describe SolidusAdmin::Layout::Navigation::Item::Component, type: :compone
   end
 
   it "syles active items differently from the others" do
-    inactive_item = SolidusAdmin::MainNavItem
+    inactive_item = SolidusAdmin::MenuItem
                     .new(key: "orders", route: :orders_path, position: 1)
-    active_item = SolidusAdmin::MainNavItem
+    active_item = SolidusAdmin::MenuItem
                   .new(key: "products", route: :products_path, position: 1)
     inactive_component = described_class.new(
       item: inactive_item,

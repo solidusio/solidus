@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusAdmin::MainNavItem do
+RSpec.describe SolidusAdmin::MenuItem do
   def url_helpers(solidus_admin: {}, spree: {})
     double(
       solidus_admin: double(**solidus_admin),

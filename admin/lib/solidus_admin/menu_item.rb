@@ -2,7 +2,7 @@
 
 module SolidusAdmin
   # Encapsulates the data for a main navigation item.
-  class MainNavItem
+  class MenuItem
     # @!attribute [r] key
     #  @return [String] a unique identifier for this item
     attr_reader :key
@@ -45,7 +45,7 @@ module SolidusAdmin
     end
 
     def name
-      I18n.t("solidus_admin.main_nav.#{key}", default: key.to_s.humanize)
+      I18n.t("solidus_admin.menu_item.#{key}", default: key.to_s.humanize)
     end
 
     # @return [Boolean] whether this item has any children

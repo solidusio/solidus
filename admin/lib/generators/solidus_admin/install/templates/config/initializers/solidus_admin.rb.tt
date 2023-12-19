@@ -23,7 +23,7 @@ SolidusAdmin::Config.configure do |config|
   # config.importmap_paths << Rails.root.join("config/solidus_admin_importmap.rb")
   #
   # Configure the main navigation.
-  # See SolidusAdmin::MainNavItem for more details.
+  # See SolidusAdmin::MenuItem for more details.
   # config.menu_items << {
   #   key: :my_custom_link,
   #   route: :my_custom_link_path,
