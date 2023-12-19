@@ -5,7 +5,7 @@ class DropDeprecatedAddressIdFromShipments < ActiveRecord::Migration[5.2]
   end
 
   def down
-    add_column :spree_shipments, :deprecated_address_id
+    add_column :spree_shipments, :deprecated_address_id, :integer
     add_index :spree_shipments, :deprecated_address_id, name: :index_spree_shipments_on_deprecated_address_id
   end
 end
