@@ -87,17 +87,15 @@ module DummyApp
     config.active_record.dump_schema_after_migration = false
 
     # Configure active storage to use storage within tmp folder
-    unless (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
-      initializer 'solidus.active_storage' do
-        config.active_storage.service_configurations = {
-          test: {
-            service: 'Disk',
-            root: Rails.root.join('tmp', 'storage')
-          }
+    initializer 'solidus.active_storage' do
+      config.active_storage.service_configurations = {
+        test: {
+          service: 'Disk',
+          root: Rails.root.join('tmp', 'storage')
         }
-        config.active_storage.service = :test
-        config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', :vips).to_sym
-      end
+      }
+      config.active_storage.service = :test
+      config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', :vips).to_sym
     end
 
     # Avoid issues if an old spec/dummy still exists
