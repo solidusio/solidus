@@ -165,7 +165,7 @@ commands:
             ruby -v >> /tmp/.ruby-versions
             gem --version >> /tmp/.gems-versions
             bundle --version >> /tmp/.gems-versions
-            gem search -eq rails -v "~> 7" -v"< 7.1" >> /tmp/.gems-versions # get the latest rails from rubygems
+            gem search -eq rails -v "~> 7" -v "< 7.2" >> /tmp/.gems-versions # get the latest rails from rubygems
             gem search -eq solidus >> /tmp/.gems-versions # get the latest solidus from rubygems
 
             cat /tmp/.ruby-versions
