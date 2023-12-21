@@ -34,7 +34,10 @@ end
 images = {
   products[:solidus_bottles].master => [
     {
-      attachment: image("solidus_bottles")
+      attachment: image("solidus_bottles_1")
+    },
+    {
+      attachment: image("solidus_bottles_2")
     }
   ],
   products[:solidus_tote].master => [
@@ -44,7 +47,7 @@ images = {
   ],
   products[:solidus_hoodie].master => [
     {
-      attachment: image("solidus_hoodie")
+      attachment: image("solidus_hoodie_black_1")
     }
   ],
   products[:solidus_hat].master => [
@@ -89,7 +92,7 @@ images = {
   ],
   products[:solidus_cap].master => [
     {
-      attachment: image("solidus_cap")
+      attachment: image("solidus_cap_black_1")
     }
   ],
 }
