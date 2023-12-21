@@ -1,22 +1,36 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::PaymentMethod
   end
 
-  def title
-    Spree::PaymentMethod.model_name.human.pluralize
+  def search_key
+    :name_or_description_cont
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.payment_methods_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def row_url(payment_method)
+    spree.edit_admin_payment_method_path(payment_method)
+  end
+
+  def sortable_options
+    {
+      url: ->(payment_method) { solidus_admin.move_payment_method_path(payment_method) },
+      param: 'position',
+    }
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_payment_method_path,
+      icon: "add-line",
+    )
   end
 
   def batch_actions
@@ -38,10 +52,6 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::BaseCompone
       { name: :storefront, label: t('.scopes.storefront') },
       { name: :admin, label: t('.scopes.admin') },
     ]
-  end
-
-  def filters
-    []
   end
 
   def columns
