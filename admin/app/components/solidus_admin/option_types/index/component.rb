@@ -1,14 +1,28 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::OptionType
   end
 
-  def title
-    Spree::OptionType.model_name.human.pluralize
+  def row_url(option_type)
+    spree.edit_admin_option_type_path(option_type)
+  end
+
+  def sortable_options
+    {
+      url: ->(option_type) { solidus_admin.move_option_type_path(option_type) },
+      param: 'position',
+    }
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_option_type_path,
+      icon: "add-line",
+    )
   end
 
   def prev_page_path
