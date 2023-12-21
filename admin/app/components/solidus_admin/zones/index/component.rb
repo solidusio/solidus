@@ -30,11 +30,11 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
-  def filters
+  def scopes
     []
   end
 
-  def scopes
+  def filters
     []
   end
 

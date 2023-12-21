@@ -32,6 +32,10 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::BaseCompone
     ]
   end
 
+  def filters
+    []
+  end
+
   def columns
     [
       {

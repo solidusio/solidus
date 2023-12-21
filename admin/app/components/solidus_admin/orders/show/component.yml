@@ -1,5 +1,3 @@
-# Add your component translations here.
-# Use the translation in the example in your template with `t(".hello")`.
 en:
   save: Save
   discard: Discard

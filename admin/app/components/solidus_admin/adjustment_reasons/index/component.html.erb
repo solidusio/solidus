@@ -8,6 +8,7 @@
       class: "align-self-end w-full",
     ) %>
   <% end %>
+
   <%= render component('ui/table').new(
     id: stimulus_id,
     data: {
@@ -24,8 +25,8 @@
       value: params[:q],
       url: solidus_admin.adjustment_reasons_path,
       searchbar_key: :name_or_code_cont,
-      filters: filters,
       scopes: scopes,
+      filters: filters,
     },
   ) %>
 <% end %>

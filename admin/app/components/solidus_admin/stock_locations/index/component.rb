@@ -30,11 +30,11 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::BaseCompone
     ]
   end
 
-  def filters
+  def scopes
     []
   end
 
-  def scopes
+  def filters
     []
   end
 

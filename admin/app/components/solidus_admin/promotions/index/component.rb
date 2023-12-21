@@ -30,6 +30,16 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def scopes
+    [
+      { name: :active, label: t('.scopes.active'), default: true },
+      { name: :draft, label: t('.scopes.draft') },
+      { name: :future, label: t('.scopes.future') },
+      { name: :expired, label: t('.scopes.expired') },
+      { name: :all, label: t('.scopes.all') },
+    ]
+  end
+
   def filters
     [
       {
@@ -38,16 +48,6 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::BaseComponent
         predicate: "in",
         options: Spree::PromotionCategory.pluck(:name, :id)
       }
-    ]
-  end
-
-  def scopes
-    [
-      { name: :active, label: t('.scopes.active'), default: true },
-      { name: :draft, label: t('.scopes.draft') },
-      { name: :future, label: t('.scopes.future') },
-      { name: :expired, label: t('.scopes.expired') },
-      { name: :all, label: t('.scopes.all') },
     ]
   end
 

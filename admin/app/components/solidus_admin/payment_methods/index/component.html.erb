@@ -26,6 +26,7 @@
       url: solidus_admin.payment_methods_path,
       searchbar_key: :name_or_description_cont,
       scopes: scopes,
+      filters: filters,
     },
     sortable: {
       url: ->(payment_method) { solidus_admin.move_payment_method_path(payment_method) },

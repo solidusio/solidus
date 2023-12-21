@@ -42,6 +42,17 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def scopes
+    [
+      { name: :all, label: t('.scopes.all'), default: true },
+      { name: :in_stock, label: t('.scopes.in_stock') },
+      { name: :out_of_stock, label: t('.scopes.out_of_stock') },
+      { name: :available, label: t('.scopes.available') },
+      { name: :discontinued, label: t('.scopes.discontinued') },
+      { name: :deleted, label: t('.scopes.deleted') },
+    ]
+  end
+
   def filters
     Spree::OptionType.all.map do |option_type|
       {
@@ -52,17 +63,6 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::BaseComponent
         options: option_type.option_values.pluck(:name, :id),
       }
     end
-  end
-
-  def scopes
-    [
-      { name: :all, label: t('.scopes.all'), default: true },
-      { name: :in_stock, label: t('.scopes.in_stock') },
-      { name: :out_of_stock, label: t('.scopes.out_of_stock') },
-      { name: :available, label: t('.scopes.available') },
-      { name: :discontinued, label: t('.scopes.discontinued') },
-      { name: :deleted, label: t('.scopes.deleted') },
-    ]
   end
 
   def columns

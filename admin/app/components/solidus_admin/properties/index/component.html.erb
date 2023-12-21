@@ -12,7 +12,7 @@
   <% end %>
 
   <%= render component('ui/table').new(
-    id: 'property-list',
+    id: stimulus_id,
     data: {
       class: Spree::Property,
       rows: @page.records,
@@ -27,6 +27,8 @@
       value: params[:q],
       url: solidus_admin.properties_path,
       searchbar_key: :name_cont,
+      scopes: scopes,
+      filters: filters,
     },
   ) %>
 <% end %>

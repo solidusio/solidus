@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-# Skip to content link
 class SolidusAdmin::Layout::SkipLink::Component < SolidusAdmin::BaseComponent
-  # @param href [String] the href attribute for the skip link
   def initialize(href:)
     @href = href
   end

@@ -23,7 +23,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     end
   end
 
-  class Search < Struct.new(:name, :value, :url, :searchbar_key, :filters, :scopes, keyword_init: true) # rubocop:disable Style/StructInheritance
+  class Search < Struct.new(:name, :value, :url, :searchbar_key, :scopes, :filters, keyword_init: true) # rubocop:disable Style/StructInheritance
     def initialize(**args)
       super
 
