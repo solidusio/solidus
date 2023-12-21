@@ -1,22 +1,29 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::Promotion
   end
 
-  def title
-    Spree::Promotion.model_name.human.pluralize
+  def search_key
+    :name_or_codes_value_or_path_or_description_cont
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.promotions_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def row_url(promotion)
+    spree.admin_promotion_path(promotion)
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_promotion_path,
+      icon: "add-line",
+    )
   end
 
   def batch_actions
