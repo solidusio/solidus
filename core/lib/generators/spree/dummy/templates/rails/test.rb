@@ -18,7 +18,7 @@ Dummy::Application.configure do
   config.eager_load = false
 
   # Raise exceptions instead of rendering exception templates
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = false # Should be :none for Rails 7.1+
 
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection = false

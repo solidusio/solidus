@@ -6,8 +6,8 @@ if Rails.env.development? || Rails.env.test?
   Rails.application.config.view_component.instrumentation_enabled = true
   Rails.application.config.view_component.use_deprecated_instrumentation_name = false
 
-  bold = ActiveSupport::LogSubscriber::BOLD
-  clear = ActiveSupport::LogSubscriber::CLEAR
+  bold  = "\e[1m"
+  clear = "\e[0m"
 
   ActiveSupport::Notifications.subscribe("render.view_component") do |*args|
     next unless args.last[:name].starts_with?("SolidusAdmin::")

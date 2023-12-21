@@ -86,7 +86,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       expect(html.css(".notice").text).to eq("ok")
       expect(html.css(".foo").text).to be_empty
       expect(html.css(".bar").text).to be_empty
-      expect(helper.output_buffer).to eq("<div class=\"flash notice\">ok</div>")
+      expect(helper.output_buffer.to_s).to eq("<div class=\"flash notice\">ok</div>")
     end
   end
 

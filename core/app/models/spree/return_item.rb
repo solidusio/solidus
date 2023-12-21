@@ -67,7 +67,7 @@ module Spree
     scope :exchange_processed, -> { where.not(exchange_inventory_unit: nil) }
     scope :exchange_required, -> { exchange_requested.where(exchange_inventory_unit: nil) }
 
-    serialize :acceptance_status_errors
+    serialize :acceptance_status_errors, coder: YAML
 
     delegate :eligible_for_return?, :requires_manual_intervention?, to: :validator
     delegate :variant, to: :inventory_unit

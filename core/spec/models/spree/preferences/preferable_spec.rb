@@ -294,7 +294,9 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with string, encryption key provided as env variable" do
-        expect(ENV).to receive(:[]).with("SOLIDUS_PREFERENCES_MASTER_KEY").and_return("VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!")
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with("SOLIDUS_PREFERENCES_MASTER_KEY").and_return("VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!")
+        expect(Spree::Encryptor).to receive(:new).with("VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!").and_call_original
 
         config_class_a.preference :secret, :encrypted_string
 

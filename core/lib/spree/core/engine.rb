@@ -67,12 +67,14 @@ module Spree
       end
 
       # Load in mailer previews for apps to use in development.
-      initializer "spree.core.action_mailer.set_preview_path", after: "action_mailer.set_configs" do |app|
-        original_preview_path = app.config.action_mailer.preview_path
-        solidus_preview_path = Spree::Core::Engine.root.join 'lib/spree/mailer_previews'
+      initializer "spree.core.action_mailer.set_preview_path", after: "action_mailer.set_autoload_paths" do
+        solidus_preview_path = Spree::Core::Engine.root.join("lib/spree/mailer_previews")
 
-        app.config.action_mailer.preview_path = "{#{original_preview_path},#{solidus_preview_path}}"
-        ActionMailer::Base.preview_path = app.config.action_mailer.preview_path
+        if ActionMailer::Base.respond_to? :preview_paths # Rails 7.1+
+          ActionMailer::Base.preview_paths << solidus_preview_path.to_s
+        else
+          ActionMailer::Base.preview_path = "{#{ActionMailer::Base.preview_path},#{solidus_preview_path}}"
+        end
       end
 
       initializer "spree.deprecator" do |app|

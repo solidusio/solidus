@@ -83,7 +83,7 @@ require "view_component/system_test_helpers"
 require "rails/version"
 require "rails/generators"
 require "rails/generators/app_base"
-require "rails/generators/testing/behaviour"
+require "rails/generators/testing/behavior"
 
 # AXE - ACCESSIBILITY
 require 'axe-rspec'
@@ -119,7 +119,7 @@ RSpec.configure do |config|
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include SolidusAdmin::ComponentHelpers, type: :component
 
-  config.include Rails::Generators::Testing::Behaviour, type: :generator
+  config.include Rails::Generators::Testing::Behavior, type: :generator
   config.include FileUtils, type: :generator
   config.before type: :generator do
     self.generator_class = described_class

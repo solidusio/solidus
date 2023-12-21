@@ -28,8 +28,10 @@ module Spree
 
     self.allowed_ransackable_attributes = %w[name]
 
-    scope :with_values, ->(attributes) do
-      where(value_attributes(attributes))
+    unless ActiveRecord::Relation.method_defined? :with_values # Rails 7.1+
+      scope :with_values, ->(attributes) do
+        where(value_attributes(attributes))
+      end
     end
 
     # @return [Address] an address with default attributes

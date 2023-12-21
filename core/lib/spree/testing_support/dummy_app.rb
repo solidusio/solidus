@@ -63,7 +63,7 @@ module DummyApp
 
     # Make debugging easier:
     config.consider_all_requests_local = true
-    config.action_dispatch.show_exceptions = false
+    config.action_dispatch.show_exceptions = false # Should be :none for Rails 7.1+
     config.active_support.deprecation = :stderr
     config.log_level = :debug
 
@@ -82,22 +82,24 @@ module DummyApp
     config.secret_key_base = 'SECRET_TOKEN'
 
     # Set the preview path within the dummy app:
-    config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    if ActionMailer::Base.respond_to? :preview_paths # Rails 7.1+
+      config.action_mailer.preview_paths << File.expand_path('dummy_app/mailer_previews', __dir__)
+    else
+      config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    end
 
     config.active_record.dump_schema_after_migration = false
 
     # Configure active storage to use storage within tmp folder
-    unless (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
-      initializer 'solidus.active_storage' do
-        config.active_storage.service_configurations = {
-          test: {
-            service: 'Disk',
-            root: Rails.root.join('tmp', 'storage')
-          }
+    initializer 'solidus.active_storage' do
+      config.active_storage.service_configurations = {
+        test: {
+          service: 'Disk',
+          root: Rails.root.join('tmp', 'storage')
         }
-        config.active_storage.service = :test
-        config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', :vips).to_sym
-      end
+      }
+      config.active_storage.service = :test
+      config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', :vips).to_sym
     end
 
     # Avoid issues if an old spec/dummy still exists

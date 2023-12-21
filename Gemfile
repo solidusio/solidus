@@ -5,10 +5,10 @@ source 'https://rubygems.org'
 gemspec require: false
 
 # rubocop:disable Bundler/DuplicatedGem
-if ENV['RAILS_VERSION'] == 'master'
+if ENV['RAILS_VERSION'] == 'main'
   gem 'rails', github: 'rails', require: false
 else
-  gem 'rails', ENV['RAILS_VERSION'] || '~> 7.0.2', require: false
+  gem 'rails', ENV['RAILS_VERSION'] || '~> 7.1.0', require: false
 end
 # rubocop:enable Bundler/DuplicatedGem
 
@@ -25,9 +25,9 @@ gem 'mysql2', '~> 0.5.0', require: false if dbs.match?(/all|mysql/)
 gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 
-gem 'database_cleaner', '~> 1.3', require: false
+gem 'database_cleaner', '~> 2.0', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
-gem 'rspec-rails', '~> 4.0.1', require: false
+gem 'rspec-rails', '~> 6.0.3', require: false
 gem 'rspec-retry', '~> 0.6.2', require: false
 gem 'simplecov', require: false
 gem 'simplecov-cobertura', require: false
@@ -55,8 +55,8 @@ end
 group :admin do
   gem 'solidus_admin', path: 'admin', require: false
   gem 'tailwindcss-rails', '~> 2.0', require: false
-  gem 'axe-core-rspec', '~> 4.7', require: false
-  gem 'axe-core-capybara', '~> 4.7', require: false
+  gem 'axe-core-rspec', '~> 4.8', require: false
+  gem 'axe-core-capybara', '~> 4.8', require: false
 end
 
 group :lint do
