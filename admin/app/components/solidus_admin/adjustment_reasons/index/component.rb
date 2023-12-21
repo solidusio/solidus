@@ -30,11 +30,11 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::BaseComp
     ]
   end
 
-  def filters
+  def scopes
     []
   end
 
-  def scopes
+  def filters
     []
   end
 

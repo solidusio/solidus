@@ -2,13 +2,20 @@
 
 module SolidusAdmin
   class OptionTypesController < SolidusAdmin::BaseController
+    include SolidusAdmin::ControllerHelpers::Search
+
     before_action :load_option_type, only: [:move]
 
     def index
-      @option_types = Spree::OptionType.all
+      option_types = apply_search_to(
+        Spree::OptionType.all,
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(option_types)
 
       respond_to do |format|
-        format.html { render component('option_types/index').new(option_types: @option_types) }
+        format.html { render component('option_types/index').new(page: @page) }
       end
     end
 

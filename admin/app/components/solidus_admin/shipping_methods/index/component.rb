@@ -30,11 +30,11 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::BaseCompon
     ]
   end
 
-  def filters
+  def scopes
     []
   end
 
-  def scopes
+  def filters
     []
   end
 

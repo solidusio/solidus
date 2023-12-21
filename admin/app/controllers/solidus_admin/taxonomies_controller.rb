@@ -2,13 +2,20 @@
 
 module SolidusAdmin
   class TaxonomiesController < SolidusAdmin::BaseController
+    include SolidusAdmin::ControllerHelpers::Search
+
     before_action :load_taxonomy, only: [:move]
 
     def index
-      @taxonomies = Spree::Taxonomy.all
+      taxonomies = apply_search_to(
+        Spree::Taxonomy.all,
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(taxonomies)
 
       respond_to do |format|
-        format.html { render component('taxonomies/index').new(taxonomies: @taxonomies) }
+        format.html { render component('taxonomies/index').new(page: @page) }
       end
     end
 

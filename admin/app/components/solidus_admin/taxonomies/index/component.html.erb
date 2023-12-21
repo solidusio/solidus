@@ -12,10 +12,10 @@
   <% end %>
 
   <%= render component('ui/table').new(
-    id: 'taxonomies-list',
+    id: stimulus_id,
     data: {
       class: Spree::Taxonomy,
-      rows: @taxonomies,
+      rows: @page.records,
       url: ->(taxonomy) { spree.edit_admin_taxonomy_path(taxonomy) },
       columns: columns,
       batch_actions: batch_actions,

@@ -12,7 +12,7 @@
   <% end %>
 
   <%= render component('ui/table').new(
-    id: 'products-list',
+    id: stimulus_id,
     data: {
       class: Spree::Product,
       rows: @page.records,
@@ -27,8 +27,8 @@
       value: params[:q],
       url: solidus_admin.products_path,
       searchbar_key: :name_or_variants_including_master_sku_cont,
-      filters: filters,
       scopes: scopes,
+      filters: filters,
     },
   ) %>
 <% end %>

@@ -12,11 +12,13 @@
   <% end %>
 
   <%= render component('ui/table').new(
-    id: 'option-types-list',
+    id: stimulus_id,
     data: {
       class: Spree::OptionType,
-      rows: @option_types,
+      rows: @page.records,
       url: ->(option_type) { spree.edit_admin_option_type_path(option_type) },
+      prev: prev_page_path,
+      next: next_page_path,
       columns: columns,
       batch_actions: batch_actions,
     },

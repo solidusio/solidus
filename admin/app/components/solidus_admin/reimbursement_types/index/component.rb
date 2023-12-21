@@ -23,11 +23,11 @@ class SolidusAdmin::ReimbursementTypes::Index::Component < SolidusAdmin::BaseCom
     []
   end
 
-  def filters
+  def scopes
     []
   end
 
-  def scopes
+  def filters
     []
   end
 

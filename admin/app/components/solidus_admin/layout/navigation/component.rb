@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Renders the sidebar
 class SolidusAdmin::Layout::Navigation::Component < SolidusAdmin::BaseComponent
   def initialize(
     store:,

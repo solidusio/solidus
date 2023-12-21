@@ -30,6 +30,14 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def scopes
+    []
+  end
+
+  def filters
+    []
+  end
+
   def columns
     [
       name_column,

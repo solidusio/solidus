@@ -1,21 +1,18 @@
-<div class="<%= stimulus_id %> px-4">
-  <header class="py-6 flex items-center">
-    <h1 class="font-semibold text-xl">
-      <%= title %>
-    </h1>
-
-    <div class="ml-auto flex gap-2 items-center">
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_title title %>
+    <%= page_header_actions do %>
       <%= render component("ui/button").new(
         tag: :a,
         text: t('.create_order'),
         href: spree.new_admin_order_path,
         icon: "add-line",
       ) %>
-    </div>
-  </header>
+    <% end %>
+  <% end %>
 
   <%= render component('ui/table').new(
-    id: 'orders-list',
+    id: stimulus_id,
     data: {
       class: Spree::Order,
       rows: @page.records,
@@ -31,8 +28,8 @@
       value: params[:q],
       searchbar_key: :number_or_shipments_number_or_bill_address_name_or_email_cont,
       url: solidus_admin.orders_path(scope: params[:scope]),
-      filters: filters,
       scopes: scopes,
+      filters: filters,
     },
   ) %>
-</div>
+<% end %>

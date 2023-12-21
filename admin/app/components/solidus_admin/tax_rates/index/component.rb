@@ -30,6 +30,10 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def scopes
+    []
+  end
+
   def filters
     [
       {
@@ -45,10 +49,6 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::BaseComponent
         options: Spree::TaxCategory.pluck(:name, :id),
       }
     ]
-  end
-
-  def scopes
-    []
   end
 
   def columns

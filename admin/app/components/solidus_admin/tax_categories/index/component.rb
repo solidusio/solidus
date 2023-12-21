@@ -30,11 +30,11 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::BaseComponen
     ]
   end
 
-  def filters
+  def scopes
     []
   end
 
-  def scopes
+  def filters
     []
   end
 

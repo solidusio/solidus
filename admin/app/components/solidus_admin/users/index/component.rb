@@ -30,6 +30,16 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def scopes
+    [
+      { name: :customers, label: t('.scopes.customers'), default: true },
+      { name: :admin, label: t('.scopes.admin') },
+      { name: :with_orders, label: t('.scopes.with_orders') },
+      { name: :without_orders, label: t('.scopes.without_orders') },
+      { name: :all, label: t('.scopes.all') },
+    ]
+  end
+
   def filters
     [
       {
@@ -38,16 +48,6 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::BaseComponent
         predicate: "in",
         options: Spree::Role.pluck(:name, :id)
       }
-    ]
-  end
-
-  def scopes
-    [
-      { name: :customers, label: t('.scopes.customers'), default: true },
-      { name: :admin, label: t('.scopes.admin') },
-      { name: :with_orders, label: t('.scopes.with_orders') },
-      { name: :without_orders, label: t('.scopes.without_orders') },
-      { name: :all, label: t('.scopes.all') },
     ]
   end
 
