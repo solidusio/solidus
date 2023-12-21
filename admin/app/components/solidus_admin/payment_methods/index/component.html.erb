@@ -15,7 +15,9 @@
     id: stimulus_id,
     data: {
       class: Spree::PaymentMethod,
-      rows: @payment_methods,
+      rows: @page.records,
+      prev: prev_page_path,
+      next: next_page_path,
       url: ->(payment_method) { spree.edit_admin_payment_method_path(payment_method) },
       columns: columns,
       batch_actions: batch_actions,
