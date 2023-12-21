@@ -63,7 +63,7 @@ module DummyApp
 
     # Make debugging easier:
     config.consider_all_requests_local = true
-    config.action_dispatch.show_exceptions = false
+    config.action_dispatch.show_exceptions = false # Should be :none for Rails 7.1+
     config.active_support.deprecation = :stderr
     config.log_level = :debug
 
