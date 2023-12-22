@@ -25,35 +25,28 @@
 }
 
 .flash-wrapper {
+  bottom: 20px;
+  max-width: 320px;
   position: fixed;
-  bottom: 0;
-  left: $width-sidebar;
-  right: 0;
+  right: 20px;
   z-index: 1000;
-
-  .admin-nav-hidden & {
-    left: $width-sidebar-collapsed;
-  }
 }
 
 .flash {
-  border-top: 3px solid;
   padding: 16px;
+  border-radius: 4px;
   text-align: center;
   font-size: 120%;
   color: $body-color;
 
   &.notice {
     background-color: rgba(theme-color-level(warning, -8), .95);
-    border-top-color: theme-color(warning);
   }
   &.success {
     background-color: rgba(theme-color-level(success, -10), .95);
-    border-top-color: theme-color(success);
   }
   &.error {
     background-color: rgba(theme-color-level(danger, -8), .95);
-    border-top-color: theme-color(danger);
   }
 }
 
