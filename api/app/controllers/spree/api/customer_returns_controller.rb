@@ -5,7 +5,7 @@ module Spree
     class CustomerReturnsController < Spree::Api::BaseController
       before_action :load_order
       before_action :build_customer_return, only: [:create]
-      around_action :lock_order, only: [:create, :update, :destroy, :cancel]
+      around_action :lock_order, only: [:create, :update]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
