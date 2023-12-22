@@ -45,6 +45,12 @@ module DummyApp
 
   class Application < ::Rails::Application
     config.load_defaults("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
+
+    if Rails.gem_version >= Gem::Version.new('7.1')
+      config.action_controller.raise_on_missing_callback_actions = true
+      config.action_dispatch.show_exceptions = :none
+    end
+
     # Make the test environment more production-like:
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
