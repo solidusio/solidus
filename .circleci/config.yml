@@ -278,7 +278,7 @@ jobs:
       - install_solidus:
           flags: "--sample=false --frontend=starter --authentication=devise"
       - test_page:
-          expected_text: "The only eCommerce platform you’ll ever need."
+          expected_text: "<title>Sample Store</title>"
       - run:
           name: Ensure the correct PayPal is installed for SSF
           command: |
@@ -287,7 +287,7 @@ jobs:
       - install_solidus:
           flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe"
       - test_page:
-          expected_text: "The only eCommerce platform you’ll ever need."
+          expected_text: "<title>Sample Store</title>"
       - install_dummy_app
       - install_dummy_app:
           extra_gems: "solidus_frontend"
