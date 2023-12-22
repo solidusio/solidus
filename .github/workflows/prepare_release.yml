@@ -33,7 +33,7 @@ jobs:
         if: github.ref_name == 'main'
         run: bin/release/bump-starter-frontend-version ${{ steps.pipeline_context.outputs.candidate_patch_branch }}
       - name: "Update Changelog"
-        run: bin/release/update-changelog ${{ github.token }} ${{ github.repository }} ${{ steps.pipeline_context.outputs.candidate_tag }}
+        run: bin/release/update-changelog ${{ steps.pipeline_context.outputs.candidate_tag }}
       - name: "Compute labels for the PR"
         id: pr_labels
         run: |
