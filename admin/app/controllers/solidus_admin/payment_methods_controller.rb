@@ -13,13 +13,15 @@ module SolidusAdmin
     search_scope(:admin, &:available_to_admin)
 
     def index
-      @payment_methods = apply_search_to(
+      payment_methods = apply_search_to(
         Spree::PaymentMethod.ordered_by_position,
         param: :q,
       )
 
+      set_page_and_extract_portion_from(payment_methods)
+
       respond_to do |format|
-        format.html { render component('payment_methods/index').new(payment_methods: @payment_methods) }
+        format.html { render component('payment_methods/index').new(page: @page) }
       end
     end
 
