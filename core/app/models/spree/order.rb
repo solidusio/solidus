@@ -799,10 +799,9 @@ module Spree
     end
 
     def ensure_promotions_eligible
-      adjustment_changed = all_adjustments.eligible.promotion.any? do |adjustment|
-        !adjustment.calculate_eligibility
-      end
-      if adjustment_changed
+      Spree::Config.promotion_adjuster_class.new(self).call
+
+      if promo_total_changed?
         restart_checkout_flow
         recalculate
         errors.add(:base, I18n.t('spree.promotion_total_changed_before_complete'))
