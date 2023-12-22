@@ -1,3 +1,142 @@
+## Solidus v4.3.0 (2023-12-22)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* Fix the link to customization guides by @pokonski in https://github.com/solidusio/solidus/pull/5404
+
+## Solidus Core
+
+* Skip `ActionCable` for dummy apps by @mamhoff in https://github.com/solidusio/solidus/pull/5420
+* Do not require `ActiveStorage` in core by @tvdeyen in https://github.com/solidusio/solidus/pull/5450
+* Fix issues raised by ERB and JS linting by @elia in https://github.com/solidusio/solidus/pull/5457
+* Fix `deactivate_unsupported_payment_methods` name in error message by @kennyadsl in https://github.com/solidusio/solidus/pull/5458
+* Make promotion handler classes configurable by @mamhoff in https://github.com/solidusio/solidus/pull/5466
+* Add `dependent: :destroy` to `Spree::Order#order_promotions` by @mamhoff in https://github.com/solidusio/solidus/pull/5411
+* Add `ActiveStorage` as a core dependency by @tvdeyen in https://github.com/solidusio/solidus/pull/5479
+* Add foreign key constraint between `order_promotions` and `promotions` by @mamhoff in https://github.com/solidusio/solidus/pull/5469
+* Minimum Quantity promotion rule by @adammathys in https://github.com/solidusio/solidus/pull/5452
+* Add `Order#use_shipping` and address management to the admin dashboard by @rainerdema in https://github.com/solidusio/solidus/pull/5461
+* set_position conflicts with acts_as_list by @tkimi in https://github.com/solidusio/solidus/pull/5509
+* Add dark themes to the backend and a theme switching support by @MassimilianoLattanzio in https://github.com/solidusio/solidus/pull/4999
+* Add a `TaxRate#display_amount` and a tax categories & rates admin index by @elia in https://github.com/solidusio/solidus/pull/5529
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Allow to choose a custom routes' mount point during install by @kennyadsl in https://github.com/solidusio/solidus/pull/5533
+* Cleanup the database configuration by @elia in https://github.com/solidusio/solidus/pull/5545
+* Update the `spree.rb.tt` stripe configuration instructions for `SolidusStripe` v5+ by @thomasbromehead in https://github.com/solidusio/solidus/pull/5505
+* Fix the down step of the `DropDeprecatedAddressIdFromShipments` migration by @DanielePalombo in https://github.com/solidusio/solidus/pull/5557
+* Deprecate `Spree::NamedType` Concern by @elia in https://github.com/solidusio/solidus/pull/5541
+* Enhance log message for Bogus payments by @nirnaeth in https://github.com/solidusio/solidus/pull/5422
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Use configurable promo adjuster in callback by @mamhoff in https://github.com/solidusio/solidus/pull/5498
+* Enable the admin preview by default for new installations by @elia in https://github.com/solidusio/solidus/pull/5563
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+
+## Solidus Admin
+
+* Fix issues raised by ERB and JS linting by @elia in https://github.com/solidusio/solidus/pull/5457
+* Add `Order#use_shipping` and address management to the admin dashboard by @rainerdema in https://github.com/solidusio/solidus/pull/5461
+* Add a `TaxRate#display_amount` and a tax categories & rates admin index by @elia in https://github.com/solidusio/solidus/pull/5529
+* Allow to choose a custom routes' mount point during install by @kennyadsl in https://github.com/solidusio/solidus/pull/5533
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+* [Admin] Ensure `action_name` is passed as symbol for `cancancan` authorization by @rainerdema in https://github.com/solidusio/solidus/pull/5399
+* [Admin] Add dynamic filters to `ui/table` component by @rainerdema in https://github.com/solidusio/solidus/pull/5376
+* Don't show missing order shipment and payment states by @elia in https://github.com/solidusio/solidus/pull/5427
+* Fix `/admin/product/new` in SolidusAdmin by @elia in https://github.com/solidusio/solidus/pull/5426
+* [Admin] Ensure labels are clickable by parameterizing ids by @rainerdema in https://github.com/solidusio/solidus/pull/5429
+* Extract the table search field to a component by @elia in https://github.com/solidusio/solidus/pull/5428
+* Don't capture `NameError` if its not a missing component by @elia in https://github.com/solidusio/solidus/pull/5432
+* Add a `ui/thumbnail` component by @elia in https://github.com/solidusio/solidus/pull/5431
+* [Admin] Enhance `ui/table` component with clickable rows and URL navigation by @rainerdema in https://github.com/solidusio/solidus/pull/5397
+* [Admin] Enhance toast message positioning and layering by @rainerdema in https://github.com/solidusio/solidus/pull/5436
+* Extract a `products/stock` component by @elia in https://github.com/solidusio/solidus/pull/5433
+* [Admin] Construct base components for order creation in admin interface by @rainerdema in https://github.com/solidusio/solidus/pull/5434
+* Admin tooltip improvements by @elia in https://github.com/solidusio/solidus/pull/5439
+* SolidusAdmin `products/stock` component fixes by @elia in https://github.com/solidusio/solidus/pull/5443
+* Update hints and remove them where not needed by @mfrecchiami in https://github.com/solidusio/solidus/pull/5435
+* [Admin] Enhance toast component: Background color and animations by @rainerdema in https://github.com/solidusio/solidus/pull/5442
+* SolidusAdmin: Extract page layout helpers by @elia in https://github.com/solidusio/solidus/pull/5445
+* SolidusAdmin misc. component fixes by @elia in https://github.com/solidusio/solidus/pull/5444
+* [Admin] Fix `ui/table/toolbar` & restore `clearSearch` & Streamline `feedback` rendering by @rainerdema in https://github.com/solidusio/solidus/pull/5449
+* Add an `orders/cart` component by @elia in https://github.com/solidusio/solidus/pull/5441
+* Dynamic `ui/toggletip` positioning by @elia in https://github.com/solidusio/solidus/pull/5451
+* [Admin] Add modal component by @the-krg in https://github.com/solidusio/solidus/pull/5364
+* [Admin] Extract a `ui/search_panel` component from `orders/cart` by @elia in https://github.com/solidusio/solidus/pull/5467
+* [Admin] Introduce `ui/forms/address` component for order admin checkout by @rainerdema in https://github.com/solidusio/solidus/pull/5468
+* [admin] Add the customer sidebar to the orders page by @elia in https://github.com/solidusio/solidus/pull/5499
+* [admin] Allow editing the order contact email by @elia in https://github.com/solidusio/solidus/pull/5500
+* SolidusAdmin customer picker for order by @elia in https://github.com/solidusio/solidus/pull/5462
+* [admin] Move layout related components under `layout/` by @elia in https://github.com/solidusio/solidus/pull/5510
+* [admin] dark mode by @elia in https://github.com/solidusio/solidus/pull/5511
+* [Admin] Add `Select address` dropdown feature to billing and shipping forms by @rainerdema in https://github.com/solidusio/solidus/pull/5507
+* [Admin] Add `order/show/summary` component by @rainerdema in https://github.com/solidusio/solidus/pull/5512
+* [admin] Update the admin preview toggle label by @elia in https://github.com/solidusio/solidus/pull/5515
+* [admin] Add scopes and controller helpers for `ui/table` by @elia in https://github.com/solidusio/solidus/pull/5516
+* [admin] Fix menu styles & add a backend menu items importer by @elia in https://github.com/solidusio/solidus/pull/5518
+* [admin] Add users index by @elia in https://github.com/solidusio/solidus/pull/5519
+* [admin] Add a `promotions/index` component by @elia in https://github.com/solidusio/solidus/pull/5517
+* [Admin] Add sortable rows in `ui/table` component by @rainerdema in https://github.com/solidusio/solidus/pull/5522
+*  [Admin] Add `Properties` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5527
+* [Admin] Add `Option Types` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5525
+* [Admin] Add `Promotion Categories` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5528
+* [admin] Move the feedback link to the bottom of the page by @elia in https://github.com/solidusio/solidus/pull/5524
+* [Admin] Add `Taxonomies` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5526
+* [admin] Add scopes to the products page by @elia in https://github.com/solidusio/solidus/pull/5531
+* [Admin] Add `Payment Methods` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5530
+* [admin] Extract common admin resources patterns to a helper by @elia in https://github.com/solidusio/solidus/pull/5534
+* [Admin] Add `Stock Items` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5532
+* [admin] Add index pages for the settings / shipping area by @elia in https://github.com/solidusio/solidus/pull/5536
+* [Admin] Add `Stores` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5537
+* [admin] Add index pages for `zones` by @elia in https://github.com/solidusio/solidus/pull/5538
+* [Admin] Add `Refunds and Returns` section with correlated index pages by @rainerdema in https://github.com/solidusio/solidus/pull/5539
+* [Admin] Add `stock_items/edit` modal component by @elia in https://github.com/solidusio/solidus/pull/5543
+* [Admin] Refactor index page settings: Ransack search and pagination by @rainerdema in https://github.com/solidusio/solidus/pull/5546
+* [admin] Cleanup TW classes by @elia in https://github.com/solidusio/solidus/pull/5550
+* [Admin] Enhancements to filter toolbar and dropdown visibility by @rainerdema in https://github.com/solidusio/solidus/pull/5548
+* [admin] Relax the SolidusAdmin dependency on Solidus core by @elia in https://github.com/solidusio/solidus/pull/5547
+* [admin] Performance fixes by @elia in https://github.com/solidusio/solidus/pull/5552
+* [Admin] Implement `enable_alpha_features?` preference config for selective feature access by @rainerdema in https://github.com/solidusio/solidus/pull/5549
+* [admin] Provide a pre-built CSS file and a script to customize TW for local modifications by @elia in https://github.com/solidusio/solidus/pull/5554
+* [admin] Build the admin CSS before running the specs by @elia in https://github.com/solidusio/solidus/pull/5558
+* [admin] Reuse the same class name as Backend for MenuItem by @elia in https://github.com/solidusio/solidus/pull/5555
+* [Admin] Refactor admin components for consistent code style by @rainerdema in https://github.com/solidusio/solidus/pull/5559
+* [Admin] Include pagination in `payment_methods/index` component by @rainerdema in https://github.com/solidusio/solidus/pull/5562
+
+## Solidus Backend
+
+* Fix issues raised by ERB and JS linting by @elia in https://github.com/solidusio/solidus/pull/5457
+* Minimum Quantity promotion rule by @adammathys in https://github.com/solidusio/solidus/pull/5452
+* Add dark themes to the backend and a theme switching support by @MassimilianoLattanzio in https://github.com/solidusio/solidus/pull/4999
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+* [admin] Fix menu styles & add a backend menu items importer by @elia in https://github.com/solidusio/solidus/pull/5518
+* Update backend configuration for solidus `v4.2` by @rainerdema in https://github.com/solidusio/solidus/pull/5405
+* Restore using `MenuItem#sections` for matching paths by @elia in https://github.com/solidusio/solidus/pull/5406
+* Fix the content navbar being hidden under the navbar when the window is narrow by @elia in https://github.com/solidusio/solidus/pull/5423
+* Solidus legacy color hierarchy by @mfrecchiami in https://github.com/solidusio/solidus/pull/5446
+* Drop autoprefixer-rails from dependencies by @elia in https://github.com/solidusio/solidus/pull/5521
+* Restyle backend UI flash message to not overlap buttons by @brettchalupa in https://github.com/solidusio/solidus/pull/5540
+
+## Solidus API
+
+* Make promotion handler classes configurable by @mamhoff in https://github.com/solidusio/solidus/pull/5466
+* Add `Order#use_shipping` and address management to the admin dashboard by @rainerdema in https://github.com/solidusio/solidus/pull/5461
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+
+## Solidus Sample
+
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Update samples to match new SSF style by @aleph1ow in https://github.com/solidusio/solidus/pull/5437
+* Update sample images by @kennyadsl in https://github.com/solidusio/solidus/pull/5560
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.0...v4.3.0
+
+
 ## Solidus v4.2.0 (2023-09-29)
 
 
