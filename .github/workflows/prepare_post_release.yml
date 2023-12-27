@@ -39,7 +39,7 @@ jobs:
       - name: "Bump to the development version in docker-compose"
         if: github.ref_name == 'main'
         run: |
-          cd bin/release/bump-docker-image-version \
+          bin/release/bump-docker-image-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
       - name: "Bump installer starter frontend version"
         if: github.ref_name == 'main'
