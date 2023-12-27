@@ -52,8 +52,6 @@ jobs:
       - name: "Publish release draft & tag last commit"
         run: |
           bin/release/publish-release \
-            ${{ github.token }} \
-            ${{ github.repository }} \
             ${{ steps.pipeline_context.outputs.candidate_tag }}
       - name: "Create backport label"
         if: github.ref_name == 'main'
