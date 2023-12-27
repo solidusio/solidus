@@ -1,6 +1,7 @@
 name: "Prepare post-release"
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -15,8 +16,10 @@ jobs:
       BUNDLE_ONLY: "release"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: |
-      github.event.pull_request.merged == true &&
+      (github.event_name == 'workflow_dispatch') || (
+        github.event.pull_request.merged == true &&
         contains(github.event.pull_request.labels.*.name, 'release:generate')
+      )
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
@@ -39,7 +42,7 @@ jobs:
       - name: "Bump to the development version in docker-compose"
         if: github.ref_name == 'main'
         run: |
-          cd bin/release/bump-docker-image-version \
+          bin/release/bump-docker-image-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
       - name: "Bump installer starter frontend version"
         if: github.ref_name == 'main'
