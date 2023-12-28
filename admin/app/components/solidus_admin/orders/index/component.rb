@@ -24,7 +24,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.create_order'),
+      text: t('.add'),
       href: spree.new_admin_order_path,
       icon: "add-line",
     )

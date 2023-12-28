@@ -1,8 +1,6 @@
 en:
   image: 'Image'
-  add: 'Add new'
   batch_actions:
-    delete: 'Delete'
     discontinue: 'Discontinue'
     activate: 'Activate'
   filters:

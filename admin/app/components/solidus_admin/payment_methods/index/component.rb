@@ -72,9 +72,9 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
         header: :available_to_users,
         data: ->(payment_method) do
           if payment_method.available_to_users?
-            component('ui/badge').new(name: t('.yes'), color: :green)
+            component('ui/badge').yes
           else
-            component('ui/badge').new(name: t('.no'), color: :graphite_light)
+            component('ui/badge').no
           end
         end
       },
@@ -82,9 +82,9 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
         header: :available_to_admin,
         data: ->(payment_method) do
           if payment_method.available_to_admin?
-            component('ui/badge').new(name: t('.yes'), color: :green)
+            component('ui/badge').yes
           else
-            component('ui/badge').new(name: t('.no'), color: :graphite_light)
+            component('ui/badge').no
           end
         end
       },

@@ -1,7 +1,4 @@
 en:
-  add: 'Add new'
-  "yes": "Yes"
-  "no": "No"
   status:
     active: Active
     inactive: Inactive
@@ -11,5 +8,3 @@ en:
     admin: Admin
     storefront: Storefront
     all: All
-  batch_actions:
-    delete: 'Delete'

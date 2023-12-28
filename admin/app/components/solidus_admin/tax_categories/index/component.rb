@@ -47,9 +47,9 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::BaseComponen
         header: :is_default,
         data: ->(tax_category) {
           if tax_category.is_default?
-            component('ui/badge').new(name: t('.yes'), color: :green)
+            component('ui/badge').yes
           else
-            component('ui/badge').new(name: t('.no'), color: :graphite_light)
+            component('ui/badge').no
           end
         },
       },
