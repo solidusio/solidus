@@ -59,7 +59,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def initialize(id:, data:, search: nil, sortable: nil)
     @id = id
     @data = Data.new(**data)
-    @data.columns.unshift selectable_column if @data.batch_actions.present?
+    @data.columns.unshift selectable_column if @data.batch_actions.present? && @data.rows.present?
     @search = Search.new(**search) if search
     @sortable = Sortable.new(**sortable) if sortable
   end

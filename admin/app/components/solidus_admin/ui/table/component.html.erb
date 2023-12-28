@@ -3,6 +3,7 @@
     rounded-lg
     border
     border-gray-100
+    <%= 'overflow-hidden' unless @search %>
   "
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-selected-row-class="bg-gray-15"
@@ -111,7 +112,7 @@
       </tr>
     </thead>
 
-    <% if @data.batch_actions %>
+    <% if @data.batch_actions && @data.rows.any? %>
       <thead
         data-<%= stimulus_id %>-target="batchHeader"
         class="bg-white color-black text-xs leading-none text-left"
