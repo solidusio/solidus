@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::RefundsAndReturns::Component
+  def model_class
+    Spree::StoreCreditReason
   end
 
-  def title
-    Spree::StoreCreditReason.model_name.human.pluralize
+  def actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_store_credit_reason_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def row_url(store_credit_reason)
+    spree.edit_admin_store_credit_reason_path(store_credit_reason)
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def search_url
+    solidus_admin.store_credit_reasons_path
+  end
+
+  def search_key
+    :name_cont
   end
 
   def batch_actions
@@ -28,14 +36,6 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::BaseCom
         icon: 'delete-bin-7-line',
       },
     ]
-  end
-
-  def scopes
-    []
-  end
-
-  def filters
-    []
   end
 
   def columns

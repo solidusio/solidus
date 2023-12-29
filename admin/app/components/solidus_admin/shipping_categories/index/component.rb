@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shipping::Component
+  def model_class
+    Spree::ShippingCategory
   end
 
-  def title
-    Spree::ShippingCategory.model_name.human.pluralize
+  def actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_shipping_category_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def row_url(shipping_category)
+    spree.edit_admin_shipping_category_path(shipping_category)
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def search_key
+    :name_or_description_cont
+  end
+
+  def search_url
+    solidus_admin.shipping_categories_path
   end
 
   def batch_actions
@@ -28,14 +36,6 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::BaseCom
         icon: 'delete-bin-7-line',
       },
     ]
-  end
-
-  def scopes
-    []
-  end
-
-  def filters
-    []
   end
 
   def columns

@@ -3,8 +3,15 @@
 class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::Layout::PageHelpers
 
+  Tab = Struct.new(:text, :href, :current, keyword_init: true)
+
+  def tabs
+    nil
+  end
+
   def initialize(page:)
     @page = page
+    @tabs = tabs&.map { |tab| Tab.new(**tab) }
   end
 
   def row_fade(_record)

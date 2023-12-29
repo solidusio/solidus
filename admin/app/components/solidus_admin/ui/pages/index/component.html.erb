@@ -1,8 +1,28 @@
 <%= page do %>
-  <%= page_header do %>
-    <%= page_header_title title %>
-    <%= page_header_actions do %>
-      <%= page_actions %>
+  <% if @tabs %>
+    <%= page_header do %>
+      <%= page_header_title title %>
+    <% end %>
+
+    <%= page_header do %>
+      <% rendered_tabs = capture do %>
+        <% @tabs.each do %>
+          <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: _1.text, 'aria-current': _1.current, href: _1.href)) %>
+        <% end %>
+      <% end %>
+      <%= page_header_title rendered_tabs %>
+      <%= page_header_actions do %>
+        <%= page_actions %>
+      <% end %>
+    <% end %>
+
+  <% else %>
+    <%= page_header do %>
+      <%= page_header_title title %>
+
+      <%= page_header_actions do %>
+        <%= page_actions %>
+      <% end %>
     <% end %>
   <% end %>
 
