@@ -23,7 +23,7 @@ module SolidusAdmin
       @properties = Spree::Property.where(id: params[:id])
 
       Spree::Property.transaction do
-        @properties.discard_all
+        @properties.destroy_all
       end
 
       flash[:notice] = t('.success')
