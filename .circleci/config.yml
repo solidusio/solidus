@@ -306,7 +306,7 @@ jobs:
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
-    parallelism: &parallelism 3
+    parallelism: 3
     environment:
       DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
       BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
@@ -334,7 +334,7 @@ jobs:
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
-    parallelism: &parallelism 3
+    parallelism: 3
     environment:
       COVERAGE: 'true'
       COVERAGE_DIR: /tmp/coverage
