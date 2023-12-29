@@ -8,12 +8,7 @@ require:
 
 AllCops:
   Exclude:
-    - 'vendor/**/*'
-    - '**/vendor/**/*'
-    - '*/spec/dummy/**/*'
-    - 'sandbox/**/*'
-    - '**/templates/**/*'
-    - 'tmp/**/*'
+    - '**/{tmp,vendor,spec/dummy,sandbox,templates,pkg}/**/*'
   TargetRubyVersion: 3.0
   NewCops: disable
   SuggestExtensions: false
