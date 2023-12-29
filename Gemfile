@@ -31,6 +31,7 @@ gem 'rspec-rails', '~> 6.0.3', require: false
 gem 'rspec-retry', '~> 0.6.2', require: false
 gem 'simplecov', require: false
 gem 'simplecov-cobertura', require: false
+gem 'rake', require: false, groups: [:lint, :release]
 gem 'rails-controller-testing', require: false
 gem 'puma', '< 6', require: false
 gem 'i18n-tasks', '~> 0.9', require: false
