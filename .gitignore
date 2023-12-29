@@ -32,3 +32,4 @@ yarn.lock
 package-lock.json
 .env
 /admin/app/assets/builds
+/test-results
