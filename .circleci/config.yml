@@ -114,30 +114,6 @@ commands:
       - store_test_results:
           path: /tmp/test-results
 
-  test_with_coverage:
-    # This command creates a dir to hold coverage data, run test suites with coverage enabled and
-    # generate the coverage report.
-    description: Run Tests With Coverage Enabled
-    steps:
-      - run:
-          name: Setup Coverage Env Vars
-          command: |
-              echo 'export COVERAGE_FILE=$COVERAGE_DIR/coverage.xml' >> $BASH_ENV
-              source $BASH_ENV
-      - run:
-          name: Verify Coverage Env Vars
-          command: |
-              echo $COVERAGE
-              echo $COVERAGE_DIR
-              echo $COVERAGE_FILE
-      - run:
-          name: Setup Coverage Directory
-          command: mkdir -p $COVERAGE_DIR
-      - test
-      - run:
-          name: Report Coverage
-          command: bundle exec rake solidus:coverage[cobertura]
-
   libvips:
     steps:
       - run:
@@ -323,6 +299,8 @@ jobs:
       - setup
       - test
 
+  # This job creates a dir to hold coverage data, run test suites with coverage enabled and
+  # generate the coverage report.
   test_solidus_with_coverage:
     parameters:
       database:
@@ -330,7 +308,7 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.1'
+        default: '3.2'
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
@@ -341,19 +319,33 @@ jobs:
       DISABLE_ACTIVE_STORAGE: false
     steps:
       - setup
-      - test_with_coverage
+      - run:
+          name: Setup Coverage Env Vars
+          command: |
+              echo 'export COVERAGE_FILE=/tmp/coverage/coverage.xml' >> $BASH_ENV
+              source $BASH_ENV
+      - run:
+          name: Verify Coverage Env Vars
+          command: |
+              echo $COVERAGE
+              echo /tmp/coverage
+              echo /tmp/coverage/coverage.xml
+      - run:
+          name: Setup Coverage Directory
+          command: mkdir -p /tmp/coverage
+      - test
+      - run:
+          name: Report Coverage
+          command: bundle exec rake solidus:coverage[cobertura]
+      - codecov/upload:
+          file: /tmp/coverage/coverage.xml
 
 workflows:
   build:
     jobs:
       - lint_code
       - solidus_installer
-
-      # Only test with coverage support with the default versions
-      - test_solidus_with_coverage:
-          post-steps:
-            - codecov/upload:
-                file: $COVERAGE_FILE
+      - test_solidus_with_coverage # Only test with coverage support with the default versions
 
       # Based on supported versions for the current Solidus release and recommended versions from
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
