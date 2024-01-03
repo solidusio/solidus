@@ -693,12 +693,12 @@ RSpec.describe Spree::Promotion, type: :model do
         let!(:line_item) { create(:line_item) }
         let!(:line_item2) { create(:line_item) }
 
-        context "and at least one item is non-promotionable" do
+        context "and at least one item is promotionable" do
           before do
             line_item.variant.product.promotionable = false
           end
 
-          it { is_expected.to be false }
+          it { is_expected.to be true }
         end
 
         context "and the items are all non-promotionable" do
@@ -708,10 +708,6 @@ RSpec.describe Spree::Promotion, type: :model do
           end
 
           it { is_expected.to be false }
-        end
-
-        context "and at least one item is promotionable" do
-          it { is_expected.to be true }
         end
       end
     end
