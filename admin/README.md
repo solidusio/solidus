@@ -26,6 +26,6 @@ bin/rails admin g solidus_admin:component foo
 ## Releasing
 
 1. Update the version in `lib/solidus_admin/version.rb`
-2. Commit the changes with the message `Release v1.2.3`
+2. Commit the changes with the message `Release solidus_admin/v1.2.3`
 3. `cd admin; bundle exec rake release`
 4. Manually release on GitHub
