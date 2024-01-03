@@ -10,7 +10,7 @@ if Rails.env.development? || Rails.env.test?
   clear = "\e[0m"
 
   ActiveSupport::Notifications.subscribe("render.view_component") do |*args|
-    next unless args.last[:name].starts_with?("SolidusAdmin::")
+    next unless args.last[:name]&.starts_with?("SolidusAdmin::")
 
     event = ActiveSupport::Notifications::Event.new(*args)
     SolidusAdmin::BaseComponent.logger.debug \

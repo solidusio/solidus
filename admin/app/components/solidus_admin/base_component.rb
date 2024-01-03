@@ -43,7 +43,7 @@ module SolidusAdmin
 
       logger.debug "  [#{self.class}] Missing translation: #{keys.join('.')}"
 
-      if options[:locale] != :en
+      if (options[:locale] || I18n.default_locale) != :en
         t(key, **options, locale: :en)
       else
         "translation missing: #{keys.join('.')}"

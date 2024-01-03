@@ -48,4 +48,20 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
       expect(SolidusAdmin::Foo::Bar::Component.new.stimulus_id).to eq("foo--bar")
     end
   end
+
+  describe "missing translations" do
+    it "logs and shows the full chain of keys" do
+      debug_logs = []
+
+      allow(Rails.logger).to receive(:debug) { debug_logs << _1 }
+
+      component_class = stub_const("Foo::Component", Class.new(described_class){ erb_template "" })
+      component = component_class.new
+      render_inline(component)
+      translation = component.translate("foo.bar.baz")
+
+      expect(translation).to eq("translation missing: en.foo.bar.baz")
+      expect(debug_logs).to include(%{  [Foo::Component] Missing translation: en.foo.bar.baz})
+    end
+  end
 end
