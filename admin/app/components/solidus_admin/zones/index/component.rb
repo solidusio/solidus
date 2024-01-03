@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Zones::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::Zone
   end
 
-  def title
-    Spree::Zone.model_name.human.pluralize
+  def search_key
+    :name_or_description_cont
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.zones_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def row_url(zone)
+    spree.edit_admin_zone_path(zone)
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_zone_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
   end
 
   def batch_actions

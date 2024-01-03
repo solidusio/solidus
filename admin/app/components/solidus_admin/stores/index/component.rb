@@ -1,22 +1,29 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Stores::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::Store
   end
 
-  def title
-    Spree::Store.model_name.human.pluralize
+  def search_key
+    :name_or_url_or_code_cont
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.stores_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def row_url(store)
+    spree.edit_admin_store_path(store)
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_store_path,
+      icon: "add-line",
+    )
   end
 
   def batch_actions
@@ -28,14 +35,6 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::BaseComponent
         icon: 'delete-bin-7-line',
       },
     ]
-  end
-
-  def scopes
-    []
-  end
-
-  def filters
-    []
   end
 
   def columns

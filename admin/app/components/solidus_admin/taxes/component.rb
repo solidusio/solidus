@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Taxes::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-  renders_one :actions
-
-  def initialize(model_class:)
-    @model_class = model_class
+class SolidusAdmin::Taxes::Component < SolidusAdmin::UI::Pages::Index::Component
+  def title
+    safe_join([
+      tag.div(t(".title")),
+      tag.div(t(".subtitle"), class: "font-normal text-sm text-gray-500"),
+    ])
   end
 
   def tabs
@@ -13,12 +13,12 @@ class SolidusAdmin::Taxes::Component < SolidusAdmin::BaseComponent
       {
         text: Spree::TaxCategory.model_name.human.pluralize,
         href: solidus_admin.tax_categories_path,
-        "aria-current": @model_class == Spree::TaxCategory,
+        current: model_class == Spree::TaxCategory,
       },
       {
         text: Spree::TaxRate.model_name.human.pluralize,
         href: solidus_admin.tax_rates_path,
-        "aria-current": @model_class == Spree::TaxRate,
+        current: model_class == Spree::TaxRate,
       },
     ]
   end

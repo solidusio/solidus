@@ -1,28 +1,33 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::Order
   end
 
-  class_attribute :row_fade, default: ->(order) { order.paid? && order.shipped? }
-
-  def title
-    Spree::Order.model_name.human.pluralize
+  def search_key
+    :number_or_shipments_number_or_bill_address_name_or_email_cont
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.orders_path(scope: params[:scope])
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def row_url(order)
+    spree.edit_admin_order_path(order)
   end
 
-  def batch_actions
-    []
+  def row_fade(order)
+    order.paid? && order.shipped?
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_order_path,
+      icon: "add-line",
+    )
   end
 
   def scopes
@@ -100,7 +105,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
     {
       header: :order,
       data: ->(order) do
-        if !row_fade.call(order)
+        if !row_fade(order)
           content_tag :div, order.number, class: 'font-semibold'
         else
           content_tag :div, order.number

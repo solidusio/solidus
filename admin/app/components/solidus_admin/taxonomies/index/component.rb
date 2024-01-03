@@ -1,22 +1,28 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::Taxonomy
   end
 
-  def title
-    Spree::Taxonomy.model_name.human.pluralize
+  def row_url(taxonomy)
+    spree.edit_admin_taxonomy_path(taxonomy)
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def sortable_options
+    {
+      url: ->(taxonomy) { solidus_admin.move_taxonomy_path(taxonomy) },
+      param: 'position',
+    }
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_taxonomy_path,
+      icon: "add-line",
+    )
   end
 
   def batch_actions

@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Component
+  def row_url(tax_category)
+    spree.edit_admin_tax_category_path(tax_category)
   end
 
-  def title
-    Spree::TaxCategory.model_name.human.pluralize
+  def model_class
+    Spree::TaxCategory
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.tax_categories_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_tax_category_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
+  end
+
+  def search_key
+    :name_or_description_cont
   end
 
   def batch_actions
@@ -30,14 +38,6 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::BaseComponen
     ]
   end
 
-  def scopes
-    []
-  end
-
-  def filters
-    []
-  end
-
   def columns
     [
       :name,
@@ -47,9 +47,9 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::BaseComponen
         header: :is_default,
         data: ->(tax_category) {
           if tax_category.is_default?
-            component('ui/badge').new(name: t('.yes'), color: :green)
+            component('ui/badge').yes
           else
-            component('ui/badge').new(name: t('.no'), color: :graphite_light)
+            component('ui/badge').no
           end
         },
       },

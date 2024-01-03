@@ -1,22 +1,20 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndReturns::Component
+  def model_class
+    Spree::ReturnReason
   end
 
-  def title
-    Spree::ReturnReason.model_name.human.pluralize
+  def search_url
+    solidus_admin.return_reasons_path
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_key
+    :name_cont
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def row_url(return_reason)
+    spree.edit_admin_return_reason_path(return_reason)
   end
 
   def batch_actions
@@ -28,14 +26,6 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::BaseComponen
         icon: 'delete-bin-7-line',
       },
     ]
-  end
-
-  def scopes
-    []
-  end
-
-  def filters
-    []
   end
 
   def columns

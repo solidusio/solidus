@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::Component
+  def model_class
+    Spree::ShippingMethod
   end
 
-  def title
-    Spree::ShippingMethod.model_name.human.pluralize
+  def row_url(shipping_method)
+    spree.edit_admin_shipping_method_path(shipping_method)
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.shipping_methods_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def search_key
+    :name_or_description_cont
+  end
+
+  def actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_shipping_method_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
   end
 
   def batch_actions
@@ -28,14 +36,6 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::BaseCompon
         icon: 'delete-bin-7-line',
       },
     ]
-  end
-
-  def scopes
-    []
-  end
-
-  def filters
-    []
   end
 
   def columns

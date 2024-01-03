@@ -1,26 +1,20 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def model_class
+    Spree::StockItem
   end
 
-  def title
-    Spree::StockItem.model_name.human.pluralize
+  def search_key
+    :variant_product_name_or_variant_sku_or_variant_option_values_name_or_variant_option_values_presentation_cont
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def search_url
+    solidus_admin.stock_items_path
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
-  end
-
-  def batch_actions
-    []
+  def row_url(stock_item)
+    solidus_admin.edit_stock_item_path(stock_item, page: params[:page], q: permitted_query_params)
   end
 
   def scopes

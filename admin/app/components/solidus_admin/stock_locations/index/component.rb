@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::BaseComponent
-  include SolidusAdmin::Layout::PageHelpers
-
-  def initialize(page:)
-    @page = page
+class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::Component
+  def model_class
+    Spree::StockLocation
   end
 
-  def title
-    Spree::StockLocation.model_name.human.pluralize
+  def actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: spree.new_admin_stock_location_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
   end
 
-  def prev_page_path
-    solidus_admin.url_for(**request.params, page: @page.number - 1, only_path: true) unless @page.first?
+  def row_url(stock_location)
+    spree.edit_admin_stock_location_path(stock_location)
   end
 
-  def next_page_path
-    solidus_admin.url_for(**request.params, page: @page.next_param, only_path: true) unless @page.last?
+  def search_url
+    solidus_admin.stock_locations_path
+  end
+
+  def search_key
+    :name_or_description_cont
   end
 
   def batch_actions
