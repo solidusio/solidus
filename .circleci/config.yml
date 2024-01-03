@@ -299,19 +299,27 @@ jobs:
         default: '3.2'
       rails:
         type: string
-        default: "7.0"
+        default: "7.1"
       paperclip:
         type: boolean
         default: true
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
-    parallelism: &parallelism 3
+    parallelism: 3
     environment:
       DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
-      RAILS_VERSION: "~> << parameters.rails >>"
       BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
+      - checkout
+      - run:
+          name: "Set the RAILS_VERSION environment variable"
+          command: |
+            # If << parameters.rails >> is a kown branch name, use the latest version of that branch
+            # otherwise interpret it as a partial version number.
+            RAILS_VERSION=$(echo "<< parameters.rails >>" | grep -qE "(stable|main)" && echo "~> << parameters.rails >>.0" || echo "<< parameters.rails >>")
+            echo "RAILS_VERSION=$RAILS_VERSION" >> $BASH_ENV
+            source $BASH_ENV
       - setup
       - test
 
@@ -326,7 +334,7 @@ jobs:
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
-    parallelism: &parallelism 3
+    parallelism: 3
     environment:
       COVERAGE: 'true'
       COVERAGE_DIR: /tmp/coverage
@@ -357,4 +365,7 @@ workflows:
           matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['7.1', 'main'], ruby: ['3.3'], database: ['sqlite'], paperclip: [false] } }
