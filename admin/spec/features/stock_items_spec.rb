@@ -7,6 +7,7 @@ describe "Stock Items", :js, type: :feature do
 
   it "lists stock items and allows navigating through scopes" do
     non_backorderable = create(:stock_item, backorderable: false)
+    non_backorderable.variant.update!(sku: 'MY-SKU-1234567890')
     backorderable = create(:stock_item, backorderable: true)
     out_of_stock = begin
       item = create(:stock_item, backorderable: false)
@@ -26,6 +27,13 @@ describe "Stock Items", :js, type: :feature do
     expect(page).to have_content(backorderable.variant.sku)
     expect(page).to have_content(out_of_stock.variant.sku)
     expect(page).to have_content(low_stock.variant.sku)
+
+    # Edit stock item
+    find('td', text: 'MY-SKU-1234567890').click
+    fill_in :quantity_adjustment, with: 1
+    click_on "Save"
+    expect(find('tr', text: 'MY-SKU-1234567890')).to have_content('11')
+    expect(find('tr', text: 'MY-SKU-1234567890')).to have_content('1 stock movement')
 
     click_on 'Back Orderable'
     expect(page).to_not have_content(non_backorderable.variant.sku)
