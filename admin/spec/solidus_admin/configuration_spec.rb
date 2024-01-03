@@ -39,4 +39,95 @@ RSpec.describe SolidusAdmin::Configuration do
       expect(config.storefront_product_path(product)).to eq("/foo/bar/foo-bar-123")
     end
   end
+
+  describe "#import_menu_items_from_backend!" do
+    it "imports the menu items from the backend" do
+      allow(Spree::Backend::Config).to receive(:menu_items).and_return([
+        Spree::BackendConfiguration::MenuItem.new(
+          label: :item1,
+          icon: 'ri-inbox-line',
+          condition: -> {},
+          match_path: %r{/foo},
+          url: :foo,
+        ),
+        Spree::BackendConfiguration::MenuItem.new(
+          label: :item2,
+          icon: 'shopping-cart',
+          condition: -> {},
+          match_path: -> {},
+          url: "/bar"
+        ),
+        Spree::BackendConfiguration::MenuItem.new(
+          label: :item3,
+          icon: 'shopping-cart',
+          condition: -> {},
+          match_path: "foo",
+          url: -> {},
+        ),
+        Spree::BackendConfiguration::MenuItem.new(
+          label: :item4,
+          icon: 'shopping-cart',
+          condition: -> {},
+          match_path: nil,
+          url: nil,
+          children: [
+            Spree::BackendConfiguration::MenuItem.new(
+              label: :item4_1,
+              icon: 'shopping-cart',
+              condition: -> {},
+              match_path: nil,
+              url: nil,
+            ),
+          ],
+        ),
+      ])
+
+      config = described_class.new
+      config.import_menu_items_from_backend!
+
+      expect(config.menu_items).to match([
+        {
+          key: :item1,
+          icon: 'inbox-line',
+          route: a_kind_of(Proc),
+          children: [],
+          match_path: a_kind_of(Proc),
+          position: 0,
+        },
+        {
+          key: :item2,
+          icon: 'record-circle-line',
+          route: a_kind_of(Proc),
+          children: [],
+          match_path: a_kind_of(Proc),
+          position: 1,
+        },
+        {
+          key: :item3,
+          icon: 'record-circle-line',
+          route: a_kind_of(Proc),
+          children: [],
+          match_path: a_kind_of(Proc),
+          position: 2,
+        },
+        {
+          key: :item4,
+          icon: 'record-circle-line',
+          route: a_kind_of(Proc),
+          children: [
+            {
+              key: :item4_1,
+              icon: 'record-circle-line',
+              route: a_kind_of(Proc),
+              children: [],
+              match_path: a_kind_of(Proc),
+              position: 0,
+            },
+          ],
+          match_path: a_kind_of(Proc),
+          position: 3,
+        },
+      ])
+    end
+  end
 end
