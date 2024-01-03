@@ -309,9 +309,17 @@ jobs:
     parallelism: &parallelism 3
     environment:
       DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
-      RAILS_VERSION: "~> << parameters.rails >>"
       BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
+      - checkout
+      - run:
+          name: "Set the RAILS_VERSION environment variable"
+          command: |
+            # If << parameters.rails >> is a kown branch name, use the latest version of that branch
+            # otherwise interpret it as a partial version number.
+            RAILS_VERSION=$(echo "<< parameters.rails >>" | grep -qE "(stable|main)" && echo "~> << parameters.rails >>.0" || echo "<< parameters.rails >>")
+            echo "RAILS_VERSION=$RAILS_VERSION" >> $BASH_ENV
+            source $BASH_ENV
       - setup
       - test
 
