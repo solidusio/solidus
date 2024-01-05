@@ -113,15 +113,22 @@ class Project
   end
 end
 
-if ARGV.first # Run a single project
-  projects = Project.all.select { _1.name == ARGV.first }
-elsif ENV['CIRCLE_NODE_INDEX'] # Run projects on a CI node
+
+if ENV['CIRCLE_NODE_INDEX'] # Run projects on a CI node
   projects = Project.weighted_projects(
     node_total: Integer(ENV.fetch('CIRCLE_NODE_TOTAL', 1)),
     node_index: Integer(ENV.fetch('CIRCLE_NODE_INDEX', 0)),
   )
-else # Run all projects
+else
   projects = Project.all
+end
+
+# Run a single project if requested
+projects.select! { _1.title == ARGV.first } if ARGV.first
+
+if projects.empty?
+  warn("No projects to run")
+  exit 0
 end
 
 exit Project.run(projects)
