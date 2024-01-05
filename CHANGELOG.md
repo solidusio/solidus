@@ -1,3 +1,14 @@
+## Solidus v4.3.1 (2024-01-05)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Backend
+
+* [v4.3] Fix the check on select2 translations asset existence by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5584
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.0...v4.3.1
+
+
 ## Solidus v4.3.0 (2023-12-22)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
