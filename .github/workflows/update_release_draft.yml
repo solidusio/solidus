@@ -34,4 +34,4 @@ jobs:
             --update \
             --branch ${{ github.ref_name }} \
             ${{ steps.pipeline_context.outputs.current_diff_source_tag }} \
-            ${{ steps.pipeline_context.outputs.candidate_tag }} \
+            ${{ steps.pipeline_context.outputs.candidate_tag }}
