@@ -36,5 +36,6 @@ context_hash = {
 }
 
 warn "~~> Generating context..."
+context_hash.each { |k, v| warn "#{k}=#{v}" }
 
 context_hash.each { |k, v| puts "#{k}=#{v}" }

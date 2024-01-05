@@ -55,6 +55,7 @@ if update
     } || OCTOKIT.create_release(
       'solidusio/solidus',
       candidate_tag_name,
+      name: candidate_tag_name,
       body: notes,
       target_commitish: branch,
       draft: true,

@@ -7,4 +7,8 @@ candidate_tag = ARGV.first
 
 warn "~~> Publishing release draft for #{candidate_tag}..."
 release = OCTOKIT.releases('solidusio/solidus').find { _1.name == candidate_tag }
-OCTOKIT.update_release(release.url, draft: false)
+OCTOKIT.update_release(
+  release.url,
+  draft: false,
+  tag_name: candidate_tag,
+)
