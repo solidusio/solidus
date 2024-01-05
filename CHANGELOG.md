@@ -1,3 +1,23 @@
+## Solidus v4.1.4 (2024-01-05)
+
+## Solidus Core
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus Backend
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus API
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus Sample
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.3...v4.1.4
+
+
 ## Solidus v4.1.3 (2023-11-02)
 
 ## Solidus Core
