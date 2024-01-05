@@ -100,8 +100,23 @@ commands:
   test:
     steps:
       - run:
-          name: Run Tests
-          command: ./bin/build-ci
+          name: "Run Admin Tests"
+          command: ./bin/build-ci admin
+      - run:
+          name: "Run Api Tests"
+          command: ./bin/build-ci api
+      - run:
+          name: "Run Backend Tests"
+          command: ./bin/build-ci backend
+      - run:
+          name: "Run Backend JS Tests"
+          command: ./bin/build-ci "backend JS"
+      - run:
+          name: "Run Core Tests"
+          command: ./bin/build-ci core
+      - run:
+          name: "Run Sample Tests"
+          command: ./bin/build-ci sample
 
       - store_artifacts:
           path: /tmp/test-artifacts
