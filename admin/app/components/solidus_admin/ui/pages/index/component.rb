@@ -22,6 +22,10 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     nil
   end
 
+  def back_url
+    nil
+  end
+
   def title
     model_class.model_name.human.pluralize
   end
@@ -93,6 +97,15 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
 
   def sortable_options
     nil
+  end
+
+  def render_title
+    back_url = self.back_url
+
+    safe_join [
+      (page_header_back back_url if back_url),
+      page_header_title(title),
+    ]
   end
 
   def render_table
