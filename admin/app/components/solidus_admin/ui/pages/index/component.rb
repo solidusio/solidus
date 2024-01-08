@@ -113,6 +113,16 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def sidebar
+    nil
+  end
+
+  def render_sidebar
+    sidebar = self.sidebar
+
+    page_with_sidebar_aside { sidebar } if sidebar
+  end
+
   def page_actions
     nil
   end

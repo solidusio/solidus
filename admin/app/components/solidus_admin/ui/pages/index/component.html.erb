@@ -26,5 +26,15 @@
     <% end %>
   <% end %>
 
-  <%= render_table %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render_table %>
+    <% end %>
+
+    <% if sidebar %>
+      <%= page_with_sidebar_aside do %>
+        <%= sidebar %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
