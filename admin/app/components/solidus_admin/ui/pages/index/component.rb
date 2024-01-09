@@ -41,10 +41,6 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     :q
   end
 
-  def table_id
-    stimulus_id
-  end
-
   def rows
     @page.records
   end
