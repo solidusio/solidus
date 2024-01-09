@@ -150,6 +150,9 @@ bin/rails db:seed
 bin/rails spree_sample:load
 ```
 
+`solidus_sample` is a development dependency, if you need to run `spree_sample:load`
+in production environments, then you have to add it to your local Gemfile `gem 'solidus_sample'`.
+
 There are also options and rake tasks provided by
 [solidus\_auth\_devise](https://github.com/solidusio/solidus_auth_devise).
 

@@ -183,6 +183,11 @@ module Solidus
       generate 'solidus_admin:install'
     end
 
+    def install_solidus_sample
+      say_status :installing, "SolidusSample", :blue
+      bundle_command 'add solidus_sample --group=development'
+    end
+
     def install_subcomponents
       apply_template_for :authentication, @selected_authentication
       apply_template_for :frontend, @selected_frontend
