@@ -34,7 +34,7 @@ RSpec.describe SolidusAdmin::Layout::Navigation::Component, type: :component do
   it "renders the account nav component" do
     account_component = mock_component do
       def call
-        "account nav"
+        "account nav".html_safe
       end
     end
     component = described_class.new(
