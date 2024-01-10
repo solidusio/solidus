@@ -41,13 +41,13 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
   def filters
     [
       {
-        presentation: Spree::Zone.model_name.human,
+        label: Spree::Zone.model_name.human,
         attribute: :zone_id,
         predicate: :eq,
         options: Spree::Zone.pluck(:name, :id),
       },
       {
-        presentation: Spree::TaxCategory.model_name.human,
+        label: Spree::TaxCategory.model_name.human,
         attribute: :tax_categories_id,
         predicate: :in,
         options: Spree::TaxCategory.pluck(:name, :id),

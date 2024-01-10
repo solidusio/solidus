@@ -63,7 +63,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   def filters
     Spree::OptionType.all.map do |option_type|
       {
-        presentation: option_type.presentation,
+        label: option_type.presentation,
         combinator: 'or',
         attribute: "variants_option_values",
         predicate: "in",

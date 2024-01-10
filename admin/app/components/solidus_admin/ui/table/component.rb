@@ -3,7 +3,7 @@
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   BatchAction = Struct.new(:label, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
-  Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
+  Filter = Struct.new(:label, :combinator, :attribute, :predicate, :options, keyword_init: true)
   Scope = Struct.new(:name, :label, :default, keyword_init: true)
   Sortable = Struct.new(:url, :param, :animation, :handle, keyword_init: true)
   private_constant :BatchAction, :Column, :Filter, :Scope, :Sortable
@@ -115,7 +115,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
 
   def render_ransack_filter_dropdown(filter, index)
     render component("ui/table/ransack_filter").new(
-      presentation: filter.presentation,
+      presentation: filter.label,
       search_param: @search.name,
       combinator: filter.combinator,
       attribute: filter.attribute,

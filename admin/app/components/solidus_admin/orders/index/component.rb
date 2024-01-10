@@ -43,7 +43,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
   def filters
     [
       {
-        presentation: t('.filters.status'),
+        label: t('.filters.status'),
         combinator: 'or',
         attribute: "state",
         predicate: "eq",
@@ -55,7 +55,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
         end
       },
       {
-        presentation: t('.filters.shipment_state'),
+        label: t('.filters.shipment_state'),
         combinator: 'or',
         attribute: "shipment_state",
         predicate: "eq",
@@ -67,7 +67,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
         end
       },
       {
-        presentation: t('.filters.payment_state'),
+        label: t('.filters.payment_state'),
         combinator: 'or',
         attribute: "payment_state",
         predicate: "eq",
@@ -79,7 +79,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
         end
       },
       {
-        presentation: t('.filters.promotions'),
+        label: t('.filters.promotions'),
         combinator: 'or',
         attribute: "promotions_id",
         predicate: "in",

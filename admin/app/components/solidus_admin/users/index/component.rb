@@ -50,7 +50,7 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UI::Pages::Index::Co
   def filters
     [
       {
-        presentation: Spree::Role.model_name.human.pluralize,
+        label: Spree::Role.model_name.human.pluralize,
         attribute: "spree_roles_id",
         predicate: "in",
         options: Spree::Role.pluck(:name, :id)

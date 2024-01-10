@@ -50,7 +50,7 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
   def filters
     [
       {
-        presentation: Spree::PromotionCategory.model_name.human.pluralize,
+        label: Spree::PromotionCategory.model_name.human.pluralize,
         attribute: "promotion_category_id",
         predicate: "in",
         options: Spree::PromotionCategory.pluck(:name, :id)
