@@ -29,7 +29,7 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UI::Pages::Index::Co
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.users_path,
         method: :delete,
         icon: 'delete-bin-7-line',

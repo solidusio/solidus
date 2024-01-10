@@ -30,7 +30,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.stock_locations_path,
         method: :delete,
         icon: 'delete-bin-7-line',

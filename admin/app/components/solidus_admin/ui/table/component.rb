@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  BatchAction = Struct.new(:label, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
   Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
   Scope = Struct.new(:name, :label, :default, keyword_init: true)
@@ -108,7 +108,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       form: batch_actions_form_id,
       type: :submit,
       icon: batch_action.icon,
-      text: batch_action.display_name,
+      text: batch_action.label,
       scheme: :secondary,
     )
   end

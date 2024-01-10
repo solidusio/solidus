@@ -30,7 +30,7 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.tax_rates_path,
         method: :delete,
         icon: 'delete-bin-7-line',

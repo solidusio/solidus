@@ -30,7 +30,7 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.store_credit_reasons_path,
         method: :delete,
         icon: 'delete-bin-7-line',

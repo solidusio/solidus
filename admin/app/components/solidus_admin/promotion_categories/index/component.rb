@@ -21,7 +21,7 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.promotion_categories_path,
         method: :delete,
         icon: 'delete-bin-7-line',
