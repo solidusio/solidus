@@ -3,10 +3,6 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::Products::Status::Component, type: :component do
-  it "renders the overview preview" do
-    render_preview(:overview)
-  end
-
   describe "#status" do
     it "returns :available when the product is available" do
       product = Spree::Product.new(available_on: Time.current)

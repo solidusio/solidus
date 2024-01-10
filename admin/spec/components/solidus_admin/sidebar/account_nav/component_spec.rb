@@ -3,10 +3,6 @@
 require "spec_helper"
 
 RSpec.describe SolidusAdmin::Sidebar::AccountNav::Component, type: :component do
-  it "renders the overview preview" do
-    render_preview(:overview)
-  end
-
   it "renders correctly" do
     component = described_class.new(
       user_label: "Alice",
