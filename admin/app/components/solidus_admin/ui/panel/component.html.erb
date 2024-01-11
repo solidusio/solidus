@@ -22,29 +22,18 @@
   <% end %>
 
   <% if @title %>
-    <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
+    <%= render_section do %>
       <h2>
         <span class="font-semibold text-xl"><%= @title %></span>
         <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
       </h2>
-    </section>
+    <% end %>
   <% end %>
 
   <% sections.each do |section| %>
     <%= section %>
   <% end %>
 
-  <% if content.present? %>
-    <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
-      <%= content %>
-    </section>
-  <% end %>
-
-  <% if action? %>
-    <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
-      <div class="flex justify-between items-center">
-        <%= action %>
-      </div>
-    </section>
-  <% end %>
+  <%= render_section { content } if content.present? %>
+  <%= render_section { tag.div(action, class: "flex justify-between items-center") } if action? %>
 </div>
