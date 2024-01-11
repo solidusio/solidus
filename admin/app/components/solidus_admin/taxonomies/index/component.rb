@@ -28,7 +28,7 @@ class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Inde
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.taxonomies_path,
         method: :delete,
         icon: 'delete-bin-7-line',

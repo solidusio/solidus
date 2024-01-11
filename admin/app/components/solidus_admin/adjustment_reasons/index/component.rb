@@ -20,7 +20,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.adjustment_reasons_path,
         method: :delete,
         icon: 'delete-bin-7-line',

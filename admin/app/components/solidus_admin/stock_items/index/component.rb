@@ -30,7 +30,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
   def filters
     [
       {
-        presentation: t('.filters.stock_locations'),
+        label: t('.filters.stock_locations'),
         combinator: 'or',
         attribute: "stock_location_id",
         predicate: "eq",
@@ -42,7 +42,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
         end
       },
       {
-        presentation: t('.filters.variants'),
+        label: t('.filters.variants'),
         combinator: 'or',
         attribute: "variant_id",
         predicate: "eq",

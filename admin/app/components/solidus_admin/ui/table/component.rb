@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
-  BatchAction = Struct.new(:display_name, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
-  Filter = Struct.new(:presentation, :combinator, :attribute, :predicate, :options, keyword_init: true)
-  Scope = Struct.new(:name, :label, :default, keyword_init: true)
   Sortable = Struct.new(:url, :param, :animation, :handle, keyword_init: true)
+  Scope = Struct.new(:label, :name, :default, keyword_init: true)
+  Filter = Struct.new(:label, :combinator, :attribute, :predicate, :options, keyword_init: true)
+  BatchAction = Struct.new(:label, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   private_constant :BatchAction, :Column, :Filter, :Scope, :Sortable
 
   class Data < Struct.new(:rows, :class, :url, :prev, :next, :columns, :fade, :batch_actions, keyword_init: true) # rubocop:disable Lint/StructNewOverride,Style/StructInheritance
@@ -108,14 +108,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       form: batch_actions_form_id,
       type: :submit,
       icon: batch_action.icon,
-      text: batch_action.display_name,
+      text: batch_action.label,
       scheme: :secondary,
     )
   end
 
   def render_ransack_filter_dropdown(filter, index)
     render component("ui/table/ransack_filter").new(
-      presentation: filter.presentation,
+      presentation: filter.label,
       search_param: @search.name,
       combinator: filter.combinator,
       attribute: filter.attribute,

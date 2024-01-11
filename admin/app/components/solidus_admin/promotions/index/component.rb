@@ -29,7 +29,7 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.promotions_path,
         method: :delete,
         icon: 'delete-bin-7-line',
@@ -50,7 +50,7 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
   def filters
     [
       {
-        presentation: Spree::PromotionCategory.model_name.human.pluralize,
+        label: Spree::PromotionCategory.model_name.human.pluralize,
         attribute: "promotion_category_id",
         predicate: "in",
         options: Spree::PromotionCategory.pluck(:name, :id)

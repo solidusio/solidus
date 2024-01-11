@@ -56,19 +56,19 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
   def batch_actions_data
     [
       {
-        display_name: "Delete",
+        label: "Delete",
         action: "#",
         method: :delete,
         icon: 'delete-bin-7-line',
       },
       {
-        display_name: "Discontinue",
+        label: "Discontinue",
         action: "#",
         method: :put,
         icon: 'pause-circle-line',
       },
       {
-        display_name: "Activate",
+        label: "Activate",
         action: "#",
         method: :put,
         icon: 'play-circle-line',

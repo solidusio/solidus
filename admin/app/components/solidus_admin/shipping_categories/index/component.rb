@@ -30,7 +30,7 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.shipping_categories_path,
         method: :delete,
         icon: 'delete-bin-7-line',

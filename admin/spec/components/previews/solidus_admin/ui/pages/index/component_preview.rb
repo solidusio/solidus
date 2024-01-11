@@ -40,7 +40,7 @@ class SolidusAdmin::UI::Pages::Index::ComponentPreview < ViewComponent::Preview
 
       def batch_actions
         [{
-          display_name: "Print",
+          label: "Print",
           action: "print",
         }]
       end

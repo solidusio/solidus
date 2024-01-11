@@ -29,19 +29,19 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   def batch_actions
     [
       {
-        display_name: t('.batch_actions.delete'),
+        label: t('.batch_actions.delete'),
         action: solidus_admin.products_path,
         method: :delete,
         icon: 'delete-bin-7-line',
       },
       {
-        display_name: t('.batch_actions.discontinue'),
+        label: t('.batch_actions.discontinue'),
         action: solidus_admin.discontinue_products_path,
         method: :put,
         icon: 'pause-circle-line',
       },
       {
-        display_name: t('.batch_actions.activate'),
+        label: t('.batch_actions.activate'),
         action: solidus_admin.activate_products_path,
         method: :put,
         icon: 'play-circle-line',
@@ -63,7 +63,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   def filters
     Spree::OptionType.all.map do |option_type|
       {
-        presentation: option_type.presentation,
+        label: option_type.presentation,
         combinator: 'or',
         attribute: "variants_option_values",
         predicate: "in",
