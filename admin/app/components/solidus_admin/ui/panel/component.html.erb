@@ -24,7 +24,7 @@
   <% if @title %>
     <%= render_section do %>
       <h2>
-        <span class="font-semibold text-xl"><%= @title %></span>
+        <span class="font-semibold text-base"><%= @title %></span>
         <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
       </h2>
     <% end %>

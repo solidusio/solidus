@@ -33,7 +33,7 @@ class SolidusAdmin::UI::Panel::Component < SolidusAdmin::BaseComponent
     tag.section(**args, class: "
       border-gray-100 border-t w-full first-of-type:border-t-0
       #{'px-6' unless wide}
-      #{'py-6' unless high}
+      #{'py-4' unless high}
       #{args[:class]}
     ", &block)
   end
