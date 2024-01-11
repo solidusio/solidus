@@ -5,9 +5,20 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
 
   Tab = Struct.new(:text, :href, :current, keyword_init: true)
 
-  def tabs
-    nil
-  end
+  # Template methods
+  def tabs; end
+  def model_class; end
+  def back_url; end
+  def search_key; end
+  def search_url; end
+  def page_actions; end
+  def sidebar; end
+  def sortable_options; end
+  def row_url(_record); end
+  def batch_actions; []; end
+  def scopes; []; end
+  def filters; []; end
+  def columns; []; end
 
   def initialize(page:)
     @page = page
@@ -18,16 +29,8 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     false
   end
 
-  def model_class
-    nil
-  end
-
   def title
     model_class.model_name.human.pluralize
-  end
-
-  def search_key
-    nil
   end
 
   def search_params
@@ -38,36 +41,8 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     :q
   end
 
-  def search_url
-    nil
-  end
-
-  def table_id
-    stimulus_id
-  end
-
   def rows
     @page.records
-  end
-
-  def row_url(_record)
-    nil
-  end
-
-  def batch_actions
-    []
-  end
-
-  def scopes
-    []
-  end
-
-  def filters
-    []
-  end
-
-  def columns
-    []
   end
 
   def prev_page_path
@@ -91,8 +66,13 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     }
   end
 
-  def sortable_options
-    nil
+  def render_title
+    back_url = self.back_url
+
+    safe_join [
+      (page_header_back back_url if back_url),
+      page_header_title(title),
+    ]
   end
 
   def render_table
@@ -113,7 +93,9 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
     )
   end
 
-  def page_actions
-    nil
+  def render_sidebar
+    sidebar = self.sidebar
+
+    page_with_sidebar_aside { sidebar } if sidebar
   end
 end

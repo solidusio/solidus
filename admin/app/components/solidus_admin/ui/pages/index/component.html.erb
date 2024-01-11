@@ -1,7 +1,7 @@
 <%= page do %>
   <% if @tabs %>
     <%= page_header do %>
-      <%= page_header_title title %>
+      <%= render_title %>
     <% end %>
 
     <%= page_header do %>
@@ -18,7 +18,7 @@
 
   <% else %>
     <%= page_header do %>
-      <%= page_header_title title %>
+      <%= render_title %>
 
       <%= page_header_actions do %>
         <%= page_actions %>
@@ -26,5 +26,15 @@
     <% end %>
   <% end %>
 
-  <%= render_table %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render_table %>
+    <% end %>
+
+    <% if sidebar %>
+      <%= page_with_sidebar_aside do %>
+        <%= sidebar %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

@@ -50,6 +50,8 @@ module Spree
 
     singleton_class.deprecate :return_authorization, deprecator: Spree.deprecator
 
+    allowed_ransackable_attributes << 'label'
+
     extend DisplayMoney
     money_methods :amount
 

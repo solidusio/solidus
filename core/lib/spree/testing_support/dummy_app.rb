@@ -49,11 +49,6 @@ module DummyApp
   class Application < ::Rails::Application
     config.load_defaults("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
 
-    if Rails.gem_version >= Gem::Version.new('7.1')
-      config.action_controller.raise_on_missing_callback_actions = true
-      config.action_dispatch.show_exceptions = :none
-    end
-
     # Make the test environment more production-like:
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
@@ -71,8 +66,13 @@ module DummyApp
     config.cache_classes = true
 
     # Make debugging easier:
+    if Rails.gem_version >= Gem::Version.new('7.1')
+      config.action_controller.raise_on_missing_callback_actions = true
+      config.action_dispatch.show_exceptions = :none
+    else
+      config.action_dispatch.show_exceptions = false
+    end
     config.consider_all_requests_local = true
-    config.action_dispatch.show_exceptions = false # Should be :none for Rails 7.1+
     config.active_support.deprecation = :stderr
     config.log_level = :debug
 
