@@ -8,4 +8,5 @@ html {
 
 main img {
   filter: invert(91%) brightness(1.5) contrast(1.5) hue-rotate(-180deg);
+  background-color: #ddd;
 }
