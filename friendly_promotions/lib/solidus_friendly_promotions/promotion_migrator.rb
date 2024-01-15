@@ -94,7 +94,7 @@ module SolidusFriendlyPromotions
       else
         new_rule = new_promo_rule_class.new(old_promotion_rule.attributes.except(*PROMOTION_IGNORED_ATTRIBUTES))
         new_rule.preload_relations.each do |relation|
-          new_rule.send("#{relation}=", old_promotion_rule.send(relation))
+          new_rule.send(:"#{relation}=", old_promotion_rule.send(relation))
         end
         [new_rule]
       end

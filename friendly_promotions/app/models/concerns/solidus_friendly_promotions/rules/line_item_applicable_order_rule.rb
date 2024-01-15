@@ -12,7 +12,7 @@ module SolidusFriendlyPromotions
       end
 
       def eligible?(promotable)
-        send("#{promotable.class.name.demodulize.underscore}_eligible?", promotable)
+        send(:"#{promotable.class.name.demodulize.underscore}_eligible?", promotable)
       end
 
       def level

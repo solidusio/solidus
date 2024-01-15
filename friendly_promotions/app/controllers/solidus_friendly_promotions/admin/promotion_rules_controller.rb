@@ -63,7 +63,7 @@ module SolidusFriendlyPromotions
 
       def validate_promotion_rule_type
         requested_type = params[:promotion_rule].delete(:type)
-        promotion_rule_types = SolidusFriendlyPromotions.config.send("#{@level}_rules")
+        promotion_rule_types = SolidusFriendlyPromotions.config.send(:"#{@level}_rules")
         @promotion_rule_type = promotion_rule_types.detect do |klass|
           klass.name == requested_type
         end
