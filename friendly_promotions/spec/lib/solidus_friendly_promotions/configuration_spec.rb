@@ -54,4 +54,16 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
       config.sync_order_promotions = true
     end
   end
+
+  describe ".recalculate_complete_orders" do
+    subject { config.recalculate_complete_orders }
+
+    it { is_expected.to be true }
+
+    it "can be set to false" do
+      config.recalculate_complete_orders = false
+      expect(subject).to be false
+      config.recalculate_complete_orders = true
+    end
+  end
 end

@@ -33,6 +33,33 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
           subject
           expect(adjustable.current_discounts).to be_empty
         end
+
+        context "if order is complete but not shipped" do
+          let(:line_item) { order.line_items.first }
+          let(:order) { create(:order_ready_to_ship) }
+
+          it "creates the adjustment" do
+            expect {
+              subject
+              order.save
+            }.to change { adjustable.reload.adjustments.length }.by(1)
+          end
+
+          context "but the preference to recalculate complete orders is set to false" do
+            around do |example|
+              SolidusFriendlyPromotions.config.recalculate_complete_orders = false
+              example.run
+              SolidusFriendlyPromotions.config.recalculate_complete_orders = true
+            end
+
+            it "will not create the adjustment" do
+              expect {
+                subject
+                order.save
+              }.not_to change { adjustable.reload.adjustments.length }
+            end
+          end
+        end
       end
 
       context "with a calculator that returns zero" do
