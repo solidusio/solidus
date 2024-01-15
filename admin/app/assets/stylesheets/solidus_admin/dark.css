@@ -9,4 +9,5 @@ html {
 
 main img {
   filter: invert(100%) hue-rotate(-180deg);
+  background-color: #fff;
 }
