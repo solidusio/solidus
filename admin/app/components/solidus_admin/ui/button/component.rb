@@ -78,7 +78,7 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
 
     @attributes[:class] = [
       'justify-start items-center justify-center gap-1 inline-flex rounded',
-      'focus:ring focus:ring-gray-300 focus:ring-0.5 focus:bg-white focus:ring-offset-0 [&:focus-visible]:outline-none',
+      'focus:ring focus:ring-gray-300 focus:ring-0.5 focus:ring-offset-0 [&:focus-visible]:outline-none',
       SIZES.fetch(size.to_sym),
       (TEXT_PADDINGS.fetch(size.to_sym) if @text),
       SCHEMES.fetch(scheme.to_sym),
