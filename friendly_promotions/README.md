@@ -51,6 +51,15 @@ One way of connecting orders to promotions is via a promotion code.
 
 Promotion categories simply allow admins to group promotion actions. They have no further significance with regards to the functionality of the promotion system. This is the same behavior as in core.
 
+### Promotion recalculation
+
+Solidus allows changing orders up until when they are shipped. SolidusFriendlyPromotions therefore will recalculate orders up until when they are shipped as well. If your admins change promotions rather than add new ones and carefully manage the start and end dates of promotions, you might want to disable this feature:
+
+```rb
+SolidusFriendlyPromotions.configure do |config|
+  config.recalculate_complete_orders = false
+end
+```
 
 ## Installation
 

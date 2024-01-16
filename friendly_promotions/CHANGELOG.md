@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/HEAD)
+
+## [v1.0.0.rc.2](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/v1.0.0.rc.3) (2024-01-16)
+
+**Merged pull requests:**
+
+- Add configuration option: `recalculate_complete_orders` [\#97](https://github.com/friendlycart/solidus_friendly_promotions/pull/97) ([mamhoff](https://github.com/mamhoff))
+- Fix standardrb violations [\#96](https://github.com/friendlycart/solidus_friendly_promotions/pull/96) ([mamhoff](https://github.com/mamhoff))
+- Fix admin sub menu entry visibility condition [\#92](https://github.com/friendlycart/solidus_friendly_promotions/pull/92) ([mickenorlen](https://github.com/mickenorlen))
+- Documentation fixes [\#91](https://github.com/friendlycart/solidus_friendly_promotions/pull/91) ([mamhoff](https://github.com/mamhoff))
+- Fix typo [\#89](https://github.com/friendlycart/solidus_friendly_promotions/pull/89) ([jarednorman](https://github.com/jarednorman))
+- Pass untranslated strings through i18n [\#88](https://github.com/friendlycart/solidus_friendly_promotions/pull/88) ([mamhoff](https://github.com/mamhoff))
+
 ## [v1.0.0.rc.2](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/v1.0.0.rc.2) (2023-11-11)
 
 [Full Changelog](https://github.com/FriendlyCart/solidus_friendly_promotions/compare/v1.0.0.rc.1...v1.0.0.rc.2)
