@@ -7,13 +7,18 @@ require "turbo-rails"
 require "importmap-rails"
 require "stimulus-rails"
 require "ransack-enum"
-require "solidus_friendly_promotions/nested_class_set"
-require "solidus_friendly_promotions/configuration"
-require "solidus_friendly_promotions/version"
-require "solidus_friendly_promotions/engine"
 
 module SolidusFriendlyPromotions
+  def self.table_name_prefix
+    "friendly_"
+  end
+
   # JS Importmap instance
   singleton_class.attr_accessor :importmap
   self.importmap = Importmap::Map.new
 end
+
+require "solidus_friendly_promotions/nested_class_set"
+require "solidus_friendly_promotions/configuration"
+require "solidus_friendly_promotions/version"
+require "solidus_friendly_promotions/engine"
