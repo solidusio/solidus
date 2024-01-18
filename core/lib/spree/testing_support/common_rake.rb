@@ -31,6 +31,7 @@ class CommonRakeTasks
           'solidus:install',
           Dir.pwd, # use the current dir as Rails.root
           "--auto-accept",
+          "--admin-preview=#{ENV.fetch('ADMIN_PREVIEW', 'false')}",
           "--authentication=none",
           "--payment-method=none",
           "--migrate=false",
