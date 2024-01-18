@@ -1,0 +1,22 @@
+<div class="field">
+  <%= batch.label :base_code, class: "required" %>
+  <%= batch.text_field :base_code, class: "fullwidth", required: true %>
+</div>
+<div class="field">
+  <%= batch.label :number_of_codes, class: "required" %>
+  <%= batch.number_field :number_of_codes, class: "fullwidth", min: 1, required: true %>
+</div>
+<div class="field">
+  <%= batch.label :join_characters %>
+  <%= batch.text_field :join_characters, class: "fullwidth" %>
+</div>
+<% unless promotion_id %>
+  <div class="field">
+    <%= f.label :per_code_usage_limit %>
+    <%= f.text_field :per_code_usage_limit, class: "fullwidth" %>
+  </div>
+<% end %>
+<div class="field">
+  <%= batch.label :email %>
+  <%= batch.text_field :email, class: "fullwidth" %>
+</div>

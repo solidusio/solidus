@@ -49,6 +49,10 @@ module SolidusFriendlyPromotions
       def routes_proxy
         solidus_friendly_promotions
       end
+
+      def parent_model_name
+        self.class.parent_data[:model_name].gsub("solidus_friendly_promotions/", "")
+      end
     end
   end
 end

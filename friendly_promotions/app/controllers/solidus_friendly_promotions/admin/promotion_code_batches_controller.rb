@@ -25,6 +25,18 @@ module SolidusFriendlyPromotions
       def build_promotion_code_batch
         @promotion_code_batch.process
       end
+
+      def model_class
+        SolidusFriendlyPromotions::PromotionCodeBatch
+      end
+
+      def collection
+        parent.code_batches
+      end
+
+      def build_resource
+        parent.code_batches.build
+      end
     end
   end
 end

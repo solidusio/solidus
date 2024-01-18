@@ -39,6 +39,9 @@ en:
     no_rules_added: No Rules Added
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
+    promotion_code_batches:
+      finished: Finished
+      errored: Errored
     view_promotion_codes_list: View codes list
     promotion_rules:
       line_item_product:
@@ -190,6 +193,9 @@ en:
       solidus_friendly_promotions/rules/user: User
       solidus_friendly_promotions/rules/user_logged_in: User Logged In
       solidus_friendly_promotions/rules/user_role: User Role(s)
+      solidus_friendly_promotions/promotion_code_batch:
+        one: Code batch
+        other: Code batches
     attributes:
       solidus_friendly_promotions/promotion:
         active: Active
