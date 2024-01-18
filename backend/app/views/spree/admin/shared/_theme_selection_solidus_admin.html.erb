@@ -1,7 +1,7 @@
 <% theme_options_for_select = Spree::Backend::Config.themes.keys.map { |theme| [theme.to_s.humanize, theme] }.sort %>
 
 <li>
-  <%= form_tag(admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "light-only") do %>
+  <%= form_tag(spree.admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "light-only") do %>
     <%= hidden_field_tag :system_theme, :light %>
     <label>
       <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-sun-line"></use></svg>
@@ -12,7 +12,7 @@
     </label>
   <% end %>
 
-  <%= form_tag(admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "dark-only") do %>
+  <%= form_tag(spree.admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "dark-only") do %>
     <%= hidden_field_tag :system_theme, :dark %>
     <label>
       <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-moon-line"></use></svg>
