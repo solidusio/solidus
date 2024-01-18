@@ -1,6 +1,6 @@
 <% theme_options_for_select = Spree::Backend::Config.themes.keys.map { |theme| [theme.to_s.humanize, theme] }.sort %>
 
-<%= form_tag(admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "light-only") do %>
+<%= form_tag(spree.admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "light-only") do %>
   <%= hidden_field_tag :system_theme, :light %>
   <label class="admin-navbar-selection">
     <i class="fa fa-sun-o fa-fw" title="<%= I18n.t('spree.choose_dashboard_theme') %>"></i>
@@ -10,7 +10,7 @@
   </label>
 <% end %>
 
-<%= form_tag(admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "dark-only") do %>
+<%= form_tag(spree.admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "dark-only") do %>
   <%= hidden_field_tag :system_theme, :dark %>
   <label class="admin-navbar-selection">
     <i class="fa fa-moon-o fa-fw" title="<%= I18n.t('spree.choose_dashboard_theme') %>"></i>
