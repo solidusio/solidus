@@ -179,7 +179,7 @@ module Solidus
       return unless options[:admin_preview]
 
       say_status :installing, "SolidusAdmin", :blue
-      bundle_command 'add solidus_admin'
+      bundle_command 'add solidus_admin -v ">= 0.2"'
       generate 'solidus_admin:install'
     end
 
