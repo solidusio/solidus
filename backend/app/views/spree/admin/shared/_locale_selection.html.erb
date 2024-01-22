@@ -3,7 +3,7 @@
 }.sort %>
 
 <% if available_locale_options_for_select.size > 1 %>
-  <%= form_tag(admin_set_locale_path(format: :html), method: :put, style: "width: 100%;") do %>
+  <%= form_tag(spree.admin_set_locale_path(format: :html), method: :put, style: "width: 100%;") do %>
     <label class="admin-navbar-selection admin-locale-selection">
       <i class="fa fa-globe fa-fw" title="<%= I18n.t('spree.choose_dashboard_locale') %>"></i>
       <select class="custom-select fullwidth" onchange="this.form.requestSubmit()">
