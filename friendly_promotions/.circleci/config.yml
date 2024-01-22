@@ -21,7 +21,7 @@ jobs:
       - checkout
       - solidusio_extensions/dependencies
       - solidusio_extensions/run-tests-solidus-current
-      # - solidusio_extensions/run-tests-solidus-main
+      - solidusio_extensions/run-tests-solidus-main
   run-specs-with-postgres:
     executor:
       name: solidusio_extensions/postgres
@@ -31,7 +31,7 @@ jobs:
       - checkout
       - solidusio_extensions/dependencies
       - solidusio_extensions/run-tests-solidus-current
-      # - solidusio_extensions/run-tests-solidus-main
+      - solidusio_extensions/run-tests-solidus-main
   run-specs-with-sqlite:
     executor:
       name: solidusio_extensions/sqlite
@@ -41,7 +41,7 @@ jobs:
       - checkout
       - solidusio_extensions/dependencies
       - solidusio_extensions/run-tests-solidus-current
-      # - solidusio_extensions/run-tests-solidus-main
+      - solidusio_extensions/run-tests-solidus-main
 workflows:
   Run specs on supported Solidus versions:
     jobs:
