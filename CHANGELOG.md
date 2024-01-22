@@ -1,3 +1,20 @@
+## Solidus v4.3.2 (2024-01-22)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.3] Disable admin preview for extensions test apps by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5602
+* [v4.3] Bundle solidus_admin >= 0.2 in Solidus installer by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5608
+
+## Solidus Backend
+
+* [v4.3] Use &#x60;spree&#x60; routing proxy in theme selection partial by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5603
+* [v4.3] Theme selection for Solidus Admin: Use spree routing proxy by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5605
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.1...v4.3.2
+
+
 ## Solidus v4.3.1 (2024-01-05)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
