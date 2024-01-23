@@ -179,7 +179,9 @@ module Solidus
       return unless options[:admin_preview]
 
       say_status :installing, "SolidusAdmin", :blue
-      bundle_command 'add solidus_admin -v ">= 0.2"'
+      unless File.read(app_path.join('Gemfile')).include?('solidus_admin')
+        bundle_command 'add solidus_admin -v ">= 0.2"'
+      end
       generate 'solidus_admin:install'
     end
 
