@@ -65,6 +65,7 @@ unbundled bundle exec rake db:drop db:create
 
 unbundled bin/rails generate solidus:install \
   --auto-accept \
+  --admin_preview=false \
   $@
 
 unbundled bundle exec rails generate solidus:auth:install --auto-run-migrations
