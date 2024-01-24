@@ -43,6 +43,25 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::LoadPromoti
         expect(subject).to eq([active_promotion])
       end
     end
+
+    context "discarded promotions" do
+      let!(:discarded_promotion) { create(:friendly_promotion, :with_adjustable_action, deleted_at: 1.hour.ago, apply_automatically: true) }
+
+      it "does not check discarded promotions" do
+        expect(subject).not_to include(discarded_promotion)
+      end
+
+      context "a discarded promo is connected to the order" do
+        before do
+          order.friendly_promotions << discarded_promotion
+        end
+
+        it "does not check connected discarded promotions" do
+          expect(subject).not_to include(discarded_promotion)
+          expect(subject).to eq([active_promotion])
+        end
+      end
+    end
   end
 
   context "promotions in the past" do

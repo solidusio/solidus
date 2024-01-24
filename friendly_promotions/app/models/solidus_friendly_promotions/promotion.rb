@@ -2,6 +2,8 @@
 
 module SolidusFriendlyPromotions
   class Promotion < Spree::Base
+    include Spree::SoftDeletable
+
     belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory",
       foreign_key: :promotion_category_id, optional: true
     belongs_to :original_promotion, class_name: "Spree::Promotion", optional: true
