@@ -19,7 +19,7 @@
 <% db_username = ENV['DB_USERNAME'] %>
 <% db_password = ENV['DB_PASSWORD'] %>
 
-<% case ENV['DB']
+<% case db
   when 'mysql' %>
 development:
   adapter: mysql2
