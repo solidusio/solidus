@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <% promotions.each do |promotion| %>
-      <tr id="<%= spree_dom_id promotion %>">
+      <tr class="<%= 'deleted' if promotion.discarded? %>" id="<%= spree_dom_id promotion %>">
         <td><%= promotion.name %></td>
         <td>
           <%= (promotion.codes.size == 1) ? promotion.codes.pluck(:value).first : t('solidus_friendly_promotions.number_of_codes', count: promotion.codes.size) %>
@@ -43,10 +43,10 @@
           <%= l(promotion.updated_at, format: :short) %>
         </td>
         <td class="actions">
-          <% if can?(:edit, promotion) %>
+          <% if can?(:edit, promotion) && !promotion.discarded? %>
             <%= link_to_edit promotion, no_text: true %>
           <% end %>
-          <% if can?(:destroy, promotion) %>
+          <% if can?(:destroy, promotion) && !promotion.discarded? %>
             <%= link_to_delete promotion, no_text: true %>
           <% end %>
         </td>

@@ -44,6 +44,15 @@
         </div>
 
         <div class="col-2">
+          <div class="field checkbox">
+            <label>
+              <%= f.check_box :with_discarded, { checked: params[:q][:with_discarded] == 'true', class: 'js-with-discarded-input' }, 'true', 'false' %>
+              <%= t('spree.show_deleted') %>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-2">
           <div class="field">
             <%= label_tag :q_promotion_category_id_eq, SolidusFriendlyPromotions::PromotionCategory.model_name.human %><br>
             <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t(:all, scope: :spree) }, { class: 'custom-select fullwidth' }) %>
