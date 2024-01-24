@@ -73,7 +73,9 @@ create_file "lib/tasks/solidus_admin/tailwind.rake", <<~RUBY
   end
 RUBY
 
-append_file ".gitignore", "app/assets/builds/solidus_admin/"
+if Rails.root.join(".gitignore").exist?
+  append_file ".gitignore", "app/assets/builds/solidus_admin/"
+end
 
 unless Rails.root.join("Procfile.dev").exist?
   create_file "Procfile.dev", <<~YAML
