@@ -4,6 +4,8 @@ module SolidusFriendlyPromotions
   class PromotionCode < Spree::Base
     belongs_to :promotion, inverse_of: :codes
     belongs_to :promotion_code_batch, inverse_of: :promotion_codes, optional: true
+
+    has_many :order_promotions, class_name: "SolidusFriendlyPromotions::OrderPromotion", dependent: :destroy
     has_many :adjustments, class_name: "Spree::Adjustment"
 
     before_validation :normalize_code

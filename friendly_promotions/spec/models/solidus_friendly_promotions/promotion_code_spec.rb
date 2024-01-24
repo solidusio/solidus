@@ -3,6 +3,12 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::PromotionCode do
+  let(:promotion) { create(:friendly_promotion) }
+  subject { create(:friendly_promotion_code, promotion: promotion) }
+
+  it { is_expected.to belong_to(:promotion) }
+  it { is_expected.to have_many(:order_promotions).class_name("SolidusFriendlyPromotions::OrderPromotion").dependent(:destroy) }
+
   context "callbacks" do
     subject { promotion_code.save }
 
@@ -286,5 +292,20 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       create(:friendly_promotion_code, promotion: promotion)
     }.to raise_error ActiveRecord::RecordInvalid,
       "Validation failed: Could not create promotion code on promotion that apply automatically"
+  end
+
+  describe "#destroy" do
+    subject { promotion_code.destroy }
+
+    let(:promotion_code) { create(:friendly_promotion_code) }
+    let(:order) { create(:order_with_line_items) }
+
+    before do
+      order.friendly_order_promotions.create(promotion: promotion_code.promotion, promotion_code: promotion_code)
+    end
+
+    it "destroys the order_promotion" do
+      expect { subject }.to change { SolidusFriendlyPromotions::OrderPromotion.count }.by(-1)
+    end
   end
 end
