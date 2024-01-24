@@ -3,7 +3,7 @@
           'mysql'
         when 'postgres', 'postgresql'
           'postgres'
-        when 'sqlite', '', nil
+        when /sqlite3?/, '', nil
           'sqlite'
         else
           raise "Invalid DB specified: #{ENV['DB']}"
