@@ -24,6 +24,7 @@ require 'spree/core/environment'
 
 module Spree
   class AppConfiguration < Preferences::Configuration
+    include Spree::Core::EnvironmentExtension
     # Preferences (alphabetized to more easily lookup particular preferences)
 
     # @!attribute [rw] address_requires_phone
@@ -582,6 +583,9 @@ module Spree
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
+
+    # Set of classes that can be promotion adjustment sources
+    add_class_set :adjustment_promotion_source_types, default: ["Spree::PromotionAction"]
 
     # Configures the absolute path that contains the Solidus engine
     # migrations. This will be checked at app boot to confirm that all Solidus
