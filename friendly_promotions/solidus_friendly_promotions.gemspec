@@ -14,8 +14,8 @@ Gem::Specification.new do |spec|
   spec.license = "BSD-3-Clause"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/solidusio-contrib/solidus_friendly_promotions"
-  spec.metadata["changelog_uri"] = "https://github.com/solidusio-contrib/solidus_friendly_promotions/blob/master/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/friendlycart/solidus_friendly_promotions"
+  spec.metadata["changelog_uri"] = "https://github.com/friendlycart/solidus_friendly_promotions/blob/master/CHANGELOG.md"
 
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5", "< 4")
 
