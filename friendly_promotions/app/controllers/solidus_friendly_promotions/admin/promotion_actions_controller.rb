@@ -53,7 +53,7 @@ module SolidusFriendlyPromotions
 
       def destroy
         @promotion_action = @promotion.actions.find(params[:id])
-        if @promotion_action.discard
+        if @promotion_action.destroy
           flash[:success] =
             t("spree.successfully_removed", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
         end

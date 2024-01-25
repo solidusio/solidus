@@ -9,7 +9,6 @@ module SolidusFriendlyPromotions
   # by an event and determined to be eligible.
   class PromotionAction < Spree::Base
     include Spree::Preferences::Persistable
-    include Spree::SoftDeletable
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
     before_destroy :remove_adjustments_from_incomplete_orders
