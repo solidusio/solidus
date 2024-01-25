@@ -20,14 +20,26 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "#destroy" do
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, apply_automatically: true) }
 
     subject { promotion.destroy! }
 
     it "destroys the promotion and nullifies the action" do
       expect { subject }.to change { SolidusFriendlyPromotions::Promotion.count }.by(-1)
-      expect(SolidusFriendlyPromotions::PromotionAction.count).to eq(1)
-      expect(SolidusFriendlyPromotions::PromotionAction.first.promotion_id).to be nil
+      expect(SolidusFriendlyPromotions::PromotionAction.count).to be_zero
+    end
+
+    context "when the promotion has been applied to a complete order" do
+      let(:order) { create(:order_ready_to_complete) }
+
+      before do
+        order.recalculate
+        order.complete!
+      end
+
+      it "raises an error" do
+        expect { subject }.to raise_exception(ActiveRecord::RecordNotDestroyed)
+      end
     end
   end
 
