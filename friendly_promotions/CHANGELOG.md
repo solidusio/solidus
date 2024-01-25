@@ -1,8 +1,33 @@
 # Changelog
 
-## [Unreleased](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/HEAD)
+## [v1.0.0](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.0) (2024-01-25)
 
-## [v1.0.0.rc.2](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/v1.0.0.rc.3) (2024-01-16)
+[Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/v1.0.0.rc.3...v1.0.0)
+
+**Implemented enhancements:**
+
+- Implement better soft-delete [\#30](https://github.com/friendlycart/solidus_friendly_promotions/issues/30)
+
+**Closed issues:**
+
+- Cannot delete promotion with promotion code [\#94](https://github.com/friendlycart/solidus_friendly_promotions/issues/94)
+- Missing action for button: Promotion code batch [\#93](https://github.com/friendlycart/solidus_friendly_promotions/issues/93)
+
+**Merged pull requests:**
+
+- Improve soft-deletion faculty [\#102](https://github.com/friendlycart/solidus_friendly_promotions/pull/102) ([mamhoff](https://github.com/mamhoff))
+- Add missing association between promo codes and order promotions [\#101](https://github.com/friendlycart/solidus_friendly_promotions/pull/101) ([mamhoff](https://github.com/mamhoff))
+- Revert "Temporarily disable running specs for Solidus main" [\#100](https://github.com/friendlycart/solidus_friendly_promotions/pull/100) ([mamhoff](https://github.com/mamhoff))
+- Add admin UI for promotion code batches [\#99](https://github.com/friendlycart/solidus_friendly_promotions/pull/99) ([mamhoff](https://github.com/mamhoff))
+- Define SolidusFriendlyPromotions.table\_name\_prefix early [\#98](https://github.com/friendlycart/solidus_friendly_promotions/pull/98) ([mamhoff](https://github.com/mamhoff))
+
+## [v1.0.0.rc.3](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.0.rc.3) (2024-01-16)
+
+[Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/v1.0.0.rc.2...v1.0.0.rc.3)
+
+**Closed issues:**
+
+- Provide Integration Instructions for Starter Frontend [\#90](https://github.com/friendlycart/solidus_friendly_promotions/issues/90)
 
 **Merged pull requests:**
 
@@ -13,9 +38,9 @@
 - Fix typo [\#89](https://github.com/friendlycart/solidus_friendly_promotions/pull/89) ([jarednorman](https://github.com/jarednorman))
 - Pass untranslated strings through i18n [\#88](https://github.com/friendlycart/solidus_friendly_promotions/pull/88) ([mamhoff](https://github.com/mamhoff))
 
-## [v1.0.0.rc.2](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/v1.0.0.rc.2) (2023-11-11)
+## [v1.0.0.rc.2](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.0.rc.2) (2023-11-11)
 
-[Full Changelog](https://github.com/FriendlyCart/solidus_friendly_promotions/compare/v1.0.0.rc.1...v1.0.0.rc.2)
+[Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/v1.0.0.rc.1...v1.0.0.rc.2)
 
 **Merged pull requests:**
 
@@ -28,18 +53,35 @@
 - Promotions index improvements [\#79](https://github.com/friendlycart/solidus_friendly_promotions/pull/79) ([mamhoff](https://github.com/mamhoff))
 - Lint: Fix standardrb error [\#78](https://github.com/friendlycart/solidus_friendly_promotions/pull/78) ([mamhoff](https://github.com/mamhoff))
 
-## [v1.0.0.rc.1](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/v1.0.0.rc.1) (2023-11-07)
+## [v1.0.0.rc.1](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.0.rc.1) (2023-11-07)
 
-[Full Changelog](https://github.com/FriendlyCart/solidus_friendly_promotions/compare/v1.0.0.pre...v1.0.0.rc.1)
+[Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/v1.0.0.pre...v1.0.0.rc.1)
+
+**Implemented enhancements:**
+
+- Implement  Free items [\#31](https://github.com/friendlycart/solidus_friendly_promotions/issues/31)
 
 **Merged pull requests:**
 
 - Goodies! [\#75](https://github.com/friendlycart/solidus_friendly_promotions/pull/75) ([mamhoff](https://github.com/mamhoff))
 - Add a null promotion handler [\#71](https://github.com/friendlycart/solidus_friendly_promotions/pull/71) ([mamhoff](https://github.com/mamhoff))
 
-## [v1.0.0.pre](https://github.com/FriendlyCart/solidus_friendly_promotions/tree/v1.0.0.pre) (2023-11-07)
+## [v1.0.0.pre](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.0.pre) (2023-11-07)
 
-[Full Changelog](https://github.com/FriendlyCart/solidus_friendly_promotions/compare/e14802957fdb55d7f4e2730341e4cbb118ebf993...v1.0.0.pre)
+[Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/e14802957fdb55d7f4e2730341e4cbb118ebf993...v1.0.0.pre)
+
+**Implemented enhancements:**
+
+- Migrator: Copy promotion codes [\#34](https://github.com/friendlycart/solidus_friendly_promotions/issues/34)
+- Add original\_promotion\_{action\_}id on promotions and promotion actions [\#33](https://github.com/friendlycart/solidus_friendly_promotions/issues/33)
+
+**Fixed bugs:**
+
+- Migrator: Add support for promotion categories [\#37](https://github.com/friendlycart/solidus_friendly_promotions/issues/37)
+
+**Closed issues:**
+
+- Document DB tables [\#35](https://github.com/friendlycart/solidus_friendly_promotions/issues/35)
 
 **Merged pull requests:**
 
