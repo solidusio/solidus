@@ -12,6 +12,8 @@ module SolidusFriendlyPromotions
     include Spree::SoftDeletable
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
+    before_destroy :remove_adjustments_from_incomplete_orders
+    before_destroy :raise_for_adjustments_for_completed_orders
 
     belongs_to :promotion, inverse_of: :actions
     belongs_to :original_promotion_action, class_name: "Spree::PromotionAction", optional: true
@@ -68,6 +70,15 @@ module SolidusFriendlyPromotions
 
     def available_calculators
       SolidusFriendlyPromotions.config.promotion_calculators[self.class] || (raise NotImplementedError)
+    end
+
+    private
+
+    def raise_for_adjustments_for_completed_orders
+      if adjustments.joins(:order).merge(Spree::Order.complete).any?
+        errors.add(:base, :cannot_destroy_if_order_completed)
+        throw(:abort)
+      end
     end
   end
 end

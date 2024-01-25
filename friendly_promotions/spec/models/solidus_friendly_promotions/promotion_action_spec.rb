@@ -17,6 +17,46 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
     end
   end
 
+  describe "#destroy" do
+    subject { action.destroy }
+    let(:action) { promotion.actions.first }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, apply_automatically: true) }
+
+    it "destroys the action" do
+      expect { subject }.to change { SolidusFriendlyPromotions::PromotionAction.count }.by(-1)
+    end
+
+    context "when the action has adjustments on an incomplete order" do
+      let(:order) { create(:order_with_line_items) }
+
+      before do
+        order.recalculate
+      end
+
+      it "destroys the action" do
+        expect { subject }.to change { SolidusFriendlyPromotions::PromotionAction.count }.by(-1)
+      end
+
+      it "destroys the adjustments" do
+        expect { subject }.to change { Spree::Adjustment.count }.by(-1)
+      end
+
+      context "when the action has adjustments on a complete order" do
+        let(:order) { create(:order_ready_to_complete) }
+
+        before do
+          order.recalculate
+          order.complete!
+        end
+
+        it "raises an error" do
+          expect { subject }.not_to change { SolidusFriendlyPromotions::PromotionAction.count }
+          expect(action.errors.full_messages).to include("Action has been applied to complete orders. It cannot be destroyed.")
+        end
+      end
+    end
+  end
+
   describe "#discount" do
     subject { action.discount(discountable) }
 
