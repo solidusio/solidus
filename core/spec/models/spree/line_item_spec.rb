@@ -70,10 +70,8 @@ RSpec.describe Spree::LineItem, type: :model do
       line_item.update!(price: 10, quantity: 2)
     end
     let!(:admin_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -1, source: nil) }
-    let!(:promo_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -2, source: promo_action) }
-    let!(:ineligible_promo_adjustment) { create(:adjustment, eligible: false, adjustable: line_item, order: line_item.order, amount: -4, source: promo_action) }
-    let(:promo_action) { promo.actions[0] }
-    let(:promo) { create(:promotion, :with_line_item_adjustment) }
+    let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -2, source: nil) }
+    let!(:ineligible_adjustment) { create(:adjustment, eligible: false, adjustable: line_item, order: line_item.order, amount: -4, source: nil) }
 
     it 'returns the amount minus any adjustments' do
       expect(line_item.total_before_tax).to eq(20 - 1 - 2)
