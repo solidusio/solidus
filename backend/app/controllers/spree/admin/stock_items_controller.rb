@@ -56,7 +56,7 @@ module Spree
       def variant_scope
         scope = Spree::Variant
           .accessible_by(current_ability)
-          .distinct.order(:sku)
+          .distinct
           .includes(
             :images,
             stock_items: :stock_location,
