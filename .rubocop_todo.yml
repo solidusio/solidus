@@ -313,7 +313,7 @@ Rails/ApplicationRecord:
     - "core/db/migrate/20170412103617_transform_tax_rate_category_relation.rb"
     - "core/db/migrate/20180322142651_add_amount_remaining_to_store_credit_events.rb"
     - "core/db/migrate/20180710170104_create_spree_store_credit_reasons_table.rb"
-    - "core/db/migrate/20190106184413_remove_code_from_spree_promotions.rb"
+    - "legacy_promotions/db/migrate/20190106184413_remove_code_from_spree_promotions.rb"
     - "core/spec/lib/calculated_adjustments_spec.rb"
     - "core/spec/models/spree/validations/db_maximum_length_validator_spec.rb"
     - "core/spec/models/spree/wallet_payment_source_spec.rb"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'solidus/migrations/promotions_with_code_handlers'
+require 'solidus_legacy_promotions/migrations/promotions_with_code_handlers'
 
 class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
   class Promotion < ActiveRecord::Base
@@ -35,8 +35,8 @@ class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
     # comment/uncomment the one then better fits you needs or use a
     # custom class or callable object.
     #
-    Solidus::Migrations::PromotionWithCodeHandlers::RaiseException
-    # Solidus::Migrations::PromotionWithCodeHandlers::MoveToSpreePromotionCode
-    # Solidus::Migrations::PromotionWithCodeHandlers::DoNothing
+    SolidusLegacyPromotions::Migrations::PromotionWithCodeHandlers::RaiseException
+    # SolidusLegacyPromotions::Migrations::PromotionWithCodeHandlers::MoveToSpreePromotionCode
+    # SolidusLegacyPromotions::Migrations::PromotionWithCodeHandlers::DoNothing
   end
 end
