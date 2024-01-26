@@ -45,5 +45,9 @@ module SolidusLegacyPromotions
     initializer "solidus_legacy_promotions.assets" do |app|
       app.config.assets.precompile << "solidus_legacy_promotions/manifest.js"
     end
+
+    initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
+      Spree::Config.order_contents_class = "Spree::OrderContents"
+    end
   end
 end
