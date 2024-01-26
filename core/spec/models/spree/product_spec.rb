@@ -416,16 +416,6 @@ RSpec.describe Spree::Product, type: :model do
         expect(product.properties).to be_empty
       end
 
-      it "removes from product promotion rules" do
-        promotion = create(:promotion)
-        rule = promotion.rules.create!(type: 'Spree::Promotion::Rules::Product', products: [product])
-
-        product.discard
-
-        rule.reload
-        expect(rule.products).to be_empty
-      end
-
       it "replaces the slug" do
         product.discard
 
@@ -498,21 +488,6 @@ RSpec.describe Spree::Product, type: :model do
       product.set_property('bar', 'value2')
       expect(Spree::Property.where(name: 'foo').first.presentation).to eq("Foo's Presentation Name")
       expect(Spree::Property.where(name: 'bar').first.presentation).to eq("bar")
-    end
-
-    # Regression test for https://github.com/spree/spree/issues/4416
-    context "#possible_promotions" do
-      let!(:promotion) { create(:promotion, :with_action, advertise: true, starts_at: 1.day.ago) }
-      let!(:rule) do
-        Spree::Promotion::Rules::Product.create(
-          promotion: promotion,
-          products: [product]
-        )
-      end
-
-      it "lists the promotion as a possible promotion" do
-        expect(product.possible_promotions).to include(promotion)
-      end
     end
   end
 
