@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderContents, type: :model do
+RSpec.describe Spree::SimpleOrderContents, type: :model do
   let!(:store) { create :store }
   let(:order) { create(:order) }
   let(:variant) { create(:variant) }
@@ -80,38 +80,6 @@ RSpec.describe Spree::OrderContents, type: :model do
 
       expect(order.item_total.to_f).to eq(19.99)
       expect(order.total.to_f).to eq(19.99)
-    end
-
-    context "running promotions" do
-      let(:promotion) { create(:promotion, apply_automatically: true) }
-      let(:calculator) { Spree::Calculator::FlatRate.new(preferred_amount: 10) }
-
-      shared_context "discount changes order total" do
-        before { subject.add(variant, 1) }
-        it { expect(subject.order.total).not_to eq variant.price }
-      end
-
-      context "one active order promotion" do
-        let!(:action) { Spree::Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
-
-        it "creates valid discount on order" do
-          subject.add(variant, 1)
-          expect(subject.order.adjustments.to_a.sum(&:amount)).not_to eq 0
-        end
-
-        include_context "discount changes order total"
-      end
-
-      context "one active line item promotion" do
-        let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
-
-        it "creates valid discount on order" do
-          subject.add(variant, 1)
-          expect(subject.order.line_item_adjustments.to_a.sum(&:amount)).not_to eq 0
-        end
-
-        include_context "discount changes order total"
-      end
     end
 
     describe 'tax calculations' do

@@ -394,7 +394,7 @@ module Spree
     # @!attribute [rw] order_contents_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::OrderContents.
-    class_name_attribute :order_contents_class, default: 'Spree::OrderContents'
+    class_name_attribute :order_contents_class, default: 'Spree::SimpleOrderContents'
 
     # Allows providing your own class for shipping an order.
     #

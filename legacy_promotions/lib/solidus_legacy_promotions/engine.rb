@@ -3,5 +3,9 @@
 module SolidusLegacyPromotions
   class Engine < ::Rails::Engine
     include SolidusSupport::EngineExtensions
+
+    initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
+      Spree::Config.order_contents_class = "Spree::OrderContents"
+    end
   end
 end
