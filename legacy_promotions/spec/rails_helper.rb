@@ -44,6 +44,7 @@ require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/controller_requests'
 require "solidus_admin/testing_support/feature_helpers"
+require 'solidus_legacy_promotions/testing_support/factory_bot'
 require 'cancan/matchers'
 require 'spree/testing_support/capybara_ext'
 
@@ -51,7 +52,8 @@ require "selenium/webdriver"
 
 ActiveJob::Base.queue_adapter = :test
 
-Spree::TestingSupport::FactoryBot.add_paths_and_load!
+Spree::TestingSupport::FactoryBot.add_definitions!
+SolidusLegacyPromotions::TestingSupport::FactoryBot.add_paths_and_load!
 
 Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
