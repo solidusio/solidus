@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/testing_support/shared_examples/working_factory'
 require "spree/testing_support/shared_examples/order_factory"
 
 RSpec.describe 'order factory' do

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/testing_support/shared_examples/working_factory'
 
 RSpec.describe 'option type factory' do
   let(:factory_class) { Spree::OptionType }
