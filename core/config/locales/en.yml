@@ -1881,6 +1881,8 @@ en:
       product_not_deleted: Product could not be deleted
       variant_deleted: Variant has been deleted
       variant_not_deleted: Variant could not be deleted
+    null_promotion_handler:
+      coupon_code_applied: Coupon code has been applied.
     num_orders: "# Orders"
     number: Number
     number_of_codes: "%{count} codes"
