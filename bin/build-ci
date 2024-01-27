@@ -21,12 +21,13 @@ class Project
 
   def self.all
     [
-      new('admin', weight: 215),
-      new('api', weight: 50),
-      new('backend', weight: 215),
-      new('backend', test_type: :teaspoon, title: "backend JS", weight: 15),
-      new('core', weight: 220),
-      new('sample', weight: 22)
+      new('admin', weight: 102),
+      new('api', weight: 69),
+      new('backend', weight: 282),
+      new('backend', test_type: :teaspoon, title: "backend JS", weight: 18),
+      new('core', weight: 266),
+      new('sample', weight: 28),
+      new('legacy_promotions', weight: 63)
     ]
   end
 
