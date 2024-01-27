@@ -92,6 +92,12 @@ RSpec.describe Spree::Adjustment, type: :model do
     let(:order) { create(:order_with_line_items, line_items_price: 100) }
     let(:line_item) { order.line_items.to_a.first }
 
+    around do |example|
+      Spree.deprecator.silence do
+        example.run
+      end
+    end
+
     context "when adjustment is finalized" do
       let(:finalized) { true }
 
