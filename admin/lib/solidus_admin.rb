@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "solidus_core"
+require "solidus_legacy_promotions"
 require "solidus_backend"
 
 module SolidusAdmin
