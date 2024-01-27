@@ -31,7 +31,7 @@ FactoryBot.define do
             adjustment.source.tax_categories = []
           end
           adjustment.source.save
-          adjustment.recalculate
+          adjustment.update!(amount: adjustment.source.compute_amount(adjustment.adjustable))
         end
       end
     end
