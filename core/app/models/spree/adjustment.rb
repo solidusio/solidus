@@ -19,14 +19,12 @@ module Spree
     belongs_to :adjustable, polymorphic: true, touch: true, optional: true
     belongs_to :source, polymorphic: true, optional: true
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :all_adjustments, optional: true
-    belongs_to :promotion_code, class_name: 'Spree::PromotionCode', optional: true
     belongs_to :adjustment_reason, class_name: 'Spree::AdjustmentReason', inverse_of: :adjustments, optional: true
 
     validates :adjustable, presence: true
     validates :order, presence: true
     validates :label, presence: true
     validates :amount, numericality: true
-    validates :promotion_code, presence: true, if: :require_promotion_code?
 
     scope :not_finalized, -> { where(finalized: false) }
     scope :finalized, -> { where(finalized: true) }
@@ -88,59 +86,6 @@ module Spree
     # @return [Boolean] true when this is a cancellation adjustment (Cancellation adjustments have a {UnitCancel} source)
     def cancellation?
       source_type == 'Spree::UnitCancel'
-    end
-
-    # Recalculate and persist the amount from this adjustment's source based on
-    # the adjustable ({Order}, {Shipment}, or {LineItem})
-    #
-    # If the adjustment has no source (such as when created manually from the
-    # admin) or is closed, this is a noop.
-    #
-    # @return [BigDecimal] New amount of this adjustment
-    def recalculate
-      if finalized? && !tax?
-        return amount
-      end
-
-      # If the adjustment has no source, do not attempt to re-calculate the
-      # amount.
-      # Some scenarios where this happens:
-      #   - Adjustments that are manually created via the admin backend
-      #   - PromotionAction adjustments where the PromotionAction was deleted
-      #     after the order was completed.
-      if source.present?
-        self.amount = source.compute_amount(adjustable)
-
-        if promotion?
-          self.eligible = calculate_eligibility
-        end
-
-        # Persist only if changed
-        # This is only not a save! to avoid the extra queries to load the order
-        # (for validations) and to touch the adjustment.
-        update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
-      end
-      amount
-    end
-    deprecate :recalculate, deprecator: Spree.deprecator
-
-    # Calculates based on attached promotion (if this is a promotion
-    # adjustment) whether this promotion is still eligible.
-    # @api private
-    # @return [true,false] Whether this adjustment is eligible
-    def calculate_eligibility
-      if !finalized? && source && promotion?
-        source.promotion.eligible?(adjustable, promotion_code: promotion_code)
-      else
-        eligible?
-      end
-    end
-    deprecate :calculate_eligibility, deprecator: Spree.deprecator
-
-    private
-
-    def require_promotion_code?
-      promotion? && !source.promotion.apply_automatically && source.promotion.codes.any?
     end
   end
 end
