@@ -114,7 +114,6 @@ module Spree
       # http://www.boe.ca.gov/formspubs/pub113/
       update_promotions
       update_taxes
-      update_cancellations
       update_item_totals
     end
 
@@ -217,10 +216,8 @@ module Spree
     end
 
     def update_cancellations
-      line_items.each do |line_item|
-        line_item.adjustments.select(&:cancellation?).each(&:recalculate)
-      end
     end
+    deprecate :update_cancellations, deprecator: Spree.deprecator
 
     def update_item_totals
       [*line_items, *shipments].each do |item|
