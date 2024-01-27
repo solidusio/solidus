@@ -149,8 +149,6 @@ RSpec.describe Spree::OrderCancellations do
       let(:line_item) { order.line_items.to_a.first }
       let(:inventory_unit_1) { line_item.inventory_units[0] }
       let(:inventory_unit_2) { line_item.inventory_units[1] }
-      let(:promotion) { create(:promotion, :with_line_item_adjustment) }
-      let(:promotion_action) { promotion.actions[0] }
 
       before do
         order.contents.add(line_item.variant)
@@ -160,7 +158,7 @@ RSpec.describe Spree::OrderCancellations do
           order: order,
           amount: 0.01,
           label: 'some promo',
-          source: promotion_action,
+          source: nil,
           finalized: true,
         )
         order.recalculate
