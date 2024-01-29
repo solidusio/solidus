@@ -20,7 +20,7 @@ module Spree
           promotion_adjustments = item.adjustments.select(&:promotion?)
 
           promotion_adjustments.each { |adjustment| recalculate(adjustment) }
-          Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+          Spree::Config.promotions.promotion_chooser_class.new(promotion_adjustments).update
 
           item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
         end
@@ -30,7 +30,7 @@ module Spree
         # line items and/or shipments.
         order_promotion_adjustments = order.adjustments.select(&:promotion?)
         order_promotion_adjustments.each { |adjustment| recalculate(adjustment) }
-        Spree::Config.promotion_chooser_class.new(order_promotion_adjustments).update
+        Spree::Config.promotions.promotion_chooser_class.new(order_promotion_adjustments).update
 
         order.promo_total = all_items.sum(&:promo_total) +
                             order_promotion_adjustments.

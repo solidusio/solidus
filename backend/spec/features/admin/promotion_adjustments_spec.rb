@@ -275,12 +275,12 @@ describe "Promotion Adjustments", type: :feature, js: true do
             "Complex Calculator"
           end
         end
-        @calculators = Rails.application.config.spree.calculators.promotion_actions_create_item_adjustments
-        Rails.application.config.spree.calculators.promotion_actions_create_item_adjustments = [ComplexCalculator]
+        @calculators = Spree::Config.promotions.calculators['Spree::Promotion::Actions::CreateItemAdjustments']
+        Spree::Config.promotions.calculators['Spree::Promotion::Actions::CreateItemAdjustments'] = [ComplexCalculator]
       end
 
       after do
-        Rails.application.config.spree.calculators.promotion_actions_create_item_adjustments = @calculators
+        Spree::Config.promotions.calculators['Spree::Promotion::Actions::CreateItemAdjustments'] = @calculators
       end
 
       it "does not show array and hash form fields" do
