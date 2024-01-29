@@ -216,10 +216,6 @@ module Spree
     #   @return [Integer] Products to show per-page in the frontend (default: +12+)
     preference :products_per_page, :integer, default: 12
 
-    # @!attribute [rw] promotions_per_page
-    #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
-    preference :promotions_per_page, :integer, default: 15
-
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true
@@ -324,12 +320,6 @@ module Spree
     #   Spree::Variant::VatPriceGenerator.
     class_name_attribute :variant_vat_prices_generator_class, default: 'Spree::Variant::VatPriceGenerator'
 
-    # promotion_chooser_class allows extensions to provide their own PromotionChooser
-    class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
-
-    # promotion_adjuster_class allows extensions to provide their own Promotion Adjuster
-    class_name_attribute :promotion_adjuster_class, default: 'Spree::Promotion::OrderAdjustmentsRecalculator'
-
     class_name_attribute :allocator_class, default: 'Spree::Stock::Allocator::OnHandFirst'
 
     class_name_attribute :shipping_rate_sorter_class, default: 'Spree::Stock::ShippingRateSorter'
@@ -366,31 +356,6 @@ module Spree
     #   the standard order recalculator class
     #   Spree::OrderUpdater.
     class_name_attribute :order_recalculator_class, default: 'Spree::OrderUpdater'
-
-    # Allows providing a different coupon code handler.
-    # @!attribute [rw] coupon_code_handler_class
-    # @see Spree::PromotionHandler::Coupon
-    # @return [Class] an object that conforms to the API of
-    #   the standard coupon code handler class
-    #   Spree::PromotionHandler::Coupon.
-    class_name_attribute :coupon_code_handler_class, default: 'Spree::PromotionHandler::Coupon'
-
-    # Allows providing a different shipping promotion handler.
-    # @!attribute [rw] shipping_promotion_handler_class
-    # @see Spree::PromotionHandler::Shipping
-    # @return [Class] an object that conforms to the API of
-    #   the standard shipping promotion handler class
-    #   Spree::PromotionHandler::Coupon.
-    class_name_attribute :shipping_promotion_handler_class, default: 'Spree::PromotionHandler::Shipping'
-
-    # Allows providing your own Mailer for promotion code batch mailer.
-    #
-    # @!attribute [rw] promotion_code_batch_mailer_class
-    # @return [ActionMailer::Base] an object that responds to "promotion_code_batch_finished",
-    #   and "promotion_code_batch_errored"
-    #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
-    #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
-    class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
 
     # Allows providing your own Mailer for reimbursement mailer.
     #
@@ -622,6 +587,39 @@ module Spree
     def promotions
       @promotion_configuration ||= Spree::Core::PromotionConfiguration.new
     end
+
+    class << self
+      private
+
+      def promotions_deprecation_message(method)
+        "The `Spree::Config.#{method}` preference is deprecated and will be removed in Solidus 5.0. " \
+        "Use `Spree::Config.promotions.#{method}` instead"
+      end
+    end
+
+    delegate :promotion_adjuster_class, :promotion_adjuster_class=, to: :promotions
+    deprecate promotion_adjuster_class: promotions_deprecation_message("promotion_adjuster_class"), deprecator: Spree.deprecator
+    deprecate "promotion_adjuster_class=": promotions_deprecation_message("promotion_adjuster_class="), deprecator: Spree.deprecator
+
+    delegate :promotion_chooser_class, :promotion_chooser_class=, to: :promotions
+    deprecate promotion_chooser_class: promotions_deprecation_message("promotion_chooser_class"), deprecator: Spree.deprecator
+    deprecate "promotion_chooser_class=": promotions_deprecation_message("promotion_chooser_class="), deprecator: Spree.deprecator
+
+    delegate :shipping_promotion_handler_class, :shipping_promotion_handler_class=, to: :promotions
+    deprecate shipping_promotion_handler_class: promotions_deprecation_message("shipping_promotion_handler_class"), deprecator: Spree.deprecator
+    deprecate "shipping_promotion_handler_class=": promotions_deprecation_message("shipping_promotion_handler_class="), deprecator: Spree.deprecator
+
+    delegate :coupon_code_handler_class, :coupon_code_handler_class=, to: :promotions
+    deprecate coupon_code_handler_class: promotions_deprecation_message("coupon_code_handler_class"), deprecator: Spree.deprecator
+    deprecate "coupon_code_handler_class=": promotions_deprecation_message("coupon_code_handler_class"), deprecator: Spree.deprecator
+
+    delegate :promotion_code_batch_mailer_class, :promotion_code_batch_mailer_class=, to: :promotions
+    deprecate promotion_code_batch_mailer_class: promotions_deprecation_message("promotion_code_batch_mailer_class"), deprecator: Spree.deprecator
+    deprecate "promotion_code_batch_mailer_class=": promotions_deprecation_message("promotion_code_batch_mailer_class="), deprecator: Spree.deprecator
+
+    delegate :preferred_promotions_per_page, :preferred_promotions_per_page=, to: :promotions
+    deprecate preferred_promotions_per_page: promotions_deprecation_message("preferred_promotions_per_page"), deprecator: Spree.deprecator
+    deprecate "preferred_promotions_per_page=": promotions_deprecation_message("preferred_promotions_per_page="), deprecator: Spree.deprecator
 
     def roles
       @roles ||= Spree::RoleConfiguration.new.tap do |roles|
