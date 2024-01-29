@@ -175,6 +175,12 @@ module Solidus
       end
     end
 
+    def install_subcomponents
+      apply_template_for :authentication, @selected_authentication
+      apply_template_for :frontend, @selected_frontend
+      apply_template_for :payment_method, @selected_payment_method
+    end
+
     def install_solidus_admin
       return unless options[:admin_preview]
 
@@ -183,12 +189,6 @@ module Solidus
         bundle_command 'add solidus_admin -v ">= 0.2"'
       end
       generate 'solidus_admin:install'
-    end
-
-    def install_subcomponents
-      apply_template_for :authentication, @selected_authentication
-      apply_template_for :frontend, @selected_frontend
-      apply_template_for :payment_method, @selected_payment_method
     end
 
     def populate_seed_data
