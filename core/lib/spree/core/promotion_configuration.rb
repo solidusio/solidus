@@ -40,6 +40,33 @@ module Spree
       #   Spree::PromotionHandler::Coupon.
       class_name_attribute :coupon_code_handler_class, default: 'Spree::PromotionHandler::Coupon'
 
+      add_class_set :rules, default: %w[
+        Spree::Promotion::Rules::ItemTotal
+        Spree::Promotion::Rules::Product
+        Spree::Promotion::Rules::User
+        Spree::Promotion::Rules::FirstOrder
+        Spree::Promotion::Rules::UserLoggedIn
+        Spree::Promotion::Rules::OneUsePerUser
+        Spree::Promotion::Rules::Taxon
+        Spree::Promotion::Rules::MinimumQuantity
+        Spree::Promotion::Rules::NthOrder
+        Spree::Promotion::Rules::OptionValue
+        Spree::Promotion::Rules::FirstRepeatPurchaseSince
+        Spree::Promotion::Rules::UserRole
+        Spree::Promotion::Rules::Store
+      ]
+
+      add_class_set :actions, default: %w[
+        Spree::Promotion::Actions::CreateAdjustment
+        Spree::Promotion::Actions::CreateItemAdjustments
+        Spree::Promotion::Actions::CreateQuantityAdjustments
+        Spree::Promotion::Actions::FreeShipping
+      ]
+
+      add_class_set :shipping_actions, default: %w[
+        Spree::Promotion::Actions::FreeShipping
+      ]
+
       add_nested_class_set :calculators, default: {
         "Spree::Promotion::Actions::CreateAdjustment" => %w[
           Spree::Calculator::FlatPercentItemTotal

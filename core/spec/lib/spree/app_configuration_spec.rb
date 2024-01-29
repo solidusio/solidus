@@ -156,7 +156,14 @@ RSpec.describe Spree::AppConfiguration do
     end
 
     context '.promotions' do
+      around do |example|
+        Spree.deprecator.silence do
+          example.run
+        end
+      end
+
       subject(:promotions) { environment.promotions }
+
       it { is_expected.to be_a Spree::Core::Environment::Promotions }
 
       context '.promotions.rules' do

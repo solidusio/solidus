@@ -656,33 +656,6 @@ module Spree
           Spree::PaymentMethod::Check
         ]
 
-        env.promotions.rules = %w[
-          Spree::Promotion::Rules::ItemTotal
-          Spree::Promotion::Rules::Product
-          Spree::Promotion::Rules::User
-          Spree::Promotion::Rules::FirstOrder
-          Spree::Promotion::Rules::UserLoggedIn
-          Spree::Promotion::Rules::OneUsePerUser
-          Spree::Promotion::Rules::Taxon
-          Spree::Promotion::Rules::MinimumQuantity
-          Spree::Promotion::Rules::NthOrder
-          Spree::Promotion::Rules::OptionValue
-          Spree::Promotion::Rules::FirstRepeatPurchaseSince
-          Spree::Promotion::Rules::UserRole
-          Spree::Promotion::Rules::Store
-        ]
-
-        env.promotions.actions = %w[
-          Spree::Promotion::Actions::CreateAdjustment
-          Spree::Promotion::Actions::CreateItemAdjustments
-          Spree::Promotion::Actions::CreateQuantityAdjustments
-          Spree::Promotion::Actions::FreeShipping
-        ]
-
-        env.promotions.shipping_actions = %w[
-          Spree::Promotion::Actions::FreeShipping
-        ]
-
         env.stock_splitters = %w[
           Spree::Stock::Splitter::ShippingCategory
           Spree::Stock::Splitter::Backordered
