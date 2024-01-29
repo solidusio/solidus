@@ -11,6 +11,14 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  shared_examples "working preferences set" do
+    it "allows adding new items" do
+      preferences_set << DummyClass
+      expect(preferences_set).to include DummyClass
+      preferences_set.delete DummyClass
+    end
+  end
+
   it "should be available from the environment" do
     prefs.layout = "my/layout"
     expect(prefs.layout).to eq "my/layout"
@@ -42,6 +50,36 @@ RSpec.describe Spree::AppConfiguration do
 
   it "uses promotion handler shipping class by default" do
     expect(prefs.shipping_promotion_handler_class).to eq Spree::PromotionHandler::Shipping
+  end
+
+  context "deprecated preferences" do
+    let(:environment) { prefs.environment }
+
+    around do |example|
+      Spree.deprecator.silence do
+        example.run
+      end
+    end
+
+    context '.calculators' do
+      subject(:calculators) { environment.calculators }
+      it { is_expected.to be_a Spree::Core::Environment::Calculators }
+
+      context '.calculators.promotion_actions_create_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_item_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_quantity_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+    end
   end
 
   it "has a getter for the pricing options class provided by the variant price selector class" do
@@ -76,14 +114,6 @@ RSpec.describe Spree::AppConfiguration do
     subject(:environment) { prefs.environment }
     it { is_expected.to be_a Spree::Core::Environment }
 
-    shared_examples "working preferences set" do
-      it "allows adding new items" do
-        preferences_set << DummyClass
-        expect(preferences_set).to include DummyClass
-        preferences_set.delete DummyClass
-      end
-    end
-
     context '.payment_methods' do
       subject(:preferences_set) { environment.payment_methods }
       it_should_behave_like "working preferences set"
@@ -105,21 +135,6 @@ RSpec.describe Spree::AppConfiguration do
 
       context '.calculators.tax_rates' do
         subject(:preferences_set) { calculators.tax_rates }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_item_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_quantity_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
         it_should_behave_like "working preferences set"
       end
     end
