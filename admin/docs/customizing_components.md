@@ -1,4 +1,4 @@
-# Customizing view components
+# Customizing components
 
 Solidus Admin uses [view components](https://viewcomponent.org/) to render the views. Components are
 a pattern for breaking up the view layer into small, reusable pieces, easy to
