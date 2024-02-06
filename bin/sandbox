@@ -68,6 +68,9 @@ group :test, :development do
   platforms :mri do
     gem 'pry-byebug'
   end
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 RUBY
 unbundled bundle install --gemfile Gemfile
