@@ -59,6 +59,13 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
       expect(subject.match_path?(matching_request)).to be true
       expect(subject.match_path?(other_request)).to be false
     end
+
+    it 'should not match the url if a match_path is set' do
+      subject = described_class.new(match_path: %r{/url$/}, url: "/foo/url")
+      request = double(ActionDispatch::Request, fullpath: '/foo/url_which_starts_with_the_same_characters')
+
+      expect(subject.match_path?(request)).to be_falsey
+    end
   end
 
   describe "#url" do
