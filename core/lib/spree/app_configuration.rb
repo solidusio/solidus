@@ -22,6 +22,8 @@ require "spree/core/search/variant"
 require 'spree/preferences/configuration'
 require 'spree/core/environment'
 
+require 'uri'
+
 module Spree
   class AppConfiguration < Preferences::Configuration
     # Preferences (alphabetized to more easily lookup particular preferences)
