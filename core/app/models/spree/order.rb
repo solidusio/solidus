@@ -630,7 +630,7 @@ module Spree
       if can_complete? || complete?
         valid_store_credit_payments.to_a.sum(&:amount)
       else
-        [total, (user.try(:available_store_credit_total, currency: currency) || 0.0)].min
+        [total, user.try(:available_store_credit_total, currency: currency) || 0.0].min
       end
     end
 
