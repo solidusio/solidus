@@ -128,6 +128,10 @@ Rails/SkipsModelValidations:
   Exclude:
     - '*/spec/**/*'
 
+# We have tasks that are not needing the Rails environment for builds and such that are not in the Rails app
+Rails/RakeEnvironment:
+  Enabled: false
+
 # We use a lot of
 #
 #     expect {
