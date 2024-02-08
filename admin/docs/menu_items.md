@@ -1,4 +1,4 @@
-# Customizing the main navigation
+# Customizing the Menu
 
 You are allowed to add your custom links to the main navigation. To do so, you can access `SolidusAdmin::Config.menu_items` in an initializer:
 

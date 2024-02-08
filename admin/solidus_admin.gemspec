@@ -12,10 +12,14 @@ Gem::Specification.new do |s|
 
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
-  s.homepage    = 'http://solidus.io'
+  s.homepage    = 'https://github.com/solidusio/solidus/blob/main/admin/README.md'
   s.license     = 'BSD-3-Clause'
 
   s.metadata['rubygems_mfa_required'] = 'true'
+
+  s.metadata["homepage_uri"] = s.homepage
+  s.metadata["source_code_uri"] = "https://github.com/solidusio/solidus/tree/main/api"
+  s.metadata["changelog_uri"] = "https://github.com/solidusio/solidus/releases?q=%22solidus_admin%2Fv0%22&expanded=true"
 
   s.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(spec|script)/})
