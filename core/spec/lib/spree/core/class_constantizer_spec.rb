@@ -35,6 +35,14 @@ RSpec.describe Spree::Core::ClassConstantizer::Set do
     end
   end
 
+  describe "initializing with a default" do
+    let(:set) { described_class.new(default: ['ClassConstantizerTest::ClassA']) }
+
+    it "contains the default" do
+      expect(set).to include(ClassConstantizerTest::ClassA)
+    end
+  end
+
   describe "<<" do
     it "can add by string" do
       set << "ClassConstantizerTest::ClassA"
