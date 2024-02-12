@@ -189,5 +189,19 @@ module Spree
       subject { action.discard }
       it_should_behave_like "destroying adjustments from incomplete orders"
     end
+
+    describe "#available_calculators" do
+      subject { action.available_calculators }
+
+      it {
+        is_expected.to contain_exactly(
+          Spree::Calculator::DistributedAmount,
+          Spree::Calculator::FlatRate,
+          Spree::Calculator::FlexiRate,
+          Spree::Calculator::PercentOnLineItem,
+          Spree::Calculator::TieredPercent
+        )
+      }
+    end
   end
 end

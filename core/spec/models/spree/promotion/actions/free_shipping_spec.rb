@@ -112,4 +112,12 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
       expect(shipment.adjustments).to eq([other_adjustment])
     end
   end
+
+  describe "#available_calculators" do
+    subject { action.available_calculators }
+
+    it {
+      is_expected.to be_empty
+    }
+  end
 end
