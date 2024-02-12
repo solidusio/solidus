@@ -46,6 +46,8 @@ module Spree
     end
 
     def net_amount
+      return nil unless amount
+
       amount / (1 + sum_of_vat_amounts)
     end
 

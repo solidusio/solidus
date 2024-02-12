@@ -25,6 +25,7 @@ module Spree
       def run
         # Early return if there is no VAT rates in the current store.
         return if !variant.tax_category || variant_vat_rates.empty?
+        return unless variant.default_price.net_amount
 
         country_isos_requiring_price.each do |country_iso|
           # Don't re-create the default price
