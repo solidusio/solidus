@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/core/environment_extension'
 
 RSpec.describe Spree::Core::EnvironmentExtension do
@@ -39,6 +39,42 @@ RSpec.describe Spree::Core::EnvironmentExtension do
         it { respond_to?(:foo) }
         it { expect(subject.foo).to include(class_one) }
         it { expect(subject.foo).to be_kind_of Spree::Core::ClassConstantizer::Set }
+      end
+    end
+  end
+
+  describe ".add_nested_class_set" do
+    let(:class_one) { String }
+    let(:class_two) { Array }
+    let(:class_three) { Hash }
+
+    context 'with a nested class set named "foo"' do
+      before { base.add_nested_class_set("foo") }
+
+      describe "#foo" do
+        it { respond_to?(:foo) }
+        it { expect(subject.foo).to be_kind_of Spree::Core::NestedClassSet }
+      end
+
+      describe "#foo=" do
+        it { respond_to?(:foo=) }
+
+        before { subject.foo = { "Spree::TaxRate": ["Spree::Calculator::DefaultTax", "Spree::Calculator::FlatFee"] } }
+
+        it { expect(subject.foo[Spree::TaxRate]).to include(Spree::Calculator::DefaultTax) }
+        it { expect(subject.foo[Spree::TaxRate]).to include(Spree::Calculator::FlatFee) }
+        it { expect(subject.foo[Spree::TaxRate]).not_to include(Spree::Calculator::Shipping::FlexiRate) }
+      end
+    end
+
+    context "setting defaults" do
+      before { base.add_nested_class_set("foo", default: { "Spree::TaxRate": ["Spree::Calculator::DefaultTax", "Spree::Calculator::FlatFee"] }) }
+
+      describe "#foo" do
+        it { respond_to?(:foo) }
+        it { expect(subject.foo[Spree::TaxRate]).to include(Spree::Calculator::DefaultTax) }
+        it { expect(subject.foo[Spree::TaxRate]).to include(Spree::Calculator::FlatFee) }
+        it { expect(subject.foo[Spree::TaxRate]).not_to include(Spree::Calculator::Shipping::FlexiRate) }
       end
     end
   end
