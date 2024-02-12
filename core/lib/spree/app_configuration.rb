@@ -619,6 +619,10 @@ module Spree
       @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
+    def promotions
+      @promotion_configuration ||= Spree::Core::PromotionConfiguration.new
+    end
+
     def roles
       @roles ||= Spree::RoleConfiguration.new.tap do |roles|
         roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']

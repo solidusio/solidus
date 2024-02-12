@@ -53,6 +53,11 @@ RSpec.describe Spree::AppConfiguration do
     it { is_expected.to be_a Spree::Core::StockConfiguration }
   end
 
+  describe '#promotions' do
+    subject { prefs.promotions }
+    it { is_expected.to be_a Spree::Core::PromotionConfiguration }
+  end
+
   describe '@default_country_iso_code' do
     it 'is the USA by default' do
       expect(prefs[:default_country_iso]).to eq("US")
