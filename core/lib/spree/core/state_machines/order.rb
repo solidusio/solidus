@@ -86,7 +86,9 @@ module Spree
                 end
 
                 after_transition to: :complete, do: :add_payment_sources_to_wallet
-                before_transition to: :payment, do: :add_default_payment_from_wallet
+                unless Spree::Config.disable_adding_default_payment_to_order
+                  before_transition to: :payment, do: :add_default_payment_from_wallet
+                end
                 before_transition to: :payment, do: :ensure_billing_address
 
                 before_transition to: :confirm, do: :add_store_credit_payments
