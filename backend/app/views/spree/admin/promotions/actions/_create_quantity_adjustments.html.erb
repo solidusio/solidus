@@ -5,6 +5,6 @@
 </div>
 
 <%= render "spree/admin/promotions/actions/promotion_calculators_with_custom_fields",
-  calculators: Rails.application.config.spree.calculators.promotion_actions_create_quantity_adjustments,
+  calculators: promotion_action.available_calculators,
   promotion_action: promotion_action,
   param_prefix: param_prefix %>

@@ -294,5 +294,17 @@ module Spree::Promotion::Actions
         expect(subject.currency).to eq item.currency
       end
     end
+
+    describe "#available_calculators" do
+      let(:action) { described_class.new }
+      subject { action.available_calculators }
+
+      it {
+        is_expected.to contain_exactly(
+          Spree::Calculator::PercentOnLineItem,
+          Spree::Calculator::FlatRate
+        )
+      }
+    end
   end
 end

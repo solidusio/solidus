@@ -619,6 +619,10 @@ module Spree
       @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
+    def promotions
+      @promotion_configuration ||= Spree::Core::PromotionConfiguration.new
+    end
+
     def roles
       @roles ||= Spree::RoleConfiguration.new.tap do |roles|
         roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
@@ -634,27 +638,6 @@ module Spree
 
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
-        env.calculators.promotion_actions_create_adjustments = %w[
-          Spree::Calculator::FlatPercentItemTotal
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::TieredPercent
-          Spree::Calculator::TieredFlatRate
-        ]
-
-        env.calculators.promotion_actions_create_item_adjustments = %w[
-          Spree::Calculator::DistributedAmount
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::TieredPercent
-        ]
-
-        env.calculators.promotion_actions_create_quantity_adjustments = %w[
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::FlatRate
-        ]
-
         env.calculators.shipping_methods = %w[
           Spree::Calculator::Shipping::FlatPercentItemTotal
           Spree::Calculator::Shipping::FlatRate

@@ -43,5 +43,9 @@ module Spree
     def to_partial_path
       "spree/admin/promotions/actions/#{model_name.element}"
     end
+
+    def available_calculators
+      Spree::Config.promotions.calculators[self.class]
+    end
   end
 end
