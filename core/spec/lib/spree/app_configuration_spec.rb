@@ -40,6 +40,10 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.variant_price_selector_class).to eq Spree::Variant::PriceSelector
   end
 
+  it "uses core's promotion configuration class by default" do
+    expect(prefs.promotion_configuration_class).to eq Spree::Core::PromotionConfiguration
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do
