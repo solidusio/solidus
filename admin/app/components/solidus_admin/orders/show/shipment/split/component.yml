@@ -1,14 +1,13 @@
 en:
-  title: "#%{index}: %{number} from %{location}"
+  title: "Split shipment %{number}"
+  submit: "Save"
+  cancel: "Cancel"
   product: Product
   quantity: Quantity
   total: Total Price
   actions: Actions
-  none: No tracking details provided
-  edit: Edit
   split: Split
-  merge: Merge
-  change_location: Change Location
+  select_all: Select All
   inventory_states:
     backordered: Backordered
     canceled: Canceled
