@@ -38,6 +38,7 @@ SolidusAdmin::Engine.routes.draw do
     resource :customer
     resource :ship_address, only: [:show, :edit, :update], controller: "addresses", type: "ship"
     resource :bill_address, only: [:show, :edit, :update], controller: "addresses", type: "bill"
+    resource :shipments
 
     member do
       get :variants_for

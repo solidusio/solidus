@@ -1,0 +1,7 @@
+en:
+  solidus_admin:
+    shipments:
+      title: "Shipments"
+      update:
+        success: "Shipment was updated successfully"
+        error: "Shipment could not be updated"

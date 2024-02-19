@@ -1,0 +1,18 @@
+<div class="<%= stimulus_id %>">
+  <%= render component("orders/show").new(order: @order) %>
+  <%= render component("ui/modal").new(title: t(".title", number: @shipment.number), close_path: close_path) do |modal| %>
+    <%= form_for @shipment, url: solidus_admin.order_shipments_path(@order, shipment_id: @shipment.id), html: { id: form_id } do |f| %>
+      <%= render component("ui/forms/field").text_field(f, :tracking) %>
+      <%= render component("ui/forms/field").select(
+        f,
+        :selected_shipping_rate_id,
+        @shipment.shipping_rates.map { |sr| [sr.shipping_method.name, sr.id] },
+      ) %>
+    <% end %>
+
+    <% modal.with_actions do %>
+      <%= render component("ui/button").new(tag: :a, scheme: :secondary, href: close_path, type: :submit, text: t('.cancel')) %>
+      <%= render component("ui/button").new(form: form_id, type: :submit, text: t('.submit')) %>
+    <% end %>
+  <% end %>
+</div>

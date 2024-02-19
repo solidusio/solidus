@@ -1,9 +1,11 @@
 en:
+  title: "#%{index}: %{number} from %{location}"
   product: Product
   quantity: Quantity
   total: Total Price
   actions: Actions
   none: No tracking details provided
+  edit_shipment: Edit shipment
   inventory_states:
     backordered: Backordered
     canceled: Canceled

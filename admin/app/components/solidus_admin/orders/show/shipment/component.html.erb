@@ -1,11 +1,14 @@
 <div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
   <div class="rounded p-2">
     <%= render component('ui/panel').new do |panel| %>
+      <% panel.with_menu t(".edit_shipment"), solidus_admin.order_shipments_path(@order, shipment_id: @shipment.id) %>
+
       <% panel.with_section(wide: true, high: true) do %>
         <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
           <h2>
             <span class="text-xl">
-              #<%= @index %>: <%= @shipment.number %> from <%= @shipment.stock_location.name %> <%= render component('ui/badge').new(name: @shipment.state.titleize) %>
+              <%= t('.title', index: @index, number: @shipment.number, location: @shipment.stock_location.name) %>
+              <%= render component('ui/badge').new(name: @shipment.state.titleize) %>
             </span>
           </h2>
         </section>
@@ -16,10 +19,20 @@
           <table class="table-auto w-full">
             <thead>
               <tr>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none"><%= t(".product") %></th>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><%= t(".quantity") %></th>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16 whitespace-nowrap"><%= t(".total") %></th>
-                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16"><span class="sr-only"><%= t(".actions") %></span></th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none">
+                  <%= t(".product") %>
+                </th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">
+                  <%= t(".quantity") %>
+                </th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16 whitespace-nowrap">
+                  <%= t(".total") %>
+                </th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">
+                  <span class="sr-only">
+                    <%= t(".actions") %>
+                  </span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -75,8 +88,6 @@
                         </span>
                         <%= @shipment.shipping_method.name %> - <%= @shipment.display_cost %>
                       </label>
-
-                      <%= render component("ui/icon").new(name: 'edit-line', class: 'w-5 h-5 cursor-pointer') %>
                     </li>
                     <li class="flex justify-between py-1.5">
                       <label class="flex flex-col w-full py-1.5">
@@ -85,8 +96,6 @@
                         </span>
                         <%= @shipment.tracking || t(".none") %>
                       </label>
-
-                      <%= render component("ui/icon").new(name: 'edit-line', class: 'w-5 h-5 cursor-pointer') %>
                     </li>
                   </ul>
                 </td>
