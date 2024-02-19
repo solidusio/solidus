@@ -18,6 +18,10 @@ export default class extends Controller {
 
   submit(event) {
     event.preventDefault()
-    //this.quantityTargets.forEach((quantity) => (quantity.disabled = !this.checkboxTargets.find(selection => quantity.contains(selection).checked )))
+    this.quantityTargets.forEach((quantity) => {
+      let checkbox = quantity.closest("tr").querySelector("input[type=checkbox]")
+      quantity.disabled = checkbox.checked
+    })
+    event.target.submit()
   }
 }
