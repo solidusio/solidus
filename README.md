@@ -307,11 +307,16 @@ data already loaded.
     bin/sandbox
   ```
 
-* Start the server (`bin/rails` will forward any argument to the sandbox)
+* You can start the Rails server and other services from either the Solidus folder or the
+sandbox one by running the command:
 
   ```bash
-  bin/rails server
+  bin/dev
   ```
+
+Please note: if you run `bin/rails server` or similar commands, only the Rails server will
+start. This might cause the error `couldn't find file 'solidus_admin/tailwind.css'` when you
+try to load admin pages.
 
 ### Tests
 
