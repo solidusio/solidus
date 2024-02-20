@@ -31,7 +31,6 @@
             <td class="py-2 px-4">
               <%=
                 render component("ui/forms/checkbox").new(
-                  name: "selected_variants[]",
                   form: form_id,
                   value: item.variant.id,
                   "data-#{stimulus_id}-target": "checkbox",
@@ -79,18 +78,9 @@
     </table>
 
     <% modal.with_actions do %>
-      <%= form_tag '', id: form_id, "data-action": "submit->#{stimulus_id}#submit" %>
+      <%= form_tag solidus_admin.split_create_order_shipment_path(@order, @shipment), method: :put, id: form_id, "data-action": "submit->#{stimulus_id}#submit" %>
       <%= render component("ui/button").new(tag: :a, scheme: :secondary, href: close_path, type: :submit, text: t('.cancel')) %>
       <%= render_split_action_button %>
     <% end %>
   <% end %>
 </div>
-
-
-
-<form action="/your_action" method="post">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-  <input type="text" name="variants[1][quantity]" value="12">
-  <input type="text" name="variants[2][quantity]" value="3">
-  <input type="submit" value="Submit">
-</form>

@@ -1,10 +1,10 @@
 <div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
   <div class="rounded p-2">
     <%= render component('ui/panel').new do |panel| %>
-      <% panel.with_menu t(".edit"), solidus_admin.edit_order_shipments_path(@order, shipment_id: @shipment.id) %>
-      <% panel.with_menu t(".split"), solidus_admin.split_edit_order_shipments_path(@order, shipment_id: @shipment.id) %>
-      <% panel.with_menu t(".merge"), solidus_admin.order_shipments_path(@order, shipment_id: @shipment.id) %>
-      <% panel.with_menu t(".change_location"), solidus_admin.order_shipments_path(@order, shipment_id: @shipment.id) %>
+      <% panel.with_menu t(".edit"), solidus_admin.edit_order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".split"), solidus_admin.split_edit_order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".merge"), solidus_admin.order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".change_location"), solidus_admin.order_shipment_path(@order, @shipment) %>
 
       <% panel.with_section(wide: true, high: true) do %>
         <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">

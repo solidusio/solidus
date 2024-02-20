@@ -20,7 +20,7 @@ export default class extends Controller {
     event.preventDefault()
     this.quantityTargets.forEach((quantity) => {
       let checkbox = quantity.closest("tr").querySelector("input[type=checkbox]")
-      quantity.disabled = checkbox.checked
+      quantity.disabled = !checkbox.checked
     })
     event.target.submit()
   }
