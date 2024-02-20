@@ -1,7 +1,7 @@
 <div class="<%= stimulus_id %>">
   <%= render component("orders/show").new(order: @order) %>
   <%= render component("ui/modal").new(title: t(".title", number: @shipment.number), close_path: close_path) do |modal| %>
-    <%= form_for @shipment, url: solidus_admin.order_shipments_path(@order, shipment_id: @shipment.id), html: { id: form_id } do |f| %>
+    <%= form_for @shipment, url: solidus_admin.order_shipment_path(@order, @shipment), html: { id: form_id } do |f| %>
       <%= render component("ui/forms/field").text_field(f, :tracking) %>
       <%= render component("ui/forms/field").select(
         f,

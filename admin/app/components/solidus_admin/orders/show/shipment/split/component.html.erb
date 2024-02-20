@@ -57,13 +57,13 @@
             <td class="px-6 py-4">
               <span class="text-gray-500 body-small whitespace-nowrap">
                 <%= render component("ui/forms/input").new(
-                  value: item.line_item.quantity,
+                  value: item.states["on_hand"],
                   form: form_id,
                   name: "variants[#{item.variant.id}][quantity]",
                   type: :number,
                   step: 1,
                   min: "1",
-                  max: item.line_item.quantity,
+                  max: item.states["on_hand"],
                   "data-#{stimulus_id}-target": "quantity",
                   "data-action": "focus->#{stimulus_id}#selectRow",
                 ) %>

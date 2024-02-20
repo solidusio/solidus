@@ -23,10 +23,10 @@ class SolidusAdmin::Orders::Show::Shipment::Split::Component < SolidusAdmin::Bas
     render component("ui/button").new(
       name: request_forgery_protection_token,
       value: form_authenticity_token(form_options: {
-        action: solidus_admin.split_create_order_shipments_path(@order),
+        action: solidus_admin.split_create_order_shipment_path(@order, @shipment),
         method: :put,
       }),
-      formaction: solidus_admin.split_create_order_shipments_path(@order),
+      formaction: solidus_admin.split_create_order_shipment_path(@order, @shipment),
       formmethod: :put,
       form: form_id,
       text: t('.split'),

@@ -5,3 +5,5 @@ en:
       update:
         success: "Shipment was updated successfully"
         error: "Shipment could not be updated"
+      split_create:
+      success: "Shipment was splitted successfully"
