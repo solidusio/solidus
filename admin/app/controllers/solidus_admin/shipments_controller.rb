@@ -46,6 +46,8 @@ class SolidusAdmin::ShipmentsController < SolidusAdmin::BaseController
   def split_create
     @desired_shipment = @shipment.order.shipments.build(stock_location: @shipment.stock_location)
 
+    results = [false]
+
     ActiveRecord::Base.transaction do
       results = @variants_with_quantity.map do |variant, quantity|
         fulfilment_changer = Spree::FulfilmentChanger.new(
@@ -58,12 +60,14 @@ class SolidusAdmin::ShipmentsController < SolidusAdmin::BaseController
         fulfilment_changer.run!
       end
       raise(ActiveRecord::Rollback) if results.include?(false)
+    end
 
-      if results.all?(true)
-        redirect_to order_path(@order), status: :see_other, notice: t('.success')
-      else
-        render json: { success: false, message: fulfilment_changer.errors.full_messages.to_sentence }, status: :accepted
-      end
+    if results.all?(true)
+      redirect_to order_path(@order), status: :see_other, notice: t('.success')
+    else
+      @order = @shipment.order.reload # remove non persisted shipments
+      flash.now[:error] = t('.failed')
+      split_edit
     end
   end
 
