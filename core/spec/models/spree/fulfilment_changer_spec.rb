@@ -6,7 +6,7 @@ RSpec.describe Spree::FulfilmentChanger do
   let(:variant) { create(:variant) }
   let(:track_inventory) { true }
 
-  let(:order) do
+  let!(:order) do
     create(
       :completed_order_with_totals,
       line_items_attributes: [
@@ -19,7 +19,7 @@ RSpec.describe Spree::FulfilmentChanger do
   end
 
   let(:current_shipment) { order.shipments.first }
-  let(:desired_shipment) { order.shipments.create!(stock_location: desired_stock_location) }
+  let!(:desired_shipment) { order.shipments.create!(stock_location: desired_stock_location) }
   let(:desired_stock_location) { current_shipment.stock_location }
   let(:current_shipment_inventory_unit_count) { 1 }
   let(:quantity) { current_shipment_inventory_unit_count }
@@ -37,7 +37,6 @@ RSpec.describe Spree::FulfilmentChanger do
   subject { shipment_splitter.run! }
 
   before do
-    order && desired_shipment
     variant.stock_items.first.update_column(:count_on_hand, 100)
   end
 
