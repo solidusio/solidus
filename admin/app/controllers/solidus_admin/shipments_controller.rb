@@ -3,13 +3,21 @@
 class SolidusAdmin::ShipmentsController < SolidusAdmin::BaseController
   include Spree::Core::ControllerHelpers::StrongParameters
 
-  before_action :load_order, :load_shipment, only: [:edit, :update, :split_edit, :split_create]
+  before_action :load_order, :load_shipment, only: [:edit, :update, :split_edit, :split_create, :merge_edit, :merge_create]
   before_action :load_shipment, only: [:split_edit, :split_create]
   before_action :load_split_variants, only: [:split_create]
   #before_action :load_transfer_params, only: [:split_create]
 
   def edit
     render component('orders/show/shipment/edit').new(shipment: @shipment)
+  end
+
+  def merge_create
+    raise
+  end
+
+  def merge_edit
+    render component('orders/show/shipment/merge').new(shipment: @shipment)
   end
 
   def split_edit

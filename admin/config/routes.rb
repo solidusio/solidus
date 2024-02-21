@@ -42,6 +42,8 @@ SolidusAdmin::Engine.routes.draw do
       member do
         get :split_edit
         put :split_create
+        get :merge_edit
+        put :merge_create
       end
     end
 
