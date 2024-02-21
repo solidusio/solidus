@@ -21,8 +21,6 @@ RSpec.describe Spree::FulfilmentChanger do
   let(:current_shipment) { order.shipments.first }
   let!(:desired_shipment) { order.shipments.create!(stock_location: desired_stock_location) }
   let(:desired_stock_location) { current_shipment.stock_location }
-  let(:current_shipment_inventory_unit_count) { 1 }
-  let(:quantity) { current_shipment_inventory_unit_count }
 
   let(:shipment_splitter) do
     described_class.new(
@@ -41,6 +39,9 @@ RSpec.describe Spree::FulfilmentChanger do
   end
 
   context "when the current shipment stock location is the same of the target shipment" do
+    let(:current_shipment_inventory_unit_count) { 1 }
+    let(:quantity) { current_shipment_inventory_unit_count }
+
     context "when the stock location is empty" do
       before do
         variant.stock_items.first.update_column(:count_on_hand, 0)
