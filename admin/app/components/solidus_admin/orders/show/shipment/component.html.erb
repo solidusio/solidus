@@ -3,7 +3,7 @@
     <%= render component('ui/panel').new do |panel| %>
       <% panel.with_menu t(".edit"), solidus_admin.edit_order_shipment_path(@order, @shipment) %>
       <% panel.with_menu t(".split"), solidus_admin.split_edit_order_shipment_path(@order, @shipment) %>
-      <% panel.with_menu t(".merge"), solidus_admin.order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".merge"), solidus_admin.merge_edit_order_shipment_path(@order, @shipment) %>
       <% panel.with_menu t(".change_location"), solidus_admin.order_shipment_path(@order, @shipment) %>
 
       <% panel.with_section(wide: true, high: true) do %>
@@ -68,7 +68,7 @@
                     <span class="text-gray-500 body-small"><%= item.line_item.display_amount %></span>
                   </td>
                   <td class="px-6 py-4 text-right">
-                    <%= form_for(item.line_item, url: '#', method: :delete) do |f| %>
+                    <%= form_for(item.line_item, url: solidus_admin.order_line_item_path(@order, item.line_item), method: :delete) do |f| %>
                       <%= render component('ui/button').new(
                         scheme: :ghost,
                         size: :s,
