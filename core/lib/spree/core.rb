@@ -11,6 +11,7 @@ require "sprockets/railtie"
 
 require 'active_support/deprecation'
 require 'spree/deprecated_instance_variable_proxy'
+require 'spree/deprecator'
 require 'acts_as_list'
 require 'awesome_nested_set'
 require 'cancan'
@@ -28,10 +29,6 @@ require_relative './ransack_4_1_patch'
 StateMachines::Machine.ignore_method_conflicts = true
 
 module Spree
-  def self.deprecator
-    @deprecator ||= ActiveSupport::Deprecation.new('5.0', 'Solidus')
-  end
-
   autoload :Deprecation, 'spree/deprecation'
 
   mattr_accessor :user_class, default: 'Spree::LegacyUser'

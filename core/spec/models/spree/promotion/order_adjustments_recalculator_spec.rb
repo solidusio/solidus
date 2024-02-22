@@ -54,7 +54,7 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
             end
           end
 
-          stub_spree_preferences(promotion_chooser_class: Spree::TestPromotionChooser)
+          stub_spree_preferences(Spree::Config.promotions, promotion_chooser_class: Spree::TestPromotionChooser)
         end
 
         it 'uses the defined promotion chooser' do

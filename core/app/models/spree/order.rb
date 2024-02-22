@@ -509,7 +509,7 @@ module Spree
     end
 
     def apply_shipping_promotions
-      Spree::Config.shipping_promotion_handler_class.new(self).activate
+      Spree::Config.promotions.shipping_promotion_handler_class.new(self).activate
       recalculate
     end
 
@@ -799,7 +799,7 @@ module Spree
     end
 
     def ensure_promotions_eligible
-      Spree::Config.promotion_adjuster_class.new(self).call
+      Spree::Config.promotions.promotion_adjuster_class.new(self).call
 
       if promo_total_changed?
         restart_checkout_flow

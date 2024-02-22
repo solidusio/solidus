@@ -14,7 +14,7 @@ module Spree
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
-    scope :shipping, -> { of_type(Spree::Config.environment.promotions.shipping_actions.to_a) }
+    scope :shipping, -> { of_type(Spree::Config.promotions.shipping_actions.to_a) }
 
     def preload_relations
       []

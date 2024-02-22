@@ -49,7 +49,7 @@ module Spree
         @collection = @search.result(distinct: true).
           includes(promotion_includes).
           page(params[:page]).
-          per(params[:per_page] || Spree::Config[:promotions_per_page])
+          per(params[:per_page] || Spree::Config.promotions.promotions_per_page)
 
         @collection
       end

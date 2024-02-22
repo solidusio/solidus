@@ -76,7 +76,7 @@ module Spree
         before do
           stub_const('CustomShippingAction', custom_klass)
 
-          allow(Spree::Config.environment.promotions).to receive(:shipping_actions) { ['CustomShippingAction'] }
+          allow(Spree::Config.promotions).to receive(:shipping_actions) { ['CustomShippingAction'] }
 
           order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
         end
