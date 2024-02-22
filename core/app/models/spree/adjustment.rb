@@ -42,8 +42,8 @@ module Spree
     scope :charge, -> { where("#{quoted_table_name}.amount >= 0") }
     scope :credit, -> { where("#{quoted_table_name}.amount < 0") }
     scope :nonzero, -> { where("#{quoted_table_name}.amount != 0") }
-    scope :promotion, -> { where(source_type: 'Spree::PromotionAction') }
-    scope :non_promotion, -> { where.not(source_type: 'Spree::PromotionAction') }
+    scope :promotion, -> { where(source_type: Spree::Config.adjustment_promotion_source_types.map(&:to_s)) }
+    scope :non_promotion, -> { where.not(source_type: Spree::Config.adjustment_promotion_source_types.map(&:to_s)) }
     scope :return_authorization, -> { where(source_type: "Spree::ReturnAuthorization") }
     scope :is_included, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
@@ -77,7 +77,7 @@ module Spree
 
     # @return [Boolean] true when this is a promotion adjustment (Promotion adjustments have a {PromotionAction} source)
     def promotion?
-      source_type == 'Spree::PromotionAction'
+      source_type.to_s.in?(Spree::Config.adjustment_promotion_source_types.map(&:to_s))
     end
 
     # @return [Boolean] true when this is a tax adjustment (Tax adjustments have a {TaxRate} source)
