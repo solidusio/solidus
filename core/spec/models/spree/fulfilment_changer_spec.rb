@@ -350,9 +350,7 @@ RSpec.describe Spree::FulfilmentChanger do
     let(:current_shipment_inventory_unit_count) { 30 }
     let(:quantity) { 30 }
 
-    it "adds the desired inventory units to the desired shipment" do
-      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
-    end
+    it_behaves_like "moves inventory units between shipments"
 
     it "removes the current shipment" do
       expect { subject }.to change { Spree::Shipment.count }.by(-1)
@@ -365,9 +363,7 @@ RSpec.describe Spree::FulfilmentChanger do
 
     let(:desired_shipment) { order.shipments.build(stock_location: current_shipment.stock_location) }
 
-    it "adds the desired inventory units to the desired shipment" do
-      expect { subject }.to change { Spree::Shipment.count }.by(1)
-    end
+    it_behaves_like "moves inventory units between shipments"
 
     context "if the desired shipment is invalid" do
       let(:desired_shipment) { order.shipments.build(stock_location_id: 99_999_999) }
