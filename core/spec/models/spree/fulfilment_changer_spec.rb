@@ -32,6 +32,55 @@ RSpec.describe Spree::FulfilmentChanger do
     )
   end
 
+  shared_examples_for "moves inventory units between shipments" do
+    it "adds the desired inventory units to the desired shipment" do
+      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
+    end
+
+    it "removes the desired inventory units from the current shipment" do
+      expect { subject }.to change { current_shipment.inventory_units.length }.by(-quantity)
+    end
+  end
+
+  shared_examples_for "recalculates shipping costs and order totals" do
+    it "recalculates shipping costs for the current shipment" do
+      expect(current_shipment).to receive(:refresh_rates)
+      subject
+    end
+
+    it "recalculates shipping costs for the new shipment" do
+      expect(desired_shipment).to receive(:refresh_rates)
+      subject
+    end
+
+    it 'updates order totals' do
+      original_total = order.total
+      original_shipment_total = order.shipment_total
+
+      expect { subject }.
+        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
+        and change { order.shipment_total }.by(original_shipment_total)
+    end
+  end
+
+  shared_examples_for "completes transfer to another stock location without tracking inventory changes" do
+    context "when transferring to another stock location" do
+      let(:desired_stock_location) { create(:stock_location) }
+
+      it "is marked as a successful transfer" do
+        expect(subject).to be true
+      end
+
+      it "does not stock in the current stock location" do
+        expect { subject }.not_to change { current_shipment.stock_location.count_on_hand(variant) }
+      end
+
+      it "does not unstock the desired stock location" do
+        expect { subject }.not_to change { desired_shipment.stock_location.count_on_hand(variant) }
+      end
+    end
+  end
+
   subject { shipment_splitter.run! }
 
   before do
@@ -76,49 +125,9 @@ RSpec.describe Spree::FulfilmentChanger do
     let(:quantity) { 1 }
     let(:track_inventory) { nil }
 
-    it "adds the desired inventory units to the desired shipment" do
-      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
-    end
-
-    it "removes the desired inventory units from the current shipment" do
-      expect { subject }.to change { current_shipment.inventory_units.length }.by(-quantity)
-    end
-
-    it "recalculates shipping costs for the current shipment" do
-      expect(current_shipment).to receive(:refresh_rates)
-      subject
-    end
-
-    it 'updates order totals' do
-      original_total = order.total
-      original_shipment_total = order.shipment_total
-
-      expect { subject }.
-        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
-        and change { order.shipment_total }.by(original_shipment_total)
-    end
-
-    context "when transferring to another stock location" do
-      let(:desired_stock_location) { create(:stock_location) }
-      let!(:stock_item) do
-        variant.stock_items.find_or_create_by!(
-          stock_location: desired_stock_location,
-          variant:,
-        )
-      end
-
-      it "is marked as a successful transfer" do
-        expect(subject).to be true
-      end
-
-      it "does not stock in the current stock location" do
-        expect { subject }.not_to change { current_shipment.stock_location.count_on_hand(variant) }
-      end
-
-      it "does not unstock the desired stock location" do
-        expect { subject }.not_to change { desired_shipment.stock_location.count_on_hand(variant) }
-      end
-    end
+    it_behaves_like "moves inventory units between shipments"
+    it_behaves_like "recalculates shipping costs and order totals"
+    it_behaves_like "completes transfer to another stock location without tracking inventory changes"
   end
 
   context "when not tracking inventory" do
@@ -126,81 +135,16 @@ RSpec.describe Spree::FulfilmentChanger do
     let(:quantity) { 1 }
     let(:track_inventory) { false }
 
-    it "adds the desired inventory units to the desired shipment" do
-      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
-    end
-
-    it "removes the desired inventory units from the current shipment" do
-      expect { subject }.to change { current_shipment.inventory_units.length }.by(-quantity)
-    end
-
-    it "recalculates shipping costs for the current shipment" do
-      expect(current_shipment).to receive(:refresh_rates)
-      subject
-    end
-
-    it 'updates order totals' do
-      original_total = order.total
-      original_shipment_total = order.shipment_total
-
-      expect { subject }.
-        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
-        and change { order.shipment_total }.by(original_shipment_total)
-    end
-
-    context "when transferring to another stock location" do
-      let(:desired_stock_location) { create(:stock_location) }
-      let!(:stock_item) do
-        variant.stock_items.find_or_create_by!(
-          stock_location: desired_stock_location,
-          variant:,
-        )
-      end
-
-      it "is marked as a successful transfer" do
-        expect(subject).to be true
-      end
-
-      it "does not stock in the current stock location" do
-        expect { subject }.not_to change { current_shipment.stock_location.count_on_hand(variant) }
-      end
-
-      it "does not unstock the desired stock location" do
-        expect { subject }.not_to change { desired_shipment.stock_location.count_on_hand(variant) }
-      end
-    end
+    it_behaves_like "moves inventory units between shipments"
+    it_behaves_like "completes transfer to another stock location without tracking inventory changes"
   end
 
   context "when the current shipment has enough inventory units" do
     let(:current_shipment_inventory_unit_count) { 2 }
     let(:quantity) { 1 }
 
-    it "adds the desired inventory units to the desired shipment" do
-      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
-    end
-
-    it "removes the desired inventory units from the current shipment" do
-      expect { subject }.to change { current_shipment.inventory_units.length }.by(-quantity)
-    end
-
-    it "recalculates shipping costs for the current shipment" do
-      expect(current_shipment).to receive(:refresh_rates)
-      subject
-    end
-
-    it "recalculates shipping costs for the new shipment" do
-      expect(desired_shipment).to receive(:refresh_rates)
-      subject
-    end
-
-    it 'updates order totals' do
-      original_total = order.total
-      original_shipment_total = order.shipment_total
-
-      expect { subject }.
-        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
-        and change { order.shipment_total }.by(original_shipment_total)
-    end
+    it_behaves_like "moves inventory units between shipments"
+    it_behaves_like "recalculates shipping costs and order totals"
 
     context "when transferring to another stock location" do
       let(:desired_stock_location) { create(:stock_location) }
