@@ -348,7 +348,7 @@ RSpec.describe Spree::FulfilmentChanger do
 
   context "when the current shipment is emptied out by the transfer" do
     let(:current_shipment_inventory_unit_count) { 30 }
-    let(:quantity) { 30 }
+    let(:quantity) { current_shipment_inventory_unit_count }
 
     it_behaves_like "moves inventory units between shipments"
 
