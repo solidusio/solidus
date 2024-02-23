@@ -81,6 +81,34 @@ RSpec.describe Spree::FulfilmentChanger do
     end
   end
 
+  shared_examples_for "properly manages inventory units" do
+    context "when the stock location is empty" do
+      let(:stock_item) { variant.stock_items.find_by!(stock_location: current_shipment.stock_location) }
+
+      before { stock_item.update_column(:count_on_hand, 0) }
+
+      context "when there are backordered inventory units" do
+        before do
+          current_shipment.inventory_units.first.update(state: :backordered)
+        end
+
+        it "doesn't change the order inventory units state" do
+          expect { subject }.not_to change { order.inventory_units.map(&:state).sort }
+        end
+      end
+
+      context "when all inventory units are on hand" do
+        before do
+          current_shipment.inventory_units.update_all(state: :on_hand)
+        end
+
+        it "doesn't change the order inventory units state" do
+          expect { subject }.not_to change { order.inventory_units.map(&:state).sort }
+        end
+      end
+    end
+  end
+
   subject { shipment_splitter.run! }
 
   before do
@@ -91,33 +119,7 @@ RSpec.describe Spree::FulfilmentChanger do
     let(:current_shipment_inventory_unit_count) { 1 }
     let(:quantity) { current_shipment_inventory_unit_count }
 
-    context "when the stock location is empty" do
-      before do
-        variant.stock_items.first.update_column(:count_on_hand, 0)
-      end
-
-      context "when the inventory unit is backordered" do
-        before do
-          current_shipment.inventory_units.first.update state: :backordered
-        end
-
-        it "creates a new backordered inventory unit" do
-          subject
-          expect(desired_shipment.inventory_units.first).to be_backordered
-        end
-      end
-
-      context "when the inventory unit is on hand" do
-        before do
-          current_shipment.inventory_units.first.update state: :on_hand
-        end
-
-        it "creates a new on hand inventory unit" do
-          subject
-          expect(desired_shipment.inventory_units.first).to be_on_hand
-        end
-      end
-    end
+    it_behaves_like "properly manages inventory units"
   end
 
   context "when tracking inventory is not set (same as false)" do
