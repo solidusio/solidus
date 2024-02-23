@@ -82,29 +82,61 @@ RSpec.describe Spree::FulfilmentChanger do
   end
 
   shared_examples_for "properly manages inventory units" do
-    context "when the stock location is empty" do
-      let(:stock_item) { variant.stock_items.find_by!(stock_location: current_shipment.stock_location) }
+    let(:stock_item) { variant.stock_items.find_by!(stock_location: current_shipment.stock_location) }
 
-      before { stock_item.update_column(:count_on_hand, 0) }
+    context "when there are backordered inventory units" do
+      let(:backordered_units_count) { 1 }
 
-      context "when there are backordered inventory units" do
+      before do
+        current_shipment.inventory_units.limit(backordered_units_count).update!(state: :backordered)
+      end
+
+      context "when the stock is zero or negative" do
         before do
-          current_shipment.inventory_units.first.update(state: :backordered)
+          stock_item.update_column(:count_on_hand, -backordered_units_count)
+        end
+
+        it "doesn't change inventory units state" do
+          expect { subject }
+          .not_to change { order.inventory_units.map(&:state).sort }
+          .from(%w[backordered on_hand])
+        end
+      end
+
+      context "when backordered items can become on hand" do
+        before do
+          stock_item.update_column(:count_on_hand, backordered_units_count)
+        end
+
+        it "makes all inventory units on hand" do
+          expect { subject }
+            .to change { order.inventory_units.map(&:state).sort }
+            .from(%w[backordered on_hand]).to(%w[on_hand on_hand])
+        end
+      end
+    end
+
+    context "when all inventory units are on hand" do
+      before do
+        current_shipment.inventory_units.update_all(state: :on_hand)
+      end
+
+      context "when the stock is negative" do
+        before do
+          stock_item.update_column(:count_on_hand, -1)
         end
 
         it "doesn't change the order inventory units state" do
           expect { subject }.not_to change { order.inventory_units.map(&:state).sort }
         end
       end
+    end
 
-      context "when all inventory units are on hand" do
-        before do
-          current_shipment.inventory_units.update_all(state: :on_hand)
-        end
+    context "when the stock location is empty" do
+      before { stock_item.update_column(:count_on_hand, 0) }
 
-        it "doesn't change the order inventory units state" do
-          expect { subject }.not_to change { order.inventory_units.map(&:state).sort }
-        end
+      it "doesn't change the order inventory units state" do
+        expect { subject }.not_to change { order.inventory_units.map(&:state).sort }
       end
     end
   end
@@ -115,10 +147,11 @@ RSpec.describe Spree::FulfilmentChanger do
     variant.stock_items.first.update_column(:count_on_hand, 100)
   end
 
-  context "when the current shipment stock location is the same of the target shipment" do
-    let(:current_shipment_inventory_unit_count) { 1 }
-    let(:quantity) { current_shipment_inventory_unit_count }
+  context "when tracking inventory (default behavior)" do
+    let(:current_shipment_inventory_unit_count) { 2 }
+    let(:quantity) { 1 }
 
+    it_behaves_like "moves inventory units between shipments"
     it_behaves_like "properly manages inventory units"
   end
 
@@ -366,6 +399,7 @@ RSpec.describe Spree::FulfilmentChanger do
     let(:desired_shipment) { order.shipments.build(stock_location: current_shipment.stock_location) }
 
     it_behaves_like "moves inventory units between shipments"
+    it_behaves_like "properly manages inventory units"
 
     context "if the desired shipment is invalid" do
       let(:desired_shipment) { order.shipments.build(stock_location_id: 99_999_999) }
