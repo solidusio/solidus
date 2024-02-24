@@ -426,7 +426,7 @@ module Spree
     #
     # @!attribute [rw] promotion_configuration_class
     # @return [Class] a class instance that fulfils the interface of a promo configuration
-    class_name_attribute :promotion_configuration_class, default: 'Spree::Core::PromotionConfiguration'
+    class_name_attribute :promotion_configuration_class, default: 'Spree::Core::NullPromotionConfiguration'
 
     # Allows providing your own class for adding payment sources to a user's
     # "wallet" after an order moves to the complete state.
