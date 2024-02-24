@@ -8,7 +8,9 @@ class Spree::UnitCancel < Spree::Base
   DEFAULT_REASON = 'Cancel'
 
   belongs_to :inventory_unit, optional: true
+
   has_one :adjustment, as: :source, dependent: :destroy
+  has_one :line_item, through: :inventory_unit
 
   validates :inventory_unit, presence: true
 
@@ -16,9 +18,9 @@ class Spree::UnitCancel < Spree::Base
   def adjust!
     raise "Adjustment is already created" if adjustment
 
-    amount = compute_amount(inventory_unit.line_item)
+    amount = compute_amount
 
-    self.adjustment = inventory_unit.line_item.adjustments.create!(
+    self.adjustment = line_item.adjustments.create!(
       source: self,
       amount: amount,
       order: inventory_unit.order,
@@ -27,27 +29,29 @@ class Spree::UnitCancel < Spree::Base
       finalized: true
     )
 
-    inventory_unit.line_item.order.recalculate
+    line_item.order.recalculate
     adjustment
   end
 
   # This method is used by Adjustment#update to recalculate the cost.
-  def compute_amount(line_item)
-    raise "Adjustable does not match line item" unless line_item == inventory_unit.line_item
-
-    -weighted_line_item_amount(line_item)
+  def compute_amount
+    -weighted_amount(line_item.total_before_tax)
   end
 
   private
 
-  def weighted_line_item_amount(line_item)
-    quantity_of_line_item = quantity_of_line_item(line_item)
-    raise ZeroDivisionError, "Line Item does not have any inventory units available to cancel" if quantity_of_line_item.zero?
+  def weighted_amount(amount)
+    quantity = quantity_of_line_item
 
-    line_item.total_before_tax / quantity_of_line_item
+    if quantity.zero?
+      raise ZeroDivisionError,
+        'Line Item does not have any inventory units available to cancel'
+    end
+
+    amount / quantity
   end
 
-  def quantity_of_line_item(line_item)
+  def quantity_of_line_item
     BigDecimal(line_item.inventory_units.not_canceled.reject(&:original_return_item).size)
   end
 end
