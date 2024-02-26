@@ -508,11 +508,6 @@ module Spree
       end
     end
 
-    def apply_shipping_promotions
-      Spree::Config.promotions.shipping_promotion_handler_class.new(self).activate
-      recalculate
-    end
-
     # Clean shipments and make order back to address state (or to whatever state
     # is set by restart_checkout_flow in case of state machine modifications)
     def check_shipments_and_restart_checkout
