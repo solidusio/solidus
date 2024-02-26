@@ -129,7 +129,7 @@ module Solidus
         rake 'active_storage:install'
       else
         say_status :assets, "Paperclip", :green
-        gsub_file 'config/initializers/spree.rb', "::ActiveStorageAttachment", "::PaperclipAttachment"
+        rake "solidus:paperclip_adapter:install"
       end
     end
 
