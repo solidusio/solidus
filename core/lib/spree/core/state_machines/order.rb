@@ -106,7 +106,6 @@ module Spree
                 before_transition to: :delivery, do: :ensure_shipping_address
                 before_transition to: :delivery, do: :create_proposed_shipments
                 before_transition to: :delivery, do: :ensure_available_shipping_rates
-                before_transition from: :delivery, do: :apply_shipping_promotions
               end
 
               before_transition to: :resumed, do: :ensure_line_item_variants_are_not_deleted

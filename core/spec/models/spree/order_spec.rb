@@ -719,18 +719,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context "#apply_shipping_promotions" do
-    it "calls out to the Shipping promotion handler" do
-      expect_any_instance_of(Spree::PromotionHandler::Shipping).to(
-        receive(:activate)
-      ).and_call_original
-
-      expect(order.recalculator).to receive(:recalculate).and_call_original
-
-      order.apply_shipping_promotions
-    end
-  end
-
   context "#products" do
     before :each do
       @variant1 = mock_model(Spree::Variant, product: "product1")
