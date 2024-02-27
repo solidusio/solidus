@@ -214,7 +214,7 @@ RSpec.describe Spree::AppConfiguration do
   describe "#adjustment_promotion_source_types" do
     subject { described_class.new.adjustment_promotion_source_types }
 
-    it { is_expected.to contain_exactly(Spree::PromotionAction) }
+    it { is_expected.to be_empty }
   end
 
   it 'has a default admin VAT location with nil values by default' do
