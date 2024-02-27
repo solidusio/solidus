@@ -17,6 +17,11 @@ module SolidusLegacyPromotions
       recalculate
     end
 
+    def empty!
+      order_promotions.destroy_all
+      super
+    end
+
     ::Spree::Order.prepend(self)
   end
 end
