@@ -42,6 +42,12 @@ module SolidusLegacyPromotions
       end
     end
 
+    initializer 'solidus_legacy_promotions.core.pub_sub', after: 'spree.core.pub_sub' do |app|
+      app.reloader.to_prepare do
+        Spree::OrderPromotionSubscriber.new.subscribe_to(Spree::Bus)
+      end
+    end
+
     initializer "solidus_legacy_promotions.assets" do |app|
       app.config.assets.precompile << "solidus_legacy_promotions/manifest.js"
     end
