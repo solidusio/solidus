@@ -14,10 +14,8 @@ module Spree
           @user = order.try(:user) || options[:user]
           @email = order.email
 
-          if user || email
-            if !completed_orders.blank? && completed_orders.first != order
-              eligibility_errors.add(:base, eligibility_error_message(:not_first_order), error_code: :not_first_order)
-            end
+          if (user || email) && (completed_orders.present? && completed_orders.first != order)
+            eligibility_errors.add(:base, eligibility_error_message(:not_first_order), error_code: :not_first_order)
           end
 
           eligibility_errors.empty?

@@ -231,7 +231,7 @@ module Spree
       actions.each do |action|
         action.remove_from(order)
       end
-      # note: this destroys the join table entry, not the promotion itself
+      # NOTE: this destroys the join table entry, not the promotion itself
       order.promotions.destroy(self)
       order.order_promotions.reset
       order_promotions.reset

@@ -50,10 +50,8 @@ module Spree
       end
 
       def promotion
-        @promotion ||= begin
-          if promotion_code && promotion_code.promotion.active?
-            promotion_code.promotion
-          end
+        @promotion ||= if promotion_code && promotion_code.promotion.active?
+          promotion_code.promotion
         end
       end
 

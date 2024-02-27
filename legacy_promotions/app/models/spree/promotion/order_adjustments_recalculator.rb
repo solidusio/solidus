@@ -2,7 +2,6 @@
 
 module Spree
   class Promotion < Spree::Base
-
     # This class encapsulates all the things the promotion system does to
     # an order. It is called from the `Spree::OrderUpdater` before taxes are
     # calculated, such that taxes always respect promotions.
@@ -43,6 +42,7 @@ module Spree
       private
 
       attr_reader :order
+
       delegate :line_items, :shipments, to: :order
 
       # Recalculate and persist the amount from this adjustment's source based on
