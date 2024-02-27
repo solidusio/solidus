@@ -7,6 +7,7 @@ module SolidusLegacyPromotions
     initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
       Spree::Config.order_contents_class = "Spree::OrderContents"
       Spree::Config.promotion_configuration_class = "Spree::Core::PromotionConfiguration"
+      Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
     end
   end
 end
