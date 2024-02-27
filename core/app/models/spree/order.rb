@@ -450,7 +450,6 @@ module Spree
       line_items.destroy_all
       adjustments.destroy_all
       shipments.destroy_all
-      order_promotions.destroy_all
 
       recalculate
     end
