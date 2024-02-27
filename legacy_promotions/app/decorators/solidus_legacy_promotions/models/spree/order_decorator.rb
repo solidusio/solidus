@@ -8,6 +8,8 @@ module SolidusLegacyPromotions
           before_transition from: :delivery, do: :apply_shipping_promotions
         end
       end
+      base.has_many :order_promotions, class_name: 'Spree::OrderPromotion', dependent: :destroy
+      base.has_many :promotions, through: :order_promotions
     end
 
     def apply_shipping_promotions
