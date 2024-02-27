@@ -122,6 +122,7 @@ module Spree
       end
       amount
     end
+    deprecate :recalculate, deprecator: Spree.deprecator
 
     # Calculates based on attached promotion (if this is a promotion
     # adjustment) whether this promotion is still eligible.
