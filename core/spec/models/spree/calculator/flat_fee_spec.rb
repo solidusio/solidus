@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "shared_examples/calculator_shared_examples"
+require 'spree/testing_support/shared_examples/calculator'
 
 RSpec.describe Spree::Calculator::FlatFee, type: :model do
   let(:tax_rate) { build(:tax_rate, amount: 42) }

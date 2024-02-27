@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'shared_examples/calculator_shared_examples'
+require 'spree/testing_support/shared_examples/calculator'
 
 module Spree
   RSpec.describe Calculator::PercentOnLineItem, type: :model do
