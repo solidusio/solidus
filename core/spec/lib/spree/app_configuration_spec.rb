@@ -44,64 +44,6 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.promotion_configuration_class).to eq Spree::Core::NullPromotionConfiguration
   end
 
-  context "deprecated preferences" do
-    around do |example|
-      Spree.deprecator.silence do
-        example.run
-      end
-    end
-
-    it "uses order adjustments recalculator class by default" do
-      expect(prefs.promotion_adjuster_class).to eq Spree::Promotion::OrderAdjustmentsRecalculator
-    end
-
-    it "uses promotion handler coupon class by default" do
-      expect(prefs.coupon_code_handler_class).to eq Spree::PromotionHandler::Coupon
-    end
-
-    it "uses promotion handler shipping class by default" do
-      expect(prefs.shipping_promotion_handler_class).to eq Spree::PromotionHandler::Shipping
-    end
-
-    it "uses promotion code batch mailer class by default" do
-      expect(prefs.promotion_code_batch_mailer_class).to eq Spree::PromotionCodeBatchMailer
-    end
-
-    it "uses promotion chooser class by default" do
-      expect(prefs.promotion_chooser_class).to eq Spree::PromotionChooser
-    end
-  end
-
-  context "deprecated preferences" do
-    let(:environment) { prefs.environment }
-
-    around do |example|
-      Spree.deprecator.silence do
-        example.run
-      end
-    end
-
-    context '.calculators' do
-      subject(:calculators) { environment.calculators }
-      it { is_expected.to be_a Spree::Core::Environment::Calculators }
-
-      context '.calculators.promotion_actions_create_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_item_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_quantity_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-    end
-  end
-
   it "has a getter for the pricing options class provided by the variant price selector class" do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
@@ -155,33 +97,6 @@ RSpec.describe Spree::AppConfiguration do
 
       context '.calculators.tax_rates' do
         subject(:preferences_set) { calculators.tax_rates }
-        it_should_behave_like "working preferences set"
-      end
-    end
-
-    context '.promotions' do
-      around do |example|
-        Spree.deprecator.silence do
-          example.run
-        end
-      end
-
-      subject(:promotions) { environment.promotions }
-
-      it { is_expected.to be_a Spree::Core::Environment::Promotions }
-
-      context '.promotions.rules' do
-        subject(:preferences_set) { promotions.rules }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.promotions.actions' do
-        subject(:preferences_set) { promotions.actions }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.promotions.shipping_actions' do
-        subject(:preferences_set) { promotions.shipping_actions }
         it_should_behave_like "working preferences set"
       end
     end

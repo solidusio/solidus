@@ -8,6 +8,7 @@ module SolidusLegacyPromotions
       Spree::Config.order_contents_class = "Spree::OrderContents"
       Spree::Config.promotion_configuration_class = "Spree::Core::PromotionConfiguration"
       Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
+      Spree::Config.promotion_configuration_class = "Spree::Core::PromotionConfiguration"
     end
   end
 end
