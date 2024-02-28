@@ -2049,4 +2049,19 @@ RSpec.describe Spree::Order, type: :model do
       it { is_expected.to eq(true) }
     end
   end
+
+  describe "#can_approve?" do
+    let(:order) { create(:order, approved_at: approved_at) }
+    let(:approved_at) { nil }
+
+    subject { order.can_approve? }
+
+    it { is_expected.to eq(true) }
+
+    context "when the order is already approved" do
+      let(:approved_at) { Time.current }
+
+      it { is_expected.to eq(false) }
+    end
+  end
 end
