@@ -229,4 +229,107 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
     end
   end
+
+  describe "#calculate_eligibility" do
+    subject { adjustment.calculate_eligibility }
+
+    around do |example|
+      Spree.deprecator.silence do
+        example.run
+      end
+    end
+
+    context "when the adjustment is not a promotion adjustment" do
+      let(:adjustment) { build(:adjustment, eligible: true, source: nil) }
+
+      it { is_expected.to eq true }
+    end
+  end
+
+  describe "#finalize" do
+    let(:adjustable) { create(:order) }
+    let(:adjustment) { build(:adjustment, finalized: false, adjustable: adjustable) }
+
+    subject { adjustment.finalize }
+
+    it "sets the adjustment as finalized" do
+      expect { subject }.to change { adjustment.finalized }.from(false).to(true)
+    end
+
+    it "persists the adjustment" do
+      expect { subject }.to change { adjustment.persisted? }.from(false).to(true)
+    end
+
+    context "for an invalid adjustment" do
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+
+      it "raises no error, returns false, does not persist the adjustment" do
+        expect { subject }.not_to change { adjustment.persisted? }.from(false)
+        expect(subject).to eq false
+      end
+    end
+  end
+
+  describe "#unfinalize" do
+    let(:adjustable) { create(:order) }
+    let(:adjustment) { build(:adjustment, finalized: true, adjustable: adjustable) }
+
+    subject { adjustment.unfinalize }
+
+    it "sets the adjustment as finalized" do
+      expect { subject }.to change { adjustment.finalized }.from(true).to(false)
+    end
+
+    it "persists the adjustment" do
+      expect { subject }.to change { adjustment.persisted? }.from(false).to(true)
+    end
+
+    context "for an invalid adjustment" do
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+
+      it "raises no error, returns false, does not persist the adjustment" do
+        expect { subject }.not_to change { adjustment.persisted? }.from(false)
+        expect(subject).to eq false
+      end
+    end
+  end
+
+  describe "#unfinalize!" do
+    let(:adjustable) { create(:order) }
+    let(:adjustment) { build(:adjustment, finalized: true, adjustable: adjustable) }
+
+    subject { adjustment.unfinalize! }
+
+    it "sets the adjustment as finalized" do
+      expect { subject }.to change { adjustment.finalized }.from(true).to(false)
+    end
+
+    it "persists the adjustment" do
+      expect { subject }.to change { adjustment.persisted? }.from(false).to(true)
+    end
+
+    context "for an invalid adjustment" do
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+
+      it "raises an error" do
+        expect { subject }.to raise_exception(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
+
+  describe "#cancellation?" do
+    subject { adjustment.cancellation? }
+
+    context "when the adjustment is a cancellation" do
+      let(:adjustment) { build(:adjustment, source_type: "Spree::UnitCancel") }
+
+      it { is_expected.to eq true }
+    end
+
+    context "when the adjustment is not a cancellation" do
+      let(:adjustment) { build(:adjustment) }
+
+      it { is_expected.to eq false }
+    end
+  end
 end
