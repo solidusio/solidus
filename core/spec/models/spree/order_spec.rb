@@ -1952,4 +1952,28 @@ RSpec.describe Spree::Order, type: :model do
       expect(subject).to eq([shipped_shipment])
     end
   end
+
+  describe "#name" do
+    let(:bill_address) { create(:address, name: "John Doe") }
+    let(:ship_address) { create(:address, name: "Jane Doe") }
+
+    let(:order) { create(:order, bill_address: bill_address, ship_address: ship_address) }
+
+    subject { order.name }
+
+    it { is_expected.to eq("John Doe") }
+
+    context "if bill address is nil" do
+      let(:bill_address) { nil }
+
+      it { is_expected.to eq("Jane Doe") }
+    end
+
+    context "if both bill address and ship address are nil" do
+      let(:bill_address) { nil }
+      let(:ship_address) { nil }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end
