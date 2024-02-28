@@ -2033,4 +2033,20 @@ RSpec.describe Spree::Order, type: :model do
       subject
     end
   end
+
+  describe "#shipping_eq_billing_address?" do
+    let(:order) { create(:order, bill_address: bill_address, ship_address: ship_address) }
+    let(:bill_address) { create(:address) }
+    let(:ship_address) { create(:address) }
+
+    subject { order.shipping_eq_billing_address? }
+
+    it { is_expected.to eq(false) }
+
+    context "when the addresses are the same" do
+      let(:ship_address) { bill_address }
+
+      it { is_expected.to eq(true) }
+    end
+  end
 end
