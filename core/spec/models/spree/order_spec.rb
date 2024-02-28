@@ -2064,4 +2064,15 @@ RSpec.describe Spree::Order, type: :model do
       it { is_expected.to eq(false) }
     end
   end
+
+  describe "#bill_address_attributes=" do
+    let(:order) { create(:order) }
+    let(:address_attributes) { { name: "Mickey Mouse" } }
+
+    subject { order.bill_address_attributes = address_attributes }
+
+    it "creates a new bill address" do
+      expect { subject }.to change { order.bill_address.name }.to("Mickey Mouse")
+    end
+  end
 end
