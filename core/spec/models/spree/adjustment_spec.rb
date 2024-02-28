@@ -293,4 +293,27 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
     end
   end
+
+  describe "#unfinalize!" do
+    let(:adjustable) { create(:order) }
+    let(:adjustment) { build(:adjustment, finalized: true, adjustable: adjustable) }
+
+    subject { adjustment.unfinalize! }
+
+    it "sets the adjustment as finalized" do
+      expect { subject }.to change { adjustment.finalized }.from(true).to(false)
+    end
+
+    it "persists the adjustment" do
+      expect { subject }.to change { adjustment.persisted? }.from(false).to(true)
+    end
+
+    context "for an invalid adjustment" do
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+
+      it "raises an error" do
+        expect { subject }.to raise_exception(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
 end
