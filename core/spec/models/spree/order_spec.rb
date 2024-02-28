@@ -1179,6 +1179,16 @@ RSpec.describe Spree::Order, type: :model do
 
       expect { shipment.reload }.not_to raise_error
     end
+
+    context "when the order is already completed" do
+      let(:order) { create(:completed_order_with_pending_payment) }
+
+      it "raises an error" do
+        expect {
+          order.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      end
+    end
   end
 
   describe "#all_inventory_units_returned?" do
