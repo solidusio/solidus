@@ -1931,4 +1931,12 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe "#to_param" do
+    let(:order) { create(:order, number: "MYNUMBER") }
+
+    subject { order.to_param }
+
+    it { is_expected.to eq("MYNUMBER") }
+  end
 end
