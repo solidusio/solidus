@@ -1988,4 +1988,24 @@ RSpec.describe Spree::Order, type: :model do
       expect(subject).to eq([valid_payment.source])
     end
   end
+
+  describe "#coupon_code=" do
+    let(:order) { create(:order) }
+    let(:promotion) { create(:promotion, code: "10off") }
+    let(:coupon_code) { "10OFF" }
+
+    subject { order.coupon_code = coupon_code }
+
+    it "stores the downcased coupon code on the order" do
+      expect { subject }.to change { order.coupon_code }.from(nil).to("10off")
+    end
+
+    context "with an non-string object" do
+      let(:coupon_code) { false }
+
+      it "doesn't store the coupon code on the order" do
+        expect { subject }.not_to change { order.coupon_code }.from(nil)
+      end
+    end
+  end
 end
