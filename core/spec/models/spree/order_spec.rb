@@ -2075,4 +2075,24 @@ RSpec.describe Spree::Order, type: :model do
       expect { subject }.to change { order.bill_address.name }.to("Mickey Mouse")
     end
   end
+
+  describe "#payments_attributes=" do
+    let(:order) { create(:order) }
+    let(:payment_attributes) { [{ payment_method_id: payment_method.id }] }
+    let(:payment_method) { create(:payment_method) }
+
+    subject { order.payments_attributes = payment_attributes }
+
+    it "creates a new payment" do
+      expect { subject }.to change { order.payments.length }.from(0).to(1)
+    end
+
+    context "if the payment method is unavailable" do
+      let(:payment_method) { create(:payment_method, available_to_users: false) }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
