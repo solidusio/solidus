@@ -623,6 +623,20 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  context "resuming a canceled order" do
+    let(:order) { create(:completed_order_with_totals) }
+
+    before do
+      order.cancel!
+    end
+
+    it "also resumes the shipments" do
+      expect(order.shipments.map(&:state)).to eq %w(canceled)
+      order.resume!
+      expect(order.shipments.map(&:state)).to eq %w(pending)
+    end
+  end
+
   context "re-define checkout flow" do
     before do
       @old_checkout_flow = Spree::Order.checkout_flow
