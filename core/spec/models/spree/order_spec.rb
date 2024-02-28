@@ -1870,4 +1870,25 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe ".by_customer" do
+    let(:user) { create(:user, email: "customer@example.com") }
+    let!(:order) { create(:order, user: user) }
+    let!(:other_order) { create(:order) }
+    let(:email) { user.email }
+
+    subject { Spree::Order.by_customer(email) }
+
+    it "finds the order" do
+      expect(subject).to eq([order])
+    end
+
+    context "if user has no order" do
+      let(:email) { "not_a_customer@example.com" }
+
+      it "returns an empty list" do
+        expect(subject).to eq([])
+      end
+    end
+  end
 end
