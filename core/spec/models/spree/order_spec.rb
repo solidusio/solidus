@@ -1976,4 +1976,16 @@ RSpec.describe Spree::Order, type: :model do
       it { is_expected.to be_nil }
     end
   end
+
+  describe "#valid_credit_cards" do
+    let(:order) { create(:order, payments: [valid_payment, invalid_payment]) }
+    let(:valid_payment) { create(:payment, state: "checkout") }
+    let(:invalid_payment) { create(:payment, state: "failed") }
+
+    subject { order.valid_credit_cards }
+
+    it "returns the valid credit cards" do
+      expect(subject).to eq([valid_payment.source])
+    end
+  end
 end
