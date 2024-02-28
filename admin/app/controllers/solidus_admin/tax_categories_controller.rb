@@ -34,7 +34,7 @@ module SolidusAdmin
     end
 
     def tax_category_params
-      params.require(:tax_category).permit(:tax_category_id, permitted_tax_category_attributes)
+      params.require(:tax_category).permit(:name, :description, :is_default, :tax_code)
     end
   end
 end
