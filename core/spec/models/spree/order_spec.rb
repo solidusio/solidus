@@ -1891,4 +1891,44 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe ".by_state" do
+    let!(:cart_order) { create(:order, state: :cart) }
+    let!(:address_order) { create(:order, state: :address) }
+    let!(:complete_order) { create(:order, state: :complete) }
+
+    subject { Spree::Order.by_state(desired_state) }
+
+    context "with a desired state of cart" do
+      let(:desired_state) { :cart }
+
+      it "returns the cart order" do
+        expect(subject).to eq([cart_order])
+      end
+    end
+
+    context "with a desired state of address" do
+      let(:desired_state) { :address }
+
+      it "returns the address order" do
+        expect(subject).to eq([address_order])
+      end
+    end
+
+    context "with a desired state of complete" do
+      let(:desired_state) { :complete }
+
+      it "returns the complete order" do
+        expect(subject).to eq([complete_order])
+      end
+    end
+
+    context "with a desired state of payment" do
+      let(:desired_state) { :payment }
+
+      it "returns an empty list" do
+        expect(subject).to eq([])
+      end
+    end
+  end
 end
