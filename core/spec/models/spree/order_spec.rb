@@ -2125,4 +2125,25 @@ RSpec.describe Spree::Order, type: :model do
       it { is_expected.to eq(false) }
     end
   end
+
+  describe "#shipped?" do
+    let(:order) { Spree::Order.new(shipment_state: shipment_state) }
+    let(:shipment_state) { "ready" }
+
+    subject { order.shipped? }
+
+    it { is_expected.to eq(false) }
+
+    context "when the all shipments are shipped" do
+      let(:shipment_state) { "shipped" }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "when some shipments are shipped" do
+      let(:shipment_state) { "partial" }
+
+      it { is_expected.to eq(true) }
+    end
+  end
 end
