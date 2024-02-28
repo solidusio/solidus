@@ -1832,4 +1832,42 @@ RSpec.describe Spree::Order, type: :model do
       expect { subject }.to change { Spree::OrderPromotion.count }.from(1).to(0)
     end
   end
+
+  describe ".find_by_param" do
+    let(:order) { create(:order) }
+    let(:param) { order.number }
+
+    subject { Spree::Order.find_by_param(param) }
+
+    it "finds the order" do
+      expect(subject).to eq(order)
+    end
+
+    context "with a non-existent order" do
+      let(:param) { "non-existent" }
+
+      it "returns nil" do
+        expect(subject).to be_nil
+      end
+    end
+  end
+
+  describe ".find_by_param!" do
+    let(:order) { create(:order) }
+    let(:param) { order.number }
+
+    subject { Spree::Order.find_by_param!(param) }
+
+    it "finds the order" do
+      expect(subject).to eq(order)
+    end
+
+    context "with a non-existent order" do
+      let(:param) { "non-existent" }
+
+      it "returns nil" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
