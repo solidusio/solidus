@@ -2018,4 +2018,19 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe "#refresh_shipment_rates" do
+    let(:order) { create(:order, shipments: [shipment_one, shipment_two]) }
+    let(:shipment_one) { create(:shipment) }
+    let(:shipment_two) { create(:shipment) }
+
+    subject { order.refresh_shipment_rates }
+
+    it "calls #refresh_rates on each shipment" do
+      expect(shipment_one).to receive(:refresh_rates)
+      expect(shipment_two).to receive(:refresh_rates)
+
+      subject
+    end
+  end
 end
