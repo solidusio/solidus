@@ -316,4 +316,20 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
     end
   end
+
+  describe "#cancellation?" do
+    subject { adjustment.cancellation? }
+
+    context "when the adjustment is a cancellation" do
+      let(:adjustment) { build(:adjustment, source_type: "Spree::UnitCancel") }
+
+      it { is_expected.to eq true }
+    end
+
+    context "when the adjustment is not a cancellation" do
+      let(:adjustment) { build(:adjustment) }
+
+      it { is_expected.to eq false }
+    end
+  end
 end
