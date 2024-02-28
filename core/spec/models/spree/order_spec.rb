@@ -1939,4 +1939,17 @@ RSpec.describe Spree::Order, type: :model do
 
     it { is_expected.to eq("MYNUMBER") }
   end
+
+  describe "#shipped_shipments" do
+    let(:order) { create(:order, shipments: shipments) }
+    let(:shipments) { [shipped_shipment, unshipped_shipment] }
+    let(:shipped_shipment) { create(:shipment, state: "shipped") }
+    let(:unshipped_shipment) { create(:shipment, state: "ready") }
+
+    subject { order.shipped_shipments }
+
+    it "returns the shipped shipments" do
+      expect(subject).to eq([shipped_shipment])
+    end
+  end
 end
