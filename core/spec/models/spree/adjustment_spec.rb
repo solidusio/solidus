@@ -229,4 +229,20 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
     end
   end
+
+  describe "#calculate_eligibility" do
+    subject { adjustment.calculate_eligibility }
+
+    around do |example|
+      Spree.deprecator.silence do
+        example.run
+      end
+    end
+
+    context "when the adjustment is not a promotion adjustment" do
+      let(:adjustment) { build(:adjustment, eligible: true, source: nil) }
+
+      it { is_expected.to eq true }
+    end
+  end
 end
