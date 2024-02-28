@@ -245,4 +245,28 @@ RSpec.describe Spree::Adjustment, type: :model do
       it { is_expected.to eq true }
     end
   end
+
+  describe "#finalize" do
+    let(:adjustable) { create(:order) }
+    let(:adjustment) { build(:adjustment, finalized: false, adjustable: adjustable) }
+
+    subject { adjustment.finalize }
+
+    it "sets the adjustment as finalized" do
+      expect { subject }.to change { adjustment.finalized }.from(false).to(true)
+    end
+
+    it "persists the adjustment" do
+      expect { subject }.to change { adjustment.persisted? }.from(false).to(true)
+    end
+
+    context "for an invalid adjustment" do
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+
+      it "raises no error, returns false, does not persist the adjustment" do
+        expect { subject }.not_to change { adjustment.persisted? }.from(false)
+        expect(subject).to eq false
+      end
+    end
+  end
 end
