@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SetPromotionsWithAnyPolicyToAllIfPossible < ActiveRecord::Migration[5.2]
+class SetPromotionsWithAnyPolicyToAllIfPossible < ActiveRecord::Migration[6.1]
   def up
     Spree::Promotion.where(match_policy: :any).includes(:promotion_rules).all.find_each do |promotion|
       if promotion.promotion_rules.length <= 1

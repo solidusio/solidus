@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
+class SolidusOneFourPromotions < ActiveRecord::Migration[6.1]
   def up
-    create_table "spree_orders_promotions", force: :cascade do |t|
+    create_table "spree_orders_promotions", if_not_exists: true, force: :cascade do |t|
       t.integer "order_id"
       t.integer "promotion_id"
       t.integer "promotion_code_id"
@@ -12,7 +12,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["promotion_code_id"], name: "index_spree_orders_promotions_on_promotion_code_id"
     end
 
-    create_table "spree_product_promotion_rules", force: :cascade do |t|
+    create_table "spree_product_promotion_rules", if_not_exists: true, force: :cascade do |t|
       t.integer "product_id"
       t.integer "promotion_rule_id"
       t.datetime "created_at", precision: 6
@@ -21,7 +21,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["promotion_rule_id"], name: "index_products_promotion_rules_on_promotion_rule_id"
     end
 
-    create_table "spree_promotion_actions", force: :cascade do |t|
+    create_table "spree_promotion_actions", if_not_exists: true, force: :cascade do |t|
       t.integer "promotion_id"
       t.integer "position"
       t.string "type"
@@ -34,14 +34,14 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["promotion_id"], name: "index_spree_promotion_actions_on_promotion_id"
     end
 
-    create_table "spree_promotion_categories", force: :cascade do |t|
+    create_table "spree_promotion_categories", if_not_exists: true, force: :cascade do |t|
       t.string "name"
       t.datetime "created_at", precision: 6
       t.datetime "updated_at", precision: 6
       t.string "code"
     end
 
-    create_table "spree_promotion_codes", force: :cascade do |t|
+    create_table "spree_promotion_codes", if_not_exists: true, force: :cascade do |t|
       t.integer "promotion_id", null: false
       t.string "value", null: false
       t.datetime "created_at", precision: 6
@@ -50,7 +50,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["value"], name: "index_spree_promotion_codes_on_value", unique: true
     end
 
-    create_table "spree_promotion_rule_taxons", force: :cascade do |t|
+    create_table "spree_promotion_rule_taxons", if_not_exists: true, force: :cascade do |t|
       t.integer "taxon_id"
       t.integer "promotion_rule_id"
       t.datetime "created_at", precision: 6
@@ -59,7 +59,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["taxon_id"], name: "index_spree_promotion_rule_taxons_on_taxon_id"
     end
 
-    create_table "spree_promotion_rules", force: :cascade do |t|
+    create_table "spree_promotion_rules", if_not_exists: true, force: :cascade do |t|
       t.integer "promotion_id"
       t.integer "product_group_id"
       t.string "type"
@@ -71,7 +71,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["promotion_id"], name: "index_spree_promotion_rules_on_promotion_id"
     end
 
-    create_table "spree_promotion_rules_users", force: :cascade do |t|
+    create_table "spree_promotion_rules_users", if_not_exists: true, force: :cascade do |t|
       t.integer "user_id"
       t.integer "promotion_rule_id"
       t.datetime "created_at", precision: 6
@@ -80,7 +80,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
       t.index ["user_id"], name: "index_promotion_rules_users_on_user_id"
     end
 
-    create_table "spree_promotions", force: :cascade do |t|
+    create_table "spree_promotions", if_not_exists: true, force: :cascade do |t|
       t.string "description"
       t.datetime "expires_at"
       t.datetime "starts_at"

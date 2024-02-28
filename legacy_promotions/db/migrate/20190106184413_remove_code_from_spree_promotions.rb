@@ -2,7 +2,7 @@
 
 require 'solidus_legacy_promotions/migrations/promotions_with_code_handlers'
 
-class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
+class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[6.1]
   class Promotion < ActiveRecord::Base
     self.table_name = "spree_promotions"
     self.ignored_columns = %w(type)
@@ -18,13 +18,13 @@ class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
       self.class.promotions_with_code_handler.new(self, promotions_with_code).call
     end
 
-    remove_index :spree_promotions, name: :index_spree_promotions_on_code
-    remove_column :spree_promotions, :code
+    remove_index :spree_promotions, name: :index_spree_promotions_on_code, if_exists: true
+    remove_column :spree_promotions, :code, if_exists: true
   end
 
   def down
-    add_column :spree_promotions, :code, :string
-    add_index :spree_promotions, :code, name: :index_spree_promotions_on_code
+    add_column :spree_promotions, :code, :string, if_not_exists: true
+    add_index :spree_promotions, :code, name: :index_spree_promotions_on_code, if_not_exists: true
   end
 
   def self.promotions_with_code_handler
