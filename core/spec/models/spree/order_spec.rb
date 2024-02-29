@@ -1179,6 +1179,16 @@ RSpec.describe Spree::Order, type: :model do
 
       expect { shipment.reload }.not_to raise_error
     end
+
+    context "when the order is already completed" do
+      let(:order) { create(:completed_order_with_pending_payment) }
+
+      it "raises an error" do
+        expect {
+          order.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      end
+    end
   end
 
   describe "#all_inventory_units_returned?" do
@@ -1830,6 +1840,310 @@ RSpec.describe Spree::Order, type: :model do
 
     it "deletes join table entries when deleting an order" do
       expect { subject }.to change { Spree::OrderPromotion.count }.from(1).to(0)
+    end
+  end
+
+  describe ".find_by_param" do
+    let(:order) { create(:order) }
+    let(:param) { order.number }
+
+    subject { Spree::Order.find_by_param(param) }
+
+    it "finds the order" do
+      expect(subject).to eq(order)
+    end
+
+    context "with a non-existent order" do
+      let(:param) { "non-existent" }
+
+      it "returns nil" do
+        expect(subject).to be_nil
+      end
+    end
+  end
+
+  describe ".find_by_param!" do
+    let(:order) { create(:order) }
+    let(:param) { order.number }
+
+    subject { Spree::Order.find_by_param!(param) }
+
+    it "finds the order" do
+      expect(subject).to eq(order)
+    end
+
+    context "with a non-existent order" do
+      let(:param) { "non-existent" }
+
+      it "returns nil" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe ".by_customer" do
+    let(:user) { create(:user, email: "customer@example.com") }
+    let!(:order) { create(:order, user: user) }
+    let!(:other_order) { create(:order) }
+    let(:email) { user.email }
+
+    subject { Spree::Order.by_customer(email) }
+
+    it "finds the order" do
+      expect(subject).to eq([order])
+    end
+
+    context "if user has no order" do
+      let(:email) { "not_a_customer@example.com" }
+
+      it "returns an empty list" do
+        expect(subject).to eq([])
+      end
+    end
+  end
+
+  describe ".by_state" do
+    let!(:cart_order) { create(:order, state: :cart) }
+    let!(:address_order) { create(:order, state: :address) }
+    let!(:complete_order) { create(:order, state: :complete) }
+
+    subject { Spree::Order.by_state(desired_state) }
+
+    context "with a desired state of cart" do
+      let(:desired_state) { :cart }
+
+      it "returns the cart order" do
+        expect(subject).to eq([cart_order])
+      end
+    end
+
+    context "with a desired state of address" do
+      let(:desired_state) { :address }
+
+      it "returns the address order" do
+        expect(subject).to eq([address_order])
+      end
+    end
+
+    context "with a desired state of complete" do
+      let(:desired_state) { :complete }
+
+      it "returns the complete order" do
+        expect(subject).to eq([complete_order])
+      end
+    end
+
+    context "with a desired state of payment" do
+      let(:desired_state) { :payment }
+
+      it "returns an empty list" do
+        expect(subject).to eq([])
+      end
+    end
+  end
+
+  describe "#to_param" do
+    let(:order) { create(:order, number: "MYNUMBER") }
+
+    subject { order.to_param }
+
+    it { is_expected.to eq("MYNUMBER") }
+  end
+
+  describe "#shipped_shipments" do
+    let(:order) { create(:order, shipments: shipments) }
+    let(:shipments) { [shipped_shipment, unshipped_shipment] }
+    let(:shipped_shipment) { create(:shipment, state: "shipped") }
+    let(:unshipped_shipment) { create(:shipment, state: "ready") }
+
+    subject { order.shipped_shipments }
+
+    it "returns the shipped shipments" do
+      expect(subject).to eq([shipped_shipment])
+    end
+  end
+
+  describe "#name" do
+    let(:bill_address) { create(:address, name: "John Doe") }
+    let(:ship_address) { create(:address, name: "Jane Doe") }
+
+    let(:order) { create(:order, bill_address: bill_address, ship_address: ship_address) }
+
+    subject { order.name }
+
+    it { is_expected.to eq("John Doe") }
+
+    context "if bill address is nil" do
+      let(:bill_address) { nil }
+
+      it { is_expected.to eq("Jane Doe") }
+    end
+
+    context "if both bill address and ship address are nil" do
+      let(:bill_address) { nil }
+      let(:ship_address) { nil }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe "#valid_credit_cards" do
+    let(:order) { create(:order, payments: [valid_payment, invalid_payment]) }
+    let(:valid_payment) { create(:payment, state: "checkout") }
+    let(:invalid_payment) { create(:payment, state: "failed") }
+
+    subject { order.valid_credit_cards }
+
+    it "returns the valid credit cards" do
+      expect(subject).to eq([valid_payment.source])
+    end
+  end
+
+  describe "#coupon_code=" do
+    let(:order) { create(:order) }
+    let(:promotion) { create(:promotion, code: "10off") }
+    let(:coupon_code) { "10OFF" }
+
+    subject { order.coupon_code = coupon_code }
+
+    it "stores the downcased coupon code on the order" do
+      expect { subject }.to change { order.coupon_code }.from(nil).to("10off")
+    end
+
+    context "with an non-string object" do
+      let(:coupon_code) { false }
+
+      it "doesn't store the coupon code on the order" do
+        expect { subject }.not_to change { order.coupon_code }.from(nil)
+      end
+    end
+  end
+
+  describe "#refresh_shipment_rates" do
+    let(:order) { create(:order, shipments: [shipment_one, shipment_two]) }
+    let(:shipment_one) { create(:shipment) }
+    let(:shipment_two) { create(:shipment) }
+
+    subject { order.refresh_shipment_rates }
+
+    it "calls #refresh_rates on each shipment" do
+      expect(shipment_one).to receive(:refresh_rates)
+      expect(shipment_two).to receive(:refresh_rates)
+
+      subject
+    end
+  end
+
+  describe "#shipping_eq_billing_address?" do
+    let(:order) { create(:order, bill_address: bill_address, ship_address: ship_address) }
+    let(:bill_address) { create(:address) }
+    let(:ship_address) { create(:address) }
+
+    subject { order.shipping_eq_billing_address? }
+
+    it { is_expected.to eq(false) }
+
+    context "when the addresses are the same" do
+      let(:ship_address) { bill_address }
+
+      it { is_expected.to eq(true) }
+    end
+  end
+
+  describe "#can_approve?" do
+    let(:order) { create(:order, approved_at: approved_at) }
+    let(:approved_at) { nil }
+
+    subject { order.can_approve? }
+
+    it { is_expected.to eq(true) }
+
+    context "when the order is already approved" do
+      let(:approved_at) { Time.current }
+
+      it { is_expected.to eq(false) }
+    end
+  end
+
+  describe "#bill_address_attributes=" do
+    let(:order) { create(:order) }
+    let(:address_attributes) { { name: "Mickey Mouse" } }
+
+    subject { order.bill_address_attributes = address_attributes }
+
+    it "creates a new bill address" do
+      expect { subject }.to change { order.bill_address.name }.to("Mickey Mouse")
+    end
+  end
+
+  describe "#payments_attributes=" do
+    let(:order) { create(:order) }
+    let(:payment_attributes) { [{ payment_method_id: payment_method.id }] }
+    let(:payment_method) { create(:payment_method) }
+
+    subject { order.payments_attributes = payment_attributes }
+
+    it "creates a new payment" do
+      expect { subject }.to change { order.payments.length }.from(0).to(1)
+    end
+
+    context "if the payment method is unavailable" do
+      let(:payment_method) { create(:payment_method, available_to_users: false) }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe "#can_add_coupon?" do
+    let(:order) { Spree::Order.new(state: state) }
+
+    subject { order.can_add_coupon? }
+
+    context "when the order is in the cart state" do
+      let(:state) { "cart" }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "when the order is completed" do
+      let(:state) { "complete" }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context "when the order is returned" do
+      let(:state) { "returned" }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context "when the order is awaiting returns" do
+      let(:state) { "returned" }
+
+      it { is_expected.to eq(false) }
+    end
+  end
+
+  describe "#shipped?" do
+    let(:order) { Spree::Order.new(shipment_state: shipment_state) }
+    let(:shipment_state) { "ready" }
+
+    subject { order.shipped? }
+
+    it { is_expected.to eq(false) }
+
+    context "when the all shipments are shipped" do
+      let(:shipment_state) { "shipped" }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "when some shipments are shipped" do
+      let(:shipment_state) { "partial" }
+
+      it { is_expected.to eq(true) }
     end
   end
 end

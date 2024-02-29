@@ -519,6 +519,18 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
+    context "no payment present" do
+      let(:order) { create :order_ready_to_complete }
+      before do
+        order.payments.destroy_all
+      end
+
+      it "does not allow the order to complete" do
+        expect { order.complete! }.to raise_exception(StateMachines::InvalidTransition)
+        expect(order.errors[:base]).to include("No payment found")
+      end
+    end
+
     context "exchange order completion" do
       before do
         order.email = 'solidus@example.org'
@@ -608,6 +620,20 @@ RSpec.describe Spree::Order, type: :model do
         order.recalculate
         expect(order.complete).to eq(true)
       end
+    end
+  end
+
+  context "resuming a canceled order" do
+    let(:order) { create(:completed_order_with_totals) }
+
+    before do
+      order.cancel!
+    end
+
+    it "also resumes the shipments" do
+      expect(order.shipments.map(&:state)).to eq %w(canceled)
+      order.resume!
+      expect(order.shipments.map(&:state)).to eq %w(pending)
     end
   end
 
