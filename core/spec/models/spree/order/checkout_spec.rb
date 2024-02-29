@@ -513,6 +513,28 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
+    context "with promotion totals changing" do
+      let(:order) { create :order_ready_to_complete }
+      before do
+        order.update!(promo_total: 10)
+
+        allow_any_instance_of(Spree::Config.promotions.promotion_adjuster_class).to receive(:call) do |adjuster|
+          order = adjuster.instance_variable_get(:@order)
+          order.promo_total = 0
+          order
+        end
+      end
+
+      it "does not allow the order to complete" do
+        expect { order.complete! }.to raise_exception(StateMachines::InvalidTransition)
+        expect(order.errors[:base]).to include(<<~MSG.tr("\n", " ").squish
+          One or more of the promotions on your order have become ineligible
+          and were removed. Please check the new order amounts and try again.
+        MSG
+        )
+      end
+    end
+
     context "no payment present" do
       let(:order) { create :order_ready_to_complete }
       before do
