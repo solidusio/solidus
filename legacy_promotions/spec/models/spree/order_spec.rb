@@ -76,4 +76,34 @@ RSpec.describe Spree::Order do
       expect { subject }.to change { Spree::OrderPromotion.count }.from(1).to(0)
     end
   end
+
+  describe "#can_add_coupon?" do
+    let(:order) { Spree::Order.new(state: state) }
+
+    subject { order.can_add_coupon? }
+
+    context "when the order is in the cart state" do
+      let(:state) { "cart" }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "when the order is completed" do
+      let(:state) { "complete" }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context "when the order is returned" do
+      let(:state) { "returned" }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context "when the order is awaiting returns" do
+      let(:state) { "returned" }
+
+      it { is_expected.to eq(false) }
+    end
+  end
 end
