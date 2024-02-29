@@ -2073,36 +2073,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  describe "#can_add_coupon?" do
-    let(:order) { Spree::Order.new(state: state) }
-
-    subject { order.can_add_coupon? }
-
-    context "when the order is in the cart state" do
-      let(:state) { "cart" }
-
-      it { is_expected.to eq(true) }
-    end
-
-    context "when the order is completed" do
-      let(:state) { "complete" }
-
-      it { is_expected.to eq(false) }
-    end
-
-    context "when the order is returned" do
-      let(:state) { "returned" }
-
-      it { is_expected.to eq(false) }
-    end
-
-    context "when the order is awaiting returns" do
-      let(:state) { "returned" }
-
-      it { is_expected.to eq(false) }
-    end
-  end
-
   describe "#shipped?" do
     let(:order) { Spree::Order.new(shipment_state: shipment_state) }
     let(:shipment_state) { "ready" }

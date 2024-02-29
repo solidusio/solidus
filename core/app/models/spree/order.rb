@@ -462,10 +462,6 @@ module Spree
                      end
     end
 
-    def can_add_coupon?
-      Spree::Config.promotions.coupon_code_handler_class.new(self).can_apply?
-    end
-
     def shipped?
       %w(partial shipped).include?(shipment_state)
     end

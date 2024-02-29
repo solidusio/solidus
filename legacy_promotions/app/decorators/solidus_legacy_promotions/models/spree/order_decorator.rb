@@ -20,6 +20,10 @@ module SolidusLegacyPromotions
       super
     end
 
+    def can_add_coupon?
+      ::Spree::Promotion.order_activatable?(self)
+    end
+
     ::Spree::Order.prepend(self)
   end
 end
