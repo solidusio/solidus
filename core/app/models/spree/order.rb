@@ -462,10 +462,6 @@ module Spree
                      end
     end
 
-    def can_add_coupon?
-      Spree::Promotion.order_activatable?(self)
-    end
-
     def shipped?
       %w(partial shipped).include?(shipment_state)
     end
