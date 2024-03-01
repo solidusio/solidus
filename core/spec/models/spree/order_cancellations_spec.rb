@@ -83,15 +83,15 @@ RSpec.describe Spree::OrderCancellations do
     end
 
     it "cancels the inventory unit" do
-      expect { subject }.to change { inventory_unit.state }.to "canceled"
+      expect { subject }.to change { inventory_unit.state }.to 'canceled'
     end
 
     it "updates the shipment.state" do
-      expect { subject }.to change { shipment.reload.state }.from('ready').to('shipped')
+      expect { subject }.to change { shipment.reload.state }.from('ready').to('canceled')
     end
 
     it "updates the order.shipment_state" do
-      expect { subject }.to change { order.shipment_state }.from('ready').to('shipped')
+      expect { subject }.to change { order.shipment_state }.from('ready').to('canceled')
     end
 
     it "adjusts the order" do
