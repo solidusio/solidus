@@ -13,6 +13,14 @@ module Spree
       #   the standard coupon code handler class
       #   Spree::NullPromotionHandler.
       class_name_attribute :coupon_code_handler_class, default: 'Spree::NullPromotionHandler'
+
+      # Allows providing a different promotion finder.
+      # @!attribute [rw] promotion_finder_class
+      # @see Spree::NullPromotionFinder
+      # @return [Class] an object that conforms to the API of
+      #   the standard promotion finder class
+      #   Spree::NullPromotionFinder.
+      class_name_attribute :promotion_finder_class, default: 'Spree::NullPromotionFinder'
     end
   end
 end
