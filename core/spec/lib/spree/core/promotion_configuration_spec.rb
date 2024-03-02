@@ -21,6 +21,10 @@ RSpec.describe Spree::Core::PromotionConfiguration do
     expect(config.shipping_promotion_handler_class).to eq Spree::PromotionHandler::Shipping
   end
 
+  it "uses promotion finder class by default" do
+    expect(config.promotion_finder_class).to eq Spree::PromotionFinder
+  end
+
   describe "#calculators" do
     subject { config.calculators[promotion_action] }
 
