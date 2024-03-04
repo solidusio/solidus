@@ -14,6 +14,35 @@ module SolidusAdmin
       end
     end
 
+    def create
+      @tax_category = Spree::TaxCategory.new(tax_category_params)
+
+      if @tax_category.save
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.tax_categories_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            # we need to explicitly write the refresh tag for now.
+            # See https://github.com/hotwired/turbo-rails/issues/579
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('tax_categories/new').new(page: @page, tax_category: @tax_category)
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def index
       set_index_page
 

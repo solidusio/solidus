@@ -4,3 +4,5 @@ en:
       title: "Tax Categories"
       destroy:
         success: "Tax categories were successfully removed."
+      create:
+        success: "Tax category was successfully created."
