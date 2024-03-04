@@ -4,13 +4,18 @@ module SolidusAdmin
   class TaxCategoriesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    def index
-      tax_categories = apply_search_to(
-        Spree::TaxCategory.order(created_at: :desc, id: :desc),
-        param: :q,
-      )
+    def new
+      @tax_category = Spree::TaxCategory.new
 
-      set_page_and_extract_portion_from(tax_categories)
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('tax_categories/new').new(page: @page, tax_category: @tax_category) }
+      end
+    end
+
+    def index
+      set_index_page
 
       respond_to do |format|
         format.html { render component('tax_categories/index').new(page: @page) }
@@ -35,6 +40,15 @@ module SolidusAdmin
 
     def tax_category_params
       params.require(:tax_category).permit(:name, :description, :is_default, :tax_code)
+    end
+
+    def set_index_page
+      tax_categories = apply_search_to(
+        Spree::TaxCategory.order(created_at: :desc, id: :desc),
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(tax_categories)
     end
   end
 end
