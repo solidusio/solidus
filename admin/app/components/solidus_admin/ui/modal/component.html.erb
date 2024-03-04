@@ -14,13 +14,13 @@
         <h3 class="text-xl font-semibold text-gray-900">
           <%= @title %>
         </h3>
-        <%= render component('ui/button').new(
-          tag: :a,
-          href: @close_path,
-          icon: 'close-line',
-          scheme: :ghost,
-          title: t('.close'),
-        ) %>
+        <form method="dialog">
+          <%= render component('ui/button').new(
+            icon: 'close-line',
+            scheme: :ghost,
+            title: t('.close'),
+          ) %>
+        </form>
       </header>
 
       <div class="p-4 overflow-auto">
