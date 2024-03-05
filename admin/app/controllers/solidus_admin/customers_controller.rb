@@ -4,7 +4,11 @@ class SolidusAdmin::CustomersController < SolidusAdmin::BaseController
   before_action :load_order, only: [:show, :destroy]
 
   def show
-    render component('orders/show/email').new(order: @order)
+    respond_to do |format|
+      format.html do
+        render component('orders/show/email').new(order: @order)
+      end
+    end
   end
 
   def destroy

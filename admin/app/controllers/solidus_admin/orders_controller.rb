@@ -54,7 +54,11 @@ module SolidusAdmin
         flash[:error] = t('.error')
       end
 
-      redirect_to spree.edit_admin_order_path(@order)
+      respond_to do |format|
+        format.html { redirect_to spree.edit_admin_order_path(@order) }
+
+        format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
+      end
     end
 
     def edit
