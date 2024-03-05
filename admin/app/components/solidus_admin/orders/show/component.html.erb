@@ -16,7 +16,7 @@
 
     <%= page_with_sidebar_aside do %>
       <%= render component('ui/panel').new do |panel| %>
-        <% panel.with_menu t(".edit_email"), solidus_admin.order_customer_path(@order) %>
+        <% panel.with_menu t(".edit_email"), solidus_admin.order_customer_path(@order), data: { turbo_frame: :edit_order_email_modal } %>
         <% panel.with_menu t(".edit_shipping"), solidus_admin.edit_order_ship_address_path(@order) %>
         <% panel.with_menu t(".edit_billing"), solidus_admin.edit_order_bill_address_path(@order) %>
         <% panel.with_menu t(".remove_customer"), solidus_admin.order_customer_path(@order), method: :delete, class: "text-red-500" if @order.user %>
@@ -72,5 +72,9 @@
       <% end %>
 
     <% end %>
+  <% end %>
+
+  <% turbo_frames.each do |frame| %>
+    <%= turbo_frame_tag frame %>
   <% end %>
 <% end %>

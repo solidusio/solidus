@@ -29,6 +29,10 @@ class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
     ], " ")
   end
 
+  def turbo_frames
+    %w[edit_order_email_modal]
+  end
+
   def customer_name(user)
     (
       user.default_user_bill_address ||
