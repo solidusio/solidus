@@ -167,11 +167,6 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
     }
   end
 
-  def permitted_query_params
-    return params[:q].permit! if params[:q].respond_to?(:permit)
-    {}
-  end
-
   def turbo_frames
     %w[edit_stock_item_modal]
   end
