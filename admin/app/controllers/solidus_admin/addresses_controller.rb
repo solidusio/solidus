@@ -26,7 +26,12 @@ module SolidusAdmin
 
     def update
       if @order.contents.update_cart(order_params)
-        redirect_to order_path(@order), status: :see_other, notice: t('.success')
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html { redirect_to order_path(@order), status: :see_other }
+          format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
+        end
       else
         flash.now[:error] = @order.errors[:base].join(", ") if @order.errors[:base].any?
 
