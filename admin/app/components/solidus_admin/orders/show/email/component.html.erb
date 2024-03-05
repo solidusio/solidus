@@ -1,7 +1,7 @@
 <div class="<%= stimulus_id %>">
   <%= render component("orders/show").new(order: @order) %>
-  <%= render component("ui/modal").new(title: t(".title"), close_path: close_path) do |modal| %>
-    <%= form_for @order, url: close_path, html: { id: form_id} do |f| %>
+  <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
+    <%= form_for @order, url: solidus_admin.order_path(@order), html: { id: form_id } do |f| %>
       <%= render component("ui/forms/field").text_field(f, :email) %>
       <label class="font-normal text-sm mt-4 block">
         <%= t('.guest_checkout') %>:
@@ -11,7 +11,9 @@
     <% end %>
 
     <% modal.with_actions do %>
-      <%= render component("ui/button").new(tag: :a, scheme: :secondary, href: close_path, type: :submit, text: t('.cancel')) %>
+      <form method="dialog">
+        <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
+      </form>
       <%= render component("ui/button").new(form: form_id, type: :submit, text: t('.submit')) %>
     <% end %>
   <% end %>
