@@ -15,6 +15,9 @@ module Spree
       # promotion_adjuster_class allows extensions to provide their own Promotion Adjuster
       class_name_attribute :promotion_adjuster_class, default: 'Spree::Promotion::OrderAdjustmentsRecalculator'
 
+      # promotion_finder_class allows extensions to provide their own Promotion Finder
+      class_name_attribute :promotion_finder_class, default: 'Spree::PromotionFinder'
+
       # Allows providing a different shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class
       # @see Spree::PromotionHandler::Shipping

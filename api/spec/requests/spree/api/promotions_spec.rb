@@ -24,28 +24,38 @@ module Spree::Api
       stub_authentication!
     end
 
-    let(:promotion) { create :promotion, code: '10off' }
+    let(:found_promotion) do
+      OpenStruct.new(
+        id: 1,
+        name: 'Test Promotion',
+        description: 'Promotion for testing purposes',
+        path: '/api/promotions/test-promo',
+        starts_at: 1.day.ago,
+        expires_at: 1.day.from_now,
+        type: "something",
+        usage_limit: 100,
+        advertise: false,
+      )
+    end
 
     describe 'GET #show' do
-      subject { get spree.api_promotion_path(id) }
+      subject { get spree.api_promotion_path("1") }
 
       context 'when admin' do
         sign_in_as_admin!
 
-        context 'when finding by id' do
-          let(:id) { promotion.id }
-
-          it_behaves_like "a JSON response"
-        end
-
-        context 'when finding by code' do
-          let(:id) { promotion.codes.first.value }
+        context 'when finding by a promotion' do
+          before do
+            allow(Spree::Config.promotions.promotion_finder_class).to receive(:by_code_or_id).and_return(found_promotion)
+          end
 
           it_behaves_like "a JSON response"
         end
 
         context 'when id does not exist' do
-          let(:id) { 'argh' }
+          before do
+            allow(Spree::Config.promotions.promotion_finder_class).to receive(:by_code_or_id).and_raise(ActiveRecord::RecordNotFound)
+          end
 
           it 'should be 404' do
             subject
@@ -55,7 +65,9 @@ module Spree::Api
       end
 
       context 'when non admin' do
-        let(:id) { promotion.id }
+        before do
+          allow(Spree::Config.promotions.promotion_finder_class).to receive(:by_code_or_id).and_return(found_promotion)
+        end
 
         it 'should be unauthorized' do
           subject
