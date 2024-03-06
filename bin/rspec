@@ -8,6 +8,7 @@ LIBS = %w[
   backend
   core
   sample
+  legacy_promotions
 ]
 
 # Ignore line info, e.g. foo/bar.rb:123 would become foo/bar.rb

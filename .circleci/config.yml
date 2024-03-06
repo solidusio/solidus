@@ -117,6 +117,9 @@ commands:
       - run:
           name: "Run Sample Tests"
           command: ./bin/build-ci sample
+      - run:
+          name: "Run Legacy Promotion Tests"
+          command: ./bin/build-ci legacy_promotions
 
       - store_artifacts:
           path: /tmp/test-artifacts
