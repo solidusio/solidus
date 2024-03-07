@@ -72,14 +72,14 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
     subject { described_class.new(url: url).url }
 
     context "if url is a string" do
-      let(:url) { "/admin/promotions" }
-      it { is_expected.to eq("/admin/promotions") }
+      let(:url) { "/admin/orders" }
+      it { is_expected.to eq("/admin/orders") }
     end
 
     context "when url is a symbol" do
-      let(:url) { :admin_promotions_path }
+      let(:url) { :admin_orders_path }
       it "treats it as a route name" do
-        is_expected.to eq("/admin/promotions")
+        is_expected.to eq("/admin/orders")
       end
     end
 
