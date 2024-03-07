@@ -12,6 +12,25 @@ module Spree
           expect(subject.can_supply?(100_001)).to eq true
         end
       end
+
+      shared_examples_for "returns the positive stock on hand" do
+        context "when the stock location has no stock for the variant" do
+          it { is_expected.to be_zero }
+        end
+
+        context "when the stock location has negative stock for the variant" do
+          before { stock_item.set_count_on_hand(-1) }
+
+          it { is_expected.to be_zero }
+        end
+
+        context "when the stock location has positive stock for the variant" do
+          before { stock_item.set_count_on_hand(10) }
+
+          it { is_expected.to eq(10) }
+        end
+      end
+
       let(:target_stock_location) { nil }
       let!(:stock_location) { create :stock_location_with_items }
       let!(:stock_item) { stock_location.stock_items.order(:id).first }
@@ -105,6 +124,35 @@ module Spree
         it 'can_supply? only upto total_on_hand' do
           expect(subject.can_supply?(5)).to eq true
           expect(subject.can_supply?(6)).to eq false
+        end
+      end
+
+      describe "#positive_stock" do
+        let(:variant) { create(:variant) }
+        let(:stock_location) { create(:stock_location) }
+        let(:stock_item) { stock_location.set_up_stock_item(variant) }
+        let(:instance) { described_class.new(variant, stock_location_or_id) }
+
+        subject { instance.positive_stock }
+
+        context "when stock location is not present" do
+          let(:stock_location_or_id) { nil }
+
+          it { is_expected.to be_nil }
+        end
+
+        context "when stock_location_id is present" do
+          context "when stock_location_id is a stock location" do
+            let(:stock_location_or_id) { stock_location }
+
+            it_behaves_like "returns the positive stock on hand"
+          end
+
+          context "when stock_location_id is a stock location id" do
+            let(:stock_location_or_id) { stock_location.id }
+
+            it_behaves_like "returns the positive stock on hand"
+          end
         end
       end
     end
