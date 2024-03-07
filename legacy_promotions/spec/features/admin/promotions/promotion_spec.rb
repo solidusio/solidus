@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Promotions' do
+RSpec.feature 'Promotions' do
   stub_authorization!
 
   context 'index' do

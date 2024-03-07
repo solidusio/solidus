@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Promotion with user rule', js: true do
+RSpec.feature 'Promotion with user rule', js: true do
   stub_authorization!
 
   given(:promotion) { create :promotion }

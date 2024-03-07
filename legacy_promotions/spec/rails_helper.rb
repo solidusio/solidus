@@ -26,6 +26,7 @@ require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/controller_requests'
 require 'cancan/matchers'
+require 'spree/testing_support/capybara_ext'
 
 ActiveJob::Base.queue_adapter = :test
 

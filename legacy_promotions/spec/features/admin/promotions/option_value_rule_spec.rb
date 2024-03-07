@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'Promotion with option value rule' do
+RSpec.feature 'Promotion with option value rule' do
   stub_authorization!
 
   given(:variant) { create :variant }
