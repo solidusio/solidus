@@ -14,6 +14,13 @@ RSpec.describe Spree::NullPromotionHandler do
     end
   end
 
+  describe "#can_apply?" do
+    subject { handler.can_apply? }
+    let(:order) { double(Spree::Order, coupon_code: nil) }
+
+    it { is_expected.to be true }
+  end
+
   describe "#status" do
     subject { handler.status }
 

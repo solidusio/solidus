@@ -13,6 +13,10 @@ module Spree
       @order
     end
 
+    def can_apply?
+      true
+    end
+
     def error
       nil
     end
