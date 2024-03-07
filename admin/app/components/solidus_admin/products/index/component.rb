@@ -33,18 +33,21 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
         action: solidus_admin.products_path,
         method: :delete,
         icon: 'delete-bin-7-line',
+        require_confirmation: true,
       },
       {
         label: t('.batch_actions.discontinue'),
         action: solidus_admin.discontinue_products_path,
         method: :put,
         icon: 'pause-circle-line',
+        require_confirmation: true,
       },
       {
         label: t('.batch_actions.activate'),
         action: solidus_admin.activate_products_path,
         method: :put,
         icon: 'play-circle-line',
+        require_confirmation: true,
       },
     ]
   end

@@ -5,6 +5,7 @@ en:
   select_row: 'Select row'
   filter: 'Filter'
   search_placeholder: 'Search all %{resources}'
+  action_confirmation: 'Are you sure you want to %{action} ${count} %{resource}?'
   refine_search: 'Refine Search'
   batch_actions: Batch actions
   cancel: Cancel

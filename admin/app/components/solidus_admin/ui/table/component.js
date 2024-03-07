@@ -125,8 +125,23 @@ export default class extends Controller {
     }
   }
 
+  selectedRows() {
+    return this.checkboxTargets.filter((checkbox) => checkbox.checked)
+  }
+
+  confirmAction(event) {
+    const message = event.params.message.replace(
+      "${count}",
+      this.selectedRows().length
+    )
+
+    if (!confirm(message)) {
+      event.preventDefault()
+    }
+  }
+
   render() {
-    const selectedRows = this.checkboxTargets.filter((checkbox) => checkbox.checked)
+    const selectedRows = this.selectedRows()
 
     if (this.hasSearchFieldTarget) {
       this.searchToolbarTarget.toggleAttribute("hidden", this.modeValue !== "search")
