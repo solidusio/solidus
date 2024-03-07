@@ -1702,7 +1702,6 @@ en:
     intercept_email_instructions: Override email recipient and replace with this address.
     invalid_exchange_variant: Invalid exchange variant.
     invalid_payment_method_type: Invalid payment method type.
-    invalid_promotion_rule: Invalid promotion rule.
     invalidate: Invalidate
     inventory: Inventory
     inventory_adjustment: Inventory Adjustment

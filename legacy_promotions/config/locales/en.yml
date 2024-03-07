@@ -1,3 +1,4 @@
 en:
   spree:
     invalid_promotion_action: Invalid promotion action.
+    invalid_promotion_rule: Invalid promotion rule.
