@@ -464,7 +464,7 @@ module Spree
     end
 
     def can_add_coupon?
-      Spree::Promotion.order_activatable?(self)
+      Spree::Config.promotions.coupon_code_handler_class.new(self).can_apply?
     end
 
     def shipped?
