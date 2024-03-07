@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Spree::Admin::PromotionRulesController, type: :controller do
+RSpec.describe Spree::Admin::PromotionRulesController, type: :controller do
   let!(:promotion) { create(:promotion) }
 
   context "when the user is authorized" do

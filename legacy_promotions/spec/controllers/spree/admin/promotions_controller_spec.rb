@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Spree::Admin::PromotionsController, type: :controller do
+RSpec.describe Spree::Admin::PromotionsController, type: :controller do
   stub_authorization!
 
   let!(:promotion1) { create(:promotion, :with_action, name: "name1", code: "code1", path: "path1") }

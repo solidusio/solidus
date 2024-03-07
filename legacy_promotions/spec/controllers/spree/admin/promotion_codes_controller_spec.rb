@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Spree::Admin::PromotionCodesController do
+RSpec.describe Spree::Admin::PromotionCodesController do
   stub_authorization!
   render_views
 
