@@ -43,9 +43,24 @@ module Spree
         total_on_hand >= required || backorderable?
       end
 
+      def positive_stock
+        return unless stock_location
+
+        on_hand = stock_location.count_on_hand(variant)
+        on_hand.positive? ? on_hand : 0
+      end
+
       private
 
       attr_reader :variant, :stock_location_or_id
+
+      def stock_location
+        @stock_location ||= if stock_location_or_id.is_a?(Spree::StockLocation)
+          stock_location_or_id
+        else
+          Spree::StockLocation.find_by(id: stock_location_or_id)
+        end
+      end
 
       def variant_stock_items
         variant.stock_items.select do |stock_item|
