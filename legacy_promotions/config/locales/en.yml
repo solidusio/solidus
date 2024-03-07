@@ -1,4 +1,7 @@
 en:
   spree:
+    create_promotion_code: Create promotion code
+    download_promotion_codes_list: Download codes list
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
+    view_promotion_codes_list: View codes list
