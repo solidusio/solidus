@@ -12,6 +12,7 @@ module Spree
     def activate
       @order
     end
+    alias_method :apply, :activate
 
     def can_apply?
       true
