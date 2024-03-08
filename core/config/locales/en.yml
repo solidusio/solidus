@@ -1814,7 +1814,6 @@ en:
     new_product: New Product
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
-    new_promotion_code_batch: New Promotion Code Batch
     new_property: New Property Type
     new_refund: New Refund
     new_refund_reason: New Refund Reason
@@ -2039,10 +2038,6 @@ en:
       promotion_code_batch_finished:
         message: 'All %{number_of_codes} codes have been created for promotion: '
         subject: Promotion code batch finished
-    promotion_code_batches:
-      errored: 'Errored: %{error}'
-      finished: All %{number_of_codes} codes have been created.
-      processing: 'Processing: %{number_of_codes_processed} / %{number_of_codes}'
     promotion_form:
       match_policies:
         all: Match all of these rules

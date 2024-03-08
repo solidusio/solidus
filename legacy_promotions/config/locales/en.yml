@@ -4,4 +4,9 @@ en:
     download_promotion_codes_list: Download codes list
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
+    new_promotion_code_batch: New Promotion Code Batch
+    promotion_code_batches:
+      errored: 'Errored: %{error}'
+      finished: All %{number_of_codes} codes have been created.
+      processing: 'Processing: %{number_of_codes_processed} / %{number_of_codes}'
     view_promotion_codes_list: View codes list
