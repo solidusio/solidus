@@ -877,27 +877,6 @@ en:
           new_price: New Price
         table:
           variant_pricing: Variant Prices
-      promotion_status:
-        active: Active
-        expired: Expired
-        inactive: Inactive
-        not_started: Not started
-      promotions:
-        actions:
-          calculator_label: Calculated by
-        activations_edit:
-          auto: All orders will attempt to use this promotion
-          multiple_codes_html: This promotion uses %{count} promotion codes
-          single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
-        activations_new:
-          auto: Apply to all orders
-          multiple_codes: Multiple promotion codes
-          single_code: Single promotion code
-        form:
-          activation: Activation
-          expires_at_placeholder: Never
-          general: General
-          starts_at_placeholder: Immediately
       shipping_methods:
         form:
           stock_locations_placeholder: Choose stock locations
@@ -963,8 +942,6 @@ en:
         overview: Overview
         payments: Payments
         products: Products
-        promotion_categories: Promotion Categories
-        promotions: Promotions
         properties: Property Types
         rma: RMA
         settings: Settings
@@ -1066,8 +1043,6 @@ en:
     back_to_payment_methods_list: Back To Payment Methods List
     back_to_payments_list: Back To Payments List
     back_to_products_list: Back To Products List
-    back_to_promotion_categories_list: Back To Promotions Categories List
-    back_to_promotions_list: Back To Promotions List
     back_to_properties_list: Back To Property Types List
     back_to_refund_reason_list: Back To Refund Reason List
     back_to_reimbursement_type_list: Back To Reimbursement Type List
@@ -1093,7 +1068,6 @@ en:
     backordered: Backordered
     backorders_allowed: backorders allowed
     balance_due: Balance Due
-    base_amount: Base Amount
     base_percent: Base Percent
     bill_address: Bill Address
     bill_address_required: Valid billing address required
@@ -1143,8 +1117,6 @@ en:
     choose_dashboard_locale: Choose Dashboard Locale
     choose_dashboard_theme: Choose Dashboard Theme
     choose_location: Choose Location
-    choose_promotion_action: Choose Action
-    choose_promotion_rule: Choose Rule
     choose_reason: Choose Reason
     city: City
     clear_cache: Clear Cache
@@ -1455,7 +1427,6 @@ en:
     currency: Currency
     currency_settings: Currency Settings
     current: Current
-    current_promotion_usage: 'Current Usage: %{count}'
     customer: Customer
     customer_details: Customer Details
     customer_details_updated: Customer Details Updated
@@ -1494,7 +1465,6 @@ en:
     destroy: Destroy
     details: Details
     discount_amount: Discount Amount
-    discount_rules: Discount Rules
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
     edit: Edit
@@ -1504,8 +1474,6 @@ en:
     editing_option_type: Editing Option Type
     editing_payment_method: Editing Payment Method
     editing_product: Editing Product
-    editing_promotion: Editing Promotion
-    editing_promotion_category: Editing Promotion Category
     editing_property: Editing Property Type
     editing_refund: Editing Refund
     editing_refund_reason: Editing Refund Reason
@@ -1608,7 +1576,6 @@ en:
     general: General
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
-    group_size: Group size
     guest_checkout: Guest Checkout
     guest_user_account: Checkout as a Guest
     has_no_shipped_units: has no shipped units
@@ -1621,7 +1588,6 @@ en:
     hide_out_of_stock: Hide out of stock
     hints:
       spree/calculator:
-        promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
         shipping_methods: This is used to calculate the shipping rates on a per order or per package rate.
         tax_rates: The "Default Tax" calculator is used for both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store. "Flat Fee" can be used for any taxes that require a flat fee be charged to the customer.
       spree/price:
@@ -1634,10 +1600,6 @@ en:
         promotionable: 'This determines whether or not promotions can apply to this product.<br>Default: Checked'
         shipping_category: 'This determines what kind of shipping this product requires.<br> Default: Default'
         tax_category: 'This determines what kind of taxation is applied to this product.<br> Default: %{default_tax_category}'
-      spree/promotion:
-        expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
-        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its rules / actions will be applied automatically to all orders.
-        starts_at: This determines when the promotion can be applied to orders. <br> If no value is specified, the promotion will be immediately available.
       spree/shipping_method:
         available_to_all: Uncheck to select specific stock locations this shipping method will be available in.
       spree/stock_location:
@@ -1766,16 +1728,12 @@ en:
     look_for_similar_items: Look for similar items
     make_refund: Make refund
     make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement amount is correct
-    manage_promotion_categories: Manage Promotion Categories
     manage_stock: Store Stock
     manage_variants: Manage Variants
     manual_intervention_required: Manual intervention required
     master_price: Master Price
     master_sku: Master SKU
     master_variant: Master Variant
-    match_choices:
-      all: All
-      none: None
     max_items: Max Items
     member_since: Member Since
     memo: Memo
@@ -1812,7 +1770,6 @@ en:
     new_payment: New Payment
     new_payment_method: New Payment Method
     new_product: New Product
-    new_promotion: New Promotion
     new_property: New Property Type
     new_refund: New Refund
     new_refund_reason: New Refund Reason
@@ -1836,7 +1793,6 @@ en:
     new_variant: New Variant
     new_zone: New Zone
     next: Next
-    no_actions_added: No actions added
     no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_option_values_on_product_html: This product has no associated option values. Add some to it through Option Types in the %{link}.
@@ -1845,13 +1801,11 @@ en:
     no_payment_methods_found: No payment methods found
     no_pending_payments: No pending payments
     no_products_found: No products found
-    no_promotions_found: No promotions found
     no_resource: No %{resource} found.
     no_resource_found: No %{resource} found
     no_resource_found_html: No %{resource} found, %{add_one_link}!
     no_resource_found_link: Add One
     no_results: No results
-    no_rules_added: No rules added
     no_shipping_method_selected: No shipping method selected.
     no_shipping_methods_found: No shipping methods found
     no_stock_locations_found: No stock locations found
@@ -2015,21 +1969,10 @@ en:
     product_has_no_description: This product has no description
     product_not_available_in_this_currency: This product is not available in the selected currency.
     product_properties: Product Properties
-    product_rule:
-      choose_products: Choose products
-      label: Order must contain %{select} of these products
-      match_all: all
-      match_any: at least one
-      match_none: none
-      product_source:
-        group: From product group
-        manual: Manually choose
     product_without_default_price_cta: Please, create a Master Price!
     product_without_default_price_info: This Product has no price in the default currency (%{default_currency}).
     products: Products
     promotion: Promotion
-    promotion_action: Promotion Action
-    promotion_actions: Actions
     promotion_code_batch_mailer:
       promotion_code_batch_errored:
         message: 'Promotion code batch errored (%{error}) for promotion: '
@@ -2037,16 +1980,7 @@ en:
       promotion_code_batch_finished:
         message: 'All %{number_of_codes} codes have been created for promotion: '
         subject: Promotion code batch finished
-    promotion_form:
-      match_policies:
-        all: Match all of these rules
-        any: Match any of these rules
-    promotion_rule: Promotion Rule
-    promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
-    promotion_uses: Promotion uses
-    promotionable: Promotable
-    promotions: Promotions
     propagate_all_variants: Propagate all variants
     properties: Property Types
     property: Property Type
@@ -2147,7 +2081,6 @@ en:
     rma_number: RMA Number
     rma_value: RMA Value
     roles: Roles
-    rules: Rules
     sales_total: Sales Total
     sales_total_description: Sales Total For All Orders
     sales_totals: Sales Totals
@@ -2296,8 +2229,6 @@ en:
       user_has_no_store_credits: User does not have any available store credit
     store_credit_category:
       default: Default
-    store_rule:
-      choose_stores: Choose Stores
     street_address: Street Address
     street_address_2: Street Address (cont'd)
     subtotal: Subtotal
@@ -2320,12 +2251,6 @@ en:
     taxon_attachment_removal_error: There was an error removing the attachment
     taxon_edit: Edit Taxon
     taxon_placeholder: Add a Taxon
-    taxon_rule:
-      choose_taxons: Choose taxons
-      label: Order must contain %{select} of these taxons
-      match_all: all
-      match_any: at least one
-      match_none: none
     taxonomies: Taxonomies
     taxonomy: Taxonomy
     taxonomy_edit: Edit taxonomy
@@ -2390,13 +2315,6 @@ en:
     use_new_cc: Use a new card
     use_new_cc_or_payment_method: Use a new card / payment method
     user: User
-    user_role_rule:
-      choose_roles: Choose Roles
-      label: User must contain %{select} of these roles
-      match_all: all
-      match_any: at least one
-    user_rule:
-      choose_users: Choose Users
     users: Users
     validation:
       cannot_be_less_than_shipped_units: cannot be less than the number of shipped units.
