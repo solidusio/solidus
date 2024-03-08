@@ -2,6 +2,7 @@
 
 require "solidus_core"
 require "solidus_backend"
+require "solidus_legacy_promotions"
 
 module SolidusAdmin
   require "solidus_admin/version"
