@@ -4,6 +4,7 @@ en:
     download_promotion_codes_list: Download codes list
     invalid_promotion_action: Invalid promotion action.
     invalid_promotion_rule: Invalid promotion rule.
+    new_promotion_category: New Promotion Category
     new_promotion_code_batch: New Promotion Code Batch
     promotion_code_batches:
       errored: 'Errored: %{error}'
