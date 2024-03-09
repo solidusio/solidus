@@ -268,6 +268,8 @@ module Spree
     def total_on_hand
       if any_variants_not_track_inventory?
         Float::INFINITY
+      elsif stock_items.loaded?
+        stock_items.sum(&:count_on_hand)
       else
         stock_items.sum(:count_on_hand)
       end
