@@ -5,6 +5,6 @@ class AddPromotionOrderPromotionForeignKey < ActiveRecord::Migration[7.0]
   end
 
   def down
-    remove_foreign_key :spree_orders_promotions, :spree_orders
+    remove_foreign_key :spree_orders_promotions, :spree_promotions
   end
 end
