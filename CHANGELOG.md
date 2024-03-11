@@ -1,3 +1,29 @@
+## Solidus v4.3.3 (2024-03-11)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* [v4.3] Add Admin Tailwind build when generating sandbox  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5689
+
+## Solidus Core
+
+* [v4.3] Add Admin Tailwind build when generating sandbox  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5689
+* [v4.3] Explicitly require URI in app configuration by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5648
+* [v4.3] Fix minor sandbox generation issues by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5676
+* [v4.3] Fix specs failing after Money 6.18.0 release by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5691
+
+## Solidus Admin
+
+* [v4.3] Fix minor sandbox generation issues by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5676
+
+## Solidus Backend
+
+* [v4.3] Fix JS locale data for release of Money 6.19 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5690
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.2...v4.3.3
+
+
 ## Solidus v4.3.2 (2024-01-22)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
