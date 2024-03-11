@@ -78,18 +78,17 @@ module Spree
       end
 
       def match_path?(request)
-        matches =
-          if match_path.is_a? Regexp
-            request.fullpath =~ match_path
-          elsif match_path.respond_to?(:call)
-            match_path.call(request)
-          elsif match_path
-            request.fullpath.starts_with?("#{spree.admin_path}#{match_path}")
-          end
-        matches ||= request.fullpath.to_s.starts_with?(url.to_s) if url.present?
-        matches ||= @sections.include?(request.controller_class.controller_name.to_sym) if @sections.present?
-
-        matches
+        if match_path.is_a? Regexp
+          request.fullpath =~ match_path
+        elsif match_path.respond_to?(:call)
+          match_path.call(request)
+        elsif match_path
+          request.fullpath.starts_with?("#{spree.admin_path}#{match_path}")
+        elsif url.present?
+          request.fullpath.to_s.starts_with?(url.to_s)
+        elsif @sections.present?
+          @sections.include?(request.controller_class.controller_name.to_sym)
+        end
       end
 
       def url
