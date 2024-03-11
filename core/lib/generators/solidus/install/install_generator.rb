@@ -35,6 +35,7 @@ module Solidus
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
     class_option :active_storage, type: :boolean, default: true, banner: 'Install ActiveStorage as image attachments handler for products and taxons'
     class_option :admin_preview, type: :boolean, default: true, desc: 'Install the admin preview'
+    class_option :build_admin_tailwind, type: :boolean, default: true, desc: 'Build and install Solidus Admin Tailwind CSS file and rake tasks'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
@@ -175,6 +176,12 @@ module Solidus
       end
     end
 
+    def install_subcomponents
+      apply_template_for :authentication, @selected_authentication
+      apply_template_for :frontend, @selected_frontend
+      apply_template_for :payment_method, @selected_payment_method
+    end
+
     def install_solidus_admin
       return unless options[:admin_preview]
 
@@ -182,13 +189,7 @@ module Solidus
       unless File.read(app_path.join('Gemfile')).include?('solidus_admin')
         bundle_command 'add solidus_admin -v ">= 0.2"'
       end
-      generate 'solidus_admin:install'
-    end
-
-    def install_subcomponents
-      apply_template_for :authentication, @selected_authentication
-      apply_template_for :frontend, @selected_frontend
-      apply_template_for :payment_method, @selected_payment_method
+      generate "solidus_admin:install #{'--tailwind' if options[:build_admin_tailwind]}"
     end
 
     def populate_seed_data
