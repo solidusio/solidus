@@ -3,7 +3,7 @@
 class SolidusAdmin::UI::Modal::Component < SolidusAdmin::BaseComponent
   renders_one :actions
 
-  def initialize(title:, close_path: nil, open: true, **attributes)
+  def initialize(title:, close_path: nil, open: false, **attributes)
     @title = title
     @close_path = close_path
     @attributes = attributes

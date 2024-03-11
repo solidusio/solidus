@@ -37,4 +37,8 @@
       <% end %>
     <% end %>
   <% end %>
+
+  <% turbo_frames.each do |frame| %>
+    <%= turbo_frame_tag frame %>
+  <% end %>
 <% end %>

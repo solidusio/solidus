@@ -13,14 +13,18 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
     solidus_admin.tax_categories_path
   end
 
-  def actions
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_tax_category_path,
+      href: solidus_admin.new_tax_category_path, data: { turbo_frame: :new_tax_category_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )
+  end
+
+  def turbo_frames
+    %w[new_tax_category_modal]
   end
 
   def search_key

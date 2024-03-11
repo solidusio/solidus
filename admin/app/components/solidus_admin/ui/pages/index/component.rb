@@ -98,4 +98,8 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
 
     page_with_sidebar_aside { sidebar } if sidebar
   end
+
+  def turbo_frames
+    []
+  end
 end

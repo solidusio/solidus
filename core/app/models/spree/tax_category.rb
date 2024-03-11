@@ -4,6 +4,8 @@ module Spree
   class TaxCategory < Spree::Base
     include Spree::SoftDeletable
 
+    self.allowed_ransackable_attributes = %w[name description]
+
     after_discard do
       self.tax_rate_tax_categories = []
     end
