@@ -9,6 +9,20 @@ module Spree
       #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
       preference :promotions_per_page, :integer, default: 15
 
+      # @!attribute [rw] promotion_attributes
+      #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion
+      preference :promotion_api_attributes, :array, default: [
+        :id,
+        :name,
+        :description,
+        :expires_at,
+        :starts_at,
+        :type,
+        :usage_limit,
+        :advertise,
+        :path
+      ]
+
       # promotion_chooser_class allows extensions to provide their own PromotionChooser
       class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
 

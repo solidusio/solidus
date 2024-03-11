@@ -21,6 +21,10 @@ module Spree
       #   the standard promotion finder class
       #   Spree::NullPromotionFinder.
       class_name_attribute :promotion_finder_class, default: 'Spree::NullPromotionFinder'
+
+      # !@attribute [rw] promotion_api_attributes
+      #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion
+      preference :promotion_api_attributes, :array, default: []
     end
   end
 end

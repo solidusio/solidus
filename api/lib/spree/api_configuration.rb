@@ -112,10 +112,7 @@ module Spree
       :variant_id
     ]
 
-    preference :promotion_attributes, :array, default: [
-      :id, :name, :description, :expires_at, :starts_at, :type, :usage_limit,
-      :advertise, :path
-    ]
+    preference :promotion_attributes, :array, default: Spree::Config.promotions.promotion_api_attributes
 
     preference :store_attributes, :array, default: [
       :id, :name, :url, :meta_description, :meta_keywords, :seo_title,
