@@ -72,6 +72,9 @@ require 'database_cleaner'
 
 # FACTORY BOT
 require 'spree/testing_support/factory_bot'
+require 'solidus_legacy_promotions/testing_support/factory_bot'
+
+SolidusLegacyPromotions::TestingSupport::FactoryBot.add_definitions!
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 # VIEW COMPONENTS

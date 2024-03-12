@@ -47,6 +47,8 @@ require 'spree/testing_support/job_helpers'
 require 'spree/testing_support/blacklist_urls'
 require 'spree/testing_support/silence_deprecations'
 
+require 'solidus_legacy_promotions/testing_support/factory_bot'
+
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 Capybara.exact = true
@@ -79,6 +81,7 @@ Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAU
 
 ActiveJob::Base.queue_adapter = :test
 
+SolidusLegacyPromotions::TestingSupport::FactoryBot.add_definitions!
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|

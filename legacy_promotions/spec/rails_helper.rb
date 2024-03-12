@@ -20,11 +20,13 @@ require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/rake'
 require 'spree/testing_support/job_helpers'
+require 'solidus_legacy_promotions/testing_support/factory_bot'
 require 'cancan/matchers'
 
 ActiveJob::Base.queue_adapter = :test
 
-Spree::TestingSupport::FactoryBot.add_paths_and_load!
+Spree::TestingSupport::FactoryBot.add_definitions!
+SolidusLegacyPromotions::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
   config.fixture_path = File.join(__dir__, "fixtures")

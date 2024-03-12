@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'importmap-rails', '~> 1.2', '>= 1.2.1'
   s.add_dependency 'solidus_backend'
   s.add_dependency 'solidus_core', '> 4.2'
+  s.add_dependency 'solidus_legacy_promotions', '> 4.2'
   s.add_dependency 'stimulus-rails', '~> 1.2'
   s.add_dependency 'turbo-rails', '~> 2.0'
   s.add_dependency 'view_component', '~> 3.9'
