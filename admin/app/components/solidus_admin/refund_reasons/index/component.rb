@@ -17,11 +17,15 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
     spree.edit_admin_refund_reason_path(refund_reason)
   end
 
-  def actions
+  def turbo_frames
+    %w[new_refund_reason_modal]
+  end
+
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_refund_reason_path,
+      href: solidus_admin.new_refund_reason_path, data: { turbo_frame: :new_refund_reason_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )
