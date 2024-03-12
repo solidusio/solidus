@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 module Spree
-  describe 'Api Feature Specs', type: :request do
+  RSpec.describe 'Api Feature Specs', type: :request do
     before do
       stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
     end
+    let!(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
+    let(:promotion_code) { promotion.codes.first }
     let!(:store) { FactoryBot.create(:store) }
     let(:bill_address) { FactoryBot.create(:address) }
     let(:ship_address) { FactoryBot.create(:address) }
@@ -60,6 +62,14 @@ module Spree
       expect(response).to have_http_status(:created)
     end
 
+    def add_promotion(_promotion)
+      expect {
+        post "/api/orders/#{@order.number}/coupon_codes",
+          params: { coupon_code: promotion_code.value }
+      }.to change { @order.promotions.count }.by 1
+      expect(response).to have_http_status(:ok)
+    end
+
     def add_address(address, billing: true)
       address_type = billing ? :bill_address : :ship_address
       # It seems we are missing an order-scoped address api endpoint since we need
@@ -93,8 +103,8 @@ module Spree
       expect(@order.state).to eq 'complete'
       expect(@order.completed_at).to be_a ActiveSupport::TimeWithZone
       expect(@order.item_total).to eq 600.00
-      expect(@order.total).to eq 610.00
-      expect(@order.adjustment_total).to eq(0)
+      expect(@order.total).to eq 600.00
+      expect(@order.adjustment_total).to eq(-10.00)
       expect(@order.shipment_total).to eq 10.00
       expect(@order.user).to eq @user
       expect(@order.bill_address).to eq bill_address
@@ -102,6 +112,7 @@ module Spree
       expect(@order.payments.length).to eq 1
       expect(@order.line_items.any? { |li| li.variant == variant_1 && li.quantity == 2 }).to eq true
       expect(@order.line_items.any? { |li| li.variant == variant_2 && li.quantity == 2 }).to eq true
+      expect(@order.promotions).to eq [promotion]
     end
 
     it "is able to checkout with individualized requests" do
@@ -109,6 +120,7 @@ module Spree
       create_order
 
       create_line_item(variant_1, 2)
+      add_promotion(promotion)
       create_line_item(variant_2, 2)
 
       add_address(bill_address)
@@ -140,6 +152,7 @@ module Spree
         }
       })
 
+      add_promotion(promotion)
       add_payment
 
       advance
@@ -167,6 +180,7 @@ module Spree
         }
       })
 
+      add_promotion(promotion)
       add_payment
 
       advance
