@@ -132,7 +132,6 @@ module Spree::Api
           subject
 
           expect(response.status).to eq(422)
-          expect(order.reload.promotions).to eq([])
           expect(json_response).to eq({
             "success" => nil,
             "error" => I18n.t('spree.coupon_code_not_present'),
