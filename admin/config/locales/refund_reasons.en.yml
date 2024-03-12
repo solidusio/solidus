@@ -4,3 +4,5 @@ en:
       title: "Refund Reasons"
       destroy:
         success: "Refund Reasons were successfully removed."
+      create:
+        success: "Refund reason was successfully created."
