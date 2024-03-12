@@ -20,6 +20,7 @@ require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/rake'
 require 'spree/testing_support/job_helpers'
+require 'spree/api/testing_support/helpers'
 require 'cancan/matchers'
 
 ActiveJob::Base.queue_adapter = :test
@@ -48,4 +49,5 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::JobHelpers
 
   config.include FactoryBot::Syntax::Methods
+  config.include Spree::Api::TestingSupport::Helpers, type: :request
 end
