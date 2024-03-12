@@ -450,7 +450,6 @@ module Spree
       line_items.destroy_all
       adjustments.destroy_all
       shipments.destroy_all
-      order_promotions.destroy_all
 
       recalculate
     end
@@ -461,10 +460,6 @@ module Spree
                      rescue StandardError
                        nil
                      end
-    end
-
-    def can_add_coupon?
-      Spree::Promotion.order_activatable?(self)
     end
 
     def shipped?
@@ -506,11 +501,6 @@ module Spree
       Spree::Config.stock.coordinator_class.new(self, units).shipments.each do |shipment|
         shipments << shipment
       end
-    end
-
-    def apply_shipping_promotions
-      Spree::Config.promotions.shipping_promotion_handler_class.new(self).activate
-      recalculate
     end
 
     # Clean shipments and make order back to address state (or to whatever state

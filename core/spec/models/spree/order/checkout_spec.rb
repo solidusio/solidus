@@ -284,13 +284,7 @@ RSpec.describe Spree::Order, type: :model do
 
       before do
         order.state = 'delivery'
-        allow(order).to receive(:apply_shipping_promotions)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
-      end
-
-      it "attempts to apply free shipping promotions" do
-        expect(order).to receive(:apply_shipping_promotions)
-        order.next!
       end
 
       context "with payment required" do

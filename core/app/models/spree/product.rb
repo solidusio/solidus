@@ -16,7 +16,6 @@ module Spree
       self.product_option_types = []
       self.product_properties = []
       self.classifications.destroy_all
-      self.product_promotion_rules = []
     end
 
     has_many :product_option_types, dependent: :destroy, inverse_of: :product
@@ -30,9 +29,6 @@ module Spree
 
     has_many :classifications, dependent: :delete_all, inverse_of: :product
     has_many :taxons, through: :classifications, before_remove: :remove_taxon
-
-    has_many :product_promotion_rules, dependent: :destroy
-    has_many :promotion_rules, through: :product_promotion_rules
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products, optional: true
@@ -274,12 +270,6 @@ module Spree
         product_property.value = property_value
         product_property.save!
       end
-    end
-
-    # @return [Array] all advertised and not-rejected promotions
-    def possible_promotions
-      promotion_ids = promotion_rules.map(&:promotion_id).uniq
-      Spree::Promotion.advertised.where(id: promotion_ids).reject(&:inactive?)
     end
 
     # The number of on-hand stock items; Infinity if any variant does not track
