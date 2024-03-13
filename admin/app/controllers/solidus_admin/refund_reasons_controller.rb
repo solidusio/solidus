@@ -5,15 +5,47 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Search
 
     def index
-      refund_reasons = apply_search_to(
-        Spree::RefundReason.unscoped.order(id: :desc),
-        param: :q,
-      )
-
-      set_page_and_extract_portion_from(refund_reasons)
+      set_index_page
 
       respond_to do |format|
         format.html { render component('refund_reasons/index').new(page: @page) }
+      end
+    end
+
+    def new
+      @refund_reason = Spree::RefundReason.new
+
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('refund_reasons/new').new(page: @page, refund_reason: @refund_reason) }
+      end
+    end
+
+    def create
+      @refund_reason = Spree::RefundReason.new(refund_reason_params)
+
+      if @refund_reason.save
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.refund_reasons_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('refund_reasons/new').new(page: @page, refund_reason: @refund_reason)
+            render page_component, status: :unprocessable_entity
+          end
+        end
       end
     end
 
@@ -34,7 +66,16 @@ module SolidusAdmin
     end
 
     def refund_reason_params
-      params.require(:refund_reason).permit(:refund_reason_id, permitted_refund_reason_attributes)
+      params.require(:refund_reason).permit(:name, :code, :active)
+    end
+
+    def set_index_page
+      refund_reasons = apply_search_to(
+        Spree::RefundReason.unscoped.order(id: :desc),
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(refund_reasons)
     end
   end
 end
