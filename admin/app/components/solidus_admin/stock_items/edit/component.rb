@@ -15,9 +15,4 @@ class SolidusAdmin::StockItems::Edit::Component < SolidusAdmin::BaseComponent
   def form_id
     "#{stimulus_id}-#{dom_id(@stock_item)}"
   end
-
-  def permitted_query_params
-    return params[:q].permit! if params[:q].respond_to?(:permit)
-    {}
-  end
 end

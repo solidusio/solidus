@@ -14,7 +14,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(stock_item)
-    solidus_admin.edit_stock_item_path(stock_item, page: params[:page], q: permitted_query_params)
+    solidus_admin.edit_stock_item_path(stock_item, _turbo_frame: :edit_stock_item_modal)
   end
 
   def scopes
@@ -167,8 +167,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
     }
   end
 
-  def permitted_query_params
-    return params[:q].permit! if params[:q].respond_to?(:permit)
-    {}
+  def turbo_frames
+    %w[edit_stock_item_modal]
   end
 end

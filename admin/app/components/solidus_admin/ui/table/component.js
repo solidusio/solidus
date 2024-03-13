@@ -104,7 +104,15 @@ export default class extends Controller {
     if (this.modeValue === "batch") {
       this.toggleCheckbox(event.currentTarget)
     } else {
-      window.Turbo.visit(event.params.url)
+      const url = new URL(event.params.url, "http://dummy.com")
+      const params = new URLSearchParams(url.search)
+      const frameId = params.get('_turbo_frame')
+      const frame = frameId ? { frame: frameId } : {}
+      // remove the custom _turbo_frame param from url search:
+      params.delete('_turbo_frame')
+      url.search = params.toString()
+
+      window.Turbo.visit(url.pathname + url.search, frame)
     }
   }
 

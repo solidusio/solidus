@@ -26,14 +26,14 @@ module SolidusAdmin
 
     def update
       quantity_adjustment = params[:quantity_adjustment].to_i
-      @stock_item.assign_attributes(stock_item_params.except(:page, :q))
+      @stock_item.assign_attributes(stock_item_params)
       @stock_item.stock_movements.build(quantity: quantity_adjustment, originator: current_solidus_admin_user)
 
       if @stock_item.save
-        redirect_to solidus_admin.stock_items_path(
-          page: stock_item_params[:page].to_i.presence,
-          q: stock_item_params[:q].presence&.then { |q| JSON.parse(q) }
-        ), status: :see_other
+        respond_to do |format|
+          format.html { redirect_to solidus_admin.stock_items_path, status: :see_other }
+          format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
+        end
       else
         respond_to do |format|
           format.html { render component('stock_items/edit').new(stock_item: @stock_item, page: @page), status: :unprocessable_entity }
@@ -61,7 +61,7 @@ module SolidusAdmin
     end
 
     def stock_item_params
-      params.require(:stock_item).permit(:backorderable, :page, :q)
+      params.require(:stock_item).permit(:backorderable)
     end
   end
 end
