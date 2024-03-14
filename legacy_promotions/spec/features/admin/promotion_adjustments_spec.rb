@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Promotion Adjustments", type: :feature, js: true do
+RSpec.describe "Promotion Adjustments", type: :feature, js: true do
   stub_authorization!
 
   context "creating a new promotion", js: true do

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature "Promotion Code Batches", partial_double_verification: false do
+RSpec.feature "Promotion Code Batches", partial_double_verification: false do
   stub_authorization!
 
   describe "create" do

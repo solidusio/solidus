@@ -10,6 +10,7 @@ DummyApp.setup(
   lib_name: 'solidus_legacy_promotions'
 )
 
+require 'rails-controller-testing'
 require 'rspec/rails'
 require 'rspec-activemodel-mocks'
 require 'database_cleaner'
@@ -21,7 +22,11 @@ require 'spree/testing_support/preferences'
 require 'spree/testing_support/rake'
 require 'spree/testing_support/job_helpers'
 require 'spree/api/testing_support/helpers'
+require 'spree/testing_support/url_helpers'
+require 'spree/testing_support/authorization_helpers'
+require 'spree/testing_support/controller_requests'
 require 'cancan/matchers'
+require 'spree/testing_support/capybara_ext'
 
 ActiveJob::Base.queue_adapter = :test
 
@@ -50,4 +55,6 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include Spree::Api::TestingSupport::Helpers, type: :request
+  config.include Spree::TestingSupport::UrlHelpers, type: :controller
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
 end

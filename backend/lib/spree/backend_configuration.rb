@@ -130,24 +130,6 @@ module Spree
           ],
         ),
         MenuItem.new(
-          label: :promotions,
-          icon: admin_updated_navbar ? 'ri-megaphone-line' : 'bullhorn',
-          partial: 'spree/admin/shared/promotion_sub_menu',
-          condition: -> { can?(:admin, Spree::Promotion) },
-          url: :admin_promotions_path,
-          data_hook: :admin_promotion_sub_tabs,
-          children: [
-            MenuItem.new(
-              label: :promotions,
-              condition: -> { can?(:admin, Spree::Promotion) },
-            ),
-            MenuItem.new(
-              label: :promotion_categories,
-              condition: -> { can?(:admin, Spree::PromotionCategory) },
-            ),
-          ],
-        ),
-        MenuItem.new(
           label: :stock,
           icon: admin_updated_navbar ? 'ri-stack-line' : 'cubes',
           match_path: %r{/(stock_items)},

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature "Promotion Codes" do
+RSpec.feature "Promotion Codes" do
   stub_authorization!
 
   describe "create" do

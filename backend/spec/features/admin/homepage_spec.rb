@@ -26,10 +26,6 @@ describe "Homepage", type: :feature do
       it "should have a link to configuration" do
         expect(page).to have_link("Settings", href: "/admin/stores")
       end
-
-      it "should have a link to promotions" do
-        expect(page).to have_link("Promotions", href: "/admin/promotions", count: 2)
-      end
     end
 
     context "visiting the products tab" do
@@ -47,20 +43,6 @@ describe "Homepage", type: :feature do
 
       it "should have a link to property types" do
         within('.selected .admin-subnav') { expect(page).to have_link("Property Types", href: "/admin/properties") }
-      end
-    end
-
-    context "visiting the promotions tab" do
-      before(:each) do
-        visit spree.admin_promotions_path
-      end
-
-      it "should have a link to promotions" do
-        within('.selected .admin-subnav') { expect(page).to have_link("Promotions", href: "/admin/promotions") }
-      end
-
-      it "should have a link to promotion categories" do
-        within('.selected .admin-subnav') { expect(page).to have_link("Promotion Categories", href: "/admin/promotion_categories") }
       end
     end
   end
