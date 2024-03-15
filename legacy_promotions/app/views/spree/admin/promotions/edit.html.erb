@@ -19,6 +19,7 @@
 
 <% content_for :head  do %>
   <%= stylesheet_link_tag 'solidus_legacy_promotions/promotions' %>
+  <%= javascript_include_tag 'spree/backend/edit_promotion' %>
 <% end %>
 
 <%= form_for @promotion, url: object_url, method: :put do |f| %>
