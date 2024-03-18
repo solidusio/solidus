@@ -17,9 +17,11 @@ module Spree
     def self.available(restrict_to_zone: Spree::Config[:checkout_zone])
       checkout_zone = Zone.find_by(name: restrict_to_zone)
 
-      return checkout_zone.country_list if checkout_zone.try(:kind) == 'country'
-
-      all
+      if checkout_zone.try(:kind) == 'country'
+        checkout_zone.country_list
+      else
+        all
+      end
     end
 
     def <=>(other)

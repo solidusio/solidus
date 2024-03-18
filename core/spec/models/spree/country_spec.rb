@@ -43,24 +43,28 @@ RSpec.describe Spree::Country, type: :model do
 
         context 'with no arguments' do
           it 'returns "Checkout Zone" countries' do
+            expect(described_class.available).to be_an(ActiveRecord::Relation)
             expect(described_class.available).to contain_exactly(united_states, canada)
           end
         end
 
         context 'setting nil as restricting zone' do
           it 'returns all countries' do
+            expect(described_class.available(restrict_to_zone: nil)).to be_an(ActiveRecord::Relation)
             expect(described_class.available(restrict_to_zone: nil)).to contain_exactly(united_states, canada, italy)
           end
         end
 
         context 'setting "Custom Zone" as restricting zone' do
           it 'returns "Custom Zone" countries' do
+            expect(described_class.available(restrict_to_zone: 'Custom Zone')).to be_an(ActiveRecord::Relation)
             expect(described_class.available(restrict_to_zone: 'Custom Zone')).to contain_exactly(united_states, italy)
           end
         end
 
         context 'setting "Checkout Zone" as restricting zone' do
           it 'returns "Checkout Zone" countries' do
+            expect(described_class.available(restrict_to_zone: 'Checkout Zone')).to be_an(ActiveRecord::Relation)
             expect(described_class.available(restrict_to_zone: 'Checkout Zone')).to contain_exactly(united_states, canada)
           end
         end
