@@ -2,7 +2,7 @@
 
 class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Component
   def row_url(tax_category)
-    spree.edit_admin_tax_category_path(tax_category)
+    spree.edit_admin_tax_category_path(tax_category, _turbo_frame: :edit_tax_category_modal)
   end
 
   def model_class
@@ -24,7 +24,10 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
   end
 
   def turbo_frames
-    %w[new_tax_category_modal]
+    %w[
+      new_tax_category_modal
+      edit_tax_category_modal
+    ]
   end
 
   def search_key
