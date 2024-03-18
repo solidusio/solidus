@@ -9,29 +9,13 @@ class SolidusOneFour < ActiveRecord::Migration[5.0]
 
     # this table should not technically exist in the database (as its provided by auth_devise),
     # but spree_api depends on it existing. This defininition comes from solidus_auth_devise's first migration,
-    # and creates a table equivolent to it
+    # and creates a table equivalent to it
     create_table "spree_users", force: true do |t|
-      t.string   "crypted_password", limit: 128
-      t.string   "salt", limit: 128
       t.string   "email"
-      t.string   "remember_token"
-      t.string   "remember_token_expires_at"
-      t.string   "persistence_token"
-      t.string   "single_access_token"
-      t.string   "perishable_token"
-      t.integer  "login_count",        default: 0, null: false
-      t.integer  "failed_login_count", default: 0, null: false
-      t.datetime "last_request_at"
-      t.datetime "current_login_at"
-      t.datetime "last_login_at"
-      t.string   "current_login_ip"
-      t.string   "last_login_ip"
-      t.string   "login"
       t.integer  "ship_address_id"
       t.integer  "bill_address_id"
       t.datetime "created_at", null: false, precision: 6
       t.datetime "updated_at", null: false, precision: 6
-      t.string   "openid_identifier"
     end
 
     create_table "friendly_id_slugs", force: :cascade do |t|
