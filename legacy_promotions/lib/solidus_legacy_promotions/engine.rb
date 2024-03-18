@@ -27,5 +27,9 @@ module SolidusLegacyPromotions
       product_menu_item_index = Spree::Backend::Config.menu_items.find_index { |item| item.label == :products }
       Spree::Backend::Config.menu_items.insert(product_menu_item_index + 1, promotions_menu_item)
     end
+
+    initializer "solidus_legacy_promotions.assets" do |app|
+      app.config.assets.precompile << "solidus_legacy_promotions/manifest.js"
+    end
   end
 end

@@ -9,7 +9,6 @@ _.extend(window.Spree, {
     Zones: {},
     Payment: {},
     Product: {},
-    Promotions: {},
     Stock: {},
     Tables: {}
   }

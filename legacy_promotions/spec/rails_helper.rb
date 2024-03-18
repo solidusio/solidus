@@ -28,9 +28,30 @@ require 'spree/testing_support/controller_requests'
 require 'cancan/matchers'
 require 'spree/testing_support/capybara_ext'
 
+require "selenium/webdriver"
+
 ActiveJob::Base.queue_adapter = :test
 
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
+
+Capybara.register_driver :selenium_chrome_headless do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  browser_options.args << '--window-size=1920,1080'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  # Sandbox cannot be used inside unprivileged Docker container
+  browser_options.args << '--no-sandbox'
+  browser_options.args << '--window-size=1240,1400'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 RSpec.configure do |config|
   config.fixture_path = File.join(__dir__, "fixtures")
