@@ -1,3 +1,57 @@
+## Solidus v4.3.3 (2024-03-11)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* [v4.3] Add Admin Tailwind build when generating sandbox  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5689
+
+## Solidus Core
+
+* [v4.3] Add Admin Tailwind build when generating sandbox  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5689
+* [v4.3] Explicitly require URI in app configuration by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5648
+* [v4.3] Fix minor sandbox generation issues by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5676
+* [v4.3] Fix specs failing after Money 6.18.0 release by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5691
+
+## Solidus Admin
+
+* [v4.3] Fix minor sandbox generation issues by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5676
+
+## Solidus Backend
+
+* [v4.3] Fix JS locale data for release of Money 6.19 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5690
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.2...v4.3.3
+
+
+## Solidus v4.3.2 (2024-01-22)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.3] Disable admin preview for extensions test apps by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5602
+* [v4.3] Bundle solidus_admin >= 0.2 in Solidus installer by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5608
+
+## Solidus Backend
+
+* [v4.3] Use &#x60;spree&#x60; routing proxy in theme selection partial by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5603
+* [v4.3] Theme selection for Solidus Admin: Use spree routing proxy by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5605
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.1...v4.3.2
+
+
+## Solidus v4.3.1 (2024-01-05)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Backend
+
+* [v4.3] Fix the check on select2 translations asset existence by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5584
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.0...v4.3.1
+
+
 ## Solidus v4.3.0 (2023-12-22)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
@@ -137,6 +191,67 @@
 **Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.0...v4.3.0
 
 
+## Solidus v4.2.3 (2023-11-02)
+
+## Solidus Core
+* [v4.2] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5483
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.2...v4.2.3
+
+
+## Solidus v4.2.2 (2023-11-01)
+
+## Solidus Core
+* [v4.2] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5456
+
+## Solidus Backend
+* [v4.2] Skip all the navbar hiding logic when using the new version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5424
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.1...v4.2.2
+
+
+## Solidus v4.2.1 (2023-10-04)
+
+## Solidus Core
+
+
+## Solidus Backend
+* [v4.2] Update backend configuration for solidus `v4.2` by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5407
+* [v4.2] Restore using `MenuItem#sections` for matching paths by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5409
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.0...v4.2.1
+
+
 ## Solidus v4.2.0 (2023-09-29)
 
 
@@ -185,6 +300,89 @@
 **Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.0...v4.2.0
 
 
+## Solidus v4.1.4 (2024-01-05)
+
+## Solidus Core
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus Backend
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus API
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus Sample
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.3...v4.1.4
+
+
+## Solidus v4.1.3 (2023-11-02)
+
+## Solidus Core
+* [v4.1] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5482
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.2...v4.1.3
+
+
+## Solidus v4.1.2 (2023-11-01)
+
+## Solidus Core
+* [v4.1] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5455
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.1...v4.1.2
+
+
+## Solidus v4.1.1 (2023-08-14)
+
+## Solidus Core
+* [v4.1] Update deprecation horizon by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5307
+* [v4.1] Fix offense after RuboCop 1.56 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5328
+* [v4.1] Bump the minimum required Psych version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5327
+* [v4.1] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5336
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.0...v4.1.1
+
+
 ## Solidus v4.1.0 (2023-06-29)
 
 ## Solidus Core
@@ -230,6 +428,90 @@
 
 
 **Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.0...v4.1.0
+
+
+## Solidus v4.0.4 (2023-11-02)
+
+## Solidus Core
+* [v4.0] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5481
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.3...v4.0.4
+
+
+## Solidus v4.0.3 (2023-11-01)
+
+## Solidus Core
+* [v4.0] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5454
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.2...v4.0.3
+
+
+## Solidus v4.0.2 (2023-08-14)
+
+## Solidus Core
+* [v4.0] Update deprecation horizon by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5306
+* [v4.0] Bump the minimum required Psych version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5326
+* [v4.0] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5335
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.1...v4.0.2
+
+
+## Solidus v4.0.1 (2023-06-30)
+
+## Solidus Core
+* [v4.0] Don't gsub attachment comment during solidus installation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5090
+* [v4.0] Make Spree::MigrationHelpers Ruby 3.0 compatible by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5098
+* [v4.0] Fix Taxon taxonomy id validation regression @github-actions[bot] in https://github.com/solidusio/solidus/pull/5191
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.0...v4.0.1
 
 
 ## Solidus v4.0.0 (2023-05-04)
