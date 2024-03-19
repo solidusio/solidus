@@ -23,6 +23,36 @@ module Spree
         expect(subject.apply).to be_a Coupon
       end
 
+      describe "#can_apply?" do
+        let(:order) { Spree::Order.new(state: state) }
+
+        subject { described_class.new(order).can_apply? }
+
+        context "when the order is in the cart state" do
+          let(:state) { "cart" }
+
+          it { is_expected.to eq(true) }
+        end
+
+        context "when the order is completed" do
+          let(:state) { "complete" }
+
+          it { is_expected.to eq(false) }
+        end
+
+        context "when the order is returned" do
+          let(:state) { "returned" }
+
+          it { is_expected.to eq(false) }
+        end
+
+        context "when the order is awaiting returns" do
+          let(:state) { "awaiting_return" }
+
+          it { is_expected.to eq(false) }
+        end
+      end
+
       context 'status messages' do
         let(:coupon) { Coupon.new(order) }
 
