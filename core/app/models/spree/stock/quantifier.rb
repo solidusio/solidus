@@ -11,14 +11,8 @@ module Spree
       #        If unspecified it will check inventory in all available StockLocations
       def initialize(variant, stock_location_or_id = nil)
         @variant = variant
-        @stock_items = variant.stock_items.select do |stock_item|
-          if stock_location_or_id
-            stock_item.stock_location == stock_location_or_id ||
-              stock_item.stock_location_id == stock_location_or_id
-          else
-            stock_item.stock_location.active?
-          end
-        end
+        @stock_location_or_id = stock_location_or_id
+        @stock_items = variant_stock_items
       end
 
       # Returns the total number of inventory units on hand for the variant.
@@ -26,7 +20,7 @@ module Spree
       # @return [Fixnum] number of inventory units on hand, or infinity if
       #   inventory is not tracked on the variant.
       def total_on_hand
-        if @variant.should_track_inventory?
+        if variant.should_track_inventory?
           stock_items.sum(&:count_on_hand)
         else
           Float::INFINITY
@@ -47,6 +41,36 @@ module Spree
       #   variant is backorderable, otherwise false
       def can_supply?(required)
         total_on_hand >= required || backorderable?
+      end
+
+      def positive_stock
+        return unless stock_location
+
+        on_hand = stock_location.count_on_hand(variant)
+        on_hand.positive? ? on_hand : 0
+      end
+
+      private
+
+      attr_reader :variant, :stock_location_or_id
+
+      def stock_location
+        @stock_location ||= if stock_location_or_id.is_a?(Spree::StockLocation)
+          stock_location_or_id
+        else
+          Spree::StockLocation.find_by(id: stock_location_or_id)
+        end
+      end
+
+      def variant_stock_items
+        variant.stock_items.select do |stock_item|
+          if stock_location_or_id
+            stock_item.stock_location == stock_location_or_id ||
+              stock_item.stock_location_id == stock_location_or_id
+          else
+            stock_item.stock_location.active?
+          end
+        end
       end
     end
   end
