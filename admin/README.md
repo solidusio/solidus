@@ -25,7 +25,7 @@ If you're using an authentication system other than `solidus_auth_devise` you'll
 
 If you encounter the error `couldn't find file 'solidus_admin/tailwind.css'` when loading admin pages, you need to manually build the `solidus_admin` tailwind CSS styles.
 This issue typically occurs when you bundle Solidus from a GitHub branch or from the local filesystem, or with the sandbox application.
-Please see [Customizing tailwind](docs/customizing_tailwind.md) for more information.
+Please see [Customizing tailwind](docs/tailwindcss.md) for more information.
 
 ### Components
 
@@ -56,9 +56,9 @@ mount SolidusAdmin::Engine, at: '/admin', constraints: ->(req) {
 
 ## Development
 
-- [Customizing tailwind](docs/customizing_tailwind.md)
-- [Customizing view components](docs/customizing_view_components.md)
-- [Customizing the main navigation](docs/customizing_menu_items.md)
+- [Customizing tailwind](docs/tailwindcss.md)
+- [Customizing view components](docs/customizing_components.md)
+- [Customizing the main navigation](docs/menu_items.md)
 
 ### Adding components to Solidus Admin
 
