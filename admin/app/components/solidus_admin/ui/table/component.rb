@@ -18,6 +18,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       self.batch_actions = batch_actions.to_a.map { |action| BatchAction.new(**action) }
     end
 
+    def singular_name
+      self[:class].model_name.human if self[:class]
+    end
+
     def plural_name
       self[:class].model_name.human.pluralize if self[:class]
     end
@@ -116,9 +120,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       params["data-action"] = "click->#{stimulus_id}#confirmAction"
       params["data-#{stimulus_id}-message-param"] = t(
         ".action_confirmation",
-        action: batch_action.label.downcase,
-        resource: @data.plural_name.downcase
+        action: batch_action.label.downcase
       )
+      params["data-#{stimulus_id}-resource-singular-param"] = @data.singular_name.downcase
+      params["data-#{stimulus_id}-resource-plural-param"] = @data.plural_name.downcase
     end
 
     render component("ui/button").new(**params)

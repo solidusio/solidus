@@ -130,10 +130,16 @@ export default class extends Controller {
   }
 
   confirmAction(event) {
-    const message = event.params.message.replace(
-      "${count}",
-      this.selectedRows().length
-    )
+    const message = event.params.message
+      .replace(
+        "${count}",
+        this.selectedRows().length
+      ).replace(
+        "${resource}",
+        this.selectedRows().length > 1 ?
+        event.params.resourcePlural :
+        event.params.resourceSingular
+      )
 
     if (!confirm(message)) {
       event.preventDefault()
