@@ -1,3 +1,30 @@
+## Solidus v4.2.4 (2024-04-05)
+
+## Solidus Core
+* [v4.2] Allow "sqlite3" as ENV["DB"] by @mamhoff in https://github.com/solidusio/solidus/pull/5613
+* Fix dummy app database.yml for ENV[DB] = sqlite3 by @mamhoff in https://github.com/solidusio/solidus/pull/5619
+* Dummy App generator: Use db var instead of ENV var by @mamhoff in https://github.com/solidusio/solidus/pull/5623
+* [v4.2] Skip &#x60;ActionCable&#x60; for dummy apps by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5631
+* [v4.2] Explicitly require URI in app configuration by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5647
+* [4.2] Fix latest rubocop issues by @tvdeyen in https://github.com/solidusio/solidus/pull/5653
+
+## Solidus Backend
+* [4.2] Fix latest rubocop issues by @tvdeyen in https://github.com/solidusio/solidus/pull/5653
+* [v4.2] Fix search by variant on stock items by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5662
+* [v4.2] Menu item should not match url if match_path is set by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5650
+
+## Solidus API
+* [4.2] Fix latest rubocop issues by @tvdeyen in https://github.com/solidusio/solidus/pull/5653
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.3...v4.2.4
+
+
 ## Solidus v4.2.3 (2023-11-02)
 
 ## Solidus Core
