@@ -1,3 +1,21 @@
+## Solidus v4.3.4 (2024-04-05)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.3] Fix down migration for promotion_orders promotions foreign key by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5652
+
+## Solidus Backend
+
+* [v4.3] Use routing proxy in locale selection by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5671
+* [v4.3] Menu item should not match url if match_path is set by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5651
+* [v4.3] Do not show theme selector if only one theme is configured by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5707
+* [v4.3] Fix search by variant on stock items by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5663
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.3...v4.3.4
+
+
 ## Solidus v4.3.3 (2024-03-11)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
