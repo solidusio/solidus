@@ -1,3 +1,27 @@
+## Solidus v4.1.5 (2024-04-05)
+
+## Solidus Core
+* [v4.1] [v4.2] Allow "sqlite3" as ENV["DB"]  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5617
+* [v4.1] Dummy App generator: Use db var instead of ENV var by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5626
+* [v4.1] Skip &#x60;ActionCable&#x60; for dummy apps by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5630
+* [v4.1] Explicitly require URI in app configuration by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5646
+* [4.1] Fix latest rubocop offenses by @tvdeyen in https://github.com/solidusio/solidus/pull/5654
+
+## Solidus Backend
+* [4.1] Fix latest rubocop offenses by @tvdeyen in https://github.com/solidusio/solidus/pull/5654
+
+## Solidus API
+* [4.1] Fix latest rubocop offenses by @tvdeyen in https://github.com/solidusio/solidus/pull/5654
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.4...v4.1.5
+
+
 ## Solidus v4.1.4 (2024-01-05)
 
 ## Solidus Core
