@@ -5,7 +5,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   Sortable = Struct.new(:url, :param, :animation, :handle, keyword_init: true)
   Scope = Struct.new(:label, :name, :default, keyword_init: true)
   Filter = Struct.new(:label, :combinator, :attribute, :predicate, :options, keyword_init: true)
-  BatchAction = Struct.new(:label, :icon, :action, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
+  BatchAction = Struct.new(:label, :icon, :action, :require_confirmation, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   private_constant :BatchAction, :Column, :Filter, :Scope, :Sortable
 
   class Data < Struct.new(:rows, :class, :url, :prev, :next, :columns, :fade, :batch_actions, keyword_init: true) # rubocop:disable Lint/StructNewOverride,Style/StructInheritance
@@ -16,6 +16,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         column.is_a?(Symbol) ? Column.new(wrap: false, header: column, data: column) : Column.new(wrap: false, **column)
       end
       self.batch_actions = batch_actions.to_a.map { |action| BatchAction.new(**action) }
+    end
+
+    def singular_name
+      self[:class].model_name.human if self[:class]
     end
 
     def plural_name
@@ -97,7 +101,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def render_batch_action_button(batch_action)
-    render component("ui/button").new(
+    params = {
       name: request_forgery_protection_token,
       value: form_authenticity_token(form_options: {
         action: batch_action.action,
@@ -110,7 +114,19 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       icon: batch_action.icon,
       text: batch_action.label,
       scheme: :secondary,
-    )
+    }
+
+    if batch_action.require_confirmation
+      params["data-action"] = "click->#{stimulus_id}#confirmAction"
+      params["data-#{stimulus_id}-message-param"] = t(
+        ".action_confirmation",
+        action: batch_action.label.downcase
+      )
+      params["data-#{stimulus_id}-resource-singular-param"] = @data.singular_name.downcase
+      params["data-#{stimulus_id}-resource-plural-param"] = @data.plural_name.downcase
+    end
+
+    render component("ui/button").new(**params)
   end
 
   def render_ransack_filter_dropdown(filter, index)

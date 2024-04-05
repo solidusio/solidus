@@ -29,7 +29,10 @@ describe "Products", type: :feature do
 
     visit "/admin/products"
     select_row("Just a product")
-    click_button "Delete"
+
+    accept_confirm("Are you sure you want to delete 1 product?") do
+      click_button "Delete"
+    end
 
     expect(page).to have_content("Products were successfully removed.", wait: 5)
     expect(page).not_to have_content("Just a product")
@@ -44,7 +47,10 @@ describe "Products", type: :feature do
 
     visit "/admin/products"
     find('main tbody tr:nth-child(2)').find('input').check
-    click_button "Discontinue"
+
+    accept_confirm("Are you sure you want to discontinue 1 product?") do
+      click_button "Discontinue"
+    end
 
     expect(page).to have_content("Products were successfully discontinued.", wait: 5)
     within('main tbody tr:nth-child(2)') {
@@ -59,7 +65,10 @@ describe "Products", type: :feature do
     }
 
     find('main tbody tr:nth-child(2)').find('input').check
-    click_button "Activate"
+
+    accept_confirm("Are you sure you want to activate 1 product?") do
+      click_button "Activate"
+    end
 
     expect(page).to have_content("Products were successfully activated.", wait: 5)
     within('tbody') do
