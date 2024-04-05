@@ -11,6 +11,10 @@ module Spree
         @coupon_code = order.coupon_code && order.coupon_code.downcase
       end
 
+      def can_apply?
+        Spree::Promotion.order_activatable?(order)
+      end
+
       def apply
         if coupon_code.present?
           if promotion.present? && promotion.active? && promotion.actions.exists?
