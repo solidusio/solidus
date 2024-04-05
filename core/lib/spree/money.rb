@@ -35,7 +35,7 @@ module Spree
       if amount.is_a?(::Money)
         @money = amount
       else
-        currency = (options[:currency] || Spree::Config[:currency])
+        currency = options[:currency] || Spree::Config[:currency]
 
         @money = Monetize.from_string(amount, currency)
       end
