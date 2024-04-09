@@ -326,3 +326,8 @@ en:
           attributes:
             quantity:
               cannot_be_changed_for_automated_items: cannot be changed on a line item managed by a promotion action
+        solidus_friendly_promotions/promotion:
+          attributes:
+            apply_automatically:
+              disallowed_with_path: cannot be set to true when path is present
+              disallowed_with_promotion_codes: cannot be set to true when promotion code is present
