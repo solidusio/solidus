@@ -4,7 +4,7 @@
 
 <% if available_locale_options_for_select.size > 1 %>
   <li>
-    <%= form_tag(admin_set_locale_path(format: :html), method: :put, style: "width: 100%;") do %>
+    <%= form_tag(spree.admin_set_locale_path(format: :html), method: :put, style: "width: 100%;") do %>
       <label>
         <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-global-line"></use></svg>
         <select name="switch_to_locale" onchange="this.form.requestSubmit()">
