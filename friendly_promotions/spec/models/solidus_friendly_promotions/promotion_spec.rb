@@ -540,7 +540,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   # admin form posts the code and path as empty string
   describe "normalize blank values for path" do
     it "will save blank value as nil value instead" do
-      promotion = Spree::Promotion.create(name: "A promotion", path: "")
+      promotion = SolidusFriendlyPromotions::Promotion.create(name: "A promotion", customer_label: "nice", path: "")
       expect(promotion.path).to be_nil
     end
   end

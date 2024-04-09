@@ -21,6 +21,8 @@ module SolidusFriendlyPromotions
     validate :apply_automatically_disallowed_with_paths
     validate :apply_automatically_disallowed_with_promotion_codes
 
+    before_save :normalize_blank_values
+
     scope :active, ->(time = Time.current) { has_actions.started_and_unexpired(time) }
     scope :advertised, -> { where(advertise: true) }
     scope :coupons, -> { joins(:codes).distinct }
@@ -165,6 +167,10 @@ module SolidusFriendlyPromotions
     end
 
     private
+
+    def normalize_blank_values
+      self[:path] = nil if self[:path].blank?
+    end
 
     def apply_automatically_disallowed_with_paths
       return unless apply_automatically
