@@ -28,13 +28,16 @@ RSpec.describe SolidusFriendlyPromotions::PromotionRule do
   end
 
   it "validates unique rules for a promotion" do
-    promotion_one = test_rule_class.new
-    promotion_one.promotion_id = 1
-    promotion_one.save
+    # Because of Rails' STI, we can't use the anonymous class here
+    promotion = create(:friendly_promotion)
+    rule_one = SolidusFriendlyPromotions::Rules::FirstOrder.new
+    rule_one.promotion_id = promotion.id
+    rule_one.save!
 
-    promotion_two = test_rule_class.new
-    promotion_two.promotion_id = 1
-    expect(promotion_two).not_to be_valid
+    rule_two = SolidusFriendlyPromotions::Rules::FirstOrder.new
+    rule_two.promotion_id = promotion.id
+    expect(rule_two).not_to be_valid
+    expect(rule_two.errors.full_messages).to include("Promotion already contains this rule type")
   end
 
   it "generates its own partial path" do

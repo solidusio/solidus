@@ -45,7 +45,7 @@ module SolidusFriendlyPromotions
     def unique_per_promotion
       return unless self.class.exists?(promotion_id: promotion_id, type: self.class.name)
 
-      errors[:base] << "Promotion already contains this rule type"
+      errors.add(:promotion, :already_contains_rule_type)
     end
 
     def eligibility_error_message(key, options = {})

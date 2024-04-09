@@ -323,6 +323,10 @@ en:
           attributes:
             base:
               cannot_destroy_if_order_completed: Action has been applied to complete orders. It cannot be destroyed.
+        solidus_friendly_promotions/promotion_rule:
+          attributes:
+            promotion:
+              already_contains_rule_type: already contains this rule type
         solidus_friendly_promotions/promotion_code:
           attributes:
             base:
