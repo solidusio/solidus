@@ -85,12 +85,40 @@
   </div>
 </fieldset>
 
-<fieldset class="form-group no-border-bottom">
+<fieldset class="form-group row no-border-bottom">
   <legend><%= t '.activation' %></legend>
 
-  <% if @promotion.new_record? %>
-    <%= render 'solidus_friendly_promotions/admin/promotions/activations_new', f: f %>
-  <% else %>
-    <%= render 'solidus_friendly_promotions/admin/promotions/activations_edit', f: f %>
+  <div class="col-4">
+    <%= f.field_container :apply_automatically do %>
+      <%= f.label :apply_automatically do %>
+        <%= f.check_box :apply_automatically, disabled: f.object.codes.any? || f.object.path.present? %>
+        <%= SolidusFriendlyPromotions::Promotion.human_attribute_name(:apply_automatically) %>
+        <%= f.field_hint :promo_code_will_be_disabled %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if f.object.new_record? %>
+    <div class="col-4">
+      <%= f.field_container :path do %>
+        <%= f.label :path %>
+        <%= f.text_field :path, class: "fullwidth", disabled: f.object.apply_automatically || f.object.codes.present? %>
+      <% end %>
+    </div>
   <% end %>
+
+    <div class="col-4">
+      <% if f.object.new_record? %>
+        <div id="promotion_single_code" class="field">
+          <%= label_tag :single_code, SolidusFriendlyPromotions::PromotionCode.model_name.human %>
+          <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth", disabled: f.object.apply_automatically || f.object.path.present? %>
+        </div>
+      <% else %>
+        <div class="codes-present">
+          <p>
+            <%= t('.codes_present') %>
+          </p>
+        </div>
+      <% end %>
+    </div>
 </fieldset>

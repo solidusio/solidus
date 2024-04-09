@@ -106,7 +106,7 @@ RSpec.describe "Promotions admin", type: :system do
       fill_in("Customer-facing label", with: "20 percent off")
       fill_in("Starts at", with: Time.current)
       fill_in("Expires at", with: 1.week.from_now)
-      choose("Apply to all orders")
+      check("Apply automatically")
       click_button("Create")
       expect(page).to have_content("March 2023 Giveaway")
       promotion = SolidusFriendlyPromotions::Promotion.first

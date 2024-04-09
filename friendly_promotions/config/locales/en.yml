@@ -9,6 +9,13 @@ en:
         promotion_categories: Promotion Categories
         legacy_promotions: Legacy Promotions
         legacy_promotion_categories: Legacy Promotion Categories
+    hints:
+      solidus_friendly_promotions/calculator:
+        promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
+      solidus_friendly_promotions/promotion:
+        expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
+        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its rules / actions will be applied automatically to all orders.
+        starts_at: This determines when the promotion can be applied to orders. <br> If no value is specified, the promotion will be immediately available.
   solidus_friendly_promotions:
     actions: Actions
     adjustment_labels:
@@ -52,9 +59,6 @@ en:
         match_policies:
           include: Line item's product has one of the chosen taxons
           exclude: Line item's product does not have one of the chosen taxons
-    hints:
-      solidus_friendly_promotions/calculator:
-        promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
     coupon_code: Coupon code
     eligibility_results:
       coupon_code_applied: The coupon code was successfully applied to your order.
@@ -147,6 +151,7 @@ en:
           expires_at_placeholder: Never
           general: General
           starts_at_placeholder: Immediately
+          codes_present: This promotion has promotion codes defined. You cannot select the apply automatically option.
         edit:
           order_rules: Order Rules
         calculator:
