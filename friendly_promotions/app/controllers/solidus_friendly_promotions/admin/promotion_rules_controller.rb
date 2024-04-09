@@ -3,7 +3,7 @@
 module SolidusFriendlyPromotions
   module Admin
     class PromotionRulesController < Spree::Admin::BaseController
-      helper "spree/promotion_rules"
+      helper "solidus_friendly_promotions/admin/promotion_rules"
 
       before_action :validate_level, only: [:new, :create]
       before_action :load_promotion, only: [:create, :destroy, :update, :new]

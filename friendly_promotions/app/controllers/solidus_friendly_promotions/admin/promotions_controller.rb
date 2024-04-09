@@ -7,6 +7,7 @@ module SolidusFriendlyPromotions
 
       helper "solidus_friendly_promotions/admin/promotion_rules"
       helper "solidus_friendly_promotions/admin/promotion_actions"
+      helper "solidus_friendly_promotions/admin/promotions"
 
       def create
         @promotion = model_class.new(permitted_resource_params)
