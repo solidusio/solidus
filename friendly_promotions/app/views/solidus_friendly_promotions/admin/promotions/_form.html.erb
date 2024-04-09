@@ -89,8 +89,8 @@
   <legend><%= t '.activation' %></legend>
 
   <% if @promotion.new_record? %>
-    <%= render 'spree/admin/promotions/activations_new', f: f %>
+    <%= render 'solidus_friendly_promotions/admin/promotions/activations_new', f: f %>
   <% else %>
-    <%= render 'spree/admin/promotions/activations_edit', f: f %>
+    <%= render 'solidus_friendly_promotions/admin/promotions/activations_edit', f: f %>
   <% end %>
 </fieldset>

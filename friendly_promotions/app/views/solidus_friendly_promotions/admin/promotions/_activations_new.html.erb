@@ -35,7 +35,7 @@
 
     <div data-activation-type="multiple_codes">
       <%= fields_for :promotion_code_batch, @promotion_code_batch do |batch| %>
-        <%= render partial: 'spree/admin/promotion_code_batches/form_fields', locals: {f: f, batch: batch, promotion_id: params[:promotion_id]} %>
+        <%= render partial: 'solidus_friendly_promotions/admin/promotion_code_batches/form_fields', locals: {f: f, batch: batch, promotion_id: params[:promotion_id]} %>
       <% end %>
     </div>
 
