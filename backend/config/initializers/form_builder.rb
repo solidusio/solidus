@@ -14,7 +14,7 @@ class ActionView::Helpers::FormBuilder
 
   def field_hint(method, options = {})
     title = options.delete(:title) || @object.class.human_attribute_name(method)
-    text = options.delete(:text) || I18n.t(method, scope: [:spree, :hints, @object.class.model_name.i18n_key], **options)
+    text = options.delete(:text) || I18n.t(method, scope: [@object.class.module_parent.to_s.underscore.to_sym, :hints, @object.class.model_name.i18n_key], **options)
     @template.admin_hint(title, text)
   end
 end
