@@ -270,7 +270,7 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups 
     end
   end
 
-  describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
+  describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups::Item do
     let!(:item) { FactoryBot.create :line_item, order: order, quantity: quantity, price: 10 }
     let(:quantity) { 5 }
 
