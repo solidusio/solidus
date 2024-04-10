@@ -34,7 +34,7 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
   end
 
   def search_key
-    :name_or_description_cont
+    :name_cont
   end
 
   def search_url
