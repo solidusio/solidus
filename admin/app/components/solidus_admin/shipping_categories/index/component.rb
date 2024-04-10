@@ -15,6 +15,20 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
     )
   end
 
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: solidus_admin.new_shipping_category_path, data: { turbo_frame: :new_shipping_category_modal },
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
+  end
+
+  def turbo_frames
+    %w[new_shipping_category_modal]
+  end
+
   def row_url(shipping_category)
     spree.edit_admin_shipping_category_path(shipping_category)
   end
