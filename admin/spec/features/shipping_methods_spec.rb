@@ -5,7 +5,7 @@ require 'spec_helper'
 describe "Shipping Methods", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists tax categories and allows deleting them" do
+  it "lists shipping methods and allows deleting them" do
     create(:shipping_method, name: "FAAAST")
 
     visit "/admin/shipping_methods"
@@ -14,9 +14,17 @@ describe "Shipping Methods", :js, type: :feature do
 
     select_row("FAAAST")
     click_on "Delete"
+
     expect(page).to have_content("Shipping methods were successfully removed.")
     expect(page).not_to have_content("FAAAST")
     expect(Spree::ShippingMethod.count).to eq(0)
     expect(page).to be_axe_clean
+  end
+
+  it "shows the link for creating a new shipping method" do
+    visit "/admin/shipping_methods"
+
+    expect(page).to have_content("Add new")
+    expect(page).to have_selector(:css, 'a[href="/admin/shipping_methods/new"]')
   end
 end
