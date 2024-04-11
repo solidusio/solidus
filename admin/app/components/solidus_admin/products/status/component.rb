@@ -5,6 +5,7 @@ class SolidusAdmin::Products::Status::Component < SolidusAdmin::BaseComponent
     available: :green,
     discontinued: :yellow,
     deleted: :red,
+    unavailable: :yellow
   }.freeze
 
   def self.from_product(product)
@@ -13,8 +14,10 @@ class SolidusAdmin::Products::Status::Component < SolidusAdmin::BaseComponent
         :deleted
       elsif product.discontinued?
         :discontinued
-      else
+      elsif product.available?
         :available
+      else
+        :unavailable
       end
 
     new(status: status)
