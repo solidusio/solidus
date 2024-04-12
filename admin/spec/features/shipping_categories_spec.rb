@@ -20,6 +20,25 @@ describe "Shipping Categories", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
+  context "edition" do
+    before do
+      Spree::ShippingCategory.create(name: "a shipping category")
+    end
+
+    it "allows to edit a shipping category" do
+      visit "/admin/shipping_categories"
+      find_row("a shipping category").click()
+
+      expect(page).to have_content("Edit Shipping Category")
+
+      fill_in "Name", with: "a new name"
+
+      click_on "Update Shipping Category"
+      expect(page).to have_content("Shipping category was successfully updated.")
+      expect(Spree::ShippingCategory.find_by(name: "a new name")).to be_present
+    end
+  end
+
   context "when creating a new shipping category" do
     let(:query) { "?page=1&q%5Bname_or_description_cont%5D=What" }
 

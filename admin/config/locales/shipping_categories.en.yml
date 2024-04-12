@@ -6,3 +6,6 @@ en:
         success: "Shipping categories were successfully removed."
       create:
         success: "Shipping category was successfully created."
+      update:
+        success: "Shipping category was successfully updated."
+

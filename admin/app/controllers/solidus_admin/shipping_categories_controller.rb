@@ -4,6 +4,8 @@ module SolidusAdmin
   class ShippingCategoriesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
+    before_action :find_shipping_category, only: %i[edit update]
+
     def new
       @shipping_category = Spree::ShippingCategory.new
 
@@ -43,6 +45,39 @@ module SolidusAdmin
       end
     end
 
+    def edit
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('shipping_categories/edit').new(page: @page, shipping_category: @shipping_category) }
+      end
+    end
+
+    def update
+      if @shipping_category.update(shipping_category_params)
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.shipping_categories_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('shipping_categories/edit').new(page: @page, shipping_category: @shipping_category)
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def index
       set_index_page
 
@@ -65,6 +100,10 @@ module SolidusAdmin
     def load_shipping_category
       @shipping_category = Spree::ShippingCategory.find_by!(id: params[:id])
       authorize! action_name, @shipping_category
+    end
+
+    def find_shipping_category
+      @shipping_category = Spree::ShippingCategory.find(params[:id])
     end
 
     def shipping_category_params
