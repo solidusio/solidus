@@ -1,24 +1,7 @@
 {
   "name": "solidus",
   "version": "0.0.1",
-  "description": "<img width=\"250\" src=\"./logo.svg\" alt=\"Solidus logo\">",
-  "main": "eslint.config.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/solidusio/solidus.git"
-  },
-  "author": "",
-  "license": "Spree License (https://github.com/solidusio/solidus/blob/main/LICENSE.md)",
-  "bugs": {
-    "url": "https://github.com/solidusio/solidus/issues"
-  },
-  "homepage": "https://github.com/solidusio/solidus#readme",
+  "private": true,
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "eslint": "^9.0.0",
