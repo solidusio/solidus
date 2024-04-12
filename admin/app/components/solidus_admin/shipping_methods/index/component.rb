@@ -17,7 +17,7 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     :name_or_description_cont
   end
 
-  def actions
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
