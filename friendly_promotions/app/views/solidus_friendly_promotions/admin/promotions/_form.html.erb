@@ -98,7 +98,7 @@
     <% end %>
   </div>
 
-  <% if f.object.new_record? %>
+  <% if f.object.new_record? || f.object.present? %>
     <div class="col-4">
       <%= f.field_container :path do %>
         <%= f.label :path %>
