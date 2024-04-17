@@ -235,6 +235,7 @@ jobs:
       - image: cimg/ruby:3.2-node
         environment:
           BUNDLE_ONLY: "lint"
+          ESLINT_USE_FLAT_CONFIG: false
     steps:
       - checkout
       - run: 'bundle install'
