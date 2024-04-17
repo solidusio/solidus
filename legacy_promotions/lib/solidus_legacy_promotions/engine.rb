@@ -29,13 +29,15 @@ module SolidusLegacyPromotions
     end
 
     initializer "solidus_legacy_promotions.add_solidus_admin_menu_items" do
-      SolidusAdmin::Config.configure do |config|
-        config.menu_items << {
-          key: "promotions",
-          route: -> { spree.admin_promotions_path },
-          icon: "megaphone-line",
-          position: 30,
-        }
+      if SolidusSupport.admin_available?
+        SolidusAdmin::Config.configure do |config|
+          config.menu_items << {
+            key: "promotions",
+            route: -> { spree.admin_promotions_path },
+            icon: "megaphone-line",
+            position: 30
+          }
+        end
       end
     end
 
