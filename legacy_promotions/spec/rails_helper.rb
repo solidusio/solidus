@@ -11,11 +11,15 @@ DummyApp.setup(
   lib_name: 'solidus_legacy_promotions'
 )
 
+DummyApp.mattr_accessor :use_solidus_admin
+
 # Calling `draw` will completely rewrite the routes defined in the dummy app,
 # so we need to include the main solidus route.
 DummyApp::Application.routes.draw do
-  mount SolidusAdmin::Engine, at: '/admin'
-  mount Spree::Core::Engine, at: '/'
+  mount SolidusAdmin::Engine, at: "/admin", constraints: ->(_req) {
+    DummyApp.use_solidus_admin
+  }
+  mount Spree::Core::Engine, at: "/"
 end
 
 unless SolidusAdmin::Engine.root.join('app/assets/builds/solidus_admin/tailwind.css').exist?
@@ -91,9 +95,18 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.define_derived_metadata(file_path: %r{spec/features/solidus_admin}) do |metadata|
+    metadata[:solidus_admin] = true
+  end
+
+  config.around :each, :solidus_admin do |example|
+    DummyApp.use_solidus_admin = true
+    example.run
+    DummyApp.use_solidus_admin = false
+  end
+
   config.include Spree::TestingSupport::JobHelpers
   config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature
-
   config.include FactoryBot::Syntax::Methods
   config.include Spree::Api::TestingSupport::Helpers, type: :request
   config.include Spree::TestingSupport::UrlHelpers, type: :controller
