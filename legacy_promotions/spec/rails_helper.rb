@@ -95,10 +95,6 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.define_derived_metadata(file_path: %r{spec/features/solidus_admin}) do |metadata|
-    metadata[:solidus_admin] = true
-  end
-
   config.around :each, :solidus_admin do |example|
     DummyApp.use_solidus_admin = true
     example.run

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "Promotion Categories", :js, type: :feature do
+RSpec.describe "Promotion Categories", :js, type: :feature, solidus_admin: true do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
   it "lists promotion categories and allows deleting them" do
