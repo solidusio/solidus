@@ -26,5 +26,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_core', s.version
   s.add_dependency 'solidus_api', s.version
   s.add_dependency 'solidus_backend', s.version
+  s.add_dependency 'solidus_admin'
   s.add_dependency 'solidus_support'
 end

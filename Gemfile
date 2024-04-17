@@ -57,6 +57,13 @@ group :admin do
   gem 'axe-core-capybara', '~> 4.8', require: false
 end
 
+group :legacy_promotions do
+  gem 'solidus_legacy_promotions', path: 'legacy_promotions', require: false
+  gem 'solidus_admin', path: 'admin', require: false
+  gem 'axe-core-rspec', '~> 4.8', require: false
+  gem 'axe-core-capybara', '~> 4.8', require: false
+end
+
 group :lint do
   gem 'erb-formatter', '~> 0.7', require: false
   gem 'rubocop', '~> 1', require: false

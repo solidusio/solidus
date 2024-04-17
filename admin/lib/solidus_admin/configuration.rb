@@ -112,13 +112,6 @@ module SolidusAdmin
         },
 
         {
-          key: "promotions",
-          route: -> { spree.admin_promotions_path },
-          icon: "megaphone-line",
-          position: 30,
-        },
-
-        {
           key: "stock",
           route: -> { spree.admin_stock_items_path },
           icon: "stack-line",
