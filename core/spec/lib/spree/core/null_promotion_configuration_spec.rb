@@ -16,4 +16,8 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
   it "uses the null promotion finder class by default" do
     expect(config.promotion_finder_class).to eq Spree::NullPromotionFinder
   end
+
+  it "uses the null promotion handler as the shipping promo handler" do
+    expect(config.shipping_promotion_handler_class).to eq Spree::NullPromotionHandler
+  end
 end
