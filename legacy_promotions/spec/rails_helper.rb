@@ -4,11 +4,29 @@ require 'spec_helper'
 
 ENV["RAILS_ENV"] ||= 'test'
 
+# SOLIDUS DUMMY APP
 require 'spree/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_legacy_promotions'
 )
+
+DummyApp.mattr_accessor :use_solidus_admin
+
+# Calling `draw` will completely rewrite the routes defined in the dummy app,
+# so we need to include the main solidus route.
+DummyApp::Application.routes.draw do
+  mount SolidusAdmin::Engine, at: "/admin", constraints: ->(_req) {
+    DummyApp.use_solidus_admin
+  }
+  mount Spree::Core::Engine, at: "/"
+end
+
+unless SolidusAdmin::Engine.root.join('app/assets/builds/solidus_admin/tailwind.css').exist?
+  Dir.chdir(SolidusAdmin::Engine.root) do
+    system 'bundle exec rake tailwindcss:build' or abort 'Failed to build Tailwind CSS'
+  end
+end
 
 require 'rails-controller-testing'
 require 'rspec/rails'
@@ -25,6 +43,7 @@ require 'spree/api/testing_support/helpers'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/controller_requests'
+require "solidus_admin/testing_support/feature_helpers"
 require 'cancan/matchers'
 require 'spree/testing_support/capybara_ext'
 
@@ -51,6 +70,10 @@ Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
+# AXE - ACCESSIBILITY
+require 'axe-rspec'
+require 'axe-capybara'
+
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 RSpec.configure do |config|
@@ -72,8 +95,14 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.include Spree::TestingSupport::JobHelpers
+  config.around :each, :solidus_admin do |example|
+    DummyApp.use_solidus_admin = true
+    example.run
+    DummyApp.use_solidus_admin = false
+  end
 
+  config.include Spree::TestingSupport::JobHelpers
+  config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature
   config.include FactoryBot::Syntax::Methods
   config.include Spree::Api::TestingSupport::Helpers, type: :request
   config.include Spree::TestingSupport::UrlHelpers, type: :controller

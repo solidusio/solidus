@@ -28,6 +28,19 @@ module SolidusLegacyPromotions
       Spree::Backend::Config.menu_items.insert(product_menu_item_index + 1, promotions_menu_item)
     end
 
+    initializer "solidus_legacy_promotions.add_solidus_admin_menu_items" do
+      if SolidusSupport.admin_available?
+        SolidusAdmin::Config.configure do |config|
+          config.menu_items << {
+            key: "promotions",
+            route: -> { spree.admin_promotions_path },
+            icon: "megaphone-line",
+            position: 30
+          }
+        end
+      end
+    end
+
     initializer "solidus_legacy_promotions.assets" do |app|
       app.config.assets.precompile << "solidus_legacy_promotions/manifest.js"
     end

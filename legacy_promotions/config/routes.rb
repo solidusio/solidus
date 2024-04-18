@@ -14,3 +14,13 @@ Spree::Core::Engine.routes.draw do
     resources :promotion_categories, except: [:show]
   end
 end
+
+if SolidusSupport.admin_available?
+  SolidusAdmin::Engine.routes.draw do
+    require "solidus_admin/admin_resources"
+    extend SolidusAdmin::AdminResources
+
+    admin_resources :promotions, only: [:index, :destroy]
+    admin_resources :promotion_categories, only: [:index, :destroy]
+  end
+end
