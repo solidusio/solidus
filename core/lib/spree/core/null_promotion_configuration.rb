@@ -22,6 +22,14 @@ module Spree
       #   Spree::NullPromotionFinder.
       class_name_attribute :promotion_finder_class, default: 'Spree::NullPromotionFinder'
 
+      # Allows providing a different promotion shipping promotion handler.
+      # @!attribute [rw] shipping_promotion_handler_class
+      # @see Spree::NullPromotionHandler
+      # @return [Class] an object that conforms to the API of
+      #   the standard promotion finder class
+      #   Spree::NullPromotionHandler.
+      class_name_attribute :shipping_promotion_handler_class, default: 'Spree::NullPromotionHandler'
+
       # !@attribute [rw] promotion_api_attributes
       #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion
       preference :promotion_api_attributes, :array, default: []
