@@ -17,6 +17,7 @@ module SolidusFriendlyPromotions
     belongs_to :promotion, inverse_of: :actions
     belongs_to :original_promotion_action, class_name: "Spree::PromotionAction", optional: true
     has_many :adjustments, class_name: "Spree::Adjustment", as: :source
+    has_many :shipping_rate_discounts, class_name: "SolidusFriendlyPromotions::ShippingRateDiscount", inverse_of: :promotion_action
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
 

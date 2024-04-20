@@ -5,6 +5,7 @@ require "spec_helper"
 RSpec.describe SolidusFriendlyPromotions::PromotionAction do
   it { is_expected.to belong_to(:promotion) }
   it { is_expected.to have_one(:calculator) }
+  it { is_expected.to have_many(:shipping_rate_discounts) }
 
   it { is_expected.to respond_to :discount }
   it { is_expected.to respond_to :can_discount? }
