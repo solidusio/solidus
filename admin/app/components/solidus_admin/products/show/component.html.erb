@@ -100,9 +100,20 @@
 
       <%= page_with_sidebar_aside do %>
         <%= render component('ui/panel').new(title: "Publishing") do %>
-          <%= render component("ui/forms/field").text_field(f, :available_on, hint: t(".available_on_html"), type: :date) %>
-          <%= render component("ui/forms/field").text_field(f, :discontinue_on, hint: t(".discontinue_on_html"), type: :date) %>
-
+          <%= render component("ui/forms/field").text_field(
+            f,
+            :available_on,
+            hint: t(".available_on_html"),
+            type: :date,
+            value: f.object.available_on&.to_date
+          ) %>
+          <%= render component("ui/forms/field").text_field(
+            f,
+            :discontinue_on,
+            hint: t(".discontinue_on_html"),
+            type: :date,
+            value: f.object.discontinue_on&.to_date
+          ) %>
           <label class="flex gap-2 items-center">
             <%= render component("ui/forms/checkbox").new(
               name: "#{f.object_name}[promotionable]",
