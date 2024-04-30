@@ -1,5 +1,5 @@
 ARG RUBY_VERSION
-FROM ruby:$RUBY_VERSION-slim-buster
+FROM ruby:$RUBY_VERSION-slim-bookworm
 
 ARG PG_VERSION
 ARG MYSQL_VERSION
@@ -14,6 +14,7 @@ RUN apt-get update -qq \
     git \
     imagemagick \
     libvips \
+    libffi-dev \
     libmariadb-dev \
     sqlite3 \
     libsqlite3-dev \
@@ -22,10 +23,10 @@ RUN apt-get update -qq \
   && rm -rf /var/cache/apt/lists/*
 
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-  && echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' $PG_VERSION > /etc/apt/sources.list.d/pgdg.list
+  && echo 'deb http://apt.postgresql.org/pub/repos/apt/ bookworm-pgdg main' $PG_VERSION > /etc/apt/sources.list.d/pgdg.list
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467b942d3a79bd29 \
- && echo "deb http://repo.mysql.com/apt/debian/ buster mysql-"$MYSQL_VERSION > /etc/apt/sources.list.d/mysql.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C \
+ && echo "deb http://repo.mysql.com/apt/debian/ bookworm mysql-"$MYSQL_VERSION > /etc/apt/sources.list.d/mysql.list
 
 RUN curl -sSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
 
