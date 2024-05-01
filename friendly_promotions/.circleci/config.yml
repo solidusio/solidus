@@ -6,7 +6,7 @@ jobs:
   lint:
     executor:
       name: solidusio_extensions/sqlite-memory
-      ruby_version: '3.0'
+      ruby_version: '3.1'
     steps:
       - checkout
       - solidusio_extensions/test-branch:
@@ -15,7 +15,7 @@ jobs:
   run-specs-with-mysql:
     executor:
       name: solidusio_extensions/mysql
-      ruby_version: '3.1'
+      ruby_version: '3.2'
     steps:
       - browser-tools/install-chrome
       - checkout
@@ -25,7 +25,7 @@ jobs:
   run-specs-with-postgres:
     executor:
       name: solidusio_extensions/postgres
-      ruby_version: '3.2'
+      ruby_version: '3.3'
     steps:
       - browser-tools/install-chrome
       - checkout
@@ -35,7 +35,7 @@ jobs:
   run-specs-with-sqlite:
     executor:
       name: solidusio_extensions/sqlite
-      ruby_version: '3.0'
+      ruby_version: '3.1'
     steps:
       - browser-tools/install-chrome
       - checkout
