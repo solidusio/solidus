@@ -115,8 +115,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       end
 
       context "with a second line item level rule" do
+        let(:hats) { create(:taxon, name: "Hats", products: [hat]) }
         let(:hat) { create(:product) }
-        let(:hat_product_rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [hat]) }
+        let(:hat_product_rule) { SolidusFriendlyPromotions::Rules::LineItemTaxon.new(taxons: [hats]) }
         let(:rules) { [shirt_product_rule, hat_product_rule] }
 
         it "can tell us about success" do
@@ -127,7 +128,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
         it "has errors for this promo" do
           subject
           expect(promotion.eligibility_results.error_messages).to eq([
-            "You need to add an applicable product before applying this coupon code."
+            "This coupon code could not be applied to the cart at this time."
           ])
         end
       end
