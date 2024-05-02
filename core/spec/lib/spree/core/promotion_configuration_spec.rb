@@ -25,6 +25,10 @@ RSpec.describe Spree::Core::PromotionConfiguration do
     expect(config.promotion_finder_class).to eq Spree::PromotionFinder
   end
 
+  it "uses promotion advertiser class by default" do
+    expect(config.advertiser_class).to eq Spree::PromotionAdvertiser
+  end
+
   describe "#calculators" do
     subject { config.calculators[promotion_action] }
 

@@ -57,6 +57,14 @@ module Spree
       #   Spree::PromotionHandler::Coupon.
       class_name_attribute :coupon_code_handler_class, default: 'Spree::PromotionHandler::Coupon'
 
+      # Allows providing a different promotion advertiser.
+      # @!attribute [rw] advertiser_class
+      # @see Spree::PromotionAdvertiser
+      # @return [Class] an object that conforms to the API of
+      #   the standard promotion advertiser class
+      #   Spree::PromotionAdvertiser.
+      class_name_attribute :advertiser_class, default: 'Spree::PromotionAdvertiser'
+
       add_class_set :rules, default: %w[
         Spree::Promotion::Rules::ItemTotal
         Spree::Promotion::Rules::Product

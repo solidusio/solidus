@@ -30,6 +30,14 @@ module Spree
       #   Spree::NullPromotionHandler.
       class_name_attribute :shipping_promotion_handler_class, default: 'Spree::NullPromotionHandler'
 
+      # Allows providing a different promotion advertiser.
+      # @!attribute [rw] advertiser_class
+      # @see Spree::NullPromotionAdvertiser
+      # @return [Class] an object that conforms to the API of
+      #   the standard promotion advertiser class
+      #   Spree::NullPromotionAdvertiser.
+      class_name_attribute :advertiser_class, default: 'Spree::NullPromotionAdvertiser'
+
       # !@attribute [rw] promotion_api_attributes
       #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion
       preference :promotion_api_attributes, :array, default: []
