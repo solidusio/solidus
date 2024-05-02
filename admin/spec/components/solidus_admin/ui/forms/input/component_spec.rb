@@ -34,5 +34,11 @@ RSpec.describe SolidusAdmin::UI::Forms::Input::Component, type: :component do
 
       expect(page).to have_css("input[type='number'][name='name'][value='value']")
     end
+
+    it "renders a date input" do
+      render_inline(described_class.new(type: :date, name: "name", value: "2020-01-01"))
+
+      expect(page).to have_css("input[type='date'][name='name'][value='2020-01-01']")
+    end
   end
 end
