@@ -5,15 +5,23 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Search
 
     def index
-      return_reasons = apply_search_to(
-        Spree::ReturnReason.unscoped.order(id: :desc),
-        param: :q,
-      )
-
-      set_page_and_extract_portion_from(return_reasons)
+      set_index_page
 
       respond_to do |format|
         format.html { render component('return_reasons/index').new(page: @page) }
+      end
+    end
+
+    def new
+      @return_reason = Spree::ReturnReason.new
+
+      set_index_page
+
+      respond_to do |format|
+        format.html {
+          render component('return_reasons/new')
+            .new(page: @page, return_reason: @return_reason)
+        }
       end
     end
 
@@ -27,6 +35,15 @@ module SolidusAdmin
     end
 
     private
+
+    def set_index_page
+      return_reasons = apply_search_to(
+        Spree::ReturnReason.unscoped.order(id: :desc),
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(return_reasons)
+    end
 
     def load_return_reason
       @return_reason = Spree::ReturnReason.find_by!(id: params[:id])

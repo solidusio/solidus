@@ -17,6 +17,16 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
     spree.edit_admin_return_reason_path(return_reason)
   end
 
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: solidus_admin.new_return_reason_path,
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
+  end
+
   def batch_actions
     [
       {

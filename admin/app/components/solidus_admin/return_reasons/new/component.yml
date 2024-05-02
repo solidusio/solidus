@@ -1,0 +1,6 @@
+en:
+  title: "New Return Reason"
+  cancel: "Cancel"
+  submit: "Add Return Reason"
+  hints:
+    active: "When checked, this retun reason will be available for selection when creating a customer return for an order."
