@@ -499,20 +499,16 @@ RSpec.describe Spree::Product, type: :model do
       expect(Spree::Property.where(name: 'foo').first.presentation).to eq("Foo's Presentation Name")
       expect(Spree::Property.where(name: 'bar').first.presentation).to eq("bar")
     end
+  end
 
-    # Regression test for https://github.com/spree/spree/issues/4416
-    context "#possible_promotions" do
-      let!(:promotion) { create(:promotion, :with_action, advertise: true, starts_at: 1.day.ago) }
-      let!(:rule) do
-        Spree::Promotion::Rules::Product.create(
-          promotion: promotion,
-          products: [product]
-        )
-      end
+  context "#possible_promotions" do
+    let(:product) { create(:product) }
 
-      it "lists the promotion as a possible promotion" do
-        expect(product.possible_promotions).to include(promotion)
-      end
+    subject { product.possible_promotions }
+
+    it "calls the configured promotion advertiser class" do
+      expect(Spree::Config.promotions.advertiser_class).to receive(:for_product).with(product)
+      subject
     end
   end
 
