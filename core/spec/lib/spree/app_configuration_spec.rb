@@ -41,7 +41,7 @@ RSpec.describe Spree::AppConfiguration do
   end
 
   it "uses core's promotion configuration class by default" do
-    expect(prefs.promotion_configuration_class).to eq Spree::Core::PromotionConfiguration
+    expect(prefs.promotions).to be_a Spree::Core::PromotionConfiguration
   end
 
   context "deprecated preferences" do
