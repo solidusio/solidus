@@ -9,8 +9,8 @@
 
   db_host =
     case adapter
-    when 'mysql' then ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
-    when 'postgres' then ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
+    when 'mysql2' then ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
+    when 'postgresql' then ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
     else ENV['DB_HOST']
     end
 
