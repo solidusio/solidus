@@ -19,6 +19,12 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
     end
   end
 
+  describe ".advertiser_class" do
+    it "is the standard advertiser" do
+      expect(subject.advertiser_class).to eq(SolidusFriendlyPromotions::PromotionAdvertiser)
+    end
+  end
+
   describe ".promotion_calculators" do
     subject { config.promotion_calculators }
 
