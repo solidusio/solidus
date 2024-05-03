@@ -44,7 +44,6 @@ Rails.application.config.i18n.raise_on_missing_translations = true
 require "capybara/rspec"
 require 'capybara-screenshot/rspec'
 require "selenium/webdriver"
-require 'webdrivers'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 Capybara.exact = true
 Capybara.disable_animation = true
