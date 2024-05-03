@@ -12,7 +12,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
 
   context "adjusting line items" do
     let(:action) do
-      SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, calculator: calculator)
+      SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, conditions: conditions, calculator: calculator)
     end
     let(:adjustable) { line_item }
 
@@ -21,7 +21,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
       discounter.call
     end
 
-    context "promotion with no rules" do
+    context "promotion with conditionless action" do
+      let(:conditions) { [] }
+
       context "creates the adjustment" do
         it "creates the adjustment" do
           expect {
@@ -101,8 +103,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
     end
 
     context "promotion includes item involved" do
-      let!(:rule) do
-        SolidusFriendlyPromotions::Rules::Product.create(products: [line_item.product], promotion: promotion)
+      let(:conditions) { [condition] }
+      let(:condition) do
+        SolidusFriendlyPromotions::Rules::Product.create(products: [line_item.product])
       end
 
       context "creates the adjustment" do
@@ -115,11 +118,11 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
     end
 
     context "promotion has item total rule" do
-      let!(:rule) do
+      let(:conditions) { [condition] }
+      let(:condition) do
         SolidusFriendlyPromotions::Rules::ItemTotal.create(
           preferred_operator: "gt",
-          preferred_amount: 50,
-          promotion: promotion
+          preferred_amount: 50
         )
       end
 
@@ -158,7 +161,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
       let(:shipment_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: zero_percent) }
       let(:zero_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 0) }
 
-      it "will not create an adjustment on the shiping rate" do
+      it "will not create an adjustment on the shipping rate" do
         expect do
           subject
         end.not_to change { order.shipments.first.shipping_rates.first.discounts.count }
