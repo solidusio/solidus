@@ -262,10 +262,10 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
         end
 
         context "when the coupon fails to activate" do
-          let(:impossible_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+          let(:impossible_condition) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
 
           before do
-            promotion.rules << impossible_rule
+            promotion.actions.first.conditions << impossible_condition
           end
 
           it "is not successful" do

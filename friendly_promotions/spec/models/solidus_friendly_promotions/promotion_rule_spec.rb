@@ -28,15 +28,16 @@ RSpec.describe SolidusFriendlyPromotions::PromotionRule do
     expect { test_rule_class.new.eligible?("promotable") }.not_to raise_error
   end
 
-  it "validates unique rules for a promotion" do
+  it "validates unique rules for a promotion action" do
     # Because of Rails' STI, we can't use the anonymous class here
-    promotion = create(:friendly_promotion)
+    promotion = create(:friendly_promotion, :with_adjustable_action)
+    promotion_action = promotion.actions.first
     rule_one = SolidusFriendlyPromotions::Rules::FirstOrder.new
-    rule_one.promotion_id = promotion.id
+    rule_one.action_id = promotion_action.id
     rule_one.save!
 
     rule_two = SolidusFriendlyPromotions::Rules::FirstOrder.new
-    rule_two.promotion_id = promotion.id
+    rule_two.action_id = promotion_action.id
     expect(rule_two).not_to be_valid
     expect(rule_two.errors.full_messages).to include("Promotion already contains this rule type")
   end

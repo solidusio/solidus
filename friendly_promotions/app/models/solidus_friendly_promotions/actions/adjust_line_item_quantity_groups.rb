@@ -58,7 +58,7 @@ module SolidusFriendlyPromotions
         adjustment_amount = adjustment_amount.abs
 
         order = line_item.order
-        line_items = promotion.applicable_line_items(order)
+        line_items = applicable_line_items(order)
 
         item_units = line_items.sort_by do |line_item|
           [-line_item.quantity, line_item.id]

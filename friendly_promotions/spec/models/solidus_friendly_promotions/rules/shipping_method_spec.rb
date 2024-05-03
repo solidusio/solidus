@@ -4,16 +4,17 @@ require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::ShippingMethod, type: :model do
   let(:rule) { described_class.new }
+  let!(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+  let(:promotion_action) { promotion.actions.first }
+  let(:ups_ground) { create(:shipping_method) }
+  let(:dhl_saver) { create(:shipping_method) }
 
   it { is_expected.to respond_to(:preferred_shipping_method_ids) }
 
   describe "preferred_shipping_methods_ids=" do
     subject { rule.preferred_shipping_method_ids = [ups_ground.id] }
 
-    let!(:promotion) { create(:friendly_promotion) }
-    let(:ups_ground) { create(:shipping_method) }
-    let(:dhl_saver) { create(:shipping_method) }
-    let(:rule) { promotion.rules.build(type: described_class.to_s) }
+    let(:rule) { promotion_action.conditions.build(type: described_class.to_s) }
 
     it "creates a valid rule with a shipping method" do
       subject
@@ -25,10 +26,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::ShippingMethod, type: :model do
   describe "#eligible?" do
     subject { rule.eligible?(promotable) }
 
-    let!(:promotion) { create(:friendly_promotion) }
-    let(:ups_ground) { create(:shipping_method) }
-    let(:dhl_saver) { create(:shipping_method) }
-    let(:rule) { promotion.rules.build(type: described_class.to_s, preferred_shipping_method_ids: [ups_ground.id]) }
+    let(:rule) { promotion_action.conditions.build(type: described_class.to_s, preferred_shipping_method_ids: [ups_ground.id]) }
 
     context "with a shipment" do
       context "when the shipment has the right shipping method selected" do

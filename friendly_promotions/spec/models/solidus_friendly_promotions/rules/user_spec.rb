@@ -10,9 +10,10 @@ RSpec.describe SolidusFriendlyPromotions::Rules::User, type: :model do
   describe "user_ids=" do
     subject { rule.user_ids = [user.id] }
 
-    let(:promotion) { create(:friendly_promotion) }
+    let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+    let(:action) { promotion.actions.first }
     let(:user) { create(:user) }
-    let(:rule) { promotion.rules.new }
+    let(:rule) { described_class.new(users: [user], action: action) }
 
     it "creates a valid rule with a user" do
       expect(rule).to be_valid

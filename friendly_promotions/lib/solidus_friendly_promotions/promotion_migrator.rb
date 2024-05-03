@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   class PromotionMigrator
-    PROMOTION_IGNORED_ATTRIBUTES = ["id", "type", "promotion_category_id"]
+    PROMOTION_IGNORED_ATTRIBUTES = ["id", "type", "promotion_category_id", "promotion_id"]
 
     attr_reader :promotion_map
 
@@ -24,12 +24,12 @@ module SolidusFriendlyPromotions
             name: promotion.promotion_category.name
           )
         end
-        new_promotion.rules = promotion.rules.flat_map do |old_promotion_rule|
-          generate_new_promotion_rules(old_promotion_rule)
-        end
         new_promotion.actions = promotion.actions.flat_map do |old_promotion_action|
           generate_new_promotion_actions(old_promotion_action)&.tap do |new_promotion_action|
             new_promotion_action.original_promotion_action = old_promotion_action
+            new_promotion_action.conditions = promotion.rules.flat_map do |old_promotion_rule|
+              generate_new_promotion_rules(old_promotion_rule)
+            end
           end
         end.compact
         new_promotion.save!

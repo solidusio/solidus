@@ -3,8 +3,10 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
+  let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+  let(:promotion_action) { promotion.actions.first }
   let(:rule) do
-    described_class.create!(promotion: create(:friendly_promotion))
+    described_class.create!(action: promotion_action)
   end
   let(:product) { order.products.first }
   let(:order) { create :order_with_line_items }
@@ -16,9 +18,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Taxon, type: :model do
   describe "taxon_ids_string=" do
     subject { rule.assign_attributes("taxon_ids_string" => taxon_two.id.to_s) }
 
-    let!(:promotion) { create(:friendly_promotion) }
-
-    let(:rule) { promotion.rules.build(type: described_class.to_s) }
+    let(:rule) { promotion_action.conditions.build(type: described_class.to_s) }
 
     it "creates a valid rule with a taxon" do
       subject

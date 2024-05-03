@@ -40,9 +40,9 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Page, type: :model d
   end
 
   context "when promotion is not eligible" do
-    let(:impossible_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+    let(:impossible_condition) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
     before do
-      promotion.rules << impossible_rule
+      promotion.actions.first.conditions << impossible_condition
     end
 
     it "is not applied" do

@@ -1,24 +1,23 @@
 # frozen_string_literal: true
 
 RSpec.describe SolidusFriendlyPromotions::Rules::MinimumQuantity do
-  subject(:quantity_rule) { described_class.new(preferred_minimum_quantity: 2) }
+  let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new }
+  subject(:quantity_condition) { described_class.new(preferred_minimum_quantity: 2, action: action) }
 
   describe "#valid?" do
-    let(:promotion) { build(:friendly_promotion) }
-
-    before { promotion.rules << quantity_rule }
+    before { action.conditions << quantity_condition }
 
     it { is_expected.to be_valid }
 
     context "when minimum quantity is zero" do
-      subject(:quantity_rule) { described_class.new(preferred_minimum_quantity: 0) }
+      subject(:quantity_condition) { described_class.new(preferred_minimum_quantity: 0) }
 
       it { is_expected.not_to be_valid }
     end
   end
 
   describe "#applicable?" do
-    subject { quantity_rule.applicable?(promotable) }
+    subject { quantity_condition.applicable?(promotable) }
 
     context "when promotable is an order" do
       let(:promotable) { Spree::Order.new }
@@ -34,7 +33,7 @@ RSpec.describe SolidusFriendlyPromotions::Rules::MinimumQuantity do
   end
 
   describe "#eligible?" do
-    subject { quantity_rule.eligible?(order) }
+    subject { quantity_condition.eligible?(order) }
 
     let(:order) do
       create(
@@ -43,11 +42,11 @@ RSpec.describe SolidusFriendlyPromotions::Rules::MinimumQuantity do
         line_items_attributes: line_items
       )
     end
-    let(:promotion) { build(:friendly_promotion) }
+    let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new }
 
-    before { promotion.rules << quantity_rule }
+    before { action.conditions << quantity_condition }
 
-    context "when only the quantity rule is applied" do
+    context "when only the quantity condition is applied" do
       context "when the quantity is less than the minimum" do
         let(:line_items) { [{quantity: 1}] }
 
@@ -67,19 +66,19 @@ RSpec.describe SolidusFriendlyPromotions::Rules::MinimumQuantity do
       end
     end
 
-    context "when another rule limits the applicable items" do
+    context "when another condition limits the applicable items" do
       let(:carry_on) { create(:variant) }
       let(:other_carry_on) { create(:variant) }
       let(:everywhere_bag) { create(:product).master }
 
-      let(:product_rule) {
+      let(:product_condition) {
         SolidusFriendlyPromotions::Rules::LineItemProduct.new(
           products: [carry_on.product, other_carry_on.product],
           preferred_match_policy: "any"
         )
       }
 
-      before { promotion.rules << product_rule }
+      before { action.conditions << product_condition }
 
       context "when the applicable quantity is less than the minimum" do
         let(:line_items) do

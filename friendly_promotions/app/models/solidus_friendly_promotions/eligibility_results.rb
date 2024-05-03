@@ -9,10 +9,10 @@ module SolidusFriendlyPromotions
       @results = []
     end
 
-    def add(item:, rule:, success:, code:, message:)
+    def add(item:, condition:, success:, code:, message:)
       results << EligibilityResult.new(
         item: item,
-        rule: rule,
+        condition: condition,
         success: success,
         code: code,
         message: message
@@ -22,16 +22,16 @@ module SolidusFriendlyPromotions
     def success?
       return true if results.empty?
       promotion.actions.any? do |action|
-        action.conditions.all? do |rule|
-          results_for_rule = results.select { |result| result.rule == rule }
-          results_for_rule.any?(&:success)
+        action.conditions.all? do |condition|
+          results_for_condition = results.select { |result| result.condition == condition }
+          results_for_condition.any?(&:success)
         end
       end
     end
 
     def error_messages
       return [] if results.empty?
-      results.group_by(&:rule).map do |rule, results|
+      results.group_by(&:condition).map do |condition, results|
         next if results.any?(&:success)
         results.detect { |r| !r.success }&.message
       end.compact

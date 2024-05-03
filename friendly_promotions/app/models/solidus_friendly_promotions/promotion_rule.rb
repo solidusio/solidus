@@ -6,8 +6,8 @@ module SolidusFriendlyPromotions
   class PromotionRule < Spree::Base
     include Spree::Preferences::Persistable
 
-    belongs_to :promotion, optional: true
-    belongs_to :action, class_name: "SolidusFriendlyPromotions::PromotionAction", optional: true
+    belongs_to :action, class_name: "SolidusFriendlyPromotions::PromotionAction", inverse_of: :conditions, optional: true
+    has_one :promotion, through: :action
 
     scope :of_type, ->(type) { where(type: type) }
 
@@ -44,7 +44,7 @@ module SolidusFriendlyPromotions
     private
 
     def unique_per_promotion
-      return unless self.class.exists?(promotion_id: promotion_id, type: self.class.name)
+      return unless self.class.exists?(action_id: action_id, type: self.class.name)
 
       errors.add(:promotion, :already_contains_rule_type)
     end

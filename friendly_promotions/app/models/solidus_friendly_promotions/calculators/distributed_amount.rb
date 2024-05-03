@@ -18,7 +18,7 @@ module SolidusFriendlyPromotions
         return 0 unless line_item
         return 0 unless preferred_currency.casecmp(line_item.currency).zero?
 
-        distributable_line_items = calculable.promotion.applicable_line_items(line_item.order)
+        distributable_line_items = calculable.applicable_line_items(line_item.order)
         return 0 unless line_item.in?(distributable_line_items)
 
         DistributedAmountsHandler.new(

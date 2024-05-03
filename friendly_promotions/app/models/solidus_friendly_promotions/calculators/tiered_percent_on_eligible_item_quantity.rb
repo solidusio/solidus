@@ -29,7 +29,7 @@ module SolidusFriendlyPromotions
       private
 
       def eligible_line_items_quantity_total(order)
-        calculable.promotion.applicable_line_items(order).sum(&:quantity)
+        calculable.applicable_line_items(order).sum(&:quantity)
       end
     end
   end

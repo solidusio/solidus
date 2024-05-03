@@ -13,9 +13,9 @@ module SolidusFriendlyPromotions
         promos << dry_run_promotion if dry_run_promotion
         promos.flat_map(&:actions).group_by(&:preload_relations).each do |preload_relations, actions|
           preload(records: actions, associations: preload_relations)
-        end
-        promos.flat_map(&:rules).group_by(&:preload_relations).each do |preload_relations, rules|
-          preload(records: rules, associations: preload_relations)
+          actions.flat_map(&:conditions).group_by(&:preload_relations).each do |preload_relations, conditions|
+            preload(records: conditions, associations: preload_relations)
+          end
         end
         promos.reject { |promotion| promotion.usage_limit_exceeded?(excluded_orders: [order]) }
       end
@@ -44,10 +44,9 @@ module SolidusFriendlyPromotions
       end
 
       def promotion_includes
-        [
-          :rules,
-          :actions
-        ]
+        {
+          actions: :conditions
+        }
       end
     end
   end

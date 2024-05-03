@@ -19,12 +19,13 @@ FactoryBot.define do
         preferred_amount { 10 }
         calculator_class { SolidusFriendlyPromotions::Calculators::FlatRate }
         promotion_action_class { SolidusFriendlyPromotions::Actions::AdjustLineItem }
+        conditions { [] }
       end
 
       after(:create) do |promotion, evaluator|
         calculator = evaluator.calculator_class.new
         calculator.preferred_amount = evaluator.preferred_amount
-        evaluator.promotion_action_class.create!(calculator: calculator, promotion: promotion)
+        evaluator.promotion_action_class.create!(calculator: calculator, promotion: promotion, conditions: evaluator.conditions)
       end
     end
 
@@ -60,32 +61,5 @@ FactoryBot.define do
     end
 
     factory :friendly_promotion_with_order_adjustment, traits: [:with_order_adjustment]
-
-    trait :with_item_total_rule do
-      transient do
-        item_total_threshold_amount { 10 }
-      end
-
-      after(:create) do |promotion, evaluator|
-        rule = SolidusFriendlyPromotions::Rules::ItemTotal.create!(
-          promotion: promotion,
-          preferred_operator: "gte",
-          preferred_amount: evaluator.item_total_threshold_amount
-        )
-        promotion.rules << rule
-        promotion.save!
-      end
-    end
-    factory :friendly_promotion_with_item_total_rule, traits: [:with_item_total_rule]
-    trait :with_first_order_rule do
-      after(:create) do |promotion, _evaluator|
-        rule = SolidusFriendlyPromotions::Rules::FirstOrder.create!(
-          promotion: promotion
-        )
-        promotion.rules << rule
-        promotion.save!
-      end
-    end
-    factory :friendly_promotion_with_first_order_rule, traits: [:with_first_order_rule]
   end
 end

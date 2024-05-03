@@ -7,7 +7,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
   it { is_expected.to belong_to(:category).optional }
   it { is_expected.to respond_to(:customer_label) }
-  it { is_expected.to have_many :rules }
+  it { is_expected.to have_many :conditions }
   it { is_expected.to have_many(:order_promotions).dependent(:destroy) }
   it { is_expected.to have_many(:code_batches).dependent(:destroy) }
 
@@ -513,13 +513,14 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "#products" do
-    let(:promotion) { create(:friendly_promotion) }
+    let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+    let(:promotion_action) { promotion.actions.first }
 
     context "when it has product rules with products associated" do
       let(:promotion_rule) { SolidusFriendlyPromotions::Rules::Product.new }
 
       before do
-        promotion_rule.promotion = promotion
+        promotion_rule.action = promotion_action
         promotion_rule.products << create(:product)
         promotion_rule.save
       end

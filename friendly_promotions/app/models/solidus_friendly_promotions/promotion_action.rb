@@ -67,6 +67,40 @@ module SolidusFriendlyPromotions
       SolidusFriendlyPromotions.config.promotion_calculators[self.class] || (raise NotImplementedError)
     end
 
+    def eligible_by_applicable_conditions?(promotable, dry_run: false)
+      applicable_conditions = conditions.select do |condition|
+        condition.applicable?(promotable)
+      end
+
+      applicable_conditions.map do |applicable_condition|
+        eligible = applicable_condition.eligible?(promotable)
+
+        break [false] if !eligible && !dry_run
+
+        if dry_run
+          if applicable_condition.eligibility_errors.details[:base].first
+            code = applicable_condition.eligibility_errors.details[:base].first[:error_code]
+            message = applicable_condition.eligibility_errors.full_messages.first
+          end
+          promotion.eligibility_results.add(
+            item: promotable,
+            condition: applicable_condition,
+            success: eligible,
+            code: eligible ? nil : (code || :coupon_code_unknown_error),
+            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_friendly_promotions, :eligibility_errors]))
+          )
+        end
+
+        eligible
+      end.all?
+    end
+
+    def applicable_line_items(order)
+      order.discountable_line_items.select do |line_item|
+        eligible_by_applicable_conditions?(line_item)
+      end
+    end
+
     private
 
     def raise_for_adjustments_for_completed_orders

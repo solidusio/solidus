@@ -10,10 +10,11 @@ RSpec.describe SolidusFriendlyPromotions::Rules::Store, type: :model do
   describe "store_ids=" do
     subject { rule.store_ids = [store.id] }
 
-    let!(:promotion) { create(:friendly_promotion) }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+    let(:promotion_action) { promotion.actions.first }
     let!(:unimportant_store) { create(:store) }
     let!(:store) { create(:store) }
-    let(:rule) { promotion.rules.build(type: described_class.to_s) }
+    let(:rule) { promotion_action.conditions.build(type: described_class.to_s) }
 
     it "creates a valid rule with a store" do
       subject

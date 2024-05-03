@@ -25,7 +25,7 @@ describe "Admin::PromotionRules", type: :request do
       }
       expect(response).to be_redirect
       expect(response).to redirect_to solidus_friendly_promotions.edit_admin_promotion_path(promotion)
-      expect(promotion.rules.count).to eq(0)
+      expect(promotion_action.conditions.count).to eq(0)
     end
   end
 

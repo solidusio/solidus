@@ -7,8 +7,8 @@ module SolidusFriendlyPromotions
     belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory",
       foreign_key: :promotion_category_id, optional: true
     belongs_to :original_promotion, class_name: "Spree::Promotion", optional: true
-    has_many :rules, class_name: "SolidusFriendlyPromotions::PromotionRule", dependent: :destroy
     has_many :actions, class_name: "SolidusFriendlyPromotions::PromotionAction", dependent: :destroy
+    has_many :conditions, through: :actions
     has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode", dependent: :destroy
     has_many :code_batches, class_name: "SolidusFriendlyPromotions::PromotionCodeBatch", dependent: :destroy
     has_many :order_promotions, class_name: "SolidusFriendlyPromotions::OrderPromotion", dependent: :destroy
@@ -125,45 +125,11 @@ module SolidusFriendlyPromotions
     end
 
     def products
-      rules.where(type: "SolidusFriendlyPromotions::Rules::Product").flat_map(&:products).uniq
+      conditions.where(type: "SolidusFriendlyPromotions::Rules::Product").flat_map(&:products).uniq
     end
 
     def eligibility_results
       @eligibility_results ||= SolidusFriendlyPromotions::EligibilityResults.new(self)
-    end
-
-    def eligible_by_applicable_rules?(promotable, dry_run: false)
-      applicable_rules = rules.select do |rule|
-        rule.applicable?(promotable)
-      end
-
-      applicable_rules.map do |applicable_rule|
-        eligible = applicable_rule.eligible?(promotable)
-
-        break [false] if !eligible && !dry_run
-
-        if dry_run
-          if applicable_rule.eligibility_errors.details[:base].first
-            code = applicable_rule.eligibility_errors.details[:base].first[:error_code]
-            message = applicable_rule.eligibility_errors.full_messages.first
-          end
-          eligibility_results.add(
-            item: promotable,
-            rule: applicable_rule,
-            success: eligible,
-            code: eligible ? nil : (code || :coupon_code_unknown_error),
-            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_friendly_promotions, :eligibility_errors]))
-          )
-        end
-
-        eligible
-      end.all?
-    end
-
-    def applicable_line_items(order)
-      order.discountable_line_items.select do |line_item|
-        eligible_by_applicable_rules?(line_item)
-      end
     end
 
     private

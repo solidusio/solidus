@@ -15,11 +15,12 @@ module SolidusFriendlyPromotions
         return order if order.shipped?
 
         SolidusFriendlyPromotions::Promotion.ordered_lanes.each do |lane, _index|
-          lane_promotions = eligible_promotions_for_promotable(promotions.select { |promotion| promotion.lane == lane }, order)
-          perform_order_actions(lane_promotions, lane) unless dry_run
-          line_item_discounts = adjust_line_items(lane_promotions)
-          shipment_discounts = adjust_shipments(lane_promotions)
-          shipping_rate_discounts = adjust_shipping_rates(lane_promotions)
+          lane_promotions = promotions.select { |promotion| promotion.lane == lane }
+          lane_actions = eligible_actions_for_promotable(lane_promotions.flat_map(&:actions), order)
+          perform_order_actions(lane_actions, lane) unless dry_run
+          line_item_discounts = adjust_line_items(lane_actions)
+          shipment_discounts = adjust_shipments(lane_actions)
+          shipping_rate_discounts = adjust_shipping_rates(lane_actions)
           (line_item_discounts + shipment_discounts + shipping_rate_discounts).each do |item, chosen_discounts|
             item.current_discounts.concat(chosen_discounts)
           end
@@ -30,16 +31,16 @@ module SolidusFriendlyPromotions
 
       private
 
-      def perform_order_actions(lane_promotions, lane)
-        lane_promotions.each do |promotion|
-          promotion.actions.select { |action| action.level == :order }.each { |action| action.perform(order) }
+      def perform_order_actions(lane_actions, lane)
+        lane_actions.select { |action| action.level == :order }.each do |action|
+          action.perform(order)
         end
 
         automated_line_items = order.line_items.select(&:managed_by_order_action)
         return if automated_line_items.empty?
 
         ineligible_line_items = automated_line_items.select do |line_item|
-          line_item.managed_by_order_action.promotion.lane == lane && !line_item.managed_by_order_action.in?(lane_promotions.flat_map(&:actions))
+          line_item.managed_by_order_action.promotion.lane == lane && !line_item.managed_by_order_action.in?(lane_actions)
         end
 
         ineligible_line_items.each do |line_item|
@@ -47,47 +48,45 @@ module SolidusFriendlyPromotions
         end
       end
 
-      def adjust_line_items(promotions)
+      def adjust_line_items(actions)
         order.discountable_line_items.select do |line_item|
           line_item.variant.product.promotionable?
         end.map do |line_item|
-          discounts = generate_discounts(promotions, line_item)
+          discounts = generate_discounts(actions, line_item)
           chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(discounts).call
           [line_item, chosen_item_discounts]
         end
       end
 
-      def adjust_shipments(promotions)
+      def adjust_shipments(actions)
         order.shipments.map do |shipment|
-          discounts = generate_discounts(promotions, shipment)
+          discounts = generate_discounts(actions, shipment)
           chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(discounts).call
           [shipment, chosen_item_discounts]
         end
       end
 
-      def adjust_shipping_rates(promotions)
+      def adjust_shipping_rates(actions)
         order.shipments.flat_map(&:shipping_rates).select(&:cost).map do |rate|
-          discounts = generate_discounts(promotions, rate)
+          discounts = generate_discounts(actions, rate)
           chosen_item_discounts = SolidusFriendlyPromotions.config.discount_chooser_class.new(discounts).call
           [rate, chosen_item_discounts]
         end
       end
 
-      def eligible_promotions_for_promotable(possible_promotions, promotable)
-        possible_promotions.select do |candidate|
-          candidate.eligible_by_applicable_rules?(promotable, dry_run: dry_run)
+      def eligible_actions_for_promotable(possible_actions, promotable)
+        possible_actions.select do |candidate|
+          candidate.eligible_by_applicable_conditions?(promotable, dry_run: dry_run)
         end
       end
 
-      def generate_discounts(possible_promotions, item)
-        eligible_promotions = eligible_promotions_for_promotable(possible_promotions, item)
-        eligible_promotions.flat_map do |promotion|
-          promotion.actions.select do |action|
-            action.can_discount?(item)
-          end.map do |action|
-            action.discount(item)
-          end.compact
-        end
+      def generate_discounts(possible_actions, item)
+        eligible_actions = eligible_actions_for_promotable(possible_actions, item)
+        eligible_actions.select do |action|
+          action.can_discount?(item)
+        end.map do |action|
+          action.discount(item)
+        end.compact
       end
     end
   end

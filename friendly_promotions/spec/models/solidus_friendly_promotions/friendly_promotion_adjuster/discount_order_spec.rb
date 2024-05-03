@@ -36,9 +36,9 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
   describe "collecting eligibility results in a dry run" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
-    let(:rules) { [product_rule] }
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, rules: rules, name: "20% off Shirts", apply_automatically: true) }
-    let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
+    let(:conditions) { [product_condition] }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
+    let(:product_condition) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
     let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions, dry_run: true) }
 
@@ -49,7 +49,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
 
       expect(promotion.eligibility_results.first.success).to be true
       expect(promotion.eligibility_results.first.code).to be nil
-      expect(promotion.eligibility_results.first.rule).to eq(product_rule)
+      expect(promotion.eligibility_results.first.condition).to eq(product_condition)
       expect(promotion.eligibility_results.first.message).to be nil
       expect(promotion.eligibility_results.first.item).to eq(order)
     end
@@ -59,20 +59,20 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       expect(promotion.eligibility_results.success?).to be true
     end
 
-    context "with two rules" do
-      let(:rules) { [product_rule, item_total_rule] }
-      let(:item_total_rule) { SolidusFriendlyPromotions::Rules::ItemTotal.new(preferred_amount: 2000) }
+    context "with two conditions" do
+      let(:conditions) { [product_condition, item_total_condition] }
+      let(:item_total_condition) { SolidusFriendlyPromotions::Rules::ItemTotal.new(preferred_amount: 2000) }
 
       it "will collect eligibility results" do
         subject
 
         expect(promotion.eligibility_results.first.success).to be true
         expect(promotion.eligibility_results.first.code).to be nil
-        expect(promotion.eligibility_results.first.rule).to eq(product_rule)
+        expect(promotion.eligibility_results.first.condition).to eq(product_condition)
         expect(promotion.eligibility_results.first.message).to be nil
         expect(promotion.eligibility_results.first.item).to eq(order)
         expect(promotion.eligibility_results.last.success).to be false
-        expect(promotion.eligibility_results.last.rule).to eq(item_total_rule)
+        expect(promotion.eligibility_results.last.condition).to eq(item_total_condition)
         expect(promotion.eligibility_results.last.code).to eq :item_total_less_than_or_equal
         expect(promotion.eligibility_results.last.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
         expect(promotion.eligibility_results.last.item).to eq(order)
@@ -91,7 +91,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       end
     end
 
-    context "with an order with multiple line items and an item-level rule" do
+    context "with an order with multiple line items and an item-level condition" do
       let(:pants) { create(:product, name: "Pants") }
       let(:order) do
         create(
@@ -100,12 +100,12 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
         )
       end
 
-      let(:shirt_product_rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
-      let(:rules) { [shirt_product_rule] }
+      let(:shirt_product_condition) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
+      let(:conditions) { [shirt_product_condition] }
 
       it "can tell us about success" do
         subject
-        # This is successful, because one of the line item rules matches
+        # This is successful, because one of the line item conditions matches
         expect(promotion.eligibility_results.success?).to be true
       end
 
@@ -114,11 +114,11 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
         expect(promotion.eligibility_results.error_messages).to be_empty
       end
 
-      context "with a second line item level rule" do
+      context "with a second line item level condition" do
         let(:hats) { create(:taxon, name: "Hats", products: [hat]) }
         let(:hat) { create(:product) }
-        let(:hat_product_rule) { SolidusFriendlyPromotions::Rules::LineItemTaxon.new(taxons: [hats]) }
-        let(:rules) { [shirt_product_rule, hat_product_rule] }
+        let(:hat_product_condition) { SolidusFriendlyPromotions::Rules::LineItemTaxon.new(taxons: [hats]) }
+        let(:conditions) { [shirt_product_condition, hat_product_condition] }
 
         it "can tell us about success" do
           subject
@@ -135,8 +135,8 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
     end
 
     context "when the order must not contain a shirt" do
-      let(:no_shirt_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_match_policy: "none", preferred_line_item_applicable: false) }
-      let(:rules) { [no_shirt_rule] }
+      let(:no_shirt_condition) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_match_policy: "none", preferred_line_item_applicable: false) }
+      let(:conditions) { [no_shirt_condition] }
 
       it "can tell us about success" do
         subject
@@ -149,15 +149,15 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       let(:usps) { create(:shipping_method) }
       let(:ups_ground) { create(:shipping_method) }
       let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}], shipping_method: ups_ground) }
-      let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
-      let(:shipping_method_rule) { SolidusFriendlyPromotions::Rules::ShippingMethod.new(preferred_shipping_method_ids: [usps.id]) }
+      let(:product_condition) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
+      let(:shipping_method_condition) { SolidusFriendlyPromotions::Rules::ShippingMethod.new(preferred_shipping_method_ids: [usps.id]) }
       let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
       let(:ten_off_shipping) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
-      let(:shipping_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: ten_off_shipping) }
-      let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items) }
+      let(:shipping_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: ten_off_shipping, conditions: [product_condition]) }
+      let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items, conditions: [shipping_method_condition]) }
       let(:actions) { [shipping_action, line_item_action] }
-      let(:rules) { [product_rule, shipping_method_rule] }
-      let!(:promotion) { create(:friendly_promotion, actions: actions, rules: rules, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
+      let(:conditions) { [product_condition, shipping_method_condition] }
+      let!(:promotion) { create(:friendly_promotion, actions: actions, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
 
       it "can tell us about success" do
         subject
@@ -170,8 +170,8 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       end
     end
 
-    context "with no rules" do
-      let(:rules) { [] }
+    context "with no conditions" do
+      let(:conditions) { [] }
 
       it "has no errors for this promo" do
         subject
@@ -179,11 +179,11 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       end
     end
 
-    context "with an ineligible order-level rule" do
+    context "with an ineligible order-level condition" do
       let(:mug) { create(:product) }
-      let(:order_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
-      let(:line_item_rule) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [mug]) }
-      let(:rules) { [order_rule, line_item_rule] }
+      let(:order_condition) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+      let(:line_item_condition) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [mug]) }
+      let(:conditions) { [order_condition, line_item_condition] }
 
       it "can tell us about success" do
         subject
