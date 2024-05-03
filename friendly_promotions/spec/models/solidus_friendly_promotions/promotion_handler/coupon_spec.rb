@@ -429,10 +429,10 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
     let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [hat], preferred_line_item_applicable: false) }
     let(:nth_order_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
     let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
-    let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items) }
+    let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items, conditions: conditions) }
     let(:actions) { [line_item_action] }
-    let(:rules) { [product_rule, nth_order_rule] }
-    let!(:promotion) { create(:friendly_promotion, actions: actions, rules: rules, name: "10% off Shirts and USPS Shipping") }
+    let(:conditions) { [product_rule, nth_order_rule] }
+    let!(:promotion) { create(:friendly_promotion, actions: actions, name: "10% off Shirts and USPS Shipping") }
     let!(:coupon) { create(:friendly_promotion_code, promotion: promotion, value: "XMAS") }
     let(:handler) { described_class.new(order) }
 

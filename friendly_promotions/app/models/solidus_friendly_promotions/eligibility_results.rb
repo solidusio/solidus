@@ -22,7 +22,7 @@ module SolidusFriendlyPromotions
     def success?
       return true if results.empty?
       promotion.actions.any? do |action|
-        action.relevant_rules.all? do |rule|
+        action.conditions.all? do |rule|
           results_for_rule = results.select { |result| result.rule == rule }
           results_for_rule.any?(&:success)
         end
