@@ -112,7 +112,17 @@ module Spree
       :variant_id
     ]
 
-    preference :promotion_attributes, :array, default: Spree::Config.promotions.promotion_api_attributes
+    def promotion_attributes
+      Spree::Config.promotions.promotion_api_attributes
+    end
+    alias_method :preferred_promotion_attributes, :promotion_attributes
+
+    def promotion_attributes=(value)
+      Spree::Config.promotions.promotion_api_attributes = value
+    end
+    alias_method :preferred_promotion_attributes=, :promotion_attributes=
+    promotion_attributes_deprecation_message = "Spree::ApiConfiguration#promotion_attributes= is deprecated. Please use Spree::Config.promotions.promotion_api_attributes= instead."
+    deprecate "promotion_attributes=" => promotion_attributes_deprecation_message, deprecator: Spree.deprecator
 
     preference :store_attributes, :array, default: [
       :id, :name, :url, :meta_description, :meta_keywords, :seo_title,
