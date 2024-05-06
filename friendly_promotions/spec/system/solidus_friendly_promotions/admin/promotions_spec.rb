@@ -110,36 +110,6 @@ RSpec.describe "Promotions admin", type: :system do
       click_button("Create")
       expect(page).to have_content("March 2023 Giveaway")
       promotion = SolidusFriendlyPromotions::Promotion.first
-      within("#new_order_promotion_rule_promotion_#{promotion.id}") do
-        click_link("New Rule")
-        select("First Order", from: "Type")
-        click_button("Add")
-      end
-      expect(page).to have_content("Must be the customer's first order")
-      expect(SolidusFriendlyPromotions::PromotionRule.first).to be_a(SolidusFriendlyPromotions::Rules::FirstOrder)
-      promotion_rule = promotion.rules.first
-      within("#rules_first_order_#{promotion_rule.id}") do
-        find(".delete").click
-      end
-      expect(page).not_to have_content("Must be the customer's first order")
-      expect(promotion.rules).to be_empty
-
-      within("#new_order_promotion_rule_promotion_#{promotion.id}") do
-        click_link("New Rule")
-        select("Item Total", from: "Type")
-        fill_in("promotion_rule_preferred_amount", with: 200)
-        click_button("Add")
-      end
-
-      expect(page).to have_content("Order total meets these criteria")
-
-      promotion_rule = promotion.rules.first
-      within("#rules_item_total_#{promotion_rule.id}") do
-        expect(find("#promotion_rule_preferred_amount").value).to eq("200.00")
-        fill_in("promotion_rule_preferred_amount", with: 300)
-        click_button("Update")
-        expect(find("#promotion_rule_preferred_amount").value).to eq("300.00")
-      end
 
       within("#new_promotion_action_promotion_#{promotion.id}") do
         click_link("New Action")
@@ -156,6 +126,33 @@ RSpec.describe "Promotions admin", type: :system do
         click_button("Update")
       end
       expect(action.reload.calculator.preferred_amount).to eq(30)
+
+      click_link("New Rule")
+      select("First Order", from: "Type")
+      click_button("Add")
+      expect(page).to have_content("Must be the customer's first order")
+      expect(SolidusFriendlyPromotions::PromotionRule.first).to be_a(SolidusFriendlyPromotions::Rules::FirstOrder)
+      promotion_rule = promotion.actions.first.conditions.first
+      within("#rules_first_order_#{promotion_rule.id}") do
+        find(".delete").click
+      end
+      expect(page).not_to have_content("Must be the customer's first order")
+      expect(promotion.conditions).to be_empty
+
+      click_link("New Rule")
+      select("Item Total", from: "Type")
+      fill_in("promotion_rule_preferred_amount", with: 200)
+      click_button("Add")
+
+      expect(page).to have_content("Order total meets these criteria")
+
+      promotion_rule = promotion.actions.first.conditions.first
+      within("#rules_item_total_#{promotion_rule.id}") do
+        expect(find("#promotion_rule_preferred_amount").value).to eq("200.00")
+        fill_in("promotion_rule_preferred_amount", with: 300)
+        click_button("Update")
+        expect(find("#promotion_rule_preferred_amount").value).to eq("300.00")
+      end
 
       within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do
         find(".delete").click

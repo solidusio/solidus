@@ -10,6 +10,12 @@ module SolidusFriendlyPromotions
       def level
         :shipment
       end
+
+      private
+
+      def possible_conditions
+        super + SolidusFriendlyPromotions.config.shipment_rules
+      end
     end
   end
 end

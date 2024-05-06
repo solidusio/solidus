@@ -1,44 +1,28 @@
-<% context = local_assigns[:context] || :order %>
+<p>
+  <%= promotion_rule.class.human_attribute_name(:description) %>
+</p>
+<%= fields_for param_prefix, promotion_rule do |form| %>
+  <div class="field taxons_rule_taxons">
+    <%= form.label :taxon_ids_string, t('solidus_friendly_promotions.taxon_rule.choose_taxons') %>
+    <%= form.hidden_field :taxon_ids_string, value: promotion_rule.taxon_ids.join(","), class: "taxon_picker fullwidth" %>
+  </div>
 
-<% if context == :order %>
-  <p>
-    <%= promotion_rule.class.human_attribute_name(:description) %>
-  </p>
-  <%= fields_for param_prefix, promotion_rule do |form| %>
-    <div class="field taxons_rule_taxons">
-      <%= form.label :taxon_ids_string, t('solidus_friendly_promotions.taxon_rule.choose_taxons') %>
-      <%= form.hidden_field :taxon_ids_string, value: promotion_rule.taxon_ids.join(","), class: "taxon_picker fullwidth" %>
-    </div>
+  <div class="field">
+    <%
+      match_policy_options = options_for_select(
+        SolidusFriendlyPromotions::Rules::Taxon::MATCH_POLICIES.map { |s| [t("solidus_friendly_promotions.taxon_rule.match_#{s}"),s] },
+        promotion_rule.preferred_match_policy
+      )
+    %>
+    <% select = form.select :preferred_match_policy, match_policy_options %>
+    <%= form.label :preferred_match_policy, t('solidus_friendly_promotions.taxon_rule.label', select: select).html_safe %>
+    </label>
+  </div>
 
-    <div class="field">
-      <%
-        match_policy_options = options_for_select(
-          SolidusFriendlyPromotions::Rules::Taxon::MATCH_POLICIES.map { |s| [t("solidus_friendly_promotions.taxon_rule.match_#{s}"),s] },
-          promotion_rule.preferred_match_policy
-        )
-      %>
-      <% select = form.select :preferred_match_policy, match_policy_options %>
-      <%= form.label :preferred_match_policy, t('solidus_friendly_promotions.taxon_rule.label', select: select).html_safe %>
-      </label>
-    </div>
-
-    <div class="field">
-      <%= form.label :preferred_line_item_applicable do %>
-        <%= form.check_box :preferred_line_item_applicable %>
-        <%= promotion_rule.class.human_attribute_name(:preferred_line_item_applicable) %>
-      <% end %>
-    </div>
-  <% end %>
-<% else %>
-  <p>
-    <% match_policy_translation_key = promotion_rule.preferred_match_policy == "none" ? :exclude : :include %>
-    <%= t(match_policy_translation_key, scope: [:solidus_friendly_promotions, :promotion_rules, :line_item_taxon, :match_policies]) %>
-  </p>
-  <ul>
-    <% promotion_rule.taxons.each do |taxon| %>
-      <li>
-        <%= taxon.name %>
-      </li>
+  <div class="field">
+    <%= form.label :preferred_line_item_applicable do %>
+      <%= form.check_box :preferred_line_item_applicable %>
+      <%= promotion_rule.class.human_attribute_name(:preferred_line_item_applicable) %>
     <% end %>
-  </ul>
+  </div>
 <% end %>
