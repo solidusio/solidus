@@ -12,4 +12,3 @@ const initPickers = ({ _target }) => {
   $(".variant_autocomplete").variantAutocomplete();
 };
 document.addEventListener("turbo:frame-load", initPickers);
-document.addEventListener("DOMContentLoaded", initPickers);
