@@ -592,11 +592,9 @@ module Spree
     # @!attribute [rw] promotions
     # @return [Spree::Core::NullPromotionConfiguration] an object that conforms to the API of
     #   the example promotion configuration class Spree::Core::NullPromotionConfiguration.
-    # Currently, this defaults to the legacy promotion configuration, until that system is fully extracted
-    # to the `solidus_legacy_promotions` gem.
     attr_writer :promotions
     def promotions
-      @promotions ||= SolidusLegacyPromotions::Configuration.new
+      @promotions ||= Spree::Core::NullPromotionConfiguration.new
     end
 
     class << self
