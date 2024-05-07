@@ -11,7 +11,7 @@ module SolidusFriendlyPromotions
 
     scope :of_type, ->(type) { where(type: type) }
 
-    validate :unique_per_promotion, on: :create
+    validate :unique_per_action, on: :create
 
     def preload_relations
       []
@@ -43,10 +43,10 @@ module SolidusFriendlyPromotions
 
     private
 
-    def unique_per_promotion
+    def unique_per_action
       return unless self.class.exists?(action_id: action_id, type: self.class.name)
 
-      errors.add(:promotion, :already_contains_rule_type)
+      errors.add(:action, :already_contains_rule_type)
     end
 
     def eligibility_error_message(key, options = {})

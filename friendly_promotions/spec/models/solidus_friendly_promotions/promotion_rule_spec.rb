@@ -39,7 +39,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionRule do
     rule_two = SolidusFriendlyPromotions::Rules::FirstOrder.new
     rule_two.action_id = promotion_action.id
     expect(rule_two).not_to be_valid
-    expect(rule_two.errors.full_messages).to include("Promotion already contains this rule type")
+    expect(rule_two.errors.full_messages).to include("Action already contains this rule type")
   end
 
   it "generates its own partial path" do
