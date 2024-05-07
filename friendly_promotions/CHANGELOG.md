@@ -1,5 +1,21 @@
 # Changelog
 
+## [v1.0.1](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.1) (2024-05-07)
+
+[Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/v1.0.0...v1.0.1)
+
+**Closed issues:**
+
+- Ransack scope missing [\#105](https://github.com/friendlycart/solidus_friendly_promotions/issues/105)
+
+**Merged pull requests:**
+
+- Fix selenium path [\#108](https://github.com/friendlycart/solidus_friendly_promotions/pull/108) ([mamhoff](https://github.com/mamhoff))
+- Restrict SQLite to "~\> 1.3" [\#107](https://github.com/friendlycart/solidus_friendly_promotions/pull/107) ([mamhoff](https://github.com/mamhoff))
+- Fix ShippingRateDiscount\#promotion\_action [\#106](https://github.com/friendlycart/solidus_friendly_promotions/pull/106) ([mamhoff](https://github.com/mamhoff))
+- Fix specs [\#104](https://github.com/friendlycart/solidus_friendly_promotions/pull/104) ([mamhoff](https://github.com/mamhoff))
+- Fix Promotion Rule Unique per promotion validation [\#103](https://github.com/friendlycart/solidus_friendly_promotions/pull/103) ([mamhoff](https://github.com/mamhoff))
+
 ## [v1.0.0](https://github.com/friendlycart/solidus_friendly_promotions/tree/v1.0.0) (2024-01-25)
 
 [Full Changelog](https://github.com/friendlycart/solidus_friendly_promotions/compare/v1.0.0.rc.3...v1.0.0)
