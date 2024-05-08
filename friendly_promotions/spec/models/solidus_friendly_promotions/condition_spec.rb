@@ -44,6 +44,6 @@ RSpec.describe SolidusFriendlyPromotions::Condition do
 
   it "generates its own partial path" do
     condition = test_condition_class.new
-    expect(condition.to_partial_path).to eq "solidus_friendly_promotions/admin/conditions/conditions/test_condition"
+    expect(condition.to_partial_path).to eq "solidus_friendly_promotions/admin/condition_forms/test_condition"
   end
 end
