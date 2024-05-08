@@ -144,7 +144,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "#apply_automatically" do
-    subject { build(:friendly_promotion) }
+    subject { create(:friendly_promotion) }
 
     it "defaults to false" do
       expect(subject.apply_automatically).to eq(false)
