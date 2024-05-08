@@ -6,7 +6,7 @@ SolidusFriendlyPromotions::Engine.routes.draw do
       resources :promotion_categories, except: [:show]
 
       resources :promotions do
-        resources :promotion_actions do
+        resources :benefits do
           resources :conditions
         end
         resources :promotion_codes, only: [:index, :new, :create]

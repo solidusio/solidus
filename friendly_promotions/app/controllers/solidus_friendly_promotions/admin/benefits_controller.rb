@@ -2,27 +2,27 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionActionsController < Spree::Admin::BaseController
+    class BenefitsController < Spree::Admin::BaseController
       before_action :validate_level, only: :new
       before_action :load_promotion, only: [:create, :destroy, :new, :update, :edit]
-      before_action :validate_promotion_action_type, only: [:create, :edit]
+      before_action :validate_benefit_type, only: [:create, :edit]
 
       def new
-        if params.dig(:promotion_action, :type)
-          validate_promotion_action_type
-          @promotion_action = @promotion.actions.build(type: @promotion_action_type)
+        if params.dig(:benefit, :type)
+          validate_benefit_type
+          @benefit = @promotion.actions.build(type: @benefit_type)
 
-          if params.dig(:promotion_action, :calculator_type)
-            @promotion_action.calculator_type = params[:promotion_action][:calculator_type]
+          if params.dig(:benefit, :calculator_type)
+            @benefit.calculator_type = params[:benefit][:calculator_type]
           end
         end
         render layout: false
       end
 
       def create
-        @promotion_action = @promotion_action_type.new(promotion_action_params)
-        @promotion_action.promotion = @promotion
-        if @promotion_action.save(validate: false)
+        @benefit = @benefit_type.new(benefit_params)
+        @benefit.promotion = @promotion
+        if @benefit.save(validate: false)
           flash[:success] =
             t("spree.successfully_created", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
           redirect_to location_after_save, format: :html
@@ -32,17 +32,17 @@ module SolidusFriendlyPromotions
       end
 
       def edit
-        @promotion_action = @promotion.actions.find(params[:id])
-        if params.dig(:promotion_action, :calculator_type)
-          @promotion_action.calculator_type = params[:promotion_action][:calculator_type]
+        @benefit = @promotion.actions.find(params[:id])
+        if params.dig(:benefit, :calculator_type)
+          @benefit.calculator_type = params[:benefit][:calculator_type]
         end
         render layout: false
       end
 
       def update
-        @promotion_action = @promotion.actions.find(params[:id])
-        @promotion_action.assign_attributes(promotion_action_params)
-        if @promotion_action.save
+        @benefit = @promotion.actions.find(params[:id])
+        @benefit.assign_attributes(benefit_params)
+        if @benefit.save
           flash[:success] =
             t("spree.successfully_updated", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
           redirect_to location_after_save, format: :html
@@ -52,8 +52,8 @@ module SolidusFriendlyPromotions
       end
 
       def destroy
-        @promotion_action = @promotion.actions.find(params[:id])
-        if @promotion_action.destroy
+        @benefit = @promotion.actions.find(params[:id])
+        if @benefit.destroy
           flash[:success] =
             t("spree.successfully_removed", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
         end
@@ -80,19 +80,19 @@ module SolidusFriendlyPromotions
         end
       end
 
-      def promotion_action_params
-        params[:promotion_action].try(:permit!) || {}
+      def benefit_params
+        params[:benefit].try(:permit!) || {}
       end
 
-      def validate_promotion_action_type
-        requested_type = params[:promotion_action].delete(:type)
-        promotion_action_types = SolidusFriendlyPromotions.config.actions
-        @promotion_action_type = promotion_action_types.detect do |klass|
+      def validate_benefit_type
+        requested_type = params[:benefit].delete(:type)
+        benefit_types = SolidusFriendlyPromotions.config.actions
+        @benefit_type = benefit_types.detect do |klass|
           klass.name == requested_type
         end
-        return if @promotion_action_type
+        return if @benefit_type
 
-        flash[:error] = t("solidus_friendly_promotions.invalid_promotion_action")
+        flash[:error] = t("solidus_friendly_promotions.invalid_benefit")
         respond_to do |format|
           format.html { redirect_to solidus_friendly_promotions.edit_admin_promotion_path(@promotion) }
           format.js { render layout: false }

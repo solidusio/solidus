@@ -1,9 +1,9 @@
 
 <div class="condition promotion-block" id="<%= dom_id condition %>">
-  <%= form_with model: condition, scope: :condition, url: solidus_friendly_promotions.admin_promotion_promotion_action_condition_path(@promotion, condition.action, condition), method: :patch do |form| %>
+  <%= form_with model: condition, scope: :condition, url: solidus_friendly_promotions.admin_promotion_benefit_condition_path(@promotion, condition.action, condition), method: :patch do |form| %>
     <h6 class='promotion-title'><%= condition.class.model_name.human %></h6>
     <% if can?(:destroy, condition) %>
-      <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.admin_promotion_promotion_action_condition_path(@promotion, condition.action, condition), method: :delete, class: 'delete' %>
+      <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.admin_promotion_benefit_condition_path(@promotion, condition.action, condition), method: :delete, class: 'delete' %>
     <% end %>
 
     <% param_prefix = "promotion[conditions_attributes][#{condition.id}]" %>

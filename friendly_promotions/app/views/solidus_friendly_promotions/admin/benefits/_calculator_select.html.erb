@@ -1,12 +1,12 @@
-<%= form_with model: promotion_action, scope: :promotion_action, url: path, method: :get do |form| %>
+<%= form_with model: benefit, scope: :benefit, url: path, method: :get do |form| %>
   <div class="field">
     <%= form.hidden_field :type %>
     <%= form.label :calculator_type %>
     <%=
       form.select :calculator_type,
-        options_for_promotion_action_calculator_types(form.object),
+        options_for_benefit_calculator_types(form.object),
         {
-          include_blank: t(:choose_promotion_action_calculator, scope: 'solidus_friendly_promotions')
+          include_blank: t(:choose_benefit_calculator, scope: 'solidus_friendly_promotions')
         },
         class: 'custom-select fullwidth',
         onchange: 'this.form.requestSubmit()',

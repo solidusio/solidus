@@ -1,7 +1,7 @@
 <%= form_with(
     model: @condition || SolidusFriendlyPromotions::Condition.new(promotion: @promotion),
     scope: :condition,
-    url: solidus_friendly_promotions.new_admin_promotion_promotion_action_condition_path(@promotion),
+    url: solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion),
     method: :get
   ) do |form| %>
   <%= hidden_field_tag :level, @level %>

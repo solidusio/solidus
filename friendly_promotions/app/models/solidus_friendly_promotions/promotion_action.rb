@@ -56,7 +56,7 @@ module SolidusFriendlyPromotions
     end
 
     def to_partial_path
-      "solidus_friendly_promotions/admin/promotion_actions/actions/#{model_name.element}"
+      "solidus_friendly_promotions/admin/benefit_forms/#{model_name.element}"
     end
 
     def level

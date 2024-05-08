@@ -57,7 +57,7 @@ module SolidusFriendlyPromotions
 
       def load_promotion_action
         @promotion = SolidusFriendlyPromotions::Promotion.find(params[:promotion_id])
-        @promotion_action = @promotion.actions.find(params[:promotion_action_id])
+        @promotion_action = @promotion.actions.find(params[:benefit_id])
       end
 
       def model_class

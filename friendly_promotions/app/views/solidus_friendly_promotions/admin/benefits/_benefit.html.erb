@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-6">
+    <%= turbo_frame_tag @promotion, dom_id(benefit) do %>
+
+    <div class="benefit promotion-block">
+      <h6 class='promotion-title'> <%= benefit.model_name.human %></h6>
+
+      <% if can?(:destroy, benefit) %>
+        <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.admin_promotion_benefit_path(@promotion, benefit), method: :delete, class: 'delete' %>
+      <% end %>
+
+
+      <%= render "solidus_friendly_promotions/admin/benefits/calculator_select",
+        path: solidus_friendly_promotions.edit_admin_promotion_benefit_path(@promotion, benefit),
+        benefit: benefit %>
+
+      <%=
+        form_with(
+        model: benefit,
+        scope: :benefit,
+        url: solidus_friendly_promotions.admin_promotion_benefit_path(@promotion, benefit),
+        data: { turbo: false }
+      ) do |form| %>
+        <%= render 'solidus_friendly_promotions/admin/benefits/form', form: form %>
+        <div class="row">
+          <div class="col-12">
+            <%= button_tag t(:update, scope: [:solidus_friendly_promotions, :crud]), class: "btn btn-secondary float-right" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="col-6">
+    <fieldset>
+      <legend align="center"><%= t("promotion_conditions", scope: :solidus_friendly_promotions) %></legend>
+        <%= render partial: 'solidus_friendly_promotions/admin/conditions/condition', collection: benefit.conditions %>
+
+        <%= turbo_frame_tag benefit, "new_condition" do %>
+          <%= link_to t(:add_condition, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion, benefit), class: 'btn btn-secondary' %>
+        <% end %>
+    </fieldset>
+  </div>
+</div>

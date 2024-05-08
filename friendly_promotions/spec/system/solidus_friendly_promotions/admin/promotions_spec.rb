@@ -111,18 +111,18 @@ RSpec.describe "Promotions admin", type: :system do
       expect(page).to have_content("March 2023 Giveaway")
       promotion = SolidusFriendlyPromotions::Promotion.first
 
-      within("#new_promotion_action_promotion_#{promotion.id}") do
-        click_link("New Action")
+      within("#new_benefit_promotion_#{promotion.id}") do
+        click_link("New Benefit")
         select("Discount matching line items", from: "Type")
         select("Flat Rate", from: "Calculator type")
-        fill_in("promotion_action_calculator_attributes_preferred_amount", with: 20)
+        fill_in("benefit_calculator_attributes_preferred_amount", with: 20)
         click_button("Add")
       end
       expect(page).to have_selector("h6", text: "Discount matching line items")
       action = promotion.actions.first
 
       within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do
-        fill_in("promotion_action_calculator_attributes_preferred_amount", with: 30)
+        fill_in("benefit_calculator_attributes_preferred_amount", with: 30)
         click_button("Update")
       end
       expect(action.reload.calculator.preferred_amount).to eq(30)
