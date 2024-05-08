@@ -262,7 +262,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
         end
 
         context "when the coupon fails to activate" do
-          let(:impossible_condition) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+          let(:impossible_condition) { SolidusFriendlyPromotions::Conditions::NthOrder.new(preferred_nth_order: 2) }
 
           before do
             promotion.actions.first.conditions << impossible_condition
@@ -426,12 +426,12 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
     let(:shirt) { create(:product) }
     let(:hat) { create(:product) }
     let(:order) { create(:order_with_line_items, coupon_code: "XMAS", line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
-    let(:product_rule) { SolidusFriendlyPromotions::Rules::Product.new(products: [hat], preferred_line_item_applicable: false) }
-    let(:nth_order_rule) { SolidusFriendlyPromotions::Rules::NthOrder.new(preferred_nth_order: 2) }
+    let(:product_condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [hat], preferred_line_item_applicable: false) }
+    let(:nth_order_condition) { SolidusFriendlyPromotions::Conditions::NthOrder.new(preferred_nth_order: 2) }
     let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
     let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items, conditions: conditions) }
     let(:actions) { [line_item_action] }
-    let(:conditions) { [product_rule, nth_order_rule] }
+    let(:conditions) { [product_condition, nth_order_condition] }
     let!(:promotion) { create(:friendly_promotion, actions: actions, name: "10% off Shirts and USPS Shipping") }
     let!(:coupon) { create(:friendly_promotion_code, promotion: promotion, value: "XMAS") }
     let(:handler) { described_class.new(order) }
@@ -441,7 +441,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model
     it "is unsuccessful with multiple errors" do
       subject
       expect(handler.success).to be nil
-      # Promotion rules are not ordered, so it can be either of these errors.
+      # Promotion conditions are not ordered, so it can be either of these errors.
       expect(handler.error).to be_in([
         "You need to add an applicable product before applying this coupon code.",
         "This coupon code could not be applied to the cart at this time."

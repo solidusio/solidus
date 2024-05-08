@@ -125,7 +125,7 @@ module SolidusFriendlyPromotions
     end
 
     def products
-      conditions.where(type: "SolidusFriendlyPromotions::Rules::Product").flat_map(&:products).uniq
+      conditions.where(type: "SolidusFriendlyPromotions::Conditions::Product").flat_map(&:products).uniq
     end
 
     def eligibility_results

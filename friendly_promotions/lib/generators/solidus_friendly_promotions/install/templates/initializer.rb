@@ -97,29 +97,29 @@ SolidusFriendlyPromotions.configure do |config|
     ]
   )
 
-  config.order_rules = [
-    "SolidusFriendlyPromotions::Rules::FirstOrder",
-    "SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince",
-    "SolidusFriendlyPromotions::Rules::ItemTotal",
-    "SolidusFriendlyPromotions::Rules::DiscountedItemTotal",
-    "SolidusFriendlyPromotions::Rules::MinimumQuantity",
-    "SolidusFriendlyPromotions::Rules::NthOrder",
-    "SolidusFriendlyPromotions::Rules::OneUsePerUser",
-    "SolidusFriendlyPromotions::Rules::OptionValue",
-    "SolidusFriendlyPromotions::Rules::Product",
-    "SolidusFriendlyPromotions::Rules::Store",
-    "SolidusFriendlyPromotions::Rules::Taxon",
-    "SolidusFriendlyPromotions::Rules::UserLoggedIn",
-    "SolidusFriendlyPromotions::Rules::UserRole",
-    "SolidusFriendlyPromotions::Rules::User"
+  config.order_conditions = [
+    "SolidusFriendlyPromotions::Conditions::FirstOrder",
+    "SolidusFriendlyPromotions::Conditions::FirstRepeatPurchaseSince",
+    "SolidusFriendlyPromotions::Conditions::ItemTotal",
+    "SolidusFriendlyPromotions::Conditions::DiscountedItemTotal",
+    "SolidusFriendlyPromotions::Conditions::MinimumQuantity",
+    "SolidusFriendlyPromotions::Conditions::NthOrder",
+    "SolidusFriendlyPromotions::Conditions::OneUsePerUser",
+    "SolidusFriendlyPromotions::Conditions::OptionValue",
+    "SolidusFriendlyPromotions::Conditions::Product",
+    "SolidusFriendlyPromotions::Conditions::Store",
+    "SolidusFriendlyPromotions::Conditions::Taxon",
+    "SolidusFriendlyPromotions::Conditions::UserLoggedIn",
+    "SolidusFriendlyPromotions::Conditions::UserRole",
+    "SolidusFriendlyPromotions::Conditions::User"
   ]
-  config.line_item_rules = [
-    "SolidusFriendlyPromotions::Rules::LineItemOptionValue",
-    "SolidusFriendlyPromotions::Rules::LineItemProduct",
-    "SolidusFriendlyPromotions::Rules::LineItemTaxon"
+  config.line_item_conditions = [
+    "SolidusFriendlyPromotions::Conditions::LineItemOptionValue",
+    "SolidusFriendlyPromotions::Conditions::LineItemProduct",
+    "SolidusFriendlyPromotions::Conditions::LineItemTaxon"
   ]
-  config.shipment_rules = [
-    "SolidusFriendlyPromotions::Rules::ShippingMethod"
+  config.shipment_conditions = [
+    "SolidusFriendlyPromotions::Conditions::ShippingMethod"
   ]
 
   config.actions = [

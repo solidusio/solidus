@@ -95,7 +95,7 @@ would become:
 
 ```rb
 class MyNewRule < SolidusFriendlyPromotions::PromotionRule
-  include LineItemLevelRule
+  include LineItemLevelCondition
   def eligible?(promotable)
     promotable.quantity > 3
   end

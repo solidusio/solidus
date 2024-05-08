@@ -516,13 +516,13 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
     let(:promotion_action) { promotion.actions.first }
 
-    context "when it has product rules with products associated" do
-      let(:promotion_rule) { SolidusFriendlyPromotions::Rules::Product.new }
+    context "when it has product conditions with products associated" do
+      let(:promotion_condition) { SolidusFriendlyPromotions::Conditions::Product.new }
 
       before do
-        promotion_rule.action = promotion_action
-        promotion_rule.products << create(:product)
-        promotion_rule.save
+        promotion_condition.action = promotion_action
+        promotion_condition.products << create(:product)
+        promotion_condition.save
       end
 
       it "has products" do
@@ -530,7 +530,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       end
     end
 
-    context "when there's no product rule associated" do
+    context "when there's no product condition associated" do
       it "does not have products but still return an empty array" do
         expect(promotion.products).to be_blank
       end

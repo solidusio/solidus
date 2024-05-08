@@ -19,9 +19,9 @@ module SolidusFriendlyPromotions
     add_class_set :line_item_discount_calculators
     add_class_set :shipment_discount_calculators
 
-    add_class_set :order_rules
-    add_class_set :line_item_rules
-    add_class_set :shipment_rules
+    add_class_set :order_conditions
+    add_class_set :line_item_conditions
+    add_class_set :shipment_conditions
 
     add_class_set :actions
 

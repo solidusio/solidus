@@ -1,0 +1,7 @@
+<p>
+  <%= condition.class.human_attribute_name(:description) %>
+</p>
+<div class="field">
+  <label><%= t('solidus_friendly_promotions.user_condition.choose_users') %></label><br>
+  <input type='hidden' name='<%= param_prefix %>[user_ids_string]' class='user_picker fullwidth' value='<%= condition.user_ids.join(",") %>'>
+</div>

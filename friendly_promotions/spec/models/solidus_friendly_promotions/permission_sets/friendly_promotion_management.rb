@@ -19,7 +19,7 @@ RSpec.describe SolidusFriendlyPromotions::PermissionSets::FriendlyPromotionManag
     end
 
     it { is_expected.to be_able_to(:manage, SolidusFriendlyPromotions::Promotion) }
-    it { is_expected.to be_able_to(:manage, SolidusFriendlyPromotions::PromotionRule) }
+    it { is_expected.to be_able_to(:manage, SolidusFriendlyPromotions::Condition) }
     it { is_expected.to be_able_to(:manage, SolidusFriendlyPromotions::PromotionAction) }
     it { is_expected.to be_able_to(:manage, SolidusFriendlyPromotions::PromotionCategory) }
     it { is_expected.to be_able_to(:manage, SolidusFriendlyPromotions::PromotionCode) }
@@ -27,7 +27,7 @@ RSpec.describe SolidusFriendlyPromotions::PermissionSets::FriendlyPromotionManag
 
   context "when not activated" do
     it { is_expected.not_to be_able_to(:manage, SolidusFriendlyPromotions::Promotion) }
-    it { is_expected.not_to be_able_to(:manage, SolidusFriendlyPromotions::PromotionRule) }
+    it { is_expected.not_to be_able_to(:manage, SolidusFriendlyPromotions::Condition) }
     it { is_expected.not_to be_able_to(:manage, SolidusFriendlyPromotions::PromotionAction) }
     it { is_expected.not_to be_able_to(:manage, SolidusFriendlyPromotions::PromotionCategory) }
     it { is_expected.not_to be_able_to(:manage, SolidusFriendlyPromotions::PromotionCode) }

@@ -1,17 +1,17 @@
 <%= form_with(
-    model: @promotion_rule || SolidusFriendlyPromotions::PromotionRule.new(promotion: @promotion),
-    scope: :promotion_rule,
+    model: @condition || SolidusFriendlyPromotions::Condition.new(promotion: @promotion),
+    scope: :condition,
     url: solidus_friendly_promotions.new_admin_promotion_promotion_action_condition_path(@promotion),
     method: :get
   ) do |form| %>
   <%= hidden_field_tag :level, @level %>
   <%= form.label :type %>
-  <%= admin_hint SolidusFriendlyPromotions::PromotionRule.human_attribute_name(:type), t(:promotions, scope: [:solidus_friendly_promotions, :hints, "spree/calculator"]) %>
+  <%= admin_hint SolidusFriendlyPromotions::Condition.human_attribute_name(:type), t(:promotions, scope: [:solidus_friendly_promotions, :hints, "spree/calculator"]) %>
   <%=
     form.select :type,
-      options_for_promotion_rule_types(@promotion_action, @promotion_rule),
+      options_for_condition_types(@promotion_action, @condition),
       {
-        include_blank: t(:choose_promotion_rule, scope: 'solidus_friendly_promotions')
+        include_blank: t(:choose_condition, scope: 'solidus_friendly_promotions')
       },
       class: 'custom-select fullwidth',
       onchange: 'this.form.requestSubmit()',

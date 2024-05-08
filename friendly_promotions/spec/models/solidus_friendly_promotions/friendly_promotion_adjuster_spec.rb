@@ -105,7 +105,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
     context "promotion includes item involved" do
       let(:conditions) { [condition] }
       let(:condition) do
-        SolidusFriendlyPromotions::Rules::Product.create(products: [line_item.product])
+        SolidusFriendlyPromotions::Conditions::Product.create(products: [line_item.product])
       end
 
       context "creates the adjustment" do
@@ -117,10 +117,10 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
       end
     end
 
-    context "promotion has item total rule" do
+    context "promotion has item total condition" do
       let(:conditions) { [condition] }
       let(:condition) do
-        SolidusFriendlyPromotions::Rules::ItemTotal.create(
+        SolidusFriendlyPromotions::Conditions::ItemTotal.create(
           preferred_operator: "gt",
           preferred_amount: 50
         )

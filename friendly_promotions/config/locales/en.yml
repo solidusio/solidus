@@ -14,7 +14,7 @@ en:
         promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
       solidus_friendly_promotions/promotion:
         expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
-        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its rules / actions will be applied automatically to all orders.
+        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its conditions / actions will be applied automatically to all orders.
         starts_at: This determines when the promotion can be applied to orders. <br> If no value is specified, the promotion will be immediately available.
   solidus_friendly_promotions:
     actions: Actions
@@ -24,33 +24,33 @@ en:
       shipping_rate: "%{promotion} (%{promotion_customer_label})"
     adjustment_type: Adjustment type
     add_action: New Action
-    add_rule: New Rule
-    order_rules: Order Rules
-    line_item_rules: Line Item Rules
-    shipment_rules: Shipment Rules
+    add_condition: New Condition
+    order_conditions: Order Conditions
+    line_item_conditions: Line Item Conditions
+    shipment_conditions: Shipment Conditions
     line_item_actions: Line Item Actions
     shipment_actions: Shipment Actions
     order_actions: Order Actions
-    invalid_promotion_rule_level: Invalid Promotion Rule Level. Must be one of "order", "shipment", or "line_item"
+    invalid_condition_level: Invalid Promotion Condition Level. Must be one of "order", "shipment", or "line_item"
     invalid_promotion_action: Invalid promotion action.
-    invalid_promotion_rule: Invalid promotion rule.
+    invalid_condition: Invalid promotion condition.
     create_promotion_code: Create promotion code
     current_promotion_usage: 'Current Usage: %{count}'
-    discount_rules: Promotion Rules
+    discount_conditions: Promotion Conditions
     download_promotion_codes_list: Download codes list
     new_promotion: New Promotion
     new_promotion_category: New Promotion Category
     new_promotion_code_batch: New Promotion Code Batch
     number_of_codes: "%{count} codes"
     legacy_promotions: Legacy Promotions
-    no_rules_added: No Rules Added
+    no_conditions_added: No Conditions Added
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
     promotion_code_batches:
       finished: Finished
       errored: Errored
     view_promotion_codes_list: View codes list
-    promotion_rules:
+    conditions:
       line_item_product:
         match_policies:
           include: Line item's product is one of the chosen products
@@ -71,50 +71,50 @@ en:
       coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
       coupon_code_not_present: The coupon code you are trying to remove is not present on this order.
       coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
-      solidus_friendly_promotions/rules/first_order:
+      solidus_friendly_promotions/conditions/first_order:
         not_first_order: This coupon code can only be applied to your first order.
-      solidus_friendly_promotions/rules/first_repeat_purchase_since:
-      solidus_friendly_promotions/rules/item_total:
+      solidus_friendly_promotions/conditions/first_repeat_purchase_since:
+      solidus_friendly_promotions/conditions/item_total:
         item_total_doesnt_match_with_operator: This coupon code can't be applied to orders %{operator} %{amount}.
         item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
         item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
-      solidus_friendly_promotions/rules/discounted_item_total:
+      solidus_friendly_promotions/conditions/discounted_item_total:
         item_total_doesnt_match_with_operator: This coupon code can't be applied to orders %{operator} %{amount}.
         item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
         item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
-      solidus_friendly_promotions/rules/landing_page:
-      solidus_friendly_promotions/rules/nth_order:
-      solidus_friendly_promotions/rules/one_use_per_user:
+      solidus_friendly_promotions/conditions/landing_page:
+      solidus_friendly_promotions/conditions/nth_order:
+      solidus_friendly_promotions/conditions/one_use_per_user:
         no_user_specified: You need to login before applying this coupon code.
         limit_once_per_user: This coupon code can only be used once per user.
-      solidus_friendly_promotions/rules/option_value:
-      solidus_friendly_promotions/rules/line_item_option_value:
-      solidus_friendly_promotions/rules/product:
+      solidus_friendly_promotions/conditions/option_value:
+      solidus_friendly_promotions/conditions/line_item_option_value:
+      solidus_friendly_promotions/conditions/product:
         has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
         missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
         no_applicable_products: You need to add an applicable product before applying this coupon code.
-      solidus_friendly_promotions/rules/line_item_product:
+      solidus_friendly_promotions/conditions/line_item_product:
         has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
         missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
         no_applicable_products: You need to add an applicable product before applying this coupon code.
-      solidus_friendly_promotions/rules/taxon:
+      solidus_friendly_promotions/conditions/taxon:
         has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
         missing_taxon: You need to add a product from all applicable categories before applying this coupon code.
         no_matching_taxons: You need to add a product from an applicable category before applying this coupon code.
-      solidus_friendly_promotions/rules/line_item_taxon:
+      solidus_friendly_promotions/conditions/line_item_taxon:
         has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
         missing_taxon: You need to add a product from all applicable categories before applying this coupon code.
         no_matching_taxons: You need to add a product from an applicable category before applying this coupon code.
-      solidus_friendly_promotions/rules/user:
+      solidus_friendly_promotions/conditions/user:
         no_user_specified: You need to login before applying this coupon code.
-      solidus_friendly_promotions/rules/user_logged_in:
+      solidus_friendly_promotions/conditions/user_logged_in:
         no_user_specified: You need to login before applying this coupon code.
-      solidus_friendly_promotions/rules/user_role:
-      solidus_friendly_promotions/rules/minimum_quantity:
+      solidus_friendly_promotions/conditions/user_role:
+      solidus_friendly_promotions/conditions/minimum_quantity:
         quantity_less_than_minimum:
           one: "You need to add a least 1 applicable item to your order."
           other: "You need to add a least %{count} applicable items to your order."
-    product_rule:
+    product_condition:
       choose_products: Choose products
       label: Order must contain %{select} these products
       match_all: all of
@@ -124,7 +124,7 @@ en:
       product_source:
         group: From product group
         manual: Manually choose
-    taxon_rule:
+    taxon_condition:
       choose_taxons: Choose taxons
       label: Order must contain %{select} of these taxons
       match_all: all
@@ -153,7 +153,7 @@ en:
           starts_at_placeholder: Immediately
           codes_present: This promotion has promotion codes defined. You cannot select the apply automatically option.
         edit:
-          order_rules: Order Rules
+          order_conditions: Order Conditions
         calculator:
           add_tier: Add tier
       promotion_status:
@@ -181,23 +181,23 @@ en:
       solidus_friendly_promotions/calculators/tiered_flat_rate: Tiered Flat Rate
       solidus_friendly_promotions/calculators/tiered_percent: Tiered Percent
       solidus_friendly_promotions/calculators/tiered_percent_on_eligible_item_quantity: Tiered Percent based on eligible item quantity
-      solidus_friendly_promotions/rules/first_order: First Order
-      solidus_friendly_promotions/rules/first_repeat_purchase_since: First Repeat Purchase Since
-      solidus_friendly_promotions/rules/item_total: Item Total
-      solidus_friendly_promotions/rules/discounted_item_total: Item Total after previous lanes
-      solidus_friendly_promotions/rules/landing_page: Landing Page
-      solidus_friendly_promotions/rules/minimum_quantity: Minimum Quantity
-      solidus_friendly_promotions/rules/nth_order: Nth Order
-      solidus_friendly_promotions/rules/one_use_per_user: One Use Per User
-      solidus_friendly_promotions/rules/option_value: Option Value(s)
-      solidus_friendly_promotions/rules/line_item_option_value: Line Item Option Value(s)
-      solidus_friendly_promotions/rules/product: Order Product(s)
-      solidus_friendly_promotions/rules/line_item_product: Line Item Product(s)
-      solidus_friendly_promotions/rules/taxon: Order Taxon(s)
-      solidus_friendly_promotions/rules/line_item_taxon: Line Item Taxon(s)
-      solidus_friendly_promotions/rules/user: User
-      solidus_friendly_promotions/rules/user_logged_in: User Logged In
-      solidus_friendly_promotions/rules/user_role: User Role(s)
+      solidus_friendly_promotions/conditions/first_order: First Order
+      solidus_friendly_promotions/conditions/first_repeat_purchase_since: First Repeat Purchase Since
+      solidus_friendly_promotions/conditions/item_total: Item Total
+      solidus_friendly_promotions/conditions/discounted_item_total: Item Total after previous lanes
+      solidus_friendly_promotions/conditions/landing_page: Landing Page
+      solidus_friendly_promotions/conditions/minimum_quantity: Minimum Quantity
+      solidus_friendly_promotions/conditions/nth_order: Nth Order
+      solidus_friendly_promotions/conditions/one_use_per_user: One Use Per User
+      solidus_friendly_promotions/conditions/option_value: Option Value(s)
+      solidus_friendly_promotions/conditions/line_item_option_value: Line Item Option Value(s)
+      solidus_friendly_promotions/conditions/product: Order Product(s)
+      solidus_friendly_promotions/conditions/line_item_product: Line Item Product(s)
+      solidus_friendly_promotions/conditions/taxon: Order Taxon(s)
+      solidus_friendly_promotions/conditions/line_item_taxon: Line Item Taxon(s)
+      solidus_friendly_promotions/conditions/user: User
+      solidus_friendly_promotions/conditions/user_logged_in: User Logged In
+      solidus_friendly_promotions/conditions/user_role: User Role(s)
       solidus_friendly_promotions/promotion_code_batch:
         one: Code batch
         other: Code batches
@@ -220,47 +220,47 @@ en:
         description: Creates a discounted item with the quantity the applicable line items.
         preferred_quantity: Quantity per applicable line item quantity
         preferred_necessary_quantity: Number of items needed for a discounted item
-      solidus_friendly_promotions/rules/first_order:
+      solidus_friendly_promotions/conditions/first_order:
         description: Must be the customer's first order
-      solidus_friendly_promotions/rules/first_repeat_purchase_since:
+      solidus_friendly_promotions/conditions/first_repeat_purchase_since:
         description: Available only to user who have not purchased in a while
         form_text: Apply this promotion to users whose last order was more than X days ago
-      solidus_friendly_promotions/rules/item_total:
+      solidus_friendly_promotions/conditions/item_total:
         description: Order total meets these criteria
-      solidus_friendly_promotions/rules/landing_page:
+      solidus_friendly_promotions/conditions/landing_page:
         description: Customer must have visited the specified page
-      solidus_friendly_promotions/rules/nth_order:
+      solidus_friendly_promotions/conditions/nth_order:
         description: Apply a promotion to every nth order a user has completed.
         form_text: 'Apply this promotion on the users Nth order: '
-      solidus_friendly_promotions/rules/one_use_per_user:
+      solidus_friendly_promotions/conditions/one_use_per_user:
         description: Only one use per user
-      solidus_friendly_promotions/rules/option_value:
+      solidus_friendly_promotions/conditions/option_value:
         description: Order includes specified product(s) with matching option value(s)
         preferred_line_item_applicable: Should also apply to line items
-      solidus_friendly_promotions/rules/line_item_option_value:
+      solidus_friendly_promotions/conditions/line_item_option_value:
         description: Line Item has specified product with matching option value
-      solidus_friendly_promotions/rules/minimum_quantity:
+      solidus_friendly_promotions/conditions/minimum_quantity:
         description: Order contains minimum quantity of applicable items
-      solidus_friendly_promotions/rules/product:
+      solidus_friendly_promotions/conditions/product:
         description: Order includes specified product(s)
         line_item_level_description: 'Line item matches the specified products:'
         preferred_line_item_applicable: Should also apply to line items
-      solidus_friendly_promotions/rules/line_item_product:
+      solidus_friendly_promotions/conditions/line_item_product:
         description: Line item matches specified product(s)
         preferred_match_policy: Match Policy
-      solidus_friendly_promotions/rules/store:
+      solidus_friendly_promotions/conditions/store:
         description: Available only to the specified stores
-      solidus_friendly_promotions/rules/taxon:
+      solidus_friendly_promotions/conditions/taxon:
         description: Order includes products with specified taxon(s)
         preferred_line_item_applicable: Should also apply to line items
-      solidus_friendly_promotions/rules/line_item_taxon:
+      solidus_friendly_promotions/conditions/line_item_taxon:
         description: Line Item has product with specified taxon(s)
         preferred_match_policy: Match Policy
-      solidus_friendly_promotions/rules/user:
+      solidus_friendly_promotions/conditions/user:
         description: Available only to the specified users
-      solidus_friendly_promotions/rules/user_logged_in:
+      solidus_friendly_promotions/conditions/user_logged_in:
         description: Available only to logged in users
-      solidus_friendly_promotions/rules/user_role:
+      solidus_friendly_promotions/conditions/user_role:
         description: Order includes User with specified Role(s)
       solidus_friendly_promotions/calculators/tiered_flat_rate:
         description: Flat Rate in tiers based on item amount
@@ -323,10 +323,10 @@ en:
           attributes:
             base:
               cannot_destroy_if_order_completed: Action has been applied to complete orders. It cannot be destroyed.
-        solidus_friendly_promotions/promotion_rule:
+        solidus_friendly_promotions/condition:
           attributes:
             action:
-              already_contains_rule_type: already contains this rule type
+              already_contains_condition_type: already contains this condition type
         solidus_friendly_promotions/promotion_code:
           attributes:
             base:

@@ -76,7 +76,7 @@ module SolidusFriendlyPromotions
           @level = requested_level
         else
           @level = "line_item"
-          flash.now[:error] = t(:invalid_promotion_rule_level, scope: :solidus_friendly_promotions)
+          flash.now[:error] = t(:invalid_promotion_condition_level, scope: :solidus_friendly_promotions)
         end
       end
 

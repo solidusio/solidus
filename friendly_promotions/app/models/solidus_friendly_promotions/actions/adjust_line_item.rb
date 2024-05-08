@@ -12,7 +12,7 @@ module SolidusFriendlyPromotions
       end
 
       def possible_conditions
-        super + SolidusFriendlyPromotions.config.line_item_rules
+        super + SolidusFriendlyPromotions.config.line_item_conditions
       end
     end
   end

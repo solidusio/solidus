@@ -18,7 +18,7 @@ module SolidusFriendlyPromotions
     belongs_to :original_promotion_action, class_name: "Spree::PromotionAction", optional: true
     has_many :adjustments, class_name: "Spree::Adjustment", as: :source
     has_many :shipping_rate_discounts, class_name: "SolidusFriendlyPromotions::ShippingRateDiscount", inverse_of: :promotion_action
-    has_many :conditions, class_name: "SolidusFriendlyPromotions::PromotionRule", inverse_of: :action, foreign_key: :action_id, dependent: :destroy
+    has_many :conditions, class_name: "SolidusFriendlyPromotions::Condition", inverse_of: :action, foreign_key: :action_id, dependent: :destroy
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
 
@@ -108,7 +108,7 @@ module SolidusFriendlyPromotions
     private
 
     def possible_conditions
-      Set.new(SolidusFriendlyPromotions.config.order_rules)
+      Set.new(SolidusFriendlyPromotions.config.order_conditions)
     end
 
     def raise_for_adjustments_for_completed_orders

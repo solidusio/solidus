@@ -16,7 +16,7 @@ class AddDbCommentsToFriendlyPromotionRulesUsers < ActiveRecord::Migration[6.1]
 
   def friendly_promotion_rules_users_table_comment
     <<~COMMENT
-      Join table between promotion rules and users. Used with promotion rules of type "SolidusFriendlyPromotions::Rules::User".
+      Join table between promotion rules and users. Used with promotion rules of type "SolidusFriendlyPromotions::Conditions::User".
       An entry here indicates that a promotion is eligible for the user ID specified here.
     COMMENT
   end

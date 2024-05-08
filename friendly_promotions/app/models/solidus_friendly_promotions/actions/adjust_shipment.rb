@@ -14,7 +14,7 @@ module SolidusFriendlyPromotions
       private
 
       def possible_conditions
-        super + SolidusFriendlyPromotions.config.shipment_rules
+        super + SolidusFriendlyPromotions.config.shipment_conditions
       end
     end
   end

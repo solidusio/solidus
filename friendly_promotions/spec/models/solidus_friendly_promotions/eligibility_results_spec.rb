@@ -9,7 +9,7 @@ RSpec.describe SolidusFriendlyPromotions::EligibilityResults do
     let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
     let(:promotion_action) { promotion.actions.first }
     let(:order) { create(:order, item_total: 100) }
-    let(:condition) { SolidusFriendlyPromotions::Rules::ItemTotal.new(action: promotion_action, preferred_amount: 101) }
+    let(:condition) { SolidusFriendlyPromotions::Conditions::ItemTotal.new(action: promotion_action, preferred_amount: 101) }
 
     it "can add an error result" do
       result = condition.eligible?(order)

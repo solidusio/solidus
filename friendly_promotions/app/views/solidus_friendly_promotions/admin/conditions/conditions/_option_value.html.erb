@@ -1,0 +1,63 @@
+<% context = local_assigns[:context] || :order %>
+
+<% if context == :order %>
+  <p>
+    <%= condition.class.human_attribute_name(:description) %>
+  </p>
+  <div class="field promo-condition-option-values">
+    <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
+    <div class="row">
+      <div class="col-6"><%= label_tag nil, Spree::Product.model_name.human %></div>
+      <div class="col-6"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
+    </div>
+
+    <div class="field">
+      <div data-controller="product-option-values">
+        <template data-product-option-values-target="template">
+          <%= render "solidus_friendly_promotions/admin/conditions/conditions/line_item_option_value/option_value_fields", product_option_values: [nil, []], form: form %>
+        </template>
+        <% form.object.preferred_eligible_values.each do |product_option_values| %>
+          <%= render "solidus_friendly_promotions/admin/conditions/conditions/line_item_option_value/option_value_fields", product_option_values: product_option_values, form: form %>
+        <% end %>
+        <div class="mb-3" data-product-option-values-target="links">
+          <%= link_to "Add Row", "#", class: "btn btn-outline-primary", data: { action: "click->product-option-values#add_row" } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= form.label :preferred_line_item_applicable do %>
+        <%= form.check_box :preferred_line_item_applicable %>
+        <%= condition.class.human_attribute_name(:preferred_line_item_applicable) %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <p>
+    <%= SolidusFriendlyPromotions::Conditions::LineItemOptionValue.human_attribute_name(:description) %>
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <%= Spree::Product.model_name.human %>
+        </th>
+        <th>
+          <%= Spree::OptionValue.model_name.human(count: :other) %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% condition.preferred_eligible_values.each do |product_id, option_value_ids| %>
+        <tr>
+          <td>
+            <%= Spree::Product.find(product_id).name %>
+          </td>
+          <td>
+            <%= Spree::OptionValue.where(id: option_value_ids).map(&:name).join(", ") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

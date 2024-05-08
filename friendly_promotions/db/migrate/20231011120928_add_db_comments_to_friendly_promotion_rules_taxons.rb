@@ -16,8 +16,8 @@ class AddDbCommentsToFriendlyPromotionRulesTaxons < ActiveRecord::Migration[6.1]
 
   def friendly_promotion_rules_taxons_table_comment
     <<~COMMENT
-      Join table between promotion rules and taxons. Only used if the promotion rule's type is SolidusFriendlyPromotion::Rules::Taxon or
-      SolidusFriendlyPromotion::Rules::LineItemTaxon. Represents those taxons that the promotion rule matches on using its any/all/none
+      Join table between promotion rules and taxons. Only used if the promotion rule's type is SolidusFriendlyPromotion::Conditions::Taxon or
+      SolidusFriendlyPromotion::Conditions::LineItemTaxon. Represents those taxons that the promotion rule matches on using its any/all/none
       or include/exclude match policy.
     COMMENT
   end

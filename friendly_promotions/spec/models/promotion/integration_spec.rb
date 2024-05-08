@@ -17,8 +17,8 @@ RSpec.describe "Promotion System" do
       order.contents.add(pants.master, 1)
     end
 
-    context "with an order-level rule" do
-      let(:condition) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: false) }
+    context "with an order-level condition" do
+      let(:condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
 
       context "with an line item level action" do
         let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
@@ -37,7 +37,7 @@ RSpec.describe "Promotion System" do
         let(:goodie) { create(:variant, price: 4) }
         let(:action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
         let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
-        let(:condition) { SolidusFriendlyPromotions::Rules::Product.new(products: [shirt], preferred_line_item_applicable: true) }
+        let(:condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: true) }
 
         it "creates a new discounted line item" do
           expect(order.adjustments).to be_empty
@@ -97,8 +97,8 @@ RSpec.describe "Promotion System" do
       end
     end
 
-    context "with a line-item level rule" do
-      let(:condition) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
+    context "with a line-item level condition" do
+      let(:condition) { SolidusFriendlyPromotions::Conditions::LineItemProduct.new(products: [shirt]) }
 
       context "with an line item level action" do
         let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
@@ -120,7 +120,7 @@ RSpec.describe "Promotion System" do
     let(:pants) { create(:product, name: "Pants", price: 40) }
     let(:discounted_item_total_condition_amount) { 60 }
     let(:discounted_item_total_condition) do
-      SolidusFriendlyPromotions::Rules::DiscountedItemTotal.new(preferred_amount: discounted_item_total_condition_amount)
+      SolidusFriendlyPromotions::Conditions::DiscountedItemTotal.new(preferred_amount: discounted_item_total_condition_amount)
     end
     let(:discounted_item_total_action) do
       SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: discounted_item_total_calculator, conditions: [discounted_item_total_condition])
@@ -137,7 +137,7 @@ RSpec.describe "Promotion System" do
       )
     end
 
-    let(:shirts_condition) { SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [shirt]) }
+    let(:shirts_condition) { SolidusFriendlyPromotions::Conditions::LineItemProduct.new(products: [shirt]) }
     let(:shirts_calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
     let(:shirts_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: shirts_calculator, conditions: [shirts_condition]) }
     let!(:shirts_promotion) do
@@ -211,7 +211,7 @@ RSpec.describe "Promotion System" do
     end
   end
 
-  context "with a shipment-level rule" do
+  context "with a shipment-level condition" do
     let!(:address) { create(:address) }
     let(:shipping_zone) { create(:global_zone) }
     let(:store) { create(:store) }
@@ -219,7 +219,7 @@ RSpec.describe "Promotion System" do
     let!(:dhl_saver) { create(:shipping_method, zones: [shipping_zone], cost: 37) }
     let(:variant) { create(:variant, price: 13) }
     let(:promotion) { create(:friendly_promotion, name: "20 percent off UPS Ground", apply_automatically: true) }
-    let(:condition) { SolidusFriendlyPromotions::Rules::ShippingMethod.new(preferred_shipping_method_ids: [ups_ground.id]) }
+    let(:condition) { SolidusFriendlyPromotions::Conditions::ShippingMethod.new(preferred_shipping_method_ids: [ups_ground.id]) }
     let(:order) { Spree::Order.create!(store: store) }
 
     before do

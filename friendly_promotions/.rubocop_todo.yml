@@ -11,7 +11,7 @@
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
   Exclude:
-    - 'spec/models/solidus_friendly_promotions/promotion_rule_spec.rb'
+    - 'spec/models/solidus_friendly_promotions/condition_spec.rb'
 
 # Offense count: 1
 Lint/DuplicateMethods:
@@ -30,7 +30,7 @@ Lint/RedundantCopDisableDirective:
 # AllowedIdentifiers: capture3, iso8601, rfc1123_date, rfc822, rfc2822, rfc3339, x86_64
 Naming/VariableNumber:
   Exclude:
-    - 'spec/models/solidus_friendly_promotions/rules/first_repeat_purchase_since_spec.rb'
+    - 'spec/models/solidus_friendly_promotions/conditions/first_repeat_purchase_since_spec.rb'
 
 # Offense count: 1
 RSpec/AnyInstance:
@@ -64,12 +64,12 @@ RSpec/IteratedExpectation:
 # Offense count: 2
 RSpec/LeakyConstantDeclaration:
   Exclude:
-    - 'spec/models/solidus_friendly_promotions/promotion_rule_spec.rb'
+    - 'spec/models/solidus_friendly_promotions/condition_spec.rb'
 
 # Offense count: 3
 RSpec/MessageChain:
   Exclude:
-    - 'spec/models/solidus_friendly_promotions/rules/first_order_spec.rb'
+    - 'spec/models/solidus_friendly_promotions/conditions/first_order_spec.rb'
 
 # Offense count: 4
 # Configuration parameters: AllowSubject.
@@ -125,19 +125,19 @@ Rails/HasManyOrHasOneDependent:
 Rails/InverseOf:
   Exclude:
     - 'app/models/solidus_friendly_promotions/promotion.rb'
-    - 'app/models/solidus_friendly_promotions/rules/line_item_product.rb'
-    - 'app/models/solidus_friendly_promotions/rules/line_item_taxon.rb'
-    - 'app/models/solidus_friendly_promotions/rules/product.rb'
-    - 'app/models/solidus_friendly_promotions/rules/store.rb'
-    - 'app/models/solidus_friendly_promotions/rules/taxon.rb'
-    - 'app/models/solidus_friendly_promotions/rules/user.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/line_item_product.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/line_item_taxon.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/product.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/store.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/taxon.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/user.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ReflectionClassName:
   Exclude:
-    - 'app/models/solidus_friendly_promotions/promotion_rules_user.rb'
-    - 'app/models/solidus_friendly_promotions/rules/user.rb'
+    - 'app/models/solidus_friendly_promotions/promotion_conditions_user.rb'
+    - 'app/models/solidus_friendly_promotions/conditions/user.rb'
 
 # Offense count: 9
 # Configuration parameters: ForbiddenMethods, AllowedMethods.

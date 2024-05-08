@@ -127,31 +127,31 @@ RSpec.describe "Promotions admin", type: :system do
       end
       expect(action.reload.calculator.preferred_amount).to eq(30)
 
-      click_link("New Rule")
+      click_link("New Condition")
       select("First Order", from: "Type")
       click_button("Add")
       expect(page).to have_content("Must be the customer's first order")
-      expect(SolidusFriendlyPromotions::PromotionRule.first).to be_a(SolidusFriendlyPromotions::Rules::FirstOrder)
-      promotion_rule = promotion.actions.first.conditions.first
-      within("#rules_first_order_#{promotion_rule.id}") do
+      expect(SolidusFriendlyPromotions::Condition.first).to be_a(SolidusFriendlyPromotions::Conditions::FirstOrder)
+      condition = promotion.actions.first.conditions.first
+      within("#conditions_first_order_#{condition.id}") do
         find(".delete").click
       end
       expect(page).not_to have_content("Must be the customer's first order")
       expect(promotion.conditions).to be_empty
 
-      click_link("New Rule")
+      click_link("New Condition")
       select("Item Total", from: "Type")
-      fill_in("promotion_rule_preferred_amount", with: 200)
+      fill_in("condition_preferred_amount", with: 200)
       click_button("Add")
 
       expect(page).to have_content("Order total meets these criteria")
 
-      promotion_rule = promotion.actions.first.conditions.first
-      within("#rules_item_total_#{promotion_rule.id}") do
-        expect(find("#promotion_rule_preferred_amount").value).to eq("200.00")
-        fill_in("promotion_rule_preferred_amount", with: 300)
+      condition = promotion.actions.first.conditions.first
+      within("#conditions_item_total_#{condition.id}") do
+        expect(find("#condition_preferred_amount").value).to eq("200.00")
+        fill_in("condition_preferred_amount", with: 300)
         click_button("Update")
-        expect(find("#promotion_rule_preferred_amount").value).to eq("300.00")
+        expect(find("#condition_preferred_amount").value).to eq("300.00")
       end
 
       within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do

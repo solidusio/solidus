@@ -9,8 +9,8 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAdvertiser, type: :model do
     let(:product) { create(:product) }
     let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, advertise: true, starts_at: 1.day.ago) }
     let!(:rule) do
-      SolidusFriendlyPromotions::Rules::LineItemProduct.create(
-        promotion: promotion,
+      SolidusFriendlyPromotions::Conditions::LineItemProduct.create(
+        action: promotion.actions.first,
         products: [product]
       )
     end

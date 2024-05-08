@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
 
       ##
       # Computes the amount for the adjustment based on the line item and any
-      # other applicable items in the order. The rules for this specific
+      # other applicable items in the order. The conditions for this specific
       # adjustment are as follows:
       #
       # = Setup

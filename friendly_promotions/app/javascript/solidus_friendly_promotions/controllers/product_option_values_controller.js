@@ -5,7 +5,7 @@ export default class extends Controller {
 
   connect() {
     this.wrapperClass =
-      this.data.get("wrapperClass") || "promo-rule-option-value";
+      this.data.get("wrapperClass") || "promo-condition-option-value";
 
     this.element.querySelectorAll("." + this.wrapperClass).forEach((element) => this.buildSelects(element))
   }

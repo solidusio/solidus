@@ -25,11 +25,11 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::DistributedAmount, type: 
       expect(order.line_items.map(&:adjustment_total)).to eq([-2, -3, -10])
     end
 
-    context "with product promotion rule" do
+    context "with product promotion condition" do
       let(:first_product) { order.line_items.first.product }
       let(:conditions) do
         [
-          SolidusFriendlyPromotions::Rules::LineItemProduct.new(products: [first_product])
+          SolidusFriendlyPromotions::Conditions::LineItemProduct.new(products: [first_product])
         ]
       end
 

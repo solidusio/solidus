@@ -2,31 +2,31 @@
 
 module SolidusFriendlyPromotions
   PROMOTION_MAP = {
-    rules: {
+    conditions: {
       Spree::Promotion::Rules::ItemTotal =>
-        SolidusFriendlyPromotions::Rules::ItemTotal,
+        SolidusFriendlyPromotions::Conditions::ItemTotal,
       Spree::Promotion::Rules::Product =>
-        SolidusFriendlyPromotions::Rules::Product,
+        SolidusFriendlyPromotions::Conditions::Product,
       Spree::Promotion::Rules::User =>
-        SolidusFriendlyPromotions::Rules::User,
+        SolidusFriendlyPromotions::Conditions::User,
       Spree::Promotion::Rules::FirstOrder =>
-        SolidusFriendlyPromotions::Rules::FirstOrder,
+        SolidusFriendlyPromotions::Conditions::FirstOrder,
       Spree::Promotion::Rules::UserLoggedIn =>
-        SolidusFriendlyPromotions::Rules::UserLoggedIn,
+        SolidusFriendlyPromotions::Conditions::UserLoggedIn,
       Spree::Promotion::Rules::OneUsePerUser =>
-        SolidusFriendlyPromotions::Rules::OneUsePerUser,
+        SolidusFriendlyPromotions::Conditions::OneUsePerUser,
       Spree::Promotion::Rules::Taxon =>
-        SolidusFriendlyPromotions::Rules::Taxon,
+        SolidusFriendlyPromotions::Conditions::Taxon,
       Spree::Promotion::Rules::NthOrder =>
-        SolidusFriendlyPromotions::Rules::NthOrder,
+        SolidusFriendlyPromotions::Conditions::NthOrder,
       Spree::Promotion::Rules::OptionValue =>
-        SolidusFriendlyPromotions::Rules::OptionValue,
+        SolidusFriendlyPromotions::Conditions::OptionValue,
       Spree::Promotion::Rules::FirstRepeatPurchaseSince =>
-        SolidusFriendlyPromotions::Rules::FirstRepeatPurchaseSince,
+        SolidusFriendlyPromotions::Conditions::FirstRepeatPurchaseSince,
       Spree::Promotion::Rules::UserRole =>
-        SolidusFriendlyPromotions::Rules::UserRole,
+        SolidusFriendlyPromotions::Conditions::UserRole,
       Spree::Promotion::Rules::Store =>
-        SolidusFriendlyPromotions::Rules::Store
+        SolidusFriendlyPromotions::Conditions::Store
     },
     actions: {
       Spree::Promotion::Actions::CreateAdjustment => ->(old_action) {
