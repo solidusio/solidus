@@ -6,7 +6,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Page, type: :model d
   subject { described_class.new(order, path).activate }
 
   let(:order) { create(:order_with_line_items, line_items_count: 1) }
-  let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, name: "10% off", path: "10off") }
+  let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, name: "10% off", path: "10off") }
   let(:path) { "10off" }
 
   it "activates at the right path" do
@@ -42,7 +42,7 @@ RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Page, type: :model d
   context "when promotion is not eligible" do
     let(:impossible_condition) { SolidusFriendlyPromotions::Conditions::NthOrder.new(preferred_nth_order: 2) }
     before do
-      promotion.actions.first.conditions << impossible_condition
+      promotion.benefits.first.conditions << impossible_condition
     end
 
     it "is not applied" do

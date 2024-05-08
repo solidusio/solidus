@@ -46,7 +46,7 @@ module SolidusFriendlyPromotions
       end
 
       def promotion_includes
-        [:actions]
+        [:benefits]
       end
 
       def model_class

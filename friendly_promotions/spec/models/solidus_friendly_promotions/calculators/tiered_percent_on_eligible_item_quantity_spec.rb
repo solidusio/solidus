@@ -17,14 +17,14 @@ RSpec.describe SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleIt
 
   let(:clothes) { create(:taxon, products: [shirt.product, pants.product]) }
 
-  let(:promotion) { create(:friendly_promotion, name: "10 Percent on 5 apparel, 15 percent on 10", actions: [action]) }
+  let(:promotion) { create(:friendly_promotion, name: "10 Percent on 5 apparel, 15 percent on 10", benefits: [benefit]) }
   let(:clothes_only) { SolidusFriendlyPromotions::Conditions::Taxon.new(taxons: [clothes]) }
-  let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator, conditions: [clothes_only]) }
+  let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: calculator, conditions: [clothes_only]) }
   let(:calculator) { described_class.new(preferred_base_percent: 10, preferred_tiers: {10 => 15.0}) }
 
   let(:line_item) { order.line_items.detect { _1.variant == shirt } }
 
-  subject { promotion.actions.first.calculator.compute(line_item) }
+  subject { promotion.benefits.first.calculator.compute(line_item) }
 
   # 2 Shirts at 50, 100 USD. 10 % == 10
   it { is_expected.to eq(10) }

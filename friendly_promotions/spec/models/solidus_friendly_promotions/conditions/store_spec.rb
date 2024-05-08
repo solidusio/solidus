@@ -10,11 +10,11 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::Store, type: :model do
   describe "store_ids=" do
     subject { condition.store_ids = [store.id] }
 
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
-    let(:promotion_action) { promotion.actions.first }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let(:promotion_benefit) { promotion.benefits.first }
     let!(:unimportant_store) { create(:store) }
     let!(:store) { create(:store) }
-    let(:condition) { promotion_action.conditions.build(type: described_class.to_s) }
+    let(:condition) { promotion_benefit.conditions.build(type: described_class.to_s) }
 
     it "creates a valid condition with a store" do
       subject

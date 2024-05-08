@@ -20,13 +20,13 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "#destroy" do
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, apply_automatically: true) }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, apply_automatically: true) }
 
     subject { promotion.destroy! }
 
-    it "destroys the promotion and nullifies the action" do
+    it "destroys the promotion and nullifies the benefit" do
       expect { subject }.to change { SolidusFriendlyPromotions::Promotion.count }.by(-1)
-      expect(SolidusFriendlyPromotions::PromotionAction.count).to be_zero
+      expect(SolidusFriendlyPromotions::Benefit.count).to be_zero
     end
 
     context "when the promotion has been applied to a complete order" do
@@ -88,14 +88,14 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
     before { promotion }
 
-    it "doesn't return promotion without actions" do
+    it "doesn't return promotion without benefits" do
       expect(subject).to be_empty
     end
 
-    context "when promotion has an action" do
-      let(:promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: Date.yesterday, name: "name1") }
+    context "when promotion has an benefit" do
+      let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, starts_at: Date.yesterday, name: "name1") }
 
-      it "returns promotion with action" do
+      it "returns promotion with benefit" do
         expect(subject).to match [promotion]
       end
     end
@@ -106,7 +106,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       let(:promotion) do
         create(
           :friendly_promotion,
-          :with_adjustable_action,
+          :with_adjustable_benefit,
           starts_at: 5.days.ago,
           expires_at: 3.days.ago,
           name: "name1"
@@ -119,22 +119,22 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
-  describe ".has_actions" do
-    subject { described_class.has_actions }
+  describe ".has_benefits" do
+    subject { described_class.has_benefits }
 
     let(:promotion) { create(:friendly_promotion, starts_at: Date.yesterday, name: "name1") }
 
     before { promotion }
 
-    it "doesn't return promotion without actions" do
+    it "doesn't return promotion without benefits" do
       expect(subject).to be_empty
     end
 
-    context "when promotion has two actions" do
-      let(:promotion) { create(:friendly_promotion, :with_adjustable_action, starts_at: Date.yesterday, name: "name1") }
+    context "when promotion has two benefits" do
+      let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, starts_at: Date.yesterday, name: "name1") }
 
       before do
-        promotion.actions << SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: SolidusFriendlyPromotions::Calculators::Percent.new)
+        promotion.benefits << SolidusFriendlyPromotions::Benefits::AdjustShipment.new(calculator: SolidusFriendlyPromotions::Calculators::Percent.new)
       end
 
       it "returns distinct promotion" do
@@ -196,7 +196,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
                 :completed_order_with_friendly_promotion,
                 promotion: promotion
               )
-              promotion.actions.first.adjustments.update_all(eligible: true)
+              promotion.benefits.first.adjustments.update_all(eligible: true)
             end
 
             it { is_expected.to be_truthy }
@@ -311,7 +311,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "#inactive" do
-    let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
+    let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
 
     it "is not expired" do
       expect(promotion).not_to be_inactive
@@ -463,8 +463,8 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       expect(promotion.active?).to eq(false)
     end
 
-    context "when promotion has an action" do
-      let(:promotion) { create(:friendly_promotion, :with_adjustable_action, name: "name1") }
+    context "when promotion has an benefit" do
+      let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, name: "name1") }
 
       it "is active if it has started already" do
         promotion.starts_at = Time.current - 1.day
@@ -513,14 +513,14 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   end
 
   describe "#products" do
-    let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
-    let(:promotion_action) { promotion.actions.first }
+    let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let(:promotion_benefit) { promotion.benefits.first }
 
     context "when it has product conditions with products associated" do
       let(:promotion_condition) { SolidusFriendlyPromotions::Conditions::Product.new }
 
       before do
-        promotion_condition.action = promotion_action
+        promotion_condition.benefit = promotion_benefit
         promotion_condition.products << create(:product)
         promotion_condition.save
       end
@@ -549,7 +549,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   describe "#used_by?" do
     subject { promotion.used_by? user, [excluded_order] }
 
-    let(:promotion) { create :friendly_promotion, :with_adjustable_action }
+    let(:promotion) { create :friendly_promotion, :with_adjustable_benefit }
     let(:user) { create :user }
     let(:order) { create :order_with_line_items, user: user }
     let(:excluded_order) { create :order_with_line_items, user: user }
@@ -608,7 +608,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
   describe ".original_promotion" do
     let(:spree_promotion) { create :promotion, :with_adjustable_action }
-    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_action }
+    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_benefit }
 
     subject { friendly_promotion.original_promotion }
 

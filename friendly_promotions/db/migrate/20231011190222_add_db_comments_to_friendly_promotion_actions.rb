@@ -38,7 +38,7 @@ class AddDbCommentsToFriendlyPromotionActions < ActiveRecord::Migration[6.1]
   def type_comment
     <<~COMMENT
       A class name representing which promotion action this represents.
-      Usually SolidusFriendlyPromotions::Actions::Adjust{LineItem,Shipment}.
+      Usually SolidusFriendlyPromotions::PromotionAction::Adjust{LineItem,Shipment}.
     COMMENT
   end
 

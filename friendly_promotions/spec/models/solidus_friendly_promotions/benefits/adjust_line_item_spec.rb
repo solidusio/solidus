@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItem do
+RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItem do
   subject(:action) { described_class.new }
 
   describe "name" do

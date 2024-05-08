@@ -21,8 +21,8 @@ module SolidusFriendlyPromotions
 
     def success?
       return true if results.empty?
-      promotion.actions.any? do |action|
-        action.conditions.all? do |condition|
+      promotion.benefits.any? do |benefit|
+        benefit.conditions.all? do |condition|
           results_for_condition = results.select { |result| result.condition == condition }
           results_for_condition.any?(&:success)
         end

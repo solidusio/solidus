@@ -8,7 +8,7 @@ RSpec.describe SolidusFriendlyPromotions::ShippingRateDiscount do
   it { is_expected.to belong_to(:shipping_rate) }
 
   it { is_expected.to respond_to(:shipping_rate) }
-  it { is_expected.to respond_to(:promotion_action) }
+  it { is_expected.to respond_to(:benefit) }
   it { is_expected.to respond_to(:amount) }
   it { is_expected.to respond_to(:display_amount) }
   it { is_expected.to respond_to(:label) }

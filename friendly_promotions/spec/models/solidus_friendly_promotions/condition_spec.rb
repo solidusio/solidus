@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Condition do
-  it { is_expected.to belong_to(:action).optional }
+  it { is_expected.to belong_to(:benefit).optional }
   let(:bad_test_condition_class) { Class.new(SolidusFriendlyPromotions::Condition) }
   let(:test_condition_class) do
     Class.new(SolidusFriendlyPromotions::Condition) do
@@ -28,18 +28,18 @@ RSpec.describe SolidusFriendlyPromotions::Condition do
     expect { test_condition_class.new.eligible?("promotable") }.not_to raise_error
   end
 
-  it "validates unique conditions for a promotion action" do
+  it "validates unique conditions for a promotion benefit" do
     # Because of Rails' STI, we can't use the anonymous class here
-    promotion = create(:friendly_promotion, :with_adjustable_action)
-    promotion_action = promotion.actions.first
+    promotion = create(:friendly_promotion, :with_adjustable_benefit)
+    promotion_benefit = promotion.benefits.first
     condition_one = SolidusFriendlyPromotions::Conditions::FirstOrder.new
-    condition_one.action_id = promotion_action.id
+    condition_one.benefit_id = promotion_benefit.id
     condition_one.save!
 
     condition_two = SolidusFriendlyPromotions::Conditions::FirstOrder.new
-    condition_two.action_id = promotion_action.id
+    condition_two.benefit_id = promotion_benefit.id
     expect(condition_two).not_to be_valid
-    expect(condition_two.errors.full_messages).to include("Action already contains this condition type")
+    expect(condition_two.errors.full_messages).to include("Benefit already contains this condition type")
   end
 
   it "generates its own partial path" do

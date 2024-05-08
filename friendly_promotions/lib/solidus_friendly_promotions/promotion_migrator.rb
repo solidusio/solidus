@@ -24,8 +24,8 @@ module SolidusFriendlyPromotions
             name: promotion.promotion_category.name
           )
         end
-        new_promotion.actions = promotion.actions.flat_map do |old_promotion_action|
-          generate_new_promotion_actions(old_promotion_action)&.tap do |new_promotion_action|
+        new_promotion.benefits = promotion.actions.flat_map do |old_promotion_action|
+          generate_new_benefits(old_promotion_action)&.tap do |new_promotion_action|
             new_promotion_action.original_promotion_action = old_promotion_action
             new_promotion_action.conditions = promotion.rules.flat_map do |old_promotion_rule|
               generate_new_promotion_conditions(old_promotion_rule)
@@ -75,7 +75,7 @@ module SolidusFriendlyPromotions
       )
     end
 
-    def generate_new_promotion_actions(old_promotion_action)
+    def generate_new_benefits(old_promotion_action)
       promo_action_config = promotion_map[:actions][old_promotion_action.class]
       if promo_action_config.nil?
         puts("#{old_promotion_action.class} is not supported")

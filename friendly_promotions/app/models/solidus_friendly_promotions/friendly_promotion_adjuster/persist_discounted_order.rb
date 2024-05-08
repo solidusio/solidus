@@ -22,7 +22,7 @@ module SolidusFriendlyPromotions
               shipping_rate: shipping_rate,
               amount: discount.amount,
               label: discount.label,
-              promotion_action: discount.source
+              benefit: discount.source
             )
           end
         end
@@ -49,7 +49,7 @@ module SolidusFriendlyPromotions
           update_adjustment(item, item_discount)
         end
         item.update(promo_total: active_adjustments.sum(&:amount))
-        # Remove any tax adjustments tied to promotion actions which no longer match.
+        # Remove any tax adjustments tied to promotion benefits which no longer match.
         unmatched_adjustments = promotion_adjustments - active_adjustments
 
         item.adjustments.destroy(unmatched_adjustments)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  module Actions
-    class AdjustLineItem < PromotionAction
+  module Benefits
+    class AdjustLineItem < Benefit
       def can_discount?(object)
         object.is_a? Spree::LineItem
       end

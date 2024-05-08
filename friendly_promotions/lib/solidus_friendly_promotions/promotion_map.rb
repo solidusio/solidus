@@ -37,7 +37,7 @@ module SolidusFriendlyPromotions
           SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: old_action.calculator.preferred_flat_percent)
         end
 
-        SolidusFriendlyPromotions::Actions::AdjustLineItem.new(
+        SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(
           calculator: calculator
         )
       },
@@ -58,7 +58,7 @@ module SolidusFriendlyPromotions
           SolidusFriendlyPromotions::Calculators::TieredPercent.new(preferences: preferences)
         end
 
-        SolidusFriendlyPromotions::Actions::AdjustLineItem.new(
+        SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(
           calculator: calculator
         )
       },
@@ -79,13 +79,13 @@ module SolidusFriendlyPromotions
           SolidusFriendlyPromotions::Calculators::TieredPercent.new(preferences: preferences)
         end
 
-        SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups.new(
+        SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups.new(
           preferred_group_size: old_action.preferred_group_size,
           calculator: calculator
         )
       },
       Spree::Promotion::Actions::FreeShipping => ->(old_action) {
-        SolidusFriendlyPromotions::Actions::AdjustShipment.new(
+        SolidusFriendlyPromotions::Benefits::AdjustShipment.new(
           calculator: SolidusFriendlyPromotions::Calculators::Percent.new(
             preferred_percent: 100
           )

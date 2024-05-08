@@ -5,7 +5,7 @@ Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderCont
 Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 
 Rails.application.config.to_prepare do |config|
-  Spree::Order.line_item_comparison_hooks << :free_from_order_action?
+  Spree::Order.line_item_comparison_hooks << :free_from_order_benefit?
 end
 
 # Replace the promotions menu from core with ours
@@ -68,7 +68,7 @@ SolidusFriendlyPromotions.configure do |config|
   config.promotions_per_page = 25
 
   config.promotion_calculators = SolidusFriendlyPromotions::NestedClassSet.new(
-    "SolidusFriendlyPromotions::Actions::AdjustShipment" => [
+    "SolidusFriendlyPromotions::Benefits::AdjustShipment" => [
       "SolidusFriendlyPromotions::Calculators::FlatRate",
       "SolidusFriendlyPromotions::Calculators::FlexiRate",
       "SolidusFriendlyPromotions::Calculators::Percent",
@@ -76,7 +76,7 @@ SolidusFriendlyPromotions.configure do |config|
       "SolidusFriendlyPromotions::Calculators::TieredPercent",
       "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ],
-    "SolidusFriendlyPromotions::Actions::AdjustLineItem" => [
+    "SolidusFriendlyPromotions::Benefits::AdjustLineItem" => [
       "SolidusFriendlyPromotions::Calculators::DistributedAmount",
       "SolidusFriendlyPromotions::Calculators::FlatRate",
       "SolidusFriendlyPromotions::Calculators::FlexiRate",
@@ -85,12 +85,12 @@ SolidusFriendlyPromotions.configure do |config|
       "SolidusFriendlyPromotions::Calculators::TieredPercent",
       "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ],
-    "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups" => [
+    "SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups" => [
       "SolidusFriendlyPromotions::Calculators::FlatRate",
       "SolidusFriendlyPromotions::Calculators::Percent",
       "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
     ],
-    "SolidusFriendlyPromotions::Actions::CreateDiscountedItem" => [
+    "SolidusFriendlyPromotions::Benefits::CreateDiscountedItem" => [
       "SolidusFriendlyPromotions::Calculators::FlatRate",
       "SolidusFriendlyPromotions::Calculators::Percent",
       "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
@@ -123,9 +123,9 @@ SolidusFriendlyPromotions.configure do |config|
   ]
 
   config.actions = [
-    "SolidusFriendlyPromotions::Actions::AdjustLineItem",
-    "SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups",
-    "SolidusFriendlyPromotions::Actions::AdjustShipment",
-    "SolidusFriendlyPromotions::Actions::CreateDiscountedItem"
+    "SolidusFriendlyPromotions::Benefits::AdjustLineItem",
+    "SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups",
+    "SolidusFriendlyPromotions::Benefits::AdjustShipment",
+    "SolidusFriendlyPromotions::Benefits::CreateDiscountedItem"
   ]
 end

@@ -6,12 +6,12 @@ module SolidusFriendlyPromotions
   class Condition < Spree::Base
     include Spree::Preferences::Persistable
 
-    belongs_to :action, class_name: "SolidusFriendlyPromotions::PromotionAction", inverse_of: :conditions, optional: true
-    has_one :promotion, through: :action
+    belongs_to :benefit, class_name: "SolidusFriendlyPromotions::Benefit", inverse_of: :conditions, optional: true
+    has_one :promotion, through: :benefit
 
     scope :of_type, ->(type) { where(type: type) }
 
-    validate :unique_per_action, on: :create
+    validate :unique_per_benefit, on: :create
 
     def preload_relations
       []
@@ -43,10 +43,10 @@ module SolidusFriendlyPromotions
 
     private
 
-    def unique_per_action
-      return unless self.class.exists?(action_id: action_id, type: self.class.name)
+    def unique_per_benefit
+      return unless self.class.exists?(benefit_id: benefit_id, type: self.class.name)
 
-      errors.add(:action, :already_contains_condition_type)
+      errors.add(:benefit, :already_contains_condition_type)
     end
 
     def eligibility_error_message(key, options = {})

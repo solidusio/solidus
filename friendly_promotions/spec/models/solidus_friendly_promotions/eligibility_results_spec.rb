@@ -6,10 +6,10 @@ RSpec.describe SolidusFriendlyPromotions::EligibilityResults do
   subject(:eligibility_results) { described_class.new(promotion) }
 
   describe "#add" do
-    let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
-    let(:promotion_action) { promotion.actions.first }
+    let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let(:promotion_benefit) { promotion.benefits.first }
     let(:order) { create(:order, item_total: 100) }
-    let(:condition) { SolidusFriendlyPromotions::Conditions::ItemTotal.new(action: promotion_action, preferred_amount: 101) }
+    let(:condition) { SolidusFriendlyPromotions::Conditions::ItemTotal.new(benefit: promotion_benefit, preferred_amount: 101) }
 
     it "can add an error result" do
       result = condition.eligible?(order)

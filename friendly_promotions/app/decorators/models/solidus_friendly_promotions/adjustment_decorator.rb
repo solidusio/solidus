@@ -3,16 +3,16 @@
 module SolidusFriendlyPromotions
   module AdjustmentDecorator
     def self.prepended(base)
-      base.scope :friendly_promotion, -> { where(source_type: "SolidusFriendlyPromotions::PromotionAction") }
-      base.scope :promotion, -> { where(source_type: ["SolidusFriendlyPromotions::PromotionAction", "Spree::PromotionAction"]) }
+      base.scope :friendly_promotion, -> { where(source_type: "SolidusFriendlyPromotions::Benefit") }
+      base.scope :promotion, -> { where(source_type: ["SolidusFriendlyPromotions::Benefit", "Spree::PromotionAction"]) }
     end
 
     def friendly_promotion?
-      source_type == "SolidusFriendlyPromotions::PromotionAction"
+      source_type == "SolidusFriendlyPromotions::Benefit"
     end
 
     def promotion?
-      super || source_type == "SolidusFriendlyPromotions::PromotionAction"
+      super || source_type == "SolidusFriendlyPromotions::Benefit"
     end
 
     private

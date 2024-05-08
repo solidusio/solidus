@@ -11,9 +11,9 @@ module SolidusFriendlyPromotions
       def call
         promos = connected_order_promotions | sale_promotions
         promos << dry_run_promotion if dry_run_promotion
-        promos.flat_map(&:actions).group_by(&:preload_relations).each do |preload_relations, actions|
-          preload(records: actions, associations: preload_relations)
-          actions.flat_map(&:conditions).group_by(&:preload_relations).each do |preload_relations, conditions|
+        promos.flat_map(&:benefits).group_by(&:preload_relations).each do |preload_relations, benefits|
+          preload(records: benefits, associations: preload_relations)
+          benefits.flat_map(&:conditions).group_by(&:preload_relations).each do |preload_relations, conditions|
             preload(records: conditions, associations: preload_relations)
           end
         end
@@ -45,7 +45,7 @@ module SolidusFriendlyPromotions
 
       def promotion_includes
         {
-          actions: :conditions
+          benefits: :conditions
         }
       end
     end

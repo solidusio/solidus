@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusFriendlyPromotions::PromotionAction do
+RSpec.describe SolidusFriendlyPromotions::Benefit do
   it { is_expected.to belong_to(:promotion) }
   it { is_expected.to have_one(:calculator) }
   it { is_expected.to have_many(:shipping_rate_discounts) }
@@ -20,30 +20,30 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
   end
 
   describe "#destroy" do
-    subject { action.destroy }
-    let(:action) { promotion.actions.first }
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, apply_automatically: true) }
+    subject { benefit.destroy }
+    let(:benefit) { promotion.benefits.first }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, apply_automatically: true) }
 
-    it "destroys the action" do
-      expect { subject }.to change { SolidusFriendlyPromotions::PromotionAction.count }.by(-1)
+    it "destroys the benefit" do
+      expect { subject }.to change { SolidusFriendlyPromotions::Benefit.count }.by(-1)
     end
 
-    context "when the action has adjustments on an incomplete order" do
+    context "when the benefit has adjustments on an incomplete order" do
       let(:order) { create(:order_with_line_items) }
 
       before do
         order.recalculate
       end
 
-      it "destroys the action" do
-        expect { subject }.to change { SolidusFriendlyPromotions::PromotionAction.count }.by(-1)
+      it "destroys the benefit" do
+        expect { subject }.to change { SolidusFriendlyPromotions::Benefit.count }.by(-1)
       end
 
       it "destroys the adjustments" do
         expect { subject }.to change { Spree::Adjustment.count }.by(-1)
       end
 
-      context "when the action has adjustments on a complete order" do
+      context "when the benefit has adjustments on a complete order" do
         let(:order) { create(:order_ready_to_complete) }
 
         before do
@@ -52,29 +52,29 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
         end
 
         it "raises an error" do
-          expect { subject }.not_to change { SolidusFriendlyPromotions::PromotionAction.count }
-          expect(action.errors.full_messages).to include("Action has been applied to complete orders. It cannot be destroyed.")
+          expect { subject }.not_to change { SolidusFriendlyPromotions::Benefit.count }
+          expect(benefit.errors.full_messages).to include("Benefit has been applied to complete orders. It cannot be destroyed.")
         end
       end
     end
   end
 
   describe "#discount" do
-    subject { action.discount(discountable) }
+    subject { benefit.discount(discountable) }
 
     let(:variant) { create(:variant) }
     let(:order) { create(:order) }
     let(:discountable) { Spree::LineItem.new(order: order, variant: variant, price: 10, quantity: 1) }
     let(:promotion) { SolidusFriendlyPromotions::Promotion.new(customer_label: "20 Perzent off") }
     let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
-    let(:action) { described_class.new(promotion: promotion, calculator: calculator) }
+    let(:benefit) { described_class.new(promotion: promotion, calculator: calculator) }
 
     it "returns an discount to the discountable" do
       expect(subject).to eq(
         SolidusFriendlyPromotions::ItemDiscount.new(
           item: discountable,
           label: "Promotion (20 Perzent off)",
-          source: action,
+          source: benefit,
           amount: -2
         )
       )
@@ -102,13 +102,13 @@ RSpec.describe SolidusFriendlyPromotions::PromotionAction do
   describe ".original_promotion_action" do
     let(:spree_promotion) { create :promotion, :with_adjustable_action }
     let(:spree_promotion_action) { spree_promotion.actions.first }
-    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_action }
-    let(:friendly_promotion_action) { friendly_promotion.actions.first }
+    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_benefit }
+    let(:friendly_promotion_benefit) { friendly_promotion.benefits.first }
 
-    subject { friendly_promotion_action.original_promotion_action }
+    subject { friendly_promotion_benefit.original_promotion_action }
 
     it "can be migrated from spree" do
-      friendly_promotion_action.original_promotion_action = spree_promotion_action
+      friendly_promotion_benefit.original_promotion_action = spree_promotion_action
       expect(subject).to eq(spree_promotion_action)
     end
 

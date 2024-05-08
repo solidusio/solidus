@@ -8,11 +8,11 @@ RSpec.describe "Promotion System" do
   context "A promotion that creates line item adjustments" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:pants) { create(:product, name: "Pants") }
-    let!(:promotion) { create(:friendly_promotion, name: "20% off Shirts", actions: [action], apply_automatically: true) }
+    let!(:promotion) { create(:friendly_promotion, name: "20% off Shirts", benefits: [benefit], apply_automatically: true) }
     let(:order) { create(:order) }
 
     before do
-      action.conditions << condition
+      benefit.conditions << condition
       order.contents.add(shirt.master, 1)
       order.contents.add(pants.master, 1)
     end
@@ -20,9 +20,9 @@ RSpec.describe "Promotion System" do
     context "with an order-level condition" do
       let(:condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
 
-      context "with an line item level action" do
+      context "with an line item level benefit" do
         let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
-        let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator) }
+        let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: calculator) }
 
         it "creates one line item level adjustment" do
           expect(order.adjustments).to be_empty
@@ -35,7 +35,7 @@ RSpec.describe "Promotion System" do
 
       context "with an automation" do
         let(:goodie) { create(:variant, price: 4) }
-        let(:action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
+        let(:benefit) { SolidusFriendlyPromotions::Benefits::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
         let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
         let(:condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: true) }
 
@@ -80,7 +80,7 @@ RSpec.describe "Promotion System" do
         end
 
         context "with a line-item level promotion in the lane before it" do
-          let!(:other_promotion) { create(:friendly_promotion, :with_adjustable_action, lane: :pre, apply_automatically: true) }
+          let!(:other_promotion) { create(:friendly_promotion, :with_adjustable_benefit, lane: :pre, apply_automatically: true) }
 
           it "creates a new discounted line item" do
             order.recalculate
@@ -90,8 +90,8 @@ RSpec.describe "Promotion System" do
             expect(order.item_total).to eq(43.98)
             expect(order.item_total_before_tax).to eq(19.98)
             expect(order.line_items.flat_map(&:adjustments).length).to eq(3)
-            expect(order.line_items.detect { |line_item| line_item.managed_by_order_action == action }.adjustments.length).to eq(1)
-            expect(order.line_items.detect { |line_item| line_item.managed_by_order_action == action }.adjustments.first.amount).to eq(-4)
+            expect(order.line_items.detect { |line_item| line_item.managed_by_order_benefit == benefit }.adjustments.length).to eq(1)
+            expect(order.line_items.detect { |line_item| line_item.managed_by_order_benefit == benefit }.adjustments.first.amount).to eq(-4)
           end
         end
       end
@@ -100,9 +100,9 @@ RSpec.describe "Promotion System" do
     context "with a line-item level condition" do
       let(:condition) { SolidusFriendlyPromotions::Conditions::LineItemProduct.new(products: [shirt]) }
 
-      context "with an line item level action" do
+      context "with an line item level benefit" do
         let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
-        let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator) }
+        let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: calculator) }
 
         it "creates one line item level adjustment" do
           expect(order.adjustments).to be_empty
@@ -122,8 +122,8 @@ RSpec.describe "Promotion System" do
     let(:discounted_item_total_condition) do
       SolidusFriendlyPromotions::Conditions::DiscountedItemTotal.new(preferred_amount: discounted_item_total_condition_amount)
     end
-    let(:discounted_item_total_action) do
-      SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: discounted_item_total_calculator, conditions: [discounted_item_total_condition])
+    let(:discounted_item_total_benefit) do
+      SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: discounted_item_total_calculator, conditions: [discounted_item_total_condition])
     end
     let(:discounted_item_total_calculator) do
       SolidusFriendlyPromotions::Calculators::DistributedAmount.new(preferred_amount: 10)
@@ -131,7 +131,7 @@ RSpec.describe "Promotion System" do
     let!(:distributed_amount_promo) do
       create(
         :friendly_promotion,
-        actions: [discounted_item_total_action],
+        benefits: [discounted_item_total_benefit],
         apply_automatically: true,
         lane: :post
       )
@@ -139,11 +139,11 @@ RSpec.describe "Promotion System" do
 
     let(:shirts_condition) { SolidusFriendlyPromotions::Conditions::LineItemProduct.new(products: [shirt]) }
     let(:shirts_calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
-    let(:shirts_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: shirts_calculator, conditions: [shirts_condition]) }
+    let(:shirts_benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: shirts_calculator, conditions: [shirts_condition]) }
     let!(:shirts_promotion) do
       create(
         :friendly_promotion,
-        actions: [shirts_action],
+        benefits: [shirts_benefit],
         name: "20% off shirts",
         apply_automatically: true
       )
@@ -194,7 +194,7 @@ RSpec.describe "Promotion System" do
         promotion: spree_promotion
       )
       Spree::PromotionHandler::Cart.new(order).activate
-      expect(order.line_items.first.adjustments.first.source).to eq(spree_promotion.actions.first)
+      expect(order.line_items.first.adjustments.first.source).to eq(spree_promotion.promotion_actions.first)
       promotion_map = SolidusFriendlyPromotions::PROMOTION_MAP
       SolidusFriendlyPromotions::PromotionMigrator.new(promotion_map).call
       expect(SolidusFriendlyPromotions::Promotion.count).to eq(1)
@@ -223,8 +223,8 @@ RSpec.describe "Promotion System" do
     let(:order) { Spree::Order.create!(store: store) }
 
     before do
-      action.conditions << condition
-      promotion.actions << action
+      benefit.conditions << condition
+      promotion.benefits << benefit
 
       order.contents.add(variant, 1)
       order.ship_address = address
@@ -239,9 +239,9 @@ RSpec.describe "Promotion System" do
       order.recalculate
     end
 
-    context "with a line item level action" do
+    context "with a line item level benefit" do
       let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
-      let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: calculator) }
+      let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: calculator) }
       let(:shipping_method) { ups_ground }
 
       it "creates adjustments" do
@@ -256,9 +256,9 @@ RSpec.describe "Promotion System" do
       end
     end
 
-    context "with a shipment level action" do
+    context "with a shipment level benefit" do
       let(:calculator) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 20) }
-      let(:action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: calculator) }
+      let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustShipment.new(calculator: calculator) }
 
       context "when the order is eligible" do
         let(:shipping_method) { ups_ground }

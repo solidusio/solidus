@@ -3,8 +3,8 @@
 require "spec_helper"
 
 describe "Admin::Conditions", type: :request do
-  let!(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
-  let(:benefit) { promotion.actions.first }
+  let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+  let(:benefit) { promotion.benefits.first }
 
   context "when the user is authorized" do
     stub_authorization! do |_u|

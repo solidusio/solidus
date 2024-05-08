@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  module Actions
-    module OrderLevelAction
+  module Benefits
+    module OrderBenefit
       def can_discount?(_)
         false
       end

@@ -37,7 +37,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
     let(:shirt) { create(:product, name: "Shirt") }
     let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
     let(:conditions) { [product_condition] }
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_action, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
     let(:product_condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
     let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions, dry_run: true) }
@@ -145,7 +145,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       end
     end
 
-    context "where one action succeeds and another errors" do
+    context "where one benefit succeeds and another errors" do
       let(:usps) { create(:shipping_method) }
       let(:ups_ground) { create(:shipping_method) }
       let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}], shipping_method: ups_ground) }
@@ -153,11 +153,11 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       let(:shipping_method_condition) { SolidusFriendlyPromotions::Conditions::ShippingMethod.new(preferred_shipping_method_ids: [usps.id]) }
       let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
       let(:ten_off_shipping) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
-      let(:shipping_action) { SolidusFriendlyPromotions::Actions::AdjustShipment.new(calculator: ten_off_shipping, conditions: [product_condition]) }
-      let(:line_item_action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new(calculator: ten_off_items, conditions: [shipping_method_condition]) }
-      let(:actions) { [shipping_action, line_item_action] }
+      let(:shipping_benefit) { SolidusFriendlyPromotions::Benefits::AdjustShipment.new(calculator: ten_off_shipping, conditions: [product_condition]) }
+      let(:line_item_benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: ten_off_items, conditions: [shipping_method_condition]) }
+      let(:benefits) { [shipping_benefit, line_item_benefit] }
       let(:conditions) { [product_condition, shipping_method_condition] }
-      let!(:promotion) { create(:friendly_promotion, actions: actions, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
+      let!(:promotion) { create(:friendly_promotion, benefits: benefits, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
 
       it "can tell us about success" do
         subject

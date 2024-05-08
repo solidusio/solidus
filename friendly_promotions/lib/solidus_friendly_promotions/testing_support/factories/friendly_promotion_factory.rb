@@ -14,29 +14,29 @@ FactoryBot.define do
       end
     end
 
-    trait :with_adjustable_action do
+    trait :with_adjustable_benefit do
       transient do
         preferred_amount { 10 }
         calculator_class { SolidusFriendlyPromotions::Calculators::FlatRate }
-        promotion_action_class { SolidusFriendlyPromotions::Actions::AdjustLineItem }
+        promotion_benefit_class { SolidusFriendlyPromotions::Benefits::AdjustLineItem }
         conditions { [] }
       end
 
       after(:create) do |promotion, evaluator|
         calculator = evaluator.calculator_class.new
         calculator.preferred_amount = evaluator.preferred_amount
-        evaluator.promotion_action_class.create!(calculator: calculator, promotion: promotion, conditions: evaluator.conditions)
+        evaluator.promotion_benefit_class.create!(calculator: calculator, promotion: promotion, conditions: evaluator.conditions)
       end
     end
 
-    factory :friendly_promotion_with_action_adjustment, traits: [:with_adjustable_action]
+    factory :friendly_promotion_with_benefit_adjustment, traits: [:with_adjustable_benefit]
 
     trait :with_line_item_adjustment do
       transient do
         adjustment_rate { 10 }
       end
 
-      with_adjustable_action
+      with_adjustable_benefit
       preferred_amount { adjustment_rate }
     end
 
@@ -46,7 +46,7 @@ FactoryBot.define do
       after(:create) do |promotion|
         calculator = SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100)
 
-        SolidusFriendlyPromotions::Actions::AdjustShipment.create!(promotion: promotion, calculator: calculator)
+        SolidusFriendlyPromotions::Benefits::AdjustShipment.create!(promotion: promotion, calculator: calculator)
       end
     end
 
@@ -55,7 +55,7 @@ FactoryBot.define do
         weighted_order_adjustment_amount { 10 }
       end
 
-      with_adjustable_action
+      with_adjustable_benefit
       preferred_amount { weighted_order_adjustment_amount }
       calculator_class { SolidusFriendlyPromotions::Calculators::DistributedAmount }
     end

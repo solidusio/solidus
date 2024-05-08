@@ -22,10 +22,10 @@
   <%= label_tag nil, calculator.class.human_attribute_name(:tiers) %>
   <div data-controller="calculator-tiers">
     <template data-calculator-tiers-target="template">
-      <%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/tiered_flat_rate/tier_fields", tier: [nil, nil], form: form %>
+      <%= render "solidus_friendly_promotions/admin/benefit_forms/calculators/tiered_flat_rate/tier_fields", tier: [nil, nil], form: form %>
     </template>
     <% form.object.calculator.preferred_tiers.each do |tier| %>
-      <%= render "solidus_friendly_promotions/admin/promotion_actions/calculators/tiered_flat_rate/tier_fields", tier: tier, form: form %>
+      <%= render "solidus_friendly_promotions/admin/benefit_forms/calculators/tiered_flat_rate/tier_fields", tier: tier, form: form %>
     <% end %>
     <div class="mb-3" data-calculator-tiers-target="links">
       <%= link_to t(:add_tier, scope: [:solidus_friendly_promotions, :admin, :promotions, :calculator]), "#", class: "btn btn-outline-primary", data: { action: "click->calculator-tiers#add_association" } %>

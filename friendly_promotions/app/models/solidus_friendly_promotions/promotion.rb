@@ -7,8 +7,8 @@ module SolidusFriendlyPromotions
     belongs_to :category, class_name: "SolidusFriendlyPromotions::PromotionCategory",
       foreign_key: :promotion_category_id, optional: true
     belongs_to :original_promotion, class_name: "Spree::Promotion", optional: true
-    has_many :actions, class_name: "SolidusFriendlyPromotions::PromotionAction", dependent: :destroy
-    has_many :conditions, through: :actions
+    has_many :benefits, class_name: "SolidusFriendlyPromotions::Benefit", dependent: :destroy
+    has_many :conditions, through: :benefits
     has_many :codes, class_name: "SolidusFriendlyPromotions::PromotionCode", dependent: :destroy
     has_many :code_batches, class_name: "SolidusFriendlyPromotions::PromotionCodeBatch", dependent: :destroy
     has_many :order_promotions, class_name: "SolidusFriendlyPromotions::OrderPromotion", dependent: :destroy
@@ -23,7 +23,7 @@ module SolidusFriendlyPromotions
 
     before_save :normalize_blank_values
 
-    scope :active, ->(time = Time.current) { has_actions.started_and_unexpired(time) }
+    scope :active, ->(time = Time.current) { has_benefits.started_and_unexpired(time) }
     scope :advertised, -> { where(advertise: true) }
     scope :coupons, -> { joins(:codes).distinct }
     scope :started_and_unexpired, ->(time = Time.current) do
@@ -32,8 +32,8 @@ module SolidusFriendlyPromotions
       where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time)))
         .where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
-    scope :has_actions, -> do
-      joins(:actions).distinct
+    scope :has_benefits, -> do
+      joins(:benefits).distinct
     end
 
     enum lane: SolidusFriendlyPromotions.config.preferred_lanes
@@ -62,8 +62,8 @@ module SolidusFriendlyPromotions
         .joins(:all_adjustments)
         .where(
           spree_adjustments: {
-            source_type: "SolidusFriendlyPromotions::PromotionAction",
-            source_id: actions.map(&:id),
+            source_type: "SolidusFriendlyPromotions::Benefit",
+            source_id: benefits.map(&:id),
             eligible: true
           }
         ).distinct
@@ -113,7 +113,7 @@ module SolidusFriendlyPromotions
     end
 
     def active?(time = Time.current)
-      started?(time) && not_expired?(time) && actions.present?
+      started?(time) && not_expired?(time) && benefits.present?
     end
 
     def inactive?(time = Time.current)

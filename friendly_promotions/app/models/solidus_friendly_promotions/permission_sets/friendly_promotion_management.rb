@@ -6,7 +6,7 @@ module SolidusFriendlyPromotions
       def activate!
         can :manage, SolidusFriendlyPromotions::Promotion
         can :manage, SolidusFriendlyPromotions::PromotionRule
-        can :manage, SolidusFriendlyPromotions::PromotionAction
+        can :manage, SolidusFriendlyPromotions::Benefit
         can :manage, SolidusFriendlyPromotions::PromotionCategory
         can :manage, SolidusFriendlyPromotions::PromotionCode
       end

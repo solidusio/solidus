@@ -10,10 +10,10 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::User, type: :model do
   describe "user_ids=" do
     subject { condition.user_ids = [user.id] }
 
-    let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
-    let(:action) { promotion.actions.first }
+    let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let(:benefit) { promotion.benefits.first }
     let(:user) { create(:user) }
-    let(:condition) { described_class.new(users: [user], action: action) }
+    let(:condition) { described_class.new(users: [user], benefit: benefit) }
 
     it "creates a valid condition with a user" do
       expect(condition).to be_valid

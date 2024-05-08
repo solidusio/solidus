@@ -3,10 +3,10 @@
 require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Conditions::Taxon, type: :model do
-  let(:promotion) { create(:friendly_promotion, :with_adjustable_action) }
-  let(:promotion_action) { promotion.actions.first }
+  let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+  let(:promotion_benefit) { promotion.benefits.first }
   let(:condition) do
-    described_class.create!(action: promotion_action)
+    described_class.create!(benefit: promotion_benefit)
   end
   let(:product) { order.products.first }
   let(:order) { create :order_with_line_items }
@@ -18,7 +18,7 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::Taxon, type: :model do
   describe "taxon_ids_string=" do
     subject { condition.assign_attributes("taxon_ids_string" => taxon_two.id.to_s) }
 
-    let(:condition) { promotion_action.conditions.build(type: described_class.to_s) }
+    let(:condition) { promotion_benefit.conditions.build(type: described_class.to_s) }
 
     it "creates a valid condition with a taxon" do
       subject

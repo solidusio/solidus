@@ -115,7 +115,7 @@ Rails/CreateTableWithTimestamps:
 Rails/HasManyOrHasOneDependent:
   Exclude:
     - 'app/models/solidus_friendly_promotions/promotion.rb'
-    - 'app/models/solidus_friendly_promotions/promotion_action.rb'
+    - 'app/models/solidus_friendly_promotions/benefit.rb'
     - 'app/models/solidus_friendly_promotions/promotion_category.rb'
     - 'app/models/solidus_friendly_promotions/promotion_code.rb'
 

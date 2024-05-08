@@ -20,11 +20,11 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
 
       context "if a line item managed by an automation exists" do
         let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
-        let(:promotion_action) { SolidusFriendlyPromotions::Actions::CreateDiscountedItem.create!(calculator: hundred_percent, preferred_variant_id: variant.id, promotion: promotion) }
+        let(:promotion_benefit) { SolidusFriendlyPromotions::Benefits::CreateDiscountedItem.create!(calculator: hundred_percent, preferred_variant_id: variant.id, promotion: promotion) }
         let(:hundred_percent) { SolidusFriendlyPromotions::Calculators::Percent.new(preferred_percent: 100) }
 
         before do
-          order.line_items.create!(variant: variant, managed_by_order_action: promotion_action, quantity: 1)
+          order.line_items.create!(variant: variant, managed_by_order_benefit: promotion_benefit, quantity: 1)
         end
 
         specify "creating a new line item with the same variant creates a separate item" do
@@ -100,8 +100,8 @@ RSpec.describe SolidusFriendlyPromotions::SimpleOrderContents, type: :model do
       let(:calculator) { SolidusFriendlyPromotions::Calculators::FlatRate.new(preferred_amount: 10) }
 
       context "one active line item promotion" do
-        let!(:action) do
-          SolidusFriendlyPromotions::Actions::AdjustLineItem.create(promotion: promotion, calculator: calculator)
+        let!(:benefit) do
+          SolidusFriendlyPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator)
         end
 
         it "creates valid discount on order" do

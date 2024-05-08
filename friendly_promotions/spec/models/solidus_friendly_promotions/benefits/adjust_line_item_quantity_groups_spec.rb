@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups do
+RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups do
   let(:action) { described_class.create!(calculator: calculator, promotion: promotion) }
 
   let(:order) do
@@ -270,7 +270,7 @@ RSpec.describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups 
     end
   end
 
-  describe SolidusFriendlyPromotions::Actions::AdjustLineItemQuantityGroups::Item do
+  describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups::Item do
     let!(:item) { FactoryBot.create :line_item, order: order, quantity: quantity, price: 10 }
     let(:quantity) { 5 }
 

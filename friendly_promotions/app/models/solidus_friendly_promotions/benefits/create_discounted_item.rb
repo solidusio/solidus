@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  module Actions
-    class CreateDiscountedItem < PromotionAction
-      include OrderLevelAction
+  module Benefits
+    class CreateDiscountedItem < Benefit
+      include OrderBenefit
       preference :variant_id, :integer
       preference :quantity, :integer, default: 1
       preference :necessary_quantity, :integer, default: 1
@@ -22,11 +22,11 @@ module SolidusFriendlyPromotions
       private
 
       def find_item(order)
-        order.line_items.detect { |line_item| line_item.managed_by_order_action == self }
+        order.line_items.detect { |line_item| line_item.managed_by_order_benefit == self }
       end
 
       def create_item(order)
-        order.line_items.create!(quantity: determine_item_quantity(order), variant: variant, managed_by_order_action: self)
+        order.line_items.create!(quantity: determine_item_quantity(order), variant: variant, managed_by_order_benefit: self)
       end
 
       def determine_item_quantity(order)

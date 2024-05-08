@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  module Actions
+  module Benefits
     class AdjustLineItemQuantityGroups < AdjustLineItem
       preference :group_size, :integer, default: 1
 

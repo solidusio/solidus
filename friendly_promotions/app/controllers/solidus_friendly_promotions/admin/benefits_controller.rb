@@ -10,7 +10,7 @@ module SolidusFriendlyPromotions
       def new
         if params.dig(:benefit, :type)
           validate_benefit_type
-          @benefit = @promotion.actions.build(type: @benefit_type)
+          @benefit = @promotion.benefits.build(type: @benefit_type)
 
           if params.dig(:benefit, :calculator_type)
             @benefit.calculator_type = params[:benefit][:calculator_type]
@@ -24,7 +24,7 @@ module SolidusFriendlyPromotions
         @benefit.promotion = @promotion
         if @benefit.save(validate: false)
           flash[:success] =
-            t("spree.successfully_created", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
+            t("spree.successfully_created", resource: SolidusFriendlyPromotions::Benefit.model_name.human)
           redirect_to location_after_save, format: :html
         else
           render :new, layout: false
@@ -32,7 +32,7 @@ module SolidusFriendlyPromotions
       end
 
       def edit
-        @benefit = @promotion.actions.find(params[:id])
+        @benefit = @promotion.benefits.find(params[:id])
         if params.dig(:benefit, :calculator_type)
           @benefit.calculator_type = params[:benefit][:calculator_type]
         end
@@ -40,11 +40,11 @@ module SolidusFriendlyPromotions
       end
 
       def update
-        @benefit = @promotion.actions.find(params[:id])
+        @benefit = @promotion.benefits.find(params[:id])
         @benefit.assign_attributes(benefit_params)
         if @benefit.save
           flash[:success] =
-            t("spree.successfully_updated", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
+            t("spree.successfully_updated", resource: SolidusFriendlyPromotions::Benefit.model_name.human)
           redirect_to location_after_save, format: :html
         else
           render :edit
@@ -52,10 +52,10 @@ module SolidusFriendlyPromotions
       end
 
       def destroy
-        @benefit = @promotion.actions.find(params[:id])
+        @benefit = @promotion.benefits.find(params[:id])
         if @benefit.destroy
           flash[:success] =
-            t("spree.successfully_removed", resource: SolidusFriendlyPromotions::PromotionAction.model_name.human)
+            t("spree.successfully_removed", resource: SolidusFriendlyPromotions::Benefit.model_name.human)
         end
         redirect_to location_after_save, format: :html
       end

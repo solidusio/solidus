@@ -9,7 +9,7 @@
   <%= admin_hint SolidusFriendlyPromotions::Condition.human_attribute_name(:type), t(:promotions, scope: [:solidus_friendly_promotions, :hints, "spree/calculator"]) %>
   <%=
     form.select :type,
-      options_for_condition_types(@promotion_action, @condition),
+      options_for_condition_types(@benefit, @condition),
       {
         include_blank: t(:choose_condition, scope: 'solidus_friendly_promotions')
       },

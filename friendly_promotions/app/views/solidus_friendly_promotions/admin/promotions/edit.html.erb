@@ -28,10 +28,10 @@
   <% end %>
 <% end %>
 
-<% if @promotion.actions.any? %>
+<% if @promotion.benefits.any? %>
   <fieldset>
   <legend align="center"><%= t("benefits", scope: :solidus_friendly_promotions) %></legend>
-    <%= render partial: 'solidus_friendly_promotions/admin/benefits/benefit', collection: @promotion.actions %>
+    <%= render partial: 'solidus_friendly_promotions/admin/benefits/benefit', collection: @promotion.benefits %>
   </fieldset>
 <% end %>
 

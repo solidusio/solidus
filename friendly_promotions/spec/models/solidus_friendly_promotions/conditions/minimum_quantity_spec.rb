@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe SolidusFriendlyPromotions::Conditions::MinimumQuantity do
-  let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new }
-  subject(:quantity_condition) { described_class.new(preferred_minimum_quantity: 2, action: action) }
+  let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new }
+  subject(:quantity_condition) { described_class.new(preferred_minimum_quantity: 2, benefit: benefit) }
 
   describe "#valid?" do
-    before { action.conditions << quantity_condition }
+    before { benefit.conditions << quantity_condition }
 
     it { is_expected.to be_valid }
 
@@ -42,9 +42,9 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::MinimumQuantity do
         line_items_attributes: line_items
       )
     end
-    let(:action) { SolidusFriendlyPromotions::Actions::AdjustLineItem.new }
+    let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new }
 
-    before { action.conditions << quantity_condition }
+    before { benefit.conditions << quantity_condition }
 
     context "when only the quantity condition is applied" do
       context "when the quantity is less than the minimum" do
@@ -78,7 +78,7 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::MinimumQuantity do
         )
       }
 
-      before { action.conditions << product_condition }
+      before { benefit.conditions << product_condition }
 
       context "when the applicable quantity is less than the minimum" do
         let(:line_items) do

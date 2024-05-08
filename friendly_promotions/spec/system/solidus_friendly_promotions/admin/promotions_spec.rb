@@ -7,15 +7,15 @@ RSpec.describe "Promotions admin", type: :system do
 
   describe "#index" do
     let!(:promotion1) do
-      create(:friendly_promotion, :with_adjustable_action, name: "name1", code: "code1", path: "path1", lane: "pre", updated_at: 2.days.ago)
+      create(:friendly_promotion, :with_adjustable_benefit, name: "name1", code: "code1", path: "path1", lane: "pre", updated_at: 2.days.ago)
     end
     let!(:promotion2) do
-      create(:friendly_promotion, :with_adjustable_action, name: "name2", code: "code2", path: "path2", lane: "default", updated_at: 10.days.ago)
+      create(:friendly_promotion, :with_adjustable_benefit, name: "name2", code: "code2", path: "path2", lane: "default", updated_at: 10.days.ago)
     end
     let!(:promotion3) do
       create(
         :friendly_promotion,
-        :with_adjustable_action,
+        :with_adjustable_benefit,
         lane: "post",
         name: "name3",
         code: "code3",
@@ -119,20 +119,20 @@ RSpec.describe "Promotions admin", type: :system do
         click_button("Add")
       end
       expect(page).to have_selector("h6", text: "Discount matching line items")
-      action = promotion.actions.first
+      benefit = promotion.benefits.first
 
-      within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do
+      within("#benefits_adjust_line_item_#{benefit.id}_promotion_#{promotion.id}") do
         fill_in("benefit_calculator_attributes_preferred_amount", with: 30)
         click_button("Update")
       end
-      expect(action.reload.calculator.preferred_amount).to eq(30)
+      expect(benefit.reload.calculator.preferred_amount).to eq(30)
 
       click_link("New Condition")
       select("First Order", from: "Type")
       click_button("Add")
       expect(page).to have_content("Must be the customer's first order")
       expect(SolidusFriendlyPromotions::Condition.first).to be_a(SolidusFriendlyPromotions::Conditions::FirstOrder)
-      condition = promotion.actions.first.conditions.first
+      condition = promotion.benefits.first.conditions.first
       within("#conditions_first_order_#{condition.id}") do
         find(".delete").click
       end
@@ -146,7 +146,7 @@ RSpec.describe "Promotions admin", type: :system do
 
       expect(page).to have_content("Order total meets these criteria")
 
-      condition = promotion.actions.first.conditions.first
+      condition = promotion.benefits.first.conditions.first
       within("#conditions_item_total_#{condition.id}") do
         expect(find("#condition_preferred_amount").value).to eq("200.00")
         fill_in("condition_preferred_amount", with: 300)
@@ -154,10 +154,10 @@ RSpec.describe "Promotions admin", type: :system do
         expect(find("#condition_preferred_amount").value).to eq("300.00")
       end
 
-      within("#actions_adjust_line_item_#{action.id}_promotion_#{promotion.id}") do
+      within("#benefits_adjust_line_item_#{benefit.id}_promotion_#{promotion.id}") do
         find(".delete").click
       end
-      expect(page).to have_content("Promotion action has been successfully removed!")
+      expect(page).to have_content("Benefit has been successfully removed!")
     end
   end
 end

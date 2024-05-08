@@ -5,20 +5,20 @@ require "spree/preferences/persistable"
 module SolidusFriendlyPromotions
   # Base class for all types of promotion action.
   #
-  # PromotionActions perform the necessary tasks when a promotion is activated
+  # Benefits perform the necessary tasks when a promotion is activated
   # by an event and determined to be eligible.
-  class PromotionAction < Spree::Base
+  class Benefit < Spree::Base
     include Spree::Preferences::Persistable
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
     before_destroy :remove_adjustments_from_incomplete_orders
     before_destroy :raise_for_adjustments_for_completed_orders
 
-    belongs_to :promotion, inverse_of: :actions
+    belongs_to :promotion, inverse_of: :benefits
     belongs_to :original_promotion_action, class_name: "Spree::PromotionAction", optional: true
     has_many :adjustments, class_name: "Spree::Adjustment", as: :source
-    has_many :shipping_rate_discounts, class_name: "SolidusFriendlyPromotions::ShippingRateDiscount", inverse_of: :promotion_action
-    has_many :conditions, class_name: "SolidusFriendlyPromotions::Condition", inverse_of: :action, foreign_key: :action_id, dependent: :destroy
+    has_many :shipping_rate_discounts, class_name: "SolidusFriendlyPromotions::ShippingRateDiscount", inverse_of: :benefit
+    has_many :conditions, class_name: "SolidusFriendlyPromotions::Condition", inverse_of: :benefit, foreign_key: :benefit_id, dependent: :destroy
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
 

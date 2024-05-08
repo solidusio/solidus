@@ -1,4 +1,9 @@
 class AddActionReferenceToRules < ActiveRecord::Migration[7.0]
+  class LocalBenefit < ApplicationRecord
+    self.table_name = "friendly_promotion_actions"
+    has_many :actions, class_name: "SolidusFriendlyPromotions::Condition", foreign_key: :action_id
+  end
+
   def up
     remove_foreign_key :friendly_promotion_rules, :friendly_promotions
     change_column :friendly_promotion_rules, :promotion_id, :integer, null: true
@@ -7,7 +12,7 @@ class AddActionReferenceToRules < ActiveRecord::Migration[7.0]
 
     SolidusFriendlyPromotions::Condition.reset_column_information
 
-    SolidusFriendlyPromotions::PromotionAction.find_each do |action|
+    LocalBenefit.find_each do |action|
       SolidusFriendlyPromotions::Condition.where(promotion_id: action.promotion_id).each do |rule|
         rule.dup.tap do |new_rule|
           new_rule.preload_relations.each do |relation|

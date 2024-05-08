@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  module Actions
-    class AdjustShipment < PromotionAction
+  module Benefits
+    class AdjustShipment < Benefit
       def can_discount?(object)
         object.is_a?(Spree::Shipment) || object.is_a?(Spree::ShippingRate)
       end
