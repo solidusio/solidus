@@ -137,6 +137,12 @@ RSpec.describe Spree::StoreCredit do
     end
   end
 
+  describe "#display_number" do
+    it "returns the category name" do
+      expect(store_credit.display_number).to eq("Exchange")
+    end
+  end
+
   describe "#display_amount" do
     it "returns a Spree::Money instance" do
       expect(store_credit.display_amount).to be_instance_of(Spree::Money)

@@ -40,6 +40,8 @@ class Spree::StoreCredit < Spree::PaymentSource
   extend Spree::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized
 
+  alias_method :display_number, :category_name
+
   # Sets this store credit's amount to a new value,
   # parsing it as a localized number if the new value is a string.
   #
