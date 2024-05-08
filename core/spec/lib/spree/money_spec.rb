@@ -148,13 +148,13 @@ RSpec.describe Spree::Money do
     it "formats as HTML if asked (nicely) to" do
       money = Spree::Money.new(10, format: '%n %u')
       # The HTML'ified version of "10.00 €"
-      expect(money.to_html).to eq("<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">&#x20AC;</span>")
+      expect(money.to_html).to eq("<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">€</span>")
     end
 
     it "formats as HTML with currency" do
       money = Spree::Money.new(10, format: '%n %u', with_currency: true)
       # The HTML'ified version of "10.00 €"
-      expect(money.to_html).to eq("<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">&#x20AC;</span> <span class=\"money-currency\">EUR</span>")
+      expect(money.to_html).to eq("<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">€</span> <span class=\"money-currency\">EUR</span>")
     end
   end
 
