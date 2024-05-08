@@ -2,8 +2,8 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    class PromotionRulesController < Spree::Admin::BaseController
-      helper "solidus_friendly_promotions/admin/promotion_rules"
+    class ConditionsController < Spree::Admin::BaseController
+      helper "solidus_friendly_promotions/admin/conditions"
 
       before_action :load_promotion_action, only: [:create, :destroy, :update, :new]
       rescue_from ActiveRecord::SubclassNotFound, with: :invalid_rule_error

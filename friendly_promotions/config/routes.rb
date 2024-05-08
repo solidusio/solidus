@@ -7,7 +7,7 @@ SolidusFriendlyPromotions::Engine.routes.draw do
 
       resources :promotions do
         resources :promotion_actions do
-          resources :promotion_rules
+          resources :conditions
         end
         resources :promotion_codes, only: [:index, :new, :create]
         resources :promotion_code_batches, only: [:index, :new, :create] do

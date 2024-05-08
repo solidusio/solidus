@@ -35,10 +35,10 @@
   <div class="col-6">
     <fieldset>
       <legend align="center"><%= t("promotion_conditions", scope: :solidus_friendly_promotions) %></legend>
-        <%= render partial: 'solidus_friendly_promotions/admin/promotion_rules/promotion_rule', collection: promotion_action.conditions %>
+        <%= render partial: 'solidus_friendly_promotions/admin/conditions/promotion_rule', collection: promotion_action.conditions %>
 
         <%= turbo_frame_tag promotion_action, "new_promotion_rule" do %>
-          <%= link_to t(:add_rule, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_action_promotion_rule_path(@promotion, promotion_action), class: 'btn btn-secondary' %>
+          <%= link_to t(:add_rule, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_promotion_action_condition_path(@promotion, promotion_action), class: 'btn btn-secondary' %>
         <% end %>
     </fieldset>
   </div>

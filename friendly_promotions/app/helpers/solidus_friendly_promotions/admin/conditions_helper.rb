@@ -2,7 +2,7 @@
 
 module SolidusFriendlyPromotions
   module Admin
-    module PromotionRulesHelper
+    module ConditionsHelper
       def options_for_promotion_rule_types(promotion_action, promotion_rule)
         options = promotion_action.available_conditions.map { |condition| [condition.model_name.human, condition.name] }
         options_for_select(options, promotion_rule&.type.to_s)

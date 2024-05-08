@@ -5,7 +5,7 @@ module SolidusFriendlyPromotions
     class PromotionsController < BaseController
       before_action :load_data
 
-      helper "solidus_friendly_promotions/admin/promotion_rules"
+      helper "solidus_friendly_promotions/admin/conditions"
       helper "solidus_friendly_promotions/admin/promotion_actions"
       helper "solidus_friendly_promotions/admin/promotions"
 

@@ -44,6 +44,6 @@ RSpec.describe SolidusFriendlyPromotions::PromotionRule do
 
   it "generates its own partial path" do
     rule = test_rule_class.new
-    expect(rule.to_partial_path).to eq "solidus_friendly_promotions/admin/promotion_rules/rules/test_rule"
+    expect(rule.to_partial_path).to eq "solidus_friendly_promotions/admin/conditions/rules/test_rule"
   end
 end
