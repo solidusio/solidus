@@ -58,6 +58,12 @@ en:
         match_policies:
           include: Line item's product has one of the chosen taxons
           exclude: Line item's product does not have one of the chosen taxons
+    item_total_condition:
+      operators:
+        gt: greater than
+        gte: greater than or equal to
+    user_condition:
+      choose_users: Choose Users
     coupon_code: Coupon code
     eligibility_results:
       coupon_code_applied: The coupon code was successfully applied to your order.

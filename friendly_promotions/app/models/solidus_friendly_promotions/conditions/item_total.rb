@@ -24,7 +24,7 @@ module SolidusFriendlyPromotions
 
       def self.operator_options
         operators_map.map do |name, _method|
-          [I18n.t(name, scope: "spree.item_total_condition.operators"), name]
+          [I18n.t(name, scope: "solidus_friendly_promotions.item_total_condition.operators"), name]
         end
       end
 
