@@ -4,7 +4,6 @@
     url: solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion),
     method: :get
   ) do |form| %>
-  <%= hidden_field_tag :level, @level %>
   <%= form.label :type %>
   <%= admin_hint SolidusFriendlyPromotions::Condition.human_attribute_name(:type), t(:promotions, scope: [:solidus_friendly_promotions, :hints, "spree/calculator"]) %>
   <%=

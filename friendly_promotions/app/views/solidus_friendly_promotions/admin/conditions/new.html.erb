@@ -2,13 +2,12 @@
   <div class="condition promotion-block">
     <h6 class='promotion-title'> <%= t(:add_condition, scope: :solidus_friendly_promotions) %></h6>
     <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.edit_admin_promotion_path(@promotion), class: 'delete' %>
-    <%= render 'type_select', level: @level %>
+    <%= render 'type_select' %>
     <% flash.each do |severity, message| %>
       <%= content_tag(:div, "", data: { controller: :flash, severity: severity, message: message }) %>
     <% end %>
     <% if @condition %>
       <%= form_with model: @condition, scope: "condition", url: solidus_friendly_promotions.admin_promotion_benefit_conditions_path(@promotion, @benefit), data: { turbo: false } do |form| %>
-        <%= hidden_field_tag :level, @level %>
         <%= hidden_field_tag "condition[type]", @condition.class.name %>
         <%= render @condition, condition: @condition, param_prefix: "condition", form: form %>
 

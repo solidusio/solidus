@@ -31,7 +31,6 @@ en:
     line_item_benefits: Line Item Benefits
     shipment_benefits: Shipment Benefits
     order_benefits: Order Benefits
-    invalid_condition_level: Invalid Promotion Condition Level. Must be one of "order", "shipment", or "line_item"
     invalid_benefit: Invalid promotion benefit.
     invalid_condition: Invalid promotion condition.
     create_promotion_code: Create promotion code

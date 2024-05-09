@@ -3,7 +3,6 @@
 module SolidusFriendlyPromotions
   module Admin
     class BenefitsController < Spree::Admin::BaseController
-      before_action :validate_level, only: :new
       before_action :load_promotion, only: [:create, :destroy, :new, :update, :edit]
       before_action :validate_benefit_type, only: [:create, :edit]
 
@@ -68,16 +67,6 @@ module SolidusFriendlyPromotions
 
       def load_promotion
         @promotion = SolidusFriendlyPromotions::Promotion.find(params[:promotion_id])
-      end
-
-      def validate_level
-        requested_level = params[:level].to_s
-        if requested_level.in?(["line_item", "shipment"])
-          @level = requested_level
-        else
-          @level = "line_item"
-          flash.now[:error] = t(:invalid_promotion_condition_level, scope: :solidus_friendly_promotions)
-        end
       end
 
       def benefit_params
