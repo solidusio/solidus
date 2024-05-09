@@ -49,7 +49,7 @@
         <% end %>
       <% end %>
 
-      <div id="starts_at_field" class="field">
+      <div id="starts_at_field" class="form-group">
         <%= f.label :starts_at %>
         <%= f.field_hint :starts_at %>
         <%=
@@ -61,7 +61,7 @@
         %>
       </div>
 
-      <div id="expires_at_field" class="field">
+      <div id="expires_at_field" class="form-group">
         <%= f.label :expires_at %>
         <%= f.field_hint :expires_at %>
         <%=
@@ -109,7 +109,7 @@
 
     <div class="col-4">
       <% if f.object.new_record? %>
-        <div id="promotion_single_code" class="field">
+        <div id="promotion_single_code" class="form-group">
           <%= label_tag :single_code, SolidusFriendlyPromotions::PromotionCode.model_name.human %>
           <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth", disabled: f.object.apply_automatically || f.object.path.present? %>
         </div>

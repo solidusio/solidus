@@ -112,13 +112,12 @@ RSpec.describe "Promotions admin", type: :system do
       promotion = SolidusFriendlyPromotions::Promotion.first
 
       within("#new_benefit_promotion_#{promotion.id}") do
-        click_link("New Benefit")
         select("Discount matching line items", from: "Type")
         select("Flat Rate", from: "Calculator type")
         fill_in("benefit_calculator_attributes_preferred_amount", with: 20)
         click_button("Add")
       end
-      expect(page).to have_selector("h6", text: "Discount matching line items")
+      expect(page).to have_selector(".card-header", text: "Discount matching line items")
       benefit = promotion.benefits.first
 
       within("#benefits_adjust_line_item_#{benefit.id}_promotion_#{promotion.id}") do
@@ -127,34 +126,30 @@ RSpec.describe "Promotions admin", type: :system do
       end
       expect(benefit.reload.calculator.preferred_amount).to eq(30)
 
-      click_link("New Condition")
-      select("First Order", from: "Type")
+      select("First Order", from: "Condition Type")
       click_button("Add")
       expect(page).to have_content("Must be the customer's first order")
       expect(SolidusFriendlyPromotions::Condition.first).to be_a(SolidusFriendlyPromotions::Conditions::FirstOrder)
-      condition = promotion.benefits.first.conditions.first
-      within("#conditions_first_order_#{condition.id}") do
+      within("#benefits_adjust_line_item_#{benefit.id}_conditions") do
         find(".delete").click
       end
       expect(page).not_to have_content("Must be the customer's first order")
       expect(promotion.conditions).to be_empty
 
-      click_link("New Condition")
-      select("Item Total", from: "Type")
+      select("Item Total", from: "Condition Type")
       fill_in("condition_preferred_amount", with: 200)
       click_button("Add")
 
       expect(page).to have_content("Order total meets these criteria")
 
-      condition = promotion.benefits.first.conditions.first
-      within("#conditions_item_total_#{condition.id}") do
+      within("#benefits_adjust_line_item_#{benefit.id}_conditions") do
         expect(find("#condition_preferred_amount").value).to eq("200.00")
         fill_in("condition_preferred_amount", with: 300)
         click_button("Update")
         expect(find("#condition_preferred_amount").value).to eq("300.00")
       end
 
-      within("#benefits_adjust_line_item_#{benefit.id}_promotion_#{promotion.id}") do
+      within("#benefits_adjust_line_item_#{benefit.id}_header") do
         find(".delete").click
       end
       expect(page).to have_content("Benefit has been successfully removed!")

@@ -1,23 +1,19 @@
 <%= turbo_frame_tag @promotion, dom_id(@benefit) do %>
-  <div class="benefit promotion-block">
-    <h6 class='promotion-title'> <%= @benefit.class.human_attribute_name(:description) %></h6>
-    <%= link_to_with_icon 'trash', '', solidus_friendly_promotions.admin_promotion_benefit_path(@promotion, @benefit), method: :delete, class: 'delete' %>
-    <%= render 'calculator_select', path: solidus_friendly_promotions.edit_admin_promotion_benefit_path(@promotion, @benefit), benefit: @benefit %>
+  <%= render 'calculator_select', path: solidus_friendly_promotions.edit_admin_promotion_benefit_path(@promotion, @benefit), benefit: @benefit %>
 
-    <%=
-      form_with(
-        model: @benefit,
-        scope: :benefit,
-        url: solidus_friendly_promotions.admin_promotion_benefit_path(@promotion, @benefit),
-      ) do |form| %>
-      <%= render "form", form: form %>
+  <%=
+    form_with(
+      model: @benefit,
+      scope: :benefit,
+      url: solidus_friendly_promotions.admin_promotion_benefit_path(@promotion, @benefit),
+    ) do |form| %>
+    <%= render "form", form: form %>
 
-      <div class="row">
-        <div class="col-12">
-          <%= button_tag "Update", class: "btn btn-secondary float-right" %>
-        </div>
+    <div class="row">
+      <div class="col-12">
+        <%= button_tag "Update", class: "btn btn-secondary float-right" %>
       </div>
+    </div>
 
-    <% end %>
-  </div>
+  <% end %>
 <% end %>

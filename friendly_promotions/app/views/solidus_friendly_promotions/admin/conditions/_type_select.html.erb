@@ -1,14 +1,14 @@
 <%= form_with(
-    model: @condition || SolidusFriendlyPromotions::Condition.new(promotion: @promotion),
+    model: @condition || benefit.conditions.build,
     scope: :condition,
-    url: solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion),
+    url: solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion, benefit),
     method: :get
   ) do |form| %>
   <%= form.label :type %>
-  <%= admin_hint SolidusFriendlyPromotions::Condition.human_attribute_name(:type), t(:promotions, scope: [:solidus_friendly_promotions, :hints, "spree/calculator"]) %>
+  <%= admin_hint SolidusFriendlyPromotions::Condition.human_attribute_name(:type), t(:conditions, scope: [:solidus_friendly_promotions, :hints, "solidus_friendly_promotions/benefit"]) %>
   <%=
     form.select :type,
-      options_for_condition_types(@benefit, @condition),
+      options_for_condition_types(benefit, @condition),
       {
         include_blank: t(:choose_condition, scope: 'solidus_friendly_promotions')
       },

@@ -1,0 +1,33 @@
+<%= turbo_frame_tag @promotion, "new_benefit" do %>
+<div class="card bg-light mb-3">
+  <div class="card-header">
+    <%= t(:add_benefit, scope: :solidus_friendly_promotions) %>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <%= render 'solidus_friendly_promotions/admin/benefits/type_select', benefit: benefit %>
+        <% if benefit.available_calculators.any? %>
+          <%= render 'solidus_friendly_promotions/admin/benefits/calculator_select', path: solidus_friendly_promotions.new_admin_promotion_benefit_path(@promotion), benefit: benefit %>
+          <% if benefit.calculator %>
+            <%=
+              form_with(
+                model: benefit,
+                scope: :benefit,
+                url: solidus_friendly_promotions.admin_promotion_benefits_path(@promotion),
+                data: { turbo: false }
+              ) do |form| %>
+              <%= render 'form', form: form %>
+              <div class="row">
+                <div class="col-12">
+                  <%= button_tag t(:add, scope: [:solidus_friendly_promotions, :crud]), class: "btn btn-secondary float-right" %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

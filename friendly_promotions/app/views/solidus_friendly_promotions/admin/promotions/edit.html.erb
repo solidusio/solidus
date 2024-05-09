@@ -5,6 +5,7 @@
 
 <%= content_for :head do %>
   <%= javascript_importmap_tags "solidus_friendly_promotions", importmap: SolidusFriendlyPromotions.importmap %>
+  <%#= stylesheet_link_tag 'solidus_friendly_promotions/promotions' %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -28,17 +29,11 @@
   <% end %>
 <% end %>
 
-<% if @promotion.benefits.any? %>
-  <fieldset>
+<fieldset>
   <legend align="center"><%= t("benefits", scope: :solidus_friendly_promotions) %></legend>
-    <%= render partial: 'solidus_friendly_promotions/admin/benefits/benefit', collection: @promotion.benefits %>
-  </fieldset>
-<% end %>
-
-<div class="row">
-  <div class="col-12">
-    <%= turbo_frame_tag @promotion, "new_benefit" do %>
-      <%= link_to t(:add_benefit, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_benefit_path(@promotion), class: 'btn btn-secondary' %>
+    <% if @promotion.benefits.any? %>
+      <%= render partial: 'solidus_friendly_promotions/admin/benefits/benefit', collection: @promotion.benefits %>
     <% end %>
-  </div>
-</div>
+
+    <%= render "solidus_friendly_promotions/admin/benefits/new_benefit", benefit: @promotion.benefits.build %>
+</fieldset>

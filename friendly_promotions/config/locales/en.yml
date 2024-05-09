@@ -10,13 +10,16 @@ en:
         legacy_promotions: Legacy Promotions
         legacy_promotion_categories: Legacy Promotion Categories
     hints:
-      solidus_friendly_promotions/calculator:
-        promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
       solidus_friendly_promotions/promotion:
         expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
         promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its conditions / benefits will be applied automatically to all orders.
         starts_at: This determines when the promotion can be applied to orders. <br> If no value is specified, the promotion will be immediately available.
   solidus_friendly_promotions:
+    hints:
+      solidus_friendly_promotions/benefit:
+        conditions: This is used to determine if the benefit should be applied.
+        type: This is the type of benefit that will be applied.
+        calculator: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
     benefits: Benefits
     adjustment_labels:
       line_item: "%{promotion} (%{promotion_customer_label})"
@@ -217,6 +220,8 @@ en:
           post: Post
       solidus_friendly_promotions/benefit:
         type: Benefit Type
+      solidus_friendly_promotions/condition:
+        type: Condition Type
       solidus_friendly_promotions/benefits/adjust_line_item:
         description: Creates a promotion credit on matching line items
       solidus_friendly_promotions/benefits/adjust_shipment:

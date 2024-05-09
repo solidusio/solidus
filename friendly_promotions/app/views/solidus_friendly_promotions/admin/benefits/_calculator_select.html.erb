@@ -1,6 +1,6 @@
 <%= form_with model: benefit, scope: :benefit, url: path, method: :get do |form| %>
+  <%= form.hidden_field :type %>
   <div class="field">
-    <%= form.hidden_field :type %>
     <%= form.label :calculator_type %>
     <%=
       form.select :calculator_type,
