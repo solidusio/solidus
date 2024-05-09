@@ -12,7 +12,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
 
   context "adjusting line items" do
     let(:benefit) do
-      SolidusFriendlyPromotions::Benefits::AdjustLineItem.create(promotion: promotion, conditions: conditions, calculator: calculator)
+      SolidusFriendlyPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator)
     end
     let(:adjustable) { line_item }
 
@@ -22,8 +22,6 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
     end
 
     context "promotion with conditionless benefit" do
-      let(:conditions) { [] }
-
       context "creates the adjustment" do
         it "creates the adjustment" do
           expect {
@@ -103,9 +101,8 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
     end
 
     context "promotion includes item involved" do
-      let(:conditions) { [condition] }
-      let(:condition) do
-        SolidusFriendlyPromotions::Conditions::Product.create(products: [line_item.product])
+      before do
+        benefit.conditions.create(type: "SolidusFriendlyPromotions::Conditions::Product", products: [line_item.product])
       end
 
       context "creates the adjustment" do
@@ -118,15 +115,12 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster, type: :mode
     end
 
     context "promotion has item total condition" do
-      let(:conditions) { [condition] }
-      let(:condition) do
-        SolidusFriendlyPromotions::Conditions::ItemTotal.create(
+      before do
+        benefit.conditions.create!(
+          type: "SolidusFriendlyPromotions::Conditions::ItemTotal",
           preferred_operator: "gt",
           preferred_amount: 50
         )
-      end
-
-      before do
         # Makes the order eligible for this promotion
         order.item_total = 100
         order.save

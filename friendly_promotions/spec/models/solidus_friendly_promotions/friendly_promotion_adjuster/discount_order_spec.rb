@@ -153,11 +153,16 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       let(:shipping_method_condition) { SolidusFriendlyPromotions::Conditions::ShippingMethod.new(preferred_shipping_method_ids: [usps.id]) }
       let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
       let(:ten_off_shipping) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
-      let(:shipping_benefit) { SolidusFriendlyPromotions::Benefits::AdjustShipment.new(calculator: ten_off_shipping, conditions: [product_condition]) }
-      let(:line_item_benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: ten_off_items, conditions: [shipping_method_condition]) }
+      let(:shipping_benefit) { SolidusFriendlyPromotions::Benefits::AdjustShipment.new(calculator: ten_off_shipping) }
+      let(:line_item_benefit) { SolidusFriendlyPromotions::Benefits::AdjustLineItem.new(calculator: ten_off_items) }
       let(:benefits) { [shipping_benefit, line_item_benefit] }
       let(:conditions) { [product_condition, shipping_method_condition] }
       let!(:promotion) { create(:friendly_promotion, benefits: benefits, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
+
+      before do
+        shipping_benefit.conditions << shipping_method_condition
+        line_item_benefit.conditions << product_condition
+      end
 
       it "can tell us about success" do
         subject

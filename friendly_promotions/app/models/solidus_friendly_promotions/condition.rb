@@ -12,6 +12,7 @@ module SolidusFriendlyPromotions
     scope :of_type, ->(type) { where(type: type) }
 
     validate :unique_per_benefit, on: :create
+    validate :possible_condition_for_benefit, if: -> { benefit.present? }
 
     def preload_relations
       []
@@ -47,6 +48,10 @@ module SolidusFriendlyPromotions
       return unless self.class.exists?(benefit_id: benefit_id, type: self.class.name)
 
       errors.add(:benefit, :already_contains_condition_type)
+    end
+
+    def possible_condition_for_benefit
+      benefit.possible_conditions.include?(self.class) || errors.add(:type, :invalid_condition_type)
     end
 
     def eligibility_error_message(key, options = {})

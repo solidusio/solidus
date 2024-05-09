@@ -7,9 +7,11 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::LineItemTaxon, type: :mode
   let(:taxon2) { create :taxon, name: "second" }
   let(:order) { create :order_with_line_items }
   let(:product) { order.products.first }
+  let(:promotion) { create :friendly_promotion, :with_adjustable_benefit }
+  let(:benefit) { promotion.benefits.first }
 
   let(:condition) do
-    described_class.create!(promotion: create(:friendly_promotion))
+    described_class.create!(benefit: benefit)
   end
 
   describe "#eligible?" do

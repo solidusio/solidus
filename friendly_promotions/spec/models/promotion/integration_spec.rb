@@ -223,8 +223,8 @@ RSpec.describe "Promotion System" do
     let(:order) { Spree::Order.create!(store: store) }
 
     before do
-      benefit.conditions << condition
       promotion.benefits << benefit
+      benefit.conditions << condition
 
       order.contents.add(variant, 1)
       order.ship_address = address

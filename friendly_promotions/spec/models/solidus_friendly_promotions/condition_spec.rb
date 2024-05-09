@@ -17,6 +17,8 @@ RSpec.describe SolidusFriendlyPromotions::Condition do
     end
   end
 
+  let(:benefit) { create(:friendly_promotion, :with_adjustable_benefit).benefits.first }
+
   describe "preferences" do
     subject { described_class.new.preferences }
 
@@ -32,11 +34,11 @@ RSpec.describe SolidusFriendlyPromotions::Condition do
     # Because of Rails' STI, we can't use the anonymous class here
     promotion = create(:friendly_promotion, :with_adjustable_benefit)
     promotion_benefit = promotion.benefits.first
-    condition_one = SolidusFriendlyPromotions::Conditions::FirstOrder.new
+    condition_one = SolidusFriendlyPromotions::Conditions::FirstOrder.new(benefit: benefit)
     condition_one.benefit_id = promotion_benefit.id
     condition_one.save!
 
-    condition_two = SolidusFriendlyPromotions::Conditions::FirstOrder.new
+    condition_two = SolidusFriendlyPromotions::Conditions::FirstOrder.new(benefit: benefit)
     condition_two.benefit_id = promotion_benefit.id
     expect(condition_two).not_to be_valid
     expect(condition_two.errors.full_messages).to include("Benefit already contains this condition type")

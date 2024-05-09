@@ -105,11 +105,11 @@ module SolidusFriendlyPromotions
       end
     end
 
-    private
-
     def possible_conditions
       Set.new(SolidusFriendlyPromotions.config.order_conditions)
     end
+
+    private
 
     def raise_for_adjustments_for_completed_orders
       if adjustments.joins(:order).merge(Spree::Order.complete).any?

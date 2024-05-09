@@ -4,8 +4,8 @@ require "spec_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Conditions::ShippingMethod, type: :model do
   let(:condition) { described_class.new }
-  let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
-  let(:promotion_benefit) { promotion.benefits.first }
+  let!(:promotion) { create(:friendly_promotion, benefits: [benefit]) }
+  let(:benefit) { SolidusFriendlyPromotions::Benefits::AdjustShipment.new(calculator: SolidusFriendlyPromotions::Calculators::FlatRate.new) }
   let(:ups_ground) { create(:shipping_method) }
   let(:dhl_saver) { create(:shipping_method) }
 
@@ -14,7 +14,7 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::ShippingMethod, type: :mod
   describe "preferred_shipping_methods_ids=" do
     subject { condition.preferred_shipping_method_ids = [ups_ground.id] }
 
-    let(:condition) { promotion_benefit.conditions.build(type: described_class.to_s) }
+    let(:condition) { benefit.conditions.build(type: described_class.to_s) }
 
     it "creates a valid condition with a shipping method" do
       subject
@@ -26,7 +26,7 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::ShippingMethod, type: :mod
   describe "#eligible?" do
     subject { condition.eligible?(promotable) }
 
-    let(:condition) { promotion_benefit.conditions.build(type: described_class.to_s, preferred_shipping_method_ids: [ups_ground.id]) }
+    let(:condition) { benefit.conditions.build(type: described_class.to_s, preferred_shipping_method_ids: [ups_ground.id]) }
 
     context "with a shipment" do
       context "when the shipment has the right shipping method selected" do

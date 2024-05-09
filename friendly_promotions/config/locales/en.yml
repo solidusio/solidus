@@ -326,6 +326,8 @@ en:
           attributes:
             benefit:
               already_contains_condition_type: already contains this condition type
+            type:
+              invalid_condition_type: is not a valid condition type
         solidus_friendly_promotions/promotion_code:
           attributes:
             base:
