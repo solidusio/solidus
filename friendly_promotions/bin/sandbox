@@ -43,12 +43,13 @@ if [ ! -d "sandbox" ]; then
   exit 1
 fi
 
-echo "~~~> Adding solidus (with i18n and authentication) and your gem to the Gemfile"
+echo "~~~> Adding solidus (with i18n) to the Gemfile"
 cd ./sandbox
 cat <<RUBY >> Gemfile
 gem 'solidus', github: 'solidusio/solidus', branch: '$SOLIDUS_BRANCH'
 gem 'rails-i18n'
 gem 'solidus_i18n'
+gem 'solidus_auth_devise'
 
 gem '$extension_name', path: '..'
 
@@ -63,9 +64,8 @@ unbundled bundle install --gemfile Gemfile
 
 unbundled bundle exec rake db:drop db:create
 
-unbundled bin/rails generate solidus:install \
+unbundled bundle exec rails generate solidus:install \
   --auto-accept \
-  --admin_preview=false \
   $@
 
 unbundled bundle exec rails generate solidus:auth:install --auto-run-migrations
