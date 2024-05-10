@@ -112,6 +112,7 @@ RSpec.describe "Promotions admin", type: :system do
       promotion = SolidusFriendlyPromotions::Promotion.first
 
       within("#new_benefit_promotion_#{promotion.id}") do
+        click_link("Add Benefit")
         select("Discount matching line items", from: "Type")
         select("Flat Rate", from: "Calculator type")
         fill_in("benefit_calculator_attributes_preferred_amount", with: 20)
@@ -126,6 +127,7 @@ RSpec.describe "Promotions admin", type: :system do
       end
       expect(benefit.reload.calculator.preferred_amount).to eq(30)
 
+      click_link("Add Condition")
       select("First Order", from: "Condition Type")
       click_button("Add")
       expect(page).to have_content("Must be the customer's first order")
@@ -136,6 +138,7 @@ RSpec.describe "Promotions admin", type: :system do
       expect(page).not_to have_content("Must be the customer's first order")
       expect(promotion.conditions).to be_empty
 
+      click_link("Add Condition")
       select("Item Total", from: "Condition Type")
       fill_in("condition_preferred_amount", with: 200)
       click_button("Add")

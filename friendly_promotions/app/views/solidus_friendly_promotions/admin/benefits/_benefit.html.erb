@@ -39,7 +39,9 @@
           <div id="<%= dom_id(benefit) %>_conditions" class="bg-white rounded border p-3">
             <%= render partial: 'solidus_friendly_promotions/admin/conditions/condition', collection: benefit.conditions %>
 
-            <%= render 'solidus_friendly_promotions/admin/conditions/new_condition', condition: benefit.conditions.build %>
+            <%= turbo_frame_tag benefit, "new_condition" do %>
+              <%= link_to t(:add_condition, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion, benefit), class: 'btn btn-secondary' %>
+            <% end %>
           </div>
         </div>
       </div>

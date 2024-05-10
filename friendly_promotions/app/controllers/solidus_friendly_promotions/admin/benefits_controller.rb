@@ -7,14 +7,7 @@ module SolidusFriendlyPromotions
       before_action :validate_benefit_type, only: [:create, :edit]
 
       def new
-        if params.dig(:benefit, :type)
-          validate_benefit_type
-          @benefit = @promotion.benefits.build(type: @benefit_type)
-
-          if params.dig(:benefit, :calculator_type)
-            @benefit.calculator_type = params[:benefit][:calculator_type]
-          end
-        end
+        @benefit = @promotion.benefits.build(benefit_params)
         render layout: false
       end
 

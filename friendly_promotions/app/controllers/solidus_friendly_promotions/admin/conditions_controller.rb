@@ -9,10 +9,7 @@ module SolidusFriendlyPromotions
       rescue_from ActiveRecord::SubclassNotFound, with: :invalid_condition_error
 
       def new
-        if params.dig(:condition, :type)
-          condition_type = params[:condition][:type]
-          @condition = @benefit.conditions.build(type: condition_type)
-        end
+        @condition = @benefit.conditions.build(condition_params)
         render layout: false
       end
 

@@ -35,5 +35,7 @@
       <%= render partial: 'solidus_friendly_promotions/admin/benefits/benefit', collection: @promotion.benefits %>
     <% end %>
 
-    <%= render "solidus_friendly_promotions/admin/benefits/new_benefit", benefit: @promotion.benefits.build %>
+    <%= turbo_frame_tag @promotion, "new_benefit" do %>
+      <%= link_to t(:add_benefit, scope: :solidus_friendly_promotions), solidus_friendly_promotions.new_admin_promotion_benefit_path(@promotion), class: 'btn btn-secondary' %>
+    <% end %>
 </fieldset>
