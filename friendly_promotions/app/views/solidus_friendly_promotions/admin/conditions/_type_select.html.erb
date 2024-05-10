@@ -2,7 +2,8 @@
     model: @condition || benefit.conditions.build,
     scope: :condition,
     url: solidus_friendly_promotions.new_admin_promotion_benefit_condition_path(@promotion, benefit),
-    method: :get
+    method: :get,
+    class: "mb-3"
   ) do |form| %>
   <%= form.label :type %>
   <%= admin_hint SolidusFriendlyPromotions::Condition.human_attribute_name(:type), t(:conditions, scope: [:solidus_friendly_promotions, :hints, "solidus_friendly_promotions/benefit"]) %>
