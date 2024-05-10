@@ -18,7 +18,9 @@
         <input
           class="js-value-input form-control right-align"
           name="<%= form.object_name %>[calculator_attributes][preferred_tiers][<%= tier[0] %>]"
-          type="text"
+          type="number"
+          min="0"
+          max="100"
           value="<%= tier[1] %>"
         >
         <div class="input-group-append">

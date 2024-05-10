@@ -285,10 +285,14 @@ en:
         description: Tiered percentage based on order's item total
         preferred_base_percent: Base Percent
         tiers: Tiers
+        order_item_total: Order Item Total
+        percent: Percent
       solidus_friendly_promotions/calculators/tiered_percent_on_eligible_item_quantity:
         description: Tiered percentage based on eligible item quantity
         preferred_base_percent: Base Percent
         tiers: Tiers
+        order_item_total: Order Item Total
+        discount: Discount
       solidus_friendly_promotions/calculators/flat_rate:
         description: Provides a flat rate discount
       solidus_friendly_promotions/calculators/flexi_rate:
@@ -300,7 +304,7 @@ en:
       solidus_friendly_promotions/calculators/percent:
         description: Provides a discount calculated by percent of the discountable amount of the item being discounted
       solidus_friendly_promotions/calculators/distributed_amount:
-        description: Distributed the configured amount among all eligible line items of the order
+        description: Distributes the configured amount among all eligible line items of the order.
         explanation: |
           <p>
             This amount will be distributed to line items weighted relative to
@@ -337,6 +341,7 @@ en:
               </tr>
             </tbody>
           </table>
+        preferred_amount: Amount
 
     errors:
       models:

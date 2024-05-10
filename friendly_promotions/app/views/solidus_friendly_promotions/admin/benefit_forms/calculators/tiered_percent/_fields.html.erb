@@ -1,7 +1,9 @@
-<%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(:base_percent)}",
-  name: "#{prefix}[calculator_attributes][preferred_base_percent]",
-  value: calculator.preferred_base_percent,
-  label: calculator.class.human_attribute_name(:preferred_base_percent) %>
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_base_percent %>
+    <%= f.number_field :preferred_base_percent, step: 1, min: 0, max: 100, default: 1, class: "form-control" %>
+  <% end %>
+</div>
 
 <div class="form-group">
   <%= label_tag(
@@ -14,13 +16,24 @@
       Spree::Config.available_currencies,
       calculator.preferred_currency || Spree::Config[:currency]
     ),
-    { class: 'custom-select fullwidth' }
+    { is: "select-two", class: 'fullwidth' }
   ) %>
 </div>
 
 <div class="form-group">
   <%= label_tag nil, calculator.class.human_attribute_name(:tiers)  %>
   <div data-controller="calculator-tiers">
+    <div class="d-flex">
+      <div class="item-total-label" style="flex-grow: 1">
+        <%= SolidusFriendlyPromotions::Calculators::TieredPercent.human_attribute_name(:order_item_total) %>
+      </div>
+      <div class="discount-label mx-2" style="flex-grow: 1">
+        <%= SolidusFriendlyPromotions::Calculators::TieredPercent.human_attribute_name(:percent) %>
+      </div>
+      <div class="tools m-3">
+
+      </div>
+    </div>
     <template data-calculator-tiers-target="template">
       <%= render "solidus_friendly_promotions/admin/benefit_forms/calculators/tiered_percent/tier_fields", tier: [nil, nil], form: form %>
     </template>
