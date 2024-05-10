@@ -188,7 +188,7 @@ en:
       solidus_friendly_promotions/benefits/create_discounted_item: Create discounted line item
       solidus_friendly_promotions/benefits/adjust_line_item_quantity_groups: Discount matching line items based on quantity groups
       solidus_friendly_promotions/calculators/distributed_amount: Distributed Amount
-      solidus_friendly_promotions/calculators/percent: Flat Percent
+      solidus_friendly_promotions/calculators/percent: Percent
       solidus_friendly_promotions/calculators/flat_rate: Flat Rate
       solidus_friendly_promotions/calculators/flexi_rate: Flexible Rate
       solidus_friendly_promotions/calculators/tiered_flat_rate: Tiered Flat Rate
