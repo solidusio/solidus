@@ -143,7 +143,7 @@ RSpec.describe "Promotions admin", type: :system do
       fill_in("condition_preferred_amount", with: 200)
       click_button("Add")
 
-      expect(page).to have_content("Order total meets these criteria")
+      expect(page).to have_content("Order total must be greater than or equal to the specified amount")
 
       within("#benefits_adjust_line_item_#{benefit.id}_conditions") do
         expect(find("#condition_preferred_amount").value).to eq("200.00")

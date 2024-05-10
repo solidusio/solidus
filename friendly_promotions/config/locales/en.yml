@@ -241,7 +241,9 @@ en:
         description: Available only to users who have not purchased in a while
         preferred_days_ago: Last purchase was at least this many days ago
       solidus_friendly_promotions/conditions/item_total:
-        description: Order total meets these criteria
+        description: Order total must be greater than or equal to the specified amount
+        preferred_operator: Operator
+        preferred_amount: Amount
       solidus_friendly_promotions/conditions/landing_page:
         description: Customer must have visited the specified page
       solidus_friendly_promotions/conditions/nth_order:
