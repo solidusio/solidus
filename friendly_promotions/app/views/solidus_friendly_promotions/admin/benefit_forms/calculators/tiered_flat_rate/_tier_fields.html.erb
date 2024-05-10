@@ -1,9 +1,9 @@
-<div class="fullwidth tier calculator-tiers">
+<div class="fullwidth tier calculator-tiers mb-3">
   <div class="d-flex">
     <div class="mr-2">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
+          <span class="input-group-text"><%= ::Money::Currency.find(currency).symbol %></span>
         </div>
         <input
           class="js-base-input form-control"
@@ -16,7 +16,7 @@
     <div class="mx-2">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
+          <span class="input-group-text"><%= ::Money::Currency.find(currency).symbol %></span>
         </div>
         <input
           class="js-value-input form-control"
