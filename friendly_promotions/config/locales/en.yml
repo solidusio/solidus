@@ -291,6 +291,12 @@ en:
         tiers: Tiers
       solidus_friendly_promotions/calculators/flat_rate:
         description: Provides a flat rate discount
+      solidus_friendly_promotions/calculators/flexi_rate:
+        description: Calculates a discount for the first item and (separately) any additional items, with a maximum number of items that can be specified.
+        preferred_first_item: Discount for the first item
+        preferred_additional_item: Discount for additional items
+        preferred_max_items: Maximum number of items
+        preferred_currency: Currency
       solidus_friendly_promotions/calculators/percent:
         description: Provides a discount calculated by percent of the discountable amount of the item being discounted
       solidus_friendly_promotions/calculators/distributed_amount:

@@ -1,0 +1,24 @@
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_first_item %>
+    <%= render "solidus_friendly_promotions/admin/shared/number_with_currency", f: f, amount_attr: :preferred_first_item, currency: f.object.preferred_currency %>
+  <% end %>
+</div>
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_additional_item %>
+    <%= render "solidus_friendly_promotions/admin/shared/number_with_currency", f: f, amount_attr: :preferred_additional_item, currency: f.object.preferred_currency %>
+  <% end %>
+</div>
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_max_items %>
+    <%= f.number_field :preferred_max_items, step: 1, min: 1, default: 1, class: "form-control" %>
+  <% end %>
+</div>
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_currency %>
+    <%= f.select :preferred_currency, Spree::Config.available_currencies.map(&:iso_code), {selected: f.object.preferred_currency }, { is: "select-two", class: "w-100"} %>
+  <% end %>
+</div>
