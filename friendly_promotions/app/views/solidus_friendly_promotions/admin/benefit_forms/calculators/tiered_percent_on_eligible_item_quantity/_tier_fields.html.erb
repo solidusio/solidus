@@ -1,7 +1,6 @@
 <div class="fullwidth tier calculator-tiers">
-  <a class="fa fa-trash remove" data-action="click->calculator-tiers#remove_association"></a>
-  <div class="row">
-    <div class="col-6">
+  <div class="d-flex">
+    <div class="mr-2">
       <input
         class="js-base-input form-control"
         data-action="calculator-tiers#propagate_base_to_value_input"
@@ -9,7 +8,7 @@
         value="<%= tier[0] %>"
       >
     </div>
-    <div class="col-6">
+    <div class="mx-2">
       <div class="input-group">
         <input
           class="js-value-input form-control right-align"
@@ -22,6 +21,6 @@
         </div>
       </div>
     </div>
+    <a class="fa fa-trash remove p-2" data-action="click->calculator-tiers#remove_association"></a>
   </div>
-  <div class="clear"></div>
 </div>

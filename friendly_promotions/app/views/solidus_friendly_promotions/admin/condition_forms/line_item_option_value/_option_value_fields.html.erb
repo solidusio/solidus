@@ -1,17 +1,14 @@
-<div class="fullwidth promo-condition-option-value">
-  <div class="row">
-    <div class="col-6">
-      <input
-        class="product-select fullwidth"
-        data-action="select2Change->product-option-values#propagate_product_id_to_value_input"
-        type="hidden"
-        value="<%= product_option_values[0] %>"
-      >
-    </div>
-    <div class="col-5">
-      <input class="option-values-select fullwidth" name="<%= form.object_name %>[preferred_eligible_values][<%= product_option_values[0] %>]" type="hidden" value="<%= product_option_values[1].join(",") %>">
-    </div>
+<div class="fullwidth promo-condition-option-value d-flex align-content-stretch">
+  <div class="mr-2" style="flex-grow: 1;">
+    <input
+      class="product-select w-100"
+      data-action="select2Change->product-option-values#propagate_product_id_to_value_input"
+      type="hidden"
+      value="<%= product_option_values[0] %>"
+    >
   </div>
-  <a class="fa fa-trash remove" data-action="click->product-option-values#remove_row"></a>
-  <div class="clear"></div>
+  <div class="mr-2 ml-2" style="flex-grow: 1;">
+    <input class="option-values-select fullwidth" name="<%= form.object_name %>[preferred_eligible_values][<%= product_option_values[0] %>]" type="hidden" value="<%= product_option_values[1].join(",") %>">
+  </div>
+  <a class="fa fa-trash remove p-2" data-action="click->product-option-values#remove_row"></a>
 </div>
