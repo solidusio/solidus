@@ -67,6 +67,11 @@ en:
         gte: greater than or equal to
     user_condition:
       choose_users: Choose Users
+    user_role_condition:
+      choose_roles: Choose Roles
+      label: User must contain %{select} of these roles
+      match_all: all
+      match_any: at least one
     coupon_code: Coupon code
     eligibility_results:
       coupon_code_applied: The coupon code was successfully applied to your order.

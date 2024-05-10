@@ -6,7 +6,7 @@
   <%= select_tag "#{param_prefix}[preferred_role_ids]",
     options_from_collection_for_select(
       Spree::Role.all, :id, :name, condition.preferred_role_ids
-    ), class: 'select2 fullwidth', multiple: true %>
+    ), class: 'fullwidth', is: 'select-two', multiple: true %>
 </div>
 <div class="field">
   <label>

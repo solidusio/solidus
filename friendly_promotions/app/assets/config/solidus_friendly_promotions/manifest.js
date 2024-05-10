@@ -10,3 +10,4 @@
 //= link solidus_friendly_promotions/web_components/taxon_picker.js
 //= link solidus_friendly_promotions/web_components/variant_picker.js
 //= link solidus_friendly_promotions/web_components/number_with_currency.js
+//= link solidus_friendly_promotions/web_components/select_two.js
