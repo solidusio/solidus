@@ -3,11 +3,13 @@ require_dependency "spree/calculator"
 module SolidusFriendlyPromotions
   module Calculators
     class TieredPercentOnEligibleItemQuantity < SolidusFriendlyPromotions::Calculators::TieredPercent
+      preference :tiers, :hash, default: {10 => 5}
+
       before_validation do
         # Convert tier values to decimals. Strings don't do us much good.
         if preferred_tiers.is_a?(Hash)
           self.preferred_tiers = preferred_tiers.map do |key, value|
-            [cast_to_d(key.to_i), cast_to_d(value.to_s)]
+            [key.to_i, cast_to_d(value.to_s)]
           end.to_h
         end
       end
