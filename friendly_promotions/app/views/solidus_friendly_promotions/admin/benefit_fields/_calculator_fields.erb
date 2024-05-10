@@ -4,8 +4,8 @@
 <p>
   <%= calculator.description %>
 </p>
-<% if lookup_context.exists?("fields",  ["solidus_friendly_promotions/admin/benefit_fields/calculators/#{type_name}"], true) %>
-  <%= render "solidus_friendly_promotions/admin/benefit_fields/calculators/#{type_name}/fields", calculator: calculator, prefix: param_prefix, form: form %>
+<% if lookup_context.exists?("fields",  ["solidus_friendly_promotions/admin/calculator_fields/#{type_name}"], true) %>
+  <%= render "solidus_friendly_promotions/admin/calculator_fields/#{type_name}/fields", calculator: calculator, prefix: param_prefix, form: form %>
 <% else %>
-  <%= render "solidus_friendly_promotions/admin/benefit_fields/calculators/default_fields", calculator: calculator, prefix: param_prefix, form: form %>
+  <%= render "solidus_friendly_promotions/admin/calculator_fields/default_fields", calculator: calculator, prefix: param_prefix, form: form %>
 <% end %>
