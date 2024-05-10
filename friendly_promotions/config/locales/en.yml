@@ -238,8 +238,8 @@ en:
       solidus_friendly_promotions/conditions/first_order:
         description: Must be the customer's first order
       solidus_friendly_promotions/conditions/first_repeat_purchase_since:
-        description: Available only to user who have not purchased in a while
-        form_text: Apply this promotion to users whose last order was more than X days ago
+        description: Available only to users who have not purchased in a while
+        preferred_days_ago: Last purchase was at least this many days ago
       solidus_friendly_promotions/conditions/item_total:
         description: Order total meets these criteria
       solidus_friendly_promotions/conditions/landing_page:

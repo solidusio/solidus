@@ -2,5 +2,6 @@
   <%= condition.class.human_attribute_name(:description) %>
 </p>
 <div class="form-group">
+  <%= label_tag "#{param_prefix}[preferred_days_ago]", condition.class.human_attribute_name(:preferred_days_ago) %>
   <%= number_field_tag "#{param_prefix}[preferred_days_ago]", condition.preferred_days_ago, class: 'fullwidth' %>
 </div>
