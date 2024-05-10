@@ -2,8 +2,8 @@
   <%= condition.class.human_attribute_name(:description) %>
 </p>
 <div class="form-group">
-  <label><%= t("solidus_friendly_promotions.store_condition.choose_stores" ) %></label>
+  <%= label_tag "#{param_prefix}[store_ids][]", Spree::Store.model_name.human(count: :other) %>
   <%= select_tag "#{param_prefix}[store_ids][]",
     options_from_collection_for_select(Spree::Store.all, :id, :name, condition.store_ids),
-    multiple: true, class: "select2 fullwidth" %>
+    multiple: true, is: "select-two", class: "fullwidth" %>
 </div>
