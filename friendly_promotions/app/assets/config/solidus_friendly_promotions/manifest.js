@@ -7,3 +7,4 @@
 //= link solidus_friendly_promotions/web_components/option_value_picker.js
 //= link solidus_friendly_promotions/web_components/product_picker.js
 //= link solidus_friendly_promotions/web_components/user_picker.js
+//= link solidus_friendly_promotions/web_components/taxon_picker.js

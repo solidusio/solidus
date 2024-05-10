@@ -4,7 +4,7 @@
 <%= fields_for param_prefix, condition do |form| %>
   <div class="field taxons_condition_taxons">
     <%= form.label :taxon_ids_string, t('solidus_friendly_promotions.taxon_condition.choose_taxons') %>
-    <%= form.hidden_field :taxon_ids_string, value: condition.taxon_ids.join(","), class: "taxon_picker fullwidth" %>
+    <%= form.hidden_field :taxon_ids_string, value: condition.taxon_ids.join(","), is: "taxon-picker", class: "fullwidth" %>
   </div>
 
   <div class="field">
