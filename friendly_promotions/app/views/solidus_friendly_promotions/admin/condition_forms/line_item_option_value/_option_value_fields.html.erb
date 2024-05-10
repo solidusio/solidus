@@ -9,7 +9,13 @@
     >
   </div>
   <div class="mr-2 ml-2" style="flex-grow: 1;">
-    <input class="option-values-select fullwidth" name="<%= form.object_name %>[preferred_eligible_values][<%= product_option_values[0] %>]" type="hidden" value="<%= product_option_values[1].join(",") %>">
+    <input
+      is="option-value-picker"
+      class="fullwidth"
+      name="<%= form.object_name %>[preferred_eligible_values][<%= product_option_values[0] %>]"
+      type="hidden"
+      value="<%= product_option_values[1].join(",") %>"
+    >
   </div>
   <a class="fa fa-trash remove p-2" data-action="click->product-option-values#remove_row"></a>
 </div>

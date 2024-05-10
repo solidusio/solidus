@@ -1,6 +1,6 @@
 import "@hotwired/turbo-rails";
 import "solidus_friendly_promotions/controllers";
-import "solidus_friendly_promotions/jquery/option_value_picker"
+import "solidus_friendly_promotions/web_components/option_value_picker"
 import "solidus_friendly_promotions/web_components/product_picker"
 
 Turbo.session.drive = false;

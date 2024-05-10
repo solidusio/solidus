@@ -42,3 +42,11 @@ $.fn.optionValueAutocomplete = function (options) {
     formatSelection: formatOptionValue
   });
 };
+
+class OptionValuePicker extends HTMLInputElement {
+  connectedCallback() {
+    $(this).optionValueAutocomplete();
+  }
+}
+
+customElements.define('option-value-picker', OptionValuePicker, { extends: 'input' });
