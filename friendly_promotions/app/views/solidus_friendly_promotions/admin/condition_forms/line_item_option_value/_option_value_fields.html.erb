@@ -1,7 +1,8 @@
 <div class="fullwidth promo-condition-option-value d-flex align-content-stretch">
   <div class="mr-2" style="flex-grow: 1;">
     <input
-      class="product-select w-100"
+      is="product-picker"
+      class="w-100"
       data-action="select2Change->product-option-values#propagate_product_id_to_value_input"
       type="hidden"
       value="<%= product_option_values[0] %>"
