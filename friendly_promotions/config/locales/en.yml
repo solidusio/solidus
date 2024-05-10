@@ -143,6 +143,10 @@ en:
       match_all: all
       match_any: at least one
       match_none: none
+    line_item_option_value_condition:
+      add_product: Add product
+    option_value_condition:
+      add_product: Add product
     crud:
       add: Add
       destroy: Delete
@@ -247,7 +251,7 @@ en:
       solidus_friendly_promotions/conditions/landing_page:
         description: Customer must have visited the specified page
       solidus_friendly_promotions/conditions/nth_order:
-        description: Apply a promotion to every nth order a user has completed.
+        description: Apply a promotion to the nth order a user has completed.
         form_text: 'Apply this promotion on the users Nth order: '
       solidus_friendly_promotions/conditions/one_use_per_user:
         description: Only one use per user
