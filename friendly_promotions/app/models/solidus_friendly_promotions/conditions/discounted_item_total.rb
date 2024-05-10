@@ -9,7 +9,7 @@ module SolidusFriendlyPromotions
     # To customize the error message you can also override `ineligible_message`.
     class DiscountedItemTotal < ItemTotal
       def to_partial_path
-        "solidus_friendly_promotions/admin/condition_forms/item_total"
+        "solidus_friendly_promotions/admin/condition_fields/item_total"
       end
 
       private

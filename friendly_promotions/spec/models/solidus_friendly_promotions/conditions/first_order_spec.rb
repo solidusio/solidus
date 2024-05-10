@@ -10,7 +10,7 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::FirstOrder, type: :model d
   describe ".to_partial_path" do
     subject { condition.to_partial_path }
 
-    it { is_expected.to eq("solidus_friendly_promotions/admin/condition_forms/first_order") }
+    it { is_expected.to eq("solidus_friendly_promotions/admin/condition_fields/first_order") }
   end
 
   context "without a user or email" do

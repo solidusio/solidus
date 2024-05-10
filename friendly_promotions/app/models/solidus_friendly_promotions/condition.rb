@@ -35,7 +35,7 @@ module SolidusFriendlyPromotions
     end
 
     def to_partial_path
-      "solidus_friendly_promotions/admin/condition_forms/#{model_name.element}"
+      "solidus_friendly_promotions/admin/condition_fields/#{model_name.element}"
     end
 
     def updateable?
