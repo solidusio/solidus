@@ -4,7 +4,7 @@
   <%= fields_for param_prefix, condition do |form| %>
     <div class="field products_condition_products">
       <%= form.label :product_ids_string, t('solidus_friendly_promotions.product_condition.choose_products') %>
-      <%= form.hidden_field :product_ids_string, value: condition.product_ids.join(","), class: "product_picker fullwidth" %>
+      <%= form.hidden_field :product_ids_string, value: condition.product_ids.join(","), class: "fullwidth", is: "product-picker" %>
     </div>
 
     <div class="field">

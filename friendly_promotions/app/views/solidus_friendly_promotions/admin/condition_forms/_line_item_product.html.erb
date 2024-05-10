@@ -5,7 +5,7 @@
   <div class="col-12">
     <div class="field products_condition_products">
       <%= label_tag "#{param_prefix}_product_ids_string", t('solidus_friendly_promotions.product_condition.choose_products') %>
-      <%= hidden_field_tag "#{param_prefix}[product_ids_string]", condition.product_ids.join(","), class: "product_picker fullwidth" %>
+      <%= hidden_field_tag "#{param_prefix}[product_ids_string]", condition.product_ids.join(","), class: "fullwidth", is: "product-picker" %>
     </div>
   </div>
   <div class="col-12">
