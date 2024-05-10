@@ -7,28 +7,28 @@
     <%= search_form_for [:admin, search] do |f| %>
       <div class="row">
         <div class="col-4">
-          <div class="field">
+          <div class="form-group">
             <%= label_tag :q_name_cont, SolidusFriendlyPromotions::Promotion.human_attribute_name(:name) %>
             <%= f.text_field :name_cont, tabindex: 1 %>
           </div>
         </div>
 
         <div class="col-4">
-          <div class="field">
+          <div class="form-group">
             <%= label_tag :q_customer_label_cont, SolidusFriendlyPromotions::Promotion.human_attribute_name(:customer_label) %>
             <%= f.text_field :customer_label_cont, tabindex: 1 %>
           </div>
         </div>
 
         <div class="col-2">
-          <div class="field">
+          <div class="form-group">
             <%= label_tag :q_codes_value_cont, SolidusFriendlyPromotions::Promotion.human_attribute_name(:code) %>
             <%= f.text_field :codes_value_cont, tabindex: 1 %>
           </div>
         </div>
 
         <div class="col-2">
-          <div class="field">
+          <div class="form-group">
             <%= label_tag :q_path_cont, SolidusFriendlyPromotions::Promotion.human_attribute_name(:path) %>
             <%= f.text_field :path_cont, tabindex: 1 %>
           </div>
@@ -53,14 +53,14 @@
         </div>
 
         <div class="col-2">
-          <div class="field">
+          <div class="form-group">
             <%= label_tag :q_promotion_category_id_eq, SolidusFriendlyPromotions::PromotionCategory.model_name.human %><br>
             <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t(:all, scope: :spree) }, { class: 'custom-select fullwidth' }) %>
           </div>
         </div>
 
         <div class="col-2">
-          <div class="field">
+          <div class="form-group">
             <%= label_tag :q_lane_eq, SolidusFriendlyPromotions::Promotion.human_attribute_name(:lane) %><br>
             <%= f.select(:lane_eq, SolidusFriendlyPromotions::Promotion.lane_options, { include_blank: t(:all, scope: :spree) }, { class: 'custom-select fullwidth' }) %>
           </div>

@@ -3,7 +3,7 @@
   value: calculator.preferred_base_percent,
   label: calculator.class.human_attribute_name(:preferred_base_percent) %>
 
-<div class="field">
+<div class="form-group">
   <%= label_tag(
     "#{prefix}[calculator_attributes][preferred_currency]",
     t('spree.currency')
@@ -18,7 +18,7 @@
   ) %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <%= label_tag nil, calculator.class.human_attribute_name(:tiers)  %>
   <div data-controller="calculator-tiers">
     <template data-calculator-tiers-target="template">

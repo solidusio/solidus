@@ -7,7 +7,7 @@
     <%= form.hidden_field :taxon_ids_string, value: condition.taxon_ids.join(","), is: "taxon-picker", class: "fullwidth" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%
       match_policy_options = options_for_select(
         SolidusFriendlyPromotions::Conditions::Taxon::MATCH_POLICIES.map { |s| [t("solidus_friendly_promotions.taxon_condition.match_#{s}"),s] },
@@ -19,7 +19,7 @@
     </label>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :preferred_line_item_applicable do %>
       <%= form.check_box :preferred_line_item_applicable %>
       <%= condition.class.human_attribute_name(:preferred_line_item_applicable) %>

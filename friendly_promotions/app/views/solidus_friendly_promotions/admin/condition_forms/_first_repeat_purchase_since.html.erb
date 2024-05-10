@@ -1,6 +1,6 @@
 <p>
   <%= condition.class.human_attribute_name(:description) %>
 </p>
-<div class="field">
+<div class="form-group">
   <%= number_field_tag "#{param_prefix}[preferred_days_ago]", condition.preferred_days_ago, class: 'fullwidth' %>
 </div>

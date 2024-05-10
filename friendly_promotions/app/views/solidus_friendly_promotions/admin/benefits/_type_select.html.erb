@@ -1,5 +1,5 @@
 <%= form_with model: benefit, scope: :benefit, url: solidus_friendly_promotions.new_admin_promotion_benefit_path(@promotion), method: :get do |form| %>
-  <div class="field">
+  <div class="form-group">
     <%= form.label :type %>
     <%= admin_hint SolidusFriendlyPromotions::Benefit.human_attribute_name(:type), t(:type, scope: [:solidus_friendly_promotions, :hints, "solidus_friendly_promotions/benefit"]) %>
     <%=

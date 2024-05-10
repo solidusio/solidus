@@ -1,11 +1,11 @@
 <%= fields_for param_prefix, benefit do |form| %>
-  <div class="field">
+  <div class="form-group">
     <%= form.label :preferred_variant_id %>
     <%= form.text_field :preferred_variant_id, is: "variant-picker", class: "fullwidth" %>
     <%= form.label :preferred_quantity %>
     <%= form.number_field :preferred_quantity, class: "fullwidth" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= form.label :preferred_necessary_quantity %>
     <%= form.number_field :preferred_necessary_quantity, class: "fullwidth" %>
   </div>

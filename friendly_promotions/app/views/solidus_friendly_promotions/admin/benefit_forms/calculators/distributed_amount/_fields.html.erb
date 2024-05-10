@@ -1,11 +1,11 @@
-<div class="field">
+<div class="form-group">
   <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
     <%= f.label :preferred_amount %>
     <%= render "solidus_friendly_promotions/admin/shared/number_with_currency", f: f, amount_attr: :preferred_amount, currency_attr: :preferred_currency %>
   <% end %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <p>
     <%= admin_hint(
       calculator.model_name.human,

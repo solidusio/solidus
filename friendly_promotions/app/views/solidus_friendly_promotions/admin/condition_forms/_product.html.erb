@@ -7,7 +7,7 @@
       <%= form.hidden_field :product_ids_string, value: condition.product_ids.join(","), class: "fullwidth", is: "product-picker" %>
     </div>
 
-    <div class="field">
+    <div class="form-group">
       <%
         match_policy_options = options_for_select(
           SolidusFriendlyPromotions::Conditions::Product::MATCH_POLICIES.map { |s| [t("solidus_friendly_promotions.product_condition.match_#{s}"),s] },
@@ -19,7 +19,7 @@
       </label>
     </div>
 
-    <div class="field">
+    <div class="form-group">
       <%= form.label :preferred_line_item_applicable do %>
         <%= form.check_box :preferred_line_item_applicable %>
         <%= condition.class.human_attribute_name(:preferred_line_item_applicable) %>

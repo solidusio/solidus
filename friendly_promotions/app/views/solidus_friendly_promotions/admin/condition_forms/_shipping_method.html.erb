@@ -1,7 +1,7 @@
 <p>
   <%= condition.class.human_attribute_name(:description) %>
 </p>
-<div class="field">
+<div class="form-group">
   <%= label_tag "#{param_prefix}_preferred_shipping_method_ids", SolidusFriendlyPromotions::Conditions::ShippingMethod.human_attribute_name(:preferred_shipping_method_ids) %>
   <%= select_tag "#{param_prefix}[preferred_shipping_method_ids]",
     options_from_collection_for_select(

@@ -1,7 +1,7 @@
 <p>
   <%= condition.class.human_attribute_name(:description) %>
 </p>
-<div class="field">
+<div class="form-group">
   <label><%= t("solidus_friendly_promotions.store_condition.choose_stores" ) %></label>
   <%= select_tag "#{param_prefix}[store_ids][]",
     options_from_collection_for_select(Spree::Store.all, :id, :name, condition.store_ids),

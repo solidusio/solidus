@@ -34,7 +34,7 @@
         <% end %>
       </div>
       <div class="col-md-6">
-        <div class="field">
+        <div class="form-group">
           <%= label_tag :conditions %>
           <div id="<%= dom_id(benefit) %>_conditions" class="bg-white rounded border p-3">
             <%= render partial: 'solidus_friendly_promotions/admin/conditions/condition', collection: benefit.conditions %>

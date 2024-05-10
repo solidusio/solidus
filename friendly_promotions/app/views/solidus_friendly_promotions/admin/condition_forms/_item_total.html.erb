@@ -3,12 +3,12 @@
 </p>
 <div class="d-flex">
   <div class="mr-2">
-    <div class="field">
+    <div class="form-group">
       <%= select_tag "#{param_prefix}[preferred_operator]", options_for_select(condition.class.operator_options, condition.preferred_operator), {class: 'custom-select select_item_total fullwidth'} %>
     </div>
   </div>
   <div class="ml-2">
-    <div class="field">
+    <div class="form-group">
       <%= fields_for param_prefix, condition do |f| %>
         <%= render "solidus_friendly_promotions/admin/shared/number_with_currency", f: f, amount_attr: :preferred_amount, currency_attr: :preferred_currency %>
       <% end %>
