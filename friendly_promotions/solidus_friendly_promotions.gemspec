@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "A replacement for Solidus' promotion system"
   spec.description = "Experimental replacement for the promotion system in Solidus"
-  spec.homepage = "https://github.com/solidusio-contrib/solidus_friendly_promotions#readme"
+  spec.homepage = "https://github.com/friendlycart/solidus_friendly_promotions#readme"
   spec.license = "BSD-3-Clause"
 
   spec.metadata["homepage_uri"] = spec.homepage
