@@ -269,7 +269,7 @@ RSpec.describe Spree::Order, type: :model do
       expect(order.line_items).to be_empty
       expect(order.shipments).to be_empty
       expect(order.adjustments).to be_empty
-      expect(order.promotions).to be_empty
+      expect(order.reload.promotions).to be_empty
       expect(order.item_total).to eq 0
       expect(order.item_count).to eq 0
       expect(order.shipment_total).to eq 0

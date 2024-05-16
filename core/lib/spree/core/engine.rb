@@ -56,6 +56,7 @@ module Spree
           Spree::Bus.clear
 
           %i[
+            order_emptied
             order_finalized
             order_recalculated
             reimbursement_reimbursed
@@ -63,6 +64,7 @@ module Spree
           ].each { |event_name| Spree::Bus.register(event_name) }
 
           Spree::OrderMailerSubscriber.new.subscribe_to(Spree::Bus)
+          Spree::OrderPromotionSubscriber.new.subscribe_to(Spree::Bus)
         end
       end
 
