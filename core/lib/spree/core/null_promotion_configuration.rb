@@ -29,6 +29,8 @@ module Spree
       #   the standard promotion finder class
       #   Spree::NullPromotionHandler.
       class_name_attribute :shipping_promotion_handler_class, default: 'Spree::NullPromotionHandler'
+      deprecate :shipping_promotion_handler_class, deprecator: Spree.deprecator
+      deprecate :shipping_promotion_handler_class=, deprecator: Spree.deprecator
 
       # Allows providing a different promotion advertiser.
       # @!attribute [rw] advertiser_class

@@ -18,7 +18,9 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
   end
 
   it "uses the null promotion handler as the shipping promo handler" do
-    expect(config.shipping_promotion_handler_class).to eq Spree::NullPromotionHandler
+    Spree.deprecator.silence do
+      expect(config.shipping_promotion_handler_class).to eq Spree::NullPromotionHandler
+    end
   end
 
   it "uses the null promotion advertiser class by default" do
