@@ -26,8 +26,8 @@ module Spree
       # promotion_chooser_class allows extensions to provide their own PromotionChooser
       class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
 
-      # promotion_adjuster_class allows extensions to provide their own Promotion Adjuster
-      class_name_attribute :promotion_adjuster_class, default: 'Spree::Promotion::OrderAdjustmentsRecalculator'
+      # order_adjuster_class allows extensions to provide their own Order Adjuster
+      class_name_attribute :order_adjuster_class, default: 'Spree::Promotion::OrderAdjustmentsRecalculator'
 
       # promotion_finder_class allows extensions to provide their own Promotion Finder
       class_name_attribute :promotion_finder_class, default: 'Spree::PromotionFinder'

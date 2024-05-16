@@ -195,7 +195,7 @@ module Spree
     end
 
     def update_promotions
-      Spree::Config.promotions.promotion_adjuster_class.new(order).call
+      Spree::Config.promotions.order_adjuster_class.new(order).call
     end
 
     def update_taxes
