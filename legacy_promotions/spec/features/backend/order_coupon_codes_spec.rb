@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "rails_helper"
 
-describe "Adjustments Promotions", type: :feature do
+RSpec.describe "Adjustments Promotions", type: :feature do
   stub_authorization!
 
   before(:each) do
     create(:promotion_with_item_adjustment,
-           name: "$10 off",
-           path: 'test',
-           code: "10_off",
-           starts_at: 1.day.ago,
-           expires_at: 1.day.from_now,
-           adjustment_rate: 10)
+      name: "$10 off",
+      path: "test",
+      code: "10_off",
+      starts_at: 1.day.ago,
+      expires_at: 1.day.from_now,
+      adjustment_rate: 10)
 
     order = create(:order_with_totals)
     line_item = order.line_items.first
@@ -44,7 +44,7 @@ describe "Adjustments Promotions", type: :feature do
       it "should show an error message", js: true do
         fill_in "coupon_code", with: "10_off"
         click_button "Add Coupon Code"
-        expect(page).to have_content('-$10.00')
+        expect(page).to have_content("-$10.00")
 
         fill_in "coupon_code", with: "10_off"
         click_button "Add Coupon Code"
