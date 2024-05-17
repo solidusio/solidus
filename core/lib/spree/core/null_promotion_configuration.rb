@@ -3,6 +3,8 @@
 module Spree
   module Core
     class NullPromotionConfiguration < Spree::Preferences::Configuration
+      include Spree::Core::EnvironmentExtension
+
       # order_adjuster_class allows extensions to provide their own Order Adjuster
       class_name_attribute :order_adjuster_class, default: 'Spree::NullPromotionAdjuster'
 
@@ -31,6 +33,12 @@ module Spree
       # Both will issue a deprecation warning.
       class_name_attribute :promotion_chooser_class, default: 'Spree::DeprecatedConfigurableClass'
       deprecate :promotion_chooser_class, :promotion_chooser_class=, deprecator: Spree.deprecator
+
+      # Allows getting and setting rules. Deprecated.
+      # @!attribute [rw] rules
+      # @return [Array] a set of rules
+      add_class_set :rules
+      deprecate :rules, :rules=, deprecator: Spree.deprecator
 
       # Allows providing a different promotion shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class

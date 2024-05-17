@@ -38,4 +38,16 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
       expect(config.promotion_chooser_class).to eq Spree::DeprecatedConfigurableClass
     end
   end
+
+  it "has a setter for a set of rules" do
+    Spree.deprecator.silence do
+      expect { config.rules = ["Spree::PromotionRule"] }.not_to raise_error
+    end
+  end
+
+  it "has a getter for a set of rules" do
+    Spree.deprecator.silence do
+      expect(config.rules).to be_empty
+    end
+  end
 end
