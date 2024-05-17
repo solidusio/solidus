@@ -4,3 +4,5 @@ en:
       title: "Shipping Categories"
       destroy:
         success: "Shipping categories were successfully removed."
+      create:
+        success: "Shipping category was successfully created."

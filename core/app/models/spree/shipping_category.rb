@@ -2,6 +2,8 @@
 
 module Spree
   class ShippingCategory < Spree::Base
+    self.allowed_ransackable_attributes = %w[name]
+
     validates :name, presence: true
     has_many :products, inverse_of: :shipping_category
     has_many :shipping_method_categories, inverse_of: :shipping_category
