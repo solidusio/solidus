@@ -27,6 +27,11 @@ module Spree
       class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::DeprecatedConfigurableClass'
       deprecate :promotion_code_batch_mailer_class, :promotion_code_batch_mailer_class=, deprecator: Spree.deprecator
 
+      # Allows getting and setting `Spree::Config.promotion_chooser_class`.
+      # Both will issue a deprecation warning.
+      class_name_attribute :promotion_chooser_class, default: 'Spree::DeprecatedConfigurableClass'
+      deprecate :promotion_chooser_class, :promotion_chooser_class=, deprecator: Spree.deprecator
+
       # Allows providing a different promotion shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class
       # @see Spree::NullPromotionHandler
