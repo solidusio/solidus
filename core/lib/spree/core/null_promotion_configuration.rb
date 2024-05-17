@@ -46,6 +46,12 @@ module Spree
       add_class_set :actions
       deprecate :actions, :actions=, deprecator: Spree.deprecator
 
+      # Allows getting and setting shipping actions. Deprecated.
+      # @!attribute [rw] shipping_actions
+      # @return [Array] a set of shipping_actions
+      add_class_set :shipping_actions
+      deprecate :shipping_actions, :shipping_actions=, deprecator: Spree.deprecator
+
       # Allows getting an setting calculators for actions. Deprecated.
       # @!attribute [rw] calculators
       # @return [Spree::Core::NestedClassSet] a set of calculators

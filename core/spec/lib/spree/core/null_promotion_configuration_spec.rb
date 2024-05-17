@@ -57,6 +57,12 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
     end
   end
 
+  it "has a setter for a set of shipping actions" do
+    Spree.deprecator.silence do
+      expect { config.shipping_actions = ["Spree::PromotionAction"] }.not_to raise_error
+    end
+  end
+
   it "has a getter for a set of actions" do
     Spree.deprecator.silence do
       expect(config.actions).to be_empty
