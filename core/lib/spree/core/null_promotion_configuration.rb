@@ -40,6 +40,12 @@ module Spree
       add_class_set :rules
       deprecate :rules, :rules=, deprecator: Spree.deprecator
 
+      # Allows getting and setting actions. Deprecated.
+      # @!attribute [rw] actions
+      # @return [Array] a set of actions
+      add_class_set :actions
+      deprecate :actions, :actions=, deprecator: Spree.deprecator
+
       # Allows providing a different promotion shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class
       # @see Spree::NullPromotionHandler
