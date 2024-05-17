@@ -62,7 +62,7 @@ describe 'Customer returns', type: :feature do
         within('[data-hook="rejected_return_items"] tbody tr:nth-child(1)') { click_button('Receive') }
         expect_order_state_label_to_eq('Complete')
 
-        within('[data-hook="rejected_return_items"] tbody tr:nth-child(2)') { click_button('Receive') }
+        within('[data-hook="rejected_return_items"] tbody') { click_button('Receive') }
         expect_order_state_label_to_eq('Returned')
       end
     end
