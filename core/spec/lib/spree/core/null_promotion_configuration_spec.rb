@@ -62,4 +62,11 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
       expect(config.actions).to be_empty
     end
   end
+
+  it "has deprecated nested class set for calculcators" do
+    Spree.deprecator.silence do
+      expect { config.calculators["Spree::PromotionAction"] = ["Spree::Calculator"] }.not_to raise_error
+      expect { config.calculators["Spree::PromotionAction"] }.not_to raise_error
+    end
+  end
 end

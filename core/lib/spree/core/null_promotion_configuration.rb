@@ -46,6 +46,12 @@ module Spree
       add_class_set :actions
       deprecate :actions, :actions=, deprecator: Spree.deprecator
 
+      # Allows getting an setting calculators for actions. Deprecated.
+      # @!attribute [rw] calculators
+      # @return [Spree::Core::NestedClassSet] a set of calculators
+      add_nested_class_set :calculators
+      deprecate :calculators, :calculators=, deprecator: Spree.deprecator
+
       # Allows providing a different promotion shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class
       # @see Spree::NullPromotionHandler
