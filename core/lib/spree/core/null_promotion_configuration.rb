@@ -22,6 +22,11 @@ module Spree
       #   Spree::NullPromotionFinder.
       class_name_attribute :promotion_finder_class, default: 'Spree::NullPromotionFinder'
 
+      # Allows getting and setting `Spree::Config.promotion_code_batch_mailer_class`.
+      # Both will issue a deprecation warning.
+      class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::DeprecatedConfigurableClass'
+      deprecate :promotion_code_batch_mailer_class, :promotion_code_batch_mailer_class=, deprecator: Spree.deprecator
+
       # Allows providing a different promotion shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class
       # @see Spree::NullPromotionHandler

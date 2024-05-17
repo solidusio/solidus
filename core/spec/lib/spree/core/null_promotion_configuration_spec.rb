@@ -26,4 +26,10 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
   it "uses the null promotion advertiser class by default" do
     expect(config.advertiser_class).to eq Spree::NullPromotionAdvertiser
   end
+
+  it "uses the deprecated configurable class for promotion code batch mailer" do
+    Spree.deprecator.silence do
+      expect(config.promotion_code_batch_mailer_class).to eq Spree::DeprecatedConfigurableClass
+    end
+  end
 end
