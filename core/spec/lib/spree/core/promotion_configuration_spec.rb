@@ -10,7 +10,7 @@ RSpec.describe Spree::Core::PromotionConfiguration do
   end
 
   it "uses order adjustments recalculator class by default" do
-    expect(config.promotion_adjuster_class).to eq Spree::Promotion::OrderAdjustmentsRecalculator
+    expect(config.order_adjuster_class).to eq Spree::Promotion::OrderAdjustmentsRecalculator
   end
 
   it "uses promotion handler coupon class by default" do

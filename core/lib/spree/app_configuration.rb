@@ -600,15 +600,21 @@ module Spree
     class << self
       private
 
-      def promotions_deprecation_message(method)
+      def promotions_deprecation_message(method, new_method_name = nil)
         "The `Spree::Config.#{method}` preference is deprecated and will be removed in Solidus 5.0. " \
-        "Use `Spree::Config.promotions.#{method}` instead"
+        "Use `Spree::Config.promotions.#{new_method_name || method}` instead"
       end
     end
 
-    delegate :promotion_adjuster_class, :promotion_adjuster_class=, to: :promotions
-    deprecate promotion_adjuster_class: promotions_deprecation_message("promotion_adjuster_class"), deprecator: Spree.deprecator
-    deprecate "promotion_adjuster_class=": promotions_deprecation_message("promotion_adjuster_class="), deprecator: Spree.deprecator
+    def promotion_adjuster_class
+      promotions.order_adjuster_class
+    end
+
+    def promotion_adjuster_class=(klass)
+      promotions.order_adjuster_class = klass
+    end
+    deprecate promotion_adjuster_class: promotions_deprecation_message("promotion_adjuster_class", "order_adjuster_class"), deprecator: Spree.deprecator
+    deprecate "promotion_adjuster_class=": promotions_deprecation_message("promotion_adjuster_class=", "order_adjuster_class="), deprecator: Spree.deprecator
 
     delegate :promotion_chooser_class, :promotion_chooser_class=, to: :promotions
     deprecate promotion_chooser_class: promotions_deprecation_message("promotion_chooser_class"), deprecator: Spree.deprecator

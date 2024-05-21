@@ -6,7 +6,7 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
   subject(:config) { described_class.new }
 
   it "uses the null promotion adjuster class by default" do
-    expect(config.promotion_adjuster_class).to eq Spree::NullPromotionAdjuster
+    expect(config.order_adjuster_class).to eq Spree::NullPromotionAdjuster
   end
 
   it "uses the null coupon code handler class by default" do

@@ -3,8 +3,8 @@
 module Spree
   module Core
     class NullPromotionConfiguration < Spree::Preferences::Configuration
-      # promotion_adjuster_class allows extensions to provide their own Promotion Adjuster
-      class_name_attribute :promotion_adjuster_class, default: 'Spree::NullPromotionAdjuster'
+      # order_adjuster_class allows extensions to provide their own Order Adjuster
+      class_name_attribute :order_adjuster_class, default: 'Spree::NullPromotionAdjuster'
 
       # Allows providing a different coupon code handler.
       # @!attribute [rw] coupon_code_handler_class
