@@ -266,6 +266,16 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
       expect(subject.order).to receive(:check_shipments_and_restart_checkout)
       subject.update_cart params
     end
+
+    context "with invalid params" do
+      let(:params) do
+        { number: "" }
+      end
+
+      it "returns false" do
+        expect(subject.update_cart(params)).to be false
+      end
+    end
   end
 
   context "completed order" do
@@ -331,6 +341,13 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
           order.contents.approve
         }.to raise_error(ArgumentError, 'user or name must be specified')
       end
+    end
+  end
+
+  describe "#advance" do
+    it "advances the order" do
+      expect(order).to receive(:next).at_least(:once)
+      subject.advance
     end
   end
 end
