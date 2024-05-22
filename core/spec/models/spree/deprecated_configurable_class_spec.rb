@@ -26,4 +26,8 @@ RSpec.describe Spree::DeprecatedConfigurableClass do
 
     expect(deprecator).to have_received(:warn).with(/It appears you are using Solidus' Legacy promotion system/).at_least(:once)
   end
+
+  it "responds to anything" do
+    expect(described_class.new).to respond_to(:anything)
+  end
 end
