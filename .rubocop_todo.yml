@@ -638,7 +638,7 @@ Style/OptionalBooleanParameter:
     - "core/app/mailers/spree/reimbursement_mailer.rb"
     - "core/app/models/concerns/spree/user_address_book.rb"
     - "core/app/models/spree/order.rb"
-    - "core/app/models/spree/order_contents.rb"
+    - "core/app/models/spree/simple_order_contents.rb"
     - "core/app/models/spree/stock/estimator.rb"
 
 # Offense count: 4
