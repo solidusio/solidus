@@ -21,7 +21,7 @@ jobs:
           !contains(github.event.pull_request.labels.*.name, 'changelog:skip')
       )
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
