@@ -1,3 +1,18 @@
+## Solidus v4.3.5 (2024-05-24)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.3] fix(StoreCredit): Add display_number method by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5745
+
+## Solidus Admin
+
+* [v4.3] Show "Unavailable" status for products with a future `Available On` date by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5743
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.4...v4.3.5
+
+
 ## Solidus v4.3.4 (2024-04-05)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
