@@ -26,4 +26,53 @@ RSpec.describe Spree::Core::NullPromotionConfiguration do
   it "uses the null promotion advertiser class by default" do
     expect(config.advertiser_class).to eq Spree::NullPromotionAdvertiser
   end
+
+  it "uses the deprecated configurable class for promotion code batch mailer" do
+    Spree.deprecator.silence do
+      expect(config.promotion_code_batch_mailer_class).to eq Spree::DeprecatedConfigurableClass
+    end
+  end
+
+  it "uses the deprecated configurable class for promotion chooser" do
+    Spree.deprecator.silence do
+      expect(config.promotion_chooser_class).to eq Spree::DeprecatedConfigurableClass
+    end
+  end
+
+  it "has a setter for a set of rules" do
+    Spree.deprecator.silence do
+      expect { config.rules = ["Spree::PromotionRule"] }.not_to raise_error
+    end
+  end
+
+  it "has a getter for a set of rules" do
+    Spree.deprecator.silence do
+      expect(config.rules).to be_empty
+    end
+  end
+
+  it "has a setter for a set of actions" do
+    Spree.deprecator.silence do
+      expect { config.actions = ["Spree::PromotionAction"] }.not_to raise_error
+    end
+  end
+
+  it "has a setter for a set of shipping actions" do
+    Spree.deprecator.silence do
+      expect { config.shipping_actions = ["Spree::PromotionAction"] }.not_to raise_error
+    end
+  end
+
+  it "has a getter for a set of actions" do
+    Spree.deprecator.silence do
+      expect(config.actions).to be_empty
+    end
+  end
+
+  it "has deprecated nested class set for calculcators" do
+    Spree.deprecator.silence do
+      expect { config.calculators["Spree::PromotionAction"] = ["Spree::Calculator"] }.not_to raise_error
+      expect { config.calculators["Spree::PromotionAction"] }.not_to raise_error
+    end
+  end
 end
