@@ -2074,32 +2074,24 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#can_add_coupon?" do
-    let(:order) { Spree::Order.new(state: state) }
+    let(:order) { Spree::Order.new }
 
     subject { order.can_add_coupon? }
 
-    context "when the order is in the cart state" do
-      let(:state) { "cart" }
+    context "when the configured coupon handler allows adding coupons" do
+      before do
+        expect_any_instance_of(Spree::Config.promotions.coupon_code_handler_class).to receive(:can_apply?).and_return(true)
+      end
 
-      it { is_expected.to eq(true) }
+      it { is_expected.to be true }
     end
 
-    context "when the order is completed" do
-      let(:state) { "complete" }
+    context "when the configured coupon handler does not allow adding coupons" do
+      before do
+        expect_any_instance_of(Spree::Config.promotions.coupon_code_handler_class).to receive(:can_apply?).and_return(false)
+      end
 
-      it { is_expected.to eq(false) }
-    end
-
-    context "when the order is returned" do
-      let(:state) { "returned" }
-
-      it { is_expected.to eq(false) }
-    end
-
-    context "when the order is awaiting returns" do
-      let(:state) { "returned" }
-
-      it { is_expected.to eq(false) }
+      it { is_expected.to be false }
     end
   end
 
