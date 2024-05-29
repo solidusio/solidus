@@ -25,13 +25,13 @@
       </colgroup>
 
       <thead>
-        <th><%= sort_link @search, :completed_at, Spree::Order.human_attribute_name(:completed_at), {}, {title: 'orders_completed_at_title'} %></th>
+        <th><%= sort_link @search, :completed_at, Spree::Order.human_attribute_name(:completed_at), {title: 'orders_completed_at_title'} %></th>
         <th colspan=2><%= Spree::LineItem.human_attribute_name(:description) %></th>
         <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
         <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
         <th><%= Spree::Order.human_attribute_name(:total) %></th>
-        <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state), {}, {title: 'orders_state_title'} %></th>
-        <th><%= sort_link @search, :number, t('spree.admin.user.order_num'), {}, {title: 'orders_number_title'} %></th>
+        <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state), {title: 'orders_state_title'} %></th>
+        <th><%= sort_link @search, :number, t('spree.admin.user.order_num'), {title: 'orders_number_title'} %></th>
       </thead>
 
       <tbody>

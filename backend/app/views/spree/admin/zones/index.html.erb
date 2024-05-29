@@ -23,7 +23,7 @@
       <tr data-hook="zones_header">
         <th><%= sort_link @search,:name, Spree::Zone.human_attribute_name(:name), title: 'zones_order_by_name_title' %></th>
         <th>
-          <%= sort_link @search,:description, Spree::Zone.human_attribute_name(:description), {}, {title: 'zones_order_by_description_title'} %>
+          <%= sort_link @search,:description, Spree::Zone.human_attribute_name(:description), {title: 'zones_order_by_description_title'} %>
         </th>
         <th class="actions"></th>
       </tr>
