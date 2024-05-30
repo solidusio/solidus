@@ -30,4 +30,18 @@ RSpec.describe Spree::DeprecatedConfigurableClass do
   it "responds to anything" do
     expect(described_class.new).to respond_to(:anything)
   end
+
+  context "when calling a class method" do
+    it "warns when a method is called" do
+      described_class.some_method
+
+      expect(deprecator).to have_received(:warn).with(/It appears you are using Solidus' Legacy promotion system/).at_least(:once)
+    end
+
+    it "can take method chains" do
+      described_class.foo.bar.baz
+
+      expect(deprecator).to have_received(:warn).with(/It appears you are using Solidus' Legacy promotion system/).at_least(:once)
+    end
+  end
 end
