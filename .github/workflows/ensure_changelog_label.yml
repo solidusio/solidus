@@ -12,7 +12,7 @@ jobs:
   ensure:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Check for the presence of a changelog label"
         env:
           GH_TOKEN: ${{ github.token }}
