@@ -41,7 +41,7 @@ RSpec.describe Spree::AppConfiguration do
   end
 
   it "uses core's promotion configuration class by default" do
-    expect(prefs.promotions).to be_a Spree::Core::PromotionConfiguration
+    expect(prefs.promotions).to be_a SolidusLegacyPromotions::Configuration
   end
 
   context "deprecated preferences" do
@@ -113,7 +113,7 @@ RSpec.describe Spree::AppConfiguration do
 
   describe '#promotions' do
     subject { prefs.promotions }
-    it { is_expected.to be_a Spree::Core::PromotionConfiguration }
+    it { is_expected.to be_a SolidusLegacyPromotions::Configuration }
   end
 
   describe '@default_country_iso_code' do
