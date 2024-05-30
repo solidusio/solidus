@@ -1734,6 +1734,9 @@ en:
     master_price: Master Price
     master_sku: Master SKU
     master_variant: Master Variant
+    match_choices:
+      all: All
+      none: None
     max_items: Max Items
     member_since: Member Since
     memo: Memo
