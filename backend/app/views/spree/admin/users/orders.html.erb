@@ -22,14 +22,14 @@
       </colgroup>
       <thead>
         <tr data-hook="admin_orders_index_headers">
-          <th><%= sort_link @search, :completed_at,   Spree::Order.human_attribute_name(:completed_at), {}, {title: 'orders_completed_at_title'} %></th>
-          <th><%= sort_link @search, :number,         Spree::Order.human_attribute_name(:number), {}, {title: 'orders_number_title'} %></th>
+          <th><%= sort_link @search, :completed_at,   Spree::Order.human_attribute_name(:completed_at), {title: 'orders_completed_at_title'} %></th>
+          <th><%= sort_link @search, :number,         Spree::Order.human_attribute_name(:number), {title: 'orders_number_title'} %></th>
           <th><%= sort_link @search, :state %></th>
           <th><%= sort_link @search, :payment_state %></th>
           <% if Spree::Order.checkout_step_names.include?(:delivery) %>
             <th><%= sort_link @search, :shipment_state %></th>
           <% end %>
-          <th><%= sort_link @search, :total,          Spree::Order.human_attribute_name(:total), {}, {title: 'orders_total_title'} %></th>
+          <th><%= sort_link @search, :total,          Spree::Order.human_attribute_name(:total), {title: 'orders_total_title'} %></th>
         </tr>
       </thead>
       <tbody>
