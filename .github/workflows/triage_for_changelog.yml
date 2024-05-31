@@ -1,6 +1,6 @@
 name: "Triage for Changelog"
 
-on: pull_request_target
+on: pull_request
 
 jobs:
   triage:
