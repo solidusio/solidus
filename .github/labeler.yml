@@ -1,25 +1,46 @@
 "changelog:solidus_core":
-  - "core/**/*"
+- any:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "core/**/*"
 "changelog:solidus_backend":
-  - "backend/**/*"
+- any:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "backend/**/*"
 "changelog:solidus_api":
-  - "api/**/*"
+- any:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "api/**/*"
 "changelog:solidus_admin":
-  - "admin/**/*"
+- any:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "admin/**/*"
 "changelog:solidus_sample":
-  - "sample/**/*"
+- any:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "sample/**/*"
 "changelog:solidus":
-  - "lib/**/*"
-  - "README.md"
-  - "solidus.gemspec"
+- any:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "lib/**/*"
+      - "README.md"
+      - "solidus.gemspec"
 "changelog:repository":
-  - any:
-    - "**/*"
-    - "!core/**/*"
-    - "!backend/**/*"
-    - "!api/**/*"
-    - "!admin/**/*"
-    - "!sample/**/*"
-    - "!lib/**/*"
-    - "!README.md"
-    - "!solidus.gemspec"
+- all:
+  - changed_files:
+    - any-glob-to-any-file:
+      - "**/*"
+    - all-globs-to-all-files:
+      - "!core/**/*"
+      - "!backend/**/*"
+      - "!api/**/*"
+      - "!admin/**/*"
+      - "!sample/**/*"
+      - "!lib/**/*"
+      - "!README.md"
+      - "!solidus.gemspec"
