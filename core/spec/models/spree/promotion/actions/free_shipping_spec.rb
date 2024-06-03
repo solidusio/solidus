@@ -117,7 +117,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
     subject { action.available_calculators }
 
     it {
-      is_expected.to be_empty
+      is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
     }
   end
 end

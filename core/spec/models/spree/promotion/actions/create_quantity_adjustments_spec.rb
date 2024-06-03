@@ -297,13 +297,11 @@ module Spree::Promotion::Actions
 
     describe "#available_calculators" do
       let(:action) { described_class.new }
+
       subject { action.available_calculators }
 
       it {
-        is_expected.to contain_exactly(
-          Spree::Calculator::PercentOnLineItem,
-          Spree::Calculator::FlatRate
-        )
+        is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
       }
     end
   end

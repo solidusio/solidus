@@ -123,13 +123,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     subject { action.available_calculators }
 
     it {
-      is_expected.to contain_exactly(
-        Spree::Calculator::FlatPercentItemTotal,
-        Spree::Calculator::FlatRate,
-        Spree::Calculator::FlexiRate,
-        Spree::Calculator::TieredPercent,
-        Spree::Calculator::TieredFlatRate
-      )
+      is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
     }
   end
 end
