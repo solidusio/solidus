@@ -12,6 +12,10 @@ module Spree
 
       subject { Spree::PromotionHandler::Shipping.new(order) }
 
+      before do
+        allow(Spree::Config.promotions).to receive(:shipping_actions) { ['Spree::Promotion::Actions::FreeShipping'] }
+      end
+
       context 'with apply_automatically' do
         let!(:promotion) { create(:promotion, apply_automatically: true, promotion_actions: [action]) }
 
