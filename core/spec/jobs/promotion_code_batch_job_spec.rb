@@ -13,7 +13,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
   end
   context "with a successful build" do
     before do
-      allow(Spree::PromotionCodeBatchMailer)
+      allow(Spree::Config.promotions.promotion_code_batch_mailer_class)
         .to receive(:promotion_code_batch_finished)
         .and_call_original
     end
@@ -50,7 +50,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
     context "with an email address" do
       it "sends an email" do
         subject.perform(promotion_code_batch)
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Spree::Config.promotions.promotion_code_batch_mailer_class)
           .to have_received(:promotion_code_batch_finished)
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
       let(:email) { nil }
       it "sends an email" do
         subject.perform(promotion_code_batch)
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Spree::Config.promotions.promotion_code_batch_mailer_class)
           .to_not have_received(:promotion_code_batch_finished)
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
         .to receive(:build_promotion_codes)
         .and_raise("Error")
 
-      allow(Spree::PromotionCodeBatchMailer)
+      allow(Spree::Config.promotions.promotion_code_batch_mailer_class)
         .to receive(:promotion_code_batch_errored)
         .and_call_original
 
@@ -80,7 +80,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
 
     context "with an email address" do
       it "sends an email" do
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Spree::Config.promotions.promotion_code_batch_mailer_class)
           .to have_received(:promotion_code_batch_errored)
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
     context "with no email address" do
       let(:email) { nil }
       it "sends an email" do
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Spree::Config.promotions.promotion_code_batch_mailer_class)
           .to_not have_received(:promotion_code_batch_errored)
       end
     end
