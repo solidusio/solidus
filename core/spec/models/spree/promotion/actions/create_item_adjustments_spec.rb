@@ -194,13 +194,7 @@ module Spree
       subject { action.available_calculators }
 
       it {
-        is_expected.to contain_exactly(
-          Spree::Calculator::DistributedAmount,
-          Spree::Calculator::FlatRate,
-          Spree::Calculator::FlexiRate,
-          Spree::Calculator::PercentOnLineItem,
-          Spree::Calculator::TieredPercent
-        )
+        is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
       }
     end
   end

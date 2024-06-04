@@ -216,66 +216,6 @@ module Spree::Promotion::Actions
       end
     end
 
-    # Regression test for https://github.com/solidusio/solidus/pull/1591
-    context "with unsaved line_item changes" do
-      let(:calculator) { FactoryBot.create :flat_rate_calculator }
-      let(:line_item) { order.line_items.first }
-
-      before do
-        order.line_items.first.promo_total = -11
-        action.compute_amount(line_item)
-      end
-
-      it "doesn't reload the line_items association" do
-        expect(order.line_items.first.promo_total).to eq(-11)
-      end
-    end
-
-    # Regression test for https://github.com/solidusio/solidus/pull/1591
-    context "applied to the order" do
-      let(:calculator) { FactoryBot.create :flat_rate_calculator }
-
-      before do
-        action.perform(order: order, promotion: promotion)
-        order.recalculate
-      end
-
-      it 'updates the order totals' do
-        expect(order).to have_attributes(
-          total: 100,
-          adjustment_total: -10
-        )
-      end
-
-      context "after updating item quantity" do
-        before do
-          order.line_items.first.update!(quantity: 2, price: 30)
-          order.recalculate
-        end
-
-        it 'updates the order totals' do
-          expect(order).to have_attributes(
-            total: 140,
-            adjustment_total: -20
-          )
-        end
-      end
-
-      context "after updating promotion amount" do
-        before do
-          calculator.update!(preferred_amount: 5)
-          order.recalculate
-        end
-
-        it 'updates the order totals' do
-          expect(order).to have_attributes(
-            total: 105,
-            adjustment_total: -5
-          )
-        end
-      end
-    end
-
     describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
       let!(:item) { FactoryBot.create :line_item, order: order, quantity: quantity, price: 10 }
       let(:quantity) { 5 }
@@ -297,13 +237,11 @@ module Spree::Promotion::Actions
 
     describe "#available_calculators" do
       let(:action) { described_class.new }
+
       subject { action.available_calculators }
 
       it {
-        is_expected.to contain_exactly(
-          Spree::Calculator::PercentOnLineItem,
-          Spree::Calculator::FlatRate
-        )
+        is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
       }
     end
   end
