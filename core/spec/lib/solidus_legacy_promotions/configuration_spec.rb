@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Spree::Core::PromotionConfiguration do
+RSpec.describe SolidusLegacyPromotions::Configuration do
   subject(:config) { described_class.new }
 
   it "uses base searcher class by default" do
