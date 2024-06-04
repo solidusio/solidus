@@ -17,8 +17,9 @@ RSpec.describe Spree::NullPromotionHandler do
   describe "#apply" do
     subject(:activate) { handler.apply }
 
-    it "returns the unchanged order" do
-      expect(activate).to eq(order)
+    it "returns the handler with the unchanged order" do
+      expect(activate).to eq(handler)
+      expect(activate.order).to eq(order)
     end
   end
 
