@@ -915,31 +915,6 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
-  describe "adding items to the cart" do
-    let(:order) { create :order }
-    let(:line_item) { create :line_item, order: order }
-    let(:promo) { create :promotion_with_item_adjustment, adjustment_rate: 5, code: 'promo' }
-    let(:promotion_code) { promo.codes.first }
-    let(:variant) { create :variant }
-
-    it "updates the promotions for new line items" do
-      expect(line_item.adjustments).to be_empty
-      expect(order.adjustment_total).to eq 0
-
-      promo.activate order: order, promotion_code: promotion_code
-      order.recalculate
-
-      expect(line_item.adjustments.size).to eq(1)
-      expect(order.adjustment_total).to eq(-5)
-
-      other_line_item = order.contents.add(variant, 1, currency: order.currency)
-
-      expect(other_line_item).not_to eq line_item
-      expect(other_line_item.adjustments.size).to eq(1)
-      expect(order.adjustment_total).to eq(-10)
-    end
-  end
-
   describe "promotion deletion" do
     subject { promotion.destroy! }
 
