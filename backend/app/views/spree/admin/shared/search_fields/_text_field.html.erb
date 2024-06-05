@@ -1,0 +1,6 @@
+<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+  <div class="field">
+    <%= label_tag "q_#{ransack}", label.respond_to?(:call) ? label.call : label %>
+    <%= f.text_field ransack, class: 'form-control', value: params[:q][ransack] %>
+  </div>
+</div>

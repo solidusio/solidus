@@ -1,0 +1,6 @@
+<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+  <div class="field">
+    <%= label_tag "q_#{ransack}", label.respond_to?(:call) ? label.call : label %>
+    <%= f.select ransack, options_for_select(options.call, params[:q][ransack]), {include_blank: true}, class: 'custom-select fullwidth' %>
+  </div>
+</div>

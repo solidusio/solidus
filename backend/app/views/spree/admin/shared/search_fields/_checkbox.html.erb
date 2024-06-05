@@ -1,0 +1,8 @@
+<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+  <div class="field checkbox">
+    <label>
+      <%= f.check_box ransack, {checked: params[:q][ransack] == '1' }, '1', '0' %>
+      <%= label.respond_to?(:call) ? label.call : label  %>
+    </label>
+  </div>
+</div>

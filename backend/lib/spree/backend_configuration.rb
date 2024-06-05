@@ -19,6 +19,96 @@ module Spree
       solidus_admin: 'spree/backend/themes/solidus_admin'
     }
 
+    preference :search_fields, :hash, default: {
+      "spree/admin/orders" => [
+        {
+          partial: "spree/admin/shared/search_fields/date_range_picker",
+          locals: {
+            attribute: :created_at,
+            label: -> { I18n.t(:date_range, scope: :spree) }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/select",
+          locals: {
+            ransack: :state_eq,
+            label: -> { I18n.t(:status, scope: :spree) },
+            options: -> {
+              Spree::Order.state_machines[:state].states.collect { |s| [I18n.t(s.name, scope: 'spree.order_state'), s.value] }
+            }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/select",
+          locals: {
+            ransack: :shipment_state_eq,
+            label: -> { I18n.t(:shipment_state, scope: :spree) },
+            options: -> {
+              %i[backorder canceled partial pending ready shipped].map { |state| [I18n.t("spree.shipment_states.#{state}"), state] }
+            }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/variant_autocomplete",
+          locals: {
+            ransack: :line_items_variant_id_in,
+            label: -> { I18n.t(:variant, scope: :spree) }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/text_field",
+          locals: {
+            ransack: :number_start,
+            label: -> { I18n.t(:order_number, scope: :spree, number: "") }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/text_field",
+          locals: {
+            ransack: :shipments_number_start,
+            label: -> { I18n.t(:shipment_number, scope: :spree) }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/text_field",
+          locals: {
+            ransack: :bill_address_name_cont,
+            label: -> { I18n.t(:name_contains, scope: :spree) }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/text_field",
+          locals: {
+            ransack: :email_start,
+            label: -> { I18n.t(:email, scope: :spree) }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/text_field",
+          locals: {
+            ransack: :order_promotions_promotion_code_value_start,
+            label: -> { I18n.t(:promotion, scope: :spree) }
+          }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/select",
+          locals: {
+            ransack: :store_id_eq,
+            label: -> { I18n.t(:store, scope: :spree) },
+            options: -> { Spree::Store.all.map { |store| [store.name, store.id] } },
+          },
+          if: -> { Spree::Store.many? }
+        },
+        {
+          partial: "spree/admin/shared/search_fields/checkbox",
+          locals: {
+            ransack: :completed_at_not_null,
+            label: -> { I18n.t(:show_only_complete_orders, scope: :spree) }
+          }
+        }
+      ]
+    }
+
     # @!attribute [rw] theme
     #   @return [String] Default admin theme name
     versioned_preference :theme, :string, initial_value: 'classic', boundaries: { "4.2.0" => "solidus_admin", "4.4.0" => "solidus" }
