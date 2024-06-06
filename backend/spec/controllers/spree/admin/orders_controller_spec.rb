@@ -27,7 +27,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     before do
       allow(Spree::Order).to receive_message_chain(:includes, find_by!: order)
-      allow(order).to receive_messages(contents: Spree::OrderContents.new(order))
+      allow(order).to receive_messages(contents: Spree::Config.order_contents_class.new(order))
     end
 
     context "#approve" do
