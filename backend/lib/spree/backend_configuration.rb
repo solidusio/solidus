@@ -84,13 +84,6 @@ module Spree
           }
         },
         {
-          partial: "spree/admin/shared/search_fields/text_field",
-          locals: {
-            ransack: :order_promotions_promotion_code_value_start,
-            label: -> { I18n.t(:promotion, scope: :spree) }
-          }
-        },
-        {
           partial: "spree/admin/shared/search_fields/select",
           locals: {
             ransack: :store_id_eq,
