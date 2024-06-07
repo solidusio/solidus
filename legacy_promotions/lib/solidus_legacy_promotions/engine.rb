@@ -31,9 +31,7 @@ module SolidusLegacyPromotions
 
     initializer "solidus_legacy_promotions.add_admin_order_index_component" do
       if SolidusSupport.admin_available?
-        config.to_prepare do
-          SolidusAdmin::Config.components["orders/index"] = SolidusLegacyPromotions::Orders::Index::Component
-        end
+        SolidusAdmin::Config.components["orders/index"] = "SolidusLegacyPromotions::Orders::Index::Component"
       end
     end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spree/preferences/configuration'
+require 'solidus_admin/component_registry'
 
 module SolidusAdmin
   # Configuration for the admin interface.
@@ -8,7 +9,6 @@ module SolidusAdmin
   # Ensure requiring this file after the Rails application has been created,
   # as some defaults depend on the application context.
   class Configuration < Spree::Preferences::Configuration
-    ComponentNotFoundError = Class.new(NameError)
     ENGINE_ROOT = File.expand_path("#{__dir__}/../..")
 
     # Path to the logo used in the admin interface.
@@ -180,24 +180,7 @@ module SolidusAdmin
     end
 
     def components
-      @components ||= Hash.new do |_h, k|
-        const_name = "solidus_admin/#{k}/component".classify
-
-        unless Object.const_defined?(const_name)
-          prefix = "#{ENGINE_ROOT}/app/components/solidus_admin/"
-          suffix = "/component.rb"
-          dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
-          corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(k.to_s)
-
-          raise ComponentNotFoundError.new(
-            "Unknown component #{k}#{DidYouMean.formatter.message_for(corrections)}",
-            k.classify,
-            receiver: ::SolidusAdmin
-          )
-        end
-
-        const_name.constantize
-      end
+      @components ||= ComponentRegistry.new
     end
 
     # The method used to authenticate the user in the admin interface, it's expected to redirect the user to the login method
