@@ -77,14 +77,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
             option
           ]
         end
-      },
-      {
-        label: t('.filters.promotions'),
-        combinator: 'or',
-        attribute: "promotions_id",
-        predicate: "in",
-        options: Spree::Promotion.all.pluck(:name, :id),
-      },
+      }
     ]
   end
 
