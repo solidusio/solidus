@@ -52,7 +52,6 @@
   <% attachment = Object.new.tap { def _1.url(*) "https://placekitten.com/280/200"; end }  %>
   <% image = Spree::Image.new.tap { _1.define_singleton_method(:attachment) { attachment } } %>
   <% [
-    Spree::PromotionAction.new,
     Spree::UnitCancel.new,
     Spree::TaxRate.new,
     image,

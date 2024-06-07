@@ -31,7 +31,7 @@ class SolidusAdmin::UI::Thumbnail::Component < SolidusAdmin::BaseComponent
 
   def self.for(record, **attrs)
     case record
-    when Spree::PromotionAction then new(icon: "megaphone-line", **attrs)
+    when *Spree::Config.adjustment_promotion_source_types then new(icon: "megaphone-line", **attrs)
     when Spree::UnitCancel then new(icon: "close-circle-line", **attrs)
     when Spree::TaxRate then new(icon: "percent-line", **attrs)
     when Spree::LineItem then self.for(record.variant, **attrs)
