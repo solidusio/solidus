@@ -16,6 +16,7 @@ RSpec.describe Spree::ApiConfiguration do
     end
 
     it "can delete attributes" do
+      config.promotion_attributes << :name # name is not included by default with the NullPromotionConfiguration
       expect(promotion_attributes).to include(:name)
       config.promotion_attributes.delete(:name)
       expect(promotion_attributes).not_to include(:name)

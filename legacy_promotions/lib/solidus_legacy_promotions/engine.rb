@@ -54,6 +54,7 @@ module SolidusLegacyPromotions
 
     initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
       Spree::Config.order_contents_class = "Spree::OrderContents"
+      Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
     end
   end
 end
