@@ -14,7 +14,7 @@
     <meta name="turbo-refresh-scroll", content="preserve">
   </head>
 
-  <body class="bg-gray-15 font-sans">
+  <body class="bg-gray-15 font-sans" <%== 'data-controller="js"' if Rails.env.test? %>>
     <%= render component("layout/skip_link").new(href: "#main") %>
     <div class="flex gap-0">
       <div class="min-w-[240px] border-r border-r-gray-100 relative">

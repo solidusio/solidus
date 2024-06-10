@@ -29,6 +29,10 @@ module SolidusAdmin
       def select_row(text)
         find_row_checkbox(text).check
       end
+
+      def ensure_js_is_ready
+        expect(page).to have_css('[data-js-loaded-value="true"]')
+      end
     end
   end
 end
