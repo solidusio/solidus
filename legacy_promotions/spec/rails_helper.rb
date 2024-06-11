@@ -75,6 +75,7 @@ require 'axe-rspec'
 require 'axe-capybara'
 
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
+Capybara.enable_aria_label = true
 
 RSpec.configure do |config|
   config.fixture_path = File.join(__dir__, "fixtures")
