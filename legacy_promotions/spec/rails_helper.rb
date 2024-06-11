@@ -76,6 +76,10 @@ require 'axe-capybara'
 
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
+# VIEW COMPONENTS
+Rails.application.config.view_component.test_controller = "SolidusAdmin::BaseController"
+require "view_component/test_helpers"
+
 RSpec.configure do |config|
   config.fixture_path = File.join(__dir__, "fixtures")
 
@@ -100,6 +104,8 @@ RSpec.configure do |config|
     example.run
     DummyApp.use_solidus_admin = false
   end
+
+  config.include ViewComponent::TestHelpers, type: :component
 
   config.include Spree::TestingSupport::JobHelpers
   config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature
