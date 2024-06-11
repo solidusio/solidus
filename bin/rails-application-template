@@ -121,11 +121,9 @@ after_bundle do
     "solidus:install",
     "--auto-accept",
     "--user_class=Spree::User",
-    "--enforce_available_locales=true",
-    "--with-authentication=false",
+    "--authentication=solidus_auth_devise",
   )
 
-  generate('solidus_auth:install')
   rails_command "db:create"
   rails_command "db:migrate"
 
@@ -135,6 +133,6 @@ after_bundle do
 
   if ENV['UPDATE_EXAMPLE_APP_REPO']
     git remote: %{ add origin git@github.com:solidusio/solidus-example-app.git }
-    git push: %{ --force --set-upstream origin master }
+    git push: %{ --force --set-upstream origin main }
   end
 end

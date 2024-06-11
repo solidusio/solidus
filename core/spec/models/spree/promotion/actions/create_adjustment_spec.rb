@@ -118,4 +118,12 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     subject { action.discard }
     it_should_behave_like "destroying adjustments from incomplete orders"
   end
+
+  describe "#available_calculators" do
+    subject { action.available_calculators }
+
+    it {
+      is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
+    }
+  end
 end

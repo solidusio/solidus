@@ -1,0 +1,33 @@
+<div class="flex justify-center items-center h-screen">
+  <table>
+    <tr>
+      <td></td>
+      <% current_component::SIZES.keys.each do |size| %>
+        <td class="px-3 py-1 text-gray-500 text-center text-[16px]" colspan="2"><%= size.to_s.humanize %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td></td>
+      <% current_component::SIZES.keys.each do |size| %>
+        <% %i[default disabled].each do |state| %>
+          <td class="px-3 py-1 text-gray-500 text-center"><%= state.to_s.humanize %></td>
+        <% end %>
+      <% end %>
+    </tr>
+    <% %i[off on].each do |checked| %>
+      <tr>
+        <td class="font-bold px-3 py-1"><%= checked.to_s.humanize %></td>
+        <% current_component::SIZES.keys.each do |size| %>
+          <% %i[default disabled].each do |state| %>
+            <% cell_id = SecureRandom.uuid %>
+            <td class="px-3 py-1 text-center">
+              <div class="leading-[0]">
+                <%= render current_component.new(id: cell_id, size: size, checked: checked == :on, disabled: state == :disabled) %>
+              </div>
+            </td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>

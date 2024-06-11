@@ -13,7 +13,7 @@ module Spree
     delegate :tax_rates, to: :variant
 
     validate :check_price
-    validates :amount, allow_nil: true, numericality: {
+    validates :amount, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
@@ -30,7 +30,7 @@ module Spree
     money_methods :amount, :price
     alias_method :money, :display_amount
 
-    self.whitelisted_ransackable_attributes = %w(amount variant_id currency country_iso)
+    self.allowed_ransackable_attributes = %w(amount variant_id currency country_iso)
 
     # An alias for #amount
     def price
@@ -55,7 +55,7 @@ module Spree
 
     def display_country
       if country_iso
-        "#{country_iso} (#{country.name})"
+        "#{country_iso} (#{I18n.t(country_iso, scope: [:spree, :country_names])})"
       else
         I18n.t(:any_country, scope: [:spree, :admin, :prices])
       end

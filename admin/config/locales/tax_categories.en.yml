@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    tax_categories:
+      title: "Tax Categories"
+      destroy:
+        success: "Tax categories were successfully removed."
+      create:
+        success: "Tax category was successfully created."
+      update:
+        success: "Tax category was successfully updated."

@@ -8,7 +8,7 @@ module Spree
     # @attr_reader [Integer] country_id the ID of a Spree::Country object
     # @attr_reader [Integer] state_id the ID of a Spree::State object
     class TaxLocation
-      attr_reader :country_id, :state_id
+      attr_reader :country, :state
 
       # Create a new TaxLocation object
       #
@@ -19,16 +19,13 @@ module Spree
       #
       # @return [Spree::Tax::TaxLocation] a Spree::Tax::TaxLocation object
       def initialize(country: nil, state: nil)
-        @country_id = country && country.id
-        @state_id = state && state.id
+        @country, @state = country, state
       end
+      delegate :id, to: :state, prefix: true, allow_nil: true
+      delegate :id, to: :country, prefix: true, allow_nil: true
 
       def ==(other)
         state_id == other.state_id && country_id == other.country_id
-      end
-
-      def country
-        Spree::Country.find_by(id: country_id)
       end
 
       def empty?

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spree/core/versioned_value'
 require 'spree/preferences/preferable'
 
 module Spree::Preferences
@@ -28,6 +29,45 @@ module Spree::Preferences
   #
   class Configuration
     include Spree::Preferences::Preferable
+
+    # @!attribute [r] loaded_defaults
+    #   @return [String]
+    #     Some configuration defaults can be added or changed when a new Solidus
+    #     version is released. Setting this to an older Solidus version allows keeping
+    #     backward compatibility until the application code is updated to the new
+    #     defaults. Set via {#load_defaults}
+    attr_reader :loaded_defaults
+
+    # @api private
+    attr_reader :load_defaults_called
+
+    def initialize
+      @loaded_defaults = Spree.solidus_version
+      @load_defaults_called = false
+    end
+
+    # @param [String] Solidus version from which take defaults when preferences
+    # are not overriden by the user.
+    # @see #loaded_defaults
+    def load_defaults(version)
+      @loaded_defaults = version
+      @load_defaults_called = true
+      reset
+    end
+
+    def check_load_defaults_called(instance_constant_name = nil)
+      return if load_defaults_called || !Spree::Core.has_install_generator_been_run?
+
+      target_name = instance_constant_name || "#{self.class.name}.new"
+      Spree.deprecator.warn <<~MSG
+        It's recommended that you explicitly load the default configuration for
+        your current Solidus version. You can do it by adding the following call
+        to your Solidus initializer within the #{target_name} block:
+
+          config.load_defaults('#{Spree.solidus_version}')
+
+      MSG
+    end
 
     # @yield [config] Yields this configuration object to a block
     def configure
@@ -79,6 +119,37 @@ module Spree::Preferences
       end
     end
 
+    def self.inherited(klass)
+      klass.instance_variable_set(:@versioned_preferences, [])
+      class << klass
+        attr_reader :versioned_preferences
+      end
+    end
+
+    # Adds a preference with different default depending on {#loaded_defaults}
+    #
+    # This method is a specialized version of {.preference} that generates a
+    # different default value for different Solidus versions. For instance, in
+    # the example, `foo`'s default was `true` until version 3.0.0.alpha, when it
+    # became `false`:
+    #
+    # @example
+    #   versioned_preference :foo, :boolean, initial_value: true, boundaries: { "3.0.0.alpha" => false }
+    #
+    # @see .preference
+    # @see #loaded_defaults
+    # @see Spree::Core::VersionedValue
+    def self.versioned_preference(name, type, initial_value:, boundaries:, **options)
+      @versioned_preferences << name
+      preference(
+        name,
+        type,
+        options.merge(
+          default: by_version(initial_value, boundaries)
+        )
+      )
+    end
+
     def self.preference(name, type, options = {})
       super
       alias_method name.to_s, "preferred_#{name}"
@@ -102,6 +173,19 @@ module Spree::Preferences
         class_name = class_name.constantize if class_name.is_a?(String)
         class_name
       end
+    end
+
+    def self.by_version(*args)
+      proc do |loaded_defaults|
+        Spree::Core::VersionedValue.new(*args).call(loaded_defaults)
+      end
+    end
+    private_class_method :by_version
+
+    private
+
+    def context_for_default
+      [loaded_defaults]
     end
   end
 end

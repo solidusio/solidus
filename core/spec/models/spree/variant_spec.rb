@@ -7,8 +7,6 @@ RSpec.describe Spree::Variant, type: :model do
 
   let!(:variant) { create(:variant) }
 
-  it_behaves_like 'default_price'
-
   describe 'delegates' do
     let(:product) { build(:product) }
     let(:variant) { build(:variant, product: product) }
@@ -26,7 +24,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   context "validations" do
     it "should validate price is greater than 0" do
-      variant.price = -1
+      variant = build(:variant, price: -1)
       expect(variant).to be_invalid
     end
 
@@ -41,6 +39,33 @@ RSpec.describe Spree::Variant, type: :model do
       expect(variant).to be_invalid
       variant.price = nil
       expect(variant).to be_invalid
+    end
+
+    it "should have a unique sku" do
+      variant_with_same_sku = build(:variant, sku: variant.sku)
+      expect(variant_with_same_sku).to be_invalid
+    end
+
+    context "if it is a master variant" do
+      let(:product) { create(:product) }
+      subject(:variant) { product.master }
+
+      before do
+        variant.price = nil
+      end
+
+      it "is invalid without a price" do
+        variant.valid?
+        expect(subject.errors.full_messages).to include("Price Must supply price for variant or master.price for product.")
+      end
+
+      context "if it has a price" do
+        before do
+          variant.price = 10
+        end
+
+        it { is_expected.to be_valid }
+      end
     end
   end
 
@@ -161,6 +186,18 @@ RSpec.describe Spree::Variant, type: :model do
         }.to change(multi_variant.option_values, :count).by(1)
       end
 
+      context "setting using #options=" do
+        it "should set option value" do
+          expect(multi_variant.option_value('media_type')).to be_nil
+
+          multi_variant.options = [{ name: "media_type", value: 'DVD' }]
+          expect(multi_variant.option_value('media_type')).to eql 'DVD'
+
+          multi_variant.options = [{ name: "media_type", value: 'CD' }]
+          expect(multi_variant.option_value('media_type')).to eql 'CD'
+        end
+      end
+
       context "and a variant is soft-deleted" do
         let!(:old_options_text) { variant.options_text }
 
@@ -212,40 +249,117 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe '#default_price' do
+    context "when multiple prices are present in addition to a default price" do
+      let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+      let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
+
+      before do
+        variant.prices.create(currency: "EUR", amount: 29.99)
+        variant.reload
+      end
+
+      it 'the default stays the same' do
+        expect(variant.default_price.amount).to eq(19.99)
+      end
+
+      it 'displays default price' do
+        expect(variant.price_for_options(pricing_options_united_states).money.to_s).to eq("$19.99")
+        expect(variant.price_for_options(pricing_options_germany).money.to_s).to eq("€29.99")
+      end
+    end
+
+    context 'when adding multiple prices' do
+      it 'it can reassign a default price' do
+        expect(variant.default_price.amount).to eq(19.99)
+        variant.prices.create(currency: "USD", amount: 12.12)
+        expect(variant.reload.default_price.amount).to eq(12.12)
+      end
+    end
+
+    it 'prioritizes prices recently updated' do
+      variant = create(:variant)
+      price = create(:price, variant: variant, currency: 'USD')
+      create(:price, variant: variant, currency: 'USD')
+      price.touch
+      variant.prices.reload
+
+      expect(variant.default_price).to eq(price)
+    end
+
+    it 'prioritizes non-persisted prices' do
+      variant = create(:variant)
+      price = build(:price, currency: 'USD', amount: 1, variant_id: variant.id)
+      variant.prices.build(price.attributes)
+      create(:price, variant: variant, currency: 'USD', amount: 2)
+
+      expect(variant.default_price.attributes).to eq(price.attributes)
+    end
+
+    context "when the variant and the price are both soft-deleted" do
+      it "will use a deleted price as the default price" do
+        variant = create(:variant, deleted_at: 1.day.ago)
+        variant.prices.each { |price| price.discard }
+        expect(variant.reload.price).to be_present
+      end
+    end
+
+    context "when the variant is not soft-deleted, but its price is" do
+      it "will not use a deleted price as the default price" do
+        variant = create(:variant)
+        variant.prices.each { |price| price.discard }
+        expect(variant.reload.price).not_to be_present
+      end
+    end
+  end
+
+  describe '#default_price_or_build' do
+    context 'when default price exists' do
+      it 'returns it' do
+        price = build(:price, currency: 'USD')
+        variant = build(:variant, prices: [price])
+
+        expect(variant.default_price_or_build).to eq(price)
+      end
+    end
+
+    context 'when default price does not exist' do
+      it 'builds and returns it' do
+        variant = build(:variant, prices: [], price: nil)
+
+        expect(
+          variant.default_price_or_build.attributes.values_at(*described_class.default_price_attributes.keys.map(&:to_s))
+        ).to eq(described_class.default_price_attributes.values)
+      end
+    end
+  end
+
+  describe '#has_default_price?' do
+    context 'when default price is present and not discarded' do
+      it 'returns true' do
+        variant = create(:variant, price: 20)
+
+        expect(variant.has_default_price?).to be(true)
+      end
+    end
+
+    context 'when default price is discarded' do
+      it 'returns false' do
+        variant = create(:variant, price: 20)
+
+        variant.default_price.discard
+
+        expect(variant.has_default_price?).to be(false)
+      end
+    end
+  end
+
   context "#cost_currency" do
     context "when cost currency is nil" do
       before { variant.cost_currency = nil }
       it "populates cost currency with the default value on save" do
         variant.save!
         expect(variant.cost_currency).to eql "USD"
-      end
-    end
-  end
-
-  context "#default_price" do
-    context "when multiple prices are present in addition to a default price" do
-      let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
-      let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
-      before do
-        variant.prices.create(currency: "EUR", amount: 29.99)
-        variant.reload
-      end
-
-      it "the default stays the same" do
-        expect(variant.default_price.amount).to eq(19.99)
-      end
-
-      it "displays default price" do
-        expect(variant.price_for(pricing_options_united_states).to_s).to eq("$19.99")
-        expect(variant.price_for(pricing_options_germany).to_s).to eq("€29.99")
-      end
-    end
-
-    context "when adding multiple prices" do
-      it "it can reassign a default price" do
-        expect(variant.default_price.amount).to eq(19.99)
-        variant.prices.create(currency: "USD", amount: 12.12)
-        expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
   end
@@ -262,12 +376,19 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  context "#price_for(price_options)" do
+  context "#price_for_options(price_options)" do
+    subject { variant.price_for_options(price_options) }
+
     let(:price_options) { Spree::Config.variant_price_selector_class.pricing_options_class.new }
 
-    it "calls the price selector with the given options object" do
-      expect(variant.price_selector).to receive(:price_for).with(price_options)
-      variant.price_for(price_options)
+    it "delegates to the price_selector" do
+      expect(variant.price_selector).to receive(:price_for_options).with(price_options)
+      subject
+    end
+
+    it "returns a Spree::Price object for the given pricing_options", :aggregate_failures do
+      expect(subject).to be_a Spree::Price
+      expect(subject.amount).to eq 19.99
     end
   end
 
@@ -298,7 +419,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product, price: 35) }
 
       before do
-        allow(product.master).to receive(:price_for).and_return(nil)
+        allow(product.master).to receive(:price_for_options).and_return(nil)
       end
 
       it { is_expected.to be_nil }
@@ -309,7 +430,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product, price: 35) }
 
       before do
-        allow(variant).to receive(:price_for).and_return(nil)
+        allow(variant).to receive(:price_for_options).and_return(nil)
       end
 
       it { is_expected.to be_nil }
@@ -340,7 +461,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, price: 10, product: master.product) }
 
       before do
-        allow(master).to receive(:price_for).and_return(nil)
+        allow(master).to receive(:price_for_options).and_return(nil)
       end
 
       subject { variant.price_same_as_master? }
@@ -353,7 +474,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, price: 10, product: master.product) }
 
       before do
-        allow(variant).to receive(:price_for).and_return(nil)
+        allow(variant).to receive(:price_for_options).and_return(nil)
       end
 
       subject { variant.price_same_as_master? }
@@ -453,11 +574,13 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/issues/2744
-  describe "set_position" do
-    it "sets variant position after creation" do
-      variant = create(:variant)
-      expect(variant.position).to_not be_nil
+  describe 'acts_as_list' do
+    it 'sets variant position by acts_as_list' do
+      expect(variant.product.master.position).to eq 1
+      expect(variant.position).to eq 2
+
+      multi_variant = create(:variant, product: variant.product)
+      expect(multi_variant.position).to eq 3
     end
   end
 
@@ -498,6 +621,22 @@ RSpec.describe Spree::Variant, type: :model do
         expect(Spree::Stock::Quantifier).to receive(:new).and_return(quantifier = double)
         expect(quantifier).to receive(:can_supply?).with(10)
         variant.can_supply?(10)
+      end
+
+      context "with a stock_location specified" do
+        subject { variant.can_supply?(10, stock_location) }
+
+        let(:quantifier) { instance_double(Spree::Stock::Quantifier) }
+        let(:stock_location) { build_stubbed(:stock_location) }
+
+        it "initializes the quantifier with the stock location" do
+          expect(Spree::Stock::Quantifier).
+            to receive(:new).
+            with(variant, stock_location).
+            and_return(quantifier)
+          allow(quantifier).to receive(:can_supply?).with(10)
+          subject
+        end
       end
     end
 
@@ -552,6 +691,22 @@ RSpec.describe Spree::Variant, type: :model do
       variant = build(:variant)
       expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
     end
+
+    context "with a stock_location specified" do
+      subject { variant.total_on_hand(stock_location) }
+
+      let(:quantifier) { instance_double(Spree::Stock::Quantifier) }
+      let(:stock_location) { build_stubbed(:stock_location) }
+
+      it "initializes the quantifier with the stock location" do
+        expect(Spree::Stock::Quantifier).
+          to receive(:new).
+          with(variant, stock_location).
+          and_return(quantifier)
+        allow(quantifier).to receive(:total_on_hand)
+        subject
+      end
+    end
   end
 
   describe '#tax_category' do
@@ -568,6 +723,44 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { build(:variant, tax_category: tax_category) }
       it 'returns the tax_category set on itself' do
         expect(variant.tax_category).to eq(tax_category)
+      end
+    end
+  end
+
+  describe '#shipping_category' do
+    context 'when shipping_category is nil' do
+      let(:shipping_category) { build(:shipping_category) }
+      let(:product) { build(:product, shipping_category: shipping_category) }
+      let(:variant) { build(:variant, product: product, shipping_category_id: nil) }
+      it 'returns the parent products shipping_category' do
+        expect(variant.shipping_category).to eq(shipping_category)
+      end
+    end
+
+    context 'when shipping_category is set' do
+      let(:shipping_category) { create(:shipping_category) }
+      let(:variant) { build(:variant, shipping_category: shipping_category) }
+      it 'returns the shipping_category set on itself' do
+        expect(variant.shipping_category).to eq(shipping_category)
+      end
+    end
+  end
+
+  describe '#shipping_category_id' do
+    context 'when shipping_category_id is nil' do
+      let(:shipping_category) { build(:shipping_category) }
+      let(:product) { build(:product, shipping_category: shipping_category) }
+      let(:variant) { build(:variant, product: product, shipping_category_id: nil) }
+      it 'returns the parent products shipping_category_id' do
+        expect(variant.shipping_category_id).to eq(shipping_category.id)
+      end
+    end
+
+    context 'when shipping_category_id is set' do
+      let(:shipping_category) { create(:shipping_category) }
+      let(:variant) { build(:variant, shipping_category_id: shipping_category.id) }
+      it 'returns the shipping_category_id set on itself' do
+        expect(variant.shipping_category_id).to eq(shipping_category.id)
       end
     end
   end
@@ -606,41 +799,40 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   describe "#discard" do
-    it "discards related associations" do
+    it "discards related stock items and images, but not prices" do
       variant.images = [create(:image)]
 
       expect(variant.stock_items).not_to be_empty
       expect(variant.prices).not_to be_empty
-      expect(variant.currently_valid_prices).not_to be_empty
 
       variant.discard
+      variant.reload
 
       expect(variant.images).to be_empty
-      expect(variant.stock_items).to be_empty
-      expect(variant.prices).to be_empty
-      expect(variant.currently_valid_prices).to be_empty
+      expect(variant.stock_items.reload).to be_empty
+      expect(variant.prices).not_to be_empty
     end
 
     describe 'default_price' do
-      let!(:previous_variant_price) { variant.display_price }
+      let!(:previous_variant_price) { variant.default_price }
 
-      it "should discard default_price" do
+      it "should not discard default_price" do
         variant.discard
         variant.reload
-        expect(variant.default_price).to be_discarded
+        expect(previous_variant_price.reload).not_to be_discarded
       end
 
       it "should keep its price if deleted" do
         variant.discard
         variant.reload
-        expect(variant.display_price).to eq(previous_variant_price)
+        expect(variant.default_price).to eq(previous_variant_price)
       end
 
       context 'when loading with pre-fetching of default_price' do
         it 'also keeps the previous price' do
           variant.discard
-          reloaded_variant = Spree::Variant.with_discarded.includes(:default_price).find_by(id: variant.id)
-          expect(reloaded_variant.display_price).to eq(previous_variant_price)
+          reloaded_variant = Spree::Variant.with_discarded.find_by(id: variant.id)
+          expect(reloaded_variant.default_price).to eq(previous_variant_price)
         end
       end
     end
@@ -805,5 +997,56 @@ RSpec.describe Spree::Variant, type: :model do
         end
       end
     end
+  end
+
+  describe "#on_backorder" do
+    let(:variant) { create(:variant) }
+
+    subject { variant.on_backorder }
+
+    it { is_expected.to be_zero }
+
+    context "with a backordered inventory_unit" do
+      let!(:backordered_inventory_unit) { create(:inventory_unit, variant: variant, state: :backordered) }
+
+      it { is_expected.to eq(1) }
+    end
+  end
+
+  describe "#deleted?" do
+    let(:variant) { create(:variant) }
+
+    subject { variant.deleted? }
+
+    it { is_expected.to be false }
+
+    context "if the variant is discarded" do
+      before do
+        variant.discard
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#name_and_sku" do
+    let(:product) { build(:product, name: "Ernie and Bert" )}
+    let(:variant) { build(:variant, product: product, sku: "EB1") }
+
+    subject { variant.name_and_sku }
+
+    it { is_expected.to eq("Ernie and Bert - EB1") }
+  end
+
+  describe "#sku_and_options_text" do
+    let(:variant) { create(:variant, sku: "EB1") }
+
+    subject { variant.sku_and_options_text }
+    it { is_expected.to eq("EB1 Size: S") }
+  end
+
+  it "cannot have the same option value multiple times" do
+    expect { variant.option_values << variant.option_values.first }
+      .to raise_error ActiveRecord::RecordNotUnique
   end
 end

@@ -1,0 +1,69 @@
+<div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
+  <%= turbo_frame_tag "edit_order_#{params[:type]}_address_modal" do %>
+    <%= render component("ui/modal").new(title: t(".title.#{@type}")) do |modal| %>
+      <%= form_for @order, url: solidus_admin.send("order_#{@type}_address_path", @order), html: { id: form_id } do |form| %>
+        <div class="w-full flex flex-col mb-4">
+          <div class="flex justify-between items-center mb-4 relative">
+            <h2 class="text-sm font-semibold">
+              <%= t(".subtitle.#{@type}") %>
+            </h2>
+
+            <% if @addresses.present? %>
+              <%= render component('ui/dropdown').new(
+                text: t(".select_address"),
+                "data-#{stimulus_id}-target": "addresses",
+                class: "max-h-[26rem] overflow-y-auto"
+              ) do %>
+                <% @addresses.each do |address| %>
+                  <%= tag.a(
+                    format_address(address),
+                    href: solidus_admin.send("order_#{@type}_address_path", @order, address_id: address.id),
+                    'data-turbo-frame': address_frame_id,
+                    'data-action': "#{component('ui/dropdown').stimulus_id}#close",
+                  ) %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="w-full flex gap-4">
+            <%= turbo_frame_tag address_frame_id do %>
+              <%= render component('ui/forms/address').new(address: @address, name: "order[#{@type}_address_attributes]") %>
+            <% end %>
+          </div>
+
+          <label class="flex gap-2 items-center">
+            <%= form.hidden_field use_attribute, value: '0', id: false %>
+
+            <%= render component("ui/forms/checkbox").new(
+              name: "#{form.object_name}[#{use_attribute}]",
+              checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address),
+              value: '1'
+            ) %>
+
+            <span class="font-normal text-xs">
+              <%= t(".use_this_address.#{@type}") %>
+            </span>
+          </label>
+        </div>
+      <% end %>
+
+      <% modal.with_actions do %>
+        <form method="dialog">
+          <%= render component("ui/button").new(
+            scheme: :secondary,
+            text: t(".cancel"),
+          ) %>
+        </form>
+
+        <%= render component("ui/button").new(
+          tag: :button,
+          text: t(".save"),
+          form: form_id
+        ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render component("orders/show").new(order: @order) %>
+</div>

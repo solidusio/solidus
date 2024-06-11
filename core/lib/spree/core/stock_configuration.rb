@@ -8,6 +8,9 @@ module Spree
       attr_writer :location_filter_class
       attr_writer :location_sorter_class
       attr_writer :allocator_class
+      attr_writer :inventory_unit_builder_class
+      attr_writer :availability_validator_class
+      attr_writer :inventory_validator_class
 
       def coordinator_class
         @coordinator_class ||= '::Spree::Stock::SimpleCoordinator'
@@ -32,6 +35,21 @@ module Spree
       def allocator_class
         @allocator_class ||= '::Spree::Stock::Allocator::OnHandFirst'
         @allocator_class.constantize
+      end
+
+      def inventory_unit_builder_class
+        @inventory_unit_builder_class ||= '::Spree::Stock::InventoryUnitBuilder'
+        @inventory_unit_builder_class.constantize
+      end
+
+      def availability_validator_class
+        @availability_validator_class ||= '::Spree::Stock::AvailabilityValidator'
+        @availability_validator_class.constantize
+      end
+ 
+      def inventory_validator_class
+        @inventory_validator_class ||= '::Spree::Stock::InventoryValidator'
+        @inventory_validator_class.constantize
       end
     end
   end

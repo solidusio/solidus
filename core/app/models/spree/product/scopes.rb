@@ -29,25 +29,25 @@ module Spree
           scope :descend_by_name, -> { order(name: :desc) }
 
           add_search_scope :ascend_by_master_price do
-            joins(master: :default_price).select('spree_products.* , spree_prices.amount')
+            joins(master: :prices).select('spree_products.* , spree_prices.amount')
                                          .order(Spree::Price.arel_table[:amount].asc)
           end
 
           add_search_scope :descend_by_master_price do
-            joins(master: :default_price).select('spree_products.* , spree_prices.amount')
+            joins(master: :prices).select('spree_products.* , spree_prices.amount')
                                          .order(Spree::Price.arel_table[:amount].desc)
           end
 
           add_search_scope :price_between do |low, high|
-            joins(master: :default_price).where(Price.table_name => { amount: low..high })
+            joins(master: :prices).where(Price.table_name => { amount: low..high })
           end
 
           add_search_scope :master_price_lte do |price|
-            joins(master: :default_price).where("#{price_table_name}.amount <= ?", price)
+            joins(master: :prices).where("#{price_table_name}.amount <= ?", price)
           end
 
           add_search_scope :master_price_gte do |price|
-            joins(master: :default_price).where("#{price_table_name}.amount >= ?", price)
+            joins(master: :prices).where("#{price_table_name}.amount >= ?", price)
           end
 
           # This scope selects products in taxon AND all its descendants
@@ -158,7 +158,7 @@ module Spree
           # order: 'COALESCE(cnt, 0) DESC'
           add_search_scope :descend_by_popularity do
             joins(:master).
-              order(%{
+              order(Arel.sql(%{
            COALESCE((
              SELECT
                COUNT(#{Spree::LineItem.quoted_table_name}.id)
@@ -171,7 +171,7 @@ module Spree
              WHERE
                popular_variants.product_id = #{Spree::Product.quoted_table_name}.id
            ), 0) DESC
-        })
+        }))
           end
 
           add_search_scope :not_deleted do
@@ -194,10 +194,23 @@ module Spree
             group("spree_products.id").joins(:taxons).where(Spree::Taxon.arel_table[:name].eq(name))
           end
 
-          def self.with_variant_sku_cont(sku)
-            sku_match = "%#{sku}%"
+          def self.with_all_variant_sku_cont(sku)
             variant_table = Spree::Variant.arel_table
-            subquery = Spree::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
+            subquery = Spree::Variant.with_discarded.where(
+              variant_table[:sku].matches("%#{sku}%").and(
+                variant_table[:product_id].eq(arel_table[:id])
+              )
+            )
+            where(subquery.arel.exists)
+          end
+
+          def self.with_kept_variant_sku_cont(sku)
+            variant_table = Spree::Variant.arel_table
+            subquery = Spree::Variant.where(
+              variant_table[:sku].matches("%#{sku}%").and(
+                variant_table[:product_id].eq(arel_table[:id])
+              )
+            )
             where(subquery.arel.exists)
           end
 

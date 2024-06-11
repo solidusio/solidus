@@ -22,8 +22,11 @@ require "spree/core/search/variant"
 require 'spree/preferences/configuration'
 require 'spree/core/environment'
 
+require 'uri'
+
 module Spree
   class AppConfiguration < Preferences::Configuration
+    include Spree::Core::EnvironmentExtension
     # Preferences (alphabetized to more easily lookup particular preferences)
 
     # @!attribute [rw] address_requires_phone
@@ -145,6 +148,10 @@ module Spree
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
+    # @!attribute [rw] default_email_regexp
+    #   @return [Regexp] Regex to be used in email validations, for example in Spree::EmailValidator
+    preference :default_email_regexp, :regexp, default: URI::MailTo::EMAIL_REGEXP
+
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
@@ -165,9 +172,21 @@ module Spree
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
     preference :logo, :string, default: 'logo/solidus.svg'
 
-    # @!attribute [rw] mails_from
-    #   @return [String] Email address used as +From:+ field in transactional emails.
-    preference :mails_from, :string, default: 'solidus@example.com'
+    # @!attribute [rw] log_entry_permitted_classes
+    #   @return [Array<String>] An array of extra classes that are allowed to be
+    #     loaded from a serialized YAML as details in {Spree::LogEntry}
+    #     (defaults to a non-frozen empty array, so that extensions can add
+    #     their own classes).
+    #   @example
+    #     config.log_entry_permitted_classes = ['Date']
+    preference :log_entry_permitted_classes, :array, default: []
+
+    # @!attribute [rw] log_entry_allow_aliases
+    #   @return [Boolean] Whether YAML aliases are allowed when loading
+    #     serialized data in {Spree::LogEntry}. It defaults to true. Depending
+    #     on the source of your data, you may consider disabling it to prevent
+    #     entity expansion attacks.
+    preference :log_entry_allow_aliases, :boolean, default: true
 
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
@@ -197,10 +216,6 @@ module Spree
     # @!attribute [rw] products_per_page
     #   @return [Integer] Products to show per-page in the frontend (default: +12+)
     preference :products_per_page, :integer, default: 12
-
-    # @!attribute [rw] promotions_per_page
-    #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
-    preference :promotions_per_page, :integer, default: 15
 
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
@@ -263,7 +278,6 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-
     # Other configurations
 
     # Allows restricting what currencies will be available.
@@ -307,9 +321,6 @@ module Spree
     #   Spree::Variant::VatPriceGenerator.
     class_name_attribute :variant_vat_prices_generator_class, default: 'Spree::Variant::VatPriceGenerator'
 
-    # promotion_chooser_class allows extensions to provide their own PromotionChooser
-    class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
-
     class_name_attribute :allocator_class, default: 'Spree::Stock::Allocator::OnHandFirst'
 
     class_name_attribute :shipping_rate_sorter_class, default: 'Spree::Stock::ShippingRateSorter'
@@ -332,14 +343,20 @@ module Spree
     #   signature as Spree::OrderMailer.confirm_email.
     class_name_attribute :order_mailer_class, default: 'Spree::OrderMailer'
 
-    # Allows providing your own Mailer for promotion code batch mailer.
+    # Allows providing your own order update attributes class for checkout.
     #
-    # @!attribute [rw] promotion_code_batch_mailer_class
-    # @return [ActionMailer::Base] an object that responds to "promotion_code_batch_finished",
-    #   and "promotion_code_batch_errored"
-    #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
-    #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
-    class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
+    # @!attribute [rw] order_update_attributes_class
+    # @return [Class] a class that responds to "call"
+    #   with the same signature as Spree::OrderUpdateAttributes.
+    class_name_attribute :order_update_attributes_class, default: 'Spree::OrderUpdateAttributes'
+
+    # Allows providing a different order recalculator.
+    # @!attribute [rw] order_recalculator_class
+    # @see Spree::OrderUpdater
+    # @return [Class] an object that conforms to the API of
+    #   the standard order recalculator class
+    #   Spree::OrderUpdater.
+    class_name_attribute :order_recalculator_class, default: 'Spree::OrderUpdater'
 
     # Allows providing your own Mailer for reimbursement mailer.
     #
@@ -371,6 +388,28 @@ module Spree
     # @return [Class] a class with the same public interfaces as
     #   Spree::Wallet::DefaultPaymentBuilder.
     class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
+
+    # Allows providing your own class for managing the contents of an order.
+    #
+    # @!attribute [rw] order_contents_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderContents.
+    class_name_attribute :order_contents_class, default: 'Spree::OrderContents'
+
+    # Allows providing your own class for shipping an order.
+    #
+    # @!attribute [rw] order_shipping_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderShipping.
+    class_name_attribute :order_shipping_class, default: 'Spree::OrderShipping'
+
+    # Allows providing your own class for managing the inventory units of a
+    # completed order.
+    #
+    # @!attribute [rw] order_cancellations_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderCancellations.
+    class_name_attribute :order_cancellations_class, default: 'Spree::OrderCancellations'
 
     # Allows providing your own class for canceling payments.
     #
@@ -443,7 +482,7 @@ module Spree
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :image_attachment_module, default: 'Spree::Image::ActiveStorageAttachment'
+    class_name_attribute :image_attachment_module, default: "Spree::Image::ActiveStorageAttachment"
 
     # @!attribute [rw] allowed_image_mime_types
     #
@@ -453,6 +492,55 @@ module Spree
     # @return [Array]
     class_name_attribute :allowed_image_mime_types, default: %w(image/jpeg image/jpg image/png image/gif).freeze
 
+    # @!attribute [rw] product_image_style_default
+    #
+    # Defines which style to default to when style is not provided
+    # :product is the default.
+    #
+    # @return [Symbol]
+    class_name_attribute :product_image_style_default, default: :product
+
+    # @!attribute [rw] product_image_styles
+    #
+    # Defines image styles/sizes hash for styles
+    # `{ mini: '48x48>',
+    #    small: '400x400>',
+    #    product: '680x680>',
+    #    large: '1200x1200>' } is the default.
+    #
+    # @return [Hash]
+    class_name_attribute :product_image_styles, default: { mini: '48x48>',
+                                                          small: '400x400>',
+                                                          product: '680x680>',
+                                                          large: '1200x1200>' }
+
+    # Allows providing your own class for prioritizing store credit application
+    # to an order.
+    #
+    # @!attribute [rw] store_credit_prioritizer_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::StoreCreditPrioritizer.
+    class_name_attribute :store_credit_prioritizer_class, default: 'Spree::StoreCreditPrioritizer'
+
+    # @!attribute [rw] taxon_image_style_default
+    #
+    # Defines which style to default to when style is not provided
+    # :mini is the default.
+    #
+    # @return [Symbol]
+    class_name_attribute :taxon_image_style_default, default: :mini
+
+    # @!attribute [rw] taxon_styles
+    #
+    # Defines taxon styles/sizes hash for styles
+    # `{ mini: '48x48>',
+    #    small: '400x400>',
+    #    product: '680x680>',
+    #    large: '1200x1200>' } is the default.
+    #
+    # @return [Hash]
+    class_name_attribute :taxon_image_styles, default: { mini: '32x32>', normal: '128x128>' }
+
     # Allows switching attachment library for Taxon
     #
     # `Spree::Taxon::ActiveStorageAttachment`
@@ -461,7 +549,21 @@ module Spree
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
-    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::ActiveStorageAttachment'
+    class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
+
+    # Set of classes that can be promotion adjustment sources
+    add_class_set :adjustment_promotion_source_types, default: ["Spree::PromotionAction"]
+
+    # Configures the absolute path that contains the Solidus engine
+    # migrations. This will be checked at app boot to confirm that all Solidus
+    # migrations are installed.
+    #
+    # @!attribute [rw] migration_path
+    # @return [Pathname] the configured path. (default: `Rails.root.join('db', 'migrate')`)
+    attr_writer :migration_path
+    def migration_path
+      @migration_path ||= ::Rails.root.join('db', 'migrate')
+    end
 
     # Allows providing your own class instance for generating order numbers.
     #
@@ -486,15 +588,59 @@ module Spree
       @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
+    # Allows providing your own promotion configuration instance
+    # @!attribute [rw] promotions
+    # @return [Spree::Core::NullPromotionConfiguration] an object that conforms to the API of
+    #   the example promotion configuration class Spree::Core::NullPromotionConfiguration.
+    attr_writer :promotions
+    def promotions
+      @promotions ||= Spree::Core::NullPromotionConfiguration.new
+    end
+
+    class << self
+      private
+
+      def promotions_deprecation_message(method, new_method_name = nil)
+        "The `Spree::Config.#{method}` preference is deprecated and will be removed in Solidus 5.0. " \
+        "Use `Spree::Config.promotions.#{new_method_name || method}` instead"
+      end
+    end
+
+    def promotion_adjuster_class
+      promotions.order_adjuster_class
+    end
+
+    def promotion_adjuster_class=(klass)
+      promotions.order_adjuster_class = klass
+    end
+    deprecate promotion_adjuster_class: promotions_deprecation_message("promotion_adjuster_class", "order_adjuster_class"), deprecator: Spree.deprecator
+    deprecate "promotion_adjuster_class=": promotions_deprecation_message("promotion_adjuster_class=", "order_adjuster_class="), deprecator: Spree.deprecator
+
+    delegate :promotion_chooser_class, :promotion_chooser_class=, to: :promotions
+    deprecate promotion_chooser_class: promotions_deprecation_message("promotion_chooser_class"), deprecator: Spree.deprecator
+    deprecate "promotion_chooser_class=": promotions_deprecation_message("promotion_chooser_class="), deprecator: Spree.deprecator
+
+    delegate :shipping_promotion_handler_class, :shipping_promotion_handler_class=, to: :promotions
+    deprecate shipping_promotion_handler_class: promotions_deprecation_message("shipping_promotion_handler_class"), deprecator: Spree.deprecator
+    deprecate "shipping_promotion_handler_class=": promotions_deprecation_message("shipping_promotion_handler_class="), deprecator: Spree.deprecator
+
+    delegate :coupon_code_handler_class, :coupon_code_handler_class=, to: :promotions
+    deprecate coupon_code_handler_class: promotions_deprecation_message("coupon_code_handler_class"), deprecator: Spree.deprecator
+    deprecate "coupon_code_handler_class=": promotions_deprecation_message("coupon_code_handler_class"), deprecator: Spree.deprecator
+
+    delegate :promotion_code_batch_mailer_class, :promotion_code_batch_mailer_class=, to: :promotions
+    deprecate promotion_code_batch_mailer_class: promotions_deprecation_message("promotion_code_batch_mailer_class"), deprecator: Spree.deprecator
+    deprecate "promotion_code_batch_mailer_class=": promotions_deprecation_message("promotion_code_batch_mailer_class="), deprecator: Spree.deprecator
+
+    delegate :preferred_promotions_per_page, :preferred_promotions_per_page=, to: :promotions
+    deprecate preferred_promotions_per_page: promotions_deprecation_message("preferred_promotions_per_page"), deprecator: Spree.deprecator
+    deprecate "preferred_promotions_per_page=": promotions_deprecation_message("preferred_promotions_per_page="), deprecator: Spree.deprecator
+
     def roles
       @roles ||= Spree::RoleConfiguration.new.tap do |roles|
         roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
         roles.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
       end
-    end
-
-    def events
-      @events_configuration ||= Spree::Event::Configuration.new
     end
 
     def user_last_url_storer_rules
@@ -505,27 +651,6 @@ module Spree
 
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
-        env.calculators.promotion_actions_create_adjustments = %w[
-          Spree::Calculator::FlatPercentItemTotal
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::TieredPercent
-          Spree::Calculator::TieredFlatRate
-        ]
-
-        env.calculators.promotion_actions_create_item_adjustments = %w[
-          Spree::Calculator::DistributedAmount
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::TieredPercent
-        ]
-
-        env.calculators.promotion_actions_create_quantity_adjustments = %w[
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::FlatRate
-        ]
-
         env.calculators.shipping_methods = %w[
           Spree::Calculator::Shipping::FlatPercentItemTotal
           Spree::Calculator::Shipping::FlatRate
@@ -536,6 +661,7 @@ module Spree
 
         env.calculators.tax_rates = %w[
           Spree::Calculator::DefaultTax
+          Spree::Calculator::FlatFee
         ]
 
         env.payment_methods = %w[
@@ -543,32 +669,6 @@ module Spree
           Spree::PaymentMethod::SimpleBogusCreditCard
           Spree::PaymentMethod::StoreCredit
           Spree::PaymentMethod::Check
-        ]
-
-        env.promotions.rules = %w[
-          Spree::Promotion::Rules::ItemTotal
-          Spree::Promotion::Rules::Product
-          Spree::Promotion::Rules::User
-          Spree::Promotion::Rules::FirstOrder
-          Spree::Promotion::Rules::UserLoggedIn
-          Spree::Promotion::Rules::OneUsePerUser
-          Spree::Promotion::Rules::Taxon
-          Spree::Promotion::Rules::NthOrder
-          Spree::Promotion::Rules::OptionValue
-          Spree::Promotion::Rules::FirstRepeatPurchaseSince
-          Spree::Promotion::Rules::UserRole
-          Spree::Promotion::Rules::Store
-        ]
-
-        env.promotions.actions = %w[
-          Spree::Promotion::Actions::CreateAdjustment
-          Spree::Promotion::Actions::CreateItemAdjustments
-          Spree::Promotion::Actions::CreateQuantityAdjustments
-          Spree::Promotion::Actions::FreeShipping
-        ]
-
-        env.promotions.shipping_actions = %w[
-          Spree::Promotion::Actions::FreeShipping
         ]
 
         env.stock_splitters = %w[

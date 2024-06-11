@@ -3,15 +3,15 @@
 
     <div data-hook="admin_zone_form_fields">
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= t('spree.general_settings')%></legend>
+        <legend align="center"><%= t('spree.store') %></legend>
 
         <%= zone_form.field_container :name do %>
-          <%= zone_form.label :name %><br />
+          <%= zone_form.label :name %><br>
           <%= zone_form.text_field :name, class: 'fullwidth' %>
         <% end %>
 
         <%= zone_form.field_container :description do %>
-          <%= zone_form.label :description %><br />
+          <%= zone_form.label :description %><br>
           <%= zone_form.text_field :description, class: 'fullwidth' %>
         <% end %>
 
@@ -37,7 +37,7 @@
   </div>
   <div class="col-5">
 
-    <%= render partial: 'state_members', locals: { zone_form: zone_form }%>
+    <%= render partial: 'state_members', locals: { zone_form: zone_form } %>
     <%= render partial: 'country_members', locals: { zone_form: zone_form } %>
   </div>
 

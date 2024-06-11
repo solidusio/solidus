@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-end
-
 require 'carmen'
 
 FactoryBot.define do
@@ -20,7 +15,6 @@ FactoryBot.define do
     iso3 { carmen_country.alpha_3_code }
     numcode { carmen_country.numeric_code }
 
-    # FIXME: We should set states required, but it causes failing tests
-    # states_required { carmen_country.subregions? }
+    states_required { carmen_country.subregions? }
   end
 end

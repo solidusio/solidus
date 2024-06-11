@@ -1,0 +1,29 @@
+<label class="flex flex-col gap-2 w-full">
+  <div class="flex gap-1 items-center">
+    <span class="
+      text-gray-700
+      font-semibold text-xs
+    "><%= @label %></span>
+
+    <%= render component('ui/toggletip').new(text: @tip) if @tip.present? %>
+  </div>
+
+  <% if @input_attributes.present? %>
+    <%= render component('ui/forms/input').new(**@input_attributes) %>
+  <% elsif content.respond_to?(:render_in) %>
+    <%= render content %>
+  <% else %>
+    <%= content %>
+  <% end %>
+
+  <% if @hint.present? || @error.present? %>
+    <div class="
+      font-normal text-xs
+      [:disabled~&]:text-gray-300 text-gray-500
+      flex gap-1 flex-col
+    ">
+      <%= tag.span @hint if @hint.present? %>
+      <%= tag.span safe_join(@error, tag.br), class: "text-red-600" if @error.present? %>
+    </div>
+  <% end %>
+</label>

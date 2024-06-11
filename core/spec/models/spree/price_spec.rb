@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Price, type: :model do
   describe 'searchable columns' do
-    subject { described_class.whitelisted_ransackable_attributes }
+    subject { described_class.allowed_ransackable_attributes }
     it 'allows searching by variant_id' do
       expect(subject).to include("variant_id")
     end
@@ -16,7 +16,7 @@ RSpec.describe Spree::Price, type: :model do
 
     context 'when the amount is nil' do
       let(:amount) { nil }
-      it { is_expected.to be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context 'when the amount is less than 0' do
@@ -96,6 +96,33 @@ RSpec.describe Spree::Price, type: :model do
         expect(price.country).to eq(country)
       end
     end
+
+    describe '.currently_valid' do
+      it 'prioritizes first those associated to a country' do
+        price_1 = create(:price, country: create(:country))
+        price_2 = create(:price, country: nil) { |price| price.touch }
+
+        result = described_class.currently_valid
+
+        expect(
+          result.index(price_1) < result.index(price_2)
+        ).to be(true)
+      end
+
+      context 'when country data is the same' do
+        it 'prioritizes first those recently updated' do
+          price_1 = create(:price, country: nil)
+          price_2 = create(:price, country: nil)
+          price_1.touch
+
+          result = described_class.currently_valid
+
+          expect(
+            result.index(price_1) < result.index(price_2)
+          ).to be(true)
+        end
+      end
+    end
   end
 
   describe "#currency" do
@@ -118,6 +145,24 @@ RSpec.describe Spree::Price, type: :model do
         let(:currency) { "USD" }
 
         it { is_expected.to be_valid }
+      end
+    end
+  end
+
+  describe "#display_country" do
+    subject { price.display_country }
+
+    context "when country_iso nil" do
+      let(:price) { build_stubbed(:price, country_iso: nil) }
+
+      it { is_expected.to eq "Any Country" }
+    end
+
+    context "when country_iso is set" do
+      let(:price) { build_stubbed(:price, country_iso: "DE") }
+
+      it "shows country iso and translated country name" do
+        is_expected.to eq "DE (Germany)"
       end
     end
   end

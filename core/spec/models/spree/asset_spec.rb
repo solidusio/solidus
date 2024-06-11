@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Spree::Asset, type: :model do
   describe "#viewable" do
     it "touches association" do
-      product = build(:custom_product)
+      product = create(:custom_product)
 
       expect do
         Spree::Asset.create! { |a| a.viewable = product.master }

@@ -1,0 +1,14 @@
+<% current_component::POSITIONS.keys.each do |position| %>
+  <div class="mb-8">
+    <h6 class="text-gray-500 mb-3 mt-0">
+      <%= position.to_s.humanize %>
+    </h6>
+
+    <div class="ml-80">
+      <%= render current_component.new(
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        position: position
+      ) %>
+    </div>
+  </div>
+<% end %>

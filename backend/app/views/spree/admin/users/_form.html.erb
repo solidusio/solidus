@@ -40,6 +40,7 @@
         <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
         <ul>
           <% if can?(:manage, Spree::UserStockLocation) %>
+            <%= hidden_field_tag('user[stock_location_ids][]', nil) %>
             <% @stock_locations.each do |stock_location| %>
               <li>
                 <label>
@@ -66,7 +67,6 @@
         <%= f.password_field :password, class: 'fullwidth' %>
         <%= f.error_message_on :password %>
       <% end %>
-
 
       <% if f.object.respond_to?(:password_confirmation) %>
         <%= f.field_container :password do %>

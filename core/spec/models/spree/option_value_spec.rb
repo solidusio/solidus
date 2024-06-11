@@ -49,4 +49,10 @@ RSpec.describe Spree::OptionValue, type: :model do
       expect(subject).to eq "Size - S"
     end
   end
+
+  it 'raises when creating an option_value with no associated option_type' do
+    expect {
+      create(:option_value, option_type: nil)
+    }.to raise_error(ActiveRecord::RecordInvalid)
+  end
 end

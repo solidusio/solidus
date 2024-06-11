@@ -2,7 +2,6 @@
 
 <% admin_breadcrumb("#{t('spree.editing_reimbursement')} #{@reimbursement.number}") %>
 
-
 <% content_for :page_actions do %>
   <li><%= link_to t('spree.back_to_customer_return'), url_for([:edit, :admin, @order, @reimbursement.customer_return]), class: 'btn btn-primary' %></li>
 <% end %>
@@ -63,11 +62,9 @@
   </fieldset>
 
   <div class="form-buttons filter-actions actions" data-hook="buttons">
-    <%= f.button do %>
-      <%= t('spree.update') %>
-    <% end %>
+    <%= f.submit t('spree.update'), class: "btn btn-primary" %>
   </div>
-  <br/>
+  <br>
 <% end %>
 
 <fieldset>
@@ -97,10 +94,10 @@
   <% end %>
   <div class="form-buttons filter-actions actions" data-hook="reimburse-buttons">
     <% if !@reimbursement.reimbursed? %>
-      <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button btn btn-primary', method: 'post' } do %>
+      <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button btn btn-primary', method: 'post', data: { disable_with: t('spree.reimburse') }} do %>
         <%= t('spree.reimburse') %>
       <% end %>
-      <%= link_to t('spree.actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]), class: 'btn btn-default' %>
+      <%= link_to t('spree.actions.cancel'), url_for([:edit, :admin, @order, @reimbursement.customer_return]), class: 'btn btn-default' %>
     <% end %>
   </div>
 </fieldset>

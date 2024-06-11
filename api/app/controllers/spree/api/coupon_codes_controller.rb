@@ -10,7 +10,7 @@ module Spree
         authorize! :update, @order, order_token
 
         @order.coupon_code = params[:coupon_code]
-        @handler = PromotionHandler::Coupon.new(@order).apply
+        @handler = Spree::Config.promotions.coupon_code_handler_class.new(@order).apply
 
         if @handler.successful?
           render 'spree/api/promotions/handler', status: 200
@@ -24,7 +24,7 @@ module Spree
         authorize! :update, @order, order_token
 
         @order.coupon_code = params[:id]
-        @handler = PromotionHandler::Coupon.new(@order).remove
+        @handler = Spree::Config.promotions.coupon_code_handler_class.new(@order).remove
 
         if @handler.successful?
           render 'spree/api/promotions/handler', status: 200

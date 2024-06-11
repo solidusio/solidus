@@ -11,17 +11,20 @@
         currency_delimiter:     I18n.t('number.currency.format.delimiter'),
         activerecord:           I18n.t('activerecord')
     }))
-%>;
+  %>;
 
   Spree.currencyInfo = <%==
     JSON.dump(
       Spree::Config.available_currencies.map { |c|
         format =
-          if c.symbol == "" || c.symbol_first
+          if c.format.present?
+            c.format.gsub("%u", "%s").gsub("%n", "%v")
+          elsif c.symbol == "" || c.symbol_first
             "%s%v"
           else
             "%v %s"
           end
+
         [c.id.to_s.upcase, [
           c.symbol || "¤",
           c.exponent,
@@ -33,7 +36,10 @@
 <script data-hook='admin-custom-translations'>
 </script>
 
-<% if I18n.locale != :en %>
-  <%= javascript_include_tag "solidus_admin/select2_locales/select2_locale_#{I18n.locale}",
-    data: {turbolinks_track: 'reload'} %>
+<% select2_locale_path = "solidus_admin/select2_locales/select2_locale_#{I18n.locale}.js" %>
+<% if I18n.locale != :en && I18n.locale && (
+    Rails.application.assets&.find_asset(select2_locale_path) || # compiled on the fly
+    Rails.application.assets_manifest.assets[select2_locale_path] # precompiled
+) %>
+  <%= javascript_include_tag select2_locale_path, data: {turbolinks_track: 'reload'} %>
 <% end %>

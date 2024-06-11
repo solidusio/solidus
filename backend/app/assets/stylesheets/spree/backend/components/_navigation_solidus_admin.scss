@@ -1,0 +1,295 @@
+$color-navbar-hover-bg: $color-navbar-bg !default;
+$color-navbar-hover: $color-navbar !default;
+@import "spree/backend/themes/solidus_admin/colors";
+@import "spree/backend/components/switch_solidus_admin";
+
+.solidus-admin--nav {
+  background-color: $solidus-admin-gray-15;
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin-left: -$width-sidebar;
+  z-index: $zindex-sticky;
+  width: $width-sidebar;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  border-right: $color-light-accent 1px solid;
+
+  .dark-only {
+    display: none;
+    @media (prefers-color-scheme: dark) {
+      display: block;
+    }
+  }
+
+  .light-only {
+    display: none;
+    @media (prefers-color-scheme: light) {
+      display: block;
+    }
+  }
+
+  &--wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 240px;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  &--section {
+    text-align: center;
+    width: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+
+  > nav {
+    flex-grow: 1;
+  }
+
+  &--logo {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    text-align: left;
+    margin-bottom: 16px;
+    padding: 12px 8px;
+
+    img {
+      max-height: $main-header-height - (16px * 2) - (12px * 2);
+    }
+  }
+
+  &--store-link {
+    display: flex;
+    width: 100%;
+    border: $border-color 1px solid;
+    border-radius: $border-radius;
+    padding: 6px 8px;
+    text-align: left;
+
+    &:hover {
+      background: $color-navbar-hover-bg;
+      color: $color-navbar-hover;
+    }
+
+    i {
+      float: right;
+      padding: 6px 8px;
+      color: $color-dark-light;
+    }
+
+    &--name {
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-dark;
+      display: block;
+    }
+
+    &--url {
+      line-height: 16px;
+      font-size: 12px;
+      font-weight: 400;
+      color: $color-dark-light;
+      display: block;
+    }
+
+    svg {
+      fill: $solidus-admin-gray-400;
+      height: 16px;
+      width: 100%;
+      max-width: 16px;
+    }
+  }
+
+  &--menu {
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    margin-bottom: 12px;
+
+    li {
+      padding: 0;
+    }
+
+    li > a,
+    li > label {
+      margin: 0;
+      margin-bottom: 2px;
+      display: block;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 600;
+      padding: 2px 12px;
+      width: 100%;
+      border-radius: $border-radius;
+      color: $solidus-admin-gray-800;
+      gap: 12px;
+      display: flex;
+      align-items: center;
+
+      &::before,
+      svg {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+      }
+    }
+
+    li > label > span {
+      line-height: 20px;
+    }
+
+    li.selected > a {
+      background: $color-navbar-active-bg;
+      color: $color-navbar-active;
+    }
+
+    li:not(.selected):hover > a,
+    li:not(.selected):hover > label {
+      background: $color-navbar-hover-bg;
+      color: $color-navbar-hover;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      li a {
+        padding-left: 12px + 18px + 12px;
+        font-weight: 400;
+        color: $color-dark-dark;
+      }
+    }
+
+    li:not(.selected) > ul {
+      display: none;
+    }
+  }
+
+  &--footer {
+    position: relative;
+    width: 100%;
+
+    summary {
+      display: flex;
+      padding: 12px;
+      margin-top: 8px;
+      gap: 6px;
+      border-radius: 4px;
+      color: $solidus-admin-gray-500;
+      cursor: pointer;
+      line-height: 0;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+
+      &:hover {
+        background-color: $solidus-admin-gray-25;
+      }
+
+      [open] > & {
+        background-color: $solidus-admin-gray-25;
+      }
+
+      &::marker,
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      svg {
+        display: inline-block;
+        flex-shrink: 0;
+        vertical-align: text-bottom;
+        width: 24px;
+        height: 24px;
+        background-color: $solidus-admin-black;
+        fill: $solidus-admin-yellow;
+        border-radius: 100%;
+      }
+
+      div {
+        line-height: 24px;
+        align-self: stretch;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    ul {
+      font-size: 14px;
+      position: absolute;
+      left: 0;
+      bottom: 100%;
+      padding: 8px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      border: 1px $solidus-admin-gray-100 solid;
+      width: 100%;
+      color: $solidus-admin-black;
+      background-color: $solidus-admin-white;
+      box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.08) 0px 4px 8px 0px,
+        rgba(0, 0, 0, 0.04) 0px 2px 4px -1px;
+
+      li {
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        height: 32px;
+        padding: 0 8px;
+
+        &:hover {
+          background-color: $solidus-admin-gray-25;
+        }
+
+        a,
+        label {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: inherit;
+          height: 32px;
+          margin: 0px;
+          font-size: 1em;
+          background-color: inherit;
+
+          select {
+            appearance: none;
+            border: none;
+            background-color: transparent;
+            width: 100%;
+            flex-grow: 1;
+          }
+
+          svg {
+            height: 20px;
+            width: 100%;
+            max-width: 20px;
+            fill: currentColor;
+          }
+        }
+      }
+    }
+  }
+}

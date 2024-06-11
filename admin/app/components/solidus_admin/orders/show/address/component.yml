@@ -1,0 +1,14 @@
+en:
+  save: Save
+  cancel: Cancel
+  back: Back
+  select_address: Select address
+  title:
+    ship: Edit Shipping Address
+    bill: Edit Billing Address
+  subtitle:
+    ship: Shipping Address
+    bill: Billing Address
+  use_this_address:
+    ship: Use this address also for Billing
+    bill: Use this address also for Shipping

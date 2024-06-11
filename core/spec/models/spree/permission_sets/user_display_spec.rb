@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/testing_support/dummy_ability'
 
 RSpec.describe Spree::PermissionSets::UserDisplay do
   let(:ability) { DummyAbility.new }

@@ -46,7 +46,11 @@ module Spree
 
               # Persist the state on the order
               after_transition do |order, transition|
-                order.state = order.state
+                # Hard to say if this is really necessary, it was introduced in this commit:
+                # https://github.com/mamhoff/solidus/commit/fa1d66c42e4c04ee7cd1c20d87e4cdb74a226d3d
+                # But it seems to be harmless, so we'll keep it for now.
+                order.state = order.state # rubocop:disable Lint/SelfAssignment
+
                 order.state_changes.create(
                   previous_state: transition.from,
                   next_state:     transition.to,
@@ -73,7 +77,7 @@ module Spree
               end
 
               event :complete do
-                transition to: :complete, from: :confirm
+                transition to: :complete, from: klass.checkout_steps.keys.last
               end
 
               if states[:payment]
@@ -102,7 +106,6 @@ module Spree
                 before_transition to: :delivery, do: :ensure_shipping_address
                 before_transition to: :delivery, do: :create_proposed_shipments
                 before_transition to: :delivery, do: :ensure_available_shipping_rates
-                before_transition from: :delivery, do: :apply_shipping_promotions
               end
 
               before_transition to: :resumed, do: :ensure_line_item_variants_are_not_deleted
@@ -119,7 +122,7 @@ module Spree
                 before_transition to: :complete, do: :process_payments_before_complete
               end
 
-              after_transition to: :complete, do: :finalize!
+              after_transition to: :complete, do: :finalize
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
 

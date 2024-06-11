@@ -137,6 +137,12 @@ RSpec.describe Spree::StoreCredit do
     end
   end
 
+  describe "#display_number" do
+    it "returns the category name" do
+      expect(store_credit.display_number).to eq("Exchange")
+    end
+  end
+
   describe "#display_amount" do
     it "returns a Spree::Money instance" do
       expect(store_credit.display_amount).to be_instance_of(Spree::Money)
@@ -152,6 +158,38 @@ RSpec.describe Spree::StoreCredit do
   describe "#display_amount_authorized" do
     it "returns a Spree::Money instance" do
       expect(store_credit.display_amount_authorized).to be_instance_of(Spree::Money)
+    end
+  end
+
+  describe "#amount=" do
+    let(:store_credit) { described_class.new(amount: amount) }
+
+    context "with an imperial price format" do
+      let(:amount) { "1,000.50" }
+
+      before do
+        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+          "."
+        end
+      end
+
+      it "sets the correct amount" do
+        expect(store_credit.amount).to eq(1000.5)
+      end
+    end
+
+    context "with an european price format" do
+      let(:amount) { "1.000,50" }
+
+      before do
+        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+          ","
+        end
+      end
+
+      it "sets the correct amount" do
+        expect(store_credit.amount).to eq(1000.5)
+      end
     end
   end
 
@@ -285,7 +323,13 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context 'troublesome floats' do
-      # 8.21.to_d < 8.21 => true
+      if Gem::Requirement.new("~> 3.0.0") === Gem::Version.new(BigDecimal::VERSION)
+        # BigDecimal 2.0.0> 8.21.to_d # => 0.821e1 (all good!)
+        # BigDecimal 3.0.0> 8.21.to_d # => 0.8210000000000001e1 (`8.21.to_d < 8.21` is `true`!!!)
+        # BigDecimal 3.1.4> 8.21.to_d # => 0.821e1 (all good!)
+        before { pending "https://github.com/rails/rails/issues/42098; https://github.com/ruby/bigdecimal/issues/192" }
+      end
+
       let(:store_credit_attrs) { { amount: 8.21 } }
 
       subject { store_credit.validate_authorization(store_credit_attrs[:amount], store_credit.currency) }
@@ -894,6 +938,14 @@ RSpec.describe Spree::StoreCredit do
       it "assigns the originator as the user that is performing the invalidation" do
         subject
         expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::INVALIDATE_ACTION).originator).to eq invalidation_user
+      end
+    end
+  end
+
+  describe "#generate_authorization_code" do
+    it "doesn't rely on time for uniqueness" do
+      freeze_time do
+        expect(subject.generate_authorization_code).not_to eq(subject.generate_authorization_code)
       end
     end
   end

@@ -25,6 +25,7 @@ describe "Variants", type: :feature do
       expect(page).to have_field('variant_width', with: "1.00")
       expect(page).to have_field('variant_depth', with: "1.50")
       expect(page).to have_select('variant[tax_category_id]')
+      expect(page).to have_select('variant[shipping_category_id]')
     end
   end
 
@@ -46,6 +47,41 @@ describe "Variants", type: :feature do
             within_row(1) { expect(page).to have_content("19.99 ₽") }
           end
         end
+      end
+    end
+
+    context 'displaying discarded variants' do
+      let!(:existing_variant) { create(:variant, sku: 'existing_variant_sku', product: product) }
+      let!(:discarded_variant) { create(:variant, sku: 'discarded_variant_sku', product: product) }
+
+      before { discarded_variant.discard! }
+
+      it 'does not display deleted variants by default' do
+        visit spree.admin_product_variants_path(product)
+
+        expect(page).to have_content(existing_variant.sku)
+        expect(page).not_to have_content(discarded_variant.sku)
+      end
+
+      it 'allows to display deleted variants with a filter' do
+        visit spree.admin_product_variants_path(product)
+        check 'Show Deleted Variants'
+        click_button 'Filter Results'
+
+        expect(page).to have_content(discarded_variant.sku)
+      end
+    end
+
+    context 'displaying variants with unconfigured prices' do
+      let!(:variant) { create(:variant, sku: 'priceless_variant', product: product) }
+
+      before { variant.prices.delete_all }
+
+      it 'renders the listing correctly' do
+        visit spree.admin_product_variants_path(product)
+
+        expect(page.status_code).to be(200)
+        expect(page).to have_content('priceless_variant')
       end
     end
   end

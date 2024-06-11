@@ -11,6 +11,14 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  shared_examples "working preferences set" do
+    it "allows adding new items" do
+      preferences_set << DummyClass
+      expect(preferences_set).to include DummyClass
+      preferences_set.delete DummyClass
+    end
+  end
+
   it "should be available from the environment" do
     prefs.layout = "my/layout"
     expect(prefs.layout).to eq "my/layout"
@@ -32,6 +40,68 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.variant_price_selector_class).to eq Spree::Variant::PriceSelector
   end
 
+  it "uses core's promotion configuration class by default" do
+    expect(prefs.promotions).to be_a Spree::Core::NullPromotionConfiguration
+  end
+
+  context "deprecated preferences" do
+    around do |example|
+      Spree.deprecator.silence do
+        example.run
+      end
+    end
+
+    it "uses order adjustments recalculator class by default" do
+      expect(prefs.promotion_adjuster_class).to eq Spree::NullPromotionAdjuster
+    end
+
+    it "uses promotion handler coupon class by default" do
+      expect(prefs.coupon_code_handler_class).to eq Spree::NullPromotionHandler
+    end
+
+    it "uses promotion handler shipping class by default" do
+      expect(prefs.shipping_promotion_handler_class).to eq Spree::NullPromotionHandler
+    end
+
+    it "uses promotion code batch mailer class by default" do
+      expect(prefs.promotion_code_batch_mailer_class).to eq Spree::DeprecatedConfigurableClass
+    end
+
+    it "uses promotion chooser class by default" do
+      expect(prefs.promotion_chooser_class).to eq Spree::DeprecatedConfigurableClass
+    end
+  end
+
+  context "deprecated preferences" do
+    let(:environment) { prefs.environment }
+
+    around do |example|
+      Spree.deprecator.silence do
+        example.run
+      end
+    end
+
+    context '.calculators' do
+      subject(:calculators) { environment.calculators }
+      it { is_expected.to be_a Spree::Core::Environment::Calculators }
+
+      context '.calculators.promotion_actions_create_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_item_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_quantity_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+    end
+  end
+
   it "has a getter for the pricing options class provided by the variant price selector class" do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
@@ -39,6 +109,11 @@ RSpec.describe Spree::AppConfiguration do
   describe '#stock' do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }
+  end
+
+  describe '#promotions' do
+    subject { prefs.promotions }
+    it { is_expected.to be_a Spree::Core::NullPromotionConfiguration }
   end
 
   describe '@default_country_iso_code' do
@@ -58,14 +133,6 @@ RSpec.describe Spree::AppConfiguration do
 
     subject(:environment) { prefs.environment }
     it { is_expected.to be_a Spree::Core::Environment }
-
-    shared_examples "working preferences set" do
-      it "allows adding new items" do
-        preferences_set << DummyClass
-        expect(preferences_set).to include DummyClass
-        preferences_set.delete DummyClass
-      end
-    end
 
     context '.payment_methods' do
       subject(:preferences_set) { environment.payment_methods }
@@ -90,25 +157,17 @@ RSpec.describe Spree::AppConfiguration do
         subject(:preferences_set) { calculators.tax_rates }
         it_should_behave_like "working preferences set"
       end
-
-      context '.calculators.promotion_actions_create_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_item_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
-        it_should_behave_like "working preferences set"
-      end
-
-      context '.calculators.promotion_actions_create_quantity_adjustments' do
-        subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
-        it_should_behave_like "working preferences set"
-      end
     end
 
     context '.promotions' do
+      around do |example|
+        Spree.deprecator.silence do
+          example.run
+        end
+      end
+
       subject(:promotions) { environment.promotions }
+
       it { is_expected.to be_a Spree::Core::Environment::Promotions }
 
       context '.promotions.rules' do
@@ -128,13 +187,35 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  describe "#migration_path" do
+    subject { config_instance.migration_path }
+
+    let(:config_instance) { described_class.new }
+
+    it "has a default value" do
+      expect(subject.to_s).to end_with "db/migrate"
+    end
+
+    context "with a custom value" do
+      before do
+        config_instance.migration_path = "db/secondary_database"
+      end
+
+      it "returns the configured value" do
+        expect(subject).to eq "db/secondary_database"
+      end
+    end
+  end
+
+  describe "#adjustment_promotion_source_types" do
+    subject { described_class.new.adjustment_promotion_source_types }
+
+    it { is_expected.to contain_exactly(Spree::PromotionAction) }
+  end
+
   it 'has a default admin VAT location with nil values by default' do
     expect(prefs.admin_vat_location).to eq(Spree::Tax::TaxLocation.new)
     expect(prefs.admin_vat_location.state_id).to eq(nil)
     expect(prefs.admin_vat_location.country_id).to eq(nil)
-  end
-
-  it 'has default Event adapter' do
-    expect(prefs.events.adapter).to eq Spree::Event::Adapters::ActiveSupportNotifications
   end
 end

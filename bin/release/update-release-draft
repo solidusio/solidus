@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '_helpers'
+require 'optparse'
+require 'yaml'
+
+branch = 'main'
+update = false
+
+opts = OptionParser.new
+opts.banner = "Usage: #{$0} [options] <previous_tag_name> <candidate_tag_name>"
+opts.on("-b", "--branch BRANCH", "GitHub branch") { branch = _1 }
+opts.on("-u", "--update", "Update the release draft instead of creating a new one") { update = true }
+opts.on("-h", "--help", "Prints this help") { puts opts; exit }
+opts.parse!
+
+previous_tag_name = ARGV.shift or abort(opts.to_s)
+candidate_tag_name = ARGV.shift or abort(opts.to_s)
+
+# Let GH generate a list of PRs between the previous tag and the current
+# one. The generated notes are not good for us because we want PRs to
+# appear multiple times.
+pull_numbers = OCTOKIT.post("/repos/solidusio/solidus/releases/generate-notes", {
+  tag_name: candidate_tag_name,
+  target_commitish: branch,
+  previous_tag_name: previous_tag_name,
+}).body.scan(%r{(?:#|pull/)(\d+)$}).flatten.uniq
+
+# Group PRs by label
+pulls_by_label = Hash.new { |h, k| h[k] = [] }
+pull_numbers.map { |n| Thread.new{ OCTOKIT.pull_request('solidusio/solidus', n) } }.map(&:value).each do |pull|
+  pull.labels.each { pulls_by_label[_1.name] << pull }
+end
+
+warn "~~> Generating release notes draft for solidusio/solidus@#{branch}, from #{previous_tag_name} to #{candidate_tag_name}..."
+notes = "<!-- Please, don't edit manually. The content is automatically generated. -->"
+release_config = YAML.load_file("#{ROOT}/.github/release.yml", symbolize_names: true)
+release_config.dig(:changelog, :categories).each do |category|
+  pull_requests = pulls_by_label.values_at(*category[:labels]).flatten.compact.uniq
+
+  next if pull_requests.empty? # Skip empty categories
+
+  notes += "\n\n## #{category[:title]}\n"
+  pull_requests.each do |pull_request|
+    notes += "\n* #{pull_request[:title]} by @#{pull_request[:user][:login]} in #{pull_request[:html_url]}"
+  end
+end
+notes += "\n\n**Full Changelog**: https://github.com/solidusio/solidus/compare/#{previous_tag_name}...#{candidate_tag_name}\n"
+
+if update
+  release =
+    OCTOKIT.releases('solidusio/solidus').find {
+      _1.name == candidate_tag_name
+    } || OCTOKIT.create_release(
+      'solidusio/solidus',
+      candidate_tag_name,
+      name: candidate_tag_name,
+      body: notes,
+      target_commitish: branch,
+      draft: true,
+    )
+
+  OCTOKIT.update_release(release.url, body: notes)
+else
+  puts notes
+end

@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    stores:
+      title: "Stores"
+      destroy:
+        success: "Stores were successfully removed."

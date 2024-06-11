@@ -1,9 +1,9 @@
-<%= paginate master_prices, theme: "solidus_admin" %>
-
 <fieldset class="no-border-bottom <%= "no-border-top" if !variants %>">
   <% if variants %>
-    <legend align="center"><%= I18n.t(:master_variant, scope: :spree) %> <%= admin_hint I18n.t(:master_variant, scope: :spree), I18n.t(:master_variant, scope: [:spree, :hints, "spree/price"]) %></legend>
+    <legend align="center"><%= t(".master_variant") %> <%= admin_hint t(".master_variant"), I18n.t(:master_variant, scope: [:spree, :hints, "spree/price"]) %></legend>
   <% end %>
+
+  <%= paginate master_prices, theme: "solidus_admin" %>
   <table class="index master_prices">
     <colgroup>
       <col style="width: 30%">
@@ -25,7 +25,7 @@
         <td><%= price.currency %></td>
         <td><%= price.money.to_html %></td>
         <td class="actions">
-          <% if can?(:update, price) %>
+          <% if can?(:edit, price) %>
             <%= link_to_edit(price, no_text: true) unless price.discarded? %>
           <% end %>
           <% if can?(:destroy, price) %>
@@ -36,6 +36,5 @@
       </tr>
     <% end %>
   </table>
+  <%= paginate master_prices, theme: "solidus_admin" %>
 </fieldset>
-
-<%= paginate master_prices, theme: "solidus_admin" %>

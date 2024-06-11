@@ -1,9 +1,18 @@
 # frozen_string_literal: true
 
+if ENV["COVERAGE"]
+  require 'simplecov'
+  if ENV["COVERAGE_DIR"]
+    SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
+  end
+  SimpleCov.command_name('solidus:backend:teaspoon')
+  SimpleCov.merge_timeout(3600)
+  SimpleCov.start('rails') unless SimpleCov.running
+end
+
 ENV['RAILS_ENV'] = 'test'
 
 require 'teaspoon/driver/selenium'
-require 'webdrivers'
 
 # Similar to setup described in
 # https://github.com/jejacks0n/teaspoon/wiki/Micro-Applications
@@ -31,7 +40,7 @@ if defined?(DummyApp)
 
     config.suite do |suite|
       suite.use_framework :mocha, "2.3.3"
-      suite.matcher = "{spec/javascripts,app/assets}/**/*_spec.{js,js.coffee,coffee}"
+      suite.matcher = "{spec/javascripts,app/assets}/**/*_spec.js"
       suite.helper = "spec_helper"
       suite.boot_partial = "/boot"
       suite.expand_assets = true

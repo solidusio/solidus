@@ -1,0 +1,21 @@
+en:
+  save: Save
+  discard: Discard
+  title: "Order %{number}"
+  customer: Customer
+  no_name: No name available
+  order_email: Order contact email
+  back: Back to orders
+  same_as_shipping: Same as shipping address
+
+  edit_email: "Edit order email"
+  add_email: "Add order email"
+  edit_shipping: "Edit shipping address"
+  add_shipping: "Add shipping address"
+  edit_billing: "Edit billing address"
+  add_billing: "Add billing address"
+  remove_customer: "Remove customer"
+
+  orders_count:
+    one: "%{count} order"
+    other: "%{count} orders"

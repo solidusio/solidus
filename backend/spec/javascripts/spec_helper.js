@@ -4,7 +4,7 @@
 //= require support/chai-jq-0.0.7
 
 //= require_self
-//= require jquery
+//= require jquery3
 //= require rails-ujs
 //= require spree/backend
 //= require_tree ./support

@@ -4,7 +4,6 @@
 <% admin_breadcrumb(sub_tab) %>
 <% admin_breadcrumb(page_title) %>
 
-
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::ReturnReason) %>
@@ -18,9 +17,9 @@
 <% if @collection.any? %>
   <table class="index" id='listing_named_types' data-hook>
     <colgroup>
-      <col style="width: 65%" />
-      <col style="width: 20%" />
-      <col style="width: 15%" />
+      <col style="width: 65%">
+      <col style="width: 20%">
+      <col style="width: 15%">
     </colgroup>
     <thead>
       <tr data-hook="named_types_header">

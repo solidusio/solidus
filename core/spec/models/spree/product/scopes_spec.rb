@@ -116,6 +116,18 @@ RSpec.describe "Product scopes", type: :model do
     end
   end
 
+  context "descend_by_popularity" do
+    it "orders products by popularity" do
+      variant_1 = create(:master_variant)
+      variant_2 = create(:master_variant)
+
+      create_list(:line_item, 3, variant: variant_1)
+      create_list(:line_item, 2, variant: variant_2)
+
+      expect(Spree::Product.descend_by_popularity.map(&:id)).to eq([variant_1.product.id, variant_2.product.id, product.id])
+    end
+  end
+
   describe '.available' do
     context "a product with past available_on" do
       let!(:product) { create(:product, available_on: 1.day.ago) }
@@ -180,6 +192,60 @@ RSpec.describe "Product scopes", type: :model do
 
       it "doesn't include the product" do
         expect(Spree::Product.available).to match_array([])
+      end
+    end
+  end
+
+  describe ".with_all_variant_sku_cont" do
+    let!(:product) { create(:product, sku: sku) }
+    let(:sku) { "SEARCH-SKU-1" }
+
+    subject { Spree::Product.with_all_variant_sku_cont("SEARCH") }
+
+    it "returns the product" do
+      expect(subject).to contain_exactly(product)
+    end
+
+    context "when the variant has been discarded" do
+      before { product.master.discard }
+
+      it "returns the product" do
+        expect(subject).to contain_exactly(product)
+      end
+    end
+
+    context "when the SKU doesn't match" do
+      let(:sku) { "NON-MATCHING-SKU" }
+
+      it "does not include the product" do
+        expect(subject).to be_empty
+      end
+    end
+  end
+
+  describe ".with_kept_variant_sku_cont" do
+    let!(:product) { create(:product, sku: sku) }
+    let(:sku) { "SEARCH-SKU-1" }
+
+    subject { Spree::Product.with_kept_variant_sku_cont("SEARCH") }
+
+    it "returns the product" do
+      expect(subject).to contain_exactly(product)
+    end
+
+    context "when the variant has been discarded" do
+      before { product.master.discard }
+
+      it "does not include the product" do
+        expect(subject).to be_empty
+      end
+    end
+
+    context "when the SKU doesn't match" do
+      let(:sku) { "NON-MATCHING-SKU" }
+
+      it "does not include the product" do
+        expect(subject).to be_empty
       end
     end
   end

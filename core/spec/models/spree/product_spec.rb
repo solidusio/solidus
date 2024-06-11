@@ -129,7 +129,7 @@ RSpec.describe Spree::Product, type: :model do
         it "should set deleted_at value" do
           product.discard
           expect(product.deleted_at).not_to be_nil
-          expect(product.variants_including_master).to all(be_discarded)
+          expect(product.variants_including_master.reload).to all(be_discarded)
         end
       end
     end
@@ -151,8 +151,7 @@ RSpec.describe Spree::Product, type: :model do
 
       context "with currency set to JPY" do
         before do
-          product.master.default_price.currency = 'JPY'
-          product.master.default_price.save!
+          product.master.default_price.update!(currency: 'JPY')
           stub_spree_preferences(currency: 'JPY')
         end
 
@@ -500,20 +499,16 @@ RSpec.describe Spree::Product, type: :model do
       expect(Spree::Property.where(name: 'foo').first.presentation).to eq("Foo's Presentation Name")
       expect(Spree::Property.where(name: 'bar').first.presentation).to eq("bar")
     end
+  end
 
-    # Regression test for https://github.com/spree/spree/issues/4416
-    context "#possible_promotions" do
-      let!(:promotion) { create(:promotion, :with_action, advertise: true, starts_at: 1.day.ago) }
-      let!(:rule) do
-        Spree::Promotion::Rules::Product.create(
-          promotion: promotion,
-          products: [product]
-        )
-      end
+  context "#possible_promotions" do
+    let(:product) { create(:product) }
 
-      it "lists the promotion as a possible promotion" do
-        expect(product.possible_promotions).to include(promotion)
-      end
+    subject { product.possible_promotions }
+
+    it "calls the configured promotion advertiser class" do
+      expect(Spree::Config.promotions.advertiser_class).to receive(:for_product).with(product)
+      subject
     end
   end
 
@@ -617,6 +612,111 @@ RSpec.describe Spree::Product, type: :model do
 
     it 'responds to #images' do
       expect(subject).to respond_to(:images)
+    end
+  end
+
+  describe '.sort_by_master_default_price_amount_asc' do
+    it 'returns first those which default price is lower' do
+      product_1 = create(:product, price: 10)
+      product_2 = create(:product, price: 5)
+
+      result = described_class.sort_by_master_default_price_amount_asc
+
+      expect(result).to eq([product_2, product_1])
+    end
+  end
+
+  describe '.sort_by_master_default_price_amount_desc' do
+    it 'returns first those which default price is higher' do
+      product_1 = create(:product, price: 10)
+      product_2 = create(:product, price: 5)
+
+      result = described_class.sort_by_master_default_price_amount_desc
+
+      expect(result).to eq([product_1, product_2])
+    end
+  end
+
+  context "ransacker :variants_option_values" do
+    it "filters products based on option values of their variants" do
+      product_1 = create(:product)
+      option_value_1 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      expect(result).to contain_exactly(product_1)
+    end
+
+    it "returns multiple products for the same option value" do
+      product_1 = create(:product)
+      product_2 = create(:product)
+      option_value_1 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+      create(:variant, product: product_2, option_values: [option_value_1])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      expect(result).to contain_exactly(product_1, product_2)
+    end
+
+    it "returns no products if there is no match" do
+      non_existing_option_value_id = 99999
+      result = Spree::Product.ransack(variants_option_values_in: [non_existing_option_value_id]).result
+      expect(result).to be_empty
+    end
+
+    it "returns products that match any of the provided option value IDs" do
+      product_1 = create(:product)
+      product_2 = create(:product)
+      option_value_1 = create(:option_value)
+      option_value_2 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+      create(:variant, product: product_2, option_values: [option_value_2])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id, option_value_2.id]).result
+      expect(result).to contain_exactly(product_1, product_2)
+    end
+
+    it "doesn't return products that have other option values not in the query" do
+      product_1 = create(:product)
+      product_2 = create(:product)
+      option_value_1 = create(:option_value)
+      option_value_2 = create(:option_value)
+      create(:variant, product: product_1, option_values: [option_value_1])
+      create(:variant, product: product_2, option_values: [option_value_2])
+
+      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      expect(result).not_to include(product_2)
+    end
+  end
+
+  describe "ransack scopes" do
+    context "available scope" do
+      subject { described_class.ransack(available: true).result }
+
+      let!(:available_product) { create(:product) }
+      let!(:not_available_product) { create(:product, available_on: Time.zone.tomorrow) }
+
+      it "is included" do
+        expect(subject).to match_array([available_product])
+      end
+    end
+  end
+
+  describe "inventory tracking" do
+    let(:product) { build(:product) }
+
+    describe "#track_inventory=" do
+      it "delegates to master variant" do
+        expect(product.master).to receive(:track_inventory=).with(true)
+        product.track_inventory = true
+      end
+    end
+
+    describe "#track_inventory" do
+      it "delegates to master variant" do
+        expect(product.master).to receive(:track_inventory) { true }
+        expect(product.track_inventory).to be(true)
+      end
     end
   end
 end

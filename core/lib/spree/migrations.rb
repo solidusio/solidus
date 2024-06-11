@@ -23,16 +23,18 @@ module Spree
     # Shouldn't run on test mode because migrations inside engine don't have
     # engine name on the file name
     def check
-      if File.directory?(app_dir)
-        unless missing_migrations.empty?
-          puts "[#{engine_name.capitalize} WARNING] Missing migrations."
-          missing_migrations.each do |migration|
-            puts "[#{engine_name.capitalize} WARNING] #{migration} from #{engine_name} is missing."
-          end
-          puts "[#{engine_name.capitalize} WARNING] Run `bundle exec rake railties:install:migrations` to get them.\n\n"
-          true
-        end
-      end
+      return unless File.directory?(app_dir)
+      return if missing_migrations.empty?
+      return if ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK']
+
+      prefix = "[WARNING #{engine_name.capitalize}]"
+      warn <<~WARN
+        #{prefix} Missing migrations.
+        #{missing_migrations.map {|m| "#{prefix} - #{m}"}.join("\n")}
+        #{prefix}
+        #{prefix} Run `bin/rails railties:install:migrations` to get them.
+        #{prefix} You can silence this warning by setting the `SOLIDUS_SKIP_MIGRATIONS_CHECK` environment variable.
+      WARN
     end
 
     def missing_migrations
@@ -66,7 +68,7 @@ module Spree
     end
 
     def app_dir
-      "#{Rails.root}/db/migrate"
+      Spree::Config.migration_path
     end
 
     def engine_dir

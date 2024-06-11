@@ -1,0 +1,26 @@
+<li class="group <%= "active" if active? %>">
+  <a
+    href="<%= path %>"
+    aria-current="<%= @item.current?(@url_helpers, @fullpath) ? "page" : "false" %>"
+    class="
+      flex gap-3 items-center
+      py-1 px-3 rounded
+      hover:text-red-500 hover:bg-gray-50
+      <%= "text-red-600 bg-gray-50" if active? %>
+      <%= @item.top_level ? "font-semibold text-sm text-black" : "font-normal text-sm text-gray-600" %>
+    "
+  >
+    <i class="w-[1.125rem] h-[1.125rem] font-normal text-sm flex">
+      <% if @item.icon %>
+        <%= icon_tag(@item.icon, class: "inline-block w-full h-full fill-current") %>
+      <% end %>
+    </i>
+    <%= @item.name %>
+  </a>
+
+  <% if @item.children? %>
+    <ul class="flex flex-col gap-0.5 pt-0.5 <%= "hidden" unless active? %>">
+      <%= render self.class.with_collection(@item.children, url_helpers: @url_helpers, fullpath: @fullpath) %>
+    </ul>
+  <% end %>
+</li>

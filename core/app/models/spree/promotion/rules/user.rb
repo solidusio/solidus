@@ -9,6 +9,10 @@ module Spree
                                         dependent: :destroy
         has_many :users, through: :promotion_rule_users, class_name: Spree::UserClassHandle.new
 
+        def preload_relations
+          [:users]
+        end
+
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end

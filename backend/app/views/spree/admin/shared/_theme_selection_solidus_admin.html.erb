@@ -1,0 +1,27 @@
+<% theme_options_for_select = Spree::Backend::Config.themes.keys.map { |theme| [theme.to_s.humanize, theme] }.sort %>
+
+<% if theme_options_for_select.length > 1 %>
+  <li>
+    <%= form_tag(spree.admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "light-only") do %>
+      <%= hidden_field_tag :system_theme, :light %>
+      <label>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-sun-line"></use></svg>
+        <select name="switch_to_theme" onchange="this.form.requestSubmit()">
+          <%= options_for_select(theme_options_for_select, session[:admin_light_theme] || Spree::Backend::Config.theme) %>
+        </select>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
+      </label>
+    <% end %>
+
+    <%= form_tag(spree.admin_set_theme_path(format: :html), method: :put, style: "width: 100%;", class: "dark-only") do %>
+      <%= hidden_field_tag :system_theme, :dark %>
+      <label>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-moon-line"></use></svg>
+        <select name="switch_to_theme" onchange="this.form.requestSubmit()">
+          <%= options_for_select(theme_options_for_select, session[:admin_dark_theme] || Spree::Backend::Config.dark_theme) %>
+        </select>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
+      </label>
+    <% end %>
+  </li>
+<% end %>

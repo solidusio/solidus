@@ -5,6 +5,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
 require 'spree/testing_support/dummy_app/rake_tasks'
+require 'bundler/gem_tasks'
 
 RSpec::Core::RakeTask.new
 task default: :spec
@@ -14,8 +15,12 @@ DummyApp::RakeTasks.new(
   lib_name: 'solidus_core'
 )
 
-require 'yard'
-YARD::Rake::YardocTask.new
+require 'yard/rake/yardoc_task'
+YARD::Rake::YardocTask.new(:yard)
+# The following workaround can be removed
+# once https://github.com/lsegal/yard/pull/1457 is merged.
+task('yard:require') { require 'yard' }
+task yard: 'yard:require'
 
 namespace :spec do
   task :isolated do

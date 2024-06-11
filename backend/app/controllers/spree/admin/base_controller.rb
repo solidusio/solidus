@@ -8,13 +8,13 @@ module Spree
 
       before_action :authorize_admin
 
+      respond_to :html
+
       private
 
       # Overrides ControllerHelpers::Common
       # We want the admin's locale selection to be different than that on the frontend
-      def set_user_language_locale_key
-        :admin_locale
-      end
+      include SetsUserLanguageLocaleKey
 
       def action
         params[:action].to_sym
@@ -33,7 +33,7 @@ module Spree
       # Need to generate an API key for a user due to some backend actions
       # requiring authentication to the Spree API
       def generate_admin_api_key
-        if (user = try_spree_current_user) && user.spree_api_key.blank?
+        if (user = spree_current_user) && user.spree_api_key.blank?
           user.generate_spree_api_key!
         end
       end

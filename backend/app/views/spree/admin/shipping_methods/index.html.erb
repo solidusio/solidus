@@ -4,7 +4,6 @@
 <% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::ShippingMethod)) %>
 
-
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::ShippingMethod) %>
     <li>
@@ -32,7 +31,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @shipping_methods.includes(:zones, :calculator).each do |shipping_method|%>
+      <% @shipping_methods.includes(:zones, :calculator).each do |shipping_method| %>
         <tr id="<%= spree_dom_id shipping_method %>" data-hook="admin_shipping_methods_index_rows">
           <td><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
           <td><%= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones %></td>

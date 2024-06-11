@@ -1,34 +1,45 @@
 <%
-database_prefix = ENV['LIB_NAME'].presence || "solidus"
-%>
-<% case ENV['DB']
-when 'mysql' %>
+  adapter =
+    case ENV['DB']
+    when 'mysql2', 'mysql' then 'mysql2'
+    when 'postgresql', 'postgres' then 'postgresql'
+    when 'sqlite3', 'sqlite', '', nil then 'sqlite3'
+    else raise "Invalid DB specified " + ENV['DB'].inspect
+    end
+
+  db_host =
+    case adapter
+    when 'mysql2' then ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
+    when 'postgresql' then ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
+    else ENV['DB_HOST']
+    end
+
+  db_prefix = ENV['LIB_NAME'].presence || "solidus"
+  db_username = ENV['DB_USERNAME']
+  db_password = ENV['DB_PASSWORD'] %>
+
+default: &default
+  adapter: <%= adapter %>
+  <% unless db_username.blank? %>username: <%= db_username %><% end %>
+  <% unless db_password.blank? %>password: <%= db_password %><% end %>
+  <% unless db_host.blank? %>host: <%= db_host %><% end %>
+  <% if adapter == 'mysql2' %>encoding: utf8<% end %>
+  <% if adapter == 'postgresql' %>min_messages: warning<% end %>
+
+<% if adapter == 'mysql2' %>
 test:
-  adapter: mysql2
-  <% if ENV['CI'] %>
-  username: root
-  password:
-  <% end %>
-  database: <%= database_prefix %>_test
-  encoding: utf8
-  <% unless ENV['DB_HOST'].blank? %>
-  host: <%= ENV['DB_HOST'] %>
-  <% end %>
-<% when 'postgres', 'postgresql' %>
-<% db_host = ENV['DB_HOST'] %>
+  <<: *default
+  database: <%= db_prefix %>_test
+
+<% elsif adapter == 'postgresql' %>
 test:
-  adapter: postgresql
-  database: <%= database_prefix %>_test
-  username: postgres
-  min_messages: warning
-<% unless db_host.blank? %>
-  host: <%= db_host %>
-<% end %>
-<% when 'sqlite', '', nil %>
+  <<: *default
+  database: <%= db_prefix %>_test
+
+<% elsif adapter == 'sqlite3' %>
 test:
-  adapter: sqlite3
-  database: db/<%= database_prefix %>_test.sqlite3
+  <<: *default
+  database: db/<%= db_prefix %>_test.sqlite3
   timeout: 10000
-<% else %>
-  <% raise "Invalid DB specified: #{ENV['DB']}" %>
+
 <% end %>

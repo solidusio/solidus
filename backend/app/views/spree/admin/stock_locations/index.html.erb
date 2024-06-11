@@ -4,7 +4,6 @@
 <% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
 
-
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::StockLocation) %>
@@ -20,10 +19,10 @@
   <table class="index sortable" id='listing_stock_locations' data-hook data-sortable-link="<%= update_positions_admin_stock_locations_url %>">
     <colgroup>
       <col style="width: 10%">
-      <col style="width: 30%" />
-      <col style="width: 15%" />
-      <col style="width: 30%" />
-      <col style="width: 15%" />
+      <col style="width: 30%">
+      <col style="width: 15%">
+      <col style="width: 30%">
+      <col style="width: 15%">
     </colgroup>
     <thead>
       <tr data-hook="stock_locations_header">
@@ -35,10 +34,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @stock_locations.each do |stock_location|
-           @edit_url = edit_admin_stock_location_path(stock_location)
-           @delete_url = admin_stock_location_path(stock_location)
-      %>
+      <% @stock_locations.each do |stock_location| %>
+        <%
+          @edit_url = edit_admin_stock_location_path(stock_location)
+          @delete_url = admin_stock_location_path(stock_location)
+        %>
         <tr id="<%= spree_dom_id stock_location %>" data-hook="stock_location_row">
           <td>
             <% if can?(:update_positions, Spree::StockLocation) %>

@@ -41,8 +41,8 @@ module Spree
 
     include ::Spree::Config.state_machines.shipment
 
-    self.whitelisted_ransackable_associations = ['order']
-    self.whitelisted_ransackable_attributes = ['number']
+    self.allowed_ransackable_associations = ['order']
+    self.allowed_ransackable_attributes = ['number']
 
     delegate :tax_category, :tax_category_id, to: :selected_shipping_rate, allow_nil: true
 
@@ -286,7 +286,7 @@ module Spree
 
     # Updates the state of the Shipment bypassing any callbacks.
     #
-    # If this moves the shipmnent to the 'shipped' state, after_ship will be
+    # If this moves the shipment to the 'shipped' state, after_ship will be
     # called.
     def update_state
       old_state = state

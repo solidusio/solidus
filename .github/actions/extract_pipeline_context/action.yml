@@ -1,0 +1,48 @@
+name: "Extract Pipeline Context"
+
+inputs:
+  last_minor:
+    description: "Next release after this one is going to be a major?"
+    type: boolean
+    default: false
+
+outputs:
+  current_tag:
+     description: "Current tag"
+     value: ${{ steps.extraction.outputs.current_tag }}
+  current_diff_source_tag:
+    description: "Current diff source tag"
+    value: ${{ steps.extraction.outputs.current_diff_source_tag }}
+  candidate_tag:
+    description: "Candidate tag"
+    value: ${{ steps.extraction.outputs.candidate_tag }}
+  candidate_version:
+    description: "Candidate version"
+    value: ${{ steps.extraction.outputs.candidate_version }}
+  candidate_minor_version:
+    description: "Candidate minor version"
+    value: ${{ steps.extraction.outputs.candidate_minor_version }}
+  candidate_patch_branch:
+    description: "Candidate patch branch"
+    value: ${{ steps.extraction.outputs.candidate_patch_branch }}
+  candidate_next_patch_dev_version:
+    description: "Candidate next patch dev version"
+    value: ${{ steps.extraction.outputs.candidate_next_patch_dev_version }}
+  next_candidate_tag:
+    description: "Next candidate tag"
+    value: ${{ steps.extraction.outputs.next_candidate_tag }}
+  next_candidate_dev_version:
+    description: "Next candidate dev version"
+    value: ${{ steps.extraction.outputs.next_candidate_dev_version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Fetch tags"
+      shell: bash
+      run: git fetch --tags origin
+    - id: extraction
+      name: "Extract context for the current pipeline"
+      shell: bash
+      run: |
+        bin/release/extract-pipeline-context ${{ inputs.last_minor }} ${{ github.ref_name }} >> $GITHUB_OUTPUT

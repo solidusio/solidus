@@ -5,6 +5,7 @@ module Spree
     acts_as_list
 
     validates :name, presence: true
+    validates :name, uniqueness: true
 
     has_many :taxons, inverse_of: :taxonomy
     has_one :root, -> { where parent_id: nil }, class_name: "Spree::Taxon", dependent: :destroy
@@ -13,7 +14,7 @@ module Spree
 
     default_scope -> { order(position: :asc) }
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     private
 

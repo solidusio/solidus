@@ -142,4 +142,28 @@ describe "Shipments", type: :feature do
       end
     end
   end
+
+  context "when split shipment", js: true do
+    let(:location_name) { "WA Warehouse" }
+    let!(:location) { create(:stock_location, name: location_name)}
+
+    it "can split item" do
+      visit spree.edit_admin_order_path(order)
+      find_all('.split-item').first.click
+      within '.stock-item-split' do
+        find('.save-split').click
+        alert_text = page.driver.browser.switch_to.alert.text
+        expect(alert_text).to include 'Please select the split destination'
+        page.driver.browser.switch_to.alert.accept
+        find('#item_quantity').fill_in(with: 'text')
+        find('.select2-container').click
+        find(:xpath, '//body').all('.select2-drop li.select2-result', text: "#{location_name} (0 on hand)")[1].click
+        find('.save-split').click
+        accept_alert 'Quantity must be greater than 0' # Test Ajax error handling
+        find('#item_quantity').fill_in(with: '1')
+        find('.save-split').click
+      end
+      expect(page).to have_content /Pending package from '#{location_name}'/i
+    end
+  end
 end

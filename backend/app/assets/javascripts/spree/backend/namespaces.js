@@ -8,7 +8,7 @@ _.extend(window.Spree, {
     Cart: {},
     Zones: {},
     Payment: {},
-    Promotions: {},
+    Product: {},
     Stock: {},
     Tables: {}
   }

@@ -12,11 +12,9 @@ module Spree
   #     end
   #
   class EmailValidator < ActiveModel::EachValidator
-    EMAIL_REGEXP = /\A([^@\.]|[^@\.]([^@\s]*)[^@\.])@([^@\s]+\.)+[^@\s]+\z/
-
     def validate_each(record, attribute, value)
-      unless EMAIL_REGEXP.match? value
-        record.errors.add(attribute, :invalid, { value: value }.merge!(options))
+      unless Spree::Config.default_email_regexp.match? value
+        record.errors.add(attribute, :invalid, **{ value: value }.merge!(options))
       end
     end
   end

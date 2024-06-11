@@ -51,7 +51,13 @@ module Spree
       :month, :year, :expiry, :first_name, :last_name, :name
     ]
 
-    @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :amount, :reception_status_event, :acceptance_status, :exchange_variant_id, :resellable]]
+    @@customer_return_attributes = [
+      :stock_location_id, return_items_attributes: [
+        :id, :inventory_unit_id, :return_authorization_id, :returned, :amount,
+        :reception_status_event, :acceptance_status, :exchange_variant_id,
+        :resellable, :return_reason_id
+      ]
+    ]
 
     @@image_attributes = [:alt, :attachment, :position, :viewable_type, :viewable_id]
 
@@ -59,16 +65,16 @@ module Spree
 
     @@line_item_attributes = [:id, :variant_id, :quantity]
 
-    @@option_type_attributes = [:name, :presentation, :option_values_attributes]
-
     @@option_value_attributes = [:name, :presentation]
+
+    @@option_type_attributes = [:name, :presentation, option_values_attributes: option_value_attributes]
 
     @@payment_attributes = [:amount, :payment_method_id, :payment_method]
 
     @@product_properties_attributes = [:property_name, :value, :position]
 
     @@product_attributes = [
-      :name, :description, :available_on, :discontinue_on, :permalink, :meta_description,
+      :name, :description, :available_on, :discontinue_on, :meta_description,
       :meta_keywords, :price, :sku, :deleted_at,
       :option_values_hash, :weight, :height, :width, :depth,
       :shipping_category_id, :tax_category_id,
@@ -125,12 +131,16 @@ module Spree
     @@variant_attributes = [
       :name, :presentation, :cost_price, :lock_version,
       :position, :track_inventory,
-      :product_id, :product, :option_values_attributes, :price,
-      :weight, :height, :width, :depth, :sku, :cost_currency, option_value_ids: [], options: [:name, :value]
+      :product_id, :product, :price,
+      :weight, :height, :width, :depth, :sku, :cost_currency,
+      :tax_category_id, :shipping_category_id,
+      option_value_ids: [],
+      options: [:name, :value]
     ]
 
     @@checkout_address_attributes = [
       :use_billing,
+      :use_shipping,
       :email,
       bill_address_attributes: address_attributes,
       ship_address_attributes: address_attributes

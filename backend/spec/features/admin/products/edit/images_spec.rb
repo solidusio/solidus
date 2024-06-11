@@ -40,33 +40,53 @@ describe "Product Images", type: :feature do
       end
     end
 
-    it "should allow an admin to upload and edit an image for a product" do
-      click_link "new_image_link"
-      within_fieldset 'New Image' do
-        attach_file('image_attachment', file_path)
-      end
-      click_button "Update"
-      expect(page).to have_content("successfully created!")
-
-      # Icons are hidden, so hover to have them pop-up
-      find('tbody > tr').hover
-      within_row(1) do
-        within ".actions" do
-          click_icon :edit
+    context 'Using the new image link' do
+      it "should allow an admin to upload and edit an image for a product" do
+        click_link "new_image_link"
+        within_fieldset 'New Image' do
+          attach_file('image_attachment', file_path)
         end
+        click_button "Update"
+        expect(page).to have_content("successfully created!")
+
+        # Icons are hidden, so hover to have them pop-up
+        find('tbody > tr').hover
+        within_row(1) do
+          within ".actions" do
+            click_icon :edit
+          end
+        end
+
+        fill_in "image_alt", with: "ruby on rails t-shirt"
+        click_button "Update"
+
+        expect(page).to have_content "successfully updated!"
+        expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
+
+        find('tbody > tr').hover
+        accept_alert do
+          click_icon :trash
+        end
+        expect(page).not_to have_field "image[alt]", with: "ruby on rails t-shirt"
       end
+    end
 
-      fill_in "image_alt", with: "ruby on rails t-shirt"
-      click_button "Update"
+    context 'Using the drag and drop upload window' do
+      it "should allow an admin to upload an image and edit an image for a product" do
+        page.find(".upload").drop(file_path)
+        find('tbody > tr').hover
+        within_row(1) do
+          within ".actions" do
+            click_icon :edit
+          end
+        end
 
-      expect(page).to have_content "successfully updated!"
-      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
+        fill_in "image_alt", with: "ruby on rails t-shirt"
+        click_button "Update"
 
-      find('tbody > tr').hover
-      accept_alert do
-        click_icon :trash
+        expect(page).to have_content "successfully updated!"
+        expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
       end
-      expect(page).not_to have_field "image[alt]", with: "ruby on rails t-shirt"
     end
 
     context 'Using Active Storage',
@@ -78,7 +98,7 @@ describe "Product Images", type: :feature do
         end
 
         click_button "Update"
-        Spree::Image.first.attachment.blob.update(key: 11)
+        invalidate_attachment(Spree::Image.first.attachment)
         visit current_path
         expect(page).to have_xpath("//img[contains(@src, 'assets/noimage/mini')]")
       end
@@ -135,5 +155,13 @@ describe "Product Images", type: :feature do
       # ensure correct cell count
       expect(page).to have_css("thead th", count: 4)
     end
+  end
+
+  def invalidate_attachment(attachment)
+    blob = attachment.blob
+    blob.variant_records.each do |variant_record|
+      variant_record.update(variation_digest: SecureRandom.uuid)
+    end
+    blob.update(key: SecureRandom.uuid)
   end
 end

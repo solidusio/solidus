@@ -11,13 +11,12 @@
 
 <% admin_breadcrumb(t('spree.cart')) %>
 
-
 <div data-hook="admin_order_edit_header">
   <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
 </div>
 
-<% if @order.payments.exists? && @order.is_risky? %>
-    <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
+<% if @order.is_risky? %>
+  <%= render 'spree/admin/orders/risk_analysis', order: @order %>
 <% end %>
 
 <div data-hook="admin_order_edit_form">

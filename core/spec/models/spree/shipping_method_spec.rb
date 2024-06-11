@@ -219,10 +219,10 @@ RSpec.describe Spree::ShippingMethod, type: :model do
 
   describe '.available_to_store' do
     let(:store) { create(:store) }
-    let(:first_shipping_method) { create(:shipping_method, stores: [store]) }
-    let(:second_shipping_method) { create(:shipping_method, stores: [store]) }
+    let!(:first_shipping_method) { create(:shipping_method, stores: [store]) }
+    let!(:second_shipping_method) { create(:shipping_method, stores: [store]) }
 
-    subject { [first_shipping_method, second_shipping_method] }
+    subject { described_class.available_to_store(store) }
 
     it 'raises an exception if no store is passed as argument' do
       expect {
@@ -235,7 +235,7 @@ RSpec.describe Spree::ShippingMethod, type: :model do
 
       it 'returns all shipping methods' do
         expect(store.shipping_methods).to eq([])
-        expect(described_class.available_to_store(store)).to eq(subject)
+        expect(subject).to match_array([first_shipping_method, second_shipping_method])
       end
     end
 
@@ -243,8 +243,8 @@ RSpec.describe Spree::ShippingMethod, type: :model do
       before { create(:shipping_method) }
 
       it 'returns the associated records' do
-        expect(store.shipping_methods).to eq(subject)
-        expect(described_class.available_to_store(store)).to eq(subject)
+        expect(store.shipping_methods).to match_array([first_shipping_method, second_shipping_method])
+        expect(subject).to match_array([first_shipping_method, second_shipping_method])
       end
     end
   end

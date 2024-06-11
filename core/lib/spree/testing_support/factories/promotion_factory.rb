@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/factories/promotion_code_factory'
-  require 'spree/testing_support/factories/variant_factory'
-end
-
 FactoryBot.define do
   factory :promotion, class: 'Spree::Promotion' do
     name { 'Promo' }
@@ -22,21 +14,38 @@ FactoryBot.define do
     end
 
     trait :with_action do
-      after(:create) do |promotion, _evaluator|
-        promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
+      transient do
+        promotion_action_class { Spree::Promotion::Actions::CreateAdjustment }
+      end
+
+      after(:create) do |promotion, evaluator|
+        promotion.actions << evaluator.promotion_action_class.new
       end
     end
+
+    trait :with_adjustable_action do
+      transient do
+        preferred_amount { 10 }
+        calculator_class { Spree::Calculator::FlatRate }
+        promotion_action_class { Spree::Promotion::Actions::CreateItemAdjustments }
+      end
+
+      after(:create) do |promotion, evaluator|
+        calculator = evaluator.calculator_class.new
+        calculator.preferred_amount = evaluator.preferred_amount
+        evaluator.promotion_action_class.create!(calculator: calculator, promotion: promotion)
+      end
+    end
+
+    factory :promotion_with_action_adjustment, traits: [:with_adjustable_action]
 
     trait :with_line_item_adjustment do
       transient do
         adjustment_rate { 10 }
       end
 
-      after(:create) do |promotion, evaluator|
-        calculator = Spree::Calculator::FlatRate.new
-        calculator.preferred_amount = evaluator.adjustment_rate
-        Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
-      end
+      with_adjustable_action
+      preferred_amount { adjustment_rate }
     end
 
     factory :promotion_with_item_adjustment, traits: [:with_line_item_adjustment]
@@ -52,14 +61,11 @@ FactoryBot.define do
         weighted_order_adjustment_amount { 10 }
       end
 
-      after(:create) do |promotion, evaluator|
-        calculator = Spree::Calculator::FlatRate.new
-        calculator.preferred_amount = evaluator.weighted_order_adjustment_amount
-        action = Spree::Promotion::Actions::CreateAdjustment.create!(calculator: calculator)
-        promotion.actions << action
-        promotion.save!
-      end
+      with_adjustable_action
+      preferred_amount { weighted_order_adjustment_amount }
+      promotion_action_class { Spree::Promotion::Actions::CreateAdjustment }
     end
+
     factory :promotion_with_order_adjustment, traits: [:with_order_adjustment]
 
     trait :with_item_total_rule do

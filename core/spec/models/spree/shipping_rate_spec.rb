@@ -38,7 +38,10 @@ RSpec.describe Spree::ShippingRate, type: :model do
       let(:order_address) { address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        shipping_rate.taxes.build(
+          amount: 0.91,
+          tax_rate: tax_rate,
+        )
       end
 
       it "shows correct tax amount" do
@@ -68,7 +71,10 @@ RSpec.describe Spree::ShippingRate, type: :model do
       let(:order_address) { address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        shipping_rate.taxes.build(
+          amount: 1.0,
+          tax_rate: tax_rate,
+        )
       end
 
       it "shows correct tax amount" do
@@ -107,7 +113,15 @@ RSpec.describe Spree::ShippingRate, type: :model do
       let(:order_address) { address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        shipping_rate.taxes.build(
+          amount: 1.0,
+          tax_rate: tax_rate,
+        )
+
+        shipping_rate.taxes.build(
+          amount: 0.5,
+          tax_rate: other_tax_rate,
+        )
       end
 
       it "shows correct tax amount" do

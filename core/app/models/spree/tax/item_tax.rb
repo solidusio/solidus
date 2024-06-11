@@ -5,9 +5,10 @@ module Spree
     # Simple object used to hold tax data for an item.
     #
     # This generic object will hold the amount of tax that should be applied to
-    # an item. (Either a {Spree::LineItem} or a {Spree::Shipment}.)
+    # an item. (Either a {Spree::Order}, a {Spree::LineItem} or a {Spree::Shipment}.)
     #
-    # @attr_reader [Integer] item_id the {Spree::LineItem} or {Spree::Shipment} ID
+    # @attr_reader [Integer] item_id the {Spree::LineItem} or {Spree::Shipment} ID.
+    #   Or blank if an order-level tax.
     # @attr_reader [String] label information about the taxes
     # @attr_reader [Spree::TaxRate] tax_rate will be used as the source for tax
     #   adjustments

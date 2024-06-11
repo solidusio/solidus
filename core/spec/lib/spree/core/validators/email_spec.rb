@@ -24,10 +24,7 @@ RSpec.describe Spree::EmailValidator do
   let(:invalid_emails) {
     [
       'invalid email@email.com',
-      '.invalid.email@email.com',
-      'invalid.email.@email.com',
       '@email.com',
-      '.@email.com',
       'invalidemailemail.com',
       '@invalid.email@email.com',
       'invalid@email@email.com',
@@ -35,19 +32,19 @@ RSpec.describe Spree::EmailValidator do
     ]
   }
 
-  it 'validates valid email addresses' do
+  it 'validates valid email addresses', :aggregate_failures do
     tester = Tester.new
     valid_emails.each do |email|
       tester.email_address = email
-      expect(tester.valid?).to be true
+      expect(tester.valid?).to be(true), "expected #{email} to be valid"
     end
   end
 
-  it 'validates invalid email addresses' do
+  it 'validates invalid email addresses', :aggregate_failures do
     tester = Tester.new
     invalid_emails.each do |email|
       tester.email_address = email
-      expect(tester.valid?).to be false
+      expect(tester.valid?).to be(false), "expected #{email} not to be valid"
     end
   end
 end

@@ -89,8 +89,8 @@ describe "Products", type: :feature do
       end
     end
 
-    context "searching products" do
-      it "should be able to search deleted products", js: true do
+    context "searching products", js: true do
+      it "should be able to search deleted products" do
         create(:product, name: 'apache baseball cap', deleted_at: "2011-01-06 18:21:13")
         create(:product, name: 'zomg shirt')
 
@@ -125,6 +125,32 @@ describe "Products", type: :feature do
         expect(page).to have_content("apache baseball cap")
         expect(page).not_to have_content("apache baseball cap2")
         expect(page).not_to have_content("zomg shirt")
+      end
+
+      # Regression test for https://github.com/solidusio/solidus/issues/3912
+      it "should be able to search deleted products by their properties" do
+        create(:product, name: "First Product", sku: "A101").discard
+        create(:product, name: "Second Product", sku: "A102")
+        create(:product, name: "Third Product", sku: "B100")
+
+        click_nav "Products"
+        expect(page).not_to have_content("First Product")
+        expect(page).to have_content("Second Product")
+        expect(page).to have_content("Third Product")
+
+        fill_in "SKU", with: "A1"
+        check "Show Deleted"
+        click_button "Search"
+        expect(find('input[name="q[with_discarded]"]')).to be_checked
+        expect(page).to have_content("First Product")
+        expect(page).to have_content("Second Product")
+        expect(page).not_to have_content("Third Product")
+
+        uncheck "Show Deleted"
+        click_button "Search"
+        expect(page).not_to have_content("First Product")
+        expect(page).to have_content("Second Product")
+        expect(page).not_to have_content("Third Product")
       end
 
       # Regression test for https://github.com/solidusio/solidus/issues/2016
@@ -244,6 +270,13 @@ describe "Products", type: :feature do
       it "should show default tax category" do
         expect(page).to have_select('product_tax_category_id', selected: 'Alcohol taxes')
       end
+
+      it "can disable track_inventory" do
+        expect(page).to have_field("product_track_inventory", checked: true)
+        uncheck "product_track_inventory"
+        click_button "Create"
+        expect(page).to have_field("product_track_inventory", checked: false)
+      end
     end
 
     context "cloning a product", js: true do
@@ -317,6 +350,23 @@ describe "Products", type: :feature do
           end
         end
       end
+
+      it "can disable track_inventory" do
+        visit spree.admin_product_path(product)
+        expect(page).to have_field("product_track_inventory", checked: true)
+        uncheck "product_track_inventory"
+        click_button "Update"
+        expect(page).to have_field("product_track_inventory", checked: false)
+      end
+
+      context "with variants" do
+        let(:product) { create(:variant).product }
+
+        it "cannot disable track_inventory" do
+          visit spree.admin_product_path(product)
+          expect(page).to_not have_field("product_track_inventory")
+        end
+      end
     end
 
     context 'deleting a product', js: true do
@@ -346,7 +396,7 @@ describe "Products", type: :feature do
 
   context 'with only product permissions' do
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
+      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |_user|

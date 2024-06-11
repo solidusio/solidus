@@ -1,0 +1,44 @@
+<%= page do %>
+  <% if @tabs %>
+    <%= page_header do %>
+      <%= render_title %>
+    <% end %>
+
+    <%= page_header do %>
+      <% rendered_tabs = capture do %>
+        <% @tabs.each do %>
+          <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: _1.text, 'aria-current': _1.current, href: _1.href)) %>
+        <% end %>
+      <% end %>
+      <%= page_header_title rendered_tabs %>
+      <%= page_header_actions do %>
+        <%= page_actions %>
+      <% end %>
+    <% end %>
+
+  <% else %>
+    <%= page_header do %>
+      <%= render_title %>
+
+      <%= page_header_actions do %>
+        <%= page_actions %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render_table %>
+    <% end %>
+
+    <% if sidebar %>
+      <%= page_with_sidebar_aside do %>
+        <%= sidebar %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% turbo_frames.each do |frame| %>
+    <%= turbo_frame_tag frame %>
+  <% end %>
+<% end %>

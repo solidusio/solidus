@@ -15,6 +15,10 @@ module Spree
         before_destroy :remove_adjustments_from_incomplete_orders
         before_discard :remove_adjustments_from_incomplete_orders
 
+        def preload_relations
+          [:calculator]
+        end
+
         def perform(payload = {})
           order = payload[:order]
           promotion = payload[:promotion]
@@ -83,13 +87,8 @@ module Spree
         end
 
         def line_items_to_adjust(promotion, order)
-          excluded_ids = adjustments.
-            where(adjustable_id: order.line_items.pluck(:id), adjustable_type: 'Spree::LineItem').
-            pluck(:adjustable_id).
-            to_set
-
           order.line_items.select do |line_item|
-            !excluded_ids.include?(line_item.id) &&
+            line_item.adjustments.none? { |adjustment| adjustment.source == self } &&
               promotion.line_item_actionable?(order, line_item)
           end
         end

@@ -14,15 +14,15 @@ RSpec.describe Spree::TestingSupport::Preferences do
   describe '#with_unfrozen_spree_preference_store' do
     it 'changes the original settings, but returns them to original values at exit' do
       with_unfrozen_spree_preference_store do
-        Spree::Config.mails_from = 'override@example.com'
-        expect(Spree::Config.mails_from).to eq 'override@example.com'
-        expect(Spree::Config.preference_store[:mails_from]).to eq 'override@example.com'
+        Spree::Config.currency = 'EUR'
+        expect(Spree::Config.currency).to eq 'EUR'
+        expect(Spree::Config.preference_store[:currency]).to eq 'EUR'
       end
 
       # both the original frozen store and the unfrozen store are unaffected by changes above:
-      expect(Spree::Config.mails_from).to eq 'store@example.com'
+      expect(Spree::Config.currency).to eq 'USD'
       with_unfrozen_spree_preference_store do
-        expect(Spree::Config.mails_from).to eq 'store@example.com'
+        expect(Spree::Config.currency).to eq 'USD'
       end
     end
   end

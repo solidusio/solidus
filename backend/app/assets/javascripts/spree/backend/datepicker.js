@@ -11,7 +11,8 @@ Spree.ready(function(){
   });
 
   $('.datepicker').flatpickr({
-    allowInput: true
+    allowInput: true,
+    dateFormat: Spree.t('date_picker.js_format')
   });
 
   // Handle range dates

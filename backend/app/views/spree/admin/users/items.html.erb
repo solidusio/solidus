@@ -2,7 +2,6 @@
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(t('spree.admin.user.items_purchased')) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :items %>
 <%= render partial: 'spree/admin/users/user_page_actions' %>
@@ -16,23 +15,23 @@
     <%# TODO add search interface %>
     <table class="stock-contents index" id="listing_items" data-hook="stock-contents">
       <colgroup>
-        <col style="width: 10%;" />
-        <col style="width: 10%;" />
-        <col style="width: 30%;" />
-        <col style="width: 8%;" />
-        <col style="width: 8%;" />
-        <col style="width: 10%;" />
-        <col style="width: 14%;" />
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 30%;">
+        <col style="width: 8%;">
+        <col style="width: 8%;">
+        <col style="width: 10%;">
+        <col style="width: 14%;">
       </colgroup>
 
       <thead>
-        <th><%= sort_link @search, :completed_at, Spree::Order.human_attribute_name(:completed_at), {}, {title: 'orders_completed_at_title'} %></th>
+        <th><%= sort_link @search, :completed_at, Spree::Order.human_attribute_name(:completed_at), {title: 'orders_completed_at_title'} %></th>
         <th colspan=2><%= Spree::LineItem.human_attribute_name(:description) %></th>
         <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
         <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
         <th><%= Spree::Order.human_attribute_name(:total) %></th>
-        <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state), {}, {title: 'orders_state_title'} %></th>
-        <th><%= sort_link @search, :number, t('spree.admin.user.order_num'), {}, {title: 'orders_number_title'} %></th>
+        <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state), {title: 'orders_state_title'} %></th>
+        <th><%= sort_link @search, :number, t('spree.admin.user.order_num'), {title: 'orders_number_title'} %></th>
       </thead>
 
       <tbody>
@@ -60,7 +59,7 @@
                 </span>
               </td>
               <td class="order-number">
-                <% if can?([:admin, :edit], order) %>
+                <% if can?(:admin, order) && can?(:edit, order) %>
                   <%= link_to order.number, edit_admin_order_url(order) %>
                 <% else %>
                   <%= order.number %>
@@ -69,6 +68,7 @@
             </tr>
           <% end %>
         <% end %>
+      </tbody>
     </table>
   <% else %>
     <div class="no-objects-found">

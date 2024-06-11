@@ -14,11 +14,13 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
+  s.metadata['rubygems_mfa_required'] = 'true'
+
   s.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(spec|script)/})
   end
 
-  s.required_ruby_version = '>= 2.5.0'
+  s.required_ruby_version = '>= 3.0.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'solidus_core', s.version

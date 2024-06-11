@@ -8,6 +8,10 @@ module Spree
           dependent: :destroy
         has_many :taxons, through: :promotion_rule_taxons, class_name: 'Spree::Taxon'
 
+        def preload_relations
+          [:taxons]
+        end
+
         MATCH_POLICIES = %w(any all none)
 
         validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES

@@ -1,0 +1,15 @@
+en:
+  batch_actions:
+    discontinue: 'Discontinue'
+    activate: 'Activate'
+  filters:
+    with_deleted: Include deleted
+  scopes:
+    customers: Customers
+    admin: Admins
+    with_orders: With Orders
+    without_orders: Without Orders
+    all: All
+  status:
+    active: Active
+    inactive: Inactive

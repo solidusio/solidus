@@ -1,0 +1,21 @@
+en:
+  title: "Order %{number} / Adjustments"
+  save: "Save"
+  discard: "Discard"
+  none: "—"
+
+  actions:
+    title: "Actions"
+    delete: "Delete"
+    lock: "Lock"
+    unlock: "Unlock"
+    edit: "Edit"
+
+  state:
+    locked: "Locked"
+    unlocked: "Unlocked"
+  confirm: "Are you sure?"
+
+  totals:
+    adjustable: "Totals (by Adjustable)"
+    source: "Totals (by Source)"

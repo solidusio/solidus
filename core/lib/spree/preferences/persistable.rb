@@ -7,7 +7,13 @@ module Spree
 
       included do
         include Spree::Preferences::Preferable
-        serialize :preferences, Hash
+
+        if method(:serialize).parameters.include?([:key, :type]) # Rails 7.1+
+          serialize :preferences, type: Hash, coder: YAML
+        else
+          serialize :preferences, Hash, coder: YAML
+        end
+
         after_initialize :initialize_preference_defaults
       end
 

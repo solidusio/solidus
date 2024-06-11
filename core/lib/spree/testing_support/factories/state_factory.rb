@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/factories/country_factory'
-end
-
-
 FactoryBot.define do
   factory :state, class: 'Spree::State' do
     transient do
@@ -17,9 +9,15 @@ FactoryBot.define do
       carmen_subregion do
         carmen_country = Carmen::Country.coded(country.iso)
 
-        carmen_country.subregions.coded(state_code) ||
-          carmen_country.subregions.sort_by(&:name).first ||
+        unless carmen_country.subregions?
           fail("Country #{country.iso} has no subregions")
+        end
+
+        carmen_regions = carmen_country.subregions
+        carmen_regions = carmen_regions.flat_map(&:subregions) if carmen_regions.first.subregions?
+        region_collection = Carmen::RegionCollection.new(carmen_regions)
+
+        region_collection.coded(state_code) || region_collection.sort_by(&:name).first
       end
     end
 

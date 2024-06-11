@@ -3,14 +3,32 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
-  with_model 'LimitedProduct', scope: :all do
-    table do |t|
-      t.string :slug, limit: 255
+  # RESOURCE FIXTURE
+  before(:all) do
+    # Database
+    class CreateLimitedProducts < ActiveRecord::Migration[5.1]
+      def change
+        create_table(:limited_products) do |t|
+          t.string :slug, limit: 255
+        end
+      end
     end
+    CreateLimitedProducts.migrate(:up)
 
-    model do
+    # Model
+    class LimitedProduct < ActiveRecord::Base
       validates_with Spree::Validations::DbMaximumLengthValidator, field: :slug
     end
+  end
+
+  # TEAR DOWN RESOURCE FIXTURE
+  after(:all) do
+    # Database
+    CreateLimitedProducts.migrate(:down)
+    Object.send(:remove_const, :CreateLimitedProducts)
+
+    # Model
+    Object.send(:remove_const, :LimitedProduct)
   end
 
   let(:record) { LimitedProduct.new(slug: slug) }

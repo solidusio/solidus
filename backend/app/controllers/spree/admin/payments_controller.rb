@@ -11,6 +11,8 @@ module Spree
       before_action :load_data
       before_action :require_bill_address, only: [:index]
 
+      helper ::Spree::Admin::OrdersHelper
+
       respond_to :html
 
       def index

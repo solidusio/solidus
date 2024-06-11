@@ -5,7 +5,7 @@ require 'spree/testing_support/shared_examples/gallery'
 
 RSpec.describe Spree::Gallery::VariantGallery do
   let(:gallery) { described_class.new(variant) }
-  let(:variant) { build_stubbed(:variant) }
+  let(:variant) { build(:variant) }
 
   shared_context 'has multiple images' do
     let(:first_image) { build(:image) }

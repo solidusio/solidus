@@ -1,0 +1,37 @@
+name: "Update Release Draft on GitHub"
+
+on:
+  workflow_dispatch:
+  pull_request_target:
+    branches:
+      - main
+      - v*
+    types:
+      - closed
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_ONLY: "release"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    if: |
+      (github.event_name == 'workflow_dispatch') || (
+        (github.event.pull_request.merged == true) &&
+          !contains(github.event.pull_request.labels.*.name, 'changelog:skip')
+      )
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - id: pipeline_context
+        uses: ./.github/actions/extract_pipeline_context
+      - name: "Save Release Draft"
+        run: |
+          bin/release/update-release-draft \
+            --update \
+            --branch ${{ github.ref_name }} \
+            ${{ steps.pipeline_context.outputs.current_diff_source_tag }} \
+            ${{ steps.pipeline_context.outputs.candidate_tag }}

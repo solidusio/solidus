@@ -89,6 +89,13 @@ RSpec.describe Spree::Core::Search::Base do
     expect(searcher.retrieve_products.count).to eq(2)
   end
 
+  it "raises a proper exception when search param is invalid" do
+    params = { per_page: "",
+               search: "blub" }
+    searcher = Spree::Core::Search::Base.new(params)
+    expect { searcher.retrieve_products }.to raise_error(described_class::InvalidOptions, "Invalid option passed to the searcher: 'search'")
+  end
+
   it "accepts a current user" do
     user = double
     searcher = Spree::Core::Search::Base.new({})

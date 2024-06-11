@@ -14,18 +14,20 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
+  s.metadata['rubygems_mfa_required'] = 'true'
+
   s.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(spec|script)/})
   end
 
-  s.required_ruby_version = '>= 2.5.0'
+  s.required_ruby_version = '>= 3.0.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   %w[
     actionmailer actionpack actionview activejob activemodel activerecord
-    activesupport railties
+    activestorage activesupport railties
   ].each do |rails_dep|
-    s.add_dependency rails_dep, ['>= 5.2', '< 6.2.x']
+    s.add_dependency rails_dep, ['>= 7.0', '< 7.2']
   end
 
   s.add_dependency 'activemerchant', '~> 1.66'
@@ -39,9 +41,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'mini_magick', '~> 4.10'
   s.add_dependency 'monetize', '~> 1.8'
-  s.add_dependency 'kt-paperclip', '~> 6.3'
-  s.add_dependency 'ransack', '~> 2.0'
+  s.add_dependency 'kt-paperclip', ['>= 6.3', '< 8']
+  s.add_dependency 'psych', ['>= 4.0.1', '< 5.0']
+  s.add_dependency 'ransack', '~> 4.0'
+  s.add_dependency 'sprockets-rails', '!= 3.5.0'
   s.add_dependency 'state_machines-activerecord', '~> 0.6'
+  s.add_dependency 'omnes', '~> 0.2.2'
 
   s.post_install_message = <<-MSG
 -------------------------------------------------------------
@@ -55,7 +60,12 @@ $ bin/rails g solidus:install
 If you are updating Solidus from an older version, please run
 the following commands to complete the update:
 
-$ bin/rails solidus:upgrade
+$ bin/rails g solidus:update
+
+Please, don't forget to look at the CHANGELOG to see what has changed and
+whether you need to perform other tasks.
+
+https://github.com/solidusio/solidus/blob/main/CHANGELOG.md
 
 Please report any issues at:
 - https://github.com/solidusio/solidus/issues

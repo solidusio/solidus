@@ -3,13 +3,20 @@
 # Used in the sandbox rake task in Rakefile
 
 set -e
+test -z "${DEBUG+empty_string}" || set -x
 
 case "$DB" in
 postgres|postgresql)
   RAILSDB="postgresql"
+  HOST=${DB_POSTGRES_HOST:-${DB_HOST}}
+  USERNAME=$DB_USERNAME
+  PASSWORD=$DB_PASSWORD
   ;;
 mysql)
   RAILSDB="mysql"
+  HOST=${DB_MYSQL_HOST:-${DB_HOST}}
+  USERNAME=$DB_USERNAME
+  PASSWORD=$DB_PASSWORD
   ;;
 sqlite|'')
   RAILSDB="sqlite3"
@@ -26,29 +33,34 @@ function unbundled {
   ruby -rbundler -e'
     Gem::Version.new(Bundler::VERSION) < Gem::Version.new("2.1") ?
       abort("The sandbox requires at least Bundler 2.1, please run bin/setup to update it.") :
-      Bundler.with_unbundled_env {system *ARGV}' -- $@
+      Bundler.with_unbundled_env {system *ARGV}' -- \
+        env BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES=true $@
 }
 
+echo "~~~> Removing the old sandbox"
 rm -rf ./sandbox
-unbundled bundle exec rails new sandbox --database="$RAILSDB" \
-  --skip-bundle \
+
+echo "~~~> Creating a pristine Rails app"
+rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
+rails _${rails_version}_ new sandbox \
+  --database="$RAILSDB" \
   --skip-git \
   --skip-keeps \
   --skip-rc \
-  --skip-spring \
-  --skip-test \
-  --skip-javascript
+  --skip-bootsnap \
+  --skip-test
 
 if [ ! -d "sandbox" ]; then
   echo 'sandbox rails application failed'
   exit 1
 fi
 
+echo "~~~> Adding solidus (with i18n) to the Gemfile"
 cd ./sandbox
 cat <<RUBY >> Gemfile
 
 gem 'solidus', path: '..'
-gem 'solidus_auth_devise', '>= 2.1.0'
+gem 'solidus_admin', path: '../admin'
 gem 'rails-i18n'
 gem 'solidus_i18n'
 
@@ -56,23 +68,41 @@ group :test, :development do
   platforms :mri do
     gem 'pry-byebug'
   end
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 RUBY
-
 unbundled bundle install --gemfile Gemfile
-unbundled bin/rails db:drop db:create
-unbundled bin/rails generate solidus:install \
-  --auto-accept \
-  --user_class=Spree::User \
-  --enforce_available_locales=true \
-  --with_authentication=false \
-  --payment-method=none
-  $@
 
-unbundled bin/rails generate solidus:auth:install \
-  --auto_run_migrations=true
+replace_in_database_yml() {
+  if [ $RAILSDB = "postgresql" ]; then
+    sed -i.bck "/^  adapter:/a \ \ $1:  $2" config/database.yml
+  elif [ $RAILSDB = "mysql" ]; then
+    sed -i.bck "s/^  $1:.*/\ \ $1: $2/" config/database.yml
+  fi
+  if [ -f config/database.yml.bck ]; then
+    rm -f config/database.yml.bck
+  fi
+}
+
+if [ ${HOST} ]; then
+  replace_in_database_yml "host" $HOST
+fi
+if [ ${USERNAME} ]; then
+  replace_in_database_yml "username" $USERNAME
+fi
+if [ ${PASSWORD} ]; then
+  replace_in_database_yml "password" $PASSWORD
+fi
+
+unbundled bin/rails db:drop db:create
+
+echo "~~~> Running the solidus:install generator"
+export SOLIDUS_ADMIN_LOOKBOOK=true
+unbundled bin/rails generate solidus:install --admin-preview --auto-accept $@
 
 echo "
 🚀 This app is intended for test purposes. If you're interested in running
 🚀 Solidus in production, visit:
-🚀 https://guides.solidus.io/developers/getting-started/first-time-installation"
+🚀 https://guides.solidus.io/getting-started/installing-solidus"

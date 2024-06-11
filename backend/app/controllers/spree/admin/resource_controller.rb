@@ -78,8 +78,17 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def update_positions
     ActiveRecord::Base.transaction do
-      params[:positions].each do |id, index|
-        model_class.find_by(id: id)&.set_list_position(index)
+      positions = params[:positions]
+
+      positions.each do |id, index|
+        # Yes here there is a N+1 but acts_as_list use after update callback
+        # so we can't keep not reloaded data without create a bug
+        # (spec : backend/spec/controllers/spree/admin/resource_controller_spec.rb)
+        # "with take care of acts_as_list's after update callback" test
+        #
+        # TODO : create a global set_list_position on all concerned objects
+        # maybe in the acts_as_list gem
+        model_class.where(id: id).first&.set_list_position(index)
       end
     end
 
@@ -184,7 +193,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
                   .find_by!(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
     instance_variable_set("@#{parent_model_name}", @parent)
   rescue ActiveRecord::RecordNotFound => e
-    resource_not_found(flash_class: e.model.constantize, redirect_url: spree.polymorphic_url([:admin, parent_model_name.pluralize]))
+    resource_not_found(flash_class: e.model.constantize, redirect_url: routes_proxy.polymorphic_url([:admin, parent_model_name.pluralize.to_sym]))
   end
 
   def parent?
@@ -229,17 +238,17 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def new_object_url(options = {})
     if parent?
-      spree.new_polymorphic_url([:admin, parent, model_class], options)
+      routes_proxy.new_polymorphic_url([:admin, parent, model_class], options)
     else
-      spree.new_polymorphic_url([:admin, model_class], options)
+      routes_proxy.new_polymorphic_url([:admin, model_class], options)
     end
   end
 
   def edit_object_url(object, options = {})
     if parent?
-      spree.polymorphic_url([:edit, :admin, parent, object], options)
+      routes_proxy.polymorphic_url([:edit, :admin, parent, object], options)
     else
-      spree.polymorphic_url([:edit, :admin, object], options)
+      routes_proxy.polymorphic_url([:edit, :admin, object], options)
     end
   end
 
@@ -247,18 +256,22 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     target = object ? object : @object
 
     if parent?
-      spree.polymorphic_url([:admin, parent, target], options)
+      routes_proxy.polymorphic_url([:admin, parent, target], options)
     else
-      spree.polymorphic_url([:admin, target], options)
+      routes_proxy.polymorphic_url([:admin, target], options)
     end
   end
 
   def collection_url(options = {})
     if parent?
-      spree.polymorphic_url([:admin, parent, model_class], options)
+      routes_proxy.polymorphic_url([:admin, parent, model_class], options)
     else
-      spree.polymorphic_url([:admin, model_class], options)
+      routes_proxy.polymorphic_url([:admin, model_class], options)
     end
+  end
+
+  def routes_proxy
+    spree
   end
 
   # Allow all attributes to be updatable.

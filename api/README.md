@@ -40,5 +40,5 @@ version is released.
   easily extend it with the endpoints provided by your Solidus extensions!
 
 [docs-dir]: https://github.com/solidusio/solidus/tree/master/api/openapi
-[live-docs]: https://solidus.docs.stoplight.io
+[live-docs]: https://solidus.stoplight.io
 [studio]: https://stoplight.io/p/studio

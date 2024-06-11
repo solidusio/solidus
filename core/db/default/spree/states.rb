@@ -9,7 +9,7 @@ def create_states(subregions, country)
 end
 
 ActiveRecord::Base.transaction do
-  Spree::Country.all.each do |country|
+  Spree::Country.all.find_each do |country|
     carmen_country = Carmen::Country.coded(country.iso)
     next unless carmen_country.subregions?
 

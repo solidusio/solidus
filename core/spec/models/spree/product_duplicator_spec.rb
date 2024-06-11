@@ -61,6 +61,10 @@ module Spree
         expect(new_product.name).to eql "COPY OF #{product.name}"
       end
 
+      it "will set the same price" do
+        expect(new_product.reload.price).to eql product.price
+      end
+
       it "will set an unique sku" do
         expect(new_product.sku).to include "COPY OF SKU"
       end
@@ -86,6 +90,11 @@ module Spree
 
       it "will not duplicate the option values" do
         expect{ duplicator.duplicate }.to change{ Spree::OptionValue.count }.by(0)
+      end
+
+      it "will duplicate the variants after initial duplicate is discarded" do
+        duplicator.duplicate.discard
+        expect { duplicator.duplicate }.to change { Spree::Variant.count }.by(3)
       end
     end
   end

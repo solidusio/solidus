@@ -5,14 +5,14 @@ module Spree::Taxon::PaperclipAttachment
 
   included do
     has_attached_file :icon,
-      styles: { mini: '32x32>', normal: '128x128>' },
-      default_style: :mini,
+      styles: Spree::Config.taxon_image_styles,
+      default_style: Spree::Config.taxon_image_style_default,
       url: '/spree/taxons/:id/:style/:basename.:extension',
       path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
       default_url: '/assets/default_taxon.png'
 
     validates_attachment :icon,
-      content_type: { content_type: %w[image/jpg image/jpeg image/png image/gif] }
+      content_type: { content_type: Spree::Config.allowed_image_mime_types }
   end
 
   def icon_present?
@@ -25,6 +25,6 @@ module Spree::Taxon::PaperclipAttachment
     attached_file = send(definition)
     return false unless attached_file.exists?
 
-    attached_file.destroy
+    attached_file.destroy && save
   end
 end

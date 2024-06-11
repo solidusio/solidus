@@ -5,7 +5,7 @@ require 'spec_helper'
 describe "Order Details", type: :feature, js: true do
   include OrderFeatureHelper
 
-  let!(:stock_location) { create(:stock_location_with_items) }
+  let!(:stock_location) { create(:stock_location) }
   let!(:product) { create(:product, name: 'spree t-shirt', price: 20.00) }
   let(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15", number: "R100") }
   let(:state) { create(:state) }
@@ -90,7 +90,7 @@ describe "Order Details", type: :feature, js: true do
 
             product.stock_items.where.not(stock_location_id: stock_location_ids).discard_all
 
-            product.stock_items.where(stock_location_id: stock_location_ids).each do |stock_item|
+            product.stock_items.where(stock_location_id: stock_location_ids).find_each do |stock_item|
               stock_item.set_count_on_hand 1
             end
 
@@ -140,6 +140,18 @@ describe "Order Details", type: :feature, js: true do
       it "can remove all items with empty cart" do
         expect(page).to have_content("spree t-shirt")
 
+        within("#item_total") do
+          expect(page).to have_content("$40.00")
+        end
+
+        within("#order_total") do
+          expect(page).to have_content("$40.00")
+        end
+
+        within("#order-total", text: 'Order Total') do
+          expect(page).to have_content("$40.00")
+        end
+
         accept_confirm "Are you sure you want to delete this record?" do
           click_on 'Empty Cart'
         end
@@ -148,6 +160,16 @@ describe "Order Details", type: :feature, js: true do
 
         # Should have a new item row
         expect(page).to have_field('quantity')
+
+        within("#item_total") do
+          expect(page).to have_content("$0.00")
+        end
+
+        within("#order_total") do
+          expect(page).to have_content("$0.00")
+        end
+
+        expect(page).to have_css('#order-total', visible: false)
       end
 
       # Regression test for https://github.com/spree/spree/issues/3862
@@ -271,12 +293,13 @@ describe "Order Details", type: :feature, js: true do
     end
 
     context 'Shipment edit page' do
-      let!(:stock_location2) { create(:stock_location_with_items, name: 'Clarksville') }
+      let!(:stock_location2) { create(:stock_location, name: 'Clarksville') }
 
       before do
-        product.master.stock_items.first.update_column(:backorderable, true)
-        product.master.stock_items.first.update_column(:count_on_hand, 100)
-        product.master.stock_items.last.update_column(:count_on_hand, 100)
+        product.master.stock_items.reload.each do |stock_item|
+          stock_item.update(backorderable: false)
+          stock_item.set_count_on_hand 100
+        end
       end
 
       context 'splitting to location' do
@@ -381,7 +404,7 @@ describe "Order Details", type: :feature, js: true do
 
         context 'there is not enough stock at the other location' do
           context 'and it cannot backorder' do
-            it 'should not allow me to split stock' do
+            it 'should not allow me to split stock', :flaky do
               product.master.stock_items.last.update_column(:backorderable, false)
               product.master.stock_items.last.update_column(:count_on_hand, 0)
 
@@ -537,7 +560,7 @@ describe "Order Details", type: :feature, js: true do
         end
 
         context 'receiving shipment can backorder' do
-          it 'should add more to the backorder' do
+          it 'should add more to the backorder', :flaky do
             shipment1.inventory_units.update_all(state: :on_hand)
             product.master.stock_items.last.update_column(:backorderable, true)
             product.master.stock_items.last.update_column(:count_on_hand, 0)
@@ -558,6 +581,29 @@ describe "Order Details", type: :feature, js: true do
             # Empty shipment should be removed
             expect(page).to have_css('.stock-contents', count: 1)
             expect(page).to have_content("2 x Backordered")
+          end
+        end
+
+        context 'when inventory levels are not being tracked' do
+          before do
+            stub_spree_preferences(track_inventory_levels: false)
+            # Simulate the default state of stock when track inventory is false.
+            shipment1.inventory_units.update_all(state: :on_hand)
+            product.master.stock_items.last.update_column(:backorderable, true)
+            product.master.stock_items.last.update_column(:count_on_hand, 0)
+          end
+
+          # Regression for https://github.com/solidusio/solidus/issues/2817
+          it "allows to ship an order's items" do
+            visit spree.edit_admin_order_path(order)
+
+            within('tr', text: line_item.sku) { click_icon 'arrows-h' }
+            complete_split_to(stock_location2)
+
+            expect(page).to have_css('.shipment', count: 2)
+            expect(order.shipments.count).to eq(2)
+            expect(page).not_to have_content('Backordered')
+            expect(page).to have_content('On hand', count: 2)
           end
         end
       end
@@ -592,7 +638,7 @@ describe "Order Details", type: :feature, js: true do
 
   context 'with only read permissions' do
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
+      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |_user|

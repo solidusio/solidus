@@ -12,6 +12,10 @@ module Spree
                                            class_name: 'Spree::ProductPromotionRule'
         has_many :products, class_name: 'Spree::Product', through: :product_promotion_rules
 
+        def preload_relations
+          [:products]
+        end
+
         MATCH_POLICIES = %w(any all none)
 
         validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
@@ -31,17 +35,19 @@ module Spree
           return true if eligible_products.empty?
 
           case preferred_match_policy
-          when 'all'
-            unless eligible_products.all? { |product| order.products.include?(product) }
+          when "all"
+            unless eligible_products.all? { |product| order_products(order).include?(product) }
               eligibility_errors.add(:base, eligibility_error_message(:missing_product), error_code: :missing_product)
             end
-          when 'any'
-            unless order.products.any? { |product| eligible_products.include?(product) }
-              eligibility_errors.add(:base, eligibility_error_message(:no_applicable_products), error_code: :no_applicable_products)
+          when "any"
+            unless order_products(order).any? { |product| eligible_products.include?(product) }
+              eligibility_errors.add(:base, eligibility_error_message(:no_applicable_products),
+                                     error_code: :no_applicable_products)
             end
-          when 'none'
-            unless order.products.none? { |product| eligible_products.include?(product) }
-              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product), error_code: :has_excluded_product)
+          when "none"
+            unless order_products(order).none? { |product| eligible_products.include?(product) }
+              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product),
+                                     error_code: :has_excluded_product)
             end
           else
             raise "unexpected match policy: #{preferred_match_policy.inspect}"
@@ -67,6 +73,12 @@ module Spree
 
         def product_ids_string=(product_ids)
           self.product_ids = product_ids.to_s.split(',').map(&:strip)
+        end
+
+        private
+
+        def order_products(order)
+          order.line_items.map(&:variant).map(&:product)
         end
       end
     end

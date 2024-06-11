@@ -1,4 +1,1366 @@
-## Solidus 3.1.0 (master, unreleased)
+## Solidus v4.3.3 (2024-03-11)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* [v4.3] Add Admin Tailwind build when generating sandbox  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5689
+
+## Solidus Core
+
+* [v4.3] Add Admin Tailwind build when generating sandbox  by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5689
+* [v4.3] Explicitly require URI in app configuration by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5648
+* [v4.3] Fix minor sandbox generation issues by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5676
+* [v4.3] Fix specs failing after Money 6.18.0 release by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5691
+
+## Solidus Admin
+
+* [v4.3] Fix minor sandbox generation issues by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5676
+
+## Solidus Backend
+
+* [v4.3] Fix JS locale data for release of Money 6.19 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5690
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.2...v4.3.3
+
+
+## Solidus v4.3.2 (2024-01-22)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.3] Disable admin preview for extensions test apps by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5602
+* [v4.3] Bundle solidus_admin >= 0.2 in Solidus installer by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5608
+
+## Solidus Backend
+
+* [v4.3] Use &#x60;spree&#x60; routing proxy in theme selection partial by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5603
+* [v4.3] Theme selection for Solidus Admin: Use spree routing proxy by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5605
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.1...v4.3.2
+
+
+## Solidus v4.3.1 (2024-01-05)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Backend
+
+* [v4.3] Fix the check on select2 translations asset existence by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5584
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.0...v4.3.1
+
+
+## Solidus v4.3.0 (2023-12-22)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* Fix the link to customization guides by @pokonski in https://github.com/solidusio/solidus/pull/5404
+
+## Solidus Core
+
+* Skip `ActionCable` for dummy apps by @mamhoff in https://github.com/solidusio/solidus/pull/5420
+* Do not require `ActiveStorage` in core by @tvdeyen in https://github.com/solidusio/solidus/pull/5450
+* Fix issues raised by ERB and JS linting by @elia in https://github.com/solidusio/solidus/pull/5457
+* Fix `deactivate_unsupported_payment_methods` name in error message by @kennyadsl in https://github.com/solidusio/solidus/pull/5458
+* Make promotion handler classes configurable by @mamhoff in https://github.com/solidusio/solidus/pull/5466
+* Add `dependent: :destroy` to `Spree::Order#order_promotions` by @mamhoff in https://github.com/solidusio/solidus/pull/5411
+* Add `ActiveStorage` as a core dependency by @tvdeyen in https://github.com/solidusio/solidus/pull/5479
+* Add foreign key constraint between `order_promotions` and `promotions` by @mamhoff in https://github.com/solidusio/solidus/pull/5469
+* Minimum Quantity promotion rule by @adammathys in https://github.com/solidusio/solidus/pull/5452
+* Add `Order#use_shipping` and address management to the admin dashboard by @rainerdema in https://github.com/solidusio/solidus/pull/5461
+* set_position conflicts with acts_as_list by @tkimi in https://github.com/solidusio/solidus/pull/5509
+* Add dark themes to the backend and a theme switching support by @MassimilianoLattanzio in https://github.com/solidusio/solidus/pull/4999
+* Add a `TaxRate#display_amount` and a tax categories & rates admin index by @elia in https://github.com/solidusio/solidus/pull/5529
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Allow to choose a custom routes' mount point during install by @kennyadsl in https://github.com/solidusio/solidus/pull/5533
+* Cleanup the database configuration by @elia in https://github.com/solidusio/solidus/pull/5545
+* Update the `spree.rb.tt` stripe configuration instructions for `SolidusStripe` v5+ by @thomasbromehead in https://github.com/solidusio/solidus/pull/5505
+* Fix the down step of the `DropDeprecatedAddressIdFromShipments` migration by @DanielePalombo in https://github.com/solidusio/solidus/pull/5557
+* Deprecate `Spree::NamedType` Concern by @elia in https://github.com/solidusio/solidus/pull/5541
+* Enhance log message for Bogus payments by @nirnaeth in https://github.com/solidusio/solidus/pull/5422
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Use configurable promo adjuster in callback by @mamhoff in https://github.com/solidusio/solidus/pull/5498
+* Enable the admin preview by default for new installations by @elia in https://github.com/solidusio/solidus/pull/5563
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+
+## Solidus Admin
+
+* Fix issues raised by ERB and JS linting by @elia in https://github.com/solidusio/solidus/pull/5457
+* Add `Order#use_shipping` and address management to the admin dashboard by @rainerdema in https://github.com/solidusio/solidus/pull/5461
+* Add a `TaxRate#display_amount` and a tax categories & rates admin index by @elia in https://github.com/solidusio/solidus/pull/5529
+* Allow to choose a custom routes' mount point during install by @kennyadsl in https://github.com/solidusio/solidus/pull/5533
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+* [Admin] Ensure `action_name` is passed as symbol for `cancancan` authorization by @rainerdema in https://github.com/solidusio/solidus/pull/5399
+* [Admin] Add dynamic filters to `ui/table` component by @rainerdema in https://github.com/solidusio/solidus/pull/5376
+* Don't show missing order shipment and payment states by @elia in https://github.com/solidusio/solidus/pull/5427
+* Fix `/admin/product/new` in SolidusAdmin by @elia in https://github.com/solidusio/solidus/pull/5426
+* [Admin] Ensure labels are clickable by parameterizing ids by @rainerdema in https://github.com/solidusio/solidus/pull/5429
+* Extract the table search field to a component by @elia in https://github.com/solidusio/solidus/pull/5428
+* Don't capture `NameError` if its not a missing component by @elia in https://github.com/solidusio/solidus/pull/5432
+* Add a `ui/thumbnail` component by @elia in https://github.com/solidusio/solidus/pull/5431
+* [Admin] Enhance `ui/table` component with clickable rows and URL navigation by @rainerdema in https://github.com/solidusio/solidus/pull/5397
+* [Admin] Enhance toast message positioning and layering by @rainerdema in https://github.com/solidusio/solidus/pull/5436
+* Extract a `products/stock` component by @elia in https://github.com/solidusio/solidus/pull/5433
+* [Admin] Construct base components for order creation in admin interface by @rainerdema in https://github.com/solidusio/solidus/pull/5434
+* Admin tooltip improvements by @elia in https://github.com/solidusio/solidus/pull/5439
+* SolidusAdmin `products/stock` component fixes by @elia in https://github.com/solidusio/solidus/pull/5443
+* Update hints and remove them where not needed by @mfrecchiami in https://github.com/solidusio/solidus/pull/5435
+* [Admin] Enhance toast component: Background color and animations by @rainerdema in https://github.com/solidusio/solidus/pull/5442
+* SolidusAdmin: Extract page layout helpers by @elia in https://github.com/solidusio/solidus/pull/5445
+* SolidusAdmin misc. component fixes by @elia in https://github.com/solidusio/solidus/pull/5444
+* [Admin] Fix `ui/table/toolbar` & restore `clearSearch` & Streamline `feedback` rendering by @rainerdema in https://github.com/solidusio/solidus/pull/5449
+* Add an `orders/cart` component by @elia in https://github.com/solidusio/solidus/pull/5441
+* Dynamic `ui/toggletip` positioning by @elia in https://github.com/solidusio/solidus/pull/5451
+* [Admin] Add modal component by @the-krg in https://github.com/solidusio/solidus/pull/5364
+* [Admin] Extract a `ui/search_panel` component from `orders/cart` by @elia in https://github.com/solidusio/solidus/pull/5467
+* [Admin] Introduce `ui/forms/address` component for order admin checkout by @rainerdema in https://github.com/solidusio/solidus/pull/5468
+* [admin] Add the customer sidebar to the orders page by @elia in https://github.com/solidusio/solidus/pull/5499
+* [admin] Allow editing the order contact email by @elia in https://github.com/solidusio/solidus/pull/5500
+* SolidusAdmin customer picker for order by @elia in https://github.com/solidusio/solidus/pull/5462
+* [admin] Move layout related components under `layout/` by @elia in https://github.com/solidusio/solidus/pull/5510
+* [admin] dark mode by @elia in https://github.com/solidusio/solidus/pull/5511
+* [Admin] Add `Select address` dropdown feature to billing and shipping forms by @rainerdema in https://github.com/solidusio/solidus/pull/5507
+* [Admin] Add `order/show/summary` component by @rainerdema in https://github.com/solidusio/solidus/pull/5512
+* [admin] Update the admin preview toggle label by @elia in https://github.com/solidusio/solidus/pull/5515
+* [admin] Add scopes and controller helpers for `ui/table` by @elia in https://github.com/solidusio/solidus/pull/5516
+* [admin] Fix menu styles & add a backend menu items importer by @elia in https://github.com/solidusio/solidus/pull/5518
+* [admin] Add users index by @elia in https://github.com/solidusio/solidus/pull/5519
+* [admin] Add a `promotions/index` component by @elia in https://github.com/solidusio/solidus/pull/5517
+* [Admin] Add sortable rows in `ui/table` component by @rainerdema in https://github.com/solidusio/solidus/pull/5522
+*  [Admin] Add `Properties` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5527
+* [Admin] Add `Option Types` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5525
+* [Admin] Add `Promotion Categories` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5528
+* [admin] Move the feedback link to the bottom of the page by @elia in https://github.com/solidusio/solidus/pull/5524
+* [Admin] Add `Taxonomies` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5526
+* [admin] Add scopes to the products page by @elia in https://github.com/solidusio/solidus/pull/5531
+* [Admin] Add `Payment Methods` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5530
+* [admin] Extract common admin resources patterns to a helper by @elia in https://github.com/solidusio/solidus/pull/5534
+* [Admin] Add `Stock Items` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5532
+* [admin] Add index pages for the settings / shipping area by @elia in https://github.com/solidusio/solidus/pull/5536
+* [Admin] Add `Stores` index component by @rainerdema in https://github.com/solidusio/solidus/pull/5537
+* [admin] Add index pages for `zones` by @elia in https://github.com/solidusio/solidus/pull/5538
+* [Admin] Add `Refunds and Returns` section with correlated index pages by @rainerdema in https://github.com/solidusio/solidus/pull/5539
+* [Admin] Add `stock_items/edit` modal component by @elia in https://github.com/solidusio/solidus/pull/5543
+* [Admin] Refactor index page settings: Ransack search and pagination by @rainerdema in https://github.com/solidusio/solidus/pull/5546
+* [admin] Cleanup TW classes by @elia in https://github.com/solidusio/solidus/pull/5550
+* [Admin] Enhancements to filter toolbar and dropdown visibility by @rainerdema in https://github.com/solidusio/solidus/pull/5548
+* [admin] Relax the SolidusAdmin dependency on Solidus core by @elia in https://github.com/solidusio/solidus/pull/5547
+* [admin] Performance fixes by @elia in https://github.com/solidusio/solidus/pull/5552
+* [Admin] Implement `enable_alpha_features?` preference config for selective feature access by @rainerdema in https://github.com/solidusio/solidus/pull/5549
+* [admin] Provide a pre-built CSS file and a script to customize TW for local modifications by @elia in https://github.com/solidusio/solidus/pull/5554
+* [admin] Build the admin CSS before running the specs by @elia in https://github.com/solidusio/solidus/pull/5558
+* [admin] Reuse the same class name as Backend for MenuItem by @elia in https://github.com/solidusio/solidus/pull/5555
+* [Admin] Refactor admin components for consistent code style by @rainerdema in https://github.com/solidusio/solidus/pull/5559
+* [Admin] Include pagination in `payment_methods/index` component by @rainerdema in https://github.com/solidusio/solidus/pull/5562
+
+## Solidus Backend
+
+* Fix issues raised by ERB and JS linting by @elia in https://github.com/solidusio/solidus/pull/5457
+* Minimum Quantity promotion rule by @adammathys in https://github.com/solidusio/solidus/pull/5452
+* Add dark themes to the backend and a theme switching support by @MassimilianoLattanzio in https://github.com/solidusio/solidus/pull/4999
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+* [admin] Fix menu styles & add a backend menu items importer by @elia in https://github.com/solidusio/solidus/pull/5518
+* Update backend configuration for solidus `v4.2` by @rainerdema in https://github.com/solidusio/solidus/pull/5405
+* Restore using `MenuItem#sections` for matching paths by @elia in https://github.com/solidusio/solidus/pull/5406
+* Fix the content navbar being hidden under the navbar when the window is narrow by @elia in https://github.com/solidusio/solidus/pull/5423
+* Solidus legacy color hierarchy by @mfrecchiami in https://github.com/solidusio/solidus/pull/5446
+* Drop autoprefixer-rails from dependencies by @elia in https://github.com/solidusio/solidus/pull/5521
+* Restyle backend UI flash message to not overlap buttons by @brettchalupa in https://github.com/solidusio/solidus/pull/5540
+
+## Solidus API
+
+* Make promotion handler classes configurable by @mamhoff in https://github.com/solidusio/solidus/pull/5466
+* Add `Order#use_shipping` and address management to the admin dashboard by @rainerdema in https://github.com/solidusio/solidus/pull/5461
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Remove unused action in controller callbacks by @kennyadsl in https://github.com/solidusio/solidus/pull/5566
+
+## Solidus Sample
+
+* Fix rubocop violations after the latest release by @elia in https://github.com/solidusio/solidus/pull/5535
+* Rails 7.1 support by @peterberkenbosch in https://github.com/solidusio/solidus/pull/5359
+* Update samples to match new SSF style by @aleph1ow in https://github.com/solidusio/solidus/pull/5437
+* Update sample images by @kennyadsl in https://github.com/solidusio/solidus/pull/5560
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.0...v4.3.0
+
+
+## Solidus v4.2.3 (2023-11-02)
+
+## Solidus Core
+* [v4.2] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5483
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.2...v4.2.3
+
+
+## Solidus v4.2.2 (2023-11-01)
+
+## Solidus Core
+* [v4.2] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5456
+
+## Solidus Backend
+* [v4.2] Skip all the navbar hiding logic when using the new version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5424
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.1...v4.2.2
+
+
+## Solidus v4.2.1 (2023-10-04)
+
+## Solidus Core
+
+
+## Solidus Backend
+* [v4.2] Update backend configuration for solidus `v4.2` by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5407
+* [v4.2] Restore using `MenuItem#sections` for matching paths by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5409
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.0...v4.2.1
+
+
+## Solidus v4.2.0 (2023-09-29)
+
+
+## Solidus Core
+
+* Allow filtering option values by variant for the Option Value promotion rule by @mamhoff in https://github.com/solidusio/solidus/pull/5200
+* Ensure `current_store` always comes with a `url` set by @elia in https://github.com/solidusio/solidus/pull/5224
+* Remove unused ActiveRecord join class `Spree::PromotionRuleRole` by @mamhoff in https://github.com/solidusio/solidus/pull/5217
+* Improving stock items management by @softr8 in https://github.com/solidusio/solidus/pull/3626
+* Load `stock_items` with a deterministic order in `OrderInventory#determine_target_shipment` by @elia in https://github.com/solidusio/solidus/pull/5288
+* Use the new Solidus logo by @elia in https://github.com/solidusio/solidus/pull/5314
+* Reorganize `Stock::SimpleCoordinator` for improved debugging by @BenMorganIO in https://github.com/solidusio/solidus/pull/5249
+* Bump the minimum required Psych version by @elia in https://github.com/solidusio/solidus/pull/5322
+* Fix `Order#restart_checkout_flow` for empty orders by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5330
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+* Cleanup `MenuItem` API and deprecate using partials for second level menus by @elia in https://github.com/solidusio/solidus/pull/5309
+* Deprecate the `Spree::Adjustment.return_authorization` scope by @mamhoff in https://github.com/solidusio/solidus/pull/5138
+* Update the `Spree::Backend` navigation menu to match the upcoming `SolidusAdmin` by @elia in https://github.com/solidusio/solidus/pull/5392
+* Deprecate `Spree::Deprecation` in favor of `Spree.deprecator` by @kennyadsl in https://github.com/solidusio/solidus/pull/5289
+* Enhance product model with `variants_option_values` ransacker by @rainerdema in https://github.com/solidusio/solidus/pull/5395
+* Add `SolidusAdmin`support by @elia in https://github.com/solidusio/solidus/pull/5068
+
+## Solidus Backend
+
+* Allow filtering option values by variant for the Option Value promotion rule by @mamhoff in https://github.com/solidusio/solidus/pull/5200
+* Improving stock items management by @softr8 in https://github.com/solidusio/solidus/pull/3626
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+* Cleanup `MenuItem` API and deprecate using partials for second level menus by @elia in https://github.com/solidusio/solidus/pull/5309
+* Update the `Spree::Backend` navigation menu to match the upcoming `SolidusAdmin` by @elia in https://github.com/solidusio/solidus/pull/5392
+* Deprecate `Spree::Deprecation` in favor of `Spree.deprecator` by @kennyadsl in https://github.com/solidusio/solidus/pull/5289
+* Add `SolidusAdmin` support by @elia in https://github.com/solidusio/solidus/pull/5068
+* Allow overriding the routes proxy in the `ResourceController` by @mamhoff in https://github.com/solidusio/solidus/pull/5219
+* Add Armenian language translations for `Select2` plugin by @arman-h in https://github.com/solidusio/solidus/pull/5285
+* Add Cilean Spanish language support for `Select2` plugin by @MauricioTRP in https://github.com/solidusio/solidus/pull/5377
+
+## Solidus API
+
+* Allow filtering option values by variant for the Option Value promotion rule by @mamhoff in https://github.com/solidusio/solidus/pull/5200
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+* Fix `Spree::Api:LineItemsController#create` handling of validation errors by @RyanofWoods in https://github.com/solidusio/solidus/pull/4177
+
+## Solidus Sample
+
+* Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @elia in https://github.com/solidusio/solidus/pull/5380
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.0...v4.2.0
+
+
+## Solidus v4.1.4 (2024-01-05)
+
+## Solidus Core
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus Backend
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus API
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus Sample
+* [4.1] Use ActiveRecord's `.find_each` instead of `.each` whenever possible by @tvdeyen in https://github.com/solidusio/solidus/pull/5484
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.3...v4.1.4
+
+
+## Solidus v4.1.3 (2023-11-02)
+
+## Solidus Core
+* [v4.1] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5482
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.2...v4.1.3
+
+
+## Solidus v4.1.2 (2023-11-01)
+
+## Solidus Core
+* [v4.1] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5455
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.1...v4.1.2
+
+
+## Solidus v4.1.1 (2023-08-14)
+
+## Solidus Core
+* [v4.1] Update deprecation horizon by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5307
+* [v4.1] Fix offense after RuboCop 1.56 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5328
+* [v4.1] Bump the minimum required Psych version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5327
+* [v4.1] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5336
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.0...v4.1.1
+
+
+## Solidus v4.1.0 (2023-06-29)
+
+## Solidus Core
+* Don't gsub attachment comment during solidus installation by @RyanofWoods in https://github.com/solidusio/solidus/pull/5087
+* Update Taxon PaperClip attributes on attachment destroy by @RyanofWoods in https://github.com/solidusio/solidus/pull/5086
+* Remove frontend related code from the core dummy app by @kennyadsl in https://github.com/solidusio/solidus/pull/5058
+* Make Spree::MigrationHelpers Ruby 3.0 compatible by @RyanofWoods in https://github.com/solidusio/solidus/pull/5072
+* Relax rubocop version requirement and add it to the CI by @elia in https://github.com/solidusio/solidus/pull/5075
+* Allow changing the order recalculator by @mamhoff in https://github.com/solidusio/solidus/pull/5110
+* Ensure to return false on Paperclip attachment destroy failure by @RyanofWoods in https://github.com/solidusio/solidus/pull/5101
+* Prefer delegating recalculate without a method by @kennyadsl in https://github.com/solidusio/solidus/pull/5120
+* Move install generator spec in the proper directory by @kennyadsl in https://github.com/solidusio/solidus/pull/5114
+* Remove references to legacy :general_settings resource by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5128
+* Document available permission sets by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5141
+* Rename Order#ensure_updated_shipments method by @spaghetticode in https://github.com/solidusio/solidus/pull/4173
+* Fix solidus_core making use of responders API by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5158
+* Allow running bin/rails from Solidus engines by @elia in https://github.com/solidusio/solidus/pull/5164
+* Fix rubocop violation enabled by a rubocop bugfix by @elia in https://github.com/solidusio/solidus/pull/5183
+* Fix Taxon taxonomy id validation regression by @RyanofWoods in https://github.com/solidusio/solidus/pull/5189
+
+## Solidus Backend
+* Remove the blue_steel theme by @elia in https://github.com/solidusio/solidus/pull/5084
+* Relax rubocop version requirement and add it to the CI by @elia in https://github.com/solidusio/solidus/pull/5075
+* Add support for admin themes by @elia in https://github.com/solidusio/solidus/pull/5091
+* Improve the CSS of the admin locale selection and login nav by @elia in https://github.com/solidusio/solidus/pull/5113
+* Fix locale selection with a hidden admin navbar by @elia in https://github.com/solidusio/solidus/pull/5119
+* Remove references to legacy :general_settings resource by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5128
+* Get fresh data for update_positions by @julienanne in https://github.com/solidusio/solidus/pull/5040
+* [backend] Disable customer returns buttons after first click by @AlessioRocco in https://github.com/solidusio/solidus/pull/3550
+* Add a new admin theme by @elia in https://github.com/solidusio/solidus/pull/5092
+* Fix solidus_core making use of responders API by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5158
+* Allow running bin/rails from Solidus engines by @elia in https://github.com/solidusio/solidus/pull/5164
+* Allow lambda in menu item :match_path option and URL by @mamhoff in https://github.com/solidusio/solidus/pull/5152
+
+## Solidus API
+* Relax rubocop version requirement and add it to the CI by @elia in https://github.com/solidusio/solidus/pull/5075
+* Allow running bin/rails from Solidus engines by @elia in https://github.com/solidusio/solidus/pull/5164
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.0...v4.1.0
+
+
+## Solidus v4.0.4 (2023-11-02)
+
+## Solidus Core
+* [v4.0] Add activestorage as dependency by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5481
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.3...v4.0.4
+
+
+## Solidus v4.0.3 (2023-11-01)
+
+## Solidus Core
+* [v4.0] Do not require active_storage/engine by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5454
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.2...v4.0.3
+
+
+## Solidus v4.0.2 (2023-08-14)
+
+## Solidus Core
+* [v4.0] Update deprecation horizon by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5306
+* [v4.0] Bump the minimum required Psych version by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5326
+* [v4.0] Fix error added when resetting order flow on an empty order by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5335
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.1...v4.0.2
+
+
+## Solidus v4.0.1 (2023-06-30)
+
+## Solidus Core
+* [v4.0] Don't gsub attachment comment during solidus installation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5090
+* [v4.0] Make Spree::MigrationHelpers Ruby 3.0 compatible by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5098
+* [v4.0] Fix Taxon taxonomy id validation regression @github-actions[bot] in https://github.com/solidusio/solidus/pull/5191
+
+## Solidus Backend
+
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.0.0...v4.0.1
+
+
+## Solidus v4.0.0 (2023-05-04)
+
+## Solidus Core
+* Remove `solidus_frontend` from the meta gem by @elia in https://github.com/solidusio/solidus/pull/5026
+* Remove support for deprecated promo rules matching policy by @kennyadsl in https://github.com/solidusio/solidus/pull/5019
+* Remove Deprecated code from API component by @kennyadsl in https://github.com/solidusio/solidus/pull/5020
+* Remove Deprecated Preferences by @kennyadsl in https://github.com/solidusio/solidus/pull/5022
+* Remove Deprecated code from Core component by @kennyadsl in https://github.com/solidusio/solidus/pull/4989
+* Remove deprecated order updater promotions code by @mamhoff in https://github.com/solidusio/solidus/pull/4890
+* Remove support for the legacy frontend names by @elia in https://github.com/solidusio/solidus/pull/5031
+* Remove support for legacy event system by @kennyadsl in https://github.com/solidusio/solidus/pull/5024
+* Remove deprecated factories usage by @kennyadsl in https://github.com/solidusio/solidus/pull/5023
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Add `stripe` to payment methods by @elia in https://github.com/solidusio/solidus/pull/5007
+* Remove stale warning about paypal not being fully supported by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5044
+* Remove solidus_frontend option from the installer by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5047
+* Drop unused table promotion_action_line_items by @mamhoff in https://github.com/solidusio/solidus/pull/4882
+* Remove unused columns from spree_promotion_rules by @mamhoff in https://github.com/solidusio/solidus/pull/4881
+* Remove position column from spree_taxons by @mamhoff in https://github.com/solidusio/solidus/pull/4754
+* Make option value to variant association unique by @jarednorman in https://github.com/solidusio/solidus/pull/4146
+* Allow to disable track inventory for product without variants by @tvdeyen in https://github.com/solidusio/solidus/pull/5039
+* Remove deprecated_address_id column from shipments by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4379
+* Deprecate other code related to old factories loading by @kennyadsl in https://github.com/solidusio/solidus/pull/5059
+* Fix generating the dummy app for extensions using solidus_frontend by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5060
+* Remove deprecated spree/testing_support file by @kennyadsl in https://github.com/solidusio/solidus/pull/5063
+
+## Solidus Backend
+* Remove support for deprecated promo rules matching policy by @kennyadsl in https://github.com/solidusio/solidus/pull/5019
+* Remove Deprecated code from Backend component by @kennyadsl in https://github.com/solidusio/solidus/pull/5021
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Allow to disable track inventory for product without variants by @tvdeyen in https://github.com/solidusio/solidus/pull/5039
+
+## Solidus API
+* Remove support for deprecated promo rules matching policy by @kennyadsl in https://github.com/solidusio/solidus/pull/5019
+* Remove Deprecated code from API component by @kennyadsl in https://github.com/solidusio/solidus/pull/5020
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Skip two randomly failing tests on SQLite by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5046
+
+## Solidus Sample
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+* Remove position column from spree_taxons by @mamhoff in https://github.com/solidusio/solidus/pull/4754
+
+## Solidus
+* Remove `solidus_frontend` from the meta gem by @elia in https://github.com/solidusio/solidus/pull/5026
+* Only support for Ruby v3 and Rails v7 by @elia in https://github.com/solidusio/solidus/pull/5012
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.4.0...v4.0.0
+
+
+## Solidus v3.4.0 (2023-04-21)
+
+## Solidus Core
+* Stop using RSpec is_expected with block expectations by @kennyadsl in https://github.com/solidusio/solidus/pull/4870
+* Fetch solidus_frontend from RubyGems instead of GitHub by @gsmendoza in https://github.com/solidusio/solidus/pull/4885
+* Fix CI only testing with the legacy event system adapter by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4880
+* Update the SolidusFrontend dependency to 3.4.0.dev by @gsmendoza in https://github.com/solidusio/solidus/pull/4889
+* Retry flaky specs automatically by @kennyadsl in https://github.com/solidusio/solidus/pull/4893
+* Fix publishing events responding to #to_hash on Ruby 2.7 by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4875
+* ERB fixes for the backend (🐛+💅) by @elia in https://github.com/solidusio/solidus/pull/4891
+* Risk analysis box update by @elia in https://github.com/solidusio/solidus/pull/4883
+* Fix CI only testing with the paperclip adapter by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4905
+* Fix AddPaymentSourcesToWallet changing default when reused by @RyanofWoods in https://github.com/solidusio/solidus/pull/4198
+* Fix duplicate context name in spec by @FrancescoAiello01 in https://github.com/solidusio/solidus/pull/4925
+* Apply store credits before creating payments by @ccarruitero in https://github.com/solidusio/solidus/pull/4667
+* Use i18n for datepicker format by @coorasse in https://github.com/solidusio/solidus/pull/3321
+* Fix flaky spec helper for local testing by @kennyadsl in https://github.com/solidusio/solidus/pull/4948
+* Ensure LogEntry only saves safe data by @elia in https://github.com/solidusio/solidus/pull/4950
+* Allow bad payloads to be saved in payment log entries by @elia in https://github.com/solidusio/solidus/pull/4953
+* Add back Variant#find_or_build_default_price by @spaghetticode in https://github.com/solidusio/solidus/pull/4960
+* Ensure target shipments are evaluated in order of creation (fix flakey) by @elia in https://github.com/solidusio/solidus/pull/4954
+* Introduce allowed_ransackable_scopes by @RyanofWoods in https://github.com/solidusio/solidus/pull/4956
+* Copy new migrations as part of the update task by @kennyadsl in https://github.com/solidusio/solidus/pull/4957
+* Update Spree::Product scopes.rb to fix issue with 'descend_by_popularity' scope by @cmbaldwin in https://github.com/solidusio/solidus/pull/4969
+* Spree::ProductDuplicator bug on price by @Roddoric in https://github.com/solidusio/solidus/pull/4971
+* Update descend_by_popularity scope spec by @kennyadsl in https://github.com/solidusio/solidus/pull/4979
+* Allow splitting shipments when not tracking inventory by @nspinazz89 in https://github.com/solidusio/solidus/pull/3338
+* Fix rake error testing the update generator by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4980
+* Improve Taxon validations and factory by @RyanofWoods in https://github.com/solidusio/solidus/pull/4851
+* Add a deprecation warning for allow_promotions_any_match_policy = true by @kennyadsl in https://github.com/solidusio/solidus/pull/4991
+* Add Braintree to the installer as a payment method option by @gsmendoza in https://github.com/solidusio/solidus/pull/4961
+* Fix typo in shipmnent.rb by @seand7565 in https://github.com/solidusio/solidus/pull/5004
+* Deprecate `Spree::Payment` offsets by @waiting-for-dev in https://github.com/solidusio/solidus/pull/5008
+* Add a tooltip for default currency in store settings by @kennyadsl in https://github.com/solidusio/solidus/pull/5009
+* Allow to set order_update_attributes_class by @tvdeyen in https://github.com/solidusio/solidus/pull/4955
+* Remove automatic propagation of generators options by @kennyadsl in https://github.com/solidusio/solidus/pull/5011
+* Mark FulfilmentChanger::TRACK_INVENTORY_NOT_PROVIDED as private by @kennyadsl in https://github.com/solidusio/solidus/pull/5028
+
+## Solidus Backend
+* Fix sticky admin nav on long menu by @MassimilianoLattanzio in https://github.com/solidusio/solidus/pull/4884
+* Deprecate `Admin::OrdersHelper#line_item_shipment_price` by @elia in https://github.com/solidusio/solidus/pull/4876
+* Improve Product Details tab layout by @davidedistefano in https://github.com/solidusio/solidus/pull/4892
+* Retry flaky specs automatically by @kennyadsl in https://github.com/solidusio/solidus/pull/4893
+* Add the `/admin/orders/:number` route by @elia in https://github.com/solidusio/solidus/pull/4886
+* ERB fixes for the backend (🐛+💅) by @elia in https://github.com/solidusio/solidus/pull/4891
+* Risk analysis box update by @elia in https://github.com/solidusio/solidus/pull/4883
+* Mark another spec as flaky by @kennyadsl in https://github.com/solidusio/solidus/pull/4946
+* Use i18n for datepicker format by @coorasse in https://github.com/solidusio/solidus/pull/3321
+* Improve REST OpenAPI documentation for auth by @kennyadsl in https://github.com/solidusio/solidus/pull/4951
+* Allow splitting shipments when not tracking inventory by @nspinazz89 in https://github.com/solidusio/solidus/pull/3338
+* Authorize uuid for update_positions on ResourceController by @julienanne in https://github.com/solidusio/solidus/pull/4992
+* Add a tooltip for default currency in store settings by @kennyadsl in https://github.com/solidusio/solidus/pull/5009
+
+## Solidus API
+* Add a better description for the api key to Stoplight  by @vassalloandrea in https://github.com/solidusio/solidus/pull/4847
+* Link to how to sign in the API with solidus_auth_devise by @waiting-for-dev in https://github.com/solidusio/solidus/pull/4900
+* Ensure LogEntry only saves safe data by @elia in https://github.com/solidusio/solidus/pull/4950
+* Improve REST OpenAPI documentation for auth by @kennyadsl in https://github.com/solidusio/solidus/pull/4951
+* Remove order token authorization option from current order API documentation by @Jackwitwicky in https://github.com/solidusio/solidus/pull/4958
+* Allow splitting shipments when not tracking inventory by @nspinazz89 in https://github.com/solidusio/solidus/pull/3338
+* Allow to set order_update_attributes_class by @tvdeyen in https://github.com/solidusio/solidus/pull/4955
+
+## Solidus Sample
+* Reduce size of sample images by @F-Hamid in https://github.com/solidusio/solidus/pull/4924
+
+## Solidus
+* Update the SolidusFrontend dependency to 3.4.0.dev by @gsmendoza in https://github.com/solidusio/solidus/pull/4889
+* fix: update Nebulab missing logo asset reference by @Agostin in https://github.com/solidusio/solidus/pull/5025
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.3.0...v3.4.0
+
+
+## Solidus v3.3.0 (2023-01-24)
+
+## Solidus Core
+- Add coverage report badge using Codecov [#3136](https://github.com/solidusio/solidus/pull/3136) ([@rubenochiavone](https://github.com/rubenochiavone))
+- Prevent UI crash on FileNotFound errors with Active Storage [#4103](https://github.com/solidusio/solidus/pull/4103) ([@cpfergus1](https://github.com/cpfergus1))
+- Fix Country factory states_required attribute [#4272](https://github.com/solidusio/solidus/pull/4272) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Configurable promotion adjuster [#4460](https://github.com/solidusio/solidus/pull/4460) ([@mamhoff](https://github.com/mamhoff))
+- Support for Colorado Delivery Fee (flat fee and order-level taxes) [#4491](https://github.com/solidusio/solidus/pull/4491) ([@adammathys](https://github.com/adammathys))
+- Add eligibility check to free shipping action [#4515](https://github.com/solidusio/solidus/pull/4515) ([@seand7565](https://github.com/seand7565))
+- Add a SQLite job to the CI [#4525](https://github.com/solidusio/solidus/pull/4525) ([@elia](https://github.com/elia))
+- Deprecate method #redirect_back_or_default [#4533](https://github.com/solidusio/solidus/pull/4533) ([@cpfergus1](https://github.com/cpfergus1))
+- Cleanup Gemfile groups [#4537](https://github.com/solidusio/solidus/pull/4537) ([@elia](https://github.com/elia))
+- Only default to activestorage adapter if Rails version is supported [#4563](https://github.com/solidusio/solidus/pull/4563) ([@tvdeyen](https://github.com/tvdeyen))
+- Delegate `--auto-accept` installer option to solidus_frontend [#4608](https://github.com/solidusio/solidus/pull/4608) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+- Don't remove non-accessible roles when assigning new accessible roles [#4609](https://github.com/solidusio/solidus/pull/4609) ([@waiting-for-dev](https://github.com/waiting-for-dev))
+- Frontend installers with app-templates [#4629](https://github.com/solidusio/solidus/pull/4629) ([@elia](https://github.com/elia))
+- `solidus:install` improvements [#4637](https://github.com/solidusio/solidus/pull/4637) ([@elia](https://github.com/elia))
+- Fix variant price performance regressions  [#4639](https://github.com/solidusio/solidus/pull/4639) ([@mamhoff](https://github.com/mamhoff))
+- Improve variant spec coverage [#4642](https://github.com/solidusio/solidus/pull/4642) ([@mamhoff](https://github.com/mamhoff))
+- Fix the dummy app usage of the generator [#4646](https://github.com/solidusio/solidus/pull/4646) ([@elia](https://github.com/elia))
+- Use app-templates to handle authentication options in the installer [#4654](https://github.com/solidusio/solidus/pull/4654) ([@elia](https://github.com/elia))
+- Add back the `--payment-method` option for `solidus:install` [#4659](https://github.com/solidusio/solidus/pull/4659) ([@elia](https://github.com/elia))
+- Make --authentication=none the same as --with-authentication=false [#4670](https://github.com/solidusio/solidus/pull/4670) ([@elia](https://github.com/elia))
+- Installer UI improvements [#4675](https://github.com/solidusio/solidus/pull/4675) ([@elia](https://github.com/elia))
+- Add support for sorting store credits with different algorithms [#4677](https://github.com/solidusio/solidus/pull/4677) ([@tmtrademarked](https://github.com/tmtrademarked))
+- Add flexible with_adjustable_action trait to Promotion factory [#4682](https://github.com/solidusio/solidus/pull/4682) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Install and set up Buildkite Test Analytics [#4688](https://github.com/solidusio/solidus/pull/4688) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove typo from warning about solidus migration check [#4704](https://github.com/solidusio/solidus/pull/4704) ([@jacobherrington](https://github.com/jacobherrington))
+- Deprecate unused `Spree::Config#mails_from` [#4712](https://github.com/solidusio/solidus/pull/4712) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Fix call context when a preference default is a proc [#4721](https://github.com/solidusio/solidus/pull/4721) ([@Roddoric](https://github.com/Roddoric))
+- Improve Spree::Order::NumberGenerator speed [#4722](https://github.com/solidusio/solidus/pull/4722) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Allow shipping category on variants [#4739](https://github.com/solidusio/solidus/pull/4739) ([@tvdeyen](https://github.com/tvdeyen))
+- Do not require 'mail' [#4740](https://github.com/solidusio/solidus/pull/4740) ([@tvdeyen](https://github.com/tvdeyen))
+- Add back PayPal as a payment method for the starter frontend [#4743](https://github.com/solidusio/solidus/pull/4743) ([@elia](https://github.com/elia))
+- Remove trailing zeroes in tax amount [#4758](https://github.com/solidusio/solidus/pull/4758) ([@Naokimi](https://github.com/Naokimi))
+- Fix typo s/loout/logout/ [#4825](https://github.com/solidusio/solidus/pull/4825) ([@chrean](https://github.com/chrean))
+- Revert "Remove trailing zeroes in tax amount" [#4824](https://github.com/solidusio/solidus/pull/4824) ([@tvdeyen](https://github.com/tvdeyen))
+- Add a default implementation for PaymentMethod#try_void [#4843](https://github.com/solidusio/solidus/pull/4843) ([@kennyadsl](https://github.com/kennyadsl))
+- Remove Ruby v2.5 support [#4845](https://github.com/solidusio/solidus/pull/4845) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Ruby v2.6 support [#4848](https://github.com/solidusio/solidus/pull/4848) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Rails v5.2 support [#4850](https://github.com/solidusio/solidus/pull/4850) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Use `call` in the adjustments recalculator's interface [#4855](https://github.com/solidusio/solidus/pull/4855) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Improve ransackable attribute class method names [#4853](https://github.com/solidusio/solidus/pull/4853) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Revert the deprecation of `#redirect_back_or_default` method [#4856](https://github.com/solidusio/solidus/pull/4856) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Raise a custom extension passing invalid search params [#4844](https://github.com/solidusio/solidus/pull/4844) ([@kennyadsl](https://github.com/kennyadsl))
+- Provide transaction_id and source in try_void [#4859](https://github.com/solidusio/solidus/pull/4859) ([@kennyadsl](https://github.com/kennyadsl))
+- Improve Ransackable attribute class methods usage [#4857](https://github.com/solidusio/solidus/pull/4857) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Add available to Product.ransackable_scopes [#4852](https://github.com/solidusio/solidus/pull/4852) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Spree::Payment::Processing refactor [#4823](https://github.com/solidusio/solidus/pull/4823) ([@elia](https://github.com/elia))
+- Improve Bogus (test) Credit Card voiding [#4861](https://github.com/solidusio/solidus/pull/4861) ([@kennyadsl](https://github.com/kennyadsl))
+- Allow storing static preferences using string class names [#4858](https://github.com/solidusio/solidus/pull/4858) ([@elia](https://github.com/elia))
+- Get the paypal payment method option out of pre-release [#4865](https://github.com/solidusio/solidus/pull/4865) ([@elia](https://github.com/elia))
+
+## Solidus Backend
+- Add coverage report badge using Codecov [#3136](https://github.com/solidusio/solidus/pull/3136) ([@rubenochiavone](https://github.com/rubenochiavone))
+- Support for Colorado Delivery Fee (flat fee and order-level taxes) [#4491](https://github.com/solidusio/solidus/pull/4491) ([@adammathys](https://github.com/adammathys))
+- Don't remove non-accessible roles when assigning new accessible roles [#4609](https://github.com/solidusio/solidus/pull/4609) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Update deprecated jQuery methods [#4625](https://github.com/solidusio/solidus/pull/4625) ([@cpfergus1](https://github.com/cpfergus1))
+- Fix variant price performance regressions  [#4639](https://github.com/solidusio/solidus/pull/4639) ([@mamhoff](https://github.com/mamhoff))
+- [FIX] Emptying cart will update the order summary [#4655](https://github.com/solidusio/solidus/pull/4655) ([@maniSHarma7575](https://github.com/maniSHarma7575))
+- Update underscore.js [#4660](https://github.com/solidusio/solidus/pull/4660) ([@ccarruitero](https://github.com/ccarruitero))
+- Paginate variant autocomplete [#4661](https://github.com/solidusio/solidus/pull/4661) ([@tvdeyen](https://github.com/tvdeyen))
+- Install and set up Buildkite Test Analytics [#4688](https://github.com/solidusio/solidus/pull/4688) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Do not pass arrays to can? [#4705](https://github.com/solidusio/solidus/pull/4705) ([@jacobherrington](https://github.com/jacobherrington))
+- Revert jQuery changes to xhr var in image upload [#4707](https://github.com/solidusio/solidus/pull/4707) ([@cpfergus1](https://github.com/cpfergus1))
+- Allow shipping category on variants [#4739](https://github.com/solidusio/solidus/pull/4739) ([@tvdeyen](https://github.com/tvdeyen))
+- Remove trailing zeroes in tax amount [#4758](https://github.com/solidusio/solidus/pull/4758) ([@Naokimi](https://github.com/Naokimi))
+- Improve variant and product autocomplete functions flexibility with Ransack [#4767](https://github.com/solidusio/solidus/pull/4767) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Fix styling of table rows for deleted records [#4833](https://github.com/solidusio/solidus/pull/4833) ([@tvdeyen](https://github.com/tvdeyen))
+- Hide soft deleted prices from admin product view [#4832](https://github.com/solidusio/solidus/pull/4832) ([@tvdeyen](https://github.com/tvdeyen))
+- Pre-add the default store to new payment methods [#4828](https://github.com/solidusio/solidus/pull/4828) ([@elia](https://github.com/elia))
+- Remove Ruby v2.5 support [#4845](https://github.com/solidusio/solidus/pull/4845) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Ruby v2.6 support [#4848](https://github.com/solidusio/solidus/pull/4848) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+
+## Solidus API
+- Add coverage report badge using Codecov [#3136](https://github.com/solidusio/solidus/pull/3136) ([@rubenochiavone](https://github.com/rubenochiavone))
+- Prevent UI crash on FileNotFound errors with Active Storage [#4103](https://github.com/solidusio/solidus/pull/4103) ([@cpfergus1](https://github.com/cpfergus1))
+- Fix Country factory states_required attribute [#4272](https://github.com/solidusio/solidus/pull/4272) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Add a SQLite job to the CI [#4525](https://github.com/solidusio/solidus/pull/4525) ([@elia](https://github.com/elia))
+- `solidus:install` improvements [#4637](https://github.com/solidusio/solidus/pull/4637) ([@elia](https://github.com/elia))
+- [FIX] Emptying cart will update the order summary [#4655](https://github.com/solidusio/solidus/pull/4655) ([@maniSHarma7575](https://github.com/maniSHarma7575))
+- Install and set up Buildkite Test Analytics [#4688](https://github.com/solidusio/solidus/pull/4688) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Deprecate unused `Spree::Config#mails_from` [#4712](https://github.com/solidusio/solidus/pull/4712) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Allow shipping category on variants [#4739](https://github.com/solidusio/solidus/pull/4739) ([@tvdeyen](https://github.com/tvdeyen))
+- Improve variant and product autocomplete functions flexibility with Ransack [#4767](https://github.com/solidusio/solidus/pull/4767) ([@RyanofWoods](https://github.com/RyanofWoods))
+- Remove Ruby v2.5 support [#4845](https://github.com/solidusio/solidus/pull/4845) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Ruby v2.6 support [#4848](https://github.com/solidusio/solidus/pull/4848) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Rails v5.2 support [#4850](https://github.com/solidusio/solidus/pull/4850) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Improve ransackable attribute class method names [#4853](https://github.com/solidusio/solidus/pull/4853) ([@RyanofWoods](https://github.com/RyanofWoods))
+
+## Solidus Sample
+- Fix occasional "database is locked" errors while loading sample data [#4648](https://github.com/solidusio/solidus/pull/4648) ([@elia](https://github.com/elia))
+- Update product_option_types Seed File [#4680](https://github.com/solidusio/solidus/pull/4680) ([@Naokimi](https://github.com/Naokimi))
+- Remove Ruby v2.5 support [#4845](https://github.com/solidusio/solidus/pull/4845) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Ruby v2.6 support [#4848](https://github.com/solidusio/solidus/pull/4848) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+
+## Solidus
+- Be explicit about the solidus_frontend gemspec dependency [#4818](https://github.com/solidusio/solidus/pull/4818) ([@kennyadsl](https://github.com/kennyadsl))
+- Remove Ruby v2.5 support [#4845](https://github.com/solidusio/solidus/pull/4845) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+- Remove Ruby v2.6 support [#4848](https://github.com/solidusio/solidus/pull/4848) ([@waiting-for-dev](https://github.io/waiting-for-dev))
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v3.2.0...v3.3.0
+
+
+## Solidus 3.2.4 (v3.2, 2022-11-09)
+
+- Revert jQuery changes to xhr var in image upload [#4708](https://github.com/solidusio/solidus/pull/4708) ([@cpfergus1](https://github.com/cpfergus1))
+- Fix variant price performance regressions [#4690](https://github.com/solidusio/solidus/pull/4690) ([@mamhoff](https://github.com/mamhoff))
+
+## Solidus 3.2.3 (v3.2, 2022-11-03)
+
+- Paginate variant autocomplete [#4662](https://github.com/solidusio/solidus/pull/4662) ([@tvdeyen](https://github.com/tvdeyen))
+- Update deprecated jQuery methods [#4674](https://github.com/solidusio/solidus/pull/4674) ([@elia](https://github.com/elia))
+- Restore `--payment-method=` for `solidus:install` on v3.2 [#4673](https://github.com/solidusio/solidus/pull/4673) ([@elia](https://github.com/elia))
+- Ensure puma 6 is not used in development [#4692](https://github.com/solidusio/solidus/pull/4692) ([@elia](https://github.com/elia))
+- make frontend installer shell-out commands more compatible [#4694](https://github.com/solidusio/solidus/pull/4694) ([@elia](https://github.com/elia))
+- Fix `nil` bundle_path while installing solidus_frontend [#4697](https://github.com/solidusio/solidus/pull/4697) ([@elia](https://github.com/elia))
+
+## Solidus 3.2.2 (v3.2, 2022-09-09)
+
+- Don't remove non-accessible roles when assigning new accessible roles ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Delegate `--auto-accept` installer option to solidus_frontend ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+## Solidus 3.2.1 (v3.2, 2022-09-09)
+
+- [v3.2] Only default to activestorage adapter if Rails version is supported [#4564](https://github.com/solidusio/solidus/pull/4564) ([tvdeyen](https://github.com/tvdeyen))
+- Remove duplicated attributes from API docs ([kennyadsl](https://github.com/kennyadsl))
+
+## Solidus 3.2.0 (v3.2, 2022-08-18)
+
+Remember to run `bin/rails g solidus:update` to support you during the upgrade
+process.
+
+You can read more about how to [upgrade
+solidus](https://edgeguides.solidus.io/getting-started/upgrading-solidus/) in
+our guides.
+
+### Major changes
+
+#### New Event Bus
+
+A completely new Event Bus has been introduced. It has better support for async
+subscribers, testability, observability, and many other features. It's been
+developed as a separated gem, [omnes](https://github.com/nebulab/omnes). Check
+its README for everything it supports!
+
+Don't forget to consult the [upgrade guide from the legacy event system to
+omnes](https://edgeguides.solidus.io/customization/subscribing-to-events#upgrading-from-the-legacy-event-system).
+
+While the legacy event system is still supported, it'll be removed on Solidus
+v4.
+
+#### New Solidus' starter frontend
+
+For fresh Solidus applications, we now recommend you use
+[solidus_starter_frontend](https://github.com/solidusio/solidus_starter_frontend).
+
+solidus_frontend will be removed from the solidus meta-package gem in Solidus
+v4. Furthermore, its code has been extracted from
+https://github.com/solidusio/solidus to
+https://github.com/solidusio/solidus_frontend. Once removed, you'll need to
+explicitly add `solidus_frontend` to your Gemfile in order to continue using
+it.
+
+Meanwhile, the Solidus installer allows you to choose which one you want to use
+as the storefront.
+
+#### New guides
+
+The guides that used to live at `solidusio/solidus` have been deprecated. You
+can still find them at https://github.com/solidusio/legacy-guides, but a great
+effort is in progress to make first-class documentation on
+https://github.com/solidusio/edgeguides.
+
+You can check them live in https://edgeguides.solidus.io/.
+
+### Other important changes
+
+#### No more autoload of decorators in fresh applications
+
+New Solidus applications won't autoload files matching `app/**/*_decorator*.rb`
+pattern anymore. For previous Solidus applications, it's something that will
+keep working as the responsible code was added to your `config/application.rb`
+when Solidus was installed. That code is intended to work with Rails' classic
+autoloader, deprecated on Rails 6 and removed on Rails 7. It keeps working
+because of a [compatibility
+layer](https://github.com/rails/rails/blob/296ef7a17221e81881e38b51aa2b014d7a28bac5/activesupport/lib/active_support/dependencies/require_dependency.rb)
+which is also deprecated. However, it may be eventually removed, so you're
+better off updating your `application.rb`  file. You should substitute:
+
+```ruby
+config.to_prepare do
+  Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
+    require_dependency(path)
+  end
+end
+```
+
+With:
+
+```ruby
+overrides = "#{Rails.root}/app/overrides" # use your actual directory here
+Rails.autoloaders.main.ignore(overrides)
+config.to_prepare do
+  Dir.glob("#{overrides}/**/*_decorator*.rb").each do |override|
+    load override
+  end
+end
+```
+
+You may also want to stop using the `decorator` naming, as it's no longer part
+of Solidus recommendations (that files are monkey patches; they don't use the
+[decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern)). E.g.,
+you can place those files in `app/overrides/` and remove the `decorator`
+suffix.
+
+> ## 🚧 **WARNING** 🚧
+>
+> If you have [deface](https://github.com/spree/deface) as one of your dependencies, the `app/overrides` path
+> interferes with the directory it uses to load its overrides. To avoid
+> double-loading and other issues, you should use a different directory. A
+> good candidate could be `app/monkey_patches`.
+
+#### Changes to the promotion system
+
+Promotions with a `match_policy` of `any` are deprecated. If you have promotions
+with such a match policy, try running the following rake task:
+
+```bash
+bin/rake solidus:split_promotions_with_any_match_policy
+```
+
+This will create separate promotions for each of the rules of your promotions with `any`
+match policy, which should have the same outcome for customers.
+
+Creating new promotions with `any` match policy is turned off by default. If you still want
+to create promotions like that (knowing they will not be supported in the future), you can
+set a temporary flag in your `config/initializers/spree.rb` file:
+
+```ruby
+# Allow creating new promotions with an `any` match policy. Unsupported in the future.
+config.allow_promotions_any_match_policy = true
+```
+
+#### Static preference sources configured within `.to_prepare` blocks
+
+[Rails 7 no longer supports referring autoloadable classes within an
+initializer](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html#autoload-on-boot-and-on-each-reload).
+
+Because of that, we need to change the way we configure static preference sources.
+
+Before:
+
+```ruby
+# config/initializers/spree.rb
+Spree.config do |config|
+  config.static_model_preferences.add(
+    AmazingStore::AmazingPaymentMethod,
+    'amazing_payment_method_credentials',
+    credentials: ENV['AMAZING_PAYMENT_METHOD_CREDENTIALS'],
+    server: Rails.env.production? ? 'production' : 'test',
+    test_mode: !Rails.env.production?
+  )
+end
+```
+
+Now:
+
+```ruby
+# config/initializers/spree.rb
+Rails.application.config.to_prepare do
+  Spree::Config.static_model_preferences.add(
+    AmazingStore::AmazingPaymentMethod,
+    'amazing_payment_method_credentials',
+    credentials: ENV['AMAZING_PAYMENT_METHOD_CREDENTIALS'],
+    server: Rails.env.production? ? 'production' : 'test',
+    test_mode: !Rails.env.production?
+  )
+end
+```
+
+### Core
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
+- Fix ReDos vulnerability on Spree::EmailValidator::EMAIL_REGEXP [GHSA-qxmr-qxh6-2cc9](https://github.com/solidusio/solidus/security/advisories/GHSA-qxmr-qxh6-2cc9)
+- Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
+- Introduce a configuration value for `migration_path` [#4190](https://github.com/solidusio/solidus/pull/4190) ([forkata](https://github.com/forkata))
+- Deprecate Promotion `any` Match Policy [#4304](https://github.com/solidusio/solidus/pull/4304) ([mamhoff](https://github.com/mamhoff))
+- Fix key in the locale file [#4512](https://github.com/solidusio/solidus/pull/4512) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Run auth generator when starter frontend installs the gem [#4511](https://github.com/solidusio/solidus/pull/4511) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Translate price country names [#4508](https://github.com/solidusio/solidus/pull/4508) ([tvdeyen](https://github.com/tvdeyen))
+- Tweaks for the Solidus installer [#4504](https://github.com/solidusio/solidus/pull/4504) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Include discarded prices in delete_prices_with_nil_amount task [#4495](https://github.com/solidusio/solidus/pull/4495) ([spaghetticode](https://github.com/spaghetticode))
+- Remove PayPal as an option during the installation process [#4494](https://github.com/solidusio/solidus/pull/4494) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Deprecate solidus_frontend & allow installing solidus_starter_frontend [#4490](https://github.com/solidusio/solidus/pull/4490) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix incorrect validation message for missing store credit category [#4481](https://github.com/solidusio/solidus/pull/4481) ([johnpitchko](https://github.com/johnpitchko))
+- Add basic support for order-level taxes [#4477](https://github.com/solidusio/solidus/pull/4477) ([adammathys](https://github.com/adammathys))
+- Allow to extend user deletion logic [#4471](https://github.com/solidusio/solidus/pull/4471) ([tvdeyen](https://github.com/tvdeyen))
+- Fix stores with no authentication [#4456](https://github.com/solidusio/solidus/pull/4456) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Support CVE-2022-32224 Rails security updates [#4451](https://github.com/solidusio/solidus/pull/4451) ([gsmendoza](https://github.com/gsmendoza))
+- Support code reloading when configuring static preferences sources [#4449](https://github.com/solidusio/solidus/pull/4449) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Deprecate Ruby 2.5 & Ruby 2.6 [#4442](https://github.com/solidusio/solidus/pull/4442) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Deprecate Rails 5.2 [#4439](https://github.com/solidusio/solidus/pull/4439) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Sanitize i18n keys using i18n-tasks gem issue: #3978 [#4437](https://github.com/solidusio/solidus/pull/4437) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Update CircleCI configuration [#4435](https://github.com/solidusio/solidus/pull/4435) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fail with `raise` when the storage adapter is not supported [#4434](https://github.com/solidusio/solidus/pull/4434) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Skip failing test because of unsupported feature on Rails < 6.1 [#4432](https://github.com/solidusio/solidus/pull/4432) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix Order#tax_address method [#4429](https://github.com/solidusio/solidus/pull/4429) ([spaghetticode](https://github.com/spaghetticode))
+- Add display shipment total before tax [#4423](https://github.com/solidusio/solidus/pull/4423) ([mamhoff](https://github.com/mamhoff))
+- Fix deprecation of active payment methods [#4414](https://github.com/solidusio/solidus/pull/4414) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix: common:test_app should change Rails.env to test [#4411](https://github.com/solidusio/solidus/pull/4411) ([gsmendoza](https://github.com/gsmendoza))
+- Only install ActiveStorage adapter on supported Rails versions [#4402](https://github.com/solidusio/solidus/pull/4402) ([tvdeyen](https://github.com/tvdeyen))
+- Fix user restricted stock management v3.1 [#4400](https://github.com/solidusio/solidus/pull/4400) ([rmparr](https://github.com/rmparr))
+- Make more stock classes configurable [#4395](https://github.com/solidusio/solidus/pull/4395) ([jarednorman](https://github.com/jarednorman))
+- Fix creating store credit with amount in foreign format [#4390](https://github.com/solidusio/solidus/pull/4390) ([tvdeyen](https://github.com/tvdeyen))
+- Allow user stock locations to be deleted [#4389](https://github.com/solidusio/solidus/pull/4389) ([rmparr](https://github.com/rmparr))
+- Deprecate duplicated variant routes [#4388](https://github.com/solidusio/solidus/pull/4388) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Add missing sprockets-rails dependency [#4382](https://github.com/solidusio/solidus/pull/4382) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix issues loading serialized logs [#4376](https://github.com/solidusio/solidus/pull/4376) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix update generator taking non-comparable values as changes in a default [#4375](https://github.com/solidusio/solidus/pull/4375) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Add flexibility to `Spree::Order#restart_checkout_flow` [#4369](https://github.com/solidusio/solidus/pull/4369) ([spaghetticode](https://github.com/spaghetticode))
+- Support for Ruby 3.1 [#4366](https://github.com/solidusio/solidus/pull/4366) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Readd `config.cache_classes` on test env and remove `with_model` dep [#4358](https://github.com/solidusio/solidus/pull/4358) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix creating refund with amount in foreign format [#4344](https://github.com/solidusio/solidus/pull/4344) ([tvdeyen](https://github.com/tvdeyen))
+- Use Omnes for pub/sub [#4342](https://github.com/solidusio/solidus/pull/4342) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Respect new preloader API in Rails 7 [#4338](https://github.com/solidusio/solidus/pull/4338) ([mamhoff](https://github.com/mamhoff))
+- Update in-memory shipments of order in order_shipping [#4334](https://github.com/solidusio/solidus/pull/4334) ([tvdeyen](https://github.com/tvdeyen))
+- Bugfix: Changing Default Addresses [#4332](https://github.com/solidusio/solidus/pull/4332) ([mamhoff](https://github.com/mamhoff))
+- Fix install generator on namespaced extensions [#4327](https://github.com/solidusio/solidus/pull/4327) ([nvandoorn](https://github.com/nvandoorn))
+- Fixes defining thumbnail sizes through ActiveStorage adapter [#4318](https://github.com/solidusio/solidus/pull/4318) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fixes using ActiveStorage adapter with libvips as variant processor [#4317](https://github.com/solidusio/solidus/pull/4317) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix flaky spec for Spree::ShippingMethod#available_to_store [#4313](https://github.com/solidusio/solidus/pull/4313) ([mamhoff](https://github.com/mamhoff))
+- Allow kt-paperclip v7 [#4310](https://github.com/solidusio/solidus/pull/4310) ([tvdeyen](https://github.com/tvdeyen))
+- Refactor promotion usage counts [#4307](https://github.com/solidusio/solidus/pull/4307) ([mamhoff](https://github.com/mamhoff))
+- OrderInventory: Use variant stock items [#4303](https://github.com/solidusio/solidus/pull/4303) ([mamhoff](https://github.com/mamhoff))
+- Fix: `extension:test_app` rake task should detect if Solidus engines are available [#4302](https://github.com/solidusio/solidus/pull/4302) ([gsmendoza](https://github.com/gsmendoza))
+- OrderContents: Initialize line item with empty adjustments [#4286](https://github.com/solidusio/solidus/pull/4286) ([mamhoff](https://github.com/mamhoff))
+- Promotion Rule CreateItemAdjustments: Use in-memory objects [#4285](https://github.com/solidusio/solidus/pull/4285) ([mamhoff](https://github.com/mamhoff))
+- Deprecate Spree::PromotionRule.for [#4284](https://github.com/solidusio/solidus/pull/4284) ([mamhoff](https://github.com/mamhoff))
+- Product Promotion Rule: Use in-memory objects [#4282](https://github.com/solidusio/solidus/pull/4282) ([mamhoff](https://github.com/mamhoff))
+- Optimize Spree::PromotionHandler::Cart [#4281](https://github.com/solidusio/solidus/pull/4281) ([mamhoff](https://github.com/mamhoff))
+- Remove n+1 in Spree::Tax::TaxLocation class [#4280](https://github.com/solidusio/solidus/pull/4280) ([mamhoff](https://github.com/mamhoff))
+- Fix n+1 possibilities in Promotion#blacklisted? [#4275](https://github.com/solidusio/solidus/pull/4275) ([mamhoff](https://github.com/mamhoff))
+- Replace expired GPG key for mysql install in dev Dockerfile [#4274](https://github.com/solidusio/solidus/pull/4274) ([nemeth](https://github.com/nemeth))
+- Fix order create permissions [#4261](https://github.com/solidusio/solidus/pull/4261) ([spaghetticode](https://github.com/spaghetticode))
+- Deprecate public visibility of order#finalize! [#4260](https://github.com/solidusio/solidus/pull/4260) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix test assertion due to staled cache [#4259](https://github.com/solidusio/solidus/pull/4259) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Relax Factory Bot version constraint [#4255](https://github.com/solidusio/solidus/pull/4255) ([jarednorman](https://github.com/jarednorman))
+- Add public interface to fetch registered events [#4252](https://github.com/solidusio/solidus/pull/4252) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix: solidus:install adds the frontend assets even if the repo does not have solidus_frontend [#4251](https://github.com/solidusio/solidus/pull/4251) ([gsmendoza](https://github.com/gsmendoza))
+- Cosmetic changes to the unknown event message [#4246](https://github.com/solidusio/solidus/pull/4246) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Stop generating code to autoload overrides [#4231](https://github.com/solidusio/solidus/pull/4231) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Accept nested addresses attributes for User [#4229](https://github.com/solidusio/solidus/pull/4229) ([kennyadsl](https://github.com/kennyadsl))
+- Ensure promotion codes don't trigger ActiveRecord::RecordNotUnique errors on save [#4228](https://github.com/solidusio/solidus/pull/4228) ([jcsanti](https://github.com/jcsanti))
+- Reintroduce inverse_of: :product for variants association [#4227](https://github.com/solidusio/solidus/pull/4227) ([spaghetticode](https://github.com/spaghetticode))
+- Enforce event registration [#4226](https://github.com/solidusio/solidus/pull/4226) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Add Rails 7 support [#4220](https://github.com/solidusio/solidus/pull/4220) ([peterberkenbosch](https://github.com/peterberkenbosch))
+- Use default spree event adapter [#4216](https://github.com/solidusio/solidus/pull/4216) ([peterberkenbosch](https://github.com/peterberkenbosch))
+- Update warning with copy/pastable code [#4215](https://github.com/solidusio/solidus/pull/4215) ([peterberkenbosch](https://github.com/peterberkenbosch))
+- Add stubbing test helpers for the event bus [#4214](https://github.com/solidusio/solidus/pull/4214) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Use SSL on fonts.googleapis.com scss import [#4209](https://github.com/solidusio/solidus/pull/4209) ([RyanofWoods](https://github.com/RyanofWoods))
+- Enable rubygems_mfa_required on solidus [#4206](https://github.com/solidusio/solidus/pull/4206) ([gsmendoza](https://github.com/gsmendoza))
+- A couple of small fixes [#4205](https://github.com/solidusio/solidus/pull/4205) ([elia](https://github.com/elia))
+- Introduce Spree::Event's test interface to run only selected listeners [#4204](https://github.com/solidusio/solidus/pull/4204) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Adds observability to the new event bus [#4203](https://github.com/solidusio/solidus/pull/4203) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- List order customer returns only once [#4196](https://github.com/solidusio/solidus/pull/4196) ([spaghetticode](https://github.com/spaghetticode))
+- Fix discarded duplicated products bug [#4189](https://github.com/solidusio/solidus/pull/4189) ([Azeem838](https://github.com/Azeem838))
+- Fix loading core on Rails < 6.1 [#4179](https://github.com/solidusio/solidus/pull/4179) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Centralize legacy event bus deprecation and test legacy on CI [#4176](https://github.com/solidusio/solidus/pull/4176) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Recalculate promotions after destroying/refreshing shipments [#4172](https://github.com/solidusio/solidus/pull/4172) ([spaghetticode](https://github.com/spaghetticode))
+- Add deprecation path for arity-zero preference defaults [#4170](https://github.com/solidusio/solidus/pull/4170) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix shipping_method_spec test flakiness [#4169](https://github.com/solidusio/solidus/pull/4169) ([DianeLooney](https://github.com/DianeLooney))
+- Respect completed_at timestamp in order factories [#4168](https://github.com/solidusio/solidus/pull/4168) ([DianeLooney](https://github.com/DianeLooney))
+- Update install templates to use jquery3 (vulnerability fix) [#4167](https://github.com/solidusio/solidus/pull/4167) ([cpfergus1](https://github.com/cpfergus1))
+- Fix staled upgrade instructions on the Gemfile's post-install message [#4166](https://github.com/solidusio/solidus/pull/4166) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix searching deleted products by SKU [#4164](https://github.com/solidusio/solidus/pull/4164) ([adammathys](https://github.com/adammathys))
+- Change application-template generation script to use main branch [#4163](https://github.com/solidusio/solidus/pull/4163) ([kennyadsl](https://github.com/kennyadsl))
+- Get Solidus ready for 3.2 [#4162](https://github.com/solidusio/solidus/pull/4162) ([kennyadsl](https://github.com/kennyadsl))
+- Introduce new EventBus adapter [#4130](https://github.com/solidusio/solidus/pull/4130) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Adds conditional validation to `ReturnItem` [#4121](https://github.com/solidusio/solidus/pull/4121) ([Brian-Demon](https://github.com/Brian-Demon))
+- Add global Spree::Config.default_email_regexp [#4022](https://github.com/solidusio/solidus/pull/4022) ([cesartalves](https://github.com/cesartalves))
+- Deprecate try_spree_current_user [#3923](https://github.com/solidusio/solidus/pull/3923) ([elia](https://github.com/elia))
+- Improve payment service providers switching errors [#3837](https://github.com/solidusio/solidus/pull/3837) ([luca-landa](https://github.com/luca-landa))
+
+### API
+
+- Sanitize i18n keys using i18n-tasks gem issue: #3978 [#4437](https://github.com/solidusio/solidus/pull/4437) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix option_values nested attributes behavior on the API [#4409](https://github.com/solidusio/solidus/pull/4409) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Add tax_category_id to variant's permitted attributes [#4406](https://github.com/solidusio/solidus/pull/4406) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Deprecate creating new shipment with an item via API [#4387](https://github.com/solidusio/solidus/pull/4387) ([kennyadsl](https://github.com/kennyadsl))
+- Deprecate dangling option_values and duplicated routes [#4385](https://github.com/solidusio/solidus/pull/4385) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Bugfix: Changing Default Addresses [#4332](https://github.com/solidusio/solidus/pull/4332) ([mamhoff](https://github.com/mamhoff))
+- Allow OrderWalkThrough to take a user [#4292](https://github.com/solidusio/solidus/pull/4292) ([mamhoff](https://github.com/mamhoff))
+- Refactor Stock Quantifier to use Enumerable [#4291](https://github.com/solidusio/solidus/pull/4291) ([mamhoff](https://github.com/mamhoff))
+- Fix(OrderMerger): Do not carry line item adjustments to new order [#4290](https://github.com/solidusio/solidus/pull/4290) ([mamhoff](https://github.com/mamhoff))
+- Add additional info for developers in docker logs [#4288](https://github.com/solidusio/solidus/pull/4288) ([Palid](https://github.com/Palid))
+- Use Variant Searcher for Autocomplete [#4197](https://github.com/solidusio/solidus/pull/4197) ([adammathys](https://github.com/adammathys))
+- Clean request specs [#4158](https://github.com/solidusio/solidus/pull/4158) ([biximilien](https://github.com/biximilien))
+
+### Admin
+
+- Switch orders name search to use contains instead of starts with [#4496](https://github.com/solidusio/solidus/pull/4496) ([sbader](https://github.com/sbader))
+- Provide support to fix locale selection in admin login page [#4493](https://github.com/solidusio/solidus/pull/4493) ([gsmendoza](https://github.com/gsmendoza))
+- Fix expectations about solidus_auth_devise order in the Gemfile [#4465](https://github.com/solidusio/solidus/pull/4465) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Translate price country names [#4508](https://github.com/solidusio/solidus/pull/4508) ([tvdeyen](https://github.com/tvdeyen))
+- Sanitize i18n keys using i18n-tasks gem issue: #3978 [#4437](https://github.com/solidusio/solidus/pull/4437) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Remove N+1 from admin users [#4419](https://github.com/solidusio/solidus/pull/4419) ([tvdeyen](https://github.com/tvdeyen))
+- Fix delete response in admin users controller [#4415](https://github.com/solidusio/solidus/pull/4415) ([tvdeyen](https://github.com/tvdeyen))
+- Remove unutilized coffee-rails dependency [#4405](https://github.com/solidusio/solidus/pull/4405) ([cpfergus1](https://github.com/cpfergus1))
+- Make more room for long values in Order Summary [#4352](https://github.com/solidusio/solidus/pull/4352) ([tvdeyen](https://github.com/tvdeyen))
+- Enhance refund admin UI [#4348](https://github.com/solidusio/solidus/pull/4348) ([tvdeyen](https://github.com/tvdeyen))
+- feat(Variants Form): Add some visual structure [#4323](https://github.com/solidusio/solidus/pull/4323) ([tvdeyen](https://github.com/tvdeyen))
+- Fix admin variants table UX [#4322](https://github.com/solidusio/solidus/pull/4322) ([tvdeyen](https://github.com/tvdeyen))
+- Authorize uuid for existing object in sortable table [#4287](https://github.com/solidusio/solidus/pull/4287) ([julienanne](https://github.com/julienanne))
+- Check for existence of `product_path` instead of `Spree::Frontend::Engine` [#4278](https://github.com/solidusio/solidus/pull/4278) ([gsmendoza](https://github.com/gsmendoza))
+- Admin permission fixes [#4276](https://github.com/solidusio/solidus/pull/4276) ([spaghetticode](https://github.com/spaghetticode))
+- Incorrect display store credit reason [#4268](https://github.com/solidusio/solidus/pull/4268) ([nbelzer](https://github.com/nbelzer))
+- Fix for advancing carts correctly in admin checkout [#4253](https://github.com/solidusio/solidus/pull/4253) ([tmtrademarked](https://github.com/tmtrademarked))
+- fix backbone shipment item view when split [#4250](https://github.com/solidusio/solidus/pull/4250) ([ccarruitero](https://github.com/ccarruitero))
+- Fix tests after two conflicting merges [#4249](https://github.com/solidusio/solidus/pull/4249) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [Admin] Fix permission checks on some links [#4244](https://github.com/solidusio/solidus/pull/4244) ([spaghetticode](https://github.com/spaghetticode))
+- Fix product prices table pagination [#4243](https://github.com/solidusio/solidus/pull/4243) ([tvdeyen](https://github.com/tvdeyen))
+- Admin users did not work with custom user models [#4238](https://github.com/solidusio/solidus/pull/4238) ([softr8](https://github.com/softr8))
+- Adds the missing en-CA localization for the select2 dropdown in admin [#4223](https://github.com/solidusio/solidus/pull/4223) ([jzisser9](https://github.com/jzisser9))
+- Add filter and pagination to tax rates admin view [#4222](https://github.com/solidusio/solidus/pull/4222) ([tvdeyen](https://github.com/tvdeyen))
+- Make display_price optional on admin variants list [#4213](https://github.com/solidusio/solidus/pull/4213) ([luca-landa](https://github.com/luca-landa))
+- Use SSL on fonts.googleapis.com scss import [#4209](https://github.com/solidusio/solidus/pull/4209) ([RyanofWoods](https://github.com/RyanofWoods))
+- Use Variant Searcher for Autocomplete [#4197](https://github.com/solidusio/solidus/pull/4197) ([adammathys](https://github.com/adammathys))
+- Update install templates to use jquery3 (vulnerability fix) [#4167](https://github.com/solidusio/solidus/pull/4167) ([cpfergus1](https://github.com/cpfergus1))
+- Fix searching deleted products by SKU [#4164](https://github.com/solidusio/solidus/pull/4164) ([adammathys](https://github.com/adammathys))
+- Refactor and add specs to stock locations helper [#3827](https://github.com/solidusio/solidus/pull/3827) ([gabrielbaldao](https://github.com/gabrielbaldao))
+
+### Frontend
+
+- Remove frontend directory [#4497](https://github.com/solidusio/solidus/pull/4497) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix expectations about solidus_auth_devise order in the Gemfile [#4465](https://github.com/solidusio/solidus/pull/4465) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Make API docs deprecation warnings consistent [#4397](https://github.com/solidusio/solidus/pull/4397) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Deprecate SolidusFrontend [#4320](https://github.com/solidusio/solidus/pull/4320) ([gsmendoza](https://github.com/gsmendoza))
+- Bump follow-redirects from 1.14.7 to 1.14.8 in /guides [#4269](https://github.com/solidusio/solidus/pull/4269) ([dependabot](https://github.com/apps/dependabot))
+- Use SSL on fonts.googleapis.com scss import [#4209](https://github.com/solidusio/solidus/pull/4209) ([RyanofWoods](https://github.com/RyanofWoods))
+
+### Docs & Guides
+
+- Add explicit information about DB_\* env variables to the README [#4461](https://github.com/solidusio/solidus/pull/4461) ([chrean](https://github.com/chrean))
+- Move legacy guides to a separate repository [#4459](https://github.com/solidusio/solidus/pull/4459) ([aldesantis](https://github.com/aldesantis))
+- Bump minimist from 1.2.0 to 1.2.6 in /guides [#4314](https://github.com/solidusio/solidus/pull/4314) ([dependabot](https://github.com/apps/dependabot))
+- Update customizing-assets.html.md [#4312](https://github.com/solidusio/solidus/pull/4312) ([mapreal19](https://github.com/mapreal19))
+- Removes Stoplight API docu auto build orb. [#4311](https://github.com/solidusio/solidus/pull/4311) ([wintermeyer](https://github.com/wintermeyer))
+- Update README.md chromedriver link [#4294](https://github.com/solidusio/solidus/pull/4294) ([Palid](https://github.com/Palid))
+- Update API docs link to point to the new domain [#4279](https://github.com/solidusio/solidus/pull/4279) ([kennyadsl](https://github.com/kennyadsl))
+- Update the Super Good logo [#4258](https://github.com/solidusio/solidus/pull/4258) ([jarednorman](https://github.com/jarednorman))
+- Update contributor logo on README.md [#4257](https://github.com/solidusio/solidus/pull/4257) ([mfrecchiami](https://github.com/mfrecchiami))
+- Update image settings documentation [#4245](https://github.com/solidusio/solidus/pull/4245) ([nbelzer](https://github.com/nbelzer))
+- Bump follow-redirects from 1.13.1 to 1.14.7 in /guides [#4242](https://github.com/solidusio/solidus/pull/4242) ([dependabot](https://github.com/apps/dependabot))
+- Documentation fixes [#4241](https://github.com/solidusio/solidus/pull/4241) ([nbelzer](https://github.com/nbelzer))
+- Make minor improvements to the "Payments" developer guides [#4208](https://github.com/solidusio/solidus/pull/4208) ([benjaminwil](https://github.com/benjaminwil))
+- Fix typo in Payments Overview guide [#4195](https://github.com/solidusio/solidus/pull/4195) ([nerfologist](https://github.com/nerfologist))
+- [Doc] Good commit message link fixed [#4186](https://github.com/solidusio/solidus/pull/4186) ([shubham9411](https://github.com/shubham9411))
+- Bump axios from 0.21.1 to 0.21.2 in /guides [#4171](https://github.com/solidusio/solidus/pull/4171) ([dependabot](https://github.com/apps/dependabot))
+
+## Solidus 3.1.8 (v3.1, 2022-09-22)
+
+- [v3.1] Only default to activestorage adapter if Rails version is supported [#4565](https://github.com/solidusio/solidus/pull/4565) ([tvdeyen](https://github.com/tvdeyen))
+- Fix key in the locale file [#4513](https://github.com/solidusio/solidus/pull/4513) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.1] Translate price country names [#4509](https://github.com/solidusio/solidus/pull/4509) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Fix admin variants table UX [#4506](https://github.com/solidusio/solidus/pull/4506) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Allow to extend user deletion logic [#4472](https://github.com/solidusio/solidus/pull/4472) ([tvdeyen](https://github.com/tvdeyen))
+
+## Solidus 3.1.7 (v3.1, 2022-07-15)
+
+- Support CVE-2022-32224 Rails security updates - backport to v3.1 [#4453](https://github.com/solidusio/solidus/pull/4453) ([gsmendoza](https://github.com/gsmendoza))
+- [v3.1] Remove N+1 from admin users [#4420](https://github.com/solidusio/solidus/pull/4420) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Fix delete response in admin users controller [#4416](https://github.com/solidusio/solidus/pull/4416) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Only install ActiveStorage adapter on supported Rails versions [#4403](https://github.com/solidusio/solidus/pull/4403) ([tvdeyen](https://github.com/tvdeyen))
+- Fix user restricted stock management v3.1 [#4400](https://github.com/solidusio/solidus/pull/4400) ([rmparr](https://github.com/rmparr))
+
+## Solidus 3.1.6 (v3.1, 2022-06-01)
+
+- [v3.1] Fix creating store credit with amount in foreign format [#4391](https://github.com/solidusio/solidus/pull/4391) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Replace expired GPG key for mysql install in dev Dockerfile [#4381](https://github.com/solidusio/solidus/pull/4381) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.1] Fix refund form (again) [#4360](https://github.com/solidusio/solidus/pull/4360) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Make more room for long values in Order Summary [#4353](https://github.com/solidusio/solidus/pull/4353) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Enhance refund admin UI [#4349](https://github.com/solidusio/solidus/pull/4349) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Fix creating refund with amount in foreign format [#4345](https://github.com/solidusio/solidus/pull/4345) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Update in-memory shipments of order in order_shipping [#4335](https://github.com/solidusio/solidus/pull/4335) ([tvdeyen](https://github.com/tvdeyen))
+- [3.1] Fixes using ActiveStorage adapter with libvips as variant processor [#4324](https://github.com/solidusio/solidus/pull/4324) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Authorize uuid for existing object in sortable table [#4301](https://github.com/solidusio/solidus/pull/4301) ([julienanne](https://github.com/julienanne))
+- Backport #4228 to V3.1 [#4237](https://github.com/solidusio/solidus/pull/4237) ([jcsanti](https://github.com/jcsanti))
+- [BACKPORT] Reintroduce inverse_of: :product for variants association [#4236](https://github.com/solidusio/solidus/pull/4236) ([spaghetticode](https://github.com/spaghetticode))
+
+## Solidus 3.1.5 (v3.1, 2021-12-20)
+
+- Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
+
+## Solidus 3.1.4 (v3.1, 2021-12-07)
+
+- Fix ReDos vulnerability on Spree::EmailValidator::EMAIL_REGEXP [GHSA-qxmr-qxh6-2cc9](https://github.com/solidusio/solidus/security/advisories/GHSA-qxmr-qxh6-2cc9)
+- Use SSL on fonts.googleapis.com scss import [#4210](https://github.com/solidusio/solidus/pull/4210) [RyanofWoods](https://github.com/RyanofWoods)
+
+## Solidus 3.1.3 (v3.1, 2021-11-17)
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
+
+## Solidus 3.1.1 (v3.1, 2021-09-20)
+
+- Add deprecation path for arity-zero preference defaults [#4170](https://github.com/solidusio/solidus/pull/4170) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix staled upgrade instructions on the Gemfile's post-install message [#4166](https://github.com/solidusio/solidus/pull/4166) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+## Solidus 3.1.0 (v3.1, 2021-09-10)
+
+### Major changes
+
+**`Spree.load_defaults`: preference defaults depending on the Solidus version**
+
+Solidus 3.1 brings a new feature where preference defaults can take different
+values depending on a specified Solidus version. It makes it possible to stop
+deprecating old defaults every time we introduce a change in the recommended
+value for a setting. After all, they're just that; recommendations. Instead,
+now users can explicitly ask for a given Solidus version defaults and, as
+before, override the preferences they want.
+
+When upgrading to 3.1, you have to take action to adopt the new behavior.
+You'll need to add `Spree.load_defaults('3.1')` on the very top of your
+`spree.rb` initializer. As we're not changing any preference default on this
+release, nothing will break. A warning will be emitted on boot-up until you do
+it!
+
+However, bumping the version given to `load_defaults` straight away for future
+upgrades will not be a safe option. Instead, you'll have to go through the new
+update process detailed below.
+
+- Allow using different preference defaults depending on a Solidus version [#4064](https://github.com/solidusio/solidus/pull/4064) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+**New update process**
+
+As aforementioned, preference defaults can change after a Solidus release. Once
+you have your defaults locked to the current Solidus version, a new upgrade
+won't break your application because of them. However, it's a good idea to
+adapt your application to the updated recommended settings. To help with this
+process, Solidus comes with a generator that you can execute like this:
+
+```bash
+bin/rails g solidus:update
+```
+
+That generator will create a new initializer called `new_solidus_defaults.rb`,
+which will preview all the defaults that have changed between versions, each on
+a commented line. From that point, you can activate the new defaults one by one
+and adapt your application incrementally. Once you're done with all of them,
+you can bump the version given to `Spree.load_defaults` in the `spree.rb`
+initializer and remove the `new_solidus_defaults.rb` initializer altogether.
+
+You can read in more detail about [this process on our
+guides](https://edgeguides.solidus.io/getting-started/upgrading-solidus#updating-preferences).
+
+- Introduce Solidus update process [#4087](https://github.com/solidusio/solidus/pull/4087) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+**Other important changes**
+
+`Spree::Price#amount` field can no longer be `nil`. Besides adding the
+validation at the model layer, we ship with a task that will remove records
+where the amount is `NULL` in the database. You should run the task before
+executing the new migrations:
+
+```ruby
+bin/rails solidus:delete_prices_with_nil_amount
+bin/rails railties:install:migrations
+bin/rails db:migrate
+```
+
+If you're running migrations automatically on deploy, you should run the task
+before rolling out the new code. In that case, you first should make sure that
+you have affected records:
+
+```ruby
+Spree::Price.where(amount: nil).any?
+```
+
+If the above code returns `false`, you don't need to do anything else.
+Otherwise, copy [the
+task](https://github.com/solidusio/solidus/blob/main/core/lib/tasks/solidus/delete_prices_with_nil_amount.rake)
+into your code, and deploy & execute it. Another option is to execute it
+manually in your console in production. However, be extremely careful when
+doing that!! :warning: :warning: :warning:
+
+```ruby
+Spree::Price.where(amount: nil).delete_all
+```
+
+- Do not allow prices with nil amount [#3987](https://github.com/solidusio/solidus/pull/3987) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+### Core
+
+- Remove the upgrade task and point to additional steps from the update generator [#4157](https://github.com/solidusio/solidus/pull/4157) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Make order-related service objects configurable [#4138](https://github.com/solidusio/solidus/pull/4138) ([aldesantis](https://github.com/aldesantis))
+- Remove unused `ShippingRateTaxer` service object [#4136](https://github.com/solidusio/solidus/pull/4136) ([aldesantis](https://github.com/aldesantis))
+- Fix Ransack error when searching for orders by customer name [#4135](https://github.com/solidusio/solidus/pull/4135) ([aldesantis](https://github.com/aldesantis))
+- Exclude canceled orders in the #usage_count of promotions and promotion codes [#4123](https://github.com/solidusio/solidus/pull/4123) ([ikraamg](https://github.com/ikraamg))
+- Make clearer default answer in prompt [#4101](https://github.com/solidusio/solidus/pull/4101) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Permit return_items_attributes return_reason_id [#4080](https://github.com/solidusio/solidus/pull/4080) ([spaghetticode](https://github.com/spaghetticode))
+- Simplify `Variant#default_price` logic [#4076](https://github.com/solidusio/solidus/pull/4076) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Move currently_valid_prices to a method [#4073](https://github.com/solidusio/solidus/pull/4073) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Support Ruby 3 [#4072](https://github.com/solidusio/solidus/pull/4072) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix customer return validation for return items without inventory units [#4068](https://github.com/solidusio/solidus/pull/4068) ([willianveiga](https://github.com/willianveiga))
+- Add preferences to configure product and taxon images style [#4062](https://github.com/solidusio/solidus/pull/4062) ([cpfergus1](https://github.com/cpfergus1))
+- Add UUID to StoreCredit#generate_authorization_code [#4060](https://github.com/solidusio/solidus/pull/4060) ([spaghetticode](https://github.com/spaghetticode))
+- Fix Spree::Promotion.has_actions scope [#4056](https://github.com/solidusio/solidus/pull/4056) ([mamhoff](https://github.com/mamhoff))
+- Update defaults in dummy application [#4047](https://github.com/solidusio/solidus/pull/4047) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Load defaults for the latest Rails minor version in the dummy app [#4035](https://github.com/solidusio/solidus/pull/4035) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Handle permalink attribute on product create [#4024](https://github.com/solidusio/solidus/pull/4024) ([nandita2010](https://github.com/nandita2010))
+- Don't hack into ActionMailer to add our mail previews path [#3961](https://github.com/solidusio/solidus/pull/3961) ([elia](https://github.com/elia))
+- Fix solidus stock locations sorting [#3954](https://github.com/solidusio/solidus/pull/3954) ([ikraamg](https://github.com/ikraamg))
+- Fix order checkout flow completion with custom steps [#3950](https://github.com/solidusio/solidus/pull/3950) ([nerfologist](https://github.com/nerfologist))
+- Add docker-compose development environment [#3947](https://github.com/solidusio/solidus/pull/3947) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Allow Variant to check stock by stock_location [#3884](https://github.com/solidusio/solidus/pull/3884) ([MadelineCollier](https://github.com/MadelineCollier))
+- Normalize email required checks [#3879](https://github.com/solidusio/solidus/pull/3879) ([elia](https://github.com/elia))
+- Improve the extensibility of Rules::ItemTotal [#3431](https://github.com/solidusio/solidus/pull/3431) ([elia](https://github.com/elia))
+
+### API
+
+- Remove Pending Request Spec: Api Admin update payment state expectations. [#4149](https://github.com/solidusio/solidus/pull/4149) ([jcowhigjr](https://github.com/jcowhigjr))
+- Fix gateway_error when no order is defined [#4156](https://github.com/solidusio/solidus/pull/4156) ([alexblackie](https://github.com/alexblackie))
+- Moving API attribute helpers to API config [#4039](https://github.com/solidusio/solidus/pull/4039) ([snada](https://github.com/snada))
+- Allow customer returns to reference existing `ReturnItem`s on create through API [#4007](https://github.com/solidusio/solidus/pull/4007) ([forkata](https://github.com/forkata))
+- Let the PriceSelector return a Spree::Price [#3925](https://github.com/solidusio/solidus/pull/3925) ([swively](https://github.com/swively))
+
+### Admin
+
+- Fix displaying of discarded variants in admin [#4148](https://github.com/solidusio/solidus/pull/4148) ([luca-landa](https://github.com/luca-landa))
+- Hide the master variants from stock management [#4155](https://github.com/solidusio/solidus/pull/4155) ([tmtrademarked](https://github.com/tmtrademarked))
+- Refactor frontend and backend locale_controllers [#4126](https://github.com/solidusio/solidus/pull/4126) ([RyanofWoods](https://github.com/RyanofWoods))
+- Fix admin portugues locale [#4107](https://github.com/solidusio/solidus/pull/4107) ([ruipbarata](https://github.com/ruipbarata))
+- Add an HTML select element to filter orders by the shipment state [#4089](https://github.com/solidusio/solidus/pull/4089) ([willianveiga](https://github.com/willianveiga))
+- Fix detecting exec js version by adding minimal requirement for autoprefixer-rails [#4077](https://github.com/solidusio/solidus/pull/4077) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Unhardcode admin base url in 'stock_location_stock_item' template [#4063](https://github.com/solidusio/solidus/pull/4063) ([ok32](https://github.com/ok32))
+- Fix "Cancel" URL link on reimbursement edit page [#4061](https://github.com/solidusio/solidus/pull/4061) ([spaghetticode](https://github.com/spaghetticode))
+- [ADMIN] Properly format flash error message [#3996](https://github.com/solidusio/solidus/pull/3996) ([spaghetticode](https://github.com/spaghetticode))
+- Consolidation of promotion code batch form fields into partial. [#3957](https://github.com/solidusio/solidus/pull/3957) ([cpfergus1](https://github.com/cpfergus1))
+- Promotion rule product limit improvements [#3934](https://github.com/solidusio/solidus/pull/3934) ([nirnaeth](https://github.com/nirnaeth))
+- eager load records instead of n+1 for update_positions [#3875](https://github.com/solidusio/solidus/pull/3875) ([BenMorganIO](https://github.com/BenMorganIO))
+- Update order_tabs Order number format [#3835](https://github.com/solidusio/solidus/pull/3835) ([brchristian](https://github.com/brchristian))
+
+### Frontend
+
+- Move frontend locale_controller_spec to correct directory [#4127](https://github.com/solidusio/solidus/pull/4127) ([RyanofWoods](https://github.com/RyanofWoods))
+- Refactor frontend and backend locale_controllers [#4126](https://github.com/solidusio/solidus/pull/4126) ([RyanofWoods](https://github.com/RyanofWoods))
+- Fix flaky product feature spec [#4118](https://github.com/solidusio/solidus/pull/4118) ([gsmendoza](https://github.com/gsmendoza))
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
+
+### Docs & Guides
+
+- Fix small typo in the 'customizing permissions' guide [#4147](https://github.com/solidusio/solidus/pull/4147) ([nerfologist](https://github.com/nerfologist))
+- Bump tar from 2.2.1 to 2.2.2 in /guides [#4142](https://github.com/solidusio/solidus/pull/4142) ([dependabot](https://github.com/apps/dependabot))
+- Document REST API params to control nested taxons [#4131](https://github.com/solidusio/solidus/pull/4131) ([kennyadsl](https://github.com/kennyadsl))
+- Bump addressable from 2.5.2 to 2.8.0 in /guides [#4129](https://github.com/solidusio/solidus/pull/4129) ([dependabot](https://github.com/apps/dependabot))
+- Document REST API filtering with Ransack [#4128](https://github.com/solidusio/solidus/pull/4128) ([kennyadsl](https://github.com/kennyadsl))
+- Guides typo corrections [#4120](https://github.com/solidusio/solidus/pull/4120) ([cesartalves](https://github.com/cesartalves))
+- Shipment Setup Examples documentation - small correction to the amount of shipping categories needed [#4115](https://github.com/solidusio/solidus/pull/4115) ([cesartalves](https://github.com/cesartalves))
+- Fix broken URL in customer-flow guide [#4096](https://github.com/solidusio/solidus/pull/4096) ([RyanofWoods](https://github.com/RyanofWoods))
+- Fix the dark mode issue with the logo on README.md [#4093](https://github.com/solidusio/solidus/pull/4093) ([mfrecchiami](https://github.com/mfrecchiami))
+- Small English correction on Payments overview PSP doc [#4088](https://github.com/solidusio/solidus/pull/4088) ([cesartalves](https://github.com/cesartalves))
+- Update the Nebulab's logo on README.md [#4079](https://github.com/solidusio/solidus/pull/4079) ([mfrecchiami](https://github.com/mfrecchiami))
+- Fix Request Bodies in API Documentation [#4066](https://github.com/solidusio/solidus/pull/4066) ([kennyadsl](https://github.com/kennyadsl))
+- Fix links in CHANGELOG.md [#4057](https://github.com/solidusio/solidus/pull/4057) ([bogdanvlviv](https://github.com/bogdanvlviv))
+- Bump hosted-git-info from 2.7.1 to 2.8.9 in /guides [#4053](https://github.com/solidusio/solidus/pull/4053) ([dependabot](https://github.com/apps/dependabot))
+- Bump lodash from 4.17.19 to 4.17.21 in /guides [#4051](https://github.com/solidusio/solidus/pull/4051) ([dependabot](https://github.com/apps/dependabot))
+- Review install instructions in README and Guides [#4034](https://github.com/solidusio/solidus/pull/4034) ([kennyadsl](https://github.com/kennyadsl))
+- Use more appropriate language for woman's t-shirt in sample data [#4031](https://github.com/solidusio/solidus/pull/4031) ([Noah-Silvera](https://github.com/Noah-Silvera))
+- Improve Customizing Attributes documentation [#3979](https://github.com/solidusio/solidus/pull/3979) ([dhughesbc](https://github.com/dhughesbc))
+- Improve Solidus events documentation [#3819](https://github.com/solidusio/solidus/pull/3819) ([spaghetticode](https://github.com/spaghetticode))
+
+## Solidus 3.0.8 (v3.0, 2022-09-22)
+
+- [v3.0] Only default to activestorage adapter if Rails version is supported [#4568](https://github.com/solidusio/solidus/pull/4568) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix Ransack error when searching for orders by customer name [#4521](https://github.com/solidusio/solidus/pull/4521) ([tvdeyen](https://github.com/tvdeyen))
+- Fix key in the locale file [#4514](https://github.com/solidusio/solidus/pull/4514) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.0] Translate price country names [#4510](https://github.com/solidusio/solidus/pull/4510) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix admin variants table UX [#4507](https://github.com/solidusio/solidus/pull/4507) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Allow to extend user deletion logic [#4473](https://github.com/solidusio/solidus/pull/4473) ([tvdeyen](https://github.com/tvdeyen))
+
+## Solidus 3.0.7 (v3.0, 2022-07-15)
+
+- Support CVE-2022-32224 Rails security updates - backport to v3.0  [#4454](https://github.com/solidusio/solidus/pull/4454) ([gsmendoza](https://github.com/gsmendoza))
+- [v3.0] Remove N+1 from admin users [#4421](https://github.com/solidusio/solidus/pull/4421) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix delete response in admin users controller [#4417](https://github.com/solidusio/solidus/pull/4417) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Backport docker development environment [#4407](https://github.com/solidusio/solidus/pull/4407) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.0] Only install ActiveStorage adapter on supported Rails versions [#4404](https://github.com/solidusio/solidus/pull/4404) ([tvdeyen](https://github.com/tvdeyen))
+- Fix user restricted stock management v3.0 [#4399](https://github.com/solidusio/solidus/pull/4399) ([rmparr](https://github.com/rmparr))
+
+## Solidus 3.0.6 (v3.0, 2022-06-01)
+
+- Fix user restricted stock management v3.0 [#4399](https://github.com/solidusio/solidus/pull/4399) ([rmparr](https://github.com/rmparr))
+- [v3.0] Fix creating store credit with amount in foreign format [#4392](https://github.com/solidusio/solidus/pull/4392) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix refund form (again) [#4361](https://github.com/solidusio/solidus/pull/4361) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Make more room for long values in Order Summary [#4354](https://github.com/solidusio/solidus/pull/4354) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Enhance refund admin UI [#4350](https://github.com/solidusio/solidus/pull/4350) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix creating refund with amount in foreign format [#4346](https://github.com/solidusio/solidus/pull/4346) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Update in-memory shipments of order in order_shipping [#4336](https://github.com/solidusio/solidus/pull/4336) ([tvdeyen](https://github.com/tvdeyen))
+- [3.0] Fixes using ActiveStorage adapter with libvips as variant processor [#4325](https://github.com/solidusio/solidus/pull/4325) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Authorize uuid for existing object in sortable table [#4300](https://github.com/solidusio/solidus/pull/4300) ([julienanne](https://github.com/julienanne))
+- [BACKPORT] Reintroduce inverse_of: :product for variants association [#4235](https://github.com/solidusio/solidus/pull/4235) ([spaghetticode](https://github.com/spaghetticode))
+- Backport #4228 to V3.0 [#4232](https://github.com/solidusio/solidus/pull/4232) ([jcsanti](https://github.com/jcsanti))
+
+## Solidus 3.0.5 (v3.0, 2021-12-20)
+
+- Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
+
+## Solidus 3.0.4 (v3.0, 2021-12-07)
+
+- Fix ReDos vulnerability on Spree::EmailValidator::EMAIL_REGEXP [GHSA-qxmr-qxh6-2cc9](https://github.com/solidusio/solidus/security/advisories/GHSA-qxmr-qxh6-2cc9)
+- Use SSL on fonts.googleapis.com scss import [#4211](https://github.com/solidusio/solidus/pull/4211) [RyanofWoods](https://github.com/RyanofWoods)
+
+## Solidus 3.0.3 (v3.0, 2021-11-17)
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
+
+## Solidus 3.0.2 (v3.0, 2021-09-10)
+
+- Permit return_items_attributes return_reason_id [#4091](https://github.com/solidusio/solidus/pull/4091) ([spaghetticode](https://github.com/spaghetticode))
+- Fix app and tests to work with ActiveRecord.has_many_inverse [#4098](https://github.com/solidusio/solidus/pull/4098) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Support Ruby 3 [#4072](https://github.com/solidusio/solidus/pull/4072) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix detecting exec js version by adding minimal requirement for autoprefixer-rails [#4077](https://github.com/solidusio/solidus/pull/4077) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+## Solidus 3.0.1 (v3.0, 2021-05-10)
+
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
 ## Solidus 3.0.0 (v3.0, 2021-04-20)
 
 ### Major Changes
@@ -50,7 +1412,7 @@ For a complete reference to rest of the code removed, these PRs can be taken as 
 
 - Remove deprecated attachment_partial_name [#3974](https://github.com/solidusio/solidus/pull/3974) ([kennyadsl](https://github.com/kennyadsl))
 - Remove legacy address state validation logic [#3847](https://github.com/solidusio/solidus/pull/3847) ([cedum](https://github.com/cedum))
-- Raise canceling a payment when try_void is not implemented [#3844](https://github.com/solidusio/solidus/pull/3844) ([kennyadsl](https://
+- Raise canceling a payment when try_void is not implemented [#3844](https://github.com/solidusio/solidus/pull/3844) ([kennyadsl](https://github.com/kennyadsl))
 - Remove all code deprecated in Solidus v2.x [#3818](https://github.com/solidusio/solidus/pull/3818) ([kennyadsl](https://github.com/kennyadsl))
 
 ***Removal without deprecations***
@@ -113,7 +1475,6 @@ the maintained fork.
 - Bump axios from 0.18.1 to 0.21.1 in /guides [#3881](https://github.com/solidusio/solidus/pull/3881) ([dependabot](https://github.com/apps/dependabot))
 - Bump ini from 1.3.5 to 1.3.7 in /guides [#3861](https://github.com/solidusio/solidus/pull/3861) ([dependabot](https://github.com/apps/dependabot))
 - Drive community to GitHub Discussions when opening issues [#3857](https://github.com/solidusio/solidus/pull/3857) ([kennyadsl](https://github.com/kennyadsl))
-github.com/kennyadsl))
 - Update governance with latest changes to the organization [#3836](https://github.com/solidusio/solidus/pull/3836) ([kennyadsl](https://github.com/kennyadsl))
 - Fix install instructions in Solidus Guides [#3833](https://github.com/solidusio/solidus/pull/3833) ([ikraamg](https://github.com/ikraamg))
 - Update install instructions after 2.11 release [#3825](https://github.com/solidusio/solidus/pull/3825) ([kennyadsl](https://github.com/kennyadsl))
@@ -122,6 +1483,59 @@ github.com/kennyadsl))
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
 
+## Solidus 2.11.17 (v2.11, 2022-07-11)
+
+- Fixed user restricted stock management in [#4398](https://github.com/solidusio/solidus/pull/4398) by [@rmparr](https://github.com/rmparr)
+- Backported docker development environment in [#4408](https://github.com/solidusio/solidus/pull/4408) by [@waiting-for-dev](https://github.com/waiting-for-dev)
+- Removed N+1 from admin users in [#4422](https://github.com/solidusio/solidus/pull/4422) by [@tvdeyen](https://github.com/tvdeyen)
+- Fixed delete response in admin users controller in [#4418](https://github.com/solidusio/solidus/pull/4418) by [@tvdeyen](https://github.com/tvdeyen)
+- Support CVE-2022-32224 Rails security updates in [#4455](https://github.com/solidusio/solidus/pull/4455) backport by [@gsmendoza](https://github.com/gsmendoza)
+
+### Breaking changes
+
+**NOTE:** This release contains a breaking change due to the backport of the
+fixes for CVE-2022-32224 in
+[#4455](https://github.com/solidusio/solidus/pull/4455), specifically due to the
+switch to `YAML.safe_load` in `Spree::LogEntry`
+[here](https://github.com/solidusio/solidus/pull/4455/commits/d2b05aa1a9ec6903027a880f5d466c5abd5b8f05).
+To ensure compatibility with this change, you may need to update your app
+configuration for `Spree::AppConfiguration#log_entry_permitted_classes` and
+ensure it includes any constants that may be serialized in YAML in addition to
+the already allowed ones by
+[core](https://github.com/solidusio/solidus/pull/4455/files#diff-96cc27eba934e1e96a1ffc0e5574406061f5b4f48770faeba62a062544b8633bR11)
+or any extensions you may use.
+
+## Solidus 2.11.15 (v2.11, 2022-03-10)
+
+- V2.11 - Fix non auto populated customer info [#4247](https://github.com/solidusio/solidus/pull/4247) ([nbelzer](https://github.com/nbelzer))
+- [BACKPORT] Reintroduce inverse_of: :product for variants association [#4234](https://github.com/solidusio/solidus/pull/4234) ([spaghetticode](https://github.com/spaghetticode))
+- Backport #4228 to V2.11 [#4230](https://github.com/solidusio/solidus/pull/4230) ([jcsanti](https://github.com/jcsanti))
+- v2.11 fix(Address): Set name from firstname and lastname on update [#4224](https://github.com/solidusio/solidus/pull/4224) ([tvdeyen](https://github.com/tvdeyen))
+- Backport #3913 to V2.11 [#4174](https://github.com/solidusio/solidus/pull/4174) ([spaghetticode](https://github.com/spaghetticode))
+
+## Solidus 2.11.14 (v2.11, 2021-12-20)
+
+- Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
+
+## Solidus 2.11.13 (v2.11, 2021-12-07)
+
+- Fix ReDos vulnerability on Spree::EmailValidator::EMAIL_REGEXP [GHSA-qxmr-qxh6-2cc9](https://github.com/solidusio/solidus/security/advisories/GHSA-qxmr-qxh6-2cc9)
+- Use SSL on fonts.googleapis.com scss import [#4212](https://github.com/solidusio/solidus/pull/4212) [RyanofWoods](https://github.com/RyanofWoods)
+
+## Solidus 2.11.12 (v2.11, 2021-11-17)
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
+
+## Solidus 2.11.11 (v2.11, 2021-09-10)
+
+- Revert "Raise canceling a payment when try_void" [#4134](https://github.com/solidusio/solidus/pull/4134) ([senemsoy](https://github.com/senemsoy))
+- Fix app and tests to work with ActiveRecord.has_many_inverse [#4099](https://github.com/solidusio/solidus/pull/4099) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Update billing address migration tasks with batch limit [#4104](https://github.com/solidusio/solidus/pull/4104) ([spaghetticode](https://github.com/spaghetticode))
+- Permit return_items_attributes return_reason_id [#4090](https://github.com/solidusio/solidus/pull/4090) ([spaghetticode](https://github.com/spaghetticode))
+
+## Solidus 2.11.10 (v2.11, 2021-05-10)
+
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
 ## Solidus 2.11.9 (v2.11, 2021-04-20)
 
 - Rescue FileNotFoundError exception on failed image downloads [#4026](https://github.com/solidusio/solidus/pull/4026) ([cpfergus1](https://github.com/cpfergus1))
@@ -575,6 +1989,10 @@ If you need to consider actionless promotions as active for any reason please im
 - Update custom search sample query [#3396](https://github.com/solidusio/solidus/pull/3396) ([peterberkenbosch](https://github.com/peterberkenbosch))
 - Guides (API): Some additional API token info [#3368](https://github.com/solidusio/solidus/pull/3368) ([felixyz](https://github.com/felixyz))
 - Add discontinue on to products guides [#3795](https://github.com/solidusio/solidus/pull/3795) ([tvdeyen](https://github.com/tvdeyen))
+
+## Solidus 2.10.5 (v2.10, 2021-05-10)
+
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
 
 ## Solidus 2.10.1 (2020-05-14)
 

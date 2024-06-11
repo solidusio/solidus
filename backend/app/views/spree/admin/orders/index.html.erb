@@ -2,12 +2,11 @@
 
 <% admin_breadcrumb(plural_resource_name(Spree::Order)) %>
 
-
 <% content_for :page_actions do %>
   <li>
     <%= link_to t('spree.new_order'), new_admin_order_url, id: 'admin_new_order', class: 'btn btn-primary' %>
   </li>
-<% end if can? :manage, Spree::Order %>
+<% end if can? :create, Spree::Order %>
 
 <% content_for :table_filter_title do %>
   <%= t('spree.filter') %>
@@ -48,6 +47,10 @@
             <%= f.text_field :shipments_number_start %>
           </div>
 
+          <div class="field">
+            <%= label_tag :q_shipment_state, t('spree.shipment_state') %>
+            <%= f.select :shipment_state_eq, %i[backorder canceled partial pending ready shipped].map { |state| [t("spree.shipment_states.#{state}"), state] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
+          </div>
         </div>
 
         <div class="col-12 col-md-6 col-lg-4 col-xl-6">
@@ -66,8 +69,8 @@
 
             <div class="col-12 col-xl-6">
               <div class="field">
-                <%= label_tag :q_bill_address_name_start, t('spree.name_contains') %>
-                <%= f.text_field :bill_address_name_start, size: 25 %>
+                <%= label_tag :q_bill_address_name_cont, t('spree.name_contains') %>
+                <%= f.text_field :bill_address_name_cont, size: 25 %>
               </div>
             </div>
 
@@ -154,7 +157,7 @@
           </span>
         </td>
         <td>
-          <% if order.payment_state  %>
+          <% if order.payment_state %>
             <span class="pill pill-<%= order.payment_state %>">
               <%= t(order.payment_state, scope: 'spree.payment_states') %>
             </span>
@@ -187,11 +190,9 @@
   </table>
 <% else %>
   <div class="no-objects-found">
-    <% if can? :manage, Spree::Order %>
-      <%= render 'spree/admin/shared/no_objects_found',
-                   resource: Spree::Order,
-                   new_resource_url: spree.new_admin_order_path %>
-    <% end %>
+    <%= render 'spree/admin/shared/no_objects_found',
+               resource: Spree::Order,
+               new_resource_url: spree.new_admin_order_path %>
   </div>
 <% end %>
 

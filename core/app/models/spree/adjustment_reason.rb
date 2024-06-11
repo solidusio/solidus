@@ -8,5 +8,7 @@ module Spree
     validates :code, presence: true, uniqueness: { case_sensitive: false, allow_blank: true }
 
     scope :active, -> { where(active: true) }
+
+    self.allowed_ransackable_attributes = %w[name code]
   end
 end

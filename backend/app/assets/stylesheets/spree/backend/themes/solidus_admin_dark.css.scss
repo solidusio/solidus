@@ -1,0 +1,16 @@
+@import "./solidus_admin";
+
+html {
+  background-color: #fff;
+  color: #fff;
+  -webkit-filter: invert(100%);
+  filter: invert(100%) hue-rotate(180deg);
+
+  img {
+    filter: invert(100%) hue-rotate(-180deg);
+  }
+
+  .brand-link img {
+    filter: invert(0%) hue-rotate(0deg);
+  }
+}

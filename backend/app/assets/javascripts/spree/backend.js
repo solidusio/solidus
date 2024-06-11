@@ -47,10 +47,9 @@
 //= require spree/backend/orders
 //= require spree/backend/payments/edit
 //= require spree/backend/payments/new
+//= require spree/backend/products/index
 //= require spree/backend/product_picker
 //= require spree/backend/progress
-//= require spree/backend/promotions
-//= require spree/backend/promotions/activation
 //= require spree/backend/shipments
 //= require spree/backend/spree-select2
 //= require spree/backend/stock_management

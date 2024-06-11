@@ -17,19 +17,24 @@ end
 describe Spree::Admin::WidgetsController, type: :controller do
   stub_authorization!
 
-  after(:all) do
-    # Spree::Core::Engine.routes.reload_routes!
-    Rails.application.reload_routes!
-  end
-
-  with_model 'Widget', scope: :all do
-    table do |t|
-      t.string :name
-      t.integer :position
-      t.timestamps null: false
+  # RESOURCE FIXTURE
+  before(:all) do
+    # Database
+    class CreateWidgets < ActiveRecord::Migration[5.1]
+      def change
+        unless table_exists?(:widgets)
+          create_table(:widgets) do |t|
+            t.string :name
+            t.integer :position
+            t.timestamps null: false
+          end
+        end
+      end
     end
+    CreateWidgets.migrate(:up)
 
-    model do
+    # Model
+    class Widget < ActiveRecord::Base
       acts_as_list
       validates :name, presence: true
       before_destroy :check_destroy_constraints
@@ -41,9 +46,8 @@ describe Spree::Admin::WidgetsController, type: :controller do
         throw(:abort)
       end
     end
-  end
 
-  before do
+    # Routes
     Spree::Core::Engine.routes.draw do
       namespace :admin do
         resources :widgets do
@@ -51,6 +55,21 @@ describe Spree::Admin::WidgetsController, type: :controller do
         end
       end
     end
+  end
+
+  after(:all) do
+    # Database
+    CreateWidgets.migrate(:down)
+    Object.send(:remove_const, :CreateWidgets)
+
+    # Model
+    Object.send(:remove_const, :Widget)
+
+    # Controller
+    Spree::Admin.send(:remove_const, :WidgetsController)
+
+    # Routes
+    Rails.application.reload_routes!
   end
 
   describe '#new' do
@@ -220,6 +239,41 @@ describe Spree::Admin::WidgetsController, type: :controller do
         expect(Widget.all.order('position')).to eq [widget_2, widget_1]
       end
     end
+
+    context "with take care of acts_as_list's after update callback" do
+      let(:widget_1) { Widget.create!(id: 4, name: 'widget 4', position: 1) }
+      let(:widget_2) { Widget.create!(id: 2, name: 'widget 3', position: 2) }
+      let(:widget_3) { Widget.create!(id: 1, name: 'widget 2', position: 3) }
+      let(:widget_4) { Widget.create!(id: 3, name: 'widget 1', position: 4) }
+
+      subject do
+        post :update_positions, params: { id: widget_1.to_param,
+          positions: { widget_3.id => '4', widget_2.id => '3', widget_4.id => '1', widget_1.id => '2' }, format: 'js' }
+      end
+
+      it 'updates the position of all widgets' do
+        subject
+        expect(Widget.all.order('position').map(&:id)).to eq [widget_4, widget_1, widget_2, widget_3].map(&:id)
+      end
+
+      context "not passing all elements" do
+        subject do
+          post :update_positions, params: { id: widget_1.to_param,
+            positions: { widget_3.id => '1', widget_2.id => '2', widget_4.id => '3' }, format: 'js' }
+        end
+
+        it 'updates the position of all widgets' do
+          widget_1 # trigger the creation
+          widget_2 # trigger the creation
+          widget_3 # trigger the creation
+          widget_4 # trigger the creation
+          expect(Widget.all.order('position').map(&:id)).to eq [widget_1, widget_2, widget_3, widget_4].map(&:id)
+          subject
+          expect(Widget.all.order('position').pluck(:position).uniq).to eq [1, 2, 3, 4] # trivial test to show no duplicate position integer
+          expect(Widget.all.order('position').map(&:id)).to eq [widget_3, widget_2, widget_4, widget_1].map(&:id)
+        end
+      end
+    end
   end
 
   describe 'rescue_from ActveRecord::RecordNotFound' do
@@ -236,6 +290,15 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
       expect(response).to redirect_to('/admin/widgets')
       expect(flash[:error]).to eql('Product is not found')
+    end
+  end
+
+  describe "#routes_proxy" do
+    subject { controller.send(:routes_proxy) }
+
+    it "forwards to the #spree routing proxy" do
+      expect(controller).to receive(:spree).and_call_original
+      expect(subject).to be_a(ActionDispatch::Routing::RoutesProxy)
     end
   end
 end

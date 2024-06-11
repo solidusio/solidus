@@ -53,7 +53,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
           path: '/api'
         })
         get :index
-        expect(response.headers["Set-Cookie"]).to match(/domain=\.test\.host; path=\/api/)
+        expect(response.headers["Set-Cookie"]).to match(/domain=(\.)?test\.host; path=\/api/)
       end
 
       it 'never overwrites httponly' do
@@ -74,24 +74,6 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
   end
 
-  describe '#try_spree_current_user' do
-    it 'calls spree_current_user when define spree_current_user method' do
-      without_partial_double_verification do
-        expect(controller).to receive(:spree_current_user)
-      end
-      controller.try_spree_current_user
-    end
-    it 'calls current_spree_user when define current_spree_user method' do
-      without_partial_double_verification do
-        expect(controller).to receive(:current_spree_user)
-      end
-      controller.try_spree_current_user
-    end
-    it 'returns nil' do
-      expect(controller.try_spree_current_user).to eq nil
-    end
-  end
-
   describe '#unauthorized_redirect' do
     before do
       def controller.index
@@ -100,7 +82,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
 
     context "http_referrer is present" do
-      before { request.env['HTTP_REFERER'] = '/redirect' }
+      before { request.env['HTTP_REFERER'] = "#{request.base_url}/redirect" }
 
       it "redirects back" do
         get :index
@@ -111,6 +93,29 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     it "redirects to unauthorized" do
       get :index
       expect(response).to redirect_to('/unauthorized')
+    end
+  end
+
+  describe "#spree_current_user" do
+    context "when an ancestor defines it" do
+      it "delegates" do
+        controller = Class.new(ApplicationController) do
+          include (Module.new do
+            def spree_current_user
+              :user
+            end
+          end)
+          include Spree::Core::ControllerHelpers::Auth
+        end.new
+
+        expect(controller.spree_current_user).to eq :user
+      end
+    end
+
+    context "when no ancestor defines it" do
+      it "returns nil" do
+        expect(controller.spree_current_user).to eq nil
+      end
     end
   end
 end

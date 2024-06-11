@@ -1,0 +1,171 @@
+@import "./colors";
+
+// -------------------------------------------------------------
+//   Variables used in all other files
+//--------------------------------------------------------------
+
+// Fonts
+//--------------------------------------------------------------
+$font-size-pill: 11px;
+$label-font-size: 12px;
+
+// Colors
+//--------------------------------------------------------------
+
+// Basic color palette for admin
+
+$color-dark: $solidus-admin-gray-800;
+$color-dark-dark: $solidus-admin-gray-600;
+$color-dark-light: $solidus-admin-gray-500;
+$color-dark-accent: $solidus-admin-gray-200;
+
+$color-primary: $solidus-admin-gray-700;
+$color-primary-light: $solidus-admin-gray-100;
+
+$color-light: $solidus-admin-gray-25;
+$color-light-dark: $solidus-admin-gray-50;
+$color-light-accent: $solidus-admin-gray-100;
+
+$color-white: $solidus-admin-white;
+
+$color-red: $solidus-admin-red-600;
+$color-yellow: $solidus-admin-yellow;
+$color-green: $solidus-admin-forest;
+
+// Basic accents for admin
+$box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+
+// Body base colors
+$color-border: $color-light-dark;
+$color-disabled: $color-dark-light;
+
+// Basic navigation colors
+$color-header-bg: $solidus-admin-white;
+$color-sidebar-bg: $color-light;
+$color-sidebar-border: $color-border;
+$color-navbar: $color-dark;
+$color-navbar-bg: $color-light;
+$color-navbar-active: $solidus-admin-solidus-red;
+$color-navbar-active-bg: $solidus-admin-gray-50;
+$color-navbar-submenu: $color-dark-light;
+$color-navbar-submenu-bg: $color-light;
+$color-navbar-submenu-active: $solidus-admin-solidus-red;
+$color-navbar-footer: $color-dark;
+$color-navbar-footer-bg: $color-light;
+$color-navbar-footer-active: $solidus-admin-solidus-red;
+$color-icon-navbar: $color-dark-light;
+
+$color-navbar-hover-bg: $solidus-admin-gray-50;
+$color-navbar-hover: $color-dark;
+
+// Basic Tabs colors
+$color-tab: $color-dark-light;
+$color-tab-bg: $color-light;
+$color-tab-border: $color-light-accent;
+$color-tab-active: $color-primary;
+$color-tab-active-bg: $color-white;
+$color-tab-active-border: $color-white;
+
+// Basic flash colors
+$color-success: $color-green;
+$color-notice: $color-yellow;
+$color-error: $color-red;
+
+// Breadcrumb custom variable
+
+$breadcrumb-color: $color-dark-light;
+$breadcrumb-active-color: $color-dark;
+
+// Color for spinner
+$color-spinner: $color-white;
+
+// Style Guide
+$color-style-guide-code: darken($color-light, 10%);
+$color-style-guide-link: darken($color-light, 65%);
+$color-style-guide-nav: $color-light;
+$color-style-guide-nav-border: darken($color-light, 5%);
+$color-style-guide-nav-link: darken($color-light, 65%);
+$color-style-guide-nav-link-hover: darken($color-light, 5%);
+$color-style-guide-section-border: darken($color-light, 10%);
+$color-style-guide-swatch-border: darken($color-light, 10%);
+$color-style-guide-table-border: $solidus-admin-sky;
+
+// Table colors
+$color-tbl-odd: $color-white;
+$color-tbl-even: $color-light;
+$color-tbl-thead: $color-light;
+
+// Pill colors
+//
+// For now these are custom assigned colors just for this section. As we go
+// about updating other areas of the admin we will likely want to pull these
+// colors out into better named variables.
+$color-pill-text: $solidus-admin-gray-800;
+$color-pill-neutral: $solidus-admin-gray-100;
+$color-pill-neutral-text: $color-pill-text;
+$color-pill-complete: $solidus-admin-sky;
+$color-pill-complete-text: $color-pill-text;
+$color-pill-active: $solidus-admin-seafoam;
+$color-pill-active-text: $color-pill-text;
+$color-pill-inactive: $color-pill-neutral;
+$color-pill-inactive-text: $solidus-admin-gray-600;
+$color-pill-pending: $solidus-admin-yellow;
+$color-pill-pending-text: $color-pill-text;
+$color-pill-warning: $solidus-admin-orange;
+$color-pill-warning-text: $color-pill-text;
+$color-pill-error: $solidus-admin-red-300;
+$color-pill-error-text: $color-pill-text;
+
+// Available states
+$states: (
+  active,
+  address,
+  awaiting_return,
+  backorder,
+  balance_due,
+  canceled,
+  cart,
+  checkout,
+  complete,
+  completed,
+  confirm,
+  credit_owed,
+  delivery,
+  error,
+  failed,
+  inactive,
+  paid,
+  payment,
+  pending,
+  ready,
+  returned,
+  shipped,
+  void
+);
+
+// Sidebar
+//--------------------------------------------------------------
+$width-sidebar: 240px;
+$width-sidebar-flyout: 225px;
+$width-sidebar-collapsed: 52px;
+$sidebar-transition: 250ms ease-in;
+$border-sidebar: 1px solid $color-sidebar-border;
+
+// Main
+//--------------------------------------------------------------
+$main-header-height: 84px;
+
+$content-wrapper-bg: $color-white;
+$admin-body-bg: $color-white;
+
+// Links
+//--------------------------------------------------------------
+
+$link-color: $solidus-admin-blue;
+$link-hover-color: darken($solidus-admin-blue, 10%);
+
+// Pagination
+//--------------------------------------------------------------
+
+$pagination-color: $color-primary;
+$pagination-hover-color: $color-dark;

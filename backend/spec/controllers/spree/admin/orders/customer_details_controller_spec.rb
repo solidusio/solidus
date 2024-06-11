@@ -64,12 +64,13 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
     context "#update" do
       let(:order) { create(:order, number: "R123456789") }
+      let(:contents) { order.contents }
 
       before { allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order } }
 
-      it "updates + progresses the order" do
-        expect(order).to receive(:update) { true }
-        expect(order).to receive(:next) { false }
+      it "updates + advances the order" do
+        expect(contents).to receive(:update_cart) { true }
+        expect(contents).to receive(:advance) { false }
         attributes = { order_id: order.number, order: { email: "" } }
         put :update, params: attributes
       end

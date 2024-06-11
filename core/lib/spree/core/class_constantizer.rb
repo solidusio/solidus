@@ -8,8 +8,8 @@ module Spree
       class Set
         include Enumerable
 
-        def initialize
-          @collection = ::Set.new
+        def initialize(default: [])
+          @collection = ::Set.new(default)
         end
 
         def <<(klass)

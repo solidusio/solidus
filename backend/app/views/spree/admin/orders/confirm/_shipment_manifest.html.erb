@@ -17,6 +17,6 @@
           <%= count %> x <%= t(state, scope: 'spree.inventory_states') %>
         <% end %>
     </td>
-    <td class="item-total"><%= line_item_shipment_price(item.line_item, item.quantity) %></td>
+    <td class="item-total"><%= item.line_item.display_amount %></td>
   </tr>
 <% end %>

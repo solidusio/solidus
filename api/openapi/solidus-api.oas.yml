@@ -1,4 +1,7 @@
 openapi: 3.0.3
+x-stoplight:
+  docs:
+    showModels: false
 info:
   title: Solidus API
   version: '1.0'
@@ -8,9 +11,6 @@ info:
     url: 'https://solidus.io'
   license:
     name: ''
-x-stoplight:
-  docs:
-    showModels: false
 paths:
   /products:
     get:
@@ -38,6 +38,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -60,7 +61,37 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  $ref: '#/components/schemas/product-input'
+            examples:
+              Example:
+                value:
+                  product:
+                    name: The Majestic Product
+                    price: '19.99'
+                    shipping_category_id: 8
+                    product_properties_attributes:
+                      - property_name: fabric
+                        value: cotton
+                    option_types:
+                      - size
+                      - color
+                    taxon_ids: '2,4'
+                    variants:
+                      - price: 19.99
+                        cost_price: 17
+                        sku: SKU-3
+                        track_inventory: true
+                        options:
+                          - name: size
+                            value: small
+                          - name: color
+                            value: black
   /orders/mine:
     get:
       responses:
@@ -87,6 +118,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
   '/orders/{number}':
@@ -116,6 +148,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The order number
     patch:
       responses:
         '200':
@@ -131,7 +164,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order
-      description: Updates an order.
+      description: |-
+        Updates an order.
+
+        To perform this operation the request should be made as the order's owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: update-order
       tags:
         - Orders
@@ -139,7 +175,42 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/order-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  $ref: '#/components/schemas/order-input'
+            examples:
+              Updating Billing Address:
+                value:
+                  order:
+                    use_billing: true
+                    ship_address_attributes:
+                      name: Jane Doe
+                      address1: 2191  Calico Drive
+                      city: Phoenix
+                      country_id: 22
+                      state_id: 31
+                      zipcode: '85022'
+                      phone: 509-644-9988
+                      company: Acme Inc.
+              Select a Shipment's Shipping Rate:
+                value:
+                  order:
+                    shipments_attributes:
+                      - id: 2
+                        selected_shipping_rate_id: 23
+              Updating Payment:
+                value:
+                  order:
+                    payments_attributes:
+                      - amount: '42.42'
+                        payment_method_id: 1
+                        source_attributes:
+                          gateway_payment_profile_id: super-secret-token-2131m3n13bv3hv1vasda
+        description: ''
   /orders/current:
     get:
       responses:
@@ -158,7 +229,6 @@ paths:
         - Orders
       security:
         - api-key: []
-        - order-token: []
   /countries:
     get:
       responses:
@@ -188,6 +258,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
   '/countries/{id}':
     get:
       responses:
@@ -344,7 +415,19 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  $ref: '#/components/schemas/product-input'
+            examples:
+              Example:
+                value:
+                  product:
+                    name: The Majestic Product
+                    price: '22.22'
   '/products/{product_id}/images':
     get:
       responses:
@@ -391,14 +474,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create product image
-      description: Creates an image for a product.
+      description: |-
+        Creates an image for a product.
+
+        Only users with the `create` permission on `Spree::Image` can perform this action.
       operationId: create-product-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/products/{product_id}/variants':
     get:
       responses:
@@ -426,6 +518,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -456,7 +549,38 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/variant-input'
+            examples:
+              Example with Option Value Ids:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    option_value_ids:
+                      - 1
+                      - 2
+              Example with Option Value Text:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    options:
+                      name: Color
+                      value: White
   '/products/{product_id}/images/{id}':
     get:
       responses:
@@ -483,11 +607,13 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Product'
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Image'
     delete:
       responses:
         '204':
@@ -524,89 +650,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update product image
-      description: Updates a product's image.
+      description: |-
+        Updates a product's image.
+
+        Only users with the `update` permission on the image can perform this action.
       operationId: update-product-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
-  '/products/{product_id}/variants/{id}':
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-      summary: Get product variant
-      description: Retrieves a product's variant.
-      operationId: get-product-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-    parameters:
-      - name: product_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-    delete:
-      responses:
-        '204':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/delete-restriction'
-      summary: Delete product variant
-      description: Deletes a product's variant.
-      operationId: delete-product-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-    put:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Update product variant
-      description: Updates a product's variant.
-      operationId: update-product-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-      requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   /states:
     get:
       responses:
@@ -674,29 +734,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/variant'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create variant
-      description: Creates a variant.
-      operationId: create-variant
-      tags:
-        - Variants
-      security:
-        - api-key: []
-      requestBody:
-        $ref: '#/components/requestBodies/variant-input'
   '/variants/{id}':
     get:
       responses:
@@ -766,7 +806,38 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/variant-input'
+            examples:
+              Example with Option Value Ids:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    option_value_ids:
+                      - 1
+                      - 2
+              Example with Option Value Text:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    options:
+                      name: Color
+                      value: White
   '/variants/{variant_id}/images':
     get:
       responses:
@@ -813,14 +884,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create variant image
-      description: Creates an image for a variant.
+      description: |-
+        Creates an image for a variant.
+
+        Only users with the `create` permission on `Spree::Image` can perform this action.
       operationId: create-variant-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/variants/{variant_id}/images/{id}':
     get:
       responses:
@@ -847,11 +927,13 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Variant'
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Image'
     delete:
       responses:
         '204':
@@ -888,14 +970,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update variant image
-      description: Updates a variant's image.
+      description: |-
+        Updates a variant's image.
+
+        Only users with the `update` permission on the image can perform this action.
       operationId: update-variant-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/shipments/{shipment_number}/estimated_rates':
     get:
       responses:
@@ -954,6 +1045,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
   '/users/{id}':
@@ -982,6 +1074,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::User'
     delete:
       responses:
         '204':
@@ -1018,14 +1111,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update user
-      description: Updates a user.
+      description: |-
+        Updates a user.
+
+        Only users with the `update` permission on the user can perform this action.
       operationId: update-user
       tags:
         - Users
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/user-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/user-input'
   '/users/{user_id}/address_book':
     get:
       responses:
@@ -1139,6 +1241,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1203,7 +1306,36 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/address-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/address-input'
+            examples:
+              Example with state_id:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_id: 31
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
+              Example with state_name:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_name: AZ
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
   '/checkouts/{checkout_id}/payments':
     get:
       responses:
@@ -1225,13 +1357,14 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
       summary: List checkout payments
-      description: Lists a checkout's payments.
+      description: 'Lists a checkout''s payments. The list of payments is only visible by the checkout''s owner and by users authorized to see the order, eg. users with admin role. '
       operationId: list-checkout-payments
       tags:
         - Payments
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1256,7 +1389,7 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create checkout payment
-      description: Creates a new payment for a checkout.
+      description: Creates a new payment for a checkout. Only the checkout's owner and users that can create a payment (eg. users with admin role) are allowed to perform this action.
       operationId: create-checkout-payment
       tags:
         - Payments
@@ -1264,7 +1397,30 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/payment-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example without a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+              Example with a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+                    source_attributes:
+                      gateway_payment_profile_id: super-secret-token-2131m3n13bv3hv1vasda
+        description: |-
+          This requests only accepts available Payment Methods in the `payment_method_id` field.
+
+          The Payment Methods available to users for creating a new payment are the ones with both attributes `available_to_users` and `active` set to `true`.
   '/checkouts/{checkout_id}/payments/{id}':
     get:
       responses:
@@ -1296,6 +1452,7 @@ paths:
       - name: id
         in: path
         required: true
+        description: The payment id
         schema:
           type: string
     patch:
@@ -1308,12 +1465,21 @@ paths:
                 $ref: '#/components/schemas/payment'
         '401':
           $ref: '#/components/responses/invalid-api-key'
+        '403':
+          description: 'Forbidden  '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         '404':
           $ref: '#/components/responses/not-found'
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout payment
-      description: Updates a checkout's payment.
+      description: 'Updates a checkout''s payment. Please note that this action can be done by users with the admin permissions on Payments (eg. users with the admin role). Only pending payment can be updated. '
       operationId: update-checkout-payment
       tags:
         - Payments
@@ -1326,12 +1492,13 @@ paths:
             schema:
               type: object
               properties:
-                amount:
-                  type: number
-                payment_method_id:
-                  type: integer
-                payment_method:
-                  $ref: '#/components/schemas/payment-method'
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example:
+                value:
+                  payment:
+                    amount: '12.10'
   '/checkouts/{checkout_id}/return_authorizations':
     get:
       responses:
@@ -1360,6 +1527,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1384,14 +1552,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create checkout return authorization
-      description: Creates a return authorization for a checkout.
+      description: |-
+        Creates a return authorization for a checkout.
+
+        Only users with the `create` permission on `Spree::RetrunAuthorization` can perform this action.
       operationId: create-checkout-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   '/checkouts/{checkout_id}/return_authorizations/{id}':
     get:
       responses:
@@ -1423,6 +1600,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::ReturnAuthorization'
     delete:
       responses:
         '204':
@@ -1459,14 +1637,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout return authorization
-      description: Updates a checkout's return authorization.
+      description: |-
+        Updates a checkout's return authorization.
+
+        Only users with the `update` permission on the return authorization can perform this action.
       operationId: update-checkout-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   '/orders/{order_id}/customer_returns/{id}':
     get:
       responses:
@@ -1496,6 +1683,7 @@ paths:
       - name: id
         in: path
         required: true
+        description: The id of the customer return
         schema:
           type: string
     put:
@@ -1513,12 +1701,21 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order customer return
-      description: Updates an orders customer return.
+      description: |-
+        Updates an orders customer return.
+
+        Only users with the `update` permission on the customer return can perform this action.
       operationId: update-order-customer-return
       tags:
         - Customer returns
       requestBody:
-        $ref: '#/components/requestBodies/customer-return-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_return:
+                  $ref: '#/components/schemas/customer-return-input'
       security:
         - api-key: []
   /orders:
@@ -1547,6 +1744,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -1569,7 +1767,21 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/order-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  $ref: '#/components/schemas/order-input'
+            examples:
+              Example:
+                value:
+                  order:
+                    email: string
+                    line_items_attributes:
+                      - quantity: 1
+                        variant_id: 22
   '/orders/{order_number}/addresses/{id}':
     get:
       responses:
@@ -1595,11 +1807,13 @@ paths:
       - name: order_number
         in: path
         required: true
+        description: The order number
         schema:
           type: string
       - name: id
         in: path
         required: true
+        description: The id of the order's address that we want to retrieve
         schema:
           type: string
     patch:
@@ -1625,7 +1839,36 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/address-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/address-input'
+            examples:
+              Example with state_id:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_id: 31
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
+              Example with state_name:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_name: AZ
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
   '/orders/{order_number}/payments':
     get:
       responses:
@@ -1657,6 +1900,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
         - order-token: []
@@ -1664,6 +1908,7 @@ paths:
       - name: order_number
         in: path
         required: true
+        description: The order number
         schema:
           type: string
     post:
@@ -1681,7 +1926,7 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create order payment
-      description: Creates a payment for an order.
+      description: Creates a new payment for a checkout. Only the order's owner and users that can create a payment (eg. users with admin role) are allowed to perform this action.
       operationId: create-order-payment
       tags:
         - Payments
@@ -1689,7 +1934,30 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/payment-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example without a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+              Example with a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+                    source_attributes:
+                      gateway_payment_profile_id: super-secret-token-2131m3n13bv3hv1vasda
+        description: |-
+          This requests only accepts available Payment Methods in the `payment_method_id` field.
+
+          The Payment Methods available to users for creating a new payment are the ones with both attributes `available_to_users` and `active` set to `true`.
   '/orders/{order_number}/payments/{id}':
     get:
       responses:
@@ -1731,12 +1999,21 @@ paths:
                 $ref: '#/components/schemas/payment'
         '401':
           $ref: '#/components/responses/invalid-api-key'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         '404':
           $ref: '#/components/responses/not-found'
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order payment
-      description: Updates an order's payment.
+      description: 'Updates a checkout''s payment. Please note that this action can be done by users with the admin permissions on Payments (eg. users with the admin role). Only pending payment can be updated. '
       operationId: update-order-payment
       tags:
         - Payments
@@ -1744,7 +2021,18 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/payment-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example:
+                value:
+                  payment:
+                    amount: '12.10'
   '/orders/{order_number}/return_authorizations':
     get:
       responses:
@@ -1773,6 +2061,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1796,14 +2085,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create order return authorization
-      description: Creates a return authorization for an order.
+      description: |-
+        Creates a return authorization for an order.
+
+        Only users with the `create` permission on `Spree::ReturnAuthorization` can perform this action.
       operationId: create-order-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   '/orders/{order_number}/return_authorizations/{id}':
     get:
       responses:
@@ -1830,11 +2128,13 @@ paths:
         required: true
         schema:
           type: string
+        description: The Order number
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::ReturnAuthorization'
     delete:
       responses:
         '200':
@@ -1871,14 +2171,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order return authorization
-      description: Updates an order's return authorization.
+      description: |-
+        Updates an order's return authorization.
+
+        Only users with the `update` permission on the return authorization can perform this action.
       operationId: update-order-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   /config:
     get:
       responses:
@@ -2058,27 +2367,6 @@ paths:
         - Option values
       security:
         - api-key: []
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/option-value'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create option value
-      description: Creates an option value.
-      operationId: create-option-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-      requestBody:
-        $ref: '#/components/requestBodies/option-value-input'
   '/option_values/{id}':
     get:
       responses:
@@ -2105,6 +2393,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::OptionValue'
     delete:
       responses:
         '204':
@@ -2141,14 +2430,24 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update option value
-      description: Updates an option value.
+      description: |-
+        Updates an option value.
+
+        Only users with the `update` permission on the option value can perform this action.
       operationId: update-option-value
       tags:
         - Option values
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/option-value-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                option_value:
+                  $ref: '#/components/schemas/option-value-input'
+        description: ''
   '/option_types/{option_type_id}/option_values':
     get:
       responses:
@@ -2177,6 +2476,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::OptionType'
     post:
       responses:
         '200':
@@ -2192,88 +2492,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create option type value
-      description: Creates an option value for a type.
+      description: |-
+        Creates an option value for a type.
+
+        Only users with the `create` permission on `Spree::OptionValue` can perform this action.
       operationId: create-option-type-value
       tags:
         - Option values
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/option-value-input'
-  '/option_types/{option_type_id}/option_values/{id}':
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema: {}
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-      summary: Get option type value
-      description: Retrieves an option type's value.
-      operationId: get-option-type-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-    parameters:
-      - name: option_type_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-    delete:
-      responses:
-        '204':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/option-value'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/delete-restriction'
-      summary: Delete option type value
-      description: Deletes an option type's value.
-      operationId: delete-option-type-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-    patch:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/option-value'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Update option type value
-      description: Updates an option type's value.
-      operationId: update-option-type-value
-      tags:
-        - Option values
-      security:
-        - api-key: []
-      requestBody:
-        $ref: '#/components/requestBodies/option-value-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                option_value:
+                  $ref: '#/components/schemas/option-value-input'
   '/products/{product_id}/product_properties':
     get:
       responses:
@@ -2302,6 +2537,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -2325,14 +2561,29 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create product property
-      description: Creates a product property.
+      description: |-
+        Creates a product property.
+
+        Only users with the `create` permission on `Spree::ProductProperty` can perform this action.
       operationId: create-product-property
       tags:
         - Product properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_property:
+                  $ref: '#/components/schemas/product-property-input'
+            examples:
+              Example:
+                value:
+                  product_property:
+                    property_name: Fit
+                    value: Loose
   '/products/{product_id}/product_properties/{id}':
     get:
       responses:
@@ -2400,14 +2651,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update product property
-      description: Updates a product's property.
+      description: |-
+        Updates a product's property.
+
+        Only users with the `update` permission on the product property can perform this action.
       operationId: update-product-property
       tags:
         - Product properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_property:
+                  $ref: '#/components/schemas/product-property-input'
+            examples:
+              Example:
+                value:
+                  product_property:
+                    value: Regular
   /properties:
     get:
       responses:
@@ -2434,6 +2699,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -2449,14 +2715,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create property
-      description: Creates a property.
+      description: |-
+        Creates a property.
+
+        Only users with the `create` permission on `Spree::Propery` can perform this action.
       operationId: create-property
       tags:
         - Properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                property:
+                  $ref: '#/components/schemas/property-input'
   '/properties/{id}':
     get:
       responses:
@@ -2483,6 +2758,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Property'
     delete:
       responses:
         '204':
@@ -2519,14 +2795,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update property
-      description: Updates a property.
+      description: |-
+        Updates a property.
+
+        Only users with the `update` permission on the property can perform this action.
       operationId: update-property
       tags:
         - Properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                property:
+                  $ref: '#/components/schemas/property-input'
   '/inventory_units/{id}':
     get:
       responses:
@@ -2604,6 +2889,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -2619,14 +2905,29 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create stock location
-      description: Creates a stock location.
+      description: |-
+        Creates a stock location.
+
+        Only users with the `create` permission on `Spree::StockLocation` can perform this action.
       operationId: create-stock-location
       tags:
         - Stock locations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-location-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_location:
+                  $ref: '#/components/schemas/stock-location-input'
+            examples:
+              Example:
+                value:
+                  stock_location:
+                    name: North Pole
+                    active: true
   '/stock_locations/{id}':
     get:
       responses:
@@ -2652,6 +2953,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the stock location
     delete:
       responses:
         '204':
@@ -2688,14 +2990,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update stock location
-      description: Updates a stock location.
+      description: |-
+        Updates a stock location.
+
+        Only users with the `update` permission on the stock location can perform this action.
       operationId: update-stock-location
       tags:
         - Stock locations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-location-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_location:
+                  $ref: '#/components/schemas/stock-location-input'
+            examples:
+              Example:
+                value:
+                  stock_location:
+                    active: false
   '/stock_locations/{stock_location_id}/stock_items':
     get:
       responses:
@@ -2724,6 +3040,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -2747,14 +3064,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create stock location item
-      description: Creates a stock item for a stock location.
+      description: |-
+        Creates a stock item for a stock location.
+
+        Only users with the `create` permission on `Spree::StockItem` can perform this action.
       operationId: create-stock-location-item
       tags:
         - Stock items
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_item:
+                  $ref: '#/components/schemas/stock-item-input'
   '/stock_locations/{stock_location_id}/stock_items/{id}':
     get:
       responses:
@@ -2780,11 +3106,13 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::StockLocation'
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::StockItem'
     delete:
       responses:
         '204':
@@ -2821,14 +3149,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update stock location item
-      description: Updates a stock location's item.
+      description: |-
+        Updates a stock location's item.
+
+        Only users with the `update` permission on the stock item can perform this action.
       operationId: update-stock-location-item
       tags:
         - Stock items
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_item:
+                  $ref: '#/components/schemas/stock-item-input'
   '/stock_locations/{stock_location_id}/stock_movements':
     get:
       responses:
@@ -2855,6 +3192,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -3072,6 +3410,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -3087,14 +3426,30 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create taxonomy
-      description: Creates a taxonomy.
+      description: |-
+        Creates a taxonomy.
+
+        Only users with the `create` permission on `Spree::Taxonomy` can perform this action.
+
+        Creating a taxonomy, its root taxon with the same name will be automatically created. The root taxon's information will be available in the response.
       operationId: create-taxonomy
       tags:
         - Taxonomies
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxonomy-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxonomy:
+                  $ref: '#/components/schemas/taxonomy-input'
+            examples:
+              Example:
+                value:
+                  taxonomy:
+                    name: Colors
   '/taxonomies/{id}':
     get:
       responses:
@@ -3114,12 +3469,20 @@ paths:
         - Taxonomies
       security:
         - api-key: []
+      parameters:
+        - schema:
+            type: string
+            default: nested
+          in: query
+          name: set
+          description: When `set=nested` it will recoursively return all the taxons of that taxonomy
     parameters:
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The id of the taxonomy
     delete:
       responses:
         '204':
@@ -3156,14 +3519,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update taxonomy
-      description: Updates a taxonomy.
+      description: |-
+        Updates a taxonomy.
+
+        Only users with the `update` permission on the taxonomy can perform this action.
       operationId: update-taxonomy
       tags:
         - Taxonomies
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxonomy-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxonomy:
+                  $ref: '#/components/schemas/taxonomy-input'
+            examples:
+              Example:
+                value:
+                  taxonomy:
+                    name: Colours
   '/taxonomies/{taxonomy_id}/taxons':
     get:
       responses:
@@ -3192,6 +3569,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -3200,6 +3578,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the taxonomy for which the new taxon will be added
     post:
       responses:
         '200':
@@ -3215,14 +3594,29 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create taxonomy taxon
-      description: Creates a taxon for a taxonomy.
+      description: |-
+        Creates a taxon for a taxonomy.
+
+        Only users with the `create` permission on `Spree::Taxon` can perform this action.
       operationId: create-taxonomy-taxon
       tags:
         - Taxons
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxon-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxon:
+                  $ref: '#/components/schemas/taxon-input'
+            examples:
+              Example:
+                value:
+                  taxon:
+                    name: Colors
+                    parent_id: 22
   '/taxonomies/{taxonomy_id}/taxons/{id}':
     get:
       responses:
@@ -3248,11 +3642,13 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the taxon's taxonomy
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The id of the taxon
     delete:
       responses:
         '204':
@@ -3289,14 +3685,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update taxonomy taxon
-      description: Updates a taxonomy's taxon.
+      description: |-
+        Updates a taxonomy's taxon.
+
+        Only users with the `update` permission on the taxon can perform this action.
       operationId: update-taxonomy-taxon
       tags:
         - Taxons
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxon-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxon:
+                  $ref: '#/components/schemas/taxon-input'
+            examples:
+              Example:
+                value:
+                  taxon:
+                    name: Colours
   /taxons:
     get:
       responses:
@@ -3323,6 +3733,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
+        - schema:
+            type: boolean
+          in: query
+          name: without_children
+          description: 'When set to `true`, it won''t recursively return all the taxons'' children.'
       security:
         - api-key: []
   /users:
@@ -3350,6 +3766,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -3365,14 +3782,24 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create user
-      description: Creates a user.
+      description: |
+        Creates a user.
+
+        Only users with the `create` permission on `Spree::User` can perform this action.
       operationId: create-user
       tags:
         - Users
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/user-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/user-input'
+        description: ''
   /zones:
     get:
       responses:
@@ -3399,6 +3826,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -3414,14 +3842,32 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create zone
-      description: Creates a zone.
+      description: |-
+        Creates a zone.
+
+        Only users with the `create` permission on `Spree::Zone` can perform this action.
       operationId: create-zone
       tags:
         - Zones
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/zone-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zone:
+                  $ref: '#/components/schemas/zone-input'
+            examples:
+              Example:
+                value:
+                  zone:
+                    name: North Pole
+                    description: The coldest one.
+                    zone_members_attributes:
+                      - zoneable_type: 'Spree::Country'
+                        zoneable_id: 1
   '/zones/{id}':
     get:
       responses:
@@ -3448,6 +3894,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The ID of the zone we want to update
     delete:
       responses:
         '204':
@@ -3484,14 +3931,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update zone
-      description: Updates a zone.
+      description: |-
+        Updates a zone.
+
+        Only users with the `update` permission on the zone can perform this action.
       operationId: update-zone
       tags:
         - Zones
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/zone-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zone:
+                  $ref: '#/components/schemas/zone-input'
+            examples:
+              Example:
+                value:
+                  zone:
+                    description: Brrr. The coldest one.
   '/promotions/{id}':
     get:
       responses:
@@ -3546,75 +4007,6 @@ paths:
         - $ref: '#/components/parameters/per_page'
       security:
         - api-key: []
-  '/checkouts/{checkout_id}/line_items/{id}':
-    delete:
-      responses:
-        '204':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/delete-restriction'
-      summary: Delete checkout line item
-      description: Deletes a checkout's line item.
-      operationId: delete-checkout-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-    parameters:
-      - name: checkout_id
-        in: path
-        required: true
-        description: The order number
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-    patch:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Update checkout line item
-      description: Updates a checkout's line item.
-      operationId: update-checkout-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                line_items_attributes:
-                  allOf:
-                    - properties:
-                        id:
-                          type: integer
-                  type: object
   '/orders/{order_number}/coupon_codes/{id}':
     delete:
       responses:
@@ -3629,9 +4021,16 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
         '422':
-          $ref: '#/components/responses/delete-restriction'
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
       summary: Delete order coupon code
-      description: Deletes an order's coupon code.
+      description: |-
+        Deletes an order's coupon code.
+
+        To perform this operation the request should be made as the order's owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: delete-order-coupon-code
       tags:
         - Coupon codes
@@ -3644,10 +4043,58 @@ paths:
         required: true
         schema:
           type: string
+        description: The order number
       - name: id
         in: path
         required: true
         description: This is the coupon code
+        schema:
+          type: string
+  '/orders/{order_number}/line_items':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order line item
+      description: |-
+        Create a line item in an order not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
+      operationId: create-order-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              Example:
+                value:
+                  line_item:
+                    quantity: 1
+                    variant_id: 22
+        description: ''
+    parameters:
+      - name: order_number
+        in: path
+        required: true
         schema:
           type: string
   '/orders/{order_number}/line_items/{id}':
@@ -3679,11 +4126,13 @@ paths:
         required: true
         schema:
           type: string
+        description: The order number
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The id of the line item to update
     patch:
       responses:
         '200':
@@ -3699,7 +4148,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order line item
-      description: Updates an order's line item.
+      description: |-
+        Update line item's information in an order not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: update-order-line-item
       tags:
         - Line items
@@ -3707,7 +4159,18 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/line-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              example-1:
+                value:
+                  line_item:
+                    quantity: 1
   '/stock_items/{id}':
     delete:
       responses:
@@ -3736,6 +4199,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Stock::Item'
     patch:
       responses:
         '200':
@@ -3751,14 +4215,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update stock item
-      description: Updates a stock item.
+      description: |-
+        Updates a stock item.
+
+        Only users with the `update` permission on the stock item can perform this action.
       operationId: update-stock-item
       tags:
         - Stock items
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_item:
+                  $ref: '#/components/schemas/stock-item-input'
   '/checkouts/{id}':
     patch:
       responses:
@@ -3776,7 +4249,9 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout
       description: |-
-        Updates a checkout.
+        Updates a checkout and moves the order to the next checkout step. A request with an empty body is legit and only tries to move the order to the next step.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
 
         **Note:** In addition to the order update, this action always attempts to perform an order state machine transition which results in a `422` response if it cannot be transitioned.
       operationId: update-checkout
@@ -3789,13 +4264,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/checkout-input'
+              type: object
+              properties:
+                order:
+                  $ref: '#/components/schemas/order-input'
     parameters:
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The order number
   '/credit_cards/{id}':
     patch:
       responses:
@@ -3845,7 +4324,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update shipment
-      description: Updates a shipment.
+      description: |-
+        Updates a shipment.
+
+        Please note that this request can be only performed by users with the `update` permission on the shipment.
       operationId: update-shipment
       tags:
         - Shipments
@@ -3855,7 +4337,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/shipment-input'
+              type: object
+              properties:
+                shipment:
+                  $ref: '#/components/schemas/shipment-input'
+            examples:
+              Example:
+                value:
+                  shipment:
+                    tracking: tracking-identifier-provided-by-shipping-provider
     parameters:
       - name: number
         in: path
@@ -4160,6 +4650,131 @@ paths:
         description: The order number
         schema:
           type: string
+  '/checkouts/{checkout_id}/line_items':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create checkout line item
+      description: |-
+        Create a line item in an checkout not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
+
+        It is not possible to add a line item to a completed order.
+      operationId: create-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              Example:
+                value:
+                  line_item:
+                    quantity: 1
+                    variant_id: 22
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/line_items/{id}':
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete checkout line item
+      description: Deletes a checkout's line item.
+      operationId: delete-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The id of the line item to update
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout line item
+      description: |-
+        Update line item's information in an checkout not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
+
+        It is not possible to add a line item to a completed order.
+      operationId: update-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              Example:
+                value:
+                  line_item:
+                    quantity: 2
   /classifications:
     put:
       responses:
@@ -4228,13 +4843,12 @@ paths:
   '/orders/{order_number}/empty':
     put:
       responses:
-        '204':
+        '200':
           description: ''
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/order-big'
         '401':
           $ref: '#/components/responses/invalid-api-key'
         '404':
@@ -4612,38 +5226,6 @@ paths:
         required: true
         schema:
           type: string
-  '/checkouts/{checkout_id}/line_items':
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create checkout line item
-      description: Creates a new line item for a checkout.
-      operationId: create-checkout-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        $ref: '#/components/requestBodies/line-item-input'
-    parameters:
-      - name: checkout_id
-        in: path
-        required: true
-        description: The order number
-        schema:
-          type: string
   '/orders/{order_number}/coupon_codes':
     post:
       responses:
@@ -4658,9 +5240,16 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
         '422':
-          $ref: '#/components/responses/unprocessable-entity'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
       summary: Create order coupon code
-      description: Creates a coupon code for an order.
+      description: |-
+        Creates a coupon code for an order.
+
+        To perform this operation the request should be made as the order's owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: create-order-coupon-code
       tags:
         - Coupon codes
@@ -4668,44 +5257,21 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/coupon-code-input'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/coupon-code-input'
+            examples:
+              Example:
+                value:
+                  coupon_code: off-20
     parameters:
       - name: order_number
         in: path
         required: true
         schema:
           type: string
-  '/orders/{order_number}/line_items':
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create order line item
-      description: Creates a line item for an order.
-      operationId: create-order-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        $ref: '#/components/requestBodies/line-item-input'
-    parameters:
-      - name: order_number
-        in: path
-        required: true
-        schema:
-          type: string
+        description: The order number
   /shipments:
     post:
       responses:
@@ -4720,7 +5286,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create shipment
-      description: Creates a shipment.
+      description: |-
+        Creates a shipment.
+
+        Please note that this request can be only performed by users with the `create` permission on the shipment.
       operationId: create-shipment
       tags:
         - Shipments
@@ -4734,10 +5303,10 @@ paths:
               properties:
                 stock_location_id:
                   type: integer
-                variant_id:
-                  type: integer
-                quantity:
-                  type: integer
+            examples:
+              Example:
+                value:
+                  stock_location_id: 0
   /shipments/transfer_to_location:
     post:
       responses:
@@ -4846,12 +5415,15 @@ paths:
           name: id
           schema:
             type: integer
+          description: The id of the Taxon
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
         - in: query
           name: simple
           schema:
             type: boolean
+          description: Returns a simplified version of the JSON
       security:
         - api-key: []
   '/orders/{order_number}/customer_returns':
@@ -4882,6 +5454,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -4890,6 +5463,7 @@ paths:
         schema:
           type: string
         required: true
+        description: The order number
     post:
       responses:
         '200':
@@ -4905,12 +5479,21 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create order customer return
-      description: Creates a customer return for an order.
+      description: |-
+        Creates a customer return for an order.
+
+        Only users with the `create` permission on `Spree::CustomerReturn` can perform this action.
       operationId: create-order-customer-return
       tags:
         - Customer returns
       requestBody:
-        $ref: '#/components/requestBodies/customer-return-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_return:
+                  $ref: '#/components/schemas/customer-return-input'
       security:
         - api-key: []
 tags:
@@ -4964,6 +5547,12 @@ components:
       schema:
         type: integer
         default: 25
+    q:
+      name: q
+      in: query
+      schema:
+        example: '?q[attribute_eq]=value'
+      description: 'Allows to query results based on search filters provided by Ransack (https://github.com/activerecord-hackery/ransack/).'
   responses:
     not-found:
       description: ''
@@ -5004,96 +5593,6 @@ components:
               message:
                 type: string
   requestBodies:
-    taxon-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/taxon-input'
-    line-item-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/line-item-input'
-    payment-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/payment-input'
-    zone-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/zone-input'
-    product-property-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/product-property-input'
-    stock-location-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/stock-location-input'
-    product-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/product-input'
-    property-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/property-input'
-    address-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/address-input'
-    order-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/order-input'
-    image-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/image-input'
-    variant-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/variant-input'
-    user-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/user-input'
-    return-authorization-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/return-authorization-input'
-    customer-return-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/customer-return-input'
-    option-value-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/option-value-input'
-    stock-item-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/stock-item-input'
-    taxonomy-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/taxonomy-input'
     complete-checkoutBody:
       content:
         application/json:
@@ -5102,11 +5601,6 @@ components:
             properties:
               expected_total:
                 type: string
-    coupon-code-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/coupon-code-input'
     add-shipment-itemBody:
       content:
         application/json:
@@ -5119,9 +5613,9 @@ components:
                 type: integer
   securitySchemes:
     api-key:
-      type: apiKey
-      name: Authorization
-      in: header
+      type: http
+      scheme: bearer
+      description: 'The `API key` is mandatory for each endpoint by default. You can change this configuration [with the Spree::Api::Config.requires_authentication preference](https://github.com/solidusio/solidus/blob/2b79f72aa53f5caa850c587888fff46c1c91f7b7/api/lib/spree/api_configuration.rb#L5) to avoid the default behavior and expose some endpoints without an API key. An example could be the [GET product list](https://solidus.stoplight.io/docs/solidus/08307f3d809e7-list-products) endpoint.'
     order-token:
       type: apiKey
       name: X-Spree-Order-Token
@@ -6043,12 +6537,18 @@ components:
       properties:
         success:
           type: string
+          description: Message returned if the coupon has been applied.
         error:
           type: string
+          description: Message returned if there are errors applying the coupon.
         successful:
           type: boolean
         status_code:
           type: string
+          description: |-
+            When applying a coupon code, it can be: `coupon_code_applied`, `coupon_code_unknown_error`, `coupon_code_max_usage`, `coupon_code_not_eligible`, `coupon_code_already_applied`, `coupon_code_expired` or `coupon_code_not_found`.
+
+            When removing a coupon code, it can be: `coupon_code_removed`, `coupon_code_not_present`, `coupon_code_not_found`.
     address-book:
       type: array
       title: Address book
@@ -6128,19 +6628,20 @@ components:
               type: string
             abbr:
               type: string
+      description: ''
     line-item-input:
       type: object
       title: Line item input
       properties:
         quantity:
           type: integer
-          description: 'Passing `0`, the line item will be removed.'
+          description: 'Passing `0`, the line item will be removed. When omitted creating a line item, quantity will be `1`.'
         options:
           type: object
           description: 'This field can be used to pass custom line item attributes. When used, it will force a new price calculation, unless `price` is one of the options.'
         id:
           type: integer
-          description: Required for existing line items only.
+          description: 'Required when updating existing line items, only when not already present in the Path Parameters.'
         variant_id:
           type: integer
           description: Required for new line items only.
@@ -6164,30 +6665,6 @@ components:
           type: string
         presentation:
           type: string
-    checkout-input:
-      type: object
-      title: Checkout input
-      properties:
-        coupon_code:
-          type: string
-        email:
-          type: string
-        special_instructions:
-          type: string
-        use_billing:
-          type: boolean
-        bill_address_attributes:
-          $ref: '#/components/schemas/address-input'
-        ship_address_attributes:
-          $ref: '#/components/schemas/address-input'
-        payments_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/payment-input'
-        shipments_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/shipment-input'
     credit-card-update-input:
       type: object
       title: Credit card update input
@@ -6222,10 +6699,9 @@ components:
           type: string
         payment_method_id:
           type: integer
-        payment_method:
-          type: string
         source_attributes:
           type: object
+          description: This field is required for Payment Method that has source_required? returning true.
           properties:
             number:
               type: string
@@ -6271,14 +6747,31 @@ components:
           type: integer
     order-input:
       title: Order input
-      allOf:
-        - $ref: '#/components/schemas/checkout-input'
-        - type: object
-          properties:
-            line_items_attributes:
-              type: array
-              items:
-                $ref: '#/components/schemas/line-item-input'
+      properties:
+        email:
+          type: string
+        special_instructions:
+          type: string
+        use_billing:
+          type: boolean
+        use_shipping:
+          type: boolean
+        bill_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        ship_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        payments_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/payment-input'
+        shipments_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipment-input'
+        line_items_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/line-item-input'
     product-input:
       type: object
       title: Product input
@@ -6288,8 +6781,6 @@ components:
         description:
           type: string
         available_on:
-          type: string
-        permalink:
           type: string
         meta_description:
           type: string
@@ -6316,13 +6807,11 @@ components:
         tax_category_id:
           type: integer
         taxon_ids:
-          type: array
-          items:
-            type: integer
+          type: string
+          description: 'Comma separated list of taxon ids. Eg. "1,2"'
         option_type_ids:
-          type: array
-          items:
-            type: integer
+          description: 'Comma separated list of option type ids ids. Eg. "1,2"'
+          type: string
         cost_currency:
           type: string
         cost_price:
@@ -6359,13 +6848,9 @@ components:
       type: object
       title: Variant input
       properties:
-        name:
-          type: string
-        presentation:
+        price:
           type: string
         cost_price:
-          type: string
-        lock_version:
           type: string
         position:
           type: integer
@@ -6373,14 +6858,10 @@ components:
           type: boolean
         product_id:
           type: integer
-        product:
+        shipping_category_id:
           type: integer
-        option_values_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/option-value-input'
-        price:
-          type: string
+        tax_category_id:
+          type: integer
         weight:
           type: string
         height:
@@ -6397,13 +6878,20 @@ components:
           type: array
           items:
             type: integer
+        option_values_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value-input'
         options:
           type: object
+          description: '`Name` will be the name/presentation of the option type and `Value` will be the name/presentation of the option value. They will be created if not exist.'
           properties:
             name:
               type: string
             value:
               type: string
+      required:
+        - price
     property-input:
       type: object
       title: Property input
@@ -6480,6 +6968,8 @@ components:
       properties:
         name:
           type: string
+      required:
+        - name
     taxon-input:
       type: object
       title: Taxon input

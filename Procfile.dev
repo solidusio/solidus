@@ -1,0 +1,2 @@
+sandbox: foreman start -d sandbox -f sandbox/Procfile.dev
+admin: bundle exec rake -C admin tailwindcss:watch

@@ -1,5 +1,4 @@
 <tr id="<%= spree_dom_id image %>" data-hook="images_row">
-
   <td>
     <% if can?(:update_positions, Spree::Image) %>
       <span class="handle"></span>
@@ -14,11 +13,7 @@
       "spree/admin/shared/modal",
       target: "modal-image-#{image.id}",
       title: image.alt,
-      content: %{
-        <div class='align-center'>
-          #{image_tag(image.url(:large))}
-        </div>
-      }.html_safe
+      content: tag.div(image_tag(image.url(:large)), class: 'align-center')
     ) %>
   </td>
 
@@ -28,7 +23,7 @@
         <%= f.select :viewable_id, options_for_select(@variants, image.viewable_id), {}, class: 'select2 fullwidth', autocomplete: "off" %>
       <% end %>
     </td>
-  <% end # @product.has_variants? %>
+  <% end %>
 
   <td>
     <%= fields_for image do |f| %>

@@ -29,9 +29,19 @@ module Spree
           @products = Spree::Product.ransack(params[:q]).result
         end
 
-        @products = @products.distinct.page(params[:page]).per(params[:per_page])
+        @products = list_products
         expires_in 15.minutes, public: true
         headers['Surrogate-Control'] = "max-age=#{15.minutes}"
+      end
+
+      private
+
+      def list_products
+        if params[:show_all]
+          @products.distinct.page(params[:page])
+        else
+          @products.distinct.page(params[:page]).per(params[:per_page])
+        end
       end
     end
   end

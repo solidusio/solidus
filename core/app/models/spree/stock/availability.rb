@@ -19,7 +19,7 @@ module Spree
       # Get the on_hand stock quantities
       # @return [Hash<Integer=>Spree::StockQuantities>] A map of stock_location_ids to the stock quantities available in that location
       def on_hand_by_stock_location_id
-        counts_on_hand.to_a.group_by do |(_, stock_location_id), _|
+        quantities_by_location_id = counts_on_hand.to_a.group_by do |(_, stock_location_id), _|
           stock_location_id
         end.transform_values do |values|
           Spree::StockQuantities.new(
@@ -31,12 +31,13 @@ module Spree
             end.to_h
           )
         end
+        restore_location_order(quantities_by_location_id)
       end
 
-      # Get the on_hand stock quantities
+      # Get the backorderable stock quantities
       # @return [Hash<Integer=>Spree::StockQuantities>] A map of stock_location_ids to the stock quantities available in that location
       def backorderable_by_stock_location_id
-        backorderables.group_by(&:second).transform_values do |variant_ids|
+        quantities_by_location_id = backorderables.group_by(&:second).transform_values do |variant_ids|
           Spree::StockQuantities.new(
             variant_ids.map do |variant_id, _|
               variant = @variant_map[variant_id]
@@ -44,6 +45,7 @@ module Spree
             end.to_h
           )
         end
+        restore_location_order(quantities_by_location_id)
       end
 
       private
@@ -66,6 +68,12 @@ module Spree
         Spree::StockItem.
           where(variant_id: @variants).
           where(stock_location_id: @stock_locations)
+      end
+
+      def restore_location_order(quantities_by_location_id)
+        sorted_location_ids = @stock_locations.map(&:id)
+
+        quantities_by_location_id.sort_by { |key, _value| sorted_location_ids.index(key) }.to_h
       end
     end
   end

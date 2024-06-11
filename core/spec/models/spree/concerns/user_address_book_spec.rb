@@ -13,24 +13,23 @@ module Spree
     describe "#save_in_address_book" do
       context "saving a default shipping address" do
         let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
-
-        subject do
-          -> { user.save_in_address_book(address.attributes, true) }
-        end
+        let(:force_default) { true }
+        subject { user.save_in_address_book(address.attributes, force_default) }
 
         context "the address is a new record" do
           let(:address) { build(:address) }
 
           it "creates a new Address" do
-            is_expected.to change { Spree::Address.count }.by(1)
+            expect { subject }.to change { Spree::Address.count }.by(1)
           end
 
           it "creates a UserAddress" do
-            is_expected.to change { Spree::UserAddress.count }.by(1)
+            expect { subject }.to change { Spree::UserAddress.count }.by(1)
           end
 
           it "sets the UserAddress default flag to true" do
-            subject.call
+            subject
+
             expect(user_address.default).to eq true
             expect(user_address.default_billing).to be_falsey
           end
@@ -46,7 +45,7 @@ module Spree
           end
 
           it "adds the address to the user's associated addresses" do
-            is_expected.to change { user.reload.addresses.count }.by(1)
+            expect { subject }.to change { user.reload.addresses.count }.by(1)
           end
         end
 
@@ -56,6 +55,7 @@ module Spree
           let(:original_default_bill_address) { create(:bill_address) }
           let(:original_user_address) { user.user_addresses.find_first_by_address_values(original_default_address.attributes) }
           let(:original_user_bill_address) { user.user_addresses.find_first_by_address_values(original_default_bill_address.attributes) }
+          let(:force_default) { false }
 
           before do
             user.user_addresses.create(address: original_default_address, default: true)
@@ -64,8 +64,8 @@ module Spree
 
           context "saving a shipping address" do
             context "makes all the other associated shipping addresses not be the default and ignores the billing ones" do
-              it { is_expected.to change { original_user_address.reload.default }.from(true).to(false) }
-              it { is_expected.not_to change { original_user_bill_address.reload.default_billing } }
+              it { expect { subject }.not_to change { original_user_address.reload.default }.from(true) }
+              it { expect { subject }.not_to change { original_user_bill_address.reload.default_billing } }
             end
 
             context "an odd flip-flop corner case discovered running backfill rake task" do
@@ -84,11 +84,11 @@ module Spree
           end
 
           context "saving a billing address" do
-            subject { -> { user.save_in_address_book(address.attributes, true, :billing) } }
+            subject { user.save_in_address_book(address.attributes, true, :billing) }
 
             context "makes all the other associated billing addresses not be the default and ignores the shipping ones" do
-              it { is_expected.not_to change { original_user_address.reload.default } }
-              it { is_expected.to change { original_user_bill_address.reload.default_billing }.from(true).to(false) }
+              it { expect { subject }.not_to change { original_user_address.reload.default } }
+              it { expect { subject }.to change { original_user_bill_address.reload.default_billing }.from(true).to(false) }
             end
 
             context "an odd flip-flop corner case discovered running backfill rake task" do
@@ -116,12 +116,12 @@ module Spree
 
           context "properly sets the default flag" do
             context "shipping address" do
-              it { expect(subject.call).to eq user.ship_address }
+              it { expect(subject).to eq user.ship_address }
             end
 
             context "billing address" do
               subject { user.save_in_address_book(address.attributes, true, :billing) }
-              it { is_expected.to eq user.bill_address }
+              it { expect(subject).to eq user.bill_address }
             end
           end
 
@@ -144,12 +144,12 @@ module Spree
 
             context "is the new default" do
               context "shipping address" do
-                it { is_expected.to eq user.ship_address }
+                it { expect(subject).to eq user.ship_address }
               end
 
               context "billing address" do
                 subject { user.save_in_address_book(address.attributes, true, :billing) }
-                it { is_expected.to eq user.bill_address }
+                it { expect(subject).to eq user.bill_address }
               end
             end
           end
@@ -372,7 +372,7 @@ module Spree
 
     context "#persist_order_address" do
       context "when automatic_default_address preference is at a default of true" do
-        let(:order) { build :order }
+        let(:order) { create :order }
 
         it 'will save both bill/ship_address references' do
           user.persist_order_address(order)
@@ -387,7 +387,7 @@ module Spree
       end
 
       context "when automatic_default_address preference is false" do
-        let(:order) { build :order }
+        let(:order) { create :order }
 
         before do
           stub_spree_preferences(automatic_default_address: false)

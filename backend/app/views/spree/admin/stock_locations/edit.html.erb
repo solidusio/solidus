@@ -5,12 +5,11 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path) %>
 <% admin_breadcrumb(@stock_location.name) %>
 
-
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:show, Spree::StockMovement) %>
       <li>
-        <%= link_to plural_resource_name(Spree::StockMovement), admin_stock_location_stock_movements_path(@stock_location.id), class: 'btn btn-primary'  %>
+        <%= link_to plural_resource_name(Spree::StockMovement), admin_stock_location_stock_movements_path(@stock_location.id), class: 'btn btn-primary' %>
       </li>
     <% end %>
   </ul>

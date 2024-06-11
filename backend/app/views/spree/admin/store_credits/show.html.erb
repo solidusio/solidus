@@ -3,7 +3,6 @@
 <% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
 <% admin_breadcrumb(@store_credit.display_amount.to_html) %>
 
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
@@ -17,9 +16,9 @@
 
 <table id='sc-detail-table'>
   <colgroup>
-    <col style="width: 20%;" />
-    <col style="width: 65%;" />
-    <col style="width: 15%;" />
+    <col style="width: 20%;">
+    <col style="width: 65%;">
+    <col style="width: 15%;">
   </colgroup>
   <tr>
     <td>
@@ -69,12 +68,13 @@
   <legend align='center'><%= t('spree.admin.store_credits.history') %></legend>
   <table>
     <colgroup>
-      <col style="width: 20%;" />
-      <col style="width: 10%;" />
-      <col style="width: 10%;" />
-      <col style="width: 25%;" />
-      <col style="width: 10%;" />
-      <col style="width: 25%;" />
+      <col style="width: 20%;">
+      <col style="width: 10%;">
+      <col style="width: 10%;">
+      <col style="width: 20%;">
+      <col style="width: 10%;">
+      <col style="width: 10%;">
+      <col style="width: 20%;">
     </colgroup>
     <thead>
       <tr>
@@ -84,7 +84,7 @@
         <th><%= t('spree.admin.store_credits.created_by') %></th>
         <th><%= Spree::StoreCreditEvent.human_attribute_name(:user_total_amount) %></th>
         <th><%= Spree::StoreCreditEvent.human_attribute_name(:amount_remaining) %></th>
-        <th><%= Spree::StoreCreditReason.human_attribute_name(:name) %></th>
+        <th><%= t('spree.admin.store_credits.reason_for_updating') %></th>
       </tr>
     </thead>
     <tbody>

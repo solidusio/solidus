@@ -1,0 +1,13 @@
+en:
+  solidus_admin:
+    orders:
+      title: "Orders"
+      update:
+        success: "Order was updated successfully"
+        error: "Order could not be updated"
+    addresses:
+      title: "Addresses"
+      update:
+        success: "The address has been successfully updated."
+      errors:
+        address_type_invalid: "Invalid address type. Please select either billing or shipping address."

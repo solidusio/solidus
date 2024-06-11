@@ -116,13 +116,15 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe '#auto_capture?' do
-    class TestGateway < Spree::PaymentMethod::CreditCard
-      def gateway_class
-        Provider
+    let(:gateway) do
+      gateway_class = Class.new(Spree::PaymentMethod::CreditCard) do
+        def gateway_class
+          Provider
+        end
       end
-    end
 
-    let(:gateway) { TestGateway.new }
+      gateway_class.new
+    end
 
     subject { gateway.auto_capture? }
 
@@ -174,28 +176,28 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe 'ActiveMerchant methods' do
-    class PaymentGateway
-      def initialize(options)
+    let(:payment_method) do
+      payment_method_class = Class.new(Spree::PaymentMethod) do
+        def gateway_class
+          Class.new do
+            def initialize(options)
+            end
+
+            def authorize; 'authorize'; end
+
+            def purchase; 'purchase'; end
+
+            def capture; 'capture'; end
+
+            def void; 'void'; end
+
+            def credit; 'credit'; end
+          end
+        end
       end
 
-      def authorize; 'authorize'; end
-
-      def purchase; 'purchase'; end
-
-      def capture; 'capture'; end
-
-      def void; 'void'; end
-
-      def credit; 'credit'; end
+      payment_method_class.new
     end
-
-    class TestPaymentMethod < Spree::PaymentMethod
-      def gateway_class
-        PaymentGateway
-      end
-    end
-
-    let(:payment_method) { TestPaymentMethod.new }
 
     it "passes through authorize" do
       expect(payment_method.authorize).to eq 'authorize'
@@ -218,6 +220,44 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     end
   end
 
+  describe "#try_void" do
+    let(:payment) { create(:payment, payment_method: payment_method) }
+
+    context "when the payment method supports payment profiles" do
+      let(:payment_method) { create(:credit_card_payment_method) }
+
+      context "when the payment is already captured" do
+        it "returns false" do
+          allow(payment).to receive(:completed?).and_return true
+          expect(payment.payment_method.try_void(payment)).to be_falsey
+        end
+      end
+
+      context "when the payment is not yet captured" do
+        it "returns the success response" do
+          expect(payment.payment_method.try_void(payment)).to be_success
+        end
+      end
+    end
+
+    context "when the payment method doesn't support payment profiles" do
+      let(:payment_method) { create(:simple_credit_card_payment_method) }
+
+      context "when the payment is already captured" do
+        it "returns false" do
+          allow(payment).to receive(:completed?).and_return true
+          expect(payment.payment_method.try_void(payment)).to be_falsey
+        end
+      end
+
+      context "when the payment is not yet captured" do
+        it "returns the success response" do
+          expect(payment.payment_method.try_void(payment)).to be_success
+        end
+      end
+    end
+  end
+
   describe 'model_name.human' do
     context 'PaymentMethod itself' do
       it "returns i18n value" do
@@ -230,6 +270,22 @@ RSpec.describe Spree::PaymentMethod, type: :model do
 
       it "returns default humanized value" do
         expect(klass.model_name.human).to eq('Some class')
+      end
+    end
+  end
+
+  describe "#find_sti_class" do
+    context "with an unexisting type" do
+      context "while retrieving records" do
+        let!(:unsupported_payment_method) { create(:payment_method, type: 'UnsupportedPaymentMethod') }
+
+        it "raises an UnsupportedPaymentMethod error" do
+          expect { Spree::PaymentMethod.all.to_json }
+            .to raise_error(
+              Spree::PaymentMethod::UnsupportedPaymentMethod,
+              /Found invalid payment type 'UnsupportedPaymentMethod'/
+            )
+        end
       end
     end
   end

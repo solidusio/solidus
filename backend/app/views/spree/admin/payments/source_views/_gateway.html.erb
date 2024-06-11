@@ -15,10 +15,53 @@
 
         <dt><%= Spree::CreditCard.human_attribute_name(:expiration) %>:</dt>
         <dd><%= payment.source.month %>/<%= payment.source.year %></dd>
+
+        <% if payment.source.address %>
+          <dt><%= Spree::CreditCard.human_attribute_name(:source_address) %>:</dt>
+          <dd><%= render partial: 'spree/admin/shared/address', locals: {address: payment.source.address} %></dd>
+        <% end %>
       </dl>
-      <% if payment.source.address %>
-        <%= render partial: 'spree/admin/shared/address', locals: {address: payment.source.address} %>
-      <% end %>
+    </div>
+
+    <div class="col-2">
+    </div>
+
+    <div class="col-4">
+      <dl>
+        <dt><%= Spree::CreditCard.human_attribute_name(:code) %>:</dt>
+        <dd><%= payment.number %></dd>
+
+        <dt><%= t('spree.risk_analysis') %></dt>
+        <dd>
+          <span class="pill pill-<%= payment.risky? ? 'error' : 'complete' %>">
+            <%= "#{t('spree.not') unless payment.risky?} #{t('spree.risky').downcase}".capitalize %>
+          </span>
+        </dd>
+
+        <dt><%= t('spree.status')%></dt>
+        <dd><span class="pill pill-<%= payment.state %>"><%= t(payment.state, scope: 'spree.payment_states') %></span></dd>
+
+
+        <dt><%= Spree::CreditCard.human_attribute_name(:avs_response) %>:</dt>
+        <dd>
+          <%= content_tag(
+            :span,
+            payment.is_avs_risky? ? t('spree.failure') : t('spree.success'),
+            class: "pill pill-#{payment.is_avs_risky? ? 'warning' : 'complete'}",
+            title: avs_response_code[payment.avs_response],
+          ) %>
+        </dd>
+
+        <dt><%= Spree::CreditCard.human_attribute_name(:cvv_response_code) %>:</dt>
+        <dd>
+          <%= content_tag(
+            :span,
+            payment.is_cvv_risky? ? t('spree.failure') : t('spree.success'),
+            class: "pill pill-#{payment.is_cvv_risky? ? 'warning' : 'complete'}",
+            title: cvv_response_code[payment.cvv_response_code],
+          ) %>
+        </dd>
+      </dl>
     </div>
   </div>
 </fieldset>

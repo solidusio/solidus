@@ -3,39 +3,49 @@
 ROOT = File.expand_path('..', __dir__)
 
 LIBS = %w[
+  admin
   api
   backend
   core
-  frontend
   sample
+  legacy_promotions
 ]
 
-# Is it a spec file or an RSpec option?
+# Ignore line info, e.g. foo/bar.rb:123 would become foo/bar.rb
+without_line = ->(path) { path.split(':', 2).first }
+
+# Is it a spec file or a CLI option?
 is_spec = ->(path) {
-  path = path.split(':', 2).first # ignore line info
-  File.directory?(path) ? path.include?('/spec') : path.end_with?('_spec.rb')
+  File.directory?(path) ? path.include?('/spec') : without_line[path].end_with?('_spec.rb')
 }
 
 # Find the Solidus library for this path
 find_lib = ->(path) {
+  path = without_line[path]
   LIBS.find { |lib| path.start_with? File.join(ROOT, lib) +'/' }
 }
 
+# Let all paths be absolute, if the file is missing try prepending one of the LIBS,
+# this allows calling `bin/rspec spec/api/foo/bar_spec.rb` without needing to add
+# the api/ prefix.
+expand_existing = ->(path) {
+  [
+    File.expand_path(path),
+    *LIBS.map { |l| File.expand_path(path, l) }
+  ].find { |p| File.exist?(without_line[p]) }
+}
+
 spec_files, options = ARGV.partition(&is_spec) # Separate specs and options
-spec_files.map! { |f| File.expand_path(f) } # Let all paths be absolute
+
 specs = {}
 
 if spec_files.any?
-  specs = spec_files.group_by(&find_lib)
+  specs = spec_files.map do |f|
+    expand_existing[f] or abort "Couldn't find spec file: #{f.inspect}"
+  end.group_by(&find_lib)
 else
   # If no files are provided run all specs in each lib.
   LIBS.each { |lib| specs[lib] = [] }
-end
-
-# If we weren't able to find the solidus lib for some files
-# then we have them under the nil key.
-if specs.key?(nil)
-  abort "Couldn't find a lib for these files: #{specs[nil].join(' ')}"
 end
 
 # Run specs for each lib separately

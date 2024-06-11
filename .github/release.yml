@@ -1,0 +1,26 @@
+# https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes#configuring-automatically-generated-release-notes
+# https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#generate-release-notes-content-for-a-release
+
+changelog:
+  exclude:
+    labels:
+      - "changelog:skip"
+  categories:
+    - title: Solidus
+      labels:
+        - "changelog:solidus"
+    - title: Solidus Core
+      labels:
+        - "changelog:solidus_core"
+    - title: Solidus Admin
+      labels:
+        - "changelog:solidus_admin"
+    - title: Solidus Backend
+      labels:
+        - "changelog:solidus_backend"
+    - title: Solidus API
+      labels:
+        - "changelog:solidus_api"
+    - title: Solidus Sample
+      labels:
+        - "changelog:solidus_sample"

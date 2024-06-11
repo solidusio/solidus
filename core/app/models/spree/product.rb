@@ -61,6 +61,17 @@ module Spree
     has_many :line_items, through: :variants_including_master
     has_many :orders, through: :line_items
 
+    scope :sort_by_master_default_price_amount_asc, -> {
+      with_default_price.order('spree_prices.amount ASC')
+    }
+    scope :sort_by_master_default_price_amount_desc, -> {
+      with_default_price.order('spree_prices.amount DESC')
+    }
+    scope :with_default_price, -> {
+      left_joins(master: :prices)
+        .where(master: { spree_prices: Spree::Config.default_pricing_options.desired_attributes })
+    }
+
     def find_or_build_master
       master || build_master
     end
@@ -72,6 +83,7 @@ module Spree
       :height,
       :price,
       :sku,
+      :track_inventory,
       :weight,
       :width,
     ]
@@ -84,7 +96,7 @@ module Spree
              :display_price,
              :has_default_price?,
              :images,
-             :price_for,
+             :price_for_options,
              :rebuild_vat_prices=,
              to: :find_or_build_master
 
@@ -119,12 +131,27 @@ module Spree
 
     alias :options :product_option_types
 
-    self.whitelisted_ransackable_associations = %w[stores variants_including_master master variants]
-    self.whitelisted_ransackable_attributes = %w[name slug]
-
-    def self.ransackable_scopes(_auth_object = nil)
-      %i(with_discarded with_variant_sku_cont)
+    # The :variants_option_values ransacker filters Spree::Product based on
+    # variant option values ids.
+    #
+    # Usage:
+    # Spree::Product.ransack(
+    #   variants_option_values_in: [option_value_id1, option_value_id2]
+    # ).result
+    ransacker :variants_option_values, formatter: proc { |v|
+      if OptionValue.exists?(v)
+        joins(variants_including_master: :option_values)
+          .where(spree_option_values: { id: v })
+          .distinct
+          .select(:id).arel
+      end
+    } do |parent|
+      parent.table[:id]
     end
+
+    self.allowed_ransackable_associations = %w[stores variants_including_master master variants]
+    self.allowed_ransackable_attributes = %w[name slug variants_option_values]
+    self.allowed_ransackable_scopes = %i[available with_discarded with_all_variant_sku_cont with_kept_variant_sku_cont]
 
     # @return [Boolean] true if there are any variants
     def has_variants?
@@ -251,8 +278,7 @@ module Spree
 
     # @return [Array] all advertised and not-rejected promotions
     def possible_promotions
-      promotion_ids = promotion_rules.map(&:promotion_id).uniq
-      Spree::Promotion.advertised.where(id: promotion_ids).reject(&:inactive?)
+      Spree::Config.promotions.advertiser_class.for_product(self)
     end
 
     # The number of on-hand stock items; Infinity if any variant does not track
@@ -327,14 +353,8 @@ module Spree
     # If the master is invalid, the Product object will be assigned its errors
     def validate_master
       unless master.valid?
-        if Gem::Requirement.new(">= 6.1").satisfied_by?(Rails.gem_version)
-          master.errors.each do |error|
-            errors.add(error.attribute, error.message)
-          end
-        else
-          master.errors.each do |att, error|
-            errors.add(att, error)
-          end
+        master.errors.each do |error|
+          errors.add(error.attribute, error.message)
         end
       end
     end

@@ -38,7 +38,7 @@ module Spree
                   .with_prices(current_pricing_options)
                   .all? { |variant_with_prices| variant_with_prices.price_same_as_master?(current_pricing_options) }
 
-      variant.price_for(current_pricing_options).to_html
+      variant.price_for_options(current_pricing_options)&.money&.to_html
     end
 
     # Converts line breaks in product description into <p> tags.
@@ -68,7 +68,7 @@ module Spree
     # @return [String] a cache invalidation key for products
     def cache_key_for_products
       count = @products.count
-      max_updated_at = (@products.maximum(:updated_at) || Date.today).to_s(:number)
+      max_updated_at = (@products.maximum(:updated_at) || Date.today).to_fs(:number)
       "#{I18n.locale}/#{current_pricing_options.cache_key}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}"
     end
   end

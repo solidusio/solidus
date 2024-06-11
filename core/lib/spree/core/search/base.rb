@@ -4,6 +4,12 @@ module Spree
   module Core
     module Search
       class Base
+        class InvalidOptions < ArgumentError
+          def initialize(option)
+            super("Invalid option passed to the searcher: '#{option}'")
+          end
+        end
+
         attr_accessor :properties
         attr_accessor :current_user
         attr_accessor :pricing_options
@@ -51,22 +57,25 @@ module Spree
           # separate queries most of the time but opt for a join as soon as any
           # `where` constraints affecting joined tables are added to the search;
           # which is the case as soon as a taxon is added to the base scope.
-          scope = scope.preload(master: :currently_valid_prices)
+          scope = scope.preload(master: :prices)
           scope = scope.preload(master: :images) if @properties[:include_images]
           scope
         end
 
         def add_search_scopes(base_scope)
-          if @properties[:search]
-            @properties[:search].each do |name, scope_attribute|
-              scope_name = name.to_sym
-              if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
-                base_scope = base_scope.send(scope_name, *scope_attribute)
-              else
-                base_scope = base_scope.merge(Spree::Product.ransack({ scope_name => scope_attribute }).result)
-              end
+          return base_scope unless @properties[:search].present?
+          raise InvalidOptions.new(:search) unless @properties[:search].respond_to?(:each_pair)
+
+          @properties[:search].each_pair do |name, scope_attribute|
+            scope_name = name.to_sym
+
+            if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
+              base_scope = base_scope.send(scope_name, *scope_attribute)
+            else
+              base_scope = base_scope.merge(Spree::Product.ransack({ scope_name => scope_attribute }).result)
             end
           end
+
           base_scope
         end
 

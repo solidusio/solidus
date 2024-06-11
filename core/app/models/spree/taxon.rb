@@ -18,16 +18,18 @@ module Spree
     after_update :update_child_permalinks, if: :saved_change_to_permalink?
 
     validates :name, presence: true
+    validates :name, uniqueness: { scope: :parent_id, message: :must_be_unique_under_same_parent }
     validates :meta_keywords, length: { maximum: 255 }
     validates :meta_description, length: { maximum: 255 }
     validates :meta_title, length: { maximum: 255 }
+    validates :taxonomy_id, uniqueness: { scope: :parent_id, message: :can_have_only_one_root }, if: -> { root? }
 
     after_save :touch_ancestors_and_taxonomy
     after_touch :touch_ancestors_and_taxonomy
 
     include ::Spree::Config.taxon_attachment_module
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     # @return [String] meta_title if set otherwise a string containing the
     #   root name and taxon name

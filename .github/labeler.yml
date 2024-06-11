@@ -1,0 +1,46 @@
+"changelog:solidus_core":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "core/**/*"
+"changelog:solidus_backend":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "backend/**/*"
+"changelog:solidus_api":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "api/**/*"
+"changelog:solidus_admin":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "admin/**/*"
+"changelog:solidus_sample":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "sample/**/*"
+"changelog:solidus":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "lib/**/*"
+      - "README.md"
+      - "solidus.gemspec"
+"changelog:repository":
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/*"
+    - all-globs-to-all-files:
+      - "!core/**/*"
+      - "!backend/**/*"
+      - "!api/**/*"
+      - "!admin/**/*"
+      - "!sample/**/*"
+      - "!lib/**/*"
+      - "!README.md"
+      - "!solidus.gemspec"

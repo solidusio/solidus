@@ -43,8 +43,8 @@ module Spree
 
     attr_accessor :target_shipment, :price_currency
 
-    self.whitelisted_ransackable_associations = ['variant']
-    self.whitelisted_ransackable_attributes = ['variant_id']
+    self.allowed_ransackable_associations = ['variant']
+    self.allowed_ransackable_attributes = ['variant_id']
 
     # @return [BigDecimal] the amount of this line item, which is the line
     #   item's price multiplied by its quantity.
@@ -123,7 +123,7 @@ module Spree
       # a price for this line item, even if there is no existing price
       # for the associated line item in the order currency.
       unless options.key?(:price) || options.key?('price')
-        self.money_price = variant.price_for(pricing_options)
+        self.money_price = variant.price_for_options(pricing_options)&.money
       end
     end
 
@@ -149,7 +149,7 @@ module Spree
     # Set price, cost_price and currency.
     def set_pricing_attributes
       self.cost_price ||= variant.cost_price
-      self.money_price = variant.price_for(pricing_options) if price.nil?
+      self.money_price = variant.price_for_options(pricing_options)&.money if price.nil?
       true
     end
 

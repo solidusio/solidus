@@ -40,13 +40,9 @@ module Spree
 
       def create
         authorize! :create, Shipment
-        quantity = params[:quantity].to_i
         @shipment = @order.shipments.create(stock_location_id: params.fetch(:stock_location_id))
-        @order.contents.add(variant, quantity, { shipment: @shipment })
 
-        @shipment.save!
-
-        respond_with(@shipment.reload, default_template: :show)
+        respond_with(@shipment, default_template: :show)
       end
 
       def update
@@ -109,7 +105,8 @@ module Spree
           current_shipment: @original_shipment,
           desired_shipment: @desired_shipment,
           variant: @variant,
-          quantity: @quantity
+          quantity: @quantity,
+          track_inventory: Spree::Config.track_inventory_levels
         )
 
         if fulfilment_changer.run!
@@ -186,7 +183,7 @@ module Spree
             },
             variant: {
               product: {},
-              default_price: {},
+              prices: {},
               option_values: {
                 option_type: {}
               }

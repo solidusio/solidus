@@ -229,6 +229,41 @@ describe 'Users', type: :feature do
       expect(page).to have_text 'Account updated'
     end
 
+    context 'when :can_restrict_stock_management is true' do
+      custom_authorization! do |_user|
+        can [:show], Spree::StockLocation
+      end
+
+      before do
+        stub_spree_preferences(Spree::Config, can_restrict_stock_management: true)
+      end
+
+      let!(:stock_location) { create(:stock_location, name: "location_1") }
+
+      it 'can edit user stock locations' do
+        click_link 'Account'
+
+        check 'user_spree_stock_locations_location_1'
+        click_button 'Update'
+        expect(page).to have_text 'Account updated'
+        expect(find_field('user_spree_stock_locations_location_1')).to be_checked
+      end
+
+      it 'can delete user stock locations' do
+        user_a.stock_locations << Spree::StockLocation.create(name: "dummy")
+        click_link 'Account'
+
+        user_a.stock_locations.each do |location|
+          uncheck "user_spree_stock_locations_#{location.name}"
+        end
+
+        click_button 'Update'
+        expect(page).to have_text 'Account updated'
+        expect(find_field('user_spree_stock_locations_dummy')).not_to be_checked
+        expect(user_a.reload.stock_locations).to be_empty
+      end
+    end
+
     context 'without password permissions' do
       custom_authorization! do |_user|
         cannot [:update_password], Spree.user_class
@@ -433,7 +468,7 @@ describe 'Users', type: :feature do
       click_link 'Create order for this user'
     end
 
-    it 'prefills the customer addresses with the user addresses' do
+    it 'prefills the customer addresses with the user addresses', :flaky do
       click_link 'Customer'
 
       within '.js-billing-address' do

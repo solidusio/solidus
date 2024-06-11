@@ -32,7 +32,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "#approve" do
       it "approves an order" do
-        expect(order.contents).to receive(:approve).with(user: controller.try_spree_current_user)
+        expect(order.contents).to receive(:approve).with(user: controller.spree_current_user)
         put :approve, params: { id: order.number }
         expect(flash[:success]).to eq I18n.t('spree.order_approved')
       end
@@ -40,7 +40,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "#cancel" do
       it "cancels an order" do
-        expect(order).to receive(:canceled_by).with(controller.try_spree_current_user)
+        expect(order).to receive(:canceled_by).with(controller.spree_current_user)
         put :cancel, params: { id: order.number }
         expect(flash[:success]).to eq I18n.t('spree.order_canceled')
       end
@@ -77,12 +77,12 @@ describe Spree::Admin::OrdersController, type: :controller do
     context "#new" do
       let(:user) { create(:user) }
       before do
-        allow(controller).to receive_messages try_spree_current_user: user
+        allow(controller).to receive_messages spree_current_user: user
       end
 
       it "imports a new order and sets the current user as a creator" do
         expect(Spree::Core::Importer::Order).to receive(:import)
-          .with(nil, hash_including(created_by_id: controller.try_spree_current_user.id))
+          .with(nil, hash_including(created_by_id: controller.spree_current_user.id))
           .and_return(order)
         get :new
       end
@@ -107,7 +107,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         it "imports a new order and assigns the user to the order" do
           expect(Spree::Core::Importer::Order).to receive(:import)
-            .with(user, hash_including(created_by_id: controller.try_spree_current_user.id))
+            .with(user, hash_including(created_by_id: controller.spree_current_user.id))
             .and_return(order)
           get :new, params: { user_id: user.id }
         end
@@ -159,6 +159,13 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
     end
 
+    describe "#show" do
+      it "redirects to :edit" do
+        get :show, params: { id: order.number }
+        expect(response).to redirect_to(spree.edit_admin_order_path(order.number))
+      end
+    end
+
     describe '#advance' do
       subject do
         put :advance, params: { id: order.number }
@@ -183,12 +190,12 @@ describe Spree::Admin::OrdersController, type: :controller do
         context 'when unsuccessful' do
           before do
             allow(order).to receive(:can_complete?).and_return(false)
-            allow(order).to receive(:errors).and_return(double(full_messages: ['failed']))
+            allow(order).to receive(:errors).and_return(double(full_messages: ['invalid address', 'invalid email']))
           end
 
           it 'messages and redirects' do
             subject
-            expect(flash[:error]).to eq order.errors.full_messages
+            expect(flash[:error]).to eq 'invalid address, invalid email'
             expect(response).to redirect_to(spree.confirm_admin_order_path(order))
           end
         end
@@ -288,7 +295,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       let(:user) { create(:user) }
 
       before do
-        allow(controller).to receive_messages try_spree_current_user: user
+        allow(controller).to receive_messages spree_current_user: user
         user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
 
         create_list(:completed_order_with_totals, 2)
@@ -361,7 +368,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let!(:order) { create(:completed_order_with_totals, number: 'R987654321') }
 
     before do
-      allow(controller).to receive_messages try_spree_current_user: user
+      allow(controller).to receive_messages spree_current_user: user
     end
 
     it 'should grant access to users with an admin role' do

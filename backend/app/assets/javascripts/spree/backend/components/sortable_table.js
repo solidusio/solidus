@@ -1,6 +1,14 @@
 //= require solidus_admin/Sortable
 /* eslint no-unused-vars: "off" */
 
+/* Check if string is valid UUID */
+function isAValidUUID(str) {
+  // https://stackoverflow.com/a/13653180/8170555
+  const regexExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  return regexExp.test(str);
+}
+
 Spree.SortableTable = {
   refresh: function() {
     var sortable_tables = document.querySelectorAll('table.sortable');
@@ -16,7 +24,7 @@ Spree.SortableTable = {
             var idAttr = el.id;
             if (idAttr) {
               var objId = idAttr.split('_').slice(-1);
-              if (!isNaN(objId)) {
+              if (!isNaN(objId) || isAValidUUID(objId)) {
                 positions['positions['+objId+']'] = index + 1;
               }
             }

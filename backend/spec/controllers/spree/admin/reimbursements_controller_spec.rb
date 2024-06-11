@@ -12,7 +12,7 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
   let(:user) { stub_model(Spree::LegacyUser, has_spree_role?: true, id: 1) }
 
   before do
-    allow_any_instance_of(described_class).to receive(:try_spree_current_user).
+    allow_any_instance_of(described_class).to receive(:spree_current_user).
       and_return(user)
   end
 

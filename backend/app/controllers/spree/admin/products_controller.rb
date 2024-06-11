@@ -68,7 +68,7 @@ module Spree
         if updating_variant_property_rules?
           url_params = {}
           url_params[:ovi] = []
-          params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
+          params[:product][:variant_property_rules_attributes].each_value do |param_attrs|
             url_params[:ovi] += param_attrs[:option_value_ids]
           end
           spree.admin_product_product_properties_url(@product, url_params)
@@ -104,7 +104,7 @@ module Spree
       end
 
       def product_includes
-        [:variant_images, { variants: [:images], master: [:images, :default_price] }]
+        [:variant_images, { variants: [:images], master: [:images, :prices] }]
       end
 
       def clone_object_url(resource)
@@ -133,7 +133,7 @@ module Spree
       def normalize_variant_property_rules
         return unless updating_variant_property_rules?
 
-        params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
+        params[:product][:variant_property_rules_attributes].each_value do |param_attrs|
           param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
         end
       end

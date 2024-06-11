@@ -15,6 +15,12 @@ module Spree
         generator.test_framework :rspec
       end
 
+      if ActiveRecord.respond_to?(:yaml_column_permitted_classes) || ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
+        config.active_record.yaml_column_permitted_classes ||= []
+        config.active_record.yaml_column_permitted_classes |=
+          [Symbol, BigDecimal, ActiveSupport::HashWithIndifferentAccess]
+      end
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
       end
@@ -40,32 +46,54 @@ module Spree
         ]
       end
 
-      initializer "spree.core.checking_migrations", before: :load_config_initializers do |_app|
+      initializer "spree.core.checking_migrations", after: :load_config_initializers do |_app|
         Migrations.new(config, engine_name).check
       end
 
-      # Setup Event Subscribers
-      initializer 'spree.core.initialize_subscribers' do |app|
+      # Setup pub/sub
+      initializer 'spree.core.pub_sub' do |app|
         app.reloader.to_prepare do
-          Spree::Event.activate_autoloadable_subscribers
-        end
+          Spree::Bus.clear
 
-        app.reloader.before_class_unload do
-          Spree::Event.deactivate_all_subscribers
+          %i[
+            order_emptied
+            order_finalized
+            order_recalculated
+            reimbursement_reimbursed
+            reimbursement_errored
+          ].each { |event_name| Spree::Bus.register(event_name) }
+
+          Spree::OrderMailerSubscriber.new.subscribe_to(Spree::Bus)
+        end
+      end
+
+      # Load in mailer previews for apps to use in development.
+      initializer "spree.core.action_mailer.set_preview_path", after: "action_mailer.set_autoload_paths" do
+        solidus_preview_path = Spree::Core::Engine.root.join("lib/spree/mailer_previews")
+
+        if ActionMailer::Base.respond_to? :preview_paths # Rails 7.1+
+          ActionMailer::Base.preview_paths << solidus_preview_path.to_s
+        else
+          ActionMailer::Base.preview_path = "{#{ActionMailer::Base.preview_path},#{solidus_preview_path}}"
+        end
+      end
+
+      initializer "spree.deprecator" do |app|
+        if app.respond_to?(:deprecators)
+          app.deprecators[:spree] = Spree.deprecator
         end
       end
 
       config.after_initialize do
-        # Load in mailer previews for apps to use in development.
-        # We need to make sure we call `Preview.all` before requiring our
-        # previews, otherwise any previews the app attempts to add need to be
-        # manually required.
-        if Rails.env.development? || Rails.env.test?
-          ActionMailer::Preview.all
+        Spree::Config.check_load_defaults_called('Spree::Config')
+        Spree::Config.static_model_preferences.validate!
+      end
 
-          Dir[root.join("lib/spree/mailer_previews/**/*_preview.rb")].each do |file|
-            require_dependency file
-          end
+      config.after_initialize do
+        if defined?(Spree::Auth::Engine) &&
+            Gem::Version.new(Spree::Auth::VERSION) < Gem::Version.new('2.5.4') &&
+            defined?(Spree::UsersController)
+          Spree::UsersController.protect_from_forgery with: :exception
         end
       end
     end

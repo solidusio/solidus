@@ -8,7 +8,7 @@ RSpec.describe Spree::Variant::PriceSelector do
   subject { described_class.new(variant) }
 
   it { is_expected.to respond_to(:variant) }
-  it { is_expected.to respond_to(:price_for) }
+  it { is_expected.to respond_to(:price_for_options) }
 
   describe ".pricing_options_class" do
     it "returns the standard pricing options class" do
@@ -16,14 +16,19 @@ RSpec.describe Spree::Variant::PriceSelector do
     end
   end
 
-  describe "#price_for(options)" do
+  describe "#price_for_options(options)" do
     let(:variant) { create(:variant, price: 12.34) }
 
     context "with the default currency" do
       let(:pricing_options) { described_class.pricing_options_class.new(currency: "USD") }
 
-      it "returns the correct (default) price as a Spree::Money object" do
-        expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(12.34, currency: "USD"))
+      it "returns the price as a Spree::Price object" do
+        expect(subject.price_for_options(pricing_options)).to be_a Spree::Price
+      end
+
+      it "returns the correct (default) price", :aggregate_failures do
+        expect(subject.price_for_options(pricing_options).amount).to eq 12.34
+        expect(subject.price_for_options(pricing_options).currency).to eq "USD"
       end
 
       context "with the another country iso" do
@@ -38,8 +43,9 @@ RSpec.describe Spree::Variant::PriceSelector do
             variant.prices.create(amount: 44.44, country: country, currency: Spree::Config.currency)
           end
 
-          it "returns the correct price" do
-            expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(44.44, currency: "USD"))
+          it "returns the correct price and currency", :aggregate_failures do
+            expect(subject.price_for_options(pricing_options).amount).to eq 44.44
+            expect(subject.price_for_options(pricing_options).currency).to eq "USD"
           end
         end
 
@@ -50,7 +56,7 @@ RSpec.describe Spree::Variant::PriceSelector do
             end
 
             it "returns nil" do
-              expect(subject.price_for(pricing_options)).to be_nil
+              expect(subject.price_for_options(pricing_options)).to be_nil
             end
           end
 
@@ -60,7 +66,7 @@ RSpec.describe Spree::Variant::PriceSelector do
             end
 
             it "returns the fallback price" do
-              expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(55.44, currency: "USD"))
+              expect(subject.price_for_options(pricing_options).amount).to eq 55.44
             end
           end
         end
@@ -75,14 +81,15 @@ RSpec.describe Spree::Variant::PriceSelector do
           variant.prices.create(amount: 99.00, currency: "EUR")
         end
 
-        it "returns the price in the correct currency as a Spree::Money object" do
-          expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(99.00, currency: "EUR"))
+        it "returns the price in the correct currency", :aggregate_failures do
+          expect(subject.price_for_options(pricing_options).amount).to eq 99.00
+          expect(subject.price_for_options(pricing_options).currency).to eq "EUR"
         end
       end
 
       context "when there is no price for that currency" do
         it "returns nil" do
-          expect(subject.price_for(pricing_options)).to be_nil
+          expect(subject.price_for_options(pricing_options)).to be_nil
         end
       end
     end

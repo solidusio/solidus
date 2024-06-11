@@ -13,8 +13,6 @@ module Spree
     #   @return [Spree::Order] The order which items wll be merged into.
     attr_accessor :order
 
-    delegate :updater, to: :order
-
     # Create the OrderMerger
     #
     # @api public
@@ -115,8 +113,8 @@ module Spree
         current_line_item.quantity += other_order_line_item.quantity
         handle_error(current_line_item) unless current_line_item.save
       else
-        order.line_items << other_order_line_item
-        handle_error(other_order_line_item) unless other_order_line_item.save
+        new_line_item = order.line_items.build(other_order_line_item.attributes.except("id"))
+        handle_error(new_line_item) unless new_line_item.save
       end
     end
 
@@ -133,13 +131,13 @@ module Spree
 
     # Save the order totals after merge
     #
-    # It triggers the order updater to ensure that item counts and totals are
+    # It triggers the order recalculator to ensure that item counts and totals are
     # up to date.
     #
     # @api private
     # @return [void]
     def persist_merge
-      updater.update
+      order.recalculate
     end
   end
 end

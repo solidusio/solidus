@@ -31,6 +31,14 @@ module Spree
       end
     end
 
+    # Sets this price's amount to a new value, parsing it if the new value is
+    # a string.
+    #
+    # @param price [String, #to_d] a new amount
+    def amount=(price)
+      self[:amount] = Spree::LocalizedNumber.parse(price)
+    end
+
     def description
       payment.payment_method.name
     end
@@ -45,7 +53,7 @@ module Spree
       credit_cents = money.cents
 
       @perform_response = process!(credit_cents)
-      log_entries.build(details: perform_response.to_yaml)
+      log_entries.build(parsed_payment_response_details_with_fallback: perform_response)
 
       self.transaction_id = perform_response.authorization
       save!
@@ -82,7 +90,7 @@ module Spree
     end
 
     def update_order
-      payment.order.updater.update
+      payment.order.recalculate
     end
   end
 end

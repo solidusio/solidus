@@ -19,21 +19,19 @@
   </li>
 </ul>
 
-<%- snippet = capture do %>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#your-target">
-    Launch demo modal
-  </button>
-
-  &lt;%= render(
-    "spree/admin/shared/modal",
-    target: "your-target",
-    title: "Your Title",
-    content: "The modal's content, could be another partial"
-  ) %&gt;
-<%- end %>
-
 <div class="style-guide-code half">
-  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+  <pre><code class="language-html"><%= %{
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#your-target">
+      Launch demo modal
+    </button>
+
+    \<\%= render(
+      "spree/admin/shared/modal",
+      target: "your-target",
+      title: "Your Title",
+      content: "The modal's content, could be another partial"
+    ) \%\>
+  }.strip_heredoc %></code></pre>
 </div>
 
 <div class="style-guide-result half">

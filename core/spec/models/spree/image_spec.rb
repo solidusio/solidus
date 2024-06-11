@@ -33,6 +33,8 @@ RSpec.describe Spree::Image, type: :model do
     end
 
     it 'returns attachment url' do
+      ActiveStorage::Current.url_options = { host: 'https://www.example.com' }
+
       expect(subject.url(:product)).to include('blank.jpg')
     end
 

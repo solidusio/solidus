@@ -5,10 +5,30 @@ require 'rails_helper'
 RSpec.describe Spree::CalculatedAdjustments do
   let(:calculator_class) { Spree::Calculator::FlatRate }
 
-  with_model :Calculable, scope: :all do
-    model do
+  # RESOURCE FIXTURE
+  before(:all) do
+    # Database
+    class CreateCalculables < ActiveRecord::Migration[5.1]
+      def change
+        create_table(:calculables)
+      end
+    end
+    CreateCalculables.migrate(:up)
+
+    # Model
+    class Calculable < ActiveRecord::Base
       include Spree::CalculatedAdjustments
     end
+  end
+
+  # TEAR DOWN RESOURCE FIXTURE
+  after(:all) do
+    # Database
+    CreateCalculables.migrate(:down)
+    Object.send(:remove_const, :CreateCalculables)
+
+    # Model
+    Object.send(:remove_const, :Calculable)
   end
 
   it "should add has_one :calculator relationship" do

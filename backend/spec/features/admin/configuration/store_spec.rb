@@ -14,10 +14,7 @@ describe "Store", type: :feature, js: true do
 
   before(:each) do
     visit spree.admin_path
-    click_link "Settings"
-    within('.admin-nav') do
-      click_link "Stores"
-    end
+    click_nav "Settings", "Stores"
   end
 
   context "visiting general store settings" do

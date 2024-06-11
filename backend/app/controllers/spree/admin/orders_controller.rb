@@ -4,11 +4,15 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       before_action :initialize_order_events
-      before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
-      around_action :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
+      before_action :load_order, only: [:edit, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
+      around_action :lock_order, only: [:advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
       respond_to :html
+
+      def show
+        redirect_to action: :edit
+      end
 
       def index
         params[:q] ||= {}
@@ -86,7 +90,7 @@ module Spree
           if @order.can_complete?
             flash[:success] = t('spree.order_ready_for_confirm')
           else
-            flash[:error] = @order.errors.full_messages
+            flash[:error] = @order.errors.full_messages.join(', ')
           end
           redirect_to confirm_admin_order_url(@order)
         end
@@ -112,7 +116,7 @@ module Spree
       end
 
       def cancel
-        @order.canceled_by(try_spree_current_user)
+        @order.canceled_by(spree_current_user)
         flash[:success] = t('spree.order_canceled')
         redirect_to(spree.edit_admin_order_path(@order))
       end
@@ -124,7 +128,7 @@ module Spree
       end
 
       def approve
-        @order.contents.approve(user: try_spree_current_user)
+        @order.contents.approve(user: spree_current_user)
         flash[:success] = t('spree.order_approved')
         redirect_to(spree.edit_admin_order_path(@order))
       end
@@ -156,7 +160,7 @@ module Spree
 
       def order_params
         {
-          created_by_id: try_spree_current_user.try(:id),
+          created_by_id: spree_current_user.try(:id),
           frontend_viewable: false,
           store_id: current_store.try(:id)
         }.with_indifferent_access

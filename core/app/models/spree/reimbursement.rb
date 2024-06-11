@@ -92,10 +92,10 @@ module Spree
 
       if unpaid_amount_within_tolerance?
         reimbursed!
-        Spree::Event.fire 'reimbursement_reimbursed', reimbursement: self
+        Spree::Bus.publish :reimbursement_reimbursed, reimbursement: self
       else
         errored!
-        Spree::Event.fire 'reimbursement_errored', reimbursement: self
+        Spree::Bus.publish :reimbursement_errored, reimbursement: self
       end
 
       if errored?

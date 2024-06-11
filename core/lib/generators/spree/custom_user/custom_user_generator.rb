@@ -22,10 +22,12 @@ module Spree
       migration_template 'migration.rb.tt', "db/migrate/add_spree_fields_to_custom_user_table.rb"
       template 'authentication_helpers.rb.tt', "lib/spree/authentication_helpers.rb"
 
-      file_action = File.exist?('config/initializers/spree.rb') ? :append_file : :create_file
-      send(file_action, 'config/initializers/spree.rb') do
-        "Rails.application.config.to_prepare do\n  require_dependency 'spree/authentication_helpers'\nend\n"
-      end
+      initializer 'solidus_authentication', <<~RUBY
+        Rails.application.config.to_prepare do
+          ApplicationController.include Spree::AuthenticationHelpers, Spree::CurrentUserHelpers
+          Spree::Api::BaseController.include Spree::CurrentUserHelpers if defined? Spree::Api
+        end
+      RUBY
 
       gsub_file 'config/initializers/spree.rb', /Spree\.user_class.?=.?.+$/, %{Spree.user_class = "#{class_name}"}
     end

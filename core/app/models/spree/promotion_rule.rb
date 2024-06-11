@@ -14,8 +14,8 @@ module Spree
     validates :promotion, presence: true
     validate :unique_per_promotion, on: :create
 
-    def self.for(promotable)
-      all.select { |rule| rule.applicable?(promotable) }
+    def preload_relations
+      []
     end
 
     def applicable?(_promotable)

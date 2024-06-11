@@ -22,11 +22,12 @@ describe 'Pricing' do
     let(:master_price) { product.master.default_price }
     let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "RUB", country_iso: "DE") }
 
-    before do
+    subject do
       visit spree.admin_product_prices_path(product)
     end
 
     it 'displays a table with the prices' do
+      subject
       expect(page).to have_content(product.name)
       within(".tabs .active") do
         expect(page).to have_content("Prices")
@@ -42,6 +43,30 @@ describe 'Pricing' do
       end
     end
 
+    context "when the user can edit prices" do
+      custom_authorization! do |_user|
+        can :edit, Spree::Price
+      end
+
+      it "shows edit links" do
+        subject
+
+        expect(page).to have_selector('a[data-action="edit"]')
+      end
+    end
+
+    context "when the user cannot edit prices" do
+      custom_authorization! do |_user|
+        cannot :edit, Spree::Price
+      end
+
+      it "doesn't show edit links" do
+        subject
+
+        expect(page).not_to have_selector('a[data-action="edit"]')
+      end
+    end
+
     context "searching" do
       let(:variant) { create(:variant, price: 20) }
       let(:product) { variant.product }
@@ -51,6 +76,7 @@ describe 'Pricing' do
       end
 
       it 'has a working table filter' do
+        subject
         expect(page).to have_selector("#table-filter")
         within "#table-filter" do
           within "fieldset legend" do
@@ -64,12 +90,48 @@ describe 'Pricing' do
       end
     end
 
+    context "pagination" do
+      let(:product) do
+        create(:product).tap do |product|
+          product.master.prices << create(:price)
+        end
+      end
+
+      let!(:variants) do
+        v = []
+        3.times do |i|
+          v << create(:variant, price: i * 10, product: product)
+        end
+        v
+      end
+
+      before do
+        allow(Spree::Config).to receive(:admin_variants_per_page) { 1 }
+      end
+
+      it "paginates products and variants independently" do
+        subject
+        within '[data-hook="variant_prices_table"] > nav:first-of-type > .pagination' do
+          click_link "2"
+        end
+        product_prices = product.prices.for_master.order(:variant_id, :country_iso, :currency)
+        expect(page).to have_content(product_prices[0].display_amount)
+        expect(page).to_not have_content(product_prices[1].display_amount)
+        expect(page).to_not have_content(product_prices[2].display_amount)
+        variant_prices = product.prices.for_variant.order(:variant_id, :country_iso, :currency)
+        expect(page).to_not have_content(variant_prices[0].display_price)
+        expect(page).to have_content(variant_prices[1].display_price)
+        expect(page).to_not have_content(variant_prices[2].display_price)
+      end
+    end
+
     context "editing" do
       let(:product) { create(:product, price: 123.99) }
       let!(:variant) { product.master }
       let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "EUR") }
 
       it 'has a working edit page' do
+        subject
         within "#spree_price_#{product.master.prices.first.id}" do
           click_icon :edit
         end
@@ -87,6 +149,7 @@ describe 'Pricing' do
       end
 
       it "will not reset the currency to default" do
+        subject
         within "#spree_price_#{other_price.id}" do
           click_icon :edit
         end
@@ -104,6 +167,7 @@ describe 'Pricing' do
       let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "EUR") }
 
       it "will delete the non-default price" do
+        subject
         within "#spree_price_#{other_price.id}" do
           accept_alert do
             click_icon :trash
@@ -113,6 +177,7 @@ describe 'Pricing' do
       end
 
       it "does not break when default price is deleted" do
+        subject
         within "#spree_price_#{variant.default_price.id}" do
           accept_alert do
             click_icon :trash

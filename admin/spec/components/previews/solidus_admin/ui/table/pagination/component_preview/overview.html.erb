@@ -1,0 +1,18 @@
+<table>
+  <% {
+    'Default': ['#1', '#2'],
+    'Left': ['#1', nil],
+    'Right': [nil, '#2'],
+    'Disabled': [nil, nil],
+  }.each do |title, (left, right)| %>
+    <tr>
+      <td class="font-bold px-3 py-1"><%= title %></td>
+      <td class="px-3 py-1 text-center">
+        <%= render current_component.new(
+          prev_link: (left && "#1"),
+          next_link: (right && "#2"),
+        ) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

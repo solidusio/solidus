@@ -8,22 +8,54 @@ RSpec.describe Spree::PromotionCode do
 
     describe '#normalize_code' do
       let(:promotion) { create(:promotion, code: code) }
-      let(:promotion_code) { promotion.codes.first }
 
       before { subject }
 
-      context 'with mixed case' do
-        let(:code) { 'NewCoDe' }
+      context 'when no other code with the same value exists' do
+        let(:promotion_code) { promotion.codes.first }
 
-        it 'downcases the value before saving' do
-          expect(promotion_code.value).to eq('newcode')
+        context 'with mixed case' do
+          let(:code) { 'NewCoDe' }
+
+          it 'downcases the value before saving' do
+            expect(promotion_code.value).to eq('newcode')
+          end
+        end
+
+        context 'with extra spacing' do
+          let(:code) { ' new code ' }
+
+          it 'removes surrounding whitespace' do
+            expect(promotion_code.value).to eq 'new code'
+          end
         end
       end
 
-      context 'with extra spacing' do
-        let(:code) { ' new code ' }
-        it 'removes surrounding whitespace' do
-          expect(promotion_code.value).to eq 'new code'
+      context 'when another code with the same value exists' do
+        let(:promotion_code) { promotion.codes.build(value: code) }
+
+        context 'with mixed case' do
+          let(:code) { 'NewCoDe' }
+
+          it 'does not save the record and marks it as invalid' do
+            expect(promotion_code.valid?).to eq false
+
+            expect(promotion_code.errors.messages[:value]).to contain_exactly(
+              'has already been taken'
+            )
+          end
+        end
+
+        context 'with extra spacing' do
+          let(:code) { ' new code ' }
+
+          it 'does not save the record and marks it as invalid' do
+            expect(promotion_code.valid?).to eq false
+
+            expect(promotion_code.errors.messages[:value]).to contain_exactly(
+              'has already been taken'
+            )
+          end
         end
       end
     end
@@ -147,60 +179,11 @@ RSpec.describe Spree::PromotionCode do
         before { order.adjustments.promotion.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
-    end
-  end
-
-  describe "completing multiple orders with the same code", slow: true do
-    let(:promotion) do
-      FactoryBot.create(
-        :promotion,
-        :with_order_adjustment,
-        code: "discount",
-        per_code_usage_limit: 1,
-        weighted_order_adjustment_amount: 10
-      )
-    end
-    let(:code) { promotion.codes.first }
-    let(:order) do
-      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
-        FactoryBot.create(:payment, amount: 30, order: order)
-        promotion.activate(order: order, promotion_code: code)
+      context "and the order is canceled" do
+        before { order.cancel! }
+        it { is_expected.to eq 0 }
+        it { expect(order.state).to eq 'canceled' }
       end
-    end
-    let(:promo_adjustment) { order.adjustments.promotion.first }
-    before do
-      order.next! until order.can_complete?
-
-      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
-        FactoryBot.create(:payment, amount: 30, order: order)
-        promotion.activate(order: order, promotion_code: code)
-        order.next! until order.can_complete?
-        order.complete!
-      end
-    end
-
-    it "makes the promotion ineligible" do
-      expect{
-        order.complete
-      }.to change{ promo_adjustment.reload.eligible }.to(false)
-    end
-
-    it "adjusts the promo_total" do
-      expect{
-        order.complete
-      }.to change(order, :promo_total).by(10)
-    end
-
-    it "increases the total to remove the promo" do
-      expect{
-        order.complete
-      }.to change(order, :total).from(30).to(40)
-    end
-
-    it "resets the state of the order" do
-      expect{
-        order.complete
-      }.to change{ order.reload.state }.from("confirm").to("address")
     end
   end
 

@@ -5,7 +5,7 @@ Solidus system depends.
 
 Core models
 -----------
-Solidus implements over 200 [models](https://github.com/solidusio/solidus/tree/master/core/app/models/spree),
+Solidus implements over 200 [models](https://github.com/solidusio/solidus/tree/main/core/app/models/spree),
 and thus a deep inspection of each in this README would be overkill. Instead,
 let's take a quick look at the fundamental models upon which all else depend.
 Currently, these models remain in the Spree namespace as part of the legacy of
@@ -40,7 +40,6 @@ source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
 `Solidus::Gateway::Braintree`).
 * `Spree::PaymentMethod` - A base class which is used for implementing payment methods.
 * `Spree::PaymentMethod::CreditCard` - An implementation of a `Spree::PaymentMethod` for credit card payments.
-See https://github.com/solidusio/solidus_gateway/ for officially supported payment method implementations.
 * `Spree::CreditCard` - The `source` of a `Spree::Payment` using `Spree::PaymentMethod::CreditCard` as payment method.
 
 ## Inventory sub-system

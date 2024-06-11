@@ -130,7 +130,7 @@ module Spree
     end
 
     def display_price(product_or_variant)
-      product_or_variant.price_for(current_pricing_options).to_html
+      product_or_variant.price_for_options(current_pricing_options)&.money&.to_html
     end
 
     def pretty_time(time, format = :long)

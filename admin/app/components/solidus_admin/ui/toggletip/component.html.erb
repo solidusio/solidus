@@ -1,0 +1,57 @@
+<details
+  data-controller="<%= stimulus_id %>"
+  <%= tag.attributes(**@attributes) %>
+>
+  <summary
+    class="
+      block
+      w-[1rem]
+      h-[1rem]
+      cursor-pointer
+      [&::marker]:hidden
+      [&::-webkit-details-marker]:hidden
+    "
+    data-action="
+      click-><%= stimulus_id %>#toggle
+      keydown.esc@window-><%= stimulus_id %>#close
+    "
+    aria-label="<%= t('.get_help') %>"
+  >
+    <%= icon_tag("question-fill", class: "w-[1rem] h-[1rem] fill-gray-800") %>
+  </summary>
+
+  <div
+    class="
+      absolute
+      inline-block
+      w-48
+      px-[0.75rem]
+      font-semibold text-xs
+      rounded
+      z-10
+      text-white
+      bg-gray-800
+      <%= POSITIONS.fetch(@position)[:bubble] %>
+    "
+    data-<%= stimulus_id %>-target="bubble"
+  >
+    <span
+      role="status"
+      class="
+        relative
+        block
+        bg-inherit
+        py-[0.5rem]
+        before:content['']
+        before:absolute
+        before:w-[0.375rem]
+        before:h-[0.375rem]
+        before:rotate-45
+        before:bg-inherit
+        <%= POSITIONS.fetch(@position)[:arrow] %>
+      "
+    >
+      <%= @text %>
+    </span>
+  </div>
+</details>

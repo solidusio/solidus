@@ -1,0 +1,10 @@
+en:
+  submit: "Save"
+  cancel: "Cancel"
+  title: "Edit Stock Levels"
+  quantity_adjustment: "Quantity Adjustment"
+  quantity_adjustment_hint_html: |
+    Enter a positive number to increase the stock level, or a negative number to decrease the stock level.
+  backorderable_hint_html: |
+    Enable to allow customers to place orders even when the product is out of stock.<br>
+    When ordering the product customers will know that the product will be delivered at a later date, once it becomes available again.

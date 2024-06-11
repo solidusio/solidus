@@ -16,7 +16,6 @@ module Spree
     belongs_to :source, polymorphic: true, optional: true
     belongs_to :payment_method, -> { with_discarded }, class_name: 'Spree::PaymentMethod', inverse_of: :payments, optional: true
 
-    has_many :offsets, -> { offset_payment }, class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source
     has_many :state_changes, as: :stateful
     has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent'
@@ -45,8 +44,6 @@ module Spree
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
     scope :with_state, ->(state) { where(state: state.to_s) }
-    # "offset" is reserved by activerecord
-    scope :offset_payment, -> { where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'") }
 
     scope :checkout, -> { with_state('checkout') }
     scope :completed, -> { with_state('completed') }
@@ -54,7 +51,7 @@ module Spree
     scope :processing, -> { with_state('processing') }
     scope :failed, -> { with_state('failed') }
 
-    scope :risky, -> { where("avs_response IN (?) OR (cvv_response_code IS NOT NULL and cvv_response_code != 'M') OR state = 'failed'", RISKY_AVS_CODES) }
+    scope :risky, -> { failed.or(where(avs_response: RISKY_AVS_CODES)).or(where.not(cvv_response_code: [nil, '', 'M'])) }
     scope :valid, -> { where.not(state: %w(failed invalid void)) }
 
     scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
@@ -89,19 +86,11 @@ module Spree
         end || amount
     end
 
-    # The total amount of the offsets (for old-style refunds) for this payment.
-    #
-    # @return [BigDecimal] the total amount of this payment's offsets
-    def offsets_total
-      offsets.pluck(:amount).sum
-    end
-
     # The total amount this payment can be credited.
     #
-    # @return [BigDecimal] the amount of this payment minus the offsets
-    #   (old-style refunds) and refunds
+    # @return [BigDecimal] the amount of this payment minus refunds
     def credit_allowed
-      amount - (offsets_total.abs + refunds.sum(:amount))
+      amount - refunds.sum(:amount)
     end
 
     # @return [Boolean] true when this payment can be credited
@@ -127,6 +116,11 @@ module Spree
       res || payment_method
     end
 
+    # @return [Boolean] true when this payment is risky
+    def risky?
+      is_avs_risky? || is_cvv_risky? || state == 'failed'
+    end
+
     # @return [Boolean] true when this payment is risky based on address
     def is_avs_risky?
       return false if avs_response.blank? || NON_RISKY_AVS_CODES.include?(avs_response)
@@ -137,7 +131,6 @@ module Spree
     def is_cvv_risky?
       return false if cvv_response_code == "M"
       return false if cvv_response_code.nil?
-      return false if cvv_response_message.present?
       true
     end
 
@@ -165,16 +158,9 @@ module Spree
 
     def validate_source
       if source && !source.valid?
-        if Gem::Requirement.new(">= 6.1").satisfied_by?(Rails.gem_version)
-          source.errors.each do |error|
-            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
-            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
-          end
-        else
-          source.errors.each do |field, error|
-            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
-            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error}")
-          end
+        source.errors.each do |error|
+          field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
+          errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
         end
       end
       if errors.any?

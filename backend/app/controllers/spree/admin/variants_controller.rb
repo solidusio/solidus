@@ -16,7 +16,7 @@ module Spree
         @object.attributes = @object.product.master.attributes.except('id', 'created_at', 'deleted_at',
                                                                       'sku', 'is_master')
         # Shallow Clone of the default price to populate the price field.
-        @object.default_price = @object.product.master.default_price.clone
+        @object.prices.build(@object.product.master.default_price.attributes.except("id", "created_at", "updated_at", "deleted_at"))
       end
 
       def collection
@@ -32,10 +32,11 @@ module Spree
 
       def load_data
         @tax_categories = Spree::TaxCategory.order(:name)
+        @shipping_categories = Spree::ShippingCategory.order(:name)
       end
 
       def variant_includes
-        [{ option_values: :option_type }, :default_price]
+        [{ option_values: :option_type }, :prices]
       end
 
       def redirect_on_empty_option_values

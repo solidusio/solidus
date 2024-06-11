@@ -2,7 +2,6 @@
 
 module Spree
   class Promotion < Spree::Base
-    MATCH_POLICIES = %w(all any)
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
     attr_reader :eligibility_errors
@@ -15,7 +14,7 @@ module Spree
     has_many :promotion_actions, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :actions, :promotion_actions
 
-    has_many :order_promotions, class_name: "Spree::OrderPromotion"
+    has_many :order_promotions, class_name: "Spree::OrderPromotion", inverse_of: :promotion, dependent: :destroy
     has_many :orders, through: :order_promotions
 
     has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion, dependent: :destroy
@@ -47,15 +46,13 @@ module Spree
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
     scope :has_actions, -> do
-      joins(:promotion_actions)
+      joins(:promotion_actions).distinct
     end
     scope :applied, -> { joins(:order_promotions).distinct }
 
-    self.whitelisted_ransackable_associations = ['codes']
-    self.whitelisted_ransackable_attributes = %w[name path promotion_category_id]
-    def self.ransackable_scopes(*)
-      %i(active)
-    end
+    self.allowed_ransackable_associations = ['codes']
+    self.allowed_ransackable_attributes = %w[name path promotion_category_id]
+    self.allowed_ransackable_scopes = %i[active]
 
     def self.order_activatable?(order)
       order && !UNACTIVATABLE_ORDER_STATES.include?(order.state)
@@ -65,6 +62,19 @@ module Spree
       joins(:codes).where(
         PromotionCode.arel_table[:value].eq(val.downcase)
       ).first
+    end
+
+    # All orders that have been discounted using this promotion
+    def discounted_orders
+      Spree::Order.
+        joins(:all_adjustments).
+        where(
+          spree_adjustments: {
+            source_type: "Spree::PromotionAction",
+            source_id: actions.map(&:id),
+            eligible: true
+          }
+        ).distinct
     end
 
     def as_json(options = {})
@@ -151,24 +161,16 @@ module Spree
       return [] if rules.none?
 
       eligible = lambda { |rule| rule.eligible?(promotable, options) }
-      specific_rules = rules.for(promotable)
+      specific_rules = rules.select { |rule| rule.applicable?(promotable) }
       return [] if specific_rules.none?
 
-      if match_all?
-        # If there are rules for this promotion, but no rules for this
-        # particular promotable, then the promotion is ineligible by default.
-        unless specific_rules.all?(&eligible)
-          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
-          return nil
-        end
-        specific_rules
-      else
-        unless specific_rules.any?(&eligible)
-          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
-          return nil
-        end
-        specific_rules.select(&eligible)
+      # If there are rules for this promotion, but no rules for this
+      # particular promotable, then the promotion is ineligible by default.
+      unless specific_rules.all?(&eligible)
+        @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
+        return nil
       end
+      specific_rules
     end
 
     def products
@@ -190,11 +192,11 @@ module Spree
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
     def usage_count(excluded_orders: [])
-      Spree::Adjustment.promotion.
-        eligible.
-        in_completed_orders(excluded_orders: excluded_orders).
-        where(source_id: actions).
-        count(:order_id)
+      discounted_orders.
+        complete.
+        where.not(id: [excluded_orders.map(&:id)]).
+        where.not(spree_orders: { state: :canceled }).
+        count
     end
 
     def line_item_actionable?(order, line_item, promotion_code: nil)
@@ -205,9 +207,7 @@ module Spree
         if rules.blank?
           true
         else
-          rules.send(match_all? ? :all? : :any?) do |rule|
-            rule.actionable? line_item
-          end
+          rules.all? { |rule| rule.actionable? line_item }
         end
       else
         false
@@ -215,21 +215,12 @@ module Spree
     end
 
     def used_by?(user, excluded_orders = [])
-      [
-        :adjustments,
-        :line_item_adjustments,
-        :shipment_adjustments
-      ].any? do |adjustment_type|
-        user.orders.complete.joins(adjustment_type).where(
-          spree_adjustments: {
-            source_type: "Spree::PromotionAction",
-            source_id: actions.map(&:id),
-            eligible: true
-          }
-        ).where.not(
-          id: excluded_orders.map(&:id)
-        ).any?
-      end
+      discounted_orders.
+        complete.
+        where.not(id: excluded_orders.map(&:id)).
+        where(user: user).
+        where.not(spree_orders: { state: :canceled }).
+        exists?
     end
 
     # Removes a promotion and any adjustments or other side effects from an
@@ -251,18 +242,14 @@ module Spree
     def blacklisted?(promotable)
       case promotable
       when Spree::LineItem
-        !promotable.product.promotionable?
+        !promotable.variant.product.promotionable?
       when Spree::Order
-        promotable.line_items.joins(:product).where(spree_products: { promotionable: false }).exists?
+        promotable.line_items.any? { |line_item| !line_item.variant.product.promotionable? }
       end
     end
 
     def normalize_blank_values
       self[:path] = nil if self[:path].blank?
-    end
-
-    def match_all?
-      match_policy == "all"
     end
 
     def apply_automatically_disallowed_with_paths

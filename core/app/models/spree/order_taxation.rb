@@ -17,13 +17,15 @@ module Spree
 
     # Apply taxes to the order.
     #
-    # This method will create or update adjustments on all line items and
-    # shipments in the order to reflect the appropriate taxes passed in. It
-    # will also remove any now inapplicable tax adjustments.
+    # This method will create or update adjustments on the order and all line
+    # items and shipments in the order to reflect the appropriate taxes passed
+    # in. It will also remove any now inapplicable tax adjustments.
     #
     # @param [Spree::Tax::OrderTax] taxes the taxes to apply to the order
     # @return [void]
     def apply(taxes)
+      update_adjustments(@order, taxes.order_taxes) if taxes.order_taxes
+
       @order.line_items.each do |item|
         taxed_items = taxes.line_item_taxes.select { |element| element.item_id == item.id }
         update_adjustments(item, taxed_items)
@@ -70,7 +72,7 @@ module Spree
 
       tax_adjustment ||= item.adjustments.new(
         source: tax_item.tax_rate,
-        order_id: item.order_id,
+        order_id: item.is_a?(Spree::Order) ? item.id : item.order_id,
         label: tax_item.label,
         included: tax_item.included_in_price
       )

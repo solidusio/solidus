@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/testing_support/shared_examples/working_factory'
 
 RSpec.describe 'state factory' do
   let(:factory_class) { Spree::State }
@@ -29,6 +30,26 @@ RSpec.describe 'state factory' do
       it 'uses the existing country in the database' do
         expect(state.country).to eq(country)
         expect(Spree::Country.count).to eq(1)
+      end
+    end
+  end
+
+  describe 'for a country with nested carmen states' do
+    context 'when not given a state_iso' do
+      let(:state) { build(:state, country_iso: "IT") }
+
+      it 'creates the first state for that country it finds in carmen' do
+        expect(state.abbr).to eq("AL")
+        expect(state.name).to eq("Alessandria")
+      end
+    end
+
+    context 'when given a state_iso' do
+      let(:state) { build(:state, country_iso: "IT", state_code: 'PE' ) }
+
+      it 'finds the corresponding state' do
+        expect(state.abbr).to eq("PE")
+        expect(state.name).to eq("Pescara")
       end
     end
   end

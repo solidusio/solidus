@@ -36,7 +36,7 @@
       </tbody>
     </table>
 
-    <% if can?([:create, :update], Spree::ProductProperty) %>
+    <% if can?(:create, Spree::ProductProperty) && can?(:update, Spree::ProductProperty) %>
       <%= render 'spree/admin/shared/edit_resource_links' %>
     <% end %>
 
@@ -95,7 +95,7 @@
             <% end %>
           </tbody>
         </table>
-        <% if can?([:create, :update], Spree::VariantPropertyRule) %>
+        <% if can?(:create, Spree::VariantPropertyRule) && can?(:update, Spree::VariantPropertyRule) %>
           <%= render 'spree/admin/shared/edit_resource_links' %>
         <% end %>
       </fieldset>

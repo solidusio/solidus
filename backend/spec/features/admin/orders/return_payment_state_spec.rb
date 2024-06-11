@@ -7,23 +7,14 @@ describe "Return payment state spec" do
 
   before do
     Spree::RefundReason.create!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
-    allow_any_instance_of(Spree::Admin::ReimbursementsController).to receive(:try_spree_current_user).
+    allow_any_instance_of(Spree::Admin::ReimbursementsController).to receive(:spree_current_user).
       and_return(user)
   end
 
   let!(:order) { create(:shipped_order) }
   let(:user) { create(:admin_user) }
 
-  # Regression test for https://github.com/spree/spree/issues/6229
-  it "refunds and has outstanding_balance of zero", js: true do
-    expect(order).to have_attributes(
-      total: 110,
-      refund_total: 0,
-      payment_total: 110,
-      outstanding_balance: 0,
-      payment_state: 'paid'
-    )
-
+  def create_customer_return
     # From an order with a shipped shipment
     visit "/admin/orders/#{order.number}/edit"
 
@@ -43,6 +34,19 @@ describe "Return payment state spec" do
     select 'Received', from: 'customer_return[return_items_attributes][0][reception_status_event]', visible: false
     select Spree::StockLocation.first.name, from: 'customer_return[stock_location_id]', visible: false
     click_on 'Create'
+  end
+
+  # Regression test for https://github.com/spree/spree/issues/6229
+  it "refunds and has outstanding_balance of zero", js: true do
+    expect(order).to have_attributes(
+      total: 110,
+      refund_total: 0,
+      payment_total: 110,
+      outstanding_balance: 0,
+      payment_state: 'paid'
+    )
+
+    create_customer_return
 
     # Create reimbursement
     click_on 'Create reimbursement'
@@ -61,5 +65,16 @@ describe "Return payment state spec" do
       outstanding_balance: 0,
       payment_state: 'paid'
     )
+  end
+
+  it 'disables the "Create Reimbursement" button at submit', :js do
+    create_customer_return
+
+    page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
+
+    # Create reimbursement
+    click_on 'Create reimbursement'
+
+    expect(page).to have_button("Create reimbursement", disabled: true)
   end
 end

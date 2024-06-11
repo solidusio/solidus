@@ -42,7 +42,7 @@ class Spree::Carton < Spree::Base
   end
 
   def display_shipped_at
-    shipped_at.to_s(:rfc822)
+    shipped_at.to_fs(:rfc822)
   end
 
   def manifest

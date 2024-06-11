@@ -274,7 +274,7 @@ RSpec.describe Spree::Order, type: :model do
           end
           specify do
             transition = lambda { order.next! }
-            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.items_cannot_be_shipped')}/)
+            expect { transition.call }.to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.items_cannot_be_shipped')}/)
           end
         end
       end
@@ -284,13 +284,7 @@ RSpec.describe Spree::Order, type: :model do
 
       before do
         order.state = 'delivery'
-        allow(order).to receive(:apply_shipping_promotions)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
-      end
-
-      it "attempts to apply free shipping promotions" do
-        expect(order).to receive(:apply_shipping_promotions)
-        order.next!
       end
 
       context "with payment required" do
@@ -470,7 +464,7 @@ RSpec.describe Spree::Order, type: :model do
           si.update(backorderable: false)
         end
 
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
         order.save!
       end
 
@@ -494,7 +488,7 @@ RSpec.describe Spree::Order, type: :model do
         allow(order).to receive(:ensure_available_shipping_rates) { true }
         order.line_items << FactoryBot.create(:line_item)
 
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
         order.save!
       end
 
@@ -519,6 +513,18 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
+    context "no payment present" do
+      let(:order) { create :order_ready_to_complete }
+      before do
+        order.payments.destroy_all
+      end
+
+      it "does not allow the order to complete" do
+        expect { order.complete! }.to raise_exception(StateMachines::InvalidTransition)
+        expect(order.errors[:base]).to include("No payment found")
+      end
+    end
+
     context "exchange order completion" do
       before do
         order.email = 'solidus@example.org'
@@ -533,7 +539,7 @@ RSpec.describe Spree::Order, type: :model do
           order.line_items << FactoryBot.create(:line_item)
           order.store = FactoryBot.create(:store)
 
-          Spree::OrderUpdater.new(order).update
+          Spree::OrderUpdater.new(order).recalculate
 
           order.save!
         end
@@ -558,7 +564,7 @@ RSpec.describe Spree::Order, type: :model do
         allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryBot.create(:line_item)
         order.create_proposed_shipments
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
 
         order.save!
       end
@@ -591,7 +597,7 @@ RSpec.describe Spree::Order, type: :model do
         allow(order).to receive_messages(validate_line_item_availability: true)
         order.line_items << FactoryBot.create(:line_item)
         order.create_proposed_shipments
-        Spree::OrderUpdater.new(order).update
+        Spree::OrderUpdater.new(order).recalculate
       end
 
       it "transitions to the payment state" do
@@ -608,6 +614,20 @@ RSpec.describe Spree::Order, type: :model do
         order.recalculate
         expect(order.complete).to eq(true)
       end
+    end
+  end
+
+  context "resuming a canceled order" do
+    let(:order) { create(:completed_order_with_totals) }
+
+    before do
+      order.cancel!
+    end
+
+    it "also resumes the shipments" do
+      expect(order.shipments.map(&:state)).to eq %w(canceled)
+      order.resume!
+      expect(order.shipments.map(&:state)).to eq %w(pending)
     end
   end
 

@@ -16,7 +16,7 @@ module Spree
     # This method should never do anything to the Order that results in a save call on the
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
-    def update
+    def recalculate
       order.transaction do
         update_item_count
         update_shipment_amounts
@@ -26,10 +26,12 @@ module Spree
           update_shipments
           update_shipment_state
         end
-        Spree::Event.fire 'order_recalculated', order: order
+        Spree::Bus.publish :order_recalculated, order: order
         persist_totals
       end
     end
+    alias_method :update, :recalculate
+    deprecate update: :recalculate, deprecator: Spree.deprecator
 
     # Updates the +shipment_state+ attribute according to the following logic:
     #
@@ -110,10 +112,8 @@ module Spree
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
       # It also fits the criteria for sales tax as outlined here:
       # http://www.boe.ca.gov/formspubs/pub113/
-      update_item_promotions
-      update_order_promotions
+      update_promotions
       update_taxes
-      update_cancellations
       update_item_totals
     end
 
@@ -157,12 +157,11 @@ module Spree
       recalculate_adjustments
 
       all_items = line_items + shipments
+      order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)
 
       order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.select(&:eligible?).sum(&:amount)
-      order.included_tax_total = all_items.sum(&:included_tax_total)
-      order.additional_tax_total = all_items.sum(&:additional_tax_total)
-
-      order.promo_total = all_items.sum(&:promo_total) + adjustments.select(&:eligible?).select(&:promotion?).sum(&:amount)
+      order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
+      order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
       update_order_total
     end
@@ -195,25 +194,8 @@ module Spree
       end
     end
 
-    def update_item_promotions
-      [*line_items, *shipments].each do |item|
-        promotion_adjustments = item.adjustments.select(&:promotion?)
-
-        promotion_adjustments.each(&:recalculate)
-        Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
-
-        item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
-      end
-    end
-
-    # Update and select the best promotion adjustment for the order.
-    # We don't update the order.promo_total yet. Order totals are updated later
-    # in #update_adjustment_total since they include the totals from the order's
-    # line items and/or shipments.
-    def update_order_promotions
-      promotion_adjustments = order.adjustments.select(&:promotion?)
-      promotion_adjustments.each(&:recalculate)
-      Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+    def update_promotions
+      Spree::Config.promotions.order_adjuster_class.new(order).call
     end
 
     def update_taxes
@@ -234,10 +216,8 @@ module Spree
     end
 
     def update_cancellations
-      line_items.each do |line_item|
-        line_item.adjustments.select(&:cancellation?).each(&:recalculate)
-      end
     end
+    deprecate :update_cancellations, deprecator: Spree.deprecator
 
     def update_item_totals
       [*line_items, *shipments].each do |item|

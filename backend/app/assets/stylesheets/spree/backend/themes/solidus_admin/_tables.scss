@@ -1,0 +1,58 @@
+@import "./colors";
+
+table.index {
+  // Borders
+  border-collapse: separate;
+  border-spacing: 0;
+
+  > thead > tr > th:first-child {
+    border-top-left-radius: 4px;
+  }
+
+  > thead > tr > th:last-child {
+    border-top-right-radius: 4px;
+  }
+
+  > tbody > tr:last-child > td:first-child {
+    border-bottom-left-radius: 4px;
+  }
+
+  > tbody > tr:last-child > td:last-child {
+    border-bottom-right-radius: 4px;
+  }
+
+  > thead > tr > th {
+    border-top: 1px solid $solidus-admin-gray-100;
+    border-bottom: none
+  }
+
+  > thead > tr > th,
+  > tbody > tr > td {
+    &:first-child {
+      border-left: 1px solid $solidus-admin-gray-100;
+    }
+
+    &:last-child {
+      border-right: 1px solid $solidus-admin-gray-100;
+    }
+  }
+
+  > tbody > tr:last-child > td {
+    border-bottom: 1px solid $solidus-admin-gray-100;
+  }
+
+  // Colors
+  > th {
+    background-color: $solidus-admin-gray-15;
+      color: $solidus-admin-gray-600;
+  }
+
+  > td {
+    background-color: $solidus-admin-white;
+      color: $solidus-admin-black;
+  }
+}
+
+table#listing_products > tbody > tr > td > img {
+  width: 24px;
+}

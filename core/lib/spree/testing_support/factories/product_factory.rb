@@ -1,16 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/sequences'
-  require 'spree/testing_support/factories/shipping_category_factory'
-  require 'spree/testing_support/factories/stock_location_factory'
-  require 'spree/testing_support/factories/tax_category_factory'
-  require 'spree/testing_support/factories/product_option_type_factory'
-end
-
 FactoryBot.define do
   factory :base_product, class: 'Spree::Product' do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
@@ -20,7 +9,10 @@ FactoryBot.define do
     sku { generate(:sku) }
     available_on { 1.year.ago }
     deleted_at { nil }
-    shipping_category { |r| Spree::ShippingCategory.first || r.association(:shipping_category) }
+    shipping_category do |r|
+      Spree::ShippingCategory.first ||
+        r.association(:shipping_category, strategy: :create)
+    end
 
     # ensure stock item will be created for this products master
     before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }

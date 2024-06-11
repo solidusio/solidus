@@ -23,6 +23,28 @@ RSpec.describe Spree::Order::NumberGenerator do
         expect(subject.length).to eq option_length
       end
     end
+
+    context "when the first generated number already exists" do
+      before do
+        allow(Spree::Order).to receive(:exists?).and_return(true, false)
+      end
+
+      it "regenerates a new number" do
+        expect(subject).to be_a(String)
+        expect(subject.length).to eq(default_length)
+      end
+
+      context "when over half the possible order numbers already exist" do
+        before do
+          allow(Spree::Order).to receive(:count).and_return(10 ** Spree::Order::ORDER_NUMBER_LENGTH / 2 + 1)
+        end
+
+        it "regenerates a new number with an increased length" do
+          expect(subject).to be_a(String)
+          expect(subject.length).to eq(default_length + 1)
+        end
+      end
+    end
   end
 
   context "when letters option is true" do

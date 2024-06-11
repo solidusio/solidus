@@ -1,0 +1,74 @@
+<details
+  data-controller="<%= stimulus_id %>"
+  class="relative w-full"
+  aria-label="<%= t('.account') %>"
+  data-action="keydown.escape-><%= stimulus_id %>#close"
+  <%= :open if params[:account_menu_open] %>
+>
+  <summary
+    class="
+      flex gap-1.5
+      p-3 mt-2 rounded
+      font-semibold text-sm text-gray-500
+      hover:bg-gray-25 [[open]_>_&]:bg-gray-25
+      cursor-pointer
+    ">
+    <%= icon_tag("user-smile-fill", class: "inline-block align-text-bottom shrink-0 w-6 h-6 rounded-[4.81rem] font-normal text-sm fill-yellow bg-black") %>
+    <span class="overflow-hidden whitespace-nowrap text-ellipsis leading-6">
+      <%= @user_label %>
+    </span>
+  </summary>
+
+  <ul
+    class="
+      p-2 mb-1 absolute bottom-full left-0 w-full
+      font-normal text-sm text-black bg-white
+      border border-gray-100 rounded-lg
+      shadow-base
+    ">
+
+    <% if (available_locales = Spree.i18n_available_locales).any? %>
+      <li class="h-8 flex items-center hover:bg-gray-25 rounded">
+        <%= autosubmit_select_tag(
+          "switch_to_locale",
+          options_for_select(locale_options_for_select(available_locales), selected: I18n.locale),
+          icon: 'global-line',
+        ) %>
+      </li>
+    <% end %>
+
+    <li class="h-8 items-center hover:bg-gray-25 rounded dark:hidden flex">
+      <%= autosubmit_select_tag(
+        "switch_to_theme",
+        options_for_select(theme_options_for_select, session[:admin_light_theme]),
+        icon: 'sun-line',
+      ) do %>
+        <%= hidden_field_tag(:system_theme, :light) %>
+      <% end %>
+    </li>
+
+    <li class="h-8 items-center hover:bg-gray-25 rounded hidden dark:flex">
+      <%= autosubmit_select_tag(
+        "switch_to_theme",
+        options_for_select(theme_options_for_select, session[:admin_dark_theme]),
+        icon: 'moon-line',
+      ) do %>
+        <%= hidden_field_tag(:system_theme, :dark) %>
+      <% end %>
+    </li>
+
+    <li class="h-8 flex items-center hover:bg-gray-25 rounded">
+      <%= link_to @account_path, class: 'flex gap-2 items-center px-2' do %>
+        <%= icon_tag("user-3-line", class: "w-5 h-5 fill-current shrink") %>
+        <span><%= t('.account') %></span>
+      <% end %>
+    </li>
+
+    <li class="h-8 flex items-center hover:bg-gray-25 rounded">
+      <%= button_to @logout_path, method: @logout_method, class: 'flex gap-2 items-center px-2' do %>
+        <%= icon_tag("logout-box-line", class: "w-5 h-5 fill-current shrink") %>
+        <span><%= t('.logout') %></span>
+      <% end %>
+    </li>
+  </ul>
+</details>

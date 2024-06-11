@@ -3,62 +3,31 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Order, type: :model do
-  context "#finalize!" do
+  context "#complete!" do
     let(:order) { create(:order_ready_to_complete) }
 
-    before do
-      order.update_column :state, 'complete'
-    end
-
     it "should set completed_at" do
-      expect(order).to receive(:touch).with(:completed_at)
-      order.finalize!
+      expect { order.complete! }.to change { order.completed_at }
     end
 
     it "should sell inventory units" do
-      order.shipments.each do |shipment|
-        expect(shipment).to receive(:update_state)
-        expect(shipment).to receive(:finalize!)
-      end
-      order.finalize!
+      inventory_unit = order.shipments.first.inventory_units.first
+
+      order.payments.map(&:complete!)
+
+      expect { order.complete! }.to change { inventory_unit.reload.pending }.from(true).to(false)
     end
 
     it "should change the shipment state to ready if order is paid" do
-      allow(order).to receive_messages(paid?: true, complete?: true)
-      order.finalize!
-      order.reload # reload so we're sure the changes are persisted
-      expect(order.shipment_state).to eq('ready')
-    end
+      order.payments.map(&:complete!)
 
-    it "should send an order confirmation email" do
-      mail_message = double "Mail::Message"
-      expect(Spree::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
-      expect(mail_message).to receive :deliver_later
-      order.finalize!
-    end
-
-    it "sets confirmation delivered when finalizing" do
-      expect(order.confirmation_delivered?).to be false
-      order.finalize!
-      expect(order.confirmation_delivered?).to be true
-    end
-
-    it "should not send duplicate confirmation emails" do
-      order.update(confirmation_delivered: true)
-      expect(Spree::OrderMailer).not_to receive(:confirm_email)
-      order.finalize!
+      expect { order.complete! }.to change { order.shipments.first.state }.from('pending').to('ready')
     end
 
     it "should freeze all adjustments" do
-      # Stub this method as it's called due to a callback
-      # and it's irrelevant to this test
-      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
-      adjustments = [double]
-      expect(order).to receive(:all_adjustments).and_return(adjustments)
-      adjustments.each do |adj|
-        expect(adj).to receive(:finalize!)
-      end
-      order.finalize!
+      adjustment = create(:adjustment, order: order)
+
+      expect { order.complete! }.to change { adjustment.reload.finalized }.from(false).to(true)
     end
 
     context "order is considered risky" do
@@ -72,7 +41,8 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         it "should leave order in complete state" do
-          order.finalize!
+          order.complete!
+
           expect(order.state).to eq 'complete'
         end
       end
@@ -84,8 +54,37 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       it "should set completed_at" do
-        order.finalize!
+        order.complete!
+
         expect(order.completed_at).to be_present
+      end
+    end
+
+    context 'with event notifications' do
+      it 'sends an email' do
+        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
+
+        order.complete!
+      end
+
+      it 'marks the order as confirmation_delivered' do
+        expect do
+          order.complete!
+        end.to change(order, :confirmation_delivered).to true
+      end
+
+      it 'sends the email' do
+        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
+
+        order.complete!
+      end
+
+      it "doesn't send duplicate confirmation emails" do
+        order.update(confirmation_delivered: true)
+
+        expect(Spree::OrderMailer).not_to receive(:confirm_email)
+
+        order.complete!
       end
     end
   end

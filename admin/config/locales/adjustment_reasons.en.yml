@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    adjustment_reasons:
+      title: "Adjustment Reasons"
+      destroy:
+        success: "Adjustment Reasons were successfully removed."

@@ -5,6 +5,8 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
+      Spree.deprecator.warn "Spree::NamedType is deprecated. Please set scopes and validations locally instead.", caller
+
       scope :active, -> { where(active: true) }
       default_scope -> { order(arel_table[:name].lower) }
 

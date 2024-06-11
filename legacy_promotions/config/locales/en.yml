@@ -1,0 +1,101 @@
+en:
+  spree:
+    admin:
+      promotion_status:
+        active: Active
+        expired: Expired
+        inactive: Inactive
+        not_started: Not started
+      promotions:
+        actions:
+          calculator_label: Calculated by
+        activations_edit:
+          auto: All orders will attempt to use this promotion
+          multiple_codes_html: This promotion uses %{count} promotion codes
+          single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
+        activations_new:
+          auto: Apply to all orders
+          multiple_codes: Multiple promotion codes
+          single_code: Single promotion code
+        form:
+          activation: Activation
+          expires_at_placeholder: Never
+          general: General
+          starts_at_placeholder: Immediately
+      tab:
+        promotion_categories: Promotion Categories
+        promotions: Promotions
+    back_to_promotion_categories_list: Back To Promotions Categories List
+    back_to_promotions_list: Back To Promotions List
+    base_amount: Base Amount
+    choose_promotion_action: Choose Action
+    choose_promotion_rule: Choose Rule
+    create_promotion_code: Create promotion code
+    current_promotion_usage: 'Current Usage: %{count}'
+    discount_rules: Discount Rules
+    download_promotion_codes_list: Download codes list
+    editing_promotion: Editing Promotion
+    editing_promotion_category: Editing Promotion Category
+    group_size: Group size
+    hints:
+      spree/calculator:
+        promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
+      spree/promotion:
+        expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
+        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its rules / actions will be applied automatically to all orders.
+        starts_at: This determines when the promotion can be applied to orders. <br> If no value is specified, the promotion will be immediately available.
+    invalid_promotion_action: Invalid promotion action.
+    invalid_promotion_rule: Invalid promotion rule.
+    manage_promotion_categories: Manage Promotion Categories
+    match_choices:
+      all: All
+      none: None
+    new_promotion: New Promotion
+    new_promotion_category: New Promotion Category
+    new_promotion_code_batch: New Promotion Code Batch
+    no_actions_added: No actions added
+    no_rules_added: No rules added
+    no_promotions_found: No promotions found
+    product_rule:
+      choose_products: Choose products
+      label: Order must contain %{select} of these products
+      match_all: all
+      match_any: at least one
+      match_none: none
+      product_source:
+        group: From product group
+        manual: Manually choose
+    promotion: Promotion
+    promotion_action: Promotion Action
+    promotion_actions: Actions
+    promotion_form:
+      match_policies:
+        all: Match all of these rules
+        any: Match any of these rules
+    promotion_rule: Promotion Rule
+    promotion_successfully_created: Promotion has been successfully created!
+    promotion_uses: Promotion uses
+    promotionable: Promotable
+    promotions: Promotions
+    rules: Rules
+    store_rule:
+      choose_stores: Choose Stores
+    taxon_rule:
+      choose_taxons: Choose taxons
+      label: Order must contain %{select} of these taxons
+      match_all: all
+      match_any: at least one
+      match_none: none
+    tiers: Tiers
+    promotion_code_batches:
+      errored: 'Errored: %{error}'
+      finished: All %{number_of_codes} codes have been created.
+      processing: 'Processing: %{number_of_codes_processed} / %{number_of_codes}'
+    user_role_rule:
+      choose_roles: Choose Roles
+      label: User must contain %{select} of these roles
+      match_all: all
+      match_any: at least one
+    user_rule:
+      choose_users: Choose Users
+    view_promotion_codes_list: View codes list

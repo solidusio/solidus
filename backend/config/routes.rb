@@ -6,23 +6,13 @@ Spree::Core::Engine.routes.draw do
     get '/search/products', to: "search#products", as: :search_products
 
     put '/locale/set', to: 'locale#set', defaults: { format: :json }, as: :set_locale
+    put '/theme/set', to: 'theme#set', defaults: { format: :json }, as: :set_theme
 
     resources :dashboards, only: [] do
       collection do
         get :home
       end
     end
-
-    resources :promotions do
-      resources :promotion_rules
-      resources :promotion_actions
-      resources :promotion_codes, only: [:index, :new, :create]
-      resources :promotion_code_batches, only: [:index, :new, :create] do
-        get '/download', to: "promotion_code_batches#download", defaults: { format: "csv" }
-      end
-    end
-
-    resources :promotion_categories, except: [:show]
 
     resources :zones
 
@@ -70,15 +60,15 @@ Spree::Core::Engine.routes.draw do
 
     delete '/product_properties/:id', to: "product_properties#destroy", as: :product_property
 
-    resources :orders, except: [:show] do
+    resources :orders do
       member do
         get :cart
         put :advance
         get :confirm
         put :complete
         post :resend
-        get "/adjustments/unfinalize", to: "orders#unfinalize_adjustments"
-        get "/adjustments/finalize", to: "orders#finalize_adjustments"
+        put "/adjustments/unfinalize", to: "orders#unfinalize_adjustments"
+        put "/adjustments/finalize", to: "orders#finalize_adjustments"
         put :approve
         put :cancel
         put :resume
@@ -91,7 +81,7 @@ Spree::Core::Engine.routes.draw do
         end
       end
 
-      resources :adjustments
+      resources :adjustments, except: [:show]
       resources :return_authorizations do
         member do
           put :fire

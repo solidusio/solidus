@@ -19,7 +19,10 @@
 <% end %>
 
 <% if @variants.any? %>
-  <%= render partial: 'stock_management', locals: { variants: @variants } %>
+  <%= render partial: 'stock_management', locals: {
+    variants: @variants,
+    stock_locations: @stock_locations,
+  } %>
 <% else %>
   <div class="fullwidth no-objects-found">
     <%= t('spree.no_variants_found_try_again') %>

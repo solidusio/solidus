@@ -1,0 +1,15 @@
+<%= link_to(
+  "https://solidus.io/feedback?category=solidus-admin",
+  class: 'whitespace-nowrap flex flex-col items-center gap-2 text-gray-500 text-small hover:text-black',
+  target: '_blank',
+) do %>
+
+  <span>
+    <%= render component("ui/badge").new(name: "beta", size: :s, color: :blue) %>
+    <span class="underline"><%= t(".give_feedback") %></span>
+  </span>
+
+  <span class="font-normal text-sm text-center">
+    <%= t(".feedback_description_html") %>
+  </span>
+<% end %>

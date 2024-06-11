@@ -39,6 +39,21 @@ RSpec.describe Spree::Refund, type: :model do
     it "does not attempt to process a transaction" do
       expect(subject.transaction_id).to be_nil
     end
+
+    context "with a european price format" do
+      let(:amount) { "100,00" }
+      let(:payment_amount) { 200.0 }
+
+      before do
+        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+          ","
+        end
+      end
+
+      it "creates a refund record" do
+        expect { subject }.to change { Spree::Refund.count }.by(1)
+      end
+    end
   end
 
   describe "#perform!" do
@@ -48,7 +63,7 @@ RSpec.describe Spree::Refund, type: :model do
       expect { subject }.to change { refund.perform_response }.from(nil)
 
       expect(refund.perform_response).to be_a(ActiveMerchant::Billing::Response)
-      expect(refund.perform_response.message).to eq(Spree::PaymentMethod::BogusCreditCard::SUCCESS_MESSAGE)
+      expect(refund.perform_response.message).to include(Spree::PaymentMethod::BogusCreditCard::SUCCESS_MESSAGE)
     end
 
     it "sets a transaction_id" do
@@ -100,7 +115,7 @@ RSpec.describe Spree::Refund, type: :model do
         end
 
         it 'should update the payment total' do
-          expect(payment.order.updater).to receive(:update)
+          expect(payment.order).to receive(:recalculate)
           subject
         end
       end

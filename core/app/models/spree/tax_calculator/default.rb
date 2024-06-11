@@ -25,6 +25,7 @@ module Spree
       def calculate
         Spree::Tax::OrderTax.new(
           order_id: order.id,
+          order_taxes: order_rates,
           line_item_taxes: line_item_rates,
           shipment_taxes: shipment_rates
         )
@@ -33,6 +34,23 @@ module Spree
       private
 
       attr_reader :order
+
+      # Calculate the order-level taxes.
+      #
+      # @private
+      # @return [Array<Spree::Tax::ItemTax>] calculated taxes for the order
+      def order_rates
+        rates_for_order.map do |rate|
+          amount = rate.compute_amount(order)
+
+          Spree::Tax::ItemTax.new(
+            label: rate.adjustment_label(amount),
+            tax_rate: rate,
+            amount: amount,
+            included_in_price: rate.included_in_price
+          )
+        end
+      end
 
       # Calculate the taxes for line items.
       #
@@ -74,6 +92,19 @@ module Spree
             amount: amount,
             included_in_price: rate.included_in_price
           )
+        end
+      end
+
+      # @private
+      # @return [Array<Spree::TaxRate>] rates that apply to an order
+      def rates_for_order
+        tax_category_ids = Set[
+          *@order.line_items.map(&:tax_category_id),
+          *@order.shipments.map(&:tax_category_id)
+        ]
+        rates = Spree::TaxRate.active.order_level.for_address(@order.tax_address)
+        rates.select do |rate|
+          tax_category_ids.intersect?(rate.tax_category_ids.to_set)
         end
       end
     end

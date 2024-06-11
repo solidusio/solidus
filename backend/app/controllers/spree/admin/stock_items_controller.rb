@@ -18,7 +18,7 @@ module Spree
         variant = Spree::Variant.accessible_by(current_ability, :show).find(params[:variant_id])
         stock_location = Spree::StockLocation.accessible_by(current_ability, :show).find(params[:stock_location_id])
         stock_location.stock_movements.build(stock_movement_params).tap do |stock_movement|
-          stock_movement.originator = try_spree_current_user
+          stock_movement.originator = spree_current_user
           stock_movement.stock_item = stock_location.set_up_stock_item(variant)
         end
       end
@@ -40,19 +40,33 @@ module Spree
       end
 
       def load_stock_management_data
-        @stock_locations = Spree::StockLocation.accessible_by(current_ability)
-        @stock_item_stock_locations = params[:stock_location_id].present? ? @stock_locations.where(id: params[:stock_location_id]) : @stock_locations
+        @stock_locations = Spree::StockLocation.accessible_by(current_ability, :read)
+        @stock_item_stock_locations = Spree::DeprecatedInstanceVariableProxy.new(
+          view_context,
+          :@stock_locations,
+          :stock_item_stock_locations,
+          Spree.deprecator,
+          "Please, do not use @stock_item_stock_locations anymore in the views, use @stock_locations",
+        )
         @variant_display_attributes = self.class.variant_display_attributes
-        @variants = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: variant_scope).results
-        @variants = @variants.includes(:images, stock_items: :stock_location, product: :variant_images)
-        @variants = @variants.includes(option_values: :option_type)
-        @variants = @variants.order(id: :desc).page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
+        @variants = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: variant_scope).results.
+            order(id: :desc).page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
       end
 
       def variant_scope
-        scope = Spree::Variant.accessible_by(current_ability)
-        scope = scope.where(product: @product) if @product
-        scope = scope.order(:sku)
+        scope = Spree::Variant
+          .accessible_by(current_ability)
+          .distinct
+          .includes(
+            :images,
+            stock_items: :stock_location,
+            product: :variant_images,
+            option_values: :option_type
+          )
+
+        scope = scope.where(product: @product, is_master: !@product.has_variants?) if @product
+        scope = scope.by_stock_location(params[:stock_location_id]) if params[:stock_location_id].present?
+
         scope
       end
 

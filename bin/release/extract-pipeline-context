@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '_helpers'
+
+USAGE = "Usage: #{$PROGRAM_NAME} <last_minor> <base_branch> # last_minor: true|false, base_branch: main|vX.Y"
+
+last_minor = (ARGV.shift or abort(USAGE)) == 'true'
+base_branch = ARGV.shift or abort(USAGE)
+
+latest_version = SolidusVersion.latest(branch: base_branch)
+
+# The previous tag for the changelog entry
+if base_branch == 'main'
+  candidate_version = latest_version.bump(:minor)
+  next_candidate_version = last_minor ? candidate_version.bump(:major) : candidate_version.bump(:minor)
+  diff_source_version = latest_version.update(patch: 0)
+else
+  abort "can't use last_minor with maintenance branches" if last_minor
+
+  candidate_version = latest_version.bump(:patch)
+  next_candidate_version = candidate_version.bump(:patch)
+  diff_source_version = latest_version
+end
+
+context_hash = {
+  current_tag: latest_version.tag,
+  current_diff_source_tag: diff_source_version.tag,
+  candidate_tag: candidate_version.tag,
+  candidate_version: candidate_version,
+  candidate_minor_version: candidate_version.segments[0..1].join('.'),
+  candidate_patch_branch: candidate_version.branch,
+  candidate_next_patch_dev_version: candidate_version.bump(:patch).dev,
+  next_candidate_tag: next_candidate_version.tag,
+  next_candidate_dev_version: next_candidate_version.dev,
+}
+
+warn "~~> Generating context..."
+context_hash.each { |k, v| warn "#{k}=#{v}" }
+
+context_hash.each { |k, v| puts "#{k}=#{v}" }

@@ -2,7 +2,7 @@
 
 module Spree
   class OptionValue < Spree::Base
-    belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values, optional: true
+    belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values
     acts_as_list scope: :option_type
 
     has_many :option_values_variants, dependent: :destroy
@@ -14,9 +14,10 @@ module Spree
     after_save :touch, if: :saved_changes?
     after_touch :touch_all_variants
 
-    delegate :name, :presentation, to: :option_type, prefix: :option_type, allow_nil: true
+    delegate :name, :presentation, to: :option_type, prefix: :option_type
 
-    self.whitelisted_ransackable_attributes = %w[name presentation]
+    self.allowed_ransackable_attributes = %w[name presentation]
+    self.allowed_ransackable_associations = %w[variants]
 
     # Updates the updated_at column on all the variants associated with this
     # option value.

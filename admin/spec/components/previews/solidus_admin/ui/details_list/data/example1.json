@@ -1,0 +1,6 @@
+[
+  { "label": "Subtotal", "value": "€120.00", "class": "font-semibold" },
+  { "label": "Discount", "value": "€20.00", "class": "text-red-500" },
+  { "label": "Shipping", "value": "€5.00" },
+  { "label": "Total", "value": "€105.00", "class": "font-bold" }
+]

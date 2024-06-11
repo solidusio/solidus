@@ -2,6 +2,11 @@
 
 if ENV["COVERAGE"]
   require 'simplecov'
+  if ENV["COVERAGE_DIR"]
+    SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
+  end
+  SimpleCov.command_name('solidus:api')
+  SimpleCov.merge_timeout(3600)
   SimpleCov.start('rails')
 end
 
@@ -20,7 +25,6 @@ require 'rspec/rails'
 require 'rspec-activemodel-mocks'
 
 require 'database_cleaner'
-require 'with_model'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -58,8 +62,6 @@ RSpec.configure do |config|
   config.extend Spree::Api::TestingSupport::Setup, type: :controller
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::JobHelpers
-
-  config.extend WithModel
 
   config.before(:each) do
     Rails.cache.clear

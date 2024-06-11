@@ -10,6 +10,13 @@ module Spree
     #
     # A class including Preferable must implement #preferences which should return
     # an object responding to .fetch(key), []=(key, val), and .delete(key).
+    # If #preferences is initialized with `default_preferences` and one of the
+    # preferences is another preference, it will cause a stack level too deep error.
+    # To avoid it do not memoize #preferences.
+    #
+    # It may also define a `#context_for_default` method. It should return an
+    # array with the arguments to be provided to a proc used as the `default:`
+    # keyword for a preference.
     #
     # The generated writer method performs typecasting before assignment into the
     # preferences object.
@@ -107,6 +114,8 @@ module Spree
       end
 
       # @return [Hash{Symbol => Object}] Default for all preferences defined on this class
+      # This may raise an infinite loop error if any of the defaults are
+      # dependent on other preferences defaults.
       def default_preferences
         Hash[
           defined_preferences.map do |preference|
@@ -175,6 +184,10 @@ module Spree
         else
           value
         end
+      end
+
+      def context_for_default
+        [].freeze
       end
     end
   end

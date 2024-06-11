@@ -1,0 +1,50 @@
+<details
+  <%= tag.attributes @attributes %>
+>
+  <summary
+    class="
+      text-black
+      hover:fill-gray-500
+      [[open]_&]:fill-gray-500
+      cursor-pointer
+      flex
+      items-center
+    "
+    title="<%= @text || t(".more") %>"
+    data-action="keydown.esc-><%= stimulus_id %>#close"
+  >
+    <% if @text %>
+      <%= @text %>
+      <%= icon_tag "arrow-down-s-fill", class: SIZES.fetch(@size) %>
+    <% else %>
+      <%= icon_tag "more-line", class: SIZES.fetch(@size) %>
+    <% end %>
+  </summary>
+
+  <div
+    class="
+      absolute
+      border
+      border-gray-100
+      mt-0.5
+      flex
+      flex-col
+      min-w-[10rem]
+      p-2
+      rounded-sm
+      shadow-lg
+      bg-white
+      z-10
+
+      <%= DIRECTIONS.fetch(@direction) %>
+
+      [&>*]:p-2
+      [&>*]:rounded-sm
+      [&>*:hover]:bg-gray-50
+      [&>*]:text-black
+      [&>*]:min-w-fit
+    "
+  >
+    <%= content %>
+  </div>
+</details>

@@ -2,6 +2,20 @@
 
 module Spree
   module PermissionSets
+    # Read-only permissions for products.
+    #
+    # This permission set allows users to view all related information about
+    # products, also from the admin panel, including:
+    #
+    # - Products
+    # - Images
+    # - Variants
+    # - Option values
+    # - Product properties
+    # - Option types
+    # - Properties
+    # - Taxonomies
+    # - Taxons
     class ProductDisplay < PermissionSets::Base
       def activate!
         can [:read, :admin, :edit], Spree::Product

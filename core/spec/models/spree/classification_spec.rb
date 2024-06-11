@@ -8,9 +8,9 @@ module Spree
     it "cannot link the same taxon to the same product more than once" do
       product = create(:product)
       taxon = create(:taxon)
-      add_taxon = lambda { product.taxons << taxon }
-      add_taxon.call
-      expect(add_taxon).to raise_error(ActiveRecord::RecordInvalid)
+      product.taxons << taxon
+
+      expect { product.taxons << taxon }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
     let(:taxon_with_5_products) do

@@ -5,7 +5,20 @@ set -e
 # Target postgresql. Override with: `env DB=sqlite bin/build`
 export DB=${DB:-postgresql}
 
+if [ -n "$COVERAGE" ]; then
+  # Coverage report directory. Override with: `env COVERAGE_DIR=/tmp/coverage`
+  export COVERAGE_DIR=$(realpath ${COVERAGE_DIR:-$(dirname ${BASH_SOURCE[0]})/../coverage})
+
+  # Make sure coverage report directory exists
+  mkdir -p $COVERAGE_DIR
+fi
+
 bin/setup
+
+echo "***************************"
+echo "* Testing Solidus Admin *"
+echo "***************************"
+bin/rspec admin/spec
 
 echo "***********************"
 echo "* Testing Solidus API *"
@@ -23,12 +36,15 @@ echo "* Testing Solidus Core *"
 echo "************************"
 bin/rspec core/spec
 
-echo "****************************"
-echo "* Testing Solidus Frontend *"
-echo "****************************"
-bin/rspec frontend/spec
-
 echo "**************************"
 echo "* Testing Solidus Sample *"
 echo "**************************"
 bin/rspec sample/spec
+
+if [ -n "$COVERAGE" ]; then
+  # Generate coverage report
+  echo "******************************"
+  echo "* Generating Coverage Report *"
+  echo "******************************"
+  bundle exec rake solidus:coverage
+fi

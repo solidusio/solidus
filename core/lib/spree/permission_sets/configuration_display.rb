@@ -2,9 +2,27 @@
 
 module Spree
   module PermissionSets
+    # Read-only permissions for e-commerce settings.
+    #
+    # Roles with this permission will be able to view information, also from the admin
+    # panel, about:
+    #
+    # - Tax categories
+    # - Tax rates
+    # - Zones
+    # - Countries
+    # - States
+    # - Payment methods
+    # - Taxonomies
+    # - Shipping methods
+    # - Shipping categories
+    # - Stock locations
+    # - Stock movements
+    # - Refund reasons
+    # - Reimbursement types
+    # - Return reasons
     class ConfigurationDisplay < PermissionSets::Base
       def activate!
-          can [:edit, :admin], :general_settings
           can [:read, :admin], Spree::TaxCategory
           can [:read, :admin], Spree::TaxRate
           can [:read, :admin], Spree::Zone

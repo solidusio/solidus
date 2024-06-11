@@ -7,7 +7,12 @@
         <span class="text"><%= t('spree.minimize_menu') %></span>
       <% end %>
       <%= render partial: 'spree/admin/shared/locale_selection' %>
-      <%= render partial: 'spree/admin/shared/navigation_footer' %>
+      <%= render partial: 'spree/admin/shared/theme_selection' %>
+      <% if lookup_context.exists?('spree/admin/shared/_navigation_footer') %>
+        <%= render partial: 'spree/admin/shared/navigation_footer' %>
+      <% else %>
+        <%= render partial: 'spree/admin/shared/navigation_footer_fallback' %>
+      <% end %>
     </div>
   </div>
 </div>

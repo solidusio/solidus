@@ -12,13 +12,11 @@ en:
         spree/fulfilment_changer:
           attributes:
             current_shipment:
-              can_not_have_backordered_inventory_units: has backordered inventory
-                units
+              can_not_have_backordered_inventory_units: has backordered inventory units
               has_already_been_shipped: has already been shipped
             desired_shipment:
               can_not_transfer_within_same_shipment: can not be same as current shipment
-              not_enough_stock_at_desired_location: not enough stock in desired stock
-                location
+              not_enough_stock_at_desired_location: not enough stock in desired stock location
   activerecord:
     attributes:
       spree/address:
@@ -94,8 +92,8 @@ en:
         quantity: Quantity
         total: Total price
       spree/log_entry:
-        details: Message
         created_at: Date/Time
+        details: Message
       spree/option_type:
         name: Name
         presentation: Presentation
@@ -106,6 +104,7 @@ en:
         additional_tax_total: Tax
         approved_at: Approved at
         approver_id: Approver
+        bill_address: Billing Address
         canceled_at: Canceled at
         canceler_id: Canceler
         checkout_complete: Checkout Complete
@@ -119,6 +118,7 @@ en:
         item_total: Item Total
         number: Number
         payment_state: Payment State
+        ship_address: Shipping Address
         shipment_state: Shipment State
         shipment_total: Ship Total
         special_instructions: Special Instructions
@@ -145,8 +145,8 @@ en:
         response_code: Transaction ID
         state: State
       spree/payment_capture_event:
-        created_at: Date/Time
         amount: Amount
+        created_at: Date/Time
       spree/payment_method:
         active: Active
         auto_capture: Auto Capture
@@ -181,6 +181,7 @@ en:
         price: Master Price
         promotionable: Promotable
         shipping_category: Shipping Category
+        sku: Master SKU
         slug: Slug
         tax_category: Tax Category
         weight: Weight
@@ -213,12 +214,13 @@ en:
         description: Must be the customer's first order
       spree/promotion/rules/first_repeat_purchase_since:
         description: Available only to user who have not purchased in a while
-        form_text: 'Apply this promotion to users whose last order was more than X
-          days ago: '
+        form_text: 'Apply this promotion to users whose last order was more than X days ago: '
       spree/promotion/rules/item_total:
         description: Order total meets these criteria
       spree/promotion/rules/landing_page:
         description: Customer must have visited the specified page
+      spree/promotion/rules/minimum_quantity:
+        description: Order contains minimum quantity of applicable items
       spree/promotion/rules/nth_order:
         description: Apply a promotion to every nth order a user has completed.
         form_text: 'Apply this promotion on the users Nth order: '
@@ -305,15 +307,15 @@ en:
         name: Name
       spree/shipping_method:
         admin_name: Internal Name
+        available_to_all: Available to all stock locations
         available_to_users: Available to users
         carrier: Carrier
         code: Code
         display_on: Display
         name: Name
         service_level: Service Level
-        tracking_url: Tracking URL
         stock_locations: Stock Locations
-        available_to_all: Available to all stock locations
+        tracking_url: Tracking URL
       spree/shipping_rate:
         amount: Amount
         label: Label
@@ -349,12 +351,12 @@ en:
         variant: Variant
       spree/store:
         available_locales: Locales Available in the Storefront
+        bcc_email: BCC Email
         cart_tax_country_iso: Tax Country for Empty Carts
         code: Slug
         default: Default
         default_currency: Default Currency
         mail_from_address: Mail From Address
-        bcc_email: BCC Email
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         name: Site Name
@@ -365,7 +367,7 @@ en:
         amount_authorized: Amount Authorized
         amount_credited: Amount Credited
         amount_used: Amount Used
-        category_id: Credit Type
+        category_id: Category
         created_at: Issued On
         created_by_id: Created By
         invalidated_at: Invalidated
@@ -418,6 +420,7 @@ en:
         depth: Depth
         height: Height
         price: Price
+        shipping_category: Variant Shipping Category
         sku: SKU
         tax_category: Variant Tax Category
         weight: Weight
@@ -434,17 +437,14 @@ en:
         spree/calculator/tiered_flat_rate:
           attributes:
             base:
-              keys_should_be_positive_number: Tier keys should all be numbers larger
-                than 0
+              keys_should_be_positive_number: Tier keys should all be numbers larger than 0
             preferred_tiers:
               should_be_hash: should be a hash
         spree/calculator/tiered_percent:
           attributes:
             base:
-              keys_should_be_positive_number: Tier keys should all be numbers larger
-                than 0
-              values_should_be_percent: Tier values should all be percentages between
-                0% and 100%
+              keys_should_be_positive_number: Tier keys should all be numbers larger than 0
+              values_should_be_percent: Tier values should all be percentages between 0% and 100%
             preferred_tiers:
               should_be_hash: should be a hash
         spree/classification:
@@ -459,15 +459,14 @@ en:
         spree/inventory_unit:
           attributes:
             base:
-              cannot_destroy_shipment_state: Cannot destroy an inventory unit for
-                a %{state} shipment
+              cannot_destroy_shipment_state: Cannot destroy an inventory unit for a %{state} shipment
             state:
               cannot_destroy: Cannot destroy a %{state} inventory unit
         spree/line_item:
           attributes:
             price:
-              not_a_number: is not valid
               does_not_match_order_currency: Line item price currency must match order currency!
+              not_a_number: is not valid
         spree/price:
           attributes:
             currency:
@@ -487,27 +486,29 @@ en:
         spree/reimbursement:
           attributes:
             base:
-              return_items_order_id_does_not_match: One or more of the return items
-                specified do not belong to the same order as the reimbursement.
+              return_items_order_id_does_not_match: One or more of the return items specified do not belong to the same order as the reimbursement.
         spree/return_item:
           attributes:
             inventory_unit:
-              other_completed_return_item_exists: "%{inventory_unit_id} has already
-                been taken by return item %{return_item_id}"
+              other_completed_return_item_exists: "%{inventory_unit_id} has already been taken by return item %{return_item_id}"
             reimbursement:
-              cannot_be_associated_unless_accepted: cannot be associated to a return
-                item that is not accepted.
+              cannot_be_associated_unless_accepted: cannot be associated to a return item that is not accepted.
         spree/shipment:
           attributes:
             base:
-              cannot_remove_items_shipment_state: Cannot remove items from a %{state}
-                shipment
+              cannot_remove_items_shipment_state: Cannot remove items from a %{state} shipment
             state:
               cannot_destroy: Cannot destroy a %{state} shipment
         spree/store:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
+        spree/taxon:
+          attributes:
+            name:
+              must_be_unique_under_same_parent: must be unique under the same parent Taxon
+            taxonomy_id:
+              can_have_only_one_root: can only have one root Taxon
         spree/user_address:
           attributes:
             user_id:
@@ -538,6 +539,9 @@ en:
       spree/calculator/distributed_amount:
         one: Distributed Amount
         other: Distributed Amount
+      spree/calculator/flat_fee:
+        one: Flat Fee
+        other: Flat Fee
       spree/calculator/flat_percent_item_total:
         one: Flat Percent
         other: Flat Percent
@@ -652,6 +656,7 @@ en:
       spree/promotion/rules/first_repeat_purchase_since: First Repeat Purchase Since
       spree/promotion/rules/item_total: Item Total
       spree/promotion/rules/landing_page: Landing Page
+      spree/promotion/rules/minimum_quantity: Minimum Quantity
       spree/promotion/rules/nth_order: Nth Order
       spree/promotion/rules/one_use_per_user: One Use Per User
       spree/promotion/rules/option_value: Option Value(s)
@@ -762,6 +767,10 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: "%{count} errors prohibited this %{resource} from being saved:"
+  number:
+    percentage:
+      format:
+        precision: 1
   spree:
     abbreviation: Abbreviation
     accept: Accept
@@ -803,8 +812,6 @@ en:
     add_option_value: Add Option Value
     add_product: Add Product
     add_product_properties: Add Product Properties
-    add_variant_properties: Add Variant Properties
-    applies_to_all_variant_properties: Applies to all Variant Properties above
     add_rule_of_type: Add rule of type
     add_state: Add State
     add_stock: Add Stock
@@ -826,6 +833,7 @@ en:
       line_item: "%{promotion} (%{promotion_name})"
       order: "%{promotion} (%{promotion_name})"
       tax_rates:
+        flat_fee: "%{name}"
         sales_tax: "%{name}"
         sales_tax_with_rate: "%{name} %{amount}"
         vat: "%{name} (Included in Price)"
@@ -854,8 +862,7 @@ en:
       payments:
         source_forms:
           storecredit:
-            not_supported: Creating store credit payments via the admin is not currently
-              supported.
+            not_supported: Creating store credit payments via the admin is not currently supported.
       prices:
         any_country: Any Country
         edit:
@@ -864,32 +871,15 @@ en:
           amount_greater_than: Amount greater than
           amount_less_than: Amount less than
           new_price: New Price
+        master_variant_table:
+          master_variant: Master Variant Prices
         new:
           new_price: New Price
-      promotions:
-        actions:
-          calculator_label: Calculated by
-        activations_edit:
-          auto: All orders will attempt to use this promotion
-          multiple_codes_html: This promotion uses %{count} promotion codes
-          single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
-        activations_new:
-          auto: Apply to all orders
-          multiple_codes: Multiple promotion codes
-          single_code: Single promotion code
-        form:
-          activation: Activation
-          expires_at_placeholder: Never
-          general: General
-          starts_at_placeholder: Immediately
-      promotion_status:
-        active: Active
-        expired: Expired
-        inactive: Inactive
-        not_started: Not started
+        table:
+          variant_pricing: Variant Prices
       shipping_methods:
         form:
-          stock_locations_placeholder: 'Choose stock locations'
+          stock_locations_placeholder: Choose stock locations
       stock_locations:
         form:
           address: Address
@@ -915,10 +905,9 @@ en:
           amount_used_cannot_be_greater: cannot be greater than the credited amount
           amount_used_not_zero: is greater than zero. Can not delete store credit
           cannot_be_modified: cannot be modified
-          cannot_change_used_store_credit: Store credit that has been claimed cannot
-            be changed
-          update_reason_required: A reason for the change must be selected
+          cannot_change_used_store_credit: Store credit that has been claimed cannot be changed
           store_credit_reason_required: A reason for the change must be selected
+          update_reason_required: A reason for the change must be selected
         history: Store credit history
         invalidate_store_credit: Invalidating store credit
         invalidated: Invalidated
@@ -953,8 +942,6 @@ en:
         overview: Overview
         payments: Payments
         products: Products
-        promotion_categories: Promotion Categories
-        promotions: Promotions
         properties: Property Types
         rma: RMA
         settings: Settings
@@ -983,10 +970,8 @@ en:
         edit:
           api_access: API Access
           clear_key: Clear key
-          confirm_clear_key: Are you sure you want to clear this user's API key? It
-            will invalidate the existing key.
-          confirm_regenerate_key: Are you sure you want to regenerate this user's
-            API key? It will invalidate the existing key.
+          confirm_clear_key: Are you sure you want to clear this user's API key? It will invalidate the existing key.
+          confirm_regenerate_key: Are you sure you want to regenerate this user's API key? It will invalidate the existing key.
           generate_key: Generate API key
           key: Key
           no_key: No key
@@ -998,12 +983,16 @@ en:
           edit_variant: Edit Variant
         form:
           dimensions: Dimensions
+          options: Options
           pricing: Pricing
-          pricing_hint: These values are populated from the product details page and
-            can be overridden below
+          pricing_hint: These values are populated from the product details page and can be overridden below
+          properties: Properties
+          use_product_shipping_category: Use Product Shipping Category
           use_product_tax_category: Use Product Tax Category
         new:
           new_variant: New Variant
+        table:
+          no_variants_found: No variants found for '%{term}'
         table_filter:
           show_deleted: Show Deleted Variants
     administration: Administration
@@ -1026,6 +1015,7 @@ en:
     analytics_desc_list_4: It's completely free!
     analytics_trackers: Analytics Trackers
     and: and
+    applies_to_all_variant_properties: Applies to all Variant Properties above
     apply_code: Apply Code
     approve: Approve
     approved_at: Approved at
@@ -1053,8 +1043,6 @@ en:
     back_to_payment_methods_list: Back To Payment Methods List
     back_to_payments_list: Back To Payments List
     back_to_products_list: Back To Products List
-    back_to_promotion_categories_list: Back To Promotions Categories List
-    back_to_promotions_list: Back To Promotions List
     back_to_properties_list: Back To Property Types List
     back_to_refund_reason_list: Back To Refund Reason List
     back_to_reimbursement_type_list: Back To Reimbursement Type List
@@ -1080,16 +1068,15 @@ en:
     backordered: Backordered
     backorders_allowed: backorders allowed
     balance_due: Balance Due
-    base_amount: Base Amount
     base_percent: Base Percent
     bill_address: Bill Address
+    bill_address_required: Valid billing address required
     billing: Billing
     billing_address: Billing Address
     both: Both
     calculated_reimbursements: Calculated Reimbursements
     calculator: Calculator
-    calculator_settings_warning: If you are changing the calculator type or preference
-      source, you must save first before you can edit the calculator settings
+    calculator_settings_warning: If you are changing the calculator type or preference source, you must save first before you can edit the calculator settings
     cancel: Cancel
     cancel_inventory: Cancel Items
     canceled: Canceled
@@ -1097,19 +1084,14 @@ en:
     canceler: Canceler
     cancellation: Cancellation
     cannot_create_payment_link: Please define some payment methods first.
-    cannot_create_payment_without_payment_methods_html: You cannot create a payment
-      for an order without any payment methods defined. %{link}
+    cannot_create_payment_without_payment_methods_html: You cannot create a payment for an order without any payment methods defined. %{link}
     cannot_create_returns: Cannot create returns as this order has no shipped units.
     cannot_edit_orders: You may only edit your current shopping cart.
     cannot_perform_operation: Cannot perform requested operation
-    cannot_rebuild_shipments_order_completed: Cannot rebuild shipments for a completed
-      order.
-    cannot_rebuild_shipments_shipments_not_pending: Cannot rebuild shipments for an
-      order with non-pending shipments.
-    cannot_set_shipping_method_without_address: Cannot set shipping method until customer
-      details are provided.
-    cannot_update_email: You do not have access to update this user's email address.
-      <br />Please contact a superuser if you need to perform this action.
+    cannot_rebuild_shipments_order_completed: Cannot rebuild shipments for a completed order.
+    cannot_rebuild_shipments_shipments_not_pending: Cannot rebuild shipments for an order with non-pending shipments.
+    cannot_set_shipping_method_without_address: Cannot set shipping method until customer details are provided.
+    cannot_update_email: You do not have access to update this user's email address. <br>Please contact a superuser if you need to perform this action.
     capture: Capture
     capture_events: Capture events
     card_code: Card Code
@@ -1133,15 +1115,13 @@ en:
     choose_a_taxon_to_sort_products_for: Choose a taxon to sort products for
     choose_currency: Choose Currency
     choose_dashboard_locale: Choose Dashboard Locale
+    choose_dashboard_theme: Choose Dashboard Theme
     choose_location: Choose Location
-    choose_promotion_action: Choose Action
-    choose_promotion_rule: Choose Rule
     choose_reason: Choose Reason
     city: City
     clear_cache: Clear Cache
     clear_cache_ok: Cache was flushed
-    clear_cache_warning: Clearing cache will temporarily reduce the performance of
-      your store.
+    clear_cache_warning: Clearing cache will temporarily reduce the performance of your store.
     clone: Clone
     close: Close
     closed: Closed
@@ -1159,41 +1139,281 @@ en:
     continue_shopping: Continue shopping
     cost_currency: Cost Currency
     cost_price: Cost Price
-    could_not_connect_to_jirafe: Could not connect to Jirafe to sync data. This will
-      be automatically retried later.
+    could_not_connect_to_jirafe: Could not connect to Jirafe to sync data. This will be automatically retried later.
     could_not_create_customer_return: Could not create customer return
-    could_not_create_stock_movement: There was a problem saving this stock movement.
-      Please try again.
+    could_not_create_stock_movement: There was a problem saving this stock movement. Please try again.
     count_on_hand: Count On Hand
     countries: Countries
     country: Country
     country_based: Country Based
     country_name: Name
     country_names:
+      AD: Andorra
+      AE: United Arab Emirates
+      AF: Afghanistan
+      AG: Antigua and Barbuda
+      AI: Anguilla
+      AL: Albania
+      AM: Armenia
+      AO: Angola
+      AQ: Antarctica
+      AR: Argentina
+      AS: American Samoa
+      AT: Austria
+      AU: Australia
+      AW: Aruba
+      AX: Åland Islands
+      AZ: Azerbaijan
+      BA: Bosnia and Herzegovina
+      BB: Barbados
+      BD: Bangladesh
+      BE: Belgium
+      BF: Burkina Faso
+      BG: Bulgaria
+      BH: Bahrain
+      BI: Burundi
+      BJ: Benin
+      BL: Saint Barthélemy
+      BM: Bermuda
+      BN: Brunei Darussalam
+      BO: Bolivia, Plurinational State of
+      BQ: Bonaire, Sint Eustatius and Saba
+      BR: Brazil
+      BS: Bahamas
+      BT: Bhutan
+      BV: Bouvet Island
+      BW: Botswana
+      BY: Belarus
+      BZ: Belize
       CA: Canada
+      CC: Cocos (Keeling) Islands
+      CD: Congo, The Democratic Republic of the
+      CF: Central African Republic
+      CG: Congo
+      CH: Switzerland
+      CI: Côte d'Ivoire
+      CK: Cook Islands
+      CL: Chile
+      CM: Cameroon
+      CN: China
+      CO: Colombia
+      CR: Costa Rica
+      CU: Cuba
+      CV: Cabo Verde
+      CW: Curaçao
+      CX: Christmas Island
+      CY: Cyprus
+      CZ: Czechia
+      DE: Germany
+      DJ: Djibouti
+      DK: Denmark
+      DM: Dominica
+      DO: Dominican Republic
+      DZ: Algeria
+      EC: Ecuador
+      EE: Estonia
+      EG: Egypt
+      EH: Western Sahara
+      ER: Eritrea
+      ES: Spain
+      ET: Ethiopia
+      FI: Finland
+      FJ: Fiji
+      FK: Falkland Islands (Malvinas)
+      FM: Micronesia, Federated States of
+      FO: Faroe Islands
+      FR: France
       FRA: France
+      GA: Gabon
+      GB: United Kingdom
+      GD: Grenada
+      GE: Georgia
+      GF: French Guiana
+      GG: Guernsey
+      GH: Ghana
+      GI: Gibraltar
+      GL: Greenland
+      GM: Gambia
+      GN: Guinea
+      GP: Guadeloupe
+      GQ: Equatorial Guinea
+      GR: Greece
+      GS: South Georgia and the South Sandwich Islands
+      GT: Guatemala
+      GU: Guam
+      GW: Guinea-Bissau
+      GY: Guyana
+      HK: Hong Kong
+      HM: Heard Island and McDonald Islands
+      HN: Honduras
+      HR: Croatia
+      HT: Haiti
+      HU: Hungary
+      ID: Indonesia
+      IE: Ireland
+      IL: Israel
+      IM: Isle of Man
+      IN: India
+      IO: British Indian Ocean Territory
+      IQ: Iraq
+      IR: Iran, Islamic Republic of
+      IS: Iceland
+      IT: Italy
       ITA: Italy
+      JE: Jersey
+      JM: Jamaica
+      JO: Jordan
+      JP: Japan
+      KE: Kenya
+      KG: Kyrgyzstan
+      KH: Cambodia
+      KI: Kiribati
+      KM: Comoros
+      KN: Saint Kitts and Nevis
+      KP: Korea, Democratic People's Republic of
+      KR: Korea, Republic of
+      KW: Kuwait
+      KY: Cayman Islands
+      KZ: Kazakhstan
+      LA: Lao People's Democratic Republic
+      LB: Lebanon
+      LC: Saint Lucia
+      LI: Liechtenstein
+      LK: Sri Lanka
+      LR: Liberia
+      LS: Lesotho
+      LT: Lithuania
+      LU: Luxembourg
+      LV: Latvia
+      LY: Libya
+      MA: Morocco
+      MC: Monaco
+      MD: Moldova, Republic of
+      ME: Montenegro
+      MF: Saint Martin (French part)
+      MG: Madagascar
+      MH: Marshall Islands
+      MK: North Macedonia
+      ML: Mali
+      MM: Myanmar
+      MN: Mongolia
+      MO: Macao
+      MP: Northern Mariana Islands
+      MQ: Martinique
+      MR: Mauritania
+      MS: Montserrat
+      MT: Malta
+      MU: Mauritius
+      MV: Maldives
+      MW: Malawi
+      MX: Mexico
+      MY: Malaysia
+      MZ: Mozambique
+      NA: Namibia
+      NC: New Caledonia
+      NE: Niger
+      NF: Norfolk Island
+      NG: Nigeria
+      NI: Nicaragua
+      NL: Netherlands
+      'NO': Norway
+      NP: Nepal
+      NR: Nauru
+      NU: Niue
+      NZ: New Zealand
+      OM: Oman
+      PA: Panama
+      PE: Peru
+      PF: French Polynesia
+      PG: Papua New Guinea
+      PH: Philippines
+      PK: Pakistan
+      PL: Poland
+      PM: Saint Pierre and Miquelon
+      PN: Pitcairn
+      PR: Puerto Rico
+      PS: Palestine, State of
+      PT: Portugal
+      PW: Palau
+      PY: Paraguay
+      QA: Qatar
+      RE: Réunion
+      RO: Romania
+      RS: Serbia
+      RU: Russia
+      RW: Rwanda
+      SA: Saudi Arabia
+      SB: Solomon Islands
+      SC: Seychelles
+      SD: Sudan
+      SE: Sweden
+      SG: Singapore
+      SH: Saint Helena, Ascension and Tristan da Cunha
+      SI: Slovenia
+      SJ: Svalbard and Jan Mayen
+      SK: Slovakia
+      SL: Sierra Leone
+      SM: San Marino
+      SN: Senegal
+      SO: Somalia
+      SR: Suriname
+      SS: South Sudan
+      ST: Sao Tome and Principe
+      SV: El Salvador
+      SX: Sint Maarten (Dutch part)
+      SY: Syrian Arab Republic
+      SZ: Eswatini
+      TC: Turks and Caicos Islands
+      TD: Chad
+      TF: French Southern Territories
+      TG: Togo
+      TH: Thailand
+      TJ: Tajikistan
+      TK: Tokelau
+      TL: Timor-Leste
+      TM: Turkmenistan
+      TN: Tunisia
+      TO: Tonga
+      TR: Turkey
+      TT: Trinidad and Tobago
+      TV: Tuvalu
+      TW: Taiwan
+      TZ: Tanzania, United Republic of
+      UA: Ukraine
+      UG: Uganda
+      UM: United States Minor Outlying Islands
       US: United States of America
+      UY: Uruguay
+      UZ: Uzbekistan
+      VA: Holy See (Vatican City State)
+      VC: Saint Vincent and the Grenadines
+      VE: Venezuela, Bolivarian Republic of
+      VG: Virgin Islands, British
+      VI: Virgin Islands, U.S.
+      VN: Vietnam
+      VU: Vanuatu
+      WF: Wallis and Futuna
+      WS: Samoa
+      YE: Yemen
+      YT: Mayotte
+      ZA: South Africa
+      ZM: Zambia
+      ZW: Zimbabwe
     coupon: Coupon
     coupon_code: Coupon code
-    coupon_code_already_applied: The coupon code has already been applied to this
-      order
+    coupon_code_already_applied: The coupon code has already been applied to this order
     coupon_code_applied: The coupon code was successfully applied to your order.
-    coupon_code_better_exists: The previously applied coupon code results in a better
-      deal
+    coupon_code_better_exists: The previously applied coupon code results in a better deal
     coupon_code_expired: The coupon code is expired
     coupon_code_max_usage: Coupon code usage limit exceeded
     coupon_code_not_eligible: This coupon code is not eligible for this order
     coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
-    coupon_code_not_present: The coupon code you are trying to remove is not present
-      on this order.
+    coupon_code_not_present: The coupon code you are trying to remove is not present on this order.
     coupon_code_removed: The coupon code was successfully removed from this order.
-    coupon_code_unknown_error: This coupon code could not be applied to the cart at
-      this time.
+    coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
     create: Create
     create_a_new_account: Create a new account
     create_one: Create One.
-    create_promotion_code: Create promotion code
     create_reimbursement: Create reimbursement
     created_at: Created At
     created_by: Created by
@@ -1207,7 +1427,6 @@ en:
     currency: Currency
     currency_settings: Currency Settings
     current: Current
-    current_promotion_usage: 'Current Usage: %{count}'
     customer: Customer
     customer_details: Customer Details
     customer_details_updated: Customer Details Updated
@@ -1220,10 +1439,8 @@ en:
       jirafe:
         app_id: App ID
         app_token: App Token
-        currently_unavailable: Jirafe is currently unavailable. Spree will automatically
-          connect to Jirafe once it is available.
-        explanation: The fields below may already be populated if you chose to register
-          with Jirafe from the admin dashboard.
+        currently_unavailable: Jirafe is currently unavailable. Spree will automatically connect to Jirafe once it is available.
+        explanation: The fields below may already be populated if you chose to register with Jirafe from the admin dashboard.
         header: Jirafe Analytics Settings
         site_id: Site ID
         token: Token
@@ -1233,14 +1450,13 @@ en:
     date_picker:
       first_day: 0
       format: "%Y/%m/%d"
-      js_format: yy/mm/dd
+      js_format: Y/m/d
     date_range: Date Range
     default: Default
     default_refund_amount: Default Refund Amount
     delete: Delete
     deleted_successfully: Deleted successfully
-    deleted_variants_present: Some line items in this order have products that are
-      no longer available.
+    deleted_variants_present: Some line items in this order have products that are no longer available.
     delivery: Delivery
     depth: Depth
     description: Description
@@ -1249,10 +1465,8 @@ en:
     destroy: Destroy
     details: Details
     discount_amount: Discount Amount
-    discount_rules: Discount Rules
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
-    download_promotion_codes_list: Download codes list
     edit: Edit
     edit_refund_reason: Edit Refund Reason
     editing_adjustment_reason: Editing Adjustment Reason
@@ -1260,8 +1474,6 @@ en:
     editing_option_type: Editing Option Type
     editing_payment_method: Editing Payment Method
     editing_product: Editing Product
-    editing_promotion: Editing Promotion
-    editing_promotion_category: Editing Promotion Category
     editing_property: Editing Property Type
     editing_refund: Editing Refund
     editing_refund_reason: Editing Refund Reason
@@ -1280,27 +1492,22 @@ en:
     editing_zone: Editing Zone
     eligibility_errors:
       messages:
-        has_excluded_product: Your cart contains a product that prevents this coupon
-          code from being applied.
-        has_excluded_taxon: Your cart contains a product from an excluded category
-          that prevents this coupon code from being applied.
-        item_total_less_than: This coupon code can't be applied to orders less than
-          %{amount}.
-        item_total_less_than_or_equal: This coupon code can't be applied to orders
-          less than or equal to %{amount}.
+        has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
+        has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
+        item_total_doesnt_match_with_operator: This coupon code can't be applied to orders %{operator} %{amount}.
+        item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
+        item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
         limit_once_per_user: This coupon code can only be used once per user.
-        missing_product: This coupon code can't be applied because you don't have
-          all of the necessary products in your cart.
-        missing_taxon: You need to add a product from all applicable categories before
-          applying this coupon code.
-        no_applicable_products: You need to add an applicable product before applying
-          this coupon code.
-        no_matching_taxons: You need to add a product from an applicable category
-          before applying this coupon code.
-        no_user_or_email_specified: You need to login or provide your email before
-          applying this coupon code.
+        missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
+        missing_taxon: You need to add a product from all applicable categories before applying this coupon code.
+        no_applicable_products: You need to add an applicable product before applying this coupon code.
+        no_matching_taxons: You need to add a product from an applicable category before applying this coupon code.
+        no_user_or_email_specified: You need to login or provide your email before applying this coupon code.
         no_user_specified: You need to login before applying this coupon code.
         not_first_order: This coupon code can only be applied to your first order.
+        quantity_less_than_minimum:
+          one: You need to add a least 1 applicable item to your order.
+          other: You need to add a least %{count} applicable items to your order.
     email: Email
     empty: Empty
     empty_cart: Empty Cart
@@ -1310,12 +1517,10 @@ en:
     error: error
     errors:
       messages:
-        cannot_delete_finalized_stock_location: Stock Location cannot be destroyed
-          if you have open stock transfers.
+        cannot_delete_finalized_stock_location: Stock Location cannot be destroyed if you have open stock transfers.
         could_not_create_taxon: Could not create taxon
         no_payment_methods_available: No payment methods are configured for this environment
-        no_shipping_methods_available: No shipping methods available for selected
-          location, please change your address and try again.
+        no_shipping_methods_available: No shipping methods available for selected location, please change your address and try again.
     errors_prohibited_this_record_from_being_saved:
       one: 1 error prohibited this record from being saved
       other: "%{count} errors prohibited this record from being saved"
@@ -1334,9 +1539,7 @@ en:
         user:
           signup: User signup
     exceptions:
-      count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically
-        by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand,
-        value)` instead.
+      count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand, value)` instead.
     exchange_for: Exchange For
     excl: excl.
     existing_shipments: Existing shipments
@@ -1371,10 +1574,8 @@ en:
     gateway_config_unavailable: Gateway unavailable for environment
     gateway_error: Gateway Error
     general: General
-    general_settings: Store
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
-    group_size: Group size
     guest_checkout: Guest Checkout
     guest_user_account: Checkout as a Guest
     has_no_shipped_units: has no shipped units
@@ -1387,78 +1588,43 @@ en:
     hide_out_of_stock: Hide out of stock
     hints:
       spree/calculator:
-        tax_rates: This is used to calculate both sales tax (United States-style taxes)
-          and value-added tax (VAT). Typically this calculator should be the only tax
-          calculator required by your store.
-        shipping_methods: This is used to calculate the shipping rates on a per order or
-          per package rate.
-        promotions: This is used to determine the promotional discount to be applied to an
-          order, an item, or shipping charges.
+        shipping_methods: This is used to calculate the shipping rates on a per order or per package rate.
+        tax_rates: The "Default Tax" calculator is used for both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store. "Flat Fee" can be used for any taxes that require a flat fee be charged to the customer.
       spree/price:
-        country: 'This determines in what country the price is valid.<br/>Default:
-          Any Country'
-        master_variant: Changing master variant prices will not change variant prices
-          below, but will be used to populate all new variants
-        options: These options are used to create variants in the variants table.
-          They can be changed in the variants tab
+        country: 'This determines in what country the price is valid.<br>Default: Any Country'
+        master_variant: Changing master variant prices will not change variant prices below, but will be used to populate all new variants
+        options: These options are used to create variants in the variants table. They can be changed in the variants tab
       spree/product:
-        available_on: This sets the availability date for the product. If this value
-          is not set, or it is set to a date in the future, then the product is not
-          available on the storefront.
-        discontinue_on: This sets the discontinue date for the product. If this value
-          is set to a date, then the product is not available on the storefront from
-          that day on anymore.
-        promotionable: 'This determines whether or not promotions can apply to this
-          product.<br/>Default: Checked'
-        shipping_category: 'This determines what kind of shipping this product requires.<br/>
-          Default: Default'
-        tax_category: 'This determines what kind of taxation is applied to this product.<br/>
-          Default: %{default_tax_category}'
-      spree/promotion:
-        expires_at: This determines when the promotion expires. <br/> If no value
-          is specified, the promotion will never expire.
-        starts_at: This determines when the promotion can be applied to orders. <br/>
-          If no value is specified, the promotion will be immediately available.
-        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion
-          because all its rules / actions will be applied automatically to all orders.
+        available_on: This sets the availability date for the product. If this value is not set, or it is set to a date in the future, then the product is not available on the storefront.
+        discontinue_on: This sets the discontinue date for the product. If this value is set to a date, then the product is not available on the storefront from that day on anymore.
+        promotionable: 'This determines whether or not promotions can apply to this product.<br>Default: Checked'
+        shipping_category: 'This determines what kind of shipping this product requires.<br> Default: Default'
+        tax_category: 'This determines what kind of taxation is applied to this product.<br> Default: %{default_tax_category}'
       spree/shipping_method:
-        available_to_all: Uncheck to select specific stock locations this
-          shipping method will be available in.
+        available_to_all: Uncheck to select specific stock locations this shipping method will be available in.
       spree/stock_location:
-        active: 'This determines whether stock from this location can be used when
-          building packages.<br/> Default: Checked'
-        backorderable_default: 'When checked, stock items in this location will default
-          to allowing backorders.<br/> Default: Unchecked'
-        check_stock_on_transfer: 'When checked, inventory levels will be checked when
-          performing stock transfers.<br/> Default: Checked'
-        fulfillable: 'When unchecked, this indicates that items in this location don''t
-          require actual fulfilment. Stock will not be checked when shipping and emails
-          will not be sent.<br/> Default: Checked'
-        propagate_all_variants: 'When checked, this will create a stock item for each variant
-          in this stock location.<br/> Default: Checked'
-        restock_inventory: 'When checked, returned inventory can be added back to
-          this location''s stock levels.<br/> Default: checked'
+        active: 'This determines whether stock from this location can be used when building packages.<br> Default: Checked'
+        backorderable_default: 'When checked, stock items in this location will default to allowing backorders.<br> Default: Unchecked'
+        check_stock_on_transfer: 'When checked, inventory levels will be checked when performing stock transfers.<br> Default: Checked'
+        fulfillable: 'When unchecked, this indicates that items in this location don''t require actual fulfilment. Stock will not be checked when shipping and emails will not be sent.<br> Default: Checked'
+        propagate_all_variants: 'When checked, this will create a stock item for each variant in this stock location.<br> Default: Checked'
+        restock_inventory: 'When checked, returned inventory can be added back to this location''s stock levels.<br> Default: checked'
       spree/store:
-        available_locales: This determines which locales are available for your customers
-          to choose from in the storefront.
-        cart_tax_country_iso: "This determines which country is used for taxes on carts
-          (orders which don't yet have an address).<br/> Default: None."
-        code: 'An identifier for your store. Developers may need this value if you operate
-          multiple storefronts.'
+        available_locales: This determines which locales are available for your customers to choose from in the storefront.
+        cart_tax_country_iso: 'This determines which country is used for taxes on carts (orders which don''t yet have an address).<br> Default: None.'
+        code: An identifier for your store. Developers may need this value if you operate multiple storefronts.
+        default_currency: This determines which currency will be used for the storefront's product prices. Please, be aware that changing this configuration, only products that have prices in the selected currency will be listed on your storefront. <br><br>This setting won't change the default currency used when you create a product. For that, only the global `Spree::Config.currency` is taken into account.
       spree/tax_category:
-        is_default: 'When checked, this tax category will be selected by default when creating new products or variants.'
+        is_default: When checked, this tax category will be selected by default when creating new products or variants.
       spree/tax_rate:
-        validity_period: This determines the validity period within which the tax
-          rate is valid and will be applied to eligible items. <br /> If no start
-          date value is specified, the tax rate will be immediately available. <br
-          /> If no expiration date value is specified, the tax rate will never expire
+        tax_rate_level: Item-level taxes will be applied as adjustments on line items and shipments. Order-level taxes will create an adjustment on the order. Care should be taken when chosing order-level adjustments as they aren't considered in refunds or in discounts. The default is item-level.
+        validity_period: This determines the validity period within which the tax rate is valid and will be applied to eligible items. <br> If no start date value is specified, the tax rate will be immediately available. <br> If no expiration date value is specified, the tax rate will never expire
       spree/variant:
         deleted: Deleted Variant
         deleted_explanation: This variant was deleted on %{date}.
-        deleted_explanation_with_replacement: This variant was deleted on %{date}.
-          It has since been replaced by another with the same SKU.
-        tax_category: 'This determines what kind of taxation is applied to this variant.<br/>
-          Default: Use tax category of the product associated with this variant'
+        deleted_explanation_with_replacement: This variant was deleted on %{date}. It has since been replaced by another with the same SKU.
+        shipping_category: 'This determines what kind of shipping this variant requires.<br> Default: Use shipping category of the product associated with this variant'
+        tax_category: 'This determines what kind of taxation is applied to this variant.<br> Default: Use tax category of the product associated with this variant'
     home: Home
     i18n:
       available_locales: Available Locales
@@ -1477,15 +1643,12 @@ en:
     identifier: Identifier
     image: Image
     images: Images
-    implement_eligible_for_return: 'Must implement #eligible_for_return? for your
-      EligibilityValidator.'
-    implement_requires_manual_intervention: 'Must implement #requires_manual_intervention?
-      for your EligibilityValidator.'
+    implement_eligible_for_return: 'Must implement #eligible_for_return? for your EligibilityValidator.'
+    implement_requires_manual_intervention: 'Must implement #requires_manual_intervention? for your EligibilityValidator.'
     inactive: Inactive
     incl: incl.
     included_in_price: Included in Price
-    included_price_validation: cannot be selected unless you have set a Default Tax
-      Zone
+    included_price_validation: cannot be selected unless you have set a Default Tax Zone
     incomplete: Incomplete
     info_number_of_skus_not_shown:
       one: and one other
@@ -1494,20 +1657,17 @@ en:
     instructions_to_reset_password: Please enter your email on the form below
     insufficient_stock: Insufficient stock available, only %{on_hand} remaining
     insufficient_stock_for_order: Insufficient stock for order
-    insufficient_stock_lines_present: Some line items in this order have insufficient
-      quantity.
+    insufficient_stock_lines_present: Some line items in this order have insufficient quantity.
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
     invalid_exchange_variant: Invalid exchange variant.
     invalid_payment_method_type: Invalid payment method type.
-    invalid_promotion_action: Invalid promotion action.
-    invalid_promotion_rule: Invalid promotion rule.
     invalidate: Invalidate
     inventory: Inventory
     inventory_adjustment: Inventory Adjustment
     inventory_canceled: Inventory canceled
     inventory_error_flash_for_insufficient_quantity: "%{names} became unavailable."
-    inventory_error_flash_for_insufficient_shipment_quantity: "Quantity selected of %{unavailable_items} is not available. Still, items may be available from another stock location, please try again."
+    inventory_error_flash_for_insufficient_shipment_quantity: Quantity selected of %{unavailable_items} is not available. Still, items may be available from another stock location, please try again.
     inventory_not_available: Inventory not available for %{item}.
     inventory_state: Inventory State
     inventory_states:
@@ -1520,20 +1680,20 @@ en:
     iso_name: Iso Name
     item: Item
     item_description: Item Description
-    items_selected:
-      all: All Items Selected
-      none: No Item Selected
-      one: One Item Selected
-      custom: Items Selected
+    item_level: Item-level
     item_total: Item Total
     item_total_rule:
       operators:
         gt: greater than
         gte: greater than or equal to
-    items_cannot_be_shipped: We are unable to calculate shipping rates for the selected
-      items.
+    items_cannot_be_shipped: We are unable to calculate shipping rates for the selected items.
     items_in_rmas: Items in RMA's (Return Merchandise Authorizations)
     items_reimbursed: Items reimbursed
+    items_selected:
+      all: All Items Selected
+      custom: Items Selected
+      none: No Item Selected
+      one: One Item Selected
     items_to_be_reimbursed: Items to be reimbursed
     jirafe: Jirafe
     landing_page_rule:
@@ -1567,9 +1727,7 @@ en:
     logs: Logs
     look_for_similar_items: Look for similar items
     make_refund: Make refund
-    make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement
-      amount is correct
-    manage_promotion_categories: Manage Promotion Categories
+    make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement amount is correct
     manage_stock: Store Stock
     manage_variants: Manage Variants
     manual_intervention_required: Manual intervention required
@@ -1598,8 +1756,10 @@ en:
     name_contains: Name Contains
     name_on_card: Name on card
     name_or_sku: Name or SKU (enter at least first 4 characters of product name)
-    negative_movement_absent_item: Cannot create negative movement for absent stock
-      item.
+    navigation:
+      switch_to_legacy: Show Legacy UI
+      switch_to_solidus_admin: Show Legacy UI
+    negative_movement_absent_item: Cannot create negative movement for absent stock item.
     new: New
     new_adjustment: New Adjustment
     new_adjustment_reason: New Adjustment Reason
@@ -1613,9 +1773,6 @@ en:
     new_payment: New Payment
     new_payment_method: New Payment Method
     new_product: New Product
-    new_promotion: New Promotion
-    new_promotion_category: New Promotion Category
-    new_promotion_code_batch: New Promotion Code Batch
     new_property: New Property Type
     new_refund: New Refund
     new_refund_reason: New Refund Reason
@@ -1639,23 +1796,19 @@ en:
     new_variant: New Variant
     new_zone: New Zone
     next: Next
-    no_actions_added: No actions added
     no_images_found: No images found
     no_inventory_selected: No inventory selected
-    no_option_values_on_product_html: This product has no associated option values.
-      Add some to it through Option Types in the %{link}.
+    no_option_values_on_product_html: This product has no associated option values. Add some to it through Option Types in the %{link}.
     no_orders_found: No orders found
     no_payment_found: No payment found
     no_payment_methods_found: No payment methods found
     no_pending_payments: No pending payments
     no_products_found: No products found
-    no_promotions_found: No promotions found
     no_resource: No %{resource} found.
     no_resource_found: No %{resource} found
     no_resource_found_html: No %{resource} found, %{add_one_link}!
     no_resource_found_link: Add One
     no_results: No results
-    no_rules_added: No rules added
     no_shipping_method_selected: No shipping method selected.
     no_shipping_methods_found: No shipping methods found
     no_stock_locations_found: No stock locations found
@@ -1668,12 +1821,10 @@ en:
     normal_amount: Normal Amount
     not: not
     not_available: N/A
-    not_enough_stock: There is not enough inventory at the source location to complete
-      this transfer.
+    not_enough_stock: There is not enough inventory at the source location to complete this transfer.
     not_found: "%{resource} is not found"
     note: Note
-    note_already_received_a_refund: 'Note: This order has already received a refund.  Make
-      sure the above reimbursement amount is correct.'
+    note_already_received_a_refund: 'Note: This order has already received a refund.  Make sure the above reimbursement amount is correct.'
     notice_messages:
       product_cloned: Product has been cloned
       product_deleted: Product has been deleted
@@ -1681,6 +1832,8 @@ en:
       product_not_deleted: Product could not be deleted
       variant_deleted: Variant has been deleted
       variant_not_deleted: Variant could not be deleted
+    null_promotion_handler:
+      coupon_code_applied: Coupon code has been applied.
     num_orders: "# Orders"
     number: Number
     number_of_codes: "%{count} codes"
@@ -1704,19 +1857,18 @@ en:
     order_details: Order Details
     order_email_resent: Order Email Resent
     order_information: Order Information
+    order_level: Order-level
     order_mailer:
       cancel_email:
         dear_customer: Dear Customer,
-        instructions: Your order has been CANCELED.  Please retain this cancellation
-          information for your records.
+        instructions: Your order has been CANCELED.  Please retain this cancellation information for your records.
         order_summary_canceled: Order Summary [CANCELED]
         subject: Cancellation of Order
         subtotal: 'Subtotal:'
         total: 'Order Total:'
       confirm_email:
         dear_customer: Dear Customer,
-        instructions: Please review and retain the following order information for
-          your records.
+        instructions: Please review and retain the following order information for your records.
         order_summary: Order Summary
         subject: Order Confirmation
         subtotal: 'Subtotal:'
@@ -1724,8 +1876,7 @@ en:
         total: 'Order Total:'
       inventory_cancellation:
         dear_customer: Dear Customer,
-        instructions: Some items in your order have been CANCELED.  Please retain
-          this cancellation information for your records.
+        instructions: Some items in your order have been CANCELED.  Please retain this cancellation information for your records.
         order_summary_canceled: Canceled Items
         subject: Cancellation of Items
     order_mutex_admin_error: Order is being modified by someone else. Please try again.
@@ -1771,15 +1922,11 @@ en:
     payment_identifier: Payment Identifier
     payment_information: Payment Information
     payment_method: Payment Method
-    payment_method_not_supported: That payment method is unsupported. Please choose
-      another one.
-    payment_method_settings_warning: If you are changing the payment method type,
-      you must save first before you can edit the payment method settings
+    payment_method_not_supported: That payment method is unsupported. Please choose another one.
+    payment_method_settings_warning: If you are changing the payment method type, you must save first before you can edit the payment method settings
     payment_methods: Payment Methods
-    payment_processing_failed: Payment could not be processed, please check the details
-      you entered
-    payment_processor_choose_banner_text: If you need help choosing a payment processor,
-      please visit
+    payment_processing_failed: Payment could not be processed, please check the details you entered
+    payment_processor_choose_banner_text: If you need help choosing a payment processor, please visit
     payment_processor_choose_link: our payments page
     payment_state: Payment State
     payment_states:
@@ -1823,24 +1970,12 @@ en:
     product: Product
     product_details: Product Details
     product_has_no_description: This product has no description
-    product_not_available_in_this_currency: This product is not available in the selected
-      currency.
+    product_not_available_in_this_currency: This product is not available in the selected currency.
     product_properties: Product Properties
-    product_rule:
-      choose_products: Choose products
-      label: Order must contain %{select} of these products
-      match_all: all
-      match_any: at least one
-      match_none: none
-      product_source:
-        group: From product group
-        manual: Manually choose
-    product_without_default_price_info: 'This Product has no price in the default currency (%{default_currency}).'
-    product_without_default_price_cta: 'Please, create a Master Price!'
+    product_without_default_price_cta: Please, create a Master Price!
+    product_without_default_price_info: This Product has no price in the default currency (%{default_currency}).
     products: Products
     promotion: Promotion
-    promotion_action: Promotion Action
-    promotion_actions: Actions
     promotion_code_batch_mailer:
       promotion_code_batch_errored:
         message: 'Promotion code batch errored (%{error}) for promotion: '
@@ -1848,22 +1983,7 @@ en:
       promotion_code_batch_finished:
         message: 'All %{number_of_codes} codes have been created for promotion: '
         subject: Promotion code batch finished
-    promotion_code_batches:
-      errored: 'Errored: %{error}'
-      finished: All %{number_of_codes} codes have been created.
-      processing: 'Processing: %{number_of_codes_processed} / %{number_of_codes}'
-    promotion_form:
-      match_policies:
-        all: Match all of these rules
-        any: Match any of these rules
-    promotion_rule: Promotion Rule
-    promotion_successfully_created: Promotion has been successfully created!
-    promotion_total_changed_before_complete: One or more of the promotions on your
-      order have become ineligible and were removed. Please check the new order amounts
-      and try again.
-    promotion_uses: Promotion uses
-    promotionable: Promotable
-    promotions: Promotions
+    promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
     propagate_all_variants: Propagate all variants
     properties: Property Types
     property: Property Type
@@ -1938,24 +2058,20 @@ en:
     resumed: Resumed
     return: return
     return_authorization: Return Merchandise Authorization
-    return_authorization_fire_error: Cannot perform this action on return merchandise
-      authorization
+    return_authorization_fire_error: Cannot perform this action on return merchandise authorization
     return_authorization_states:
       authorized: Authorized
       canceled: Canceled
     return_authorization_updated: Return merchandise authorization updated
     return_authorizations: Return Merchandise Authorizations
     return_item_inventory_unit_ineligible: Return item's inventory unit must be shipped
-    return_item_inventory_unit_reimbursed: Return item's inventory unit is already
-      reimbursed
+    return_item_inventory_unit_reimbursed: Return item's inventory unit is already reimbursed
     return_item_order_not_completed: Return item's order must be completed
     return_item_rma_ineligible: Return item requires an RMA
     return_item_time_period_ineligible: Return item is outside the eligible time period
     return_items: Return Items
-    return_items_cannot_be_associated_with_multiple_orders: Return items cannot be
-      associated with multiple orders.
-    return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange: Return
-      items cannot be created for inventory units that are already awaiting exchange.
+    return_items_cannot_be_associated_with_multiple_orders: Return items cannot be associated with multiple orders.
+    return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange: Return items cannot be created for inventory units that are already awaiting exchange.
     return_number: Return Number
     return_quantity: Return Quantity
     return_reasons: Return Reasons
@@ -1968,7 +2084,6 @@ en:
     rma_number: RMA Number
     rma_value: RMA Value
     roles: Roles
-    rules: Rules
     sales_total: Sales Total
     sales_total_description: Sales Total For All Orders
     sales_totals: Sales Totals
@@ -1995,7 +2110,6 @@ en:
     ship: ship
     ship_address: Ship Address
     ship_address_required: Valid shipping address required
-    bill_address_required: Valid billing address required
     ship_total: Ship Total
     shipment: Shipment
     shipment_adjustments: Shipment adjustments
@@ -2061,11 +2175,9 @@ en:
     special_instructions: Special Instructions
     split: Split
     split_failed: Unable to complete split
-    spree_gateway_error_flash_for_checkout: There was a problem with your payment
-      information. Please check your information and try again.
+    spree_gateway_error_flash_for_checkout: There was a problem with your payment information. Please check your information and try again.
     ssl:
-      change_protocol: Please switch to using HTTP (rather than HTTPS) and retry this
-        request.
+      change_protocol: Please switch to using HTTP (rather than HTTPS) and retry this request.
     start: Start
     state: State
     state_based: State Based
@@ -2079,11 +2191,9 @@ en:
     stock_location: Stock Location
     stock_location_info: Stock location info
     stock_locations: Stock Locations
-    stock_locations_need_a_default_country: You must create a default country before
-      creating a stock location.
+    stock_locations_need_a_default_country: You must create a default country before creating a stock location.
     stock_management: Product Stock
-    stock_management_requires_a_stock_location: Please create a stock location in
-      order to manage stock.
+    stock_management_requires_a_stock_location: Please create a stock location in order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
     stock_successfully_transferred: Stock was successfully transferred between locations.
@@ -2106,8 +2216,7 @@ en:
         invalidate: Invalidated
         void: Credit
       errors:
-        cannot_invalidate_uncaptured_authorization: Cannot invalidate a store credit
-          with an uncaptured authorization
+        cannot_invalidate_uncaptured_authorization: Cannot invalidate a store credit with an uncaptured authorization
         unable_to_fund: Unable to pay for order using store credits
       expiring: Expiring
       insufficient_authorized_amount: Unable to capture more than authorized amount
@@ -2118,14 +2227,11 @@ en:
       successful_action: Successful store credit %{action}
       unable_to_credit: 'Unable to credit code: %{auth_code}'
       unable_to_find: Could not find store credit
-      unable_to_find_for_action: 'Could not find store credit for auth code: %{auth_code}
-        for action: %{action}'
+      unable_to_find_for_action: 'Could not find store credit for auth code: %{auth_code} for action: %{action}'
       unable_to_void: 'Unable to void code: %{auth_code}'
       user_has_no_store_credits: User does not have any available store credit
     store_credit_category:
       default: Default
-    store_rule:
-      choose_stores: Choose Stores
     street_address: Street Address
     street_address_2: Street Address (cont'd)
     subtotal: Subtotal
@@ -2141,26 +2247,18 @@ en:
     tax_category: Tax Category
     tax_code: Tax Code
     tax_included: Tax (incl.)
-    tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations,
-      (i.e. if the tax rate is 5% then enter 0.05)
+    tax_rate_amount_explanation: When using the "Default Tax" calculator, the amount is treated as a decimal amount to aid in calculations. (i.e. If the tax rate is 5% then enter 0.05) If using the "Flat Fee" calculator, the amount is used for the static fee.
+    tax_rate_level: Tax Rate Level
     tax_rates: Tax Rates
     taxon: Taxon
     taxon_attachment_removal_error: There was an error removing the attachment
     taxon_edit: Edit Taxon
     taxon_placeholder: Add a Taxon
-    taxon_rule:
-      choose_taxons: Choose taxons
-      label: Order must contain %{select} of these taxons
-      match_all: all
-      match_any: at least one
-      match_none: none
     taxonomies: Taxonomies
     taxonomy: Taxonomy
     taxonomy_edit: Edit taxonomy
-    taxonomy_tree_error: The requested change has not been accepted and the tree has
-      been returned to its previous state, please try again.
-    taxonomy_tree_instruction: "* Right click a child in the tree to access the menu
-      for adding, deleting or sorting a child."
+    taxonomy_tree_error: The requested change has not been accepted and the tree has been returned to its previous state, please try again.
+    taxonomy_tree_instruction: "* Right click a child in the tree to access the menu for adding, deleting or sorting a child."
     taxons: Taxons
     test: Test
     test_mailer:
@@ -2169,12 +2267,10 @@ en:
         message: If you have received this email, then your email settings are correct.
         subject: Test Mail
     test_mode: Test Mode
-    thank_you_for_your_order: Thank you for your business. Please print out a copy
-      of this confirmation page for your records.
-    there_are_no_items_for_this_order: There are no items for this order. Please add
-      an item to the order to continue.
-    there_were_problems_with_the_following_fields: There were problems with the following
-      fields
+    thank_you_for_your_order: Thank you for your business. Please print out a copy of this confirmation page for your records.
+    theme_changed: Theme Changed
+    there_are_no_items_for_this_order: There are no items for this order. Please add an item to the order to continue.
+    there_were_problems_with_the_following_fields: There were problems with the following fields
     this_order_has_already_received_a_refund: This order has already received a refund
     thumbnail: Thumbnail
     tiered_flat_rate: Tiered Flat Rate
@@ -2205,8 +2301,7 @@ en:
     type: Type
     type_to_search: Type to search
     unable_to_connect_to_gateway: Unable to connect to gateway.
-    unable_to_create_reimbursements: Unable to create reimbursements because there
-      are items pending manual intervention.
+    unable_to_create_reimbursements: Unable to create reimbursements because there are items pending manual intervention.
     unable_to_find_all_inventory_units: Unable to find all specified inventory units
     under_price: Under %{price}
     unfinalize_all_adjustments: Unfinalize All Adjustments
@@ -2223,21 +2318,11 @@ en:
     use_new_cc: Use a new card
     use_new_cc_or_payment_method: Use a new card / payment method
     user: User
-    user_role_rule:
-      choose_roles: Choose Roles
-      label: User must contain %{select} of these roles
-      match_all: all
-      match_any: at least one
-    user_rule:
-      choose_users: Choose Users
     users: Users
     validation:
-      cannot_be_less_than_shipped_units: cannot be less than the number of shipped
-        units.
-      cannot_destroy_line_item_as_inventory_units_have_shipped: Cannot destroy line
-        item as some inventory units have shipped.
-      exceeds_available_stock: exceeds available stock. Please ensure line items have
-        a valid quantity.
+      cannot_be_less_than_shipped_units: cannot be less than the number of shipped units.
+      cannot_destroy_line_item_as_inventory_units_have_shipped: Cannot destroy line item as some inventory units have shipped.
+      exceeds_available_stock: exceeds available stock. Please ensure line items have a valid quantity.
       is_too_large: is too large -- stock on hand cannot cover requested quantity!
       must_be_int: must be an integer
       must_be_non_negative: must be a non-negative value
@@ -2246,7 +2331,6 @@ en:
     value: Value
     variant: Variant
     variant_placeholder: Choose a Variant
-    variant_pricing: Variant Pricing
     variant_properties: Variant Properties
     variant_search: Variant Search
     variant_search_placeholder: SKU or Option Value
@@ -2255,7 +2339,6 @@ en:
     variants: Variants
     version: Version
     view_product: View Product On Store
-    view_promotion_codes_list: View codes list
     void: Void
     weight: Weight
     what_is_a_cvv: What is a (CVV) Credit Card Code?

@@ -4,7 +4,6 @@
 <% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::ShippingCategory)) %>
 
-
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::ShippingCategory) %>
     <li>
@@ -26,7 +25,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @shipping_categories.each do |shipping_category|%>
+    <% @shipping_categories.each do |shipping_category| %>
     <tr id="<%= spree_dom_id shipping_category %>" data-hook="category_row">
       <td><%= shipping_category.name %></td>
       <td class="actions">

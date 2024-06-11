@@ -1,7 +1,7 @@
-<%= paginate variant_prices, theme: "solidus_admin" %>
+<fieldset class="no-border-bottom" data-hook="variant_prices_table">
+  <legend align="center"><%= t(".variant_pricing") %></legend>
 
-<fieldset class="no-border-bottom">
-  <legend align="center"><%= I18n.t(:variant_pricing, scope: :spree) %></legend>
+  <%= paginate variant_prices, theme: "solidus_admin", param_name: :variants_page %>
   <table class="index prices">
     <thead data-hook="prices_header">
       <tr>
@@ -20,7 +20,7 @@
           <td><%= price.currency %></td>
           <td><%= price.money.to_html %></td>
           <td class="actions">
-            <% if can?(:update, price) %>
+            <% if can?(:edit, price) %>
               <%= link_to_edit(price, no_text: true) unless price.discarded? %>
             <% end %>
             <% if can?(:destroy, price) %>
@@ -32,6 +32,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate variant_prices, theme: "solidus_admin", param_name: :variants_page %>
 </fieldset>
-
-<%= paginate variant_prices, theme: "solidus_admin" %>

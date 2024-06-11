@@ -17,7 +17,8 @@
       </div>
     </div>
   </fieldset>
-  <fieldset class="no-border-top no-border-bottom">
+  <fieldset class="no-border-bottom">
+    <legend><%= t(".options") %></legend>
     <div class="row">
       <% @product.option_types.each_with_index do |option_type, index| %>
           <div class="col-3">
@@ -41,7 +42,8 @@
 </div>
 
 <div data-hook="admin_variant_form_additional_fields">
-  <fieldset class="no-border-top no-border-bottom">
+  <fieldset class="no-border-bottom">
+    <legend><%= t(".properties") %></legend>
     <div class="row">
       <% [:weight, :height, :width, :depth].each_with_index do |field, index| %>
         <div class="col-3">
@@ -58,22 +60,20 @@
 </div>
 
 <div data-hook="admin_variant_form_fields">
-  <fieldset class="no-border-top no-border-bottom">
-    <p> <%== t('.pricing_hint') %> </p>
+  <fieldset class="no-border-bottom">
+    <legend><%= t(".pricing") %></legend>
+    <div class="alert alert-info"><%= t('.pricing_hint') %></div>
 
     <div class="row">
       <div class="col-3">
         <div class="field" data-hook="price">
           <%= f.label :price %>
-          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.find_or_build_default_price.currency %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.default_price_or_build.currency %>
         </div>
+        <% if show_rebuild_vat_checkbox? %>
+          <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant" %>
+        <% end %>
       </div>
-
-      <% if show_rebuild_vat_checkbox? %>
-        <div class="col-3">
-          <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant", wrapper_class: "field" %>
-        </div>
-      <% end %>
 
       <div class="col-3">
         <div class="field" data-hook="cost_price">
@@ -94,10 +94,21 @@
                                   { class: 'custom-select fullwidth' } %>
         </div>
       </div>
+
+      <div class="col-3">
+        <div class="field" data-hook="shipping_category">
+          <%= f.label :shipping_category %>
+          <%= f.field_hint :shipping_category %>
+          <%= f.collection_select :shipping_category_id,
+                                  @shipping_categories,
+                                  :id,
+                                  :name,
+                                  { include_blank: t('.use_product_shipping_category') },
+                                  { class: 'custom-select fullwidth' } %>
+        </div>
+      </div>
     </div>
   </fieldset>
 </div>
-
-
 
 <div class="clear"></div>

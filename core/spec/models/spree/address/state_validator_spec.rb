@@ -7,9 +7,7 @@ RSpec.describe Spree::Address::StateValidator do
   let(:state) { create :state, name: 'maryland', abbr: 'md', country: country }
   let(:address) { build(:address, country: country) }
 
-  subject do
-    -> { described_class.new(address).perform }
-  end
+  subject { described_class.new(address).perform }
 
   describe 'state attributes normalization' do
     context "having a country with no states" do
@@ -21,7 +19,7 @@ RSpec.describe Spree::Address::StateValidator do
 
       it "nullifies the state attr" do
         address.state = state
-        expect(subject).to change(address, :state).from(state).to(nil)
+        expect { subject }.to change(address, :state).from(state).to(nil)
       end
     end
 
@@ -39,8 +37,8 @@ RSpec.describe Spree::Address::StateValidator do
         end
 
         it "nullifies the state_name if the state attr belongs to the country" do
-          expect(subject).to change(address, :state_name).from(state_name).to(nil)
-          expect(subject).to_not change(address, :state).from(state)
+          expect { subject }.to change(address, :state_name).from(state_name).to(nil)
+          expect { subject }.to_not change(address, :state).from(state)
         end
 
         context "belonging to a different country" do
@@ -49,7 +47,7 @@ RSpec.describe Spree::Address::StateValidator do
           end
 
           it "doesn't nullify the state name" do
-            expect(subject).to_not change(address, :state_name).from(state_name)
+            expect { subject }.to_not change(address, :state_name).from(state_name)
           end
         end
       end
@@ -62,7 +60,7 @@ RSpec.describe Spree::Address::StateValidator do
         end
 
         it "sets the state having the specified state name" do
-          expect(subject).
+          expect { subject }.
             to change{ [address.state, address.state_name] }.
             from([nil, state.name]).
             to([state, nil])
@@ -76,7 +74,7 @@ RSpec.describe Spree::Address::StateValidator do
       it "doesn't validate the state presence" do
         address.state = nil
         address.state_name = nil
-        subject.call
+        subject
 
         expect(address.errors).to be_empty
       end
@@ -107,14 +105,18 @@ RSpec.describe Spree::Address::StateValidator do
     it "state_name is not nil and country does not have any states" do
       address.state = nil
       address.state_name = 'alabama'
-      subject.call
+
+      subject
+
       expect(address.errors).to be_empty
     end
 
     it "errors when state_name is nil" do
       address.state_name = nil
       address.state = nil
-      subject.call
+
+      subject
+
       expect(address.errors.messages).to eq({ state: ["can't be blank"] })
     end
 
@@ -127,7 +129,9 @@ RSpec.describe Spree::Address::StateValidator do
         it 'is invalid' do
           address.country = italy
           address.state = us_state
-          subject.call
+
+          subject
+
           expect(address.errors["state"]).to eq(['does not match the country'])
         end
       end

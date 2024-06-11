@@ -8,7 +8,7 @@
       <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
       <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:acceptance_status_errors) %></th>
       <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
-      <% unless return_items.all?(&:received?)%>
+      <% unless return_items.all?(&:received?) %>
         <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:item_received?) %></th>
       <% end %>
       <% if show_decision %>
@@ -50,7 +50,7 @@
           <td>
             <%= form_for [:admin, return_item] do |f| %>
               <%= f.hidden_field 'reception_status_event', value: 'receive' %>
-              <%= f.button t('spree.actions.receive'), class: 'with-tip', "data-action" => 'save' %>
+              <%= f.submit t('spree.actions.receive'), class: 'btn btn-primary' %>
             <% end %>
           </td>
         <% end %>

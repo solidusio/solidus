@@ -26,8 +26,14 @@ module Spree::Preferences
         options[:default] = preference_encryptor.encrypt(options[:default])
       end
 
-      default = options[:default]
-      default = ->{ options[:default] } unless default.is_a?(Proc)
+      default = begin
+                  given = options[:default]
+                  if given.is_a?(Proc)
+                    given
+                  else
+                    proc { given }
+                  end
+                end
 
       # The defined preferences on a class are all those defined directly on
       # that class as well as those defined on ancestors.
@@ -44,7 +50,7 @@ module Spree::Preferences
       # is a pending preference before going to default
       define_method preference_getter_method(name) do
         value = preferences.fetch(name) do
-          default.call
+          instance_exec(*context_for_default, &default)
         end
         value = preference_encryptor.decrypt(value) if preference_encryptor.present?
         value
@@ -60,7 +66,9 @@ module Spree::Preferences
         preferences_will_change! if respond_to?(:preferences_will_change!)
       end
 
-      define_method preference_default_getter_method(name), &default
+      define_method preference_default_getter_method(name) do
+        instance_exec(*context_for_default, &default)
+      end
 
       define_method preference_type_getter_method(name) do
         type

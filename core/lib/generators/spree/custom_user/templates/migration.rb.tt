@@ -1,7 +1,11 @@
 class AddSpreeFieldsToCustomUserTable < ActiveRecord::Migration[4.2]
   def up
-    add_column <%= table_name.inspect %>, :spree_api_key, :string, :limit => 48
-    add_column <%= table_name.inspect %>, :ship_address_id, :integer
-    add_column <%= table_name.inspect %>, :bill_address_id, :integer
+    if table_exists?(<%= table_name.inspect %>)
+      add_column <%= table_name.inspect %>, :spree_api_key, :string, :limit => 48 unless column_exists?(<%= table_name.inspect %>, :spree_api_key)
+      add_column <%= table_name.inspect %>, :ship_address_id, :integer unless column_exists?(<%= table_name.inspect %>, :ship_address_id)
+      add_column <%= table_name.inspect %>, :bill_address_id, :integer unless column_exists?(<%= table_name.inspect %>, :bill_address_id)
+      add_column <%= table_name.inspect %>, :deleted_at, :datetime unless column_exists?(<%= table_name.inspect %>, :deleted_at)
+      add_index  <%= table_name.inspect %>, :deleted_at unless column_exists?(<%= table_name.inspect %>, :deleted_at)
+    end
   end
 end

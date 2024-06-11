@@ -1,17 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.when_cherry_picked do
-  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
-
-  require 'spree/testing_support/factories/address_factory'
-  require 'spree/testing_support/factories/shipment_factory'
-  require 'spree/testing_support/factories/store_factory'
-  require 'spree/testing_support/factories/user_factory'
-  require 'spree/testing_support/factories/line_item_factory'
-  require 'spree/testing_support/factories/payment_factory'
-end
-
 FactoryBot.define do
   factory :order, class: 'Spree::Order' do
     user
@@ -19,7 +7,7 @@ FactoryBot.define do
     ship_address
     completed_at { nil }
     email { user.try(:email) }
-    store
+    association :store, strategy: :create
 
     transient do
       line_items_price { BigDecimal(10) }
@@ -68,6 +56,7 @@ FactoryBot.define do
 
       factory :completed_order_with_promotion do
         transient do
+          completed_at { Time.current }
           promotion { nil }
         end
 
@@ -79,7 +68,7 @@ FactoryBot.define do
           order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
 
           # Complete the order after the promotion has been activated
-          order.update_column(:completed_at, Time.current)
+          order.update_column(:completed_at, evaluator.completed_at)
           order.update_column(:state, "complete")
         end
       end
@@ -104,13 +93,16 @@ FactoryBot.define do
       end
 
       factory :completed_order_with_totals do
+        transient do
+          completed_at { Time.current }
+        end
         state { 'complete' }
 
-        after(:create) do |order|
+        after(:create) do |order, evaluator|
           order.shipments.each do |shipment|
             shipment.inventory_units.update_all state: 'on_hand', pending: false
           end
-          order.update_column(:completed_at, Time.current)
+          order.update_column(:completed_at, evaluator.completed_at)
         end
 
         factory :completed_order_with_pending_payment do

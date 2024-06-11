@@ -40,6 +40,16 @@ class Spree::StoreCredit < Spree::PaymentSource
   extend Spree::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized
 
+  alias_method :display_number, :category_name
+
+  # Sets this store credit's amount to a new value,
+  # parsing it as a localized number if the new value is a string.
+  #
+  # @param number [String, #to_d] a new amount
+  def amount=(number)
+    self[:amount] = Spree::LocalizedNumber.parse(number)
+  end
+
   def amount_remaining
     return 0.0.to_d if invalidated?
     amount - amount_used - amount_authorized
@@ -150,7 +160,12 @@ class Spree::StoreCredit < Spree::PaymentSource
   end
 
   def generate_authorization_code
-    "#{id}-SC-#{Time.current.utc.strftime('%Y%m%d%H%M%S%6N')}"
+    [
+      id,
+      'SC',
+      Time.current.utc.strftime('%Y%m%d%H%M%S%6N'),
+      SecureRandom.uuid
+    ].join('-')
   end
 
   def editable?

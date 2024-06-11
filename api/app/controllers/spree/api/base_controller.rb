@@ -10,7 +10,7 @@ module Spree
       protect_from_forgery unless: -> { request.format.json? }
 
       include CanCan::ControllerAdditions
-      include Spree::Core::ControllerHelpers::CurrentHost
+      include ActiveStorage::SetCurrent
       include Spree::Core::ControllerHelpers::Store
       include Spree::Core::ControllerHelpers::Pricing
       include Spree::Core::ControllerHelpers::StrongParameters
@@ -71,8 +71,11 @@ module Spree
       end
 
       def gateway_error(exception)
-        @order.errors.add(:base, exception.message)
-        invalid_resource!(@order)
+        # Fall back to a blank order if one isn't set, as we only need this for
+        # its errors interface.
+        model = @order || Spree::Order.new
+        model.errors.add(:base, exception.message)
+        invalid_resource!(model)
       end
 
       def parameter_missing_error(exception)
@@ -139,7 +142,7 @@ module Spree
       end
 
       def variants_associations
-        [{ option_values: :option_type }, :default_price, :images]
+        [{ option_values: :option_type }, :prices, :images]
       end
 
       def product_includes

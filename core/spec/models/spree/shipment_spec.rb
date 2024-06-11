@@ -667,12 +667,13 @@ RSpec.describe Spree::Shipment, type: :model do
   end
 
   context "don't require shipment" do
+    let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
     let(:stock_location) { create(:stock_location, fulfillable: false) }
     let(:unshippable_shipment) do
       create(
         :shipment,
-        stock_location: stock_location,
-        inventory_units: [build(:inventory_unit)]
+        order: order,
+        stock_location: stock_location
       )
     end
 

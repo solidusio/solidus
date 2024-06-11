@@ -11,6 +11,11 @@ module Spree
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
 
+    enum level: {
+      item: 0,
+      order: 1
+    }, _suffix: true
+
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
 
     has_many :tax_rate_tax_categories,
@@ -26,6 +31,8 @@ module Spree
     has_many :shipping_rate_taxes, class_name: "Spree::ShippingRateTax"
 
     validates :amount, presence: true, numericality: true
+
+    self.allowed_ransackable_associations = %w[tax_categories zone]
 
     # Finds all tax rates whose zones match a given address
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
@@ -106,6 +113,10 @@ module Spree
       )
     end
 
+    def display_amount
+      amount_for_adjustment_label
+    end
+
     private
 
     def amount_for_adjustment_label
@@ -116,6 +127,8 @@ module Spree
     end
 
     def translation_key(_amount)
+      return "flat_fee" if calculator.is_a?(Spree::Calculator::FlatFee)
+
       key = included_in_price? ? "vat" : "sales_tax"
       key += "_with_rate" if show_rate_in_label?
       key.to_sym

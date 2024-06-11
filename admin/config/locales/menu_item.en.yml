@@ -1,0 +1,19 @@
+en:
+  solidus_admin:
+    menu_item:
+      orders: Orders
+      products: Products
+      option_types: Option Types
+      property_types: Properties
+      taxonomies: Taxonomies
+      taxons: Display Order
+      promotions: Promotions
+      promotion_categories: Promotion Categories
+      stock: Stock
+      users: Users
+      settings: Settings
+      stores: Stores
+      taxes: Taxes
+      checkout: Refunds and Returns
+      shipping: Shipping
+      zones: Zones

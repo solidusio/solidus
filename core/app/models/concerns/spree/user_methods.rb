@@ -18,7 +18,7 @@ module Spree
       has_many :stock_locations, through: :user_stock_locations
 
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
-      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order", dependent: :restrict_with_exception
+      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order"
 
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
@@ -27,12 +27,13 @@ module Spree
       has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
 
       after_create :auto_generate_spree_api_key
+      before_destroy :check_for_deletion
 
       include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
 
       ransack_alias :name, :addresses_name
-      self.whitelisted_ransackable_associations = %w[addresses spree_roles]
-      self.whitelisted_ransackable_attributes = %w[name id email created_at]
+      self.allowed_ransackable_associations = %w[addresses spree_roles]
+      self.allowed_ransackable_attributes = %w[name id email created_at]
     end
 
     def wallet
@@ -75,6 +76,39 @@ module Spree
         available_store_credit_total(currency: currency),
         currency: currency,
       )
+    end
+
+    # Restrict to delete users with existing orders
+    #
+    # Override this in your user model class to add another logic.
+    #
+    # Ie. to allow to delete users with incomplete orders add:
+    #
+    #   orders.complete.none?
+    #
+    def can_be_deleted?
+      orders.none?
+    end
+
+    # Updates the roles in keeping with the given ability's permissions
+    #
+    # Roles that are not accessible to the given ability will be ignored. It
+    # also ensure not to remove non accessible roles when assigning new
+    # accessible ones.
+    #
+    # @param given_roles [Spree::Role]
+    # @param ability [Spree::Ability]
+    def update_spree_roles(given_roles, ability:)
+      accessible_roles = Spree::Role.accessible_by(ability)
+      non_accessible_roles = Spree::Role.all - accessible_roles
+      new_accessible_roles = given_roles - non_accessible_roles
+      self.spree_roles = spree_roles - accessible_roles + new_accessible_roles
+    end
+
+    private
+
+    def check_for_deletion
+      raise ActiveRecord::DeleteRestrictionError unless can_be_deleted?
     end
   end
 end

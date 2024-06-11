@@ -42,42 +42,49 @@ module Spree
       # Make an admin tab that covers one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
-      #   * :route to override automatically determining the default route
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
-      def tab(*args, &_block)
-        options = { label: args.first.to_s }
+      #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.
+      #   * :selected to explicitly control whether the tab is active
+      def tab(*args, &block)
+        options = args.last.is_a?(Hash) ? args.pop.dup : {}
+        css_classes = Array(options[:css_class])
 
-        if args.last.is_a?(Hash)
-          options = options.merge(args.pop)
+        if options.key?(:route)
+          Spree.deprecator.warn "Passing a route to #tab is deprecated. Please pass a url instead."
+          options[:url] ||= spree.send("#{options[:route]}_path")
         end
-        options[:route] ||= "admin_#{args.first}"
 
-        destination_url = options[:url] || spree.send("#{options[:route]}_path")
+        if args.any?
+          Spree.deprecator.warn "Passing resources to #tab is deprecated. Please use the `label:` and `match_path:` options instead."
+          options[:label] ||= args.first
+          options[:url] ||= spree.send("admin_#{args.first}_path")
+          options[:selected] = args.include?(controller.controller_name.to_sym)
+        end
+
+        options[:url] ||= spree.send("admin_#{options[:label]}_path")
         label = t(options[:label], scope: [:spree, :admin, :tab])
 
-        css_classes = []
+        options[:selected] ||=
+          if options[:match_path].is_a? Regexp
+            request.fullpath =~ options[:match_path]
+          elsif options[:match_path].respond_to?(:call)
+            options[:match_path].call(request)
+          elsif options[:match_path]
+            request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
+          else
+            request.fullpath.starts_with?(options[:url])
+          end
+
+        css_classes << 'selected' if options[:selected]
 
         if options[:icon]
-          link = link_to_with_icon(options[:icon], label, destination_url)
+          link = link_to_with_icon(options[:icon], label, options[:url])
           css_classes << 'tab-with-icon'
         else
-          link = link_to(label, destination_url)
+          link = link_to(label, options[:url])
         end
-
-        selected = if options[:match_path].is_a? Regexp
-          request.fullpath =~ options[:match_path]
-        elsif options[:match_path]
-          request.fullpath.starts_with?("#{spree.admin_path}#{options[:match_path]}")
-        else
-          request.fullpath.starts_with?(destination_url) ||
-            args.include?(controller.controller_name.to_sym)
-        end
-        css_classes << 'selected' if selected
-
-        if options[:css_class]
-          css_classes << options[:css_class]
-        end
-        content_tag('li', link + (yield if block_given?), class: css_classes.join(' ') )
+        block_content = capture(&block) if block_given?
+        content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
       end
 
       def link_to_clone(resource, options = {})
@@ -112,12 +119,25 @@ module Spree
       end
 
       def link_to_with_icon(icon_name, text, url, options = {})
-        options[:class] = (options[:class].to_s + " fa fa-#{icon_name} icon_link with-tip").strip
+        options[:class] = "#{options[:class]} icon_link with-tip".strip
+
+        if icon_name.starts_with?('ri-')
+          svg_map = image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg')
+          icon_tag = tag.svg(
+            tag.use('xlink:href': "#{svg_map}##{icon_name}"),
+            'aria-hidden': true,
+            style: "fill: currentColor;",
+          )
+        else
+          options[:class] << " fa fa-#{icon_name}"
+          icon_tag = ''.html_safe
+        end
+
         options[:class] += ' no-text' if options[:no_text]
         options[:title] = text if options[:no_text]
         text = options[:no_text] ? '' : content_tag(:span, text, class: 'text')
         options.delete(:no_text)
-        link_to(text, url, options)
+        link_to(icon_tag + text, url, options)
       end
 
       def solidus_icon(icon_name)

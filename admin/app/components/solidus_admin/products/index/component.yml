@@ -1,0 +1,14 @@
+en:
+  image: 'Image'
+  batch_actions:
+    discontinue: 'Discontinue'
+    activate: 'Activate'
+  filters:
+    with_deleted: Include deleted
+  scopes:
+    all: All
+    available: Available
+    discontinued: Discontinued
+    in_stock: In stock
+    out_of_stock: Out of stock
+    deleted: Deleted

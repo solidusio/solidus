@@ -37,12 +37,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.before :suite do
-    FileUtils.rm_rf(Rails.configuration.storage_path)
+    FileUtils.rm_rf(Rails.configuration.active_storage.service_configurations[:test][:root]) unless (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
     DatabaseCleaner.clean_with :truncation
   end
 
   config.before :each do
-    ActiveStorage::Current.host = 'https://www.example.com'
     Rails.cache.clear
   end
 

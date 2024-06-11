@@ -4,6 +4,7 @@ require 'rubygems'
 require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
+require 'bundler/gem_tasks'
 
 require 'solidus_backend'
 require 'spree/testing_support/dummy_app/rake_tasks'

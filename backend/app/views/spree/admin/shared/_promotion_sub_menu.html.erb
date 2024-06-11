@@ -1,8 +1,10 @@
+<% Spree.deprecator.warn "Using the #{@virtual_path.inspect} partial is deprecated, please use MenuItem#children instead." %>
+
 <ul class="admin-subnav" data-hook="admin_promotion_sub_tabs">
   <% if can? :admin, Spree::Promotion %>
-    <%= tab :promotions %>
+    <%= tab label: :promotions %>
   <% end %>
   <% if can? :admin, Spree::PromotionCategory %>
-    <%= tab :promotion_categories %>
+    <%= tab label: :promotion_categories %>
   <% end %>
 </ul>

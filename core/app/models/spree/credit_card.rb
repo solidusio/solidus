@@ -21,9 +21,6 @@ module Spree
 
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
-    # needed for some of the ActiveMerchant gateways (eg. SagePay)
-    alias_attribute :brand, :cc_type
-
     # Taken from ActiveMerchant
     # https://github.com/activemerchant/active_merchant/blob/2f2acd4696e8de76057b5ed670b9aa022abc1187/lib/active_merchant/billing/credit_card_methods.rb#L5
     CARD_TYPES = {
@@ -95,9 +92,15 @@ module Spree
       end
     end
 
+    # needed for some of the ActiveMerchant gateways (eg. SagePay)
+    alias_attribute :brand, :cc_type
+
+    # Rails 7.1+ won't use the custom setter with alias_attribute
+    alias_method :brand=, :cc_type=
+
     # Sets the last digits field based on the assigned credit card number.
     def set_last_digits
-      self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
+      self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..)
     end
 
     # @return [String] the credit card type if it can be determined from the

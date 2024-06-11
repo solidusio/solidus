@@ -2,15 +2,22 @@
 
 if ENV["COVERAGE"]
   require 'simplecov'
+  if ENV["COVERAGE_DIR"]
+    SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
+  end
+  SimpleCov.command_name('solidus:core')
+  SimpleCov.merge_timeout(3600)
   SimpleCov.start('rails')
 end
 
 require 'rspec/core'
 
+require 'spree/testing_support/flaky'
 require 'spree/testing_support/partial_double_verification'
+require 'spree/testing_support/silence_deprecations'
 require 'spree/testing_support/preferences'
+require 'spree/deprecator'
 require 'spree/config'
-require 'with_model'
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
@@ -23,7 +30,6 @@ RSpec.configure do |config|
   end
 
   config.include Spree::TestingSupport::Preferences
-  config.extend WithModel
 
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true

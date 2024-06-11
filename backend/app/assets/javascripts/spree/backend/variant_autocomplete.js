@@ -7,10 +7,19 @@
     });
   };
 
-  $.fn.variantAutocomplete = function(searchOptions) {
-    if (searchOptions == null) {
-      searchOptions = {};
-    }
+  /**
+    * Make the element a select2 dropdown used for finding Variants. By default, the search term will be
+    * passed to the defined Spree::Config.variant_search_class by the controller with its defined scope.
+    * @param  {Object|undefined|null} options Options
+    * @param  {Function|undefined} options.searchParameters Returns a hash object for params to merge on the select2 ajax request
+    *                                                       Accepts an argument of the select2 search term. To use Ransack, define
+    *                                                       variant_search_term as a falsy value, and q as the Ransack query. Note,
+    *                                                       you need to ensure that the attributes are allowed to be Ransacked.
+    */
+  $.fn.variantAutocomplete = function(options) {
+    // Default options
+    options = options || {}
+
     this.select2({
       placeholder: Spree.translations.variant_placeholder,
       minimumInputLength: 3,
@@ -30,19 +39,20 @@
           }
         },
         data: function(term, page) {
-          var searchData = {
-            q: {
-              product_name_or_sku_cont: term
-            },
-            token: Spree.api_key
-          };
-          return _.extend(searchData, searchOptions);
-        },
+          const extraParameters = options["searchParameters"] ? options["searchParameters"](term) : {}
 
+          return {
+            variant_search_term: term,
+            token: Spree.api_key,
+            page: page,
+            ...extraParameters,
+          }
+        },
         results: function(data, page) {
           window.variants = data["variants"];
           return {
-            results: data["variants"]
+            results: data["variants"],
+            more: data.current_page * data.per_page < data.total_count
           };
         }
       },

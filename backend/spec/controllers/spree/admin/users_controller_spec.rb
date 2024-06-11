@@ -59,6 +59,33 @@ describe Spree::Admin::UsersController, type: :controller do
         expect(assigns(:collection)).to eq [user]
       end
     end
+
+    context "when Spree.user_class have a different namespace than Spree" do
+      class UserModel < ApplicationRecord
+        self.table_name = 'spree_users'
+        include Spree::UserMethods
+      end
+
+      around do |example|
+        actual_user_class = Spree.user_class
+        Spree.user_class = 'UserModel'
+        UserModel.create(email: "a@solidus.io")
+        example.run
+        Spree.user_class = actual_user_class.name
+      end
+
+      render_views
+
+      it "renders the edit and delete links correctly" do
+        allow(Spree.user_class).to receive(:find_by).
+            with(hash_including(:spree_api_key)).
+            and_return(Spree.user_class.new)
+
+        get :index
+
+        expect(response).to be_successful
+      end
+    end
   end
 
   context "#show" do
@@ -321,7 +348,7 @@ describe Spree::Admin::UsersController, type: :controller do
       end
     end
 
-    context "when the user can manage only some stock locations" do
+    context "when the user can manage only some roles" do
       stub_authorization! do |_user|
         can :manage, Spree.user_class
         can :manage, Spree::Role
@@ -333,6 +360,14 @@ describe Spree::Admin::UsersController, type: :controller do
         role2 = Spree::Role.create(name: "not_accessible_role")
         put :update, params: { id: user.id, user: { spree_role_ids: [role1.id, role2.id] } }
         expect(user.reload.spree_roles).to eq([role1])
+      end
+
+      it "can't remove non accessible roles when assigning accessible ones" do
+        role1 = Spree::Role.create(name: "accessible_role")
+        role2 = Spree::Role.create(name: "not_accessible_role")
+        user.spree_roles << role2
+        put :update, params: { id: user.id, user: { spree_role_ids: [role1.id] } }
+        expect(user.reload.spree_roles).to match_array([role1, role2])
       end
     end
 
@@ -406,6 +441,13 @@ describe Spree::Admin::UsersController, type: :controller do
         put :update, params: { id: user.id, user: { stock_location_ids: [location2.id] } }
         expect(user.reload.stock_locations).to eq([location2])
       end
+
+      it "can clear stock locations" do
+        user.stock_locations << Spree::StockLocation.create(name: "my_location")
+        expect {
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs", stock_location_ids: [""] } }
+        }.to change { user.reload.stock_locations.to_a }.to([])
+      end
     end
 
     context "when the user cannot manage stock locations" do
@@ -435,6 +477,35 @@ describe Spree::Admin::UsersController, type: :controller do
         location2 = Spree::StockLocation.create(name: "not_accessible_location")
         put :update, params: { id: user.id, user: { stock_location_ids: [location1.id, location2.id] } }
         expect(user.reload.stock_locations).to eq([location1])
+      end
+    end
+  end
+
+  describe "#destroy" do
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
+    end
+
+    subject do
+      delete :destroy, params: { id: user.id }
+      response
+    end
+
+    context "with user having no orders" do
+      let(:user) { create(:user) }
+
+      it "can be destroyed" do
+        is_expected.to be_redirect
+        expect(flash[:success]).to eq("User has been successfully removed!")
+      end
+    end
+
+    context "with user having orders" do
+      let(:user) { create(:user, :with_orders) }
+
+      it "cannot be destroyed" do
+        is_expected.to be_forbidden
+        expect(subject.body).to eq I18n.t("spree.error_user_destroy_with_orders")
       end
     end
   end

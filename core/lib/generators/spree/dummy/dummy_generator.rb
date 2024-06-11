@@ -44,6 +44,7 @@ module Spree
       opts[:skip_yarn] = true
       opts[:skip_bootsnap] = true
       opts[:skip_javascript] = true
+      opts[:skip_action_cable] = true
 
       puts "Generating dummy Rails application..."
       invoke Rails::Generators::AppGenerator,
@@ -96,13 +97,15 @@ module Spree
     protected
 
     def inject_require_for(requirement)
-      inject_into_file 'config/application.rb', %[
-begin
-  require '#{requirement}'
-rescue LoadError
-  # #{requirement} is not available.
-end
-      ], before: /require '#{@lib_name}'/, verbose: true
+      inject_into_file 'config/application.rb', (
+        <<~RUBY
+          begin
+            require '#{requirement}'
+          rescue LoadError
+            # #{requirement} is not available.
+          end
+        RUBY
+      ), before: /require '#{@lib_name}'/, verbose: true
     end
 
     def dummy_path
@@ -118,7 +121,7 @@ end
         dummy_application_path = File.expand_path("#{dummy_path}/config/application.rb", destination_root)
         unless options[:pretend] || !File.exist?(dummy_application_path)
           contents = File.read(dummy_application_path)
-          contents[(contents.index("module #{module_name}"))..-1]
+          contents[(contents.index("module #{module_name}"))..]
         end
       end
     end

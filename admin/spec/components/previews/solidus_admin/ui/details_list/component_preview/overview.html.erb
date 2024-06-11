@@ -1,0 +1,10 @@
+<%= render current_component.new(
+  items: [
+    { label: 'Subtotal', value: '€90.00', class: 'font-semibold' },
+    { label: 'Taxes', value: '€0.00' },
+    { label: 'Shipping', value: '€0.00' },
+    { label: link_to('Add promo code', '#', class: "body-link"), value: '€0.00' },
+    { label: link_to('Adjustments', '#', class: "body-link"), value: '€0.00' },
+    { label: 'Total', value: '€90.00', class: 'font-semibold' }
+  ]
+) %>

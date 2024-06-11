@@ -4,13 +4,14 @@ module Spree
   module Api
     class CustomerReturnsController < Spree::Api::BaseController
       before_action :load_order
-      around_action :lock_order, only: [:create, :update, :destroy, :cancel]
+      before_action :build_customer_return, only: [:create]
+      around_action :lock_order, only: [:create, :update]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
       def create
         authorize! :create, CustomerReturn
-        @customer_return = CustomerReturn.create(customer_return_params)
+
         if @customer_return.save
           respond_with(@customer_return, status: 201, default_template: :show)
         else
@@ -61,6 +62,26 @@ module Spree
 
       def customer_return_params
         params.require(:customer_return).permit(permitted_customer_return_attributes)
+      end
+
+      def build_customer_return
+        customer_return_attributes = customer_return_params
+        return_items_params = customer_return_attributes.
+          delete(:return_items_attributes)
+
+        @customer_return = CustomerReturn.new(customer_return_attributes)
+
+        @customer_return.return_items = return_items_params.map do |item_params|
+          return_item = if item_params[:id]
+                          Spree::ReturnItem.find(item_params[:id])
+                        else
+                          Spree::ReturnItem.new
+                        end
+
+          return_item.assign_attributes(item_params)
+
+          return_item
+        end
       end
     end
   end

@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 
-<% if @variants.any? || @product.variants.discarded.any? %>
+<% if @product.variants.with_discarded.any? || params[:variant_search_term].present? %>
   <%= render "table_filter", product: @product %>
   <%= render "table", variants: @variants %>
 <% else %>
@@ -22,7 +22,7 @@
     <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
       <%= t('spree.to_add_variants_you_must_first_define') %>
       <% if can?(:show, Spree::OptionType) %>
-        <%= link_to plural_resource_name(Spree::OptionType), admin_option_types_path%>
+        <%= link_to plural_resource_name(Spree::OptionType), admin_option_types_path %>
       <% else %>
         <%= plural_resource_name(Spree::OptionType) %>
       <% end %>

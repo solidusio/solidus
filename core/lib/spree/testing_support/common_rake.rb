@@ -1,38 +1,91 @@
 # frozen_string_literal: true
 
-unless defined?(Solidus::InstallGenerator)
-  require 'generators/solidus/install/install_generator'
-end
-
 require 'generators/spree/dummy/dummy_generator'
 
-namespace :common do
-  task :test_app, :user_class do |_t, args|
-    args.with_defaults(user_class: "Spree::LegacyUser")
-    require ENV['LIB_NAME']
+class CommonRakeTasks
+  include Rake::DSL
 
-    ENV["RAILS_ENV"] = 'test'
+  def initialize
+    namespace :common do
+      task :test_app, :user_class do |_t, args|
+        args.with_defaults(user_class: "Spree::LegacyUser")
+        lib_name = ENV['LIB_NAME'] or
+          raise "Please provide a library name via the LIB_NAME environment variable."
 
-    Spree::DummyGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--quiet"]
-    Solidus::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--with-authentication=false", "--payment-method=none", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
+        require lib_name
 
-    puts "Setting up dummy database..."
+        force_rails_environment_to_test
 
-    sh "bin/rails db:environment:set RAILS_ENV=test"
-    sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
+        Spree::DummyGenerator.start [
+          "--lib-name=#{lib_name}",
+          "--quiet",
+        ]
 
-    begin
-      require "generators/#{ENV['LIB_NAME']}/install/install_generator"
-      puts 'Running extension installation generator...'
-      "#{ENV['LIB_NAMESPACE'] || ENV['LIB_NAME'].camelize}::Generators::InstallGenerator".constantize.start(["--auto-run-migrations"])
-    rescue LoadError
-      # No extension generator to run
+        # While the dummy app is generated the current directory
+        # within ruby is changed to that of the dummy app.
+        sh({
+          'FRONTEND' => ENV['FRONTEND'] || 'none',
+        }, [
+          'bin/rails',
+          'generate',
+          'solidus:install',
+          Dir.pwd, # use the current dir as Rails.root
+          "--auto-accept",
+          "--admin-preview=#{ENV.fetch('ADMIN_PREVIEW', 'false')}",
+          "--authentication=none",
+          "--payment-method=none",
+          "--migrate=false",
+          "--seed=false",
+          "--sample=false",
+          "--user-class=#{args[:user_class]}",
+          "--quiet",
+        ].shelljoin)
+
+        if Bundler.locked_gems.dependencies['solidus_frontend']
+          sh "bin/rails g solidus_frontend:install --auto-accept"
+        end
+
+        puts "Setting up dummy database..."
+
+        sh "bin/rails db:environment:set RAILS_ENV=test"
+        sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
+
+        if extension_installation_generator_exists?
+          puts 'Running extension installation generator...'
+          sh "bin/rails generate #{rake_generator_namespace}:install --auto-run-migrations"
+        end
+      end
+
+      task :seed do |_t, _args|
+        puts "Seeding ..."
+
+        sh "bundle exec rake db:seed RAILS_ENV=test"
+      end
     end
   end
 
-  task :seed do |_t, _args|
-    puts "Seeding ..."
+  private
 
-    sh "bundle exec rake db:seed RAILS_ENV=test"
+  def force_rails_environment_to_test
+    ENV["RAILS_ENV"] = 'test'
+    Rails.env = 'test'
+  end
+
+  def extension_installation_generator_exists?
+    require "generators/#{generator_namespace}/install/install_generator"
+
+    true
+  rescue LoadError
+    false
+  end
+
+  def generator_namespace
+    "#{ENV['LIB_NAMESPACE']&.underscore || ENV['LIB_NAME']}"
+  end
+
+  def rake_generator_namespace
+    generator_namespace.gsub("/", ":")
   end
 end
+
+CommonRakeTasks.new

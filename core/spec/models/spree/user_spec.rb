@@ -39,13 +39,13 @@ RSpec.describe Spree::LegacyUser, type: :model do
         stub_spree_preferences(completable_order_created_cutoff_days: 1)
       end
 
-      it "excludes orders updated outside of the cutoff date" do
+      it "excludes orders created outside of the cutoff date" do
         create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
         expect(user.last_incomplete_spree_order).to eq nil
       end
     end
 
-    context "with completable_order_created_cutoff set" do
+    context "with completable_order_updated_cutoff set" do
       before do
         stub_spree_preferences(completable_order_updated_cutoff_days: 1)
       end

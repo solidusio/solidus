@@ -1,0 +1,10 @@
+en:
+  status:
+    active: Active
+    inactive: Inactive
+  scopes:
+    active: Active
+    inactive: Inactive
+    admin: Admin
+    storefront: Storefront
+    all: All

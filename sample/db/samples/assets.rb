@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
+require 'thor'
+shell = Thor::Base.shell.new
+
 Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
 
 products = {}
-products[:solidus_tshirt] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus T-Shirt")
-products[:solidus_long] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Long Sleeve")
-products[:solidus_girly] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Girly")
-products[:solidus_snapback_cap] = Spree::Product.find_by!(name: "Solidus Snapback Cap")
-products[:solidus_hoodie] = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
-products[:ruby_hoodie] = Spree::Product.find_by!(name: "Ruby Hoodie")
-products[:ruby_hoodie_zip] = Spree::Product.find_by!(name: "Ruby Hoodie Zip")
-products[:ruby_polo] = Spree::Product.find_by!(name: "Ruby Polo")
-products[:solidus_mug] = Spree::Product.find_by!(name: "Solidus Mug")
-products[:ruby_mug] = Spree::Product.find_by!(name: "Ruby Mug")
-products[:solidus_tote] = Spree::Product.find_by!(name: "Solidus Tote")
-products[:ruby_tote] = Spree::Product.find_by!(name: "Ruby Tote")
+products[:solidus_bottles] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Water Bottle")
+products[:solidus_tote] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus tote")
+products[:solidus_hoodie] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus hoodie")
+products[:solidus_hat] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus winter hat")
+products[:solidus_sticker] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus circle sticker")
+products[:solidus_cap] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus cap")
 
-def image(name, type = "jpg")
+products[:solidus_mug_set] = Spree::Product.find_by!(name: "Solidus mug set")
+products[:solidus_notebook] = Spree::Product.find_by!(name: "Solidus notebook")
+products[:solidus_tshirt] = Spree::Product.find_by!(name: "Solidus t-shirt")
+products[:solidus_long_sleeve_tee] = Spree::Product.find_by!(name: "Solidus long sleeve tee")
+products[:solidus_dark_tee] = Spree::Product.find_by!(name: "Solidus dark tee")
+products[:solidus_canvas_tote] = Spree::Product.find_by!(name: "Solidus canvas tote bag")
+products[:solidus_cap] = Spree::Product.find_by!(name: "Solidus cap")
+
+def image(name, type = "png")
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"
   path = images_path + "#{name}.#{type}"
 
@@ -27,96 +32,91 @@ def image(name, type = "jpg")
 end
 
 images = {
-  products[:solidus_snapback_cap].master => [
+  products[:solidus_bottles].master => [
     {
-      attachment: image("solidus_snapback_cap")
-    }
-  ],
-  products[:solidus_hoodie].master => [
-    {
-      attachment: image("solidus_hoodie")
-    }
-  ],
-  products[:ruby_hoodie].master => [
-    {
-      attachment: image("ruby_hoodie")
-    }
-  ],
-  products[:ruby_hoodie_zip].master => [
-    {
-      attachment: image("ruby_hoodie_zip")
-    }
-  ],
-  products[:ruby_polo].master => [
-    {
-      attachment: image("ruby_polo")
+      attachment: image("solidus_bottles_1")
     },
     {
-      attachment: image("ruby_polo_back")
-    }
-  ],
-  products[:solidus_mug].master => [
-    {
-      attachment: image("solidus_mug")
-    }
-  ],
-  products[:ruby_mug].master => [
-    {
-      attachment: image("ruby_mug")
+      attachment: image("solidus_bottles_2")
     }
   ],
   products[:solidus_tote].master => [
     {
-      attachment: image("tote_bag_solidus")
+      attachment: image("solidus_tote")
     }
   ],
-  products[:ruby_tote].master => [
+  products[:solidus_hoodie].master => [
     {
-      attachment: image("tote_bag_ruby")
+      attachment: image("solidus_hoodie_black_1")
     }
-  ]
+  ],
+  products[:solidus_hat].master => [
+    {
+      attachment: image("solidus_hat")
+    }
+  ],
+  products[:solidus_sticker].master => [
+    {
+      attachment: image("solidus_sticker")
+    }
+  ],
+  products[:solidus_mug_set].master => [
+    {
+      attachment: image("solidus_mug_set")
+    }
+  ],
+  products[:solidus_notebook].master => [
+    {
+      attachment: image("solidus_notebook")
+    }
+  ],
+  products[:solidus_tshirt].master => [
+    {
+      attachment: image("solidus_tshirt")
+    }
+  ],
+  products[:solidus_long_sleeve_tee].master => [
+    {
+      attachment: image("solidus_long_sleeve_tee")
+    }
+  ],
+  products[:solidus_dark_tee].master => [
+    {
+      attachment: image("solidus_dark_tee")
+    }
+  ],
+  products[:solidus_canvas_tote].master => [
+    {
+      attachment: image("solidus_canvas_tote")
+    }
+  ],
+  products[:solidus_cap].master => [
+    {
+      attachment: image("solidus_cap_black_1")
+    }
+  ],
 }
 
-products[:solidus_tshirt].variants.each do |variant|
-  color = variant.option_value("tshirt-color").downcase
-  main_image = image("solidus_tshirt_#{color}", "png")
-  File.open(main_image) do |f|
-    variant.images.create!(attachment: f)
-  end
-  back_image = image("solidus_tshirt_back_#{color}", "png")
+products.each do |key, product|
+  product.reload.variants.each do |variant|
+    color = variant.option_value("clothing-color").downcase
+    index = 1
 
-  next unless back_image
+    loop do
+      image_path = image("#{key}_#{color}_#{index}", 'png')
+      break unless image_path
 
-  File.open(back_image) do |f|
-    variant.images.create!(attachment: f)
-  end
-end
+      File.open(image_path) do |f|
+        variant.images.create!(attachment: f)
+      end
 
-products[:solidus_long].variants.each do |variant|
-  color = variant.option_value("tshirt-color").downcase
-  main_image = image("solidus_long_#{color}", "png")
-  File.open(main_image) do |f|
-    variant.images.create!(attachment: f)
-  end
-  back_image = image("solidus_long_back_#{color}", "png")
-
-  next unless back_image
-
-  File.open(back_image) do |f|
-    variant.images.create!(attachment: f)
-  end
-end
-
-products[:solidus_girly].reload.variants.each do |variant|
-  color = variant.option_value("tshirt-color").downcase
-  main_image = image("solidus_girly_#{color}", "png")
-  File.open(main_image) do |f|
-    variant.images.create!(attachment: f)
+      index += 1
+    end
   end
 end
 
 images.each do |variant, attachments|
-  puts "Loading images for #{variant.product.name}"
+  shell.say_status :sample, "images for #{variant.product.name}"
   attachments.each do |attachment|
     File.open(attachment[:attachment]) do |f|
       variant.images.create!(attachment: f)

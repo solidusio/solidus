@@ -1,4 +1,4 @@
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <meta name="turbolinks-cache-control" content="no-cache">
 
 <%= csrf_meta_tags %>
@@ -6,7 +6,8 @@
 <title><%= admin_page_title %></title>
 
 <%= favicon_link_tag 'favicon.ico' %>
-<%= stylesheet_link_tag 'spree/backend/all', media: 'all', data: {turbolinks_track: 'reload'} %>
+<%= stylesheet_link_tag Spree::Backend::Config.theme_path(session[:admin_light_theme]), media: '(prefers-color-scheme: light)', data: {turbolinks_track: 'reload'} %>
+<%= stylesheet_link_tag Spree::Backend::Config.theme_path(session[:admin_dark_theme]), media: '(prefers-color-scheme: dark)', data: {turbolinks_track: 'reload'} %>
 <%= javascript_include_tag 'spree/backend/all', data: {turbolinks_track: 'reload'} %>
 
 <%- if Rails.env.test? %>
@@ -31,18 +32,18 @@
     }
   </style>
 
-  <%= javascript_tag do %>
+  <script>
     Spree.ready(function(){
       $('.translation_missing').tooltip();
     });
-  <% end %>
+  </script>
 <%- end %>
 
 <%= render "spree/admin/shared/js_locale_data" %>
 
-<%= javascript_tag do -%>
-  Spree.api_key = "<%= try_spree_current_user.try(:spree_api_key) %>";
+<script>
+  Spree.api_key = "<%= spree_current_user.try(:spree_api_key) %>";
   Spree.env = "<%= Rails.env %>";
-<% end %>
+</script>
 
 <%= yield :head %>

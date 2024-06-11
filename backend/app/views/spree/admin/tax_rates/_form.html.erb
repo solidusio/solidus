@@ -1,6 +1,6 @@
 <div data-hook="admin_tax_rate_form_fields">
     <fieldset data-hook="tax_rates" class=" no-border-bottom">
-      <legend align="center"><%= t('spree.general_settings') %></legend>
+      <legend align="center"><%= t('spree.store') %></legend>
       <div class="row">
 
         <div class="col-5">
@@ -11,13 +11,27 @@
           <div data-hook="rate" class="field">
             <%= f.label :amount %>
             <%= f.text_field :amount, class: 'fullwidth' %>
-            <br/><span class="info"><%= t('spree.tax_rate_amount_explanation') %></span>
+            <br><span class="info"><%= t('spree.tax_rate_amount_explanation') %></span>
           </div>
           <div data-hook="included" class="field">
             <label>
               <%= f.check_box :included_in_price %>
               <%= t('spree.included_in_price') %>
             </label>
+          </div>
+          <div data-hook="level" class="field">
+            <%= f.label :level, t('spree.tax_rate_level') %>
+            <%= admin_hint t('spree.tax_rate_level'), t(:tax_rate_level, scope: [:spree, :hints, "spree/tax_rate"]) %>
+            <ul>
+              <% Spree::TaxRate.levels.keys.each do |level| %>
+                <li>
+                  <label>
+                    <%= f.radio_button :level, level %>
+                    <%= t("spree.#{level}_level") %>
+                  </label>
+                </li>
+              <% end %>
+            </ul>
           </div>
         </div>
 

@@ -35,11 +35,17 @@ module Spree
         # Use the random number if no other order exists with it.
         if Spree::Order.exists?(number: random)
           # If over half of all possible options are taken add another digit.
-          @length += 1 if Spree::Order.count > (10**@length / 2)
+          @length += 1 if order_count > (10**@length / 2)
         else
           break random
         end
       end
+    end
+
+    private
+
+    def order_count
+      @order_count ||= Spree::Order.count
     end
   end
 end

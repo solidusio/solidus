@@ -92,7 +92,7 @@ module Spree
 
         @search = super.ransack(params[:q])
         @collection = @search.result.includes(:spree_roles)
-        @collection = @collection.includes(:spree_orders)
+        @collection = @collection.includes(:orders)
         @collection = @collection.page(params[:page]).per(Spree::Config[:admin_products_per_page])
       end
 
@@ -101,10 +101,6 @@ module Spree
 
         if action_name == "create" || can?(:update_email, @user)
           attributes |= [:email]
-        end
-
-        if can? :manage, Spree::Role
-          attributes += [{ spree_role_ids: [] }]
         end
 
         if can? :manage, Spree::StockLocation
@@ -121,11 +117,11 @@ module Spree
       # handling raise from Spree::Admin::ResourceController#destroy
       def user_destroy_with_orders_error
         invoke_callbacks(:destroy, :fails)
-        render status: :forbidden, text: t('spree.error_user_destroy_with_orders')
+        render status: :forbidden, plain: t("spree.error_user_destroy_with_orders")
       end
 
       def sign_in_if_change_own_password
-        if try_spree_current_user == @user && @user.password.present?
+        if spree_current_user == @user && @user.password.present?
           sign_in(@user, event: :authentication, bypass: true)
         end
       end
@@ -142,9 +138,13 @@ module Spree
       end
 
       def set_roles
-        if user_params[:spree_role_ids]
-          @user.spree_roles = Spree::Role.accessible_by(current_ability).where(id: user_params[:spree_role_ids])
-        end
+        roles_ids = params[:user][:spree_role_ids]
+        return unless roles_ids
+
+        @user.update_spree_roles(
+          Spree::Role.where(id: roles_ids),
+          ability: current_ability
+        )
       end
 
       def set_stock_locations

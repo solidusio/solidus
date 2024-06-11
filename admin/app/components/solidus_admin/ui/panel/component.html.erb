@@ -1,0 +1,39 @@
+<div
+  class="
+    bg-white
+    rounded-lg
+    shadow-sm
+    border
+    border-gray-100
+    flex-col
+    justify-start
+    items-start
+    inline-flex
+    w-full
+    relative
+  "
+  data-controller="<%= stimulus_id %>"
+>
+  <% if menus? %>
+    <%= render component('ui/dropdown').new(
+      size: :s,
+      class: "absolute top-0 right-0 m-6",
+    ).with_content(safe_join(menus)) %>
+  <% end %>
+
+  <% if @title %>
+    <%= render_section do %>
+      <h2>
+        <span class="font-semibold text-base"><%= @title %></span>
+        <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
+      </h2>
+    <% end %>
+  <% end %>
+
+  <% sections.each do |section| %>
+    <%= section %>
+  <% end %>
+
+  <%= render_section { content } if content.present? %>
+  <%= render_section { tag.div(action, class: "flex justify-between items-center") } if action? %>
+</div>

@@ -1,15 +1,27 @@
-<% Spree::Backend::Config.menu_items.sort_by { |item| item.position || Float::INFINITY }.each do |menu_item| %>
-  <% if instance_exec(&menu_item.condition) %>
+<% Spree::Backend::Config.menu_items.each do |menu_item| %>
+  <% if menu_item.render_in?(self) %>
     <%=
       tab(
-        *menu_item.sections,
         icon: menu_item.icon,
         label: menu_item.label,
-        url: menu_item.url.is_a?(Symbol) ? spree.public_send(menu_item.url) : menu_item.url,
-        match_path: menu_item.match_path,
+        url: menu_item.url,
+        selected: menu_item.match_path?(request) || menu_item.children.any? { _1.match_path?(request) },
       ) do
     %>
-      <%- render partial: menu_item.partial if menu_item.partial %>
+      <% if menu_item.render_partial? %>
+        <%- render partial: menu_item.partial %>
+      <% elsif menu_item.children.present? %>
+        <ul class="admin-subnav" data-hook="<%= menu_item.data_hook %>">
+          <%- menu_item.children.each do |child| %>
+            <%= tab(
+              icon: child.icon,
+              label: child.label,
+              url: child.url,
+              selected: child.match_path?(request),
+            ) if child.render_in?(self) %>
+          <% end %>
+        </ul>
+      <% end %>
     <%- end %>
   <% end %>
 <% end %>

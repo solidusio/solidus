@@ -1,0 +1,11 @@
+@import "solidus_admin/select2";
+@import "solidus_admin/flatpickr/flatpickr";
+@import "prism";
+
+@import 'spree/backend/bootstrap_custom';
+@import 'solidus_admin/bootstrap/bootstrap';
+@import 'font-awesome';
+
+// These mixins will modify existing Bootstrap ones and need to be imported
+// after the Bootstrap has been processed.
+@import 'spree/backend/globals/mixins';
