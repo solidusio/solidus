@@ -36,6 +36,10 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
   end
 
+  it "uses simple order contents class by default" do
+    expect(prefs.order_contents_class).to eq Spree::SimpleOrderContents
+  end
+
   it "uses variant price selector class by default" do
     expect(prefs.variant_price_selector_class).to eq Spree::Variant::PriceSelector
   end
