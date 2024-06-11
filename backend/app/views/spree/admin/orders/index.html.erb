@@ -16,89 +16,11 @@
   <div data-hook="admin_orders_index_search">
     <%= search_form_for [:admin, @search] do |f| %>
       <div class="row">
-        <div class="field-block col-12 col-md-6 col-lg-4 col-xl-3">
-          <div class="date-range-filter field">
-            <%= label_tag :q_created_at_gt, t('spree.date_range') %>
-            <div class="date-range-fields input-group">
-              <%= f.text_field :created_at_gt, class: 'datepicker form-control datepicker-from', value: params[:q][:created_at_gt], placeholder: t('spree.start') %>
-
-              <div class="input-group-prepend input-group-append">
-                <span class="input-group-text range-divider">
-                  <i class="fa fa-arrow-right"></i>
-                </span>
-              </div>
-
-              <%= f.text_field :created_at_lt, class: 'datepicker form-control datepicker-to', value: params[:q][:created_at_lt], placeholder: t('spree.stop') %>
-            </div>
-          </div>
-
-          <div class="field">
-            <%= label_tag :q_state_eq, t('spree.status') %>
-            <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [t(s.name, scope: 'spree.order_state'), s.value]}, {include_blank: true}, class: 'custom-select fullwidth' %>
-          </div>
-
-          <div class="field">
-            <%= label_tag nil, t('spree.promotion') %>
-            <%= f.text_field :order_promotions_promotion_code_value_start, size: 25 %>
-          </div>
-
-          <div class="field">
-            <%= label_tag nil, t('spree.shipment_number') %>
-            <%= f.text_field :shipments_number_start %>
-          </div>
-
-          <div class="field">
-            <%= label_tag :q_shipment_state, t('spree.shipment_state') %>
-            <%= f.select :shipment_state_eq, %i[backorder canceled partial pending ready shipped].map { |state| [t("spree.shipment_states.#{state}"), state] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 col-xl-6">
-          <div class="row">
-            <div class="col-12 col-xl-6">
-              <div class="field">
-                <%= label_tag :q_number_start, t('spree.order_number', number: '') %>
-                <%= f.text_field :number_start %>
-              </div>
-
-              <div class="field">
-                <%= label_tag :q_email_start, t('spree.email') %>
-                <%= f.text_field :email_start %>
-              </div>
-            </div>
-
-            <div class="col-12 col-xl-6">
-              <div class="field">
-                <%= label_tag :q_bill_address_name_cont, t('spree.name_contains') %>
-                <%= f.text_field :bill_address_name_cont, size: 25 %>
-              </div>
-            </div>
-
-            <div class="col-12 col-xl-6">
-              <div class="field" data-hook="sku-select">
-                <%= label_tag :q_line_items_variant_id_in, t('spree.variant') %>
-                <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-          <% if Spree::Store.count > 1 %>
-            <div class="field">
-              <%= label_tag :q_store_id_eq, t('spree.store') %>
-              <%= f.select :store_id_eq, Spree::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
-            </div>
+        <% Spree::Backend::Config.search_fields[controller_path].each do |field_config| %>
+          <% if !field_config.has_key?(:if) || field_config[:if].call %>
+            <%= render field_config.except(:if).deep_merge(locals: { f: f }) %>
           <% end %>
-
-          <div class="field checkbox">
-            <label>
-              <%= f.check_box :completed_at_not_null, {checked: @show_only_completed}, '1', '0' %>
-              <%= t('spree.show_only_complete_orders') %>
-            </label>
-          </div>
-        </div>
-
+        <% end %>
       </div>
 
       <div class="clearfix"></div>

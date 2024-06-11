@@ -50,6 +50,21 @@ module SolidusLegacyPromotions
       end
     end
 
+    initializer "solidus_legacy_promotions.add_order_search_field" do
+      if SolidusSupport.backend_available?
+        email_field_index = Spree::Backend::Config.search_fields["spree/admin/orders"].find_index do |field|
+          field.dig(:locals, :ransack) == :email_start
+        end
+        Spree::Backend::Config.search_fields["spree/admin/orders"].insert(email_field_index + 1, {
+          partial: "spree/admin/shared/search_fields/text_field",
+          locals: {
+            ransack: :order_promotions_promotion_code_value_start,
+            label: -> { I18n.t(:promotion, scope: :spree) }
+          }
+        })
+      end
+    end
+
     initializer 'solidus_legacy_promotions.core.pub_sub', after: 'spree.core.pub_sub' do |app|
       app.reloader.to_prepare do
         Spree::OrderPromotionSubscriber.new.subscribe_to(Spree::Bus)

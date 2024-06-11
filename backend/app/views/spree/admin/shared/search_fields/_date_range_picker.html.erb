@@ -1,0 +1,16 @@
+<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+  <div class="date-range-filter field">
+    <%= label_tag "q_#{attribute}", label.respond_to?(:call) ? label.call : label %>
+    <div class="date-range-fields input-group">
+      <%= f.text_field "#{attribute}_gt", class: 'datepicker form-control datepicker-from', value: params[:q][:created_at_gt], placeholder: t('spree.start') %>
+
+      <div class="input-group-prepend input-group-append">
+        <span class="input-group-text range-divider">
+          <i class="fa fa-arrow-right"></i>
+        </span>
+      </div>
+
+      <%= f.text_field "#{attribute}_lt", class: 'datepicker form-control datepicker-to', value: params[:q][:created_at_lt], placeholder: t('spree.stop') %>
+    </div>
+  </div>
+</div>
