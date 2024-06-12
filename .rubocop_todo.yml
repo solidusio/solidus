@@ -285,7 +285,7 @@ Naming/MethodParameterName:
 # Configuration parameters: SafeMultiline.
 Performance/DeletePrefix:
   Exclude:
-    - "core/app/models/spree/promotion_handler/page.rb"
+    - "legacy_promotions/app/models/spree/promotion_handler/page.rb"
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
@@ -660,7 +660,7 @@ Style/RedundantAssignment:
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantBegin:
   Exclude:
-    - "core/app/models/spree/promotion_handler/coupon.rb"
+    - "legacy_promotions/app/models/spree/promotion_handler/coupon.rb"
     - "core/app/models/spree/user_last_url_storer/rules/authentication_rule.rb"
     - "core/spec/models/spree/stock/simple_coordinator_spec.rb"
 
