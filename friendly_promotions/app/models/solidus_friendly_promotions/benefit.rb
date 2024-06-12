@@ -3,7 +3,7 @@
 require "spree/preferences/persistable"
 
 module SolidusFriendlyPromotions
-  # Base class for all types of promotion action.
+  # Base class for all types of benefit.
   #
   # Benefits perform the necessary tasks when a promotion is activated
   # by an event and determined to be eligible.
