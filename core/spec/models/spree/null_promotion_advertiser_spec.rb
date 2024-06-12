@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Spree::PromotionAdvertiser, type: :model do
+RSpec.describe Spree::NullPromotionAdvertiser, type: :model do
   describe ".for_product" do
     subject { described_class.for_product(product) }
     let(:product) { create(:product) }
