@@ -100,14 +100,9 @@ end
 If you need more control, you can explicitly register your component in the
 Solidus Admin container instead of using an implicit path:
 
-> ⓘ  Right now, that will raise an error when the application is reloaded. We
-> need to fix it.
-
 ```ruby
 # config/initalizers/solidus_admin.rb
-Rails.application.config.to_prepare do
-  SolidusAdmin::Config.components['ui/button'] = MyApplication::Button::Component
-end
+SolidusAdmin::Config.components['ui/button'] = "MyApplication::Button::Component"
 ```
 
 ### Tweaking a component
