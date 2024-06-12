@@ -12,10 +12,16 @@ RSpec.describe "Orders", type: :feature, solidus_admin: true do
   it "lists products", :js do
     visit "/admin/orders"
 
-    click_button "Filter"
+    # Keep on clicking until the Promotions menu appears
+    page.document.synchronize do
+      click_button "Filter"
+
+      within("div[role=search]") do
+        expect(page).to have_content("Promotions")
+      end
+    end
 
     within("div[role=search]") do
-      expect(page).to have_content("Promotions")
       find(:xpath, "//summary[normalize-space(text())='Promotions']").click
     end
     check "10OFF"
