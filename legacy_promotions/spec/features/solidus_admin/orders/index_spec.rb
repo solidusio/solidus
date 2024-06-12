@@ -12,6 +12,8 @@ RSpec.describe "Orders", type: :feature, solidus_admin: true do
   it "lists products", :js do
     visit "/admin/orders"
 
+    sleep 1
+
     click_button "Filter"
 
     within("div[role=search]") do
