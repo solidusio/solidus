@@ -65,6 +65,7 @@ Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
 end
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
+Capybara.enable_aria_label = true
 
 # DATABASE CLEANER
 require 'database_cleaner'

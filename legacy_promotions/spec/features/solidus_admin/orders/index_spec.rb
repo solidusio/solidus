@@ -11,7 +11,11 @@ RSpec.describe "Orders", type: :feature, solidus_admin: true do
 
   it "lists products", :js do
     visit "/admin/orders"
-    find("button[aria-label=Filter]").click
+
+    sleep 1
+
+    click_button "Filter"
+
     within("div[role=search]") do
       expect(page).to have_content("Promotions")
       find(:xpath, "//summary[normalize-space(text())='Promotions']").click

@@ -75,6 +75,7 @@ require 'axe-rspec'
 require 'axe-capybara'
 
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
+Capybara.enable_aria_label = true
 
 # VIEW COMPONENTS
 Rails.application.config.view_component.test_controller = "SolidusAdmin::BaseController"
