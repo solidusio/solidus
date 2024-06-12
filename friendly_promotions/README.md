@@ -10,11 +10,7 @@ The basic architecture is very similar to the one in core Solidus, but with a fe
 
 This extension centralizes promotion handling in the order updater. A service class, the `SolidusFriendlyPromotions::FriendlyPromotionAdjuster` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
 
-In Solidus Core, Promotion adjustments get recalculated twice on every change to the cart; once in `Spree::OrderContents#after_add_or_remove` and in `Spree::OrderUpdater#update_promotions`. To make things more complicated, `Spree::OrderContents` leverages the `Spree::PromotionHandler#cart`, while the order updater goes through `Spree::Adjustment#recalculate`.
-
-The design decision here is to make the code path easier to follow, and consequently to make it more performant ("Make it easy, then make it fast").
-
-`SolidusFriendlyPromotions::Promotion` objects have rules and actions, just like `Spree::Promotion`. However, both rules and actions work slightly differently.
+`SolidusFriendlyPromotions::Promotion` objects have benefits, and benefits have conditions. For example, a promotion that is "20% off shirts" would have a benefit of type "AdjustLineItem", and that benefit would have a condition of type "LineItemTaxon" that makes sure only line items with the "shirts" taxon will get the benefit.
 
 ### Promotion lanes
 
@@ -31,25 +27,37 @@ SolidusFriendlyPromotions.configure do |config|
 end
 ```
 
-### Promotion Rules
+### Benefits
 
-Promotion rules can be applicable to either `Spree::Order`, `Spree::LineItem`, or `Spree::Shipment` objects. If they are applicable, they will be asked for eligibility. Rules applicable to orders are processed first. If a promotion has a rule that makes it ineligible for an order, line items and shipments will not be adjusted. If there are no rules that are applicable, the promotion will be considered eligible.
+Solidus Friendly Promotions ships with only three benefit types by default that should cover most use cases: `AdjustLineItem`, `AdjustShipment` and `CreateDiscountedItem`. There is no benefit that creates order-level adjustments, as this feature of Solidus' legacy promotions system has proven to be very difficult for customer service and finance departments due to the difficulty of accruing order-level adjustments to individual line items when e.g. processing returns. In order to give a fixed discount to all line items in an order, use the `AdjustLineItem` benefit with the `DistributedAmount` calculator.
 
-### Promotion Actions
+Alle benefits are calculable. By setting their `calculator` to one of the classes provided, a great range of discounts is possible.
 
-There are only two actions by default that should cover most use cases: `AdjustLineItem` and `AdjustShipment`. Ther is no action that creates order-level adjustments, as this feature of core Solidus has proven to be very difficult for customer service and finance departments due to the difficulty of accruing order-level adjustments to individual line items when e.g. processing returns. In order to give a fixed discount to all line items in an order, use the `AdjustLineItem` action with the `DistributedAmount` calculator.
+#### `AdjustLineItem`
 
-Both actions are calculable. By setting their `calculator` to one of the classes provided, a great range of discount possibilities is maintained.
+Benefits of this class will create promotion adjustments on line items. By default, they will create a discount on every line item in the order. If you want to restrict which line items get the discount, add line-item level conditions, such as `LineItemProduct`.
+
+#### `AdjustShipment`
+
+Benefits of this class will create promotion adjustments on shipments. By default, they will create a discount on every shipment in the order. If you want to restrict which shipments get a discount, add shipment-level conditions, such as `ShippingMethod`.
+
+### Conditions
+
+Every type of benefit has a list of rules that can be applied to them. When calculating adjustments for an order, benefits will only produce adjustments on line items or shipments if all their respective conditions are true.
 
 ### Connecting promotions to orders
 
-When there is a join record `SolidusFriendlyPromotions::OrderPromotion`, the promotion and the order will be "connected", and the promotion will be applied even if it does not `apply_automatically` (see below). There's a difference to Solidus' system here in that promotions are not automatically connected to orders when they apply.
+When there is a join record `SolidusFriendlyPromotions::OrderPromotion`, the promotion and the order will be "connected", and the promotion will be applied even if it does not `apply_automatically` (see below). This is different from Solidus' legacy promotion system here in that promotions are not automatically connected to orders when they produce an adjustment.
 
-One way of connecting orders to promotions is via a promotion code.
+If you want to create an `OrderPromotion` record, the usual way to do this is via a promotion handler:
+
+- `SolidusFriendlyPromotions::PromotionHandler::Coupon`: Connects orders to promotions if a customer or service agent enters a matching promotion code.
+- `SolidusFriendlyPromotions::PromotionHandler::Page`: Connects orders to promotions if a customer visits a page with the correct path. This handler is not integrated in core Solidus, and must be integrated by you.
+- `SolidusFriendlyPromotions::PromotionHandler::Page`: Connects orders to promotions if a customer visits a page with the correct path. This handler is not integrated in core Solidus, and must be integrated by you.
 
 ### Promotion categories
 
-Promotion categories simply allow admins to group promotion actions. They have no further significance with regards to the functionality of the promotion system. This is the same behavior as in core.
+Promotion categories simply allow admins to group promotions. They have no further significance with regards to the functionality of the promotion system.
 
 ### Promotion recalculation
 
@@ -78,9 +86,7 @@ bin/rails generate solidus_friendly_promotions:install
 ```
 
 This will create the tables for this extension. It will also replace the promotion administration system under
-`/admin/promotions` with a new one that needs `turbo-rails`.
-
-It will also create an initializer within which Solidus is configured to use this extension's `SimpleOrderContents` and `FriendlyPromotionAdjuster` classes. Feel free to override with your own implementations!
+`/admin/promotions` with a new one that needs `turbo-rails`. It will also create an initializer within which Solidus is configured to use `Spree::SimpleOrderContents` and this extension's `FriendlyPromotionAdjuster` classes. Feel free to override with your own implementations!
 
 ## Usage
 
