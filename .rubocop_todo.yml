@@ -89,7 +89,7 @@ Layout/EmptyLinesAroundAttributeAccessor:
   Exclude:
     - "core/app/models/spree/address/state_validator.rb"
     - "core/app/models/spree/order_updater.rb"
-    - "core/app/models/spree/promotion/order_adjustments_recalculator.rb"
+    - "legacy_promotions/app/models/spree/promotion/order_adjustments_recalculator.rb"
     - "core/app/models/spree/stock_quantities.rb"
     - "core/app/models/spree/variant.rb"
     - "core/lib/spree/app_configuration.rb"
@@ -113,7 +113,7 @@ Layout/EmptyLinesAroundBlockBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
 Layout/EmptyLinesAroundClassBody:
   Exclude:
-    - "core/app/models/spree/promotion/order_adjustments_recalculator.rb"
+    - "legacy_promotions/app/models/spree/promotion/order_adjustments_recalculator.rb"
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
