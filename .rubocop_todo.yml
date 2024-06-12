@@ -310,7 +310,7 @@ Rails/ApplicationController:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationJob:
   Exclude:
-    - "core/app/jobs/spree/promotion_code_batch_job.rb"
+    - "legacy_promotions/app/jobs/spree/promotion_code_batch_job.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
