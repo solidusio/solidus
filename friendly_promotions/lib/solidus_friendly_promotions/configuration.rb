@@ -20,6 +20,8 @@ module SolidusFriendlyPromotions
 
     class_name_attribute :coupon_code_handler_class, default: "SolidusFriendlyPromotions::PromotionHandler::Coupon"
 
+    class_name_attribute :promotion_finder_class, default: "SolidusFriendlyPromotions::PromotionFinder"
+
     # In case solidus_legacy_promotions is loaded, we need to define this.
     class_name_attribute :shipping_promotion_handler_class, default: "Spree::NullPromotionHandler"
 
