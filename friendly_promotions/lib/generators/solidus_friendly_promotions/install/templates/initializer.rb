@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Replace solidus core's order contents and promotion adjuster classes with ours.
-Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
+Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 
 Rails.application.config.to_prepare do |config|

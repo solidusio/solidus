@@ -22,7 +22,7 @@ This will install the extension. It will add new tables, and new routes. It will
 For the time being, comment out the following lines:
 
 ```rb
-# Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
+# Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 # Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 ```
 
@@ -44,7 +44,7 @@ Now, change `config/initializers/solidus_friendly_promotions.rb` to use your new
 
 ```rb
 # Stops running the stock `Spree::PromotionHandler::Cart`
-Spree::Config.order_contents_class = "SolidusFriendlyPromotions::SimpleOrderContents"
+Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 # Adjusts all items in an order according to the currently eligible promotions
 Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 ```
