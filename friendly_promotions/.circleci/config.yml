@@ -20,7 +20,6 @@ jobs:
       - browser-tools/install-chrome
       - checkout
       - solidusio_extensions/dependencies
-      - solidusio_extensions/run-tests-solidus-current
       - solidusio_extensions/run-tests-solidus-main
   run-specs-with-postgres:
     executor:
@@ -30,7 +29,6 @@ jobs:
       - browser-tools/install-chrome
       - checkout
       - solidusio_extensions/dependencies
-      - solidusio_extensions/run-tests-solidus-current
       - solidusio_extensions/run-tests-solidus-main
   run-specs-with-sqlite:
     executor:
@@ -40,7 +38,6 @@ jobs:
       - browser-tools/install-chrome
       - checkout
       - solidusio_extensions/dependencies
-      - solidusio_extensions/run-tests-solidus-current
       - solidusio_extensions/run-tests-solidus-main
 workflows:
   Run specs on supported Solidus versions:
