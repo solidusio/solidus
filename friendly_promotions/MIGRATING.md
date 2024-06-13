@@ -22,8 +22,10 @@ This will install the extension. It will add new tables, and new routes. It will
 For the time being, comment out the following lines:
 
 ```rb
+# Make sure we use Spree::SimpleOrderContents
 # Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
-# Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
+# Set the promotion configuration to ours
+# Spree::Config.promotions = SolidusFriendlyPromotions.configuration
 ```
 
 This makes sure that the behavior of the current promotion system does not change - yet.
@@ -43,10 +45,10 @@ Now, change `config/initializers/solidus_friendly_promotions.rb` to use your new
 ## Change store behavior to use SolidusFriendlyPromotions
 
 ```rb
-# Stops running the stock `Spree::PromotionHandler::Cart`
+# Make sure we use Spree::SimpleOrderContents
 Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
-# Adjusts all items in an order according to the currently eligible promotions
-Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
+# Set the promotion configuration to ours
+Spree::Config.promotions = SolidusFriendlyPromotions.configuration
 ```
 
 From a user's perspective, your promotions should work as before.

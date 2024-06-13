@@ -16,6 +16,8 @@ module SolidusFriendlyPromotions
 
     include Spree::Core::EnvironmentExtension
 
+    class_name_attribute :order_adjuster_class, default: "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
+
     add_class_set :line_item_discount_calculators
     add_class_set :shipment_discount_calculators
 

@@ -74,7 +74,7 @@ module SolidusFriendlyPromotions
         return promotion_applied if promotion_exists_on_order?(order, promotion)
 
         # Try applying this promotion, with no effects
-        Spree::Config.promotion_adjuster_class.new(order, dry_run_promotion: promotion).call
+        Spree::Config.promotions.order_adjuster_class.new(order, dry_run_promotion: promotion).call
 
         if promotion.eligibility_results.success?
           order.friendly_order_promotions.create!(

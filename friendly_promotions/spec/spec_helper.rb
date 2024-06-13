@@ -25,6 +25,8 @@ Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 # See: lib/solidus_friendly_promotions/testing_support/factories.rb
 SolidusDevSupport::TestingSupport::Factories.load_for(SolidusFriendlyPromotions::Engine)
 
+Spree::Config.promotions = SolidusFriendlyPromotions.configuration
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = true

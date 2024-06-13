@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-# Replace solidus core's order contents and promotion adjuster classes with ours.
-Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
-Spree::Config.promotion_adjuster_class = "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
+# Make sure we use Spree::SimpleOrderContents
+# Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
+# Set the promotion configuration to ours
+# Spree::Config.promotions = SolidusFriendlyPromotions.configuration
 
 Rails.application.config.to_prepare do |config|
   Spree::Order.line_item_comparison_hooks << :free_from_order_benefit?

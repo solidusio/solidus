@@ -11,7 +11,7 @@ module SolidusFriendlyPromotions
     end
 
     def ensure_promotions_eligible
-      Spree::Config.promotion_adjuster_class.new(self).call
+      Spree::Config.promotions.order_adjuster_class.new(self).call
       if promo_total_changed?
         restart_checkout_flow
         recalculate
