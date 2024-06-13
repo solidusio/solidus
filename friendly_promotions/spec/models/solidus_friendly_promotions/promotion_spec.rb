@@ -56,6 +56,59 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
     end
   end
 
+  describe "#discard" do
+    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, apply_automatically: true) }
+
+    subject { promotion.discard! }
+
+    it "discards the promotion and keeps the benefit" do
+      expect { subject }.to change { SolidusFriendlyPromotions::Promotion.count }.by(-1)
+    end
+
+    it "keeps the benefit" do
+      expect { subject }.not_to change(SolidusFriendlyPromotions::Benefit, :count)
+    end
+
+    context "when the promotion has been applied to a complete order" do
+      let(:order) { create(:order_ready_to_complete) }
+
+      before do
+        order.recalculate
+        order.complete!
+      end
+
+      it "does not complain" do
+        expect { subject }.not_to raise_exception
+      end
+    end
+
+    context "when the promotion has been added to an incomplete order" do
+      let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+      let(:order) { create(:order) }
+
+      before do
+        order.friendly_promotions << promotion
+      end
+
+      it "destroys the connection" do
+        expect { subject }.to change(SolidusFriendlyPromotions::OrderPromotion, :count).by(-1)
+      end
+    end
+
+    context "when the promotion has been added to a complete order" do
+      let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+      let(:order) { create(:order_ready_to_ship) }
+
+      before do
+        order.friendly_promotions << promotion
+      end
+
+      it "keeps the connection" do
+        expect { subject }.not_to change(SolidusFriendlyPromotions::OrderPromotion, :count)
+      end
+    end
+  end
+
   describe ".ordered_lanes" do
     subject { described_class.ordered_lanes }
 

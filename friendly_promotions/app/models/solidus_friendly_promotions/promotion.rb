@@ -22,6 +22,7 @@ module SolidusFriendlyPromotions
     validate :apply_automatically_disallowed_with_promotion_codes
 
     before_save :normalize_blank_values
+    after_discard :delete_cart_connections
 
     scope :active, ->(time = Time.current) { has_benefits.started_and_unexpired(time) }
     scope :advertised, -> { where(advertise: true) }
@@ -148,6 +149,10 @@ module SolidusFriendlyPromotions
       return unless apply_automatically
 
       errors.add(:apply_automatically, :disallowed_with_promotion_codes) if codes.present?
+    end
+
+    def delete_cart_connections
+      order_promotions.where(order: Spree::Order.incomplete).destroy_all
     end
   end
 end
