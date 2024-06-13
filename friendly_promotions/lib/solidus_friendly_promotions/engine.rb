@@ -37,5 +37,11 @@ module SolidusFriendlyPromotions
     initializer "solidus_friendly_promotions.spree_config", after: "spree.load_config_initializers" do
       Spree::Config.adjustment_promotion_source_types << "SolidusFriendlyPromotions::Benefit"
     end
+
+    initializer "solidus_friendly_promotions.core.pub_sub", after: "spree.core.pub_sub" do |app|
+      app.reloader.to_prepare do
+        SolidusFriendlyPromotions::OrderPromotionSubscriber.new.subscribe_to(Spree::Bus)
+      end
+    end
   end
 end
