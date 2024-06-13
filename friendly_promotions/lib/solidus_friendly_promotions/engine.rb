@@ -33,5 +33,9 @@ module SolidusFriendlyPromotions
         end
       end
     end
+
+    initializer "solidus_friendly_promotions.spree_config", after: "spree.load_config_initializers" do
+      Spree::Config.adjustment_promotion_source_types << "SolidusFriendlyPromotions::Benefit"
+    end
   end
 end
