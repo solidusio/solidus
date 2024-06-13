@@ -36,14 +36,6 @@ module SolidusFriendlyPromotions
       line_items.reject(&:managed_by_order_benefit)
     end
 
-    def apply_shipping_promotions
-      if Spree::Config.promotion_adjuster_class <= SolidusFriendlyPromotions::FriendlyPromotionAdjuster
-        recalculate
-      else
-        super
-      end
-    end
-
     def free_from_order_benefit?(line_item, _options)
       !line_item.managed_by_order_benefit
     end
