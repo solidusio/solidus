@@ -24,7 +24,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
     subject { promotion.destroy! }
 
-    it "destroys the promotion and nullifies the benefit" do
+    it "destroys the promotion and deletes the benefit" do
       expect { subject }.to change { SolidusFriendlyPromotions::Promotion.count }.by(-1)
       expect(SolidusFriendlyPromotions::Benefit.count).to be_zero
     end
@@ -39,6 +39,19 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
 
       it "raises an error" do
         expect { subject }.to raise_exception(ActiveRecord::RecordNotDestroyed)
+      end
+    end
+
+    context "when the promotion has been added to an incomplete order" do
+      let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+      let(:order) { create(:order) }
+
+      before do
+        order.friendly_promotions << promotion
+      end
+
+      it "destroys the connection" do
+        expect { subject }.to change(SolidusFriendlyPromotions::OrderPromotion, :count).by(-1)
       end
     end
   end
