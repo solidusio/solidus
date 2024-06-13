@@ -3,29 +3,28 @@
 require 'spec_helper'
 
 describe "Order", :js, type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  let(:order) { create(:order, number: "R123456789") }
 
-  it "allows detaching a customer from an order" do
+  before do
     allow(SolidusAdmin::Config).to receive(:enable_alpha_features?) { true }
+    sign_in create(:admin_user, email: 'admin@example.com')
+  end
 
-    order = create(:order, number: "R123456789", user: create(:user))
-    Spree::Adjustment.insert_all([
-      {
-        order_id: order.id,
-        adjustable_id: order.id,
-        adjustable_type: "Spree::Order",
-        amount: 10,
-        label: "Test Adjustment",
-        eligible: true,
-        finalized: false,
-        created_at: Time.current,
-        updated_at: Time.current,
-        included: false,
-        source_type: "Spree::Order",
-        source_id: order.id,
-        promotion_code_id: nil,
-      },
-    ])
+  it "allows locking and unlocking adjustments" do
+    taxrate = create(:tax_rate)
+    Spree::Adjustment.create(
+      order: order,
+      adjustable: order,
+      amount: 10,
+      label: "Test Adjustment",
+      eligible: true,
+      finalized: false,
+      created_at: Time.current,
+      updated_at: Time.current,
+      included: false,
+      source: taxrate,
+      promotion_code_id: nil,
+    )
     visit "/admin/orders/R123456789"
 
     click_on "Adjustments"
@@ -48,5 +47,42 @@ describe "Order", :js, type: :feature do
     expect(Spree::AdjustmentReason.count).to eq(0)
 
     expect(page).to be_axe_clean
+  end
+
+  it "can display an adjustment without a source" do
+    Spree::Adjustment.create(
+      order: order,
+      adjustable: order,
+      amount: 10,
+      label: "No Source Adjustment",
+      eligible: true,
+      finalized: false,
+      created_at: Time.current,
+      updated_at: Time.current,
+      included: false,
+      source: nil,
+      promotion_code_id: nil,
+    )
+    visit "/admin/orders/R123456789"
+
+    click_on "Adjustments"
+    expect(page).to have_content("No Source Adjustment")
+    expect(page).to be_axe_clean
+  end
+
+  context "with a unit cancellation" do
+    let(:order) { create(:order_ready_to_ship, number: "R123456789") }
+
+    before do
+      Spree::OrderCancellations.new(order).short_ship([order.inventory_units.first])
+    end
+
+    it "can display an adjustment with a unit cancellation" do
+      visit "/admin/orders/R123456789"
+
+      click_on "Adjustments"
+      expect(page).to have_content("Cancellation - Short Ship")
+      expect(page).to be_axe_clean
+    end
   end
 end

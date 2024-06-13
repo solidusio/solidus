@@ -83,9 +83,9 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
         header: :source,
         col: { class: "w-56" },
         data: ->(adjustment) {
-          tag.figure(safe_join([
-            figcaption_for_source(adjustment),
-          ]), class: "flex items-center gap-2")
+          component_name = adjustment.source&.class&.table_name&.singularize
+          component_key = ["orders/show/adjustments/index/adjustment", component_name].compact.join("/")
+          render component(component_key).new(adjustment)
         }
       },
       {
@@ -148,26 +148,6 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
 
   def svg_data_uri(data)
     "data:image/svg+xml;base64,#{Base64.strict_encode64(data)}"
-  end
-
-  def figcaption_for_source(adjustment)
-    return thumbnail_caption(adjustment.label, nil) unless adjustment.source_type
-
-    # ["Spree::PromotionAction", nil, "Spree::UnitCancel", "Spree::TaxRate"]
-    record = adjustment.source
-    record_class = adjustment.source_type&.constantize
-    model_name = record_class.model_name.human
-
-    case record || record_class
-    when Spree::TaxRate
-      detail = link_to("#{model_name}: #{record.zone&.name || t('spree.all_zones')}", spree.edit_admin_tax_rate_path(adjustment.source_id), class: "body-link")
-    when Spree::PromotionAction
-      detail = link_to("#{model_name}: #{record.promotion.name}", spree.edit_admin_promotion_path(adjustment.source_id), class: "body-link")
-    else
-      detail = "#{model_name}: #{record.display_amount}" if record.respond_to?(:display_amount)
-    end
-
-    thumbnail_caption(adjustment.label, detail)
   end
 
   def figcaption_for_adjustable(adjustment)
