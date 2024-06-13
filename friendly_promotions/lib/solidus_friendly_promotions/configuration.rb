@@ -18,6 +18,11 @@ module SolidusFriendlyPromotions
 
     class_name_attribute :order_adjuster_class, default: "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
 
+    class_name_attribute :coupon_code_handler_class, default: "SolidusFriendlyPromotions::PromotionHandler::Coupon"
+
+    # In case solidus_legacy_promotions is loaded, we need to define this.
+    class_name_attribute :shipping_promotion_handler_class, default: "Spree::NullPromotionHandler"
+
     add_class_set :line_item_discount_calculators
     add_class_set :shipment_discount_calculators
 
