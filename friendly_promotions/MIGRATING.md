@@ -68,20 +68,20 @@ bundle exec rails solidus_friendly_promotions:migrate_adjustments:down
 bundle exec rails solidus_friendly_promotions:migrate_order_promotions:down
 ```
 
-Both of these tasks only work if every promotion and promotion action have an equivalent in SolidusFrienndlyPromotions. Promotion Actions are connected to their originals using the `SolidusFriendlyPromotions#original_promotion_action_id`, Promotions are connected to their originals using the  `SolidusFriendlyPromotions#original_promotion_id`.
+Both of these tasks only work if every promotion rule and promotion action have an equivalent condition or benefit in SolidusFrienndlyPromotions. Benefits are connected to their originals promotion action using the `SolidusFriendlyPromotions#original_promotion_action_id`, Promotions are connected to their originals using the  `SolidusFriendlyPromotions#original_promotion_id`.
 
 ## Solidus Starter Frontend (and other custom frontends)
 
-Stores that have a custom coupon codes controller, such as Solidus' starter frontend, have to change the coupon promotion handler to the one from this gem. If you are on a very recent Solidus version, you can change any reference to `Spree::PromotionHandler::Coupon` to `Spree::Config.coupon_code_handler_class`. If your version of Solidus does not have that method yet, replace `Spree::PromotionHandler::Coupon` with `SolidusFriendlyPromotions::PromotionHandler::Coupon`
+Stores that have a custom coupon codes controller, such as Solidus' starter frontend, have to change the coupon promotion handler to the one from this gem. Cange any reference to `Spree::PromotionHandler::Coupon` to `Spree::Config.promotions.coupon_code_handler_class`.
 
 ## Migrating custom rules and actions
 
-If you have custom promotion rules or actions, you need to create new promotion rules and actions.
+If you have custom promotion rules or actions, you need to create new conditions and benefits, respectively.
 
 > [!IMPORTANT]
-> SolidusFriendlyPromotions currently only supports actions that discount line items and shipments. If you have actions that add line items, or create order-level adjustments, we currently have no support for that.
+> SolidusFriendlyPromotions currently only supports actions that discount line items and shipments, as well as creating discounted line items. If you have actions that create order-level adjustments, we currently have no support for that.
 
-In our experience, using the two actions can do almost all the things necessary, since they are customizable using calculators.
+In our experience, using the three actions can do almost all the things necessary, since they are customizable using calculators.
 
 Rules share a lot of the previous API. If you make use of `#actionable?`, you might want to migrate your rule to be a line-item level rule:
 
@@ -96,8 +96,9 @@ end
 would become:
 
 ```rb
-class MyNewRule < SolidusFriendlyPromotions::PromotionRule
+class MyCondition < SolidusFriendlyPromotions::Condition
   include LineItemLevelCondition
+
   def eligible?(promotable)
     promotable.quantity > 3
   end
@@ -111,12 +112,12 @@ require 'solidus_friendly_promotions/promotion_map'
 
 MY_PROMOTION_MAP = SolidusFriendlyPromotions::PROMOTION_MAP.deep_merge(
   rules: {
-    MyRule => MyNewRule
+    MyRule => MyCondition
   }
 )
 ```
 
-The value of the conversion map can also be a callable that takes the original promotion rule and should return a new promotion rule.
+The value of the conversion map can also be a callable that takes the original promotion rule and should return a new condition.
 
 ```rb
 require 'solidus_friendly_promotions/promotion_map'
@@ -124,7 +125,7 @@ require 'solidus_friendly_promotions/promotion_map'
 MY_PROMOTION_MAP = SolidusFriendlyPromotions::PROMOTION_MAP.deep_merge(
   rules: {
     MyRule => ->(old_promotion_rule) {
-      MyNewRule.new(preferred_quantity: old_promotion_rule.preferred_count)
+      MyCondition.new(preferred_quantity: old_promotion_rule.preferred_count)
     }
   }
 )
