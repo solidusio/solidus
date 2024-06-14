@@ -73,18 +73,14 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
         header: :adjustable,
         col: { class: 'w-56' },
         data: ->(adjustment) {
-          component_name = adjustment.adjustable&.class&.table_name&.singularize
-          component_key = ["orders/show/adjustments/index/adjustable", component_name].compact.join("/")
-          render component(component_key).new(adjustment)
+          render_thumbnail_with_caption(adjustment, :adjustable)
         }
       },
       {
         header: :source,
         col: { class: "w-56" },
         data: ->(adjustment) {
-          component_name = adjustment.source&.class&.table_name&.singularize
-          component_key = ["orders/show/adjustments/index/source", component_name].compact.join("/")
-          render component(component_key).new(adjustment)
+          render_thumbnail_with_caption(adjustment, :source)
         }
       },
       {
@@ -139,5 +135,13 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
         end
       },
     ]
+  end
+
+  private
+
+  def render_thumbnail_with_caption(adjustment, role)
+    component_name = adjustment.send(role).class.base_class.name.delete("::").underscore if adjustment.send(role)
+    component_key = ["orders/show/adjustments/index/#{role}", component_name].compact.join("/")
+    render component(component_key).new(adjustment)
   end
 end
