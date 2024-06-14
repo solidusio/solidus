@@ -380,4 +380,4 @@ workflows:
           matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.1', 'main'], ruby: ['3.3'], database: ['sqlite'], paperclip: [false] } }
+          matrix: { parameters: { rails: ['7.1', 'main'], ruby: ['3.3.2'], database: ['sqlite'], paperclip: [false] } }
