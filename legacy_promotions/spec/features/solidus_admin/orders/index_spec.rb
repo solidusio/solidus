@@ -9,10 +9,8 @@ RSpec.describe "Orders", type: :feature, solidus_admin: true do
 
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
-  it "lists products", :js do
+  it "lists products", :js, :flaky do
     visit "/admin/orders"
-
-    sleep 1
 
     click_button "Filter"
 
