@@ -142,11 +142,15 @@ module Spree
         expect(order_1.line_items.pluck(:variant_id)).to match_array([variant.id, variant_2.id])
       end
 
-      context "with line item promotion applied to order 2" do
-        let!(:promotion) { create(:promotion, :with_line_item_adjustment, apply_automatically: true) }
-
+      context "with line item adjustment on order 2" do
         before do
-          Spree::PromotionHandler::Cart.new(order_2).activate
+          order_2.line_items.first.adjustments.create!(
+            order: order_2,
+            adjustable: order_2.line_items.first,
+            label: "For loyal customers",
+            source: nil,
+            amount: -2
+          )
           expect(order_2.line_items.flat_map(&:adjustments)).not_to be_empty
         end
 
