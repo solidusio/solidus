@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Orders::Show::Adjustments::Index::Adjustment::SpreePromotionAction::Component < SolidusAdmin::Orders::Show::Adjustments::Index::Adjustment::Component
+class SolidusAdmin::Orders::Show::Adjustments::Index::Source::SpreePromotionAction::Component < SolidusAdmin::Orders::Show::Adjustments::Index::Source::Component
   def icon
     "megaphone-line"
   end

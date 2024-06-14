@@ -84,7 +84,7 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
         col: { class: "w-56" },
         data: ->(adjustment) {
           component_name = adjustment.source&.class&.table_name&.singularize
-          component_key = ["orders/show/adjustments/index/adjustment", component_name].compact.join("/")
+          component_key = ["orders/show/adjustments/index/source", component_name].compact.join("/")
           render component(component_key).new(adjustment)
         }
       },

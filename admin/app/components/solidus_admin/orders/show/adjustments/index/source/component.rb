@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Orders::Show::Adjustments::Index::Adjustment::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Orders::Show::Adjustments::Index::Source::Component < SolidusAdmin::BaseComponent
   attr_reader :adjustment, :source, :model_name
 
   def initialize(adjustment)
