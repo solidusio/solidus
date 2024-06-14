@@ -90,7 +90,6 @@ Layout/EmptyLinesAroundAttributeAccessor:
     - "core/app/models/spree/address/state_validator.rb"
     - "core/app/models/spree/order_updater.rb"
     - "core/app/models/spree/promotion/order_adjustments_recalculator.rb"
-    - "core/app/models/spree/promotion_code/batch_builder.rb"
     - "core/app/models/spree/stock_quantities.rb"
     - "core/app/models/spree/variant.rb"
     - "core/lib/spree/app_configuration.rb"
@@ -311,7 +310,7 @@ Rails/ApplicationController:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationJob:
   Exclude:
-    - "core/app/jobs/spree/promotion_code_batch_job.rb"
+    - "legacy_promotions/app/jobs/spree/promotion_code_batch_job.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
