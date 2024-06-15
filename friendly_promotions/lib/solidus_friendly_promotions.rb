@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
 require "solidus_core"
-require "solidus_backend"
 require "solidus_support"
 require "turbo-rails"
 require "importmap-rails"
 require "stimulus-rails"
 require "ransack-enum"
+
+begin
+  require "solidus_backend"
+rescue LoadError
+  # Solidus backend is not available
+end
 
 module SolidusFriendlyPromotions
   def self.table_name_prefix
