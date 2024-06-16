@@ -28,7 +28,7 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
   describe ".promotion_calculators" do
     subject { config.promotion_calculators }
 
-    it { is_expected.to be_a(SolidusFriendlyPromotions::NestedClassSet) }
+    it { is_expected.to be_a(Spree::Core::NestedClassSet) }
   end
 
   describe ".order_conditions" do

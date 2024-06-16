@@ -18,7 +18,6 @@ module SolidusFriendlyPromotions
   self.importmap = Importmap::Map.new
 end
 
-require "solidus_friendly_promotions/nested_class_set"
 require "solidus_friendly_promotions/configuration"
 require "solidus_friendly_promotions/version"
 require "solidus_friendly_promotions/engine"
