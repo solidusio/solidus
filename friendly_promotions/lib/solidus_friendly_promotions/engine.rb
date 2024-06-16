@@ -51,6 +51,7 @@ module SolidusFriendlyPromotions
     initializer "solidus_friendly_promotions.add_admin_order_index_component", after: "solidus_legacy_promotions.add_admin_order_index_component" do
       if SolidusSupport.admin_available?
         SolidusAdmin::Config.components["orders/index"] = "SolidusFriendlyPromotions::Orders::Index::Component"
+        SolidusAdmin::Config.components["promotions/index"] = "SolidusFriendlyPromotions::Promotions::Index::Component"
         SolidusAdmin::Config.components["promotion_categories/index"] = "SolidusFriendlyPromotions::PromotionCategories::Index::Component"
       end
     end

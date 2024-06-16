@@ -13,6 +13,7 @@ SolidusFriendlyPromotions::Engine.routes.draw do
       scope :admin do
         scope :friendly do
           admin_resources :promotion_categories, only: [:index, :destroy]
+          admin_resources :promotions, only: [:index, :destroy]
         end
       end
     end
