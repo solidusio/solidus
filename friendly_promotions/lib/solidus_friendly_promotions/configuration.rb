@@ -6,12 +6,10 @@ module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration
     attr_accessor :sync_order_promotions
     attr_accessor :recalculate_complete_orders
-    attr_accessor :promotion_calculators
 
     def initialize
       @sync_order_promotions = true
       @recalculate_complete_orders = true
-      @promotion_calculators = NestedClassSet.new
     end
 
     include Spree::Core::EnvironmentExtension
@@ -33,16 +31,70 @@ module SolidusFriendlyPromotions
     # In case solidus_legacy_promotions is loaded, we need to define this.
     class_name_attribute :shipping_promotion_handler_class, default: "Spree::NullPromotionHandler"
 
-    add_class_set :line_item_discount_calculators
-    add_class_set :shipment_discount_calculators
+    add_class_set :order_conditions, default: [
+      "SolidusFriendlyPromotions::Conditions::FirstOrder",
+      "SolidusFriendlyPromotions::Conditions::FirstRepeatPurchaseSince",
+      "SolidusFriendlyPromotions::Conditions::ItemTotal",
+      "SolidusFriendlyPromotions::Conditions::DiscountedItemTotal",
+      "SolidusFriendlyPromotions::Conditions::MinimumQuantity",
+      "SolidusFriendlyPromotions::Conditions::NthOrder",
+      "SolidusFriendlyPromotions::Conditions::OneUsePerUser",
+      "SolidusFriendlyPromotions::Conditions::OptionValue",
+      "SolidusFriendlyPromotions::Conditions::Product",
+      "SolidusFriendlyPromotions::Conditions::Store",
+      "SolidusFriendlyPromotions::Conditions::Taxon",
+      "SolidusFriendlyPromotions::Conditions::UserLoggedIn",
+      "SolidusFriendlyPromotions::Conditions::UserRole",
+      "SolidusFriendlyPromotions::Conditions::User"
+    ]
 
-    add_class_set :order_conditions
-    add_class_set :line_item_conditions
-    add_class_set :shipment_conditions
+    add_class_set :line_item_conditions, default: [
+      "SolidusFriendlyPromotions::Conditions::LineItemOptionValue",
+      "SolidusFriendlyPromotions::Conditions::LineItemProduct",
+      "SolidusFriendlyPromotions::Conditions::LineItemTaxon"
+    ]
+    add_class_set :shipment_conditions, default: [
+      "SolidusFriendlyPromotions::Conditions::ShippingMethod"
+    ]
 
-    add_class_set :actions
+    add_class_set :actions, default: [
+      "SolidusFriendlyPromotions::Benefits::AdjustLineItem",
+      "SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups",
+      "SolidusFriendlyPromotions::Benefits::AdjustShipment",
+      "SolidusFriendlyPromotions::Benefits::CreateDiscountedItem"
+    ]
 
-    class_name_attribute :discount_chooser_class, default: "SolidusFriendlyPromotions::DiscountChooser"
+    add_nested_class_set :promotion_calculators, default: {
+      "SolidusFriendlyPromotions::Benefits::AdjustShipment" => [
+        "SolidusFriendlyPromotions::Calculators::FlatRate",
+        "SolidusFriendlyPromotions::Calculators::FlexiRate",
+        "SolidusFriendlyPromotions::Calculators::Percent",
+        "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
+        "SolidusFriendlyPromotions::Calculators::TieredPercent",
+        "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
+      ],
+      "SolidusFriendlyPromotions::Benefits::AdjustLineItem" => [
+        "SolidusFriendlyPromotions::Calculators::DistributedAmount",
+        "SolidusFriendlyPromotions::Calculators::FlatRate",
+        "SolidusFriendlyPromotions::Calculators::FlexiRate",
+        "SolidusFriendlyPromotions::Calculators::Percent",
+        "SolidusFriendlyPromotions::Calculators::TieredFlatRate",
+        "SolidusFriendlyPromotions::Calculators::TieredPercent",
+        "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
+      ],
+      "SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups" => [
+        "SolidusFriendlyPromotions::Calculators::FlatRate",
+        "SolidusFriendlyPromotions::Calculators::Percent",
+        "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
+      ],
+      "SolidusFriendlyPromotions::Benefits::CreateDiscountedItem" => [
+        "SolidusFriendlyPromotions::Calculators::FlatRate",
+        "SolidusFriendlyPromotions::Calculators::Percent",
+        "SolidusFriendlyPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
+      ]
+    }
+
+    class_name_attribute :discount_chooser_class, default: "SolidusFriendlyPromotions::FriendlyPromotionAdjuster::ChooseDiscounts"
     class_name_attribute :promotion_code_batch_mailer_class,
       default: "SolidusFriendlyPromotions::PromotionCodeBatchMailer"
 
