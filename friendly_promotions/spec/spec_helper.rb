@@ -12,6 +12,7 @@ end
 
 require "rspec/core"
 
+require "spree/testing_support/flaky"
 require "spree/testing_support/partial_double_verification"
 require "spree/testing_support/silence_deprecations"
 require "spree/testing_support/preferences"

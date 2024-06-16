@@ -5,10 +5,21 @@ ENV["RAILS_ENV"] = "test"
 
 require "spec_helper"
 
-# Create the dummy app if it's still missing.
-dummy_env = "#{__dir__}/dummy/config/environment.rb"
-system "bin/rake extension:test_app" unless File.exist? dummy_env
-require dummy_env
+# Run Coverage report
+require "solidus_dev_support/rspec/coverage"
+# SOLIDUS DUMMY APP
+require "spree/testing_support/dummy_app"
+DummyApp.setup(
+  gem_root: File.expand_path("..", __dir__),
+  lib_name: "solidus_friendly_promotions"
+)
+
+# Calling `draw` will completely rewrite the routes defined in the dummy app,
+# so we need to include the main solidus route.
+DummyApp::Application.routes.draw do
+  mount SolidusFriendlyPromotions::Engine, at: "/"
+  mount Spree::Core::Engine, at: "/"
+end
 
 # Turbo will try to autoload ActionCable if we allow `app/channels`.
 # Backport of https://github.com/hotwired/turbo-rails/pull/601
