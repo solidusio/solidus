@@ -25,6 +25,11 @@ Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 # See: lib/solidus_friendly_promotions/testing_support/factories.rb
 SolidusDevSupport::TestingSupport::Factories.load_for(SolidusFriendlyPromotions::Engine)
 
+# Turbo will try to autoload ActionCable if we allow `app/channels`.
+# Backport of https://github.com/hotwired/turbo-rails/pull/601
+# Can go once `turbo-rails` 2.0.7 is released.
+Rails.autoloaders.once.do_not_eager_load("#{Turbo::Engine.root}/app/channels")
+
 Spree::Config.promotions = SolidusFriendlyPromotions.configuration
 
 RSpec.configure do |config|
