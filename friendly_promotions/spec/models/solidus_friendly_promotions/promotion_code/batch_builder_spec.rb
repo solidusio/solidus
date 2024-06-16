@@ -34,8 +34,8 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode::BatchBuilder do
 
     context "with a successful build" do
       before do
-        allow(Spree::PromotionCodeBatchMailer)
-          .to receive(:code_batch_finished)
+        allow(SolidusFriendlyPromotions::PromotionCodeBatchMailer)
+          .to receive(:promotion_code_batch_finished)
           .and_call_original
 
         subject.build_promotion_codes
