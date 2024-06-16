@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.feature "Promotion Code Batches", partial_double_verification: false do
   stub_authorization!

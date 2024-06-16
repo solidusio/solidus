@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SolidusFriendlyPromotions::PromotionHandler::Coupon, type: :model do
   let(:order) { double("Order", coupon_code: "10off").as_null_object }

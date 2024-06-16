@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SolidusFriendlyPromotions::ShippingRateDiscount do
   subject(:shipping_rate_discount) { build(:friendly_shipping_rate_discount) }

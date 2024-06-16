@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Conditions::Taxon, type: :model do
   let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }

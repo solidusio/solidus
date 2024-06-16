@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 require "solidus_friendly_promotions/promotion_migrator"
 require "solidus_friendly_promotions/promotion_map"
 require "solidus_friendly_promotions/migrate_order_promotions"

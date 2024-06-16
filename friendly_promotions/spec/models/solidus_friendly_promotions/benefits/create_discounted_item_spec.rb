@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Benefits::CreateDiscountedItem do
   it { is_expected.to respond_to(:preferred_variant_id) }

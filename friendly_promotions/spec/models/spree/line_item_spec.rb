@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Spree::LineItem do
   it { is_expected.to belong_to(:managed_by_order_benefit).optional }

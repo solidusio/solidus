@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SolidusFriendlyPromotions::Conditions::LineItemProduct, type: :model do
   let(:condition) { described_class.new(condition_options) }

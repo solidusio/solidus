@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Spree::Config.order_recalculator_class do
   let(:order) { create(:order) }

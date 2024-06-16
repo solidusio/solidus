@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusFriendlyPromotions::Calculators::Percent, type: :model do

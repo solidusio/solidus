@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SolidusFriendlyPromotions::EligibilityResults do
   subject(:eligibility_results) { described_class.new(promotion) }
