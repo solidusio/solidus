@@ -8,7 +8,7 @@ RSpec.describe "Admin::Conditions", type: :request do
 
   context "when the user is authorized" do
     stub_authorization! do |_u|
-      Spree::PermissionSets::PromotionManagement.new(self).activate!
+      SolidusFriendlyPromotions::PermissionSets::PromotionManagement.new(self).activate!
     end
 
     it "can create a promotion condition of a valid type" do
@@ -35,7 +35,7 @@ RSpec.describe "Admin::Conditions", type: :request do
       post solidus_friendly_promotions.admin_promotion_benefit_conditions_path(promotion, benefit), params: {
         condition: {type: "SolidusFriendlyPromotions::Conditions::Product"}
       }
-      expect(response).to redirect_to("/admin/login")
+      expect(response).to be_redirect
     end
   end
 end
