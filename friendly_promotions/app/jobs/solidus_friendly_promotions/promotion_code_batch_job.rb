@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusFriendlyPromotions
-  class PromotionCodeBatchJob < ApplicationJob
+  class PromotionCodeBatchJob < ActiveJob::Base
     queue_as :default
 
     def perform(promotion_code_batch)
