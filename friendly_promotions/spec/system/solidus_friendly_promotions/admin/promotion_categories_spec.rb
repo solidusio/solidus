@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Promotion Categories", type: :system do
+RSpec.describe "Promotion Categories", type: :system do
   stub_authorization!
 
   context "index" do

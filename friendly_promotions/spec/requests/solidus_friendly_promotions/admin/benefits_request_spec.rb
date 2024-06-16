@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin::Benefits", type: :request do
+RSpec.describe "Admin::Benefits", type: :request do
   stub_authorization!
 
   let!(:promotion) { create(:friendly_promotion) }
