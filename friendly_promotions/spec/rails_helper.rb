@@ -4,6 +4,7 @@
 ENV["RAILS_ENV"] = "test"
 
 require "spec_helper"
+require "solidus_legacy_promotions"
 
 # Run Coverage report
 require "solidus_dev_support/rspec/coverage"
