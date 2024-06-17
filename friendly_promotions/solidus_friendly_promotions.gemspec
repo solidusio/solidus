@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "shoulda-matchers", "~> 5.3"
   spec.add_development_dependency "solidus_dev_support", "~> 2.6"
   spec.add_development_dependency "standard", "~> 1.31"
+  spec.add_development_dependency "tailwindcss-rails", "~> 2.2"
 end

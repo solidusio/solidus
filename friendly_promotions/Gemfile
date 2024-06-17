@@ -18,6 +18,10 @@ gem "rails", ">0.a"
 # Provides basic authentication functionality for testing parts of your engine
 gem "solidus_auth_devise"
 
+gem "solidus_admin", github: "solidusio/solidus", branch: branch
+gem "axe-core-rspec", "~> 4.8", require: false
+gem "axe-core-capybara", "~> 4.8", require: false
+
 case ENV.fetch("DB", nil)
 when "mysql"
   gem "mysql2"

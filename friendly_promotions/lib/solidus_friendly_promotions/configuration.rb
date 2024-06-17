@@ -107,6 +107,12 @@ module SolidusFriendlyPromotions
       default: 1,
       post: 2
     }
+
+    preference :use_new_admin, :boolean, default: false
+
+    def use_new_admin?
+      SolidusSupport.admin_available? && preferred_use_new_admin
+    end
   end
 
   class << self

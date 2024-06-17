@@ -18,6 +18,11 @@ DummyApp.setup(
 # Calling `draw` will completely rewrite the routes defined in the dummy app,
 # so we need to include the main solidus route.
 DummyApp::Application.routes.draw do
+  mount SolidusAdmin::Engine, at: "/admin", constraints: ->(req) {
+    req.cookies["solidus_admin"] == "true" ||
+      req.params["solidus_admin"] == "true" ||
+      SolidusFriendlyPromotions.config.use_new_admin?
+  }
   mount SolidusFriendlyPromotions::Engine, at: "/"
   mount Spree::Core::Engine, at: "/"
 end
@@ -27,8 +32,15 @@ end
 # Can go once `turbo-rails` 2.0.7 is released.
 Rails.autoloaders.once.do_not_eager_load("#{Turbo::Engine.root}/app/channels")
 
+require "solidus_admin/testing_support/admin_assets"
+
+# AXE - ACCESSIBILITY
+require "axe-rspec"
+require "axe-capybara"
 # Requires factories and other useful helpers defined in spree_core.
 require "solidus_dev_support/rspec/feature_helper"
+# Feature helpers for the new admin
+require "solidus_admin/testing_support/feature_helpers"
 require "shoulda-matchers"
 # Explicitly load activemodel mocks
 require "rspec-activemodel-mocks"
@@ -48,6 +60,13 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include SolidusFriendlyPromotions::Engine.routes.url_helpers, type: :request
+
+  config.around :each, :solidus_admin, :js do |example|
+    SolidusFriendlyPromotions.config.use_new_admin = true
+    example.run
+    SolidusFriendlyPromotions.config.use_new_admin = false
+  end
+  config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature, solidus_admin: true
 end
 
 Shoulda::Matchers.configure do |config|
