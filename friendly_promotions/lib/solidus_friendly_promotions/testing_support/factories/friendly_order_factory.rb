@@ -9,7 +9,7 @@ FactoryBot.define do
 
     after(:create) do |order, evaluator|
       promotion = evaluator.promotion || create(:friendly_promotion, code: "test")
-      promotion_code = promotion.codes.first || create(:promotion_code, promotion: promotion)
+      promotion_code = promotion.codes.first || create(:friendly_promotion_code, promotion: promotion)
 
       order.friendly_order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
       order.recalculate
