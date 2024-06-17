@@ -55,6 +55,9 @@ SolidusDevSupport::TestingSupport::Factories.load_for(SolidusFriendlyPromotions:
 
 Spree::Config.promotions = SolidusFriendlyPromotions.configuration
 
+# Allow Capybara to find elements by aria-label attributes
+Capybara.enable_aria_label = true
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = true
