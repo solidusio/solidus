@@ -47,5 +47,11 @@ module SolidusFriendlyPromotions
         SolidusFriendlyPromotions::OrderPromotionSubscriber.new.subscribe_to(Spree::Bus)
       end
     end
+
+    initializer "solidus_friendly_promotions.add_admin_order_index_component", after: "solidus_legacy_promotions.add_admin_order_index_component" do
+      if SolidusSupport.admin_available?
+        SolidusAdmin::Config.components["orders/index"] = "SolidusFriendlyPromotions::Orders::Index::Component"
+      end
+    end
   end
 end
