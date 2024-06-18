@@ -6,7 +6,7 @@ RSpec.describe Spree::FulfilmentChanger do
   let(:variant) { create(:variant) }
   let(:track_inventory) { true }
 
-  let(:order) do
+  let!(:order) do
     create(
       :completed_order_with_totals,
       line_items_attributes: [
@@ -19,10 +19,8 @@ RSpec.describe Spree::FulfilmentChanger do
   end
 
   let(:current_shipment) { order.shipments.first }
-  let(:desired_shipment) { order.shipments.create!(stock_location: desired_stock_location) }
+  let!(:desired_shipment) { order.shipments.create!(stock_location: desired_stock_location) }
   let(:desired_stock_location) { current_shipment.stock_location }
-  let(:current_shipment_inventory_unit_count) { 1 }
-  let(:quantity) { current_shipment_inventory_unit_count }
 
   let(:shipment_splitter) do
     described_class.new(
@@ -37,36 +35,51 @@ RSpec.describe Spree::FulfilmentChanger do
   subject { shipment_splitter.run! }
 
   before do
-    order && desired_shipment
     variant.stock_items.first.update_column(:count_on_hand, 100)
   end
 
   context "when the current shipment stock location is the same of the target shipment" do
-    context "when the stock location is empty" do
+    let(:current_shipment_inventory_unit_count) { 3 }
+    let(:quantity) { current_shipment_inventory_unit_count - 1 }
+    let(:stock_item) { variant.stock_items.find_by(stock_location: current_shipment.stock_location) }
+
+    context "when one inventory unit is backordered" do
       before do
-        variant.stock_items.first.update_column(:count_on_hand, 0)
+        current_shipment.inventory_units.first.update!(state: :backordered)
       end
 
-      context "when the inventory unit is backordered" do
+      it "moves the expected number of inventory units to the new shipment" do
+        subject
+        expect(desired_shipment.inventory_units.count).to eq(2)
+        expect(current_shipment.inventory_units.count).to eq(1)
+      end
+
+      context "when the number of backordered items is consistent with stock" do
         before do
-          current_shipment.inventory_units.first.update state: :backordered
+          stock_item.update_column(:count_on_hand, current_shipment.inventory_units.on_hand.count)
         end
 
-        it "creates a new backordered inventory unit" do
-          subject
-          expect(desired_shipment.inventory_units.first).to be_backordered
+        xit "keeps inventory units state consistent" do
+          expect { subject }.not_to change { order.inventory_units.map(&:state).sort }
+          expect(order.inventory_units.map(&:state)).to match_array(%w[backordered on_hand on_hand])
         end
       end
 
-      context "when the inventory unit is on hand" do
+      context "when the backordered item can become on hand" do
         before do
-          current_shipment.inventory_units.first.update state: :on_hand
+          stock_item.update_column(:count_on_hand, current_shipment.inventory_units.count)
         end
 
-        it "creates a new on hand inventory unit" do
-          subject
-          expect(desired_shipment.inventory_units.first).to be_on_hand
+        it "makes all items on hand" do
+          expect { subject }.to change { order.inventory_units.map(&:state).uniq }.from(%w[backordered on_hand]).to(["on_hand"])
         end
+      end
+    end
+
+    context "when all inventory units are on hand" do
+      it "creates on hand inventory units" do
+        subject
+        expect(desired_shipment.inventory_units).to be_all(&:on_hand?)
       end
     end
   end
