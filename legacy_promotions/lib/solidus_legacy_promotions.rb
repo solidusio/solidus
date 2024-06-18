@@ -24,4 +24,5 @@ module SolidusLegacyPromotions
   VERSION = Spree.solidus_version
 end
 
+require "solidus_legacy_promotions/configuration"
 require "solidus_legacy_promotions/engine"
