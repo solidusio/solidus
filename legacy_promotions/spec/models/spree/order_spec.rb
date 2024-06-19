@@ -20,7 +20,7 @@ RSpec.describe Spree::Order do
       order.apply_shipping_promotions
     end
 
-    context "after the order state machine is reloaded", :pending do
+    context "after the order state machine is reloaded" do
       let(:order) { create(:order_with_line_items, state: :delivery) }
 
       before do
