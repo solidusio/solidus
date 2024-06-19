@@ -1,3 +1,20 @@
 en:
+  columns:
+    items:
+      one: 1 Item
+      other: '%{count} Items'
   filters:
+    status: Status
+    shipment_state: Shipment State
+    payment_state: Payment State
+    promotions: Promotions
+  date:
+    formats:
+      short: '%d %b %y'
+  scopes:
+    all_orders: All
+    canceled: Canceled
+    complete: Complete
+    returned: Returned
+    in_progress: In Progress
     promotions: Promotions
