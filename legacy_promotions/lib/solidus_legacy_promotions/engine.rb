@@ -73,6 +73,16 @@ module SolidusLegacyPromotions
       app.config.assets.precompile << "solidus_legacy_promotions/manifest.js"
     end
 
+    initializer "solidus_legacy_promotions.add_factories_to_core" do
+      if Rails.env.test?
+        require "spree/testing_support/factory_bot"
+        require "solidus_legacy_promotions/testing_support/factory_bot"
+        Spree::TestingSupport::FactoryBot.definition_file_paths.concat(SolidusLegacyPromotions::TestingSupport::FactoryBot.definition_file_paths)
+      end
+    rescue LoadError
+      # FactoryBot is not available, we don't need factories
+    end
+
     initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
       Spree::Config.order_contents_class = "Spree::OrderContents"
       Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
