@@ -10,7 +10,7 @@ module SolidusLegacyPromotions
       end
     end
 
-    def apply_shipping_promotions
+    def apply_shipping_promotions(_event = nil)
       ::Spree::Config.promotions.shipping_promotion_handler_class.new(self).activate
       recalculate
     end

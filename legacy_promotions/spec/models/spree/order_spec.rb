@@ -19,6 +19,20 @@ RSpec.describe Spree::Order do
 
       order.apply_shipping_promotions
     end
+
+    context "after the order state machine is reloaded", :pending do
+      let(:order) { create(:order_with_line_items, state: :delivery) }
+
+      before do
+        @old_checkout_flow = Spree::Order.checkout_flow
+        Spree::Order.checkout_flow(&@old_checkout_flow)
+      end
+
+      it "calls apply_shipping_promotions " do
+        expect(order).to receive(:apply_shipping_promotions)
+        order.next!
+      end
+    end
   end
 
   context "empty!" do
