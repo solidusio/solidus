@@ -21,12 +21,7 @@ DummyApp::Application.routes.draw do
   }
   mount Spree::Core::Engine, at: "/"
 end
-
-unless SolidusAdmin::Engine.root.join('app/assets/builds/solidus_admin/tailwind.css').exist?
-  Dir.chdir(SolidusAdmin::Engine.root) do
-    system 'bundle exec rake tailwindcss:build' or abort 'Failed to build Tailwind CSS'
-  end
-end
+require "solidus_admin/testing_support/admin_assets"
 
 require 'rails-controller-testing'
 require 'rspec/rails'
