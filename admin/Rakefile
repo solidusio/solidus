@@ -5,6 +5,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
 require 'spree/testing_support/dummy_app/rake_tasks'
+require 'solidus_admin/testing_support/dummy_app/rake_tasks'
 require 'bundler/gem_tasks'
 
 namespace :tailwindcss do
