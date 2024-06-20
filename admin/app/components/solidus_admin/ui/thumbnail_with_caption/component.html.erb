@@ -1,7 +1,12 @@
 <figure class="flex items-center gap-2">
+  <% if content? %>
+    <%= content %>
+  <% else %>
+    <%= icon_thumbnail %>
+  <% end %>
   <figcaption class="flex flex-col gap-0 max-w-[15rem]">
     <div class="text-black body-small whitespace-nowrap text-ellipsis overflow-hidden">
-      <%= adjustment.label %>
+      <%= caption %>
     </div>
     <% if detail %>
       <div class="text-gray-500 body-small whitespace-nowrap text-ellipsis overflow-hidden">

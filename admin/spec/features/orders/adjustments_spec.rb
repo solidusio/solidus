@@ -85,4 +85,25 @@ describe "Order", :js, type: :feature do
       expect(page).to be_axe_clean
     end
   end
+
+  context "with a shipment being adjusted" do
+    let(:order) { create(:order_with_line_items, number: "R123456789") }
+
+    before do
+      order.shipments.first.adjustments.create!(
+        order: order,
+        label: "Manual shipping discount",
+        amount: -2,
+        source: nil
+      )
+    end
+
+    it "can display a shipment adjustment" do
+      visit "/admin/orders/R123456789"
+
+      click_on "Adjustments"
+      expect(page).to have_content("Manual shipping discount")
+      expect(page).to be_axe_clean
+    end
+  end
 end
