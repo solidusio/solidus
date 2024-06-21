@@ -2,6 +2,12 @@
 
 module SolidusFriendlyPromotions
   module OrderDecorator
+    module ClassMethods
+      def allowed_ransackable_associations
+        super + ["friendly_promotions", "friendly_order_promotions"]
+      end
+    end
+
     def self.prepended(base)
       base.has_many :friendly_order_promotions,
         class_name: "SolidusFriendlyPromotions::OrderPromotion",
@@ -30,6 +36,7 @@ module SolidusFriendlyPromotions
       !line_item.managed_by_order_benefit
     end
 
+    Spree::Order.singleton_class.prepend self::ClassMethods
     Spree::Order.prepend self
   end
 end

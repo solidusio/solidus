@@ -33,4 +33,10 @@ RSpec.describe Spree::Order do
       expect { subject }.to change { SolidusFriendlyPromotions::OrderPromotion.count }.from(1).to(0)
     end
   end
+
+  describe ".allowed_ransackable_associations" do
+    subject { described_class.allowed_ransackable_associations }
+
+    it { is_expected.to include("friendly_promotions", "friendly_order_promotions") }
+  end
 end
