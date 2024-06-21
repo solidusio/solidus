@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'solidus_legacy_promotions'
+
 module SolidusLegacyPromotions
   class Engine < ::Rails::Engine
     include SolidusSupport::EngineExtensions
