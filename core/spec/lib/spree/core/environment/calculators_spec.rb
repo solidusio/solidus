@@ -41,8 +41,8 @@ RSpec.describe Spree::Core::Environment::Calculators do
 
       it "can be set to a new value" do
         previous_value = subject.promotion_actions_create_adjustments
-        subject.promotion_actions_create_adjustments = ["Spree::Calculator::FlatRate"]
-        expect(subject.promotion_actions_create_adjustments).to include(Spree::Calculator::FlatRate)
+        subject.promotion_actions_create_adjustments = ["Spree::Calculator::Shipping::FlatRate"]
+        expect(subject.promotion_actions_create_adjustments).to include(Spree::Calculator::Shipping::FlatRate)
         subject.promotion_actions_create_adjustments = previous_value
       end
     end
@@ -54,8 +54,8 @@ RSpec.describe Spree::Core::Environment::Calculators do
 
       it "can be set to a new value" do
         previous_value = subject.promotion_actions_create_item_adjustments
-        subject.promotion_actions_create_item_adjustments = ["Spree::Calculator::FlatRate"]
-        expect(subject.promotion_actions_create_item_adjustments).to include(Spree::Calculator::FlatRate)
+        subject.promotion_actions_create_item_adjustments = ["Spree::Calculator::Shipping::FlatRate"]
+        expect(subject.promotion_actions_create_item_adjustments).to include(Spree::Calculator::Shipping::FlatRate)
         subject.promotion_actions_create_item_adjustments = previous_value
       end
     end
@@ -66,8 +66,8 @@ RSpec.describe Spree::Core::Environment::Calculators do
 
       it "can be set to a new value" do
         previous_value = subject.promotion_actions_create_quantity_adjustments
-        subject.promotion_actions_create_quantity_adjustments = ["Spree::Calculator::FlatRate"]
-        expect(subject.promotion_actions_create_quantity_adjustments).to include(Spree::Calculator::FlatRate)
+        subject.promotion_actions_create_quantity_adjustments = ["Spree::Calculator::Shipping::FlatRate"]
+        expect(subject.promotion_actions_create_quantity_adjustments).to include(Spree::Calculator::Shipping::FlatRate)
         subject.promotion_actions_create_quantity_adjustments = previous_value
       end
     end

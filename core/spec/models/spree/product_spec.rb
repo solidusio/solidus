@@ -416,16 +416,6 @@ RSpec.describe Spree::Product, type: :model do
         expect(product.properties).to be_empty
       end
 
-      it "removes from product promotion rules" do
-        promotion = create(:promotion)
-        rule = promotion.rules.create!(type: 'Spree::Promotion::Rules::Product', products: [product])
-
-        product.discard
-
-        rule.reload
-        expect(rule.products).to be_empty
-      end
-
       it "replaces the slug" do
         product.discard
 

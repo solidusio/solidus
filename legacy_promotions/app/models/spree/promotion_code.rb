@@ -33,7 +33,7 @@ class Spree::PromotionCode < Spree::Base
       complete.
       where.not(spree_orders: { state: :canceled }).
       joins(:order_promotions).
-      where(spree_orders_promotions: { promotion_code_id: self.id }).
+      where(spree_orders_promotions: { promotion_code_id: id }).
       where.not(id: excluded_orders.map(&:id)).
       count
   end

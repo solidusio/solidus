@@ -89,7 +89,6 @@ Layout/EmptyLinesAroundAttributeAccessor:
   Exclude:
     - "core/app/models/spree/address/state_validator.rb"
     - "core/app/models/spree/order_updater.rb"
-    - "legacy_promotions/app/models/spree/promotion/order_adjustments_recalculator.rb"
     - "core/app/models/spree/stock_quantities.rb"
     - "core/app/models/spree/variant.rb"
     - "core/lib/spree/app_configuration.rb"
@@ -106,14 +105,6 @@ Layout/EmptyLinesAroundAttributeAccessor:
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
     - "core/spec/models/spree/order/checkout_spec.rb"
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - "legacy_promotions/app/models/spree/promotion/order_adjustments_recalculator.rb"
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
@@ -280,13 +271,6 @@ Lint/UnusedMethodArgument:
 Naming/MethodParameterName:
   Exclude:
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: SafeMultiline.
-Performance/DeletePrefix:
-  Exclude:
-    - "legacy_promotions/app/models/spree/promotion_handler/page.rb"
-
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
 Performance/RegexpMatch:
@@ -329,7 +313,7 @@ Rails/ApplicationRecord:
     - "core/db/migrate/20170412103617_transform_tax_rate_category_relation.rb"
     - "core/db/migrate/20180322142651_add_amount_remaining_to_store_credit_events.rb"
     - "core/db/migrate/20180710170104_create_spree_store_credit_reasons_table.rb"
-    - "core/db/migrate/20190106184413_remove_code_from_spree_promotions.rb"
+    - "legacy_promotions/db/migrate/20190106184413_remove_code_from_spree_promotions.rb"
     - "core/spec/lib/calculated_adjustments_spec.rb"
     - "core/spec/models/spree/validations/db_maximum_length_validator_spec.rb"
     - "core/spec/models/spree/wallet_payment_source_spec.rb"
@@ -343,7 +327,6 @@ Rails/Blank:
     - "core/app/models/spree/line_item.rb"
     - "core/app/models/spree/order.rb"
     - "core/app/models/spree/order_contents.rb"
-    - "core/app/models/spree/promotion/rules/user_logged_in.rb"
     - "core/app/models/spree/reimbursement_type/exchange.rb"
     - "core/app/models/spree/wallet_payment_source.rb"
     - "core/app/models/spree/zone.rb"
@@ -432,12 +415,6 @@ Rails/OutputSafety:
     - "core/lib/spree/money.rb"
 
 # Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/Pick:
-  Exclude:
-    - "core/spec/models/spree/promotion/rules/option_value_spec.rb"
-
-# Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Rails/Presence:
   Exclude:
@@ -453,7 +430,6 @@ Rails/Present:
     - "api/app/controllers/spree/api/taxons_controller.rb"
     - "backend/app/helpers/spree/admin/stock_movements_helper.rb"
     - "core/app/models/concerns/spree/ordered_property_value_list.rb"
-    - "core/app/models/spree/promotion/rules/first_order.rb"
     - "core/app/models/spree/stock/availability_validator.rb"
     - "core/lib/spree/core/search/base.rb"
     - "core/spec/models/spree/stock/availability_validator_spec.rb"
@@ -475,8 +451,8 @@ Rails/ReflectionClassName:
   Exclude:
     - "core/app/models/spree/credit_card.rb"
     - "core/app/models/spree/order.rb"
-    - "core/app/models/spree/promotion/rules/user.rb"
-    - "core/app/models/spree/promotion_rule_user.rb"
+    - "legacy_promotions/app/models/spree/promotion/rules/user.rb"
+    - "legacy_promotions/app/models/spree/promotion_rule_user.rb"
     - "core/app/models/spree/role_user.rb"
     - "core/app/models/spree/store_credit.rb"
     - "core/app/models/spree/user_address.rb"
@@ -568,7 +544,6 @@ Style/CommentAnnotation:
     - "backend/app/controllers/spree/admin/products_controller.rb"
     - "backend/app/controllers/spree/admin/resource_controller.rb"
     - "core/app/models/spree/payment_method/store_credit.rb"
-    - "core/app/models/spree/promotion.rb"
     - "core/lib/spree/permission_sets/user_management.rb"
     - "core/lib/spree/testing_support/rake.rb"
     - "core/spec/models/spree/variant/scopes_spec.rb"
@@ -660,7 +635,6 @@ Style/RedundantAssignment:
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantBegin:
   Exclude:
-    - "legacy_promotions/app/models/spree/promotion_handler/coupon.rb"
     - "core/app/models/spree/user_last_url_storer/rules/authentication_rule.rb"
     - "core/spec/models/spree/stock/simple_coordinator_spec.rb"
 
@@ -729,7 +703,6 @@ Style/RedundantReturn:
 Style/RedundantSelf:
   Exclude:
     - "core/app/models/spree/product.rb"
-    - "core/app/models/spree/promotion_code.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -749,7 +722,6 @@ Style/SafeNavigation:
 # Configuration parameters: AllowModifier.
 Style/SoleNestedConditional:
   Exclude:
-    - "core/app/models/spree/promotion/rules/first_order.rb"
     - "core/lib/spree/core/controller_helpers/order.rb"
 
 # Offense count: 13

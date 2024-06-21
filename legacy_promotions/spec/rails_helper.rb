@@ -39,6 +39,7 @@ require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/controller_requests'
 require "solidus_admin/testing_support/feature_helpers"
+require 'solidus_legacy_promotions/testing_support/factory_bot'
 require 'cancan/matchers'
 require 'spree/testing_support/capybara_ext'
 

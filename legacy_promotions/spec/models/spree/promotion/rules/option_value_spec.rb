@@ -33,7 +33,7 @@ RSpec.describe Spree::Promotion::Rules::OptionValue do
     context "when there are any applicable line items" do
       before do
         rule.preferred_eligible_values = Hash[line_item.product.id => [
-          line_item.variant.option_values.pluck(:id).first
+          line_item.variant.option_values.pick(:id)
         ]]
       end
       it { is_expected.to be true }

@@ -552,7 +552,7 @@ module Spree
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
 
     # Set of classes that can be promotion adjustment sources
-    add_class_set :adjustment_promotion_source_types, default: ["Spree::PromotionAction"]
+    add_class_set :adjustment_promotion_source_types, default: []
 
     # Configures the absolute path that contains the Solidus engine
     # migrations. This will be checked at app boot to confirm that all Solidus

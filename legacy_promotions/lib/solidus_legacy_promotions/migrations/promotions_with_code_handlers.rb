@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-module Solidus
+require 'spree/core'
+
+module SolidusLegacyPromotions
   module Migrations
     module PromotionWithCodeHandlers
-      class PromotionCode < Spree::Base
+      class PromotionCode < ::Spree::Base
         self.table_name = "spree_promotion_codes"
       end
 
