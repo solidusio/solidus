@@ -91,6 +91,7 @@ module SolidusLegacyPromotions
       Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
 
       Spree::Api::Config.adjustment_attributes << :promotion_code_id
+      Spree::Api::Config.adjustment_attributes << :eligible
     end
   end
 end
