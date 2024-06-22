@@ -22,8 +22,7 @@ describe "Order", :js, type: :feature do
       created_at: Time.current,
       updated_at: Time.current,
       included: false,
-      source: taxrate,
-      promotion_code_id: nil,
+      source: taxrate
     )
     visit "/admin/orders/R123456789"
 
@@ -60,8 +59,7 @@ describe "Order", :js, type: :feature do
       created_at: Time.current,
       updated_at: Time.current,
       included: false,
-      source: nil,
-      promotion_code_id: nil,
+      source: nil
     )
     visit "/admin/orders/R123456789"
 
