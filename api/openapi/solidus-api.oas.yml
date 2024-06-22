@@ -6126,8 +6126,6 @@ components:
           type: integer
         label:
           type: string
-        promotion_code_id:
-          type: integer
         source_id:
           type: integer
         source_type:

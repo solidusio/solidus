@@ -89,6 +89,8 @@ module SolidusLegacyPromotions
       Spree::Config.order_contents_class = "Spree::OrderContents"
       Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
       Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
+
+      Spree::Api::Config.adjustment_attributes << :promotion_code_id
     end
   end
 end
