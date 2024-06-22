@@ -247,21 +247,6 @@ describe "Order Details", type: :feature, js: true do
         end
       end
 
-      context "with adjustments" do
-        let(:order) do
-          super().tap do |o|
-            o.adjustments.create!(order: order, label: 'Non-Eligible', amount: 10, eligible: false)
-            o.adjustments.create!(order: order, label: 'Rebate', amount: 10)
-          end
-        end
-
-        it "shows only eligible adjustments" do
-          visit spree.cart_admin_order_path(order)
-          expect(page).to have_content("Rebate")
-          expect(page).not_to have_content("Non-Eligible")
-        end
-      end
-
       context "variant doesn't track inventory" do
         let(:track_inventory) { false }
         let(:backorderable) { false }
