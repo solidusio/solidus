@@ -36,7 +36,10 @@ module Spree
     end
     scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
     scope :shipping, -> { where(adjustable_type: 'Spree::Shipment') }
-    scope :eligible, -> { where(eligible: true) }
+    scope :eligible, -> { all }
+    class << self
+      deprecate :eligible, deprecator: Spree.deprecator
+    end
     scope :charge, -> { where("#{quoted_table_name}.amount >= 0") }
     scope :credit, -> { where("#{quoted_table_name}.amount < 0") }
     scope :nonzero, -> { where("#{quoted_table_name}.amount != 0") }
@@ -87,5 +90,10 @@ module Spree
     def cancellation?
       source_type == 'Spree::UnitCancel'
     end
+
+    def eligible?
+      true
+    end
+    alias_method :eligible, :eligible?
   end
 end
