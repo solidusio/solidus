@@ -31,22 +31,13 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
     expect(confirmation_email.body).not_to include("&quot;")
   end
 
-  context "only shows eligible adjustments in emails" do
+  context "displays order adjustments in emails" do
     before do
       create(
         :adjustment,
         adjustable: order,
         order:      order,
-        eligible:   true,
-        label:      'Eligible Adjustment'
-      )
-
-      create(
-        :adjustment,
-        adjustable: order,
-        order:      order,
-        eligible:   false,
-        label:      'Ineligible Adjustment'
+        label:      'Order Adjustment'
       )
     end
 
@@ -54,11 +45,11 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
     let!(:cancel_email) { Spree::OrderMailer.cancel_email(order) }
 
     specify do
-      expect(confirmation_email.body).not_to include("Ineligible Adjustment")
+      expect(confirmation_email.parts.first.body).to include("Order Adjustment")
     end
 
     specify do
-      expect(cancel_email.body).not_to include("Ineligible Adjustment")
+      expect(cancel_email.parts.first.body).to include("Order Adjustment")
     end
   end
 

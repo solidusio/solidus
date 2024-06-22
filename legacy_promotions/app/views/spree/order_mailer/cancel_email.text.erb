@@ -10,7 +10,7 @@
 <% end %>
 ============================================================
 <%= t('.subtotal') %> <%= @order.display_item_total %>
-<% @order.adjustments.each do |adjustment| %>
+<% @order.adjustments.eligible.each do |adjustment| %>
   <%= raw(adjustment.label) %> <%= adjustment.display_amount %>
 <% end %>
 <%= t('.total') %> <%= @order.display_total %>
