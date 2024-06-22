@@ -56,8 +56,12 @@ module SolidusLegacyPromotions
 
     private
 
+    def legacy_promotion?
+      source_type == "Spree::PromotionAction"
+    end
+
     def require_promotion_code?
-      promotion? && !source.promotion.apply_automatically && source.promotion.codes.any?
+      legacy_promotion? && !source.promotion.apply_automatically && source.promotion.codes.any?
     end
 
     Spree::Adjustment.prepend self
