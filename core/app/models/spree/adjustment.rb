@@ -4,17 +4,8 @@ module Spree
   # Adjustments represent a change to the +item_total+ of an Order. Each
   # adjustment has an +amount+ that can be either positive or negative.
   #
-  # Adjustments can be "opened" or "closed". Once an adjustment is closed, it
+  # Adjustments can be "unfinalized" or "finalized". Once an adjustment is finalized, it
   # will not be automatically updated.
-  #
-  # == Boolean attributes
-  #
-  # 1. *eligible?*
-  #
-  #    This boolean attributes stores whether this adjustment is currently
-  #    eligible for its order. Only eligible adjustments count towards the
-  #    order's adjustment total. This allows an adjustment to be preserved if
-  #    it becomes ineligible so it might be reinstated.
   class Adjustment < Spree::Base
     belongs_to :adjustable, polymorphic: true, touch: true, optional: true
     belongs_to :source, polymorphic: true, optional: true
