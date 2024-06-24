@@ -46,7 +46,9 @@ module Spree
 
       def empty
         authorize! :update, @order, order_token
-        @order.empty!
+
+        @order.empty! unless @order.shipped?
+
         respond_with(@order, default_template: :show)
       end
 
