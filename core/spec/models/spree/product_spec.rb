@@ -536,6 +536,8 @@ RSpec.describe Spree::Product, type: :model do
   end
 
   context '#total_on_hand' do
+    let(:product) { create :product }
+
     it 'should be infinite if track_inventory_levels is false' do
       stub_spree_preferences(track_inventory_levels: false)
       expect(build(:product, variants_including_master: [build(:master_variant)]).total_on_hand).to eql(Float::INFINITY)
@@ -547,16 +549,29 @@ RSpec.describe Spree::Product, type: :model do
     end
 
     it 'should return sum of stock items count_on_hand' do
-      product = create(:product)
       product.stock_items.first.set_count_on_hand 5
       product.variants_including_master.reload # force load association
       expect(product.total_on_hand).to eql(5)
     end
 
     it 'should return sum of stock items count_on_hand when variants_including_master is not loaded' do
-      product = create(:product)
       product.stock_items.first.set_count_on_hand 5
       expect(product.reload.total_on_hand).to eql(5)
+    end
+
+    context 'when the stock items are loaded' do
+      it 'returns the loaded count_on_hand instead of doing SUM(count_on_hand)' do
+        product.stock_items.first.set_count_on_hand(5)
+
+        product = described_class.includes(:stock_items).find(product.id)
+
+        # Set the count on hand to a different number to highlight we loaded and
+        # must be done from the class level so that we don't update the instance
+        # product has loaded
+        Spree::StockItem.find(product.stock_items.first.id).set_count_on_hand(7)
+
+        expect(product.total_on_hand).to eql 5
+      end
     end
   end
 
