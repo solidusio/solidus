@@ -15,7 +15,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_product_promotion_rules)
-      create_table "spree_product_promotion_rules", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_product_promotion_rules", force: :cascade do |t|
         t.integer "product_id"
         t.integer "promotion_rule_id"
         t.datetime "created_at", precision: 6
@@ -26,7 +26,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotion_actions)
-      create_table "spree_promotion_actions", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotion_actions", force: :cascade do |t|
         t.integer "promotion_id"
         t.integer "position"
         t.string "type"
@@ -41,7 +41,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotion_categories)
-      create_table "spree_promotion_categories", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotion_categories", force: :cascade do |t|
         t.string "name"
         t.datetime "created_at", precision: 6
         t.datetime "updated_at", precision: 6
@@ -50,7 +50,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotion_codes)
-      create_table "spree_promotion_codes", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotion_codes", force: :cascade do |t|
         t.integer "promotion_id", null: false
         t.string "value", null: false
         t.datetime "created_at", precision: 6
@@ -61,7 +61,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotion_rule_taxons)
-      create_table "spree_promotion_rule_taxons", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotion_rule_taxons", force: :cascade do |t|
         t.integer "taxon_id"
         t.integer "promotion_rule_id"
         t.datetime "created_at", precision: 6
@@ -72,7 +72,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotion_rules)
-      create_table "spree_promotion_rules", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotion_rules", force: :cascade do |t|
         t.integer "promotion_id"
         t.integer "product_group_id"
         t.string "type"
@@ -86,7 +86,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotion_rules_users)
-      create_table "spree_promotion_rules_users", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotion_rules_users", force: :cascade do |t|
         t.integer "user_id"
         t.integer "promotion_rule_id"
         t.datetime "created_at", precision: 6
@@ -97,7 +97,7 @@ class SolidusOneFourPromotions < ActiveRecord::Migration[5.0]
     end
 
     unless table_exists?(:spree_promotions)
-      create_table "spree_promotions", if_not_exists: true, force: :cascade do |t|
+      create_table "spree_promotions", force: :cascade do |t|
         t.string "description"
         t.datetime "expires_at"
         t.datetime "starts_at"
