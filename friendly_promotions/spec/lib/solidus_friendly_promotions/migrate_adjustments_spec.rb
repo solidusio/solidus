@@ -16,7 +16,6 @@ RSpec.describe SolidusFriendlyPromotions::MigrateAdjustments do
       source: tax_rate,
       amount: -3,
       label: "Business tax",
-      eligible: true,
       included: true,
       order: order
     )
@@ -24,7 +23,6 @@ RSpec.describe SolidusFriendlyPromotions::MigrateAdjustments do
       source: promotion.actions.first,
       amount: -2,
       label: "Promotion (Because we like you)",
-      eligible: true,
       order: order
     )
     SolidusFriendlyPromotions::PromotionMigrator.new(

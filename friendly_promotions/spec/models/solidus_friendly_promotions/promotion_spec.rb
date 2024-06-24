@@ -262,7 +262,6 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
                 :completed_order_with_friendly_promotion,
                 promotion: promotion
               )
-              promotion.benefits.first.adjustments.update_all(eligible: true)
             end
 
             it { is_expected.to be_truthy }
@@ -362,8 +361,10 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
       end
 
       context "and the promo is ineligible" do
-        before { order.all_adjustments.friendly_promotion.update_all(eligible: false) }
-
+        before do
+          promotion.benefits.first.conditions << SolidusFriendlyPromotions::Conditions::NthOrder.new(preferred_nth_order: 2)
+          order.recalculate
+        end
         it { is_expected.to eq 0 }
       end
 
@@ -639,11 +640,9 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
         it { is_expected.to be true }
 
         context "when the promotion was not eligible" do
-          let(:adjustment) { order.all_adjustments.first }
-
           before do
-            adjustment.eligible = false
-            adjustment.save!
+            promotion.benefits.first.conditions << SolidusFriendlyPromotions::Conditions::NthOrder.new(preferred_nth_order: 2)
+            order.recalculate
           end
 
           it { is_expected.to be false }

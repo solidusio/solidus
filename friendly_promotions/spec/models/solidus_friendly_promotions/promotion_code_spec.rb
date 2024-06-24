@@ -87,7 +87,6 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
                 :completed_order_with_friendly_promotion,
                 promotion: promotion
               )
-              code.adjustments.update_all(eligible: true)
             end
 
             it { is_expected.to be_truthy }
@@ -205,7 +204,10 @@ RSpec.describe SolidusFriendlyPromotions::PromotionCode do
       end
 
       context "and the promo is ineligible" do
-        before { order.all_adjustments.update_all(eligible: false) }
+        before do
+          promotion.benefits.first.conditions << SolidusFriendlyPromotions::Conditions::NthOrder.new(preferred_nth_order: 2)
+          order.recalculate
+        end
 
         it { is_expected.to eq 0 }
       end

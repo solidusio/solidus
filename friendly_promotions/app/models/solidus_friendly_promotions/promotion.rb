@@ -70,8 +70,7 @@ module SolidusFriendlyPromotions
         .where(
           spree_adjustments: {
             source_type: "SolidusFriendlyPromotions::Benefit",
-            source_id: benefits.map(&:id),
-            eligible: true
+            source_id: benefits.map(&:id)
           }
         ).distinct
     end

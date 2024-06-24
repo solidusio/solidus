@@ -69,8 +69,7 @@ module SolidusFriendlyPromotions
         adjustment ||= item.adjustments.new(
           source: discount_item.source,
           order_id: item.is_a?(Spree::Order) ? item.id : item.order_id,
-          label: discount_item.label,
-          eligible: true
+          label: discount_item.label
         )
         adjustment.update!(amount: discount_item.amount)
         adjustment
