@@ -1,4 +1,4 @@
-class RenameFriendlyPromotionActionsToFriendlyBenefits < ActiveRecord::Migration[7.1]
+class RenameFriendlyPromotionActionsToFriendlyBenefits < ActiveRecord::Migration[7.0]
   def change
     rename_table :friendly_promotion_actions, :friendly_benefits
     rename_column :friendly_conditions, :action_id, :benefit_id

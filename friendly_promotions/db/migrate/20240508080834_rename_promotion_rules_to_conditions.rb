@@ -1,4 +1,4 @@
-class RenamePromotionRulesToConditions < ActiveRecord::Migration[7.1]
+class RenamePromotionRulesToConditions < ActiveRecord::Migration[7.0]
   def change
     rename_table :friendly_promotion_rules, :friendly_conditions
     rename_table :friendly_promotion_rules_stores, :friendly_condition_stores

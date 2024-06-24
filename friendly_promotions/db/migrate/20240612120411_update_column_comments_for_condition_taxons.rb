@@ -1,4 +1,4 @@
-class UpdateColumnCommentsForConditionTaxons < ActiveRecord::Migration[7.1]
+class UpdateColumnCommentsForConditionTaxons < ActiveRecord::Migration[7.0]
   def up
     if connection.supports_comments?
       change_table_comment(:friendly_condition_taxons, friendly_condition_taxons_table_comment)
