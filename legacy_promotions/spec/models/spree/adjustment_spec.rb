@@ -9,6 +9,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
   let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
 
+  it { is_expected.to respond_to(:promotion_code) }
   context '#recalculate' do
     subject { adjustment.recalculate }
     let(:adjustment) do

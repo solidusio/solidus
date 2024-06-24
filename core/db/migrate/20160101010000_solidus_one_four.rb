@@ -90,14 +90,12 @@ class SolidusOneFour < ActiveRecord::Migration[5.0]
       t.datetime "updated_at", precision: 6
       t.integer "order_id", null: false
       t.boolean "included", default: false
-      t.integer "promotion_code_id"
       t.integer "adjustment_reason_id"
       t.boolean "finalized", default: false, null: false
       t.index ["adjustable_id", "adjustable_type"], name: "index_spree_adjustments_on_adjustable_id_and_adjustable_type"
       t.index ["adjustable_id"], name: "index_adjustments_on_order_id"
       t.index ["eligible"], name: "index_spree_adjustments_on_eligible"
       t.index ["order_id"], name: "index_spree_adjustments_on_order_id"
-      t.index ["promotion_code_id"], name: "index_spree_adjustments_on_promotion_code_id"
       t.index ["source_id", "source_type"], name: "index_spree_adjustments_on_source_id_and_source_type"
     end
 

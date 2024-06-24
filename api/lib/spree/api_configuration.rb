@@ -72,7 +72,7 @@ module Spree
 
     preference :adjustment_attributes, :array, default: [
       :id, :source_type, :source_id, :adjustable_type, :adjustable_id,
-      :amount, :label, :promotion_code_id,
+      :amount, :label,
       :finalized, :eligible, :created_at, :updated_at
     ]
 
