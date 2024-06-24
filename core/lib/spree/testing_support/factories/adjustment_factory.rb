@@ -7,7 +7,6 @@ FactoryBot.define do
     amount { 100.0 }
     label { 'Shipping' }
     association(:source, factory: :tax_rate)
-    eligible { true }
 
     after(:build) do |adjustment|
       adjustments = adjustment.adjustable.adjustments

@@ -5,6 +5,8 @@ module SolidusLegacyPromotions
     def self.prepended(base)
       base.belongs_to :promotion_code, class_name: 'Spree::PromotionCode', optional: true
       base.validates :promotion_code, presence: true, if: :require_promotion_code?
+
+      base.scope :eligible, -> { where(eligible: true) }
     end
 
     # Recalculate and persist the amount from this adjustment's source based on
@@ -53,6 +55,11 @@ module SolidusLegacyPromotions
       end
     end
     deprecate :calculate_eligibility, deprecator: ::Spree.deprecator
+
+    def eligible
+      self[:eligible]
+    end
+    alias_method :eligible?, :eligible
 
     private
 

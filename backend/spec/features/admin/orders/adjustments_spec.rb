@@ -22,7 +22,6 @@ describe "Adjustments", type: :feature do
     let(:tax_category) { create(:tax_category) }
     let(:variant) { create(:variant, tax_category: tax_category) }
 
-    let!(:non_eligible_adjustment) { order.adjustments.create!(order: order, label: 'Non-Eligible', amount: 10, eligible: false) }
     let!(:adjustment) { order.adjustments.create!(order: order, label: 'Rebate', amount: 10) }
 
     before(:each) do
@@ -40,13 +39,6 @@ describe "Adjustments", type: :feature do
           expect(column_text(2)).to match(/TaxCategory - \d+ 20\.0%/)
           expect(column_text(3)).to eq("$2.00")
         end
-      end
-
-      it "shows both eligible and non-eligible adjustments" do
-        expect(page).to have_content("Rebate")
-        expect(page).to have_content("Non-Eligible")
-        expect(find('tr', text: 'Rebate')[:class]).not_to eq('adjustment-ineligible')
-        expect(find('tr', text: 'Non-Eligible')[:class]).to eq('adjustment-ineligible')
       end
     end
 

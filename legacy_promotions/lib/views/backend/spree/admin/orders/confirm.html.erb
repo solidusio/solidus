@@ -18,7 +18,7 @@
       order: @order,
       title: t('spree.line_item_adjustments'),
     }
-  ) if @order.line_item_adjustments.any?
+  ) if @order.line_item_adjustments.eligible.any?
 %>
 
 <%=
@@ -29,7 +29,7 @@
       order: @order,
       title: t('spree.shipment_adjustments'),
     }
-  ) if @order.shipment_adjustments.any?
+  ) if @order.shipment_adjustments.eligible.any?
 %>
 
 <%=
@@ -40,7 +40,7 @@
       order: @order,
       title: t('spree.order_adjustments'),
     }
-  ) if @order.adjustments.any?
+  ) if @order.adjustments.eligible.any?
 %>
 
 <% if @order.line_items.exists? %>

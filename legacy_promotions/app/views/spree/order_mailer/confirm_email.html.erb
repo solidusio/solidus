@@ -31,8 +31,8 @@
           </td>
         </tr>
         <% if @order.line_item_adjustments.exists? %>
-          <% if @order.all_adjustments.promotion.exists? %>
-            <% @order.all_adjustments.promotion.group_by(&:label).each do |label, adjustments| %>
+          <% if @order.all_adjustments.promotion.eligible.exists? %>
+            <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
               <tr>
                 <td></td>
                 <td><%= t('spree.promotion') %> <%= label %>:</td>
@@ -48,8 +48,8 @@
             <td><%= Spree::Money.new(shipments.sum(&:total_before_tax), currency: @order.currency) %></td>
           </tr>
         <% end %>
-        <% if @order.all_adjustments.tax.exists? %>
-          <% @order.all_adjustments.tax.group_by(&:label).each do |label, adjustments| %>
+        <% if @order.all_adjustments.eligible.tax.exists? %>
+          <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
             <tr>
               <td></td>
               <td><%= t('spree.tax') %> <%= label %>:</td>
@@ -57,7 +57,7 @@
             </tr>
           <% end %>
         <% end %>
-        <% @order.adjustments.each do |adjustment| %>
+        <% @order.adjustments.eligible.each do |adjustment| %>
           <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
           <tr>
             <td></td>

@@ -12,6 +12,10 @@ module SolidusLegacyPromotions
       recalculate
     end
 
+    def shipping_discount
+      shipment_adjustments.credit.eligible.sum(:amount) * - 1
+    end
+
     Spree::Order.prepend(self)
   end
 end

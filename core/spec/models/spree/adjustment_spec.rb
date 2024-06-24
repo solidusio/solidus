@@ -18,6 +18,12 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
   end
 
+  describe ".eligible", :silence_deprecations do
+    subject { described_class.eligible.to_sql }
+
+    it { is_expected.to eq(Spree::Adjustment.all.to_sql) }
+  end
+
   describe 'non_tax scope' do
     subject do
       Spree::Adjustment.non_tax.to_a

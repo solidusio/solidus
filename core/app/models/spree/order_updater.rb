@@ -157,9 +157,9 @@ module Spree
       recalculate_adjustments
 
       all_items = line_items + shipments
-      order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)
+      order_tax_adjustments = adjustments.select(&:tax?)
 
-      order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.select(&:eligible?).sum(&:amount)
+      order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.sum(&:amount)
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
@@ -224,7 +224,6 @@ module Spree
         # The cancellation_total isn't persisted anywhere but is included in
         # the adjustment_total
         item.adjustment_total = item.adjustments.
-          select(&:eligible?).
           reject(&:included?).
           sum(&:amount)
 
