@@ -53,6 +53,7 @@ Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 # See: lib/solidus_friendly_promotions/testing_support/factories.rb
 SolidusDevSupport::TestingSupport::Factories.load_for(SolidusFriendlyPromotions::Engine)
 
+Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 Spree::Config.promotions = SolidusFriendlyPromotions.configuration
 
 # Allow Capybara to find elements by aria-label attributes
