@@ -49,25 +49,4 @@ RSpec.describe Spree::Adjustment do
       it { is_expected.to be false }
     end
   end
-
-  describe "#friendly_promotion?" do
-    let(:source) { create(:friendly_promotion, :with_adjustable_benefit).benefits.first }
-    let!(:adjustment) { build(:adjustment, source: source) }
-
-    subject { adjustment.friendly_promotion? }
-
-    it { is_expected.to be true }
-
-    context "with a Spree Promotion Action source" do
-      let(:source) { create(:promotion, :with_action).actions.first }
-
-      it { is_expected.to be false }
-    end
-
-    context "with a Tax Rate source" do
-      let(:source) { create(:tax_rate) }
-
-      it { is_expected.to be false }
-    end
-  end
 end
