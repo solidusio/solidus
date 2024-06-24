@@ -51,5 +51,7 @@ if SolidusSupport.backend_available?
 end
 
 SolidusFriendlyPromotions.configure do |config|
-  # Add your custom configuration here
+  # Sync order promotions between the legacy and new promotion systems
+  # You can delete this line once your done with the migration process.
+  # config.sync_order_promotions = true
 end

@@ -49,6 +49,9 @@ Now, change `config/initializers/solidus_friendly_promotions.rb` to use your new
 Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 # Set the promotion configuration to ours
 Spree::Config.promotions = SolidusFriendlyPromotions.configuration
+
+# Sync legacy order promotions with the new promotion system
+SolidusFriendlyPromotions.config.sync_order_promotions = true
 ```
 
 From a user's perspective, your promotions should work as before.
@@ -69,6 +72,12 @@ bundle exec rails solidus_friendly_promotions:migrate_order_promotions:down
 ```
 
 Both of these tasks only work if every promotion rule and promotion action have an equivalent condition or benefit in SolidusFrienndlyPromotions. Benefits are connected to their originals promotion action using the `SolidusFriendlyPromotions#original_promotion_action_id`, Promotions are connected to their originals using the  `SolidusFriendlyPromotions#original_promotion_id`.
+
+Once these tasks have run and everything works, you can stop syncing legacy order promotions and new order promotions:
+
+```rb
+SolidusFriendlyPromotions.config.sync_order_promotions = false
+```
 
 ## Solidus Starter Frontend (and other custom frontends)
 
