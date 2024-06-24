@@ -90,7 +90,7 @@ This will create the tables for this extension. It will also replace the promoti
 
 ## Usage
 
-Add a promotion using the admin. Add rules and actions, and observe promotions getting applied how you'd expect them to.
+Add a promotion using the admin. Add benefits with conditions, and observe promotions getting applied how you'd expect them to.
 
 In the admin screen, you can set a number of attributes on your promotion:
 - Name: The name of the promotion. The `name` attribute will also be used to generate adjustment labels. In multi-lingual stores, you probably want different promotions per language for this reason.
