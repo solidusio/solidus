@@ -9,6 +9,8 @@ module Spree
     # customizations.
     class DashboardDisplay < PermissionSets::Base
       def activate!
+          Spree.deprecator.warn "The #{self.class.name} module is deprecated. " \
+            "If you still use dashboards, please copy all controllers and views from #{self.class.name} to your application."
           can [:admin, :home], :dashboards
       end
     end
