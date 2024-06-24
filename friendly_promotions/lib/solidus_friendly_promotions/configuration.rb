@@ -57,7 +57,7 @@ module SolidusFriendlyPromotions
       "SolidusFriendlyPromotions::Conditions::ShippingMethod"
     ]
 
-    add_class_set :actions, default: [
+    add_class_set :benefits, default: [
       "SolidusFriendlyPromotions::Benefits::AdjustLineItem",
       "SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups",
       "SolidusFriendlyPromotions::Benefits::AdjustShipment",

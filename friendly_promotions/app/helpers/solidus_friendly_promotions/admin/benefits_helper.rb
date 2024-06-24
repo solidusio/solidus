@@ -10,7 +10,7 @@ module SolidusFriendlyPromotions
       end
 
       def options_for_benefit_types(benefit)
-        benefits = SolidusFriendlyPromotions.config.actions
+        benefits = SolidusFriendlyPromotions.config.benefits
         options = benefits.map { |action| [action.model_name.human, action.name] }
         options_for_select(options, benefit&.type&.to_s)
       end
