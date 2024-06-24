@@ -68,7 +68,7 @@ module SolidusFriendlyPromotions
 
       def validate_benefit_type
         requested_type = params[:benefit].delete(:type)
-        benefit_types = SolidusFriendlyPromotions.config.actions
+        benefit_types = SolidusFriendlyPromotions.config.benefits
         @benefit_type = benefit_types.detect do |klass|
           klass.name == requested_type
         end
