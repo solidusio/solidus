@@ -52,12 +52,12 @@ RSpec.describe SolidusFriendlyPromotions::Configuration do
   describe ".sync_order_promotions" do
     subject { config.sync_order_promotions }
 
-    it { is_expected.to be true }
+    it { is_expected.to be false }
 
-    it "can be set to false" do
-      config.sync_order_promotions = false
-      expect(subject).to be false
+    it "can be set to true" do
       config.sync_order_promotions = true
+      expect(subject).to be true
+      config.sync_order_promotions = false
     end
   end
 

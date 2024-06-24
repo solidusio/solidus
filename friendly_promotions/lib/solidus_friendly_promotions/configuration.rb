@@ -4,11 +4,9 @@ require "spree/core/environment_extension"
 
 module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration
-    attr_accessor :sync_order_promotions
     attr_accessor :recalculate_complete_orders
 
     def initialize
-      @sync_order_promotions = true
       @recalculate_complete_orders = true
     end
 
@@ -107,6 +105,8 @@ module SolidusFriendlyPromotions
       default: 1,
       post: 2
     }
+
+    preference :sync_order_promotions, :boolean, default: false
 
     preference :use_new_admin, :boolean, default: false
 
