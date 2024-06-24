@@ -188,16 +188,27 @@ RSpec.describe "Promotion System" do
     let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt}]) }
 
     before do
+      Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
+      Spree::Config.order_contents_class = "Spree::OrderContents"
+      SolidusFriendlyPromotions.config.sync_order_promotions = true
       promotion_code = spree_promotion.codes.first
       order.order_promotions << Spree::OrderPromotion.new(
         promotion_code: promotion_code,
         promotion: spree_promotion
       )
       Spree::PromotionHandler::Cart.new(order).activate
+      order.recalculate
       expect(order.line_items.first.adjustments.first.source).to eq(spree_promotion.promotion_actions.first)
       promotion_map = SolidusFriendlyPromotions::PROMOTION_MAP
       SolidusFriendlyPromotions::PromotionMigrator.new(promotion_map).call
       expect(SolidusFriendlyPromotions::Promotion.count).to eq(1)
+
+      Spree::Config.promotions = SolidusFriendlyPromotions::Configuration.new
+      Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
+    end
+
+    after do
+      SolidusFriendlyPromotions.config.sync_order_promotions = false
     end
 
     subject { order.recalculate }
