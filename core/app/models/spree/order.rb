@@ -719,6 +719,10 @@ module Spree
       end
     end
 
+    def order_email
+      email.presence || user&.email
+    end
+
     private
 
     def process_payments_before_complete

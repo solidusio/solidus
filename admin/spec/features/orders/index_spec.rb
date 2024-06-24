@@ -11,6 +11,7 @@ describe "Orders", type: :feature do
     visit "/admin/orders"
     click_on "In Progress"
 
+    expect(page).to have_content("admin@example.com")
     expect(page).to have_content("R123456789")
     expect(page).to have_content("$19.99")
     expect(page).to be_axe_clean

@@ -2101,4 +2101,26 @@ RSpec.describe Spree::Order, type: :model do
       it { is_expected.to eq(true) }
     end
   end
+
+  describe "order_email" do
+    context "when a new order is created" do
+      it "returns nil" do
+        expect(Spree::Order.new.order_email).to eq(nil)
+      end
+    end
+
+    context "when a logged in user creates an order" do
+      it "returns the customer's email" do
+        order = build(:order, user: build(:user, email: "customer@example.com"))
+        expect(order.order_email).to eq("customer@example.com")
+      end
+    end
+
+    context "when order email is different than user's email" do
+      it "gives preference to order's email" do
+        order = build(:order, email: "buyer@example.com", user: build(:user, email: "customer@example.com"))
+        expect(order.order_email).to eq("buyer@example.com")
+      end
+    end
+  end
 end
