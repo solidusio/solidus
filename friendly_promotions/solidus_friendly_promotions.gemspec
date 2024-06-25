@@ -34,10 +34,17 @@ Gem::Specification.new do |spec|
   spec.add_dependency "stimulus-rails", "~> 1.2"
   spec.add_dependency "importmap-rails", "~> 1.2"
   spec.add_dependency "ransack-enum", "~> 1.0"
+
+  spec.add_development_dependency "capybara", "~> 3.29"
+  spec.add_development_dependency "database_cleaner", [">= 1.7", "< 3"]
+  spec.add_development_dependency "factory_bot", ">= 4.8"
+  spec.add_development_dependency "factory_bot_rails"
   spec.add_development_dependency "rspec-activemodel-mocks", "~> 1.0"
   spec.add_development_dependency "rspec-retry"
+  spec.add_development_dependency "rspec-rails", ">= 5.0", "< 7.0"
+  spec.add_development_dependency "selenium-webdriver", "~> 4.11"
   spec.add_development_dependency "shoulda-matchers", "~> 5.3"
-  spec.add_development_dependency "solidus_dev_support", "~> 2.6"
   spec.add_development_dependency "standard", "~> 1.31"
   spec.add_development_dependency "tailwindcss-rails", "~> 2.2"
+  spec.add_development_dependency "puma", ">= 4.3", "< 7.0"
 end

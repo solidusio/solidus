@@ -6,8 +6,6 @@ ENV["RAILS_ENV"] = "test"
 require "spec_helper"
 require "solidus_legacy_promotions"
 
-# Run Coverage report
-require "solidus_dev_support/rspec/coverage"
 # SOLIDUS DUMMY APP
 require "spree/testing_support/dummy_app"
 DummyApp.setup(
@@ -37,8 +35,7 @@ require "solidus_admin/testing_support/admin_assets"
 # AXE - ACCESSIBILITY
 require "axe-rspec"
 require "axe-capybara"
-# Requires factories and other useful helpers defined in spree_core.
-require "solidus_dev_support/rspec/feature_helper"
+
 # Feature helpers for the new admin
 require "solidus_admin/testing_support/feature_helpers"
 require "shoulda-matchers"
@@ -49,13 +46,34 @@ require "rspec-activemodel-mocks"
 # in spec/support/ and its subdirectories.
 Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
+require "rspec/rails"
+require "database_cleaner"
+
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+
+require "spree/testing_support/preferences"
+require "spree/testing_support/rake"
+require "spree/testing_support/job_helpers"
+require "spree/api/testing_support/helpers"
+require "spree/testing_support/url_helpers"
+require "spree/testing_support/authorization_helpers"
+require "spree/testing_support/controller_requests"
+require "cancan/matchers"
+require "spree/testing_support/capybara_ext"
+
+require "selenium/webdriver"
 # Requires factories defined in Solidus core and this extension.
 # See: lib/solidus_friendly_promotions/testing_support/factories.rb
-SolidusDevSupport::TestingSupport::Factories.load_for(SolidusFriendlyPromotions::Engine)
+require "spree/testing_support/factory_bot"
+require "solidus_legacy_promotions/testing_support/factory_bot"
+require "solidus_friendly_promotions/testing_support/factory_bot"
+Spree::TestingSupport::FactoryBot.add_definitions!
+SolidusLegacyPromotions::TestingSupport::FactoryBot.add_definitions!
+SolidusFriendlyPromotions::TestingSupport::FactoryBot.add_paths_and_load!
 
 Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 Spree::Config.promotions = SolidusFriendlyPromotions.configuration
-
+ActiveJob::Base.queue_adapter = :test
 # Allow Capybara to find elements by aria-label attributes
 Capybara.enable_aria_label = true
 
@@ -64,6 +82,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include SolidusFriendlyPromotions::Engine.routes.url_helpers, type: :request
+  config.include FactoryBot::Syntax::Methods
+  config.include Shoulda::Matchers::ActiveRecord, type: :model
 
   config.around :each, :solidus_admin, :js do |example|
     SolidusFriendlyPromotions.config.use_new_admin = true
