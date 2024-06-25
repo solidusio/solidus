@@ -1302,9 +1302,25 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         context "there is a credit card payment" do
+          subject(:add_store_credit_payments!) { order.add_store_credit_payments }
+
+          let!(:cc_payment) { create(:payment, order: order) }
+
           it "invalidates the credit card payment" do
-            cc_payment = create(:payment, order: order)
             expect { subject }.to change { cc_payment.reload.state }.to 'invalid'
+          end
+
+          context "when the order doesn't use store credits" do
+            let(:order) do
+              create(:order_with_totals,
+                     use_store_credits: false,
+                     user: store_credit.user,
+                     line_items_price: order_total).tap(&:recalculate)
+            end
+
+            it "doesn't invalidates the credit card payment" do
+              expect { add_store_credit_payments! }.not_to(change { cc_payment.reload.state })
+            end
           end
         end
       end
