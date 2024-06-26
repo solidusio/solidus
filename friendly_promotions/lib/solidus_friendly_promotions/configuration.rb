@@ -4,12 +4,6 @@ require "spree/core/environment_extension"
 
 module SolidusFriendlyPromotions
   class Configuration < Spree::Preferences::Configuration
-    attr_accessor :recalculate_complete_orders
-
-    def initialize
-      @recalculate_complete_orders = true
-    end
-
     include Spree::Core::EnvironmentExtension
 
     class_name_attribute :order_adjuster_class, default: "SolidusFriendlyPromotions::FriendlyPromotionAdjuster"
@@ -105,6 +99,8 @@ module SolidusFriendlyPromotions
       default: 1,
       post: 2
     }
+
+    preference :recalculate_complete_orders, :boolean, default: true
 
     preference :sync_order_promotions, :boolean, default: false
 
