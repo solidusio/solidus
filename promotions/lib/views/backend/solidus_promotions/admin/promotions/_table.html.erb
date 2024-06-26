@@ -30,6 +30,7 @@
           <% else %>
             <%= promotion.usage_count %> / <%= promotion.usage_limit %>
           <% end %>
+        </td>
         <td>
           <%= l(promotion.starts_at, format: :short) if promotion.starts_at %>
         </td>
