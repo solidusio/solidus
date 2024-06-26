@@ -1,0 +1,19 @@
+<%= turbo_frame_tag @promotion, dom_id(@benefit) do %>
+  <%= render 'calculator_select', path: solidus_promotions.edit_admin_promotion_benefit_path(@promotion, @benefit), benefit: @benefit %>
+
+  <%=
+    form_with(
+      model: @benefit,
+      scope: :benefit,
+      url: solidus_promotions.admin_promotion_benefit_path(@promotion, @benefit),
+    ) do |form| %>
+    <%= render "form", form: form %>
+
+    <div class="row">
+      <div class="col-12">
+        <%= button_tag "Update", class: "btn btn-secondary float-right" %>
+      </div>
+    </div>
+
+  <% end %>
+<% end %>

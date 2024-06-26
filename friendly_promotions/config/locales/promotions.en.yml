@@ -1,6 +1,0 @@
-en:
-  solidus_friendly_promotions:
-    promotions:
-      title: "Promotions"
-      destroy:
-        success: "Promotions were successfully removed."
