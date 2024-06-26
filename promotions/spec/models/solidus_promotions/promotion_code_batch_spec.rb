@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SolidusPromotions::PromotionCodeBatch, type: :model do
   subject do
     described_class.create!(
-      promotion_id: create(:friendly_promotion).id,
+      promotion_id: create(:solidus_promotion).id,
       base_code: "abc",
       number_of_codes: 1,
       error: nil,

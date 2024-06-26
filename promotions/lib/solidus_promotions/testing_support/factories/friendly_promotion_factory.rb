@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :friendly_promotion, class: "SolidusPromotions::Promotion" do
+  factory :solidus_promotion, class: "SolidusPromotions::Promotion" do
     name { "Promo" }
     customer_label { "Because we like you" }
 
@@ -10,7 +10,7 @@ FactoryBot.define do
     end
     before(:create) do |promotion, evaluator|
       if evaluator.code
-        promotion.codes << build(:friendly_promotion_code, promotion: promotion, value: evaluator.code)
+        promotion.codes << build(:solidus_promotion_code, promotion: promotion, value: evaluator.code)
       end
     end
 
@@ -29,7 +29,7 @@ FactoryBot.define do
       end
     end
 
-    factory :friendly_promotion_with_benefit_adjustment, traits: [:with_adjustable_benefit]
+    factory :solidus_promotion_with_benefit_adjustment, traits: [:with_adjustable_benefit]
 
     trait :with_line_item_adjustment do
       transient do
@@ -40,7 +40,7 @@ FactoryBot.define do
       preferred_amount { adjustment_rate }
     end
 
-    factory :friendly_promotion_with_item_adjustment, traits: [:with_line_item_adjustment]
+    factory :solidus_promotion_with_item_adjustment, traits: [:with_line_item_adjustment]
 
     trait :with_free_shipping do
       after(:create) do |promotion|
@@ -60,6 +60,6 @@ FactoryBot.define do
       calculator_class { SolidusPromotions::Calculators::DistributedAmount }
     end
 
-    factory :friendly_promotion_with_order_adjustment, traits: [:with_order_adjustment]
+    factory :solidus_promotion_with_order_adjustment, traits: [:with_order_adjustment]
   end
 end

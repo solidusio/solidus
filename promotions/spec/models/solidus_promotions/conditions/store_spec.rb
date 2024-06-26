@@ -10,7 +10,7 @@ RSpec.describe SolidusPromotions::Conditions::Store, type: :model do
   describe "store_ids=" do
     subject { condition.store_ids = [store.id] }
 
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
     let(:promotion_benefit) { promotion.benefits.first }
     let!(:unimportant_store) { create(:store) }
     let!(:store) { create(:store) }

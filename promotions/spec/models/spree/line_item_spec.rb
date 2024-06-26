@@ -41,7 +41,7 @@ RSpec.describe Spree::LineItem do
     context "when line item is managed by an automation" do
       let(:order) { create(:order) }
       let(:variant) { create(:variant) }
-      let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
+      let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
       let(:promotion_benefit) { SolidusPromotions::Benefits::CreateDiscountedItem.create!(calculator: hundred_percent, preferred_variant_id: variant.id, promotion: promotion) }
       let(:hundred_percent) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 100) }
 

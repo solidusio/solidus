@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::ShippingRateDiscount do
-  subject(:shipping_rate_discount) { build(:friendly_shipping_rate_discount) }
+  subject(:shipping_rate_discount) { build(:solidus_shipping_rate_discount) }
 
   it { is_expected.to belong_to(:shipping_rate) }
 

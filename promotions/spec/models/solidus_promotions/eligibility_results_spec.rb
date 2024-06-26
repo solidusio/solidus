@@ -6,7 +6,7 @@ RSpec.describe SolidusPromotions::EligibilityResults do
   subject(:eligibility_results) { described_class.new(promotion) }
 
   describe "#add" do
-    let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
     let(:promotion_benefit) { promotion.benefits.first }
     let(:order) { create(:order, item_total: 100) }
     let(:condition) { SolidusPromotions::Conditions::ItemTotal.new(benefit: promotion_benefit, preferred_amount: 101) }

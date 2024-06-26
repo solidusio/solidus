@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::PromotionCode do
-  let(:promotion) { create(:friendly_promotion) }
-  subject { create(:friendly_promotion_code, promotion: promotion) }
+  let(:promotion) { create(:solidus_promotion) }
+  subject { create(:solidus_promotion_code, promotion: promotion) }
 
   it { is_expected.to belong_to(:promotion) }
   it { is_expected.to have_many(:order_promotions).class_name("SolidusPromotions::OrderPromotion").dependent(:destroy) }
@@ -13,7 +13,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
     subject { promotion_code.save }
 
     describe "#normalize_code" do
-      let(:promotion) { create(:friendly_promotion, code: code) }
+      let(:promotion) { create(:solidus_promotion, code: code) }
 
       before { subject }
 
@@ -84,7 +84,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
           context "on a different order" do
             before do
               FactoryBot.create(
-                :completed_order_with_friendly_promotion,
+                :completed_order_with_solidus_promotion,
                 promotion: promotion
               )
             end
@@ -110,7 +110,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
     context "with an order-level adjustment" do
       let(:promotion) do
         FactoryBot.create(
-          :friendly_promotion,
+          :solidus_promotion,
           :with_order_adjustment,
           code: "discount",
           per_code_usage_limit: usage_limit
@@ -118,7 +118,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
       end
       let(:promotable) do
         FactoryBot.create(
-          :completed_order_with_friendly_promotion,
+          :completed_order_with_solidus_promotion,
           promotion: promotion
         )
       end
@@ -129,7 +129,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
     context "with an item-level adjustment" do
       let(:promotion) do
         FactoryBot.create(
-          :friendly_promotion,
+          :solidus_promotion,
           :with_line_item_adjustment,
           code: "discount",
           per_code_usage_limit: usage_limit
@@ -170,7 +170,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
 
     let(:promotion) do
       FactoryBot.create(
-        :friendly_promotion,
+        :solidus_promotion,
         :with_order_adjustment,
         code: "discount"
       )
@@ -181,7 +181,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
       let(:order) { FactoryBot.create(:order_with_line_items) }
 
       before do
-        order.friendly_order_promotions.create(
+        order.solidus_order_promotions.create(
           promotion: promotion,
           promotion_code: code
         )
@@ -194,7 +194,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
     context "when the code is applied to a complete order" do
       let!(:order) do
         FactoryBot.create(
-          :completed_order_with_friendly_promotion,
+          :completed_order_with_solidus_promotion,
           promotion: promotion
         )
       end
@@ -224,7 +224,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
   describe "completing multiple orders with the same code", slow: true do
     let(:promotion) do
       FactoryBot.create(
-        :friendly_promotion,
+        :solidus_promotion,
         :with_order_adjustment,
         code: "discount",
         per_code_usage_limit: 1,
@@ -239,10 +239,10 @@ RSpec.describe SolidusPromotions::PromotionCode do
       end
     end
 
-    let(:promo_adjustment) { order.all_adjustments.friendly_promotion.first }
+    let(:promo_adjustment) { order.all_adjustments.solidus_promotion.first }
 
     before do
-      order.friendly_order_promotions.create!(
+      order.solidus_order_promotions.create!(
         order: order,
         promotion: promotion,
         promotion_code: described_class.find_by(value: "discount")
@@ -252,7 +252,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
 
       FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
         FactoryBot.create(:payment, amount: 30, order: order)
-        order.friendly_order_promotions.create!(
+        order.solidus_order_promotions.create!(
           order: order,
           promotion: promotion,
           promotion_code: described_class.find_by(value: "discount")
@@ -266,7 +266,7 @@ RSpec.describe SolidusPromotions::PromotionCode do
     it "makes the adjustment disappear" do
       expect {
         order.complete
-      }.to change { order.all_adjustments.friendly_promotion }.to([])
+      }.to change { order.all_adjustments.solidus_promotion }.to([])
     end
 
     it "adjusts the promo_total" do
@@ -289,9 +289,9 @@ RSpec.describe SolidusPromotions::PromotionCode do
   end
 
   it "cannot create promotion code on apply automatically promotion" do
-    promotion = create(:friendly_promotion, apply_automatically: true)
+    promotion = create(:solidus_promotion, apply_automatically: true)
     expect {
-      create(:friendly_promotion_code, promotion: promotion)
+      create(:solidus_promotion_code, promotion: promotion)
     }.to raise_error ActiveRecord::RecordInvalid,
       "Validation failed: Could not create promotion code on promotion that apply automatically"
   end
@@ -299,11 +299,11 @@ RSpec.describe SolidusPromotions::PromotionCode do
   describe "#destroy" do
     subject { promotion_code.destroy }
 
-    let(:promotion_code) { create(:friendly_promotion_code) }
+    let(:promotion_code) { create(:solidus_promotion_code) }
     let(:order) { create(:order_with_line_items) }
 
     before do
-      order.friendly_order_promotions.create(promotion: promotion_code.promotion, promotion_code: promotion_code)
+      order.solidus_order_promotions.create(promotion: promotion_code.promotion, promotion_code: promotion_code)
     end
 
     it "destroys the order_promotion" do

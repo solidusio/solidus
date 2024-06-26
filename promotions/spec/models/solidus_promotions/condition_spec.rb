@@ -17,7 +17,7 @@ RSpec.describe SolidusPromotions::Condition do
     end
   end
 
-  let(:benefit) { create(:friendly_promotion, :with_adjustable_benefit).benefits.first }
+  let(:benefit) { create(:solidus_promotion, :with_adjustable_benefit).benefits.first }
 
   describe "preferences" do
     subject { described_class.new.preferences }
@@ -32,7 +32,7 @@ RSpec.describe SolidusPromotions::Condition do
 
   it "validates unique conditions for a promotion benefit" do
     # Because of Rails' STI, we can't use the anonymous class here
-    promotion = create(:friendly_promotion, :with_adjustable_benefit)
+    promotion = create(:solidus_promotion, :with_adjustable_benefit)
     promotion_benefit = promotion.benefits.first
     condition_one = SolidusPromotions::Conditions::FirstOrder.new(benefit: benefit)
     condition_one.benefit_id = promotion_benefit.id

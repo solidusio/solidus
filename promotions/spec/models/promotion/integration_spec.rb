@@ -8,7 +8,7 @@ RSpec.describe "Promotion System" do
   context "A promotion that creates line item adjustments" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:pants) { create(:product, name: "Pants") }
-    let!(:promotion) { create(:friendly_promotion, name: "20% off Shirts", benefits: [benefit], apply_automatically: true) }
+    let!(:promotion) { create(:solidus_promotion, name: "20% off Shirts", benefits: [benefit], apply_automatically: true) }
     let(:order) { create(:order) }
 
     before do
@@ -80,7 +80,7 @@ RSpec.describe "Promotion System" do
         end
 
         context "with a line-item level promotion in the lane before it" do
-          let!(:other_promotion) { create(:friendly_promotion, :with_adjustable_benefit, lane: :pre, apply_automatically: true) }
+          let!(:other_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre, apply_automatically: true) }
 
           it "creates a new discounted line item" do
             order.recalculate
@@ -130,7 +130,7 @@ RSpec.describe "Promotion System" do
     end
     let!(:distributed_amount_promo) do
       create(
-        :friendly_promotion,
+        :solidus_promotion,
         benefits: [discounted_item_total_benefit],
         apply_automatically: true,
         lane: :post
@@ -142,7 +142,7 @@ RSpec.describe "Promotion System" do
     let(:shirts_benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator: shirts_calculator, conditions: [shirts_condition]) }
     let!(:shirts_promotion) do
       create(
-        :friendly_promotion,
+        :solidus_promotion,
         benefits: [shirts_benefit],
         name: "20% off shirts",
         apply_automatically: true
@@ -229,7 +229,7 @@ RSpec.describe "Promotion System" do
     let!(:ups_ground) { create(:shipping_method, zones: [shipping_zone], cost: 23) }
     let!(:dhl_saver) { create(:shipping_method, zones: [shipping_zone], cost: 37) }
     let(:variant) { create(:variant, price: 13) }
-    let(:promotion) { create(:friendly_promotion, name: "20 percent off UPS Ground", apply_automatically: true) }
+    let(:promotion) { create(:solidus_promotion, name: "20 percent off UPS Ground", apply_automatically: true) }
     let(:condition) { SolidusPromotions::Conditions::ShippingMethod.new(preferred_shipping_method_ids: [ups_ground.id]) }
     let(:order) { Spree::Order.create!(store: store) }
 

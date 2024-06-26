@@ -19,7 +19,7 @@ RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups do
   end
 
   let(:quantity) { 1 }
-  let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
+  let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
 
   describe "#compute_amount" do
     subject { action.compute_amount(line_item) }

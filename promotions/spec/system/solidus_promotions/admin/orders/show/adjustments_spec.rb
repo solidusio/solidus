@@ -13,7 +13,7 @@ RSpec.describe "Order", :js, type: :feature, solidus_admin: true do
 
   context "with a promotion adjustment" do
     let(:order) { create(:order_ready_to_ship, number: "R123456789") }
-    let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
 
     before do
       Spree::Adjustment.create!(

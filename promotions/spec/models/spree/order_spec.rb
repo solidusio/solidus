@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Spree::Order do
-  it { is_expected.to have_many :friendly_promotions }
-  it { is_expected.to have_many :friendly_order_promotions }
+  it { is_expected.to have_many :solidus_promotions }
+  it { is_expected.to have_many :solidus_order_promotions }
 
   describe "#reset_current_discounts" do
     let(:line_item) { Spree::LineItem.new }
@@ -22,11 +22,11 @@ RSpec.describe Spree::Order do
 
   describe "order deletion" do
     let(:order) { create(:order) }
-    let(:promotion) { create(:friendly_promotion) }
+    let(:promotion) { create(:solidus_promotion) }
 
     subject { order.destroy }
     before do
-      order.friendly_promotions << promotion
+      order.solidus_promotions << promotion
     end
 
     it "deletes join table entries when deleting an order" do
@@ -37,6 +37,6 @@ RSpec.describe Spree::Order do
   describe ".allowed_ransackable_associations" do
     subject { described_class.allowed_ransackable_associations }
 
-    it { is_expected.to include("friendly_promotions", "friendly_order_promotions") }
+    it { is_expected.to include("solidus_promotions", "solidus_order_promotions") }
   end
 end

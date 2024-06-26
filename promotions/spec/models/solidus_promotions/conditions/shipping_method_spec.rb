@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe SolidusPromotions::Conditions::ShippingMethod, type: :model do
   let(:condition) { described_class.new }
-  let!(:promotion) { create(:friendly_promotion, benefits: [benefit]) }
+  let!(:promotion) { create(:solidus_promotion, benefits: [benefit]) }
   let(:benefit) { SolidusPromotions::Benefits::AdjustShipment.new(calculator: SolidusPromotions::Calculators::FlatRate.new) }
   let(:ups_ground) { create(:shipping_method) }
   let(:dhl_saver) { create(:shipping_method) }

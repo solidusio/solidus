@@ -18,7 +18,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::DiscountOrder do
   describe "discounting orders" do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }]) }
-    let!(:promotion) { create(:friendly_promotion, :with_free_shipping, name: "20% off Shirts", apply_automatically: true) }
+    let!(:promotion) { create(:solidus_promotion, :with_free_shipping, name: "20% off Shirts", apply_automatically: true) }
     let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions) }
 
@@ -37,7 +37,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::DiscountOrder do
     let(:shirt) { create(:product, name: "Shirt") }
     let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }]) }
     let(:conditions) { [product_condition] }
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
+    let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
     let(:product_condition) { SolidusPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
     let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions, dry_run: true) }
@@ -157,7 +157,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::DiscountOrder do
       let(:line_item_benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator: ten_off_items) }
       let(:benefits) { [shipping_benefit, line_item_benefit] }
       let(:conditions) { [product_condition, shipping_method_condition] }
-      let!(:promotion) { create(:friendly_promotion, benefits: benefits, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
+      let!(:promotion) { create(:solidus_promotion, benefits: benefits, name: "10% off Shirts and USPS Shipping", apply_automatically: true) }
 
       before do
         shipping_benefit.conditions << shipping_method_condition

@@ -6,7 +6,7 @@ RSpec.feature "Promotion Code Batches", partial_double_verification: false do
   stub_authorization!
 
   describe "create" do
-    let(:promotion) { create :friendly_promotion }
+    let(:promotion) { create :solidus_promotion }
 
     before do
       allow_any_instance_of(ApplicationController).to receive(:spree_current_user) { build(:user, id: 123) }

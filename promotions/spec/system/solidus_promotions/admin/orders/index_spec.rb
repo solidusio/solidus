@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe "Orders", type: :feature, solidus_admin: true do
-  let(:promotion) { create(:friendly_promotion, name: "10OFF") }
-  let!(:order_with_promotion) { create(:completed_order_with_friendly_promotion, number: "R123456789", promotion: promotion) }
+  let(:promotion) { create(:solidus_promotion, name: "10OFF") }
+  let!(:order_with_promotion) { create(:completed_order_with_solidus_promotion, number: "R123456789", promotion: promotion) }
   let!(:order_without_promotion) { create(:completed_order_with_totals, number: "R987654321") }
 
   before { sign_in create(:admin_user, email: "admin@example.com") }

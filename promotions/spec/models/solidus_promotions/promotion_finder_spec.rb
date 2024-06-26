@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe SolidusPromotions::PromotionFinder do
   describe ".by_code_or_id" do
-    let!(:promotion) { create(:friendly_promotion, code: "promo") }
+    let!(:promotion) { create(:solidus_promotion, code: "promo") }
 
     it "finds a promotion by its code" do
       expect(described_class.by_code_or_id("promo")).to eq promotion

@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SolidusPromotions::PromotionCode::BatchBuilder do
   subject { described_class.new(code_batch, options) }
 
-  let(:promotion) { create(:friendly_promotion) }
+  let(:promotion) { create(:solidus_promotion) }
   let(:base_code) { "abc" }
   let(:options) { {} }
   let(:number_of_codes) { 10 }
@@ -113,7 +113,7 @@ RSpec.describe SolidusPromotions::PromotionCode::BatchBuilder do
           @raise_exception = false
           raise(ActiveRecord::RecordInvalid)
         else
-          create(:friendly_promotion_code, promotion: promotion)
+          create(:solidus_promotion_code, promotion: promotion)
         end
       end
     end
@@ -127,7 +127,7 @@ RSpec.describe SolidusPromotions::PromotionCode::BatchBuilder do
   context "when same promotion_codes are already present" do
     let(:number_of_codes) { 50 }
     before do
-      create_list(:friendly_promotion_code, 11, promotion: promotion, promotion_code_batch: code_batch)
+      create_list(:solidus_promotion_code, 11, promotion: promotion, promotion_code_batch: code_batch)
     end
 
     it "creates only the missing promotion_codes" do

@@ -7,14 +7,14 @@ RSpec.describe "Promotions admin", type: :system do
 
   describe "#index" do
     let!(:promotion1) do
-      create(:friendly_promotion, :with_adjustable_benefit, name: "name1", code: "code1", path: "path1", lane: "pre", updated_at: 2.days.ago)
+      create(:solidus_promotion, :with_adjustable_benefit, name: "name1", code: "code1", path: "path1", lane: "pre", updated_at: 2.days.ago)
     end
     let!(:promotion2) do
-      create(:friendly_promotion, :with_adjustable_benefit, name: "name2", code: "code2", path: "path2", lane: "default", updated_at: 10.days.ago)
+      create(:solidus_promotion, :with_adjustable_benefit, name: "name2", code: "code2", path: "path2", lane: "default", updated_at: 10.days.ago)
     end
     let!(:promotion3) do
       create(
-        :friendly_promotion,
+        :solidus_promotion,
         :with_adjustable_benefit,
         lane: "post",
         name: "name3",
@@ -24,7 +24,7 @@ RSpec.describe "Promotions admin", type: :system do
         expires_at: Date.yesterday
       )
     end
-    let!(:category) { create :friendly_promotion_category }
+    let!(:category) { create :solidus_promotion_category }
 
     it "succeeds" do
       visit solidus_promotions.admin_promotions_path

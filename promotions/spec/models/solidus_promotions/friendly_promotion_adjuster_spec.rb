@@ -7,7 +7,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster, type: :model do
 
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
-  let(:promotion) { create(:friendly_promotion, apply_automatically: true) }
+  let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
   let(:calculator) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 10) }
 
   context "adjusting line items" do
@@ -72,7 +72,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster, type: :model do
       end
 
       context "for a non-sale promotion" do
-        let(:promotion) { create(:friendly_promotion, apply_automatically: false) }
+        let(:promotion) { create(:solidus_promotion, apply_automatically: false) }
 
         it "doesn't connect the promotion to the order" do
           expect {
@@ -137,7 +137,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster, type: :model do
   end
 
   context "adjusting shipping rates" do
-    let(:promotion) { create(:friendly_promotion, benefits: [shipment_benefit], apply_automatically: true) }
+    let(:promotion) { create(:solidus_promotion, benefits: [shipment_benefit], apply_automatically: true) }
     let(:shipment_benefit) { SolidusPromotions::Benefits::AdjustShipment.new(calculator: fifty_percent) }
     let(:fifty_percent) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 50) }
     let(:order) { create(:order_with_line_items) }
@@ -164,7 +164,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster, type: :model do
   end
 
   context "adjusting shipments" do
-    let(:promotion) { create(:friendly_promotion, benefits: [shipment_benefit], apply_automatically: true) }
+    let(:promotion) { create(:solidus_promotion, benefits: [shipment_benefit], apply_automatically: true) }
     let(:shipment_benefit) { SolidusPromotions::Benefits::AdjustShipment.new(calculator: fifty_percent) }
     let(:fifty_percent) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 50) }
     let(:order) { create(:order_with_line_items) }

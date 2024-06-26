@@ -5,7 +5,7 @@ RSpec.describe SolidusPromotions::PromotionCodeBatchJob, type: :job do
   let(:email) { "test@email.com" }
   let(:code_batch) do
     SolidusPromotions::PromotionCodeBatch.create!(
-      promotion: create(:friendly_promotion),
+      promotion: create(:solidus_promotion),
       base_code: "test",
       number_of_codes: 10,
       email: email
@@ -35,7 +35,7 @@ RSpec.describe SolidusPromotions::PromotionCodeBatchJob, type: :job do
     context "with a custom join character" do
       let(:code_batch) do
         SolidusPromotions::PromotionCodeBatch.create!(
-          promotion: create(:friendly_promotion),
+          promotion: create(:solidus_promotion),
           base_code: "test",
           number_of_codes: 10,
           email: email,

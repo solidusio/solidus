@@ -17,7 +17,7 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
 
   let(:clothes) { create(:taxon, products: [shirt.product, pants.product]) }
 
-  let(:promotion) { create(:friendly_promotion, name: "10 Percent on 5 apparel, 15 percent on 10", benefits: [benefit]) }
+  let(:promotion) { create(:solidus_promotion, name: "10 Percent on 5 apparel, 15 percent on 10", benefits: [benefit]) }
   let(:clothes_only) { SolidusPromotions::Conditions::Taxon.new(taxons: [clothes]) }
   let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator: calculator, conditions: [clothes_only]) }
   let(:calculator) { described_class.new(preferred_base_percent: 10, preferred_tiers: { 10 => 15.0 }) }

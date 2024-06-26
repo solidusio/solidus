@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::PromotionCodeBatchMailer, type: :mailer do
-  let(:promotion) { create(:friendly_promotion, name: "Promotion Test") }
+  let(:promotion) { create(:solidus_promotion, name: "Promotion Test") }
   let(:code_batch) do
     SolidusPromotions::PromotionCodeBatch.create!(
       promotion_id: promotion.id,

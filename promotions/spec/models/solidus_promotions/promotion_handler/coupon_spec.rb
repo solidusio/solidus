@@ -8,8 +8,8 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
   subject { described_class.new(order) }
 
   def expect_order_connection(order:, promotion:, promotion_code: nil)
-    expect(order.friendly_promotions.to_a).to include(promotion)
-    expect(order.friendly_order_promotions.flat_map(&:promotion_code)).to include(promotion_code)
+    expect(order.solidus_promotions.to_a).to include(promotion)
+    expect(order.solidus_order_promotions.flat_map(&:promotion_code)).to include(promotion_code)
   end
 
   def expect_adjustment_creation(adjustable:, promotion:, promotion_code: nil)
@@ -90,7 +90,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
 
   context "existing coupon code promotion" do
     let!(:promotion) { promotion_code.promotion }
-    let(:promotion_code) { create(:friendly_promotion_code, value: "10off") }
+    let(:promotion_code) { create(:solidus_promotion_code, value: "10off") }
     let!(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator) }
     let(:calculator) { SolidusPromotions::Calculators::FlatRate.new(preferred_amount: 10) }
 
@@ -148,7 +148,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
         before do
           order.coupon_code = "10off"
           calculator = SolidusPromotions::Calculators::FlatRate.new(preferred_amount: 10)
-          general_promo = create(:friendly_promotion, lane: :post, apply_automatically: true, name: "General Promo")
+          general_promo = create(:solidus_promotion, lane: :post, apply_automatically: true, name: "General Promo")
           SolidusPromotions::Benefits::AdjustLineItem.create(promotion: general_promo, calculator: calculator)
 
           order.contents.add create(:variant)
@@ -171,7 +171,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
         before do
           order.coupon_code = "10off"
           calculator = SolidusPromotions::Calculators::Percent.new(preferred_percent: 10)
-          general_promo = create(:friendly_promotion, lane: :pre, apply_automatically: true, name: "General Promo")
+          general_promo = create(:solidus_promotion, lane: :pre, apply_automatically: true, name: "General Promo")
           SolidusPromotions::Benefits::AdjustLineItem.create!(promotion: general_promo, calculator: calculator)
 
           order.contents.add create(:variant, price: 500)
@@ -280,7 +280,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
         end
 
         context "when the promotion exceeds its usage limit" do
-          let!(:second_order) { FactoryBot.create(:completed_order_with_friendly_promotion, promotion: promotion) }
+          let!(:second_order) { FactoryBot.create(:completed_order_with_solidus_promotion, promotion: promotion) }
 
           before do
             promotion.update!(usage_limit: 1)
@@ -357,7 +357,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
 
       context "and multiple quantity per line item" do
         before(:each) do
-          twnty_off = create(:friendly_promotion, name: "promo", code: "20off")
+          twnty_off = create(:solidus_promotion, name: "promo", code: "20off")
           twnty_off_calc = SolidusPromotions::Calculators::FlatRate.new(preferred_amount: 20)
           SolidusPromotions::Benefits::AdjustLineItem.create(promotion: twnty_off,
             calculator: twnty_off_calc)
@@ -386,7 +386,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
 
   context "removing a coupon code from an order" do
     let!(:promotion) { promotion_code.promotion }
-    let(:promotion_code) { create(:friendly_promotion_code, value: "10off") }
+    let(:promotion_code) { create(:solidus_promotion_code, value: "10off") }
     let!(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator) }
     let(:calculator) { SolidusPromotions::Calculators::FlatRate.new(preferred_amount: 10) }
     let(:order) { create(:order_with_line_items, line_items_count: 3) }
@@ -432,8 +432,8 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
     let(:line_item_benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator: ten_off_items, conditions: conditions) }
     let(:benefits) { [line_item_benefit] }
     let(:conditions) { [product_condition, nth_order_condition] }
-    let!(:promotion) { create(:friendly_promotion, benefits: benefits, name: "10% off Shirts and USPS Shipping") }
-    let!(:coupon) { create(:friendly_promotion_code, promotion: promotion, value: "XMAS") }
+    let!(:promotion) { create(:solidus_promotion, benefits: benefits, name: "10% off Shirts and USPS Shipping") }
+    let!(:coupon) { create(:solidus_promotion_code, promotion: promotion, value: "XMAS") }
     let(:handler) { described_class.new(order) }
 
     subject { handler.apply }

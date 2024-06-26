@@ -22,7 +22,7 @@ RSpec.describe Spree::ShippingRate do
 
     context "with discounts" do
       let(:shipping_rate) { build(:shipping_rate, cost: 4, discounts: discounts) }
-      let(:discounts) { build_list(:friendly_shipping_rate_discount, 2, amount: -1.5, label: "DISCOUNT") }
+      let(:discounts) { build_list(:solidus_shipping_rate_discount, 2, amount: -1.5, label: "DISCOUNT") }
 
       it { is_expected.to eq(1) }
     end

@@ -6,7 +6,7 @@ require "shared_examples/calculator_shared_examples"
 RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model do
   let(:calculator) { described_class.new(preferred_amount: 15, preferred_currency: currency) }
   let!(:promotion) do
-    create :friendly_promotion, apply_automatically: true, name: "15 spread", benefits: [benefit]
+    create :solidus_promotion, apply_automatically: true, name: "15 spread", benefits: [benefit]
   end
   let(:conditions) { [] }
   let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.create(calculator: calculator, conditions: conditions) }

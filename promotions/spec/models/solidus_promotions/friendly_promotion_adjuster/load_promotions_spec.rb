@@ -8,13 +8,13 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::LoadPromotions do
 
     let(:order) { create(:order) }
 
-    let!(:active_promotion) { create(:friendly_promotion, :with_adjustable_benefit, apply_automatically: true) }
+    let!(:active_promotion) { create(:solidus_promotion, :with_adjustable_benefit, apply_automatically: true) }
     let!(:inactive_promotion) do
-      create(:friendly_promotion, :with_adjustable_benefit, expires_at: 2.days.ago, apply_automatically: true)
+      create(:solidus_promotion, :with_adjustable_benefit, expires_at: 2.days.ago, apply_automatically: true)
     end
-    let!(:connectable_promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+    let!(:connectable_promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
     let!(:connectable_inactive_promotion) do
-      create(:friendly_promotion, :with_adjustable_benefit, expires_at: 2.days.ago)
+      create(:solidus_promotion, :with_adjustable_benefit, expires_at: 2.days.ago)
     end
 
     context "no promo is connected to the order" do
@@ -25,7 +25,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::LoadPromotions do
 
     context "an active promo is connected to the order" do
       before do
-        order.friendly_promotions << connectable_promotion
+        order.solidus_promotions << connectable_promotion
       end
 
       it "checks active and connected promotions" do
@@ -35,7 +35,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::LoadPromotions do
 
     context "an inactive promo is connected to the order" do
       before do
-        order.friendly_promotions << connectable_inactive_promotion
+        order.solidus_promotions << connectable_inactive_promotion
       end
 
       it "does not check connected inactive promotions" do
@@ -45,7 +45,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::LoadPromotions do
     end
 
     context "discarded promotions" do
-      let!(:discarded_promotion) { create(:friendly_promotion, :with_adjustable_benefit, deleted_at: 1.hour.ago, apply_automatically: true) }
+      let!(:discarded_promotion) { create(:solidus_promotion, :with_adjustable_benefit, deleted_at: 1.hour.ago, apply_automatically: true) }
 
       it "does not check discarded promotions" do
         expect(subject).not_to include(discarded_promotion)
@@ -53,7 +53,7 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::LoadPromotions do
 
       context "a discarded promo is connected to the order" do
         before do
-          order.friendly_promotions << discarded_promotion
+          order.solidus_promotions << discarded_promotion
         end
 
         it "does not check connected discarded promotions" do
@@ -66,14 +66,14 @@ RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::LoadPromotions do
 
   context "promotions in the past" do
     let(:order) { create(:order, completed_at: 7.days.ago) }
-    let(:currently_active_promotion) { create(:friendly_promotion, :with_adjustable_benefit, starts_at: 1.hour.ago) }
-    let(:past_promotion) { create(:friendly_promotion, :with_adjustable_benefit, starts_at: 1.year.ago, expires_at: 11.months.ago) }
-    let(:order_promotion) { create(:friendly_promotion, :with_adjustable_benefit, starts_at: 8.days.ago, expires_at: 6.days.ago) }
+    let(:currently_active_promotion) { create(:solidus_promotion, :with_adjustable_benefit, starts_at: 1.hour.ago) }
+    let(:past_promotion) { create(:solidus_promotion, :with_adjustable_benefit, starts_at: 1.year.ago, expires_at: 11.months.ago) }
+    let(:order_promotion) { create(:solidus_promotion, :with_adjustable_benefit, starts_at: 8.days.ago, expires_at: 6.days.ago) }
 
     before do
-      order.friendly_promotions << past_promotion
-      order.friendly_promotions << order_promotion
-      order.friendly_promotions << currently_active_promotion
+      order.solidus_promotions << past_promotion
+      order.solidus_promotions << order_promotion
+      order.solidus_promotions << currently_active_promotion
     end
 
     subject { described_class.new(order: order).call }

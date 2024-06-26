@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
-  let(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+  let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
   let(:promotion_benefit) { promotion.benefits.first }
   let(:condition) do
     described_class.create!(benefit: promotion_benefit)

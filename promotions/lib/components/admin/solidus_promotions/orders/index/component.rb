@@ -6,7 +6,7 @@ class SolidusPromotions::Orders::Index::Component < SolidusAdmin::Orders::Index:
       {
         label: t(".filters.promotions"),
         combinator: "or",
-        attribute: "friendly_promotions_id",
+        attribute: "solidus_promotions_id",
         predicate: "in",
         options: SolidusPromotions::Promotion.all.pluck(:name, :id)
       }

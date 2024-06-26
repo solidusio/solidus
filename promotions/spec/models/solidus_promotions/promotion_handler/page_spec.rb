@@ -6,7 +6,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Page, type: :model do
   subject { described_class.new(order, path).activate }
 
   let(:order) { create(:order_with_line_items, line_items_count: 1) }
-  let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, name: "10% off", path: "10off") }
+  let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, name: "10% off", path: "10off") }
   let(:path) { "10off" }
 
   it "activates at the right path" do
@@ -50,7 +50,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Page, type: :model do
     end
 
     it "does not connect the promotion to the order" do
-      expect { subject }.not_to change { order.friendly_order_promotions.count }
+      expect { subject }.not_to change { order.solidus_order_promotions.count }
     end
   end
 end

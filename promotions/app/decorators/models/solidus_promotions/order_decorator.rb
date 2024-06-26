@@ -4,16 +4,16 @@ module SolidusPromotions
   module OrderDecorator
     module ClassMethods
       def allowed_ransackable_associations
-        super + ["friendly_promotions", "friendly_order_promotions"]
+        super + ["solidus_promotions", "solidus_order_promotions"]
       end
     end
 
     def self.prepended(base)
-      base.has_many :friendly_order_promotions,
+      base.has_many :solidus_order_promotions,
         class_name: "SolidusPromotions::OrderPromotion",
         dependent: :destroy,
         inverse_of: :order
-      base.has_many :friendly_promotions, through: :friendly_order_promotions, source: :promotion
+      base.has_many :solidus_promotions, through: :solidus_order_promotions, source: :promotion
     end
 
     def discountable_item_total

@@ -35,10 +35,10 @@ RSpec.describe SolidusPromotions::MigrateAdjustments do
 
     it "migrates our adjustment" do
       spree_promotion_action = Spree::PromotionAction.first
-      friendly_promotion_benefit = SolidusPromotions::Benefit.first
+      solidus_promotion_benefit = SolidusPromotions::Benefit.first
       expect { subject }.to change {
         Spree::Adjustment.promotion.first.source
-      }.from(spree_promotion_action).to(friendly_promotion_benefit)
+      }.from(spree_promotion_action).to(solidus_promotion_benefit)
     end
 
     it "will not touch tax adjustments" do
@@ -57,10 +57,10 @@ RSpec.describe SolidusPromotions::MigrateAdjustments do
 
     it "migrates our adjustment" do
       spree_promotion_action = Spree::PromotionAction.first
-      friendly_promotion_benefit = SolidusPromotions::Benefit.first
+      solidus_promotion_benefit = SolidusPromotions::Benefit.first
       expect { subject }.to change {
         Spree::Adjustment.promotion.first.source
-      }.from(friendly_promotion_benefit).to(spree_promotion_action)
+      }.from(solidus_promotion_benefit).to(spree_promotion_action)
     end
 
     it "will not touch tax adjustments" do

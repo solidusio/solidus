@@ -7,8 +7,8 @@ RSpec.describe SolidusPromotions::OrderPromotion do
     order_promotion
   end
 
-  let(:promotion) { build(:friendly_promotion) }
-  let(:order_promotion) { build(:friendly_order_promotion, promotion: promotion) }
+  let(:promotion) { build(:solidus_promotion) }
+  let(:order_promotion) { build(:solidus_order_promotion, promotion: promotion) }
 
   describe "promotion code presence error" do
     subject do
@@ -22,7 +22,7 @@ RSpec.describe SolidusPromotions::OrderPromotion do
 
     context "when the promotion has a code" do
       let!(:promotion_code) do
-        promotion.codes << build(:friendly_promotion_code, promotion: promotion)
+        promotion.codes << build(:solidus_promotion_code, promotion: promotion)
       end
 
       it { is_expected.to include("can't be blank") }
@@ -42,7 +42,7 @@ RSpec.describe SolidusPromotions::OrderPromotion do
 
     context "when the promotion has a code" do
       let!(:promotion_code) do
-        promotion.codes << build(:friendly_promotion_code, promotion: promotion)
+        promotion.codes << build(:solidus_promotion_code, promotion: promotion)
       end
 
       it { is_expected.to be_blank }

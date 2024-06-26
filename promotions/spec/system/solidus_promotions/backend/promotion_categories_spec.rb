@@ -7,8 +7,8 @@ RSpec.describe "Promotion Categories", type: :system do
 
   context "index" do
     before do
-      create(:friendly_promotion_category, name: "name1", code: "code1")
-      create(:friendly_promotion_category, name: "name2", code: "code2")
+      create(:solidus_promotion_category, name: "name1", code: "code1")
+      create(:solidus_promotion_category, name: "name2", code: "code2")
       visit solidus_promotions.admin_promotion_categories_path
     end
 
@@ -50,7 +50,7 @@ RSpec.describe "Promotion Categories", type: :system do
 
   context "edit" do
     before do
-      create(:friendly_promotion_category, name: "name1")
+      create(:solidus_promotion_category, name: "name1")
       visit solidus_promotions.admin_promotion_categories_path
       within_row(1) { click_icon :edit }
     end
@@ -71,7 +71,7 @@ RSpec.describe "Promotion Categories", type: :system do
 
   context "delete" do
     before do
-      create(:friendly_promotion_category, name: "name1")
+      create(:solidus_promotion_category, name: "name1")
       visit solidus_promotions.admin_promotion_categories_path
     end
 

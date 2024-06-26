@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Admin::Benefits", type: :request do
   stub_authorization!
 
-  let!(:promotion) { create(:friendly_promotion) }
+  let!(:promotion) { create(:solidus_promotion) }
 
   it "can create a promotion benefit of a valid type" do
     post solidus_promotions.admin_promotion_benefits_path(promotion_id: promotion.id), params: {

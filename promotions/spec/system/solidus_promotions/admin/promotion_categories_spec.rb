@@ -6,8 +6,8 @@ RSpec.describe "Promotion Categories", :js, type: :feature, solidus_admin: true 
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists promotion categories and allows deleting them" do
-    create(:friendly_promotion_category, name: "test1", code: "code1")
-    create(:friendly_promotion_category, name: "test2", code: "code2")
+    create(:solidus_promotion_category, name: "test1", code: "code1")
+    create(:solidus_promotion_category, name: "test2", code: "code2")
 
     visit "/admin/friendly/promotion_categories"
     expect(page).to have_content("test1")

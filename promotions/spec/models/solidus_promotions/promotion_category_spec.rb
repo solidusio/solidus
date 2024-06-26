@@ -22,8 +22,8 @@ RSpec.describe SolidusPromotions::PromotionCategory, type: :model do
   end
 
   describe "associations" do
-    let!(:promotion) { create(:friendly_promotion, category: category) }
-    let(:category) { create(:friendly_promotion_category) }
+    let!(:promotion) { create(:solidus_promotion, category: category) }
+    let(:category) { create(:solidus_promotion_category) }
 
     it "nullifies associated promotions when deleted" do
       category.destroy

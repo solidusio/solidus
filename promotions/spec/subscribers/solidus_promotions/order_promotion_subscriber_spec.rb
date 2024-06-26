@@ -13,13 +13,13 @@ RSpec.describe SolidusPromotions::OrderPromotionSubscriber do
 
   describe "on :order_emptied" do
     it "clears connected promotions" do
-      promotion = create(:friendly_promotion)
+      promotion = create(:solidus_promotion)
       order = create(:order)
-      order.friendly_promotions << promotion
-      expect(order.friendly_promotions).not_to be_empty
+      order.solidus_promotions << promotion
+      expect(order.solidus_promotions).not_to be_empty
 
       bus.publish(:order_emptied, order: order)
-      expect(order.friendly_promotions.reload).to be_empty
+      expect(order.solidus_promotions.reload).to be_empty
     end
   end
 end

@@ -6,10 +6,10 @@ RSpec.describe "Promotions", :js, type: :feature, solidus_admin: true do
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists promotions and allows deleting them" do
-    create(:friendly_promotion, :with_adjustable_benefit, name: "My active Promotion")
-    create(:friendly_promotion, name: "My draft Promotion")
-    create(:friendly_promotion, :with_adjustable_benefit, name: "My expired Promotion", expires_at: 1.day.ago)
-    create(:friendly_promotion, :with_adjustable_benefit, name: "My future Promotion", starts_at: 1.day.from_now)
+    create(:solidus_promotion, :with_adjustable_benefit, name: "My active Promotion")
+    create(:solidus_promotion, name: "My draft Promotion")
+    create(:solidus_promotion, :with_adjustable_benefit, name: "My expired Promotion", expires_at: 1.day.ago)
+    create(:solidus_promotion, :with_adjustable_benefit, name: "My future Promotion", starts_at: 1.day.from_now)
 
     visit "/admin/friendly/promotions"
     expect(page).to have_content("My active Promotion")

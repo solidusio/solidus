@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Admin::Conditions", type: :request do
-  let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit) }
+  let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
   let(:benefit) { promotion.benefits.first }
 
   context "when the user is authorized" do

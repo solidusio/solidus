@@ -60,7 +60,7 @@ RSpec.describe SolidusPromotions::MigrateOrderPromotions do
 
       context "if the order promotion already exists" do
         before do
-          order.friendly_order_promotions.create!(
+          order.solidus_order_promotions.create!(
             promotion: SolidusPromotions::Promotion.first,
             promotion_code: nil
           )
@@ -87,7 +87,7 @@ RSpec.describe SolidusPromotions::MigrateOrderPromotions do
 
     context "if the order promotion already exists" do
       before do
-        order.friendly_order_promotions.create(
+        order.solidus_order_promotions.create(
           promotion: SolidusPromotions::Promotion.first,
           promotion_code: SolidusPromotions::PromotionCode.first
         )

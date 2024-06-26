@@ -32,7 +32,7 @@ module SolidusPromotions
         elsif !promotion_exists_on_order?(order, promotion)
           set_error_code :coupon_code_not_present
         else
-          order.friendly_order_promotions.destroy_by(
+          order.solidus_order_promotions.destroy_by(
             promotion: promotion
           )
           order.recalculate
@@ -77,7 +77,7 @@ module SolidusPromotions
         Spree::Config.promotions.order_adjuster_class.new(order, dry_run_promotion: promotion).call
 
         if promotion.eligibility_results.success?
-          order.friendly_order_promotions.create!(
+          order.solidus_order_promotions.create!(
             promotion: promotion,
             promotion_code: promotion_code
           )
@@ -106,7 +106,7 @@ module SolidusPromotions
       end
 
       def promotion_exists_on_order?(order, promotion)
-        order.friendly_promotions.include? promotion
+        order.solidus_promotions.include? promotion
       end
     end
   end

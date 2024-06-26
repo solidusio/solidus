@@ -14,7 +14,7 @@ module SolidusPromotions
         if promotion
           Spree::Config.promotions.order_adjuster_class.new(order, dry_run_promotion: promotion).call
           if promotion.eligibility_results.success?
-            order.friendly_promotions << promotion
+            order.solidus_promotions << promotion
             order.recalculate
           end
         end

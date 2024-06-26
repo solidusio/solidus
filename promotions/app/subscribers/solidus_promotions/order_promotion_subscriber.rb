@@ -14,7 +14,7 @@ module SolidusPromotions
     # @param event [Omnes::UnstructuredEvent]
     def clear_order_promotions(event)
       order = event[:order]
-      order.friendly_order_promotions.destroy_all
+      order.solidus_order_promotions.destroy_all
     end
   end
 end

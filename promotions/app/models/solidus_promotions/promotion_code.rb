@@ -33,7 +33,7 @@ module SolidusPromotions
         .discounted_orders
         .complete
         .where.not(spree_orders: { state: :canceled })
-        .joins(:friendly_order_promotions)
+        .joins(:solidus_order_promotions)
         .where(SolidusPromotions::OrderPromotion.table_name => { promotion_code_id: id })
         .where.not(id: excluded_orders.map(&:id))
         .count

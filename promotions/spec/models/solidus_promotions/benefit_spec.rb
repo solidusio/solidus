@@ -22,7 +22,7 @@ RSpec.describe SolidusPromotions::Benefit do
   describe "#destroy" do
     subject { benefit.destroy }
     let(:benefit) { promotion.benefits.first }
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, apply_automatically: true) }
+    let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, apply_automatically: true) }
 
     it "destroys the benefit" do
       expect { subject }.to change { SolidusPromotions::Benefit.count }.by(-1)
@@ -102,13 +102,13 @@ RSpec.describe SolidusPromotions::Benefit do
   describe ".original_promotion_action" do
     let(:spree_promotion) { create :promotion, :with_adjustable_action }
     let(:spree_promotion_action) { spree_promotion.actions.first }
-    let(:friendly_promotion) { create :friendly_promotion, :with_adjustable_benefit }
-    let(:friendly_promotion_benefit) { friendly_promotion.benefits.first }
+    let(:solidus_promotion) { create :solidus_promotion, :with_adjustable_benefit }
+    let(:solidus_promotion_benefit) { solidus_promotion.benefits.first }
 
-    subject { friendly_promotion_benefit.original_promotion_action }
+    subject { solidus_promotion_benefit.original_promotion_action }
 
     it "can be migrated from spree" do
-      friendly_promotion_benefit.original_promotion_action = spree_promotion_action
+      solidus_promotion_benefit.original_promotion_action = spree_promotion_action
       expect(subject).to eq(spree_promotion_action)
     end
 

@@ -7,7 +7,7 @@ RSpec.describe SolidusPromotions::PromotionAdvertiser, type: :model do
     subject { described_class.for_product(product) }
 
     let(:product) { create(:product) }
-    let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, advertise: true, starts_at: 1.day.ago) }
+    let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, advertise: true, starts_at: 1.day.ago) }
     let!(:rule) do
       SolidusPromotions::Conditions::LineItemProduct.create(
         benefit: promotion.benefits.first,

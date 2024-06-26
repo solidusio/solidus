@@ -29,10 +29,10 @@ module SolidusPromotions
       end
 
       def connected_order_promotions
-        eligible_connected_promotion_ids = order.friendly_order_promotions.select do |order_promotion|
+        eligible_connected_promotion_ids = order.solidus_order_promotions.select do |order_promotion|
           order_promotion.promotion.kept? && (order_promotion.promotion_code.nil? || !order_promotion.promotion_code.usage_limit_exceeded?(excluded_orders: [order]))
         end.map(&:promotion_id)
-        order.friendly_promotions.active(reference_time).where(id: eligible_connected_promotion_ids).includes(promotion_includes)
+        order.solidus_promotions.active(reference_time).where(id: eligible_connected_promotion_ids).includes(promotion_includes)
       end
 
       def sale_promotions
