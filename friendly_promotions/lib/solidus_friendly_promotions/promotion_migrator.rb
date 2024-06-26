@@ -42,11 +42,11 @@ module SolidusFriendlyPromotions
 
     def copy_promotion_code_batches(new_promotion)
       sql = <<~SQL
-        INSERT INTO friendly_promotion_code_batches (promotion_id, base_code, number_of_codes, email, error, state, created_at, updated_at, join_characters)
-        SELECT friendly_promotions.id AS promotion_id, base_code, number_of_codes, email, error, state, spree_promotion_code_batches.created_at, spree_promotion_code_batches.updated_at, join_characters
+        INSERT INTO solidus_promotions_promotion_code_batches (promotion_id, base_code, number_of_codes, email, error, state, created_at, updated_at, join_characters)
+        SELECT solidus_promotions_promotions.id AS promotion_id, base_code, number_of_codes, email, error, state, spree_promotion_code_batches.created_at, spree_promotion_code_batches.updated_at, join_characters
         FROM spree_promotion_code_batches
         INNER JOIN spree_promotions ON spree_promotion_code_batches.promotion_id = spree_promotions.id
-        INNER JOIN friendly_promotions ON spree_promotions.id = friendly_promotions.original_promotion_id
+        INNER JOIN solidus_promotions_promotions ON spree_promotions.id = solidus_promotions_promotions.original_promotion_id
         WHERE spree_promotion_code_batches.promotion_id = #{new_promotion.original_promotion_id};
       SQL
       SolidusFriendlyPromotions::PromotionCodeBatch.connection.execute(sql)
@@ -54,13 +54,13 @@ module SolidusFriendlyPromotions
 
     def copy_promotion_codes(new_promotion)
       sql = <<~SQL
-        INSERT INTO friendly_promotion_codes (promotion_id, promotion_code_batch_id, value, created_at, updated_at)
-        SELECT friendly_promotions.id AS promotion_id, friendly_promotion_code_batches.id AS promotion_code_batch_id, value, spree_promotion_codes.created_at, spree_promotion_codes.updated_at
+        INSERT INTO solidus_promotions_promotion_codes (promotion_id, promotion_code_batch_id, value, created_at, updated_at)
+        SELECT solidus_promotions_promotions.id AS promotion_id, solidus_promotions_promotion_code_batches.id AS promotion_code_batch_id, value, spree_promotion_codes.created_at, spree_promotion_codes.updated_at
         FROM spree_promotion_codes
         LEFT OUTER JOIN spree_promotion_code_batches ON spree_promotion_code_batches.id = spree_promotion_codes.promotion_code_batch_id
-        LEFT OUTER JOIN friendly_promotion_code_batches ON friendly_promotion_code_batches.base_code = spree_promotion_code_batches.base_code
+        LEFT OUTER JOIN solidus_promotions_promotion_code_batches ON solidus_promotions_promotion_code_batches.base_code = spree_promotion_code_batches.base_code
         INNER JOIN spree_promotions ON spree_promotion_codes.promotion_id = spree_promotions.id
-        INNER JOIN friendly_promotions ON spree_promotions.id = friendly_promotions.original_promotion_id
+        INNER JOIN solidus_promotions_promotions ON spree_promotions.id = solidus_promotions_promotions.original_promotion_id
         WHERE spree_promotion_codes.promotion_id = #{new_promotion.original_promotion_id};
       SQL
       SolidusFriendlyPromotions::PromotionCode.connection.execute(sql)

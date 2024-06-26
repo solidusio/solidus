@@ -8,17 +8,17 @@ module SolidusFriendlyPromotions
           <<~SQL
             UPDATE spree_adjustments
               INNER JOIN spree_promotion_actions ON spree_adjustments.source_id = spree_promotion_actions.id and spree_adjustments.source_type = 'Spree::PromotionAction'
-              INNER JOIN friendly_benefits ON friendly_benefits.original_promotion_action_id = spree_promotion_actions.id
-            SET source_id = friendly_benefits.id,
+              INNER JOIN solidus_promotions_benefits ON solidus_promotions_benefits.original_promotion_action_id = spree_promotion_actions.id
+            SET source_id = solidus_promotions_benefits.id,
               source_type = 'SolidusFriendlyPromotions::Benefit'
           SQL
         else
           <<~SQL
             UPDATE spree_adjustments
-            SET source_id = friendly_benefits.id,
+            SET source_id = solidus_promotions_benefits.id,
               source_type = 'SolidusFriendlyPromotions::Benefit'
             FROM spree_promotion_actions
-              INNER JOIN friendly_benefits ON friendly_benefits.original_promotion_action_id = spree_promotion_actions.id
+              INNER JOIN solidus_promotions_benefits ON solidus_promotions_benefits.original_promotion_action_id = spree_promotion_actions.id
             WHERE spree_adjustments.source_id = spree_promotion_actions.id and spree_adjustments.source_type = 'Spree::PromotionAction'
           SQL
         end
@@ -30,11 +30,11 @@ module SolidusFriendlyPromotions
         sql = if ActiveRecord::Base.connection_db_config.adapter == "mysql2"
           <<~SQL
             UPDATE spree_adjustments
-              INNER JOIN friendly_benefits
-              INNER JOIN spree_promotion_actions ON spree_adjustments.source_id = friendly_benefits.id and spree_adjustments.source_type = 'SolidusFriendlyPromotions::Benefit'
+              INNER JOIN solidus_promotions_benefits
+              INNER JOIN spree_promotion_actions ON spree_adjustments.source_id = solidus_promotions_benefits.id and spree_adjustments.source_type = 'SolidusFriendlyPromotions::Benefit'
             SET source_id = spree_promotion_actions.id,
               source_type = 'Spree::PromotionAction'
-            WHERE friendly_benefits.original_promotion_action_id = spree_promotion_actions.id
+            WHERE solidus_promotions_benefits.original_promotion_action_id = spree_promotion_actions.id
           SQL
         else
           <<~SQL
@@ -42,8 +42,8 @@ module SolidusFriendlyPromotions
             SET source_id = spree_promotion_actions.id,
                 source_type = 'Spree::PromotionAction'
             FROM spree_promotion_actions
-              INNER JOIN friendly_benefits ON friendly_benefits.original_promotion_action_id = spree_promotion_actions.id
-            WHERE spree_adjustments.source_id = friendly_benefits.id and spree_adjustments.source_type = 'SolidusFriendlyPromotions::Benefit'
+              INNER JOIN solidus_promotions_benefits ON solidus_promotions_benefits.original_promotion_action_id = spree_promotion_actions.id
+            WHERE spree_adjustments.source_id = solidus_promotions_benefits.id and spree_adjustments.source_type = 'SolidusFriendlyPromotions::Benefit'
           SQL
         end
 

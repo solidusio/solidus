@@ -5,7 +5,7 @@ module SolidusFriendlyPromotions
     class << self
       def up
         sql = <<~SQL
-          INSERT INTO friendly_order_promotions (
+          INSERT INTO solidus_promotions_order_promotions (
             order_id,
             promotion_id,
             promotion_code_id,
@@ -14,21 +14,21 @@ module SolidusFriendlyPromotions
           )
           SELECT
             spree_orders_promotions.order_id AS order_id,
-            friendly_promotions.id AS promotion_id,
-            friendly_promotion_codes.id AS promotion_code_id,
+            solidus_promotions_promotions.id AS promotion_id,
+            solidus_promotions_promotion_codes.id AS promotion_code_id,
             spree_orders_promotions.created_at,
             spree_orders_promotions.updated_at
           FROM spree_orders_promotions
             INNER JOIN spree_promotions ON spree_orders_promotions.promotion_id = spree_promotions.id
-            INNER JOIN friendly_promotions ON spree_promotions.id = friendly_promotions.original_promotion_id
+            INNER JOIN solidus_promotions_promotions ON spree_promotions.id = solidus_promotions_promotions.original_promotion_id
             LEFT OUTER JOIN spree_promotion_codes ON spree_orders_promotions.promotion_code_id = spree_promotion_codes.id
-            LEFT OUTER JOIN friendly_promotion_codes ON spree_promotion_codes.value = friendly_promotion_codes.value
+            LEFT OUTER JOIN solidus_promotions_promotion_codes ON spree_promotion_codes.value = solidus_promotions_promotion_codes.value
           WHERE NOT EXISTS (
             SELECT NULL
-            FROM friendly_order_promotions
-            WHERE friendly_order_promotions.order_id = order_id
-              AND (friendly_order_promotions.promotion_code_id = promotion_code_id OR promotion_code_id IS NULL)
-              AND friendly_order_promotions.promotion_id = promotion_id
+            FROM solidus_promotions_order_promotions
+            WHERE solidus_promotions_order_promotions.order_id = order_id
+              AND (solidus_promotions_order_promotions.promotion_code_id = promotion_code_id OR promotion_code_id IS NULL)
+              AND solidus_promotions_order_promotions.promotion_id = promotion_id
           );
         SQL
         ActiveRecord::Base.connection.execute(sql)
@@ -46,16 +46,16 @@ module SolidusFriendlyPromotions
             updated_at
           )
           SELECT
-            friendly_order_promotions.order_id AS order_id,
+            solidus_promotions_order_promotions.order_id AS order_id,
             spree_promotions.id AS promotion_id,
             spree_promotion_codes.id AS promotion_code_id,
-            friendly_order_promotions.created_at,
-            friendly_order_promotions.updated_at
-          FROM friendly_order_promotions
-            INNER JOIN friendly_promotions ON friendly_order_promotions.promotion_id = friendly_promotions.id
-            INNER JOIN spree_promotions ON spree_promotions.id = friendly_promotions.original_promotion_id
-            LEFT OUTER JOIN friendly_promotion_codes ON friendly_order_promotions.promotion_code_id = friendly_promotion_codes.id
-            LEFT OUTER JOIN spree_promotion_codes ON spree_promotion_codes.value = friendly_promotion_codes.value
+            solidus_promotions_order_promotions.created_at,
+            solidus_promotions_order_promotions.updated_at
+          FROM solidus_promotions_order_promotions
+            INNER JOIN solidus_promotions_promotions ON solidus_promotions_order_promotions.promotion_id = solidus_promotions_promotions.id
+            INNER JOIN spree_promotions ON spree_promotions.id = solidus_promotions_promotions.original_promotion_id
+            LEFT OUTER JOIN solidus_promotions_promotion_codes ON solidus_promotions_order_promotions.promotion_code_id = solidus_promotions_promotion_codes.id
+            LEFT OUTER JOIN spree_promotion_codes ON spree_promotion_codes.value = solidus_promotions_promotion_codes.value
           WHERE NOT EXISTS (
             SELECT NULL
             FROM spree_orders_promotions

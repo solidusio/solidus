@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-class AddDbCommentsToFriendlyPromotionCodeBatches < ActiveRecord::Migration[6.1]
+class AddDbCommentsToPromotionCodeBatches < ActiveRecord::Migration[6.1]
   def up
     if connection.supports_comments?
-      change_table_comment(:friendly_promotion_code_batches, friendly_promotion_code_batches_table_comment)
-      change_column_comment(:friendly_promotion_code_batches, :id, id_comment)
-      change_column_comment(:friendly_promotion_code_batches, :promotion_id, promotion_id_comment)
-      change_column_comment(:friendly_promotion_code_batches, :base_code, base_code_comment)
-      change_column_comment(:friendly_promotion_code_batches, :number_of_codes, number_of_codes_comment)
-      change_column_comment(:friendly_promotion_code_batches, :email, email_comment)
-      change_column_comment(:friendly_promotion_code_batches, :error, error_comment)
-      change_column_comment(:friendly_promotion_code_batches, :state, state_comment)
-      change_column_comment(:friendly_promotion_code_batches, :created_at, created_at_comment)
-      change_column_comment(:friendly_promotion_code_batches, :updated_at, updated_at_comment)
-      change_column_comment(:friendly_promotion_code_batches, :join_characters, join_characters_comment)
+      change_table_comment(:solidus_promotions_promotion_code_batches, solidus_promotions_promotion_code_batches_table_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :id, id_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :promotion_id, promotion_id_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :base_code, base_code_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :number_of_codes, number_of_codes_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :email, email_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :error, error_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :state, state_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :created_at, created_at_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :updated_at, updated_at_comment)
+      change_column_comment(:solidus_promotions_promotion_code_batches, :join_characters, join_characters_comment)
     end
   end
 
   private
 
-  def friendly_promotion_code_batches_table_comment
+  def solidus_promotions_promotion_code_batches_table_comment
     <<~COMMENT
       We allow creating a large number of promotion codes automatically through a background job. This table collects the input
       for creating such a batch of promotion codes.
@@ -34,7 +34,7 @@ class AddDbCommentsToFriendlyPromotionCodeBatches < ActiveRecord::Migration[6.1]
 
   def promotion_id_comment
     <<~COMMENT
-      Foreign key to the friendly_promotions table.
+      Foreign key to the solidus_promotions_promotions table.
     COMMENT
   end
 

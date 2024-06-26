@@ -25,7 +25,7 @@ end
 
 module SolidusFriendlyPromotions
   def self.table_name_prefix
-    "friendly_"
+    "solidus_promotions_"
   end
 
   # JS Importmap instance

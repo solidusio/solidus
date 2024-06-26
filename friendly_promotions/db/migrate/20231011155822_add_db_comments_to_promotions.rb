@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-class AddDbCommentsToFriendlyPromotions < ActiveRecord::Migration[6.1]
+class AddDbCommentsToPromotions < ActiveRecord::Migration[6.1]
   def up
     if connection.supports_comments?
-      change_table_comment(:friendly_promotions, friendly_promotions_table_comment)
-      change_column_comment(:friendly_promotions, :id, id_comment)
-      change_column_comment(:friendly_promotions, :description, description_comment)
-      change_column_comment(:friendly_promotions, :expires_at, expires_at_comment)
-      change_column_comment(:friendly_promotions, :starts_at, starts_at_comment)
-      change_column_comment(:friendly_promotions, :customer_label, customer_label_comment)
-      change_column_comment(:friendly_promotions, :usage_limit, usage_limit_comment)
-      change_column_comment(:friendly_promotions, :advertise, advertise_comment)
-      change_column_comment(:friendly_promotions, :path, path_comment)
-      change_column_comment(:friendly_promotions, :lane, lane_comment)
-      change_column_comment(:friendly_promotions, :name, name_comment)
-      change_column_comment(:friendly_promotions, :created_at, created_at_comment)
-      change_column_comment(:friendly_promotions, :updated_at, updated_at_comment)
-      change_column_comment(:friendly_promotions, :promotion_category_id, promotion_category_id_comment)
-      change_column_comment(:friendly_promotions, :per_code_usage_limit, per_code_usage_limit_comment)
-      change_column_comment(:friendly_promotions, :apply_automatically, apply_automatically_comment)
+      change_table_comment(:solidus_promotions_promotions, solidus_promotions_promotions_table_comment)
+      change_column_comment(:solidus_promotions_promotions, :id, id_comment)
+      change_column_comment(:solidus_promotions_promotions, :description, description_comment)
+      change_column_comment(:solidus_promotions_promotions, :expires_at, expires_at_comment)
+      change_column_comment(:solidus_promotions_promotions, :starts_at, starts_at_comment)
+      change_column_comment(:solidus_promotions_promotions, :customer_label, customer_label_comment)
+      change_column_comment(:solidus_promotions_promotions, :usage_limit, usage_limit_comment)
+      change_column_comment(:solidus_promotions_promotions, :advertise, advertise_comment)
+      change_column_comment(:solidus_promotions_promotions, :path, path_comment)
+      change_column_comment(:solidus_promotions_promotions, :lane, lane_comment)
+      change_column_comment(:solidus_promotions_promotions, :name, name_comment)
+      change_column_comment(:solidus_promotions_promotions, :created_at, created_at_comment)
+      change_column_comment(:solidus_promotions_promotions, :updated_at, updated_at_comment)
+      change_column_comment(:solidus_promotions_promotions, :promotion_category_id, promotion_category_id_comment)
+      change_column_comment(:solidus_promotions_promotions, :per_code_usage_limit, per_code_usage_limit_comment)
+      change_column_comment(:solidus_promotions_promotions, :apply_automatically, apply_automatically_comment)
     end
   end
 
   private
 
-  def friendly_promotions_table_comment
+  def solidus_promotions_promotions_table_comment
     <<~COMMENT
       Promotions are sets of rules and actions to discount (parts of) an order.
     COMMENT
@@ -104,7 +104,7 @@ class AddDbCommentsToFriendlyPromotions < ActiveRecord::Migration[6.1]
 
   def promotion_category_id_comment
     <<~COMMENT
-      Foreign key to the friendly_promotion_categories table.
+      Foreign key to the solidus_promotions_promotion_categories table.
     COMMENT
   end
 
