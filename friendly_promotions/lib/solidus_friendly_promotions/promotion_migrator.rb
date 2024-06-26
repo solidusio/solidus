@@ -12,12 +12,12 @@ module SolidusFriendlyPromotions
 
     def call
       SolidusFriendlyPromotions::PromotionCategory.destroy_all
-      Spree::PromotionCategory.all.each do |promotion_category|
+      Spree::PromotionCategory.all.find_each do |promotion_category|
         SolidusFriendlyPromotions::PromotionCategory.create!(promotion_category.attributes.except("id"))
       end
 
       SolidusFriendlyPromotions::Promotion.destroy_all
-      Spree::Promotion.all.each do |promotion|
+      Spree::Promotion.all.find_each do |promotion|
         new_promotion = copy_promotion(promotion)
         if promotion.promotion_category&.name.present?
           new_promotion.category = SolidusFriendlyPromotions::PromotionCategory.find_by(

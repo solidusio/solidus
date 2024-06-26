@@ -14,7 +14,7 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
 
   let(:line_items_attributes) do
     [
-      {price: 10, quantity: quantity}
+      { price: 10, quantity: quantity }
     ]
   end
 
@@ -64,9 +64,9 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
         context "and 2x item A, 1x item B and 1x item C" do
           let(:line_items_attributes) do
             [
-              {price: 10, quantity: 2},
-              {price: 10, quantity: 1},
-              {price: 10, quantity: 1}
+              { price: 10, quantity: 2 },
+              { price: 10, quantity: 1 },
+              { price: 10, quantity: 1 }
             ]
           end
 
@@ -90,7 +90,7 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
           create(
             :order_with_line_items,
             line_items_attributes: [
-              {quantity: 3}
+              { quantity: 3 }
             ]
           )
         end
@@ -110,8 +110,8 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
 
       let(:line_items_attributes) do
         [
-          {price: 10, quantity: 1}.merge(line_one_options),
-          {price: 10, quantity: 1}.merge(line_two_options)
+          { price: 10, quantity: 1 }.merge(line_one_options),
+          { price: 10, quantity: 1 }.merge(line_two_options)
         ]
       end
 
@@ -124,7 +124,7 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
         end
 
         context "and 2x item A and 1x item B" do
-          let(:line_one_options) { {quantity: 2} }
+          let(:line_one_options) { { quantity: 2 } }
 
           describe "the adjustment for the first item" do
             let(:line_item) { order.line_items.first }
@@ -137,8 +137,8 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
         end
 
         context "and the items cost different amounts" do
-          let(:line_one_options) { {quantity: 3} }
-          let(:line_two_options) { {price: 20} }
+          let(:line_one_options) { { quantity: 3 } }
+          let(:line_two_options) { { price: 20 } }
 
           describe "the adjustment for the first item" do
             let(:line_item) { order.line_items.first }
@@ -165,8 +165,8 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
       end
       let(:line_items_attributes) do
         [
-          {price: 10, quantity: 1}.merge(line_one_options),
-          {price: 10, quantity: 1}.merge(line_two_options)
+          { price: 10, quantity: 1 }.merge(line_one_options),
+          { price: 10, quantity: 1 }.merge(line_two_options)
         ]
       end
 
@@ -179,7 +179,7 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
         end
 
         context "and 2x item A and 1x item B" do
-          let(:line_one_options) { {quantity: 2} }
+          let(:line_one_options) { { quantity: 2 } }
 
           context "when amount falls within the first tier" do
             describe "the adjustment for the first item" do
@@ -193,7 +193,7 @@ RSpec.describe SolidusFriendlyPromotions::Benefits::AdjustLineItemQuantityGroups
           end
 
           context "when amount falls within the second tier" do
-            let(:line_two_options) { {price: 20} }
+            let(:line_two_options) { { price: 20 } }
 
             describe "the adjustment for the first item" do
               let(:line_item) { order.line_items.first }

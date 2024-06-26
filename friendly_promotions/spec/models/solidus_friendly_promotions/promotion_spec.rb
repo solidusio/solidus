@@ -112,7 +112,7 @@ RSpec.describe SolidusFriendlyPromotions::Promotion, type: :model do
   describe ".ordered_lanes" do
     subject { described_class.ordered_lanes }
 
-    it { is_expected.to eq({"pre" => 0, "default" => 1, "post" => 2}) }
+    it { is_expected.to eq({ "pre" => 0, "default" => 1, "post" => 2 }) }
   end
 
   describe "validations" do

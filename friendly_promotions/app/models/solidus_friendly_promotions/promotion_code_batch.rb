@@ -8,7 +8,7 @@ module SolidusFriendlyPromotions
     belongs_to :promotion
     has_many :promotion_codes, dependent: :destroy
 
-    validates :number_of_codes, numericality: {greater_than: 0}
+    validates :number_of_codes, numericality: { greater_than: 0 }
     validates :base_code, :number_of_codes, presence: true
 
     def finished?

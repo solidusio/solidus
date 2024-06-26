@@ -48,19 +48,19 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::MinimumQuantity do
 
     context "when only the quantity condition is applied" do
       context "when the quantity is less than the minimum" do
-        let(:line_items) { [{quantity: 1}] }
+        let(:line_items) { [{ quantity: 1 }] }
 
         it { is_expected.to be false }
       end
 
       context "when the quantity is equal to the minimum" do
-        let(:line_items) { [{quantity: 2}] }
+        let(:line_items) { [{ quantity: 2 }] }
 
         it { is_expected.to be true }
       end
 
       context "when the quantity is greater than the minimum" do
-        let(:line_items) { [{quantity: 4}] }
+        let(:line_items) { [{ quantity: 4 }] }
 
         it { is_expected.to be true }
       end
@@ -83,8 +83,8 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::MinimumQuantity do
       context "when the applicable quantity is less than the minimum" do
         let(:line_items) do
           [
-            {variant: carry_on, quantity: 1},
-            {variant: everywhere_bag, quantity: 1}
+            { variant: carry_on, quantity: 1 },
+            { variant: everywhere_bag, quantity: 1 }
           ]
         end
 
@@ -94,9 +94,9 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::MinimumQuantity do
       context "when the applicable quantity is greater than the minimum" do
         let(:line_items) do
           [
-            {variant: carry_on, quantity: 1},
-            {variant: other_carry_on, quantity: 1},
-            {variant: everywhere_bag, quantity: 1}
+            { variant: carry_on, quantity: 1 },
+            { variant: other_carry_on, quantity: 1 },
+            { variant: everywhere_bag, quantity: 1 }
           ]
         end
 

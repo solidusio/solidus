@@ -39,11 +39,11 @@ class SolidusFriendlyPromotions::Promotions::Index::Component < SolidusAdmin::UI
 
   def scopes
     [
-      {name: :active, label: t(".scopes.active"), default: true},
-      {name: :draft, label: t(".scopes.draft")},
-      {name: :future, label: t(".scopes.future")},
-      {name: :expired, label: t(".scopes.expired")},
-      {name: :all, label: t(".scopes.all")}
+      { name: :active, label: t(".scopes.active"), default: true },
+      { name: :draft, label: t(".scopes.draft") },
+      { name: :future, label: t(".scopes.future") },
+      { name: :expired, label: t(".scopes.expired") },
+      { name: :all, label: t(".scopes.all") }
     ]
   end
 

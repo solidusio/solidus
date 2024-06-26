@@ -3,7 +3,7 @@
 class CreatePromotionCodeBatches < ActiveRecord::Migration[7.0]
   def change
     create_table :solidus_promotions_promotion_code_batches do |t|
-      t.references :promotion, null: false, index: true, foreign_key: {to_table: :solidus_promotions_promotions}
+      t.references :promotion, null: false, index: true, foreign_key: { to_table: :solidus_promotions_promotions }
       t.string :base_code, null: false
       t.integer :number_of_codes, null: false
       t.string :join_characters, null: false, default: "_"

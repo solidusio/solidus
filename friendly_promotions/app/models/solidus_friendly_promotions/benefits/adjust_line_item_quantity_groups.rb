@@ -76,8 +76,6 @@ module SolidusFriendlyPromotions
         [line_item.discountable_amount, amount].min * -1
       end
 
-      private
-
       ##
       # Used specifically for PercentOnLineItem calculator. That calculator uses
       # `line_item.amount`, however we might not necessarily want to discount the
@@ -86,6 +84,7 @@ module SolidusFriendlyPromotions
       # for flat rate adjustments.
       class Item
         attr_reader :line_item
+
         def initialize(line_item)
           @line_item = line_item
         end

@@ -14,10 +14,10 @@ module SolidusFriendlyPromotions
     has_many :order_promotions, class_name: "SolidusFriendlyPromotions::OrderPromotion", dependent: :destroy
 
     validates :name, :customer_label, presence: true
-    validates :path, uniqueness: {allow_blank: true, case_sensitive: true}
-    validates :usage_limit, numericality: {greater_than: 0, allow_nil: true}
-    validates :per_code_usage_limit, numericality: {greater_than_or_equal_to: 0, allow_nil: true}
-    validates :description, length: {maximum: 255}
+    validates :path, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :usage_limit, numericality: { greater_than: 0, allow_nil: true }
+    validates :per_code_usage_limit, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+    validates :description, length: { maximum: 255 }
     validate :apply_automatically_disallowed_with_paths
     validate :apply_automatically_disallowed_with_promotion_codes
 
@@ -83,7 +83,7 @@ module SolidusFriendlyPromotions
       discounted_orders
         .complete
         .where.not(id: [excluded_orders.map(&:id)])
-        .where.not(spree_orders: {state: :canceled})
+        .where.not(spree_orders: { state: :canceled })
         .count
     end
 
@@ -92,7 +92,7 @@ module SolidusFriendlyPromotions
         .complete
         .where.not(id: excluded_orders.map(&:id))
         .where(user: user)
-        .where.not(spree_orders: {state: :canceled})
+        .where.not(spree_orders: { state: :canceled })
         .exists?
     end
 

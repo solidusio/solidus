@@ -22,7 +22,7 @@ module SolidusFriendlyPromotions
       def build_promotion_codes
         generate_random_codes
         promotion_code_batch.update!(state: "completed")
-      rescue => e
+      rescue StandardError => e
         promotion_code_batch.update!(
           error: e.inspect,
           state: "failed"

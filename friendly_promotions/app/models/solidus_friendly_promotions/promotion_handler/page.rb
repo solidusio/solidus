@@ -7,7 +7,7 @@ module SolidusFriendlyPromotions
 
       def initialize(order, path)
         @order = order
-        @path = path.gsub(/\A\//, "")
+        @path = path.delete_prefix('/')
       end
 
       def activate

@@ -9,6 +9,6 @@ class CreatePromotionCategories < ActiveRecord::Migration[7.0]
 
     add_reference :solidus_promotions_promotions,
       :promotion_category,
-      foreign_key: {to_table: :solidus_promotions_promotion_categories}
+      foreign_key: { to_table: :solidus_promotions_promotion_categories }
   end
 end

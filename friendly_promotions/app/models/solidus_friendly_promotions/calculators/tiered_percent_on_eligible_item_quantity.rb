@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require_dependency "spree/calculator"
 
 module SolidusFriendlyPromotions
   module Calculators
     class TieredPercentOnEligibleItemQuantity < SolidusFriendlyPromotions::Calculators::TieredPercent
-      preference :tiers, :hash, default: {10 => 5}
+      preference :tiers, :hash, default: { 10 => 5 }
 
       before_validation do
         # Convert tier values to decimals. Strings don't do us much good.

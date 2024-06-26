@@ -11,7 +11,7 @@ RSpec.describe "Admin::Benefits", type: :request do
     post solidus_friendly_promotions.admin_promotion_benefits_path(promotion_id: promotion.id), params: {
       benefit: {
         type: "SolidusFriendlyPromotions::Benefits::AdjustLineItem",
-        calculator_attributes: {type: "SolidusFriendlyPromotions::Calculators::FlatRate"}
+        calculator_attributes: { type: "SolidusFriendlyPromotions::Calculators::FlatRate" }
       }
     }
     expect(response).to be_redirect
@@ -21,7 +21,7 @@ RSpec.describe "Admin::Benefits", type: :request do
 
   it "can not create a promotion benefit of an invalid type" do
     post solidus_friendly_promotions.admin_promotion_benefits_path(promotion_id: promotion.id), params: {
-      benefit: {type: "Spree::InvalidType"}
+      benefit: { type: "Spree::InvalidType" }
     }
     expect(response).to be_redirect
     expect(response).to redirect_to solidus_friendly_promotions.edit_admin_promotion_path(promotion)

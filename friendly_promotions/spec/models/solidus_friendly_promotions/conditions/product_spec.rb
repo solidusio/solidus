@@ -21,7 +21,7 @@ RSpec.describe SolidusFriendlyPromotions::Conditions::Product, type: :model do
       it { is_expected.to be true }
 
       context "with line item applicable set to false" do
-        let(:condition_options) { {preferred_line_item_applicable: false} }
+        let(:condition_options) { { preferred_line_item_applicable: false } }
 
         it { is_expected.to be false }
       end

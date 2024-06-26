@@ -17,7 +17,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
 
   describe "discounting orders" do
     let(:shirt) { create(:product, name: "Shirt") }
-    let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }]) }
     let!(:promotion) { create(:friendly_promotion, :with_free_shipping, name: "20% off Shirts", apply_automatically: true) }
     let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions) }
@@ -35,7 +35,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
 
   describe "collecting eligibility results in a dry run" do
     let(:shirt) { create(:product, name: "Shirt") }
-    let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }]) }
     let(:conditions) { [product_condition] }
     let!(:promotion) { create(:friendly_promotion, :with_adjustable_benefit, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
     let(:product_condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
@@ -96,7 +96,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
       let(:order) do
         create(
           :order_with_line_items,
-          line_items_attributes: [{variant: shirt.master, quantity: 1}, {variant: pants.master, quantity: 1}]
+          line_items_attributes: [{ variant: shirt.master, quantity: 1 }, { variant: pants.master, quantity: 1 }]
         )
       end
 
@@ -148,7 +148,7 @@ RSpec.describe SolidusFriendlyPromotions::FriendlyPromotionAdjuster::DiscountOrd
     context "where one benefit succeeds and another errors" do
       let(:usps) { create(:shipping_method) }
       let(:ups_ground) { create(:shipping_method) }
-      let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt.master, quantity: 1}], shipping_method: ups_ground) }
+      let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }], shipping_method: ups_ground) }
       let(:product_condition) { SolidusFriendlyPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
       let(:shipping_method_condition) { SolidusFriendlyPromotions::Conditions::ShippingMethod.new(preferred_shipping_method_ids: [usps.id]) }
       let(:ten_off_items) { SolidusFriendlyPromotions::Calculators::Percent.create!(preferred_percent: 10) }
