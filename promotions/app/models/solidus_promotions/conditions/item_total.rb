@@ -60,18 +60,7 @@ module SolidusPromotions
       end
 
       def ineligible_message
-        case preferred_operator.to_s
-        when "gte"
-          eligibility_error_message(:item_total_less_than, amount: formatted_amount)
-        when "gt"
-          eligibility_error_message(:item_total_less_than_or_equal, amount: formatted_amount)
-        else
-          eligibility_error_message(
-            :item_total_doesnt_match_with_operator,
-            amount: formatted_amount,
-            operator: preferred_operator
-          )
-        end
+        eligibility_error_message(ineligible_error_code, amount: formatted_amount)
       end
 
       def ineligible_error_code
