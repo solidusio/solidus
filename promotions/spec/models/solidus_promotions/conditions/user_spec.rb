@@ -22,6 +22,11 @@ RSpec.describe SolidusPromotions::Conditions::User, type: :model do
     end
   end
 
+  describe "#preload_relations" do
+    subject { condition.preload_relations }
+    it { is_expected.to eq([:users]) }
+  end
+
   describe "#eligible?(order)" do
     let(:order) { Spree::Order.new }
 

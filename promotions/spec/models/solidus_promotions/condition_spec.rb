@@ -25,6 +25,13 @@ RSpec.describe SolidusPromotions::Condition do
     it { is_expected.to be_a(Hash) }
   end
 
+  describe "#preload_relations" do
+    let(:condition) { described_class.new }
+    subject { condition.preload_relations }
+
+    it { is_expected.to be_empty }
+  end
+
   it "forces developer to implement eligible? method" do
     expect { bad_test_condition_class.new.eligible?("promotable") }.to raise_error NotImplementedError
     expect { test_condition_class.new.eligible?("promotable") }.not_to raise_error

@@ -30,6 +30,11 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
     end
   end
 
+  describe "#preload_relations" do
+    subject { condition.preload_relations }
+    it { is_expected.to eq([:taxons]) }
+  end
+
   describe "#eligible?(order)" do
     context "with any match policy" do
       before do

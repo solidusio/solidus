@@ -18,6 +18,10 @@ module SolidusPromotions
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
+      def preload_relations
+        [:products]
+      end
+
       def eligible?(line_item, _options = {})
         order_includes_product = product_ids.include?(line_item.variant.product_id)
         success = inverse? ? !order_includes_product : order_includes_product

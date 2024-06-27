@@ -59,6 +59,13 @@ RSpec.describe SolidusPromotions::Benefit do
     end
   end
 
+  describe "#preload_relations" do
+    let(:benefit) { described_class.new }
+    subject { benefit.preload_relations }
+
+    it { is_expected.to eq([:calculator]) }
+  end
+
   describe "#discount" do
     subject { benefit.discount(discountable) }
 

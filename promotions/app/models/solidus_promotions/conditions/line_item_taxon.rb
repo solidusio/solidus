@@ -15,6 +15,10 @@ module SolidusPromotions
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
+      def preload_relations
+        [:taxons]
+      end
+
       def eligible?(line_item, _options = {})
         found = Spree::Classification.where(
           product_id: line_item.variant.product_id,

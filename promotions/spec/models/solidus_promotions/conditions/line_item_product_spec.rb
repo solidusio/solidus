@@ -79,6 +79,11 @@ RSpec.describe SolidusPromotions::Conditions::LineItemProduct, type: :model do
     end
   end
 
+  describe "#preload_relations" do
+    subject { condition.preload_relations }
+    it { is_expected.to eq([:products]) }
+  end
+
   describe "#product_ids_string" do
     it "returns a string of product ids" do
       condition.products = [create(:product), create(:product)]
