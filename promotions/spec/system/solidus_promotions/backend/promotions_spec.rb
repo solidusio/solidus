@@ -24,6 +24,8 @@ RSpec.describe "Promotions admin", type: :system do
         expires_at: Date.yesterday
       )
     end
+    let!(:inactive_promotion) { create(:solidus_promotion, name: "My inactive Promotion", starts_at: 1.day.ago, updated_at: 20.days.ago) }
+
     let!(:category) { create :solidus_promotion_category }
 
     it "succeeds" do
