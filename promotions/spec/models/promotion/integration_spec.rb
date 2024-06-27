@@ -213,7 +213,7 @@ RSpec.describe "Promotion System" do
 
     subject { order.recalculate }
 
-    it "replaces existing adjustments with adjustments for the equivalent friendly promotion" do
+    it "replaces existing adjustments with adjustments for the equivalent solidus promotion" do
       expect { subject }.not_to change { order.all_adjustments.count }
     end
 

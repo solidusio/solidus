@@ -7,14 +7,14 @@ RSpec.describe SolidusPromotions::MigrationSupport::OrderPromotionSyncer do
 
   let(:order) { create(:order) }
 
-  context "when there are no friendly order promotions" do
+  context "when there are no solidus order promotions" do
     it "does not create order promotions" do
       expect { subject }.not_to change { order.order_promotions.length }
     end
   end
 
   context "when there are no order promotions" do
-    it "does not create friendly order promotions" do
+    it "does not create solidus order promotions" do
       expect { subject }.not_to change { order.solidus_order_promotions.length }
     end
   end
@@ -30,20 +30,20 @@ RSpec.describe SolidusPromotions::MigrationSupport::OrderPromotionSyncer do
       )
     end
 
-    it "does not create friendly order promotions" do
+    it "does not create solidus order promotions" do
       expect { subject }.not_to change { order.solidus_order_promotions.length }
     end
 
-    context "when there is a corresponding friendly promotion" do
+    context "when there is a corresponding solidus promotion" do
       let!(:solidus_promotion) { create(:solidus_promotion, original_promotion: spree_promotion) }
       let!(:solidus_promotion_code) { nil }
 
-      it "creates a friendly order promotions" do
+      it "creates a solidus order promotions" do
         expect { subject }.to change { order.solidus_order_promotions.length }.by(1)
         expect(order.solidus_order_promotions.first.promotion).to eq(solidus_promotion)
       end
 
-      it "does not create a friendly order promotion twice" do
+      it "does not create a solidus order promotion twice" do
         described_class.new(order: order).call
         expect { subject }.not_to change { order.solidus_order_promotions.length }
       end
@@ -52,7 +52,7 @@ RSpec.describe SolidusPromotions::MigrationSupport::OrderPromotionSyncer do
         let(:spree_promotion_code) { create(:promotion_code, promotion: spree_promotion) }
         let!(:solidus_promotion_code) { create(:solidus_promotion_code, promotion: solidus_promotion, value: spree_promotion_code.value) }
 
-        it "does creates a friendly order promotion with the corresponding code" do
+        it "does creates a solidus order promotion with the corresponding code" do
           expect { subject }.to change { order.solidus_order_promotions.length }.by(1)
           expect(order.solidus_order_promotions.first.promotion_code).to eq(solidus_promotion_code)
         end
@@ -60,7 +60,7 @@ RSpec.describe SolidusPromotions::MigrationSupport::OrderPromotionSyncer do
     end
   end
 
-  context "when there are frienly order promotions" do
+  context "when there are solidus order promotions" do
     let(:spree_promotion) { nil }
     let(:solidus_promotion) { create(:solidus_promotion, original_promotion: spree_promotion) }
     let(:solidus_promotion_code) { nil }
@@ -85,7 +85,7 @@ RSpec.describe SolidusPromotions::MigrationSupport::OrderPromotionSyncer do
         expect(order.order_promotions.first.promotion).to eq(spree_promotion)
       end
 
-      it "does not create a friendly order promotion twice" do
+      it "does not create a solidus order promotion twice" do
         described_class.new(order: order).call
         expect { subject }.not_to change { order.order_promotions.length }
       end
@@ -94,7 +94,7 @@ RSpec.describe SolidusPromotions::MigrationSupport::OrderPromotionSyncer do
         let(:solidus_promotion_code) { create(:solidus_promotion_code, promotion: solidus_promotion) }
         let!(:spree_promotion_code) { create(:promotion_code, promotion: spree_promotion, value: solidus_promotion_code.value) }
 
-        it "does creates a friendly order promotion with the corresponding code" do
+        it "does creates a solidus order promotion with the corresponding code" do
           expect { subject }.to change { order.order_promotions.length }.by(1)
           expect(order.order_promotions.first.promotion_code).to eq(spree_promotion_code)
         end

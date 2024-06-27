@@ -66,7 +66,7 @@ RSpec.describe SolidusPromotions::MigrateOrderPromotions do
           )
         end
 
-        it "deletes the friendly order promotion" do
+        it "deletes the spree order promotion" do
           expect { subject }.to change {
             Spree::OrderPromotion.count
           }.from(1).to(0)
@@ -98,7 +98,7 @@ RSpec.describe SolidusPromotions::MigrateOrderPromotions do
         }.from(1).to(0)
       end
 
-      it "does not create the already existing friendly promotion code" do
+      it "does not create the already existing solidus promotion code" do
         expect { subject }.not_to change {
           SolidusPromotions::OrderPromotion.count
         }.from(1)
@@ -162,7 +162,7 @@ RSpec.describe SolidusPromotions::MigrateOrderPromotions do
           )
         end
 
-        it "deletes the friendly order promotion" do
+        it "deletes the solidus order promotion" do
           expect { subject }.to change {
             SolidusPromotions::OrderPromotion.count
           }.from(1).to(0)
@@ -194,7 +194,7 @@ RSpec.describe SolidusPromotions::MigrateOrderPromotions do
         }.from(1).to(0)
       end
 
-      it "does not create the already existing friendly promotion code" do
+      it "does not create the already existing solidus promotion code" do
         expect { subject }.not_to change {
           Spree::OrderPromotion.count
         }.from(1)
