@@ -3,7 +3,7 @@
 require "rails_helper"
 require "cancan/matchers"
 
-RSpec.describe SolidusPromotions::PermissionSets::FriendlyPromotionManagement do
+RSpec.describe SolidusPromotions::PermissionSets::SolidusPromotionManagement do
   let(:ability_klass) do
     Class.new do
       include CanCan::Ability
