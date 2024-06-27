@@ -6,7 +6,7 @@ module SolidusPromotions
   class Configuration < Spree::Preferences::Configuration
     include Spree::Core::EnvironmentExtension
 
-    class_name_attribute :order_adjuster_class, default: "SolidusPromotions::FriendlyPromotionAdjuster"
+    class_name_attribute :order_adjuster_class, default: "SolidusPromotions::OrderAdjuster"
 
     class_name_attribute :coupon_code_handler_class, default: "SolidusPromotions::PromotionHandler::Coupon"
 
@@ -86,7 +86,7 @@ module SolidusPromotions
       ]
     }
 
-    class_name_attribute :discount_chooser_class, default: "SolidusPromotions::FriendlyPromotionAdjuster::ChooseDiscounts"
+    class_name_attribute :discount_chooser_class, default: "SolidusPromotions::OrderAdjuster::ChooseDiscounts"
     class_name_attribute :promotion_code_batch_mailer_class,
       default: "SolidusPromotions::PromotionCodeBatchMailer"
 

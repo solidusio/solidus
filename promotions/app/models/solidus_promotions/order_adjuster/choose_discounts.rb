@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  class FriendlyPromotionAdjuster
+  class OrderAdjuster
     class ChooseDiscounts
       attr_reader :discounts
 

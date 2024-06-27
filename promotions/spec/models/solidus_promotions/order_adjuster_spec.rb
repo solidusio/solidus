@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster, type: :model do
+RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
   subject(:discounter) { described_class.new(order) }
 
   let(:line_item) { create(:line_item) }

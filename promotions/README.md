@@ -8,7 +8,7 @@ The basic architecture is very similar to the one in core Solidus, but with a fe
 
 ## Architecture
 
-This extension centralizes promotion handling in the order updater. A service class, the `SolidusPromotions::FriendlyPromotionAdjuster` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
+This extension centralizes promotion handling in the order updater. A service class, the `SolidusPromotions::OrderAdjuster` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
 
 `SolidusPromotions::Promotion` objects have benefits, and benefits have conditions. For example, a promotion that is "20% off shirts" would have a benefit of type "AdjustLineItem", and that benefit would have a condition of type "LineItemTaxon" that makes sure only line items with the "shirts" taxon will get the benefit.
 
@@ -86,7 +86,7 @@ bin/rails generate solidus_promotions:install
 ```
 
 This will create the tables for this extension. It will also replace the promotion administration system under
-`/admin/promotions` with a new one that needs `turbo-rails`. It will also create an initializer within which Solidus is configured to use `Spree::SimpleOrderContents` and this extension's `FriendlyPromotionAdjuster` classes. Feel free to override with your own implementations!
+`/admin/promotions` with a new one that needs `turbo-rails`. It will also create an initializer within which Solidus is configured to use `Spree::SimpleOrderContents` and this extension's `OrderAdjuster` classes. Feel free to override with your own implementations!
 
 ## Usage
 

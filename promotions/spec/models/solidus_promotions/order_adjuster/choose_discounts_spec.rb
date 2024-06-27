@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::ChooseDiscounts do
+RSpec.describe SolidusPromotions::OrderAdjuster::ChooseDiscounts do
   subject { described_class.new(discounts).call }
 
   let(:source_1) { create(:solidus_promotion, :with_adjustable_benefit).benefits.first }

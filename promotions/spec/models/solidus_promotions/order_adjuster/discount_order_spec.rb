@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::FriendlyPromotionAdjuster::DiscountOrder do
+RSpec.describe SolidusPromotions::OrderAdjuster::DiscountOrder do
   context "shipped orders" do
     let(:promotions) { [] }
     let(:order) { create(:order, shipment_state: "shipped") }

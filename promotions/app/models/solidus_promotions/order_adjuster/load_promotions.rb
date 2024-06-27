@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  class FriendlyPromotionAdjuster
+  class OrderAdjuster
     class LoadPromotions
       def initialize(order:, dry_run_promotion: nil)
         @order = order
