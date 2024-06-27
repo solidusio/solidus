@@ -36,4 +36,13 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
     # 7 Shirts at 50, 350 USD, 15 % == 52.5
     it { is_expected.to eq(52.5) }
   end
+
+  context "if the order's currency is different" do
+    before do
+      order.currency = "GBP"
+      order.save!
+    end
+
+    it { is_expected.to eq(0) }
+  end
 end
