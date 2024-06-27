@@ -72,4 +72,10 @@ RSpec.describe SolidusPromotions::Configuration do
       config.recalculate_complete_orders = true
     end
   end
+
+  describe ".configure" do
+    it "yields self" do
+      expect { |b| config.configure(&b) }.to yield_with_args(config)
+    end
+  end
 end
