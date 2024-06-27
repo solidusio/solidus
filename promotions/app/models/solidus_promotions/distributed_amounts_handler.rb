@@ -32,10 +32,6 @@ module SolidusPromotions
       line_items.map(&:discountable_amount)
     end
 
-    def subtotal
-      elligible_amounts.sum
-    end
-
     def allocated_amounts
       total_amount.to_money.allocate(elligible_amounts).map(&:to_money)
     end
