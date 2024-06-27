@@ -12,10 +12,9 @@ RSpec.describe SolidusPromotions::Conditions::DiscountedItemTotal, type: :model 
   let(:order) { instance_double("Spree::Order", discountable_item_total: item_total, currency: order_currency) }
   let(:preferred_amount) { 50 }
   let(:order_currency) { "USD" }
+  let(:preferred_operator) { "gt" }
 
   context "preferred operator set to gt" do
-    let(:preferred_operator) { "gt" }
-
     context "item total is greater than preferred amount" do
       let(:item_total) { 51 }
 
@@ -126,6 +125,12 @@ RSpec.describe SolidusPromotions::Conditions::DiscountedItemTotal, type: :model 
         expect(condition.eligibility_errors.details[:base].first[:error_code])
           .to eq :item_total_less_than
       end
+    end
+  end
+
+  describe "#to_partial_path" do
+    it "uses the item total partial path" do
+      expect(condition.to_partial_path).to eq "solidus_promotions/admin/condition_fields/item_total"
     end
   end
 end
