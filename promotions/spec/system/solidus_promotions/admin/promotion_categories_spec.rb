@@ -9,7 +9,7 @@ RSpec.describe "Promotion Categories", :js, type: :feature, solidus_admin: true 
     create(:solidus_promotion_category, name: "test1", code: "code1")
     create(:solidus_promotion_category, name: "test2", code: "code2")
 
-    visit "/admin/friendly/promotion_categories"
+    visit "/admin/solidus/promotion_categories"
     expect(page).to have_content("test1")
     expect(page).to have_content("test2")
 

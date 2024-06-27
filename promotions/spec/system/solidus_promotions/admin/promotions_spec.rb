@@ -11,7 +11,7 @@ RSpec.describe "Promotions", :js, type: :feature, solidus_admin: true do
     create(:solidus_promotion, :with_adjustable_benefit, name: "My expired Promotion", expires_at: 1.day.ago)
     create(:solidus_promotion, :with_adjustable_benefit, name: "My future Promotion", starts_at: 1.day.from_now)
 
-    visit "/admin/friendly/promotions"
+    visit "/admin/solidus/promotions"
     expect(page).to have_content("My active Promotion")
     click_on "Draft"
     expect(page).to have_content("My draft Promotion", wait: 30)

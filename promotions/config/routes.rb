@@ -11,7 +11,7 @@ SolidusPromotions::Engine.routes.draw do
                     SolidusPromotions.config.use_new_admin?
                 }) do
       scope :admin do
-        scope :friendly do
+        scope :solidus do
           admin_resources :promotion_categories, only: [:index, :destroy]
           admin_resources :promotions, only: [:index, :destroy]
         end
@@ -20,7 +20,7 @@ SolidusPromotions::Engine.routes.draw do
   end
   if SolidusSupport.backend_available?
     namespace :admin do
-      scope :friendly do
+      scope :solidus do
         resources :promotion_categories, except: [:show]
 
         resources :promotions do
