@@ -7,6 +7,8 @@ RSpec.describe SolidusPromotions::Conditions::User, type: :model do
 
   it { is_expected.to have_many(:users) }
 
+  it { is_expected.to be_updateable }
+
   describe "user_ids=" do
     subject { condition.user_ids = [user.id] }
 

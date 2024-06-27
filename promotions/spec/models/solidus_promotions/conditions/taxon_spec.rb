@@ -15,6 +15,8 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
 
   it { is_expected.to have_many(:taxons) }
 
+  it { is_expected.to be_updateable }
+
   describe "taxon_ids_string=" do
     subject { condition.assign_attributes("taxon_ids_string" => taxon_two.id.to_s) }
 

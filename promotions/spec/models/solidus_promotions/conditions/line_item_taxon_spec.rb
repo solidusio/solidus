@@ -14,6 +14,8 @@ RSpec.describe SolidusPromotions::Conditions::LineItemTaxon, type: :model do
     described_class.create!(benefit: benefit)
   end
 
+  it { is_expected.to be_updateable }
+
   describe "#eligible?" do
     let(:line_item) { order.line_items.first! }
     let(:order) { create :order_with_line_items }

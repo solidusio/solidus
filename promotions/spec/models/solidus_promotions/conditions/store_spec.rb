@@ -7,6 +7,8 @@ RSpec.describe SolidusPromotions::Conditions::Store, type: :model do
 
   it { is_expected.to have_many(:stores) }
 
+  it { is_expected.to be_updateable }
+
   describe "store_ids=" do
     subject { condition.store_ids = [store.id] }
 
