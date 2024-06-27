@@ -7,6 +7,12 @@ RSpec.describe SolidusPromotions::Conditions::FirstOrder, type: :model do
   let(:order) { mock_model(Spree::Order, user: nil, email: nil) }
   let(:user) { mock_model(Spree::LegacyUser) }
 
+  describe "#level" do
+    it "is order" do
+      expect(condition.level).to eq(:order)
+    end
+  end
+
   describe ".to_partial_path" do
     subject { condition.to_partial_path }
 

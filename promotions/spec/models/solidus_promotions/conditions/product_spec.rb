@@ -8,6 +8,12 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
 
   it { is_expected.to have_many(:products) }
 
+  describe "#level" do
+    it "is order" do
+      expect(condition.level).to eq(:order)
+    end
+  end
+
   describe "#applicable?" do
     let(:promotable) { Spree::Order.new }
 

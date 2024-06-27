@@ -6,6 +6,12 @@ RSpec.describe SolidusPromotions::Conditions::LineItemProduct, type: :model do
   let(:condition) { described_class.new(condition_options) }
   let(:condition_options) { {} }
 
+  describe "#level" do
+    it "is line_item" do
+      expect(condition.level).to eq(:line_item)
+    end
+  end
+
   describe "#eligible?(line_item)" do
     subject { condition.eligible?(line_item, {}) }
 
