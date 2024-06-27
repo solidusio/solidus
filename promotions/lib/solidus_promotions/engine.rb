@@ -40,6 +40,10 @@ module SolidusPromotions
 
     initializer "solidus_promotions.spree_config", after: "spree.load_config_initializers" do
       Spree::Config.adjustment_promotion_source_types << "SolidusPromotions::Benefit"
+
+      Rails.application.config.to_prepare do
+        Spree::Order.line_item_comparison_hooks << :free_from_order_benefit?
+      end
     end
 
     initializer "solidus_promotions.core.pub_sub", after: "spree.core.pub_sub" do |app|

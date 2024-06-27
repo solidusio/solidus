@@ -5,10 +5,6 @@
 # Set the promotion configuration to ours
 # Spree::Config.promotions = SolidusPromotions.configuration
 
-Rails.application.config.to_prepare do |config|
-  Spree::Order.line_item_comparison_hooks << :free_from_order_benefit?
-end
-
 if SolidusSupport.backend_available?
   # Replace the promotions menu from core with ours
   Spree::Backend::Config.configure do |config|
