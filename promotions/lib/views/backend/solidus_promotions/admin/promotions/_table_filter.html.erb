@@ -9,33 +9,33 @@
         <div class="col-4">
           <div class="form-group">
             <%= label_tag :q_name_cont, SolidusPromotions::Promotion.human_attribute_name(:name) %>
-            <%= f.text_field :name_cont, tabindex: 1 %>
+            <%= f.text_field :name_cont, tabindex: 1, class: "w-100" %>
           </div>
         </div>
 
         <div class="col-4">
           <div class="form-group">
             <%= label_tag :q_customer_label_cont, SolidusPromotions::Promotion.human_attribute_name(:customer_label) %>
-            <%= f.text_field :customer_label_cont, tabindex: 1 %>
+            <%= f.text_field :customer_label_cont, tabindex: 1, class: "w-100" %>
           </div>
         </div>
 
         <div class="col-2">
           <div class="form-group">
             <%= label_tag :q_codes_value_cont, SolidusPromotions::Promotion.human_attribute_name(:code) %>
-            <%= f.text_field :codes_value_cont, tabindex: 1 %>
+            <%= f.text_field :codes_value_cont, tabindex: 1, class: "w-100" %>
           </div>
         </div>
 
         <div class="col-2">
           <div class="form-group">
             <%= label_tag :q_path_cont, SolidusPromotions::Promotion.human_attribute_name(:path) %>
-            <%= f.text_field :path_cont, tabindex: 1 %>
+            <%= f.text_field :path_cont, tabindex: 1, class: "w-100" %>
           </div>
         </div>
 
         <div class="col-2">
-          <div class="date-range-filter field">
+          <div class="date-range-filter form-group">
             <%= label_tag :q_active, SolidusPromotions::Promotion.human_attribute_name(:active) %>
             <%= f.text_field :active, value: params[:q][:active],
                              class: 'datepicker datepicker-from fullwidth',
