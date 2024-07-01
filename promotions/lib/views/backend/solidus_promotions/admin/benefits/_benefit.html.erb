@@ -1,0 +1,50 @@
+<div class="card bg-light primary mb-3">
+  <div id="<%= dom_id(benefit) %>_header" class="card-header">
+    <%= benefit.model_name.human %>
+
+    <span class="float-right text-dark">
+      <% if can?(:destroy, benefit) %>
+        <%= link_to_with_icon 'trash', '', solidus_promotions.admin_promotion_benefit_path(@promotion, benefit), method: :delete, class: 'delete' %>
+      <% end %>
+    </span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <%= turbo_frame_tag @promotion, dom_id(benefit) do %>
+
+          <%= render "solidus_promotions/admin/benefits/calculator_select",
+            path: solidus_promotions.edit_admin_promotion_benefit_path(@promotion, benefit),
+            benefit: benefit %>
+
+          <%=
+            form_with(
+            model: benefit,
+            scope: :benefit,
+            url: solidus_promotions.admin_promotion_benefit_path(@promotion, benefit),
+            data: { turbo: false }
+          ) do |form| %>
+            <%= render 'solidus_promotions/admin/benefits/form', form: form %>
+            <div class="row">
+              <div class="col-12">
+                <%= button_tag t(:update, scope: [:solidus_promotions, :crud]), class: "btn btn-secondary float-right" %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= label_tag :conditions %>
+          <div id="<%= dom_id(benefit) %>_conditions" class="bg-white rounded border p-3">
+            <%= render partial: 'solidus_promotions/admin/conditions/condition', collection: benefit.conditions %>
+
+            <%= turbo_frame_tag benefit, "new_condition" do %>
+              <%= link_to t(:add_condition, scope: :solidus_promotions), solidus_promotions.new_admin_promotion_benefit_condition_path(@promotion, benefit), class: 'btn btn-secondary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

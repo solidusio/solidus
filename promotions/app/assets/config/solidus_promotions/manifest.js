@@ -1,0 +1,13 @@
+//= link solidus_promotions.js
+//= link solidus_promotions/controllers/application.js
+//= link solidus_promotions/controllers/index.js
+//= link solidus_promotions/controllers/calculator_tiers_controller.js
+//= link solidus_promotions/controllers/flash_controller.js
+//= link solidus_promotions/controllers/product_option_values_controller.js
+//= link solidus_promotions/web_components/option_value_picker.js
+//= link solidus_promotions/web_components/product_picker.js
+//= link solidus_promotions/web_components/user_picker.js
+//= link solidus_promotions/web_components/taxon_picker.js
+//= link solidus_promotions/web_components/variant_picker.js
+//= link solidus_promotions/web_components/number_with_currency.js
+//= link solidus_promotions/web_components/select_two.js
