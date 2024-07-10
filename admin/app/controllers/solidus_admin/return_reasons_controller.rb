@@ -25,6 +25,35 @@ module SolidusAdmin
       end
     end
 
+    def create
+      @return_reason = Spree::ReturnReason.new(return_reason_params)
+
+      if @return_reason.save
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.return_reasons_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('return_reasons/new')
+              .new(page: @page, return_reason: @return_reason)
+
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def destroy
       @return_reason = Spree::ReturnReason.find_by!(id: params[:id])
 
@@ -51,7 +80,7 @@ module SolidusAdmin
     end
 
     def return_reason_params
-      params.require(:return_reason).permit(:return_reason_id, permitted_return_reason_attributes)
+      params.require(:return_reason).permit(:name, :active)
     end
   end
 end

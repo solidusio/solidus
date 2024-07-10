@@ -2,5 +2,7 @@ en:
   solidus_admin:
     return_reasons:
       title: "Return Reasons"
+      create:
+        success: "Return reason has been successfully created!"
       destroy:
         success: "Return Reasons were successfully removed."
