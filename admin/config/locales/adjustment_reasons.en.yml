@@ -4,3 +4,5 @@ en:
       title: "Adjustment Reasons"
       destroy:
         success: "Adjustment Reasons were successfully removed."
+      create:
+        success: "Adjustment reason was successfully created."
