@@ -43,7 +43,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'monetize', '~> 1.8'
   s.add_dependency 'kt-paperclip', ['>= 6.3', '< 8']
   s.add_dependency 'psych', ['>= 4.0.1', '< 6.0']
-  s.add_dependency 'ransack', '~> 4.0'
+  # @note ransack 4.2 contains a bug which has not yet been addressed.
+  # @see https://github.com/activerecord-hackery/ransack/pull/1468
+  s.add_dependency 'ransack', ['~> 4.0', '< 4.2']
   s.add_dependency 'sprockets-rails', '!= 3.5.0'
   s.add_dependency 'state_machines-activerecord', '~> 0.6'
   s.add_dependency 'omnes', '~> 0.2.2'
