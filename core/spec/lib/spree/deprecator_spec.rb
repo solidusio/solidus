@@ -20,7 +20,6 @@ RSpec.describe "Spree.deprecator" do
 
     it "does not raise an error unless overridden by environment" do
       if ENV["SOLIDUS_RAISE_DEPRECATIONS"]
-        pending "fix for deprecation behaviour override"
         expect { Dummy.new.deprecated_method }.to raise_error(ActiveSupport::DeprecationException)
       else
         expect { Dummy.new.deprecated_method }.not_to raise_error

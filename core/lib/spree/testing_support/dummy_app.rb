@@ -41,6 +41,12 @@ module DummyApp
     DummyApp::Application.config.root = root
     DummyApp::Application.initialize! unless DummyApp::Application.initialized?
 
+    # Raise on deprecation warnings.
+    # NOTE: This needs to happen after the application is initialized.
+    if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
+      Spree.deprecator.behavior = :raise
+    end
+
     if auto_migrate
       DummyApp::Migrations.auto_migrate
     end
@@ -150,9 +156,4 @@ Spree.config do |config|
     config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
     config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
   end
-end
-
-# Raise on deprecation warnings
-if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
-  Spree.deprecator.behavior = :raise
 end
