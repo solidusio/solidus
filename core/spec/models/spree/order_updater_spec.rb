@@ -62,7 +62,7 @@ module Spree
       describe 'promotion recalculation' do
         it "calls the Promotion Adjustments Recalculator" do
           adjuster = double(:call)
-          expect(Spree::Config.promotion_adjuster_class).to receive(:new).and_return(adjuster)
+          expect(Spree::Config.promotions.order_adjuster_class).to receive(:new).and_return(adjuster)
           expect(adjuster).to receive(:call)
           order.recalculate
         end
