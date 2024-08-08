@@ -11,6 +11,8 @@ module SolidusAdmin
     search_scope(:in_stock) { _1.where(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
     search_scope(:out_of_stock) { _1.where.not(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
 
+    before_action :split_params, only: [:update]
+
     def index
       products = apply_search_to(
         Spree::Product.includes(:master, :variants),
@@ -97,6 +99,15 @@ module SolidusAdmin
 
       flash[:notice] = t('.success')
       redirect_to products_path, status: :see_other
+    end
+
+    def split_params
+      if params[:product][:taxon_ids].present?
+        params[:product][:taxon_ids] = params[:product][:taxon_ids].split(',')
+      end
+      if params[:product][:option_type_ids].present?
+        params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
+      end
     end
   end
 end
