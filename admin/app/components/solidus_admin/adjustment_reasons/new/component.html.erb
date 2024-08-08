@@ -5,6 +5,7 @@
         <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
         <%= render component("ui/forms/field").text_field(f, :code, class: "required") %>
         <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[active]", "0" %>
           <%= render component("ui/forms/checkbox").new(
             name: "#{f.object_name}[active]",
             value: "1",

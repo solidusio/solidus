@@ -41,11 +41,13 @@ describe "Adjustment Reasons", :js, type: :feature do
       it "successfully creates a new adjustment reason, keeping page and q params" do
         fill_in "Name", with: "New Reason"
         fill_in "Code", with: "1234"
+        page.uncheck "adjustment_reason[active]"
 
         click_on "Add Adjustment Reason"
 
         expect(page).to have_content("Adjustment reason was successfully created.")
         expect(Spree::AdjustmentReason.find_by(name: "New Reason")).to be_present
+        expect(Spree::AdjustmentReason.find_by(name: "New Reason").active).to be_falsey
         expect(page.current_url).to include(query)
       end
     end
