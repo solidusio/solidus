@@ -6,3 +6,5 @@ en:
         success: "Adjustment Reasons were successfully removed."
       create:
         success: "Adjustment reason was successfully created."
+      update:
+        success: "Adjustment reason was successfully updated."

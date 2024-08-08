@@ -4,6 +4,8 @@ module SolidusAdmin
   class AdjustmentReasonsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
+    before_action :find_adjustment_reason, only: %i[edit update]
+
     def index
       set_index_page
 
@@ -49,6 +51,39 @@ module SolidusAdmin
       end
     end
 
+    def edit
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('adjustment_reasons/edit').new(page: @page, adjustment_reason: @adjustment_reason) }
+      end
+    end
+
+    def update
+      if @adjustment_reason.update(adjustment_reason_params)
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.adjustment_reasons_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('adjustment_reasons/edit').new(page: @page, adjustment_reason: @adjustment_reason)
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def destroy
       @adjustment_reason = Spree::AdjustmentReason.find_by!(id: params[:id])
 
@@ -63,6 +98,10 @@ module SolidusAdmin
     def load_adjustment_reason
       @adjustment_reason = Spree::AdjustmentReason.find_by!(id: params[:id])
       authorize! action_name, @adjustment_reason
+    end
+
+    def find_adjustment_reason
+      @adjustment_reason = Spree::AdjustmentReason.find(params[:id])
     end
 
     def adjustment_reason_params

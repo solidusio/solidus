@@ -61,4 +61,36 @@ describe "Adjustment Reasons", :js, type: :feature do
       end
     end
   end
+
+  context "when editing an existing adjustment reason" do
+    let(:query) { "?page=1&q%5Bname_or_code_cont%5D=reason" }
+
+    before do
+      Spree::AdjustmentReason.create(name: "Good Reason", code: 5999)
+      visit "/admin/adjustment_reasons#{query}"
+      find_row("Good Reason").click
+      expect(page).to have_content("Edit Adjustment Reason")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens a modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+      expect(page.current_url).to include(query)
+    end
+
+    it "successfully updates the existing adjustment reason" do
+      fill_in "Name", with: "Better Reason"
+      page.uncheck "adjustment_reason[active]"
+
+      click_on "Update Adjustment Reason"
+      expect(page).to have_content("Adjustment reason was successfully updated.")
+      expect(page).to have_content("Better Reason")
+      expect(page).not_to have_content("Good Reason")
+      expect(Spree::AdjustmentReason.find_by(name: "Better Reason")).to be_present
+      expect(Spree::AdjustmentReason.find_by(name: "Better Reason").active).to be_falsey
+      expect(page.current_url).to include(query)
+    end
+  end
 end
