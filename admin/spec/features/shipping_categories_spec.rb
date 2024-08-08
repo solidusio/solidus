@@ -58,4 +58,34 @@ describe "Shipping Categories", :js, type: :feature do
       end
     end
   end
+
+  context "when editing an existing shipping category" do
+    let(:query) { "?page=1&q%5Bname_or_description_cont%5D=mail" }
+
+    before do
+      Spree::ShippingCategory.create(name: "Letter Mail")
+      visit "/admin/shipping_categories#{query}"
+      find_row("Letter Mail").click
+      expect(page).to have_content("Edit Shipping Category")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens a modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+      expect(page.current_url).to include(query)
+    end
+
+    it "successfully updates the existing shipping category" do
+      fill_in "Name", with: "Air Mail"
+
+      click_on "Update Shipping Category"
+      expect(page).to have_content("Shipping category was successfully updated.")
+      expect(page).to have_content("Air Mail")
+      expect(page).not_to have_content("Letter Mail")
+      expect(Spree::ShippingCategory.find_by(name: "Air Mail")).to be_present
+      expect(page.current_url).to include(query)
+    end
+  end
 end
