@@ -5,15 +5,47 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Search
 
     def index
-      adjustment_reasons = apply_search_to(
-        Spree::AdjustmentReason.order(id: :desc),
-        param: :q,
-      )
-
-      set_page_and_extract_portion_from(adjustment_reasons)
+      set_index_page
 
       respond_to do |format|
         format.html { render component('adjustment_reasons/index').new(page: @page) }
+      end
+    end
+
+    def new
+      @adjustment_reason = Spree::AdjustmentReason.new
+
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('adjustment_reasons/new').new(page: @page, adjustment_reason: @adjustment_reason) }
+      end
+    end
+
+    def create
+      @adjustment_reason = Spree::AdjustmentReason.new(adjustment_reason_params)
+
+      if @adjustment_reason.save
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.adjustment_reasons_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('adjustment_reasons/new').new(page: @page, adjustment_reason: @adjustment_reason)
+            render page_component, status: :unprocessable_entity
+          end
+        end
       end
     end
 
@@ -34,7 +66,16 @@ module SolidusAdmin
     end
 
     def adjustment_reason_params
-      params.require(:adjustment_reason).permit(:adjustment_reason_id, permitted_adjustment_reason_attributes)
+      params.require(:adjustment_reason).permit(:name, :code, :active)
+    end
+
+    def set_index_page
+      adjustment_reasons = apply_search_to(
+        Spree::AdjustmentReason.order(id: :desc),
+        param: :q,
+      )
+
+      set_page_and_extract_portion_from(adjustment_reasons)
     end
   end
 end
