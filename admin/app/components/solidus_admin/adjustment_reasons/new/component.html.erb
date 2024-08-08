@@ -11,7 +11,7 @@
             value: "1",
             checked: f.object.active
           ) %>
-          <span class="font-semibold text-xs ml-2"><%= Spree::TaxCategory.human_attribute_name :active %></span>
+          <span class="font-semibold text-xs ml-2"><%= Spree::AdjustmentReason.human_attribute_name :active %></span>
           <%= render component("ui/toggletip").new(text: t(".hints.active")) %>
         </label>
       </div>
