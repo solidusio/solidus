@@ -14,7 +14,7 @@ describe "Adjustment Reasons", :js, type: :feature do
 
     select_row("Default-adjustment-reason")
     click_on "Delete"
-    expect(page).to have_content("Adjustment Reasons were successfully removed.")
+    expect(page).to have_content("Adjustment reasons were successfully removed.")
     expect(page).not_to have_content("Default-adjustment-reason")
     expect(Spree::AdjustmentReason.count).to eq(0)
     expect(page).to be_axe_clean
