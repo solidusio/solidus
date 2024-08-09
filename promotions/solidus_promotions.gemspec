@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/solidus_promotions/version"
+require_relative '../core/lib/spree/core/version.rb'
 
 Gem::Specification.new do |spec|
   spec.platform = Gem::Platform::RUBY

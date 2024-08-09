@@ -34,5 +34,4 @@ module SolidusPromotions
 end
 
 require "solidus_promotions/configuration"
-require "solidus_promotions/version"
 require "solidus_promotions/engine"
