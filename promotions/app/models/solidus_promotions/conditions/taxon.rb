@@ -3,7 +3,7 @@
 module SolidusPromotions
   module Conditions
     class Taxon < Condition
-      include LineItemApplicableOrderCondition
+      include LineItemApplicableOrderLevelCondition
 
       has_many :condition_taxons, class_name: "SolidusPromotions::ConditionTaxon", foreign_key: :condition_id,
         dependent: :destroy

@@ -2,7 +2,7 @@
 
 module SolidusPromotions
   module Conditions
-    module LineItemApplicableOrderCondition
+    module LineItemApplicableOrderLevelCondition
       def self.included(klass)
         klass.preference :line_item_applicable, :boolean, default: true
       end

@@ -7,7 +7,7 @@ module SolidusPromotions
     # either come from assigned product group or are assingned directly to
     # the condition.
     class Product < Condition
-      include LineItemApplicableOrderCondition
+      include LineItemApplicableOrderLevelCondition
 
       has_many :condition_products,
         dependent: :destroy,

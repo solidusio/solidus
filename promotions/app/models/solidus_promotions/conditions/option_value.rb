@@ -3,7 +3,7 @@
 module SolidusPromotions
   module Conditions
     class OptionValue < Condition
-      include LineItemApplicableOrderCondition
+      include LineItemApplicableOrderLevelCondition
 
       preference :eligible_values, :hash
 
