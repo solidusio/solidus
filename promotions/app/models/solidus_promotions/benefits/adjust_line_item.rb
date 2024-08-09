@@ -3,13 +3,7 @@
 module SolidusPromotions
   module Benefits
     class AdjustLineItem < Benefit
-      def can_discount?(object)
-        object.is_a? Spree::LineItem
-      end
-
-      def level
-        :line_item
-      end
+      include SolidusPromotions::Benefits::LineItemBenefit
 
       def possible_conditions
         super + SolidusPromotions.config.line_item_conditions

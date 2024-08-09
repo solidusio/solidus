@@ -27,7 +27,8 @@ module SolidusPromotions
     end
 
     def can_discount?(object)
-      raise NotImplementedError
+      raise NotImplementedError, "Please implement the correct interface, or include one of the `SolidusPromotions::Benefits::OrderBenefit`, " \
+        "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
     end
 
     def discount(adjustable)
@@ -60,7 +61,8 @@ module SolidusPromotions
     end
 
     def level
-      raise NotImplementedError
+      raise NotImplementedError, "Please implement the correct interface, or include one of the `SolidusPromotions::Benefits::OrderBenefit`, " \
+        "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
     end
 
     def available_conditions
