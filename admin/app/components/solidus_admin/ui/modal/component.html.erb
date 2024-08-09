@@ -1,5 +1,6 @@
 <dialog
   data-controller="<%= stimulus_id %>"
+  data-modal-open="<%= @attributes[:open] %>"
   <%= tag.attributes(
     "aria-label": @title,
     class: "relative z-10",
