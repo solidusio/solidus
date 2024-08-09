@@ -129,19 +129,48 @@ export default class extends Controller {
     return this.checkboxTargets.filter((checkbox) => checkbox.checked)
   }
 
-  confirmAction(event) {
-    const message = event.params.message
-      .replace(
-        "${count}",
-        this.selectedRows().length
-      ).replace(
-        "${resource}",
-        this.selectedRows().length > 1 ?
-        event.params.resourcePlural :
-        event.params.resourceSingular
-      )
+  async confirmAction(event) {
+    event.preventDefault()
+    // const message = event.params.message
+    //   .replace("${count}", this.selectedRows().length)
+    //   .replace("${resource}", this.selectedRows().length > 1 ?
+    //     event.params.resourcePlural :
+    //     event.params.resourceSingular
+    //   )
 
-    if (!confirm(message)) {
+    const modal = document.getElementById(event.params.modalId)
+    modal.showModal()
+
+    return new Promise((resolve, reject) => {
+      const submitButton = modal.querySelector('button[type="submit"]')
+      const cancelButton = modal.querySelector('button[type="button"]')
+
+      if (submitButton) {
+        submitButton.addEventListener('click', () => {
+          modal.close()
+          resolve()
+        }, { once: true })
+      }
+
+      if (cancelButton) {
+        cancelButton.addEventListener('click', () => {
+          modal.close()
+          reject()
+        }, { once: true })
+      }
+    })
+  }
+
+  async handleConfirmation(event) {
+    event.preventDefault()
+    try {
+      await this.confirmAction(event)
+      // User clicked submit
+      console.log('User confirmed the action')
+      event.currentTarget.submit()
+      debugger
+    } catch {
+      // User clicked cancel
       event.preventDefault()
     }
   }

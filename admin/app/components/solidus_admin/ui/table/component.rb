@@ -117,16 +117,21 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     }
 
     if batch_action.require_confirmation
-      params["data-action"] = "click->#{stimulus_id}#confirmAction"
+      params["data-action"] = "click->#{stimulus_id}#handleConfirmation"
       params["data-#{stimulus_id}-message-param"] = t(
         ".action_confirmation",
         action: batch_action.label.downcase
       )
       params["data-#{stimulus_id}-resource-singular-param"] = @data.singular_name.downcase
       params["data-#{stimulus_id}-resource-plural-param"] = @data.plural_name.downcase
+      params["data-#{stimulus_id}-modal-id-param"] = batch_confirm_modal_id(batch_action)
     end
 
     render component("ui/button").new(**params)
+  end
+
+  def batch_confirm_modal_id(batch_action)
+    "#{batch_action.label.downcase}_#{@data.plural_name.downcase}_confirmation_modal"
   end
 
   def render_ransack_filter_dropdown(filter, index)

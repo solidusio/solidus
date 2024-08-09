@@ -94,6 +94,25 @@
     <% end %>
   <% end %>
 
+  <% @data.batch_actions.each do |batch_action| %>
+    <% if batch_action.require_confirmation %>
+      <% title = t(".action_confirmation", action: batch_action.label.downcase) %>
+      <% id = batch_confirm_modal_id(batch_action) %>
+
+      <%= render component("ui/modal").new(title: title, open: false, id: id) do |modal| %>
+        <div class="flex flex-col gap-6 pb-4">
+          <span class="font-semibold text-xs ml-2">ARE YOU SURE?????</span>
+        </div>
+        <% modal.with_actions do %>
+          <form method="dialog">
+            <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
+          </form>
+          <%= render component("ui/button").new(type: :submit, text: t('.submit')) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <table class="table-fixed w-full border-collapse">
     <colgroup>
       <% @data.columns.each do |column| %>
