@@ -26,11 +26,14 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
   end
 
   def turbo_frames
-    %w[new_shipping_category_modal]
+    %w[
+      new_shipping_category_modal
+      edit_shipping_category_modal
+    ]
   end
 
   def row_url(shipping_category)
-    spree.edit_admin_shipping_category_path(shipping_category)
+    spree.edit_admin_shipping_category_path(shipping_category, _turbo_frame: :edit_shipping_category_modal)
   end
 
   def search_key
