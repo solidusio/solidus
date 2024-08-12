@@ -1,0 +1,8 @@
+# Add your component translations here.
+# Use the translation in the example in your template with `t(".hello")`.
+en:
+  title: "New Store Credit Reason"
+  cancel: "Cancel"
+  submit: "Add Store Credit Reason"
+  hints:
+    active: "When checked, this adjustment reason will be available for selection when adding adjustments to orders."
