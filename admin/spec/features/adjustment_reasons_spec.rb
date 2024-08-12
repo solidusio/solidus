@@ -14,7 +14,7 @@ describe "Adjustment Reasons", :js, type: :feature do
 
     select_row("Default-adjustment-reason")
     click_on "Delete"
-    expect(page).to have_content("Adjustment Reasons were successfully removed.")
+    expect(page).to have_content("Adjustment reasons were successfully removed.")
     expect(page).not_to have_content("Default-adjustment-reason")
     expect(Spree::AdjustmentReason.count).to eq(0)
     expect(page).to be_axe_clean
@@ -41,11 +41,13 @@ describe "Adjustment Reasons", :js, type: :feature do
       it "successfully creates a new adjustment reason, keeping page and q params" do
         fill_in "Name", with: "New Reason"
         fill_in "Code", with: "1234"
+        page.uncheck "adjustment_reason[active]"
 
         click_on "Add Adjustment Reason"
 
         expect(page).to have_content("Adjustment reason was successfully created.")
         expect(Spree::AdjustmentReason.find_by(name: "New Reason")).to be_present
+        expect(Spree::AdjustmentReason.find_by(name: "New Reason").active).to be_falsey
         expect(page.current_url).to include(query)
       end
     end
@@ -57,6 +59,38 @@ describe "Adjustment Reasons", :js, type: :feature do
         expect(page).to have_content("can't be blank").twice
         expect(page.current_url).to include(query)
       end
+    end
+  end
+
+  context "when editing an existing adjustment reason" do
+    let(:query) { "?page=1&q%5Bname_or_code_cont%5D=reason" }
+
+    before do
+      Spree::AdjustmentReason.create(name: "Good Reason", code: 5999)
+      visit "/admin/adjustment_reasons#{query}"
+      find_row("Good Reason").click
+      expect(page).to have_content("Edit Adjustment Reason")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens a modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+      expect(page.current_url).to include(query)
+    end
+
+    it "successfully updates the existing adjustment reason" do
+      fill_in "Name", with: "Better Reason"
+      page.uncheck "adjustment_reason[active]"
+
+      click_on "Update Adjustment Reason"
+      expect(page).to have_content("Adjustment reason was successfully updated.")
+      expect(page).to have_content("Better Reason")
+      expect(page).not_to have_content("Good Reason")
+      expect(Spree::AdjustmentReason.find_by(name: "Better Reason")).to be_present
+      expect(Spree::AdjustmentReason.find_by(name: "Better Reason").active).to be_falsey
+      expect(page.current_url).to include(query)
     end
   end
 end

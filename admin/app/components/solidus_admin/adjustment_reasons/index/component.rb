@@ -24,11 +24,14 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
   end
 
   def turbo_frames
-    %w[new_adjustment_reason_modal]
+    %w[
+      new_adjustment_reason_modal
+      edit_adjustment_reason_modal
+    ]
   end
 
   def row_url(adjustment_reason)
-    spree.edit_admin_adjustment_reason_path(adjustment_reason)
+    spree.edit_admin_adjustment_reason_path(adjustment_reason, _turbo_frame: :edit_adjustment_reason_modal)
   end
 
   def batch_actions

@@ -3,6 +3,8 @@ en:
     adjustment_reasons:
       title: "Adjustment Reasons"
       destroy:
-        success: "Adjustment Reasons were successfully removed."
+        success: "Adjustment reasons were successfully removed."
       create:
         success: "Adjustment reason was successfully created."
+      update:
+        success: "Adjustment reason was successfully updated."
