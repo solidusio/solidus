@@ -58,4 +58,34 @@ describe "Refund Reasons", :js, type: :feature do
       end
     end
   end
+
+  context "when editing an existing refund reason" do
+    let(:query) { "?page=1&q%5Bname_or_description_cont%5D=Ret" }
+
+    before do
+      Spree::RefundReason.create(name: "Return process")
+      visit "/admin/refund_reasons#{query}"
+      find_row("Return process").click
+      expect(page).to have_content("Edit Refund Reason")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens a modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+      expect(page.current_url).to include(query)
+    end
+
+    it "successfully updates the existing refund reason" do
+      fill_in "Name", with: "Customer complaint"
+
+      click_on "Update Refund Reason"
+      expect(page).to have_content("Refund reason was successfully updated.")
+      expect(page).to have_content("Customer complaint")
+      expect(page).not_to have_content("Return process")
+      expect(Spree::RefundReason.find_by(name: "Customer complaint")).to be_present
+      expect(page.current_url).to include(query)
+    end
+  end
 end

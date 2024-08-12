@@ -14,11 +14,14 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
   end
 
   def row_url(refund_reason)
-    spree.edit_admin_refund_reason_path(refund_reason)
+    spree.edit_admin_refund_reason_path(refund_reason, _turbo_frame: :edit_refund_reason_modal)
   end
 
   def turbo_frames
-    %w[new_refund_reason_modal]
+    %w[
+      new_refund_reason_modal
+      edit_refund_reason_modal
+    ]
   end
 
   def page_actions
