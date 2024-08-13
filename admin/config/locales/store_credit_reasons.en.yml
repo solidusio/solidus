@@ -4,3 +4,5 @@ en:
       title: "Store Credit Reasons"
       destroy:
         success: "Store Credit Reasons were successfully removed."
+      create:
+        success: "Store Credit Reason was successfully created."
