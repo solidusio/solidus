@@ -95,11 +95,6 @@ module SolidusAdmin
 
     private
 
-    def load_refund_reason
-      @refund_reason = Spree::RefundReason.find_by!(id: params[:id])
-      authorize! action_name, @refund_reason
-    end
-
     def find_refund_reason
       @refund_reason = Spree::RefundReason.find(params[:id])
     end
