@@ -4,6 +4,8 @@ module SolidusAdmin
   class StoreCreditReasonsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
+    before_action :find_store_credit_reason, only: %i[edit update]
+
     def index
       set_index_page
 
@@ -49,6 +51,39 @@ module SolidusAdmin
       end
     end
 
+    def edit
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('store_credit_reasons/edit').new(page: @page, store_credit_reason: @store_credit_reason) }
+      end
+    end
+
+    def update
+      if @store_credit_reason.update(store_credit_reason_params)
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.store_credit_reasons_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('store_credit_reasons/edit').new(page: @page, store_credit_reason: @store_credit_reason)
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def destroy
       @store_credit_reason = Spree::StoreCreditReason.find_by!(id: params[:id])
 
@@ -63,6 +98,10 @@ module SolidusAdmin
     def load_store_credit_reason
       @store_credit_reason = Spree::StoreCreditReason.find_by!(id: params[:id])
       authorize! action_name, @store_credit_reason
+    end
+
+    def find_store_credit_reason
+      @store_credit_reason = Spree::StoreCreditReason.find(params[:id])
     end
 
     def store_credit_reason_params
