@@ -18,11 +18,12 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
   def turbo_frames
     %w[
       new_store_credit_reason_modal
+      edit_store_credit_reason_modal
     ]
   end
 
   def row_url(store_credit_reason)
-    spree.edit_admin_store_credit_reason_path(store_credit_reason)
+    spree.edit_admin_store_credit_reason_path(store_credit_reason, _turbo_frame: :edit_store_credit_reason_modal)
   end
 
   def search_url

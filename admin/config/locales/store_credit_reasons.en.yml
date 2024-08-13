@@ -3,6 +3,8 @@ en:
     store_credit_reasons:
       title: "Store Credit Reasons"
       destroy:
-        success: "Store Credit Reasons were successfully removed."
+        success: "Store credit reasons were successfully removed."
       create:
-        success: "Store Credit Reason was successfully created."
+        success: "Store credit reason was successfully created."
+      update:
+        success: "Store credit reason was successfully updated."
