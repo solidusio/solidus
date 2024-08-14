@@ -95,11 +95,6 @@ module SolidusAdmin
 
     private
 
-    def load_store_credit_reason
-      @store_credit_reason = Spree::StoreCreditReason.find_by!(id: params[:id])
-      authorize! action_name, @store_credit_reason
-    end
-
     def find_store_credit_reason
       @store_credit_reason = Spree::StoreCreditReason.find(params[:id])
     end

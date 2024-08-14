@@ -97,11 +97,6 @@ module SolidusAdmin
 
     private
 
-    def load_shipping_category
-      @shipping_category = Spree::ShippingCategory.find_by!(id: params[:id])
-      authorize! action_name, @shipping_category
-    end
-
     def find_shipping_category
       @shipping_category = Spree::ShippingCategory.find(params[:id])
     end

@@ -19,11 +19,6 @@ module SolidusAdmin
 
     private
 
-    def load_reimbursement_type
-      @reimbursement_type = Spree::ReimbursementType.find_by!(id: params[:id])
-      authorize! action_name, @reimbursement_type
-    end
-
     def reimbursement_type_params
       params.require(:reimbursement_type).permit(:reimbursement_type_id, permitted_reimbursement_type_attributes)
     end

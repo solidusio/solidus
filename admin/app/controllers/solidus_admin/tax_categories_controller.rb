@@ -99,11 +99,6 @@ module SolidusAdmin
 
     private
 
-    def load_tax_category
-      @tax_category = Spree::TaxCategory.find_by!(number: params[:id])
-      authorize! action_name, @tax_category
-    end
-
     def find_tax_category
       @tax_category = Spree::TaxCategory.find(params[:id])
     end

@@ -28,11 +28,6 @@ module SolidusAdmin
 
     private
 
-    def load_shipping_method
-      @shipping_method = Spree::ShippingMethod.find_by!(number: params[:id])
-      authorize! action_name, @shipping_method
-    end
-
     def shipping_method_params
       params.require(:shipping_method).permit(:shipping_method_id, permitted_shipping_method_attributes)
     end
