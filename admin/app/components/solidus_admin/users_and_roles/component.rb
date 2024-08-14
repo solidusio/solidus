@@ -14,6 +14,11 @@ class SolidusAdmin::UsersAndRoles::Component < SolidusAdmin::UI::Pages::Index::C
         href: solidus_admin.users_path,
         current: model_class == Spree.user_class,
       },
+      {
+        text: Spree::Role.model_name.human(count: 2),
+        href: solidus_admin.roles_path,
+        current: model_class == Spree::Role,
+      },
     ]
   end
 end
