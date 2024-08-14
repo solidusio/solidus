@@ -95,11 +95,6 @@ module SolidusAdmin
 
     private
 
-    def load_adjustment_reason
-      @adjustment_reason = Spree::AdjustmentReason.find_by!(id: params[:id])
-      authorize! action_name, @adjustment_reason
-    end
-
     def find_adjustment_reason
       @adjustment_reason = Spree::AdjustmentReason.find(params[:id])
     end

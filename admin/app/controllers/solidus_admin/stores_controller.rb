@@ -28,11 +28,6 @@ module SolidusAdmin
 
     private
 
-    def load_store
-      @store = Spree::Store.find_by!(number: params[:id])
-      authorize! action_name, @store
-    end
-
     def store_params
       params.require(:store).permit(:store_id, permitted_store_attributes)
     end

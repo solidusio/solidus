@@ -28,11 +28,6 @@ module SolidusAdmin
 
     private
 
-    def load_tax_rate
-      @tax_rate = Spree::TaxRate.find_by!(number: params[:id])
-      authorize! action_name, @tax_rate
-    end
-
     def tax_rate_params
       params.require(:tax_rate).permit(:tax_rate_id, permitted_tax_rate_attributes)
     end

@@ -28,11 +28,6 @@ module SolidusAdmin
 
     private
 
-    def load_stock_location
-      @stock_location = Spree::StockLocation.find_by!(number: params[:id])
-      authorize! action_name, @stock_location
-    end
-
     def stock_location_params
       params.require(:stock_location).permit(:stock_location_id, permitted_stock_location_attributes)
     end

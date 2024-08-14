@@ -34,11 +34,6 @@ module SolidusAdmin
 
     private
 
-    def load_user
-      @user = Spree.user_class.find_by!(number: params[:id])
-      authorize! action_name, @user
-    end
-
     def user_params
       params.require(:user).permit(:user_id, permitted_user_attributes)
     end

@@ -28,11 +28,6 @@ module SolidusAdmin
 
     private
 
-    def load_zone
-      @zone = Spree::Zone.find_by!(number: params[:id])
-      authorize! action_name, @zone
-    end
-
     def zone_params
       params.require(:zone).permit(:zone_id, permitted_zone_attributes)
     end

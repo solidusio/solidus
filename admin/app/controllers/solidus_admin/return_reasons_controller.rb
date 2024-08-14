@@ -28,11 +28,6 @@ module SolidusAdmin
 
     private
 
-    def load_return_reason
-      @return_reason = Spree::ReturnReason.find_by!(id: params[:id])
-      authorize! action_name, @return_reason
-    end
-
     def return_reason_params
       params.require(:return_reason).permit(:return_reason_id, permitted_return_reason_attributes)
     end
