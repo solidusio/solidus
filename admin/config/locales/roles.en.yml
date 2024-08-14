@@ -1,0 +1,8 @@
+en:
+  solidus_admin:
+    roles:
+      title: "Roles"
+      destroy:
+        success: "Roles were successfully removed."
+      create:
+        success: "Role was successfully created."
