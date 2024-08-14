@@ -11,6 +11,7 @@ describe "Users", :js, type: :feature do
     create(:user, :with_orders, email: "customer-with-order@example.com")
 
     visit "/admin/users"
+    expect(page).to have_content("Users and Roles")
     expect(page).to have_content("customer@example.com")
     expect(page).not_to have_content("admin-2@example.com")
     click_on "Admins"
