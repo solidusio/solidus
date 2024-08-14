@@ -3,7 +3,7 @@ en:
     refund_reasons:
       title: "Refund Reasons"
       destroy:
-        success: "Refund Reasons were successfully removed."
+        success: "Refund reasons were successfully removed."
       create:
         success: "Refund reason was successfully created."
       update:

@@ -5,4 +5,4 @@ en:
   cancel: "Cancel"
   submit: "Update Refund Reason"
   hints:
-    active: "When checked, this adjustment reason will be available for selection when adding adjustments to orders."
+    active: "When checked, this refund reason will be available for selection when adding refunds to orders."
