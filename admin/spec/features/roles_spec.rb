@@ -74,4 +74,34 @@ describe "Roles", :js, type: :feature do
       end
     end
   end
+
+  context "when editing an existing role" do
+    let(:query) { "?page=1&q%5Bname_cont%5D=er" }
+
+    before do
+      Spree::Role.create(name: "Reviewer")
+      visit "/admin/roles#{query}"
+      find_row("Reviewer").click
+      expect(page).to have_content("Edit Role")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens a modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+      expect(page.current_url).to include(query)
+    end
+
+    it "successfully updates the existing role" do
+      fill_in "Name", with: "Publisher"
+
+      click_on "Update Role"
+      expect(page).to have_content("Role was successfully updated.")
+      expect(page).to have_content("Publisher")
+      expect(page).not_to have_content("Reviewer")
+      expect(Spree::Role.find_by(name: "Publisher")).to be_present
+      expect(page.current_url).to include(query)
+    end
+  end
 end

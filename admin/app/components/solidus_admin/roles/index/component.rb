@@ -14,7 +14,7 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   end
 
   def row_url(role)
-    solidus_admin.roles_path(role)
+    solidus_admin.edit_role_path(role, _turbo_frame: :edit_role_modal)
   end
 
   def page_actions
@@ -29,6 +29,7 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   def turbo_frames
     %w[
       new_role_modal
+      edit_role_modal
     ]
   end
 
