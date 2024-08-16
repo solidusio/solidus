@@ -75,10 +75,10 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
 
       context "when promotion_code creation returns an error" do
         before do
-          @raise_exception = true
+          raise_exception = true
           allow(Spree::PromotionCode).to receive(:create!) do
-            if @raise_exception
-              @raise_exception = false
+            if raise_exception
+              raise_exception = false
               raise(ActiveRecord::RecordInvalid)
             else
               create(:promotion_code, promotion: promotion)
