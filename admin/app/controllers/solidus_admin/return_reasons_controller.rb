@@ -4,6 +4,7 @@ module SolidusAdmin
   class ReturnReasonsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
+    before_action :find_return_reason, only: %i[edit update]
 
     def index
       set_index_page
@@ -44,6 +45,39 @@ module SolidusAdmin
         respond_to do |format|
           format.html do
             page_component = component('return_reasons/new').new(page: @page, return_reason: @return_reason)
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
+    def edit
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('return_reasons/edit').new(page: @page, return_reason: @return_reason) }
+      end
+    end
+
+    def update
+      if @return_reason.update(return_reason_params)
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.return_reasons_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('return_reasons/edit').new(page: @page, return_reason: @return_reason)
             render page_component, status: :unprocessable_entity
           end
         end

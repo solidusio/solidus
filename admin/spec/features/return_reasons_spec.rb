@@ -60,4 +60,36 @@ describe "Return Reasons", :js, type: :feature do
       end
     end
   end
+
+  context "when editing an existing return reason" do
+    let(:query) { "?page=1&q%5Bname_cont%5D=reason" }
+
+    before do
+      Spree::ReturnReason.create(name: "Good Reason")
+      visit "/admin/return_reasons#{query}"
+      find_row("Good Reason").click
+      expect(page).to have_content("Edit Return Reason")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens a modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+      expect(page.current_url).to include(query)
+    end
+
+    it "successfully updates the existing return reason" do
+      fill_in "Name", with: "Better Reason"
+      page.uncheck "return_reason[active]"
+
+      click_on "Update Return Reason"
+      expect(page).to have_content("Return reason was successfully updated.")
+      expect(page).to have_content("Better Reason")
+      expect(page).not_to have_content("Good Reason")
+      expect(Spree::ReturnReason.find_by(name: "Better Reason")).to be_present
+      expect(Spree::ReturnReason.find_by(name: "Better Reason").active).to be_falsey
+      expect(page.current_url).to include(query)
+    end
+  end
 end
