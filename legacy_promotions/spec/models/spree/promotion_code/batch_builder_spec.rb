@@ -72,6 +72,35 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
         subject.build_promotion_codes
         expect(promotion.codes.size).to eq(number_of_codes)
       end
+
+      context "when promotion_code creation returns an error" do
+        before do
+          raise_exception = true
+          allow(Spree::PromotionCode).to receive(:create!) do
+            if raise_exception
+              raise_exception = false
+              raise(ActiveRecord::RecordInvalid)
+            else
+              create(:promotion_code, promotion: promotion)
+            end
+          end
+        end
+
+        it "creates the correct number of codes anyway" do
+          subject.build_promotion_codes
+          expect(promotion.codes.size).to eq(number_of_codes)
+        end
+      end
+
+      context "when same promotion_codes are already present" do
+        before do
+          create_list(:promotion_code, 11, promotion: promotion, promotion_code_batch: promotion_code_batch)
+        end
+
+        it "creates only the missing promotion_codes" do
+          expect { subject.build_promotion_codes }.to change { promotion.codes.size }.by(39)
+        end
+      end
     end
   end
 
