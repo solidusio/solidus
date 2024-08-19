@@ -8,7 +8,7 @@ gemspec require: false
 if ENV['RAILS_VERSION'] == 'main'
   gem 'rails', github: 'rails', require: false
 else
-  gem 'rails', ENV['RAILS_VERSION'] || '~> 7.1.0', require: false
+  gem 'rails', ENV['RAILS_VERSION'] || '< 7.2', require: false
 end
 # rubocop:enable Bundler/DuplicatedGem
 
