@@ -14,7 +14,25 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
   end
 
   def row_url(return_reason)
-    spree.edit_admin_return_reason_path(return_reason)
+    spree.edit_admin_return_reason_path(return_reason, _turbo_frame: :edit_return_reason_modal)
+  end
+
+  def turbo_frames
+    %w[
+      new_return_reason_modal
+      edit_return_reason_modal
+    ]
+  end
+
+  def page_actions
+    render component("ui/button").new(
+      tag: :a,
+      text: t('.add'),
+      href: solidus_admin.new_return_reason_path,
+      data: { turbo_frame: :new_return_reason_modal },
+      icon: "add-line",
+      class: "align-self-end w-full",
+    )
   end
 
   def batch_actions
