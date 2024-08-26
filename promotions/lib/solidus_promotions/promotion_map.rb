@@ -61,9 +61,9 @@ module SolidusPromotions
     actions: {
       Spree::Promotion::Actions::CreateAdjustment => ->(old_action) {
         calculator = case old_action.calculator
-        when Spree::Calculator::FlatRate
+                     when Spree::Calculator::FlatRate
           SolidusPromotions::Calculators::DistributedAmount.new(preferences: old_action.calculator.preferences)
-        when Spree::Calculator::FlatPercentItemTotal
+                     when Spree::Calculator::FlatPercentItemTotal
           SolidusPromotions::Calculators::Percent.new(preferred_percent: old_action.calculator.preferred_flat_percent)
         end
 
@@ -74,17 +74,17 @@ module SolidusPromotions
       Spree::Promotion::Actions::CreateItemAdjustments => ->(old_action) {
         preferences = old_action.calculator.preferences
         calculator = case old_action.calculator
-        when Spree::Calculator::FlatRate
+                     when Spree::Calculator::FlatRate
           SolidusPromotions::Calculators::FlatRate.new(preferences: preferences)
-        when Spree::Calculator::PercentOnLineItem
+                     when Spree::Calculator::PercentOnLineItem
           SolidusPromotions::Calculators::Percent.new(preferences: preferences)
-        when Spree::Calculator::FlexiRate
+                     when Spree::Calculator::FlexiRate
           SolidusPromotions::Calculators::FlexiRate.new(preferences: preferences)
-        when Spree::Calculator::DistributedAmount
+                     when Spree::Calculator::DistributedAmount
           SolidusPromotions::Calculators::DistributedAmount.new(preferences: preferences)
-        when Spree::Calculator::TieredFlatRate
+                     when Spree::Calculator::TieredFlatRate
           SolidusPromotions::Calculators::TieredFlatRate.new(preferences: preferences)
-        when Spree::Calculator::TieredPercent
+                     when Spree::Calculator::TieredPercent
           SolidusPromotions::Calculators::TieredPercent.new(preferences: preferences)
         end
 
@@ -95,17 +95,17 @@ module SolidusPromotions
       Spree::Promotion::Actions::CreateQuantityAdjustments => ->(old_action) {
         preferences = old_action.calculator.preferences
         calculator = case old_action.calculator
-        when Spree::Calculator::FlatRate
+                     when Spree::Calculator::FlatRate
           SolidusPromotions::Calculators::FlatRate.new(preferences: preferences)
-        when Spree::Calculator::PercentOnLineItem
+                     when Spree::Calculator::PercentOnLineItem
           SolidusPromotions::Calculators::Percent.new(preferences: preferences)
-        when Spree::Calculator::FlexiRate
+                     when Spree::Calculator::FlexiRate
           SolidusPromotions::Calculators::FlexiRate.new(preferences: preferences)
-        when Spree::Calculator::DistributedAmount
+                     when Spree::Calculator::DistributedAmount
           SolidusPromotions::Calculators::DistributedAmount.new(preferences: preferences)
-        when Spree::Calculator::TieredFlatRate
+                     when Spree::Calculator::TieredFlatRate
           SolidusPromotions::Calculators::TieredFlatRate.new(preferences: preferences)
-        when Spree::Calculator::TieredPercent
+                     when Spree::Calculator::TieredPercent
           SolidusPromotions::Calculators::TieredPercent.new(preferences: preferences)
         end
 
