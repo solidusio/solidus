@@ -95,7 +95,7 @@ export default class extends Controller {
     }
 
     if (this.openResults && resultsHtml && this.query) {
-      if (!this.resultsTarget.parentNode.open) this.selectedIndex = 0
+      if (this.resultsTarget.parentNode.classList.contains("hidden")) this.selectedIndex = 0
 
       for (const result of this.resultTargets) {
         if (result === this.selectedResult) {
@@ -108,9 +108,9 @@ export default class extends Controller {
           result.removeAttribute("aria-selected")
         }
       }
-      this.resultsTarget.parentNode.open = true
+      this.resultsTarget.parentNode.classList.remove("hidden")
     } else {
-      this.resultsTarget.parentNode.open = false
+      this.resultsTarget.parentNode.classList.add("hidden")
     }
   }
 }
