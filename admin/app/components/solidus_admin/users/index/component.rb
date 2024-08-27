@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Users::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Component
   def model_class
     Spree.user_class
   end

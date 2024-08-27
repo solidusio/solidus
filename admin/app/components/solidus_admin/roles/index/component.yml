@@ -1,0 +1,6 @@
+en:
+  batch_actions:
+    delete: 'Delete'
+  scopes:
+    admin: Admin
+    all: All
