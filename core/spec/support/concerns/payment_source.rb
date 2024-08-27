@@ -13,6 +13,24 @@ RSpec.shared_examples "a payment source" do
     it { is_expected.to respond_to(:user) }
   end
 
+  describe "#wallet_payment_sources" do
+    let(:user) { create(:user) }
+
+    let!(:wallet_payment_source) do
+      # There are nasty validations that do not matter for this test
+      payment_source.save(validate: false)
+      Spree::WalletPaymentSource.new(user: user, payment_source: payment_source).tap do |wps|
+        wps.save(validate: false)
+      end
+    end
+
+    context "when the payment source gets destroyed" do
+      it "destroys the wallet payment source" do
+        expect { payment_source.destroy }.to change { Spree::WalletPaymentSource.count }.by(-1)
+      end
+    end
+  end
+
   describe "#can_capture?" do
     it "should be true if payment is pending" do
       payment = mock_model(Spree::Payment, pending?: true, created_at: Time.current)

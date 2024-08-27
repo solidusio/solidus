@@ -10,7 +10,8 @@ module Spree
     has_many :wallet_payment_sources,
       class_name: 'Spree::WalletPaymentSource',
       as: :payment_source,
-      inverse_of: :payment_source
+      inverse_of: :payment_source,
+      dependent: :destroy
 
     attr_accessor :imported
 
