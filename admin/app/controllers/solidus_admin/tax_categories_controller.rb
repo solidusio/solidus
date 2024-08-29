@@ -4,7 +4,7 @@ module SolidusAdmin
   class TaxCategoriesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    before_action :find_tax_category, only: %i[edit update]
+    before_action :set_tax_category, only: %i[edit update]
 
     def new
       @tax_category = Spree::TaxCategory.new
@@ -99,7 +99,7 @@ module SolidusAdmin
 
     private
 
-    def find_tax_category
+    def set_tax_category
       @tax_category = Spree::TaxCategory.find(params[:id])
     end
 

@@ -4,7 +4,7 @@ module SolidusAdmin
   class RefundReasonsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    before_action :find_refund_reason, only: %i[edit update]
+    before_action :set_refund_reason, only: %i[edit update]
 
     def index
       set_index_page
@@ -95,7 +95,7 @@ module SolidusAdmin
 
     private
 
-    def find_refund_reason
+    def set_refund_reason
       @refund_reason = Spree::RefundReason.find(params[:id])
     end
 
