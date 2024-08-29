@@ -6,3 +6,5 @@ en:
         success: "Roles were successfully removed."
       create:
         success: "Role was successfully created."
+      update:
+        success: "Role was successfully updated."

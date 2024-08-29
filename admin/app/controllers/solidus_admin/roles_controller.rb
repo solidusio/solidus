@@ -4,6 +4,8 @@ module SolidusAdmin
   class RolesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
+    before_action :find_role, only: %i[edit update]
+
     search_scope(:all)
     search_scope(:admin) { _1.where(name: "admin") }
 
@@ -52,6 +54,39 @@ module SolidusAdmin
       end
     end
 
+    def edit
+      set_index_page
+
+      respond_to do |format|
+        format.html { render component('roles/edit').new(page: @page, role: @role) }
+      end
+    end
+
+    def update
+      if @role.update(role_params)
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.roles_path, status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        set_index_page
+
+        respond_to do |format|
+          format.html do
+            page_component = component('roles/edit').new(page: @page, role: @role)
+            render page_component, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def destroy
       @roles = Spree::Role.where(id: params[:id])
 
@@ -62,6 +97,10 @@ module SolidusAdmin
     end
 
     private
+
+    def find_role
+      @role = Spree::Role.find(params[:id])
+    end
 
     def set_index_page
       roles = apply_search_to(

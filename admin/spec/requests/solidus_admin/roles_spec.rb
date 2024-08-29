@@ -64,6 +64,53 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
     end
   end
 
+  describe "GET /edit" do
+    it "renders the edit template with a 200 OK status" do
+      get solidus_admin.edit_role_path(role)
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe "PATCH /update" do
+    context "with valid parameters" do
+      let(:valid_attributes) { { name: "Publisher" } }
+
+      it "updates the role" do
+        patch solidus_admin.role_path(role), params: { role: valid_attributes }
+        role.reload
+        expect(role.name).to eq("Publisher")
+      end
+
+      it "redirects to the index page with a 303 See Other status" do
+        patch solidus_admin.role_path(role), params: { role: valid_attributes }
+        expect(response).to redirect_to(solidus_admin.roles_path)
+        expect(response).to have_http_status(:see_other)
+      end
+
+      it "displays a success flash message" do
+        patch solidus_admin.role_path(role), params: { role: valid_attributes }
+        follow_redirect!
+        expect(response.body).to include("Role was successfully updated.")
+      end
+    end
+
+    context "with invalid parameters" do
+      let(:invalid_attributes) { { name: "admin" } }
+
+      it "does not update the role" do
+        original_name = role.name
+        patch solidus_admin.role_path(role), params: { role: invalid_attributes }
+        role.reload
+        expect(role.name).to eq(original_name)
+      end
+
+      it "renders the edit template with unprocessable_entity status" do
+        patch solidus_admin.role_path(role), params: { role: invalid_attributes }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
+
   describe "DELETE /destroy" do
     let!(:role_to_delete) { create(:role) }
 
