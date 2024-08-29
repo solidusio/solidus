@@ -27,12 +27,12 @@ Gem::Specification.new do |s|
     actionmailer actionpack actionview activejob activemodel activerecord
     activestorage activesupport railties
   ].each do |rails_dep|
-    s.add_dependency rails_dep, ['>= 7.0', '< 7.2']
+    s.add_dependency rails_dep, ['>= 7.0', '< 8.0.0.beta1']
   end
 
   s.add_dependency 'activemerchant', '~> 1.66'
   s.add_dependency 'acts_as_list', '< 2.0'
-  s.add_dependency 'awesome_nested_set', '~> 3.3'
+  s.add_dependency 'awesome_nested_set', ['~> 3.3', '>= 3.7.0']
   s.add_dependency 'cancancan', ['>= 2.2', '< 4.0']
   s.add_dependency 'carmen', '~> 1.1.0'
   s.add_dependency 'discard', '~> 1.0'
