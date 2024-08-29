@@ -6,11 +6,11 @@ module Spree
       def index
         authorize! :index, StockLocation
 
-        @stock_locations = StockLocation.
-          accessible_by(current_ability).
-          order('name ASC').
-          ransack(params[:q]).
-          result
+        @stock_locations = StockLocation
+          .accessible_by(current_ability)
+          .order("name ASC")
+          .ransack(params[:q])
+          .result
 
         @stock_locations = paginate(@stock_locations)
 

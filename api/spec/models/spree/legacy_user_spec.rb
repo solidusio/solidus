@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   describe LegacyUser, type: :model do
@@ -17,13 +17,13 @@ module Spree
     end
 
     it "can clear an API key" do
-      user.spree_api_key = 'abc123'
+      user.spree_api_key = "abc123"
       expect(user).to receive(:save!)
       expect { user.clear_spree_api_key! }.to change(user, :spree_api_key).to be_blank
     end
 
     it "can clear an api key without persisting" do
-      user.spree_api_key = 'abc123'
+      user.spree_api_key = "abc123"
       expect(user).not_to receive(:save!)
       expect { user.clear_spree_api_key }.to change(user, :spree_api_key).to be_blank
     end
@@ -49,12 +49,12 @@ module Spree
         end
 
         context "roles_for_auto_api_key is defined" do
-          let(:role) { create(:role, name: 'hobbit') }
+          let(:role) { create(:role, name: "hobbit") }
           let(:undesired_role) { create(:role, name: "foo") }
 
           before {
             user.clear_spree_api_key!
-            stub_spree_preferences(roles_for_auto_api_key: ['hobbit'])
+            stub_spree_preferences(roles_for_auto_api_key: ["hobbit"])
           }
 
           it { expect { subject }.to change { user.reload.spree_api_key }.from(nil) }
@@ -62,8 +62,8 @@ module Spree
         end
 
         context "for all roles" do
-          let(:role) { create(:role, name: 'hobbit') }
-          let(:other_role) { create(:role, name: 'wizard') }
+          let(:role) { create(:role, name: "hobbit") }
+          let(:other_role) { create(:role, name: "wizard") }
           let(:other_user) { create(:user) }
 
           before {

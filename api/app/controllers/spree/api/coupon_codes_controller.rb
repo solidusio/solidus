@@ -13,10 +13,10 @@ module Spree
         @handler = Spree::Config.promotions.coupon_code_handler_class.new(@order).apply
 
         if @handler.successful?
-          render 'spree/api/promotions/handler', status: 200
+          render "spree/api/promotions/handler", status: 200
         else
           logger.error("apply_coupon_code_error=#{@handler.error.inspect}")
-          render 'spree/api/promotions/handler', status: 422
+          render "spree/api/promotions/handler", status: 422
         end
       end
 
@@ -27,10 +27,10 @@ module Spree
         @handler = Spree::Config.promotions.coupon_code_handler_class.new(@order).remove
 
         if @handler.successful?
-          render 'spree/api/promotions/handler', status: 200
+          render "spree/api/promotions/handler", status: 200
         else
           logger.error("remove_coupon_code_error=#{@handler.error.inspect}")
-          render 'spree/api/promotions/handler', status: 422
+          render "spree/api/promotions/handler", status: 422
         end
       end
 

@@ -13,7 +13,7 @@ class SolidusAdmin::UI::Table::RansackFilter::ComponentPreview < ViewComponent::
   def playground(presentation: "Filter", search_bar: 10)
     render current_component.new(
       presentation:,
-      combinator: 'or',
+      combinator: "or",
       attribute: "attribute",
       predicate: "eq",
       options: Array.new(search_bar.to_i) { |o| [o, 0] },

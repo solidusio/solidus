@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/calculator'
+require_dependency "spree/calculator"
 
 # This is a calculator for line item adjustment actions. It accepts a line item
 # and calculates its weighted adjustment amount based on the value of the

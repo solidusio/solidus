@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
+require "spree/preferences/persistable"
 
 module Spree
   # Base class for all promotion rules
   class PromotionRule < Spree::Base
     include Spree::Preferences::Persistable
 
-    belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_rules, optional: true
+    belongs_to :promotion, class_name: "Spree::Promotion", inverse_of: :promotion_rules, optional: true
 
     scope :of_type, ->(type) { where(type:) }
 
@@ -49,7 +49,7 @@ module Spree
     end
 
     def eligibility_error_message(key, options = {})
-      I18n.t(key, **{ scope: [:spree, :eligibility_errors, :messages] }.merge(options))
+      I18n.t(key, scope: [:spree, :eligibility_errors, :messages], **options)
     end
   end
 end

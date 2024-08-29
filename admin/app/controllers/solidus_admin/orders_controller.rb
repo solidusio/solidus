@@ -14,13 +14,13 @@ module SolidusAdmin
     def index
       orders = apply_search_to(
         Spree::Order.order(created_at: :desc, id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(orders)
 
       respond_to do |format|
-        format.html { render component('orders/index').new(page: @page) }
+        format.html { render component("orders/index").new(page: @page) }
       end
     end
 
@@ -38,7 +38,7 @@ module SolidusAdmin
       load_order
 
       respond_to do |format|
-        format.html { render component('orders/show').new(order: @order) }
+        format.html { render component("orders/show").new(order: @order) }
       end
     end
 
@@ -49,9 +49,9 @@ module SolidusAdmin
       @order.email ||= @order.user.email if @order.user && @order.user.changed?
 
       if @order.save
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
       else
-        flash[:error] = t('.error')
+        flash[:error] = t(".error")
       end
 
       respond_to do |format|
@@ -71,7 +71,7 @@ module SolidusAdmin
       # We need to eager load active storage attachments when using it
       if Spree::Image.include?(Spree::Image::ActiveStorageAttachment)
         image_includes = {
-          attachment_attachment: { blob: { variant_records: { image_attachment: :blob } } }
+          attachment_attachment: {blob: {variant_records: {image_attachment: :blob}}}
         }
       end
 
@@ -84,11 +84,11 @@ module SolidusAdmin
           :prices,
           images: image_includes || {},
           option_values: :option_type,
-          stock_items: :stock_location,
+          stock_items: :stock_location
         )
 
       respond_to do |format|
-        format.html { render component('orders/cart/result').with_collection(@variants, order: @order), layout: false }
+        format.html { render component("orders/cart/result").with_collection(@variants, order: @order), layout: false }
       end
     end
 
@@ -104,7 +104,7 @@ module SolidusAdmin
         .limit(10)
 
       respond_to do |format|
-        format.html { render component('orders/show/customer_search/result').with_collection(@users, order: @order), layout: false }
+        format.html { render component("orders/show/customer_search/result").with_collection(@users, order: @order), layout: false }
       end
     end
 

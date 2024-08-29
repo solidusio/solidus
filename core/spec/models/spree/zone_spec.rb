@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Zone, type: :model do
-  describe 'for_address' do
+  describe "for_address" do
     let(:new_york_address) { create(:address, state_code: "NY") }
     let(:alabama_address) { create(:address) }
     let(:canada_address) { create(:address, country_iso_code: "CA") }
@@ -15,33 +15,33 @@ RSpec.describe Spree::Zone, type: :model do
     let!(:north_america_zone) { create(:zone, countries: [canada_address.country, new_york_address.country]) }
     subject { Spree::Zone.for_address(address) }
 
-    context 'when there is no address' do
+    context "when there is no address" do
       let(:address) { nil }
-      it 'returns an empty relation' do
+      it "returns an empty relation" do
         expect(subject).to eq([])
       end
     end
 
-    context 'for an address in New York' do
+    context "for an address in New York" do
       let(:address) { new_york_address }
 
-      it 'matches the New York zone' do
+      it "matches the New York zone" do
         expect(subject).to include(new_york_zone)
       end
 
-      it 'matches the United States zone' do
+      it "matches the United States zone" do
         expect(subject).to include(united_states_zone)
       end
 
-      it 'does not match the Alabama zone' do
+      it "does not match the Alabama zone" do
         expect(subject).not_to include(alabama_zone)
       end
 
-      it 'does not match the Canadian zone' do
+      it "does not match the Canadian zone" do
         expect(subject).not_to include(canada_zone)
       end
 
-      it 'matches the North America zone' do
+      it "matches the North America zone" do
         expect(subject).to include(north_america_zone)
       end
     end
@@ -52,21 +52,21 @@ RSpec.describe Spree::Zone, type: :model do
     let(:country) { state.country }
 
     context "when zone consists of countries" do
-      let(:country_zone) { create(:zone, name: 'CountryZone') }
+      let(:country_zone) { create(:zone, name: "CountryZone") }
 
       before { country_zone.members.create(zoneable: country) }
 
-      it 'should return a list of countries' do
+      it "should return a list of countries" do
         expect(country_zone.country_list).to eq([country])
       end
     end
 
     context "when zone consists of states" do
-      let(:state_zone) { create(:zone, name: 'StateZone') }
+      let(:state_zone) { create(:zone, name: "StateZone") }
 
       before { state_zone.members.create(zoneable: state) }
 
-      it 'should return a list of countries' do
+      it "should return a list of countries" do
         expect(state_zone.country_list).to eq([state.country])
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe Spree::Zone, type: :model do
     let(:address) { create(:address, state:) }
 
     context "when zone is country type" do
-      let(:country_zone) { create(:zone, name: 'CountryZone') }
+      let(:country_zone) { create(:zone, name: "CountryZone") }
       before { country_zone.members.create(zoneable: country) }
 
       it "should be true" do
@@ -87,7 +87,7 @@ RSpec.describe Spree::Zone, type: :model do
     end
 
     context "when zone is state type" do
-      let(:state_zone) { create(:zone, name: 'StateZone') }
+      let(:state_zone) { create(:zone, name: "StateZone") }
       before { state_zone.members.create(zoneable: state) }
 
       it "should be true" do
@@ -99,7 +99,7 @@ RSpec.describe Spree::Zone, type: :model do
   context "#save" do
     context "when a zone member country is added to an existing zone consisting of state members" do
       it "should remove existing state members" do
-        zone = create(:zone, name: 'foo', zone_members: [])
+        zone = create(:zone, name: "foo", zone_members: [])
         state = create(:state)
         country = create(:country)
         zone.members.create(zoneable: state)
@@ -113,7 +113,7 @@ RSpec.describe Spree::Zone, type: :model do
   context "#kind" do
     context "when the zone consists of country zone members" do
       before do
-        @zone = create(:zone, name: 'country', zone_members: [])
+        @zone = create(:zone, name: "country", zone_members: [])
         @zone.members.create(zoneable: create(:country))
       end
       it "should return the kind of zone member" do
@@ -123,7 +123,7 @@ RSpec.describe Spree::Zone, type: :model do
 
     context "when the zone consists of state zone members" do
       before do
-        @zone = create(:zone, name: 'state', zone_members: [])
+        @zone = create(:zone, name: "state", zone_members: [])
         @zone.members.create(zoneable: create(:state))
       end
       it "should return the kind of zone member" do
@@ -158,24 +158,24 @@ RSpec.describe Spree::Zone, type: :model do
   end
 
   context ".with_shared_members" do
-    let!(:country)  { create(:country) }
-    let!(:country2) { create(:country, name: 'OtherCountry') }
-    let!(:country3) { create(:country, name: 'TaxCountry') }
+    let!(:country) { create(:country) }
+    let!(:country2) { create(:country, name: "OtherCountry") }
+    let!(:country3) { create(:country, name: "TaxCountry") }
 
     subject(:zones_with_shared_members) { Spree::Zone.with_shared_members(zone) }
 
-    context 'when passing a zone with no members' do
+    context "when passing a zone with no members" do
       let!(:zone) { create :zone }
 
-      it 'will return an empty set' do
+      it "will return an empty set" do
         expect(subject).to eq([])
       end
     end
 
-    context 'when passing nil' do
+    context "when passing nil" do
       let!(:zone) { nil }
 
-      it 'will return an empty set' do
+      it "will return an empty set" do
         expect(subject).to eq([])
       end
     end
@@ -211,9 +211,9 @@ RSpec.describe Spree::Zone, type: :model do
     end
 
     context "finding potential matches for a state zone" do
-      let!(:state)  { create(:state, country:) }
-      let!(:state2) { create(:state, country: country2, name: 'OtherState') }
-      let!(:state3) { create(:state, country: country2, name: 'State') }
+      let!(:state) { create(:state, country:) }
+      let!(:state2) { create(:state, country: country2, name: "OtherState") }
+      let!(:state3) { create(:state, country: country2, name: "State") }
       let!(:zone) do
         create(:zone).tap do |z|
           z.members.create(zoneable: state)

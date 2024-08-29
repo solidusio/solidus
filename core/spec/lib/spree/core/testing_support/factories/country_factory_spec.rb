@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'country factory' do
+RSpec.describe "country factory" do
   let(:factory_class) { Spree::Country }
 
-  describe 'plain adjustment' do
+  describe "plain adjustment" do
     let(:factory) { :country }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

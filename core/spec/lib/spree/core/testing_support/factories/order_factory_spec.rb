@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 require "spree/testing_support/shared_examples/order_factory"
 
-RSpec.describe 'order factory' do
+RSpec.describe "order factory" do
   let(:factory_class) { Spree::Order }
 
-  describe 'plain order' do
+  describe "plain order" do
     let(:factory) { :order }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
 
     shared_examples "it has the expected attributes" do
       it do
@@ -38,10 +38,10 @@ RSpec.describe 'order factory' do
     end
   end
 
-  describe 'order with totals' do
+  describe "order with totals" do
     let(:factory) { :order_with_totals }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
 
     context "when built" do
       let(:order) { build(factory, line_items_price: 77) }
@@ -68,20 +68,20 @@ RSpec.describe 'order factory' do
     end
   end
 
-  describe 'order with line items' do
+  describe "order with line items" do
     let(:factory) { :order_with_line_items }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "cart", "on_hand"
-    it_behaves_like 'shipping methods are assigned'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "cart", "on_hand"
+    it_behaves_like "shipping methods are assigned"
   end
 
-  describe 'order ready to complete' do
+  describe "order ready to complete" do
     let(:factory) { :order_ready_to_complete }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "confirm", "on_hand"
-    it_behaves_like 'shipping methods are assigned'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "confirm", "on_hand"
+    it_behaves_like "shipping methods are assigned"
 
     it "is completable" do
       order = create(factory)
@@ -92,13 +92,13 @@ RSpec.describe 'order factory' do
     end
   end
 
-  describe 'completed order with totals' do
+  describe "completed order with totals" do
     let(:factory) { :completed_order_with_totals }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "complete", "on_hand"
-    it_behaves_like 'shipping methods are assigned'
-    it_behaves_like 'supplied completed_at is respected'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "complete", "on_hand"
+    it_behaves_like "shipping methods are assigned"
+    it_behaves_like "supplied completed_at is respected"
 
     it "has the expected attributes" do
       order = create(factory)
@@ -108,7 +108,7 @@ RSpec.describe 'order factory' do
           item_total: 10,
           ship_total: 100,
           total: 110,
-          state: 'complete'
+          state: "complete"
         )
         expect(order.inventory_units.where(pending: true)).to be_empty
         expect(order.inventory_units.where(pending: false)).to_not be_empty
@@ -116,20 +116,20 @@ RSpec.describe 'order factory' do
     end
   end
 
-  describe 'completed order with pending payment' do
+  describe "completed order with pending payment" do
     let(:factory) { :completed_order_with_pending_payment }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "complete", "on_hand"
-    it_behaves_like 'shipping methods are assigned'
-    it_behaves_like 'supplied completed_at is respected'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "complete", "on_hand"
+    it_behaves_like "shipping methods are assigned"
+    it_behaves_like "supplied completed_at is respected"
 
     it "has the expected attributes" do
       order = create(factory)
       aggregate_failures do
         expect(order).to be_completed
         expect(order).to have_attributes(
-          payment_state: 'balance_due',
+          payment_state: "balance_due",
           total: 110,
           payment_total: 0 # payment is still pending
         )
@@ -137,19 +137,19 @@ RSpec.describe 'order factory' do
         expect(order.payments.count).to eq 1
         expect(order.payments[0]).to have_attributes(
           amount: 110,
-          state: 'pending'
+          state: "pending"
         )
       end
     end
   end
 
-  describe 'order ready to ship' do
+  describe "order ready to ship" do
     let(:factory) { :order_ready_to_ship }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "complete", "on_hand"
-    it_behaves_like 'shipping methods are assigned'
-    it_behaves_like 'supplied completed_at is respected'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "complete", "on_hand"
+    it_behaves_like "shipping methods are assigned"
+    it_behaves_like "supplied completed_at is respected"
 
     it "has the expected attributes" do
       order = create(factory)
@@ -165,12 +165,12 @@ RSpec.describe 'order factory' do
         expect(order.payments.count).to eq 1
         expect(order.payments[0]).to have_attributes(
           amount: 110,
-          state: 'completed'
+          state: "completed"
         )
 
         expect(order.shipments.count).to eq 1
         expect(order.shipments[0]).to have_attributes(
-          state: 'ready'
+          state: "ready"
         )
       end
     end
@@ -185,13 +185,13 @@ RSpec.describe 'order factory' do
     end
   end
 
-  describe 'shipped order' do
+  describe "shipped order" do
     let(:factory) { :shipped_order }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "complete", "shipped"
-    it_behaves_like 'shipping methods are assigned'
-    it_behaves_like 'supplied completed_at is respected'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "complete", "shipped"
+    it_behaves_like "shipping methods are assigned"
+    it_behaves_like "supplied completed_at is respected"
 
     it "has the expected attributes" do
       order = create(factory)
@@ -207,12 +207,12 @@ RSpec.describe 'order factory' do
         expect(order.payments.count).to eq 1
         expect(order.payments[0]).to have_attributes(
           amount: 110,
-          state: 'completed'
+          state: "completed"
         )
 
         expect(order.shipments.count).to eq 1
         expect(order.shipments[0]).to have_attributes(
-          state: 'shipped'
+          state: "shipped"
         )
 
         expect(order.cartons.count).to eq 1

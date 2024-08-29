@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
-  RSpec.describe 'Api Feature Specs', type: :request do
+  RSpec.describe "Api Feature Specs", type: :request do
     before do
       stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
     end
-    let!(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
+    let!(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment, code: "foo", weighted_order_adjustment_amount: 10) }
     let(:promotion_code) { promotion.codes.first }
     let!(:store) { FactoryBot.create(:store) }
     let(:bill_address) { FactoryBot.create(:address) }
@@ -28,7 +28,7 @@ module Spree
 
     def login
       expect {
-        post '/api/users', params: {
+        post "/api/users", params: {
           user: {
             email: "featurecheckoutuser@example.com",
             password: "featurecheckoutuser"
@@ -36,16 +36,16 @@ module Spree
         }
       }.to change { Spree.user_class.count }.by 1
       expect(response).to have_http_status(:created)
-      @user = Spree.user_class.find(parsed['id'])
+      @user = Spree.user_class.find(parsed["id"])
 
       # copied from api testing helpers support since we can't really sign in
       allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { @user }
     end
 
     def create_order(order_params: {})
-      expect { post '/api/orders', params: order_params }.to change { Order.count }.by 1
+      expect { post "/api/orders", params: order_params }.to change { Order.count }.by 1
       expect(response).to have_http_status(:created)
-      @order = Order.find(parsed['id'])
+      @order = Order.find(parsed["id"])
       expect(@order.email).to eq "featurecheckoutuser@example.com"
     end
 
@@ -57,7 +57,7 @@ module Spree
     def create_line_item(variant, quantity = 1)
       expect {
         post "/api/orders/#{@order.number}/line_items",
-          params: { line_item: { variant_id: variant.id, quantity: } }
+          params: {line_item: {variant_id: variant.id, quantity:}}
       }.to change { @order.line_items.count }.by 1
       expect(response).to have_http_status(:created)
     end
@@ -65,7 +65,7 @@ module Spree
     def add_promotion(_promotion)
       expect {
         post "/api/orders/#{@order.number}/coupon_codes",
-          params: { coupon_code: promotion_code.value }
+          params: {coupon_code: promotion_code.value}
       }.to change { @order.promotions.count }.by 1
       expect(response).to have_http_status(:ok)
     end
@@ -75,14 +75,14 @@ module Spree
       # It seems we are missing an order-scoped address api endpoint since we need
       # to use update here.
       expect {
-        update_order(order_params: { order: { address_type => address.as_json.except('id') } })
+        update_order(order_params: {order: {address_type => address.as_json.except("id")}})
       }.to change { @order.reload.public_send(address_type) }.to address
     end
 
     def add_payment
       expect {
         post "/api/orders/#{@order.number}/payments",
-          params: { payment: { payment_method_id: payment_method.id } }
+          params: {payment: {payment_method_id: payment_method.id}}
       }.to change { @order.reload.payments.count }.by 1
       expect(response).to have_http_status(:created)
       expect(@order.payments.last.payment_method).to eq payment_method
@@ -100,7 +100,7 @@ module Spree
 
     def assert_order_expectations
       @order.reload
-      expect(@order.state).to eq 'complete'
+      expect(@order.state).to eq "complete"
       expect(@order.completed_at).to be_a ActiveSupport::TimeWithZone
       expect(@order.item_total).to eq 600.00
       expect(@order.total).to eq 600.00
@@ -139,12 +139,12 @@ module Spree
 
       create_order(order_params: {
         order: {
-          bill_address: bill_address.as_json.except('id'),
-          ship_address: ship_address.as_json.except('id'),
+          bill_address: bill_address.as_json.except("id"),
+          ship_address: ship_address.as_json.except("id"),
           line_items: {
-            0 => { variant_id: variant_1.id, quantity: 2 },
-            1 => { variant_id: variant_2.id, quantity: 2 }
-          },
+            0 => {variant_id: variant_1.id, quantity: 2},
+            1 => {variant_id: variant_2.id, quantity: 2}
+          }
           # Would like to do this, but it puts the payment in a complete state,
           # which the order does not like when transitioning from confirm to complete
           # since it looks to process pending payments.
@@ -167,12 +167,12 @@ module Spree
       create_order
       update_order(order_params: {
         order: {
-          bill_address: bill_address.as_json.except('id'),
-          ship_address: ship_address.as_json.except('id'),
+          bill_address: bill_address.as_json.except("id"),
+          ship_address: ship_address.as_json.except("id"),
           line_items: {
-            0 => { variant_id: variant_1.id, quantity: 2 },
-            1 => { variant_id: variant_2.id, quantity: 2 }
-          },
+            0 => {variant_id: variant_1.id, quantity: 2},
+            1 => {variant_id: variant_2.id, quantity: 2}
+          }
           # Would like to do this, but it puts the payment in a complete state,
           # which the order does not like when transitioning from confirm to complete
           # since it looks to process pending payments.

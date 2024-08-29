@@ -6,8 +6,8 @@ module Spree
       skip_before_action :authenticate_user
 
       def index
-        @states = scope.ransack(params[:q]).result.
-                    includes(:country).order('name ASC')
+        @states = scope.ransack(params[:q]).result
+          .includes(:country).order("name ASC")
 
         if params[:page] || params[:per_page]
           @states = paginate(@states)

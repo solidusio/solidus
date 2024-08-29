@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class AdjustmentsController < ResourceController
-      belongs_to 'spree/order', find_by: :number
+      belongs_to "spree/order", find_by: :number
 
       create.after :update_totals
       destroy.after :update_totals

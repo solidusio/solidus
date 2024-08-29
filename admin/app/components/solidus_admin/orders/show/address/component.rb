@@ -3,9 +3,9 @@
 class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::Layout::PageHelpers
 
-  VALID_TYPES = ['ship', 'bill'].freeze
+  VALID_TYPES = ["ship", "bill"].freeze
 
-  def initialize(order:, address:, user: nil, type: 'ship')
+  def initialize(order:, address:, user: nil, type: "ship")
     @order = order
     @user = user
     @address = address
@@ -23,10 +23,10 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
 
   def use_attribute
     case @type
-    when 'ship'
-      'use_shipping'
-    when 'bill'
-      'use_billing'
+    when "ship"
+      "use_shipping"
+    when "bill"
+      "use_billing"
     end
   end
 
@@ -43,7 +43,7 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
       tag.br,
       address.country.name,
       tag.br,
-      address.phone,
+      address.phone
     ], " ")
   end
 

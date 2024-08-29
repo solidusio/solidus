@@ -9,7 +9,7 @@ module SolidusPromotions
 
     before_validation :normalize_code
 
-    validates :value, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :value, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     validate :promotion_not_apply_automatically, on: :create
 
     self.allowed_ransackable_attributes = ["value"]
@@ -32,9 +32,9 @@ module SolidusPromotions
       promotion
         .discounted_orders
         .complete
-        .where.not(spree_orders: { state: :canceled })
+        .where.not(spree_orders: {state: :canceled})
         .joins(:solidus_order_promotions)
-        .where(SolidusPromotions::OrderPromotion.table_name => { promotion_code_id: id })
+        .where(SolidusPromotions::OrderPromotion.table_name => {promotion_code_id: id})
         .where.not(id: excluded_orders.map(&:id))
         .count
     end

@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 require "spree/testing_support/shared_examples/order_factory"
-require 'spree/testing_support/shared_examples/working_factory'
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'order factory' do
+RSpec.describe "order factory" do
   let(:factory_class) { Spree::Order }
 
-  describe 'completed order with promotion' do
+  describe "completed order with promotion" do
     let(:factory) { :completed_order_with_promotion }
 
-    it_behaves_like 'a working factory'
-    it_behaves_like 'an order with line items factory', "complete", "on_hand"
-    it_behaves_like 'shipping methods are assigned'
-    it_behaves_like 'supplied completed_at is respected'
+    it_behaves_like "a working factory"
+    it_behaves_like "an order with line items factory", "complete", "on_hand"
+    it_behaves_like "shipping methods are assigned"
+    it_behaves_like "supplied completed_at is respected"
 
     it "has the expected attributes" do
       order = create(factory)
@@ -27,7 +27,7 @@ RSpec.describe 'order factory' do
       end
     end
 
-    context 'with a promotion with an action' do
+    context "with a promotion with an action" do
       let(:promotion) { create(:promotion, :with_line_item_adjustment) }
       it "has the expected attributes" do
         order = create(factory, promotion:)

@@ -20,7 +20,7 @@ class SolidusAdmin::UI::Forms::Address::Component < SolidusAdmin::BaseComponent
       addressable:,
       form_field_name:,
       extends:,
-      excludes:,
+      excludes:
     )
   end
 

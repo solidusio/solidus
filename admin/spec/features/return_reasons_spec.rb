@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
+require "spec_helper"
+require "solidus_admin/testing_support/shared_examples/bulk_delete_resources"
 
 describe "Return Reasons", type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists Return Reasons and allows deleting them", :js do
     create(:return_reason, name: "Default-return-reason")

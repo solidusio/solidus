@@ -27,7 +27,7 @@ module Spree
 
     def generate
       possible = (0..9).to_a
-      possible += ('A'..'Z').to_a if letters
+      possible += ("A".."Z").to_a if letters
 
       loop do
         # Make a random number.

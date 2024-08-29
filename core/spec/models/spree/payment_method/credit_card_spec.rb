@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
   context "fetching payment sources" do
@@ -12,16 +12,16 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
 
     let(:cc) do
       create(:credit_card,
-             payment_method:,
-             gateway_customer_profile_id: "EFWE",
-             user: cc_user)
+        payment_method:,
+        gateway_customer_profile_id: "EFWE",
+        user: cc_user)
     end
 
     let(:payment) do
       create(:payment, order:, source: cc, payment_method:)
     end
 
-    context 'order is not complete and credit card user is nil' do
+    context "order is not complete and credit card user is nil" do
       let(:cc_user) { nil }
       let(:completed_at) { nil }
 
@@ -30,7 +30,7 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
       end
     end
 
-    context 'order is complete but credit card user is nil' do
+    context "order is complete but credit card user is nil" do
       let(:cc_user) { nil }
       let(:completed_at) { Date.yesterday }
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
       end
     end
 
-    context 'order is not complete but credit card has user' do
+    context "order is not complete but credit card has user" do
       let(:cc_user) { user }
       let(:completed_at) { nil }
       before do
@@ -51,18 +51,18 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
     end
   end
 
-  context 'using preference_source' do
-    let(:klass){ Spree::PaymentMethod::BogusCreditCard }
+  context "using preference_source" do
+    let(:klass) { Spree::PaymentMethod::BogusCreditCard }
     before do
-      Spree::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
+      Spree::Config.static_model_preferences.add(klass, "test_preference_source", server: "bar")
     end
     after do
       Spree::Config.static_model_preferences.for_class(klass).clear
     end
-    let(:payment_method){ create(:credit_card_payment_method, preference_source: 'test_preference_source') }
+    let(:payment_method) { create(:credit_card_payment_method, preference_source: "test_preference_source") }
 
     it "reads static preferences" do
-      expect(payment_method.options).to eq({ server: "bar" })
+      expect(payment_method.options).to eq({server: "bar"})
     end
   end
 end

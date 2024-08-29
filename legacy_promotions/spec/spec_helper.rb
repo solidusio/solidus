@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 if ENV["COVERAGE"]
-  require 'simplecov'
+  require "simplecov"
   if ENV["COVERAGE_DIR"]
     SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
   end
-  SimpleCov.command_name('solidus:core')
+  SimpleCov.command_name("solidus:core")
   SimpleCov.merge_timeout(3600)
-  SimpleCov.start('rails')
+  SimpleCov.start("rails")
 end
 
-require 'rspec/core'
+require "rspec/core"
 
-require 'spree/testing_support/flaky'
-require 'spree/testing_support/partial_double_verification'
-require 'spree/testing_support/silence_deprecations'
-require 'spree/testing_support/preferences'
-require 'spree/deprecator'
-require 'spree/config'
+require "spree/testing_support/flaky"
+require "spree/testing_support/partial_double_verification"
+require "spree/testing_support/silence_deprecations"
+require "spree/testing_support/preferences"
+require "spree/deprecator"
+require "spree/config"
 
 require "solidus_legacy_promotions"
 

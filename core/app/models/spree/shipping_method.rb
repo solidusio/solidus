@@ -16,7 +16,7 @@ module Spree
     has_many :shipping_method_zones, dependent: :destroy
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, -> { with_discarded }, class_name: 'Spree::TaxCategory', optional: true
+    belongs_to :tax_category, -> { with_discarded }, class_name: "Spree::TaxCategory", optional: true
     has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
@@ -41,10 +41,10 @@ module Spree
       # cause this to return incorrect results.
       join_table = Spree::ShippingMethodCategory.arel_table
       having = join_table[:id].count(true).eq(shipping_category_ids.count)
-      subquery = joins(:shipping_method_categories).
-        where(spree_shipping_method_categories: { shipping_category_id: shipping_category_ids }).
-        group('spree_shipping_methods.id').
-        having(having)
+      subquery = joins(:shipping_method_categories)
+        .where(spree_shipping_method_categories: {shipping_category_id: shipping_category_ids})
+        .group("spree_shipping_methods.id")
+        .having(having)
 
       where(id: subquery.select(:id))
     end
@@ -62,9 +62,9 @@ module Spree
       # rails 5 this will be easy using .left_join and .or, but for now we must
       # use arel to achieve this.
       arel_join =
-        arel_table.join(smsl_table, Arel::Nodes::OuterJoin).
-        on(arel_table[:id].eq(smsl_table[:shipping_method_id])).
-        join_sources
+        arel_table.join(smsl_table, Arel::Nodes::OuterJoin)
+          .on(arel_table[:id].eq(smsl_table[:shipping_method_id]))
+          .join_sources
       arel_condition =
         arel_table[:available_to_all].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
 
@@ -87,7 +87,7 @@ module Spree
 
     def build_tracking_url(tracking)
       return if tracking.blank? || tracking_url.blank?
-      tracking_url.gsub(/:tracking/, ERB::Util.url_encode(tracking)) # :url_encode exists in 1.8.7 through 2.1.0
+      tracking_url.gsub(":tracking", ERB::Util.url_encode(tracking)) # :url_encode exists in 1.8.7 through 2.1.0
     end
 
     private

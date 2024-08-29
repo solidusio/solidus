@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   module Admin
@@ -27,19 +27,19 @@ module Spree
         )
       end
 
-      describe '#index' do
+      describe "#index" do
         subject { get :index, params: }
 
-        context 'with no params' do
-          let(:params) { { stock_location_id: stock_location.id } }
+        context "with no params" do
+          let(:params) { {stock_location_id: stock_location.id} }
 
-          it 'responds with a successful status code' do
+          it "responds with a successful status code" do
             subject
 
             expect(response).to be_successful
           end
 
-          it 'responds with all the stock locations stock movements' do
+          it "responds with all the stock locations stock movements" do
             subject
 
             expect(assigns[:stock_movements]).to contain_exactly(
@@ -49,7 +49,7 @@ module Spree
           end
         end
 
-        context 'with search parameters' do
+        context "with search parameters" do
           let(:params) do
             {
               stock_location_id: stock_location.id,
@@ -59,17 +59,17 @@ module Spree
             }
           end
 
-          it 'responds with a successful status code' do
+          it "responds with a successful status code" do
             subject
 
             expect(response).to be_successful
           end
 
-          it 'responds with the stock movements that match the search criteria' do
+          it "responds with the stock movements that match the search criteria" do
             subject
 
             expect(assigns[:stock_movements]).to contain_exactly(
-              stock_movement_1,
+              stock_movement_1
             )
           end
         end

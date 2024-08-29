@@ -4,7 +4,7 @@
 # using the special +register_ability+ method which allows extensions to add their own abilities.
 #
 # See http://github.com/ryanb/cancan for more details on cancan.
-require 'cancan'
+require "cancan"
 module Spree
   class Ability
     include CanCan::Ability

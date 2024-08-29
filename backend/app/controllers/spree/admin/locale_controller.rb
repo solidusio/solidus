@@ -12,13 +12,13 @@ module Spree
           I18n.locale = requested_locale
           session[set_user_language_locale_key] = requested_locale
           respond_to do |format|
-            format.json { render json: { locale: requested_locale, location: spree.admin_url } }
-            format.html { redirect_back_or_to spree.admin_url, notice: t('spree.locale_changed') }
+            format.json { render json: {locale: requested_locale, location: spree.admin_url} }
+            format.html { redirect_back_or_to spree.admin_url, notice: t("spree.locale_changed") }
           end
         else
           respond_to do |format|
-            format.json { render json: { locale: I18n.locale }, status: 404 }
-            format.html { redirect_back_or_to spree.admin_url, error: t('spree.error') }
+            format.json { render json: {locale: I18n.locale}, status: 404 }
+            format.html { redirect_back_or_to spree.admin_url, error: t("spree.error") }
           end
         end
       end

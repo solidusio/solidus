@@ -17,7 +17,7 @@ class Spree::Wallet::DefaultPaymentBuilder
     if default && order.payments.where(source_type: default.payment_source_type).none?
       Spree::Payment.new(
         payment_method: default.payment_source.payment_method,
-        source: default.payment_source,
+        source: default.payment_source
       )
     end
   end

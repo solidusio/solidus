@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Spree::Order, type: :model do
@@ -21,16 +21,16 @@ module Spree
         create(:payment, payment_method:, order:, amount: 50)
       end
 
-      context 'sharing the same payment method' do
+      context "sharing the same payment method" do
         let!(:payment_2) do
           create(:payment, payment_method:, order:, amount: 50)
         end
 
-        it 'processes only new payments' do
+        it "processes only new payments" do
           order.process_payments!
           updater.update_payment_state
 
-          expect(order.payment_state).to eq('balance_due')
+          expect(order.payment_state).to eq("balance_due")
           expect(order.payment_total).to eq(50)
 
           expect(payment_1).to be_invalid
@@ -38,28 +38,28 @@ module Spree
         end
       end
 
-      context 'with different payment methods that are store credit' do
+      context "with different payment methods that are store credit" do
         let!(:payment_2) { create(:store_credit_payment, order:, amount: 50) }
 
-        it 'processes all checkout payments' do
+        it "processes all checkout payments" do
           order.process_payments!
           updater.update_payment_state
 
-          expect(order.payment_state).to eq('paid')
+          expect(order.payment_state).to eq("paid")
           expect(order.payment_total).to eq(100)
 
           expect(payment_1).to be_completed
           expect(payment_2).to be_completed
         end
 
-        context 'with over paid payments' do
+        context "with over paid payments" do
           let!(:payment_3) { create(:store_credit_payment, order:, amount: 50) }
 
-          it 'does not go over total for order' do
+          it "does not go over total for order" do
             order.process_payments!
             updater.update_payment_state
 
-            expect(order.payment_state).to eq('paid')
+            expect(order.payment_state).to eq("paid")
             expect(order.payment_total).to eq(100)
             expect(payment_1).to be_completed
             expect(payment_2).to be_completed
@@ -68,13 +68,13 @@ module Spree
         end
       end
 
-      context 'with failed payments' do
+      context "with failed payments" do
         let!(:payment_2) do
           create(:payment,
             payment_method:,
             order:,
             amount: 50,
-            state: 'failed')
+            state: "failed")
         end
 
         it "does not use failed payments" do
@@ -96,8 +96,8 @@ module Spree
     end
 
     context "ensure source attributes stick around" do
-      let(:order){ Spree::Order.create }
-      let(:payment_method){ create(:credit_card_payment_method) }
+      let(:order) { Spree::Order.create }
+      let(:payment_method) { create(:credit_card_payment_method) }
       let(:payment_attributes) do
         {
           payment_method_id: payment_method.id,
@@ -111,25 +111,25 @@ module Spree
       end
 
       it "keeps source attributes on assignment" do
-        OrderUpdateAttributes.new(order, { payments_attributes: [payment_attributes] }).call
+        OrderUpdateAttributes.new(order, {payments_attributes: [payment_attributes]}).call
         expect(order.unprocessed_payments.last.source.number).to be_present
       end
 
       # For the reason of this test, please see spree/spree_gateway#132
       it "keeps source attributes through OrderUpdateAttributes" do
-        OrderUpdateAttributes.new(order, { payments_attributes: [payment_attributes] }).call
+        OrderUpdateAttributes.new(order, {payments_attributes: [payment_attributes]}).call
         expect(order.unprocessed_payments.last.source.number).to be_present
       end
     end
 
     context "checking if order is paid" do
       context "payment_state is paid" do
-        before { allow(order).to receive_messages payment_state: 'paid' }
+        before { allow(order).to receive_messages payment_state: "paid" }
         it { expect(order).to be_paid }
       end
 
       context "payment_state is credit_owned" do
-        before { allow(order).to receive_messages payment_state: 'credit_owed' }
+        before { allow(order).to receive_messages payment_state: "credit_owed" }
         it { expect(order).to be_paid }
       end
     end
@@ -206,14 +206,14 @@ module Spree
           reimbursement.order.payments.first.update_column :amount, amount
           # Creates a refund of 110
           create(:refund, amount:,
-                          payment: reimbursement.order.payments.first,
-                          reimbursement:)
+            payment: reimbursement.order.payments.first,
+            reimbursement:)
           # Update the order totals so payment_total goes to 0 reflecting the refund..
           order.recalculate
         end
 
         context "for canceled orders" do
-          before { order.update(state: 'canceled') }
+          before { order.update(state: "canceled") }
 
           it "it should be zero" do
             expect(order.total).to eq(110)
@@ -226,7 +226,7 @@ module Spree
         end
 
         context "for non-canceled orders" do
-          it 'should incorporate refund reimbursements' do
+          it "should incorporate refund reimbursements" do
             # Order Total - (Payment Total + Reimbursed)
             # 110 - (0 + 10) = 100
             expect(order.outstanding_balance).to eq 100

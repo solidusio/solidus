@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 if ENV["COVERAGE"]
-  require 'simplecov'
+  require "simplecov"
   if ENV["COVERAGE_DIR"]
     SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
   end
-  SimpleCov.command_name('solidus:backend:teaspoon')
+  SimpleCov.command_name("solidus:backend:teaspoon")
   SimpleCov.merge_timeout(3600)
-  SimpleCov.start('rails') unless SimpleCov.running
+  SimpleCov.start("rails") unless SimpleCov.running
 end
 
-ENV['RAILS_ENV'] = 'test'
+ENV["RAILS_ENV"] = "test"
 
-require 'teaspoon/driver/selenium'
+require "teaspoon/driver/selenium"
 
 # Similar to setup described in
 # https://github.com/jejacks0n/teaspoon/wiki/Micro-Applications
@@ -20,7 +20,7 @@ require 'teaspoon/driver/selenium'
 if defined?(DummyApp)
   DummyApp::Migrations.auto_migrate
 
-  require 'teaspoon-mocha'
+  require "teaspoon-mocha"
 
   Teaspoon.configure do |config|
     config.mount_at = "/teaspoon"
@@ -33,9 +33,9 @@ if defined?(DummyApp)
       client_driver: :chrome,
       selenium_options: {
         options: Selenium::WebDriver::Chrome::Options.new(
-          args: %w(headless disable-gpu window-size=1920,1440),
-        ),
-      },
+          args: %w[headless disable-gpu window-size=1920,1440]
+        )
+      }
     }
 
     config.suite do |suite|
@@ -47,15 +47,15 @@ if defined?(DummyApp)
     end
   end
 else
-  require 'solidus_backend'
+  require "solidus_backend"
 
-  require 'teaspoon'
+  require "teaspoon"
 
-  require 'spree/testing_support/dummy_app'
+  require "spree/testing_support/dummy_app"
 
   DummyApp.setup(
-    gem_root: File.expand_path('..', __dir__),
-    lib_name: 'solidus_backend',
+    gem_root: File.expand_path("..", __dir__),
+    lib_name: "solidus_backend",
     auto_migrate: false
   )
 end

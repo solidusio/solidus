@@ -6,14 +6,14 @@ module Spree
   class ReturnAuthorization < Spree::Base
     include Metadata
 
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations, optional: true
+    belongs_to :order, class_name: "Spree::Order", inverse_of: :return_authorizations, optional: true
 
     has_many :return_items, inverse_of: :return_authorization, dependent: :destroy
     has_many :inventory_units, through: :return_items, dependent: :nullify
     has_many :customer_returns, through: :return_items
 
     belongs_to :stock_location, optional: true
-    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id, optional: true
+    belongs_to :reason, class_name: "Spree::ReturnReason", foreign_key: :return_reason_id, optional: true
 
     before_create :generate_number
 
@@ -29,7 +29,7 @@ module Spree
     extend DisplayMoney
     money_methods :amount, :total_excluding_vat
 
-    self.allowed_ransackable_attributes = ['memo']
+    self.allowed_ransackable_attributes = ["memo"]
 
     def total_excluding_vat
       return_items.sum(&:total_excluding_vat)
@@ -59,20 +59,20 @@ module Spree
 
     def must_have_shipped_units
       if order.nil? || order.inventory_units.shipped.none?
-        errors.add(:order, I18n.t('spree.has_no_shipped_units'))
+        errors.add(:order, I18n.t("spree.has_no_shipped_units"))
       end
     end
 
     def generate_number
       self.number ||= loop do
-        random = "RA#{Array.new(9){ rand(9) }.join}"
+        random = "RA#{Array.new(9) { rand(9) }.join}"
         break random unless self.class.exists?(number: random)
       end
     end
 
     def no_previously_exchanged_inventory_units
       if return_items.map(&:inventory_unit).any?(&:exchange_requested?)
-        errors.add(:base, I18n.t('spree.return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange'))
+        errors.add(:base, I18n.t("spree.return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange"))
       end
     end
 

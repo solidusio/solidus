@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :payment_method do
-  desc "Deactivates old payment methods and fixes ActiveRecord::SubclassNotFound error, "\
+  desc "Deactivates old payment methods and fixes ActiveRecord::SubclassNotFound error, " \
   "which happens after switching Payment Service Provider."
   task deactivate_unsupported_payment_methods: :environment do
     Spree::PaymentMethod.pluck(:id, :type).select do |id, type|
@@ -24,6 +24,6 @@ namespace :payment_method do
         available_to_admin=#{false_value}
       WHERE id=#{id};
     SQL
-    )
+                          )
   end
 end

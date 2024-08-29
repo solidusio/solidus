@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 module Spree
   module Calculator::Shipping
     RSpec.describe FlatPercentItemTotal, type: :model do
-      it_behaves_like 'a calculator with a description'
+      it_behaves_like "a calculator with a description"
 
       let(:line_item1) { build(:line_item, price: 10.11) }
       let(:line_item2) { build(:line_item, price: 20.2222) }
@@ -20,7 +20,7 @@ module Spree
           contents: [
             Spree::Stock::ContentItem.new(inventory_unit1),
             Spree::Stock::ContentItem.new(inventory_unit1),
-            Spree::Stock::ContentItem.new(inventory_unit2),
+            Spree::Stock::ContentItem.new(inventory_unit2)
           ]
         )
       end
@@ -32,7 +32,7 @@ module Spree
       end
 
       it "should round result based on order currency" do
-        package.order.currency = 'JPY'
+        package.order.currency = "JPY"
         expect(subject.compute(package)).to eq(4)
       end
 
