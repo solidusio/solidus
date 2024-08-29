@@ -4,7 +4,7 @@ module SolidusAdmin
   class ShippingCategoriesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    before_action :find_shipping_category, only: %i[edit update]
+    before_action :set_shipping_category, only: %i[edit update]
 
     def new
       @shipping_category = Spree::ShippingCategory.new
@@ -97,7 +97,7 @@ module SolidusAdmin
 
     private
 
-    def find_shipping_category
+    def set_shipping_category
       @shipping_category = Spree::ShippingCategory.find(params[:id])
     end
 

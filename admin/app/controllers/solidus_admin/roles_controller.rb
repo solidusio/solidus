@@ -4,7 +4,7 @@ module SolidusAdmin
   class RolesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    before_action :find_role, only: %i[edit update]
+    before_action :set_role, only: %i[edit update]
 
     search_scope(:all)
     search_scope(:admin) { _1.where(name: "admin") }
@@ -98,7 +98,7 @@ module SolidusAdmin
 
     private
 
-    def find_role
+    def set_role
       @role = Spree::Role.find(params[:id])
     end
 

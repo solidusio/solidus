@@ -4,7 +4,7 @@ module SolidusAdmin
   class ReturnReasonsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    before_action :find_return_reason, only: %i[edit update]
+    before_action :set_return_reason, only: %i[edit update]
 
     def index
       set_index_page
@@ -95,7 +95,7 @@ module SolidusAdmin
 
     private
 
-    def find_return_reason
+    def set_return_reason
       @return_reason = Spree::ReturnReason.find(params[:id])
     end
 
