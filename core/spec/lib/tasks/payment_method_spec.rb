@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'payment_method:deactivate_unsupported_payment_methods' do
+RSpec.describe "payment_method:deactivate_unsupported_payment_methods" do
   include_context(
-    'rake',
-    task_name: 'payment_method:deactivate_unsupported_payment_methods',
-    task_path: Spree::Core::Engine.root.join('lib/tasks/payment_method.rake'),
+    "rake",
+    task_name: "payment_method:deactivate_unsupported_payment_methods",
+    task_path: Spree::Core::Engine.root.join("lib/tasks/payment_method.rake")
   )
 
   let!(:unsupported_payment_method_id) { 0 }
@@ -18,7 +18,7 @@ RSpec.describe 'payment_method:deactivate_unsupported_payment_methods' do
   end
 
   before do
-    unsupported_payment_method.update type: 'UnsupportedPaymentMethod'
+    unsupported_payment_method.update type: "UnsupportedPaymentMethod"
   end
 
   context "with an unsupported payment method" do
@@ -36,11 +36,11 @@ RSpec.describe 'payment_method:deactivate_unsupported_payment_methods' do
     subject { unsupported_payment_method_reloaded }
 
     it "sets payment method type to 'Spree::PaymentMethod'" do
-      expect(subject.type).to eq 'Spree::PaymentMethod'
+      expect(subject.type).to eq "Spree::PaymentMethod"
     end
 
     it "sets payment method type_before_removal correctly" do
-      expect(subject.type_before_removal).to eq 'UnsupportedPaymentMethod'
+      expect(subject.type_before_removal).to eq "UnsupportedPaymentMethod"
     end
 
     it "resets payment method active flag" do

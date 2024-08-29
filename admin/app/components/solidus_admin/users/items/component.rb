@@ -29,13 +29,13 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
       quantity_column,
       total_column,
       state_column,
-      number_column,
+      number_column
     ]
   end
 
   def date_column
     {
-      col: { class: "w-[8%]" },
+      col: {class: "w-[8%]"},
       header: :date,
       data: ->(item) do
         content_tag :div, l(item.order.created_at, format: :short), class: "text-sm"
@@ -45,13 +45,13 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
   def image_column
     {
-      col: { class: "w-[8%]" },
-      header: tag.span('aria-label': Spree::Image.model_name.human, role: 'text'),
+      col: {class: "w-[8%]"},
+      header: tag.span("aria-label": Spree::Image.model_name.human, role: "text"),
       data: ->(item) do
         image = item.variant.gallery.images.first || item.variant.product.gallery.images.first or return
 
         render(
-          component('ui/thumbnail').new(
+          component("ui/thumbnail").new(
             src: image.url(:small),
             alt: item.product.name
           )
@@ -62,7 +62,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
   def description_column
     {
-      col: { class: "w-[24%]" },
+      col: {class: "w-[24%]"},
       header: t(".description_column_header"),
       data: ->(item) { item_name_with_variant_and_sku(item) }
     }
@@ -70,7 +70,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
   def price_column
     {
-      col: { class: "w-[10%]" },
+      col: {class: "w-[10%]"},
       header: :price,
       data: ->(item) do
         content_tag :div, item.single_money.to_html
@@ -80,7 +80,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
   def quantity_column
     {
-      col: { class: "w-[7%]" },
+      col: {class: "w-[7%]"},
       header: :qty,
       data: ->(item) do
         content_tag :div, item.quantity
@@ -90,7 +90,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
   def total_column
     {
-      col: { class: "w-[10%]" },
+      col: {class: "w-[10%]"},
       header: t(".total_column_header"),
       data: ->(item) do
         content_tag :div, item.money.to_html
@@ -100,23 +100,23 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
   def state_column
     {
-      col: { class: "w-[15%]" },
+      col: {class: "w-[15%]"},
       header: :state,
       data: ->(item) do
         color = {
-          'complete' => :green,
-          'returned' => :red,
-          'canceled' => :blue,
-          'cart' => :graphite_light,
+          "complete" => :green,
+          "returned" => :red,
+          "canceled" => :blue,
+          "cart" => :graphite_light
         }[item.order.state] || :yellow
-        component('ui/badge').new(name: item.order.state.humanize, color: color)
+        component("ui/badge").new(name: item.order.state.humanize, color: color)
       end
     }
   end
 
   def number_column
     {
-      col: { class: "w-[18%]" },
+      col: {class: "w-[18%]"},
       header: t(".number_column_header"),
       data: ->(item) do
         content_tag :div, item.order.number, class: "font-semibold text-sm"
@@ -130,7 +130,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
     content = []
     content << item.product.name
     content << "(#{item.variant.options_text})" if item.variant.option_values.any?
-    content << "<strong>#{t('spree.sku')}:</strong> #{item.variant.sku}" if item.variant.sku.present?
+    content << "<strong>#{t("spree.sku")}:</strong> #{item.variant.sku}" if item.variant.sku.present?
 
     # The `.html_safe` is required for the description to display as desired.
     # rubocop:disable Rails/OutputSafety

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe ShippingCalculator, type: :model do
@@ -23,22 +23,22 @@ module Spree
 
     subject { described_class.new }
 
-    it 'computes with a package' do
+    it "computes with a package" do
       expect(subject).to receive(:compute_package).with(package)
       subject.compute(package)
     end
 
-    it 'compute_package must be overridden' do
+    it "compute_package must be overridden" do
       expect {
         subject.compute_package(package)
       }.to raise_error NotImplementedError
     end
 
-    it 'checks availability for a package' do
+    it "checks availability for a package" do
       expect(subject.available?(package)).to be true
     end
 
-    it 'calculates totals for content_items' do
+    it "calculates totals for content_items" do
       expect(subject.send(:total, package.contents)).to eq 40.00
     end
   end

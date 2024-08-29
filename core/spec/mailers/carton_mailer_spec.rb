@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::CartonMailer do
   let(:carton) { create(:carton) }
@@ -9,8 +9,8 @@ RSpec.describe Spree::CartonMailer do
   # Regression test for https://github.com/spree/spree/issues/2196
   it "doesn't include out of stock in the email body" do
     shipment_email = Spree::CartonMailer.shipped_email(order:, carton:)
-    expect(shipment_email.parts.first.body).not_to include(%{Out of Stock})
-    expect(shipment_email.parts.first.body).to include(%{Your order has been shipped})
+    expect(shipment_email.parts.first.body).not_to include(%(Out of Stock))
+    expect(shipment_email.parts.first.body).to include(%(Your order has been shipped))
     expect(shipment_email.subject).to eq "#{order.store.name} Shipment Notification ##{order.number}"
   end
 
@@ -18,16 +18,16 @@ RSpec.describe Spree::CartonMailer do
     subject do
       Spree::CartonMailer.shipped_email(order:, carton:, resend: true).subject
     end
-    it { is_expected.to match /^\[RESEND\] / }
+    it { is_expected.to match(/^\[RESEND\] /) }
   end
 
   context "emails must be translatable" do
     context "shipped_email" do
       context "pt-BR locale" do
         before do
-          pt_br_shipped_email = { spree: { shipment_mailer: { shipped_email: { dear_customer: 'Caro Cliente,' } } } }
-          I18n.backend.store_translations :'pt-BR', pt_br_shipped_email
-          I18n.locale = :'pt-BR'
+          pt_br_shipped_email = {spree: {shipment_mailer: {shipped_email: {dear_customer: "Caro Cliente,"}}}}
+          I18n.backend.store_translations :"pt-BR", pt_br_shipped_email
+          I18n.locale = :"pt-BR"
         end
 
         after do

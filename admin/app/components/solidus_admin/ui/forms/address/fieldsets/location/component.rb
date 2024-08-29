@@ -8,7 +8,7 @@ class SolidusAdmin::UI::Forms::Address::Fieldsets::Location::Component < Solidus
       city_and_zipcode: -> { component("ui/forms/address/fields/city_and_zipcode").new(form_field_name: @form_field_name, addressable: @addressable) },
       country_and_state: -> { component("ui/forms/address/fields/country_and_state").new(form_field_name: @form_field_name, addressable: @addressable) },
       phone: -> { component("ui/forms/field").text_field(@form_field_name, :phone, object: @addressable) },
-      email: -> { component("ui/forms/field").text_field(@form_field_name, :email, object: @addressable) },
+      email: -> { component("ui/forms/field").text_field(@form_field_name, :email, object: @addressable) }
     }
   end
 end

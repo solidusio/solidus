@@ -3,7 +3,7 @@
 FactoryBot.define do
   sequence(:random_float) { BigDecimal("#{rand(200)}.#{rand(99)}") }
 
-  factory :base_variant, class: 'Spree::Variant' do
+  factory :base_variant, class: "Spree::Variant" do
     price { 19.99 }
     cost_price { 17.00 }
     sku { generate(:sku) }
@@ -23,7 +23,7 @@ FactoryBot.define do
 
     factory :master_variant do
       is_master { 1 }
-      before(:create){ |variant| variant.product.master = variant }
+      before(:create) { |variant| variant.product.master = variant }
       product { build(:base_product) }
     end
 

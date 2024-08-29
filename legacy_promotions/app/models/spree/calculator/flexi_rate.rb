@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/calculator'
+require_dependency "spree/calculator"
 
 module Spree
   class Calculator::FlexiRate < Calculator
-    preference :first_item,      :decimal, default: 0
+    preference :first_item, :decimal, default: 0
     preference :additional_item, :decimal, default: 0
-    preference :max_items,       :integer, default: 0
-    preference :currency,        :string,  default: ->{ Spree::Config[:currency] }
+    preference :max_items, :integer, default: 0
+    preference :currency, :string, default: -> { Spree::Config[:currency] }
 
     def compute(object)
       items_count = object.quantity

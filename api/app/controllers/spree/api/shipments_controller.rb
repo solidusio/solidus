@@ -14,7 +14,7 @@ module Spree
           @shipments = Spree::Shipment
             .reverse_chronological
             .joins(:order)
-            .where(spree_orders: { user_id: current_api_user.id })
+            .where(spree_orders: {user_id: current_api_user.id})
             .includes(mine_includes)
             .ransack(params[:q]).result
 
@@ -57,7 +57,7 @@ module Spree
             @shipment.ready!
           else
             logger.error("cannot_ready_shipment shipment_state=#{@shipment.state}")
-            render('spree/api/shipments/cannot_ready_shipment', status: 422) && return
+            render("spree/api/shipments/cannot_ready_shipment", status: 422) && return
           end
         end
         respond_with(@shipment, default_template: :show)
@@ -66,7 +66,7 @@ module Spree
       def ship
         authorize! :ship, @shipment
         unless @shipment.shipped?
-          @shipment.suppress_mailer = (params[:send_mailer] == 'false')
+          @shipment.suppress_mailer = (params[:send_mailer] == "false")
           @shipment.ship!
         end
         respond_with(@shipment, default_template: :show)
@@ -75,7 +75,7 @@ module Spree
       def add
         quantity = params[:quantity].to_i
 
-        @shipment.order.contents.add(variant, quantity, { shipment: @shipment })
+        @shipment.order.contents.add(variant, quantity, {shipment: @shipment})
         respond_with(@shipment, default_template: :show)
       end
 
@@ -86,7 +86,7 @@ module Spree
           @shipment.errors.add(:base, :cannot_remove_items_shipment_state, state: @shipment.state)
           invalid_resource!(@shipment)
         else
-          @shipment.order.contents.remove(variant, quantity, { shipment: @shipment })
+          @shipment.order.contents.remove(variant, quantity, {shipment: @shipment})
           @shipment.reload if @shipment.persisted?
           respond_with(@shipment, default_template: :show)
         end
@@ -110,19 +110,19 @@ module Spree
         )
 
         if fulfilment_changer.run!
-          render json: { success: true, message: t('spree.api.shipment.transfer_success') }, status: :accepted
+          render json: {success: true, message: t("spree.api.shipment.transfer_success")}, status: :accepted
         else
-          render json: { success: false, message: fulfilment_changer.errors.full_messages.to_sentence }, status: :accepted
+          render json: {success: false, message: fulfilment_changer.errors.full_messages.to_sentence}, status: :accepted
         end
       end
 
       private
 
       def load_transfer_params
-        @original_shipment         = Spree::Shipment.find_by!(number: params[:original_shipment_number])
-        @order                     = @original_shipment.order
-        @variant                   = Spree::Variant.find(params[:variant_id])
-        @quantity                  = params[:quantity].to_i
+        @original_shipment = Spree::Shipment.find_by!(number: params[:original_shipment_number])
+        @order = @original_shipment.order
+        @variant = Spree::Variant.find(params[:variant_id])
+        @quantity = params[:quantity].to_i
         authorize! [:update, :destroy], @original_shipment
         authorize! :create, Shipment
       end

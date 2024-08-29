@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :reimbursement, class: 'Spree::Reimbursement' do
+  factory :reimbursement, class: "Spree::Reimbursement" do
     transient do
       return_items_count { 1 }
     end

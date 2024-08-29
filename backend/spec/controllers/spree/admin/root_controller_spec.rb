@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::RootController do
   describe "GET index" do
@@ -36,7 +36,7 @@ describe Spree::Admin::RootController do
       context "when a user cannot admin and home dashboards" do
         # The default exception handler redirects to /unauthorized.
         # Extensions may change this.
-        it { is_expected.to redirect_to('/unauthorized') }
+        it { is_expected.to redirect_to("/unauthorized") }
       end
     end
   end

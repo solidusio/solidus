@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Orders', type: :request do
+  describe "Orders", type: :request do
     let!(:order) { create(:order) }
     let(:variant) { create(:variant) }
     let(:line_item) { create(:line_item) }
 
     let(:attributes) {
       [:number, :item_total, :display_total, :total,
-       :state, :adjustment_total,
-       :user_id, :created_at, :updated_at,
-       :completed_at, :payment_total, :shipment_state,
-       :payment_state, :email, :special_instructions,
-       :total_quantity, :display_item_total, :currency, :customer_metadata]
+        :state, :adjustment_total,
+        :user_id, :created_at, :updated_at,
+        :completed_at, :payment_total, :shipment_state,
+        :payment_state, :email, :special_instructions,
+        :total_quantity, :display_item_total, :currency, :customer_metadata]
     }
 
-    let(:address_params) { { country_id: Country.first.id, state_id: State.first.id } }
+    let(:address_params) { {country_id: Country.first.id, state_id: State.first.id} }
 
     let(:current_api_user) do
       user = Spree.user_class.new(email: "solidus@example.com")
@@ -31,11 +31,11 @@ module Spree::Api
 
     describe "POST create" do
       let(:target_user) { create :user }
-      let(:date_override) { Time.parse('2015-01-01') }
-      let(:attributes) { { user_id: target_user.id, created_at: date_override, email: target_user.email } }
+      let(:date_override) { Time.parse("2015-01-01") }
+      let(:attributes) { {user_id: target_user.id, created_at: date_override, email: target_user.email} }
 
       subject do
-        post spree.api_orders_path, params: { order: attributes }
+        post spree.api_orders_path, params: {order: attributes}
         response
       end
 
@@ -54,11 +54,11 @@ module Spree::Api
 
         it { is_expected.to be_successful }
 
-        context 'creating payment' do
-          let(:attributes) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
+        context "creating payment" do
+          let(:attributes) { super().merge(payments_attributes: [{payment_method_id: payment_method.id}]) }
 
           context "with allowed payment method" do
-            let!(:payment_method) { create(:check_payment_method, name: "allowed" ) }
+            let!(:payment_method) { create(:check_payment_method, name: "allowed") }
             it { is_expected.to be_successful }
             it "creates a payment" do
               expect {
@@ -85,23 +85,23 @@ module Spree::Api
         end
 
         let(:attributes_with_metadata) {
-          { email: "foo@foobar.com",
-            customer_metadata: { 'Note' => 'Do not ring the bell' },
-            admin_metadata: { 'Customer_type' => 'Corporate giant' } }
+          {email: "foo@foobar.com",
+           customer_metadata: {"Note" => "Do not ring the bell"},
+           admin_metadata: {"Customer_type" => "Corporate giant"}}
         }
 
-        let(:order_update_data_with_admin_metadata){
+        let(:order_update_data_with_admin_metadata) {
           {
             email: "new_email@update.com",
-            admin_metadata: { 'Serial_number' => 'Sn98765' }
+            admin_metadata: {"Serial_number" => "Sn98765"}
           }
         }
 
         it "allows creating order with customer metadata but not admin metadata" do
-          post spree.api_orders_path, params: { order: attributes_with_metadata }
+          post spree.api_orders_path, params: {order: attributes_with_metadata}
 
-          expect(json_response['customer_metadata']).to eq({ 'Note' => 'Do not ring the bell' })
-          expect(json_response).not_to have_key('admin_metadata')
+          expect(json_response["customer_metadata"]).to eq({"Note" => "Do not ring the bell"})
+          expect(json_response).not_to have_key("admin_metadata")
 
           created_order = Spree::Order.last
 
@@ -111,10 +111,10 @@ module Spree::Api
         it "allows updating order but ignores admin metadata" do
           order = create(:order)
 
-          put spree.api_order_path(order), params: { order: order_update_data_with_admin_metadata }
+          put spree.api_order_path(order), params: {order: order_update_data_with_admin_metadata}
 
-          expect(json_response['email']).to eq( "new_email@update.com" )
-          expect(json_response).not_to have_key('admin_metadata')
+          expect(json_response["email"]).to eq("new_email@update.com")
+          expect(json_response).not_to have_key("admin_metadata")
 
           order.reload
 
@@ -126,18 +126,18 @@ module Spree::Api
 
           get spree.api_order_path(order)
 
-          expect(json_response).not_to have_key('admin_metadata')
+          expect(json_response).not_to have_key("admin_metadata")
         end
 
         it "cannot update customer metadata if the order is complete" do
           order = create(:order)
           order.completed_at = Time.current
-          order.state = 'complete'
+          order.state = "complete"
           order.save!
 
-          put spree.api_order_path(order), params: { order: attributes_with_metadata }
+          put spree.api_order_path(order), params: {order: attributes_with_metadata}
 
-          expect(json_response['customer_metadata']).to eq({})
+          expect(json_response["customer_metadata"]).to eq({})
         end
       end
 
@@ -157,13 +157,13 @@ module Spree::Api
         it { is_expected.to be_successful }
       end
 
-      context 'when the line items have custom attributes' do
+      context "when the line items have custom attributes" do
         it "can create an order with line items that have custom permitted attributes" do
-          Spree::PermittedAttributes.line_item_attributes << { options: [:some_option] }
+          Spree::PermittedAttributes.line_item_attributes << {options: [:some_option]}
           without_partial_double_verification do
-            expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
+            expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with("4")
           end
-          post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
+          post spree.api_orders_path, params: {order: {line_items: {"0" => {variant_id: variant.to_param, quantity: 5, options: {some_option: 4}}}}}
           expect(response.status).to eq(201)
           order = Spree::Order.last
           expect(order.line_items.count).to eq(1)
@@ -173,10 +173,10 @@ module Spree::Api
 
     describe "PUT update" do
       let(:user) { create :user }
-      let(:order_params) { { number: "anothernumber", user_id: user.id, email: "foo@foobar.com" } }
+      let(:order_params) { {number: "anothernumber", user_id: user.id, email: "foo@foobar.com"} }
       let(:can_admin) { false }
       subject do
-        put spree.api_order_path(order), params: { order: order_params }
+        put spree.api_order_path(order), params: {order: order_params}
         response
       end
 
@@ -202,15 +202,15 @@ module Spree::Api
         it "does not change forbidden attributes" do
           expect {
             subject
-          }.to_not change{ order.reload.number }
+          }.to_not change { order.reload.number }
         end
 
-        context 'creating payment' do
+        context "creating payment" do
           let!(:order) { create(:order_with_line_items) }
-          let(:order_params) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
+          let(:order_params) { super().merge(payments_attributes: [{payment_method_id: payment_method.id}]) }
 
           context "with allowed payment method" do
-            let!(:payment_method) { create(:check_payment_method, name: "allowed" ) }
+            let!(:payment_method) { create(:check_payment_method, name: "allowed") }
             it { is_expected.to be_successful }
             it "creates a payment" do
               expect {
@@ -218,22 +218,22 @@ module Spree::Api
               }.to change { Spree::Payment.count }.by(1)
             end
 
-            context 'trying to change the address' do
+            context "trying to change the address" do
               let(:order_params) do
                 super().merge(
                   ship_address_attributes: {
-                    zipcode: '90100'
+                    zipcode: "90100"
                   }
                 )
               end
 
-              it 'changes the address' do
+              it "changes the address" do
                 expect {
                   subject
                 }.to change { order.reload.ship_address.zipcode }
               end
 
-              it 'invalidates the shipments' do
+              it "invalidates the shipments" do
                 expect {
                   subject
                 }.to change { order.reload.shipments }.to([])
@@ -265,8 +265,8 @@ module Spree::Api
         end
 
         it "updates the otherwise forbidden attributes" do
-          expect{ subject }.to change{ order.reload.number }.
-            to("anothernumber")
+          expect { subject }.to change { order.reload.number }
+            .to("anothernumber")
         end
       end
     end
@@ -291,7 +291,7 @@ module Spree::Api
       let(:order) { create(:order, line_items: [line_item], store:) }
 
       it "can view all of their own orders for the current store" do
-        get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
+        get spree.api_my_orders_path, headers: {"SERVER_NAME" => store.url}
 
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
@@ -303,14 +303,14 @@ module Spree::Api
       end
 
       it "cannot view orders for a different store" do
-        get spree.api_my_orders_path, headers: { 'SERVER_NAME' => 'foo' }
+        get spree.api_my_orders_path, headers: {"SERVER_NAME" => "foo"}
 
         expect(response.status).to eq(200)
         expect(json_response["orders"].length).to eq(0)
       end
 
       it "can filter the returned results" do
-        get spree.api_my_orders_path, params: { q: { completed_at_not_null: 1 } }, headers: { 'SERVER_NAME' => store.url }
+        get spree.api_my_orders_path, params: {q: {completed_at_not_null: 1}}, headers: {"SERVER_NAME" => store.url}
 
         expect(response.status).to eq(200)
         expect(json_response["orders"].length).to eq(0)
@@ -326,7 +326,7 @@ module Spree::Api
         order_four = Spree::Order.create(user: order.user, completed_at: nil, created_at: 0.days.ago, store:)
         expect(order_four.created_at).to be > order_three.created_at
 
-        get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
+        get spree.api_my_orders_path, headers: {"SERVER_NAME" => store.url}
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
         orders = json_response["orders"]
@@ -337,20 +337,20 @@ module Spree::Api
       end
     end
 
-    describe 'current' do
+    describe "current" do
       let(:current_api_user) { order.user }
       let!(:order) { create(:order, line_items: [line_item]) }
 
       it "uses the user's last_incomplete_spree_order logic with the current store" do
         expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: Spree::Store.default)
-        get spree.api_current_order_path(format: 'json')
+        get spree.api_current_order_path(format: "json")
       end
 
       context "when the current user is not present" do
         let(:current_api_user) { nil }
 
         before do
-          get spree.api_current_order_path(format: 'json'), params: { order_token: }
+          get spree.api_current_order_path(format: "json"), params: {order_token:}
         end
 
         context "when the spree guest token is not present" do
@@ -379,7 +379,7 @@ module Spree::Api
       expect(json_response["adjustments"]).to be_empty
     end
 
-    describe 'GET #show' do
+    describe "GET #show" do
       let(:order) { create :order_with_line_items }
       let(:adjustment) { FactoryBot.create(:adjustment, adjustable: order, order:) }
 
@@ -389,76 +389,76 @@ module Spree::Api
         allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       end
 
-      context 'when inventory information is present' do
-        it 'contains stock information on variant' do
+      context "when inventory information is present" do
+        it "contains stock information on variant" do
           subject
-          variant = json_response['line_items'][0]['variant']
+          variant = json_response["line_items"][0]["variant"]
           expect(variant).to_not be_nil
-          expect(variant['in_stock']).to eq(false)
-          expect(variant['total_on_hand']).to eq(0)
-          expect(variant['is_backorderable']).to eq(true)
-          expect(variant['is_destroyed']).to eq(false)
+          expect(variant["in_stock"]).to eq(false)
+          expect(variant["total_on_hand"]).to eq(0)
+          expect(variant["is_backorderable"]).to eq(true)
+          expect(variant["is_destroyed"]).to eq(false)
         end
       end
 
-      context 'when an item does not track inventory' do
+      context "when an item does not track inventory" do
         before do
           order.line_items.first.variant.update!(track_inventory: false)
         end
 
-        it 'contains stock information on variant' do
+        it "contains stock information on variant" do
           subject
-          variant = json_response['line_items'][0]['variant']
+          variant = json_response["line_items"][0]["variant"]
           expect(variant).to_not be_nil
-          expect(variant['in_stock']).to eq(true)
-          expect(variant['total_on_hand']).to eq(nil)
-          expect(variant['is_backorderable']).to eq(true)
-          expect(variant['is_destroyed']).to eq(false)
+          expect(variant["in_stock"]).to eq(true)
+          expect(variant["total_on_hand"]).to eq(nil)
+          expect(variant["is_backorderable"]).to eq(true)
+          expect(variant["is_destroyed"]).to eq(false)
         end
       end
 
-      context 'when shipment adjustments are present' do
+      context "when shipment adjustments are present" do
         before do
           order.shipments.first.adjustments << adjustment
         end
 
-        it 'contains adjustments on shipment' do
+        it "contains adjustments on shipment" do
           subject
 
           # Test to insure shipment has adjustments
-          shipment = json_response['shipments'][0]
+          shipment = json_response["shipments"][0]
           expect(shipment).to_not be_nil
-          expect(shipment['adjustments'][0]).not_to be_empty
-          expect(shipment['adjustments'][0]['label']).to eq(adjustment.label)
+          expect(shipment["adjustments"][0]).not_to be_empty
+          expect(shipment["adjustments"][0]["label"]).to eq(adjustment.label)
         end
       end
 
-      context 'when credit cards are present' do
+      context "when credit cards are present" do
         let!(:payment) { create(:credit_card_payment, order:, source: credit_card) }
         let(:credit_card) { create(:credit_card, address: create(:address)) }
 
-        it 'contains the credit cards' do
+        it "contains the credit cards" do
           subject
 
-          credit_cards = json_response['credit_cards']
+          credit_cards = json_response["credit_cards"]
           expect(credit_cards.size).to eq 1
-          expect(credit_cards[0]['id']).to eq payment.source.id
-          expect(credit_cards[0]['address']['id']).to eq credit_card.address_id
+          expect(credit_cards[0]["id"]).to eq payment.source.id
+          expect(credit_cards[0]["address"]["id"]).to eq credit_card.address_id
         end
 
-        it 'renders the payment source view for gateway' do
+        it "renders the payment source view for gateway" do
           subject
-          expect(response).to render_template partial: 'spree/api/payments/source_views/_gateway'
+          expect(response).to render_template partial: "spree/api/payments/source_views/_gateway"
         end
       end
 
-      context 'when store credit is present' do
+      context "when store credit is present" do
         let!(:payment) { create(:store_credit_payment, order:, source: store_credit) }
         let(:store_credit) { create(:store_credit) }
 
-        it 'renders the payment source view for store credit' do
+        it "renders the payment source view for store credit" do
           subject
-          expect(response).to render_template partial: 'spree/api/payments/source_views/_store_credit'
+          expect(response).to render_template partial: "spree/api/payments/source_views/_store_credit"
         end
       end
     end
@@ -477,12 +477,12 @@ module Spree::Api
     end
 
     it "can view an order if the token is known" do
-      get spree.api_order_path(order), params: { order_token: order.guest_token }
+      get spree.api_order_path(order), params: {order_token: order.guest_token}
       expect(response.status).to eq(200)
     end
 
     it "can view an order if the token is passed in header" do
-      get spree.api_order_path(order), headers: { "X-Spree-Order-Token" => order.guest_token }
+      get spree.api_order_path(order), headers: {"X-Spree-Order-Token" => order.guest_token}
       expect(response.status).to eq(200)
     end
 
@@ -494,7 +494,7 @@ module Spree::Api
     end
 
     it "can create an order" do
-      post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5 } } } }
+      post spree.api_orders_path, params: {order: {line_items: {"0" => {variant_id: variant.to_param, quantity: 5}}}}
       expect(response.status).to eq(201)
 
       order = Spree::Order.last
@@ -502,7 +502,7 @@ module Spree::Api
       expect(order.line_items.first.variant).to eq(variant)
       expect(order.line_items.first.quantity).to eq(5)
 
-      expect(json_response['number']).to be_present
+      expect(json_response["number"]).to be_present
       expect(json_response["token"]).not_to be_blank
       expect(json_response["state"]).to eq("cart")
       expect(order.user).to eq(current_api_user)
@@ -511,9 +511,9 @@ module Spree::Api
     end
 
     it "assigns email when creating a new order" do
-      post spree.api_orders_path, params: { order: { email: "guest@solidus.io" } }
-      expect(json_response['email']).not_to eq current_api_user.email
-      expect(json_response['email']).to eq "guest@solidus.io"
+      post spree.api_orders_path, params: {order: {email: "guest@solidus.io"}}
+      expect(json_response["email"]).not_to eq current_api_user.email
+      expect(json_response["email"]).to eq "guest@solidus.io"
     end
 
     context "specifying additional parameters for a line items" do
@@ -546,7 +546,7 @@ module Spree::Api
           order: {
             line_items: {
               "0" => {
-                variant_id: variant.to_param, quantity: 5, options: { special: "foo" }
+                variant_id: variant.to_param, quantity: 5, options: {special: "foo"}
               }
             }
           }
@@ -574,9 +574,9 @@ module Spree::Api
       let!(:current_api_user) { create :admin_user }
 
       it "is able to set any default unpermitted attribute" do
-        post spree.api_orders_path, params: { order: { number: "WOW" } }
+        post spree.api_orders_path, params: {order: {number: "WOW"}}
         expect(response.status).to eq 201
-        expect(json_response['number']).to eq "WOW"
+        expect(json_response["number"]).to eq "WOW"
       end
     end
 
@@ -591,65 +591,65 @@ module Spree::Api
       let!(:line_item) { order.contents.add(variant, 1) }
       let!(:payment_method) { create(:check_payment_method) }
 
-      let(:address_params) { { country_id: country.id } }
+      let(:address_params) { {country_id: country.id} }
       let(:billing_address) {
-        { name: "Tiago Motta", address1: "Av Paulista",
-                                city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                country_id: country.id, state_id: state.id }
+        {name: "Tiago Motta", address1: "Av Paulista",
+         city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
+         country_id: country.id, state_id: state.id}
       }
       let(:shipping_address) {
-        { name: "Tiago Motta", address1: "Av Paulista",
-                                 city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                 country_id: country.id, state_id: state.id }
+        {name: "Tiago Motta", address1: "Av Paulista",
+         city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
+         country_id: country.id, state_id: state.id}
       }
-      let(:country) { create(:country, { name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76 }) }
-      let(:state) { create(:state, country_iso: 'BR')  }
+      let(:country) { create(:country, {name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76}) }
+      let(:state) { create(:state, country_iso: "BR") }
 
       before { allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user }
 
       it "updates quantities of existing line items" do
-        put spree.api_order_path(order), params: { order: {
+        put spree.api_order_path(order), params: {order: {
           line_items: {
-            "0" => { id: line_item.id, quantity: 10 }
+            "0" => {id: line_item.id, quantity: 10}
           }
-        } }
+        }}
 
         expect(response.status).to eq(200)
-        expect(json_response['line_items'].count).to eq(1)
-        expect(json_response['line_items'].first['quantity']).to eq(10)
+        expect(json_response["line_items"].count).to eq(1)
+        expect(json_response["line_items"].first["quantity"]).to eq(10)
       end
 
       it "adds an extra line item" do
         variant_two = create(:variant)
-        put spree.api_order_path(order), params: { order: {
+        put spree.api_order_path(order), params: {order: {
           line_items: {
-            "0" => { id: line_item.id, quantity: 10 },
-            "1" => { variant_id: variant_two.id, quantity: 1 }
+            "0" => {id: line_item.id, quantity: 10},
+            "1" => {variant_id: variant_two.id, quantity: 1}
           }
-        } }
+        }}
 
         expect(response.status).to eq(200)
-        expect(json_response['line_items'].count).to eq(2)
-        expect(json_response['line_items'][0]['quantity']).to eq(10)
-        expect(json_response['line_items'][1]['variant_id']).to eq(variant_two.id)
-        expect(json_response['line_items'][1]['quantity']).to eq(1)
+        expect(json_response["line_items"].count).to eq(2)
+        expect(json_response["line_items"][0]["quantity"]).to eq(10)
+        expect(json_response["line_items"][1]["variant_id"]).to eq(variant_two.id)
+        expect(json_response["line_items"][1]["quantity"]).to eq(1)
       end
 
       it "cannot change the price of an existing line item" do
-        put spree.api_order_path(order), params: { order: {
+        put spree.api_order_path(order), params: {order: {
           line_items: {
-            0 => { id: line_item.id, price: 0 }
+            0 => {id: line_item.id, price: 0}
           }
-        } }
+        }}
 
         expect(response.status).to eq(200)
-        expect(json_response['line_items'].count).to eq(1)
-        expect(json_response['line_items'].first['price'].to_f).to_not eq(0)
-        expect(json_response['line_items'].first['price'].to_f).to eq(line_item.variant.price)
+        expect(json_response["line_items"].count).to eq(1)
+        expect(json_response["line_items"].first["price"].to_f).to_not eq(0)
+        expect(json_response["line_items"].first["price"].to_f).to eq(line_item.variant.price)
       end
 
       it "can add billing address" do
-        put spree.api_order_path(order), params: { order: { bill_address_attributes: billing_address } }
+        put spree.api_order_path(order), params: {order: {bill_address_attributes: billing_address}}
 
         expect(order.reload.bill_address).to_not be_nil
       end
@@ -657,18 +657,18 @@ module Spree::Api
       it "receives error message if trying to add billing address with errors" do
         billing_address[:city] = ""
 
-        put spree.api_order_path(order), params: { order: { bill_address_attributes: billing_address } }
+        put spree.api_order_path(order), params: {order: {bill_address_attributes: billing_address}}
 
-        expect(json_response['error']).not_to be_nil
-        expect(json_response['errors']).not_to be_nil
-        expect(json_response['errors']['bill_address.city'].first).to eq "can't be blank"
+        expect(json_response["error"]).not_to be_nil
+        expect(json_response["errors"]).not_to be_nil
+        expect(json_response["errors"]["bill_address.city"].first).to eq "can't be blank"
       end
 
       it "can add shipping address" do
         order.update!(ship_address_id: nil)
 
         expect {
-          put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
+          put spree.api_order_path(order), params: {order: {ship_address_attributes: shipping_address}}
         }.to change { order.reload.ship_address }.from(nil)
       end
 
@@ -677,17 +677,17 @@ module Spree::Api
 
         shipping_address[:city] = ""
 
-        put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
+        put spree.api_order_path(order), params: {order: {ship_address_attributes: shipping_address}}
 
-        expect(json_response['error']).not_to be_nil
-        expect(json_response['errors']).not_to be_nil
-        expect(json_response['errors']['ship_address.city'].first).to eq "can't be blank"
+        expect(json_response["error"]).not_to be_nil
+        expect(json_response["errors"]).not_to be_nil
+        expect(json_response["errors"]["ship_address.city"].first).to eq "can't be blank"
       end
 
       it "cannot set the user_id for the order" do
         user = Spree.user_class.create
         original_id = order.user_id
-        put spree.api_order_path(order), params: { order: { user_id: user.id } }
+        put spree.api_order_path(order), params: {order: {user_id: user.id}}
         expect(response.status).to eq 200
         expect(json_response["user_id"]).to eq(original_id)
       end
@@ -696,11 +696,11 @@ module Spree::Api
         before { order.create_proposed_shipments }
 
         it "clears out all existing shipments on line item update" do
-          put spree.api_order_path(order), params: { order: {
+          put spree.api_order_path(order), params: {order: {
             line_items: {
-              0 => { id: line_item.id, quantity: 10 }
+              0 => {id: line_item.id, quantity: 10}
             }
-          } }
+          }}
           expect(order.reload.shipments).to be_empty
         end
       end
@@ -713,7 +713,7 @@ module Spree::Api
           create(:adjustment, order:, adjustable: order)
           put spree.empty_api_order_path(order)
           expect(response.status).to eq(200)
-          expect(json_response['id']).to eq(order.id)
+          expect(json_response["id"]).to eq(order.id)
           order.reload
           expect(order.line_items).to be_empty
           expect(order.adjustments).to be_empty
@@ -724,22 +724,22 @@ module Spree::Api
 
           get spree.api_order_path(order)
 
-          expect(json_response['line_items'].first['variant']).to have_attributes([:images])
+          expect(json_response["line_items"].first["variant"]).to have_attributes([:images])
         end
 
         it "lists variants product id" do
           get spree.api_order_path(order)
 
-          expect(json_response['line_items'].first['variant']).to have_attributes([:product_id])
+          expect(json_response["line_items"].first["variant"]).to have_attributes([:product_id])
         end
 
         it "includes the tax_total in the response" do
           get spree.api_order_path(order)
 
-          expect(json_response['included_tax_total']).to eq('0.0')
-          expect(json_response['additional_tax_total']).to eq('0.0')
-          expect(json_response['display_included_tax_total']).to eq('$0.00')
-          expect(json_response['display_additional_tax_total']).to eq('$0.00')
+          expect(json_response["included_tax_total"]).to eq("0.0")
+          expect(json_response["additional_tax_total"]).to eq("0.0")
+          expect(json_response["display_included_tax_total"]).to eq("$0.00")
+          expect(json_response["display_additional_tax_total"]).to eq("$0.00")
         end
 
         it "lists line item adjustments" do
@@ -750,9 +750,9 @@ module Spree::Api
           adjustment.update_column(:amount, 5)
           get spree.api_order_path(order)
 
-          adjustment = json_response['line_items'].first['adjustments'].first
-          expect(adjustment['label']).to eq("10% off!")
-          expect(adjustment['amount']).to eq("5.0")
+          adjustment = json_response["line_items"].first["adjustments"].first
+          expect(adjustment["label"]).to eq("10% off!")
+          expect(adjustment["amount"]).to eq("5.0")
         end
 
         it "lists payments source without gateway info" do
@@ -786,8 +786,8 @@ module Spree::Api
           it "includes the ship_total in the response" do
             get spree.api_order_path(order)
 
-            expect(json_response['ship_total']).to eq '10.0'
-            expect(json_response['display_ship_total']).to eq '$10.00'
+            expect(json_response["ship_total"]).to eq "10.0"
+            expect(json_response["display_ship_total"]).to eq "$10.00"
           end
 
           it "returns available shipments for an order" do
@@ -879,7 +879,7 @@ module Spree::Api
 
         # Test for https://github.com/spree/spree/issues/1763
         it "can control the page size through a parameter" do
-          get spree.api_orders_path, params: { per_page: 1 }
+          get spree.api_orders_path, params: {per_page: 1}
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["count"]).to eq(1)
@@ -891,13 +891,13 @@ module Spree::Api
       context "search" do
         before do
           create(:order)
-          Spree::Order.last.update_attribute(:email, 'solidus@solidus.io')
+          Spree::Order.last.update_attribute(:email, "solidus@solidus.io")
         end
 
         let(:expected_result) { Spree::Order.last }
 
         it "can query the results through a parameter" do
-          get spree.api_orders_path, params: { q: { email_cont: 'solidus' } }
+          get spree.api_orders_path, params: {q: {email_cont: "solidus"}}
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["orders"].first["email"]).to eq(expected_result.email)
@@ -930,7 +930,7 @@ module Spree::Api
 
         it "can set the user_id for the order" do
           user = Spree.user_class.create
-          post spree.api_orders_path, params: { order: { user_id: user.id } }
+          post spree.api_orders_path, params: {order: {user_id: user.id}}
           expect(response.status).to eq 201
           expect(json_response["user_id"]).to eq(user.id)
         end
@@ -939,7 +939,7 @@ module Spree::Api
           let(:params) do
             {
               payments: [{
-                amount: '10.0',
+                amount: "10.0",
                 payment_method: create(:payment_method).name,
                 source: {
                   month: "01",
@@ -954,18 +954,18 @@ module Spree::Api
 
           context "with source" do
             it "creates a payment" do
-              post spree.api_orders_path, params: { order: params }
-              payment = json_response['payments'].first
+              post spree.api_orders_path, params: {order: params}
+              payment = json_response["payments"].first
 
               expect(response.status).to eq 201
-              expect(payment['amount']).to eql "10.0"
-              expect(payment['source']['last_digits']).to eql "1111"
+              expect(payment["amount"]).to eql "10.0"
+              expect(payment["source"]["last_digits"]).to eql "1111"
             end
 
             context "when payment_method is missing" do
               it "returns an error" do
                 params[:payments][0].delete(:payment_method)
-                post spree.api_orders_path, params: { order: params }
+                post spree.api_orders_path, params: {order: params}
                 expect(response.status).to eq 404
               end
             end
@@ -976,7 +976,7 @@ module Spree::Api
       context "updating" do
         it "can set the user_id for the order" do
           user = Spree.user_class.create
-          put spree.api_order_path(order), params: { order: { user_id: user.id } }
+          put spree.api_order_path(order), params: {order: {user_id: user.id}}
           expect(response.status).to eq 200
           expect(json_response["user_id"]).to eq(user.id)
         end
@@ -984,42 +984,42 @@ module Spree::Api
         it "cannot cancel not completed order" do
           put spree.cancel_api_order_path(order)
 
-          expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: 'order'))
+          expect(json_response["error"]).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
           expect(response.status).to eq(422)
         end
 
         it "can update a order admin_metadata" do
-          put spree.api_order_path(order), params: { order: { admin_metadata: { 'order_number' => 'PN345678' } } }
+          put spree.api_order_path(order), params: {order: {admin_metadata: {"order_number" => "PN345678"}}}
 
           expect(response.status).to eq(200)
 
-          expect(json_response["admin_metadata"]).to eq({ 'order_number' => 'PN345678' })
+          expect(json_response["admin_metadata"]).to eq({"order_number" => "PN345678"})
         end
 
         it "can update customer metadata if the order is complete" do
           order = create(:order)
           order.completed_at = Time.current
-          order.state = 'complete'
+          order.state = "complete"
           order.save!
 
-          put spree.api_order_path(order), params: { order: { customer_metadata: { 'Note' => 'Do not ring the bell' }, admin_metadata: { 'order_number' => 'PN345678' } } }
+          put spree.api_order_path(order), params: {order: {customer_metadata: {"Note" => "Do not ring the bell"}, admin_metadata: {"order_number" => "PN345678"}}}
 
-          expect(json_response['customer_metadata']).to eq({ 'Note' => 'Do not ring the bell' })
-          expect(json_response["admin_metadata"]).to eq({ 'order_number' => 'PN345678' })
+          expect(json_response["customer_metadata"]).to eq({"Note" => "Do not ring the bell"})
+          expect(json_response["admin_metadata"]).to eq({"order_number" => "PN345678"})
         end
 
         it "can view admin_metadata" do
           get spree.api_order_path(order)
 
-          expect(json_response).to have_key('admin_metadata')
+          expect(json_response).to have_key("admin_metadata")
         end
       end
 
       context "can cancel an order" do
         before do
           order.completed_at = Time.current
-          order.state = 'complete'
-          order.shipment_state = 'ready'
+          order.state = "complete"
+          order.shipment_state = "ready"
           order.save!
         end
 

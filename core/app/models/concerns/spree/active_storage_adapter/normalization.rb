@@ -26,13 +26,13 @@ module Spree
 
       def attachable_io(attachable)
         filename = if attachable.respond_to?(:to_path)
-                     attachable.to_path
-                   else
-                     SecureRandom.uuid
-                   end
+          attachable.to_path
+        else
+          SecureRandom.uuid
+        end
         attachable.rewind
 
-        { io: attachable, filename: }
+        {io: attachable, filename:}
       end
     end
   end

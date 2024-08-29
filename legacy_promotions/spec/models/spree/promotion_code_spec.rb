@@ -1,59 +1,59 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::PromotionCode do
-  context 'callbacks' do
+  context "callbacks" do
     subject { promotion_code.save }
 
-    describe '#normalize_code' do
+    describe "#normalize_code" do
       let(:promotion) { create(:promotion, code:) }
 
       before { subject }
 
-      context 'when no other code with the same value exists' do
+      context "when no other code with the same value exists" do
         let(:promotion_code) { promotion.codes.first }
 
-        context 'with mixed case' do
-          let(:code) { 'NewCoDe' }
+        context "with mixed case" do
+          let(:code) { "NewCoDe" }
 
-          it 'downcases the value before saving' do
-            expect(promotion_code.value).to eq('newcode')
+          it "downcases the value before saving" do
+            expect(promotion_code.value).to eq("newcode")
           end
         end
 
-        context 'with extra spacing' do
-          let(:code) { ' new code ' }
+        context "with extra spacing" do
+          let(:code) { " new code " }
 
-          it 'removes surrounding whitespace' do
-            expect(promotion_code.value).to eq 'new code'
+          it "removes surrounding whitespace" do
+            expect(promotion_code.value).to eq "new code"
           end
         end
       end
 
-      context 'when another code with the same value exists' do
+      context "when another code with the same value exists" do
         let(:promotion_code) { promotion.codes.build(value: code) }
 
-        context 'with mixed case' do
-          let(:code) { 'NewCoDe' }
+        context "with mixed case" do
+          let(:code) { "NewCoDe" }
 
-          it 'does not save the record and marks it as invalid' do
+          it "does not save the record and marks it as invalid" do
             expect(promotion_code.valid?).to eq false
 
             expect(promotion_code.errors.messages[:value]).to contain_exactly(
-              'has already been taken'
+              "has already been taken"
             )
           end
         end
 
-        context 'with extra spacing' do
-          let(:code) { ' new code ' }
+        context "with extra spacing" do
+          let(:code) { " new code " }
 
-          it 'does not save the record and marks it as invalid' do
+          it "does not save the record and marks it as invalid" do
             expect(promotion_code.valid?).to eq false
 
             expect(promotion_code.errors.messages[:value]).to contain_exactly(
-              'has already been taken'
+              "has already been taken"
             )
           end
         end
@@ -182,7 +182,7 @@ RSpec.describe Spree::PromotionCode do
       context "and the order is canceled" do
         before { order.cancel! }
         it { is_expected.to eq 0 }
-        it { expect(order.state).to eq 'canceled' }
+        it { expect(order.state).to eq "canceled" }
       end
     end
   end

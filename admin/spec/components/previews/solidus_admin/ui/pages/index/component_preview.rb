@@ -32,16 +32,16 @@ class SolidusAdmin::UI::Pages::Index::ComponentPreview < ViewComponent::Preview
       def page_actions
         render component("ui/button").new(
           tag: :a,
-          text: t('.add'),
+          text: t(".add"),
           href: spree.new_admin_order_path,
-          icon: "add-line",
+          icon: "add-line"
         )
       end
 
       def batch_actions
         [{
           label: "Print",
-          action: "print",
+          action: "print"
         }]
       end
     end

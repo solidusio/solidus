@@ -7,13 +7,13 @@ module SolidusAdmin
     def index
       reimbursement_types = apply_search_to(
         Spree::ReimbursementType.unscoped.order(id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(reimbursement_types)
 
       respond_to do |format|
-        format.html { render component('reimbursement_types/index').new(page: @page) }
+        format.html { render component("reimbursement_types/index").new(page: @page) }
       end
     end
 

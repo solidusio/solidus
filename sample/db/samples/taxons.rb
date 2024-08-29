@@ -28,7 +28,7 @@ end
 taxons = [
   {
     name: "Categories",
-    taxonomy: categories,
+    taxonomy: categories
   },
   {
     name: "Brands",
@@ -94,7 +94,7 @@ taxons = [
     taxonomy: categories,
     parent: "Accessories",
     products: [
-      products[:solidus_bottles],
+      products[:solidus_bottles]
     ]
   },
   {
@@ -105,14 +105,14 @@ taxons = [
       products[:solidus_tshirt],
       products[:solidus_dark_tee],
       products[:solidus_long_sleeve_tee]
-    ],
+    ]
   },
   {
     name: "Hoodies",
     taxonomy: categories,
     parent: "Clothing",
     products: [
-      products[:solidus_hoodie],
+      products[:solidus_hoodie]
     ]
   }
 ]

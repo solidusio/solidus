@@ -59,8 +59,8 @@ module Spree
         inverse_of: :user
 
       has_many :wallet_payment_sources,
-        foreign_key: 'user_id',
-        class_name: 'Spree::WalletPaymentSource',
+        foreign_key: "user_id",
+        class_name: "Spree::WalletPaymentSource",
         inverse_of: :user,
         dependent: :destroy
 
@@ -97,22 +97,22 @@ module Spree
       self_orders = orders
       self_orders = self_orders.where(frontend_viewable: true) if only_frontend_viewable
       self_orders = self_orders.where(store:) if store
-      self_orders = self_orders.where('updated_at > ?', Spree::Config.completable_order_updated_cutoff_days.days.ago) if Spree::Config.completable_order_updated_cutoff_days
-      self_orders = self_orders.where('created_at > ?', Spree::Config.completable_order_created_cutoff_days.days.ago) if Spree::Config.completable_order_created_cutoff_days
+      self_orders = self_orders.where("updated_at > ?", Spree::Config.completable_order_updated_cutoff_days.days.ago) if Spree::Config.completable_order_updated_cutoff_days
+      self_orders = self_orders.where("created_at > ?", Spree::Config.completable_order_created_cutoff_days.days.ago) if Spree::Config.completable_order_created_cutoff_days
       last_order = self_orders.order(:created_at).last
       last_order unless last_order.try!(:completed?)
     end
 
     def available_store_credit_total(currency:)
-      store_credits.to_a.
-        select { |credit| credit.currency == currency }.
-        sum(&:amount_remaining)
+      store_credits.to_a
+        .select { |credit| credit.currency == currency }
+        .sum(&:amount_remaining)
     end
 
     def display_available_store_credit_total(currency:)
       Spree::Money.new(
         available_store_credit_total(currency:),
-        currency:,
+        currency:
       )
     end
 

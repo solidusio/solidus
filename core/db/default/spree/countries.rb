@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'carmen'
+require "carmen"
 
 # Insert Countries into the spree_countries table, checking to ensure that no
 # duplicates are created, using as few SQL statements as possible (2)
@@ -8,11 +8,11 @@ require 'carmen'
 connection = Spree::Base.connection
 
 country_mapper = ->(country) do
-  name            = connection.quote country.name
-  iso3            = connection.quote country.alpha_3_code
-  iso             = connection.quote country.alpha_2_code
-  iso_name        = connection.quote country.name.upcase
-  numcode         = connection.quote country.numeric_code
+  name = connection.quote country.name
+  iso3 = connection.quote country.alpha_3_code
+  iso = connection.quote country.alpha_2_code
+  iso_name = connection.quote country.name.upcase
+  numcode = connection.quote country.numeric_code
   states_required = connection.quote country.subregions?
 
   [name, iso3, iso, iso_name, numcode, states_required].join(", ")
@@ -32,7 +32,7 @@ country_values = -> do
     .join("), (")
 end
 
-country_columns = %w(name iso3 iso iso_name numcode states_required).join(', ')
+country_columns = %w[name iso3 iso iso_name numcode states_required].join(", ")
 country_vals = country_values.call
 
 if country_vals.present?

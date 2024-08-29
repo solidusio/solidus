@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::StoreSelector::Legacy do
   describe "#store" do
@@ -15,7 +15,7 @@ RSpec.describe Spree::StoreSelector::Legacy do
       end
 
       context "with a domain match" do
-        let(:request) { double(headers: {}, env: { "SERVER_NAME" => url } ) }
+        let(:request) { double(headers: {}, env: {"SERVER_NAME" => url}) }
         let(:url) { "server-name.org" }
         let!(:store_2) { create :store, default: false, url: }
 
@@ -23,7 +23,7 @@ RSpec.describe Spree::StoreSelector::Legacy do
           expect(subject).to eq(store_2)
         end
 
-        context 'the store has multiple URLs' do
+        context "the store has multiple URLs" do
           let!(:store_2) { create :store, default: false, url: "foo\n#{url}\nbar" }
 
           it "returns the store with the matching domain" do
@@ -32,7 +32,7 @@ RSpec.describe Spree::StoreSelector::Legacy do
         end
 
         context "with headers" do
-          let(:request) { double(headers: { "HTTP_SPREE_STORE" => headers_code }, env: {}) }
+          let(:request) { double(headers: {"HTTP_SPREE_STORE" => headers_code}, env: {}) }
           let(:headers_code) { "HEADERS" }
           let!(:store_3) { create :store, code: headers_code, default: false }
 

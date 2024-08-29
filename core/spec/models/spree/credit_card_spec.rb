@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::CreditCard, type: :model do
   let(:valid_credit_card_attributes) do
     {
-      number: '4111111111111111',
-      verification_value: '123',
+      number: "4111111111111111",
+      verification_value: "123",
       expiry: "12 / #{(Time.current.year + 1).to_s.last(2)}",
-      name: 'Spree Commerce'
+      name: "Spree Commerce"
     }
   end
 
@@ -18,14 +18,14 @@ RSpec.describe Spree::CreditCard, type: :model do
 
   let(:credit_card) { Spree::CreditCard.new }
 
-  it_behaves_like 'a payment source'
+  it_behaves_like "a payment source"
 
   before(:each) do
     @order = create(:order)
     @payment = Spree::Payment.create(amount: 100, order: @order)
 
-    @success_response = double('gateway_response', success?: true, authorization: '123', avs_result: { 'code' => 'avs-code' })
-    @fail_response = double('gateway_response', success?: false)
+    @success_response = double("gateway_response", success?: true, authorization: "123", avs_result: {"code" => "avs-code"})
+    @fail_response = double("gateway_response", success?: false)
 
     @payment_gateway = mock_model(Spree::PaymentMethod,
       payment_profiles_supported?: true,
@@ -111,10 +111,10 @@ RSpec.describe Spree::CreditCard, type: :model do
     end
 
     it "should save and update addresses through nested attributes" do
-      persisted_card.update({ address_attributes: valid_address_attributes })
+      persisted_card.update({address_attributes: valid_address_attributes})
       persisted_card.save!
-      updated_attributes = { id: persisted_card.address.id, address1: "123 Main St." }
-      persisted_card.update({ address_attributes: updated_attributes })
+      updated_attributes = {id: persisted_card.address.id, address1: "123 Main St."}
+      persisted_card.update({address_attributes: updated_attributes})
       expect(persisted_card.address.address1).to eq "123 Main St."
     end
   end
@@ -151,109 +151,109 @@ RSpec.describe Spree::CreditCard, type: :model do
     end
 
     it "strips any whitespace" do
-      credit_card.verification_value = ' 1 2  3 '
-      expect(credit_card.verification_value).to eq('123')
+      credit_card.verification_value = " 1 2  3 "
+      expect(credit_card.verification_value).to eq("123")
     end
   end
 
   # Regression test for https://github.com/spree/spree/issues/3847 and https://github.com/spree/spree/issues/3896
   describe "#expiry=" do
     it "can set with a 2-digit month and year" do
-      credit_card.expiry = '04 / 15'
-      expect(credit_card.month).to eq('4')
-      expect(credit_card.year).to eq('2015')
+      credit_card.expiry = "04 / 15"
+      expect(credit_card.month).to eq("4")
+      expect(credit_card.year).to eq("2015")
     end
 
     it "can set with a 2-digit month and 4-digit year" do
-      credit_card.expiry = '04 / 2015'
-      expect(credit_card.month).to eq('4')
-      expect(credit_card.year).to eq('2015')
+      credit_card.expiry = "04 / 2015"
+      expect(credit_card.month).to eq("4")
+      expect(credit_card.year).to eq("2015")
     end
 
     it "can set with a 2-digit month and 4-digit year without whitespace" do
-      credit_card.expiry = '04/15'
-      expect(credit_card.month).to eq('4')
-      expect(credit_card.year).to eq('2015')
+      credit_card.expiry = "04/15"
+      expect(credit_card.month).to eq("4")
+      expect(credit_card.year).to eq("2015")
     end
 
     it "can set with a 2-digit month and 4-digit year without whitespace" do
-      credit_card.expiry = '04/2015'
-      expect(credit_card.month).to eq('4')
-      expect(credit_card.year).to eq('2015')
+      credit_card.expiry = "04/2015"
+      expect(credit_card.month).to eq("4")
+      expect(credit_card.year).to eq("2015")
     end
 
     it "can set with a 2-digit month and 4-digit year without whitespace and slash" do
-      credit_card.expiry = '042015'
-      expect(credit_card.month).to eq('4')
-      expect(credit_card.year).to eq('2015')
+      credit_card.expiry = "042015"
+      expect(credit_card.month).to eq("4")
+      expect(credit_card.year).to eq("2015")
     end
 
     it "can set with a 2-digit month and 2-digit year without whitespace and slash" do
-      credit_card.expiry = '0415'
-      expect(credit_card.month).to eq('4')
-      expect(credit_card.year).to eq('2015')
+      credit_card.expiry = "0415"
+      expect(credit_card.month).to eq("4")
+      expect(credit_card.year).to eq("2015")
     end
 
     it "does not blow up when passed an empty string" do
-      credit_card.expiry = ''
+      credit_card.expiry = ""
     end
 
     # Regression test for https://github.com/spree/spree/issues/4725
     it "does not blow up when passed one number" do
-      credit_card.expiry = '12'
+      credit_card.expiry = "12"
     end
   end
 
   describe "#cc_type=" do
     it "converts between the different types" do
-      credit_card.cc_type = 'mastercard'
-      expect(credit_card.cc_type).to eq('master')
+      credit_card.cc_type = "mastercard"
+      expect(credit_card.cc_type).to eq("master")
 
-      credit_card.cc_type = 'maestro'
-      expect(credit_card.cc_type).to eq('master')
+      credit_card.cc_type = "maestro"
+      expect(credit_card.cc_type).to eq("master")
 
-      credit_card.cc_type = 'amex'
-      expect(credit_card.cc_type).to eq('american_express')
+      credit_card.cc_type = "amex"
+      expect(credit_card.cc_type).to eq("american_express")
 
-      credit_card.cc_type = 'dinersclub'
-      expect(credit_card.cc_type).to eq('diners_club')
+      credit_card.cc_type = "dinersclub"
+      expect(credit_card.cc_type).to eq("diners_club")
 
-      credit_card.cc_type = 'some_outlandish_cc_type'
-      expect(credit_card.cc_type).to eq('some_outlandish_cc_type')
+      credit_card.cc_type = "some_outlandish_cc_type"
+      expect(credit_card.cc_type).to eq("some_outlandish_cc_type")
     end
 
     it "assigns the type based on card number in the event of js failure" do
-      credit_card.number = '4242424242424242'
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('visa')
+      credit_card.number = "4242424242424242"
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("visa")
 
-      credit_card.number = '5555555555554444'
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('master')
+      credit_card.number = "5555555555554444"
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("master")
 
-      credit_card.number = '2221000000000000'
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('master')
+      credit_card.number = "2221000000000000"
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("master")
 
-      credit_card.number = '378282246310005'
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('american_express')
+      credit_card.number = "378282246310005"
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("american_express")
 
-      credit_card.number = '30569309025904'
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('diners_club')
+      credit_card.number = "30569309025904"
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("diners_club")
 
-      credit_card.number = '3530111333300000'
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('jcb')
+      credit_card.number = "3530111333300000"
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("jcb")
 
-      credit_card.number = ''
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('')
+      credit_card.number = ""
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("")
 
       credit_card.number = nil
-      credit_card.cc_type = ''
-      expect(credit_card.cc_type).to eq('')
+      credit_card.cc_type = ""
+      expect(credit_card.cc_type).to eq("")
     end
   end
 

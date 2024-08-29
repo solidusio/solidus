@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/api'
-require 'spree/api/responders'
-require 'jbuilder'
+require "spree/api"
+require "spree/api/responders"
+require "jbuilder"

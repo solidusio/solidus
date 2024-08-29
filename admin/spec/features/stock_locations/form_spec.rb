@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Stock Location Form", :js, type: :feature do
   before do
@@ -8,12 +8,12 @@ describe "Stock Location Form", :js, type: :feature do
       create(:country, iso:).tap { create(:state, country: _1, name: "Fictitious State in #{iso}") }
     end
 
-    sign_in create(:admin_user, email: 'admin@example.com')
+    sign_in create(:admin_user, email: "admin@example.com")
     visit "/admin/stock_locations"
     click_on "Add new"
   end
 
-  it 'shows page with form for stock location' do
+  it "shows page with form for stock location" do
     expect(page).to have_current_path(solidus_admin.new_stock_location_path)
     expect(page).to have_content("New Stock Location")
     expect(page).to have_content("Address")
@@ -24,14 +24,14 @@ describe "Stock Location Form", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  describe 'navigation buttons' do
-    it 'allows to go back' do
-      click_on 'Back'
+  describe "navigation buttons" do
+    it "allows to go back" do
+      click_on "Back"
       expect(page).to have_current_path(solidus_admin.stock_locations_path)
     end
 
-    it 'allows to discard changes' do
-      click_on 'Discard'
+    it "allows to discard changes" do
+      click_on "Discard"
       expect(page).to have_current_path(solidus_admin.stock_locations_path)
     end
   end

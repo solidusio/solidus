@@ -8,8 +8,8 @@ module Spree
 
     # @param quantities [Hash<Spree::Variant=>Numeric>]
     def initialize(quantities = {})
-      raise ArgumentError unless quantities.keys.all?{ |value| value.is_a?(Spree::Variant) }
-      raise ArgumentError unless quantities.values.all?{ |value| value.is_a?(Numeric) }
+      raise ArgumentError unless quantities.keys.all? { |value| value.is_a?(Spree::Variant) }
+      raise ArgumentError unless quantities.values.all? { |value| value.is_a?(Numeric) }
 
       @quantities = quantities
     end

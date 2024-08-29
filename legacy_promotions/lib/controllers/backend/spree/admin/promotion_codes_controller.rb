@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
 module Spree
   module Admin
@@ -24,7 +24,7 @@ module Spree
       def new
         @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         if @promotion.apply_automatically
-          flash[:error] = t('activerecord.errors.models.spree/promotion_code.attributes.base.disallowed_with_apply_automatically')
+          flash[:error] = t("activerecord.errors.models.spree/promotion_code.attributes.base.disallowed_with_apply_automatically")
           redirect_to admin_promotion_promotion_codes_url(@promotion)
         else
           @promotion_code = @promotion.promotion_codes.build

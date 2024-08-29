@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'action_mailer'
+require "rails_helper"
+require "action_mailer"
 
 RSpec.describe Spree::OrderMailerSubscriber do
   let(:bus) { Omnes::Bus.new }

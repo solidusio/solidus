@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'geared_pagination'
+require "geared_pagination"
 
 module SolidusAdmin
   class BaseController < ApplicationController
@@ -17,17 +17,17 @@ module SolidusAdmin
 
     layout :set_layout
 
-    helper 'solidus_admin/components'
-    helper 'solidus_admin/layout'
-    helper 'solidus_admin/flash'
+    helper "solidus_admin/components"
+    helper "solidus_admin/layout"
+    helper "solidus_admin/flash"
 
     private
 
     def set_layout
       if turbo_frame_request?
-        'turbo_rails/frame'
+        "turbo_rails/frame"
       else
-        'solidus_admin/application'
+        "solidus_admin/application"
       end
     end
   end

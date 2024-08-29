@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/bus'
+require "spree/bus"
 
 module Spree
   module TestingSupport

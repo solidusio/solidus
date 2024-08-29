@@ -6,16 +6,16 @@ FactoryBot.define do
     aliases: [
       :base_shipping_method
     ],
-    class: 'Spree::ShippingMethod'
+    class: "Spree::ShippingMethod"
   ) do
     zones do
-      [Spree::Zone.find_by(name: 'GlobalZone') || FactoryBot.create(:global_zone)]
+      [Spree::Zone.find_by(name: "GlobalZone") || FactoryBot.create(:global_zone)]
     end
 
-    name { 'UPS Ground' }
-    code { 'UPS_GROUND' }
-    carrier { 'UPS' }
-    service_level { '1DAYGROUND' }
+    name { "UPS Ground" }
+    code { "UPS_GROUND" }
+    carrier { "UPS" }
+    service_level { "1DAYGROUND" }
 
     calculator { |s| s.association(:shipping_calculator, strategy: :build, preferred_amount: s.cost, preferred_currency: s.currency) }
 
@@ -30,7 +30,7 @@ FactoryBot.define do
       end
     end
 
-    factory :free_shipping_method, class: 'Spree::ShippingMethod' do
+    factory :free_shipping_method, class: "Spree::ShippingMethod" do
       cost { nil }
       association(:calculator, factory: :shipping_no_amount_calculator, strategy: :build)
     end

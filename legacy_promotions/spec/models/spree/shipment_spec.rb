@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'benchmark'
+require "rails_helper"
+require "benchmark"
 
 RSpec.describe Spree::Shipment, type: :model do
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
@@ -9,7 +9,7 @@ RSpec.describe Spree::Shipment, type: :model do
   let(:stock_location) { create(:stock_location) }
   let(:shipment) do
     order.shipments.create!(
-      state: 'pending',
+      state: "pending",
       cost: 1,
       inventory_units: order.inventory_units,
       shipping_rates: [shipping_rate],
@@ -23,7 +23,7 @@ RSpec.describe Spree::Shipment, type: :model do
     )
   end
 
-  describe '#total_before_tax' do
+  describe "#total_before_tax" do
     before do
       shipment.update!(cost: 10)
     end
@@ -33,7 +33,7 @@ RSpec.describe Spree::Shipment, type: :model do
     let(:promo_action) { promo.actions[0] }
     let(:promo) { create(:promotion, :with_line_item_adjustment) }
 
-    it 'returns the amount minus any adjustments' do
+    it "returns the amount minus any adjustments" do
       expect(shipment.total_before_tax).to eq(10 - 1 - 2)
     end
   end

@@ -206,16 +206,16 @@ describe "Users", :js, type: :feature do
         expect(page).not_to have_content("No Orders found.")
       end
 
-      context 'with a different currency' do
+      context "with a different currency" do
         around do |example|
           currency_was = Spree::Config.currency
-          Spree::Config.currency = 'EUR'
+          Spree::Config.currency = "EUR"
           example.run
           Spree::Config.currency = currency_was
         end
 
-        it 'displays correct currency' do
-          page.assert_selector('section table td:last-child', exact_text: /€\d\.\d{2}/, count: user.orders.count)
+        it "displays correct currency" do
+          page.assert_selector("section table td:last-child", exact_text: /€\d\.\d{2}/, count: user.orders.count)
         end
       end
     end

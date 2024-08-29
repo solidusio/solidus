@@ -15,7 +15,7 @@ module Spree
         authorize! :update, @order, order_token
         find_address
 
-        if @order.update({ "#{@order_source}_attributes" => address_params })
+        if @order.update({"#{@order_source}_attributes" => address_params})
           @address = @order.send(@order_source)
           respond_with(@address, default_template: :show)
         else

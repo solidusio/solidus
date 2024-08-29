@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderPromotionSubscriber do
   let(:bus) { Omnes::Bus.new }
@@ -11,8 +11,8 @@ RSpec.describe Spree::OrderPromotionSubscriber do
     described_class.new.subscribe_to(bus)
   end
 
-  describe 'on :order_emptied' do
-    it 'clears connected promotions' do
+  describe "on :order_emptied" do
+    it "clears connected promotions" do
       promotion = create(:promotion)
       order = create(:order)
       order.promotions << promotion

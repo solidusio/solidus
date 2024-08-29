@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
   let(:return_item) { create(:return_item) }
-  let(:validator)   { Spree::ReturnItem::EligibilityValidator::InventoryShipped.new(return_item) }
+  let(:validator) { Spree::ReturnItem::EligibilityValidator::InventoryShipped.new(return_item) }
 
   describe "#eligible_for_return?" do
     before { allow(return_item.inventory_unit).to receive(:shipped?).and_return(true) }
@@ -26,7 +26,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
 
       it "sets an error" do
         subject
-        expect(validator.errors[:inventory_unit_shipped]).to eq I18n.t('spree.return_item_inventory_unit_ineligible')
+        expect(validator.errors[:inventory_unit_shipped]).to eq I18n.t("spree.return_item_inventory_unit_ineligible")
       end
     end
   end
@@ -40,7 +40,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
         validator.eligible_for_return?
       end
 
-      it 'returns true if errors were added' do
+      it "returns true if errors were added" do
         expect(subject).to eq true
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
         validator.eligible_for_return?
       end
 
-      it 'returns false if no errors were added' do
+      it "returns false if no errors were added" do
         expect(subject).to eq false
       end
     end

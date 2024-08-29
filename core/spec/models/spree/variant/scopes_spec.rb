@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Variant scopes", type: :model do
   let!(:product) { create(:product) }
@@ -29,7 +29,7 @@ RSpec.describe "Variant scopes", type: :model do
       end
     end
 
-    context 'when searching for a variant that has two eligible prices (one fallback)' do
+    context "when searching for a variant that has two eligible prices (one fallback)" do
       let(:france) { create(:country, iso: "FR") }
       let(:pricing_options) { Spree::Variant::PricingOptions.new(country_iso: "FR", currency: "EUR") }
 

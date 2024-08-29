@@ -22,11 +22,11 @@ module Spree
       def index
         authorize! :index, CustomerReturn
 
-        @customer_returns = @order.
-          customer_returns.
-          accessible_by(current_ability).
-          ransack(params[:q]).
-          result
+        @customer_returns = @order
+          .customer_returns
+          .accessible_by(current_ability)
+          .ransack(params[:q])
+          .result
 
         @customer_returns = paginate(@customer_returns)
 
@@ -66,17 +66,17 @@ module Spree
 
       def build_customer_return
         customer_return_attributes = customer_return_params
-        return_items_params = customer_return_attributes.
-          delete(:return_items_attributes)
+        return_items_params = customer_return_attributes
+          .delete(:return_items_attributes)
 
         @customer_return = CustomerReturn.new(customer_return_attributes)
 
         @customer_return.return_items = return_items_params.map do |item_params|
           return_item = if item_params[:id]
-                          Spree::ReturnItem.find(item_params[:id])
-                        else
-                          Spree::ReturnItem.new
-                        end
+            Spree::ReturnItem.find(item_params[:id])
+          else
+            Spree::ReturnItem.new
+          end
 
           return_item.assign_attributes(item_params)
 

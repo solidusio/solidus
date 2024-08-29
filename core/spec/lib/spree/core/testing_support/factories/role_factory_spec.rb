@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'role factory' do
+RSpec.describe "role factory" do
   let(:factory_class) { Spree::Role }
 
-  describe 'plain role' do
+  describe "plain role" do
     let(:factory) { :role }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'admin role' do
+  describe "admin role" do
     let(:factory) { :admin_role }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::StockItem, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }
 
   subject { stock_location.stock_items.order(:id).first }
 
-  it 'maintains the count on hand for a variant' do
+  it "maintains the count on hand for a variant" do
     expect(subject.count_on_hand).to eq 10
   end
 
@@ -35,19 +35,19 @@ RSpec.describe Spree::StockItem, type: :model do
     end
   end
 
-  describe 'reduce_count_on_hand_to_zero' do
-    context 'when count_on_hand > 0' do
+  describe "reduce_count_on_hand_to_zero" do
+    context "when count_on_hand > 0" do
       before(:each) do
-        subject.update_column('count_on_hand', 4)
+        subject.update_column("count_on_hand", 4)
         subject.reduce_count_on_hand_to_zero
       end
 
       it { expect(subject.count_on_hand).to eq(0) }
     end
 
-    context 'when count_on_hand > 0' do
+    context "when count_on_hand > 0" do
       before(:each) do
-        subject.update_column('count_on_hand', -4)
+        subject.update_column("count_on_hand", -4)
         @count_on_hand = subject.count_on_hand
         subject.reduce_count_on_hand_to_zero
       end
@@ -59,7 +59,7 @@ RSpec.describe Spree::StockItem, type: :model do
   context "adjust count_on_hand" do
     let!(:current_on_hand) { subject.count_on_hand }
 
-    it 'is updated pessimistically' do
+    it "is updated pessimistically" do
       copy = Spree::StockItem.find(subject.id)
 
       subject.adjust_count_on_hand(5)
@@ -71,8 +71,8 @@ RSpec.describe Spree::StockItem, type: :model do
     end
 
     context "item out of stock (by two items)" do
-      let(:inventory_unit) { double('InventoryUnit') }
-      let(:inventory_unit_2) { double('InventoryUnit2') }
+      let(:inventory_unit) { double("InventoryUnit") }
+      let(:inventory_unit_2) { double("InventoryUnit2") }
 
       before do
         allow(subject).to receive_messages(backordered_inventory_units: [inventory_unit, inventory_unit_2])
@@ -112,7 +112,7 @@ RSpec.describe Spree::StockItem, type: :model do
   context "set count_on_hand" do
     let!(:current_on_hand) { subject.count_on_hand }
 
-    it 'is updated pessimistically' do
+    it "is updated pessimistically" do
       copy = Spree::StockItem.find(subject.id)
 
       subject.set_count_on_hand(5)
@@ -124,8 +124,8 @@ RSpec.describe Spree::StockItem, type: :model do
     end
 
     context "item out of stock (by two items)" do
-      let(:inventory_unit) { double('InventoryUnit') }
-      let(:inventory_unit_2) { double('InventoryUnit2') }
+      let(:inventory_unit) { double("InventoryUnit") }
+      let(:inventory_unit_2) { double("InventoryUnit2") }
 
       before { subject.set_count_on_hand(-2) }
 
@@ -258,37 +258,37 @@ RSpec.describe Spree::StockItem, type: :model do
     end
   end
 
-  describe 'validations' do
+  describe "validations" do
     before do
       subject.backorderable = backorderable
       subject.send(:count_on_hand=, count_on_hand)
     end
 
-    describe 'count_on_hand' do
-      shared_examples_for 'valid count_on_hand' do
-        it 'has :no errors_on' do
+    describe "count_on_hand" do
+      shared_examples_for "valid count_on_hand" do
+        it "has :no errors_on" do
           expect(subject).to be_valid
           expect(subject.errors[:count_on_hand].size).to eq(0)
         end
       end
 
-      shared_examples_for 'invalid count_on_hand' do
-        it 'has the correct error on count_on_hand' do
+      shared_examples_for "invalid count_on_hand" do
+        it "has the correct error on count_on_hand" do
           expect(subject).not_to be_valid
           expect(subject.errors[:count_on_hand].size).to eq(1)
-          expect(subject.errors[:count_on_hand]).to include('must be greater than or equal to 0')
+          expect(subject.errors[:count_on_hand]).to include("must be greater than or equal to 0")
         end
       end
 
-      context 'when backorderable' do
+      context "when backorderable" do
         let(:backorderable) { true }
 
-        context 'when count_on_hand is positive' do
+        context "when count_on_hand is positive" do
           let(:count_on_hand) { 3 }
           it_should_behave_like "valid count_on_hand"
         end
 
-        context 'when count_on_hand is negative' do
+        context "when count_on_hand is negative" do
           let(:count_on_hand) { -3 }
 
           it_should_behave_like "valid count_on_hand"
@@ -301,15 +301,15 @@ RSpec.describe Spree::StockItem, type: :model do
         end
       end
 
-      context 'when not backorderable' do
+      context "when not backorderable" do
         let(:backorderable) { false }
 
-        context 'when count_on_hand is positive' do
+        context "when count_on_hand is positive" do
           let(:count_on_hand) { 3 }
           it_should_behave_like "valid count_on_hand"
         end
 
-        context 'when count_on_hand is negative' do
+        context "when count_on_hand is negative" do
           let(:count_on_hand) { -3 }
 
           it_should_behave_like "invalid count_on_hand"

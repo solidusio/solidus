@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bundler/gem_tasks'
+require "bundler/gem_tasks"
 
 SOLIDUS_GEM_NAMES = %w[core api backend sample promotions legacy_promotions]
 

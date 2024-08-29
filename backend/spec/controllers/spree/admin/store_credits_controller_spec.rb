@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 shared_examples "update reason loader" do
   it "sets the store_credit_reasons variable to a list of categories sorted by category name " do
@@ -22,7 +22,7 @@ describe Spree::Admin::StoreCreditsController do
     let!(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
     let!(:event) { create(:store_credit_auth_event, store_credit:, created_at: 5.days.ago) }
 
-    before { get :show, params: { user_id: user.id, id: store_credit.id  } }
+    before { get :show, params: {user_id: user.id, id: store_credit.id} }
 
     it "sets the store_credit variable to a new store credit model" do
       expect(assigns(:store_credit)).to eq store_credit
@@ -35,14 +35,14 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#new" do
-    before { get :new, params: { user_id: create(:user).id } }
+    before { get :new, params: {user_id: create(:user).id} }
     it { expect(assigns(:credit_categories)).to eq [a_credit_category, b_credit_category] }
   end
 
   describe "#create" do
     subject { post :create, params: parameters }
 
-    before  {
+    before {
       allow(controller).to receive_messages(spree_current_user: admin_user)
       create(:primary_credit_type)
     }
@@ -73,7 +73,7 @@ describe Spree::Admin::StoreCreditsController do
         expect(user.reload.store_credits.first.created_by).to eq admin_user
       end
 
-      it 'sets the admin as the store credit event originator' do
+      it "sets the admin as the store credit event originator" do
         expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
         expect(Spree::StoreCreditEvent.last.originator).to eq admin_user
       end
@@ -97,7 +97,7 @@ describe Spree::Admin::StoreCreditsController do
   describe "#edit_amount" do
     let!(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
 
-    before { get :edit_amount, params: { user_id: user.id, id: store_credit.id } }
+    before { get :edit_amount, params: {user_id: user.id, id: store_credit.id} }
 
     it_behaves_like "update reason loader"
 
@@ -109,7 +109,7 @@ describe Spree::Admin::StoreCreditsController do
   describe "#edit_validity" do
     let!(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
 
-    before { get :edit_validity, params: { user_id: user.id, id: store_credit.id } }
+    before { get :edit_validity, params: {user_id: user.id, id: store_credit.id} }
 
     it_behaves_like "update reason loader"
 
@@ -119,12 +119,12 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#update" do
-    let(:memo)          { "New memo" }
+    let(:memo) { "New memo" }
     let!(:store_credit) { create(:store_credit, user:) }
 
     subject { put :update, params: parameters.merge(format: :json) }
 
-    before  { allow(controller).to receive_messages(spree_current_user: admin_user) }
+    before { allow(controller).to receive_messages(spree_current_user: admin_user) }
 
     context "the passed parameters are valid" do
       let(:parameters) do
@@ -144,7 +144,7 @@ describe Spree::Admin::StoreCreditsController do
       it "returns a success message" do
         subject
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)['message']).to match("Store Credit has been successfully updated!")
+        expect(JSON.parse(response.body)["message"]).to match("Store Credit has been successfully updated!")
       end
     end
 
@@ -165,14 +165,14 @@ describe Spree::Admin::StoreCreditsController do
       it "returns an error message" do
         subject
         expect(response).to have_http_status(:bad_request)
-        expect(JSON.parse(response.body)['message']).to match("Unable to update store credit")
+        expect(JSON.parse(response.body)["message"]).to match("Unable to update store credit")
       end
     end
   end
 
   describe "#update_amount" do
     let(:original_amount) { 100.0 }
-    let!(:store_credit)   { create(:store_credit, user:, amount: original_amount) }
+    let!(:store_credit) { create(:store_credit, user:, amount: original_amount) }
     let!(:store_credit_reason) { create(:store_credit_reason) }
     let(:parameters) do
       {
@@ -187,7 +187,7 @@ describe Spree::Admin::StoreCreditsController do
 
     subject { put :update_amount, params: parameters }
 
-    before  { allow(controller).to receive_messages(spree_current_user: admin_user) }
+    before { allow(controller).to receive_messages(spree_current_user: admin_user) }
 
     context "the passed parameters are valid" do
       let(:updated_amount) { 300.0 }
@@ -308,10 +308,10 @@ describe Spree::Admin::StoreCreditsController do
       end
     end
   end
-  context 'User does not exist' do
+  context "User does not exist" do
     let(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
     it "cannot find a store-credit for non-existent user" do
-      get :index, params: { user_id: 'non-existent-user', id: store_credit.id }
+      get :index, params: {user_id: "non-existent-user", id: store_credit.id}
       expect(response).to redirect_to(spree.admin_users_path)
       expect(flash[:error]).to eql("User is not found")
     end

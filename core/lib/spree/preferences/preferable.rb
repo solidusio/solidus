@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/preferable_class_methods'
-require 'active_support/concern'
-require 'active_support/core_ext/hash/keys'
+require "spree/preferences/preferable_class_methods"
+require "active_support/concern"
+require "active_support/core_ext/hash/keys"
 
 module Spree
   module Preferences
@@ -152,6 +152,7 @@ module Spree
 
       def convert_preference_value(value, type, preference_encryptor = nil)
         return nil if value.nil?
+
         case type
         when :string, :text
           value.to_s
@@ -165,17 +166,19 @@ module Spree
           value.to_i
         when :boolean
           if !value ||
-             value.to_s =~ /\A(f|false|0|^)\Z/i ||
-             (value.respond_to?(:empty?) && value.empty?)
+              value.to_s =~ /\A(f|false|0|^)\Z/i ||
+              (value.respond_to?(:empty?) && value.empty?)
             false
           else
             true
           end
         when :array
           raise TypeError, "Array expected got #{value.inspect}" unless value.is_a?(Array)
+
           value
         when :hash
           raise TypeError, "Hash expected got #{value.inspect}" unless value.is_a?(Hash)
+
           value
         else
           value

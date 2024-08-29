@@ -70,8 +70,8 @@ RSpec.describe Spree::Role, type: :model do
 
       role.destroy
       aggregate_failures do
-        expect{ described_class.find(role.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        expect{ Spree::RolePermission.find(role_permission.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { described_class.find(role.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Spree::RolePermission.find(role_permission.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

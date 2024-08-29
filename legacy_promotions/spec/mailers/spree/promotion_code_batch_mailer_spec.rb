@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 RSpec.describe Spree::PromotionCodeBatchMailer, type: :mailer do
   let(:promotion) { create(:promotion, name: "Promotion Test") }
   let(:promotion_code_batch) do

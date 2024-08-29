@@ -3,9 +3,9 @@
 module Spree
   module Admin
     class ReimbursementsController < ResourceController
-      helper 'spree/admin/reimbursement_type'
-      helper 'spree/admin/customer_returns'
-      belongs_to 'spree/order', find_by: :number
+      helper "spree/admin/reimbursement_type"
+      helper "spree/admin/customer_returns"
+      belongs_to "spree/order", find_by: :number
 
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
@@ -50,11 +50,7 @@ module Spree
       # Perhaps we should add a reimbursement new page of some sort.
       def render_after_create_error
         flash.keep
-        if request.referer
-          redirect_to request.referer
-        else
-          redirect_to admin_url
-        end
+        redirect_to request.referer || admin_url
       end
 
       def load_stock_locations

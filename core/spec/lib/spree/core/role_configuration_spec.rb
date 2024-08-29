@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/dummy_ability'
+require "rails_helper"
+require "spree/testing_support/dummy_ability"
 
 RSpec.describe Spree::RoleConfiguration do
   class DummyPermissionSet < Spree::PermissionSets::Base
@@ -9,6 +9,7 @@ RSpec.describe Spree::RoleConfiguration do
       can :manage, :things
     end
   end
+
   class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
 
   let(:instance) { Spree::RoleConfiguration.new }
@@ -26,7 +27,7 @@ RSpec.describe Spree::RoleConfiguration do
         let(:existing_roles) { [DummyPermissionSet] }
 
         it "does not add another role" do
-          expect{ subject }.to_not change{ instance.roles.count }
+          expect { subject }.to_not change { instance.roles.count }
         end
 
         it "does not add duplicate permission sets" do
@@ -40,7 +41,7 @@ RSpec.describe Spree::RoleConfiguration do
         let(:existing_roles) { [OtherDummyPermissionSet] }
 
         it "does not add another role" do
-          expect{ subject }.to_not change{ instance.roles.count }
+          expect { subject }.to_not change { instance.roles.count }
         end
 
         it "appends the permission set to the existing role" do
@@ -53,7 +54,7 @@ RSpec.describe Spree::RoleConfiguration do
 
     context "when a role for the name does not yet exist" do
       it "creates a new role" do
-        expect{ subject }.to change{ instance.roles.count }.from(0).to(1)
+        expect { subject }.to change { instance.roles.count }.from(0).to(1)
       end
 
       it "sets the roles name accordingly" do
@@ -87,15 +88,15 @@ RSpec.describe Spree::RoleConfiguration do
       end
 
       context "default_role" do
-        let(:role_name) { 'default' }
+        let(:role_name) { "default" }
 
         context "when the user has no roles" do
           let(:user_roles) { [] }
 
           it "activates the applicable permissions on the ability" do
-            expect{ subject }.to change{ ability.can? :manage, :things }.
-              from(false).
-              to(true)
+            expect { subject }.to change { ability.can? :manage, :things }
+              .from(false)
+              .to(true)
           end
         end
 
@@ -103,9 +104,9 @@ RSpec.describe Spree::RoleConfiguration do
           let(:user_roles) { [] }
 
           it "activates the applicable permissions on the ability" do
-            expect{ subject }.to change{ ability.can? :manage, :things }.
-              from(false).
-              to(true)
+            expect { subject }.to change { ability.can? :manage, :things }
+              .from(false)
+              .to(true)
           end
         end
       end
@@ -114,9 +115,9 @@ RSpec.describe Spree::RoleConfiguration do
         let(:user_roles) { [role_name, "someotherrandomrole"] }
 
         it "activates the applicable permissions on the ability" do
-          expect{ subject }.to change{ ability.can? :manage, :things }.
-            from(false).
-            to(true)
+          expect { subject }.to change { ability.can? :manage, :things }
+            .from(false)
+            .to(true)
         end
       end
 

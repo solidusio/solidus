@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'shared_examples/protect_product_actions'
+require "spec_helper"
+require "shared_examples/protect_product_actions"
 
 module Spree::Api
-  describe 'Product properties', type: :request do
+  describe "Product properties", type: :request do
     let!(:product) { create(:product) }
     let!(:property_1) { product.product_properties.create(property_name: "My Property 1", value: "my value 1", position: 0) }
     let!(:property_2) { product.product_properties.create(property_name: "My Property 2", value: "my value 2", position: 1) }
 
     let(:attributes) { [:id, :product_id, :property_id, :value, :property_name] }
-    let(:resource_scoping) { { product_id: product.to_param } }
+    let(:resource_scoping) { {product_id: product.to_param} }
 
     before do
       stub_authentication!
@@ -34,18 +34,18 @@ module Spree::Api
     end
 
     it "can control the page size through a parameter" do
-      get spree.api_product_product_properties_path(product), params: { per_page: 1 }
-      expect(json_response['product_properties'].count).to eq(1)
-      expect(json_response['current_page']).to eq(1)
-      expect(json_response['pages']).to eq(2)
+      get spree.api_product_product_properties_path(product), params: {per_page: 1}
+      expect(json_response["product_properties"].count).to eq(1)
+      expect(json_response["current_page"]).to eq(1)
+      expect(json_response["pages"]).to eq(2)
     end
 
-    it 'can query the results through a parameter' do
-      Spree::ProductProperty.last.update_attribute(:value, 'loose')
+    it "can query the results through a parameter" do
+      Spree::ProductProperty.last.update_attribute(:value, "loose")
       property = Spree::ProductProperty.last
-      get spree.api_product_product_properties_path(product), params: { q: { value_cont: 'loose' } }
-      expect(json_response['count']).to eq(1)
-      expect(json_response['product_properties'].first['value']).to eq property.value
+      get spree.api_product_product_properties_path(product), params: {q: {value_cont: "loose"}}
+      expect(json_response["count"]).to eq(1)
+      expect(json_response["product_properties"].first["value"]).to eq property.value
     end
 
     it "can see a single product_property" do
@@ -60,12 +60,12 @@ module Spree::Api
     end
 
     it "cannot create a new product property if not an admin" do
-      post spree.api_product_product_properties_path(product), params: { product_property: { property_name: "My Property 3" } }
+      post spree.api_product_product_properties_path(product), params: {product_property: {property_name: "My Property 3"}}
       assert_unauthorized!
     end
 
     it "cannot update a product property" do
-      put spree.api_product_product_property_path(product, property_1.property_name), params: { product_property: { value: "my value 456" } }
+      put spree.api_product_product_property_path(product, property_1.property_name), params: {product_property: {value: "my value 456"}}
       assert_unauthorized!
     end
 
@@ -80,14 +80,14 @@ module Spree::Api
 
       it "can create a new product property" do
         expect do
-          post spree.api_product_product_properties_path(product), params: { product_property: { property_name: "My Property 3", value: "my value 3" } }
+          post spree.api_product_product_properties_path(product), params: {product_property: {property_name: "My Property 3", value: "my value 3"}}
         end.to change(product.product_properties, :count).by(1)
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
       end
 
       it "can update a product property" do
-        put spree.api_product_product_property_path(product, property_1.property_name), params: { product_property: { value: "my value 456" } }
+        put spree.api_product_product_property_path(product, property_1.property_name), params: {product_property: {value: "my value 456"}}
         expect(response.status).to eq(200)
       end
 
@@ -97,14 +97,14 @@ module Spree::Api
         expect { property_1.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      context 'when product property does not exist' do
-        it 'cannot update because is not found' do
-          put spree.api_product_product_property_path(product, 'no property'), params: { product_property: { value: "my value 456" } }
+      context "when product property does not exist" do
+        it "cannot update because is not found" do
+          put spree.api_product_product_property_path(product, "no property"), params: {product_property: {value: "my value 456"}}
           expect(response.status).to eq(404)
         end
 
-        it 'cannot delete because is not found' do
-          delete spree.api_product_product_property_path(product, 'no property')
+        it "cannot delete because is not found" do
+          delete spree.api_product_product_property_path(product, "no property")
           expect(response.status).to eq(404)
         end
       end

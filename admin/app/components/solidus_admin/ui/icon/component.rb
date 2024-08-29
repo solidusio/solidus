@@ -15,11 +15,11 @@ class SolidusAdmin::UI::Icon::Component < SolidusAdmin::BaseComponent
     @attrs = attrs
 
     # Hide the icon from screen readers by default.
-    @attrs['aria-hidden'] = true unless @attrs.key?('aria-hidden')
+    @attrs["aria-hidden"] = true unless @attrs.key?("aria-hidden")
 
     # Default icons without style to 16x16, mostly useful in test snapshots.
-    @attrs['width'] = '16'
-    @attrs['height'] = '16'
+    @attrs["width"] = "16"
+    @attrs["height"] = "16"
   end
 
   def call

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rake/clean'
+require "rake/clean"
 
 CLOBBER.include "sandbox"
 CLOBBER.include "Gemfile.lock"

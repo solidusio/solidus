@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Core::ControllerHelpers::Search, type: :controller do
   controller(ApplicationController) {
@@ -9,11 +9,11 @@ RSpec.describe Spree::Core::ControllerHelpers::Search, type: :controller do
     include Spree::Core::ControllerHelpers::Search
   }
 
-  describe '#build_searcher' do
-    it 'returns Spree::Core::Search::Base instance' do
+  describe "#build_searcher" do
+    it "returns Spree::Core::Search::Base instance" do
       allow(controller).to receive_messages(
         spree_current_user: create(:user),
-        current_pricing_options: Spree::Config.pricing_options_class.new(currency: 'USD')
+        current_pricing_options: Spree::Config.pricing_options_class.new(currency: "USD")
       )
       expect(controller.build_searcher({}).class).to eq Spree::Core::Search::Base
     end

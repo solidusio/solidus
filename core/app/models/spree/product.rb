@@ -7,6 +7,7 @@ module Spree
   # variant.
   class Product < Spree::Base
     extend FriendlyId
+
     friendly_id :slug_candidates, use: :history
 
     include Spree::SoftDeletable
@@ -15,7 +16,7 @@ module Spree
       variants_including_master.discard_all
       self.product_option_types = []
       self.product_properties = []
-      self.classifications.destroy_all
+      classifications.destroy_all
     end
 
     has_many :product_option_types, dependent: :destroy, inverse_of: :product
@@ -30,27 +31,27 @@ module Spree
     has_many :classifications, dependent: :delete_all, inverse_of: :product
     has_many :taxons, through: :classifications, before_remove: :remove_taxon
 
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products
-    belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: true
+    belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
+    belongs_to :shipping_category, class_name: "Spree::ShippingCategory", inverse_of: :products
+    belongs_to :primary_taxon, class_name: "Spree::Taxon", optional: true
 
     has_one :master,
       -> { where(is_master: true).with_discarded },
       inverse_of: :product,
-      class_name: 'Spree::Variant',
+      class_name: "Spree::Variant",
       autosave: true,
       dependent: false
 
     has_many :variants,
       -> { where(is_master: false).order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant',
+      class_name: "Spree::Variant",
       dependent: false
 
     has_many :variants_including_master,
       -> { order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant',
+      class_name: "Spree::Variant",
       dependent: :destroy
 
     has_many :prices, -> { order(Spree::Variant.arel_table[:position].asc, Spree::Variant.arel_table[:id].asc, :currency) }, through: :variants_including_master
@@ -63,14 +64,14 @@ module Spree
     has_many :option_values, -> { distinct }, through: :variants_including_master
 
     scope :sort_by_master_default_price_amount_asc, -> {
-      with_default_price.order('spree_prices.amount ASC')
+      with_default_price.order("spree_prices.amount ASC")
     }
     scope :sort_by_master_default_price_amount_desc, -> {
-      with_default_price.order('spree_prices.amount DESC')
+      with_default_price.order("spree_prices.amount DESC")
     }
     scope :with_default_price, -> {
       left_joins(master: :prices)
-        .where(master: { spree_prices: Spree::Config.default_pricing_options.desired_attributes })
+        .where(master: {spree_prices: Spree::Config.default_pricing_options.desired_attributes})
     }
 
     def find_or_build_master
@@ -95,13 +96,13 @@ module Spree
     end
 
     delegate :amount_in,
-             :display_amount,
-             :display_price,
-             :has_default_price?,
-             :images,
-             :price_for_options,
-             :rebuild_vat_prices=,
-             to: :find_or_build_master
+      :display_amount,
+      :display_price,
+      :has_default_price?,
+      :images,
+      :price_for_options,
+      :rebuild_vat_prices=,
+      to: :find_or_build_master
 
     alias_method :master_images, :images
 
@@ -120,18 +121,18 @@ module Spree
     before_validation :normalize_slug, on: :update
     before_validation :validate_master
 
-    validates :meta_keywords, length: { maximum: 255 }
-    validates :meta_title, length: { maximum: 255 }
+    validates :meta_keywords, length: {maximum: 255}
+    validates :meta_title, length: {maximum: 255}
     validates :name, presence: true
     validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
-    validates :slug, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :slug, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
 
     attr_accessor :option_values_hash
 
     accepts_nested_attributes_for :variant_property_rules, allow_destroy: true
     accepts_nested_attributes_for :product_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
 
-    alias :options :product_option_types
+    alias_method :options, :product_option_types
 
     self.allowed_ransackable_associations = %w[stores variants_including_master master variants option_values]
     self.allowed_ransackable_attributes = %w[name slug]
@@ -153,6 +154,7 @@ module Spree
     # @return [Array] the option_values
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
+
       required_option_type_ids = option_values_hash.keys.map(&:to_i)
       self.option_type_ids |= required_option_type_ids
     end
@@ -225,24 +227,25 @@ module Spree
     # associated with the products variants grouped by option type
     def variant_option_values_by_option_type(variant_scope = nil)
       option_value_scope = Spree::OptionValuesVariant.joins(:variant)
-        .where(spree_variants: { product_id: id })
+        .where(spree_variants: {product_id: id})
       option_value_scope = option_value_scope.merge(variant_scope) if variant_scope
       option_value_ids = option_value_scope.distinct.pluck(:option_value_id)
-      Spree::OptionValue.where(id: option_value_ids).
-        includes(:option_type).
-        order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position").
-        group_by(&:option_type)
+      Spree::OptionValue.where(id: option_value_ids)
+        .includes(:option_type)
+        .order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position")
+        .group_by(&:option_type)
     end
 
     # @return [Boolean] true if there are no option values
     def empty_option_values?
-      options.empty? || !option_types.left_joins(:option_values).where('spree_option_values.id IS NULL').empty?
+      options.empty? || !option_types.left_joins(:option_values).where("spree_option_values.id IS NULL").empty?
     end
 
     # @param property_name [String] the name of the property to find
     # @return [String] the value of the given property. nil if property is undefined on this product
     def property(property_name)
       return nil unless prop = properties.find_by(name: property_name)
+
       product_properties.find_by(property: prop).try(:value)
     end
 
@@ -326,6 +329,7 @@ module Spree
 
     def ensure_master
       return unless new_record?
+
       find_or_build_master
     end
 
@@ -377,4 +381,4 @@ module Spree
   end
 end
 
-require_dependency 'spree/product/scopes'
+require_dependency "spree/product/scopes"

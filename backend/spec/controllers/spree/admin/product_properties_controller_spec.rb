@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   module Admin
@@ -13,7 +13,7 @@ module Spree
         context "no option values are provided" do
           let(:product) { create(:product) }
           let(:parameters) do
-            { product_id: product.to_param }
+            {product_id: product.to_param}
           end
 
           before { subject }
@@ -29,10 +29,10 @@ module Spree
         end
 
         context "option values are provided" do
-          let(:size) { create(:option_type, name: 'size') }
+          let(:size) { create(:option_type, name: "size") }
           let(:product) { create(:product, option_types: [size]) }
-          let(:size_small) { create(:option_value, name: 'small', option_type: size) }
-          let(:size_large) { create(:option_value, name: 'large', option_type: size) }
+          let(:size_small) { create(:option_value, name: "small", option_type: size) }
+          let(:size_large) { create(:option_value, name: "large", option_type: size) }
           let!(:first_rule) { create(:variant_property_rule, product:, option_value: size_small) }
 
           context "no rules match the option values" do
@@ -68,7 +68,7 @@ module Spree
           context "existent product id not given" do
             let(:parameters) do
               {
-                product_id: 'non-existent-product'
+                product_id: "non-existent-product"
               }
             end
 

@@ -8,7 +8,7 @@ module Spree
 
     has_many :payments, as: :source
     has_many :wallet_payment_sources,
-      class_name: 'Spree::WalletPaymentSource',
+      class_name: "Spree::WalletPaymentSource",
       as: :payment_source,
       inverse_of: :payment_source,
       dependent: :destroy
@@ -17,7 +17,7 @@ module Spree
 
     # @return [Array<String>] the actions available on this payment source
     def actions
-      %w(capture void credit)
+      %w[capture void credit]
     end
 
     # @param payment [Spree::Payment] the payment we want to know if can be captured

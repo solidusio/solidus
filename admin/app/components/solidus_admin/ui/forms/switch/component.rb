@@ -2,8 +2,8 @@
 
 class SolidusAdmin::UI::Forms::Switch::Component < SolidusAdmin::BaseComponent
   SIZES = {
-    s: 'w-8 h-5 after:w-4 after:h-4 after:checked:translate-x-3',
-    m: 'w-10 h-6 after:w-5 after:h-5 after:checked:translate-x-4',
+    s: "w-8 h-5 after:w-4 after:h-4 after:checked:translate-x-3",
+    m: "w-10 h-6 after:w-5 after:h-5 after:checked:translate-x-4"
   }.freeze
 
   def initialize(size: :m, include_hidden: false, **attributes)
@@ -34,8 +34,8 @@ class SolidusAdmin::UI::Forms::Switch::Component < SolidusAdmin::BaseComponent
 
   def call
     input = tag.input(
-      type: 'checkbox',
-      **@attributes,
+      type: "checkbox",
+      **@attributes
     )
 
     @include_hidden ? hidden_field_tag(@attributes.fetch(:name), false) + input : input

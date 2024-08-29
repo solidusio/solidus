@@ -45,7 +45,7 @@ RSpec.describe SolidusAdmin::UI::Button::Component, type: :component do
 
     it "renders Back button" do
       render_inline(component)
-      expect(page).to have_link(href: '/index', title: 'Back')
+      expect(page).to have_link(href: "/index", title: "Back")
     end
   end
 
@@ -54,7 +54,7 @@ RSpec.describe SolidusAdmin::UI::Button::Component, type: :component do
 
     it "renders Discard button" do
       render_inline(component)
-      expect(page).to have_link(href: '/index')
+      expect(page).to have_link(href: "/index")
       expect(page).to have_content("Discard")
     end
   end

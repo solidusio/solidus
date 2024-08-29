@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :base_product, class: 'Spree::Product' do
+  factory :base_product, class: "Spree::Product" do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
     description { "As seen on TV!" }
     price { 19.99 }
@@ -18,7 +18,7 @@ FactoryBot.define do
     before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }
 
     factory :custom_product do
-      name { 'Custom Product' }
+      name { "Custom Product" }
       price { 17.99 }
 
       tax_category { |r| Spree::TaxCategory.first || r.association(:tax_category) }

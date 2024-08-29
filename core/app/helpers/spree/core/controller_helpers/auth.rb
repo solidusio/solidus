@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'cancan'
+require "cancan"
 
 module Spree
   module Core

@@ -4,6 +4,7 @@ module SolidusPromotions
   module Conditions
     class FirstOrder < Condition
       include OrderLevelCondition
+
       attr_reader :user, :email
 
       def eligible?(order, options = {})

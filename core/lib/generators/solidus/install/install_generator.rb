@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails/version'
-require 'rails/generators'
-require 'rails/generators/app_base'
+require "rails/version"
+require "rails/generators"
+require "rails/generators/app_base"
 
 module Solidus
   # @private
@@ -12,30 +12,30 @@ module Solidus
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
     FRONTENDS = [
-      { name: 'starter', description: 'Generate all necessary controllers and views directly in your Rails app', default: true },
-      { name: 'none', description: 'Skip installing a frontend' }
+      {name: "starter", description: "Generate all necessary controllers and views directly in your Rails app", default: true},
+      {name: "none", description: "Skip installing a frontend"}
     ]
 
     AUTHENTICATIONS = [
-      { name: 'devise', description: 'Install and configure the standard `devise` integration', default: true },
-      { name: 'existing', description: 'Integrate and configure an existing `devise` setup' },
-      { name: 'custom', description: 'A starter configuration for rolling your own authentication system' },
-      { name: 'none', description: 'Don\'t add any configuration for authentication' }
+      {name: "devise", description: "Install and configure the standard `devise` integration", default: true},
+      {name: "existing", description: "Integrate and configure an existing `devise` setup"},
+      {name: "custom", description: "A starter configuration for rolling your own authentication system"},
+      {name: "none", description: "Don't add any configuration for authentication"}
     ]
 
     PAYMENT_METHODS = [
-      { name: 'paypal', description: 'Install `solidus_paypal_commerce_platform`', default: true },
-      { name: 'stripe', description: 'Install `solidus_stripe`', default: false },
-      { name: 'braintree', description: 'Install `solidus_braintree`', default: false },
-      { name: 'none', description: 'Skip installing a payment method', default: false }
+      {name: "paypal", description: "Install `solidus_paypal_commerce_platform`", default: true},
+      {name: "stripe", description: "Install `solidus_stripe`", default: false},
+      {name: "braintree", description: "Install `solidus_braintree`", default: false},
+      {name: "none", description: "Skip installing a payment method", default: false}
     ]
 
-    class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
-    class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
-    class_option :active_storage, type: :boolean, default: true, banner: 'Install ActiveStorage as image attachments handler for products and taxons'
-    class_option :admin_preview, type: :boolean, default: true, desc: 'Install the admin preview'
-    class_option :build_admin_tailwind, type: :boolean, default: true, desc: 'Build and install Solidus Admin Tailwind CSS file and rake tasks'
+    class_option :migrate, type: :boolean, default: true, banner: "Run Solidus migrations"
+    class_option :seed, type: :boolean, default: true, banner: "Load seed data (migrations must be run)"
+    class_option :sample, type: :boolean, default: true, banner: "Load sample data (migrations and seeds must be run)"
+    class_option :active_storage, type: :boolean, default: true, banner: "Install ActiveStorage as image attachments handler for products and taxons"
+    class_option :admin_preview, type: :boolean, default: true, desc: "Install the admin preview"
+    class_option :build_admin_tailwind, type: :boolean, default: true, desc: "Build and install Solidus Admin Tailwind CSS file and rake tasks"
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
@@ -58,45 +58,45 @@ module Solidus
       @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
 
       @selected_frontend = selected_option_for(
-        'frontend',
-        selected: ENV['FRONTEND'] || options[:frontend],
-        available_options: FRONTENDS,
+        "frontend",
+        selected: ENV["FRONTEND"] || options[:frontend],
+        available_options: FRONTENDS
       )
 
       @selected_authentication = selected_option_for(
-        'authentication',
+        "authentication",
         selected:
-          ('devise' if @selected_frontend == 'starter') ||
-          ('devise' if has_gem?('solidus_auth_devise')) ||
-          ENV['AUTHENTICATION'] || options[:authentication],
-        available_options: AUTHENTICATIONS,
+          ("devise" if @selected_frontend == "starter") ||
+          ("devise" if has_gem?("solidus_auth_devise")) ||
+          ENV["AUTHENTICATION"] || options[:authentication],
+        available_options: AUTHENTICATIONS
       )
 
       @selected_payment_method = selected_option_for(
-        'payment method',
+        "payment method",
         selected:
-          ('paypal' if has_gem?('solidus_paypal_commerce_platform')) ||
-          ('stripe' if has_gem?('solidus_stripe')) ||
-          ('bolt' if has_gem?('solidus_bolt')) ||
-          ENV['PAYMENT_METHOD'] || options[:payment_method],
-        available_options: PAYMENT_METHODS,
+          ("paypal" if has_gem?("solidus_paypal_commerce_platform")) ||
+          ("stripe" if has_gem?("solidus_stripe")) ||
+          ("bolt" if has_gem?("solidus_bolt")) ||
+          ENV["PAYMENT_METHOD"] || options[:payment_method],
+        available_options: PAYMENT_METHODS
       )
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
-      ENV['VERBOSE'] = 'false'
+      ENV["VERBOSE"] = "false"
 
       # No reason to check for their presence if we're about to install them
-      ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
+      ENV["SOLIDUS_SKIP_MIGRATIONS_CHECK"] = "true"
     end
 
     def install_routes
-      if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
+      if Pathname(app_path).join("config", "routes.rb").read.include? CORE_MOUNT_ROUTE
         say_status :route_exist, CORE_MOUNT_ROUTE, :blue
       else
         say_status :installing, "solidus routes"
         mount_point = options[:mount_point] || ask_with_default(
           desc: 'Where would you like to mount Solidus? (E.g. "/store" or "/shop")',
-          default: '/',
+          default: "/"
         )
 
         shell.mute do
@@ -120,23 +120,23 @@ module Solidus
     end
 
     def add_files
-      template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
+      template "config/initializers/spree.rb.tt", "config/initializers/spree.rb"
     end
 
     def install_file_attachment
       if options[:active_storage]
         say_status :assets, "Active Storage", :green
-        rake 'active_storage:install'
+        rake "active_storage:install"
       else
         say_status :assets, "Paperclip", :green
-        gsub_file 'config/initializers/spree.rb', "::ActiveStorageAttachment", "::PaperclipAttachment"
+        gsub_file "config/initializers/spree.rb", "::ActiveStorageAttachment", "::PaperclipAttachment"
       end
     end
 
     def setup_assets
-      empty_directory 'app/assets/images'
+      empty_directory "app/assets/images"
 
-      %w{javascripts stylesheets images}.each do |path|
+      %w[javascripts stylesheets images].each do |path|
         empty_directory "vendor/assets/#{path}/spree/backend" if defined?(Spree::Backend) || Rails.env.test?
       end
 
@@ -158,19 +158,19 @@ module Solidus
 
     def install_migrations
       say_status :copying, "migrations"
-      rake 'railties:install:migrations'
+      rake "railties:install:migrations"
     end
 
     def create_database
       say_status :creating, "database"
-      rake 'db:create'
+      rake "db:create"
     end
 
     def run_migrations
       if @run_migrations
         say_status :running, "migrations"
 
-        rake 'db:migrate'
+        rake "db:migrate"
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
@@ -186,10 +186,10 @@ module Solidus
       return unless options[:admin_preview]
 
       say_status :installing, "SolidusAdmin", :blue
-      unless File.read(app_path.join('Gemfile')).include?('solidus_admin')
+      unless File.read(app_path.join("Gemfile")).include?("solidus_admin")
         bundle_command 'add solidus_admin -v ">= 0.2"'
       end
-      generate "solidus_admin:install #{'--tailwind' if options[:build_admin_tailwind]}"
+      generate "solidus_admin:install #{"--tailwind" if options[:build_admin_tailwind]}"
     end
 
     def populate_seed_data
@@ -200,7 +200,7 @@ module Solidus
         rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
         rake_options << "ADMIN_PASSWORD=#{options[:admin_password]}" if options[:admin_password]
 
-        rake("db:seed #{rake_options.join(' ')}")
+        rake("db:seed #{rake_options.join(" ")}")
       else
         say_status :skipping, "seed data (you can always run rake db:seed)"
       end
@@ -209,7 +209,7 @@ module Solidus
     def load_sample_data
       if @load_sample_data
         say_status :loading, "sample data"
-        rake 'spree_sample:load'
+        rake "spree_sample:load"
       else
         say_status :skipping, "sample data (you can always run rake spree_sample:load)"
       end
@@ -223,7 +223,7 @@ module Solidus
 
     def bundle_command(command, env = {})
       # Make `bundle install` less verbose by skipping the "Using ..." messages
-      super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
+      super(command, env.reverse_merge("BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES" => "true"))
     ensure
       Bundler.reset_paths!
     end
@@ -268,7 +268,7 @@ module Solidus
 
     def apply_template_for(topic, selected)
       template_path = Dir["#{__dir__}/app_templates/#{topic}/*.rb"].find do |path|
-        File.basename(path, '.rb') == selected
+        File.basename(path, ".rb") == selected
       end
 
       unless template_path

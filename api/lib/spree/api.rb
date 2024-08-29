@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/core'
+require "spree/core"
 
-require 'spree/api/engine'
+require "spree/api/engine"

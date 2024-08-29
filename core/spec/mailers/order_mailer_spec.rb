@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderMailer, type: :mailer do
   let(:order) do
     order = create(:order)
-    product = stub_model(Spree::Product, name: %{The "BEST" product})
+    product = stub_model(Spree::Product, name: %(The "BEST" product))
     variant = stub_model(Spree::Variant, product:)
     price = stub_model(Spree::Price, variant:, amount: 5.00)
     store = FactoryBot.build :store, mail_from_address: "store@example.com", bcc_email: "bcc@example.com"
@@ -37,7 +37,7 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
         :adjustment,
         adjustable: order,
         order:,
-        label:      'Order Adjustment'
+        label: "Order Adjustment"
       )
     end
 
@@ -75,11 +75,11 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
     context "pt-BR locale" do
       before do
         I18n.enforce_available_locales = false
-        pt_br_confirm_mail = { spree: { order_mailer: { confirm_email: { dear_customer: 'Caro Cliente,' } } } }
-        pt_br_cancel_mail = { spree: { order_mailer: { cancel_email: { order_summary_canceled: 'Resumo da Pedido [CANCELADA]' } } } }
-        I18n.backend.store_translations :'pt-BR', pt_br_confirm_mail
-        I18n.backend.store_translations :'pt-BR', pt_br_cancel_mail
-        I18n.locale = :'pt-BR'
+        pt_br_confirm_mail = {spree: {order_mailer: {confirm_email: {dear_customer: "Caro Cliente,"}}}}
+        pt_br_cancel_mail = {spree: {order_mailer: {cancel_email: {order_summary_canceled: "Resumo da Pedido [CANCELADA]"}}}}
+        I18n.backend.store_translations :"pt-BR", pt_br_confirm_mail
+        I18n.backend.store_translations :"pt-BR", pt_br_cancel_mail
+        I18n.locale = :"pt-BR"
       end
 
       after do

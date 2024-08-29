@@ -23,7 +23,7 @@ module SolidusAdmin::Moveable
   end
 
   def moveable_class
-    "Spree::#{self.class.name.demodulize.remove('Controller').singularize}".constantize
+    "Spree::#{self.class.name.demodulize.remove("Controller").singularize}".constantize
   rescue NameError
     raise NameError,
       "could not infer model class from #{self.class.name}. Please override `moveable_class` to specify it explicitly."

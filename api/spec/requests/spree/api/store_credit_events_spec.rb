@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Store credit events', type: :request do
+  describe "Store credit events", type: :request do
     let(:api_user) { create(:user, :with_api_key) }
 
     describe "GET mine" do
       subject do
-        get spree.mine_api_store_credit_events_path(format: :json), headers: { Authorization: "Bearer #{api_key}" }
+        get spree.mine_api_store_credit_events_path(format: :json), headers: {Authorization: "Bearer #{api_key}"}
       end
 
       context "no current api user" do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/configuration'
-require 'solidus_admin/component_registry'
+require "spree/preferences/configuration"
+require "solidus_admin/component_registry"
 
 module SolidusAdmin
   # Configuration for the admin interface.
@@ -23,14 +23,14 @@ module SolidusAdmin
     preference :importmap_cache_sweepers, :array, default: [
       "#{ENGINE_ROOT}/app/assets/javascripts",
       "#{ENGINE_ROOT}/app/javascript",
-      "#{ENGINE_ROOT}/app/components",
+      "#{ENGINE_ROOT}/app/components"
     ]
 
     # List of paths to importmap files to be loaded.
     #
     # @see https://github.com/rails/importmap-rails#composing-import-maps
     preference :importmap_paths, :array, default: [
-      "#{ENGINE_ROOT}/config/importmap.rb",
+      "#{ENGINE_ROOT}/config/importmap.rb"
     ]
 
     # @!attribute [rw] low_stock_value
@@ -46,7 +46,7 @@ module SolidusAdmin
     #                     Default: false
     preference :enable_alpha_features, :boolean, default: false
 
-    alias enable_alpha_features? enable_alpha_features
+    alias_method :enable_alpha_features?, :enable_alpha_features
 
     preference :storefront_product_path_proc, :proc, default: ->(_version) {
       ->(product) { "/products/#{product.slug}" }
@@ -124,7 +124,7 @@ module SolidusAdmin
           key: "settings",
           route: -> { spree.admin_stores_path },
           icon: "settings-line",
-          position: 60,
+          position: 60
         }
       ]
     end
@@ -158,7 +158,7 @@ module SolidusAdmin
           when /^ri-/
             item.icon.delete_prefix("ri-")
           when String
-            'record-circle-line' # fallback on a generic icon
+            "record-circle-line" # fallback on a generic icon
           end
 
         {
@@ -167,7 +167,7 @@ module SolidusAdmin
           icon:,
           route:,
           children: item.children.map.with_index(&menu_item_to_hash),
-          match_path:,
+          match_path:
         }
       end
 
@@ -186,7 +186,7 @@ module SolidusAdmin
     preference :current_user_method, :string, default: :spree_current_user
 
     # The path used to logout the user in the admin interface.
-    preference :logout_link_path, :string, default: '/admin/logout'
+    preference :logout_link_path, :string, default: "/admin/logout"
 
     # The HTTP method used to logout the user in the admin interface.
     preference :logout_link_method, :string, default: :delete
@@ -194,18 +194,18 @@ module SolidusAdmin
     # @!attribute [rw] themes
     #   @return [Hash] A hash containing the themes that are available for the admin panel
     preference :themes, :hash, default: {
-      solidus: 'solidus_admin/application',
-      solidus_dark: 'solidus_admin/dark',
-      solidus_dimmed: 'solidus_admin/dimmed',
+      solidus: "solidus_admin/application",
+      solidus_dark: "solidus_admin/dark",
+      solidus_dimmed: "solidus_admin/dimmed"
     }
 
     # @!attribute [rw] theme
     #   @return [String] Default admin theme name
-    preference :theme, :string, default: 'solidus'
+    preference :theme, :string, default: "solidus"
 
     # @!attribute [rw] dark_theme
     #   @return [String] Default admin theme name
-    preference :dark_theme, :string, default: 'solidus_dark'
+    preference :dark_theme, :string, default: "solidus_dark"
 
     def theme_path(user_theme)
       themes.fetch(user_theme&.to_sym, themes[theme.to_sym])

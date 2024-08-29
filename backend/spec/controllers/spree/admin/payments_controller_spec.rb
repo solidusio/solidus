@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   module Admin
@@ -12,7 +12,7 @@ module Spree
       let(:user) { create(:admin_user) }
       let(:order) { create(:order) }
 
-      describe '#create' do
+      describe "#create" do
         context "with a valid credit card" do
           let(:order) { create(:order_with_line_items, state: "payment") }
           let(:payment_method) { create(:credit_card_payment_method, available_to_admin: true, available_to_users: false) }
@@ -27,7 +27,7 @@ module Spree
                   name: "Test User",
                   number: "4111 1111 1111 1111",
                   expiry: "09 / #{Time.current.year + 1}",
-                verification_value: "123"
+                  verification_value: "123"
                 }
               }
             }
@@ -39,12 +39,12 @@ module Spree
 
           it "should process payment correctly" do
             expect(order.payments.count).to eq(1)
-            expect(order.payments.last.state).to eq 'checkout'
+            expect(order.payments.last.state).to eq "checkout"
             expect(response).to redirect_to(spree.admin_order_payments_path(order))
-            expect(order.reload.state).to eq('confirm')
+            expect(order.reload.state).to eq("confirm")
           end
 
-          context 'with credit card address fields' do
+          context "with credit card address fields" do
             let(:address) { build(:address) }
 
             let(:attributes) do
@@ -55,17 +55,17 @@ module Spree
 
             let(:address_attributes) do
               {
-                'name' => address.name,
-                'address1' => address.address1,
-                'city' => address.city,
-                'country_id' => address.country_id,
-                'state_id' => address.state_id,
-                'zipcode' => address.zipcode,
-                'phone' => address.phone
+                "name" => address.name,
+                "address1" => address.address1,
+                "city" => address.city,
+                "country_id" => address.country_id,
+                "state_id" => address.state_id,
+                "zipcode" => address.zipcode,
+                "phone" => address.phone
               }
             end
 
-            it 'associates the address' do
+            it "associates the address" do
               expect(order.payments.count).to eq(1)
               credit_card = order.payments.last.source
               expect(credit_card.address.as_json).to include(address_attributes)
@@ -74,7 +74,7 @@ module Spree
         end
       end
 
-      describe '#new' do
+      describe "#new" do
         # Regression test for https://github.com/spree/spree/issues/3233
         context "with a backend payment method" do
           context "and the payment method is active" do
@@ -83,7 +83,7 @@ module Spree
             end
 
             it "loads the payment method" do
-              get :new, params: { order_id: order.number }
+              get :new, params: {order_id: order.number}
               expect(response.status).to eq(200)
               expect(assigns[:payment_methods]).to include(@payment_method)
             end
@@ -95,7 +95,7 @@ module Spree
             end
 
             it "does not load the payment method" do
-              get :new, params: { order_id: order.number }
+              get :new, params: {order_id: order.number}
               expect(response.status).to eq(200)
               expect(assigns[:payment_methods]).to be_empty
             end
@@ -105,7 +105,7 @@ module Spree
             check = create :check_payment_method, position: 2
             credit_card = create :payment_method, position: 1
 
-            get :new, params: { order_id: order.number }
+            get :new, params: {order_id: order.number}
 
             expect(assigns(:payment_methods)).to eq [
               credit_card, check
@@ -115,7 +115,7 @@ module Spree
         end
       end
 
-      describe '#index' do
+      describe "#index" do
         context "order has billing address" do
           before do
             order.bill_address = create(:address)
@@ -124,18 +124,18 @@ module Spree
 
           context "order does not have payments" do
             it "redirect to new payments page" do
-              get :index, params: { amount: 100, order_id: order.number }
+              get :index, params: {amount: 100, order_id: order.number}
               expect(response).to redirect_to(spree.new_admin_order_payment_path(order))
             end
           end
 
           context "order has payments" do
             before do
-              order.payments << create(:payment, amount: order.total, order:, state: 'completed')
+              order.payments << create(:payment, amount: order.total, order:, state: "completed")
             end
 
             it "shows the payments page" do
-              get :index, params: { amount: 100, order_id: order.number }
+              get :index, params: {amount: 100, order_id: order.number}
               expect(response.code).to eq "200"
             end
           end
@@ -148,26 +148,26 @@ module Spree
           end
 
           it "should redirect to the customer details page" do
-            get :index, params: { amount: 100, order_id: order.number }
+            get :index, params: {amount: 100, order_id: order.number}
             expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
           end
         end
 
         context "existent order id not given" do
           it "redirects and flashes about the non-existent order" do
-            get :index, params: { order_id: 'non-existent-order' }
+            get :index, params: {order_id: "non-existent-order"}
             expect(response).to redirect_to(spree.admin_orders_path)
             expect(flash[:error]).to eql("Order is not found")
           end
         end
       end
 
-      describe '#fire' do
-        describe 'authorization' do
-          let(:payment) { create(:payment, state: 'checkout', amount: 10) }
+      describe "#fire" do
+        describe "authorization" do
+          let(:payment) { create(:payment, state: "checkout", amount: 10) }
           let(:order) { payment.order }
 
-          context 'the user is authorized' do
+          context "the user is authorized" do
             class CaptureAllowedAbility
               include CanCan::Ability
 
@@ -180,13 +180,13 @@ module Spree
               Spree::Ability.register_ability(CaptureAllowedAbility)
             end
 
-            it 'allows the action' do
+            it "allows the action" do
               expect {
-                post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param })
-              }.to change { payment.reload.state }.from('checkout').to('completed')
+                post(:fire, params: {id: payment.to_param, e: "capture", order_id: order.to_param})
+              }.to change { payment.reload.state }.from("checkout").to("completed")
             end
 
-            context 'the user is not authorized' do
+            context "the user is not authorized" do
               class CaptureNotAllowedAbility
                 include CanCan::Ability
 
@@ -199,11 +199,11 @@ module Spree
                 Spree::Ability.register_ability(CaptureNotAllowedAbility)
               end
 
-              it 'does not allow the action' do
+              it "does not allow the action" do
                 expect {
-                  post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param })
+                  post(:fire, params: {id: payment.to_param, e: "capture", order_id: order.to_param})
                 }.to_not change { payment.reload.state }
-                expect(flash[:error]).to eq('Authorization Failure')
+                expect(flash[:error]).to eq("Authorization Failure")
               end
             end
           end

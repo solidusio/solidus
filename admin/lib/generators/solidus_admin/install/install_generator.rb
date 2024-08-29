@@ -3,8 +3,8 @@
 module SolidusAdmin
   module Generators
     class InstallGenerator < Rails::Generators::Base
-      class_option :lookbook, type: :boolean, default: !!ENV['SOLIDUS_ADMIN_LOOKBOOK'], desc: 'Install Lookbook for component previews'
-      class_option :tailwind, type: :boolean, default: false, desc: 'Install TailwindCSS for custom components'
+      class_option :lookbook, type: :boolean, default: !!ENV["SOLIDUS_ADMIN_LOOKBOOK"], desc: "Install Lookbook for component previews"
+      class_option :tailwind, type: :boolean, default: false, desc: "Install TailwindCSS for custom components"
 
       source_root "#{__dir__}/templates"
 
@@ -18,7 +18,7 @@ module SolidusAdmin
       end
 
       def copy_initializer
-        template 'config/initializers/solidus_admin.rb.tt', 'config/initializers/solidus_admin.rb'
+        template "config/initializers/solidus_admin.rb.tt", "config/initializers/solidus_admin.rb"
       end
 
       def ignore_tailwind_build_files
@@ -38,7 +38,7 @@ module SolidusAdmin
           gem "actioncable"
         end
 
-        require 'bundler'
+        require "bundler"
         Bundler.with_unbundled_env do
           execute_command :bundle, :install
         end

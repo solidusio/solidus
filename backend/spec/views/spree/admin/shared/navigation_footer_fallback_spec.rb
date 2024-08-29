@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "spree/admin/shared/_navigation_footer_fallback", type: :view, partial_double_verification: false do
   let(:user) { FactoryBot.build_stubbed(:admin_user) }
@@ -50,7 +50,7 @@ describe "spree/admin/shared/_navigation_footer_fallback", type: :view, partial_
 
     it "has user-logout-link" do
       render
-      expect(rendered).to have_link(I18n.t('spree.logout'), href: "/logout")
+      expect(rendered).to have_link(I18n.t("spree.logout"), href: "/logout")
     end
   end
 
@@ -61,7 +61,7 @@ describe "spree/admin/shared/_navigation_footer_fallback", type: :view, partial_
 
     it "has a back to store link" do
       render
-      expect(rendered).to have_link(I18n.t('spree.back_to_store'), href: "/")
+      expect(rendered).to have_link(I18n.t("spree.back_to_store"), href: "/")
     end
   end
 end

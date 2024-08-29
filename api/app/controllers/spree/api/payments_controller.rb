@@ -30,7 +30,7 @@ module Spree
       def update
         authorize! params[:action], @payment
         if !@payment.pending?
-          render 'update_forbidden', status: 403
+          render "update_forbidden", status: 403
         elsif @payment.update(payment_params)
           respond_with(@payment, default_template: :show)
         else
@@ -71,7 +71,7 @@ module Spree
 
       def perform_payment_action(action, *args)
         authorize! action, Payment
-        @payment.send("#{action}!", *args)
+        @payment.send(:"#{action}!", *args)
         respond_with(@payment, default_template: :show)
       end
 

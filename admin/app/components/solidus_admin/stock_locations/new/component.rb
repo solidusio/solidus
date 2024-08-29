@@ -4,7 +4,7 @@ class SolidusAdmin::StockLocations::New::Component < SolidusAdmin::Resources::Ne
   include SolidusAdmin::Layout::PageHelpers
 
   def initialize(*args)
-    super(*args)
+    super
     ensure_country
   end
 

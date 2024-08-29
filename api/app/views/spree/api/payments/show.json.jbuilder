@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.(@payment, *payment_attributes)
+json.call(@payment, *payment_attributes)

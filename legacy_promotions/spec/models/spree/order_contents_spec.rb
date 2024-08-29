@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderContents, type: :model do
   let!(:store) { create :store }
@@ -49,9 +49,9 @@ RSpec.describe Spree::OrderContents, type: :model do
     let!(:shirt) { subject.add variant, 1 }
 
     let(:params) do
-      { line_items_attributes: {
-        "0" => { id: shirt.id, quantity: 3 }
-      } }
+      {line_items_attributes: {
+        "0" => {id: shirt.id, quantity: 3}
+      }}
     end
 
     it "changes item quantity" do
@@ -67,9 +67,9 @@ RSpec.describe Spree::OrderContents, type: :model do
 
     context "submits item quantity 0" do
       let(:params) do
-        { line_items_attributes: {
-          "0" => { id: shirt.id, quantity: 0 }
-        } }
+        {line_items_attributes: {
+          "0" => {id: shirt.id, quantity: 0}
+        }}
       end
 
       it "removes item from order" do
@@ -88,7 +88,7 @@ RSpec.describe Spree::OrderContents, type: :model do
   context "completed order" do
     let(:order) do
       Spree::Order.create!(
-        state: 'complete',
+        state: "complete",
         completed_at: Time.current,
         email: "test@example.com"
       )

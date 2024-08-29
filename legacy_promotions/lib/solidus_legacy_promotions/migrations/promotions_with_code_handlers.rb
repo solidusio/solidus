@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core'
+require "spree/core"
 
 module SolidusLegacyPromotions
   module Migrations
@@ -23,11 +23,11 @@ module SolidusLegacyPromotions
           # Please note that this will block the current migration and rollback all
           # the previous ones run with the same "rails db:migrate" command.
           #
-          raise StandardError, "You are trying to drop 'code' column from "\
-            "spree_promotions table but you have at least one record with that "\
+          raise StandardError, "You are trying to drop 'code' column from " \
+            "spree_promotions table but you have at least one record with that " \
             "column filled. Please take care of that or you could lose data. See:" \
             "\n" \
-            "https://github.com/solidusio/solidus/pull/3028"\
+            "https://github.com/solidusio/solidus/pull/3028" \
             "\n"
         end
       end
@@ -45,7 +45,7 @@ module SolidusLegacyPromotions
               value: normalized_code,
               promotion_id: promotion.id
             ) do
-              migration_context.say "Creating Spree::PromotionCode with value "\
+              migration_context.say "Creating Spree::PromotionCode with value " \
                "'#{normalized_code}' for Spree::Promotion with id '#{promotion.id}'"
             end
           end
@@ -58,7 +58,7 @@ module SolidusLegacyPromotions
           # least we could print a message to track what we are deleting.
           #
           promotions.find_each do |promotion|
-            migration_context.say "Code '#{promotion.code}' is going to be removed "\
+            migration_context.say "Code '#{promotion.code}' is going to be removed " \
               "from Spree::Promotion with id '#{promotion.id}'"
           end
         end

@@ -7,7 +7,7 @@ class SolidusAdmin::UI::Toast::Component < SolidusAdmin::BaseComponent
     ],
     error: %w[
       bg-red-500 text-white
-    ],
+    ]
   }
 
   def initialize(text:, icon: nil, scheme: :default)

@@ -7,13 +7,13 @@ module SolidusAdmin
     def index
       tax_rates = apply_search_to(
         Spree::TaxRate.order(created_at: :desc, id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(tax_rates)
 
       respond_to do |format|
-        format.html { render component('tax_rates/index').new(page: @page) }
+        format.html { render component("tax_rates/index").new(page: @page) }
       end
     end
 
@@ -22,7 +22,7 @@ module SolidusAdmin
 
       Spree::TaxRate.transaction { @tax_rates.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to tax_rates_path, status: :see_other
     end
 

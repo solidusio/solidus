@@ -5,7 +5,7 @@ module Spree
     class PromotionsController < ResourceController
       before_action :load_data
 
-      helper 'spree/promotion_rules'
+      helper "spree/promotion_rules"
 
       def show
         redirect_to action: :edit
@@ -21,11 +21,11 @@ module Spree
 
         if @promotion.save
           @promotion_code_batch.process if @promotion_code_batch
-          flash[:success] = t('spree.promotion_successfully_created')
+          flash[:success] = t("spree.promotion_successfully_created")
           redirect_to location_after_save
         else
           flash[:error] = @promotion.errors.full_messages.to_sentence
-          render action: 'new'
+          render action: "new"
         end
       end
 
@@ -41,15 +41,16 @@ module Spree
 
       def collection
         return @collection if @collection
+
         params[:q] ||= HashWithIndifferentAccess.new
-        params[:q][:s] ||= 'id desc'
+        params[:q][:s] ||= "id desc"
 
         @collection = super
         @search = @collection.ransack(params[:q])
-        @collection = @search.result(distinct: true).
-          includes(promotion_includes).
-          page(params[:page]).
-          per(params[:per_page] || Spree::Config.promotions.promotions_per_page)
+        @collection = @search.result(distinct: true)
+          .includes(promotion_includes)
+          .page(params[:page])
+          .per(params[:per_page] || Spree::Config.promotions.promotions_per_page)
 
         @collection
       end

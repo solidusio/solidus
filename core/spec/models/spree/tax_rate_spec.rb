@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::TaxRate, type: :model do
   it { is_expected.to respond_to(:shipping_rate_taxes) }
 
-  context '.for_address' do
+  context ".for_address" do
     let(:germany) { create(:country, iso: "DE") }
     let(:germany_zone) { create(:zone, countries: [germany]) }
     let!(:german_tax) { create(:tax_rate, zone: germany_zone) }
@@ -26,27 +26,27 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     subject(:rates_for_address) { Spree::TaxRate.for_address(address) }
 
-    context 'when address is in germany' do
+    context "when address is in germany" do
       let(:address) { create(:address, country_iso_code: "DE") }
       it { is_expected.to contain_exactly(german_tax, eu_tax) }
     end
 
-    context 'when address is in france' do
+    context "when address is in france" do
       let(:address) { create(:address, country_iso_code: "FR") }
       it { is_expected.to contain_exactly(french_tax, eu_tax) }
     end
 
-    context 'when address is in new york' do
+    context "when address is in new york" do
       let(:address) { create(:address, country_iso_code: "US", state_code: "NY") }
       it { is_expected.to contain_exactly(new_york_tax, us_tax) }
     end
 
-    context 'when address is in alabama' do
+    context "when address is in alabama" do
       let(:address) { create(:address, country_iso_code: "US", state_code: "AL") }
       it { is_expected.to contain_exactly(alabama_tax, us_tax) }
     end
 
-    context 'when address is in alaska' do
+    context "when address is in alaska" do
       let(:address) { create(:address, country_iso_code: "US", state_code: "AK") }
       it { is_expected.to contain_exactly(us_tax) }
     end
@@ -148,43 +148,43 @@ RSpec.describe Spree::TaxRate, type: :model do
     end
 
     context "when the start date is in the past" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago ) }
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago) }
 
       it { is_expected.to eq([rate]) }
     end
 
     context "when the start date is in the future" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now ) }
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the expiry date is in the future" do
-      let!(:rate) { create(:tax_rate, expires_at: 1.day.from_now ) }
+      let!(:rate) { create(:tax_rate, expires_at: 1.day.from_now) }
 
       it { is_expected.to eq([rate]) }
     end
 
     context "when the expiry date is in the past" do
-      let!(:rate) { create(:tax_rate, expires_at: 1.day.ago ) }
+      let!(:rate) { create(:tax_rate, expires_at: 1.day.ago) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the start date in the past and expiry date is in the future" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.from_now ) }
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.from_now) }
 
       it { is_expected.to eq([rate]) }
     end
 
     context "when the start date and expiry date are in the past" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.ago ) }
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.ago) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the start date and expiry date are in the future" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now, expires_at: 1.day.from_now ) }
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now, expires_at: 1.day.from_now) }
 
       it { is_expected.to be_empty }
     end
@@ -201,19 +201,19 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     context "when starts_at is set" do
       context "now" do
-        let(:validity) { { starts_at: Time.current } }
+        let(:validity) { {starts_at: Time.current} }
 
         it { is_expected.to eq(true) }
       end
 
       context "in the past" do
-        let(:validity) { { starts_at: 1.day.ago } }
+        let(:validity) { {starts_at: 1.day.ago} }
 
         it { is_expected.to eq(true) }
       end
 
       context "in the future" do
-        let(:validity) { { starts_at: 1.day.from_now } }
+        let(:validity) { {starts_at: 1.day.from_now} }
 
         it { is_expected.to eq(false) }
       end
@@ -221,19 +221,19 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     context "when expires_at is set" do
       context "now" do
-        let(:validity) { { expires_at: Time.current } }
+        let(:validity) { {expires_at: Time.current} }
 
         it { is_expected.to eq(false) }
       end
 
       context "in the past" do
-        let(:validity) { { expires_at: 1.day.ago } }
+        let(:validity) { {expires_at: 1.day.ago} }
 
         it { is_expected.to eq(false) }
       end
 
       context "in the future" do
-        let(:validity) { { expires_at: 1.day.from_now } }
+        let(:validity) { {expires_at: 1.day.from_now} }
 
         it { is_expected.to eq(true) }
       end
@@ -241,19 +241,19 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     context "when starts_at and expires_at are set" do
       context "so that today is in range" do
-        let(:validity) { { starts_at: 1.day.ago, expires_at: 1.day.from_now } }
+        let(:validity) { {starts_at: 1.day.ago, expires_at: 1.day.from_now} }
 
         it { is_expected.to eq(true) }
       end
 
       context "both in the past" do
-        let(:validity) { { starts_at: 2.days.ago, expires_at: 1.day.ago } }
+        let(:validity) { {starts_at: 2.days.ago, expires_at: 1.day.ago} }
 
         it { is_expected.to eq(false) }
       end
 
       context "both in the future" do
-        let(:validity) { { starts_at: 1.day.from_now, expires_at: 2.days.from_now } }
+        let(:validity) { {starts_at: 1.day.from_now, expires_at: 2.days.from_now} }
 
         it { is_expected.to eq(false) }
       end

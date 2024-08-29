@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::FlatPercentItemTotal, type: :model do
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
   let(:line_item) { create(:line_item) }
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 
@@ -21,7 +21,7 @@ RSpec.describe Spree::Calculator::FlatPercentItemTotal, type: :model do
     end
 
     it "should round result based on order currency" do
-      line_item.order.currency = 'JPY'
+      line_item.order.currency = "JPY"
       allow(line_item).to receive_messages amount: 31.08
       expect(calculator.compute(line_item)).to eq 3
 
@@ -29,7 +29,7 @@ RSpec.describe Spree::Calculator::FlatPercentItemTotal, type: :model do
       expect(calculator.compute(line_item)).to eq 3
     end
 
-    it 'returns object.amount if computed amount is greater' do
+    it "returns object.amount if computed amount is greater" do
       allow(calculator).to receive_messages preferred_flat_percent: 110
       allow(line_item).to receive_messages amount: 30.00
 

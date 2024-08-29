@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Order, type: :model do
-  let(:order) { stub_model('Spree::Order') }
+  let(:order) { stub_model("Spree::Order") }
 
   describe ".is_risky?" do
     context "Not risky order" do
@@ -60,7 +60,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context "state == 'failed'" do
-        let(:order) { FactoryBot.create(:order, payments: [FactoryBot.create(:payment, state: 'failed')]) }
+        let(:order) { FactoryBot.create(:order, payments: [FactoryBot.create(:payment, state: "failed")]) }
         it "returns true if the order has state == 'failed'" do
           expect(order.is_risky?).to eq(true)
         end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -16,19 +16,19 @@ module Spree
         build(:inventory_unit, variant:, line_item:)
       end
 
-      it 'calculates the weight of all the contents' do
+      it "calculates the weight of all the contents" do
         4.times { subject.add build_inventory_unit }
         expect(subject.weight).to eq(100.0)
       end
 
-      it 'filters by on_hand and backordered' do
+      it "filters by on_hand and backordered" do
         4.times { subject.add build_inventory_unit }
         3.times { subject.add build_inventory_unit, :backordered }
         expect(subject.on_hand.count).to eq 4
         expect(subject.backordered.count).to eq 3
       end
 
-      it 'calculates the quantity by state' do
+      it "calculates the quantity by state" do
         4.times { subject.add build_inventory_unit }
         3.times { subject.add build_inventory_unit, :backordered }
 
@@ -37,61 +37,61 @@ module Spree
         expect(subject.quantity(:backordered)).to eq 3
       end
 
-      it 'returns nil for content item not found' do
+      it "returns nil for content item not found" do
         unit = build_inventory_unit
         item = subject.find_item(unit, :on_hand)
         expect(item).to be_nil
       end
 
-      it 'finds content item for an inventory unit' do
+      it "finds content item for an inventory unit" do
         unit = build_inventory_unit
         subject.add unit
         item = subject.find_item(unit, :on_hand)
         expect(item.quantity).to eq 1
       end
 
-      it 'builds the correct list of shipping methods based on stock location and categories' do
+      it "builds the correct list of shipping methods based on stock location and categories" do
         category_one = create(:shipping_category)
         category_two = create(:shipping_category)
-        method_one   = create(:shipping_method, available_to_all: true)
-        method_two   = create(:shipping_method, stock_locations: [stock_location])
+        method_one = create(:shipping_method, available_to_all: true)
+        method_two = create(:shipping_method, stock_locations: [stock_location])
         method_one.shipping_categories = [category_one, category_two]
         method_two.shipping_categories = [category_one, category_two]
         variant_one = mock_model(Variant, shipping_category_id: category_one.id)
         variant_two = mock_model(Variant, shipping_category_id: category_two.id)
         variant_three = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant: variant_one)),
-                    ContentItem.new(build(:inventory_unit, variant: variant_one)),
-                    ContentItem.new(build(:inventory_unit, variant: variant_two)),
-                    ContentItem.new(build(:inventory_unit, variant: variant_three))]
+          ContentItem.new(build(:inventory_unit, variant: variant_one)),
+          ContentItem.new(build(:inventory_unit, variant: variant_two)),
+          ContentItem.new(build(:inventory_unit, variant: variant_three))]
 
         package = Package.new(stock_location, contents)
         expect(package.shipping_methods).to match_array([method_one, method_two])
       end
       # Contains regression test for https://github.com/spree/spree/issues/2804
-      it 'builds a list of shipping methods common to all categories' do
+      it "builds a list of shipping methods common to all categories" do
         category_one = create(:shipping_category)
         category_two = create(:shipping_category)
-        method_one   = create(:shipping_method)
-        method_two   = create(:shipping_method)
+        method_one = create(:shipping_method)
+        method_two = create(:shipping_method)
         method_one.shipping_categories = [category_one, category_two]
         method_two.shipping_categories = [category_one]
         variant_one = mock_model(Variant, shipping_category_id: category_one.id)
         variant_two = mock_model(Variant, shipping_category_id: category_two.id)
         variant_three = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant: variant_one)),
-                    ContentItem.new(build(:inventory_unit, variant: variant_one)),
-                    ContentItem.new(build(:inventory_unit, variant: variant_two)),
-                    ContentItem.new(build(:inventory_unit, variant: variant_three))]
+          ContentItem.new(build(:inventory_unit, variant: variant_one)),
+          ContentItem.new(build(:inventory_unit, variant: variant_two)),
+          ContentItem.new(build(:inventory_unit, variant: variant_three))]
 
         package = Package.new(stock_location, contents)
         expect(package.shipping_methods).to match_array([method_one])
       end
 
-      it 'builds an empty list of shipping methods when no categories' do
-        variant  = mock_model(Variant, shipping_category_id: nil)
+      it "builds an empty list of shipping methods when no categories" do
+        variant = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant:))]
-        package  = Package.new(stock_location, contents)
+        package = Package.new(stock_location, contents)
         expect(package.shipping_methods).to be_empty
       end
 
@@ -108,17 +108,17 @@ module Spree
 
         first_unit = shipment.inventory_units.first
         expect(first_unit.variant).to eq variant
-        expect(first_unit.state).to eq 'on_hand'
+        expect(first_unit.state).to eq "on_hand"
         expect(first_unit).to be_pending
 
         last_unit = shipment.inventory_units.last
         expect(last_unit.variant).to eq variant
-        expect(last_unit.state).to eq 'backordered'
+        expect(last_unit.state).to eq "backordered"
 
         expect(shipment.shipping_method).to eq shipping_method
       end
 
-      it 'does not add an inventory unit to a package twice' do
+      it "does not add an inventory unit to a package twice" do
         # since inventory units currently don't have a quantity
         unit = build_inventory_unit
         subject.add unit

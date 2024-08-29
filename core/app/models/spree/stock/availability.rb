@@ -52,22 +52,22 @@ module Spree
 
       def counts_on_hand
         @counts_on_hand ||=
-          stock_item_scope.
-            group(:variant_id, :stock_location_id).
-            sum(:count_on_hand)
+          stock_item_scope
+            .group(:variant_id, :stock_location_id)
+            .sum(:count_on_hand)
       end
 
       def backorderables
         @backorderables ||=
-          stock_item_scope.
-            where(backorderable: true).
-            pluck(:variant_id, :stock_location_id)
+          stock_item_scope
+            .where(backorderable: true)
+            .pluck(:variant_id, :stock_location_id)
       end
 
       def stock_item_scope
-        Spree::StockItem.
-          where(variant_id: @variants).
-          where(stock_location_id: @stock_locations)
+        Spree::StockItem
+          .where(variant_id: @variants)
+          .where(stock_location_id: @stock_locations)
       end
 
       def restore_location_order(quantities_by_location_id)

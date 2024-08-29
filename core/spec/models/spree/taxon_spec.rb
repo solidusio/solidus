@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Taxon, type: :model do
-  it_behaves_like 'an attachment' do
+  it_behaves_like "an attachment" do
     subject { create(:taxon) }
     let(:attachment_name) { :icon }
     let(:default_style) { :mini }
@@ -54,13 +54,13 @@ RSpec.describe Spree::Taxon, type: :model do
     context "when trying to destroy an invalid attachment" do
       let(:taxon) { create(:taxon) }
 
-      it 'returns false' do
+      it "returns false" do
         expect(taxon.destroy_attachment(:foo)).to be_falsey
       end
     end
   end
 
-  describe '#to_param' do
+  describe "#to_param" do
     let(:taxon) { FactoryBot.build(:taxon, name: "Ruby on Rails") }
 
     subject { super().to_param }
@@ -77,16 +77,16 @@ RSpec.describe Spree::Taxon, type: :model do
     end
 
     context "updating a taxon permalink" do
-      it 'parameterizes permalink correctly' do
+      it "parameterizes permalink correctly" do
         taxon.save!
-        taxon.update(permalink: 'spécial&charactèrs')
+        taxon.update(permalink: "spécial&charactèrs")
         expect(taxon.permalink).to eql "special-characters"
       end
     end
 
     context "with parent taxon" do
       let(:parent) { FactoryBot.build(:taxon, permalink: "brands") }
-      before       { allow(taxon).to receive_messages(parent:) }
+      before { allow(taxon).to receive_messages(parent:) }
 
       it "should set permalink correctly when taxon has parent" do
         taxon.set_permalink
@@ -99,9 +99,9 @@ RSpec.describe Spree::Taxon, type: :model do
         expect(taxon.permalink).to eql "brands/rubyonrails"
       end
 
-      it 'parameterizes permalink correctly' do
+      it "parameterizes permalink correctly" do
         taxon.save!
-        taxon.update(permalink_part: 'spécial&charactèrs')
+        taxon.update(permalink_part: "spécial&charactèrs")
         expect(taxon.reload.permalink).to eql "brands/special-characters"
       end
 
@@ -124,69 +124,69 @@ RSpec.describe Spree::Taxon, type: :model do
   end
 
   context "updating permalink" do
-    let(:taxonomy) { create(:taxonomy, name: 't') }
+    let(:taxonomy) { create(:taxonomy, name: "t") }
     let(:root) { taxonomy.root }
-    let(:taxon1) { create(:taxon, name: 't1', taxonomy:, parent: root) }
-    let(:taxon2) { create(:taxon, name: 't2', taxonomy:, parent: root) }
-    let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy:, parent: taxon2) }
+    let(:taxon1) { create(:taxon, name: "t1", taxonomy:, parent: root) }
+    let(:taxon2) { create(:taxon, name: "t2", taxonomy:, parent: root) }
+    let(:taxon2_child) { create(:taxon, name: "t2_child", taxonomy:, parent: taxon2) }
 
     context "changing parent" do
       subject { taxon2.update!(parent: taxon1) }
 
       it "changes own permalink" do
-        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/t2')
+        expect { subject }.to change { taxon2.reload.permalink }.from("t/t2").to("t/t1/t2")
       end
 
       it "changes child's permalink" do
-        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/t2/t2_child')
+        expect { subject }.to change { taxon2_child.reload.permalink }.from("t/t2/t2_child").to("t/t1/t2/t2_child")
       end
     end
 
     context "changing own permalink" do
-      subject { taxon2.update!(permalink: 'foo') }
+      subject { taxon2.update!(permalink: "foo") }
 
       it "changes own permalink" do
-        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
+        expect { subject }.to change { taxon2.reload.permalink }.from("t/t2").to("t/foo")
       end
 
       it "changes child's permalink" do
-        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
+        expect { subject }.to change { taxon2_child.reload.permalink }.from("t/t2/t2_child").to("t/foo/t2_child")
       end
     end
 
     context "changing own permalink part" do
-      subject { taxon2.update!(permalink_part: 'foo') }
+      subject { taxon2.update!(permalink_part: "foo") }
 
       it "changes own permalink" do
-        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/foo')
+        expect { subject }.to change { taxon2.reload.permalink }.from("t/t2").to("t/foo")
       end
 
       it "changes child's permalink" do
-        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
+        expect { subject }.to change { taxon2_child.reload.permalink }.from("t/t2/t2_child").to("t/foo/t2_child")
       end
     end
 
     context "changing parent and own permalink" do
-      subject { taxon2.update!(parent: taxon1, permalink: 'foo') }
+      subject { taxon2.update!(parent: taxon1, permalink: "foo") }
 
       it "changes own permalink" do
-        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/t1/foo')
+        expect { subject }.to change { taxon2.reload.permalink }.from("t/t2").to("t/t1/foo")
       end
 
       it "changes child's permalink" do
-        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/foo/t2_child')
+        expect { subject }.to change { taxon2_child.reload.permalink }.from("t/t2/t2_child").to("t/t1/foo/t2_child")
       end
     end
 
-    context 'changing parent permalink with special characters ' do
-      subject { taxon2.update!(permalink: 'spécial&charactèrs') }
+    context "changing parent permalink with special characters " do
+      subject { taxon2.update!(permalink: "spécial&charactèrs") }
 
-      it 'changes own permalink with parameterized characters' do
-        expect { subject }.to change{ taxon2.reload.permalink }.from('t/t2').to('t/special-characters')
+      it "changes own permalink with parameterized characters" do
+        expect { subject }.to change { taxon2.reload.permalink }.from("t/t2").to("t/special-characters")
       end
 
-      it 'changes child permalink with parameterized characters' do
-        expect { subject }.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/special-characters/t2_child')
+      it "changes child permalink with parameterized characters" do
+        expect { subject }.to change { taxon2_child.reload.permalink }.from("t/t2/t2_child").to("t/special-characters/t2_child")
       end
     end
   end
@@ -196,23 +196,23 @@ RSpec.describe Spree::Taxon, type: :model do
       let(:taxonomy) { create(:taxonomy) }
 
       it "ensures that only one root can be created" do
-        taxon = taxonomy.taxons.create(name: 'New node')
+        taxon = taxonomy.taxons.create(name: "New node")
         expect(taxon).to be_invalid
         expect(taxon.errors.full_messages).to match_array(["Taxonomy can only have one root Taxon"])
       end
 
       it "allows for multiple taxons under a taxonomy" do
-        taxon = taxonomy.root.children.create!(name: 'First child', taxonomy:)
+        taxon = taxonomy.root.children.create!(name: "First child", taxonomy:)
         expect(taxon).to be_valid
         expect(taxonomy.taxons.many?).to eq(true)
-        second_taxon = taxonomy.root.children.create!(name: 'Second child', taxonomy:)
+        second_taxon = taxonomy.root.children.create!(name: "Second child", taxonomy:)
         expect(second_taxon).to be_valid
         expect(taxonomy.root.children.many?).to eq(true)
       end
 
       # Regression test https://github.com/solidusio/solidus/issues/5187
       it "does not invalidate the root taxon after having children taxons" do
-        taxonomy.root.children.create!(name: 'New node', taxonomy:)
+        taxonomy.root.children.create!(name: "New node", taxonomy:)
         expect(taxonomy.taxons.many?).to eq(true)
         expect(taxonomy.root).to be_valid
       end
@@ -220,9 +220,9 @@ RSpec.describe Spree::Taxon, type: :model do
 
     context "name validations" do
       let!(:taxonomy) { create(:taxonomy) }
-      let!(:taxon_level_one) { create(:taxon, name: 'Solidus', parent: taxonomy.root) }
-      let(:taxon_level_one_duplicate) { build(:taxon, name: 'Solidus', parent: taxonomy.root) }
-      let(:taxon_level_two) { create(:taxon, name: 'Solidus', parent: taxon_level_one) }
+      let!(:taxon_level_one) { create(:taxon, name: "Solidus", parent: taxonomy.root) }
+      let(:taxon_level_one_duplicate) { build(:taxon, name: "Solidus", parent: taxonomy.root) }
+      let(:taxon_level_two) { create(:taxon, name: "Solidus", parent: taxon_level_one) }
 
       it "ensures that taxons with the same parent must have unique names" do
         expect(taxon_level_one_duplicate.save).to eq(false)
@@ -235,12 +235,12 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 
-  context 'leaves of the taxon tree' do
-    let(:taxonomy) { create(:taxonomy, name: 't') }
+  context "leaves of the taxon tree" do
+    let(:taxonomy) { create(:taxonomy, name: "t") }
     let(:root) { taxonomy.root }
-    let(:taxon) { create(:taxon, name: 't1', taxonomy:, parent: root) }
-    let(:child) { create(:taxon, name: 'child taxon', taxonomy:, parent: taxon) }
-    let(:grandchild) { create(:taxon, name: 'grandchild taxon', taxonomy:, parent: child) }
+    let(:taxon) { create(:taxon, name: "t1", taxonomy:, parent: root) }
+    let(:child) { create(:taxon, name: "child taxon", taxonomy:, parent: taxon) }
+    let(:grandchild) { create(:taxon, name: "grandchild taxon", taxonomy:, parent: child) }
     let(:product1) { create(:product) }
     let(:product2) { create(:product) }
     let(:product3) { create(:product) }
@@ -253,16 +253,16 @@ RSpec.describe Spree::Taxon, type: :model do
       [product1, product2, product3].each { |p| 2.times.each { create(:variant, product: p) } }
     end
 
-    describe '#all_products' do
-      it 'returns all descendant products' do
+    describe "#all_products" do
+      it "returns all descendant products" do
         products = taxon.all_products
         expect(products.count).to eq(3)
         expect(products).to match_array([product1, product2, product3])
       end
     end
 
-    describe '#all_variants' do
-      it 'returns all descendant variants' do
+    describe "#all_variants" do
+      it "returns all descendant variants" do
         variants = taxon.all_variants
         expect(variants.count).to eq(9)
         expect(variants).to match_array([product1, product2, product3].flat_map(&:variants_including_master))
@@ -270,8 +270,8 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 
-  context 'stores history of permalinks' do
-    let(:taxonomy) { create(:taxonomy, name: 'brands') }
+  context "stores history of permalinks" do
+    let(:taxonomy) { create(:taxonomy, name: "brands") }
     let(:root) { taxonomy.root }
     let(:taxon_name) { "ruby on rails" }
     let(:new_permalink) { "rails for ruby" }
@@ -280,7 +280,7 @@ RSpec.describe Spree::Taxon, type: :model do
 
     let!(:taxon) { create(:taxon, name: taxon_name, parent: root) }
 
-    it 'should store the previous slug when permalink is updated' do
+    it "should store the previous slug when permalink is updated" do
       expect(taxon.slugs.count).to eq(1)
       expect(expected_initial_slug).to eq(taxon.slugs.last.slug)
 

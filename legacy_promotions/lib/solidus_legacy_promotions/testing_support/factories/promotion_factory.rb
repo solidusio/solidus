@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :promotion, class: 'Spree::Promotion' do
-    name { 'Promo' }
+  factory :promotion, class: "Spree::Promotion" do
+    name { "Promo" }
 
     transient do
       code { nil }
@@ -76,7 +76,7 @@ FactoryBot.define do
       after(:create) do |promotion, evaluator|
         rule = Spree::Promotion::Rules::ItemTotal.create!(
           promotion:,
-          preferred_operator: 'gte',
+          preferred_operator: "gte",
           preferred_amount: evaluator.item_total_threshold_amount
         )
         promotion.rules << rule
@@ -87,7 +87,7 @@ FactoryBot.define do
     trait :with_first_order_rule do
       after(:create) do |promotion, _evaluator|
         rule = Spree::Promotion::Rules::FirstOrder.create!(
-          promotion:,
+          promotion:
         )
         promotion.rules << rule
         promotion.save!

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'mini_magick'
+require "mini_magick"
 
 module Spree
   module ActiveStorageAdapter
@@ -62,7 +62,7 @@ module Spree
       rescue ActiveStorage::FileNotFoundError => error
         logger.error("#{error} - Image id: #{attachment.record.id} is corrupted or cannot be found")
 
-        { identified: nil, width: nil, height: nil, analyzed: true }
+        {identified: nil, width: nil, height: nil, analyzed: true}
       end
 
       def styles_to_transformations(styles)
@@ -70,18 +70,18 @@ module Spree
       end
 
       def imagemagick_to_image_processing_definition(definition)
-        width_height = definition.split('x').map(&:to_i)
+        width_height = definition.split("x").map(&:to_i)
 
         case definition[-1].to_sym
         when :^
-          { resize_to_fill: width_height }
+          {resize_to_fill: width_height}
         else
           default_transformation(*width_height)
         end
       end
 
       def default_transformation(width, height)
-        { resize_to_limit: [width, height] }
+        {resize_to_limit: [width, height]}
       end
     end
   end

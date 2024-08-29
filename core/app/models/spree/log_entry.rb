@@ -69,7 +69,7 @@ module Spree
         @details ||= YAML.safe_load(
           details,
           permitted_classes: self.class.permitted_classes,
-          aliases: Spree::Config.log_entry_allow_aliases,
+          aliases: Spree::Config.log_entry_allow_aliases
         )
       end
     end
@@ -79,7 +79,7 @@ module Spree
         self.details = YAML.safe_dump(
           value,
           permitted_classes: self.class.permitted_classes,
-          aliases: Spree::Config.log_entry_allow_aliases,
+          aliases: Spree::Config.log_entry_allow_aliases
         )
       end
     end
@@ -91,7 +91,7 @@ module Spree
       self.parsed_details = ActiveMerchant::Billing::Response.new(
         response.success?,
         "[WARNING: An error occurred while trying to serialize the payment response] #{response.message}",
-        { 'data' => response.inspect, 'error' => e.message.to_s },
+        {"data" => response.inspect, "error" => e.message.to_s}
       )
     end
 

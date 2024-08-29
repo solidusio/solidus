@@ -70,7 +70,7 @@ module Spree
         can :create, Spree.user_class
         can [:show, :update, :update_email], Spree.user_class, id: user.id
         can :read, State
-        can :read, StockItem, stock_location: { active: true }
+        can :read, StockItem, stock_location: {active: true}
         can :read, StockLocation, active: true
         can :read, Taxon
         can :read, Taxonomy

@@ -2,17 +2,17 @@
 
 class AddAmountRemainingToStoreCreditEvents < ActiveRecord::Migration[5.0]
   class StoreCredit < ActiveRecord::Base
-    self.table_name = 'spree_store_credits'
+    self.table_name = "spree_store_credits"
     has_many :store_credit_events
 
-    VOID_ACTION       = 'void'
-    CREDIT_ACTION     = 'credit'
-    CAPTURE_ACTION    = 'capture'
-    ELIGIBLE_ACTION   = 'eligible'
-    AUTHORIZE_ACTION  = 'authorize'
-    ALLOCATION_ACTION = 'allocation'
-    ADJUSTMENT_ACTION = 'adjustment'
-    INVALIDATE_ACTION = 'invalidate'
+    VOID_ACTION = "void"
+    CREDIT_ACTION = "credit"
+    CAPTURE_ACTION = "capture"
+    ELIGIBLE_ACTION = "eligible"
+    AUTHORIZE_ACTION = "authorize"
+    ALLOCATION_ACTION = "allocation"
+    ADJUSTMENT_ACTION = "adjustment"
+    INVALIDATE_ACTION = "invalidate"
   end
 
   class StoreCreditEvent < ActiveRecord::Base

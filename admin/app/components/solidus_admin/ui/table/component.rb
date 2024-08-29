@@ -75,7 +75,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           form: batch_actions_form_id,
           "data-action": "#{stimulus_id}#selectAllRows",
           "data-#{stimulus_id}-target": "headerCheckbox",
-          "aria-label": t('.select_all'),
+          "aria-label": t(".select_all")
         )
       },
       data: ->(data) {
@@ -85,10 +85,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
           value: data.id,
           "data-action": "#{stimulus_id}#selectRow",
           "data-#{stimulus_id}-target": "checkbox",
-          "aria-label": t('.select_row'),
+          "aria-label": t(".select_row")
         )
       },
-      col: { class: 'w-[52px]' },
+      col: {class: "w-[52px]"}
     )
   end
 
@@ -105,7 +105,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       name: request_forgery_protection_token,
       value: form_authenticity_token(form_options: {
         action: batch_action.action,
-        method: batch_action.method,
+        method: batch_action.method
       }),
       formaction: batch_action.action,
       formmethod: batch_action.method,
@@ -113,7 +113,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       type: :submit,
       icon: batch_action.icon,
       text: batch_action.label,
-      scheme: :secondary,
+      scheme: :secondary
     }
 
     if batch_action.require_confirmation
@@ -138,7 +138,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       predicate: filter.predicate,
       options: filter.options,
       form: search_form_id,
-      index:,
+      index:
     )
   end
 
@@ -147,7 +147,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     cell = @data[:class].human_attribute_name(cell) if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
 
-    content_tag(:th, cell, class: %{
+    content_tag(:th, cell, class: %(
       border-b
       border-gray-100
       px-4
@@ -155,7 +155,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       font-semibold
       vertical-align-middle
       leading-none
-    }, **attrs)
+    ), **attrs)
   end
 
   def render_data_cell(column, data)
@@ -187,6 +187,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def should_enable_sortable?
     return false if @sortable.nil?
     return true if @search.nil?
+
     @search.on_default_scope?
   end
 end

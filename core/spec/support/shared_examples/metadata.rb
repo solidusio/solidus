@@ -12,12 +12,12 @@ RSpec.shared_examples "customer and admin metadata fields: storage and validatio
   end
 
   it "can store data in customer_metadata" do
-    object.customer_metadata = { "order_id" => "OD34236" }
+    object.customer_metadata = {"order_id" => "OD34236"}
     expect(object.customer_metadata["order_id"]).to eq("OD34236")
   end
 
   it "can store data in admin_metadata" do
-    object.admin_metadata = { "internal_note" => "Generate invoice after payment is received" }
+    object.admin_metadata = {"internal_note" => "Generate invoice after payment is received"}
     expect(object.admin_metadata["internal_note"]).to eq("Generate invoice after payment is received")
   end
 
@@ -44,10 +44,10 @@ RSpec.shared_examples "customer and admin metadata fields: storage and validatio
     }
   end
 
-  let(:oversized_value_metadata) { { "product_details" => "This is an amazing product built to last long" * 10 } } # Exceeds 256 characters
-  let(:valid_value_metadata) { { "product_details" => "This is an amazing product built to last long" } }
-  let(:oversized_key_metadata) { { "company_details_for_products" => 'This is made by demo company' } } #  Exceeds 16 characters
-  let(:valid_key_metadata) { { "company_details" => 'This is made by demo company' } }
+  let(:oversized_value_metadata) { {"product_details" => "This is an amazing product built to last long" * 10} } # Exceeds 256 characters
+  let(:valid_value_metadata) { {"product_details" => "This is an amazing product built to last long"} }
+  let(:oversized_key_metadata) { {"company_details_for_products" => "This is made by demo company"} } #  Exceeds 16 characters
+  let(:valid_key_metadata) { {"company_details" => "This is made by demo company"} }
 
   subject { create(metadata_class) }
 

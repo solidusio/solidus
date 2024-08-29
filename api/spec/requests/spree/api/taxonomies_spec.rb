@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Taxonomies', type: :request do
+  describe "Taxonomies", type: :request do
     let(:taxonomy) { create(:taxonomy) }
     let(:taxon) { create(:taxon, name: "Ruby", taxonomy:) }
     let(:taxon2) { create(:taxon, name: "Rails", taxonomy:) }
@@ -20,43 +20,43 @@ module Spree::Api
       it "gets all taxonomies" do
         get spree.api_taxonomies_path
 
-        expect(json_response["taxonomies"].first['name']).to eq taxonomy.name
-        expect(json_response["taxonomies"].first['root']['taxons'].count).to eq 1
+        expect(json_response["taxonomies"].first["name"]).to eq taxonomy.name
+        expect(json_response["taxonomies"].first["root"]["taxons"].count).to eq 1
       end
 
-      it 'can control the page size through a parameter' do
+      it "can control the page size through a parameter" do
         create(:taxonomy)
-        get spree.api_taxonomies_path, params: { per_page: 1 }
-        expect(json_response['count']).to eq(1)
-        expect(json_response['current_page']).to eq(1)
-        expect(json_response['pages']).to eq(2)
+        get spree.api_taxonomies_path, params: {per_page: 1}
+        expect(json_response["count"]).to eq(1)
+        expect(json_response["current_page"]).to eq(1)
+        expect(json_response["pages"]).to eq(2)
       end
 
-      it 'can query the results through a paramter' do
-        expected_result = create(:taxonomy, name: 'Style')
-        get spree.api_taxonomies_path, params: { q: { name_cont: 'style' } }
-        expect(json_response['count']).to eq(1)
-        expect(json_response['taxonomies'].first['name']).to eq expected_result.name
+      it "can query the results through a paramter" do
+        expected_result = create(:taxonomy, name: "Style")
+        get spree.api_taxonomies_path, params: {q: {name_cont: "style"}}
+        expect(json_response["count"]).to eq(1)
+        expect(json_response["taxonomies"].first["name"]).to eq expected_result.name
       end
 
       it "gets a single taxonomy" do
         get spree.api_taxonomy_path(taxonomy.id)
 
-        expect(json_response['name']).to eq taxonomy.name
+        expect(json_response["name"]).to eq taxonomy.name
 
-        children = json_response['root']['taxons']
+        children = json_response["root"]["taxons"]
         expect(children.count).to eq 1
-        expect(children.first['name']).to eq taxon.name
-        expect(children.first.key?('taxons')).to be false
+        expect(children.first["name"]).to eq taxon.name
+        expect(children.first.key?("taxons")).to be false
       end
 
       it "gets a single taxonomy with set=nested" do
-        get spree.api_taxonomy_path(taxonomy.id), params: { set: 'nested' }
+        get spree.api_taxonomy_path(taxonomy.id), params: {set: "nested"}
 
-        expect(json_response['name']).to eq taxonomy.name
+        expect(json_response["name"]).to eq taxonomy.name
 
-        children = json_response['root']['taxons']
-        expect(children.first.key?('taxons')).to be true
+        children = json_response["root"]["taxons"]
+        expect(children.first.key?("taxons")).to be true
       end
 
       it "can learn how to create a new taxonomy" do
@@ -67,12 +67,12 @@ module Spree::Api
       end
 
       it "cannot create a new taxonomy if not an admin" do
-        post spree.api_taxonomies_path, params: { taxonomy: { name: "Location" } }
+        post spree.api_taxonomies_path, params: {taxonomy: {name: "Location"}}
         assert_unauthorized!
       end
 
       it "cannot update a taxonomy if not an admin" do
-        put spree.api_taxonomy_path(taxonomy.id), params: { taxonomy: { name: "I hacked your store!" } }
+        put spree.api_taxonomy_path(taxonomy.id), params: {taxonomy: {name: "I hacked your store!"}}
         assert_unauthorized!
       end
 
@@ -86,22 +86,22 @@ module Spree::Api
       sign_in_as_admin!
 
       it "can create a taxonomy" do
-        post spree.api_taxonomies_path, params: { taxonomy: { name: "Colors" } }
+        post spree.api_taxonomies_path, params: {taxonomy: {name: "Colors"}}
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
       end
 
       it "cannot create a new taxonomy with invalid attributes" do
-        post spree.api_taxonomies_path, params: { taxonomy: {} }
+        post spree.api_taxonomies_path, params: {taxonomy: {}}
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       end
 
       it "can update a taxonomy" do
-        put spree.api_taxonomy_path(taxonomy), params: { taxonomy: { name: "Colours" } }
+        put spree.api_taxonomy_path(taxonomy), params: {taxonomy: {name: "Colours"}}
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(200)
-        expect(taxonomy.reload.name).to eql 'Colours'
+        expect(taxonomy.reload.name).to eql "Colours"
       end
 
       it "can destroy" do

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::BaseHelper, type: :helper do
   include Spree::BaseHelper
 
-  let(:current_store){ create :store }
+  let(:current_store) { create :store }
 
   context "available_countries" do
     let(:country) { create(:country) }
@@ -64,7 +64,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
 
   # Regression test for https://github.com/spree/spree/issues/2034
   context "flash_message" do
-    let(:flash) { { "notice" => "ok", "foo" => "foo", "bar" => "bar" } }
+    let(:flash) { {"notice" => "ok", "foo" => "foo", "bar" => "bar"} }
 
     it "should output all flash content" do
       flash_messages
@@ -94,25 +94,25 @@ RSpec.describe Spree::BaseHelper, type: :helper do
 
   context "link_to_tracking" do
     it "returns tracking link if available" do
-      a = link_to_tracking_html(shipping_method: true, tracking: '123', tracking_url: 'http://g.c/?t=123').css('a')
+      a = link_to_tracking_html(shipping_method: true, tracking: "123", tracking_url: "http://g.c/?t=123").css("a")
 
-      expect(a.text).to eq '123'
-      expect(a.attr('href').value).to eq 'http://g.c/?t=123'
+      expect(a.text).to eq "123"
+      expect(a.attr("href").value).to eq "http://g.c/?t=123"
     end
 
     it "returns tracking without link if link unavailable" do
-      html = link_to_tracking_html(shipping_method: true, tracking: '123', tracking_url: nil)
-      expect(html.css('span').text).to eq '123'
+      html = link_to_tracking_html(shipping_method: true, tracking: "123", tracking_url: nil)
+      expect(html.css("span").text).to eq "123"
     end
 
     it "returns nothing when no shipping method" do
-      html = link_to_tracking_html(shipping_method: nil, tracking: '123')
-      expect(html.css('span').text).to eq ''
+      html = link_to_tracking_html(shipping_method: nil, tracking: "123")
+      expect(html.css("span").text).to eq ""
     end
 
     it "returns nothing when no tracking" do
       html = link_to_tracking_html(tracking: nil)
-      expect(html.css('span').text).to eq ''
+      expect(html.css("span").text).to eq ""
     end
 
     def link_to_tracking_html(options = {})
@@ -123,7 +123,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
 
   # Regression test for https://github.com/spree/spree/issues/2396
   context "meta_data_tags" do
-    let(:controller_name) { 'test' }
+    let(:controller_name) { "test" }
 
     it "truncates a product description to 160 characters" do
       @test = Spree::Product.new(description: "a" * 200)
@@ -142,7 +142,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       is_expected.to eq "November 06, 2012 1:33 PM"
     end
 
-    context 'with format set to short' do
+    context "with format set to short" do
       subject { pretty_time(date, :short) }
 
       it "pretty prints time in short format" do

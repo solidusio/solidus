@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :store_credit, class: 'Spree::StoreCredit' do
+  factory :store_credit, class: "Spree::StoreCredit" do
     association :user, strategy: :create
     association :created_by, factory: :user, strategy: :create
     association :category, factory: :store_credit_category, strategy: :create

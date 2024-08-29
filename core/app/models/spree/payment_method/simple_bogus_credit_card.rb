@@ -11,9 +11,9 @@ module Spree
       message_detail = " - #{__method__}"
 
       if VALID_CCS.include? credit_card.number
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: {code: "A"})
       else
-        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, { message: FAILURE_MESSAGE }, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, {message: FAILURE_MESSAGE}, test: true)
       end
     end
 
@@ -21,7 +21,7 @@ module Spree
       message_detail = " - #{__method__}"
 
       if VALID_CCS.include? credit_card.number
-        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: {code: "A"})
       else
         ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, message: FAILURE_MESSAGE, test: true)
       end

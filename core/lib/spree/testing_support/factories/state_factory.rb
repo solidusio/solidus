@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :state, class: 'Spree::State' do
+  factory :state, class: "Spree::State" do
     transient do
-      country_iso { 'US' }
-      state_code { 'AL' }
+      country_iso { "US" }
+      state_code { "AL" }
 
       carmen_subregion do
         carmen_country = Carmen::Country.coded(country.iso)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Stock Locations", type: :feature do
   stub_authorization!
@@ -27,7 +27,7 @@ describe "Stock Locations", type: :feature do
     create(:stock_location)
     visit current_path
 
-    expect(find('#listing_stock_locations')).to have_content("NY Warehouse")
+    expect(find("#listing_stock_locations")).to have_content("NY Warehouse")
     accept_alert do
       click_icon :trash
     end

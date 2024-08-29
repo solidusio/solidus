@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'action_mailer'
+require "rails_helper"
+require "action_mailer"
 
 RSpec.describe Spree::CartonShippedMailerSubscriber do
   let(:bus) { Omnes::Bus.new }
@@ -12,7 +12,7 @@ RSpec.describe Spree::CartonShippedMailerSubscriber do
     described_class.new.subscribe_to(bus)
   end
 
-  describe 'on :carton_shipped' do
+  describe "on :carton_shipped" do
     context "when the carton's stock location is not fulfillable" do
       it "does not send an email" do
         carton = create :carton,

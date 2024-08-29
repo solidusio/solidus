@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/class/attribute'
+require "active_support/core_ext/class/attribute"
 
 module Spree
   module Core
@@ -58,7 +58,7 @@ module Spree
 
         def search_term_params(word)
           terms = Hash[search_terms(word).map { |term| [term, word] }]
-          terms.merge(m: 'or')
+          terms.merge(m: "or")
         end
       end
     end

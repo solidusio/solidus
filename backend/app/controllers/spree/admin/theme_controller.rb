@@ -9,14 +9,14 @@ module Spree
         requested_theme = params[:switch_to_theme].presence
 
         # Avoid interpolating user content into the session key
-        system_theme = params[:system_theme].presence == "dark" ? "dark" : "light"
+        system_theme = (params[:system_theme].presence == "dark") ? "dark" : "light"
         session_key = :"admin_#{system_theme}_theme"
 
         if theme_is_available?(requested_theme)
           session[session_key] = requested_theme
-          redirect_back_or_to spree.admin_url, notice: t('spree.theme_changed')
+          redirect_back_or_to spree.admin_url, notice: t("spree.theme_changed")
         else
-          redirect_back_or_to spree.admin_url, error: t('spree.error')
+          redirect_back_or_to spree.admin_url, error: t("spree.error")
         end
       end
 

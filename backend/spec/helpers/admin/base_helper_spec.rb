@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::BaseHelper, type: :helper do
   include Spree::Admin::BaseHelper

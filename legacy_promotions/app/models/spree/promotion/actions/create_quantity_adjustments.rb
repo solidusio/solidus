@@ -63,9 +63,9 @@ module Spree
           order = line_item.order
           line_items = actionable_line_items(order)
 
-          actioned_line_items = order.line_item_adjustments.reload.
-            select { |adjustment| adjustment.source == self && adjustment.amount < 0 }.
-            map(&:adjustable)
+          actioned_line_items = order.line_item_adjustments.reload
+            .select { |adjustment| adjustment.source == self && adjustment.amount < 0 }
+            .map(&:adjustable)
           other_line_items = actioned_line_items - [line_item]
 
           applicable_quantity = total_applicable_quantity(line_items)

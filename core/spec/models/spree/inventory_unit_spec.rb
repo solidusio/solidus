@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::InventoryUnit, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }
@@ -18,7 +18,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
   context "#backordered_for_stock_item" do
     let(:order) do
-      order = create(:order, state: 'complete', ship_address: create(:ship_address))
+      order = create(:order, state: "complete", ship_address: create(:ship_address))
       order.completed_at = Time.current
       create(:shipment, order:, stock_location:)
       order.shipments.reload
@@ -37,7 +37,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
     let!(:unit) do
       unit = shipment.inventory_units.first
-      unit.state = 'backordered'
+      unit.state = "backordered"
       unit.variant_id = stock_item.variant.id
       unit.line_item = line_item
       unit.tap(&:save!)
@@ -59,7 +59,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
     it "does not find inventory units that aren't backordered" do
       on_hand_unit = shipment.inventory_units.build
-      on_hand_unit.state = 'on_hand'
+      on_hand_unit.state = "on_hand"
       on_hand_unit.line_item = line_item
       on_hand_unit.variant = stock_item.variant
       on_hand_unit.save!
@@ -69,7 +69,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
     it "does not find inventory units that don't match the stock item's variant" do
       other_variant_unit = shipment.inventory_units.build
-      other_variant_unit.state = 'backordered'
+      other_variant_unit.state = "backordered"
       other_variant_unit.line_item = line_item
       other_variant_unit.variant = create(:variant)
       other_variant_unit.save!
@@ -87,7 +87,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     context "other shipments" do
       let(:other_order) do
         order = create(:order)
-        order.state = 'payment'
+        order.state = "payment"
         order.completed_at = nil
         order.tap(&:save!)
       end
@@ -102,7 +102,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
       let!(:other_unit) do
         unit = other_shipment.inventory_units.build
-        unit.state = 'backordered'
+        unit.state = "backordered"
         unit.variant_id = stock_item.variant.id
         unit.line_item = line_item
         unit.tap(&:save!)
@@ -157,7 +157,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     end
   end
 
-  describe '#additional_tax_total' do
+  describe "#additional_tax_total" do
     let(:quantity) { 2 }
     let(:line_item_additional_tax_total) { 10.00 }
     let(:line_item) do
@@ -171,12 +171,12 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       build(:inventory_unit, line_item:)
     end
 
-    it 'is the correct amount' do
+    it "is the correct amount" do
       expect(subject.additional_tax_total).to eq line_item_additional_tax_total / quantity
     end
   end
 
-  describe '#included_tax_total' do
+  describe "#included_tax_total" do
     let(:quantity) { 2 }
     let(:line_item_included_tax_total) { 10.00 }
     let(:line_item) do
@@ -190,12 +190,12 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       build(:inventory_unit, line_item:)
     end
 
-    it 'is the correct amount' do
+    it "is the correct amount" do
       expect(subject.included_tax_total).to eq line_item_included_tax_total / quantity
     end
   end
 
-  describe '#additional_tax_total' do
+  describe "#additional_tax_total" do
     let(:quantity) { 2 }
     let(:line_item_additional_tax_total) { 10.00 }
     let(:line_item) do
@@ -209,12 +209,12 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       build(:inventory_unit, line_item:)
     end
 
-    it 'is the correct amount' do
+    it "is the correct amount" do
       expect(subject.additional_tax_total).to eq line_item_additional_tax_total / quantity
     end
   end
 
-  describe '#included_tax_total' do
+  describe "#included_tax_total" do
     let(:quantity) { 2 }
     let(:line_item_included_tax_total) { 10.00 }
     let(:line_item) do
@@ -228,7 +228,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       build(:inventory_unit, line_item:)
     end
 
-    it 'is the correct amount' do
+    it "is the correct amount" do
       expect(subject.included_tax_total).to eq line_item_included_tax_total / quantity
     end
   end
@@ -264,14 +264,14 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     it "cannot be destroyed when shipped" do
       inventory_unit = create(:inventory_unit, state: "shipped")
       expect(inventory_unit.destroy).to eq false
-      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect(inventory_unit.errors.full_messages.join).to match(/Cannot destroy/)
       expect { inventory_unit.reload }.not_to raise_error
     end
 
     it "cannot be destroyed when returned" do
       inventory_unit = create(:inventory_unit, state: "returned")
       expect(inventory_unit.destroy).to eq false
-      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect(inventory_unit.errors.full_messages.join).to match(/Cannot destroy/)
       expect { inventory_unit.reload }.not_to raise_error
     end
 
@@ -284,7 +284,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     it "cannot be destroyed if its shipment is shipped" do
       inventory_unit = create(:shipped_order).inventory_units.first
       expect(inventory_unit.destroy).to eq false
-      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
+      expect(inventory_unit.errors.full_messages.join).to match(/Cannot destroy/)
       expect { inventory_unit.reload }.not_to raise_error
     end
   end

@@ -19,9 +19,9 @@ module Spree
       end
 
       def activate!
-          Spree.deprecator.warn "The #{self.class.name} module is deprecated. " \
-            "If you still use dashboards, please copy all controllers and views from #{self.class.name} to your application."
-          can [:admin, :home], :dashboards
+        Spree.deprecator.warn "The #{self.class.name} module is deprecated. " \
+          "If you still use dashboards, please copy all controllers and views from #{self.class.name} to your application."
+        can [:admin, :home], :dashboards
       end
     end
   end

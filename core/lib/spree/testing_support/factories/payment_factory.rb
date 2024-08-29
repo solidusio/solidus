@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :payment, aliases: [:credit_card_payment], class: 'Spree::Payment' do
+  factory :payment, aliases: [:credit_card_payment], class: "Spree::Payment" do
     association(:payment_method, factory: :credit_card_payment_method)
     source { create(:credit_card, user: order.user, address: order.bill_address) }
     order
-    state { 'checkout' }
-    response_code { '12345' }
+    state { "checkout" }
+    response_code { "12345" }
 
     trait :completed do
-      state { 'completed' }
+      state { "completed" }
     end
 
     trait :failing do
-      response_code { '00000' }
-      association(:source, :failing, { factory: :credit_card })
+      response_code { "00000" }
+      association(:source, :failing, {factory: :credit_card})
     end
 
     factory :payment_with_refund do
@@ -24,7 +24,7 @@ FactoryBot.define do
 
       amount { refund_amount }
 
-      state { 'completed' }
+      state { "completed" }
 
       refunds { build_list :refund, 1, amount: refund_amount }
     end
@@ -34,12 +34,12 @@ FactoryBot.define do
     end
   end
 
-  factory :check_payment, class: 'Spree::Payment' do
+  factory :check_payment, class: "Spree::Payment" do
     association(:payment_method, factory: :check_payment_method)
     order
   end
 
-  factory :store_credit_payment, class: 'Spree::Payment', parent: :payment do
+  factory :store_credit_payment, class: "Spree::Payment", parent: :payment do
     association(:payment_method, factory: :store_credit_payment_method)
     association(:source, factory: :store_credit)
   end

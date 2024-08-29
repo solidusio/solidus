@@ -2,6 +2,7 @@
 
 module Spree::RansackableAttributes
   extend ActiveSupport::Concern
+
   included do
     class_attribute :allowed_ransackable_associations, default: []
     class_attribute :allowed_ransackable_attributes, default: []

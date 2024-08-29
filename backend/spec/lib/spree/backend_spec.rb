@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'spree/backend'
+require "spec_helper"
+require "spree/backend"
 
 RSpec.describe Spree::Backend do
-  it 'loads only the necessary Rails Frameworks' do
+  it "loads only the necessary Rails Frameworks" do
     aggregate_failures do
       expect(defined? ActionCable::Engine).to be_falsey
       expect(defined? ActionController::Railtie).to be_truthy

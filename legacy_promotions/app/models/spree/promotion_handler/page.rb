@@ -7,7 +7,7 @@ module Spree
 
       def initialize(order, path)
         @order = order
-        @path = path.delete_prefix('/')
+        @path = path.delete_prefix("/")
       end
 
       def activate

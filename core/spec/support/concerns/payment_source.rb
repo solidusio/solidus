@@ -3,7 +3,7 @@
 RSpec.shared_examples "a payment source" do
   subject(:payment_source) { described_class.new }
 
-  describe 'attributes' do
+  describe "attributes" do
     it { is_expected.to respond_to(:imported) }
     it { is_expected.to respond_to(:name) }
   end
@@ -58,7 +58,7 @@ RSpec.shared_examples "a payment source" do
     end
 
     it "should be false when credit_allowed is zero" do
-      payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
+      payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: "credit_owed"))
       expect(payment_source.can_credit?(payment)).to be false
     end
   end

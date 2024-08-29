@@ -12,7 +12,7 @@ module Spree
           display_name += %{ (#{variant.options_text})} unless variant.options_text.blank?
 
           line_item.errors.add(:quantity, I18n.t(
-            'spree.selected_quantity_not_available',
+            "spree.selected_quantity_not_available",
             item: display_name.inspect
           ))
           false

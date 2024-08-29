@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Admin::PromotionsController, type: :controller do
   stub_authorization!
@@ -14,8 +14,8 @@ RSpec.describe Spree::Admin::PromotionsController, type: :controller do
 
   describe "#show" do
     it "redirects to edit" do
-      expect(get(:show, params: { id: promotion1.id }))
-        .to redirect_to(action: :edit, id: promotion1.id )
+      expect(get(:show, params: {id: promotion1.id}))
+        .to redirect_to(action: :edit, id: promotion1.id)
     end
   end
 
@@ -32,27 +32,27 @@ RSpec.describe Spree::Admin::PromotionsController, type: :controller do
 
     context "search" do
       it "pages results" do
-        get :index, params: { per_page: '1' }
+        get :index, params: {per_page: "1"}
         expect(assigns[:promotions]).to eq [promotion3]
       end
 
       it "filters by name" do
-        get :index, params: { q: { name_cont: promotion1.name } }
+        get :index, params: {q: {name_cont: promotion1.name}}
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by code" do
-        get :index, params: { q: { codes_value_cont: promotion1.codes.first.value } }
+        get :index, params: {q: {codes_value_cont: promotion1.codes.first.value}}
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by path" do
-        get :index, params: { q: { path_cont: promotion1.path } }
+        get :index, params: {q: {path_cont: promotion1.path}}
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by active" do
-        get :index, params: { q: { active: true } }
+        get :index, params: {q: {active: true}}
         expect(assigns[:promotions]).to match_array [promotion2, promotion1]
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe Spree::Admin::PromotionsController, type: :controller do
 
   describe "#create" do
     subject { post :create, params: }
-    let(:params) { { promotion: { name: 'some promo' } } }
+    let(:params) { {promotion: {name: "some promo"}} }
 
     context "it succeeds" do
       context "with no single code param" do
@@ -84,7 +84,7 @@ RSpec.describe Spree::Admin::PromotionsController, type: :controller do
       end
 
       context "with a single code" do
-        let(:params) { { promotion: { name: 'some promo' }, single_code: "promo" } }
+        let(:params) { {promotion: {name: "some promo"}, single_code: "promo"} }
 
         it "creates a promotion" do
           expect { subject }.to change { Spree::Promotion.count }.by(1)

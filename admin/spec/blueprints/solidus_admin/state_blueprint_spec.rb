@@ -15,7 +15,7 @@ RSpec.describe SolidusAdmin::StateBlueprint, type: :blueprint do
   end
 
   describe "state_with_country" do
-    let(:options) { { view: :state_with_country } }
+    let(:options) { {view: :state_with_country} }
 
     it "returns correct data" do
       expect(result).to eq(id: state.id, name: state.state_with_country)

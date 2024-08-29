@@ -33,7 +33,7 @@ class SolidusAdmin::UI::Forms::Checkbox::ComponentPreview < ViewComponent::Previ
   # @param hint toggle
   # @param hint_text text
   # @param hint_position select { choices: [above, below] }
-  def playground(caption_size: :s, caption_weight: :normal, caption_classes: '', hint: true, hint_text: "This will be helpful", hint_position: :above)
+  def playground(caption_size: :s, caption_weight: :normal, caption_classes: "", hint: true, hint_text: "This will be helpful", hint_position: :above)
     render current_component.new(object_name: "store", method: :active, checked: true) do |component|
       component.with_label(text: "Active", size: caption_size, weight: caption_weight, classes: caption_classes)
       component.with_hint(text: hint_text, position: hint_position) if hint

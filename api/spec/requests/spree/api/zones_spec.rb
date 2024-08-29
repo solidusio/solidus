@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Zones', type: :request do
+  describe "Zones", type: :request do
     let!(:attributes) { [:id, :name, :zone_members] }
-    let!(:zone) { create(:zone, name: 'Europe') }
+    let!(:zone) { create(:zone, name: "Europe") }
 
     before do
       stub_authentication!
@@ -13,29 +13,29 @@ module Spree::Api
 
     it "gets list of zones" do
       get spree.api_zones_path
-      expect(json_response['zones'].first).to have_attributes(attributes)
+      expect(json_response["zones"].first).to have_attributes(attributes)
     end
 
-    it 'can control the page size through a parameter' do
+    it "can control the page size through a parameter" do
       create(:zone)
-      get spree.api_zones_path, params: { per_page: 1 }
-      expect(json_response['count']).to eq(1)
-      expect(json_response['current_page']).to eq(1)
-      expect(json_response['pages']).to eq(2)
+      get spree.api_zones_path, params: {per_page: 1}
+      expect(json_response["count"]).to eq(1)
+      expect(json_response["current_page"]).to eq(1)
+      expect(json_response["pages"]).to eq(2)
     end
 
-    it 'can query the results through a paramter' do
-      expected_result = create(:zone, name: 'South America')
-      get spree.api_zones_path, params: { q: { name_cont: 'south' } }
-      expect(json_response['count']).to eq(1)
-      expect(json_response['zones'].first['name']).to eq expected_result.name
+    it "can query the results through a paramter" do
+      expected_result = create(:zone, name: "South America")
+      get spree.api_zones_path, params: {q: {name_cont: "south"}}
+      expect(json_response["count"]).to eq(1)
+      expect(json_response["zones"].first["name"]).to eq expected_result.name
     end
 
     it "gets a zone" do
       get spree.api_zone_path(zone)
       expect(json_response).to have_attributes(attributes)
-      expect(json_response['name']).to eq zone.name
-      expect(json_response['zone_members'].size).to eq zone.zone_members.count
+      expect(json_response["name"]).to eq zone.name
+      expect(json_response["zone_members"].size).to eq zone.zone_members.count
     end
 
     context "as an admin" do
@@ -75,8 +75,8 @@ module Spree::Api
 
         put(spree.api_zone_path(zone), params:)
         expect(response.status).to eq(200)
-        expect(json_response['name']).to eq 'North Pole'
-        expect(json_response['zone_members']).not_to be_blank
+        expect(json_response["name"]).to eq "North Pole"
+        expect(json_response["zone_members"]).not_to be_blank
       end
 
       it "can delete a zone" do

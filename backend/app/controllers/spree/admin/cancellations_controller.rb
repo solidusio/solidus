@@ -14,15 +14,15 @@ module Spree
         inventory_units = Spree::InventoryUnit.where(id: inventory_unit_ids)
 
         if inventory_units.size != inventory_unit_ids.size
-          flash[:error] = t('spree.unable_to_find_all_inventory_units')
+          flash[:error] = t("spree.unable_to_find_all_inventory_units")
           redirect_to admin_order_cancellations_path(@order)
         elsif inventory_units.empty?
-          flash[:error] = t('spree.no_inventory_selected')
+          flash[:error] = t("spree.no_inventory_selected")
           redirect_to admin_order_cancellations_path(@order)
         else
           @order.cancellations.short_ship(inventory_units, created_by:)
 
-          flash[:success] = t('spree.inventory_canceled')
+          flash[:success] = t("spree.inventory_canceled")
           redirect_to edit_admin_order_url(@order)
         end
       end

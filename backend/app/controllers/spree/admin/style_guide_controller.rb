@@ -4,37 +4,37 @@ module Spree
   module Admin
     class StyleGuideController < Spree::Admin::BaseController
       respond_to :html
-      layout 'spree/layouts/admin_style_guide'
+      layout "spree/layouts/admin_style_guide"
 
       def index
         @topics = {
           typography: [
-            'fonts',
-            'colors',
-            'lists',
-            'icons'
+            "fonts",
+            "colors",
+            "lists",
+            "icons"
           ],
           forms: [
-            'building_forms',
-            'buttons',
-            'helper_text',
-            'inputs',
-            'labels',
-            'validation'
+            "building_forms",
+            "buttons",
+            "helper_text",
+            "inputs",
+            "labels",
+            "validation"
           ],
           components: [
-            'pills',
-            'modals',
-            'tabs'
+            "pills",
+            "modals",
+            "tabs"
           ],
           messaging: [
-            'loading',
-            'flashes',
-            'tooltips'
+            "loading",
+            "flashes",
+            "tooltips"
           ],
           tables: [
-            'building_tables',
-            'pagination'
+            "building_tables",
+            "pagination"
           ]
         }
       end

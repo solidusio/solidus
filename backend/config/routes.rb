@@ -2,11 +2,11 @@
 
 Spree::Core::Engine.routes.draw do
   namespace :admin do
-    get '/search/users', to: "search#users", as: :search_users
-    get '/search/products', to: "search#products", as: :search_products
+    get "/search/users", to: "search#users", as: :search_users
+    get "/search/products", to: "search#products", as: :search_products
 
-    put '/locale/set', to: 'locale#set', defaults: { format: :json }, as: :set_locale
-    put '/theme/set', to: 'theme#set', defaults: { format: :json }, as: :set_theme
+    put "/locale/set", to: "locale#set", defaults: {format: :json}, as: :set_locale
+    put "/theme/set", to: "theme#set", defaults: {format: :json}, as: :set_theme
 
     resources :dashboards, only: [] do
       collection do
@@ -45,7 +45,7 @@ Spree::Core::Engine.routes.draw do
       resources :variants_including_master, only: [:update]
       resources :prices, only: [:destroy, :index, :edit, :update, :new, :create]
     end
-    get '/products/:product_slug/stock', to: "stock_items#index", as: :product_stock
+    get "/products/:product_slug/stock", to: "stock_items#index", as: :product_stock
 
     resources :option_types do
       collection do
@@ -54,11 +54,11 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    delete '/option_values/:id', to: "option_values#destroy", as: :option_value
+    delete "/option_values/:id", to: "option_values#destroy", as: :option_value
 
     resources :properties
 
-    delete '/product_properties/:id', to: "product_properties#destroy", as: :product_property
+    delete "/product_properties/:id", to: "product_properties#destroy", as: :product_property
 
     resources :orders do
       member do
@@ -118,7 +118,7 @@ Spree::Core::Engine.routes.draw do
         post :update_positions
       end
       resources :taxons do
-        resource :attachment, controller: 'taxons/attachment', only: [:destroy]
+        resource :attachment, controller: "taxons/attachment", only: [:destroy]
       end
     end
 
@@ -174,5 +174,5 @@ Spree::Core::Engine.routes.draw do
     resources :style_guide, only: [:index]
   end
 
-  get '/admin', to: 'admin/root#index', as: :admin
+  get "/admin", to: "admin/root#index", as: :admin
 end

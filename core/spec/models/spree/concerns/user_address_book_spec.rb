@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe UserAddressBook do
@@ -253,43 +253,43 @@ module Spree
         expect(user.remove_from_address_book(0)).to be false
       end
 
-      context 'when user has previous order addresses' do
+      context "when user has previous order addresses" do
         let(:order) { create(:order, ship_address: address1, bill_address: address2) }
 
         before { user.persist_order_address(order) }
 
-        context 'when address does not match any user address references' do
+        context "when address does not match any user address references" do
           let(:another_address) { create(:address) }
 
           let(:remove_id) { another_address.id }
 
-          it 'leaves current user ship address' do
+          it "leaves current user ship address" do
             expect { subject }.not_to change(user, :ship_address_id).from(address1.id)
           end
 
-          it 'leaves current user bill address' do
+          it "leaves current user bill address" do
             expect { subject }.not_to change(user, :bill_address_id).from(address2.id)
           end
         end
 
-        context 'when address matches user ship address' do
-          it 'removes the ship address reference from user' do
+        context "when address matches user ship address" do
+          it "removes the ship address reference from user" do
             expect { subject }.to change(user, :ship_address_id).from(address1.id).to(nil)
           end
         end
 
-        context 'when address matches user bill address' do
+        context "when address matches user bill address" do
           let(:remove_id) { address2.id }
 
-          it 'removes the bill address reference from user' do
+          it "removes the bill address reference from user" do
             expect { subject }.to change(user, :bill_address_id).from(address2.id).to(nil)
           end
         end
 
-        context 'when address matches user bill and ship address' do
+        context "when address matches user bill and ship address" do
           let(:order) { create(:order, ship_address: address1, bill_address: address1) }
 
-          it 'removes the address references from user' do
+          it "removes the address references from user" do
             expect { subject }.to change(user, :ship_address_id).from(address1.id).to(nil)
               .and change(user, :bill_address_id).from(address1.id).to(nil)
           end
@@ -301,15 +301,15 @@ module Spree
       context "when automatic_default_address preference is at a default of true" do
         let(:order) { create :order }
 
-        it 'will save both bill/ship_address references' do
+        it "will save both bill/ship_address references" do
           user.persist_order_address(order)
 
-          expect( user.bill_address_id ).to eq order.bill_address_id
-          expect( user.ship_address_id ).to eq order.ship_address_id
-          expect( user.bill_address_id ).not_to eq user.ship_address_id
+          expect(user.bill_address_id).to eq order.bill_address_id
+          expect(user.ship_address_id).to eq order.ship_address_id
+          expect(user.bill_address_id).not_to eq user.ship_address_id
 
-          expect( user.bill_address).to eq order.bill_address
-          expect( user.ship_address).to eq order.ship_address
+          expect(user.bill_address).to eq order.bill_address
+          expect(user.ship_address).to eq order.ship_address
         end
       end
 
@@ -323,11 +323,11 @@ module Spree
         it "will save only the default ship address on user as it is the first address at all" do
           user.persist_order_address(order)
 
-          expect( user.bill_address_id ).to eq order.bill_address_id
-          expect( user.ship_address_id ).to eq order.ship_address_id
+          expect(user.bill_address_id).to eq order.bill_address_id
+          expect(user.ship_address_id).to eq order.ship_address_id
 
-          expect( user.bill_address).to be_nil
-          expect( user.ship_address).to eq order.ship_address
+          expect(user.bill_address).to be_nil
+          expect(user.ship_address).to eq order.ship_address
         end
       end
 

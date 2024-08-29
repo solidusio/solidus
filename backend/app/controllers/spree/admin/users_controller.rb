@@ -26,7 +26,7 @@ module Spree
           set_roles
           set_stock_locations
 
-          flash[:success] = t('spree.created_successfully')
+          flash[:success] = t("spree.created_successfully")
           redirect_to edit_admin_user_url(@user)
         else
           load_roles
@@ -42,7 +42,7 @@ module Spree
           set_roles
           set_stock_locations
 
-          flash[:success] = t('spree.account_updated')
+          flash[:success] = t("spree.account_updated")
           redirect_to edit_admin_user_url(@user)
         else
           load_roles
@@ -56,7 +56,7 @@ module Spree
       def addresses
         if request.put?
           if @user.update(user_params)
-            flash.now[:success] = t('spree.account_updated')
+            flash.now[:success] = t("spree.account_updated")
           end
 
           render :addresses
@@ -74,9 +74,9 @@ module Spree
 
         @search = Spree::Order.includes(
           line_items: {
-            variant: [:product, { option_values: :option_type }]
+            variant: [:product, {option_values: :option_type}]
           }
-).ransack(params[:q].merge(user_id_eq: @user.id))
+        ).ransack(params[:q].merge(user_id_eq: @user.id))
 
         @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
       end
@@ -104,7 +104,7 @@ module Spree
         end
 
         if can? :manage, Spree::StockLocation
-          attributes += [{ stock_location_ids: [] }]
+          attributes += [{stock_location_ids: []}]
         end
 
         unless can? :update_password, @user

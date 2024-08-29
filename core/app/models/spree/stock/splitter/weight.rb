@@ -22,6 +22,7 @@ module Spree
           removed = []
           while package.weight > threshold
             break if package.contents.size == 1
+
             removed << package.contents.shift
           end
           removed

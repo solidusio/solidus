@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::CancellationsController do
   stub_authorization!
 
   describe "#index" do
-    subject { get :index, params: { order_id: order.number } }
+    subject { get :index, params: {order_id: order.number} }
 
     let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
 
@@ -20,7 +20,7 @@ describe Spree::Admin::CancellationsController do
 
     context "existent order id not given" do
       it "redirects and flashes about the non-existent order" do
-        get :index, params: { order_id: 'non-existent-order' }
+        get :index, params: {order_id: "non-existent-order"}
         expect(response).to redirect_to(spree.admin_orders_path)
         expect(flash[:error]).to eql("Order is not found")
       end
@@ -28,13 +28,13 @@ describe Spree::Admin::CancellationsController do
   end
 
   describe "#cancel" do
-    subject { post :short_ship, params: { order_id: order.number, inventory_unit_ids: inventory_units.map(&:id) } }
+    subject { post :short_ship, params: {order_id: order.number, inventory_unit_ids: inventory_units.map(&:id)} }
 
-    let(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: 4 }]) }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{quantity: 4}]) }
     let(:referer) { "order_admin_page" }
 
     context "no inventory unit ids are provided" do
-      subject { post :short_ship, params: { order_id: order.number } }
+      subject { post :short_ship, params: {order_id: order.number} }
 
       it "redirects back" do
         subject
@@ -43,7 +43,7 @@ describe Spree::Admin::CancellationsController do
 
       it "sets an error message" do
         subject
-        expect(flash[:error]).to eq I18n.t('spree.no_inventory_selected')
+        expect(flash[:error]).to eq I18n.t("spree.no_inventory_selected")
       end
     end
 
@@ -57,7 +57,7 @@ describe Spree::Admin::CancellationsController do
 
       it "sets an error message" do
         subject
-        expect(flash[:error]).to eq I18n.t('spree.unable_to_find_all_inventory_units')
+        expect(flash[:error]).to eq I18n.t("spree.unable_to_find_all_inventory_units")
       end
     end
 
@@ -71,7 +71,7 @@ describe Spree::Admin::CancellationsController do
 
       it "sets an success message" do
         subject
-        expect(flash[:success]).to eq I18n.t('spree.inventory_canceled')
+        expect(flash[:success]).to eq I18n.t("spree.inventory_canceled")
       end
 
       it "creates a unit cancel" do
@@ -80,7 +80,7 @@ describe Spree::Admin::CancellationsController do
 
       it "cancels the inventory" do
         subject
-        expect(order.reload.inventory_units.map(&:state).uniq).to match_array(['canceled'])
+        expect(order.reload.inventory_units.map(&:state).uniq).to match_array(["canceled"])
       end
 
       it "adjusts the order" do
