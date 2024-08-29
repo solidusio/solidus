@@ -53,7 +53,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   # @return [Boolean] Returns true if the checkbox should be checked, false otherwise.
   def checked?(value)
     conditions = params.dig(:q, :g, @index.to_s, :c)
-    conditions && conditions.values.any? { |c| c[:v]&.include?(value.to_s) }
+    conditions&.values&.any? { |c| c[:v]&.include?(value.to_s) }
   end
 
   SUFFIXES = {

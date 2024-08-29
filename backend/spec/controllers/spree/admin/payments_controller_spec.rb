@@ -168,16 +168,18 @@ module Spree
           let(:order) { payment.order }
 
           context "the user is authorized" do
-            class CaptureAllowedAbility
-              include CanCan::Ability
+            let(:capture_allowed_ability) do
+              Class.new do
+                include CanCan::Ability
 
-              def initialize(_user)
-                can :capture, Spree::Payment
+                def initialize(_user)
+                  can :capture, Spree::Payment
+                end
               end
             end
 
             before do
-              Spree::Ability.register_ability(CaptureAllowedAbility)
+              Spree::Ability.register_ability(capture_allowed_ability)
             end
 
             it "allows the action" do
@@ -187,16 +189,18 @@ module Spree
             end
 
             context "the user is not authorized" do
-              class CaptureNotAllowedAbility
-                include CanCan::Ability
+              let(:capture_not_allowed_ability) do
+                Class.new do
+                  include CanCan::Ability
 
-                def initialize(_user)
-                  cannot :capture, Spree::Payment
+                  def initialize(_user)
+                    cannot :capture, Spree::Payment
+                  end
                 end
               end
 
               before do
-                Spree::Ability.register_ability(CaptureNotAllowedAbility)
+                Spree::Ability.register_ability(capture_not_allowed_ability)
               end
 
               it "does not allow the action" do

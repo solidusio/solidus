@@ -2,6 +2,12 @@
 
 require "spec_helper"
 
+class ComplexPayments < Spree::PaymentMethod
+  preference :name, :string
+  preference :mapping, :hash
+  preference :recipients, :array
+end
+
 describe "Payment Methods", type: :feature do
   stub_authorization!
 
@@ -94,12 +100,6 @@ describe "Payment Methods", type: :feature do
     end
 
     context "with payment method having hash and array as preference" do
-      class ComplexPayments < Spree::PaymentMethod
-        preference :name, :string
-        preference :mapping, :hash
-        preference :recipients, :array
-      end
-
       let!(:payment_method) { ComplexPayments.create!(name: "Complex Payments") }
 
       it "does not display preference fields that are hash or array" do

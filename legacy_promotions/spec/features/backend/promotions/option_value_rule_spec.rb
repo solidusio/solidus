@@ -37,7 +37,7 @@ RSpec.feature "Promotion with option value rule" do
 
     first_rule = promotion.rules.reload.first
     expect(first_rule.class).to eq Spree::Promotion::Rules::OptionValue
-    expect(first_rule.preferred_eligible_values).to eq Hash[product.id => [option_value.id]]
+    expect(first_rule.preferred_eligible_values).to eq({product.id => [option_value.id]})
   end
 
   context "with an attempted XSS" do
@@ -66,10 +66,8 @@ RSpec.feature "Promotion with option value rule" do
     background do
       rule = Spree::Promotion::Rules::OptionValue.new
       rule.promotion = promotion
-      rule.preferred_eligible_values = Hash[
-        variant1.product_id => variant1.option_values.pluck(:id),
-        variant2.product_id => variant2.option_values.pluck(:id)
-      ]
+      rule.preferred_eligible_values(= {variant1.product_id => variant1.option_values.pluck(:id),
+        variant2.product_id => variant2.option_values.pluck(:id)})
       rule.save!
 
       visit spree.edit_admin_promotion_path(promotion)
@@ -84,7 +82,7 @@ RSpec.feature "Promotion with option value rule" do
       expect(page).to have_content("has been successfully updated")
 
       first_rule = promotion.rules.reload.first
-      expect(first_rule.preferred_eligible_values).to eq Hash[variant1.product_id => variant1.option_values.pluck(:id)]
+      expect(first_rule.preferred_eligible_values).to eq({variant1.product_id => variant1.option_values.pluck(:id)})
     end
   end
 end

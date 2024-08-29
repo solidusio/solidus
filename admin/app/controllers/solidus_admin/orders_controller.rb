@@ -46,7 +46,7 @@ module SolidusAdmin
       load_order
 
       @order.assign_attributes(order_params)
-      @order.email ||= @order.user.email if @order.user && @order.user.changed?
+      @order.email ||= @order.user.email if @order&.user&.changed?
 
       if @order.save
         flash[:notice] = t(".success")

@@ -14,38 +14,39 @@ module Spree
   end
 end
 
+# RESOURCE FIXTURE
+class CreateWidgets < ActiveRecord::Migration[5.1]
+  def change
+    unless table_exists?(:widgets)
+      create_table(:widgets) do |t|
+        t.string :name
+        t.integer :position
+        t.timestamps null: false
+      end
+    end
+  end
+end
+
+# Model
+class Widget < ActiveRecord::Base
+  acts_as_list
+  validates :name, presence: true
+  before_destroy :check_destroy_constraints
+
+  def check_destroy_constraints
+    return unless name == "undestroyable"
+    errors.add :base, "You can't destroy undestroyable things!"
+    errors.add :base, "Terrible things might happen."
+    throw(:abort)
+  end
+end
+
 describe Spree::Admin::WidgetsController, type: :controller do
   stub_authorization!
 
-  # RESOURCE FIXTURE
   before(:all) do
     # Database
-    class CreateWidgets < ActiveRecord::Migration[5.1]
-      def change
-        unless table_exists?(:widgets)
-          create_table(:widgets) do |t|
-            t.string :name
-            t.integer :position
-            t.timestamps null: false
-          end
-        end
-      end
-    end
     CreateWidgets.migrate(:up)
-
-    # Model
-    class Widget < ActiveRecord::Base
-      acts_as_list
-      validates :name, presence: true
-      before_destroy :check_destroy_constraints
-
-      def check_destroy_constraints
-        return unless name == "undestroyable"
-        errors.add :base, "You can't destroy undestroyable things!"
-        errors.add :base, "Terrible things might happen."
-        throw(:abort)
-      end
-    end
 
     # Routes
     Spree::Core::Engine.routes.draw do
