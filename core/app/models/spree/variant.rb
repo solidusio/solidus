@@ -319,7 +319,7 @@ module Spree
 
     def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)
       diff = price_difference_from_master(pricing_options)
-      diff && diff.zero?
+      diff&.zero?
     end
 
     # Generates a friendly name and sku string.
@@ -396,7 +396,7 @@ module Spree
     end
 
     def set_master_out_of_stock
-      if product.master && product.master.in_stock?
+      if product.master&.in_stock?
         product.master.stock_items.update_all(backorderable: false)
         product.master.stock_items.each(&:reduce_count_on_hand_to_zero)
       end

@@ -28,7 +28,7 @@ module Spree
 
         yield
       ensure
-        order_mutex.destroy if order_mutex
+        order_mutex&.destroy
       end
     end
   end

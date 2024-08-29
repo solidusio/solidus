@@ -77,7 +77,7 @@ module Spree::Preferences
       return unless should_persist?
 
       preference = Spree::Preference.find_by(key: cache_key)
-      preference.destroy if preference
+      preference&.destroy
     end
 
     def should_persist?

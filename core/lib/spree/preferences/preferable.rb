@@ -117,11 +117,9 @@ module Spree
       # This may raise an infinite loop error if any of the defaults are
       # dependent on other preferences defaults.
       def default_preferences
-        Hash[
-          defined_preferences.map do |preference|
-            [preference, preference_default(preference)]
-          end
-        ]
+        defined_preferences.map do |preference|
+          [preference, preference_default(preference)]
+        end.to_h
       end
 
       # Preference names representable as form fields in Solidus backend

@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+class UserModel < ApplicationRecord
+  self.table_name = "spree_users"
+  include Spree::UserMethods
+end
 
 describe Spree::Admin::UsersController, type: :controller do
   let(:user) { create(:user) }
@@ -61,11 +65,6 @@ describe Spree::Admin::UsersController, type: :controller do
     end
 
     context "when Spree.user_class have a different namespace than Spree" do
-      class UserModel < ApplicationRecord
-        self.table_name = "spree_users"
-        include Spree::UserMethods
-      end
-
       around do |example|
         actual_user_class = Spree.user_class
         Spree.user_class = "UserModel"

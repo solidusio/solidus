@@ -31,15 +31,15 @@ module Spree
       end
 
       # leave empty initializers for backwards-compatability. Other apps might still rely on these events
-      initializer "spree.default_permissions", before: :load_config_initializers do; end
-      initializer "spree.register.calculators", before: :load_config_initializers do; end
-      initializer "spree.register.stock_splitters", before: :load_config_initializers do; end
-      initializer "spree.register.payment_methods", before: :load_config_initializers do; end
-      initializer "spree.promo.environment", before: :load_config_initializers do; end
-      initializer "spree.promo.register.promotion.calculators", before: :load_config_initializers do; end
-      initializer "spree.promo.register.promotion.rules", before: :load_config_initializers do; end
-      initializer "spree.promo.register.promotions.actions", before: :load_config_initializers do; end
-      initializer "spree.promo.register.promotions.shipping_actions", before: :load_config_initializers do; end
+      initializer("spree.default_permissions", before: :load_config_initializers) {}
+      initializer("spree.register.calculators", before: :load_config_initializers) {}
+      initializer("spree.register.stock_splitters", before: :load_config_initializers) {}
+      initializer("spree.register.payment_methods", before: :load_config_initializers) {}
+      initializer("spree.promo.environment", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotion.calculators", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotion.rules", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotions.actions", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotions.shipping_actions", before: :load_config_initializers) {}
 
       # Filter sensitive information during logging
       initializer "spree.params.filter", before: :load_config_initializers do |app|

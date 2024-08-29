@@ -96,7 +96,7 @@ module Spree
           context 'without a user with email address "solidus@example.com" in the database' do
             before do
               default_user = Spree::LegacyUser.find_by(email: "solidus@example.com")
-              default_user.destroy if default_user
+              default_user&.destroy
             end
 
             it "creates a store credit with the same currency as the reimbursement's order" do

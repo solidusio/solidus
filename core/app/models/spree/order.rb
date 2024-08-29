@@ -485,7 +485,7 @@ module Spree
     end
 
     def ensure_shipping_address
-      unless ship_address && ship_address.valid?
+      unless ship_address&.valid?
         errors.add(:base, I18n.t("spree.ship_address_required")) && (return false)
       end
     end
@@ -687,7 +687,7 @@ module Spree
     end
 
     def persist_user_address!
-      if !temporary_address && user && user.respond_to?(:persist_order_address) && bill_address_id
+      if !temporary_address && user&.respond_to?(:persist_order_address) && bill_address_id
         user.persist_order_address(self)
       end
     end

@@ -9,12 +9,14 @@ module Spree
     let(:payment) { reimbursement.order.payments.first }
     let(:simulate) { false }
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
-    let(:creditable) { DummyCreditable.new(amount: 99.99) }
+    let(:creditable) { dummy_class.new(amount: 99.99) }
     let(:created_by_user) { create(:user, email: "user@email.com") }
 
-    class DummyCreditable < Spree::Base
-      attr_accessor :amount
-      self.table_name = "spree_payments" # Your creditable class should not use this table
+    let(:dummy_class) do
+      Class.new(Spree::Base) do
+        attr_accessor :amount
+        self.table_name = "spree_payments" # Your creditable class should not use this table
+      end
     end
 
     subject { Spree::ReimbursementType::Credit.reimburse(reimbursement, [return_item], simulate, created_by: created_by_user) }

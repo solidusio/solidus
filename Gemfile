@@ -81,4 +81,4 @@ group :release do
 end
 
 custom_gemfile = File.expand_path("Gemfile-custom", __dir__)
-eval File.read(custom_gemfile), nil, custom_gemfile, 0 if File.exist?(custom_gemfile)
+eval File.read(custom_gemfile), nil, custom_gemfile, 0 if File.exist?(custom_gemfile) # rubocop:disable Security/Eval

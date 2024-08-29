@@ -31,7 +31,7 @@ module Spree
     def authorize(_money, credit_card, _options = {})
       profile_id = credit_card.gateway_customer_profile_id
       message_detail = " - #{__method__}"
-      if VALID_CCS.include?(credit_card.number) || (profile_id && profile_id.starts_with?("BGS-"))
+      if VALID_CCS.include?(credit_card.number) || profile_id&.starts_with?("BGS-")
         ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: {code: "D"})
       else
         ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, {message: FAILURE_MESSAGE + message_detail}, test: true)
@@ -41,7 +41,7 @@ module Spree
     def purchase(_money, credit_card, _options = {})
       profile_id = credit_card.gateway_customer_profile_id
       message_detail = " - #{__method__}"
-      if VALID_CCS.include?(credit_card.number) || (profile_id && profile_id.starts_with?("BGS-"))
+      if VALID_CCS.include?(credit_card.number) || profile_id&.starts_with?("BGS-")
         ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE + message_detail, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: {code: "M"})
       else
         ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE + message_detail, message: FAILURE_MESSAGE + message_detail, test: true)

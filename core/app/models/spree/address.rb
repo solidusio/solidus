@@ -96,7 +96,7 @@ module Spree
     #   the logical "address" and excludes the database specific fields (id, created_at, updated_at).
     # @return [Boolean] true if the two addresses have the same address fields
     def ==(other)
-      return false unless other && other.respond_to?(:value_attributes)
+      return false unless other&.respond_to?(:value_attributes)
 
       value_attributes == other.value_attributes
     end
@@ -143,7 +143,7 @@ module Spree
     end
 
     def country_iso
-      country && country.iso
+      country&.iso
     end
   end
 end

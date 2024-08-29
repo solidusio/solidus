@@ -91,7 +91,8 @@ module Spree
       end
 
       def current
-        if current_api_user && @order = current_api_user.last_incomplete_spree_order(store: current_store)
+        @order = current_api_user.last_incomplete_spree_order(store: current_store)
+        if current_api_user && @order
           respond_with(@order, default_template: :show, locals: {root_object: @order})
         else
           head :no_content
@@ -122,7 +123,7 @@ module Spree
       def prevent_customer_metadata_update
         return unless @order&.completed? && cannot?(:admin, Spree::Order)
 
-        params[:order].delete(:customer_metadata) if params[:order]
+        params[:order]&.delete(:customer_metadata)
       end
 
       def normalize_params
