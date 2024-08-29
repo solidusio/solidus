@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     f.match(%r{^(spec|script)/})
   end
 
-  s.required_ruby_version = '>= 3.0.0'
+  s.required_ruby_version = '>= 3.1.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   %w[
