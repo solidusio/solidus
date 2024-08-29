@@ -11,7 +11,7 @@ def subproject_task(project, task, title: project, task_name: nil)
   task_name ||= "#{task}:#{project}"
   task task_name do
     print_title(title)
-    Dir.chdir("#{File.dirname(__FILE__)}/#{project}") do
+    Dir.chdir(project) do
       sh "rake #{task}"
     end
   end
