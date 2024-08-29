@@ -178,4 +178,45 @@ RSpec.describe Spree::Adjustment, type: :model do
       it { is_expected.to eq true }
     end
   end
+
+  describe ".eligible scope" do
+    let!(:eligible_adjustment) { create(:adjustment, eligible: true) }
+    let!(:ineligible_adjustment) { create(:adjustment, eligible: false) }
+
+    subject { described_class.eligible }
+
+    it { is_expected.to contain_exactly(eligible_adjustment) }
+  end
+
+  describe "#eligible" do
+    subject { adjustment.eligible }
+
+    context "when the adjustment is eligible" do
+      let(:adjustment) { create(:adjustment, eligible: true) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the adjustment is not not eligible" do
+      let(:adjustment) { create(:adjustment, eligible: false) }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#eligible?" do
+    subject { adjustment.eligible? }
+
+    context "when the adjustment is eligible" do
+      let(:adjustment) { create(:adjustment, eligible: true) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the adjustment is not not eligible" do
+      let(:adjustment) { create(:adjustment, eligible: false) }
+
+      it { is_expected.to be false }
+    end
+  end
 end

@@ -26,7 +26,7 @@
           <td><%= t('.subtotal') %></td>
           <td><%= @order.display_item_total %></td>
         </tr>
-        <% @order.adjustments.each do |adjustment| %>
+        <% @order.adjustments.eligible.each do |adjustment| %>
           <tr>
             <td></td>
             <td><%= sanitize(adjustment.label) %></td>

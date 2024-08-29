@@ -4,13 +4,7 @@ class SolidusAdmin::AdjustmentsController < SolidusAdmin::BaseController
   before_action :load_order
 
   def index
-    @adjustments = @order
-      .all_adjustments
-      .eligible
-      .order("adjustable_type ASC, created_at ASC")
-      .ransack(params[:q])
-      .result
-
+    load_adjustments
     set_page_and_extract_portion_from(@adjustments)
 
     respond_to do |format|
@@ -48,6 +42,14 @@ class SolidusAdmin::AdjustmentsController < SolidusAdmin::BaseController
   end
 
   private
+
+  def load_adjustments
+    @adjustments = @order
+      .all_adjustments
+      .order("adjustable_type ASC, created_at ASC")
+      .ransack(params[:q])
+      .result
+  end
 
   def load_order
     @order = Spree::Order.find_by!(number: params[:order_id])

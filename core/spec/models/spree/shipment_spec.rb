@@ -125,7 +125,6 @@ RSpec.describe Spree::Shipment, type: :model do
     end
     let!(:admin_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -1, source: nil) }
     let!(:other_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -2, source: nil) }
-    let!(:ineligible_adjustment) { create(:adjustment, eligible: false, adjustable: shipment, order: shipment.order, amount: -4, source: nil) }
 
     it 'returns the amount minus any adjustments' do
       expect(shipment.total_before_tax).to eq(10 - 1 - 2)

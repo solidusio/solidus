@@ -7,5 +7,6 @@ RSpec.describe Spree::Api::Config do
     subject { described_class.adjustment_attributes }
 
     it { is_expected.to include(:promotion_code_id) }
+    it { is_expected.to include(:eligible) }
   end
 end

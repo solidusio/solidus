@@ -73,7 +73,7 @@ module Spree
     preference :adjustment_attributes, :array, default: [
       :id, :source_type, :source_id, :adjustable_type, :adjustable_id,
       :amount, :label,
-      :finalized, :eligible, :created_at, :updated_at
+      :finalized, :created_at, :updated_at
     ]
 
     preference :inventory_unit_attributes, :array, default: [

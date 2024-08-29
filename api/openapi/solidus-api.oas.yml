@@ -6118,8 +6118,6 @@ components:
           type: string
         display_amount:
           type: string
-        eligible:
-          type: boolean
         finalized:
           type: boolean
         id:

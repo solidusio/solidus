@@ -1,4 +1,4 @@
-<div class="js-order-line-item-adjustments <%= "hidden" if order.line_item_adjustments.none? %>">
+<div class="js-order-line-item-adjustments <%= "hidden" if order.line_item_adjustments.eligible.none? %>">
   <%=
     render "spree/admin/orders/adjustments", {
       adjustments: order.line_item_adjustments,
@@ -7,7 +7,7 @@
     }
   %>
 </div>
-<div class="js-order-shipment-adjustments <%= "hidden" if order.shipment_adjustments.none? %>">
+<div class="js-order-shipment-adjustments <%= "hidden" if order.shipment_adjustments.eligible.none? %>">
   <%=
     render "spree/admin/orders/adjustments", {
       adjustments: order.shipment_adjustments,
@@ -16,7 +16,7 @@
     }
   %>
 </div>
-<div class="js-order-adjustments <%= "hidden" if order.adjustments.none? %>">
+<div class="js-order-adjustments <%= "hidden" if order.adjustments.eligible.none? %>">
   <%=
     render "spree/admin/orders/adjustments", {
       adjustments: order.adjustments,

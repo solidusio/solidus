@@ -31,7 +31,6 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
           adjustable:  order,
           order:       order,
           amount:      adjustment_amount,
-          eligible:    true,
           label:       'Adjustment',
           source_type: 'Spree::Order'
         )

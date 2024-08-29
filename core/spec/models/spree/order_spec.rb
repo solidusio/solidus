@@ -1054,10 +1054,10 @@ RSpec.describe Spree::Order, type: :model do
     it "sums all of the line items totals before tax" do
       subject.line_items = [
         Spree::LineItem.new(price: 10, quantity: 2, included_tax_total: 15.0).tap do |li|
-          li.adjustments.build(eligible: true, amount: -2)
+          li.adjustments.build(amount: -2)
         end,
         Spree::LineItem.new(price: 30, quantity: 1, included_tax_total: 16.0).tap do |li|
-          li.adjustments.build(eligible: true, amount: -3)
+          li.adjustments.build(amount: -3)
         end
       ]
       # (2*10)-2 + 30-3 = 18 + 27 = 14
@@ -1070,10 +1070,10 @@ RSpec.describe Spree::Order, type: :model do
     it "sums all of the line items totals before tax" do
       subject.shipments = [
         Spree::Shipment.new(cost: 20, included_tax_total: 15.0).tap do |li|
-          li.adjustments.build(eligible: true, amount: -2)
+          li.adjustments.build(amount: -2)
         end,
         Spree::Shipment.new(cost: 30, included_tax_total: 16.0).tap do |li|
-          li.adjustments.build(eligible: true, amount: -3)
+          li.adjustments.build(amount: -3)
         end
       ]
       # 20-2 + 30-3 = 18 + 27 = 14

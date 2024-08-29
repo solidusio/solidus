@@ -4,6 +4,7 @@
 %>
 <tr id="<%= spree_dom_id(adjustment) %>"
     data-hook="adjustment_row"
+    class="<%= "adjustment-ineligible" if !adjustment.eligible? %>"
     >
   <td><%= display_adjustable(adjustment.adjustable) %></td>
   <td><%= adjustment.label %></td>
