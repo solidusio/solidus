@@ -112,7 +112,7 @@ module SolidusAdmin
     end
 
     def role_params
-      params.require(:role).permit(:role_id, :name, :description, :type)
+      params.require(:role).permit(:role_id, :name, :description)
     end
   end
 end

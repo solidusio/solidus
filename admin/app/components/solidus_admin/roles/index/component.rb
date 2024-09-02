@@ -60,6 +60,10 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
       {
         header: :role,
         data: :name,
+      },
+      {
+        header: :description,
+        data: :description,
       }
     ]
   end

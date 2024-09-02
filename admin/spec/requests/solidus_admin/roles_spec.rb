@@ -27,7 +27,7 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Customer" } }
+      let(:valid_attributes) { { name: "Customer", description: "A person who buys stuff" } }
 
       it "creates a new Role" do
         expect {
@@ -49,7 +49,7 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "admin" } }
+      let(:invalid_attributes) { { name: "" } }
 
       it "does not create a new Role" do
         expect {
@@ -73,7 +73,7 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Publisher" } }
+      let(:valid_attributes) { { name: "Publisher", description: "A person who publishes stuff" } }
 
       it "updates the role" do
         patch solidus_admin.role_path(role), params: { role: valid_attributes }
@@ -95,7 +95,7 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "admin" } }
+      let(:invalid_attributes) { { name: "" } }
 
       it "does not update the role" do
         original_name = role.name

@@ -49,6 +49,7 @@ describe "Roles", :js, type: :feature do
     context "with valid data" do
       it "successfully creates a new role, keeping page and q params" do
         fill_in "Name", with: "Purchaser"
+        fill_in "Description", with: "A person who buys stuff"
 
         click_on "Add Role"
 
@@ -59,18 +60,27 @@ describe "Roles", :js, type: :feature do
     end
 
     context "with invalid data" do
-      # @note: The only validation that Roles currently have is that names must
-      #   be unique (but they can still be blank).
-      before do
-        create(:role, name: "Customer Role" )
+      context "with a non-unique name" do
+        before do
+          create(:role, name: "Customer Role" )
+        end
+
+        it "fails to create a new role, keeping page and q params" do
+          fill_in "Name", with: "Customer Role"
+          click_on "Add Role"
+
+          expect(page).to have_content("has already been taken")
+          expect(page.current_url).to include(query)
+        end
       end
 
-      it "fails to create a new role, keeping page and q params" do
-        fill_in "Name", with: "Customer Role"
-        click_on "Add Role"
+      context "with no name" do
+        it "fails to create a new role, keeping page and q params" do
+          click_on "Add Role"
 
-        expect(page).to have_content("has already been taken")
-        expect(page.current_url).to include(query)
+          expect(page).to have_content("can't be blank")
+          expect(page.current_url).to include(query)
+        end
       end
     end
   end
@@ -95,10 +105,12 @@ describe "Roles", :js, type: :feature do
 
     it "successfully updates the existing role" do
       fill_in "Name", with: "Publisher"
+      fill_in "Description", with: "A person who publishes stuff"
 
       click_on "Update Role"
       expect(page).to have_content("Role was successfully updated.")
       expect(page).to have_content("Publisher")
+      expect(page).to have_content("A person who publishes stuff")
       expect(page).not_to have_content("Reviewer")
       expect(Spree::Role.find_by(name: "Publisher")).to be_present
       expect(page.current_url).to include(query)
