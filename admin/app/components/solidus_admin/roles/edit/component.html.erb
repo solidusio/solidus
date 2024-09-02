@@ -5,6 +5,21 @@
         <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
         <%= render component("ui/forms/field").text_field(f, :description) %>
       </div>
+
+      <% if permission_set_options.present? %>
+        <h3 class="text-l py-4 font-semibold text-gray-900">
+          <%= t(".choose_permissions") %>
+        </h3>
+      <% end %>
+
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:order], row_title: t('.orders'), form: f, method: :permission_set_ids) %>
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:product], row_title: t('.products'), form: f, method: :permission_set_ids) %>
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:stock], row_title: t('.stock'), form: f, method: :permission_set_ids) %>
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:user], row_title: t('.customers'), form: f, method: :permission_set_ids) %>
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:restricted_stock], row_title: t('.restricted_stock'), form: f, method: :permission_set_ids) %>
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:configuration], row_title: t('.settings'), form: f, method: :permission_set_ids) %>
+      <%= render component("ui/checkbox_row").new(options: permission_set_options[:other], row_title: t('.other'), form: f, method: :permission_set_ids, layout: :subsection) %>
+
       <% modal.with_actions do %>
         <form method="dialog">
           <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
@@ -14,4 +29,5 @@
     <% end %>
   <% end %>
 <% end %>
+
 <%= render component("roles/index").new(page: @page) %>

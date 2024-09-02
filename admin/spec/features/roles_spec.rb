@@ -118,11 +118,13 @@ describe "Roles", :js, type: :feature do
     let(:query) { "?page=1&q%5Bname_cont%5D=er" }
 
     before do
-      Spree::Role.create(name: "Reviewer")
+      Spree::Role.create(name: "Reviewer", permission_sets: [settings_edit_permission])
       visit "/admin/roles#{query}"
       find_row("Reviewer").click
       expect(page).to have_content("Edit Role")
       expect(page).to be_axe_clean
+      expect(Spree::Role.find_by(name: "Reviewer").permission_set_ids)
+        .to contain_exactly(settings_edit_permission.id)
     end
 
     it "opens a modal" do
@@ -136,12 +138,26 @@ describe "Roles", :js, type: :feature do
       fill_in "Name", with: "Publisher"
       fill_in "Description", with: "A person who publishes stuff"
 
+      within("form.edit_role") do
+        expect(page).to have_content("Choose permissions")
+        expect(page).to have_content("Settings")
+        expect(page).to have_content("Edit")
+        expect(page).to have_content("View")
+        expect(find('label', text: 'Edit').find('input[type=checkbox]').checked?).to eq(true)
+        find('label', text: 'Edit').find('input[type=checkbox]').uncheck
+        find('label', text: 'View').find('input[type=checkbox]').check
+      end
+
       click_on "Update Role"
       expect(page).to have_content("Role was successfully updated.")
       expect(page).to have_content("Publisher")
       expect(page).to have_content("A person who publishes stuff")
       expect(page).not_to have_content("Reviewer")
       expect(Spree::Role.find_by(name: "Publisher")).to be_present
+      expect(Spree::Role.find_by(name: "Publisher").permission_set_ids)
+        .to contain_exactly(
+          settings_view_permission.id,
+        )
       expect(page.current_url).to include(query)
     end
   end
