@@ -3,7 +3,26 @@
 require 'spec_helper'
 
 describe "Roles", :js, type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before do
+    sign_in create(:admin_user, email: 'admin@example.com')
+  end
+
+  let!(:settings_edit_permission) {
+    Spree::PermissionSet.find_or_create_by!(
+      name: "ConfigurationManagement",
+      set: "Spree::PermissionSets::ConfigurationManagement",
+      privilege: "management",
+      category: "configuration"
+    )
+  }
+  let!(:settings_view_permission) {
+    Spree::PermissionSet.find_or_create_by!(
+      name: "ConfigurationDisplay",
+      set: "Spree::PermissionSets::ConfigurationDisplay",
+      privilege: "display",
+      category: "configuration"
+    )
+  }
 
   it "lists roles and allows deleting them" do
     create(:role, name: "Customer Role" )
@@ -51,10 +70,20 @@ describe "Roles", :js, type: :feature do
         fill_in "Name", with: "Purchaser"
         fill_in "Description", with: "A person who buys stuff"
 
+        within("form.new_role") do
+          expect(page).to have_content("Choose permissions")
+          expect(page).to have_content("Settings")
+          expect(page).to have_content("Edit")
+          expect(page).to have_content("View")
+          find('label', text: 'View').find('input[type=checkbox]').click
+        end
+
         click_on "Add Role"
 
         expect(page).to have_content("Role was successfully created.")
         expect(Spree::Role.find_by(name: "Purchaser")).to be_present
+        expect(Spree::Role.find_by(name: "Purchaser").permission_set_ids)
+          .to contain_exactly(settings_view_permission.id)
         expect(page.current_url).to include(query)
       end
     end
