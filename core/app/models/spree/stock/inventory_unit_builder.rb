@@ -3,8 +3,9 @@
 module Spree
   module Stock
     class InventoryUnitBuilder
-      def initialize(order)
+      def initialize(order, coordinator_options: {})
         @order = order
+        @coordinator_options = coordinator_options
       end
 
       def units

@@ -15,14 +15,17 @@ module Spree
         # @!attribute [r] stock_locations
         #   @return [Enumerable<Spree::StockLocation>]
         #     a collection of locations to sort
-        attr_reader :stock_locations
+        attr_reader :stock_locations, :coordinator_options
 
         # Initializes the stock location sorter.
         #
         # @param stock_locations [Enumerable<Spree::StockLocation>]
         #   a collection of locations to sort
-        def initialize(stock_locations)
+        # @param coordinator_options [Hash]
+        #  a set of options passed from the stock_coordinator
+        def initialize(stock_locations, coordinator_options: {})
           @stock_locations = stock_locations
+          @coordinator_options = coordinator_options
         end
 
         # Sorts the stock locations.

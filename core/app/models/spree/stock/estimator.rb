@@ -6,6 +6,10 @@ module Spree
       class ShipmentRequired < StandardError; end
       class OrderRequired < StandardError; end
 
+      def initialize(coordinator_options: {})
+        @coordinator_options = coordinator_options
+      end
+
       # Estimate the shipping rates for a package.
       #
       # @param package [Spree::Stock::Package] the package to be shipped
