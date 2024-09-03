@@ -11,22 +11,26 @@ module Spree
 
       describe "#shipments" do
         it 'uses the pluggable estimator class' do
-          expect(Spree::Config.stock).to receive(:estimator_class).and_call_original
+          expect(Spree::Config.stock.estimator_class).to receive(:new).with(coordinator_options: {}).and_call_original
+
           subject.shipments
         end
 
         it 'uses the configured stock location filter' do
-          expect(Spree::Config.stock).to receive(:location_filter_class).and_call_original
+          expect(Spree::Config.stock.location_filter_class).to receive(:new).with(anything, anything, coordinator_options: {}).and_call_original
+
           subject.shipments
         end
 
         it 'uses the configured stock location sorter' do
-          expect(Spree::Config.stock).to receive(:location_sorter_class).and_call_original
+          expect(Spree::Config.stock.location_sorter_class).to receive(:new).with(anything, coordinator_options: {}).and_call_original
+
           subject.shipments
         end
 
         it 'uses the pluggable allocator class' do
-          expect(Spree::Config.stock).to receive(:allocator_class).and_call_original
+          expect(Spree::Config.stock.allocator_class).to receive(:new).with(anything, coordinator_options: {}).and_call_original
+
           subject.shipments
         end
 
@@ -39,9 +43,7 @@ module Spree
         end
 
         it 'uses the pluggable inventory unit builder class' do
-          expect(Spree::Config.stock)
-            .to receive(:inventory_unit_builder_class)
-            .and_call_original
+          expect(Spree::Config.stock.inventory_unit_builder_class).to receive(:new).with(anything, coordinator_options: {}).and_call_original
 
           subject.shipments
         end
