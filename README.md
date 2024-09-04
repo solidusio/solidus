@@ -226,7 +226,7 @@ docker-compose build --build-arg RUBY_VERSION=3.0 app
 docker-compose up -d
 ```
 
-The rails version can be customized at runtime through `RAILS_VERSION` environment variable:
+The rails version can be customized at runtime through the `RAILS_VERSION` environment variable:
 
 ```bash
 RAILS_VERSION='~> 5.0' docker-compose up -d
