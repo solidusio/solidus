@@ -1,0 +1,15 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Default Layout
+  </h6>
+
+  <%= render current_component.new(options: [{ label: "true", id: 1 }, { label: "false", id: 0 }], row_title: "I have flossed recently", form: ActionView::Helpers::FormBuilder.new(:object, Object.new, self, {}), method: "attribute", layout: :default) %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Subsection Layout
+  </h6>
+
+  <%= render current_component.new(options: [{ label: "Pizza", id: 1 }, { label: "Pasta", id: 0 }, { label: "Soup", id: 3 }], row_title: "Favourite foods", form: ActionView::Helpers::FormBuilder.new(:object, Object.new, self, {}), method: "attribute", layout: :subsection) %>
+</div>
