@@ -8,6 +8,16 @@ module Spree
     # which may or not contain sensitive information depending on
     # customizations.
     class DashboardDisplay < PermissionSets::Base
+      class << self
+        def privilege
+          :other
+        end
+
+        def category
+          :dashboard_display
+        end
+      end
+
       def activate!
           can [:admin, :home], :dashboards
       end

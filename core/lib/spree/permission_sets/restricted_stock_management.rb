@@ -8,6 +8,16 @@ module Spree
     # access to their locations. Those locations are also readable by the
     # corresponding ability.
     class RestrictedStockManagement < PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :restricted_stock
+        end
+      end
+
       def activate!
         can :manage, Spree::StockItem, stock_location_id: location_ids
         can :read, Spree::StockLocation, id: location_ids

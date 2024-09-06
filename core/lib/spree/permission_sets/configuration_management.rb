@@ -21,6 +21,16 @@ module Spree
     # - Reimbursement types
     # - Return reasons
     class ConfigurationManagement < PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :configuration
+        end
+      end
+
       def activate!
         can :manage, Spree::TaxCategory
         can :manage, Spree::TaxRate

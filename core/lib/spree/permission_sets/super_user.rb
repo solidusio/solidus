@@ -8,6 +8,16 @@ module Spree
     #
     # It grants permission to perform any read or write action on any resource.
     class SuperUser < PermissionSets::Base
+      class << self
+        def privilege
+          :other
+        end
+
+        def category
+          :super_user
+        end
+      end
+
       def activate!
         can :manage, :all
       end

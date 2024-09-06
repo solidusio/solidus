@@ -55,4 +55,16 @@ RSpec.describe Spree::PermissionSets::ProductDisplay do
     it { is_expected.not_to be_able_to(:admin, Spree::Taxon) }
     it { is_expected.not_to be_able_to(:edit, Spree::Product) }
   end
+
+  describe ".privilege" do
+    it "returns the correct privilege symbol" do
+      expect(described_class.privilege).to eq(:display)
+    end
+  end
+
+  describe ".category" do
+    it "returns the correct category symbol" do
+      expect(described_class.category).to eq(:product)
+    end
+  end
 end

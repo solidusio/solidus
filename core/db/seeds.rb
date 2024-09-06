@@ -13,6 +13,7 @@ shell = Thor::Base.shell.new
   zones
   refund_reasons
   roles
+  permission_sets
   shipping_categories
 ).each do |seed|
   shell.say_status :seed, seed

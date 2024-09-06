@@ -17,6 +17,16 @@ module Spree
     # - Taxonomies
     # - Taxons
     class ProductDisplay < PermissionSets::Base
+      class << self
+        def privilege
+          :display
+        end
+
+        def category
+          :product
+        end
+      end
+
       def activate!
         can [:read, :admin, :edit], Spree::Product
         can [:read, :admin], Spree::Image
