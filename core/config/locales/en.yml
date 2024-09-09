@@ -410,6 +410,7 @@ en:
         analytics_id: Analytics ID
       spree/user:
         email: Email
+        last_active: Last active
         lifetime_value: Total spent
         password: Password
         password_confirmation: Password Confirmation
