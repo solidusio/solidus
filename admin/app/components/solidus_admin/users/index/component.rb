@@ -39,11 +39,11 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
 
   def scopes
     [
-      { name: :customers, label: t('.scopes.customers'), default: true },
+      { name: :all, label: t('.scopes.all'), default: true },
+      { name: :customers, label: t('.scopes.customers') },
       { name: :admin, label: t('.scopes.admin') },
       { name: :with_orders, label: t('.scopes.with_orders') },
       { name: :without_orders, label: t('.scopes.without_orders') },
-      { name: :all, label: t('.scopes.all') },
     ]
   end
 

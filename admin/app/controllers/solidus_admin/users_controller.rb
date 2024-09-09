@@ -4,11 +4,11 @@ module SolidusAdmin
   class UsersController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    search_scope(:customers, default: true) { _1.left_outer_joins(:role_users).where(role_users: { id: nil }) }
+    search_scope(:all, default: true)
+    search_scope(:customers) { _1.left_outer_joins(:role_users).where(role_users: { id: nil }) }
     search_scope(:admin) { _1.joins(:role_users).distinct }
     search_scope(:with_orders) { _1.joins(:orders).distinct }
     search_scope(:without_orders) { _1.left_outer_joins(:orders).where(orders: { id: nil }) }
-    search_scope(:all)
 
     def index
       users = apply_search_to(
