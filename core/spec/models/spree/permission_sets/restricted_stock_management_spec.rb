@@ -39,4 +39,16 @@ RSpec.describe Spree::PermissionSets::RestrictedStockManagement do
     it { is_expected.to_not be_able_to(:manage, item1) }
     it { is_expected.to_not be_able_to(:manage, item2) }
   end
+
+  describe ".privilege" do
+    it "returns the correct privilege symbol" do
+      expect(described_class.privilege).to eq(:management)
+    end
+  end
+
+  describe ".category" do
+    it "returns the correct category symbol" do
+      expect(described_class.category).to eq(:restricted_stock)
+    end
+  end
 end

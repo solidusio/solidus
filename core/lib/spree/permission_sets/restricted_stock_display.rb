@@ -8,6 +8,16 @@ module Spree
     # locations, both of them limited to locations they have access to.
     # Permissions are also granted for the admin panel for items.
     class RestrictedStockDisplay < PermissionSets::Base
+      class << self
+        def privilege
+          :display
+        end
+
+        def category
+          :restricted_stock
+        end
+      end
+
       def activate!
         can [:read, :admin], Spree::StockItem, stock_location_id: location_ids
         can :read, Spree::StockLocation, id: location_ids

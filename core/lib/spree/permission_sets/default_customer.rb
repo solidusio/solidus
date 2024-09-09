@@ -32,6 +32,16 @@ module Spree
     # with the same user, as well as reading and updating the user record and
     # their associated cards.
     class DefaultCustomer < PermissionSets::Base
+      class << self
+        def privilege
+          :other
+        end
+
+        def category
+          :default_customer
+        end
+      end
+
       def activate!
         can :read, Country
         can :read, OptionType

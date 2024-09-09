@@ -22,6 +22,16 @@ module Spree
     # However, it does not allow any modifications to be made to any of these
     # resources.
     class OrderDisplay < PermissionSets::Base
+      class << self
+        def privilege
+          :display
+        end
+
+        def category
+          :order
+        end
+      end
+
       def activate!
         can [:read, :admin, :edit, :cart], Spree::Order
         can [:read, :admin], Spree::Payment

@@ -21,6 +21,16 @@ module Spree
     #
     # It also allows reading reimbursement types, but not modifying them.
     class OrderManagement < PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :order
+        end
+      end
+
       def activate!
         can :read, Spree::ReimbursementType
         can :manage, Spree::Order

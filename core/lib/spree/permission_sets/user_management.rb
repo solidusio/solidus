@@ -12,6 +12,16 @@ module Spree
     # - Roles
     # - API keys
     class UserManagement < PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :user
+        end
+      end
+
       def activate!
         can [:admin, :read, :create, :update, :save_in_address_book, :remove_from_address_book, :addresses, :orders, :items], Spree.user_class
 

@@ -22,6 +22,16 @@ module Spree
     # - Reimbursement types
     # - Return reasons
     class ConfigurationDisplay < PermissionSets::Base
+      class << self
+        def privilege
+          :display
+        end
+
+        def category
+          :configuration
+        end
+      end
+
       def activate!
           can [:read, :admin], Spree::TaxCategory
           can [:read, :admin], Spree::TaxRate

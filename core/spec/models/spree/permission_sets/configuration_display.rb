@@ -73,4 +73,16 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
     it { is_expected.not_to be_able_to(:admin, Spree::ReimbursementType) }
     it { is_expected.not_to be_able_to(:admin, Spree::ReturnReason) }
   end
+
+  describe ".privilege" do
+    it "returns the correct privilege symbol" do
+      expect(described_class.privilege).to eq(:display)
+    end
+  end
+
+  describe ".category" do
+    it "returns the correct category symbol" do
+      expect(described_class.category).to eq(:configuration)
+    end
+  end
 end

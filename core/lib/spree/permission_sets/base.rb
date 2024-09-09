@@ -18,9 +18,21 @@ module Spree
       end
 
       # Activate permissions on the ability. Put your can and cannot statements here.
-      # Must be overriden by subclasses
+      # Must be overridden by subclasses
       def activate!
         raise NotImplementedError.new
+      end
+
+      # Provide the permission set privilege in the form of a :symbol.
+      # Must be overridden by subclasses.
+      def self.privilege
+        raise NotImplementedError, "Subclass #{name} must define a privilege using `self.privilege :symbol`"
+      end
+
+      # Provide the permission set category in the form of a :symbol.
+      # Must be overridden by subclasses.
+      def self.category
+        raise NotImplementedError, "Subclass #{name} must define a category using `self.category :symbol`"
       end
 
       private

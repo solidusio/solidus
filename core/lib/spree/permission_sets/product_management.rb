@@ -19,6 +19,16 @@ module Spree
     # - Classifications
     # - Prices
     class ProductManagement < PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :product
+        end
+      end
+
       def activate!
         can :manage, Spree::Classification
         can :manage, Spree::Image

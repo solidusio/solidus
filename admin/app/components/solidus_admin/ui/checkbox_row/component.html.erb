@@ -1,0 +1,29 @@
+<% if @layout == :default && @options.present? %>
+  <span class="p-2 flex hover:bg-gray-50 rounded-md">
+    <span class="w-1/2"><%= @row_title %></span>
+    <span class="w-1/2 text-right">
+      <% @options.each do |option| %>
+        <label class="px-2 cursor-pointer">
+          <%= @form.check_box(@method.to_s, { checked: @form.object.try(@method.to_sym)&.include?(option[:id]), multiple: true }, option[:id], nil)%>
+          <span class="capitalize"><%= option[:label] %></span>
+        </label>
+      <% end %>
+    </span>
+  </span>
+<% end %>
+
+<% if @layout == :subsection && @options.present? %>
+  <div class="hover:bg-gray-50 rounded-md">
+    <div class="font-semibold px-2 py-2 mt-2 mb-1"><%= @row_title %></div>
+    <div class="px-4">
+      <% @options.each do |option| %>
+        <div class="py-1">
+          <label class="cursor-pointer">
+            <%= @form.check_box(@method.to_s, { checked: @form.object.try(@method.to_sym)&.include?(option[:id]), multiple: true }, option[:id], nil)%>
+            <span class="capitalize"><%= option[:label] %></span>
+          </label>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
