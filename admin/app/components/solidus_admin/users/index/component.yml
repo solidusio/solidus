@@ -13,3 +13,7 @@ en:
   status:
     active: Active
     inactive: Inactive
+  last_login:
+    login_time_ago: "%{last_login_time} ago"
+    never: Never
+    invitation_sent: Invitation sent
