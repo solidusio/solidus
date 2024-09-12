@@ -89,7 +89,7 @@ RSpec.describe Spree::CreditCard, type: :model do
 
     let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
     let(:country) { create(:country, states_required: true) }
-    let(:state) { create(:state, country: country) }
+    let(:state) { create(:state, country:) }
     let(:valid_address_attributes) do
       {
         name: "Hugo Furst",

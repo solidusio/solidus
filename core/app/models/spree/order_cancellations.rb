@@ -36,7 +36,7 @@ class Spree::OrderCancellations
     Spree::OrderMutex.with_lock!(@order) do
       Spree::InventoryUnit.transaction do
         inventory_units.each do |iu|
-          unit_cancels << short_ship_unit(iu, created_by: created_by)
+          unit_cancels << short_ship_unit(iu, created_by:)
         end
 
         update_shipped_shipments(inventory_units)
@@ -67,9 +67,9 @@ class Spree::OrderCancellations
 
     Spree::OrderMutex.with_lock!(@order) do
       unit_cancel = Spree::UnitCancel.create!(
-        inventory_unit: inventory_unit,
-        reason: reason,
-        created_by: created_by
+        inventory_unit:,
+        reason:,
+        created_by:
       )
 
       inventory_unit.cancel!
@@ -89,8 +89,8 @@ class Spree::OrderCancellations
 
     Spree::OrderMutex.with_lock!(@order) do
       return_items = inventory_units.map(&:current_or_new_return_item)
-      reimbursement = Spree::Reimbursement.new(order: @order, return_items: return_items)
-      reimbursement.return_all(created_by: created_by)
+      reimbursement = Spree::Reimbursement.new(order: @order, return_items:)
+      reimbursement.return_all(created_by:)
     end
 
     reimbursement
@@ -100,9 +100,9 @@ class Spree::OrderCancellations
 
   def short_ship_unit(inventory_unit, created_by: nil)
     unit_cancel = Spree::UnitCancel.create!(
-      inventory_unit: inventory_unit,
+      inventory_unit:,
       reason: Spree::UnitCancel::SHORT_SHIP,
-      created_by: created_by
+      created_by:
     )
     unit_cancel.adjust!
     inventory_unit.cancel!

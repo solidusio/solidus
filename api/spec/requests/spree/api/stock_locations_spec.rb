@@ -52,7 +52,7 @@ module Spree::Api
             }
           }
 
-          post spree.api_stock_locations_path, params: params
+          post(spree.api_stock_locations_path, params:)
           expect(response.status).to eq(401)
         end
       end
@@ -138,7 +138,7 @@ module Spree::Api
             }
           }
 
-          post spree.api_stock_locations_path, params: params
+          post(spree.api_stock_locations_path, params:)
           expect(response.status).to eq(201)
           expect(json_response).to have_attributes(attributes)
         end
@@ -152,7 +152,7 @@ module Spree::Api
             }
           }
 
-          put spree.api_stock_location_path(stock_location), params: params
+          put(spree.api_stock_location_path(stock_location), params:)
           expect(response.status).to eq(200)
           expect(json_response['name']).to eq 'South Pole'
         end

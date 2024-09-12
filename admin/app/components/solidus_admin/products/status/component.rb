@@ -20,7 +20,7 @@ class SolidusAdmin::Products::Status::Component < SolidusAdmin::BaseComponent
         :unavailable
       end
 
-    new(status: status)
+    new(status:)
   end
 
   def initialize(status:)

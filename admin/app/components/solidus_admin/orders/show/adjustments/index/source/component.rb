@@ -10,7 +10,7 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Source::Component < Solidu
   end
 
   def call
-    render component("ui/thumbnail_with_caption").new(icon: icon, caption: caption, detail: detail)
+    render component("ui/thumbnail_with_caption").new(icon:, caption:, detail:)
   end
 
   def caption

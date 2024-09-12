@@ -43,7 +43,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
     context "country_iso" do
       subject { controller.current_pricing_options.country_iso }
 
-      let(:store) { FactoryBot.create(:store, cart_tax_country_iso: cart_tax_country_iso) }
+      let(:store) { FactoryBot.create(:store, cart_tax_country_iso:) }
 
       context "when the store has a cart tax country set" do
         let(:cart_tax_country_iso) { "DE" }

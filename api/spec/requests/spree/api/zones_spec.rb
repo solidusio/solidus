@@ -54,7 +54,7 @@ module Spree::Api
           }
         }
 
-        post spree.api_zones_path, params: params
+        post(spree.api_zones_path, params:)
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["zone_members"]).not_to be_empty
@@ -73,7 +73,7 @@ module Spree::Api
           }
         }
 
-        put spree.api_zone_path(zone), params: params
+        put(spree.api_zone_path(zone), params:)
         expect(response.status).to eq(200)
         expect(json_response['name']).to eq 'North Pole'
         expect(json_response['zone_members']).not_to be_blank

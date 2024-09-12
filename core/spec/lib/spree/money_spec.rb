@@ -9,7 +9,7 @@ RSpec.describe Spree::Money do
 
   describe '#initialize' do
     subject do
-      described_class.new(amount, currency: currency, with_currency: true).to_s
+      described_class.new(amount, currency:, with_currency: true).to_s
     end
 
     context 'with no currency' do

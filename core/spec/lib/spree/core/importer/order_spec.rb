@@ -7,7 +7,7 @@ module Spree
     RSpec.describe Importer::Order do
       let!(:store) { create(:store) }
       let!(:country) { create(:country) }
-      let!(:state) { country.states.first || create(:state, country: country) }
+      let!(:state) { country.states.first || create(:state, country:) }
       let!(:stock_location) { create(:stock_location, admin_name: 'Admin Name') }
 
       let(:user) { stub_model(LegacyUser, email: 'fox@mudler.com') }
@@ -131,7 +131,7 @@ module Spree
       it 'can build an order from API with variant sku' do
         params = {
           line_items_attributes: {
-            "0" => { sku: sku, quantity: 5 }
+            "0" => { sku:, quantity: 5 }
           }
         }
 
@@ -145,7 +145,7 @@ module Spree
       it 'handle when line items is an array' do
         params = {
           line_items_attributes: [
-            { variant_id: variant_id, quantity: 7 }
+            { variant_id:, quantity: 7 }
           ]
         }
         order = Importer::Order.import(user, params)
@@ -299,7 +299,7 @@ module Spree
                 cost: '14.99',
                 shipping_method: shipping_method.name,
                 stock_location: stock_location.name,
-                inventory_units: [{ sku: sku }]
+                inventory_units: [{ sku: }]
               }
             ]
           }
@@ -358,7 +358,7 @@ module Spree
                   shipped_at: 1.day.ago,
                   shipping_method: shipping_method.name,
                   stock_location: stock_location.name,
-                  inventory_units: [{ sku: sku }]
+                  inventory_units: [{ sku: }]
                 }
               ]
             }
@@ -394,7 +394,7 @@ module Spree
                   shipped_at: 1.day.ago,
                   shipping_method: shipping_method.name,
                   stock_location: stock_location.name,
-                  inventory_units: [{ sku: sku }]
+                  inventory_units: [{ sku: }]
                 }
               ]
             }

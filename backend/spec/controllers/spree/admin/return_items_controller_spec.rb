@@ -39,7 +39,7 @@ describe Spree::Admin::ReturnItemsController, type: :controller do
       end
 
       subject do
-        put :update, params: { id: return_item.to_param, return_item: { reception_status_event: reception_status_event } }
+        put :update, params: { id: return_item.to_param, return_item: { reception_status_event: } }
       end
 
       it 'updates the return item' do

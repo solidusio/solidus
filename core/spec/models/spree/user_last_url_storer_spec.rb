@@ -7,12 +7,12 @@ RSpec.describe Spree::UserLastUrlStorer do
 
   let(:fullpath) { '/products/baseball-cap' }
   let(:session) { {} }
-  let(:request) { double(fullpath: fullpath) }
+  let(:request) { double(fullpath:) }
   let(:controller) do
     instance_double(
       ApplicationController,
-      request: request,
-      session: session,
+      request:,
+      session:,
       controller_name: 'app_controller_double'
     )
   end

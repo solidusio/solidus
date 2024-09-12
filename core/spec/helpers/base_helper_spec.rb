@@ -48,7 +48,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       context "checkout zone is of type state" do
         before do
           state_zone = create(:zone, name: "StateZone")
-          state = create(:state, country: country)
+          state = create(:state, country:)
           state_zone.members.create(zoneable: state)
           stub_spree_preferences(checkout_zone: state_zone.name)
         end

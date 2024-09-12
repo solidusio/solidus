@@ -107,7 +107,7 @@ module Spree
       store_credit = Spree::StoreCreditEvent.find_by(authorization_code: auth_code).try(:store_credit)
 
       if store_credit.nil?
-        ActiveMerchant::Billing::Response.new(false, I18n.t('spree.store_credit.unable_to_find_for_action', auth_code: auth_code, action: action_name), {}, {})
+        ActiveMerchant::Billing::Response.new(false, I18n.t('spree.store_credit.unable_to_find_for_action', auth_code:, action: action_name), {}, {})
       else
         handle_action_call(store_credit, action, action_name, auth_code)
       end

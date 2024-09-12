@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Spree::TaxonsHelper, type: :helper do
   let(:currency) { 'USD' }
   let(:pricing_options) do
-    Spree::Config.pricing_options_class.new(currency: currency)
+    Spree::Config.pricing_options_class.new(currency:)
   end
   before do
     without_partial_double_verification do

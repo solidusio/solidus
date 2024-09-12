@@ -17,35 +17,35 @@ Spree::ShippingMethod.create!([
     name: "UPS Ground (USD)",
     zones: [north_america],
     calculator: Spree::Calculator::Shipping::FlatRate.create!,
-    tax_category: tax_category,
+    tax_category:,
     shipping_categories: [shipping_category]
   },
   {
     name: "UPS Two Day (USD)",
     zones: [north_america],
     calculator: Spree::Calculator::Shipping::FlatRate.create!,
-    tax_category: tax_category,
+    tax_category:,
     shipping_categories: [shipping_category]
   },
   {
     name: "UPS One Day (USD)",
     zones: [north_america],
     calculator: Spree::Calculator::Shipping::FlatRate.create!,
-    tax_category: tax_category,
+    tax_category:,
     shipping_categories: [shipping_category]
   },
   {
     name: "UPS Ground (EU)",
     zones: [europe_vat],
     calculator: Spree::Calculator::Shipping::FlatRate.create!,
-    tax_category: tax_category,
+    tax_category:,
     shipping_categories: [shipping_category]
   },
   {
     name: "UPS Ground (EUR)",
     zones: [europe_vat],
     calculator: Spree::Calculator::Shipping::FlatRate.create!,
-    tax_category: tax_category,
+    tax_category:,
     shipping_categories: [shipping_category]
   }
 ])
@@ -60,7 +60,7 @@ Spree::ShippingMethod.create!([
   shipping_method = Spree::ShippingMethod.find_by!(name: shipping_method_name)
   shipping_method.calculator.preferences = {
     amount: price,
-    currency: currency
+    currency:
   }
   shipping_method.calculator.save!
   shipping_method.save!

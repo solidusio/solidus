@@ -17,7 +17,7 @@ module Spree
     let(:return_item) do
       create(
         :return_item,
-        preferred_reimbursement_type: preferred_reimbursement_type
+        preferred_reimbursement_type:
       )
     end
     let(:dummy) { DummyClass.new }

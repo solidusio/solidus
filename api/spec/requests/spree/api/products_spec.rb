@@ -372,7 +372,7 @@ module Spree::Api
           variant_hash = {
             sku: '123', price: 19.99, options: [{ name: "size", value: "small" }]
           }
-          variant_id = product.variants.create!({ product: product }.merge(variant_hash)).id
+          variant_id = product.variants.create!({ product: }.merge(variant_hash)).id
 
           put spree.api_product_path(product), params: { product: {
             variants: [

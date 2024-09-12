@@ -41,8 +41,8 @@ orders[1].line_items.create!(
 )
 
 orders.each do |order|
-  order.payments.create!(payment_method: payment_method)
-  order.update(store: store)
+  order.payments.create!(payment_method:)
+  order.update(store:)
 
   order.next! while !order.can_complete?
   order.complete!

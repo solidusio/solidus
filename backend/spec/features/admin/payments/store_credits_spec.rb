@@ -9,7 +9,7 @@ RSpec.describe 'Store credits', type: :feature do
   let(:payment) do
     FactoryBot.create(
       :store_credit_payment,
-      order: order,
+      order:,
       amount: 20
     )
   end

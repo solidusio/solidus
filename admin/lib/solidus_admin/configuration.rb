@@ -169,10 +169,10 @@ module SolidusAdmin
         {
           position: index,
           key: item.label,
-          icon: icon,
-          route: route,
+          icon:,
+          route:,
           children: item.children.map.with_index(&menu_item_to_hash),
-          match_path: match_path,
+          match_path:,
         }
       end
 

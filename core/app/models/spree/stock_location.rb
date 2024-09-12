@@ -39,7 +39,7 @@ module Spree
 
     # Wrapper for creating a new stock item respecting the backorderable config
     def propagate_variant(variant)
-      stock_items.create!(variant: variant, backorderable: backorderable_default)
+      stock_items.create!(variant:, backorderable: backorderable_default)
     end
 
     # Return either an existing stock item or create a new one. Useful in
@@ -55,7 +55,7 @@ module Spree
     #
     # @return [StockItem] Corresponding StockItem for the StockLocation's variant.
     def stock_item(variant_id)
-      stock_items.where(variant_id: variant_id).order(:id).first
+      stock_items.where(variant_id:).order(:id).first
     end
 
     # Attempts to look up StockItem for the variant, and creates one if not found.
@@ -101,8 +101,8 @@ module Spree
       if quantity < 1 && !stock_item(variant)
         raise InvalidMovementError.new(I18n.t('spree.negative_movement_absent_item'))
       end
-      stock_item_or_create(variant).stock_movements.create!(quantity: quantity,
-                                                            originator: originator)
+      stock_item_or_create(variant).stock_movements.create!(quantity:,
+                                                            originator:)
     end
 
     def fill_status(variant, quantity)
@@ -121,7 +121,7 @@ module Spree
 
     def ensure_one_default
       if default
-        Spree::StockLocation.where(default: true).where.not(id: id).find_each do |stock_location|
+        Spree::StockLocation.where(default: true).where.not(id:).find_each do |stock_location|
           stock_location.default = false
           stock_location.save!
         end

@@ -25,7 +25,7 @@ class Spree::ReimbursementType::StoreCredit < Spree::ReimbursementType
           unpaid_amount,
           simulate,
           reimbursement_list,
-          created_by: created_by
+          created_by:
         )
       end
 

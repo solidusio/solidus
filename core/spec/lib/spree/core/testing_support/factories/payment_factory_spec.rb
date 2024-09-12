@@ -20,7 +20,7 @@ RSpec.describe 'payment factory' do
     it 'uses the orders bill address for the credit card' do
       address = create(:address)
       order = create(:order, bill_address: address)
-      payment = create(factory, order: order)
+      payment = create(factory, order:)
 
       expect(payment.source.address).to eq address
     end

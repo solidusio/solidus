@@ -7,11 +7,11 @@ module Spree
     let!(:store) { create :store }
     let(:order) { Order.create! }
     let(:variant) { create :variant }
-    let!(:shipment) { create(:shipment, state: 'pending', order: order) }
-    subject(:manifest) { described_class.new(inventory_units: inventory_units) }
+    let!(:shipment) { create(:shipment, state: 'pending', order:) }
+    subject(:manifest) { described_class.new(inventory_units:) }
 
     def build_unit(variant, attrs = {})
-      attrs = { variant: variant, shipment: shipment }.merge(attrs)
+      attrs = { variant:, shipment: }.merge(attrs)
       attrs[:line_item] = order.contents.add(variant)
       InventoryUnit.new(attrs)
     end
@@ -29,7 +29,7 @@ module Spree
         it "has correct item" do
           expect(manifest.items.count).to eq 1
           expect(manifest.items[0]).to have_attributes(
-            variant: variant,
+            variant:,
             quantity: 1,
             states: { "on_hand" => 1 }
           )
@@ -41,7 +41,7 @@ module Spree
         it "has correct item" do
           expect(manifest.items.count).to eq 1
           expect(manifest.items[0]).to have_attributes(
-            variant: variant,
+            variant:,
             quantity: 2,
             states: { "on_hand" => 2 }
           )
@@ -54,7 +54,7 @@ module Spree
         it "has correct item" do
           expect(manifest.items.count).to eq 2
           expect(manifest.items[0]).to have_attributes(
-            variant: variant,
+            variant:,
             quantity: 1,
             states: { "on_hand" => 1 }
           )
