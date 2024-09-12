@@ -192,10 +192,10 @@ commands:
     parameters:
       app_root:
         type: string
-        default: '/tmp/my_app'
+        default: "/tmp/my_app"
       path:
         type: string
-        default: '/'
+        default: "/"
       expected_text:
         type: string
 
@@ -240,7 +240,7 @@ jobs:
           ESLINT_USE_FLAT_CONFIG: false
     steps:
       - checkout
-      - run: 'bundle install'
+      - run: "bundle install"
       - run:
           name: Check Ruby
           command: "bin/rake lint:rb"
@@ -291,7 +291,7 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.2'
+        default: "3.2"
       rails:
         type: string
         default: "7.1"
@@ -327,13 +327,13 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.2'
+        default: "3.2"
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
     parallelism: 3
     environment:
-      COVERAGE: 'true'
+      COVERAGE: "true"
       COVERAGE_DIR: /tmp/coverage
       DISABLE_ACTIVE_STORAGE: false
     steps:
@@ -341,14 +341,14 @@ jobs:
       - run:
           name: Setup Coverage Env Vars
           command: |
-              echo 'export COVERAGE_FILE=/tmp/coverage/coverage.xml' >> $BASH_ENV
-              source $BASH_ENV
+            echo 'export COVERAGE_FILE=/tmp/coverage/coverage.xml' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Verify Coverage Env Vars
           command: |
-              echo $COVERAGE
-              echo /tmp/coverage
-              echo /tmp/coverage/coverage.xml
+            echo $COVERAGE
+            echo /tmp/coverage
+            echo /tmp/coverage/coverage.xml
       - run:
           name: Setup Coverage Directory
           command: mkdir -p /tmp/coverage
@@ -370,13 +370,49 @@ workflows:
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['mysql'], paperclip: [true] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1"],
+                  ruby: ["3.1"],
+                  database: ["mysql"],
+                  paperclip: [true],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1"],
+                  ruby: ["3.1"],
+                  database: ["postgres"],
+                  paperclip: [false],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0"],
+                  ruby: ["3.2"],
+                  database: ["sqlite"],
+                  paperclip: [false],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.1', 'main'], ruby: ['3.3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.1", "main"],
+                  ruby: ["3.3.2"],
+                  database: ["sqlite"],
+                  paperclip: [false],
+                },
+            }
