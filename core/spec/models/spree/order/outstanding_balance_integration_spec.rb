@@ -35,11 +35,11 @@ RSpec.describe "Outstanding balance integration tests" do
   end
 
   context 'when the order is fully paid' do
-    let!(:payment) { create(:payment, :completed, order: order, amount: order.total) }
+    let!(:payment) { create(:payment, :completed, order:, amount: order.total) }
     it { should eq 0 }
 
     context 'and there is a full refund' do
-      let!(:refund) { create(:refund, payment: payment, amount: payment.amount) }
+      let!(:refund) { create(:refund, payment:, amount: payment.amount) }
       it { should eq 19 }
     end
 
@@ -53,12 +53,12 @@ RSpec.describe "Outstanding balance integration tests" do
       end
 
       context 'and there is a full refund' do
-        let!(:refund) { create(:refund, payment: payment, amount: payment.amount) }
+        let!(:refund) { create(:refund, payment:, amount: payment.amount) }
         it { should eq 0 }
       end
 
       context 'and there is a partial refund' do
-        let!(:refund) { create(:refund, payment: payment, amount: 6) }
+        let!(:refund) { create(:refund, payment:, amount: 6) }
         it { should eq(-13) }
       end
     end
@@ -67,15 +67,15 @@ RSpec.describe "Outstanding balance integration tests" do
       before do
         item_amount = item_1.total
         order.contents.remove(item_1.variant)
-        create(:refund, payment: payment, amount: item_amount)
+        create(:refund, payment:, amount: item_amount)
       end
 
       it { should eq(0) }
     end
 
     context 'when the order is adjusted downward by an admin' do
-      let!(:adjustment) { create(:adjustment, order: order, adjustable: item_1, amount: -1, source: nil) }
-      let!(:refund) { create(:refund, payment: payment, amount: 1) }
+      let!(:adjustment) { create(:adjustment, order:, adjustable: item_1, amount: -1, source: nil) }
+      let!(:refund) { create(:refund, payment:, amount: 1) }
 
       it { should eq(0) }
     end
@@ -107,11 +107,11 @@ RSpec.describe "Outstanding balance integration tests" do
   end
 
   context 'when the order is partly paid' do
-    let!(:payment) { create(:payment, :completed, order: order, amount: 10) }
+    let!(:payment) { create(:payment, :completed, order:, amount: 10) }
     it { should eq 9 }
 
     context 'and there is a full refund' do
-      let!(:refund) { create(:refund, payment: payment, amount: payment.amount) }
+      let!(:refund) { create(:refund, payment:, amount: payment.amount) }
       it { should eq 19 }
     end
 
@@ -125,12 +125,12 @@ RSpec.describe "Outstanding balance integration tests" do
       end
 
       context 'and there is a full refund' do
-        let!(:refund) { create(:refund, payment: payment, amount: payment.amount) }
+        let!(:refund) { create(:refund, payment:, amount: payment.amount) }
         it { should eq 0 }
       end
 
       context 'and there is a partial refund' do
-        let!(:refund) { create(:refund, payment: payment, amount: 6) }
+        let!(:refund) { create(:refund, payment:, amount: 6) }
         it { should eq(-4) }
       end
     end

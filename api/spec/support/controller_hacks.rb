@@ -29,10 +29,10 @@ module ControllerHacks
     scoping = respond_to?(:resource_scoping) ? resource_scoping : {}
     process(
       action,
-      method: method,
+      method:,
       params: params.merge(scoping),
-      session: session,
-      flash: flash,
+      session:,
+      flash:,
       format: :json
     )
   end

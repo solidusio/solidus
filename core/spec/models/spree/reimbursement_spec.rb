@@ -6,7 +6,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
   describe ".create" do
     let(:customer_return) { create(:customer_return) }
     let(:order) { customer_return.order }
-    let(:reimbursement) { build(:reimbursement, order: order) }
+    let(:reimbursement) { build(:reimbursement, order:) }
 
     subject { reimbursement.save }
 
@@ -19,7 +19,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     end
 
     context "when total is present" do
-      let(:reimbursement) { build(:reimbursement, order: order, total: 10) }
+      let(:reimbursement) { build(:reimbursement, order:, total: 10) }
 
       it { expect { subject }.not_to change(reimbursement, :total).from(10) }
     end
@@ -29,7 +29,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     describe "#generate_number" do
       context "number is assigned" do
         let(:number)        { '123' }
-        let(:reimbursement) { Spree::Reimbursement.new(number: number) }
+        let(:reimbursement) { Spree::Reimbursement.new(number:) }
 
         it "should return the assigned number" do
           reimbursement.save
@@ -55,8 +55,8 @@ RSpec.describe Spree::Reimbursement, type: :model do
   describe "#display_total" do
     let(:total)         { 100.50 }
     let(:currency)      { "USD" }
-    let(:order)         { Spree::Order.new(currency: currency) }
-    let(:reimbursement) { Spree::Reimbursement.new(total: total, order: order) }
+    let(:order)         { Spree::Order.new(currency:) }
+    let(:reimbursement) { Spree::Reimbursement.new(total:, order:) }
 
     subject { reimbursement.display_total }
 
@@ -76,18 +76,18 @@ RSpec.describe Spree::Reimbursement, type: :model do
     let!(:tax_zone)               { create :zone, :with_country }
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
     let(:variant)                 { create :variant }
-    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{ variant: variant, price: line_items_price }], shipment_cost: 0, shipping_method: shipping_method) }
+    let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{ variant:, price: line_items_price }], shipment_cost: 0, shipping_method:) }
     let(:line_items_price)        { BigDecimal(10) }
     let(:line_item)               { order.line_items.first }
     let(:inventory_unit)          { line_item.inventory_units.first }
-    let(:payment)                 { build(:payment, amount: payment_amount, order: order, state: 'checkout') }
+    let(:payment)                 { build(:payment, amount: payment_amount, order:, state: 'checkout') }
     let(:payment_amount)          { order.total }
     let(:customer_return)         { build(:customer_return, return_items: [return_item]) }
-    let(:return_item)             { build(:return_item, inventory_unit: inventory_unit) }
+    let(:return_item)             { build(:return_item, inventory_unit:) }
 
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
-    let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item]) }
+    let(:reimbursement) { create(:reimbursement, customer_return:, order:, return_items: [return_item]) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
 
     subject { reimbursement.perform!(created_by: created_by_user) }
@@ -152,7 +152,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     end
 
     context 'when reimbursement cannot be fully performed' do
-      let!(:non_return_refund) { create(:refund, amount: 1, payment: payment) }
+      let!(:non_return_refund) { create(:refund, amount: 1, payment:) }
 
       it 'does not send a reimbursement email and raises IncompleteReimbursement error' do
         expect(Spree::ReimbursementMailer).not_to receive(:reimbursement_email)
@@ -259,8 +259,8 @@ RSpec.describe Spree::Reimbursement, type: :model do
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
     let(:order)                  { create(:shipped_order, line_items_count: 1) }
     let(:inventory_unit)         { order.inventory_units.first }
-    let(:return_item)            { build(:return_item, inventory_unit: inventory_unit) }
-    let(:reimbursement)          { build(:reimbursement, order: order, return_items: [return_item]) }
+    let(:return_item)            { build(:return_item, inventory_unit:) }
+    let(:reimbursement)          { build(:reimbursement, order:, return_items: [return_item]) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
 
     it "accepts all the return items" do

@@ -17,7 +17,7 @@ RSpec.describe "Order", :js, type: :feature, solidus_admin: true do
 
     before do
       Spree::Adjustment.create!(
-        order: order,
+        order:,
         source: promotion.actions.first,
         adjustable: order.line_items.first,
         amount: 2,

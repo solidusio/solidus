@@ -6,13 +6,13 @@ module Spree
   module Stock
     RSpec.describe Estimator, type: :model do
       let(:shipping_rate) { 4.00 }
-      let!(:shipping_method) { create(:shipping_method, cost: shipping_rate, currency: currency) }
+      let!(:shipping_method) { create(:shipping_method, cost: shipping_rate, currency:) }
       let(:package) do
         build(:stock_package, contents: inventory_units.map { |unit| ContentItem.new(unit) }).tap do |package|
           package.shipment = package.to_shipment
         end
       end
-      let(:order) { create(:order_with_line_items, shipping_method: shipping_method) }
+      let(:order) { create(:order_with_line_items, shipping_method:) }
       let(:inventory_units) { order.inventory_units }
 
       subject { Estimator.new }
@@ -213,7 +213,7 @@ module Spree
         context "includes tax adjustments if applicable" do
           let(:zone) { create(:zone, countries: [order.tax_address.country]) }
 
-          let!(:tax_rate) { create(:tax_rate, zone: zone) }
+          let!(:tax_rate) { create(:tax_rate, zone:) }
 
           before do
             shipping_method.update!(tax_category: tax_rate.tax_categories.first)

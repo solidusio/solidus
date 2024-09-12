@@ -12,11 +12,11 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
 
       context 'when the item quantity has changed' do
         let(:promotion) { create(:promotion, promotion_actions: [promotion_action]) }
-        let(:promotion_action) { Spree::Promotion::Actions::CreateItemAdjustments.new(calculator: calculator) }
+        let(:promotion_action) { Spree::Promotion::Actions::CreateItemAdjustments.new(calculator:) }
         let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         before do
-          promotion.activate(order: order)
+          promotion.activate(order:)
           order.recalculate
           line_item.update!(quantity: 2)
         end
@@ -69,8 +69,8 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
 
         let(:source) do
           Spree::Promotion::Actions::CreateItemAdjustments.create!(
-            calculator: calculator,
-            promotion: promotion,
+            calculator:,
+            promotion:,
           )
         end
         let(:promotion) { create(:promotion) }
@@ -78,12 +78,12 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
         def create_adjustment(label, amount)
           create(
             :adjustment,
-            order: order,
+            order:,
             adjustable: line_item,
-            source: source,
-            amount: amount,
+            source:,
+            amount:,
             finalized: true,
-            label: label,
+            label:,
           )
         end
 
@@ -91,7 +91,7 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
           create_adjustment('Promotion A', -100)
           create_adjustment('Promotion B', -200)
           create_adjustment('Promotion C', -300)
-          create(:adjustment, order: order,
+          create(:adjustment, order:,
                               adjustable: line_item,
                               source: nil,
                               amount: -500,
@@ -153,8 +153,8 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
             context "with promo sequence #{promo_sequence}" do
               it 'should pick the best order-level promo according to current eligibility' do
                 # apply both promos to the order, even though only promo1 is eligible
-                order_promos[promo_sequence[0]].activate order: order
-                order_promos[promo_sequence[1]].activate order: order
+                order_promos[promo_sequence[0]].activate(order:)
+                order_promos[promo_sequence[1]].activate(order:)
 
                 subject
                 order.reload
@@ -174,8 +174,8 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
 
               it 'should pick the best line-item-level promo according to current eligibility' do
                 # apply both promos to the order, even though only promo1 is eligible
-                line_item_promos[promo_sequence[0]].activate order: order
-                line_item_promos[promo_sequence[1]].activate order: order
+                line_item_promos[promo_sequence[0]].activate(order:)
+                line_item_promos[promo_sequence[1]].activate(order:)
 
                 order.reload
                 expect(order.all_adjustments.count).to eq(1), 'Expected one adjustment'

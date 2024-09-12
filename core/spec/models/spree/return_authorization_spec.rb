@@ -10,7 +10,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
 
   let(:variant) { order.variants.first }
   let(:return_authorization) do
-    Spree::ReturnAuthorization.new(order: order,
+    Spree::ReturnAuthorization.new(order:,
       stock_location_id: stock_location.id,
       return_reason_id: rma_reason.id)
   end
@@ -28,7 +28,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
       let(:order)                           { create(:shipped_order, line_items_count: 2) }
       let!(:previous_exchange_return_item)  { create(:exchange_return_item, inventory_unit: order.inventory_units.last) }
       let(:return_item)                     { create(:return_item, inventory_unit: order.inventory_units.last) }
-      let(:return_authorization)            { build(:return_authorization, order: order, return_items: [return_item]) }
+      let(:return_authorization)            { build(:return_authorization, order:, return_items: [return_item]) }
 
       it "should be invalid" do
         return_authorization.save
@@ -39,7 +39,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
     context "an inventory unit is not being exchanged" do
       let(:order)                           { create(:shipped_order, line_items_count: 2) }
       let(:return_item)                     { create(:return_item, inventory_unit: order.inventory_units.last) }
-      let(:return_authorization)            { build(:return_authorization, order: order, return_items: [return_item]) }
+      let(:return_authorization)            { build(:return_authorization, order:, return_items: [return_item]) }
 
       it "is valid" do
         return_authorization.save
@@ -81,13 +81,13 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
 
   describe "#total_excluding_vat" do
     let(:amount_1) { 15.0 }
-    let!(:return_item_1) { create(:return_item, return_authorization: return_authorization, amount: amount_1) }
+    let!(:return_item_1) { create(:return_item, return_authorization:, amount: amount_1) }
 
     let(:amount_2) { 50.0 }
-    let!(:return_item_2) { create(:return_item, return_authorization: return_authorization, amount: amount_2) }
+    let!(:return_item_2) { create(:return_item, return_authorization:, amount: amount_2) }
 
     let(:amount_3) { 5.0 }
-    let!(:return_item_3) { create(:return_item, return_authorization: return_authorization, amount: amount_3) }
+    let!(:return_item_3) { create(:return_item, return_authorization:, amount: amount_3) }
 
     subject { return_authorization.reload.total_excluding_vat }
 
@@ -167,7 +167,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
   end
 
   describe 'cancel_return_items' do
-    let(:return_authorization) { create(:return_authorization, return_items: return_items) }
+    let(:return_authorization) { create(:return_authorization, return_items:) }
     let(:return_items) { [return_item] }
     let(:return_item) { create(:return_item) }
 
@@ -193,7 +193,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
   end
 
   describe '#can_cancel?' do
-    subject { create(:return_authorization, return_items: return_items).can_cancel? }
+    subject { create(:return_authorization, return_items:).can_cancel? }
     let(:return_items) { [return_item_1, return_item_2] }
     let(:return_item_1) { create(:return_item) }
     let(:return_item_2) { create(:return_item) }

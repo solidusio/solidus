@@ -16,7 +16,7 @@ RSpec.describe Spree::Admin::LocaleController, type: :controller do
     let(:json_response) { JSON.parse(response.body, symbolize_names: true) }
 
     before do
-      get :set, params: { switch_to_locale: switch_to_locale, format: :json }
+      get :set, params: { switch_to_locale:, format: :json }
     end
 
     context 'available locale' do

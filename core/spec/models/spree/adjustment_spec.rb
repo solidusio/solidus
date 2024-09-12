@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe Spree::Adjustment, type: :model do
   let!(:store) { create :store }
   let(:order) { create :order }
-  let(:line_item) { create :line_item, order: order }
+  let(:line_item) { create :line_item, order: }
 
-  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
+  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order:, amount: 5) }
 
   context '#save' do
-    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
+    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order:, adjustable: line_item) }
 
     it 'touches the adjustable' do
       line_item.update_columns(updated_at: 1.day.ago)
@@ -30,15 +30,15 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     let!(:tax_adjustment) do
-      create(:adjustment, adjustable: order, order: order, source: create(:tax_rate))
+      create(:adjustment, adjustable: order, order:, source: create(:tax_rate))
     end
 
     let!(:non_tax_adjustment_with_source) do
-      create(:adjustment, adjustable: order, order: order, source_type: 'Spree::Order', source_id: nil)
+      create(:adjustment, adjustable: order, order:, source_type: 'Spree::Order', source_id: nil)
     end
 
     let!(:non_tax_adjustment_without_source) do
-      create(:adjustment, adjustable: order, order: order, source: nil)
+      create(:adjustment, adjustable: order, order:, source: nil)
     end
 
     it 'select non-tax adjustments' do
@@ -85,7 +85,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
   describe "#finalize" do
     let(:adjustable) { create(:order) }
-    let(:adjustment) { build(:adjustment, finalized: false, adjustable: adjustable) }
+    let(:adjustment) { build(:adjustment, finalized: false, adjustable:) }
 
     subject { adjustment.finalize }
 
@@ -98,7 +98,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     context "for an invalid adjustment" do
-      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable:) }
 
       it "raises no error, returns false, does not persist the adjustment" do
         expect { subject }.not_to change { adjustment.persisted? }.from(false)
@@ -109,7 +109,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
   describe "#unfinalize" do
     let(:adjustable) { create(:order) }
-    let(:adjustment) { build(:adjustment, finalized: true, adjustable: adjustable) }
+    let(:adjustment) { build(:adjustment, finalized: true, adjustable:) }
 
     subject { adjustment.unfinalize }
 
@@ -122,7 +122,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     context "for an invalid adjustment" do
-      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable:) }
 
       it "raises no error, returns false, does not persist the adjustment" do
         expect { subject }.not_to change { adjustment.persisted? }.from(false)
@@ -133,7 +133,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
   describe "#unfinalize!" do
     let(:adjustable) { create(:order) }
-    let(:adjustment) { build(:adjustment, finalized: true, adjustable: adjustable) }
+    let(:adjustment) { build(:adjustment, finalized: true, adjustable:) }
 
     subject { adjustment.unfinalize! }
 
@@ -146,7 +146,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     context "for an invalid adjustment" do
-      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable: adjustable) }
+      let(:adjustment) { build(:adjustment, finalized: false, amount: nil, adjustable:) }
 
       it "raises an error" do
         expect { subject }.to raise_exception(ActiveRecord::RecordInvalid)

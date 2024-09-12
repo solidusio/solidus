@@ -11,7 +11,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
   }
 
   let(:user) { create(:user) }
-  let(:order) { create(:order, user: user, store: store) }
+  let(:order) { create(:order, user:, store:) }
   let(:store) { create(:store) }
 
   before do
@@ -22,7 +22,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
 
   describe '#current_order' do
     context 'create_order_if_necessary option is false' do
-      let!(:order) { create :order, user: user, store: store }
+      let!(:order) { create :order, user:, store: }
       it 'returns current order' do
         expect(controller.current_order).to eq order
       end
@@ -87,7 +87,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
   end
 
   describe '#set_current_order' do
-    let(:incomplete_order) { create(:order, store: incomplete_order_store, user: user) }
+    let(:incomplete_order) { create(:order, store: incomplete_order_store, user:) }
 
     context 'when current order not equal to users incomplete orders' do
       before { allow(controller).to receive_messages(current_order: order, last_incomplete_order: incomplete_order, cookies: double(signed: { guest_token: 'guest_token' })) }

@@ -28,7 +28,7 @@ RSpec.describe 'stock location factory' do
     let(:country) { create(:country, iso: 'HK') }
     it 'succeeds' do
       expect(
-        create(:stock_location, country: country)
+        create(:stock_location, country:)
       ).to be_a(Spree::StockLocation)
     end
   end

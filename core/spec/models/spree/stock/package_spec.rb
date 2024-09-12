@@ -8,12 +8,12 @@ module Spree
       let(:variant) { build(:variant, weight: 25.0) }
       let(:stock_location) { build(:stock_location) }
       let(:order) { build(:order) }
-      let(:line_item) { build(:line_item, order: order) }
+      let(:line_item) { build(:line_item, order:) }
 
       subject { Package.new(stock_location) }
 
       def build_inventory_unit
-        build(:inventory_unit, variant: variant, line_item: line_item)
+        build(:inventory_unit, variant:, line_item:)
       end
 
       it 'calculates the weight of all the contents' do
@@ -90,7 +90,7 @@ module Spree
 
       it 'builds an empty list of shipping methods when no categories' do
         variant  = mock_model(Variant, shipping_category_id: nil)
-        contents = [ContentItem.new(build(:inventory_unit, variant: variant))]
+        contents = [ContentItem.new(build(:inventory_unit, variant:))]
         package  = Package.new(stock_location, contents)
         expect(package.shipping_methods).to be_empty
       end
@@ -102,7 +102,7 @@ module Spree
         shipping_method = build(:shipping_method)
 
         shipment = subject.to_shipment
-        shipment.shipping_rates = [Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)]
+        shipment.shipping_rates = [Spree::ShippingRate.new(shipping_method:, cost: 10.00, selected: true)]
         expect(shipment.stock_location).to eq subject.stock_location
         expect(shipment.inventory_units.size).to eq 3
 

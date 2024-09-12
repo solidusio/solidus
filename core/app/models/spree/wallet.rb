@@ -28,7 +28,7 @@ class Spree::Wallet
   # @param payment_source [PaymentSource] The payment source to add to the wallet
   # @return [WalletPaymentSource] the generated WalletPaymentSource
   def add(payment_source)
-    user.wallet_payment_sources.find_or_create_by!(payment_source: payment_source)
+    user.wallet_payment_sources.find_or_create_by!(payment_source:)
   end
 
   # Remove a PaymentSource from the wallet.
@@ -37,7 +37,7 @@ class Spree::Wallet
   # @raise [ActiveRecord::RecordNotFound] if the source is not in the wallet.
   # @return [WalletPaymentSource] the destroyed WalletPaymentSource
   def remove(payment_source)
-    user.wallet_payment_sources.find_by!(payment_source: payment_source).destroy!
+    user.wallet_payment_sources.find_by!(payment_source:).destroy!
   end
 
   # Find a WalletPaymentSource in the wallet by id.

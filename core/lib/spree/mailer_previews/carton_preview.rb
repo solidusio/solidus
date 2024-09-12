@@ -7,7 +7,7 @@ module Spree
         carton = Carton.joins(:orders).last
         raise "Your database needs at least one shipped order with a carton to render this preview" unless carton
 
-        Spree::Config.carton_shipped_email_class.shipped_email(order: carton.orders.first, carton: carton)
+        Spree::Config.carton_shipped_email_class.shipped_email(order: carton.orders.first, carton:)
       end
     end
   end

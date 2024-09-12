@@ -102,7 +102,7 @@ RSpec.describe Spree::OrderCancellations do
       subject { described_class.new(order).short_ship(inventory_units) }
 
       let(:quantity) { 4 }
-      let!(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: quantity }]) }
+      let!(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: }]) }
       let(:inventory_units) { Spree::InventoryUnit.find(order.line_items.first.inventory_units.pluck(:id)) }
 
       it "adjusts the order" do
@@ -155,7 +155,7 @@ RSpec.describe Spree::OrderCancellations do
 
         # make the total $1.67 so it divides unevenly
         line_item.adjustments.create!(
-          order: order,
+          order:,
           amount: 0.01,
           label: 'some promo',
           source: nil,

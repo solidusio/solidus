@@ -20,9 +20,9 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     let(:order) do
       order = create(:order, state: 'complete', ship_address: create(:ship_address))
       order.completed_at = Time.current
-      create(:shipment, order: order, stock_location: stock_location)
+      create(:shipment, order:, stock_location:)
       order.shipments.reload
-      create(:line_item, order: order, variant: stock_item.variant)
+      create(:line_item, order:, variant: stock_item.variant)
       order.line_items.reload
       order.tap(&:save!)
     end
@@ -162,13 +162,13 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     let(:line_item_additional_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
-        quantity: quantity,
+        quantity:,
         additional_tax_total: line_item_additional_tax_total
       })
     end
 
     subject do
-      build(:inventory_unit, line_item: line_item)
+      build(:inventory_unit, line_item:)
     end
 
     it 'is the correct amount' do
@@ -181,13 +181,13 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     let(:line_item_included_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
-        quantity: quantity,
+        quantity:,
         included_tax_total: line_item_included_tax_total
       })
     end
 
     subject do
-      build(:inventory_unit, line_item: line_item)
+      build(:inventory_unit, line_item:)
     end
 
     it 'is the correct amount' do
@@ -200,13 +200,13 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     let(:line_item_additional_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
-        quantity: quantity,
+        quantity:,
         additional_tax_total: line_item_additional_tax_total
       })
     end
 
     subject do
-      build(:inventory_unit, line_item: line_item)
+      build(:inventory_unit, line_item:)
     end
 
     it 'is the correct amount' do
@@ -219,13 +219,13 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     let(:line_item_included_tax_total) { 10.00 }
     let(:line_item) do
       build(:line_item, {
-        quantity: quantity,
+        quantity:,
         included_tax_total: line_item_included_tax_total
       })
     end
 
     subject do
-      build(:inventory_unit, line_item: line_item)
+      build(:inventory_unit, line_item:)
     end
 
     it 'is the correct amount' do

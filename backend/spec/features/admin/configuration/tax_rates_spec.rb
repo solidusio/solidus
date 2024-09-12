@@ -32,8 +32,8 @@ describe "Tax Rates", type: :feature do
 
   describe "listing" do
     let(:calculator) { create(:default_tax_calculator) }
-    let!(:tax_rate_1) { create(:tax_rate, name: "Tax Rate 1", calculator: calculator) }
-    let!(:tax_rate_2) { create(:tax_rate, name: "Tax Rate 2", calculator: calculator) }
+    let!(:tax_rate_1) { create(:tax_rate, name: "Tax Rate 1", calculator:) }
+    let!(:tax_rate_2) { create(:tax_rate, name: "Tax Rate 2", calculator:) }
 
     it "shows all tax rates if no filter is applied" do
       visit spree.admin_tax_rates_path

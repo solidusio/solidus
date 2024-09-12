@@ -7,8 +7,8 @@ module SolidusAdmin::ControllerHelpers::Search
     def search_scope(name, default: false, &block)
       search_scopes << SearchScope.new(
         name: name.to_s,
-        block: block,
-        default: default,
+        block:,
+        default:,
       )
     end
 
@@ -20,8 +20,8 @@ module SolidusAdmin::ControllerHelpers::Search
   private
 
   def apply_search_to(relation, param:)
-    relation = apply_scopes_to(relation, param: param)
-    apply_ransack_search_to(relation, param: param)
+    relation = apply_scopes_to(relation, param:)
+    apply_ransack_search_to(relation, param:)
   end
 
   def apply_ransack_search_to(relation, param:)

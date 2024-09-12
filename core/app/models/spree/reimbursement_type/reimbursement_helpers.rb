@@ -21,7 +21,7 @@ module Spree
     end
 
     def create_credits(reimbursement, unpaid_amount, simulate, reimbursement_list = [], created_by:)
-      credits = [create_credit(reimbursement, unpaid_amount, simulate, created_by: created_by)]
+      credits = [create_credit(reimbursement, unpaid_amount, simulate, created_by:)]
       unpaid_amount -= credits.sum(&:amount)
       reimbursement_list += credits
 
@@ -32,8 +32,8 @@ module Spree
 
     def create_refund(reimbursement, payment, amount, simulate)
       refund = reimbursement.refunds.build({
-        payment: payment,
-        amount: amount,
+        payment:,
+        amount:,
         reason: Spree::RefundReason.return_processing_reason
       })
 
@@ -50,8 +50,8 @@ module Spree
     # If you have multiple methods of crediting a customer, overwrite this method
     # Must return an array of objects the respond to #description, #display_amount
     def create_credit(reimbursement, unpaid_amount, simulate, created_by:)
-      creditable = create_creditable(reimbursement, unpaid_amount, created_by: created_by)
-      credit = reimbursement.credits.build(creditable: creditable, amount: unpaid_amount)
+      creditable = create_creditable(reimbursement, unpaid_amount, created_by:)
+      credit = reimbursement.credits.build(creditable:, amount: unpaid_amount)
       simulate ? credit.readonly! : credit.save!
       credit
     end
@@ -61,7 +61,7 @@ module Spree
         user: reimbursement.order.user,
         amount: unpaid_amount,
         category: reimbursement.store_credit_category,
-        created_by: created_by,
+        created_by:,
         memo: "Refund for uncreditable payments on order #{reimbursement.order.number}",
         currency: reimbursement.order.currency
       )

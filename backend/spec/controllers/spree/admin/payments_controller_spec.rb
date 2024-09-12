@@ -131,7 +131,7 @@ module Spree
 
           context "order has payments" do
             before do
-              order.payments << create(:payment, amount: order.total, order: order, state: 'completed')
+              order.payments << create(:payment, amount: order.total, order:, state: 'completed')
             end
 
             it "shows the payments page" do

@@ -2,5 +2,5 @@
 
 json.taxons(taxon.children) do |taxon|
   json.(taxon, *taxon_attributes)
-  json.partial!("spree/api/taxons/taxons", taxon: taxon)
+  json.partial!("spree/api/taxons/taxons", taxon:)
 end

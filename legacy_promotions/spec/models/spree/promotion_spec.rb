@@ -246,7 +246,7 @@ RSpec.describe Spree::Promotion, type: :model do
       let(:promotion) { promotion_code.promotion }
 
       it "assigns the code" do
-        expect(promotion.activate(order: @order, promotion_code: promotion_code)).to be true
+        expect(promotion.activate(order: @order, promotion_code:)).to be true
         expect(promotion.order_promotions.map(&:promotion_code)).to eq [promotion_code]
       end
     end
@@ -257,7 +257,7 @@ RSpec.describe Spree::Promotion, type: :model do
     let(:order) { create(:order_with_line_items) }
 
     before do
-      promotion.activate(order: order)
+      promotion.activate(order:)
     end
 
     it 'removes the promotion' do
@@ -286,7 +286,7 @@ RSpec.describe Spree::Promotion, type: :model do
             before do
               FactoryBot.create(
                 :completed_order_with_promotion,
-                promotion: promotion
+                promotion:
               )
               promotion.actions.first.adjustments.update_all(eligible: true)
             end
@@ -309,13 +309,13 @@ RSpec.describe Spree::Promotion, type: :model do
           :promotion,
           :with_order_adjustment,
           code: "discount",
-          usage_limit: usage_limit
+          usage_limit:
         )
       end
       let(:promotable) do
         FactoryBot.create(
           :completed_order_with_promotion,
-          promotion: promotion
+          promotion:
         )
       end
       it_behaves_like "it should"
@@ -327,13 +327,13 @@ RSpec.describe Spree::Promotion, type: :model do
           :promotion,
           :with_line_item_adjustment,
           code: "discount",
-          usage_limit: usage_limit
+          usage_limit:
         )
       end
       before do
         promotion.actions.first.perform({
-          order: order,
-          promotion: promotion,
+          order:,
+          promotion:,
           promotion_code: promotion.codes.first
         })
       end
@@ -369,14 +369,14 @@ RSpec.describe Spree::Promotion, type: :model do
 
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
-      before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
+      before { promotion.activate(order:, promotion_code: promotion.codes.first) }
       it { is_expected.to eq 0 }
     end
     context "when the code is applied to a complete order" do
       let!(:order) do
         FactoryBot.create(
           :completed_order_with_promotion,
-          promotion: promotion
+          promotion:
         )
       end
       context "and the promo is eligible" do
@@ -429,7 +429,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#not_started?' do
-    let(:promotion) { Spree::Promotion.new(starts_at: starts_at) }
+    let(:promotion) { Spree::Promotion.new(starts_at:) }
     subject { promotion.not_started? }
 
     context 'no starts_at date' do
@@ -449,7 +449,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#started?' do
-    let(:promotion) { Spree::Promotion.new(starts_at: starts_at) }
+    let(:promotion) { Spree::Promotion.new(starts_at:) }
     subject { promotion.started? }
 
     context 'when no starts_at date' do
@@ -469,7 +469,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#expired?' do
-    let(:promotion) { Spree::Promotion.new(expires_at: expires_at) }
+    let(:promotion) { Spree::Promotion.new(expires_at:) }
     subject { promotion.expired? }
 
     context 'when no expires_at date' do
@@ -489,7 +489,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#not_expired?' do
-    let(:promotion) { Spree::Promotion.new(expires_at: expires_at) }
+    let(:promotion) { Spree::Promotion.new(expires_at:) }
     subject { promotion.not_expired? }
 
     context 'when no expired_at date' do
@@ -569,7 +569,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
     let!(:action) do
       calculator = Spree::Calculator::FlatRate.new
-      action_params = { promotion: promotion, calculator: calculator }
+      action_params = { promotion:, calculator: }
       action = Spree::Promotion::Actions::CreateAdjustment.create(action_params)
       promotion.actions << action
       action
@@ -578,7 +578,7 @@ RSpec.describe Spree::Promotion, type: :model do
     let!(:adjustment) do
       order = create(:order)
       Spree::Adjustment.create!(
-        order:      order,
+        order:,
         adjustable: order,
         source:     action,
         promotion_code: promotion.codes.first,
@@ -642,7 +642,7 @@ RSpec.describe Spree::Promotion, type: :model do
       context "when promotion's usage limit is exceeded" do
         before do
           promotion.usage_limit = 1
-          create(:completed_order_with_promotion, promotion: promotion)
+          create(:completed_order_with_promotion, promotion:)
         end
 
         it { is_expected.to be false }
@@ -651,7 +651,7 @@ RSpec.describe Spree::Promotion, type: :model do
       context "when promotion code's usage limit is exceeded" do
         before do
           promotion.per_code_usage_limit = 1
-          create(:completed_order_with_promotion, promotion: promotion)
+          create(:completed_order_with_promotion, promotion:)
           promotion.codes.first.adjustments.update_all(eligible: true)
         end
 
@@ -659,7 +659,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       context "when promotion is at last usage on the same order" do
-        let(:order) { create(:completed_order_with_promotion, promotion: promotion) }
+        let(:order) { create(:completed_order_with_promotion, promotion:) }
         let(:promotable) { order }
 
         before do
@@ -670,7 +670,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       context "when promotion code is at last usage on the same order" do
-        let(:order) { create(:completed_order_with_promotion, promotion: promotion) }
+        let(:order) { create(:completed_order_with_promotion, promotion:) }
         let(:promotable) { order }
 
         before do
@@ -683,7 +683,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
     context "when promotable is a Spree::Order" do
       let(:promotion) { create(:promotion, :with_order_adjustment) }
-      let(:promotable) { create :order, line_items: line_items }
+      let(:promotable) { create :order, line_items: }
       let(:line_items) { [] }
 
       it_behaves_like "a promotable"
@@ -745,8 +745,8 @@ RSpec.describe Spree::Promotion, type: :model do
 
   context "#eligible_rules" do
     let(:promotable) { double('Promotable') }
-    let(:rule1) { Spree::PromotionRule.create!(promotion: promotion) }
-    let(:rule2) { Spree::PromotionRule.create!(promotion: promotion) }
+    let(:rule1) { Spree::PromotionRule.create!(promotion:) }
+    let(:rule2) { Spree::PromotionRule.create!(promotion:) }
 
     it "true if there are no rules" do
       expect(promotion.eligible_rules(promotable)).to eq []
@@ -838,9 +838,9 @@ RSpec.describe Spree::Promotion, type: :model do
       context "due to promotion code not being eligible" do
         let(:order) { create(:order) }
         let(:promotion) { create(:promotion, per_code_usage_limit: 0) }
-        let(:promotion_code) { create(:promotion_code, promotion: promotion) }
+        let(:promotion_code) { create(:promotion_code, promotion:) }
 
-        subject { promotion.line_item_actionable? order, line_item, promotion_code: promotion_code }
+        subject { promotion.line_item_actionable? order, line_item, promotion_code: }
 
         it "returns false" do
           expect(subject).to eq false
@@ -863,8 +863,8 @@ RSpec.describe Spree::Promotion, type: :model do
 
     let(:promotion) { create :promotion, :with_order_adjustment }
     let(:user) { create :user }
-    let(:order) { create :order_with_line_items, user: user }
-    let(:excluded_order) { create :order_with_line_items, user: user }
+    let(:order) { create :order_with_line_items, user: }
+    let(:excluded_order) { create :order_with_line_items, user: }
 
     before do
       order.user_id = user.id
@@ -873,7 +873,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
     context 'when the user has used this promo' do
       before do
-        promotion.activate(order: order)
+        promotion.activate(order:)
         order.recalculate
         order.completed_at = Time.current
         order.save!
@@ -900,7 +900,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       context 'when the order is not complete' do
-        let(:order) { create :order, user: user }
+        let(:order) { create :order, user: }
 
         # The before clause above sets the completed at
         # value for this order

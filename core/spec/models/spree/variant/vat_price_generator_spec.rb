@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Spree::Variant::VatPriceGenerator do
   let(:tax_category) { create(:tax_category) }
   let(:product) { variant.product }
-  let(:variant) { create(:variant, price: 10, tax_category: tax_category) }
+  let(:variant) { create(:variant, price: 10, tax_category:) }
 
   subject { described_class.new(variant).run }
 

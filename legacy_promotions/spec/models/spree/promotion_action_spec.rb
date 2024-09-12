@@ -13,7 +13,7 @@ RSpec.describe Spree::PromotionAction, type: :model do
     class MyPromotionAction < Spree::PromotionAction
       def perform(options = {})
         order = options[:order]
-        order.adjustments.create!(amount: 1, order: order, source: self, label: 'foo')
+        order.adjustments.create!(amount: 1, order:, source: self, label: 'foo')
         true
       end
 
@@ -27,17 +27,17 @@ RSpec.describe Spree::PromotionAction, type: :model do
     let(:order) { create(:order) }
 
     # this adjustment should not get removed
-    let!(:other_adjustment) { create(:adjustment, order: order, source: nil) }
+    let!(:other_adjustment) { create(:adjustment, order:, source: nil) }
 
     it "generates its own partial path" do
-      action.perform(order: order)
+      action.perform(order:)
       @action_adjustment = order.adjustments.where(source: action).first!
 
       expect(action.to_partial_path).to eq 'spree/admin/promotions/actions/my_promotion_action'
     end
 
     it 'executes the remove logic' do
-      action.perform(order: order)
+      action.perform(order:)
       @action_adjustment = order.adjustments.where(source: action).first!
 
       expect(action.remove_from(order)).to eq('Implement your remove logic')

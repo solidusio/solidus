@@ -6,7 +6,7 @@ describe Spree::Admin::StockMovementsHelper, type: :helper do
   describe "#pretty_originator" do
     let!(:stock_location) { create(:stock_location_with_items) }
     let!(:stock_item)     { stock_location.stock_items.first }
-    let(:stock_movement)  { create(:stock_movement, stock_item: stock_item, originator: originator) }
+    let(:stock_movement)  { create(:stock_movement, stock_item:, originator:) }
 
     subject { helper.pretty_originator(stock_movement) }
 

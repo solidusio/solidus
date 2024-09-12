@@ -45,7 +45,7 @@ class SolidusAdmin::UI::Table::ComponentPreview < ViewComponent::Preview
     {
       class: Spree::Product,
       rows: Array.new(10) { |n| Spree::Product.new(id: n, name: "Product #{n}", price: n * 10.0, available_on: n.days.ago) },
-      columns: columns,
+      columns:,
       prev: nil,
       next: '#2',
     }.tap do |data|

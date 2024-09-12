@@ -32,10 +32,10 @@ module Spree
     end
 
     describe "#perform!" do
-      let(:return_item) { create(:exchange_return_item, inventory_unit: inventory_unit) }
+      let(:return_item) { create(:exchange_return_item, inventory_unit:) }
       let(:return_items) { [return_item] }
 
-      let(:inventory_unit) { create(:inventory_unit, order: order, line_item: line_item) }
+      let(:inventory_unit) { create(:inventory_unit, order:, line_item:) }
       let(:order) { create(:shipped_order, line_items_count: 1) }
       let(:line_item) { order.line_items.first }
 

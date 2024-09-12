@@ -19,7 +19,7 @@ module SolidusAdmin
       end
 
       def find_row(text)
-        find('table tbody tr', text: text)
+        find('table tbody tr', text:)
       end
 
       def find_row_checkbox(text)

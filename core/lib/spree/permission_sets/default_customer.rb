@@ -54,7 +54,7 @@ module Spree
           # via API, just like with show and update
           (order.guest_token.present? && token == order.guest_token)
         end
-        can [:show, :update], Order, Order.where(user: user) do |order, token|
+        can [:show, :update], Order, Order.where(user:) do |order, token|
           order.user == user || (order.guest_token.present? && token == order.guest_token)
         end
         cannot :update, Order do |order|

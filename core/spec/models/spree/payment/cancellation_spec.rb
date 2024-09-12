@@ -21,7 +21,7 @@ RSpec.describe Spree::Payment::Cancellation do
     subject { described_class.new.cancel(payment) }
 
     let(:payment_method) { create(:payment_method) }
-    let(:payment) { create(:payment, payment_method: payment_method, amount: 10) }
+    let(:payment) { create(:payment, payment_method:, amount: 10) }
 
     context 'if payment method returns void response' do
       before do

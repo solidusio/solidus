@@ -28,7 +28,7 @@ module SolidusAdmin
       prefix = "#{SolidusAdmin::Configuration::ENGINE_ROOT}/app/components/solidus_admin/"
       suffix = "/component.rb"
       dictionary = Dir["#{prefix}**#{suffix}"].map { _1.delete_prefix(prefix).delete_suffix(suffix) }
-      corrections = DidYouMean::SpellChecker.new(dictionary: dictionary).correct(key.to_s)
+      corrections = DidYouMean::SpellChecker.new(dictionary:).correct(key.to_s)
 
       raise ComponentNotFoundError.new(
         "Unknown component #{key}#{DidYouMean.formatter.message_for(corrections)}",

@@ -9,7 +9,7 @@ FactoryBot.define do
     end
     before(:create) do |promotion, evaluator|
       if evaluator.code
-        promotion.codes << build(:promotion_code, promotion: promotion, value: evaluator.code)
+        promotion.codes << build(:promotion_code, promotion:, value: evaluator.code)
       end
     end
 
@@ -33,7 +33,7 @@ FactoryBot.define do
       after(:create) do |promotion, evaluator|
         calculator = evaluator.calculator_class.new
         calculator.preferred_amount = evaluator.preferred_amount
-        evaluator.promotion_action_class.create!(calculator: calculator, promotion: promotion)
+        evaluator.promotion_action_class.create!(calculator:, promotion:)
       end
     end
 
@@ -52,7 +52,7 @@ FactoryBot.define do
 
     trait :with_free_shipping do
       after(:create) do |promotion|
-        Spree::Promotion::Actions::FreeShipping.create!(promotion: promotion)
+        Spree::Promotion::Actions::FreeShipping.create!(promotion:)
       end
     end
 
@@ -75,7 +75,7 @@ FactoryBot.define do
 
       after(:create) do |promotion, evaluator|
         rule = Spree::Promotion::Rules::ItemTotal.create!(
-          promotion: promotion,
+          promotion:,
           preferred_operator: 'gte',
           preferred_amount: evaluator.item_total_threshold_amount
         )
@@ -87,7 +87,7 @@ FactoryBot.define do
     trait :with_first_order_rule do
       after(:create) do |promotion, _evaluator|
         rule = Spree::Promotion::Rules::FirstOrder.create!(
-          promotion: promotion,
+          promotion:,
         )
         promotion.rules << rule
         promotion.save!

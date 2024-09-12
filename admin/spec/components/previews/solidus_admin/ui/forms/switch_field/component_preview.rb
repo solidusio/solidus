@@ -25,14 +25,14 @@ class SolidusAdmin::UI::Forms::SwitchField::ComponentPreview < ViewComponent::Pr
     disabled: false
   )
     render current_component.new(
-      label: label,
+      label:,
       name: nil,
       error: [error],
-      hint: hint,
-      tip: tip,
+      hint:,
+      tip:,
       size: size.to_sym,
-      checked: checked,
-      disabled: disabled,
+      checked:,
+      disabled:,
     )
   end
 end

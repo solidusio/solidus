@@ -16,8 +16,8 @@ module Spree
               order: shipment.order,
               amount: compute_amount(shipment),
               source: self,
-              promotion_code: promotion_code,
-              label: label
+              promotion_code:,
+              label:
             )
           end
 

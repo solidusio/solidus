@@ -70,7 +70,7 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
         header: :code,
         data: ->(promotion) do
           count = promotion.codes.count
-          (count == 1) ? promotion.codes.pick(:value) : t('spree.number_of_codes', count: count)
+          (count == 1) ? promotion.codes.pick(:value) : t('spree.number_of_codes', count:)
         end
       },
       {

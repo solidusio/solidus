@@ -75,7 +75,7 @@ RSpec.describe Spree::Zone, type: :model do
   context "#include?" do
     let(:state) { create(:state) }
     let(:country) { state.country }
-    let(:address) { create(:address, state: state) }
+    let(:address) { create(:address, state:) }
 
     context "when zone is country type" do
       let(:country_zone) { create(:zone, name: 'CountryZone') }
@@ -146,7 +146,7 @@ RSpec.describe Spree::Zone, type: :model do
     end
 
     context "has states associated" do
-      let!(:state) { create(:state, country: country) }
+      let!(:state) { create(:state, country:) }
       let!(:zone) do
         create(:zone, states: [state])
       end
@@ -211,7 +211,7 @@ RSpec.describe Spree::Zone, type: :model do
     end
 
     context "finding potential matches for a state zone" do
-      let!(:state)  { create(:state, country: country) }
+      let!(:state)  { create(:state, country:) }
       let!(:state2) { create(:state, country: country2, name: 'OtherState') }
       let!(:state3) { create(:state, country: country2, name: 'State') }
       let!(:zone) do

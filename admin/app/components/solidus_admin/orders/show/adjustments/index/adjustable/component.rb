@@ -10,7 +10,7 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Adjustable::Component < So
   end
 
   def call
-    render component("ui/thumbnail_with_caption").new(caption: caption, detail: detail) do
+    render component("ui/thumbnail_with_caption").new(caption:, detail:) do
       thumbnail
     end
   end

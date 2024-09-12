@@ -31,7 +31,7 @@ module Spree
     scope :ready,   -> { with_state('ready') }
     scope :shipped, -> { with_state('shipped') }
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
-    scope :with_state, ->(*state) { where(state: state) }
+    scope :with_state, ->(*state) { where(state:) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
     scope :reverse_chronological, -> {
       order(Arel.sql("coalesce(#{Spree::Shipment.table_name}.shipped_at, #{Spree::Shipment.table_name}.created_at) desc"), id: :desc)
@@ -175,7 +175,7 @@ module Spree
     end
 
     def manifest
-      @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
+      @manifest ||= Spree::ShippingManifest.new(inventory_units:).items
     end
 
     def selected_shipping_rate_id
@@ -217,7 +217,7 @@ module Spree
 
     def set_up_inventory(state, variant, _order, line_item)
       inventory_units.create(
-        state: state,
+        state:,
         variant_id: variant.id,
         line_item_id: line_item.id
       )
@@ -263,7 +263,7 @@ module Spree
         self.cost = selected_shipping_rate.cost
         if changed?
           update_columns(
-            cost: cost,
+            cost:,
             updated_at: Time.current
           )
         end
@@ -312,7 +312,7 @@ module Spree
     end
 
     def after_ship
-      order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)
+      order.shipping.ship_shipment(self, suppress_mailer:)
     end
 
     def can_get_rates?
@@ -339,7 +339,7 @@ module Spree
 
     def ensure_can_destroy
       if shipped? || canceled?
-        errors.add(:state, :cannot_destroy, state: state)
+        errors.add(:state, :cannot_destroy, state:)
         throw :abort
       end
     end

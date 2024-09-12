@@ -14,8 +14,8 @@ module Spree
 
         it 'splits packages by status' do
           package = Package.new(stock_location)
-          4.times { package.add build(:inventory_unit, variant: variant) }
-          5.times { package.add build(:inventory_unit, variant: variant), :backordered }
+          4.times { package.add build(:inventory_unit, variant:) }
+          5.times { package.add build(:inventory_unit, variant:), :backordered }
 
           packages = subject.split([package])
           expect(packages.count).to eq 2

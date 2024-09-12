@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
   let(:rule) do
     Spree::Promotion::Rules::ItemTotal.new(
-      preferred_amount: preferred_amount,
-      preferred_operator: preferred_operator
+      preferred_amount:,
+      preferred_operator:
     )
   end
-  let(:order) { double(:order, item_total: item_total, currency: order_currency) }
+  let(:order) { double(:order, item_total:, currency: order_currency) }
   let(:preferred_amount) { 50 }
   let(:order_currency) { 'USD' }
 

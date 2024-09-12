@@ -18,14 +18,14 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
-      label: label,
-      hint: hint,
-      tip: tip,
+      label:,
+      hint:,
+      tip:,
       error: errors,
       input_attributes: {
         name: "#{object_name}[#{method}]",
         tag: :input,
-        size: size,
+        size:,
         value: object.public_send(method),
         error: (errors.to_sentence.capitalize if errors),
         **attributes,
@@ -37,15 +37,15 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
-      label: label,
-      hint: hint,
-      tip: tip,
+      label:,
+      hint:,
+      tip:,
       error: errors,
       input_attributes: {
         name: "#{object_name}[#{method}]",
         tag: :select,
-        choices: choices,
-        size: size,
+        choices:,
+        size:,
         value: object.public_send(method),
         error: (errors.to_sentence.capitalize if errors),
         **attributes,
@@ -57,13 +57,13 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
-      label: label,
-      hint: hint,
-      tip: tip,
+      label:,
+      hint:,
+      tip:,
       error: errors,
       input_attributes: {
         name: "#{object_name}[#{method}]",
-        size: size,
+        size:,
         tag: :textarea,
         value: object.public_send(method),
         error: (errors.to_sentence.capitalize if errors),
@@ -76,14 +76,14 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
-      label: label,
-      hint: hint,
-      tip: tip,
+      label:,
+      hint:,
+      tip:,
       error: errors,
     ).with_content(
       component('ui/forms/switch').new(
         name: "#{object_name}[#{method}]",
-        size: size,
+        size:,
         checked: object.public_send(method),
         include_hidden: true,
         **attributes,

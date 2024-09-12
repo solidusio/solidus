@@ -37,7 +37,7 @@ module SolidusLegacyPromotions
         # Persist only if changed
         # This is only not a save! to avoid the extra queries to load the order
         # (for validations) and to touch the adjustment.
-        update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
+        update_columns(eligible:, amount:, updated_at: Time.current) if changed?
       end
       amount
     end
@@ -49,7 +49,7 @@ module SolidusLegacyPromotions
     # @return [true,false] Whether this adjustment is eligible
     def calculate_eligibility
       if !finalized? && source && promotion?
-        source.promotion.eligible?(adjustable, promotion_code: promotion_code)
+        source.promotion.eligible?(adjustable, promotion_code:)
       else
         eligible?
       end

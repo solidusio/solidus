@@ -10,15 +10,15 @@ FactoryBot.define do
     association :variant, strategy: :create
     line_item do
       if order
-        build(:line_item, variant: variant, order: order)
+        build(:line_item, variant:, order:)
       else
-        build(:line_item, variant: variant)
+        build(:line_item, variant:)
       end
     end
     state { 'on_hand' }
     shipment do
       if stock_location
-        build(:shipment, state: 'pending', order: line_item.order, stock_location: stock_location)
+        build(:shipment, state: 'pending', order: line_item.order, stock_location:)
       else
         build(:shipment, state: 'pending', order: line_item.order)
       end

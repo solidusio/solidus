@@ -17,7 +17,7 @@ RSpec.describe Spree::Preference, type: :model do
       element.key = key
       element.save
 
-      Spree::Preference.find_by(key: key)
+      Spree::Preference.find_by(key:)
     end
 
     it ":boolean" do

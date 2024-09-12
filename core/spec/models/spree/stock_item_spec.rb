@@ -196,7 +196,7 @@ RSpec.describe Spree::StockItem, type: :model do
 
     context "inventory_cache_threshold is set" do
       before do
-        stub_spree_preferences(inventory_cache_threshold: inventory_cache_threshold)
+        stub_spree_preferences(inventory_cache_threshold:)
       end
 
       let(:inventory_cache_threshold) { 5 }

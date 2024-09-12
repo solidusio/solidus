@@ -17,7 +17,7 @@ RSpec.describe Spree::StoreSelector::Legacy do
       context "with a domain match" do
         let(:request) { double(headers: {}, env: { "SERVER_NAME" => url } ) }
         let(:url) { "server-name.org" }
-        let!(:store_2) { create :store, default: false, url: url }
+        let!(:store_2) { create :store, default: false, url: }
 
         it "returns the store with the matching domain" do
           expect(subject).to eq(store_2)

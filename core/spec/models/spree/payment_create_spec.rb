@@ -5,9 +5,9 @@ require 'rails_helper'
 module Spree
   RSpec.describe PaymentCreate do
     let(:user) { nil }
-    let(:order) { create :order, user: user }
+    let(:order) { create :order, user: }
     let(:request_env) { {} }
-    let(:payment_create) { described_class.new(order, attributes, request_env: request_env) }
+    let(:payment_create) { described_class.new(order, attributes, request_env:) }
     let(:payment_method) { create(:payment_method) }
     let(:new_payment) { payment_create.build }
 
@@ -28,7 +28,7 @@ module Spree
       let(:attributes) do
         {
           amount: 100,
-          payment_method: payment_method,
+          payment_method:,
           source_attributes: {
             expiry: "01 / 99",
             number: '1234567890123',
@@ -55,7 +55,7 @@ module Spree
         let(:attributes) do
           {
             amount: 100,
-            payment_method: payment_method,
+            payment_method:,
             source_attributes: { expiry: "1 / 12" }
           }
         end
@@ -74,7 +74,7 @@ module Spree
       let(:valid_attributes) do
         {
           amount: 100,
-          payment_method: payment_method,
+          payment_method:,
           source_attributes: {
             expiry: "01 / 99",
             number: '1234567890123',
@@ -116,7 +116,7 @@ module Spree
         it "creates a payment with all attributes" do
           expect(new_payment).to have_attributes(
             amount: 100,
-            payment_method: payment_method,
+            payment_method:,
             source: kind_of(CreditCard)
           )
         end

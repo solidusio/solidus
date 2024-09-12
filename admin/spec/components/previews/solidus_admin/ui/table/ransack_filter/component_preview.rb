@@ -12,7 +12,7 @@ class SolidusAdmin::UI::Table::RansackFilter::ComponentPreview < ViewComponent::
   # @param search_bar select { choices: [[ Yes, 10], [ No, 3]] }
   def playground(presentation: "Filter", search_bar: 10)
     render current_component.new(
-      presentation: presentation,
+      presentation:,
       combinator: 'or',
       attribute: "attribute",
       predicate: "eq",

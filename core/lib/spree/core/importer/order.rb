@@ -74,7 +74,7 @@ module Spree
               # able to find the line item if line_item.variant_id |= iu.variant_id
               shipment.inventory_units.new(
                 variant_id: inventory_unit[:variant_id],
-                line_item: line_item
+                line_item:
               )
             end
 
@@ -91,7 +91,7 @@ module Spree
             shipment.save!
 
             shipping_method = Spree::ShippingMethod.find_by(name: target[:shipping_method]) || Spree::ShippingMethod.find_by!(admin_name: target[:shipping_method])
-            rate = shipment.shipping_rates.create!(shipping_method: shipping_method,
+            rate = shipment.shipping_rates.create!(shipping_method:,
                                                    cost: target[:cost])
             shipment.selected_shipping_rate_id = rate.id
             shipment.update_amounts
@@ -129,7 +129,7 @@ module Spree
           return [] unless adjustments
           adjustments.each do |target|
             adjustment = order.adjustments.build(
-              order:  order,
+              order:,
               amount: target[:amount].to_d,
               label:  target[:label]
             )
@@ -141,7 +141,7 @@ module Spree
         def self.create_payments_from_params(payments_hash, order)
           return [] unless payments_hash
           payments_hash.each do |target|
-            payment = order.payments.build order: order
+            payment = order.payments.build(order:)
             payment.amount = target[:amount].to_f
             # Order API should be using state as that's the normal payment field.
             # spree_wombat serializes payment state as status so imported orders should fall back to status field.
@@ -170,7 +170,7 @@ module Spree
         def self.ensure_variant_id_from_params(hash)
           sku = hash.delete(:sku)
           unless hash[:variant_id].present?
-            hash[:variant_id] = Spree::Variant.with_prices.find_by!(sku: sku).id
+            hash[:variant_id] = Spree::Variant.with_prices.find_by!(sku:).id
           end
           hash
         end
