@@ -12,8 +12,8 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
   let(:expires_at) { nil }
   let!(:rate) do
     create(:tax_rate, tax_categories: [tax_category], amount: 0.05,
-                      included_in_price: included_in_price, zone: zone,
-                      starts_at: starts_at, expires_at: expires_at)
+                      included_in_price:, zone:,
+                      starts_at:, expires_at:)
   end
   let(:included_in_price) { false }
   subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
@@ -26,8 +26,8 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
         create(
           :order_with_line_items,
           line_items_attributes: [
-            { price: 10, quantity: 3, tax_category: tax_category }.merge(line_item_one_options),
-            { price: 10, quantity: 3, tax_category: tax_category }.merge(line_item_two_options)
+            { price: 10, quantity: 3, tax_category: }.merge(line_item_one_options),
+            { price: 10, quantity: 3, tax_category: }.merge(line_item_two_options)
           ],
           ship_address: address
         )
@@ -189,9 +189,9 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
         :line_item,
         price: 10,
         quantity: 3,
-        adjustments: adjustments,
-        order: order,
-        tax_category: tax_category
+        adjustments:,
+        order:,
+        tax_category:
       )
     end
 
@@ -202,7 +202,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
     let(:shipping_method) do
       build_stubbed(
         :shipping_method,
-        tax_category: tax_category
+        tax_category:
       )
     end
 
@@ -210,7 +210,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       build_stubbed(
         :shipping_rate,
         selected: true,
-        shipping_method: shipping_method
+        shipping_method:
       )
     end
 
@@ -218,8 +218,8 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       build_stubbed(
         :shipment,
         cost: 30,
-        adjustments: adjustments,
-        order: order,
+        adjustments:,
+        order:,
         shipping_rates: [shipping_rate]
       )
     end
@@ -231,14 +231,14 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
     let(:shipping_method) do
       build_stubbed(
         :shipping_method,
-        tax_category: tax_category
+        tax_category:
       )
     end
 
     let(:shipment) do
       build_stubbed(
         :shipment,
-        order: order
+        order:
       )
     end
 
@@ -250,8 +250,8 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
         :shipping_rate,
         cost: 30 + adjustment_total,
         selected: true,
-        shipping_method: shipping_method,
-        shipment: shipment
+        shipping_method:,
+        shipment:
       )
     end
 

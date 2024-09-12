@@ -8,7 +8,7 @@ RSpec.describe Spree::UserMethods do
   describe '#has_spree_role?' do
     subject { test_user.has_spree_role? name }
 
-    let(:role) { Spree::Role.create(name: name) }
+    let(:role) { Spree::Role.create(name:) }
     let(:name) { 'test' }
 
     context 'with a role' do
@@ -37,7 +37,7 @@ RSpec.describe Spree::UserMethods do
     it 'can add accessible roles' do
       user = create(:user, spree_roles: [])
 
-      user.update_spree_roles([accessible_role], ability: ability)
+      user.update_spree_roles([accessible_role], ability:)
 
       expect(user.reload.spree_roles).to eq([accessible_role])
     end
@@ -45,7 +45,7 @@ RSpec.describe Spree::UserMethods do
     it 'can remove accessible roles' do
       user = create(:user, spree_roles: [accessible_role])
 
-      user.update_spree_roles([], ability: ability)
+      user.update_spree_roles([], ability:)
 
       expect(user.reload.spree_roles).to eq([])
     end
@@ -53,7 +53,7 @@ RSpec.describe Spree::UserMethods do
     it "can't add non accessible roles" do
       user = create(:user, spree_roles: [])
 
-      user.update_spree_roles([non_accessible_role], ability: ability)
+      user.update_spree_roles([non_accessible_role], ability:)
 
       expect(user.reload.spree_roles).to eq([])
     end
@@ -61,7 +61,7 @@ RSpec.describe Spree::UserMethods do
     it "can't remove non accessible roles" do
       user = create(:user, spree_roles: [non_accessible_role])
 
-      user.update_spree_roles([], ability: ability)
+      user.update_spree_roles([], ability:)
 
       expect(user.reload.spree_roles).to eq([non_accessible_role])
     end

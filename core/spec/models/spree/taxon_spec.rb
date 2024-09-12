@@ -86,7 +86,7 @@ RSpec.describe Spree::Taxon, type: :model do
 
     context "with parent taxon" do
       let(:parent) { FactoryBot.build(:taxon, permalink: "brands") }
-      before       { allow(taxon).to receive_messages parent: parent }
+      before       { allow(taxon).to receive_messages(parent:) }
 
       it "should set permalink correctly when taxon has parent" do
         taxon.set_permalink
@@ -126,9 +126,9 @@ RSpec.describe Spree::Taxon, type: :model do
   context "updating permalink" do
     let(:taxonomy) { create(:taxonomy, name: 't') }
     let(:root) { taxonomy.root }
-    let(:taxon1) { create(:taxon, name: 't1', taxonomy: taxonomy, parent: root) }
-    let(:taxon2) { create(:taxon, name: 't2', taxonomy: taxonomy, parent: root) }
-    let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy: taxonomy, parent: taxon2) }
+    let(:taxon1) { create(:taxon, name: 't1', taxonomy:, parent: root) }
+    let(:taxon2) { create(:taxon, name: 't2', taxonomy:, parent: root) }
+    let(:taxon2_child) { create(:taxon, name: 't2_child', taxonomy:, parent: taxon2) }
 
     context "changing parent" do
       subject { taxon2.update!(parent: taxon1) }
@@ -202,17 +202,17 @@ RSpec.describe Spree::Taxon, type: :model do
       end
 
       it "allows for multiple taxons under a taxonomy" do
-        taxon = taxonomy.root.children.create!(name: 'First child', taxonomy: taxonomy)
+        taxon = taxonomy.root.children.create!(name: 'First child', taxonomy:)
         expect(taxon).to be_valid
         expect(taxonomy.taxons.many?).to eq(true)
-        second_taxon = taxonomy.root.children.create!(name: 'Second child', taxonomy: taxonomy)
+        second_taxon = taxonomy.root.children.create!(name: 'Second child', taxonomy:)
         expect(second_taxon).to be_valid
         expect(taxonomy.root.children.many?).to eq(true)
       end
 
       # Regression test https://github.com/solidusio/solidus/issues/5187
       it "does not invalidate the root taxon after having children taxons" do
-        taxonomy.root.children.create!(name: 'New node', taxonomy: taxonomy)
+        taxonomy.root.children.create!(name: 'New node', taxonomy:)
         expect(taxonomy.taxons.many?).to eq(true)
         expect(taxonomy.root).to be_valid
       end
@@ -238,9 +238,9 @@ RSpec.describe Spree::Taxon, type: :model do
   context 'leaves of the taxon tree' do
     let(:taxonomy) { create(:taxonomy, name: 't') }
     let(:root) { taxonomy.root }
-    let(:taxon) { create(:taxon, name: 't1', taxonomy: taxonomy, parent: root) }
-    let(:child) { create(:taxon, name: 'child taxon', taxonomy: taxonomy, parent: taxon) }
-    let(:grandchild) { create(:taxon, name: 'grandchild taxon', taxonomy: taxonomy, parent: child) }
+    let(:taxon) { create(:taxon, name: 't1', taxonomy:, parent: root) }
+    let(:child) { create(:taxon, name: 'child taxon', taxonomy:, parent: taxon) }
+    let(:grandchild) { create(:taxon, name: 'grandchild taxon', taxonomy:, parent: child) }
     let(:product1) { create(:product) }
     let(:product2) { create(:product) }
     let(:product3) { create(:product) }

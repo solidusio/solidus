@@ -35,7 +35,7 @@ module Spree
             item_id: shipping_rate.id,
             label: rate.adjustment_label(amount),
             tax_rate: rate,
-            amount: amount
+            amount:
           )
         end
       end

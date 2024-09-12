@@ -28,7 +28,7 @@ module Spree::Api
     context "filtering by product" do
       let(:product) { create(:product, option_types: [product_option_value.option_type]) }
       let(:product_option_value) { create(:option_value, presentation: "BLACK") }
-      let!(:variant) { create(:variant, product: product, option_values: [product_option_value]) }
+      let!(:variant) { create(:variant, product:, option_values: [product_option_value]) }
 
       it "can filter by product" do
         get spree.api_option_values_path(q: { variants_product_id_eq: product.id } )
@@ -54,8 +54,8 @@ module Spree::Api
       end
 
       it "can retrieve a list of option types" do
-        option_value_one = create(:option_value, option_type: option_type)
-        create(:option_value, option_type: option_type)
+        option_value_one = create(:option_value, option_type:)
+        create(:option_value, option_type:)
         get spree.api_option_values_path, params: { ids: [option_value.id, option_value_one.id] }
         expect(json_response.count).to eq(2)
       end

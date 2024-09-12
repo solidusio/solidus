@@ -11,7 +11,7 @@ module Spree
     context "order totals" do
       before do
         2.times do
-          create(:line_item, order: order, price: 10)
+          create(:line_item, order:, price: 10)
         end
       end
 
@@ -21,15 +21,15 @@ module Spree
 
         let(:promotion_action) do
           Promotion::Actions::CreateAdjustment.create!({
-            calculator: calculator,
-            promotion: promotion
+            calculator:,
+            promotion:
           })
         end
 
         before do
           updater.recalculate
-          create(:adjustment, source: promotion_action, adjustable: order, order: order)
-          create(:line_item, order: order, price: 10) # in addition to the two already created
+          create(:adjustment, source: promotion_action, adjustable: order, order:)
+          create(:line_item, order:, price: 10) # in addition to the two already created
           order.line_items.reload # need to pick up the extra line item
           updater.recalculate
         end
@@ -40,7 +40,7 @@ module Spree
       end
 
       it "update order adjustments" do
-        create(:adjustment, adjustable: order, order: order, source: nil, amount: 10)
+        create(:adjustment, adjustable: order, order:, source: nil, amount: 10)
 
         expect {
           updater.recalculate
@@ -58,7 +58,7 @@ module Spree
       let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 1) }
 
       it 'updates in-memory items' do
-        promotion.activate(order: order)
+        promotion.activate(order:)
 
         expect(line_item.promo_total).to eq(0)
         expect(order.promo_total).to eq(0)

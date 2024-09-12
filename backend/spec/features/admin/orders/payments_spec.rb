@@ -225,7 +225,7 @@ describe 'Payments', type: :feature do
 
     context "user existing card" do
       let!(:cc) do
-        create(:credit_card, payment_method: payment_method, gateway_customer_profile_id: "BGS-RFRE", user: order.user)
+        create(:credit_card, payment_method:, gateway_customer_profile_id: "BGS-RFRE", user: order.user)
       end
 
       before do
@@ -259,7 +259,7 @@ describe 'Payments', type: :feature do
     context 'with a soft-deleted payment method' do
       let(:order) { create(:completed_order_with_totals, line_items_count: 1) }
       let!(:payment_method) { create(:check_payment_method) }
-      let!(:payment) { create_payment(payment_method: payment_method) }
+      let!(:payment) { create_payment(payment_method:) }
 
       before do
         payment_method.discard
@@ -299,7 +299,7 @@ describe 'Payments', type: :feature do
     let(:order) do
       create(:order_with_line_items, {
         line_items_count: 1,
-        line_items_attributes: [{ quantity: 11, product: product }],
+        line_items_attributes: [{ quantity: 11, product: }],
         stock_location: product.master.stock_locations.first
       })
     end
@@ -325,10 +325,10 @@ describe 'Payments', type: :feature do
     create(
       :payment,
       {
-        order: order,
+        order:,
         amount: order.outstanding_balance,
         payment_method: create(:credit_card_payment_method),
-        state: state
+        state:
       }.merge(opts)
     )
   end

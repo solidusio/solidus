@@ -100,7 +100,7 @@ describe 'Pricing' do
       let!(:variants) do
         v = []
         3.times do |i|
-          v << create(:variant, price: i * 10, product: product)
+          v << create(:variant, price: i * 10, product:)
         end
         v
       end

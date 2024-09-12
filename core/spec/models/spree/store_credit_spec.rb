@@ -162,7 +162,7 @@ RSpec.describe Spree::StoreCredit do
   end
 
   describe "#amount=" do
-    let(:store_credit) { described_class.new(amount: amount) }
+    let(:store_credit) { described_class.new(amount:) }
 
     context "with an imperial price format" do
       let(:amount) { "1,000.50" }
@@ -219,7 +219,7 @@ RSpec.describe Spree::StoreCredit do
     context "the amount_used is defined" do
       let(:amount_used) { 10.0 }
 
-      before { store_credit.update(amount_used: amount_used) }
+      before { store_credit.update(amount_used:) }
 
       context "the authorized amount is not defined" do
         it "subtracts the amount used from the credited amount" do
@@ -270,7 +270,7 @@ RSpec.describe Spree::StoreCredit do
       end
 
       context "authorization has already happened" do
-        let!(:auth_event) { create(:store_credit_auth_event, store_credit: store_credit) }
+        let!(:auth_event) { create(:store_credit_auth_event, store_credit:) }
 
         before { store_credit.update(amount_authorized: store_credit.amount) }
 
@@ -439,7 +439,7 @@ RSpec.describe Spree::StoreCredit do
                                     action: Spree::StoreCredit::CAPTURE_ACTION,
                                     authorization_code: auth_code,
                                     amount: captured_amount,
-                                    store_credit: store_credit)
+                                    store_credit:)
       }
 
       it "returns false" do
@@ -459,7 +459,7 @@ RSpec.describe Spree::StoreCredit do
         create(:store_credit_auth_event,
                                  authorization_code: auth_code,
                                  amount: authorized_amount,
-                                 store_credit: store_credit)
+                                 store_credit:)
       }
 
       it "returns true" do
@@ -484,13 +484,13 @@ RSpec.describe Spree::StoreCredit do
   describe "#credit" do
     let(:event_auth_code) { "1-SC-20141111111111" }
     let(:amount_used)     { 10.0 }
-    let(:store_credit)    { create(:store_credit, amount_used: amount_used) }
+    let(:store_credit)    { create(:store_credit, amount_used:) }
     let!(:capture_event)  {
       create(:store_credit_auth_event,
                                    action: Spree::StoreCredit::CAPTURE_ACTION,
                                    authorization_code: event_auth_code,
                                    amount: captured_amount,
-                                   store_credit: store_credit)
+                                   store_credit:)
     }
     let(:originator) { nil }
 
@@ -629,7 +629,7 @@ RSpec.describe Spree::StoreCredit do
     context "amount used is defined" do
       let(:amount_used) { 100.0 }
 
-      subject { create(:store_credit, amount_used: amount_used) }
+      subject { create(:store_credit, amount_used:) }
 
       it "returns the attribute value" do
         expect(subject.amount_used).to eq amount_used
@@ -649,7 +649,7 @@ RSpec.describe Spree::StoreCredit do
     context "amount authorized is defined" do
       let(:amount_authorized) { 100.0 }
 
-      subject { create(:store_credit, amount_authorized: amount_authorized) }
+      subject { create(:store_credit, amount_authorized:) }
 
       it "returns the attribute value" do
         expect(subject.amount_authorized).to eq amount_authorized
@@ -820,7 +820,7 @@ RSpec.describe Spree::StoreCredit do
 
           let!(:store_credits) do
             [
-              create(:store_credit, user: user, amount: store_credit_amount),
+              create(:store_credit, user:, amount: store_credit_amount),
               create(:store_credit, user: user.reload, amount: additional_store_credit_amount)
             ]
           end

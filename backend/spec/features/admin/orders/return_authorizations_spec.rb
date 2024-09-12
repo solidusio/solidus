@@ -60,7 +60,7 @@ describe "ReturnAuthorizations", type: :feature do
     end
 
     describe "when a return authorization exists" do
-      let!(:return_authorization) { create(:return_authorization, order: order) }
+      let!(:return_authorization) { create(:return_authorization, order:) }
 
       it "can visit the return authorizations list page" do
         visit spree.admin_order_return_authorizations_path(order)

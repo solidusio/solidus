@@ -30,7 +30,7 @@ RSpec.describe Spree::Tax::TaxLocation do
     subject { described_class.new(**args) }
 
     context 'with a country object' do
-      let(:args) { { country: country } }
+      let(:args) { { country: } }
 
       it "will yield a location with that country's id" do
         expect(subject.country_id).to eq(country.id)
@@ -43,7 +43,7 @@ RSpec.describe Spree::Tax::TaxLocation do
     subject { described_class.new(**args).country }
 
     context 'with a country object' do
-      let(:args) { { country: country } }
+      let(:args) { { country: } }
 
       it { is_expected.to eq(country) }
     end
@@ -59,13 +59,13 @@ RSpec.describe Spree::Tax::TaxLocation do
     subject { described_class.new(**args).empty? }
 
     context 'with a country present' do
-      let(:args) { { country: country } }
+      let(:args) { { country: } }
 
       it { is_expected.to be false }
     end
 
     context 'with a state present' do
-      let(:args) { { state: state } }
+      let(:args) { { state: } }
 
       it { is_expected.to be false }
     end

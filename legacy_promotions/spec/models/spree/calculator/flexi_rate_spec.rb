@@ -19,7 +19,7 @@ RSpec.describe Spree::Calculator::FlexiRate, type: :model do
 
   let(:order) do
     mock_model(
-      Spree::Order, quantity: quantity
+      Spree::Order, quantity:
     )
   end
 

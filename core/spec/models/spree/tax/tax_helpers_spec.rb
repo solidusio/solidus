@@ -16,12 +16,12 @@ RSpec.describe Spree::Tax::TaxHelpers do
   let(:tax_category) { create(:tax_category) }
   let(:irrelevant_tax_category) { create(:tax_category) }
 
-  let(:item) { create(:line_item, tax_category: tax_category) }
+  let(:item) { create(:line_item, tax_category:) }
   let(:tax_address) { item.order.tax_address }
   let(:zone) { create(:zone, name: "Country Zone", countries: [tax_address.country]) }
 
   let!(:tax_rate) do
-    create(:tax_rate, tax_categories: [tax_category], zone: zone)
+    create(:tax_rate, tax_categories: [tax_category], zone:)
   end
 
   describe '#rates_for_item' do
@@ -34,8 +34,8 @@ RSpec.describe Spree::Tax::TaxHelpers do
       let(:expires_at) { 2.days.from_now }
 
       let!(:invalid_tax_rate) do
-        create(:tax_rate, tax_categories: [tax_category], zone: zone,
-               starts_at: starts_at, expires_at: expires_at)
+        create(:tax_rate, tax_categories: [tax_category], zone:,
+               starts_at:, expires_at:)
       end
 
       it 'returns only active rates that match the tax category of given item' do

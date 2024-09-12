@@ -25,7 +25,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         let(:params) { { q: {} } }
 
         it 'filters out soft-deleted products by default' do
-          get :index, params: params
+          get(:index, params:)
           expect(assigns[:collection]).to_not include(soft_deleted_product)
         end
       end
@@ -34,7 +34,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         let(:params) { { q: { with_discarded: 'true' } } }
 
         it 'includes soft-deleted products' do
-          get :index, params: params
+          get(:index, params:)
           expect(assigns[:collection]).to include(soft_deleted_product)
         end
       end
@@ -190,7 +190,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     let(:original_option_value) { create(:option_value) }
     let!(:product) { create(:product, option_types: [option_value.option_type]) }
     let!(:rule) do
-      create(:variant_property_rule, product: product, option_value: original_option_value)
+      create(:variant_property_rule, product:, option_value: original_option_value)
     end
     let(:payload) do
       {
@@ -261,7 +261,7 @@ describe Spree::Admin::ProductsController, type: :controller do
   context "destroying a product" do
     let(:product) do
       product = create(:product)
-      create(:variant, product: product)
+      create(:variant, product:)
       product
     end
 

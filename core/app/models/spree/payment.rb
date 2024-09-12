@@ -69,7 +69,7 @@ module Spree
 
     # @return [Spree::Money] this amount of this payment as money object
     def money
-      Spree::Money.new(amount, { currency: currency })
+      Spree::Money.new(amount, { currency: })
     end
     alias display_amount money
 
@@ -211,7 +211,7 @@ module Spree
     def set_unique_identifier
       loop do
         self.number = generate_identifier
-        break unless self.class.exists?(number: number)
+        break unless self.class.exists?(number:)
       end
     end
 

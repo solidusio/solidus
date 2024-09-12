@@ -13,7 +13,7 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
     render component("ui/forms/address").new(
       name: "",
       address: fake_address,
-      disabled: disabled
+      disabled:
     )
   end
 
@@ -21,6 +21,6 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
 
   def fake_address
     country = Spree::Country.find_or_initialize_by(iso: Spree::Config.default_country_iso)
-    Spree::Address.new(country: country)
+    Spree::Address.new(country:)
   end
 end

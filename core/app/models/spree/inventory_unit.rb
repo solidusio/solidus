@@ -64,7 +64,7 @@ module Spree
     #   stock location that is associated with this inventory unit's variant
     def find_stock_item
       Spree::StockItem.where(stock_location_id: shipment.stock_location_id,
-        variant_id: variant_id).first
+        variant_id:).first
     end
 
     # @return [Spree::ReturnItem] a valid return item for this inventory unit
@@ -114,7 +114,7 @@ module Spree
 
     def ensure_can_destroy
       if !backordered? && !on_hand?
-        errors.add(:state, :cannot_destroy, state: state)
+        errors.add(:state, :cannot_destroy, state:)
         throw :abort
       end
 

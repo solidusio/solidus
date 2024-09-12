@@ -250,7 +250,7 @@ module Spree
       ActiveRecord::Base.transaction do
         # Works around spree_i18n https://github.com/spree/spree/issues/301
         property = Spree::Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
-        product_property = Spree::ProductProperty.where(product: self, property: property).first_or_initialize
+        product_property = Spree::ProductProperty.where(product: self, property:).first_or_initialize
         product_property.value = property_value
         product_property.save!
       end
@@ -363,7 +363,7 @@ module Spree
     end
 
     def remove_taxon(taxon)
-      removed_classifications = classifications.where(taxon: taxon)
+      removed_classifications = classifications.where(taxon:)
       removed_classifications.each(&:remove_from_list)
     end
   end

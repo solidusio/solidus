@@ -28,7 +28,7 @@ module Spree
         @variants =
           if params[:variant_search_term]
             Spree::Config.variant_search_class.new(
-              params[:variant_search_term], scope: scope
+              params[:variant_search_term], scope:
             ).results.includes(include_list)
           else
             scope.includes(include_list).ransack(params[:q]).result

@@ -40,7 +40,7 @@ FactoryBot.define do
       end
 
       factory :product_with_option_types do
-        after(:create) { |product| create(:product_option_type, product: product) }
+        after(:create) { |product| create(:product_option_type, product:) }
       end
     end
   end

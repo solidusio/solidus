@@ -41,7 +41,7 @@ module Spree
         @desired = Spree::StockQuantities.new(inventory_units_by_variant.transform_values(&:count))
         @availability = Spree::Stock::Availability.new(
           variants: desired.variants,
-          stock_locations: stock_locations
+          stock_locations:
         )
 
         @allocator = Spree::Config.stock.allocator_class.new(availability)

@@ -57,7 +57,7 @@ module Spree
       def build_from_customer_return(customer_return)
         order = customer_return.order
         order.reimbursements.build({
-          customer_return: customer_return,
+          customer_return:,
           return_items: customer_return.return_items.accepted.not_reimbursed
         })
       end
@@ -88,7 +88,7 @@ module Spree
       reload
       update!(total: calculated_total)
 
-      reimbursement_performer.perform(self, created_by: created_by)
+      reimbursement_performer.perform(self, created_by:)
 
       if unpaid_amount_within_tolerance?
         reimbursed!
@@ -108,7 +108,7 @@ module Spree
       reload
       update!(total: calculated_total)
 
-      reimbursement_performer.simulate(self, created_by: created_by)
+      reimbursement_performer.simulate(self, created_by:)
     end
 
     def return_items_requiring_exchange
@@ -131,7 +131,7 @@ module Spree
     def return_all(created_by:)
       return_items.each(&:accept!)
       save!
-      perform!(created_by: created_by)
+      perform!(created_by:)
     end
 
     # The returned category is used as the category

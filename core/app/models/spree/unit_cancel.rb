@@ -20,7 +20,7 @@ class Spree::UnitCancel < Spree::Base
 
     self.adjustment = inventory_unit.line_item.adjustments.create!(
       source: self,
-      amount: amount,
+      amount:,
       order: inventory_unit.order,
       label: "#{I18n.t('spree.cancellation')} - #{reason}",
       finalized: true

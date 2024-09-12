@@ -15,7 +15,7 @@ products_with_variants = [
 ]
 
 products_with_variants.each do |name|
-  product = Spree::Product.find_by!(name: name)
+  product = Spree::Product.find_by!(name:)
   product.option_types = [size, color]
   product.save!
 end

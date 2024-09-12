@@ -58,7 +58,7 @@ module Spree
     def last_incomplete_spree_order(store: nil, only_frontend_viewable: true)
       self_orders = orders
       self_orders = self_orders.where(frontend_viewable: true) if only_frontend_viewable
-      self_orders = self_orders.where(store: store) if store
+      self_orders = self_orders.where(store:) if store
       self_orders = self_orders.where('updated_at > ?', Spree::Config.completable_order_updated_cutoff_days.days.ago) if Spree::Config.completable_order_updated_cutoff_days
       self_orders = self_orders.where('created_at > ?', Spree::Config.completable_order_created_cutoff_days.days.ago) if Spree::Config.completable_order_created_cutoff_days
       last_order = self_orders.order(:created_at).last
@@ -73,8 +73,8 @@ module Spree
 
     def display_available_store_credit_total(currency:)
       Spree::Money.new(
-        available_store_credit_total(currency: currency),
-        currency: currency,
+        available_store_credit_total(currency:),
+        currency:,
       )
     end
 
