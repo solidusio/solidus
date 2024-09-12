@@ -160,7 +160,7 @@ commands:
             ruby -v >> /tmp/.ruby-versions
             gem --version >> /tmp/.gems-versions
             bundle --version >> /tmp/.gems-versions
-            gem search -eq rails -v "~> 7" -v "< 7.2" >> /tmp/.gems-versions # get the latest rails from rubygems
+            gem search -eq rails -v "~> 7" -v "< 8.0" >> /tmp/.gems-versions # get the latest rails from rubygems
             gem search -eq solidus >> /tmp/.gems-versions # get the latest solidus from rubygems
 
             cat /tmp/.ruby-versions
@@ -173,7 +173,7 @@ commands:
           name: "Prepare the rails application"
           command: |
             cd /tmp
-            test -d my_app || (gem install rails -v "< 7.1" && gem install solidus)
+            test -d my_app || (gem install rails -v "< 8.0" && gem install solidus)
             test -d my_app || rails new my_app --skip-git
       - save_cache:
           key: solidus-installer-v10-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
@@ -224,8 +224,8 @@ commands:
             mkdir -p /tmp/dummy_extension
             cd /tmp/dummy_extension
             bundle init
-            bundle add rails -v "< 7.1" --skip-install
-            bundle add sqlite3 -v "~> 1.3" --skip-install
+            bundle add rails -v "< 8.0" --skip-install
+            bundle add sqlite3 -v "~> 2.0" --skip-install
             test -n "<<parameters.extra_gems>>" && bundle add <<parameters.extra_gems>> --skip-install
             bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             export LIB_NAME=set # dummy requireable file
@@ -374,7 +374,7 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.0", "7.1"],
+                  rails: ["7.0", "7.1", "7.2"],
                   ruby: ["3.1"],
                   database: ["mysql"],
                   paperclip: [true],
@@ -386,7 +386,7 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.0", "7.1"],
+                  rails: ["7.0", "7.1", "7.2"],
                   ruby: ["3.1"],
                   database: ["postgres"],
                   paperclip: [false],
@@ -398,7 +398,7 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.0"],
+                  rails: ["7.1"],
                   ruby: ["3.2"],
                   database: ["sqlite"],
                   paperclip: [false],
@@ -410,8 +410,8 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.1", "main"],
-                  ruby: ["3.3.2"],
+                  rails: ["7.2", "main"],
+                  ruby: ["3.3.5"],
                   database: ["sqlite"],
                   paperclip: [false],
                 },
