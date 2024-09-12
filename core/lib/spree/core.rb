@@ -22,8 +22,6 @@ require 'paperclip'
 require 'ransack'
 require 'state_machines-activerecord'
 
-require_relative './ransack_4_1_patch'
-
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
 StateMachines::Machine.ignore_method_conflicts = true
