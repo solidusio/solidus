@@ -68,7 +68,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
       {
         label: option_type.presentation,
         combinator: 'or',
-        attribute: "variants_option_values",
+        attribute: "option_values_id",
         predicate: "in",
         options: option_type.option_values.pluck(:name, :id),
       }

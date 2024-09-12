@@ -57,6 +57,8 @@ module Spree
     has_many :line_items, through: :variants_including_master
     has_many :orders, through: :line_items
 
+    has_many :option_values, -> { distinct }, through: :variants_including_master
+
     scope :sort_by_master_default_price_amount_asc, -> {
       with_default_price.order('spree_prices.amount ASC')
     }
@@ -127,26 +129,8 @@ module Spree
 
     alias :options :product_option_types
 
-    # The :variants_option_values ransacker filters Spree::Product based on
-    # variant option values ids.
-    #
-    # Usage:
-    # Spree::Product.ransack(
-    #   variants_option_values_in: [option_value_id1, option_value_id2]
-    # ).result
-    ransacker :variants_option_values, formatter: proc { |v|
-      if OptionValue.exists?(v)
-        joins(variants_including_master: :option_values)
-          .where(spree_option_values: { id: v })
-          .distinct
-          .select(:id).arel
-      end
-    } do |parent|
-      parent.table[:id]
-    end
-
-    self.allowed_ransackable_associations = %w[stores variants_including_master master variants]
-    self.allowed_ransackable_attributes = %w[name slug variants_option_values]
+    self.allowed_ransackable_associations = %w[stores variants_including_master master variants option_values]
+    self.allowed_ransackable_attributes = %w[name slug]
     self.allowed_ransackable_scopes = %i[available with_discarded with_all_variant_sku_cont with_kept_variant_sku_cont]
 
     # @return [Boolean] true if there are any variants

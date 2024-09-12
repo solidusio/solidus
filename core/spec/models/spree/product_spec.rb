@@ -627,13 +627,13 @@ RSpec.describe Spree::Product, type: :model do
     end
   end
 
-  context "ransacker :variants_option_values" do
+  describe "ransack :option_values_id_in" do
     it "filters products based on option values of their variants" do
       product_1 = create(:product)
       option_value_1 = create(:option_value)
       create(:variant, product: product_1, option_values: [option_value_1])
 
-      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      result = Spree::Product.ransack(option_values_id_in: [option_value_1.id]).result
       expect(result).to contain_exactly(product_1)
     end
 
@@ -644,13 +644,13 @@ RSpec.describe Spree::Product, type: :model do
       create(:variant, product: product_1, option_values: [option_value_1])
       create(:variant, product: product_2, option_values: [option_value_1])
 
-      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      result = Spree::Product.ransack(option_values_id_in: [option_value_1.id]).result
       expect(result).to contain_exactly(product_1, product_2)
     end
 
     it "returns no products if there is no match" do
       non_existing_option_value_id = 99999
-      result = Spree::Product.ransack(variants_option_values_in: [non_existing_option_value_id]).result
+      result = Spree::Product.ransack(option_values_id_in: [non_existing_option_value_id]).result
       expect(result).to be_empty
     end
 
@@ -662,7 +662,7 @@ RSpec.describe Spree::Product, type: :model do
       create(:variant, product: product_1, option_values: [option_value_1])
       create(:variant, product: product_2, option_values: [option_value_2])
 
-      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id, option_value_2.id]).result
+      result = Spree::Product.ransack(option_values_id_in: [option_value_1.id, option_value_2.id]).result
       expect(result).to contain_exactly(product_1, product_2)
     end
 
@@ -674,7 +674,7 @@ RSpec.describe Spree::Product, type: :model do
       create(:variant, product: product_1, option_values: [option_value_1])
       create(:variant, product: product_2, option_values: [option_value_2])
 
-      result = Spree::Product.ransack(variants_option_values_in: [option_value_1.id]).result
+      result = Spree::Product.ransack(option_values_id_in: [option_value_1.id]).result
       expect(result).not_to include(product_2)
     end
   end
