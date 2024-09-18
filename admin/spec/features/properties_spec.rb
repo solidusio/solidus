@@ -21,4 +21,19 @@ describe "Properties", :js, type: :feature do
     expect(page).not_to have_content("Type prop")
     expect(Spree::Property.count).to eq(1)
   end
+
+  context "when creating a new product property" do
+    before do
+      visit "/admin/properties"
+      click_on "Add new"
+      expect(page).to have_content("New Property")
+      expect(page).to be_axe_clean
+    end
+
+    it "opens and closes new property modal" do
+      expect(page).to have_selector("dialog")
+      within("dialog") { click_on "Cancel" }
+      expect(page).not_to have_selector("dialog")
+    end
+  end
 end
