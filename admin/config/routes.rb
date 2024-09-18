@@ -45,7 +45,7 @@ SolidusAdmin::Engine.routes.draw do
     end
   end
 
-  admin_resources :users, only: [:index, :destroy]
+  admin_resources :users, only: [:index, :edit, :destroy]
   admin_resources :promotions, only: [:index, :destroy]
   admin_resources :properties, only: [:index, :destroy]
   admin_resources :option_types, only: [:index, :destroy], sortable: true

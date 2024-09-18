@@ -23,6 +23,14 @@ module SolidusAdmin
       end
     end
 
+    def edit
+      set_user
+
+      respond_to do |format|
+        format.html { render component('users/edit').new(user: @user) }
+      end
+    end
+
     def destroy
       @users = Spree.user_class.where(id: params[:id])
 
@@ -33,6 +41,10 @@ module SolidusAdmin
     end
 
     private
+
+    def set_user
+      @user = Spree.user_class.find(params[:id])
+    end
 
     def user_params
       params.require(:user).permit(:user_id, permitted_user_attributes)

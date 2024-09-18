@@ -3,7 +3,11 @@
 require "spec_helper"
 
 describe "Users", :js, type: :feature do
-  before { sign_in create(:admin_user, email: "admin@example.com") }
+  let(:admin) { create(:admin_user, email: "admin@example.com") }
+
+  before do
+    sign_in admin
+  end
 
   it "lists users and allows deleting them" do
     create(:user, email: "customer@example.com")
@@ -50,6 +54,59 @@ describe "Users", :js, type: :feature do
       expect(page).to have_content("Last active")
       expect(page).to have_content("Less than a minute ago")
       expect(page).not_to have_content("Never")
+    end
+  end
+
+  context "when editing an existing user" do
+    before do
+      # This is needed for the actions which are still powered by the backend
+      # and not the new admin. (#update, etc.)
+      stub_authorization!(admin)
+
+      create(:user, email: "customer@example.com")
+      visit "/admin/users"
+      find_row("customer@example.com").click
+    end
+
+    it "shows the edit page" do
+      expect(page).to have_content("Users / customer@example.com")
+      expect(page).to have_content("Lifetime Stats")
+      expect(page).to have_content("Roles")
+      expect(find("label", text: /admin/i).find("input[type=checkbox]").checked?).to eq(false)
+    end
+
+    it "allows editing of the existing user" do
+      # API key interactions
+      expect(page).to have_content("No key")
+      click_on "Generate API key"
+      expect(page).to have_content("Key generated")
+      expect(page).to have_content("(hidden)")
+
+      click_on "Regenerate key"
+      expect(page).to have_content("Key generated")
+      expect(page).to have_content("(hidden)")
+
+      click_on "Clear key"
+      expect(page).to have_content("Key cleared")
+      expect(page).to have_content("No key")
+
+      # Update user
+      within("form.edit_user") do
+        fill_in "Email", with: "dogtown@example.com"
+        find("label", text: /admin/i).find("input[type=checkbox]").check
+        click_on "Update"
+      end
+
+      expect(page).to have_content("Users / dogtown@example.com")
+      expect(find("label", text: /admin/i).find("input[type=checkbox]").checked?).to eq(true)
+
+      # Cancel out of editing
+      within("form.edit_user") do
+        fill_in "Email", with: "newemail@example.com"
+        click_on "Cancel"
+      end
+
+      expect(page).not_to have_content("newemail@example.com")
     end
   end
 end
