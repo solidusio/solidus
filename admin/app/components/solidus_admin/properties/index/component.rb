@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Index::Component
+  def title
+    t('solidus_admin.properties.title')
+  end
+
   def model_class
     Spree::Property
   end
