@@ -24,6 +24,6 @@ Spree.Views.Cart.EmptyCartButton = Backbone.View.extend({
 
   render: function() {
     var isNew = function (item) { return item.isNew() };
-    this.$el.prop("disabled", !this.collection.length || this.collection.some(isNew));
+    this.$el.prop("disabled", !this.collection.length || this.collection.some(isNew) || this.model.get("completed_at"));
   }
 });
