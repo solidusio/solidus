@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'ostruct'
 
 module Spree::Api
   describe 'Promotions', type: :request do
@@ -25,7 +26,7 @@ module Spree::Api
     end
 
     let(:found_promotion) do
-      OpenStruct.new(
+      ::OpenStruct.new(
         id: 1,
         name: 'Test Promotion',
         description: 'Promotion for testing purposes',
