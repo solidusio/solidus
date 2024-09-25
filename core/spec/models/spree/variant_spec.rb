@@ -885,6 +885,18 @@ RSpec.describe Spree::Variant, type: :model do
       it "returns all in stock variants" do
         expect(subject).to eq [in_stock_variant]
       end
+
+      context "with stock in several locations" do
+        let!(:other_stock_location) { create(:stock_location, propagate_all_variants: true) }
+
+        before do
+          Spree::StockItem.where(variant: in_stock_variant).update_all(count_on_hand: 10)
+        end
+
+        it "returns just one variant" do
+          expect(subject).to eq([in_stock_variant])
+        end
+      end
     end
 
     context "inventory levels globally not tracked" do
