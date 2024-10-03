@@ -81,7 +81,7 @@
         <td><%= tax_rate.amount %></td>
         <td><%= tax_rate.included_in_price? ? t('spree.say_yes') : t('spree.say_no') %></td>
         <td><%= tax_rate.show_rate_in_label? ? t('spree.say_yes') : t('spree.say_no') %></td>
-        <td><%= tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
+        <td><%= tax_rate.expires_at.to_date.to_fs(:short_date) if tax_rate.expires_at %></td>
         <td><%= tax_rate.calculator && tax_rate.calculator.class.model_name.human %></td>
         <td class="actions">
           <% if can?(:update, tax_rate) %>
