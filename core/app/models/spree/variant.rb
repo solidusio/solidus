@@ -94,7 +94,7 @@ module Spree
       if stock_locations.present?
         in_stock_variants = in_stock_variants.where(spree_stock_items: { stock_location_id: stock_locations.map(&:id) })
       end
-      in_stock_variants
+      in_stock_variants.distinct
     end
 
     # Returns a scope of Variants which are suppliable. This includes:
