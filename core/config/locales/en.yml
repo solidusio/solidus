@@ -1855,6 +1855,7 @@ en:
     order_approved: Order approved
     order_canceled: Order canceled
     order_completed: Order completed
+    order_count: Order Count
     order_details: Order Details
     order_email_resent: Order Email Resent
     order_information: Order Information

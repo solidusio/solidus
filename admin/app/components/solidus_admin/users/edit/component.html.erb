@@ -1,0 +1,62 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.users_path) %>
+    <%= page_header_title(t(".title", email: @user.email)) %>
+
+    <% # @todo: I am not sure how we want to handle Cancan stuff in the new admin. %>
+    <% # if can?(:admin, Spree::Order) && can?(:create, Spree::Order) %>
+      <%= page_header_actions do %>
+        <%= render component("ui/button").new(tag: :a, text: t(".create_order_for_user"), href: spree.new_admin_order_path(user_id: @user.id)) %>
+      <% end %>
+    <% # end %>
+  <% end %>
+
+  <%= page_header do %>
+    <% tabs.each do |tab| %>
+      <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: tab[:text], 'aria-current': tab[:current], href: tab[:href])) %>
+    <% end %>
+  <% end %>
+
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+
+      <%= render component('ui/panel').new(title: Spree.user_class.model_name.human) do %>
+        <%= form_for @user, url: solidus_admin.user_path(@user), html: { id: form_id, autocomplete: "off" } do |f| %>
+          <div class="py-1.5">
+            <%= render component("ui/forms/field").text_field(f, :email) %>
+          </div>
+          <div class="py-1.5">
+            <%= render component("ui/forms/field").text_field(f, :password) %>
+          </div>
+          <div class="py-1.5">
+            <%= render component("ui/forms/field").text_field(f, :password_confirmation) %>
+          </div>
+          <div class="py-1.5">
+            <%= render component("ui/checkbox_row").new(options: role_options, row_title: "Roles", form: f, method: "spree_role_ids", layout: :subsection) %>
+          </div>
+          <div class="py-1.5 text-center">
+            <%= render component("ui/button").new(tag: :button, text: t(".update"), form: form_id) %>
+            <%= render component("ui/button").new(tag: :a, text: t(".cancel"), href: solidus_admin.user_path(@user), scheme: :secondary) %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= render component("users/edit/api_access").new(user: @user) %>
+
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component("ui/panel").new(title: t("spree.lifetime_stats")) do %>
+        <%= render component("ui/details_list").new(
+          items: [
+            { label: t("spree.total_sales"), value: @user.display_lifetime_value.to_html },
+            { label: t("spree.order_count"), value: @user.order_count.to_i },
+            { label: t("spree.average_order_value"), value: @user.display_average_order_value.to_html },
+            { label: t("spree.member_since"), value: @user.created_at.to_date },
+            { label: t(".last_active"), value: last_login(@user) },
+          ]
+        ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

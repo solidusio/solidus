@@ -1,0 +1,49 @@
+<%= render component('ui/panel').new(title: t('.api_access')) do %>
+  <section>
+    <% if @user.spree_api_key.present? %>
+      <div id="current-api-key">
+        <h2 class="py-1.5 font-semibold"><%= t('.key') %></h2>
+        <% if @user == helpers.current_solidus_admin_user %>
+          <%= @user.spree_api_key %>
+        <% else %>
+          <i>(<%= t('spree.hidden') %>)</i>
+        <% end %>
+      </div>
+
+      <div class="py-1.5 text-center">
+        <%= form_with url: spree.admin_user_api_key_path(@user), method: :delete, local: true, html: { class: 'clear_api_key inline-flex' } do %>
+          <%= render component("ui/button").new(
+            text: t('.clear_key'),
+            scheme: :secondary,
+            type: :submit,
+            "data-action": "click->#{stimulus_id}#confirm",
+            "data-#{stimulus_id}-message-param": t(".confirm_clear_key"),
+          ) %>
+        <% end %>
+
+        <%= form_with url: spree.admin_user_api_key_path(@user), method: :post, local: true, html: { class: 'regen_api_key inline-flex' } do %>
+          <%= render component("ui/button").new(
+            text: t('.regenerate_key'),
+            scheme: :secondary,
+            type: :submit,
+            "data-action": "click->#{stimulus_id}#confirm",
+            "data-#{stimulus_id}-message-param": t(".confirm_regenerate_key"),
+          ) %>
+        <% end %>
+      </div>
+
+    <% else %>
+      <div class="no-objects-found"><%= t('.no_key') %></div>
+      <div class="filter-actions actions">
+        <div class="py-1.5 text-center">
+          <%= form_with url: spree.admin_user_api_key_path(@user), method: :post, local: true, html: { class: 'generate_api_key inline-flex' } do %>
+            <%= render component("ui/button").new(
+              text: t('.generate_key'),
+              type: :submit,
+            ) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </section>
+<% end %>

@@ -1,0 +1,10 @@
+en:
+  api_access: API Access
+  no_key: No key
+  key: "Key"
+  generate_key: Generate API key
+  clear_key: Clear key
+  regenerate_key: Regenerate key
+  hidden: Hidden
+  confirm_clear_key: Are you sure you want to clear this user's API key? It will invalidate the existing key.
+  confirm_regenerate_key: Are you sure you want to regenerate this user's API key? It will invalidate the existing key.

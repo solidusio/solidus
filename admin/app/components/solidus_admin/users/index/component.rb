@@ -14,7 +14,7 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   end
 
   def row_url(user)
-    spree.admin_user_path(user)
+    solidus_admin.edit_user_path(user)
   end
 
   def page_actions
@@ -104,7 +104,8 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
 
     t(
       '.last_login.login_time_ago',
-      # @note The second `.try` is only here for the specs to work.
+      # @note The second `.try` is here for the specs and for setups that use a
+      # custom User class which may not have this attribute.
       last_login_time: time_ago_in_words(user.try(:last_sign_in_at))
     ).capitalize
   end

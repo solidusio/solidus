@@ -1,0 +1,16 @@
+en:
+  title: "Users / %{email}"
+  account: Account
+  addresses: Addresses
+  order_history: Order History
+  items: Items
+  store_credit: Store Credit
+  last_active: Last Active
+  last_login:
+    login_time_ago: "%{last_login_time} ago"
+    never: Never
+    invitation_sent: Invitation sent
+  create_order_for_user: Create order for this user
+  update: Update
+  cancel: Cancel
+  back: Back
