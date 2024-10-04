@@ -295,6 +295,7 @@ Rails/ApplicationController:
 Rails/ApplicationJob:
   Exclude:
     - "legacy_promotions/app/jobs/spree/promotion_code_batch_job.rb"
+    - "promotions/app/jobs/solidus_promotions/promotion_code_batch_job.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -458,6 +459,8 @@ Rails/ReflectionClassName:
     - "core/app/models/spree/user_address.rb"
     - "core/app/models/spree/user_stock_location.rb"
     - "core/app/models/spree/wallet_payment_source.rb"
+    - "promotions/app/models/solidus_promotions/condition_user.rb"
+    - "promotions/app/models/solidus_promotions/conditions/user.rb"
 
 # Offense count: 23
 # This cop supports safe autocorrection (--autocorrect).
