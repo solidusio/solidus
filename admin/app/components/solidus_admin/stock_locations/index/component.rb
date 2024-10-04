@@ -57,7 +57,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
           color = _1.active? ? :green : :graphite_light
           text = _1.active? ? t('.active') : t('.inactive')
 
-          component('ui/badge').new(name: text, color: color)
+          component('ui/badge').new(name: text, color:)
         },
       },
       {
@@ -78,7 +78,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
           count = _1.stock_movements.count
 
           link_to(
-            "#{count} #{Spree::StockMovement.model_name.human(count: count).downcase}",
+            "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
             spree.admin_stock_location_stock_movements_path(_1),
             class: 'body-link'
           )

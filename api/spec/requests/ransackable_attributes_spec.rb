@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "Ransackable Attributes" do
   let(:user) { create(:user).tap(&:generate_spree_api_key!) }
-  let(:order) { create(:order_with_line_items, user: user) }
+  let(:order) { create(:order_with_line_items, user:) }
   context "filtering by attributes one association away" do
     it "does not allow the filtering of variants by order attributes" do
       2.times { create(:variant) }
@@ -30,7 +30,7 @@ describe "Ransackable Attributes" do
   context "it maintains desired association behavior" do
     it "allows filtering of variants product name" do
       product = create(:product, name: "Fritos")
-      variant = create(:variant, product: product)
+      variant = create(:variant, product:)
       other_variant = create(:variant)
 
       get "/api/variants?q[product_name_or_sku_cont]=fritos", params: { token: user.spree_api_key }

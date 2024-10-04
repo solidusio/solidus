@@ -13,8 +13,8 @@ FactoryBot.define do
           # ensure the shipment uses the same stock location as the carton
           shipment: build(
             :shipment,
-            stock_location: stock_location,
-            shipping_method: shipping_method
+            stock_location:,
+            shipping_method:
           )
         )
       ]

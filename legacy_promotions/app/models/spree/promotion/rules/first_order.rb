@@ -28,7 +28,7 @@ module Spree
         end
 
         def orders_by_email
-          Spree::Order.where(email: email).complete
+          Spree::Order.where(email:).complete
         end
       end
     end

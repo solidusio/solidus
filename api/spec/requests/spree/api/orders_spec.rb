@@ -226,7 +226,7 @@ module Spree::Api
     context "the current api user is authenticated" do
       let(:current_api_user) { order.user }
       let(:store) { create(:store) }
-      let(:order) { create(:order, line_items: [line_item], store: store) }
+      let(:order) { create(:order, line_items: [line_item], store:) }
 
       it "can view all of their own orders for the current store" do
         get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
@@ -257,11 +257,11 @@ module Spree::Api
       it "returns orders in reverse chronological order by completed_at" do
         order.update_columns completed_at: Time.current, created_at: 3.days.ago
 
-        order_two = Spree::Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.days.ago, store: store
+        order_two = Spree::Order.create(user: order.user, completed_at: Time.current - 1.day, created_at: 2.days.ago, store:)
         expect(order_two.created_at).to be > order.created_at
-        order_three = Spree::Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
+        order_three = Spree::Order.create(user: order.user, completed_at: nil, created_at: 1.day.ago, store:)
         expect(order_three.created_at).to be > order_two.created_at
-        order_four = Spree::Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
+        order_four = Spree::Order.create(user: order.user, completed_at: nil, created_at: 0.days.ago, store:)
         expect(order_four.created_at).to be > order_three.created_at
 
         get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
@@ -288,7 +288,7 @@ module Spree::Api
         let(:current_api_user) { nil }
 
         before do
-          get spree.api_current_order_path(format: 'json'), params: { order_token: order_token }
+          get spree.api_current_order_path(format: 'json'), params: { order_token: }
         end
 
         context "when the spree guest token is not present" do
@@ -319,7 +319,7 @@ module Spree::Api
 
     describe 'GET #show' do
       let(:order) { create :order_with_line_items }
-      let(:adjustment) { FactoryBot.create(:adjustment, adjustable: order, order: order) }
+      let(:adjustment) { FactoryBot.create(:adjustment, adjustable: order, order:) }
 
       subject { get spree.api_order_path(order) }
 
@@ -372,7 +372,7 @@ module Spree::Api
       end
 
       context 'when credit cards are present' do
-        let!(:payment) { create(:credit_card_payment, order: order, source: credit_card) }
+        let!(:payment) { create(:credit_card_payment, order:, source: credit_card) }
         let(:credit_card) { create(:credit_card, address: create(:address)) }
 
         it 'contains the credit cards' do
@@ -391,7 +391,7 @@ module Spree::Api
       end
 
       context 'when store credit is present' do
-        let!(:payment) { create(:store_credit_payment, order: order, source: store_credit) }
+        let!(:payment) { create(:store_credit_payment, order:, source: store_credit) }
         let(:store_credit) { create(:store_credit) }
 
         it 'renders the payment source view for store credit' do
@@ -648,7 +648,7 @@ module Spree::Api
         let(:line_item) { order.line_items.first }
 
         it "can empty an order" do
-          create(:adjustment, order: order, adjustable: order)
+          create(:adjustment, order:, adjustable: order)
           put spree.empty_api_order_path(order)
           expect(response.status).to eq(200)
           expect(json_response['id']).to eq(order.id)
@@ -683,7 +683,7 @@ module Spree::Api
         it "lists line item adjustments" do
           adjustment = create(:adjustment,
             label: "10% off!",
-            order: order,
+            order:,
             adjustable: order.line_items.first)
           adjustment.update_column(:amount, 5)
           get spree.api_order_path(order)

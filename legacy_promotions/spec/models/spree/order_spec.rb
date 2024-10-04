@@ -47,10 +47,10 @@ RSpec.describe Spree::Order do
     let(:code) { promotion.codes.first }
 
     before do
-      create(:line_item, order: order)
-      create(:shipment, order: order)
-      create(:adjustment, adjustable: order, order: order)
-      promotion.activate(order: order, promotion_code: code)
+      create(:line_item, order:)
+      create(:shipment, order:)
+      create(:adjustment, adjustable: order, order:)
+      promotion.activate(order:, promotion_code: code)
       order.recalculate
 
       # Make sure we are asserting changes
@@ -92,7 +92,7 @@ RSpec.describe Spree::Order do
   end
 
   describe "#can_add_coupon?" do
-    let(:order) { Spree::Order.new(state: state) }
+    let(:order) { Spree::Order.new(state:) }
 
     subject { order.can_add_coupon? }
 

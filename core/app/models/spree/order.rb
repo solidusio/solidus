@@ -179,7 +179,7 @@ module Spree
     end
 
     def self.by_state(state)
-      where(state: state)
+      where(state:)
     end
 
     def self.complete
@@ -314,7 +314,7 @@ module Spree
 
       if persisted?
         # immediately persist the changes we just made, but don't use save since we might have an invalid address associated
-        self.class.unscoped.where(id: id).update_all(attrs_to_set)
+        self.class.unscoped.where(id:).update_all(attrs_to_set)
       end
 
       assign_attributes(attrs_to_set)
@@ -570,7 +570,7 @@ module Spree
 
     def add_store_credit_payments
       return if user.nil?
-      return if payments.store_credits.checkout.empty? && user.available_store_credit_total(currency: currency).zero?
+      return if payments.store_credits.checkout.empty? && user.available_store_credit_total(currency:).zero?
 
       payments.store_credits.checkout.each(&:invalidate!)
 
@@ -581,7 +581,7 @@ module Spree
 
       remaining_total = outstanding_balance - authorized_total
 
-      matching_store_credits = user.store_credits.where(currency: currency)
+      matching_store_credits = user.store_credits.where(currency:)
 
       if matching_store_credits.any?
         payment_method = Spree::PaymentMethod::StoreCredit.first
@@ -593,7 +593,7 @@ module Spree
 
           amount_to_take = [credit.amount_remaining, remaining_total].min
           payments.create!(source: credit,
-                           payment_method: payment_method,
+                           payment_method:,
                            amount: amount_to_take,
                            state: 'checkout',
                            response_code: credit.generate_authorization_code)
@@ -617,13 +617,13 @@ module Spree
 
     def covered_by_store_credit?
       return false unless user
-      user.available_store_credit_total(currency: currency) >= total
+      user.available_store_credit_total(currency:) >= total
     end
     alias_method :covered_by_store_credit, :covered_by_store_credit?
 
     def total_available_store_credit
       return 0.0 unless user
-      user.available_store_credit_total(currency: currency)
+      user.available_store_credit_total(currency:)
     end
 
     def order_total_after_store_credit
@@ -634,16 +634,16 @@ module Spree
       if can_complete? || complete?
         valid_store_credit_payments.to_a.sum(&:amount)
       else
-        [total, user.try(:available_store_credit_total, currency: currency) || 0.0].min
+        [total, user.try(:available_store_credit_total, currency:) || 0.0].min
       end
     end
 
     def display_total_applicable_store_credit
-      Spree::Money.new(-total_applicable_store_credit, { currency: currency })
+      Spree::Money.new(-total_applicable_store_credit, { currency: })
     end
 
     def display_store_credit_remaining_after_capture
-      Spree::Money.new(total_available_store_credit - total_applicable_store_credit, { currency: currency })
+      Spree::Money.new(total_available_store_credit - total_applicable_store_credit, { currency: })
     end
 
     def bill_address_attributes=(attributes)

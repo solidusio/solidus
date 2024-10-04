@@ -88,7 +88,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
         #
         # TODO : create a global set_list_position on all concerned objects
         # maybe in the acts_as_list gem
-        model_class.where(id: id).first&.set_list_position(index)
+        model_class.where(id:).first&.set_list_position(index)
       end
     end
 

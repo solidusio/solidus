@@ -6,10 +6,10 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
   let(:order) do
     order = create(:order)
     product = stub_model(Spree::Product, name: %{The "BEST" product})
-    variant = stub_model(Spree::Variant, product: product)
-    price = stub_model(Spree::Price, variant: variant, amount: 5.00)
+    variant = stub_model(Spree::Variant, product:)
+    price = stub_model(Spree::Price, variant:, amount: 5.00)
     store = FactoryBot.build :store, mail_from_address: "store@example.com", bcc_email: "bcc@example.com"
-    line_item = stub_model(Spree::LineItem, variant: variant, order: order, quantity: 1, price: 4.99)
+    line_item = stub_model(Spree::LineItem, variant:, order:, quantity: 1, price: 4.99)
     allow(variant).to receive_messages(default_price: price)
     allow(order).to receive_messages(line_items: [line_item])
     allow(order).to receive(:store).and_return(store)
@@ -21,7 +21,7 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
       create(
         :adjustment,
         adjustable: order,
-        order:      order,
+        order:,
         eligible:   true,
         label:      'Eligible Adjustment'
       )
@@ -29,7 +29,7 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
       create(
         :adjustment,
         adjustable: order,
-        order:      order,
+        order:,
         eligible:   false,
         label:      'Ineligible Adjustment'
       )

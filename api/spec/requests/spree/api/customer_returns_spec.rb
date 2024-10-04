@@ -148,7 +148,7 @@ module Spree::Api
         let(:inventory_unit) { create(:inventory_unit, state: "shipped") }
         let(:order) { inventory_unit.order }
         let(:return_item) do
-          create(:return_item, inventory_unit: inventory_unit)
+          create(:return_item, inventory_unit:)
         end
 
         let(:customer_return_params) do

@@ -12,7 +12,7 @@ RSpec.describe 'JS Spree.formatMoney', js: true do
     visit '/admin'
 
     Money::Currency.all.map(&:id).map(&:to_s).map(&:upcase).uniq.each do |currency|
-      money = Spree::Money.new(1234, currency: currency)
+      money = Spree::Money.new(1234, currency:)
 
       js_result = page.evaluate_script("Spree.formatMoney(#{money.to_d}, '#{currency}')")
 

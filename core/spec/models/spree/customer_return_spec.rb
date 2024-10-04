@@ -97,7 +97,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
     let(:customer_return) { create(:customer_return, line_items_count: 2) }
 
     before do
-      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(amount: amount, additional_tax_total: tax_amount)
+      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(amount:, additional_tax_total: tax_amount)
       customer_return.reload
     end
 
@@ -118,7 +118,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
   describe "#currency" do
     let(:order) { stub_model(Spree::Order, currency: "GBP") }
-    let(:customer_return) { stub_model(Spree::CustomerReturn, order: order) }
+    let(:customer_return) { stub_model(Spree::CustomerReturn, order:) }
 
     it 'returns the order currency' do
       expect(Spree::Config.currency).to eq("USD")
@@ -131,7 +131,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
     let(:customer_return) { create(:customer_return, line_items_count: 2) }
 
     before do
-      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(amount: amount)
+      Spree::ReturnItem.where(customer_return_id: customer_return.id).update_all(amount:)
     end
 
     subject { customer_return.amount }
@@ -183,7 +183,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
   context ".after_save" do
     let(:inventory_unit)  { create(:inventory_unit, state: 'shipped', order: create(:shipped_order)) }
-    let(:return_item)     { build(:return_item, inventory_unit: inventory_unit) }
+    let(:return_item)     { build(:return_item, inventory_unit:) }
 
     context "to the initial stock location" do
       it "should mark the received inventory units are returned" do
@@ -287,7 +287,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
         end
 
         context 'when all return items have a reimbursement' do
-          let!(:reimbursement) { create(:reimbursement, customer_return: customer_return) }
+          let!(:reimbursement) { create(:reimbursement, customer_return:) }
 
           context 'when some reimbursements are not reimbursed' do
             it { is_expected.to be false }

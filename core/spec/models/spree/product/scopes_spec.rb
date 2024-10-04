@@ -40,7 +40,7 @@ RSpec.describe "Product scopes", type: :model do
 
       it 'after ordering changed' do
         [@child_taxon, other_taxon].each do |taxon|
-          Spree::Classification.find_by(taxon: taxon, product: product).insert_at(2)
+          Spree::Classification.find_by(taxon:, product:).insert_at(2)
           expect(Spree::Product.in_taxon(taxon)).to eq([product_2, product])
         end
       end
@@ -50,11 +50,11 @@ RSpec.describe "Product scopes", type: :model do
   context "property scopes" do
     let(:name) { "A proper tee" }
     let(:value) { "A proper value" }
-    let!(:property) { create(:property, name: name) }
+    let!(:property) { create(:property, name:) }
 
     before do
       product.properties << property
-      product.product_properties.find_by(property: property).update_column(:value, value)
+      product.product_properties.find_by(property:).update_column(:value, value)
     end
 
     context "with_property" do
@@ -197,7 +197,7 @@ RSpec.describe "Product scopes", type: :model do
   end
 
   describe ".with_all_variant_sku_cont" do
-    let!(:product) { create(:product, sku: sku) }
+    let!(:product) { create(:product, sku:) }
     let(:sku) { "SEARCH-SKU-1" }
 
     subject { Spree::Product.with_all_variant_sku_cont("SEARCH") }
@@ -224,7 +224,7 @@ RSpec.describe "Product scopes", type: :model do
   end
 
   describe ".with_kept_variant_sku_cont" do
-    let!(:product) { create(:product, sku: sku) }
+    let!(:product) { create(:product, sku:) }
     let(:sku) { "SEARCH-SKU-1" }
 
     subject { Spree::Product.with_kept_variant_sku_cont("SEARCH") }

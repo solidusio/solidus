@@ -52,7 +52,7 @@ RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
     end
 
     context 'order with user' do
-      let(:order) { Spree::Order.new(user: user) }
+      let(:order) { Spree::Order.new(user:) }
 
       context 'with any match policy' do
         before { rule.preferred_match_policy = 'any' }

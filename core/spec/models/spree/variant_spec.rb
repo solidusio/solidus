@@ -9,7 +9,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe 'delegates' do
     let(:product) { build(:product) }
-    let(:variant) { build(:variant, product: product) }
+    let(:variant) { build(:variant, product:) }
 
     it 'discontinue_on to product' do
       expect(product).to receive(:discontinue_on)
@@ -116,7 +116,7 @@ RSpec.describe Spree::Variant, type: :model do
       let!(:high_vat) { create(:tax_rate, included_in_price: true, amount: 0.25, zone: high_vat_zone, tax_categories: [tax_category]) }
       let!(:low_vat) { create(:tax_rate, included_in_price: true, amount: 0.15, zone: low_vat_zone, tax_categories: [tax_category]) }
 
-      let(:product) { build(:product, tax_category: tax_category) }
+      let(:product) { build(:product, tax_category:) }
 
       subject(:new_variant) { build(:variant, price: 15) }
 
@@ -133,7 +133,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       context "when the products price changes" do
         context "and rebuild_vat_prices is set to true" do
-          subject { variant.update(price: 99, rebuild_vat_prices: true, tax_category: tax_category) }
+          subject { variant.update(price: 99, rebuild_vat_prices: true, tax_category:) }
 
           it "creates new appropriate prices for this variant" do
             expect { subject }.to change { Spree::Price.count }.by(3)
@@ -145,7 +145,7 @@ RSpec.describe Spree::Variant, type: :model do
         end
 
         context "and rebuild_vat_prices is not set" do
-          subject { variant.update(price: 99, tax_category: tax_category) }
+          subject { variant.update(price: 99, tax_category:) }
 
           it "does not create new prices" do
             expect { subject }.not_to change { Spree::Price.count }
@@ -279,8 +279,8 @@ RSpec.describe Spree::Variant, type: :model do
 
     it 'prioritizes prices recently updated' do
       variant = create(:variant)
-      price = create(:price, variant: variant, currency: 'USD')
-      create(:price, variant: variant, currency: 'USD')
+      price = create(:price, variant:, currency: 'USD')
+      create(:price, variant:, currency: 'USD')
       price.touch
       variant.prices.reload
 
@@ -291,7 +291,7 @@ RSpec.describe Spree::Variant, type: :model do
       variant = create(:variant)
       price = build(:price, currency: 'USD', amount: 1, variant_id: variant.id)
       variant.prices.build(price.attributes)
-      create(:price, variant: variant, currency: 'USD', amount: 2)
+      create(:price, variant:, currency: 'USD', amount: 2)
 
       expect(variant.default_price.attributes).to eq(price.attributes)
     end
@@ -409,14 +409,14 @@ RSpec.describe Spree::Variant, type: :model do
 
     context "when both variants have a price" do
       let(:product) { create(:product, price: 25) }
-      let(:variant) { create(:variant, product: product, price: 35) }
+      let(:variant) { create(:variant, product:, price: 35) }
 
       it { is_expected.to eq(Spree::Money.new(10, currency: Spree::Config.currency)) }
     end
 
     context "when the master variant does not have a price" do
       let(:product) { create(:product, price: 25) }
-      let(:variant) { create(:variant, product: product, price: 35) }
+      let(:variant) { create(:variant, product:, price: 35) }
 
       before do
         allow(product.master).to receive(:price_for_options).and_return(nil)
@@ -427,7 +427,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     context "when the variant does not have a price" do
       let(:product) { create(:product, price: 25) }
-      let(:variant) { create(:variant, product: product, price: 35) }
+      let(:variant) { create(:variant, product:, price: 35) }
 
       before do
         allow(variant).to receive(:price_for_options).and_return(nil)
@@ -712,7 +712,7 @@ RSpec.describe Spree::Variant, type: :model do
   describe '#tax_category' do
     context 'when tax_category is nil' do
       let(:product) { build(:product) }
-      let(:variant) { build(:variant, product: product, tax_category_id: nil) }
+      let(:variant) { build(:variant, product:, tax_category_id: nil) }
       it 'returns the parent products tax_category' do
         expect(variant.tax_category).to eq(product.tax_category)
       end
@@ -720,7 +720,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     context 'when tax_category is set' do
       let(:tax_category) { create(:tax_category) }
-      let(:variant) { build(:variant, tax_category: tax_category) }
+      let(:variant) { build(:variant, tax_category:) }
       it 'returns the tax_category set on itself' do
         expect(variant.tax_category).to eq(tax_category)
       end
@@ -730,8 +730,8 @@ RSpec.describe Spree::Variant, type: :model do
   describe '#shipping_category' do
     context 'when shipping_category is nil' do
       let(:shipping_category) { build(:shipping_category) }
-      let(:product) { build(:product, shipping_category: shipping_category) }
-      let(:variant) { build(:variant, product: product, shipping_category_id: nil) }
+      let(:product) { build(:product, shipping_category:) }
+      let(:variant) { build(:variant, product:, shipping_category_id: nil) }
       it 'returns the parent products shipping_category' do
         expect(variant.shipping_category).to eq(shipping_category)
       end
@@ -739,7 +739,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     context 'when shipping_category is set' do
       let(:shipping_category) { create(:shipping_category) }
-      let(:variant) { build(:variant, shipping_category: shipping_category) }
+      let(:variant) { build(:variant, shipping_category:) }
       it 'returns the shipping_category set on itself' do
         expect(variant.shipping_category).to eq(shipping_category)
       end
@@ -749,8 +749,8 @@ RSpec.describe Spree::Variant, type: :model do
   describe '#shipping_category_id' do
     context 'when shipping_category_id is nil' do
       let(:shipping_category) { build(:shipping_category) }
-      let(:product) { build(:product, shipping_category: shipping_category) }
-      let(:variant) { build(:variant, product: product, shipping_category_id: nil) }
+      let(:product) { build(:product, shipping_category:) }
+      let(:variant) { build(:variant, product:, shipping_category_id: nil) }
       it 'returns the parent products shipping_category_id' do
         expect(variant.shipping_category_id).to eq(shipping_category.id)
       end
@@ -858,10 +858,10 @@ RSpec.describe Spree::Variant, type: :model do
       context "there's stock in the location" do
         before do
           in_stock_variant.
-            stock_items.find_by(stock_location: stock_location).
+            stock_items.find_by(stock_location:).
             update_column(:count_on_hand, 10)
           out_of_stock_variant.
-            stock_items.where.not(stock_location: stock_location).first.
+            stock_items.where.not(stock_location:).first.
             update_column(:count_on_hand, 10)
         end
 
@@ -979,7 +979,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     context "when variant.images is empty" do
       let(:product) { create(:product) }
-      let(:variant) { create(:variant, product: product) }
+      let(:variant) { create(:variant, product:) }
 
       it "fallbacks to variant.product.master.images" do
         product.master.images = [create(:image)]
@@ -1019,7 +1019,7 @@ RSpec.describe Spree::Variant, type: :model do
     it { is_expected.to be_zero }
 
     context "with a backordered inventory_unit" do
-      let!(:backordered_inventory_unit) { create(:inventory_unit, variant: variant, state: :backordered) }
+      let!(:backordered_inventory_unit) { create(:inventory_unit, variant:, state: :backordered) }
 
       it { is_expected.to eq(1) }
     end
@@ -1043,7 +1043,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe "#name_and_sku" do
     let(:product) { build(:product, name: "Ernie and Bert" )}
-    let(:variant) { build(:variant, product: product, sku: "EB1") }
+    let(:variant) { build(:variant, product:, sku: "EB1") }
 
     subject { variant.name_and_sku }
 

@@ -39,9 +39,9 @@ RSpec.describe SolidusAdmin::PermissionSetsHelper, :helper do
     context "when permission_sets are provided" do
       it "organizes permissions into the correct categories with labels and IDs" do
         result = helper.organize_permissions(
-          permission_sets: permission_sets,
-          view_label: view_label,
-          edit_label: edit_label
+          permission_sets:,
+          view_label:,
+          edit_label:
         )
 
         expect(result[:sample_privilege]).to contain_exactly(
@@ -56,9 +56,9 @@ RSpec.describe SolidusAdmin::PermissionSetsHelper, :helper do
 
       it "creates a hash with keys for each privilege and other" do
         result = helper.organize_permissions(
-          permission_sets: permission_sets,
-          view_label: view_label,
-          edit_label: edit_label
+          permission_sets:,
+          view_label:,
+          edit_label:
         )
 
         expect(result.keys).to include(:sample_privilege, :other)
@@ -70,9 +70,9 @@ RSpec.describe SolidusAdmin::PermissionSetsHelper, :helper do
 
       it "returns an empty hash" do
         result = helper.organize_permissions(
-          permission_sets: permission_sets,
-          view_label: view_label,
-          edit_label: edit_label
+          permission_sets:,
+          view_label:,
+          edit_label:
         )
 
         expect(result).to eq({})
@@ -84,9 +84,9 @@ RSpec.describe SolidusAdmin::PermissionSetsHelper, :helper do
 
       it "returns an empty hash" do
         result = helper.organize_permissions(
-          permission_sets: permission_sets,
-          view_label: view_label,
-          edit_label: edit_label
+          permission_sets:,
+          view_label:,
+          edit_label:
         )
 
         expect(result).to eq({})

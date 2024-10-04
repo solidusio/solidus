@@ -19,7 +19,7 @@ RSpec.shared_examples "a payment source" do
     let!(:wallet_payment_source) do
       # There are nasty validations that do not matter for this test
       payment_source.save(validate: false)
-      Spree::WalletPaymentSource.new(user: user, payment_source: payment_source).tap do |wps|
+      Spree::WalletPaymentSource.new(user:, payment_source:).tap do |wps|
         wps.save(validate: false)
       end
     end

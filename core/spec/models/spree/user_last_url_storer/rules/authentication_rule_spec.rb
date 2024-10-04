@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe Spree::UserLastUrlStorer::Rules::AuthenticationRule do
   describe '#match?' do
     let(:login_path) { '/sign_in' }
-    let(:request) { double(fullpath: fullpath) }
+    let(:request) { double(fullpath:) }
     let(:controller) do
       double(
-        request: request,
+        request:,
         spree_login_path: login_path,
         controller_name: 'controller_double'
       )

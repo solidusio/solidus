@@ -39,7 +39,7 @@ module Spree
           cost = shipping_method.calculator.compute(package)
           if cost
             rate = shipping_method.shipping_rates.new(
-              cost: cost,
+              cost:,
               shipment: package.shipment
             )
             tax_calculator.calculate(rate).each do |tax|

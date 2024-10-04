@@ -14,7 +14,7 @@ FactoryBot.define do
 
     trait :with_orders do
       after(:create) do |user, _|
-        create(:order, user: user)
+        create(:order, user:)
       end
     end
 

@@ -7,7 +7,7 @@ module Spree::Stock
     let(:variants) { Spree::Variant.all.to_a }
     let(:infinity) { Float::INFINITY }
 
-    let(:availability) { described_class.new(variants: variants) }
+    let(:availability) { described_class.new(variants:) }
 
     let!(:stock_location1) { create(:stock_location) }
 
@@ -23,7 +23,7 @@ module Spree::Stock
         it "maintains the StockLocation order with which it is initialised" do
           stock_location2 = create(:stock_location)
           stock_location3 = create(:stock_location)
-          sorted_availability = described_class.new(variants: variants, stock_locations: [
+          sorted_availability = described_class.new(variants:, stock_locations: [
             stock_location3,
             stock_location1,
             stock_location2
@@ -114,7 +114,7 @@ module Spree::Stock
         it "maintains the StockLocation order with which it is initialised" do
           stock_location2 = create(:stock_location)
           stock_location3 = create(:stock_location)
-          sorted_availability = described_class.new(variants: variants, stock_locations: [
+          sorted_availability = described_class.new(variants:, stock_locations: [
             stock_location3,
             stock_location1,
             stock_location2

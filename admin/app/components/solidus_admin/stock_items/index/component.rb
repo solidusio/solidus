@@ -138,7 +138,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
         count = stock_movement_counts[_1.id] || 0
 
         link_to(
-          "#{count} #{Spree::StockMovement.model_name.human(count: count).downcase}",
+          "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
           spree.admin_stock_location_stock_movements_path(
             _1.stock_location.id,
             q: { variant_sku_eq: _1.variant.sku },

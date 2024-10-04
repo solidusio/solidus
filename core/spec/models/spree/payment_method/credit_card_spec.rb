@@ -6,19 +6,19 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
   context "fetching payment sources" do
     let(:store) { create :store }
     let(:user) { create :user }
-    let(:order) { Spree::Order.create(user: user, completed_at: completed_at, store: store) }
+    let(:order) { Spree::Order.create(user:, completed_at:, store:) }
 
     let(:payment_method) { create(:credit_card_payment_method) }
 
     let(:cc) do
       create(:credit_card,
-             payment_method: payment_method,
+             payment_method:,
              gateway_customer_profile_id: "EFWE",
              user: cc_user)
     end
 
     let(:payment) do
-      create(:payment, order: order, source: cc, payment_method: payment_method)
+      create(:payment, order:, source: cc, payment_method:)
     end
 
     context 'order is not complete and credit card user is nil' do

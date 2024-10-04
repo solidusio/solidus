@@ -7,7 +7,7 @@ RSpec.describe Spree::PaymentMethod::Check do
   subject { described_class.new }
 
   context "#can_capture?" do
-    let(:payment) { create(:payment, order: order, state: state) }
+    let(:payment) { create(:payment, order:, state:) }
 
     context "with payment in state checkout" do
       let(:state) { "checkout" }
@@ -35,7 +35,7 @@ RSpec.describe Spree::PaymentMethod::Check do
   end
 
   context "#can_void?" do
-    let(:payment) { create(:payment, order: order, state: state) }
+    let(:payment) { create(:payment, order:, state:) }
 
     context "with payment in state checkout" do
       let(:state) { "checkout" }
