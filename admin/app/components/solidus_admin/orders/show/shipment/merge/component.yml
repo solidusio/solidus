@@ -1,0 +1,15 @@
+en:
+  title: "Merge shipment %{number}"
+  submit: "Save"
+  cancel: "Cancel"
+  product: Product
+  quantity: Quantity
+  total: Total Price
+  actions: Actions
+  select_all: Select All
+  inventory_states:
+    backordered: Backordered
+    canceled: Canceled
+    on_hand: On hand
+    returned: Returned
+    shipped: Shipped

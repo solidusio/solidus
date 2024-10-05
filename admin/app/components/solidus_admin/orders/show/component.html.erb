@@ -12,6 +12,14 @@
     <%= page_with_sidebar_main do %>
       <%= render component("orders/cart").new(order: @order) %>
       <%= render component("orders/show/summary").new(order: @order) %>
+
+      <% if @order.shipments.count > 0 %>
+        <%= render component('ui/panel').new(title: t('.shipments')) do %>
+          <% @order.shipments.each.with_index(1) do |shipment, index| %>
+            <%= render component("orders/show/shipment").new(shipment: shipment, index: index) %>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
 
     <%= page_with_sidebar_aside do %>
