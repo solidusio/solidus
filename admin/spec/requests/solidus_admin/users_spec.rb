@@ -4,7 +4,42 @@ require "spec_helper"
 
 RSpec.describe "SolidusAdmin::UsersController", type: :request do
   let(:admin_user) { create(:admin_user) }
-  let(:user) { create(:user) }
+  let(:user) { create(:user_with_addresses) }
+  let(:address) { create(:address) }
+
+  let(:valid_address_params) do
+    {
+      user: {
+        bill_address_attributes: {
+          name: address.name,
+          address1: address.address1,
+          address2: address.address2,
+          city: address.city,
+          zipcode: address.zipcode,
+          state_id: address.state_id,
+          country_id: address.country_id,
+          phone: address.phone
+        }
+      }
+    }
+  end
+
+  # Invalid due to missing "name" field.
+  let(:invalid_address_params) do
+    {
+      user: {
+        bill_address_attributes: {
+          address1: address.address1,
+          address2: address.address2,
+          city: address.city,
+          zipcode: address.zipcode,
+          state_id: address.state_id,
+          country_id: address.country_id,
+          phone: address.phone
+        }
+      }
+    }
+  end
 
   before do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
@@ -41,6 +76,30 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
       delete solidus_admin.user_path(user)
       follow_redirect!
       expect(response.body).to include("Users were successfully removed.")
+    end
+  end
+
+  describe "GET /addresses" do
+    it "renders the addresses template with a 200 OK status" do
+      get solidus_admin.addresses_user_path(user)
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe "PUT /update_addresses" do
+    context "with valid address parameters" do
+      it "updates the user's address and redirects with a success message" do
+        put solidus_admin.update_addresses_user_path(user), params: valid_address_params
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Address has been successfully updated.")
+      end
+    end
+
+    context "with invalid address parameters" do
+      it "does not update the user's address and renders the addresses component with errors" do
+        put solidus_admin.update_addresses_user_path(user), params: invalid_address_params
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 
