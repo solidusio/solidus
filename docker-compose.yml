@@ -34,7 +34,7 @@ services:
       CAPYBARA_DRIVER: selenium_chrome_headless_docker_friendly
       DB_USERNAME: root
       DB_PASSWORD: password
-      RAILS_VERSION: ${RAILS_VERSION:-~> 7.0.2}
+      RAILS_VERSION: ${RAILS_VERSION:-~> 7.1.0}
       DB_ALL: "1"
       DB_MYSQL_HOST: mysql
       DB_POSTGRES_HOST: postgres
