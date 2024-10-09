@@ -18,7 +18,7 @@ services:
       - postgres:/var/lib/postgresql/data:cached
 
   app:
-    shm_size: '256mb'
+    shm_size: '512mb'
     build:
       context: .dockerdev
       dockerfile: Dockerfile
