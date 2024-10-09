@@ -80,6 +80,11 @@ module Spree
 
     after_destroy :destroy_option_values_variants
 
+    scope :template_variants, -> do
+      left_joins(product: { option_types: :option_values }).where(is_master: true).where.not(spree_option_values: { id: nil }).reorder(nil).distinct
+    end
+    scope :non_template_variants, -> { where.not(id: template_variants) }
+
     # Returns variants that are in stock. When stock locations are provided as
     # a parameter, the scope is limited to variants that are in stock in the
     # provided stock locations.

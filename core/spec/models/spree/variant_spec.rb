@@ -7,6 +7,28 @@ RSpec.describe Spree::Variant, type: :model do
 
   let!(:variant) { create(:variant) }
 
+  describe '.non_template_variants' do
+    let(:option_type) { create(:option_type, option_values: [option_value]) }
+    let(:option_value) { build(:option_value) }
+    let(:product) { create(:product, option_types: [option_type]) }
+    let!(:variant) { create(:variant, product: product) }
+
+    subject { described_class.non_template_variants }
+
+    it { is_expected.to contain_exactly(variant) }
+  end
+
+  describe '.template_variants' do
+    let(:option_type) { create(:option_type, option_values: [option_value]) }
+    let(:option_value) { build(:option_value) }
+    let(:product) { create(:product, option_types: [option_type]) }
+    let!(:variant) { create(:variant, product: product) }
+
+    subject { described_class.template_variants }
+
+    it { is_expected.to contain_exactly(product.master) }
+  end
+
   describe 'delegates' do
     let(:product) { build(:product) }
     let(:variant) { build(:variant, product: product) }
