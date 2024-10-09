@@ -4,3 +4,9 @@ en:
       title: "Users"
       destroy:
         success: "Users were successfully removed."
+      update_addresses:
+        bill:
+          success: "Billing Address has been successfully updated."
+        ship:
+          success: "Shipping Address has been successfully updated."
+        error: "Address could not be updated."

@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Users::Addresses::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::Layout::PageHelpers
 
-  def initialize(user:)
+  def initialize(user:, address: nil, type: nil)
     @user = user
+    @bill_address = bill_address(address, type)
+    @ship_address = ship_address(address, type)
   end
 
   def form_id
@@ -16,30 +18,27 @@ class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
       {
         text: t('.account'),
         href: solidus_admin.user_path(@user),
-        current: action_name == "edit",
+        current: false,
       },
       {
         text: t('.addresses'),
         href: solidus_admin.addresses_user_path(@user),
-        current: action_name == "addresses",
+        current: true,
       },
       {
         text: t('.order_history'),
         href: spree.orders_admin_user_path(@user),
-        # @todo: update this "current" logic once folded into new admin
-        current: action_name != "edit",
+        current: false,
       },
       {
         text: t('.items'),
         href: spree.items_admin_user_path(@user),
-        # @todo: update this "current" logic once folded into new admin
-        current: action_name != "edit",
+        current: false,
       },
       {
         text: t('.store_credit'),
         href: spree.admin_user_store_credits_path(@user),
-        # @todo: update this "current" logic once folded into new admin
-        current: action_name != "edit",
+        current: false,
       },
     ]
   end
@@ -49,14 +48,25 @@ class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
 
     t(
       '.last_login.login_time_ago',
-      # @note The second `.try` is only here for the specs to work.
+      # @note The second `.try` is here for the specs and for setups that use a
+      # custom User class which may not have this attribute.
       last_login_time: time_ago_in_words(user.try(:last_sign_in_at))
     ).capitalize
   end
 
-  def role_options
-    Spree::Role.all.map do |role|
-      { label: role.name, id: role.id }
+  def bill_address(address, type)
+    if address.present? && type == "bill"
+      address
+    else
+      @user.bill_address || Spree::Address.build_default
+    end
+  end
+
+  def ship_address(address, type)
+    if address.present? && type == "ship"
+      address
+    else
+      @user.ship_address || Spree::Address.build_default
     end
   end
 end
