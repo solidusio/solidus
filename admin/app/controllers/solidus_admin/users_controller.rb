@@ -5,7 +5,7 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Search
     include Spree::Core::ControllerHelpers::StrongParameters
 
-    before_action :set_user, only: [:edit, :addresses, :update_addresses]
+    before_action :set_user, only: [:edit, :addresses, :update_addresses, :orders]
 
     search_scope(:all, default: true)
     search_scope(:customers) { _1.left_outer_joins(:role_users).where(role_users: { id: nil }) }
@@ -50,6 +50,14 @@ module SolidusAdmin
       end
     end
 
+    def orders
+      set_orders
+
+      respond_to do |format|
+        format.html { render component('users/orders').new(user: @user, orders: @orders) }
+      end
+    end
+
     def edit
       respond_to do |format|
         format.html { render component('users/edit').new(user: @user) }
@@ -91,6 +99,12 @@ module SolidusAdmin
         @address = Spree::Address.new(user_params[:ship_address_attributes])
         @type = "ship"
       end
+    end
+
+    def set_orders
+      params[:q] ||= {}
+      @search = Spree::Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
+      @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
     end
 
     def authorization_subject
