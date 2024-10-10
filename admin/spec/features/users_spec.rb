@@ -161,4 +161,49 @@ describe "Users", :js, type: :feature do
       expect(page).to have_field("user[ship_address_attributes][name]", with: "Elrond")
     end
   end
+
+  context "when viewing a user's order history" do
+    context "when a user has no orders" do
+      before do
+        create(:user, email: "customer@example.com")
+        visit "/admin/users"
+        find_row("customer@example.com").click
+        click_on "Order History"
+      end
+
+      it "shows the order history page" do
+        expect(page).to have_content("Users / customer@example.com / Order History")
+        expect(page).to have_content("Lifetime Stats")
+        expect(page).to have_content("Order History")
+        expect(page).to be_axe_clean
+      end
+
+      it "shows the appropriate content" do
+        expect(page).to have_content("No Orders found.")
+      end
+    end
+
+    context "when a user has ordered before" do
+      before do
+        create(:user, :with_orders, email: "loyal_customer@example.com")
+        visit "/admin/users"
+        find_row("loyal_customer@example.com").click
+        click_on "Order History"
+      end
+
+      it "shows the order history page" do
+        expect(page).to have_content("Users / loyal_customer@example.com / Order History")
+        expect(page).to have_content("Lifetime Stats")
+        expect(page).to have_content("Order History")
+        expect(page).to be_axe_clean
+      end
+
+      it "shows the order history" do
+        expect(page).to have_content(/R\d+/) # Matches on any order number.
+        expect(page).to have_content("Shipment")
+        expect(page).to have_content("Payment")
+        expect(page).not_to have_content("No Orders found.")
+      end
+    end
+  end
 end

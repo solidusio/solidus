@@ -25,9 +25,8 @@ class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
       },
       {
         text: t('.order_history'),
-        href: spree.orders_admin_user_path(@user),
-        # @todo: update this "current" logic once folded into new admin
-        current: action_name != "edit",
+        href: solidus_admin.orders_user_path(@user),
+        current: action_name == "orders",
       },
       {
         text: t('.items'),

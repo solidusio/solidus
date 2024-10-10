@@ -27,7 +27,7 @@ class SolidusAdmin::Users::Addresses::Component < SolidusAdmin::BaseComponent
       },
       {
         text: t('.order_history'),
-        href: spree.orders_admin_user_path(@user),
+        href: solidus_admin.orders_user_path(@user),
         current: false,
       },
       {

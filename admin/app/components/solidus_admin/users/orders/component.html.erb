@@ -1,0 +1,52 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.users_path) %>
+    <%= page_header_title(t(".title", email: @user.email)) %>
+
+    <%= page_header_actions do %>
+      <%= render component("ui/button").new(tag: :a, text: t(".create_order_for_user"), href: spree.new_admin_order_path(user_id: @user.id)) %>
+    <% end %>
+  <% end %>
+
+  <%= page_header do %>
+    <% tabs.each do |tab| %>
+      <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: tab[:text], 'aria-current': tab[:current], href: tab[:href])) %>
+    <% end %>
+  <% end %>
+
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new(title: t(".order_history")) do %>
+        <% if @orders.present? %>
+          <%= render component('ui/table').new(
+              id: stimulus_id,
+              data: {
+                class: model_class,
+                rows: rows,
+                fade: -> { row_fade(_1) },
+                columns: columns,
+                url: -> { row_url(_1) },
+              },
+          )%>
+        <% else %>
+            <%= t(".no_orders_found") %>
+            <%= render component("ui/button").new(tag: :a, text: t(".create_one"), href: spree.new_admin_order_path(user_id: @user.id)) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component("ui/panel").new(title: t("spree.lifetime_stats")) do %>
+        <%= render component("ui/details_list").new(
+          items: [
+            { label: t("spree.total_sales"), value: @user.display_lifetime_value.to_html },
+            { label: t("spree.order_count"), value: @user.order_count.to_i },
+            { label: t("spree.average_order_value"), value: @user.display_average_order_value.to_html },
+            { label: t("spree.member_since"), value: @user.created_at.to_date },
+            { label: t(".last_active"), value: last_login(@user) },
+          ]
+        ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
