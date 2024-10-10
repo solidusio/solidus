@@ -109,4 +109,101 @@ describe "Users", :js, type: :feature do
       expect(page).not_to have_content("newemail@example.com")
     end
   end
+
+  context "when editing a user's addresses" do
+    before do
+      create(:user_with_addresses, email: "customer@example.com")
+      visit "/admin/users"
+      find_row("customer@example.com").click
+      click_on "Addresses"
+    end
+
+    it "shows the address page" do
+      expect(page).to have_content("Users / customer@example.com / Addresses")
+      expect(page).to have_content("Lifetime Stats")
+      expect(page).to have_content("Billing Address")
+      expect(page).to be_axe_clean
+    end
+
+    it "allows editing of the existing address" do
+      # Invalid submission
+      within("form.ship_address") do
+        fill_in "Name", with: ""
+        fill_in "Street Address", with: ""
+        click_on "Update"
+      end
+      expect(page).to have_content("can't be blank").twice
+
+      # Valid submission
+      within("form.bill_address") do
+        fill_in "Name", with: "Galadriel"
+        click_on "Update"
+      end
+      expect(page).to have_content("Billing Address has been successfully updated.")
+
+      # Valid submission
+      within("form.ship_address") do
+        fill_in "Name", with: "Elrond"
+        click_on "Update"
+      end
+      expect(page).to have_content("Shipping Address has been successfully updated.")
+
+      # Cancel submission
+      within("form.bill_address") do
+        fill_in "Name", with: "Smeagol"
+        click_on "Cancel"
+      end
+      expect(page).to have_content("Users / customer@example.com / Addresses")
+      expect(page).not_to have_content("Smeagol")
+
+      # The address forms weirdly only have values rather than actual text on the page.
+      expect(page).to have_field("user[bill_address_attributes][name]", with: "Galadriel")
+      expect(page).to have_field("user[ship_address_attributes][name]", with: "Elrond")
+    end
+  end
+
+  context "when viewing a user's order history" do
+    context "when a user has no orders" do
+      before do
+        create(:user, email: "customer@example.com")
+        visit "/admin/users"
+        find_row("customer@example.com").click
+        click_on "Order History"
+      end
+
+      it "shows the order history page" do
+        expect(page).to have_content("Users / customer@example.com / Order History")
+        expect(page).to have_content("Lifetime Stats")
+        expect(page).to have_content("Order History")
+        expect(page).to be_axe_clean
+      end
+
+      it "shows the appropriate content" do
+        expect(page).to have_content("No Orders found.")
+      end
+    end
+
+    context "when a user has ordered before" do
+      before do
+        create(:user, :with_orders, email: "loyal_customer@example.com")
+        visit "/admin/users"
+        find_row("loyal_customer@example.com").click
+        click_on "Order History"
+      end
+
+      it "shows the order history page" do
+        expect(page).to have_content("Users / loyal_customer@example.com / Order History")
+        expect(page).to have_content("Lifetime Stats")
+        expect(page).to have_content("Order History")
+        expect(page).to be_axe_clean
+      end
+
+      it "shows the order history" do
+        expect(page).to have_content(/R\d+/) # Matches on any order number.
+        expect(page).to have_content("Shipment")
+        expect(page).to have_content("Payment")
+        expect(page).not_to have_content("No Orders found.")
+      end
+    end
+  end
 end
