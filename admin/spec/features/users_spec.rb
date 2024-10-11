@@ -109,4 +109,56 @@ describe "Users", :js, type: :feature do
       expect(page).not_to have_content("newemail@example.com")
     end
   end
+
+  context "when editing a user's addresses" do
+    before do
+      create(:user_with_addresses, email: "customer@example.com")
+      visit "/admin/users"
+      find_row("customer@example.com").click
+      click_on "Addresses"
+    end
+
+    it "shows the address page" do
+      expect(page).to have_content("Users / customer@example.com / Addresses")
+      expect(page).to have_content("Lifetime Stats")
+      expect(page).to have_content("Billing Address")
+      expect(page).to be_axe_clean
+    end
+
+    it "allows editing of the existing address" do
+      # Invalid submission
+      within("form.ship_address") do
+        fill_in "Name", with: ""
+        fill_in "Street Address", with: ""
+        click_on "Update"
+      end
+      expect(page).to have_content("can't be blank").twice
+
+      # Valid submission
+      within("form.bill_address") do
+        fill_in "Name", with: "Galadriel"
+        click_on "Update"
+      end
+      expect(page).to have_content("Billing Address has been successfully updated.")
+
+      # Valid submission
+      within("form.ship_address") do
+        fill_in "Name", with: "Elrond"
+        click_on "Update"
+      end
+      expect(page).to have_content("Shipping Address has been successfully updated.")
+
+      # Cancel submission
+      within("form.bill_address") do
+        fill_in "Name", with: "Smeagol"
+        click_on "Cancel"
+      end
+      expect(page).to have_content("Users / customer@example.com / Addresses")
+      expect(page).not_to have_content("Smeagol")
+
+      # The address forms weirdly only have values rather than actual text on the page.
+      expect(page).to have_field("user[bill_address_attributes][name]", with: "Galadriel")
+      expect(page).to have_field("user[ship_address_attributes][name]", with: "Elrond")
+    end
+  end
 end
