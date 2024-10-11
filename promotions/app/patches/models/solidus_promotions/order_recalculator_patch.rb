@@ -12,5 +12,6 @@ module SolidusPromotions
     end
 
     Spree::OrderUpdater.prepend self
+    Spree::InMemoryOrderUpdater.prepend self
   end
 end
