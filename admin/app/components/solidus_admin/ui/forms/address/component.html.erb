@@ -21,15 +21,33 @@
       "data-action": "change->#{stimulus_id}#loadStates"
     ) %>
 
-    <%= render component("ui/forms/field").select(
-      @name,
-      :state_id,
-      state_options,
-      object: @address,
-      value: @address.try(:state_id),
-      disabled: @address.country&.states&.empty?,
-      "data-#{stimulus_id}-target": "state"
-    ) %>
+    <%= content_tag(:div,
+      data: { "#{stimulus_id}-target": "stateNameWrapper" },
+      class: (@address.country&.states&.empty? ? "flex flex-col gap-2 w-full" : "hidden flex flex-col gap-2 w-full")
+        ) do %>
+      <%= render component("ui/forms/field").text_field(
+        @name,
+        :state_name,
+        object: @address,
+        value: @address.try(:state_name),
+        "data-#{stimulus_id}-target": "stateName"
+      ) %>
+    <% end %>
+    <input autocomplete="off" type="hidden" name=<%= "#{@name}[state_id]" %>>
+
+    <%= content_tag(:div,
+      data: { "#{stimulus_id}-target": "stateWrapper" },
+      class: (@address.country&.states&.empty? ? "hidden flex flex-col gap-2 w-full" : "flex flex-col gap-2 w-full")
+        ) do %>
+      <%= render component("ui/forms/field").select(
+        @name,
+        :state_id,
+        state_options,
+        object: @address,
+        value: @address.try(:state_id),
+        "data-#{stimulus_id}-target": "state"
+      ) %>
+    <% end %>
 
     <%= render component("ui/forms/field").text_field(@name, :phone,  object: @address) %>
   </div>
