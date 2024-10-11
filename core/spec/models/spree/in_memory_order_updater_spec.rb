@@ -8,6 +8,52 @@ module Spree
     let(:order) { Spree::Order.create }
     let(:updater) { described_class.new(order) }
 
+    describe "#recalculate" do
+      subject { updater.recalculate(persist:) }
+
+      let(:new_store) { create(:store) }
+
+      context "when the persist flag is set to 'false'" do
+        let(:persist) { false }
+
+        it "does not persist changes to order" do
+          order.store = new_store
+
+          expect {
+            subject
+          }.not_to make_database_queries(manipulative: true)
+
+          expect(order.store).to eq new_store
+          expect(order.reload.store).not_to eq new_store
+        end
+
+        it "does not persist changes to the item count" do
+          order.line_items << build(:line_item)
+
+          expect {
+            subject
+          }.not_to make_database_queries(manipulative: true)
+
+          expect(order.item_count).to eq 1
+          expect(order.reload.item_count).to eq 0
+        end
+      end
+
+      context "when the persist flag is set to 'true'" do
+        let(:persist) { true }
+
+        it "persists any changes to order" do
+          order.store = new_store
+
+          expect {
+            subject
+          }.to make_database_queries(manipulative: true)
+
+          expect(order.reload.store).to eq new_store
+        end
+      end
+    end
+
     context "order totals" do
       before do
         2.times do
