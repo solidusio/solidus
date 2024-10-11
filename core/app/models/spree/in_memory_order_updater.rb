@@ -16,7 +16,7 @@ module Spree
     # This method should never do anything to the Order that results in a save call on the
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
-    def recalculate
+    def recalculate(persist: true)
       order.transaction do
         recalculate_item_count
         update_shipment_amounts
@@ -28,7 +28,8 @@ module Spree
         end
 
         Spree::Bus.publish :order_recalculated, order: order
-        persist_totals
+
+        persist_totals if persist
       end
     end
     alias_method :update, :recalculate
