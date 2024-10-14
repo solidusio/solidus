@@ -43,17 +43,6 @@ class SolidusAdmin::Users::Addresses::Component < SolidusAdmin::BaseComponent
     ]
   end
 
-  def last_login(user)
-    return t('.last_login.never') if user.try(:last_sign_in_at).blank?
-
-    t(
-      '.last_login.login_time_ago',
-      # @note The second `.try` is here for the specs and for setups that use a
-      # custom User class which may not have this attribute.
-      last_login_time: time_ago_in_words(user.try(:last_sign_in_at))
-    ).capitalize
-  end
-
   def bill_address(address, type)
     if address.present? && type == "bill"
       address

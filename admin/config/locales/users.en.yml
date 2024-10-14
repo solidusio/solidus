@@ -10,3 +10,7 @@ en:
         ship:
           success: "Shipping Address has been successfully updated."
         error: "Address could not be updated."
+      last_login:
+        never: "Never"
+        login_time_ago: "%{last_login_time} ago"
+        invitation_sent: "Invitation sent"
