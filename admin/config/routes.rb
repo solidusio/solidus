@@ -50,6 +50,7 @@ SolidusAdmin::Engine.routes.draw do
       get :addresses
       put :update_addresses
       get :orders
+      get :items
     end
   end
 

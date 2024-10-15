@@ -69,6 +69,16 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
     end
   end
 
+  describe "GET /items" do
+    let!(:order) { create(:order_with_line_items, user: user) }
+
+    it "renders the items template and displays the user's purchased items" do
+      get solidus_admin.items_user_path(user)
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(order.number)
+    end
+  end
+
   describe "DELETE /destroy" do
     it "deletes the user and redirects to the index page with a 303 See Other status" do
       # Ensure the user exists prior to deletion

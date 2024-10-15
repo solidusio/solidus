@@ -1,0 +1,41 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.users_path) %>
+    <%= page_header_title(t(".title", email: @user.email)) %>
+
+    <%= page_header_actions do %>
+      <%= render component("ui/button").new(tag: :a, text: t(".create_order_for_user"), href: spree.new_admin_order_path(user_id: @user.id)) %>
+    <% end %>
+  <% end %>
+
+  <%= page_header do %>
+    <% tabs.each do |tab| %>
+      <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: tab[:text], 'aria-current': tab[:current], href: tab[:href])) %>
+    <% end %>
+  <% end %>
+
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new(title: t(".items_purchased")) do %>
+        <% if @items.present? %>
+          <%= render component('ui/table').new(
+              id: stimulus_id,
+              data: {
+                class: model_class,
+                rows: rows,
+                columns: columns,
+                url: -> { row_url(_1.order) },
+              },
+          )%>
+        <% else %>
+            <%= t(".no_orders_found") %>
+            <%= render component("ui/button").new(tag: :a, text: t(".create_one"), href: spree.new_admin_order_path(user_id: @user.id)) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component("users/stats").new(user: @user) %>
+    <% end %>
+  <% end %>
+<% end %>
