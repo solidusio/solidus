@@ -8,10 +8,6 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
     @items = items
   end
 
-  def form_id
-    @form_id ||= "#{stimulus_id}--form-#{@user.id}"
-  end
-
   def tabs
     [
       {

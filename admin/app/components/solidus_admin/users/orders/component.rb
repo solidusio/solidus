@@ -8,10 +8,6 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
     @orders = orders
   end
 
-  def form_id
-    @form_id ||= "#{stimulus_id}--form-#{@user.id}"
-  end
-
   def tabs
     [
       {
