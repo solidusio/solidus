@@ -37,6 +37,42 @@ RSpec.describe Spree::Core::StockConfiguration do
     ensure
       Object.send(:remove_const, :MyEstimator)
     end
+
+    # FIXME:
+    # Move this to an integration test file after moving existing specs that are
+    # actually integration specs to that file.
+    #
+    it "uses coordinator options passed in to the simple coordinator" do
+      order = create(:order_with_line_items)
+      my_shipping_rate = create(:shipping_method).shipping_rates.new
+
+      MyEstimator = Class.new(Spree::Stock::Estimator) do
+        def shipping_rates(package, _frontend_only = true)
+          raise ShipmentRequired if package.shipment.nil?
+          raise OrderRequired if package.shipment.order.nil?
+
+          if (shipping_rate = coordinator_options[:arbitrary_shipping_rates].first)
+            shipping_rate.selected = true
+            return [shipping_rate]
+          else
+            raise StandardError, "no shipping rate!"
+          end
+        end
+      end
+      Spree::Config.stock.estimator_class = MyEstimator.to_s
+
+      stock_simple_coordinator = stock_configuration.coordinator_class
+      shipments = stock_simple_coordinator
+        .new(
+          order, coordinator_options: {
+            arbitrary_shipping_rates: [my_shipping_rate]
+          }
+        )
+        .shipments
+
+
+      expect(shipments.first.selected_shipping_rate).to eq my_shipping_rate
+    end
   end
 
   describe '#location_filter_class' do
