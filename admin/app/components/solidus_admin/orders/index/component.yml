@@ -5,6 +5,7 @@ en:
       other: '%{count} Items'
   filters:
     status: Status
+    store: Store
     shipment_state: Shipment State
     payment_state: Payment State
     promotions: Promotions

@@ -77,6 +77,13 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
             option
           ]
         end
+      },
+      {
+        label: t('.filters.store'),
+        combinator: 'or',
+        attribute: "store_id",
+        predicate: "eq",
+        options: Spree::Store.all.pluck(:name, :id)
       }
     ]
   end
