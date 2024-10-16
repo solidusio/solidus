@@ -51,7 +51,7 @@ end
 
 group :admin do
   gem 'solidus_admin', path: 'admin', require: false
-  gem 'tailwindcss-rails', '~> 2.0', require: false
+  gem 'tailwindcss-rails', '~> 3.0', require: false
   gem 'axe-core-rspec', '~> 4.8', require: false
   gem 'axe-core-capybara', '~> 4.8', require: false
 end

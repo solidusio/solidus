@@ -33,7 +33,7 @@ namespace :solidus_admin do
         DummyApp::Application.root.join("app/assets/stylesheets/solidus_admin/application.tailwind.css")
       )
 
-      tailwindcss = Tailwindcss::Commands.executable
+      tailwindcss = Tailwindcss::Ruby.executable
 
       tailwindcss_command = [
         tailwindcss,
