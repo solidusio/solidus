@@ -14,9 +14,15 @@ SolidusAdmin::Config.configure do |config|
   # you can import menu_items from the backend by uncommenting the following line,
   # but you will need to
   <%- if defined? Spree::Backend -%>
-  config.import_menu_items_from_backend!
+  Rails.application.config.after_initialize do
+    Rails.application.reload_routes!
+    config.import_menu_items_from_backend!
+  end
   <%- else -%>
-  # config.import_menu_items_from_backend!
+  # Rails.application.config.after_initialize do
+  #  Rails.application.reload_routes!
+  #  config.import_menu_items_from_backend!
+  # end
   <%- end -%>
 
   # Add custom paths to importmap files to be loaded.
