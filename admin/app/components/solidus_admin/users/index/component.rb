@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Component
+  include SolidusAdmin::LastLoginHelper
+
   def model_class
     Spree.user_class
   end
@@ -92,21 +94,5 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
         data: ->(user) { last_login(user) },
       },
     ]
-  end
-
-  private
-
-  # @todo add logic to display "Invitation sent" when the user has not yet
-  #   accepted the invitation and filled out account details. To be implemented
-  #   in conjunction with the invitation logic.
-  def last_login(user)
-    return t('.last_login.never') if user.try(:last_sign_in_at).blank?
-
-    t(
-      '.last_login.login_time_ago',
-      # @note The second `.try` is here for the specs and for setups that use a
-      # custom User class which may not have this attribute.
-      last_login_time: time_ago_in_words(user.try(:last_sign_in_at))
-    ).capitalize
   end
 end

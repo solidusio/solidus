@@ -1,5 +1,5 @@
 en:
-  title: "Users / %{email} / Order History"
+  title: "Users / %{email} / Items Purchased"
   account: Account
   addresses: Addresses
   order_history: Order History
@@ -7,6 +7,10 @@ en:
   store_credit: Store Credit
   last_active: Last Active
   create_order_for_user: Create order for this user
+  items_purchased: Items Purchased
   no_orders_found: No Orders found.
   create_one: Create One
   back: Back
+  number_column_header: "Order #"
+  description_column_header: "Description"
+  total_column_header: "Total"

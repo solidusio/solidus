@@ -1,0 +1,11 @@
+<%= render component("ui/panel").new(title: t("spree.lifetime_stats")) do %>
+  <%= render component("ui/details_list").new(
+    items: [
+      { label: t("spree.total_sales"), value: @user.display_lifetime_value.to_html },
+      { label: t("spree.order_count"), value: @user.order_count.to_i },
+      { label: t("spree.average_order_value"), value: @user.display_average_order_value.to_html },
+      { label: t("spree.member_since"), value: @user.created_at.to_date },
+      { label: t(".last_active"), value: last_login(@user) },
+    ]
+  ) %>
+<% end %>

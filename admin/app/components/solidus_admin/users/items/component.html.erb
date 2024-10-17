@@ -16,16 +16,15 @@
 
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
-      <%= render component('ui/panel').new(title: t(".order_history")) do %>
-        <% if @orders.present? %>
+      <%= render component('ui/panel').new(title: t(".items_purchased")) do %>
+        <% if @items.present? %>
           <%= render component('ui/table').new(
               id: stimulus_id,
               data: {
                 class: model_class,
                 rows: rows,
-                fade: -> { row_fade(_1) },
                 columns: columns,
-                url: -> { row_url(_1) },
+                url: -> { row_url(_1.order) },
               },
           )%>
         <% else %>

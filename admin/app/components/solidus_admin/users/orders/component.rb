@@ -8,10 +8,6 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
     @orders = orders
   end
 
-  def form_id
-    @form_id ||= "#{stimulus_id}--form-#{@user.id}"
-  end
-
   def tabs
     [
       {
@@ -40,16 +36,6 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
         current: false,
       },
     ]
-  end
-
-  def last_login(user)
-    return t('.last_login.never') if user.try(:last_sign_in_at).blank?
-
-    t(
-      '.last_login.login_time_ago',
-      # @note The second `.try` is only here for the specs to work.
-      last_login_time: time_ago_in_words(user.try(:last_sign_in_at))
-    ).capitalize
   end
 
   def model_class
