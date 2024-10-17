@@ -114,7 +114,6 @@ class Project
   end
 end
 
-
 if ENV['CIRCLE_NODE_INDEX'] # Run projects on a CI node
   projects = Project.weighted_projects(
     node_total: Integer(ENV.fetch('CIRCLE_NODE_TOTAL', 1)),

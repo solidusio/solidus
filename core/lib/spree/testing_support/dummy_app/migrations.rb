@@ -4,21 +4,6 @@ module DummyApp
   module Migrations
     extend self
 
-    # Ensure database exists
-    def database_exists?
-      ActiveRecord::Base.connection
-    rescue ActiveRecord::NoDatabaseError
-      false
-    else
-      true
-    end
-
-    def needs_migration?
-      return true if !database_exists?
-
-      ActiveRecord::Base.connection.migration_context.needs_migration?
-    end
-
     def auto_migrate
       if needs_migration?
         puts "Configuration changed. Re-running migrations"
@@ -34,6 +19,14 @@ module DummyApp
     end
 
     private
+
+    def needs_migration?
+      ActiveRecord::Migration.check_all_pending!
+    rescue ActiveRecord::PendingMigrationError, ActiveRecord::NoDatabaseError
+      true
+    else
+      false
+    end
 
     def sh(cmd)
       puts cmd

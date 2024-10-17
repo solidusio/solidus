@@ -18,7 +18,7 @@ class SolidusAdmin::UI::Forms::Input::ComponentPreview < ViewComponent::Preview
       type: type.to_sym,
       error: error ? "There is an error" : nil,
       size: size.to_sym,
-      value: value,
+      value:,
     )
   end
 
@@ -38,7 +38,7 @@ class SolidusAdmin::UI::Forms::Input::ComponentPreview < ViewComponent::Preview
       "size" => rows > 1 ? rows : nil,
       error: error ? "There is an error" : nil,
       size: size.to_sym,
-      multiple: multiple,
+      multiple:,
     ).with_content(options.reduce(:+))
   end
 

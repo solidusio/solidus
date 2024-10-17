@@ -113,7 +113,7 @@ module Spree
         end
 
         let!(:order) { create(:order) }
-        let!(:line_item) { create(:line_item, order: order, variant: variant, quantity: 5) }
+        let!(:line_item) { create(:line_item, order:, variant:, quantity: 5) }
         before { order.reload }
         let(:shipments) { subject.shipments }
 

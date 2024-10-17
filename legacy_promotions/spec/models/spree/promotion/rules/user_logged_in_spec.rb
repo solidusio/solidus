@@ -10,7 +10,7 @@ RSpec.describe Spree::Promotion::Rules::UserLoggedIn, type: :model do
 
     it "should be eligible if order has an associated user" do
       user = double('User')
-      allow(order).to receive_messages(user: user)
+      allow(order).to receive_messages(user:)
 
       expect(rule).to be_eligible(order)
     end

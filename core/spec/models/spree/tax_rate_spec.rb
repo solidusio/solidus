@@ -109,7 +109,7 @@ RSpec.describe Spree::TaxRate, type: :model do
         let(:default_zone) { create(:zone, :with_country) }
         let(:included_in_price) { false }
         let!(:rate) do
-          create(:tax_rate, zone: default_zone, included_in_price: included_in_price)
+          create(:tax_rate, zone: default_zone, included_in_price:)
         end
 
         context "when the zone is the default zone" do

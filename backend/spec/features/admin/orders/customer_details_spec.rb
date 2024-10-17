@@ -8,16 +8,16 @@ describe "Customer Details", type: :feature, js: true do
   stub_authorization!
 
   let(:country) { create(:country, name: "Kangaland") }
-  let(:state) { create(:state, name: "Alabama", country: country) }
+  let(:state) { create(:state, name: "Alabama", country:) }
   let!(:shipping_method) { create(:shipping_method) }
-  let!(:order) { create(:order, ship_address: ship_address, bill_address: bill_address, state: 'complete', completed_at: "2011-02-01 12:36:15") }
+  let!(:order) { create(:order, ship_address:, bill_address:, state: 'complete', completed_at: "2011-02-01 12:36:15") }
   let!(:product) { create(:product_in_stock) }
 
   # We need a unique name that will appear for the customer dropdown
-  let!(:ship_address) { create(:address, country: country, state: state, name: "Jane Doe") }
-  let!(:bill_address) { create(:address, country: country, state: state, name: "Jane Doe") }
+  let!(:ship_address) { create(:address, country:, state:, name: "Jane Doe") }
+  let!(:bill_address) { create(:address, country:, state:, name: "Jane Doe") }
 
-  let!(:user) { create(:user, email: 'foobar@example.com', ship_address: ship_address, bill_address: bill_address) }
+  let!(:user) { create(:user, email: 'foobar@example.com', ship_address:, bill_address:) }
 
   context "brand new order" do
     let(:quantity) { 1 }
@@ -27,7 +27,7 @@ describe "Customer Details", type: :feature, js: true do
       click_link "Orders"
       click_link "New Order"
 
-      add_line_item product.name, quantity: quantity
+      add_line_item(product.name, quantity:)
 
       expect(page).to have_css('.line-item')
       click_link "Customer"

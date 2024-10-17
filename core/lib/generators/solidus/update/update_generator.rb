@@ -110,7 +110,7 @@ module Solidus
     end
 
     def changes_template_for(klass, from, to)
-      changes = Spree::Preferences::PreferenceDifferentiator.new(klass).call(from: from, to: to)
+      changes = Spree::Preferences::PreferenceDifferentiator.new(klass).call(from:, to:)
       return '# No changes' if changes.empty?
 
       [

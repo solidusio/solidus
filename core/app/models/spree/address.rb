@@ -97,14 +97,14 @@ module Spree
     # @return [Hash] an ActiveMerchant compatible address hash
     def active_merchant_hash
       {
-        name: name,
-        address1: address1,
-        address2: address2,
-        city: city,
+        name:,
+        address1:,
+        address2:,
+        city:,
         state: state_text,
         zip: zipcode,
         country: country.try(:iso),
-        phone: phone
+        phone:
       }
     end
 
@@ -132,7 +132,7 @@ module Spree
     # @return [Country] setter that sets self.country to the Country with a matching 2 letter iso
     # @raise [ActiveRecord::RecordNotFound] if country with the iso doesn't exist
     def country_iso=(iso)
-      self.country = Spree::Country.find_by!(iso: iso)
+      self.country = Spree::Country.find_by!(iso:)
     end
 
     def country_iso

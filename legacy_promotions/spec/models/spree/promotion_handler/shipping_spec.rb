@@ -6,7 +6,7 @@ module Spree
   module PromotionHandler
     RSpec.describe Shipping, type: :model do
       let(:order) { create(:order) }
-      let(:shipment) { create(:shipment, order: order ) }
+      let(:shipment) { create(:shipment, order: ) }
 
       let(:action) { Spree::Promotion::Actions::FreeShipping.new }
 
@@ -41,7 +41,7 @@ module Spree
 
         context 'when already applied' do
           before do
-            order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+            order.order_promotions.create!(promotion:, promotion_code: promotion.codes.first)
           end
 
           it 'adjusts the shipment' do
@@ -56,7 +56,7 @@ module Spree
             end
 
             before do
-              order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+              order.order_promotions.create!(promotion:, promotion_code: promotion.codes.first)
             end
 
             it 'does not adjust the shipment' do
@@ -82,7 +82,7 @@ module Spree
 
           allow(Spree::Config.promotions).to receive(:shipping_actions) { ['CustomShippingAction'] }
 
-          order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+          order.order_promotions.create!(promotion:, promotion_code: promotion.codes.first)
         end
 
         let(:action) { custom_klass.new }

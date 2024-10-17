@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::PaymentMethod::StoreCredit do
   let(:order)           { create(:order) }
-  let(:payment)         { create(:payment, order: order) }
+  let(:payment)         { create(:payment, order:) }
   let(:gateway_options) { payment.gateway_options }
 
   context "#authorize" do
@@ -14,7 +14,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
     let(:auth_amount) { store_credit.amount_remaining * 100 }
     let(:store_credit) { create(:store_credit) }
-    let(:gateway_options) { super().merge(originator: originator) }
+    let(:gateway_options) { super().merge(originator:) }
     let(:originator) { nil }
 
     context 'without an invalid store credit' do
@@ -70,10 +70,10 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
     let(:capture_amount) { 10_00 }
     let(:auth_code) { auth_event.authorization_code }
-    let(:gateway_options) { super().merge(originator: originator) }
+    let(:gateway_options) { super().merge(originator:) }
 
     let(:authorized_amount) { capture_amount / 100.0 }
-    let(:auth_event) { create(:store_credit_auth_event, store_credit: store_credit, amount: authorized_amount) }
+    let(:auth_event) { create(:store_credit_auth_event, store_credit:, amount: authorized_amount) }
     let(:store_credit) { create(:store_credit, amount_authorized: authorized_amount) }
     let(:originator) { nil }
 
@@ -132,7 +132,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
     end
 
     let(:auth_code) { auth_event.authorization_code }
-    let(:gateway_options) { super().merge(originator: originator) }
+    let(:gateway_options) { super().merge(originator:) }
     let(:auth_event) { create(:store_credit_auth_event) }
     let(:originator) { nil }
 
@@ -175,10 +175,10 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
       store_credit = create(:store_credit)
       auth_code = store_credit.generate_authorization_code
       store_credit.store_credit_events.create!(action: Spree::StoreCredit::ELIGIBLE_ACTION,
-                                               amount: amount,
+                                               amount:,
                                                authorization_code: auth_code)
       store_credit.store_credit_events.create!(action: Spree::StoreCredit::CAPTURE_ACTION,
-                                               amount: amount,
+                                               amount:,
                                                authorization_code: auth_code)
 
       resp = subject.purchase(amount * 100.0, store_credit, gateway_options)
@@ -191,7 +191,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
       store_credit = create(:store_credit)
       auth_code = store_credit.generate_authorization_code
       store_credit.store_credit_events.create!(action: Spree::StoreCredit::ELIGIBLE_ACTION,
-                                               amount: amount,
+                                               amount:,
                                                authorization_code: auth_code)
 
       resp = subject.purchase(amount * 100.0, store_credit, gateway_options)
@@ -207,7 +207,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
     let(:credit_amount) { 100.0 }
     let(:auth_code) { auth_event.authorization_code }
-    let(:gateway_options) { super().merge(originator: originator) }
+    let(:gateway_options) { super().merge(originator:) }
     let(:auth_event) { create(:store_credit_auth_event) }
     let(:originator) { nil }
 
@@ -270,7 +270,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
         create(:store_credit_capture_event,
           authorization_code: auth_code,
           amount: captured_amount,
-          store_credit: store_credit)
+          store_credit:)
       end
 
       it { is_expected.to be(false) }
@@ -280,8 +280,8 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
         let!(:payment) do
           create(:payment,
-            order: order,
-            payment_method: payment_method,
+            order:,
+            payment_method:,
             source: store_credit,
             amount: captured_amount,
             response_code: auth_code)
@@ -301,7 +301,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
           create(:store_credit_auth_event,
             authorization_code: auth_code,
             amount: captured_amount,
-            store_credit: store_credit)
+            store_credit:)
         end
 
         it_behaves_like "a spree payment method"

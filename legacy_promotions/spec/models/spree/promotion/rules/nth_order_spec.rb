@@ -39,7 +39,7 @@ RSpec.describe Spree::Promotion::Rules::NthOrder do
 
       context "when the user has completed orders" do
         before do
-          old_order = create :completed_order_with_totals, user: user
+          old_order = create(:completed_order_with_totals, user:)
           old_order.update(completed_at: 1.day.ago)
         end
 

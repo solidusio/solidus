@@ -46,7 +46,7 @@ module Spree
           Spree::Tax::ItemTax.new(
             label: rate.adjustment_label(amount),
             tax_rate: rate,
-            amount: amount,
+            amount:,
             included_in_price: rate.included_in_price
           )
         end
@@ -89,7 +89,7 @@ module Spree
             item_id: item.id,
             label: rate.adjustment_label(amount),
             tax_rate: rate,
-            amount: amount,
+            amount:,
             included_in_price: rate.included_in_price
           )
         end

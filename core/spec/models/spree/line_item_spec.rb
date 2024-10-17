@@ -40,7 +40,7 @@ RSpec.describe Spree::LineItem, type: :model do
   describe 'line item creation' do
     let(:variant) { create :variant }
 
-    subject(:line_item) { Spree::LineItem.new(variant: variant, order: order) }
+    subject(:line_item) { Spree::LineItem.new(variant:, order:) }
 
     # Tests for https://github.com/spree/spree/issues/3391
     context 'before validation' do
@@ -97,9 +97,9 @@ RSpec.describe Spree::LineItem, type: :model do
 
   context 'setting a line item price' do
     let(:store) { create(:store, default: true) }
-    let(:order) { Spree::Order.new(currency: "RUB", store: store) }
+    let(:order) { Spree::Order.new(currency: "RUB", store:) }
     let(:variant) { Spree::Variant.new(product: Spree::Product.new) }
-    let(:line_item) { Spree::LineItem.new(order: order, variant: variant) }
+    let(:line_item) { Spree::LineItem.new(order:, variant:) }
 
     before { expect(variant).to receive(:price_for_options).at_least(:once).and_return(price) }
 
@@ -150,7 +150,7 @@ RSpec.describe Spree::LineItem, type: :model do
 
   describe 'money_price=' do
     let(:currency) { "USD" }
-    let(:new_price) { Spree::Money.new(99.00, currency: currency) }
+    let(:new_price) { Spree::Money.new(99.00, currency:) }
 
     it 'assigns a new price' do
       line_item.money_price = new_price

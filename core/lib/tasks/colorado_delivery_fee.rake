@@ -16,8 +16,8 @@ namespace :taxes do
       calculator = Spree::Calculator::FlatFee.new
       rate = Spree::TaxRate.create!(
         name: "Colorado Delivery Fee",
-        calculator: calculator,
-        zone: zone,
+        calculator:,
+        zone:,
         amount: 0.27,
         show_rate_in_label: false,
         level: "order"

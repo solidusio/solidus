@@ -14,7 +14,7 @@ RSpec.describe Spree::Order, type: :model do
 
       context "when payment processing succeeds" do
         let!(:payment) do
-          create(:payment, state: 'checkout', order: order)
+          create(:payment, state: 'checkout', order:)
         end
 
         it "should finalize order when transitioning to complete state" do
@@ -25,7 +25,7 @@ RSpec.describe Spree::Order, type: :model do
 
         context "when credit card processing fails" do
           let!(:payment) do
-            create(:payment, :failing, state: 'checkout', order: order)
+            create(:payment, :failing, state: 'checkout', order:)
           end
 
           it "should not complete the order" do
@@ -85,7 +85,7 @@ RSpec.describe Spree::Order, type: :model do
 
   describe "#complete" do
     context "when the confirm step has been taken out of the checkout flow" do
-      let!(:payment) { create(:payment, state: 'checkout', order: order) }
+      let!(:payment) { create(:payment, state: 'checkout', order:) }
 
       before :all do
         class Spree::Order

@@ -11,6 +11,6 @@ class SolidusAdmin::UI::Thumbnail::ComponentPreview < ViewComponent::Preview
   # @param size select { choices: [s, m, l] }
   # @param src text
   def playground(size: :m, src: "https://picsum.photos/200/300")
-    render component("ui/thumbnail").new(size: size.to_sym, src: src)
+    render component("ui/thumbnail").new(size: size.to_sym, src:)
   end
 end

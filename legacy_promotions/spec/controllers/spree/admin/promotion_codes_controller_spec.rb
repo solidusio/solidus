@@ -7,9 +7,9 @@ RSpec.describe Spree::Admin::PromotionCodesController do
   render_views
 
   let!(:promotion) { create(:promotion) }
-  let!(:code1) { create(:promotion_code, promotion: promotion) }
-  let!(:code2) { create(:promotion_code, promotion: promotion) }
-  let!(:code3) { create(:promotion_code, promotion: promotion) }
+  let!(:code1) { create(:promotion_code, promotion:) }
+  let!(:code2) { create(:promotion_code, promotion:) }
+  let!(:code3) { create(:promotion_code, promotion:) }
 
   it "can create a CSV file with all promotion codes" do
     get :index, params: { promotion_id: promotion.id, format: 'csv' }
@@ -21,13 +21,13 @@ RSpec.describe Spree::Admin::PromotionCodesController do
   it "can create a new code" do
     post :create, params: { promotion_id: promotion.id, promotion_code: { value: "new_code" } }
     expect(response).to redirect_to(spree.admin_promotion_promotion_codes_path(promotion))
-    expect(Spree::PromotionCode.where(promotion: promotion).count).to eql(4)
+    expect(Spree::PromotionCode.where(promotion:).count).to eql(4)
   end
 
   it "cannot create an existing code" do
     post :create, params: { promotion_id: promotion.id, promotion_code: { value: code1.value } }
     expect(flash[:error]).not_to be_nil
-    expect(Spree::PromotionCode.where(promotion: promotion).count).to eql(3)
+    expect(Spree::PromotionCode.where(promotion:).count).to eql(3)
   end
 
   it "can't create a new code on promotions that apply automatically" do

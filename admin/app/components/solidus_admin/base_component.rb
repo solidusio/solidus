@@ -10,7 +10,7 @@ module SolidusAdmin
     include Turbo::FramesHelper
 
     def icon_tag(name, **attrs)
-      render component("ui/icon").new(name: name, **attrs)
+      render component("ui/icon").new(name:, **attrs)
     end
 
     def missing_translation(key, options)

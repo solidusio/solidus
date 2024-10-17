@@ -57,7 +57,7 @@ module Spree
     def create_line_item(variant, quantity = 1)
       expect {
         post "/api/orders/#{@order.number}/line_items",
-          params: { line_item: { variant_id: variant.id, quantity: quantity } }
+          params: { line_item: { variant_id: variant.id, quantity: } }
       }.to change { @order.line_items.count }.by 1
       expect(response).to have_http_status(:created)
     end

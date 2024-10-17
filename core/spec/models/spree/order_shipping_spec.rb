@@ -56,10 +56,10 @@ RSpec.describe Spree::OrderShipping do
   describe "#ship" do
     subject do
       order.shipping.ship(
-        inventory_units: inventory_units,
-        stock_location: stock_location,
-        address: address,
-        shipping_method: shipping_method
+        inventory_units:,
+        stock_location:,
+        address:,
+        shipping_method:
       )
     end
 
@@ -74,10 +74,10 @@ RSpec.describe Spree::OrderShipping do
     context "with an external_number" do
       subject do
         order.shipping.ship(
-          inventory_units: inventory_units,
-          stock_location: stock_location,
-          address: address,
-          shipping_method: shipping_method,
+          inventory_units:,
+          stock_location:,
+          address:,
+          shipping_method:,
           external_number: 'some-external-number'
         )
       end
@@ -90,10 +90,10 @@ RSpec.describe Spree::OrderShipping do
     context "with a tracking number" do
       subject do
         order.shipping.ship(
-          inventory_units: inventory_units,
-          stock_location: stock_location,
-          address: address,
-          shipping_method: shipping_method,
+          inventory_units:,
+          stock_location:,
+          address:,
+          shipping_method:,
           tracking_number: 'tracking-number'
         )
       end
@@ -106,10 +106,10 @@ RSpec.describe Spree::OrderShipping do
     context "when told to suppress the mailer" do
       subject do
         order.shipping.ship(
-          inventory_units: inventory_units,
-          stock_location: stock_location,
-          address: address,
-          shipping_method: shipping_method,
+          inventory_units:,
+          stock_location:,
+          address:,
+          shipping_method:,
           suppress_mailer: true
         )
       end
@@ -220,7 +220,7 @@ RSpec.describe Spree::OrderShipping do
       it "sets the order to shipped state" do
         order.shipping.ship_shipment(order.shipments.first)
 
-        unshipped_shipment = create(:shipment, order: order, state: "ready")
+        unshipped_shipment = create(:shipment, order:, state: "ready")
 
         order.reload
         order.recalculate
@@ -247,7 +247,7 @@ RSpec.describe Spree::OrderShipping do
       let(:shipment) do
         FactoryBot.create(
           :shipment,
-          order: order
+          order:
         )
       end
 

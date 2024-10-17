@@ -19,8 +19,8 @@ describe Spree::Admin::StoreCreditsController do
   let!(:store_credit_reason) { create(:store_credit_reason) }
 
   describe "#show" do
-    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
-    let!(:event) { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
+    let!(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
+    let!(:event) { create(:store_credit_auth_event, store_credit:, created_at: 5.days.ago) }
 
     before { get :show, params: { user_id: user.id, id: store_credit.id  } }
 
@@ -95,7 +95,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#edit_amount" do
-    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
+    let!(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
 
     before { get :edit_amount, params: { user_id: user.id, id: store_credit.id } }
 
@@ -107,7 +107,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#edit_validity" do
-    let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
+    let!(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
 
     before { get :edit_validity, params: { user_id: user.id, id: store_credit.id } }
 
@@ -120,7 +120,7 @@ describe Spree::Admin::StoreCreditsController do
 
   describe "#update" do
     let(:memo)          { "New memo" }
-    let!(:store_credit) { create(:store_credit, user: user) }
+    let!(:store_credit) { create(:store_credit, user:) }
 
     subject { put :update, params: parameters.merge(format: :json) }
 
@@ -132,7 +132,7 @@ describe Spree::Admin::StoreCreditsController do
           user_id: user.id,
           id: store_credit.id,
           store_credit: {
-            memo: memo
+            memo:
           }
         }
       end
@@ -172,7 +172,7 @@ describe Spree::Admin::StoreCreditsController do
 
   describe "#update_amount" do
     let(:original_amount) { 100.0 }
-    let!(:store_credit)   { create(:store_credit, user: user, amount: original_amount) }
+    let!(:store_credit)   { create(:store_credit, user:, amount: original_amount) }
     let!(:store_credit_reason) { create(:store_credit_reason) }
     let(:parameters) do
       {
@@ -265,7 +265,7 @@ describe Spree::Admin::StoreCreditsController do
   end
 
   describe "#invalidate" do
-    let!(:store_credit) { create(:store_credit, user: user, category: b_credit_category) }
+    let!(:store_credit) { create(:store_credit, user:, category: b_credit_category) }
 
     let(:parameters) do
       {
@@ -309,7 +309,7 @@ describe Spree::Admin::StoreCreditsController do
     end
   end
   context 'User does not exist' do
-    let(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
+    let(:store_credit) { create(:store_credit, user:, category: a_credit_category) }
     it "cannot find a store-credit for non-existent user" do
       get :index, params: { user_id: 'non-existent-user', id: store_credit.id }
       expect(response).to redirect_to(spree.admin_users_path)
