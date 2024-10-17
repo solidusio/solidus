@@ -1,0 +1,35 @@
+<div class="fullwidth tier calculator-tiers mb-3">
+  <div class="d-flex">
+    <div class="mr-2">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">∑</span>
+        </div>
+        <input
+          class="js-base-input form-control"
+          data-action="calculator-tiers#propagate_base_to_value_input"
+          type="number"
+          min=="1"
+          step="1"
+          value="<%= tier[0] %>"
+        >
+      </div>
+    </div>
+    <div class="mx-2">
+      <div class="input-group">
+        <input
+          class="js-value-input form-control right-align"
+          name="<%= form.object_name %>[calculator_attributes][preferred_tiers][<%= tier[0] %>]"
+          type="number"
+          min="1"
+          max="100"
+          value="<%= tier[1] %>"
+        >
+        <div class="input-group-append">
+          <span class="input-group-text">%</span>
+        </div>
+      </div>
+    </div>
+    <a class="fa fa-trash remove p-2" data-action="click->calculator-tiers#remove_association"></a>
+  </div>
+</div>
