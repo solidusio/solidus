@@ -5,7 +5,7 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Search
     include Spree::Core::ControllerHelpers::StrongParameters
 
-    before_action :set_user, only: [:edit, :addresses, :update_addresses, :orders, :items]
+    before_action :set_user, only: [:edit, :addresses, :update_addresses, :orders, :items, :store_credits]
 
     search_scope(:all, default: true)
     search_scope(:customers) { _1.left_outer_joins(:role_users).where(role_users: { id: nil }) }
@@ -79,6 +79,14 @@ module SolidusAdmin
 
       flash[:notice] = t('.success')
       redirect_back_or_to users_path, status: :see_other
+    end
+
+    def store_credits
+      set_page_and_extract_portion_from(Spree::StoreCredit.where(user_id: @user.id).order(id: :desc))
+
+      respond_to do |format|
+        format.html { render component('users/store_credits').new(page: @page) }
+      end
     end
 
     private
