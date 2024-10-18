@@ -203,7 +203,7 @@ commands:
             cd <<parameters.app_root>>
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails server -p 3000 &
-            wget --output-document - --tries=30 --retry-connrefused "http://localhost:3000<<parameters.path>>" | grep "<<parameters.expected_text>>"
+            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000<<parameters.path>>" | grep "<<parameters.expected_text>>"
             echo "Exited with $?"
             kill $(cat "tmp/pids/server.pid")
 
