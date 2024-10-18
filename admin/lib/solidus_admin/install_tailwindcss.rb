@@ -39,7 +39,7 @@ create_file "lib/tasks/solidus_admin/tailwind.rake", <<~RUBY
   namespace :solidus_admin do
     namespace :tailwindcss do
       root = Rails.root
-      tailwindcss = Tailwindcss::Commands.executable
+      tailwindcss = Tailwindcss::Ruby.executable
 
       tailwindcss_command = [
         tailwindcss,
