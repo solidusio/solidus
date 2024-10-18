@@ -41,7 +41,7 @@ module Spree
       def find_or_initialize_price_by(country_iso, currency)
         variant.prices.detect do |price|
           price.country_iso == country_iso && price.currency == currency
-        end || variant.prices.build(country_iso: country_iso, currency: currency)
+        end || variant.prices.build(country_iso:, currency:)
       end
 
       # nil is added to the array so we always have an export price.

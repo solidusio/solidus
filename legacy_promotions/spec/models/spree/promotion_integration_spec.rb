@@ -4,18 +4,18 @@ require "rails_helper"
 
 RSpec.describe "Legacy promotion system" do
   describe "promotions with a quantity adjustment" do
-    let(:action) { Spree::Promotion::Actions::CreateQuantityAdjustments.create!(calculator: calculator, promotion: promotion) }
+    let(:action) { Spree::Promotion::Actions::CreateQuantityAdjustments.create!(calculator:, promotion:) }
 
     let(:order) do
       create(
         :order_with_line_items,
-        line_items_attributes: line_items_attributes
+        line_items_attributes:
       )
     end
 
     let(:line_items_attributes) do
       [
-        { price: 10, quantity: quantity }
+        { price: 10, quantity: }
       ]
     end
 
@@ -42,7 +42,7 @@ RSpec.describe "Legacy promotion system" do
       let(:calculator) { FactoryBot.create :flat_rate_calculator }
 
       before do
-        action.perform(order: order, promotion: promotion)
+        action.perform(order:, promotion:)
         order.recalculate
       end
 
@@ -91,13 +91,13 @@ RSpec.describe "Legacy promotion system" do
     }
     let(:order) {
       create :completed_order_with_promotion,
-        promotion: promotion,
+        promotion:,
         line_items_attributes: [{ price: 20 }, { price: 30 }, { price: 100 }]
     }
 
     before do
       calculator.preferred_amount = 15
-      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
+      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
       order.recalculate
     end
 
@@ -111,7 +111,7 @@ RSpec.describe "Legacy promotion system" do
 
       before do
         rule = Spree::Promotion::Rules::Product.create!(
-          promotion: promotion,
+          promotion:,
           product_promotion_rules: [
             Spree::ProductPromotionRule.new(product: first_product),
           ],
@@ -141,8 +141,8 @@ RSpec.describe "Legacy promotion system" do
     let(:code) { promotion.codes.first }
     let(:order) do
       FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
-        FactoryBot.create(:payment, amount: 30, order: order)
-        promotion.activate(order: order, promotion_code: code)
+        FactoryBot.create(:payment, amount: 30, order:)
+        promotion.activate(order:, promotion_code: code)
       end
     end
     let(:promo_adjustment) { order.adjustments.promotion.first }
@@ -150,8 +150,8 @@ RSpec.describe "Legacy promotion system" do
       order.next! until order.can_complete?
 
       FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
-        FactoryBot.create(:payment, amount: 30, order: order)
-        promotion.activate(order: order, promotion_code: code)
+        FactoryBot.create(:payment, amount: 30, order:)
+        promotion.activate(order:, promotion_code: code)
         order.next! until order.can_complete?
         order.complete!
       end
@@ -184,7 +184,7 @@ RSpec.describe "Legacy promotion system" do
 
   describe "adding items to the cart" do
     let(:order) { create :order }
-    let(:line_item) { create :line_item, order: order }
+    let(:line_item) { create :line_item, order: }
     let(:promo) { create :promotion_with_item_adjustment, adjustment_rate: 5, code: 'promo' }
     let(:promotion_code) { promo.codes.first }
     let(:variant) { create :variant }
@@ -193,7 +193,7 @@ RSpec.describe "Legacy promotion system" do
       expect(line_item.adjustments).to be_empty
       expect(order.adjustment_total).to eq 0
 
-      promo.activate order: order, promotion_code: promotion_code
+      promo.activate(order:, promotion_code:)
       order.recalculate
 
       expect(line_item.adjustments.size).to eq(1)

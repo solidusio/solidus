@@ -8,7 +8,7 @@
   "
   data-controller="<%= stimulus_id %>"
   data-<%= stimulus_id %>-animation-class="translate-y-full opacity-0"
-  data-<%= stimulus_id %>-transition-value="500"
+  data-<%= stimulus_id %>-transition-value="<%= Rails.env.test? ? 1000 : 500 %>"
   role="dialog"
   aria-label="<%= t(".#{@scheme}_label") %>"
   aria-live="polite"

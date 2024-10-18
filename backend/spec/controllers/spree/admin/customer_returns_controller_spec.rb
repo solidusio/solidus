@@ -61,7 +61,7 @@ module Spree
           let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
           let(:order) { create(:shipped_order, line_items_count: 4) }
-          let(:rma) { create(:return_authorization, order: order, reason: return_reason_1) }
+          let(:rma) { create(:return_authorization, order:, reason: return_reason_1) }
 
           let!(:rma_return_item) { create(:return_item, return_authorization: rma, inventory_unit: order.inventory_units.first, return_reason: return_reason_2) }
           let!(:customer_return_return_item) { create(:return_item, return_authorization: nil, inventory_unit: order.inventory_units.last, return_reason: return_reason_3) }
@@ -199,13 +199,13 @@ module Spree
           {
             order_id: order.to_param,
             customer_return: {
-              stock_location_id: stock_location_id,
+              stock_location_id:,
               return_items_attributes: {
                 "0" => {
                   returned: "1",
                   amount: "15.99",
                   inventory_unit_id: order.inventory_units.shipped.last.id,
-                  reception_status_event: reception_status_event
+                  reception_status_event:
                 }
               }
             }

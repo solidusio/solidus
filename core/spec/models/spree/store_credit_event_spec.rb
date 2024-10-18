@@ -10,7 +10,7 @@ RSpec.describe Spree::StoreCreditEvent do
     ].each do |action|
       let(:action) { action }
       it "excludes #{action} actions" do
-        event = create(:store_credit_event, action: action)
+        event = create(:store_credit_event, action:)
         expect(described_class.exposed_events).not_to include event
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe Spree::StoreCreditEvent do
       Spree::StoreCredit::ALLOCATION_ACTION
     ].each do |action|
       it "includes #{action} actions" do
-        event = create(:store_credit_event, action: action)
+        event = create(:store_credit_event, action:)
         expect(described_class.exposed_events).to include event
       end
     end
@@ -209,7 +209,7 @@ RSpec.describe Spree::StoreCreditEvent do
   describe "#display_user_total_amount" do
     let(:user_total_amount) { 300.0 }
 
-    subject { create(:store_credit_auth_event, user_total_amount: user_total_amount) }
+    subject { create(:store_credit_auth_event, user_total_amount:) }
 
     it "returns a Spree::Money instance" do
       expect(subject.display_user_total_amount).to be_instance_of(Spree::Money)
@@ -223,7 +223,7 @@ RSpec.describe Spree::StoreCreditEvent do
   describe "#display_remaining_amount" do
     let(:amount_remaining) { 300.0 }
 
-    subject { create(:store_credit_auth_event, amount_remaining: amount_remaining) }
+    subject { create(:store_credit_auth_event, amount_remaining:) }
 
     it "returns a Spree::Money instance" do
       expect(subject.display_remaining_amount).to be_instance_of(Spree::Money)
@@ -316,9 +316,9 @@ RSpec.describe Spree::StoreCreditEvent do
     context "there is an associated payment with the event" do
       let(:authorization_code) { "1-SC-TEST" }
       let(:order)              { create(:order) }
-      let!(:payment)           { create(:store_credit_payment, order: order, response_code: authorization_code) }
+      let!(:payment)           { create(:store_credit_payment, order:, response_code: authorization_code) }
 
-      subject { create(:store_credit_auth_event, action: Spree::StoreCredit::CAPTURE_ACTION, authorization_code: authorization_code) }
+      subject { create(:store_credit_auth_event, action: Spree::StoreCredit::CAPTURE_ACTION, authorization_code:) }
 
       it "returns the order associated with the payment" do
         expect(subject.order).to eq order

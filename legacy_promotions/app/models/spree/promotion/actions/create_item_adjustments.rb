@@ -63,9 +63,9 @@ module Spree
           return if amount == 0
           adjustable.adjustments.create!(
             source: self,
-            amount: amount,
-            order: order,
-            promotion_code: promotion_code,
+            amount:,
+            order:,
+            promotion_code:,
             label: I18n.t('spree.adjustment_labels.line_item', promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
           )
           true

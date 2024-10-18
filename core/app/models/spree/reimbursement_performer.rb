@@ -12,12 +12,12 @@ module Spree
       # - #display_amount
       # so they can be displayed in the Admin UI appropriately.
       def simulate(reimbursement, created_by:)
-        execute(reimbursement, true, created_by: created_by)
+        execute(reimbursement, true, created_by:)
       end
 
       # Actually perform the reimbursement
       def perform(reimbursement, created_by:)
-        execute(reimbursement, false, created_by: created_by)
+        execute(reimbursement, false, created_by:)
       end
 
       private
@@ -26,7 +26,7 @@ module Spree
         reimbursement_type_hash = calculate_reimbursement_types(reimbursement)
 
         reimbursement_type_hash.flat_map do |reimbursement_type, return_items|
-          reimbursement_type.reimburse(reimbursement, return_items, simulate, created_by: created_by)
+          reimbursement_type.reimburse(reimbursement, return_items, simulate, created_by:)
         end
       end
 

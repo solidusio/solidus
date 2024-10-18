@@ -6,14 +6,14 @@ RSpec.describe Spree::ShippingRate, type: :model do
   let(:address) { create(:address) }
   let(:foreign_address) { create :address, country_iso_code: "DE" }
   let(:order) { create :order, ship_address: address }
-  let(:shipment) { create(:shipment, order: order) }
-  let(:shipping_method) { create(:shipping_method, tax_category: tax_category) }
+  let(:shipment) { create(:shipment, order:) }
+  let(:shipping_method) { create(:shipping_method, tax_category:) }
   let(:tax_category) { create :tax_category }
 
   subject(:shipping_rate) do
     Spree::ShippingRate.new(
-      shipment: shipment,
-      shipping_method: shipping_method,
+      shipment:,
+      shipping_method:,
       cost: 10
     )
   end
@@ -40,7 +40,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       before do
         shipping_rate.taxes.build(
           amount: 0.91,
-          tax_rate: tax_rate,
+          tax_rate:,
         )
       end
 
@@ -73,7 +73,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       before do
         shipping_rate.taxes.build(
           amount: 1.0,
-          tax_rate: tax_rate,
+          tax_rate:,
         )
       end
 
@@ -115,7 +115,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       before do
         shipping_rate.taxes.build(
           amount: 1.0,
-          tax_rate: tax_rate,
+          tax_rate:,
         )
 
         shipping_rate.taxes.build(

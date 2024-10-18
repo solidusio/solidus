@@ -64,7 +64,7 @@ module Spree
           complete! if handle_response(response)
         end
 
-        capture_events.create!(amount: amount)
+        capture_events.create!(amount:)
       end
 
       # Takes the amount in cents to capture.
@@ -243,7 +243,7 @@ module Spree
           cvv_result: response.cvv_result,
           error_code: response.error_code,
           emv_authorization: response.emv_authorization,
-          gateway_order_id: gateway_order_id,
+          gateway_order_id:,
           order_number: order.number
         }
       end

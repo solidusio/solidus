@@ -58,7 +58,7 @@ module Spree::Api
         end
 
         subject do
-          post spree.api_shipments_path, params: params
+          post spree.api_shipments_path, params:
         end
 
         it 'creates a new shipment' do
@@ -87,7 +87,7 @@ module Spree::Api
           }
         }
 
-        put spree.api_shipment_path(shipment), params: params
+        put(spree.api_shipment_path(shipment), params:)
         expect(response.status).to eq(200)
         expect(json_response['stock_location_name']).to eq(stock_location.name)
       end
@@ -136,7 +136,7 @@ module Spree::Api
       end
 
       context 'for ready shipments' do
-        let(:order) { create :order_ready_to_ship, line_items_attributes: [{ variant: variant, quantity: 1 }] }
+        let(:order) { create :order_ready_to_ship, line_items_attributes: [{ variant:, quantity: 1 }] }
         let(:shipment) { order.shipments.first }
 
         it 'adds a variant to a shipment' do
@@ -171,7 +171,7 @@ module Spree::Api
 
       context 'for empty shipments' do
         let(:order) { create :completed_order_with_totals }
-        let(:shipment) { order.shipments.create(stock_location: stock_location) }
+        let(:shipment) { order.shipments.create(stock_location:) }
 
         it 'adds a variant to a shipment' do
           put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
@@ -182,7 +182,7 @@ module Spree::Api
 
       describe '#mine' do
         subject do
-          get spree.mine_api_shipments_path, params: params
+          get spree.mine_api_shipments_path, params:
         end
 
         let(:params) { {} }
@@ -306,7 +306,7 @@ module Spree::Api
       let(:send_mailer) { nil }
 
       subject do
-        put spree.ship_api_shipment_path(shipment), params: { send_mailer: send_mailer }
+        put spree.ship_api_shipment_path(shipment), params: { send_mailer: }
       end
 
       context "the user is allowed to ship the shipment" do
@@ -396,10 +396,10 @@ module Spree::Api
       let(:order) do
         create(
           :completed_order_with_totals,
-          user: user,
+          user:,
           line_items_attributes: [
             {
-              variant: variant
+              variant:
             }
           ]
         )
@@ -417,7 +417,7 @@ module Spree::Api
           post "/api/shipments/transfer_to_location.json",
             params: {
               original_shipment_number: source_shipment.number,
-              stock_location_id: stock_location_id,
+              stock_location_id:,
               quantity: 1,
               variant_id: variant.id,
               token: user.spree_api_key
@@ -498,7 +498,7 @@ module Spree::Api
       describe "POST /api/shipments/transfer_to_shipment" do
         let(:stock_location) { create(:stock_location) }
         let(:source_shipment) { order.shipments.first }
-        let(:target_shipment) { order.shipments.create(stock_location: stock_location) }
+        let(:target_shipment) { order.shipments.create(stock_location:) }
         let(:parsed_response) { JSON.parse(response.body) }
         let(:source_shipment_number) { source_shipment.number }
 

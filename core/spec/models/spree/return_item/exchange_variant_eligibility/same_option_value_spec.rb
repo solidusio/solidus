@@ -21,10 +21,10 @@ module Spree
 
         let(:product) { create(:product, option_types: [color_option_type, waist_option_type, inseam_option_type]) }
 
-        let!(:variant) { create(:variant, product: product, option_values: [blue_option_value, three_two_waist_option_value, three_zero_inseam_option_value]) }
-        let!(:same_option_values_variant) { create(:variant, product: product, option_values: [blue_option_value, three_two_waist_option_value, three_one_inseam_option_value]) }
-        let!(:different_color_option_value_variant) { create(:variant, product: product, option_values: [red_option_value, three_two_waist_option_value, three_one_inseam_option_value]) }
-        let!(:different_waist_option_value_variant) { create(:variant, product: product, option_values: [blue_option_value, three_four_waist_option_value, three_one_inseam_option_value]) }
+        let!(:variant) { create(:variant, product:, option_values: [blue_option_value, three_two_waist_option_value, three_zero_inseam_option_value]) }
+        let!(:same_option_values_variant) { create(:variant, product:, option_values: [blue_option_value, three_two_waist_option_value, three_one_inseam_option_value]) }
+        let!(:different_color_option_value_variant) { create(:variant, product:, option_values: [red_option_value, three_two_waist_option_value, three_one_inseam_option_value]) }
+        let!(:different_waist_option_value_variant) { create(:variant, product:, option_values: [blue_option_value, three_four_waist_option_value, three_one_inseam_option_value]) }
 
         before do
           @original_option_type_restrictions = SameOptionValue.option_type_restrictions

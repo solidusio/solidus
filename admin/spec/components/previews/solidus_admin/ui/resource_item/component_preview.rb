@@ -13,9 +13,9 @@ class SolidusAdmin::UI::ResourceItem::ComponentPreview < ViewComponent::Preview
   # @param subtitle text
   def render_resource_item(title: "Your Title", subtitle: "Your Subtitle", thumbnail: "https://picsum.photos/200/300")
     render current_component.new(
-      title: title,
-      subtitle: subtitle,
-      thumbnail: thumbnail
+      title:,
+      subtitle:,
+      thumbnail:
     )
   end
 end

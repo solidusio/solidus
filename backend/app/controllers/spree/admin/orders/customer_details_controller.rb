@@ -15,8 +15,8 @@ module Spree
         def edit
           country_id = default_country_id
 
-          @order.build_bill_address(country_id: country_id) if @order.bill_address.nil?
-          @order.build_ship_address(country_id: country_id) if @order.ship_address.nil?
+          @order.build_bill_address(country_id:) if @order.bill_address.nil?
+          @order.build_ship_address(country_id:) if @order.ship_address.nil?
 
           @order.bill_address.country_id = country_id if @order.bill_address.country.nil?
           @order.ship_address.country_id = country_id if @order.ship_address.country.nil?

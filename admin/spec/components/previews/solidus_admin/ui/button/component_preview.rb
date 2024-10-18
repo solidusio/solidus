@@ -7,7 +7,7 @@ class SolidusAdmin::UI::Button::ComponentPreview < ViewComponent::Preview
   # @param text text
   # @param show_icon toggle
   def overview(text: "Button", show_icon: true)
-    render_with_template locals: { text: text, show_icon: show_icon }
+    render_with_template locals: { text:, show_icon: }
   end
 
   # @param size select { choices: [s, m, l] }
@@ -15,7 +15,7 @@ class SolidusAdmin::UI::Button::ComponentPreview < ViewComponent::Preview
   # @param icon select "Of all icon names we show only 10, chosen randomly" :icon_options
   # @param text text
   def playground(size: :m, scheme: :primary, text: "Button", icon: 'search-line')
-    render component("ui/button").new(size: size, scheme: scheme, text: text, icon: icon.presence)
+    render component("ui/button").new(size:, scheme:, text:, icon: icon.presence)
   end
 
   def group

@@ -32,7 +32,7 @@ module Spree
                    end
         attachable.rewind
 
-        { io: attachable, filename: filename }
+        { io: attachable, filename: }
       end
     end
   end

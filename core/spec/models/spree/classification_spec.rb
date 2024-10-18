@@ -19,7 +19,7 @@ module Spree
         products << create(:base_product)
       end
 
-      create(:taxon, products: products)
+      create(:taxon, products:)
     end
 
     def positions_to_be_valid(taxon)

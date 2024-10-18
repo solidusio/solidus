@@ -15,7 +15,7 @@ FactoryBot.define do
     after(:create) do |shipment, evaluator|
       shipping_method = evaluator.shipping_method || create(:shipping_method, cost: evaluator.cost)
       shipment.shipping_rates.create!(
-        shipping_method: shipping_method,
+        shipping_method:,
         cost: evaluator.cost,
         selected: true
       )

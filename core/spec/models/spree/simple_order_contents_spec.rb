@@ -21,32 +21,32 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
     end
 
     context 'given a shipment' do
-      let!(:shipment) { create(:shipment, order: order) }
+      let!(:shipment) { create(:shipment, order:) }
 
       it "ensure shipment calls update_amounts instead of order calling check_shipments_and_restart_checkout" do
         expect(subject.order).to_not receive(:check_shipments_and_restart_checkout)
         expect(shipment).to receive(:update_amounts).at_least(:once)
-        subject.add(variant, 1, shipment: shipment)
+        subject.add(variant, 1, shipment:)
       end
 
       context "with quantity=1" do
         it "creates correct inventory" do
-          subject.add(variant, 1, shipment: shipment)
+          subject.add(variant, 1, shipment:)
           expect(order.inventory_units.count).to eq(1)
         end
       end
 
       context "with quantity=2" do
         it "creates correct inventory" do
-          subject.add(variant, 2, shipment: shipment)
+          subject.add(variant, 2, shipment:)
           expect(order.inventory_units.count).to eq(2)
         end
       end
 
       context "called multiple times" do
         it "creates correct inventory" do
-          subject.add(variant, 1, shipment: shipment)
-          subject.add(variant, 1, shipment: shipment)
+          subject.add(variant, 1, shipment:)
+          subject.add(variant, 1, shipment:)
           expect(order.inventory_units.count).to eq(2)
         end
       end
@@ -85,7 +85,7 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
     describe 'tax calculations' do
       let!(:zone) { create(:global_zone) }
       let!(:tax_rate) do
-        create(:tax_rate, zone: zone, tax_categories: [variant.tax_category])
+        create(:tax_rate, zone:, tax_categories: [variant.tax_category])
       end
 
       context 'when the order has a taxable address' do
@@ -139,7 +139,7 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
         shipment = create(:shipment)
         expect(subject.order).to_not receive(:check_shipments_and_restart_checkout)
         expect(shipment).to receive(:update_amounts)
-        subject.remove(variant, 1, shipment: shipment)
+        subject.remove(variant, 1, shipment:)
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
         shipment = create(:shipment)
         expect(subject.order).to_not receive(:check_shipments_and_restart_checkout)
         expect(shipment).to receive(:update_amounts)
-        subject.remove_line_item(line_item, shipment: shipment)
+        subject.remove_line_item(line_item, shipment:)
       end
     end
 
@@ -315,7 +315,7 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
       let(:user) { create(:user) }
 
       it 'approves the order' do
-        order.contents.approve(user: user)
+        order.contents.approve(user:)
         expect(order.approver).to eq(user)
         expect(order.approver_name).to be_nil
         expect(order.approved_at).to be_present
@@ -327,7 +327,7 @@ RSpec.describe Spree::SimpleOrderContents, type: :model do
       let(:user) { create(:user) }
 
       it 'approves the order' do
-        order.contents.approve(user: user, name: 'Jordan')
+        order.contents.approve(user:, name: 'Jordan')
         expect(order.approver).to eq(user)
         expect(order.approver_name).to eq('Jordan')
         expect(order.approved_at).to be_present

@@ -31,7 +31,7 @@ describe Spree::Admin::PricesController do
       let(:variant) { create(:variant) }
       let(:product) { variant.product }
 
-      let!(:deleted_variant_price) { create(:price, variant: variant).tap(&:discard!) }
+      let!(:deleted_variant_price) { create(:price, variant:).tap(&:discard!) }
 
       subject { get :index, params: { product_id: product.slug, variant_id: variant.id } }
 

@@ -23,7 +23,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     let(:order)          { create(:shipped_order) }
     let(:inventory_unit) { create(:inventory_unit, state: 'shipped') }
     let!(:customer_return) { create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id) }
-    let(:return_item) { create(:return_item, inventory_unit: inventory_unit) }
+    let(:return_item) { create(:return_item, inventory_unit:) }
 
     before do
       inventory_unit.update!(state: 'shipped')
@@ -44,7 +44,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
 
     context 'when there is a received return item with the same inventory unit' do
-      let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'received') }
+      let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit:, reception_status: 'received') }
 
       before do
         expect { subject }.to raise_error { StateMachines::InvalidTransition }
@@ -61,7 +61,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
     context 'when the received item is actually the exchange (aka customer changed mind about exchange)' do
       let(:exchange_inventory_unit) { create(:inventory_unit, state: 'shipped') }
-      let!(:return_item_with_exchange) { create(:return_item, inventory_unit: inventory_unit, exchange_inventory_unit: exchange_inventory_unit) }
+      let!(:return_item_with_exchange) { create(:return_item, inventory_unit:, exchange_inventory_unit:) }
       let!(:return_item_in_lieu) { create(:return_item, inventory_unit: exchange_inventory_unit) }
 
       it 'unexchanges original return item' do
@@ -145,7 +145,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
   describe "#display_total_excluding_vat" do
     let(:amount) { 21.22 }
     let(:included_tax_total) { 1.22 }
-    let(:return_item) { build(:return_item, amount: amount, included_tax_total: included_tax_total) }
+    let(:return_item) { build(:return_item, amount:, included_tax_total:) }
 
     it "returns a Spree::Money" do
       expect(return_item.display_total_excluding_vat).to eq Spree::Money.new(amount - included_tax_total)
@@ -162,7 +162,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     let(:inventory_unit) { create(:inventory_unit) }
 
     context "amount is not specified" do
-      subject { create(:return_item, inventory_unit: inventory_unit) }
+      subject { create(:return_item, inventory_unit:) }
 
       context "not an exchange" do
         it { expect(subject.amount).to eq Spree::Calculator::Returns::DefaultRefundAmount.new.compute(subject) }
@@ -176,7 +176,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
 
     context "amount is specified" do
-      subject { build(:return_item, inventory_unit: inventory_unit, amount: 100) }
+      subject { build(:return_item, inventory_unit:, amount: 100) }
 
       it { expect(subject.amount).to eq 100 }
     end
@@ -188,19 +188,19 @@ RSpec.describe Spree::ReturnItem, type: :model do
     subject { Spree::ReturnItem.from_inventory_unit(inventory_unit) }
 
     context "with a cancelled return item" do
-      let!(:return_item) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'cancelled') }
+      let!(:return_item) { create(:return_item, inventory_unit:, reception_status: 'cancelled') }
 
       it { is_expected.not_to be_persisted }
     end
 
     context 'with a expired item' do
-      let!(:return_item) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'expired') }
+      let!(:return_item) { create(:return_item, inventory_unit:, reception_status: 'expired') }
 
       it { is_expected.not_to be_persisted }
     end
 
     context "with a non-cancelled return item" do
-      let!(:return_item) { create(:return_item, inventory_unit: inventory_unit) }
+      let!(:return_item) { create(:return_item, inventory_unit:) }
 
       it { is_expected.to be_persisted }
     end
@@ -254,7 +254,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
   describe "#receive" do
     let(:order) { create(:shipped_order) }
     let(:inventory_unit) { create(:inventory_unit, shipment: order.shipments.first) }
-    let(:return_item)    { create(:return_item, reception_status: status, inventory_unit: inventory_unit) }
+    let(:return_item)    { create(:return_item, reception_status: status, inventory_unit:) }
 
     subject { return_item.receive! }
 
@@ -307,7 +307,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     short_shipped: 'short_shipped'
   }.each do |transition, status|
     describe "##{transition}" do
-      let(:return_item) { create(:return_item, reception_status: status, inventory_unit: inventory_unit) }
+      let(:return_item) { create(:return_item, reception_status: status, inventory_unit:) }
       let(:inventory_unit) { create(:inventory_unit, state: 'shipped') }
       subject { return_item.public_send("#{transition}!") }
       context "awaiting status" do
@@ -489,7 +489,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
   end
 
   describe 'validity for reimbursements' do
-    let(:return_item) { create(:return_item, acceptance_status: acceptance_status) }
+    let(:return_item) { create(:return_item, acceptance_status:) }
     let(:acceptance_status) { 'pending' }
 
     before { return_item.reimbursement = build(:reimbursement) }
@@ -716,7 +716,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     let(:return_item) do
       create(
         :return_item,
-        inventory_unit: inventory_unit,
+        inventory_unit:,
         included_tax_total: 5
       )
     end

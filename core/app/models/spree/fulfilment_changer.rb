@@ -107,14 +107,14 @@ module Spree
         # We order by state, because `'backordered' < 'on_hand'`.
         current_shipment.
           inventory_units.
-          where(variant: variant).
+          where(variant:).
           order(state: :asc).
           limit(new_on_hand_quantity).
           update_all(shipment_id: desired_shipment.id, state: :on_hand)
 
         current_shipment.
           inventory_units.
-          where(variant: variant).
+          where(variant:).
           order(state: :asc).
           limit(quantity - new_on_hand_quantity).
           update_all(shipment_id: desired_shipment.id, state: :backordered)
@@ -127,7 +127,7 @@ module Spree
       ActiveRecord::Base.transaction do
         current_shipment.
           inventory_units.
-          where(variant: variant).
+          where(variant:).
           order(state: :asc).
           limit(quantity).
           update_all(shipment_id: desired_shipment.id)
@@ -145,7 +145,7 @@ module Spree
       if current_stock_location != desired_stock_location
         0
       else
-        current_shipment.inventory_units.where(variant: variant).on_hand.count
+        current_shipment.inventory_units.where(variant:).on_hand.count
       end
     end
 

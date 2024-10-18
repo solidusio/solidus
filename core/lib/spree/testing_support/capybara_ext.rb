@@ -23,7 +23,7 @@ module Spree
             field.dispatchEvent(event);
           JS
         else
-          fill_in locator, with: with
+          fill_in locator, with:
         end
       end
 

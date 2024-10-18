@@ -8,10 +8,10 @@ module Spree
 
     let(:product) { create(:product, price: product_price) }
     let(:product_price) { 10 }
-    let(:variant) { create(:variant, product: product, price: variant_price) }
+    let(:variant) { create(:variant, product:, price: variant_price) }
     let(:currency) { 'USD' }
     let(:pricing_options) do
-      Spree::Config.pricing_options_class.new(currency: currency)
+      Spree::Config.pricing_options_class.new(currency:)
     end
 
     before do
@@ -51,8 +51,8 @@ module Spree
         let(:currency) { 'JPY' }
 
         before do
-          variant.prices.each { |p| p.update(currency: currency) }
-          product.master.prices.each { |p| p.update(currency: currency) }
+          variant.prices.each { |p| p.update(currency:) }
+          product.master.prices.each { |p| p.update(currency:) }
         end
 
         context "when variant is more than master" do
@@ -70,7 +70,7 @@ module Spree
     end
 
     context "#variant_price_full" do
-      let!(:variant_2) { create(:variant, product: product, price: variant_2_price) }
+      let!(:variant_2) { create(:variant, product:, price: variant_2_price) }
       let(:variant_2_price) { 20 }
       let(:variant_price) { 15 }
 
@@ -92,8 +92,8 @@ module Spree
         let(:variant_price) { 150 }
 
         before do
-          variant.prices.each { |p| p.update(currency: currency) }
-          product.master.prices.each { |p| p.update(currency: currency) }
+          variant.prices.each { |p| p.update(currency:) }
+          product.master.prices.each { |p| p.update(currency:) }
         end
 
         it "should return the variant price if the price is different than master" do

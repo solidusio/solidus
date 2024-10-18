@@ -6,7 +6,7 @@ RSpec.describe Spree::Refund, type: :model do
   let(:amount) { 100.0 }
   let(:amount_in_cents) { amount * 100 }
 
-  let(:payment) { create(:payment, amount: payment_amount, payment_method: payment_method) }
+  let(:payment) { create(:payment, amount: payment_amount, payment_method:) }
   let(:payment_amount) { amount * 2 }
   let(:payment_method) { create(:credit_card_payment_method) }
 
@@ -17,10 +17,10 @@ RSpec.describe Spree::Refund, type: :model do
   let(:refund) do
     create(
       :refund,
-      payment: payment,
-      amount: amount,
+      payment:,
+      amount:,
       reason: refund_reason,
-      transaction_id: transaction_id
+      transaction_id:
     )
   end
 

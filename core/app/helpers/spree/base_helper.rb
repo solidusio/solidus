@@ -48,7 +48,7 @@ module Spree
 
     def meta_data_tags
       meta_data.map do |name, content|
-        tag('meta', name: name, content: content)
+        tag('meta', name:, content:)
       end.join("\n")
     end
 
@@ -111,7 +111,7 @@ module Spree
     end
 
     def available_countries(restrict_to_zone: Spree::Config[:checkout_zone])
-      countries = Spree::Country.available(restrict_to_zone: restrict_to_zone)
+      countries = Spree::Country.available(restrict_to_zone:)
 
       country_names = Carmen::Country.all.map do |country|
         [country.code, country.name]

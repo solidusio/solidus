@@ -114,7 +114,7 @@ module Spree
         name = options[:name] || t('spree.actions.delete')
         confirm = options[:confirm] || t('spree.are_you_sure')
         options[:class] = "#{options[:class]} delete-resource".strip
-        options[:data] = { confirm: confirm, action: 'remove' }
+        options[:data] = { confirm:, action: 'remove' }
         link_to_with_icon 'trash', name, url, options
       end
 

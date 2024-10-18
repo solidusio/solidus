@@ -10,6 +10,6 @@ tax_rate = Spree::TaxRate.create(
 tax_rate.calculator = Spree::Calculator::DefaultTax.create!
 tax_rate.save!
 Spree::TaxRateTaxCategory.create!(
-  tax_rate: tax_rate,
+  tax_rate:,
   tax_category: clothing
 )

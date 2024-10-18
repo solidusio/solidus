@@ -7,7 +7,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
   let(:shipment) { order.shipments.to_a.first }
   let(:promotion) { create(:promotion, code: 'somecode', promotion_actions: [action]) }
   let(:action) { Spree::Promotion::Actions::FreeShipping.new }
-  let(:payload) { { order: order, promotion_code: promotion_code } }
+  let(:payload) { { order:, promotion_code: } }
   let(:promotion_code) { promotion.codes.first! }
 
   # From promotion spec:
@@ -49,10 +49,10 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
         before do
           shipments.each do |shipment|
             shipment.adjustments.create!(
-              order: order,
+              order:,
               amount: shipment.cost * -1,
               source: action,
-              promotion_code: promotion_code,
+              promotion_code:,
               label: 'somelabel'
             )
           end
@@ -74,10 +74,10 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
           shipment = shipments.last
 
           shipment.adjustments.create!(
-            order: order,
+            order:,
             amount: shipment.cost * -1,
             source: action,
-            promotion_code: promotion_code,
+            promotion_code:,
             label: 'somelabel'
           )
         end
@@ -97,7 +97,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
 
   describe '#remove_from' do
     # this adjustment should not get removed
-    let!(:other_adjustment) { create(:adjustment, adjustable: shipment, order: order, source: nil) }
+    let!(:other_adjustment) { create(:adjustment, adjustable: shipment, order:, source: nil) }
 
     before do
       action.perform(payload)

@@ -29,7 +29,7 @@ RSpec.describe 'taxon factory' do
     end
 
     context "when a taxonomy is given" do
-      subject { create(:taxon, taxonomy: taxonomy) }
+      subject { create(:taxon, taxonomy:) }
 
       let!(:taxonomy) { create(:taxonomy) }
 
