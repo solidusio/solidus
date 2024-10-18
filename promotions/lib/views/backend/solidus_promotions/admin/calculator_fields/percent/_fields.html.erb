@@ -1,0 +1,6 @@
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_percent %>
+    <%= f.number_field :preferred_percent, step: 1, min: 1, max: 100, default: 1, class: "form-control" %>
+  <% end %>
+</div>
