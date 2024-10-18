@@ -38,6 +38,8 @@ module SolidusAdmin
           gem "actioncable"
         end
 
+        execute_command :bundle, :install
+
         route "mount Lookbook::Engine, at: '#{solidus_mount_point}lookbook' if Rails.env.development?"
       end
 
