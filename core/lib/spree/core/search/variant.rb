@@ -22,7 +22,7 @@ module Spree
 
         def initialize(query_string, scope: Spree::Variant.all)
           @query_string = query_string
-          @scope = scope
+          @scope = scope.non_template_variants
         end
 
         # Searches the variants table using the ransack 'search_terms' defined on the class.
@@ -39,7 +39,7 @@ module Spree
             @scope.ransack(search_term_params(word)).result.pluck(:id)
           end
 
-          Spree::Variant.where(id: matches.inject(:&))
+          @scope.where(id: matches.inject(:&))
         end
 
         private
