@@ -27,6 +27,16 @@ module Spree
       it { refute_found("bca", variant) }
     end
 
+    context "with a template variant" do
+      let!(:option_type) { create(:option_type, option_values: [option_value]) }
+      let(:option_value) { build(:option_value) }
+      let(:product) { create(:product, option_types: [option_type], sku: "TEMPLATE") }
+      let(:variant) { create(:variant, product: product, sku: "NOT_TEMPLATE") }
+
+      it { refute_found("TEMPLATE", product.master) }
+      it { assert_found("NOT_TEMPLATE", variant) }
+    end
+
     context "by product" do
       it { assert_found("My Special Product", variant) }
       it { assert_found("My Spec", variant) }
