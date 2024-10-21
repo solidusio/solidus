@@ -58,7 +58,7 @@ module Spree
 
     def ensure_default_exists_and_is_unique
       if default
-        Spree::Store.where.not(id: id).update_all(default: false)
+        Spree::Store.where.not(id:).update_all(default: false)
       elsif Spree::Store.where(default: true).count == 0
         self.default = true
       end

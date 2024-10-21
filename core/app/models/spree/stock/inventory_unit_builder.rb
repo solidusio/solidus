@@ -25,7 +25,7 @@ module Spree
           Spree::InventoryUnit.new(
             pending: true,
             variant: line_item.variant,
-            line_item: line_item
+            line_item:
           )
         end
       end

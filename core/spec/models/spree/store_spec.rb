@@ -32,7 +32,7 @@ RSpec.describe Spree::Store, type: :model do
   end
 
   describe '#default_cart_tax_location' do
-    subject { described_class.new(cart_tax_country_iso: cart_tax_country_iso) }
+    subject { described_class.new(cart_tax_country_iso:) }
     context "when there is no cart_tax_country_iso set" do
       let(:cart_tax_country_iso) { '' }
       it "responds with an empty default_cart_tax_location" do
@@ -45,7 +45,7 @@ RSpec.describe Spree::Store, type: :model do
       let(:cart_tax_country_iso) { country.iso }
 
       it "responds with a default_cart_tax_location with that country" do
-        expect(subject.default_cart_tax_location).to eq(Spree::Tax::TaxLocation.new(country: country))
+        expect(subject.default_cart_tax_location).to eq(Spree::Tax::TaxLocation.new(country:))
       end
     end
   end

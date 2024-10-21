@@ -4,18 +4,18 @@ require "rails_helper"
 
 module Spree::Promotion::Actions
   RSpec.describe CreateQuantityAdjustments do
-    let(:action) { CreateQuantityAdjustments.create!(calculator: calculator, promotion: promotion) }
+    let(:action) { CreateQuantityAdjustments.create!(calculator:, promotion:) }
 
     let(:order) do
       create(
         :order_with_line_items,
-        line_items_attributes: line_items_attributes
+        line_items_attributes:
       )
     end
 
     let(:line_items_attributes) do
       [
-        { price: 10, quantity: quantity }
+        { price: 10, quantity: }
       ]
     end
 
@@ -71,7 +71,7 @@ module Spree::Promotion::Actions
               ]
             end
 
-            before { action.perform({ order: order, promotion: promotion }) }
+            before { action.perform({ order:, promotion: }) }
 
             describe "the adjustment for the first item" do
               let(:line_item) { order.line_items.first }
@@ -102,7 +102,7 @@ module Spree::Promotion::Actions
 
           before do
             action.preferred_group_size = 2
-            action.perform({ order: other_order, promotion: promotion })
+            action.perform({ order: other_order, promotion: })
           end
 
           it { is_expected.to eq(-10) }
@@ -125,7 +125,7 @@ module Spree::Promotion::Actions
         context "with a quantity group of 3" do
           before do
             action.preferred_group_size = 3
-            action.perform({ order: order, promotion: promotion })
+            action.perform({ order:, promotion: })
           end
 
           context "and 2x item A and 1x item B" do
@@ -181,7 +181,7 @@ module Spree::Promotion::Actions
         context "with a quantity group of 3" do
           before do
             action.preferred_group_size = 3
-            action.perform({ order: order, promotion: promotion })
+            action.perform({ order:, promotion: })
           end
 
           context "and 2x item A and 1x item B" do
@@ -217,7 +217,7 @@ module Spree::Promotion::Actions
     end
 
     describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
-      let!(:item) { FactoryBot.create :line_item, order: order, quantity: quantity, price: 10 }
+      let!(:item) { FactoryBot.create :line_item, order:, quantity:, price: 10 }
       let(:quantity) { 5 }
 
       subject { described_class.new(item) }

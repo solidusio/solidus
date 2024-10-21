@@ -6,14 +6,14 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
   let(:order) { create(:order_with_line_items, line_items_count: 1) }
   let(:promotion) { create(:promotion) }
   let(:action) { Spree::Promotion::Actions::CreateAdjustment.new }
-  let(:payload) { { order: order } }
+  let(:payload) { { order: } }
 
   # From promotion spec:
   context "#perform" do
     before do
       action.calculator = Spree::Calculator::FlatRate.new(preferred_amount: 10)
       promotion.promotion_actions = [action]
-      allow(action).to receive_messages(promotion: promotion)
+      allow(action).to receive_messages(promotion:)
     end
 
     it "does apply an adjustment if the amount is 0" do
@@ -49,7 +49,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     context "when a promotion code is used" do
       let(:promotion_code) { create(:promotion_code) }
       let(:promotion) { promotion_code.promotion }
-      let(:payload) { { order: order, promotion_code: promotion_code } }
+      let(:payload) { { order:, promotion_code: } }
 
       it "should connect the adjustment to the promotion_code" do
         expect {
@@ -64,7 +64,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     let(:action) { promotion.actions.first! }
     let(:promotion) { create(:promotion, :with_order_adjustment) }
 
-    let!(:unrelated_adjustment) { create(:adjustment, order: order, source: nil) }
+    let!(:unrelated_adjustment) { create(:adjustment, order:, source: nil) }
 
     before do
       action.perform(payload)

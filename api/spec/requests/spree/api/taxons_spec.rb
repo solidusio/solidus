@@ -5,9 +5,9 @@ require 'spec_helper'
 module Spree::Api
   describe 'Taxons', type: :request do
     let!(:taxonomy) { create(:taxonomy) }
-    let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy: taxonomy) }
-    let!(:taxon2) { create(:taxon, name: "Rails", parent: taxon, taxonomy: taxonomy) }
-    let!(:rails_v3_2_2) { create(:taxon, name: "3.2.2", parent: taxon2, taxonomy: taxonomy) }
+    let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy:) }
+    let!(:taxon2) { create(:taxon, name: "Rails", parent: taxon, taxonomy:) }
+    let!(:rails_v3_2_2) { create(:taxon, name: "3.2.2", parent: taxon2, taxonomy:) }
     let(:attributes) { ["id", "name", "pretty_name", "permalink", "parent_id", "taxonomy_id"] }
 
     before do
@@ -34,7 +34,7 @@ module Spree::Api
       end
 
       it "paginates through taxons" do
-        new_taxon = create(:taxon, name: "Go", taxonomy: taxonomy)
+        new_taxon = create(:taxon, name: "Go", taxonomy:)
         taxonomy.root.children << new_taxon
         expect(taxonomy.root.children.count).to eql(2)
         get spree.api_taxonomy_taxons_path(taxonomy), params: { page: 1, per_page: 1 }
@@ -92,8 +92,8 @@ module Spree::Api
 
         it 'returns only requested ids' do
           # We need a completly new branch to avoid having parent that can be preloaded from the rails ancestors
-          python   = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy: taxonomy)
-          python_three = create(:taxon, name: "3.0", parent: python, taxonomy: taxonomy)
+          python   = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy:)
+          python_three = create(:taxon, name: "3.0", parent: python, taxonomy:)
 
           get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id, python_three.id] }
 

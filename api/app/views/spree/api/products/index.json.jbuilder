@@ -2,5 +2,5 @@
 
 json.partial! 'spree/api/shared/pagination', pagination: @products
 json.products(@products) do |product|
-  json.partial!("spree/api/products/product", product: product)
+  json.partial!("spree/api/products/product", product:)
 end

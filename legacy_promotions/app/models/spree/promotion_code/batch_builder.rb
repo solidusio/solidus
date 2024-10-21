@@ -43,9 +43,9 @@ class ::Spree::PromotionCode::BatchBuilder
 
       codes_for_current_batch.filter! do |value|
         Spree::PromotionCode.create!(
-          value: value,
-          promotion: promotion,
-          promotion_code_batch: promotion_code_batch
+          value:,
+          promotion:,
+          promotion_code_batch:
         )
       rescue ActiveRecord::RecordInvalid
         false

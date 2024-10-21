@@ -8,8 +8,8 @@ require:
 
 AllCops:
   Exclude:
-    - '**/{tmp,vendor,spec/dummy,sandbox,templates,pkg}/**/*'
-  TargetRubyVersion: 3.0
+    - "**/{tmp,vendor,spec/dummy,sandbox,templates,pkg}/**/*"
+  TargetRubyVersion: 3.1
   NewCops: disable
   SuggestExtensions: false
 
@@ -121,7 +121,7 @@ Rails/DynamicFindBy:
 # It's okay to skip model validations to setup a spec.
 Rails/SkipsModelValidations:
   Exclude:
-    - '*/spec/**/*'
+    - "*/spec/**/*"
 
 # We use a lot of
 #
@@ -132,15 +132,15 @@ Rails/SkipsModelValidations:
 # syntax in the specs files.
 Lint/AmbiguousBlockAssociation:
   Exclude:
-    - '*/spec/**/*'
-    - 'spec/**/*' # For the benefit of apps that inherit from this config
+    - "*/spec/**/*"
+    - "spec/**/*" # For the benefit of apps that inherit from this config
 
 # We use eval to add common_spree_dependencies into the Gemfiles of each of our gems
 Security/Eval:
   Exclude:
-    - 'Gemfile'
-    - 'common_spree_dependencies.rb'
-    - '*/Gemfile'
+    - "Gemfile"
+    - "common_spree_dependencies.rb"
+    - "*/Gemfile"
 
 Naming/VariableNumber:
   Enabled: false
@@ -306,10 +306,10 @@ Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
   Exclude:
-    - '*/lib/generators/**/*'
-    - '**/bin/**/*'
-    - '*/db/migrate/**/*'
-    - '*/config/importmap.rb'
+    - "*/lib/generators/**/*"
+    - "**/bin/**/*"
+    - "*/db/migrate/**/*"
+    - "*/config/importmap.rb"
 
 # json.() is idiomatic in jbuilder files
 Style/LambdaCall:
@@ -333,13 +333,13 @@ Lint/SuppressedException:
 
 Lint/MissingSuper:
   Exclude:
-    - '*/app/components/**/*' # components need pristine initializer methods
-    - 'core/lib/spree/deprecated_instance_variable_proxy.rb' # this is a known class that doesn't require super
-    - 'core/lib/spree/preferences/configuration.rb' # this class has no superclass defining `self.inherited`
+    - "*/app/components/**/*" # components need pristine initializer methods
+    - "core/lib/spree/deprecated_instance_variable_proxy.rb" # this is a known class that doesn't require super
+    - "core/lib/spree/preferences/configuration.rb" # this class has no superclass defining `self.inherited`
 
 Rails/FindEach:
   Exclude:
-    - 'db/migrate/**/*'
+    - "db/migrate/**/*"
 
 # Since we're writing library code we can't assume that
 # tasks should load the rails environment loaded.

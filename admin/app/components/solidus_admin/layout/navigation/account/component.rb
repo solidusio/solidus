@@ -11,7 +11,7 @@ class SolidusAdmin::Layout::Navigation::Account::Component < SolidusAdmin::BaseC
   def locale_options_for_select(available_locales)
     available_locales.map do |locale|
       [
-        t("spree.i18n.this_file_language", locale: locale, default: locale.to_s, fallback: false),
+        t("spree.i18n.this_file_language", locale:, default: locale.to_s, fallback: false),
         locale,
       ]
     end.sort
@@ -27,7 +27,7 @@ class SolidusAdmin::Layout::Navigation::Account::Component < SolidusAdmin::BaseC
         block_given? ? capture(&block) : nil,
         tag.label(safe_join([
           icon_tag(icon, class: "w-full max-w-[20px] h-5 fill-current shrink"),
-          tag.select(options, name: name, onchange: "this.form.requestSubmit()", class: "w-full appearance-none grow bg-transparent outline-none"),
+          tag.select(options, name:, onchange: "this.form.requestSubmit()", class: "w-full appearance-none grow bg-transparent outline-none"),
           icon_tag("expand-up-down-line", class: "w-full max-w-[20px] h-5 fill-current shrink"),
         ]), class: "flex gap-2 items-center px-2"),
       ])

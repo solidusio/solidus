@@ -10,8 +10,8 @@ module DummyApp
         require lib_name
         require 'spree/testing_support/dummy_app'
         DummyApp.setup(
-          gem_root: gem_root,
-          lib_name: lib_name,
+          gem_root:,
+          lib_name:,
           auto_migrate: false
         )
       end

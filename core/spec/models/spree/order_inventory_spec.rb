@@ -302,7 +302,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
 
     context "inventory unit line item and variant points to different products" do
       let(:new_quantity) { 0 }
-      let(:different_line_item) { create(:line_item, order: order) }
+      let(:different_line_item) { create(:line_item, order:) }
 
       let!(:different_inventory) do
         shipment.set_up_inventory("on_hand", variant, order, different_line_item)
@@ -317,7 +317,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
   end
 
   context 'when the order has no suitable shipment for the variant' do
-    let(:new_line_item) { create :line_item, order: order }
+    let(:new_line_item) { create :line_item, order: }
 
     before do
       new_line_item.inventory_units.destroy_all

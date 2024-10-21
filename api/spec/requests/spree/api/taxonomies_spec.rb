@@ -5,13 +5,13 @@ require 'spec_helper'
 module Spree::Api
   describe 'Taxonomies', type: :request do
     let(:taxonomy) { create(:taxonomy) }
-    let(:taxon) { create(:taxon, name: "Ruby", taxonomy: taxonomy) }
-    let(:taxon2) { create(:taxon, name: "Rails", taxonomy: taxonomy) }
+    let(:taxon) { create(:taxon, name: "Ruby", taxonomy:) }
+    let(:taxon2) { create(:taxon, name: "Rails", taxonomy:) }
     let(:attributes) { [:id, :name] }
 
     before do
       stub_authentication!
-      taxon2.children << create(:taxon, name: "3.2.2", taxonomy: taxonomy)
+      taxon2.children << create(:taxon, name: "3.2.2", taxonomy:)
       taxon.children << taxon2
       taxonomy.root.children << taxon
     end

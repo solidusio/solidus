@@ -5,7 +5,7 @@ require 'spec_helper'
 module Spree::Api
   describe 'Payments', type: :request do
     let!(:order) { create(:order_with_line_items) }
-    let!(:payment) { create(:payment, order: order, amount: order.amount) }
+    let!(:payment) { create(:payment, order:, amount: order.amount) }
     let!(:attributes) {
       [:id, :source_type, :source_id, :amount, :display_amount,
        :payment_method_id, :state, :avs_response,
@@ -119,7 +119,7 @@ module Spree::Api
       end
 
       context "multiple payments" do
-        before { @payment = create(:payment, order: order) }
+        before { @payment = create(:payment, order:) }
 
         it "can view all payments on an order" do
           get spree.api_order_payments_path(order)

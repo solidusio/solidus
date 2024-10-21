@@ -26,7 +26,7 @@ RSpec.describe Spree::Carton do
       carton.tracking_url
     end
 
-    let(:carton) { create(:carton, shipping_method: shipping_method) }
+    let(:carton) { create(:carton, shipping_method:) }
     let(:shipping_method) do
       create(:shipping_method, tracking_url: "https://example.com/:tracking")
     end
@@ -37,7 +37,7 @@ RSpec.describe Spree::Carton do
 
     context "when tracking is present" do
       let(:carton) do
-        create(:carton, shipping_method: shipping_method, tracking: "1Z12345")
+        create(:carton, shipping_method:, tracking: "1Z12345")
       end
 
       it "uses shipping method to determine url" do
@@ -81,8 +81,8 @@ RSpec.describe Spree::Carton do
     let(:email) { 'something@something.com' }
 
     before do
-      first_order.update!(email: email)
-      second_order.update!(email: email)
+      first_order.update!(email:)
+      second_order.update!(email:)
     end
 
     it "returns a unique list of the order emails it is associated to" do

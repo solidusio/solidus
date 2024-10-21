@@ -53,6 +53,6 @@ class SolidusAdmin::UI::Forms::Checkbox::ComponentPreview < ViewComponent::Previ
   # @param checked toggle
   # @param disabled toggle
   def playground(size: :m, checked: false, disabled: false)
-    render current_component.new(size: size.to_sym, checked: checked, disabled: disabled)
+    render current_component.new(size: size.to_sym, checked:, disabled:)
   end
 end

@@ -77,7 +77,7 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
               when 'customer' then :green
               else :graphite_light
               end
-            render component('ui/badge').new(name: _1.name, color: color)
+            render component('ui/badge').new(name: _1.name, color:)
           })
         end,
       },

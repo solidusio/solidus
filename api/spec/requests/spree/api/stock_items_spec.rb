@@ -55,7 +55,7 @@ module Spree::Api
             }
           }
 
-          post spree.api_stock_location_stock_items_path(stock_location), params: params
+          post(spree.api_stock_location_stock_items_path(stock_location), params:)
           expect(response.status).to eq(401)
         end
       end
@@ -122,13 +122,13 @@ module Spree::Api
           {
             stock_item: {
               variant_id: variant.id,
-              count_on_hand: count_on_hand
+              count_on_hand:
             }
           }
         end
 
         subject do
-          post spree.api_stock_location_stock_items_path(stock_location), params: params
+          post spree.api_stock_location_stock_items_path(stock_location), params:
         end
 
         it 'can create a new stock item' do
@@ -182,7 +182,7 @@ module Spree::Api
         end
 
         subject do
-          put spree.api_stock_item_path(stock_item), params: params
+          put spree.api_stock_item_path(stock_item), params:
         end
 
         context 'adjusting count_on_hand' do
@@ -190,7 +190,7 @@ module Spree::Api
           let(:params) do
             {
               stock_item: {
-                count_on_hand: count_on_hand,
+                count_on_hand:,
                 backorderable: true
               }
             }
@@ -248,7 +248,7 @@ module Spree::Api
             {
               id: stock_item.to_param,
               stock_item: {
-                count_on_hand: count_on_hand,
+                count_on_hand:,
                 backorderable: true,
                 force: true
               }

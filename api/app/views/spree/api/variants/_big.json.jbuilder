@@ -2,7 +2,7 @@
 
 json.cache! [I18n.locale, Spree::StockLocation.accessible_by(current_ability), variant] do
   json.(variant, *variant_attributes)
-  json.partial!("spree/api/variants/small", variant: variant)
+  json.partial!("spree/api/variants/small", variant:)
   json.variant_properties(variant.variant_properties) do |variant_property|
     json.(variant_property, *variant_property_attributes)
   end

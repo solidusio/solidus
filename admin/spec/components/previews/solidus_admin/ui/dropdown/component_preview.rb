@@ -14,11 +14,11 @@ class SolidusAdmin::UI::Dropdown::ComponentPreview < ViewComponent::Preview
   # @param open toggle
   def playground(text: "text", size: :m, direction: :right, open: false)
     render component("ui/dropdown").new(
-      text: text,
+      text:,
       size: size.to_sym,
       direction: direction.to_sym,
       style: "float: #{direction == :left ? 'right' : 'left'}",
-      open: open,
+      open:,
     ).with_content(
       tag.span("Lorem ipsum dolor sit amet"),
     )

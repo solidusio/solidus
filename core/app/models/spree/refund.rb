@@ -21,7 +21,7 @@ module Spree
     delegate :currency, to: :payment
 
     def money
-      Spree::Money.new(amount, { currency: currency })
+      Spree::Money.new(amount, { currency: })
     end
     alias display_amount money
 

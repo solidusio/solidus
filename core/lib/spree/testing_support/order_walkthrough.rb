@@ -4,7 +4,7 @@ module Spree
   module TestingSupport
     class OrderWalkthrough
       def self.up_to(state, user: nil)
-        new.up_to(state, user: user)
+        new.up_to(state, user:)
       end
 
       def up_to(state, user: nil)
@@ -23,7 +23,7 @@ module Spree
         end
 
         order = Spree::Order.create!(
-          user: user,
+          user:,
           email: "solidus@example.com",
           store: Spree::Store.first || ::FactoryBot.create(:store)
         )
@@ -47,7 +47,7 @@ module Spree
       private
 
       def add_line_item!(order)
-        ::FactoryBot.create(:line_item, order: order)
+        ::FactoryBot.create(:line_item, order:)
         order.reload
       end
 

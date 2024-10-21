@@ -11,7 +11,7 @@ module Spree
         let(:product) { create(:product) }
         let(:params) { { product_id: product.slug } }
 
-        subject { get :index, params: params }
+        subject { get :index, params: }
 
         context "the value of @parent" do
           it "is the product" do
@@ -30,8 +30,8 @@ module Spree
         end
 
         context "the value of @collection" do
-          let!(:variant) { create(:variant, product: product) }
-          let!(:deleted_variant) { create(:variant, product: product) }
+          let!(:variant) { create(:variant, product:) }
+          let!(:deleted_variant) { create(:variant, product:) }
 
           context "with soft-deleted variants" do
             before { deleted_variant.discard }

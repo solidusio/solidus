@@ -31,7 +31,7 @@ RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
     Object.send(:remove_const, :LimitedProduct)
   end
 
-  let(:record) { LimitedProduct.new(slug: slug) }
+  let(:record) { LimitedProduct.new(slug:) }
 
   context "when slug is below limit" do
     let(:slug) { 'a' * 255 }

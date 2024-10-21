@@ -10,6 +10,6 @@ class SolidusAdmin::UI::ThumbnailWithCaption::Component < SolidusAdmin::BaseComp
   end
 
   def icon_thumbnail
-    render component("ui/thumbnail").new(icon: icon)
+    render component("ui/thumbnail").new(icon:)
   end
 end

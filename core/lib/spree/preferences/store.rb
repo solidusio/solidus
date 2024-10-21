@@ -19,7 +19,7 @@ module Spree::Preferences
 
     def exist?(key)
       @cache.exist?(key) ||
-        should_persist? && Spree::Preference.where(key: key).exists?
+        should_persist? && Spree::Preference.where(key:).exists?
     end
 
     def get(key)
@@ -35,7 +35,7 @@ module Spree::Preferences
         # has been cleared from the cache
 
         # does it exist in the database?
-        if preference = Spree::Preference.find_by(key: key)
+        if preference = Spree::Preference.find_by(key:)
           # it does exist
           val = preference.value
         else

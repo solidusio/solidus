@@ -107,7 +107,7 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
         Spree::Promotion::Rules::Product.create!(
           promotion: create(:promotion),
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: product),
+            Spree::ProductPromotionRule.new(product:),
           ],
         ).tap do |rule|
           rule.preferred_match_policy = 'invalid'

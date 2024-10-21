@@ -26,7 +26,7 @@ module Spree
           update_shipments
           update_shipment_state
         end
-        Spree::Bus.publish :order_recalculated, order: order
+        Spree::Bus.publish(:order_recalculated, order:)
         persist_totals
       end
     end
@@ -188,7 +188,7 @@ module Spree
         order.state_changes.new(
           previous_state: old_state,
           next_state:     new_state,
-          name:           name,
+          name:,
           user_id:        order.user_id
         )
       end

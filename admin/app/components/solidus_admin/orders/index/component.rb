@@ -124,7 +124,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
           'canceled' => :blue,
           'cart' => :graphite_light,
         }[order.state] || :yellow
-        component('ui/badge').new(name: order.state.humanize, color: color)
+        component('ui/badge').new(name: order.state.humanize, color:)
       end
     }
   end
