@@ -63,6 +63,10 @@ module Spree
     #   @return [Boolean] When false, customers must create an account to complete an order (default: +true+)
     preference :allow_guest_checkout, :boolean, default: true
 
+    # @!attribute [rw] default_use_store_credits
+    #   @return [Boolean] When true, user store credits will applied for default (default: +true+)
+    preference :default_use_store_credits, :boolean, default: true
+
     # @!attribute [rw] guest_token_cookie_options
     #   @return [Hash] Add additional guest_token cookie options here (ie. domain or path)
     preference :guest_token_cookie_options, :hash, default: {}
