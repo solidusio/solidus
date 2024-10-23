@@ -256,7 +256,7 @@ jobs:
   solidus_installer:
     executor:
       name: sqlite
-      ruby: "3.0"
+      ruby: "3.1"
     steps:
       - checkout
       - run:
