@@ -1,0 +1,47 @@
+<div class="form-group">
+  <%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+    <%= f.label :preferred_base_percent %>
+    <%= f.number_field :preferred_base_percent, step: 1, min: 0, max: 100, default: 1, class: "form-control" %>
+  <% end %>
+</div>
+
+<div class="form-group">
+  <%= label_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    t('spree.currency')
+  ) %>
+  <%= select_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    options_for_select(
+      Spree::Config.available_currencies,
+      calculator.preferred_currency || Spree::Config[:currency]
+    ),
+    { is: "select-two", class: 'fullwidth' }
+  ) %>
+</div>
+
+<div class="form-group">
+  <%= label_tag nil, calculator.class.human_attribute_name(:tiers)  %>
+  <div data-controller="calculator-tiers">
+    <div class="d-flex">
+      <div class="item-total-label" style="flex-grow: 1">
+        <%= SolidusPromotions::Calculators::TieredPercent.human_attribute_name(:order_item_total) %>
+      </div>
+      <div class="discount-label mx-2" style="flex-grow: 1">
+        <%= SolidusPromotions::Calculators::TieredPercent.human_attribute_name(:percent) %>
+      </div>
+      <div class="tools m-3">
+
+      </div>
+    </div>
+    <template data-calculator-tiers-target="template">
+      <%= render "solidus_promotions/admin/calculator_fields/tiered_percent/tier_fields", tier: [nil, nil], form: form %>
+    </template>
+    <% form.object.calculator.preferred_tiers.each do |tier| %>
+      <%= render "solidus_promotions/admin/calculator_fields/tiered_percent/tier_fields", tier: tier, form: form %>
+    <% end %>
+    <div class="mb-3" data-calculator-tiers-target="links">
+      <%= link_to t(:add_tier, scope: [:solidus_promotions, :admin, :promotions, :calculator]), "#", class: "btn btn-outline-primary", data: { action: "click->calculator-tiers#add_association" } %>
+    </div>
+  </div>
+</div>

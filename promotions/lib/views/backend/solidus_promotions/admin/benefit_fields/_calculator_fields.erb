@@ -1,0 +1,11 @@
+
+<% calculator = benefit.calculator %>
+<% type_name = calculator.type.demodulize.underscore %>
+<p>
+  <%= calculator.description %>
+</p>
+<% if lookup_context.exists?("fields",  ["solidus_promotions/admin/calculator_fields/#{type_name}"], true) %>
+  <%= render "solidus_promotions/admin/calculator_fields/#{type_name}/fields", calculator: calculator, prefix: param_prefix, form: form %>
+<% else %>
+  <%= render "solidus_promotions/admin/calculator_fields/default_fields", calculator: calculator, prefix: param_prefix, form: form %>
+<% end %>

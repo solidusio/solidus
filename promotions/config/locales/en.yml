@@ -1,0 +1,376 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  spree:
+    admin:
+      tab:
+        promotions: Promotions
+        promotion_categories: Promotion Categories
+        legacy_promotions: Legacy Promotions
+        legacy_promotion_categories: Legacy Promotion Categories
+    hints:
+      solidus_promotions/promotion:
+        expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
+        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion because all its conditions / benefits will be applied automatically to all orders.
+        starts_at: This determines when the promotion can be applied to orders. <br> If no value is specified, the promotion will be immediately available.
+  solidus_promotions:
+    hints:
+      solidus_promotions/benefit:
+        conditions: This is used to determine if the benefit should be applied.
+        type: This is the type of benefit that will be applied.
+        calculator: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
+    benefits: Benefits
+    adjustment_labels:
+      line_item: "%{promotion} (%{promotion_customer_label})"
+      shipment: "%{promotion} (%{promotion_customer_label})"
+      shipping_rate: "%{promotion} (%{promotion_customer_label})"
+    adjustment_type: Adjustment type
+    add_benefit: Add Benefit
+    add_condition: Add Condition
+    order_conditions: Order Conditions
+    line_item_conditions: Line Item Conditions
+    shipment_conditions: Shipment Conditions
+    line_item_benefits: Line Item Benefits
+    shipment_benefits: Shipment Benefits
+    order_benefits: Order Benefits
+    invalid_benefit: Invalid promotion benefit.
+    invalid_condition: Invalid promotion condition.
+    create_promotion_code: Create promotion code
+    current_promotion_usage: 'Current Usage: %{count}'
+    discount_conditions: Promotion Conditions
+    download_promotion_codes_list: Download codes list
+    new_promotion: New Promotion
+    new_promotion_category: New Promotion Category
+    new_promotion_code_batch: New Promotion Code Batch
+    number_of_codes: "%{count} codes"
+    legacy_promotions: Legacy Promotions
+    no_conditions_added: No Conditions Added
+    promotion_successfully_created: Promotion has been successfully created!
+    promotion_total_changed_before_complete: One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again.
+    promotion_code_batches:
+      finished: Finished
+      errored: Errored
+    view_promotion_codes_list: View codes list
+    conditions:
+      line_item_product:
+        match_policies:
+          include: Line item's product is one of the chosen products
+          exclude: Line item's product is not one of the chosen products
+      line_item_taxon:
+        match_policies:
+          include: Line item's product has one of the chosen taxons
+          exclude: Line item's product does not have one of the chosen taxons
+    item_total_condition:
+      operators:
+        gt: greater than
+        gte: greater than or equal to
+    user_condition:
+      choose_users: Choose Users
+    user_role_condition:
+      choose_roles: Choose Roles
+      label: User must contain %{select} of these roles
+      match_all: all
+      match_any: at least one
+    coupon_code: Coupon code
+    eligibility_results:
+      coupon_code_applied: The coupon code was successfully applied to your order.
+      coupon_code_removed: The coupon code was successfully removed from this order.
+    eligibility_errors:
+      coupon_code_already_applied: The coupon code has already been applied to this order
+      coupon_code_expired: The coupon code is expired
+      coupon_code_max_usage: Coupon code usage limit exceeded
+      coupon_code_not_eligible: This coupon code is not eligible for this order
+      coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
+      coupon_code_not_present: The coupon code you are trying to remove is not present on this order.
+      coupon_code_unknown_error: This coupon code could not be applied to the cart at this time.
+      solidus_promotions/conditions/first_order:
+        not_first_order: This coupon code can only be applied to your first order.
+      solidus_promotions/conditions/first_repeat_purchase_since:
+      solidus_promotions/conditions/item_total:
+        item_total_doesnt_match_with_operator: This coupon code can't be applied to orders %{operator} %{amount}.
+        item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
+        item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
+      solidus_promotions/conditions/discounted_item_total:
+        item_total_doesnt_match_with_operator: This coupon code can't be applied to orders %{operator} %{amount}.
+        item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
+        item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
+      solidus_promotions/conditions/landing_page:
+      solidus_promotions/conditions/nth_order:
+      solidus_promotions/conditions/one_use_per_user:
+        no_user_specified: You need to login before applying this coupon code.
+        limit_once_per_user: This coupon code can only be used once per user.
+      solidus_promotions/conditions/option_value:
+      solidus_promotions/conditions/line_item_option_value:
+      solidus_promotions/conditions/product:
+        has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
+        missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
+        no_applicable_products: You need to add an applicable product before applying this coupon code.
+      solidus_promotions/conditions/line_item_product:
+        has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
+        missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
+        no_applicable_products: You need to add an applicable product before applying this coupon code.
+      solidus_promotions/conditions/taxon:
+        has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
+        missing_taxon: You need to add a product from all applicable categories before applying this coupon code.
+        no_matching_taxons: You need to add a product from an applicable category before applying this coupon code.
+      solidus_promotions/conditions/line_item_taxon:
+        has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
+        missing_taxon: You need to add a product from all applicable categories before applying this coupon code.
+        no_matching_taxons: You need to add a product from an applicable category before applying this coupon code.
+      solidus_promotions/conditions/user:
+        no_user_specified: You need to login before applying this coupon code.
+      solidus_promotions/conditions/user_logged_in:
+        no_user_specified: You need to login before applying this coupon code.
+      solidus_promotions/conditions/user_role:
+      solidus_promotions/conditions/minimum_quantity:
+        quantity_less_than_minimum:
+          one: "You need to add a least 1 applicable item to your order."
+          other: "You need to add a least %{count} applicable items to your order."
+    product_condition:
+      choose_products: Choose products
+      label: Order must contain %{select} these products
+      match_all: all of
+      match_any: at least one of
+      match_none: none of
+      match_only: only
+      product_source:
+        group: From product group
+        manual: Manually choose
+    taxon_condition:
+      choose_taxons: Choose taxons
+      label: Order must contain %{select} of these taxons
+      match_all: all
+      match_any: at least one
+      match_none: none
+    line_item_option_value_condition:
+      add_product: Add product
+    option_value_condition:
+      add_product: Add product
+    crud:
+      add: Add
+      destroy: Delete
+      update: Update
+    admin:
+      promotions:
+        benefits:
+          calculator_label: Calculated by
+        activations_edit:
+          auto: All orders will attempt to use this promotion
+          multiple_codes_html: This promotion uses %{count} promotion codes
+          single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
+        activations_new:
+          auto: Apply to all orders
+          multiple_codes: Multiple promotion codes
+          single_code: Single promotion code
+        form:
+          activation: Activation
+          expires_at_placeholder: Never
+          general: General
+          starts_at_placeholder: Immediately
+          codes_present: This promotion has promotion codes defined. You cannot select the apply automatically option.
+        edit:
+          order_conditions: Order Conditions
+        calculator:
+          add_tier: Add tier
+      promotion_status:
+        active: Active
+        expired: Expired
+        inactive: Inactive
+        not_started: Not started
+    promotion_code_batch_mailer:
+      promotion_code_batch_errored:
+        message: 'Promotion code batch errored (%{error}) for promotion: '
+        subject: Promotion code batch errored
+      promotion_code_batch_finished:
+        message: 'All %{number_of_codes} codes have been created for promotion: '
+        subject: Promotion code batch finished
+  activerecord:
+    models:
+      solidus_promotions/benefits/adjust_shipment: Discount matching shipments
+      solidus_promotions/benefits/adjust_line_item: Discount matching line items
+      solidus_promotions/benefits/create_discounted_item: Create discounted line item
+      solidus_promotions/benefits/adjust_line_item_quantity_groups: Discount matching line items based on quantity groups
+      solidus_promotions/calculators/distributed_amount: Distributed Amount
+      solidus_promotions/calculators/percent: Percent
+      solidus_promotions/calculators/flat_rate: Flat Rate
+      solidus_promotions/calculators/flexi_rate: Flexible Rate
+      solidus_promotions/calculators/tiered_flat_rate: Tiered Flat Rate
+      solidus_promotions/calculators/tiered_percent: Tiered Percent
+      solidus_promotions/calculators/tiered_percent_on_eligible_item_quantity: Tiered Percent based on eligible item quantity
+      solidus_promotions/conditions/first_order: First Order
+      solidus_promotions/conditions/first_repeat_purchase_since: First Repeat Purchase Since
+      solidus_promotions/conditions/item_total: Item Total
+      solidus_promotions/conditions/discounted_item_total: Item Total after previous lanes
+      solidus_promotions/conditions/landing_page: Landing Page
+      solidus_promotions/conditions/minimum_quantity: Minimum Quantity
+      solidus_promotions/conditions/nth_order: Nth Order
+      solidus_promotions/conditions/one_use_per_user: One Use Per User
+      solidus_promotions/conditions/option_value: Option Value(s)
+      solidus_promotions/conditions/line_item_option_value: Line Item Option Value(s)
+      solidus_promotions/conditions/product: Order Product(s)
+      solidus_promotions/conditions/line_item_product: Line Item Product(s)
+      solidus_promotions/conditions/taxon: Order Taxon(s)
+      solidus_promotions/conditions/line_item_taxon: Line Item Taxon(s)
+      solidus_promotions/conditions/user: User
+      solidus_promotions/conditions/user_logged_in: User Logged In
+      solidus_promotions/conditions/user_role: User Role(s)
+      solidus_promotions/promotion_code_batch:
+        one: Code batch
+        other: Code batches
+    attributes:
+      solidus_promotions/promotion:
+        active: Active
+        customer_label: Customer-facing label
+        usage: Usage
+        lanes:
+          pre: Pre
+          default: Default
+          post: Post
+      solidus_promotions/benefit:
+        type: Benefit Type
+      solidus_promotions/condition:
+        type: Condition Type
+      solidus_promotions/benefits/adjust_line_item:
+        description: Creates a promotion credit on matching line items
+      solidus_promotions/benefits/adjust_shipment:
+        description: Creates a promotion credit on matching shipments
+      solidus_promotions/benefits/create_discounted_item:
+        description: Creates a discounted item with the quantity the applicable line items.
+        preferred_quantity: Quantity per applicable line item quantity
+        preferred_necessary_quantity: Number of items needed for a discounted item
+      solidus_promotions/conditions/first_order:
+        description: Must be the customer's first order
+      solidus_promotions/conditions/first_repeat_purchase_since:
+        description: Available only to users who have not purchased in a while
+        preferred_days_ago: Last purchase was at least this many days ago
+      solidus_promotions/conditions/item_total:
+        description: Order total must be greater than or equal to the specified amount
+        preferred_operator: Operator
+        preferred_amount: Amount
+      solidus_promotions/conditions/landing_page:
+        description: Customer must have visited the specified page
+      solidus_promotions/conditions/nth_order:
+        description: Apply a promotion to the nth order a user has completed.
+        form_text: 'Apply this promotion on the users Nth order: '
+      solidus_promotions/conditions/one_use_per_user:
+        description: Only one use per user
+      solidus_promotions/conditions/option_value:
+        description: Order includes specified product(s) with matching option value(s)
+        preferred_line_item_applicable: Should also apply to line items
+      solidus_promotions/conditions/line_item_option_value:
+        description: Line Item has specified product with matching option value
+      solidus_promotions/conditions/minimum_quantity:
+        description: Order contains minimum quantity of applicable items
+      solidus_promotions/conditions/product:
+        description: Order includes specified product(s)
+        line_item_level_description: 'Line item matches the specified products:'
+        preferred_line_item_applicable: Should also apply to line items
+      solidus_promotions/conditions/line_item_product:
+        description: Line item matches specified product(s)
+        preferred_match_policy: Match Policy
+      solidus_promotions/conditions/store:
+        description: Available only to the specified stores
+      solidus_promotions/conditions/taxon:
+        description: Order includes products with specified taxon(s)
+        preferred_line_item_applicable: Should also apply to line items
+      solidus_promotions/conditions/line_item_taxon:
+        description: Line Item has product with specified taxon(s)
+        preferred_match_policy: Match Policy
+      solidus_promotions/conditions/user:
+        description: Available only to the specified users
+      solidus_promotions/conditions/user_logged_in:
+        description: Available only to logged in users
+      solidus_promotions/conditions/user_role:
+        description: Order includes User with specified Role(s)
+      solidus_promotions/calculators/tiered_flat_rate:
+        description: Flat Rate in tiers based on item amount
+        preferred_base_amount: Base Amount
+        tiers: Tiers
+      solidus_promotions/calculators/tiered_percent:
+        description: Tiered percentage based on order's item total
+        preferred_base_percent: Base Percent
+        tiers: Tiers
+        order_item_total: Order Item Total
+        percent: Percent
+      solidus_promotions/calculators/tiered_percent_on_eligible_item_quantity:
+        description: Tiered percentage based on eligible item quantity
+        preferred_base_percent: Base Percent
+        tiers: Tiers
+        order_item_total: Order Item Total
+        discount: Discount
+      solidus_promotions/calculators/flat_rate:
+        description: Provides a flat rate discount
+      solidus_promotions/calculators/flexi_rate:
+        description: Calculates a discount for the first item and (separately) any additional items, with a maximum number of items that can be specified.
+        preferred_first_item: Discount for the first item
+        preferred_additional_item: Discount for additional items
+        preferred_max_items: Maximum number of items
+        preferred_currency: Currency
+      solidus_promotions/calculators/percent:
+        description: Provides a discount calculated by percent of the discountable amount of the item being discounted
+      solidus_promotions/calculators/distributed_amount:
+        description: Distributes the configured amount among all eligible line items of the order.
+        explanation: |
+          <p>
+            This amount will be distributed to line items weighted relative to
+            their price. More expensive line items will receive a greater share
+            of the adjustment.
+          </p>
+          <p>
+            For example, with three line items and a preferred amount of $15 we
+            would end up with the following distribution:
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Price</th>
+                <th>Weighted Adj.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Socks</td>
+                <td>$5</td>
+                <td>-$1.5</td>
+              </tr>
+              <tr>
+                <td>Shoes</td>
+                <td>$30</td>
+                <td>-$9</td>
+              </tr>
+              <tr>
+                <td>Slippers</td>
+                <td>$15</td>
+                <td>-$4.5</td>
+              </tr>
+            </tbody>
+          </table>
+        preferred_amount: Amount
+
+    errors:
+      models:
+        solidus_promotions/benefit:
+          attributes:
+            base:
+              cannot_destroy_if_order_completed: Benefit has been applied to complete orders. It cannot be destroyed.
+        solidus_promotions/condition:
+          attributes:
+            benefit:
+              already_contains_condition_type: already contains this condition type
+            type:
+              invalid_condition_type: is not a valid condition type
+        solidus_promotions/promotion_code:
+          attributes:
+            base:
+              disallowed_with_apply_automatically: Could not create promotion code on promotion that apply automatically
+        spree/line_item:
+          attributes:
+            quantity:
+              cannot_be_changed_for_automated_items: cannot be changed on a line item managed by a promotion benefit
+        solidus_promotions/promotion:
+          attributes:
+            apply_automatically:
+              disallowed_with_path: cannot be set to true when path is present
+              disallowed_with_promotion_codes: cannot be set to true when promotion code is present
