@@ -35,7 +35,7 @@ module SolidusPromotions
       attr_reader :order
 
       # Walk through the discounts for an item and update adjustments for it. Once
-      # all of the discounts have been added as adjustments, remove any old tax
+      # all of the discounts have been added as adjustments, remove any old promotion
       # adjustments that weren't touched.
       #
       # @private
@@ -49,18 +49,18 @@ module SolidusPromotions
           update_adjustment(item, item_discount)
         end
         item.update(promo_total: active_adjustments.sum(&:amount))
-        # Remove any tax adjustments tied to promotion benefits which no longer match.
+        # Remove any promotion adjustments tied to promotion benefits which no longer match.
         unmatched_adjustments = promotion_adjustments - active_adjustments
 
         item.adjustments.destroy(unmatched_adjustments)
       end
 
-      # Update or create a new tax adjustment on an item.
+      # Update or create a new promotion adjustment on an item.
       #
       # @private
       # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
-      # @param [SolidusPromotions::ItemDiscount] tax_item calculated discounts for an item
-      # @return [Spree::Adjustment] the created or updated tax adjustment
+      # @param [SolidusPromotions::ItemDiscount] discount_item calculated discounts for an item
+      # @return [Spree::Adjustment] the created or updated promotion adjustment
       def update_adjustment(item, discount_item)
         adjustment = item.adjustments.detect do |item_adjustment|
           item_adjustment.source == discount_item.source
