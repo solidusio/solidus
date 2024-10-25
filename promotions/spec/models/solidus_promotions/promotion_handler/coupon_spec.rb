@@ -12,7 +12,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
     expect(order.solidus_order_promotions.flat_map(&:promotion_code)).to include(promotion_code)
   end
 
-  def expect_adjustment_creation(adjustable:, promotion:, promotion_code: nil)
+  def expect_adjustment_creation(adjustable:, promotion:)
     expect(adjustable.adjustments.map(&:source).map(&:promotion)).to include(promotion)
   end
 
@@ -111,7 +111,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
             expect(subject.success).to be_present
             expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
             order.line_items.each do |line_item|
-              expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+              expect_adjustment_creation(adjustable: line_item, promotion: promotion)
             end
             # Ensure that applying the adjustment actually affects the order's total!
             expect(order.reload.total).to eq(100)
@@ -134,7 +134,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
             expect(subject.success).to be_present
             expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
             order.line_items.each do |line_item|
-              expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+              expect_adjustment_creation(adjustable: line_item, promotion: promotion)
             end
             # Ensure that applying the adjustment actually affects the order's total!
             expect(order.reload.total).to eq(100)
@@ -160,7 +160,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
           expect(subject).to be_successful
           expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
           order.line_items.each do |line_item|
-            expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+            expect_adjustment_creation(adjustable: line_item, promotion: promotion)
           end
         end
       end
@@ -183,7 +183,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
           expect(subject).to be_successful
           order.line_items.each do |line_item|
             expect(line_item.adjustments.count).to eq 2
-            expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+            expect_adjustment_creation(adjustable: line_item, promotion: promotion)
           end
         end
       end
@@ -209,7 +209,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
 
           expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
           order.shipments.each do |shipment|
-            expect_adjustment_creation(adjustable: shipment, promotion: promotion, promotion_code: promotion_code)
+            expect_adjustment_creation(adjustable: shipment, promotion: promotion)
           end
         end
 
@@ -243,7 +243,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
           expect(order.all_adjustments.count).to eq(order.line_items.count)
           expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
           order.line_items.each do |line_item|
-            expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+            expect_adjustment_creation(adjustable: line_item, promotion: promotion)
           end
         end
 

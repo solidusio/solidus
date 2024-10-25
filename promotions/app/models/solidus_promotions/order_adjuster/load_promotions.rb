@@ -11,10 +11,10 @@ module SolidusPromotions
       def call
         promos = connected_order_promotions | sale_promotions
         promos << dry_run_promotion if dry_run_promotion
-        promos.flat_map(&:benefits).group_by(&:preload_relations).each do |preload_relations, benefits|
-          preload(records: benefits, associations: preload_relations)
-          benefits.flat_map(&:conditions).group_by(&:preload_relations).each do |preload_relations, conditions|
-            preload(records: conditions, associations: preload_relations)
+        promos.flat_map(&:benefits).group_by(&:preload_relations).each do |benefit_preload_relations, benefits|
+          preload(records: benefits, associations: benefit_preload_relations)
+          benefits.flat_map(&:conditions).group_by(&:preload_relations).each do |condition_preload_relations, conditions|
+            preload(records: conditions, associations: condition_preload_relations)
           end
         end
         promos.reject { |promotion| promotion.usage_limit_exceeded?(excluded_orders: [order]) }

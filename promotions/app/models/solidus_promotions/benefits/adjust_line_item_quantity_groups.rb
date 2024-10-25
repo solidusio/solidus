@@ -60,11 +60,11 @@ module SolidusPromotions
         order = line_item.order
         line_items = applicable_line_items(order)
 
-        item_units = line_items.sort_by do |line_item|
-          [-line_item.quantity, line_item.id]
-        end.flat_map do |line_item|
-          Array.new(line_item.quantity) do
-            Item.new(line_item)
+        item_units = line_items.sort_by do |applicable_line_item|
+          [-applicable_line_item.quantity, applicable_line_item.id]
+        end.flat_map do |applicable_line_item|
+          Array.new(applicable_line_item.quantity) do
+            Item.new(applicable_line_item)
           end
         end
 
