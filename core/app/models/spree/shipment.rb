@@ -277,10 +277,10 @@ module Spree
       @tracking_url ||= shipping_method.build_tracking_url(tracking)
     end
 
-    def update_amounts
+    def update_amounts(persist: true)
       if selected_shipping_rate
         self.cost = selected_shipping_rate.cost
-        if changed?
+        if changed? && persist
           update_columns(
             cost:,
             updated_at: Time.current
