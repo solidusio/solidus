@@ -507,14 +507,23 @@ RSpec.describe Spree::Shipment, type: :model do
     end
   end
 
-  context "updates cost when selected shipping rate is present" do
-    let(:shipment) { create(:shipment) }
-    before { shipment.selected_shipping_rate.update!(cost: 5) }
+  describe "#update_amounts" do
+    let(:shipment) { create(:shipment, cost: 3) }
 
-    it "updates shipment totals" do
-      expect {
-        shipment.update_amounts
-      }.to change { shipment.cost }.to(5)
+    context 'when the selected shipping rate cost is different than the current shipment cost' do
+      before { shipment.selected_shipping_rate.update!(cost: 5) }
+
+      it "updates the shipments cost" do
+        expect {
+          shipment.update_amounts
+        }.to change { shipment.reload.cost }.to(5)
+      end
+
+      it 'changes the updated_at column' do
+        expect {
+          shipment.update_amounts
+        }.to change { shipment.reload.updated_at }
+      end
     end
   end
 
