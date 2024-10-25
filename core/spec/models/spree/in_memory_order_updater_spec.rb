@@ -37,6 +37,30 @@ module Spree
           expect(order.item_count).to eq 1
           expect(order.reload.item_count).to eq 0
         end
+
+        context 'when a shipment is attached to the order' do
+          let(:shipment) { create(:shipment) }
+
+          before do
+            order.shipments << shipment
+          end
+
+          it 'does not make manipulative database queries' do
+            expect {
+              subject
+            }.not_to make_database_queries(manipulative: true)
+          end
+
+          context 'when the shipment has a selected shipping rate' do
+            let(:shipment) { create(:shipment, shipping_rates: [build(:shipping_rate, selected: true)]) }
+
+            it 'does not make manipulative database queries' do
+              expect {
+                subject
+              }.not_to make_database_queries(manipulative: true)
+            end
+          end
+        end
       end
 
       context "when the persist flag is set to 'true'" do
