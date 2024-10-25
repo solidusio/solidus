@@ -27,7 +27,8 @@ class Project
       new('backend', test_type: :teaspoon, title: "backend JS", weight: 18),
       new('core', weight: 266),
       new('sample', weight: 28),
-      new('legacy_promotions', weight: 63)
+      new('legacy_promotions', weight: 63),
+      new('promotions', weight: 63)
     ]
   end
 
@@ -113,7 +114,6 @@ class Project
     base_dir.join('rspec').tap { mkdir_p _1 }
   end
 end
-
 
 if ENV['CIRCLE_NODE_INDEX'] # Run projects on a CI node
   projects = Project.weighted_projects(

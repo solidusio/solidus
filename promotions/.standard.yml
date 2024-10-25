@@ -1,4 +1,0 @@
-ruby_version: 3.0
-ignore:
-  - 'sandbox/**/*'
-  - 'spec/dummy/**/*'
