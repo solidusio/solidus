@@ -1,0 +1,20 @@
+<%= form_with(
+    model: @condition || benefit.conditions.build,
+    scope: :condition,
+    url: solidus_promotions.new_admin_promotion_benefit_condition_path(@promotion, benefit),
+    method: :get,
+    class: "mb-3"
+  ) do |form| %>
+  <%= form.label :type %>
+  <%= admin_hint SolidusPromotions::Condition.human_attribute_name(:type), t(:conditions, scope: [:solidus_promotions, :hints, "solidus_promotions/benefit"]) %>
+  <%=
+    form.select :type,
+      options_for_condition_types(benefit, @condition),
+      {
+        include_blank: t(:choose_condition, scope: 'solidus_promotions')
+      },
+      class: 'custom-select fullwidth',
+      onchange: 'this.form.requestSubmit()',
+      required: true
+  %>
+<% end %>

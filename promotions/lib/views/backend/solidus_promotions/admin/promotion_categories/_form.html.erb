@@ -1,0 +1,14 @@
+<%= render partial: 'spree/shared/error_messages', locals: { target: @promotion_category } %>
+
+<div class='row'>
+  <div class='col-4'>
+    <%= f.field_container :name do %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'fullwidth' %>
+    <% end %>
+    <%= f.field_container :code do %>
+      <%= f.label :code %>
+      <%= f.text_field :code, class: 'fullwidth' %>
+    <% end %>
+  </div>
+</div>

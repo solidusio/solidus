@@ -1,0 +1,57 @@
+<table class="index">
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :name %></th>
+      <th><%= SolidusPromotions::Promotion.human_attribute_name(:code) %></th>
+      <th><%= SolidusPromotions::Promotion.human_attribute_name(:status) %></th>
+      <th><%= SolidusPromotions::Promotion.human_attribute_name(:usage) %></th>
+      <th><%= sort_link @search, :starts_at %></th>
+      <th><%= sort_link @search, :expires_at %></th>
+      <th><%= SolidusPromotions::Promotion.human_attribute_name(:lane) %></th>
+      <th><%= sort_link @search, :updated_at %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% promotions.each do |promotion| %>
+      <tr class="<%= 'deleted' if promotion.discarded? %>" id="<%= spree_dom_id promotion %>">
+        <td><%= promotion.name %></td>
+        <td>
+          <%= (promotion.codes.size == 1) ? promotion.codes.pluck(:value).first : t('solidus_promotions.number_of_codes', count: promotion.codes.size) %>
+        </td>
+        <td>
+          <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
+            <%= t(admin_promotion_status(promotion), scope: 'solidus_promotions.admin.promotion_status') %>
+          </span>
+        </td>
+        <td>
+          <% if promotion.usage_limit.nil? %>
+            <%= promotion.discounted_orders.exists? ? t(:say_yes, scope: :spree) : t(:say_no, scope: :spree) %>
+          <% else %>
+            <%= promotion.usage_count %> / <%= promotion.usage_limit %>
+          <% end %>
+        </td>
+        <td>
+          <%= l(promotion.starts_at, format: :short) if promotion.starts_at %>
+        </td>
+        <td>
+          <%= l(promotion.expires_at, format: :short) if promotion.expires_at %>
+        </td>
+        <td>
+          <%= SolidusPromotions::Promotion.human_enum_name(:lane, promotion.lane) %>
+        </td>
+        <td>
+          <%= l(promotion.updated_at, format: :short) %>
+        </td>
+        <td class="actions">
+          <% if can?(:edit, promotion) && !promotion.discarded? %>
+            <%= link_to_edit promotion, no_text: true %>
+          <% end %>
+          <% if can?(:destroy, promotion) && !promotion.discarded? %>
+            <%= link_to_delete promotion, no_text: true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,78 @@
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_promotions_index_search">
+    <%= search_form_for [:admin, search] do |f| %>
+      <div class="row">
+        <div class="col-4">
+          <div class="form-group">
+            <%= label_tag :q_name_cont, SolidusPromotions::Promotion.human_attribute_name(:name) %>
+            <%= f.text_field :name_cont, tabindex: 1, class: "w-100" %>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="form-group">
+            <%= label_tag :q_customer_label_cont, SolidusPromotions::Promotion.human_attribute_name(:customer_label) %>
+            <%= f.text_field :customer_label_cont, tabindex: 1, class: "w-100" %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="form-group">
+            <%= label_tag :q_codes_value_cont, SolidusPromotions::Promotion.human_attribute_name(:code) %>
+            <%= f.text_field :codes_value_cont, tabindex: 1, class: "w-100" %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="form-group">
+            <%= label_tag :q_path_cont, SolidusPromotions::Promotion.human_attribute_name(:path) %>
+            <%= f.text_field :path_cont, tabindex: 1, class: "w-100" %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="date-range-filter form-group">
+            <%= label_tag :q_active, SolidusPromotions::Promotion.human_attribute_name(:active) %>
+            <%= f.text_field :active, value: params[:q][:active],
+                             class: 'datepicker datepicker-from fullwidth',
+                             data: { :'enable-time' => true, :'default-hour' => 0 } %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="field checkbox">
+            <label>
+              <%= f.check_box :with_discarded, { checked: params[:q][:with_discarded] == 'true', class: 'js-with-discarded-input' }, 'true', 'false' %>
+              <%= t('spree.show_deleted') %>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="form-group">
+            <%= label_tag :q_promotion_category_id_eq, SolidusPromotions::PromotionCategory.model_name.human %><br>
+            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t(:all, scope: :spree) }, { class: 'custom-select fullwidth' }) %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="form-group">
+            <%= label_tag :q_lane_eq, SolidusPromotions::Promotion.human_attribute_name(:lane) %><br>
+            <%= f.select(:lane_eq, SolidusPromotions::Promotion.lane_options, { include_blank: t(:all, scope: :spree) }, { class: 'custom-select fullwidth' }) %>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="actions filter-actions">
+        <div data-hook="admin_promotions_index_search_buttons">
+          <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
