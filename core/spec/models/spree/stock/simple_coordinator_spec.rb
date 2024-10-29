@@ -39,7 +39,7 @@ module Spree
         end
 
         it "builds a shipment for all active stock locations" do
-          subject.shipments.count == StockLocation.count
+          expect(subject.shipments.count).to eq StockLocation.count
         end
 
         it 'uses the pluggable inventory unit builder class' do
