@@ -279,12 +279,10 @@ jobs:
       - test_page:
           expected_text: "<title>Sample Store</title>"
       - install_dummy_app
-      - install_dummy_app:
-          extra_gems: "solidus_frontend"
       - run:
-          name: "Ensure solidus_frontend installer is run"
+          name: "Ensure extension test app is created"
           command: |
-            test -f /tmp/dummy_extension/spec/dummy/config/initializers/solidus_frontend.rb
+            test -d /tmp/dummy_extension/spec/dummy
 
   test_solidus:
     parameters:
