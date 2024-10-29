@@ -29,6 +29,8 @@ module Spree
 
       private
 
+      attr_reader :coordinator_options
+
       def choose_default_shipping_rate(shipping_rates)
         unless shipping_rates.empty?
           default_shipping_rate = Spree::Config.shipping_rate_selector_class.new(shipping_rates).find_default
