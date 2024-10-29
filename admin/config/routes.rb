@@ -51,6 +51,7 @@ SolidusAdmin::Engine.routes.draw do
       put :update_addresses
       get :orders
       get :items
+      get :store_credits
     end
   end
 
