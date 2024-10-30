@@ -14,7 +14,7 @@ module Spree
     enum :level, {
       item: 0,
       order: 1
-    }, _suffix: true
+    }, suffix: true
 
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
 
