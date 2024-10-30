@@ -103,7 +103,7 @@
                                   @shipping_categories,
                                   :id,
                                   :name,
-                                  { include_blank: t('.use_product_shipping_category') },
+                                  { include_blank: t('.use_product_shipping_category'), selected: @variant[:shipping_category_id] },
                                   { class: 'custom-select fullwidth' } %>
         </div>
       </div>
