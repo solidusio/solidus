@@ -167,8 +167,8 @@ commands:
             cat /tmp/.gems-versions
       - restore_cache:
           keys:
-            - solidus-installer-v10-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
-            - solidus-installer-v10-{{ checksum "/tmp/.ruby-versions" }}-
+            - solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+            - solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-
       - run:
           name: "Prepare the rails application"
           command: |
@@ -176,7 +176,7 @@ commands:
             test -d my_app || (gem install rails -v "< 8.0" && gem install solidus)
             test -d my_app || rails new my_app --skip-git
       - save_cache:
-          key: solidus-installer-v10-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+          key: solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
           paths:
             - /tmp/my_app
             - /home/circleci/.rubygems
