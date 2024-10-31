@@ -62,7 +62,7 @@ module Spree
       go_to_state :confirm
     end
 
-    self.allowed_ransackable_associations = %w[shipments user order_promotions promotions bill_address ship_address line_items]
+    self.allowed_ransackable_associations = %w[shipments user bill_address ship_address line_items]
     self.allowed_ransackable_attributes = %w[completed_at created_at email number state payment_state shipment_state total store_id]
 
     attr_reader :coupon_code

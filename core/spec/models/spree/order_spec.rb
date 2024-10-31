@@ -7,6 +7,12 @@ RSpec.describe Spree::Order, type: :model do
   let(:user) { create(:user, email: "solidus@example.com") }
   let(:order) { create(:order, user:, store:) }
 
+  describe ".ransackable_associations" do
+    subject { described_class.ransackable_associations }
+
+    it { is_expected.to contain_exactly("user", "line_items", "shipments", "bill_address", "ship_address") }
+  end
+
   context '#store' do
     it { is_expected.to respond_to(:store) }
 
