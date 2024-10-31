@@ -7,7 +7,7 @@ RSpec.describe Spree::PromotionCode do
     subject { promotion_code.save }
 
     describe '#normalize_code' do
-      let(:promotion) { create(:promotion, code: code) }
+      let(:promotion) { create(:promotion, code:) }
 
       before { subject }
 
@@ -76,7 +76,7 @@ RSpec.describe Spree::PromotionCode do
             before do
               FactoryBot.create(
                 :completed_order_with_promotion,
-                promotion: promotion
+                promotion:
               )
               code.adjustments.update_all(eligible: true)
             end
@@ -107,7 +107,7 @@ RSpec.describe Spree::PromotionCode do
       let(:promotable) do
         FactoryBot.create(
           :completed_order_with_promotion,
-          promotion: promotion
+          promotion:
         )
       end
       it_behaves_like "it should"
@@ -124,8 +124,8 @@ RSpec.describe Spree::PromotionCode do
       end
       before do
         promotion.actions.first.perform({
-          order: order,
-          promotion: promotion,
+          order:,
+          promotion:,
           promotion_code: code
         })
       end
@@ -162,14 +162,14 @@ RSpec.describe Spree::PromotionCode do
 
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
-      before { promotion.activate(order: order, promotion_code: code) }
+      before { promotion.activate(order:, promotion_code: code) }
       it { is_expected.to eq 0 }
     end
     context "when the code is applied to a complete order" do
       let!(:order) do
         FactoryBot.create(
           :completed_order_with_promotion,
-          promotion: promotion
+          promotion:
         )
       end
       context "and the promo is eligible" do
@@ -190,7 +190,7 @@ RSpec.describe Spree::PromotionCode do
   it "cannot create promotion code on apply automatically promotion" do
     promotion = create(:promotion, apply_automatically: true)
     expect {
-      create(:promotion_code, promotion: promotion)
+      create(:promotion_code, promotion:)
     }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Could not create promotion code on promotion that apply automatically"
   end
 end

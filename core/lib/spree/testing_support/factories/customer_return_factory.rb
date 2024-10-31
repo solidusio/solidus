@@ -7,13 +7,13 @@ FactoryBot.define do
     transient do
       line_items_count { 1 }
       return_items_count { line_items_count }
-      shipped_order { create :shipped_order, line_items_count: line_items_count }
+      shipped_order { create :shipped_order, line_items_count: }
       return_authorization { create :return_authorization, order: shipped_order }
     end
 
     before(:create) do |customer_return, evaluator|
       evaluator.shipped_order.inventory_units.take(evaluator.return_items_count).each do |inventory_unit|
-        customer_return.return_items << build(:return_item, inventory_unit: inventory_unit, return_authorization: evaluator.return_authorization)
+        customer_return.return_items << build(:return_item, inventory_unit:, return_authorization: evaluator.return_authorization)
       end
     end
 

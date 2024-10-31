@@ -27,7 +27,7 @@ RSpec.describe Spree::Promotion::Rules::OptionValue do
 
   describe "#eligible?" do
     let(:variant) { create :variant }
-    let(:line_item) { create :line_item, variant: variant }
+    let(:line_item) { create :line_item, variant: }
     let(:promotable) { line_item.order }
     subject { rule.eligible?(promotable) }
     context "when there are any applicable line items" do

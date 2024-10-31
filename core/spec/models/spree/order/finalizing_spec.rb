@@ -25,7 +25,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "should freeze all adjustments" do
-      adjustment = create(:adjustment, order: order)
+      adjustment = create(:adjustment, order:)
 
       expect { order.complete! }.to change { adjustment.reload.finalized }.from(false).to(true)
     end

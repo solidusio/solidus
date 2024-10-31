@@ -12,10 +12,10 @@ describe "Product Stock", type: :feature do
   context "given a product with a variant and a stock location" do
     let!(:stock_location) { create(:stock_location, name: 'Default') }
     let!(:product) { create(:product, name: 'apache baseball cap', price: 10) }
-    let!(:variant) { create(:variant, product: product) }
-    let!(:variant2) { create(:variant, product: product, track_inventory: false) }
-    let(:stock_item) { variant.stock_items.find_by(stock_location: stock_location) }
-    let(:stock_item2) { variant2.stock_items.find_by(stock_location: stock_location) }
+    let!(:variant) { create(:variant, product:) }
+    let!(:variant2) { create(:variant, product:, track_inventory: false) }
+    let(:stock_item) { variant.stock_items.find_by(stock_location:) }
+    let(:stock_item2) { variant2.stock_items.find_by(stock_location:) }
 
     before do
       stock_location.stock_item(variant).update_column(:count_on_hand, 10)

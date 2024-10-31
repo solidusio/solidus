@@ -110,12 +110,12 @@ module Spree
       return unless self.class.order_activatable?(order)
 
       payload = {
-        order: order,
+        order:,
         promotion: self,
-        line_item: line_item,
-        user: user,
-        path: path,
-        promotion_code: promotion_code
+        line_item:,
+        user:,
+        path:,
+        promotion_code:
       }
 
       # Track results from actions to see if any action has been taken.
@@ -131,7 +131,7 @@ module Spree
         # connect to the order
         order.order_promotions.find_or_create_by!(
           promotion: self,
-          promotion_code: promotion_code,
+          promotion_code:,
         )
         order.promotions.reset
         order_promotions.reset
@@ -147,8 +147,8 @@ module Spree
       return false if blacklisted?(promotable)
 
       excluded_orders = eligibility_excluded_orders(promotable)
-      return false if usage_limit_exceeded?(excluded_orders: excluded_orders)
-      return false if promotion_code&.usage_limit_exceeded?(excluded_orders: excluded_orders)
+      return false if usage_limit_exceeded?(excluded_orders:)
+      return false if promotion_code&.usage_limit_exceeded?(excluded_orders:)
 
       !!eligible_rules(promotable, {})
     end
@@ -183,7 +183,7 @@ module Spree
     # @return true or false
     def usage_limit_exceeded?(excluded_orders: [])
       if usage_limit
-        usage_count(excluded_orders: excluded_orders) >= usage_limit
+        usage_count(excluded_orders:) >= usage_limit
       end
     end
 
@@ -202,7 +202,7 @@ module Spree
     def line_item_actionable?(order, line_item, promotion_code: nil)
       return false if blacklisted?(line_item)
 
-      if eligible?(order, promotion_code: promotion_code)
+      if eligible?(order, promotion_code:)
         rules = eligible_rules(order)
         if rules.blank?
           true
@@ -218,7 +218,7 @@ module Spree
       discounted_orders.
         complete.
         where.not(id: excluded_orders.map(&:id)).
-        where(user: user).
+        where(user:).
         where.not(spree_orders: { state: :canceled }).
         exists?
     end

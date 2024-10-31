@@ -7,30 +7,30 @@ RSpec.describe Spree::LegacyUser, type: :model do
     let!(:user) { create(:user) }
 
     it "excludes orders that are not frontend_viewable" do
-      create(:order, user: user, frontend_viewable: false)
+      create(:order, user:, frontend_viewable: false)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
     it "can include orders that are not frontend viewable" do
-      order = create(:order, user: user, frontend_viewable: false)
+      order = create(:order, user:, frontend_viewable: false)
       expect(user.last_incomplete_spree_order(only_frontend_viewable: false)).to eq order
     end
 
     it "can scope to a store" do
       store = create(:store)
-      store_1_order = create(:order, user: user, store: store)
-      create(:order, user: user, store: create(:store))
-      expect(user.last_incomplete_spree_order(store: store)).to eq store_1_order
+      store_1_order = create(:order, user:, store:)
+      create(:order, user:, store: create(:store))
+      expect(user.last_incomplete_spree_order(store:)).to eq store_1_order
     end
 
     it "excludes completed orders" do
-      create(:completed_order_with_totals, user: user, created_by: user)
+      create(:completed_order_with_totals, user:, created_by: user)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
     it "excludes orders created prior to the user's last completed order" do
-      create(:order, user: user, created_by: user, created_at: 1.second.ago)
-      create(:completed_order_with_totals, user: user, created_by: user)
+      create(:order, user:, created_by: user, created_at: 1.second.ago)
+      create(:completed_order_with_totals, user:, created_by: user)
       expect(user.last_incomplete_spree_order).to eq nil
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Spree::LegacyUser, type: :model do
       end
 
       it "excludes orders created outside of the cutoff date" do
-        create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        create(:order, user:, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
         expect(user.last_incomplete_spree_order).to eq nil
       end
     end
@@ -51,21 +51,21 @@ RSpec.describe Spree::LegacyUser, type: :model do
       end
 
       it "excludes orders updated outside of the cutoff date" do
-        create(:order, user: user, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
+        create(:order, user:, created_by: user, created_at: 3.days.ago, updated_at: 2.days.ago)
         expect(user.last_incomplete_spree_order).to eq nil
       end
     end
 
     it "chooses the most recently created incomplete order" do
-      create(:order, user: user, created_at: 1.second.ago)
-      order_2 = create(:order, user: user)
+      create(:order, user:, created_at: 1.second.ago)
+      order_2 = create(:order, user:)
       expect(user.last_incomplete_spree_order).to eq order_2
     end
 
     context "persists order address" do
       let(:bill_address) { create(:address) }
       let(:ship_address) { create(:address) }
-      let(:order) { create(:order, user: user, bill_address: bill_address, ship_address: ship_address) }
+      let(:order) { create(:order, user:, bill_address:, ship_address:) }
 
       it "doesn't create new addresses" do
         user.user_addresses.create(address: bill_address)

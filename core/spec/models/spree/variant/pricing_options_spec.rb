@@ -61,7 +61,7 @@ RSpec.describe Spree::Variant::PricingOptions do
 
   context ".from_price" do
     let(:country) { create(:country) }
-    let(:price) { create(:price, country: country) }
+    let(:price) { create(:price, country:) }
 
     subject { described_class.from_price(price) }
     it "gets the currency from the previous price" do

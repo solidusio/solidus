@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Spree::Address::StateValidator do
   let(:country) { create :country, states_required: true }
-  let(:state) { create :state, name: 'maryland', abbr: 'md', country: country }
-  let(:address) { build(:address, country: country) }
+  let(:state) { create :state, name: 'maryland', abbr: 'md', country: }
+  let(:address) { build(:address, country:) }
 
   subject { described_class.new(address).perform }
 

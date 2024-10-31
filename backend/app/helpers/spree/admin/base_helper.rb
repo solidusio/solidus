@@ -25,7 +25,7 @@ module Spree
       end
 
       def admin_hint(title, text)
-        content_tag(:span, class: 'hint-tooltip', title: title, data: { content: text }) do
+        content_tag(:span, class: 'hint-tooltip', title:, data: { content: text }) do
           content_tag(:i, '', class: 'fa fa-info-circle')
         end
       end
@@ -39,7 +39,7 @@ module Spree
           t('spree.date_picker.format', default: '%Y/%m/%d')
         end
 
-        l(date, format: format)
+        l(date, format:)
       end
 
       def spree_dom_id(record)

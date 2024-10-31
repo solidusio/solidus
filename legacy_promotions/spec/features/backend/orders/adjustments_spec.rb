@@ -13,17 +13,17 @@ RSpec.describe "Adjustments", type: :feature do
     let!(:order) do
       create(
         :completed_order_with_totals,
-        line_items_attributes: [{ price: 10, variant: variant }] * 5,
-        ship_address: ship_address
+        line_items_attributes: [{ price: 10, variant: }] * 5,
+        ship_address:
       )
     end
     let!(:line_item) { order.line_items[0] }
 
     let(:tax_category) { create(:tax_category) }
-    let(:variant) { create(:variant, tax_category: tax_category) }
+    let(:variant) { create(:variant, tax_category:) }
 
-    let!(:non_eligible_adjustment) { order.adjustments.create!(order: order, label: "Non-Eligible", amount: 10, eligible: false) }
-    let!(:adjustment) { order.adjustments.create!(order: order, label: "Rebate", amount: 10) }
+    let!(:non_eligible_adjustment) { order.adjustments.create!(order:, label: "Non-Eligible", amount: 10, eligible: false) }
+    let!(:adjustment) { order.adjustments.create!(order:, label: "Rebate", amount: 10) }
 
     before(:each) do
       order.recalculate

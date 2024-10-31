@@ -5,7 +5,7 @@ require 'spree/testing_support/order_walkthrough'
 
 RSpec.describe Spree::Order, type: :model do
   let!(:store) { create(:store) }
-  let(:order) { create(:order, store: store) }
+  let(:order) { create(:order, store:) }
 
   def assert_state_changed(order, from, to)
     state_change_exists = order.state_changes.where(previous_state: from, next_state: to).exists?
@@ -168,7 +168,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "from address" do
       let(:ship_address) { create(:ship_address) }
-      let!(:line_item) { create(:line_item, order: order, price: 10) }
+      let!(:line_item) { create(:line_item, order:, price: 10) }
       let!(:shipping_method) { create(:shipping_method) }
 
       before do
@@ -189,7 +189,7 @@ RSpec.describe Spree::Order, type: :model do
 
       it "recalculates tax and updates totals" do
         zone = create(:zone, countries: [order.tax_address.country])
-        create(:tax_rate, tax_categories: [line_item.tax_category], amount: 0.05, zone: zone)
+        create(:tax_rate, tax_categories: [line_item.tax_category], amount: 0.05, zone:)
         order.next!
         expect(order).to have_attributes(
           adjustment_total: 0.5,
@@ -242,11 +242,11 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context 'when order has default selected_shipping_rate_id', partial_double_verification: false do
-        let(:shipment) { create(:shipment, order: order) }
+        let(:shipment) { create(:shipment, order:) }
         let(:shipping_method) { create(:shipping_method) }
         let(:shipping_rate) {
           [
-          Spree::ShippingRate.create!(shipping_method: shipping_method, cost: 10.00, shipment: shipment)
+          Spree::ShippingRate.create!(shipping_method:, cost: 10.00, shipment:)
         ]
         }
 
@@ -267,7 +267,7 @@ RSpec.describe Spree::Order, type: :model do
 
       context "cannot transition to delivery" do
         context "if there are no shipping rates for any shipment" do
-          let!(:line_item){ create :line_item, order: order }
+          let!(:line_item){ create :line_item, order: }
           before do
             order.state = 'address'
             order.email = 'user@example.com'
@@ -364,7 +364,7 @@ RSpec.describe Spree::Order, type: :model do
 
       before do
         user = create(:user, email: 'solidus@example.org', bill_address: user_bill_address)
-        default_credit_card.update(user: user)
+        default_credit_card.update(user:)
         wallet_payment_source = user.wallet.add(default_credit_card)
         user.wallet.default_wallet_payment_source = wallet_payment_source
         order.user = user
@@ -503,7 +503,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "with a payment in the pending state" do
       let(:order) { create :order_ready_to_complete }
-      let(:payment) { create :payment, order: order, state: "pending", amount: order.total }
+      let(:payment) { create :payment, order:, state: "pending", amount: order.total }
 
       it "allows the order to complete" do
         expect { order.complete! }.
@@ -556,7 +556,7 @@ RSpec.describe Spree::Order, type: :model do
         order.user = FactoryBot.create(:user)
         order.store = FactoryBot.create(:store)
         order.email = 'solidus@example.org'
-        order.payments << FactoryBot.create(:payment, order: order)
+        order.payments << FactoryBot.create(:payment, order:)
 
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
@@ -610,7 +610,7 @@ RSpec.describe Spree::Order, type: :model do
       let(:order) { create(:order_with_line_items) }
 
       it 'can complete the order' do
-        create(:payment, state: 'completed', order: order, amount: order.total)
+        create(:payment, state: 'completed', order:, amount: order.total)
         order.recalculate
         expect(order.complete).to eq(true)
       end
@@ -662,7 +662,7 @@ RSpec.describe Spree::Order, type: :model do
 
   # Regression test for https://github.com/spree/spree/issues/3665
   context "with only a complete step" do
-    let!(:line_item){ create :line_item, order: order }
+    let!(:line_item){ create :line_item, order: }
 
     before do
       @old_checkout_flow = Spree::Order.checkout_flow

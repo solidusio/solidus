@@ -12,7 +12,7 @@ RSpec.describe Spree::Price, type: :model do
 
   describe 'validations' do
     let(:variant) { stub_model Spree::Variant }
-    subject { Spree::Price.new variant: variant, amount: amount }
+    subject { Spree::Price.new variant:, amount: }
 
     context 'when the amount is nil' do
       let(:amount) { nil }
@@ -51,7 +51,7 @@ RSpec.describe Spree::Price, type: :model do
     end
 
     context '#country_iso' do
-      subject(:price) { build(:price, country_iso: country_iso) }
+      subject(:price) { build(:price, country_iso:) }
 
       context 'when country iso is nil' do
         let(:country_iso) { nil }
@@ -127,7 +127,7 @@ RSpec.describe Spree::Price, type: :model do
 
   describe "#currency" do
     let(:variant) { stub_model Spree::Variant }
-    subject { Spree::Price.new variant: variant, amount: 10, currency: currency }
+    subject { Spree::Price.new variant:, amount: 10, currency: }
 
     describe "validation" do
       context "with an invalid currency" do
@@ -171,7 +171,7 @@ RSpec.describe Spree::Price, type: :model do
     describe '.for_any_country' do
       let(:country) { create(:country) }
       let!(:fallback_price) { create(:price, country_iso: nil) }
-      let!(:country_price) { create(:price, country: country) }
+      let!(:country_price) { create(:price, country:) }
 
       subject { described_class.for_any_country }
 
@@ -182,11 +182,11 @@ RSpec.describe Spree::Price, type: :model do
   describe 'net_amount' do
     let(:country) { create(:country, iso: "DE") }
     let(:zone) { create(:zone, countries: [country]) }
-    let!(:tax_rate) { create(:tax_rate, included_in_price: true, zone: zone, tax_categories: [variant.tax_category]) }
+    let!(:tax_rate) { create(:tax_rate, included_in_price: true, zone:, tax_categories: [variant.tax_category]) }
 
     let(:variant) { create(:product).master }
 
-    let(:price) { variant.prices.create(amount: 20, country: country) }
+    let(:price) { variant.prices.create(amount: 20, country:) }
 
     subject { price.net_amount }
 

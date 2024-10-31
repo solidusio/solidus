@@ -11,7 +11,7 @@ module Spree
     end
 
     def money(amount, currency = Spree::Config[:currency])
-      Spree::Money.new(amount, currency: currency).to_s
+      Spree::Money.new(amount, currency:).to_s
     end
     helper_method :money
 

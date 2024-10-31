@@ -86,7 +86,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
         end
 
         context "when the match_path is a callable" do
-          subject { helper.tab(label: :orders, match_path: match_path) }
+          subject { helper.tab(label: :orders, match_path:) }
 
           context "when the callable returns false" do
             let(:match_path) { ->(_request) { false } }

@@ -37,7 +37,7 @@ describe "Variants", type: :feature do
         end
 
         let!(:variant) do
-          create(:variant, product: product, price: 19.99)
+          create(:variant, product:, price: 19.99)
         end
 
         # Regression test for https://github.com/spree/spree/issues/2737
@@ -51,8 +51,8 @@ describe "Variants", type: :feature do
     end
 
     context 'displaying discarded variants' do
-      let!(:existing_variant) { create(:variant, sku: 'existing_variant_sku', product: product) }
-      let!(:discarded_variant) { create(:variant, sku: 'discarded_variant_sku', product: product) }
+      let!(:existing_variant) { create(:variant, sku: 'existing_variant_sku', product:) }
+      let!(:discarded_variant) { create(:variant, sku: 'discarded_variant_sku', product:) }
 
       before { discarded_variant.discard! }
 
@@ -73,7 +73,7 @@ describe "Variants", type: :feature do
     end
 
     context 'displaying variants with unconfigured prices' do
-      let!(:variant) { create(:variant, sku: 'priceless_variant', product: product) }
+      let!(:variant) { create(:variant, sku: 'priceless_variant', product:) }
 
       before { variant.prices.delete_all }
 
@@ -87,11 +87,11 @@ describe "Variants", type: :feature do
   end
 
   context "editing existent variant" do
-    let!(:variant) { create(:variant, product: product) }
+    let!(:variant) { create(:variant, product:) }
 
     context "if product has an option type" do
       let!(:option_type) { create(:option_type) }
-      let!(:option_value) { create(:option_value, option_type: option_type) }
+      let!(:option_value) { create(:option_value, option_type:) }
 
       before do
         product.option_types << option_type
@@ -107,9 +107,9 @@ describe "Variants", type: :feature do
   end
 
   context "deleting a variant", js: true do
-    let!(:variant) { create(:variant, product: product) }
+    let!(:variant) { create(:variant, product:) }
     let!(:option_type) { create(:option_type) }
-    let!(:option_value) { create(:option_value, option_type: option_type) }
+    let!(:option_value) { create(:option_value, option_type:) }
 
     it "can delete a variant" do
       visit spree.admin_product_variants_path(product)

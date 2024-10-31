@@ -34,7 +34,7 @@ module Spree
         method_name = attachment_name
         override = Module.new do
           define_method method_name do |*args|
-            attachment = Attachment.new(super(), styles: styles)
+            attachment = Attachment.new(super(), styles:)
             if args.empty?
               attachment
             else

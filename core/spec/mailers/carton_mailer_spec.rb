@@ -8,7 +8,7 @@ RSpec.describe Spree::CartonMailer do
 
   # Regression test for https://github.com/spree/spree/issues/2196
   it "doesn't include out of stock in the email body" do
-    shipment_email = Spree::CartonMailer.shipped_email(order: order, carton: carton)
+    shipment_email = Spree::CartonMailer.shipped_email(order:, carton:)
     expect(shipment_email.parts.first.body).not_to include(%{Out of Stock})
     expect(shipment_email.parts.first.body).to include(%{Your order has been shipped})
     expect(shipment_email.subject).to eq "#{order.store.name} Shipment Notification ##{order.number}"
@@ -16,7 +16,7 @@ RSpec.describe Spree::CartonMailer do
 
   context "with resend option" do
     subject do
-      Spree::CartonMailer.shipped_email(order: order, carton: carton, resend: true).subject
+      Spree::CartonMailer.shipped_email(order:, carton:, resend: true).subject
     end
     it { is_expected.to match /^\[RESEND\] / }
   end
@@ -35,7 +35,7 @@ RSpec.describe Spree::CartonMailer do
         end
 
         specify do
-          shipped_email = Spree::CartonMailer.shipped_email(order: order, carton: carton)
+          shipped_email = Spree::CartonMailer.shipped_email(order:, carton:)
           expect(shipped_email.parts.first.body).to include("Caro Cliente,")
         end
       end

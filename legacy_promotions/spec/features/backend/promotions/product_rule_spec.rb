@@ -6,7 +6,7 @@ RSpec.feature 'Promotion with product rule', js: true do
   stub_authorization!
 
   given!(:product) { create :product, name: "BlamCo Mac & Cheese", sku: "PRODUCT_SKU" }
-  given!(:variant) { create :variant, sku: "VARIANT_SKU", product: product }
+  given!(:variant) { create :variant, sku: "VARIANT_SKU", product: }
   given!(:option_value) { variant.option_values.first }
 
   given(:promotion) { create :promotion }

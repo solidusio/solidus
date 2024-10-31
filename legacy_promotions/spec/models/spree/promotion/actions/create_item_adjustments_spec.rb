@@ -9,7 +9,7 @@ module Spree
     let(:adjustment_amount) { 10 }
     let(:action) { promotion.actions.first! }
     let(:line_item) { order.line_items.to_a.first }
-    let(:payload) { { order: order, promotion: promotion } }
+    let(:payload) { { order:, promotion: } }
 
     before do
       allow(action).to receive(:promotion).and_return(promotion)
@@ -79,8 +79,8 @@ module Spree
         end
 
         context "when a promotion code is used" do
-          let!(:promotion_code) { create(:promotion_code, promotion: promotion) }
-          let(:payload) { { order: order, promotion: promotion, promotion_code: promotion_code } }
+          let!(:promotion_code) { create(:promotion_code, promotion:) }
+          let(:payload) { { order:, promotion:, promotion_code: } }
 
           it "should connect the adjustment to the promotion_code" do
             expect {
@@ -124,7 +124,7 @@ module Spree
 
     describe '#remove_from' do
       # this adjustment should not get removed
-      let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order: order, source: nil) }
+      let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order:, source: nil) }
 
       before do
         action.perform(payload)
@@ -150,7 +150,7 @@ module Spree
         let(:order) { create(:order) }
 
         it 'destroys adjustments' do
-          order.adjustments.create!(label: 'Check', amount: 0, order: order, source: action)
+          order.adjustments.create!(label: 'Check', amount: 0, order:, source: action)
 
           expect {
             subject
@@ -163,7 +163,7 @@ module Spree
 
         it "does not change adjustments for completed orders" do
           order = create :order, completed_at: Time.current
-          adjustment = action.adjustments.create!(label: "Check", amount: 0, order: order, adjustable: order)
+          adjustment = action.adjustments.create!(label: "Check", amount: 0, order:, adjustable: order)
 
           expect {
             expect {
@@ -176,7 +176,7 @@ module Spree
         end
 
         it "doesnt mess with unrelated adjustments" do
-          order.adjustments.create!(label: "Check", amount: 0, order: order, source: action)
+          order.adjustments.create!(label: "Check", amount: 0, order:, source: action)
 
           expect {
             subject

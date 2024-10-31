@@ -38,7 +38,7 @@ RSpec.describe 'address factory' do
       let(:country) { create(:country, iso: 'IT' )}
 
       context 'when given a state but no country' do
-        subject { build(:address, state: state) }
+        subject { build(:address, state:) }
 
         it 'infers the country from the state' do
           expect(subject).to be_valid
@@ -48,7 +48,7 @@ RSpec.describe 'address factory' do
       end
 
       context 'when given a country but no state' do
-        subject { build(:address, country: country) }
+        subject { build(:address, country:) }
 
         it 'automatically finds or creates an appropriate state' do
           expect(subject).to be_valid
@@ -58,7 +58,7 @@ RSpec.describe 'address factory' do
       end
 
       context 'when given a country, no state but a state_name' do
-        subject { build(:address, country: country, state_name: 'Bogus state') }
+        subject { build(:address, country:, state_name: 'Bogus state') }
 
         it 'does not automatically find or create an appropriate state' do
           expect(subject).to be_valid
@@ -69,7 +69,7 @@ RSpec.describe 'address factory' do
     end
 
     describe 'country not requiring a state' do
-      subject { build(:address, country: country) }
+      subject { build(:address, country:) }
       let(:country) { create(:country, iso: 'AI' )}
 
       it 'does not automatically find or create an appropriate state' do
@@ -80,7 +80,7 @@ RSpec.describe 'address factory' do
     end
 
     describe 'when passing in a state and country ISO' do
-      subject { build(:address, country_iso_code: country_iso_code, state_code: state_code) }
+      subject { build(:address, country_iso_code:, state_code:) }
 
       context 'when the country has a state with proper code' do
         let(:country_iso_code) { "US" }

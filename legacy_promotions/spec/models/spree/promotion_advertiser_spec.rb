@@ -10,7 +10,7 @@ RSpec.describe Spree::PromotionAdvertiser, type: :model do
     let!(:promotion) { create(:promotion, :with_action, advertise: true, starts_at: 1.day.ago) }
     let!(:rule) do
       Spree::Promotion::Rules::Product.create(
-        promotion: promotion,
+        promotion:,
         products: [product]
       )
     end

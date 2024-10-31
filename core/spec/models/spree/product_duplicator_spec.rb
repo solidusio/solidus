@@ -77,11 +77,11 @@ module Spree
 
     context "with variants" do
       let(:option_type) { create(:option_type, name: "MyOptionType") }
-      let(:option_value1) { create(:option_value, name: "OptionValue1", option_type: option_type) }
-      let(:option_value2) { create(:option_value, name: "OptionValue2", option_type: option_type) }
+      let(:option_value1) { create(:option_value, name: "OptionValue1", option_type:) }
+      let(:option_value2) { create(:option_value, name: "OptionValue2", option_type:) }
 
-      let!(:variant1) { create(:variant, product: product, option_values: [option_value1]) }
-      let!(:variant2) { create(:variant, product: product, option_values: [option_value2]) }
+      let!(:variant1) { create(:variant, product:, option_values: [option_value1]) }
+      let!(:variant2) { create(:variant, product:, option_values: [option_value2]) }
 
       it "will duplciate the variants" do
         # will change the count by 3, since there will be a master variant as well

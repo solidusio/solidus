@@ -12,7 +12,7 @@ RSpec.describe Spree::FulfilmentChanger do
       line_items_attributes: [
         {
           quantity: current_shipment_inventory_unit_count,
-          variant: variant
+          variant:
         }
       ]
     )
@@ -26,11 +26,11 @@ RSpec.describe Spree::FulfilmentChanger do
 
   let(:shipment_splitter) do
     described_class.new(
-      current_shipment: current_shipment,
-      desired_shipment: desired_shipment,
-      variant: variant,
-      quantity: quantity,
-      track_inventory: track_inventory
+      current_shipment:,
+      desired_shipment:,
+      variant:,
+      quantity:,
+      track_inventory:
     )
   end
 
@@ -103,7 +103,7 @@ RSpec.describe Spree::FulfilmentChanger do
       let!(:stock_item) do
         variant.stock_items.find_or_create_by!(
           stock_location: desired_stock_location,
-          variant: variant,
+          variant:,
         )
       end
 
@@ -153,7 +153,7 @@ RSpec.describe Spree::FulfilmentChanger do
       let!(:stock_item) do
         variant.stock_items.find_or_create_by!(
           stock_location: desired_stock_location,
-          variant: variant,
+          variant:,
         )
       end
 
@@ -207,7 +207,7 @@ RSpec.describe Spree::FulfilmentChanger do
       let!(:stock_item) do
         variant.stock_items.find_or_create_by!(
           stock_location: desired_stock_location,
-          variant: variant,
+          variant:,
         )
       end
 
@@ -300,8 +300,8 @@ RSpec.describe Spree::FulfilmentChanger do
         end
 
         context "when the original shipment had some backordered units" do
-          let(:current_stock_item) { current_shipment.stock_location.stock_items.find_by(variant: variant) }
-          let(:desired_stock_item) { desired_shipment.stock_location.stock_items.find_by(variant: variant) }
+          let(:current_stock_item) { current_shipment.stock_location.stock_items.find_by(variant:) }
+          let(:desired_stock_item) { desired_shipment.stock_location.stock_items.find_by(variant:) }
           let(:backordered_units)  { 6 }
 
           before do
@@ -385,7 +385,7 @@ RSpec.describe Spree::FulfilmentChanger do
           line_items_attributes: [
             {
               quantity: current_shipment_inventory_unit_count,
-              variant: variant
+              variant:
             }
           ]
         )

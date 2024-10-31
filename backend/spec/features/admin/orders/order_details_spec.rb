@@ -32,8 +32,8 @@ describe "Order Details", type: :feature, js: true do
       let(:count_on_hand) { 100 }
 
       before do
-        product.master.update_columns(track_inventory: track_inventory)
-        product.master.stock_items.update_all(count_on_hand: count_on_hand, backorderable: backorderable)
+        product.master.update_columns(track_inventory:)
+        product.master.stock_items.update_all(count_on_hand:, backorderable:)
 
         visit spree.cart_admin_order_path(order)
       end
@@ -70,7 +70,7 @@ describe "Order Details", type: :feature, js: true do
 
         context 'when the items cannot be added to the existing shipment' do
           before do
-            create :payment, order: order, amount: order.amount
+            create :payment, order:, amount: order.amount
             visit spree.admin_order_payments_path(order)
             find('.fa-capture').click
           end
@@ -347,7 +347,7 @@ describe "Order Details", type: :feature, js: true do
 
           context 'A shipment has shipped' do
             it 'should not show or let me back to the cart page, nor show the shipment edit buttons' do
-              order = create(:shipped_order, state: 'payment', stock_location: stock_location)
+              order = create(:shipped_order, state: 'payment', stock_location:)
 
               visit spree.cart_admin_order_path(order)
 

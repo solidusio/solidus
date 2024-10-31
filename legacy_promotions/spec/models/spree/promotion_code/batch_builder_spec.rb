@@ -10,8 +10,8 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
   let(:promotion_code_batch) do
     Spree::PromotionCodeBatch.create!(
       promotion_id: promotion.id,
-      base_code: base_code,
-      number_of_codes: number_of_codes,
+      base_code:,
+      number_of_codes:,
       email: "test@email.com"
     )
   end
@@ -81,7 +81,7 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
               raise_exception = false
               raise(ActiveRecord::RecordInvalid)
             else
-              create(:promotion_code, promotion: promotion)
+              create(:promotion_code, promotion:)
             end
           end
         end
@@ -94,7 +94,7 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
 
       context "when same promotion_codes are already present" do
         before do
-          create_list(:promotion_code, 11, promotion: promotion, promotion_code_batch: promotion_code_batch)
+          create_list(:promotion_code, 11, promotion:, promotion_code_batch:)
         end
 
         it "creates only the missing promotion_codes" do
@@ -118,8 +118,8 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
       let(:promotion_code_batch) do
         Spree::PromotionCodeBatch.create!(
           promotion_id: promotion.id,
-          base_code: base_code,
-          number_of_codes: number_of_codes,
+          base_code:,
+          number_of_codes:,
           email: "test@email.com",
           join_characters: "x"
         )

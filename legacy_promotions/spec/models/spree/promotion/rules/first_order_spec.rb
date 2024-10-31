@@ -24,18 +24,18 @@ RSpec.describe Spree::Promotion::Rules::FirstOrder, type: :model do
         end
 
         specify do
-          allow(order).to receive_messages(user: user)
+          allow(order).to receive_messages(user:)
           expect(rule).to be_eligible(order)
         end
 
         it "should be eligible when user passed in payload data" do
-          expect(rule).to be_eligible(order, user: user)
+          expect(rule).to be_eligible(order, user:)
         end
       end
 
       context "with completed orders" do
         before(:each) do
-          allow(order).to receive_messages(user: user)
+          allow(order).to receive_messages(user:)
         end
 
         it "should be eligible when checked against first completed order" do

@@ -24,7 +24,7 @@ candidate_tag_name = ARGV.shift or abort(opts.to_s)
 pull_numbers = OCTOKIT.post("/repos/solidusio/solidus/releases/generate-notes", {
   tag_name: candidate_tag_name,
   target_commitish: branch,
-  previous_tag_name: previous_tag_name,
+  previous_tag_name:,
 }).body.scan(%r{(?:#|pull/)(\d+)$}).flatten.uniq
 
 # Group PRs by label

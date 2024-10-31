@@ -324,7 +324,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "#not_finalized_adjustments" do
       let(:order) { create(:order) }
-      let!(:finalized_adjustment) { create(:adjustment, finalized: true, adjustable: order, order: order) }
+      let!(:finalized_adjustment) { create(:adjustment, finalized: true, adjustable: order, order:) }
 
       it "changes all the finalized adjustments to unfinalized" do
         post :unfinalize_adjustments, params: { id: order.number }
@@ -344,7 +344,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "#finalize_adjustments" do
       let(:order) { create(:order) }
-      let!(:not_finalized_adjustment) { create(:adjustment, finalized: false, adjustable: order, order: order) }
+      let!(:not_finalized_adjustment) { create(:adjustment, finalized: false, adjustable: order, order:) }
 
       it "changes all the unfinalized adjustments to finalized" do
         post :finalize_adjustments, params: { id: order.number }

@@ -13,7 +13,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
   let(:inventory_unit_3) { order.inventory_units.order('id asc')[2] }
 
   describe '#fire' do
-    let(:return_authorization) { create(:return_authorization, order: order) }
+    let(:return_authorization) { create(:return_authorization, order:) }
 
     context 'with the event parameter set' do
       let(:params) do
@@ -28,7 +28,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
         let(:event) { 'cancel' }
 
         it 'sends method with ! to return authorization and redirect back' do
-          get :fire, params: params
+          get(:fire, params:)
 
           expect(response).to redirect_to(admin_order_return_authorizations_path(order))
           expect(flash[:success]).to eq 'Return merchandise authorization updated'
@@ -39,7 +39,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
         let(:event) { 'do_something_crazy' }
 
         it 'redirects back with an error message' do
-          get :fire, params: params
+          get(:fire, params:)
 
           expect(response).to redirect_to(admin_order_return_authorizations_path(order))
           expect(flash[:error]).to eq 'Cannot perform this action on return merchandise authorization'
@@ -52,7 +52,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
         it 'redirects back with an error message' do
           expect(return_authorization).not_to receive :destroy!
 
-          get :fire, params: params
+          get(:fire, params:)
 
           expect(response).to redirect_to(admin_order_return_authorizations_path(order))
           expect(flash[:error]).to eq 'Cannot perform this action on return merchandise authorization'
@@ -107,7 +107,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
 
     shared_context 'with existing return items' do
       context 'with existing return items' do
-        let!(:return_item_1) { create(:return_item, inventory_unit: inventory_unit_1, return_authorization: return_authorization) }
+        let!(:return_item_1) { create(:return_item, inventory_unit: inventory_unit_1, return_authorization:) }
 
         it 'has 1 existing return item and 2 new return items' do
           subject
@@ -132,7 +132,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
         }
       end
 
-      let(:return_authorization) { create(:return_authorization, order: order) }
+      let(:return_authorization) { create(:return_authorization, order:) }
 
       include_context 'without existing return items'
       include_context 'with existing return items'
@@ -158,7 +158,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
         }
       end
 
-      let(:return_authorization) { create(:return_authorization, order: order) }
+      let(:return_authorization) { create(:return_authorization, order:) }
 
       include_context 'without existing return items'
       include_context 'with existing return items'
@@ -199,7 +199,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
   context '#create' do
     let(:stock_location) { create(:stock_location) }
 
-    subject { post :create, params: params }
+    subject { post :create, params: }
 
     let(:params) do
       {
@@ -223,7 +223,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
   end
 
   context '#update' do
-    let(:return_authorization) { create(:return_authorization, order: order) }
+    let(:return_authorization) { create(:return_authorization, order:) }
 
     let(:params) do
       {
@@ -239,7 +239,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
       }
     end
 
-    subject { put :update, params: params }
+    subject { put :update, params: }
 
     context "adding an item" do
       let(:return_items_params) do
@@ -257,7 +257,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
       context 'with existing completed items' do
         let!(:completed_return_item) do
           create(:return_item, {
-            return_authorization: return_authorization,
+            return_authorization:,
             inventory_unit: inventory_unit_1,
             reception_status: 'received'
           })
@@ -272,7 +272,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
 
     context "removing an item" do
       let!(:return_item) do
-        create(:return_item, return_authorization: return_authorization, inventory_unit: inventory_unit_1)
+        create(:return_item, return_authorization:, inventory_unit: inventory_unit_1)
       end
 
       let(:return_items_params) do

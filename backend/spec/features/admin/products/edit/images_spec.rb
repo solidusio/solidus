@@ -7,8 +7,8 @@ describe "Product Images", type: :feature do
 
   let(:file_path) { file_fixture("ror_ringer.jpeg") }
   let!(:product)  { create(:product) }
-  let!(:variant1) { create(:variant, product: product) }
-  let!(:variant2) { create(:variant, product: product) }
+  let!(:variant1) { create(:variant, product:) }
+  let!(:variant2) { create(:variant, product:) }
 
   before do
     # Ensure attachment style keys are symbolized before running all tests

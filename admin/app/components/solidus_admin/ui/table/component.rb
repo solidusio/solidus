@@ -138,7 +138,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
       predicate: filter.predicate,
       options: filter.options,
       form: search_form_id,
-      index: index,
+      index:,
     )
   end
 

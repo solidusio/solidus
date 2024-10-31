@@ -31,7 +31,7 @@ module Spree
       tax_explanations = taxes.map(&:label).join(tax_label_separator)
 
       I18n.t 'spree.shipping_rate.display_price.display_price_with_explanations',
-             price: price,
+             price:,
              explanations: tax_explanations
     end
     alias_method :display_cost, :display_price

@@ -5,7 +5,7 @@ json.cache! [I18n.locale, @shipment] do
   json.order_id(@shipment.order.number)
   json.stock_location_name(@shipment.stock_location.name)
   json.shipping_rates(@shipment.shipping_rates) do |shipping_rate|
-    json.partial!("spree/api/shipping_rates/shipping_rate", shipping_rate: shipping_rate)
+    json.partial!("spree/api/shipping_rates/shipping_rate", shipping_rate:)
   end
   json.selected_shipping_rate do
     if @shipment.selected_shipping_rate

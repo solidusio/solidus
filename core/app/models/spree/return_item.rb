@@ -53,7 +53,7 @@ module Spree
     scope :not_expired, -> { where.not(reception_status: 'expired') }
     scope :received, -> { where(reception_status: 'received') }
     INTERMEDIATE_RECEPTION_STATUSES.each do |reception_status|
-      scope reception_status, -> { where(reception_status: reception_status) }
+      scope reception_status, -> { where(reception_status:) }
     end
     scope :pending, -> { where(acceptance_status: 'pending') }
     scope :accepted, -> { where(acceptance_status: 'accepted') }
@@ -93,8 +93,8 @@ module Spree
     # @return [Spree::ReturnItem] a valid return item for the given inventory
     #   unit if one exists, or a new one if one does not
     def self.from_inventory_unit(inventory_unit)
-      valid.find_by(inventory_unit: inventory_unit) ||
-        new(inventory_unit: inventory_unit).tap(&:set_default_amount)
+      valid.find_by(inventory_unit:) ||
+        new(inventory_unit:).tap(&:set_default_amount)
     end
 
     # @return [Boolean] true when an exchange has been requested on this return
@@ -130,7 +130,7 @@ module Spree
     # @return [ActiveRecord::Relation<Spree::Variant>] the variants eligible
     #   for exchange for this return item
     def eligible_exchange_variants(stock_locations = nil)
-      exchange_variant_engine.eligible_variants(variant, stock_locations: stock_locations)
+      exchange_variant_engine.eligible_variants(variant, stock_locations:)
     end
 
     # Builds the exchange inventory unit for this return item, only if an
@@ -248,20 +248,20 @@ module Spree
 
     def validate_no_other_completed_return_items
       other_return_item = Spree::ReturnItem.where({
-        inventory_unit_id: inventory_unit_id,
+        inventory_unit_id:,
         reception_status: COMPLETED_RECEPTION_STATUSES
-      }).where.not(id: id).first
+      }).where.not(id:).first
 
       if other_return_item && (new_record? || COMPLETED_RECEPTION_STATUSES.include?(reception_status.to_sym))
         errors.add(:inventory_unit, :other_completed_return_item_exists,
-          inventory_unit_id: inventory_unit_id,
+          inventory_unit_id:,
           return_item_id: other_return_item.id)
       end
     end
 
     def cancel_others
-      Spree::ReturnItem.where(inventory_unit_id: inventory_unit_id)
-                       .where.not(id: id)
+      Spree::ReturnItem.where(inventory_unit_id:)
+                       .where.not(id:)
                        .valid
                        .each(&:cancel!)
     end

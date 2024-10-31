@@ -43,12 +43,12 @@ FactoryBot.define do
         evaluator.stock_location # must evaluate before creating line items
 
         evaluator.line_items_attributes.each do |attributes|
-          attributes = { order: order, price: evaluator.line_items_price }.merge(attributes)
+          attributes = { order:, price: evaluator.line_items_price }.merge(attributes)
           create(:line_item, attributes)
         end
         order.line_items.reload
 
-        create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, stock_location: evaluator.stock_location)
+        create(:shipment, order:, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, stock_location: evaluator.stock_location)
         order.shipments.reload
 
         order.recalculate
@@ -65,7 +65,7 @@ FactoryBot.define do
         after(:create) do |order, evaluator|
           create(evaluator.payment_type, {
             amount: order.total,
-            order: order,
+            order:,
             state: order.payment_state
           })
 
@@ -88,7 +88,7 @@ FactoryBot.define do
 
         factory :completed_order_with_pending_payment do
           after(:create) do |order|
-            create(:payment, amount: order.total, order: order, state: 'pending')
+            create(:payment, amount: order.total, order:, state: 'pending')
           end
         end
 
@@ -101,7 +101,7 @@ FactoryBot.define do
           end
 
           after(:create) do |order, evaluator|
-            create(evaluator.payment_type, amount: order.total, order: order, state: 'completed')
+            create(evaluator.payment_type, amount: order.total, order:, state: 'completed')
             order.shipments.each do |shipment|
               shipment.update_column('state', 'ready')
             end

@@ -40,7 +40,7 @@ RSpec.describe Spree::Variant::PriceSelector do
 
         context "with a price for that country present" do
           before do
-            variant.prices.create(amount: 44.44, country: country, currency: Spree::Config.currency)
+            variant.prices.create(amount: 44.44, country:, currency: Spree::Config.currency)
           end
 
           it "returns the correct price and currency", :aggregate_failures do

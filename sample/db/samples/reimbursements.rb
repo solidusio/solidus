@@ -22,20 +22,20 @@ end
 
 # Create a return authorization
 return_item = Spree::ReturnItem.new(
-  inventory_unit: inventory_unit,
-  preferred_reimbursement_type: preferred_reimbursement_type
+  inventory_unit:,
+  preferred_reimbursement_type:
 )
 
 order.return_authorizations.create!(
   reason: return_reason,
   return_items: [return_item],
-  stock_location: stock_location
+  stock_location:
 )
 
 # Create a customer return and mark it as received
 customer_return = Spree::CustomerReturn.create!(
   return_items: [return_item],
-  stock_location: stock_location
+  stock_location:
 )
 return_item.reload
 return_item.receive!

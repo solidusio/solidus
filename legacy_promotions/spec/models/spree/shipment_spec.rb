@@ -13,12 +13,12 @@ RSpec.describe Spree::Shipment, type: :model do
       cost: 1,
       inventory_units: order.inventory_units,
       shipping_rates: [shipping_rate],
-      stock_location: stock_location
+      stock_location:
     )
   end
   let(:shipping_rate) do
     Spree::ShippingRate.create!(
-      shipping_method: shipping_method,
+      shipping_method:,
       selected: true
     )
   end

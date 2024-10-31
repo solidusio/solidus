@@ -33,7 +33,7 @@ module Spree
           let(:product) { create(:product, option_types: [size]) }
           let(:size_small) { create(:option_value, name: 'small', option_type: size) }
           let(:size_large) { create(:option_value, name: 'large', option_type: size) }
-          let!(:first_rule) { create(:variant_property_rule, product: product, option_value: size_small) }
+          let!(:first_rule) { create(:variant_property_rule, product:, option_value: size_small) }
 
           context "no rules match the option values" do
             let(:parameters) do

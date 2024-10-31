@@ -18,7 +18,7 @@ RSpec.describe Spree::OrderPromotionSubscriber do
       order.promotions << promotion
       expect(order.order_promotions).not_to be_empty
 
-      bus.publish(:order_emptied, order: order)
+      bus.publish(:order_emptied, order:)
       expect(order.order_promotions).to be_empty
     end
   end

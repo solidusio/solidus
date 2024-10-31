@@ -22,8 +22,8 @@ RSpec.describe Spree::Wallet::AddPaymentSourcesToWallet, type: :model do
 
     context "when the default wallet payment source is used and a more recent wallet payment exists" do
       before do
-        credit_card_one = user.wallet.add(create(:credit_card, user: user))
-        user.wallet.add(create(:credit_card, user: user))
+        credit_card_one = user.wallet.add(create(:credit_card, user:))
+        user.wallet.add(create(:credit_card, user:))
         user.wallet.default_wallet_payment_source = credit_card_one # must be the first created card
         order.payments.first.update!(source: credit_card_one.payment_source)
       end

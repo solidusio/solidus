@@ -99,7 +99,7 @@ module Spree
       end
 
       it 'updates the resource' do
-        put :update, params: params
+        put(:update, params:)
 
         expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
         response_payment_method = Spree::PaymentMethod.find(payment_method.id)

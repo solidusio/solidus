@@ -8,7 +8,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
       promotion_id: create(:promotion).id,
       base_code: "test",
       number_of_codes: 10,
-      email: email
+      email:
     )
   end
   context "with a successful build" do
@@ -36,7 +36,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
           promotion_id: create(:promotion).id,
           base_code: "test",
           number_of_codes: 10,
-          email: email,
+          email:,
           join_characters: '-'
         )
       end

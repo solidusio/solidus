@@ -46,11 +46,11 @@ class Spree::Carton < Spree::Base
   end
 
   def manifest
-    @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
+    @manifest ||= Spree::ShippingManifest.new(inventory_units:).items
   end
 
   def manifest_for_order(order)
-    Spree::ShippingManifest.new(inventory_units: inventory_units).for_order(order).items
+    Spree::ShippingManifest.new(inventory_units:).for_order(order).items
   end
 
   def any_exchanges?
