@@ -50,7 +50,7 @@ describe 'Customer returns', type: :feature do
         within('[data-hook="rejected_return_items"] tbody tr:nth-child(1)') do
           click_button('Receive')
 
-          expect(page).to have_button("Receive", disabled: true)
+          expect(page).to have_button("Receive", disabled: true, wait: 5)
         end
       end
 

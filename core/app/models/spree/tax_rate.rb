@@ -11,10 +11,10 @@ module Spree
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
 
-    enum level: {
+    enum :level, {
       item: 0,
       order: 1
-    }, _suffix: true
+    }, suffix: true
 
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
 

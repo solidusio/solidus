@@ -37,7 +37,7 @@ module SolidusPromotions
       joins(:benefits).distinct
     end
 
-    enum lane: SolidusPromotions.config.preferred_lanes
+    enum :lane, SolidusPromotions.config.preferred_lanes
 
     def self.with_coupon_code(val)
       joins(:codes).where(
