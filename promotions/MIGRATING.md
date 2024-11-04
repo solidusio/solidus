@@ -1,6 +1,10 @@
-# Migrating from Solidus' promotion system to SolidusPromotions
+# Migrating from `solidus_legacy_promotions` to `solidus_promotions`
 
-The system is designed to completely replace the Solidus promotion system. Follow these steps to migrate your store to the gem:
+The system is designed to completely replace the legacy promotion system. This guide shows you how
+to run both systems side-by-side, migrate your store's configuration to the `solidus_promotions`, and
+finally remove the dependency on `solidus_legacy_promotions`.
+
+Follow these steps to migrate your store to the gem:
 
 ## Install solidus_promotions
 
@@ -17,9 +21,9 @@ bundle install
 bundle exec rails generate solidus_promotions:install
 ```
 
-This will install the extension. It will add new tables, and new routes. It will also generate an initializer in `config/initializers/solidus_promotions.rb`.
+This will install the extension. It will add new tables, and new routes. It will also change your initializer in `config/initializers/spree.rb`.
 
-For the time being, comment out the following lines:
+For the time being, leave the following lines commented out:
 
 ```rb
 # Make sure we use Spree::SimpleOrderContents
@@ -88,7 +92,7 @@ Stores that have a custom coupon codes controller, such as Solidus' starter fron
 If you have custom promotion rules or actions, you need to create new conditions and benefits, respectively.
 
 > [!IMPORTANT]
-> SolidusPromotions currently only supports actions that discount line items and shipments, as well as creating discounted line items. If you have actions that create order-level adjustments, we currently have no support for that.
+> SolidusPromotions only supports actions that discount line items and shipments, as well as creating discounted line items. If you have actions that create order-level adjustments, we have no support for that.
 
 In our experience, using the three actions can do almost all the things necessary, since they are customizable using calculators.
 
@@ -147,4 +151,34 @@ require 'solidus_promotions/promotion_migrator'
 require 'my_promotion_map'
 
 SolidusPromotions::PromotionMigrator.new(MY_PROMOTION_MAP).call
+```
+
+## Removing `solidus_legacy_promotions`
+
+Once your store runs on `solidus_promotions`, you can now drop the dependency on `solidus_legacy_promotions`.
+In order to do so, first make sure you have no ineligible promotion adjustments left in your database:
+
+```rb
+>> Spree::Adjustment.where(eligible: false)
+=> 0
+>>
+```
+
+If you still have ineligible adjustments in your database, run the following command:
+
+```sh
+bundle exec rails solidus_legacy_promotions:delete_ineligible_adjustments
+```
+
+Now you can safely remove `solidus_legacy_promotions` from your `Gemfile`. If your store depends on the whole `solidus` suite,
+replace that dependency declaration in the `Gemfile` with the individual gems:
+
+```diff
+# Gemfile
+- gem 'solidus', '~> 4,4'
++ gem 'solidus_core', '~> 4.4'
++ gem 'solidus_api', '~> 4.4'
++ gem 'solidus_backend', '~> 4.4'
++ gem 'solidus_admin', '~> 4.4'
++ gem 'solidus_promotions', '~> 4.4'
 ```
