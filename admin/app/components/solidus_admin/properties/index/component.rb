@@ -14,7 +14,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(property)
-    spree.admin_property_path(property)
+    spree.edit_admin_property_path(property)
   end
 
   def page_actions
