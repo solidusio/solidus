@@ -2,14 +2,14 @@
 
 json.cache! [I18n.locale, shipment] do
   json.(shipment, *shipment_attributes)
-  json.partial!("spree/api/shipments/small", shipment: shipment)
+  json.partial!("spree/api/shipments/small", shipment:)
   json.inventory_units(shipment.inventory_units) do |inventory_unit|
     json.(inventory_unit, *inventory_unit_attributes)
     json.variant do
       json.partial!("spree/api/variants/small", variant: inventory_unit.variant)
       json.(inventory_unit.variant, :product_id)
       json.images(inventory_unit.variant.gallery.images) do |image|
-        json.partial!("spree/api/images/image", image: image)
+        json.partial!("spree/api/images/image", image:)
       end
     end
     json.line_item do

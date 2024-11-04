@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe Spree::Adjustment, type: :model do
   let!(:store) { create :store }
   let(:order) { create :order }
-  let(:line_item) { create :line_item, order: order }
+  let(:line_item) { create :line_item, order: }
 
-  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
+  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order:, amount: 5) }
 
   it { is_expected.to respond_to(:promotion_code) }
   context '#recalculate' do
@@ -15,11 +15,11 @@ RSpec.describe Spree::Adjustment, type: :model do
     let(:adjustment) do
       line_item.adjustments.create!(
         label: 'Adjustment',
-        order: order,
+        order:,
         adjustable: order,
         amount: 5,
-        finalized: finalized,
-        source: source,
+        finalized:,
+        source:,
       )
     end
     let(:order) { create(:order_with_line_items, line_items_price: 100) }
@@ -139,7 +139,7 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
 
       context "when the promotion has a code" do
-        let!(:promotion_code) { create(:promotion_code, promotion: promotion) }
+        let!(:promotion_code) { create(:promotion_code, promotion:) }
 
         it { is_expected.to include("can't be blank") }
       end
@@ -155,7 +155,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
       context "when the promotion has a code" do
         let!(:promotion_code) do
-          promotion.codes << build(:promotion_code, promotion: promotion)
+          promotion.codes << build(:promotion_code, promotion:)
         end
 
         it { is_expected.to be_blank }

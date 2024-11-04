@@ -31,7 +31,7 @@ describe "Products", type: :feature do
     select_row("Just a product")
 
     accept_confirm("Are you sure you want to delete 1 product?") do
-      click_button "Delete"
+      click_button("Delete", wait: 5)
     end
 
     expect(page).to have_content("Products were successfully removed.", wait: 5)

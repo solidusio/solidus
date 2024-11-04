@@ -111,7 +111,7 @@ module Spree
           let(:address) { create(:address) }
 
           before do
-            user.user_addresses.create(address: address, default: false)
+            user.user_addresses.create(address:, default: false)
           end
 
           context "properly sets the default flag" do
@@ -453,7 +453,7 @@ module Spree
 
     describe "generating a new user with a ship_address at once" do
       let(:ship_address) { build(:ship_address) }
-      subject { create(:user, ship_address: ship_address) }
+      subject { create(:user, ship_address:) }
 
       it "stores the ship_address" do
         expect(subject.ship_address).to eq ship_address

@@ -49,7 +49,7 @@ RSpec.describe Spree::Core do
         initializer_name = File.basename(__FILE__)
 
         expect(
-          Spree::Core.has_install_generator_been_run?(rails_paths: rails_paths, initializer_name: initializer_name, dummy_app_name: 'Foo')
+          Spree::Core.has_install_generator_been_run?(rails_paths:, initializer_name:, dummy_app_name: 'Foo')
         ).to be(true)
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe Spree::Core do
         initializer_name = 'xxxxxxxxxxxxxxxxxxxxxx'
 
         expect(
-          Spree::Core.has_install_generator_been_run?(rails_paths: rails_paths, initializer_name: initializer_name, dummy_app_name: 'Foo')
+          Spree::Core.has_install_generator_been_run?(rails_paths:, initializer_name:, dummy_app_name: 'Foo')
         ).to be(false)
       end
     end
@@ -69,7 +69,7 @@ RSpec.describe Spree::Core do
         initializer_name = 'xxxxxxxxxxxxxxxxxxxxxx'
 
         expect(
-          Spree::Core.has_install_generator_been_run?(rails_paths: rails_paths, initializer_name: initializer_name)
+          Spree::Core.has_install_generator_been_run?(rails_paths:, initializer_name:)
         ).to be(true)
       end
     end

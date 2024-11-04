@@ -41,10 +41,10 @@ RSpec.describe Spree::Promotion::Rules::FirstRepeatPurchaseSince do
         let(:order_completion_date_1) { 1.day.ago }
         let(:order_completion_date_2) { 1.day.ago }
         before do
-          old_order_1 = create :completed_order_with_totals, user: user
+          old_order_1 = create(:completed_order_with_totals, user:)
           old_order_1.update(completed_at: order_completion_date_1)
 
-          old_order_2 = create :completed_order_with_totals, user: user
+          old_order_2 = create(:completed_order_with_totals, user:)
           old_order_2.update(completed_at: order_completion_date_2)
         end
 

@@ -73,7 +73,7 @@ module Spree
 
           before do
             shipment = order.shipments.create(stock_location: stock_location_1)
-            order.contents.add(variant, 1, shipment: shipment)
+            order.contents.add(variant, 1, shipment:)
           end
 
           context "but no stock in either location" do
@@ -117,7 +117,7 @@ module Spree
         before do
           shipment_two = order.shipments.create!(stock_location: order.shipments.first.stock_location)
           order.contents.add(variant, 1, shipment: shipment_two)
-          variant.stock_items.first.update_columns(count_on_hand: count_on_hand, backorderable: false)
+          variant.stock_items.first.update_columns(count_on_hand:, backorderable: false)
         end
 
         context "and there is just enough stock" do

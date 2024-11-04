@@ -11,7 +11,7 @@ describe "Products", type: :feature do
     end
 
     def build_option_type_with_values(name, values)
-      ot = FactoryBot.create(:option_type, name: name)
+      ot = FactoryBot.create(:option_type, name:)
       values.each do |val|
         ot.option_values.create(name: val.downcase, presentation: val)
       end
@@ -156,7 +156,7 @@ describe "Products", type: :feature do
       # Regression test for https://github.com/solidusio/solidus/issues/2016
       it "should be able to search and sort by price" do
         product = create(:product, name: 'apache baseball cap', sku: "A001")
-        create(:variant, product: product, sku: "A002")
+        create(:variant, product:, sku: "A002")
         create(:product, name: 'zomg shirt', sku: "Z001")
 
         click_nav "Products"

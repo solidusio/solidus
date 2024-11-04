@@ -20,10 +20,10 @@ Gem::Specification.new do |s|
     f.match(%r{^(spec|script)/})
   end
 
-  s.required_ruby_version = '>= 3.0.0'
+  s.required_ruby_version = '>= 3.1.0'
   s.required_rubygems_version = '>= 1.8.23'
 
-  s.add_dependency 'solidus_core', s.version
   s.add_dependency 'solidus_api', s.version
+  s.add_dependency 'solidus_core', s.version
   s.add_dependency 'solidus_support'
 end

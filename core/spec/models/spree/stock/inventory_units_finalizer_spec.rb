@@ -7,7 +7,7 @@ module Spree
     RSpec.describe InventoryUnitsFinalizer, type: :model do
       context "when finalizing an order with one line_item" do
         let(:order)          { build(:order_with_line_items) }
-        let(:inventory_unit) { build(:inventory_unit, order: order, variant: variant, line_item: line_item, shipment: order.shipments.first) }
+        let(:inventory_unit) { build(:inventory_unit, order:, variant:, line_item:, shipment: order.shipments.first) }
         let(:stock_item)     { inventory_unit.variant.stock_items.first }
         let(:line_item)      { order.line_items.first }
         let(:variant)        { create(:variant) }
@@ -40,8 +40,8 @@ module Spree
 
       context "when finalizing an order with multiple line_items" do
         let(:order)          { build(:order_with_line_items, line_items_count: 2) }
-        let(:inventory_unit) { build(:inventory_unit, order: order, variant: order.line_items.first.variant, shipment: order.shipments.first) }
-        let(:inventory_unit_2) { build(:inventory_unit, order: order, variant: order.line_items.second.variant, shipment: order.shipments.first) }
+        let(:inventory_unit) { build(:inventory_unit, order:, variant: order.line_items.first.variant, shipment: order.shipments.first) }
+        let(:inventory_unit_2) { build(:inventory_unit, order:, variant: order.line_items.second.variant, shipment: order.shipments.first) }
         let(:stock_item) { inventory_unit.variant.stock_items.first }
         let(:stock_item_2) { inventory_unit.variant.stock_items.first }
 

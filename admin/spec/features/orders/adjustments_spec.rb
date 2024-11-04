@@ -13,7 +13,7 @@ describe "Order", :js, type: :feature do
   it "allows locking and unlocking adjustments" do
     taxrate = create(:tax_rate)
     Spree::Adjustment.create(
-      order: order,
+      order:,
       adjustable: order,
       amount: 10,
       label: "Test Adjustment",
@@ -49,7 +49,7 @@ describe "Order", :js, type: :feature do
 
   it "can display an adjustment without a source" do
     Spree::Adjustment.create(
-      order: order,
+      order:,
       adjustable: order,
       amount: 10,
       label: "No Source Adjustment",
@@ -87,7 +87,7 @@ describe "Order", :js, type: :feature do
 
     before do
       order.shipments.first.adjustments.create!(
-        order: order,
+        order:,
         label: "Manual shipping discount",
         amount: -2,
         source: nil

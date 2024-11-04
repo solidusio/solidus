@@ -19,7 +19,7 @@ class Spree::PromotionCode < Spree::Base
   # @return true or false
   def usage_limit_exceeded?(excluded_orders: [])
     if usage_limit
-      usage_count(excluded_orders: excluded_orders) >= usage_limit
+      usage_count(excluded_orders:) >= usage_limit
     end
   end
 

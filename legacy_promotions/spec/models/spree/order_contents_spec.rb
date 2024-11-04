@@ -22,7 +22,7 @@ RSpec.describe Spree::OrderContents, type: :model do
       end
 
       context "one active order promotion" do
-        let!(:action) { Spree::Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
+        let!(:action) { Spree::Promotion::Actions::CreateAdjustment.create(promotion:, calculator:) }
 
         it "creates valid discount on order" do
           subject.add(variant, 1)
@@ -33,7 +33,7 @@ RSpec.describe Spree::OrderContents, type: :model do
       end
 
       context "one active line item promotion" do
-        let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
+        let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(promotion:, calculator:) }
 
         it "creates valid discount on order" do
           subject.add(variant, 1)

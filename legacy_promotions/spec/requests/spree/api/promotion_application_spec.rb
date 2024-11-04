@@ -12,7 +12,7 @@ RSpec.describe 'Promotion application', type: :request do
     let!(:promotion) do
       promotion = create(:promotion, name: "10% off", code: "10off")
       calculator = Spree::Calculator::FlatPercentItemTotal.create(preferred_flat_percent: "10")
-      action = Spree::Promotion::Actions::CreateItemAdjustments.create(calculator: calculator)
+      action = Spree::Promotion::Actions::CreateItemAdjustments.create(calculator:)
       promotion.actions << action
       promotion
     end

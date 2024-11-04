@@ -46,6 +46,6 @@ class SolidusAdmin::UI::Pages::Index::ComponentPreview < ViewComponent::Preview
       end
     end
 
-    render component_subclcass.new(page: page)
+    render component_subclcass.new(page:)
   end
 end

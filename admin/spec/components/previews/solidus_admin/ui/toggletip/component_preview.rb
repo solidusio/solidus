@@ -13,9 +13,9 @@ class SolidusAdmin::UI::Toggletip::ComponentPreview < ViewComponent::Preview
   # @param open toggle
   def playground(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", position: :above, open: false)
     render current_component.new(
-      text: text,
-      position: position,
-      open: open,
+      text:,
+      position:,
+      open:,
       class: "m-40"
     )
   end

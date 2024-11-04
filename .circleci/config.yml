@@ -9,7 +9,7 @@ executors:
     parameters: &parameters
       ruby:
         type: string
-        default: "3.0"
+        default: "3.1"
     working_directory: &workdir ~/solidus
     environment: &environment
       DEFAULT_MAX_WAIT_TIME: 10
@@ -118,6 +118,9 @@ commands:
       - run:
           name: "Run Legacy Promotion Tests"
           command: ./bin/build-ci legacy_promotions
+      - run:
+          name: "Run Friendly Promotion Tests"
+          command: ./bin/build-ci promotions
 
       - store_artifacts:
           path: /tmp/test-artifacts
@@ -157,23 +160,23 @@ commands:
             ruby -v >> /tmp/.ruby-versions
             gem --version >> /tmp/.gems-versions
             bundle --version >> /tmp/.gems-versions
-            gem search -eq rails -v "~> 7" -v "< 7.2" >> /tmp/.gems-versions # get the latest rails from rubygems
+            gem search -eq rails -v "~> 7" -v "< 8.0" >> /tmp/.gems-versions # get the latest rails from rubygems
             gem search -eq solidus >> /tmp/.gems-versions # get the latest solidus from rubygems
 
             cat /tmp/.ruby-versions
             cat /tmp/.gems-versions
       - restore_cache:
           keys:
-            - solidus-installer-v9-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
-            - solidus-installer-v9-{{ checksum "/tmp/.ruby-versions" }}-
+            - solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+            - solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-
       - run:
           name: "Prepare the rails application"
           command: |
             cd /tmp
-            test -d my_app || (gem install rails -v "< 7.1" && gem install solidus)
+            test -d my_app || (gem install rails -v "< 8.0" && gem install solidus)
             test -d my_app || rails new my_app --skip-git
       - save_cache:
-          key: solidus-installer-v9-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
+          key: solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
           paths:
             - /tmp/my_app
             - /home/circleci/.rubygems
@@ -189,10 +192,10 @@ commands:
     parameters:
       app_root:
         type: string
-        default: '/tmp/my_app'
+        default: "/tmp/my_app"
       path:
         type: string
-        default: '/'
+        default: "/"
       expected_text:
         type: string
 
@@ -221,8 +224,8 @@ commands:
             mkdir -p /tmp/dummy_extension
             cd /tmp/dummy_extension
             bundle init
-            bundle add rails -v "< 7.1" --skip-install
-            bundle add sqlite3 -v "~> 1.3" --skip-install
+            bundle add rails -v "< 8.0" --skip-install
+            bundle add sqlite3 -v "~> 2.0" --skip-install
             test -n "<<parameters.extra_gems>>" && bundle add <<parameters.extra_gems>> --skip-install
             bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             export LIB_NAME=set # dummy requireable file
@@ -237,7 +240,7 @@ jobs:
           ESLINT_USE_FLAT_CONFIG: false
     steps:
       - checkout
-      - run: 'bundle install'
+      - run: "bundle install"
       - run:
           name: Check Ruby
           command: "bin/rake lint:rb"
@@ -253,7 +256,7 @@ jobs:
   solidus_installer:
     executor:
       name: sqlite
-      ruby: "3.0"
+      ruby: "3.1"
     steps:
       - checkout
       - run:
@@ -276,12 +279,10 @@ jobs:
       - test_page:
           expected_text: "<title>Sample Store</title>"
       - install_dummy_app
-      - install_dummy_app:
-          extra_gems: "solidus_frontend"
       - run:
-          name: "Ensure solidus_frontend installer is run"
+          name: "Ensure extension test app is created"
           command: |
-            test -f /tmp/dummy_extension/spec/dummy/config/initializers/solidus_frontend.rb
+            test -d /tmp/dummy_extension/spec/dummy
 
   test_solidus:
     parameters:
@@ -290,7 +291,7 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.2'
+        default: "3.2"
       rails:
         type: string
         default: "7.1"
@@ -326,13 +327,13 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.2'
+        default: "3.2"
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
     parallelism: 3
     environment:
-      COVERAGE: 'true'
+      COVERAGE: "true"
       COVERAGE_DIR: /tmp/coverage
       DISABLE_ACTIVE_STORAGE: false
     steps:
@@ -340,14 +341,14 @@ jobs:
       - run:
           name: Setup Coverage Env Vars
           command: |
-              echo 'export COVERAGE_FILE=/tmp/coverage/coverage.xml' >> $BASH_ENV
-              source $BASH_ENV
+            echo 'export COVERAGE_FILE=/tmp/coverage/coverage.xml' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Verify Coverage Env Vars
           command: |
-              echo $COVERAGE
-              echo /tmp/coverage
-              echo /tmp/coverage/coverage.xml
+            echo $COVERAGE
+            echo /tmp/coverage
+            echo /tmp/coverage/coverage.xml
       - run:
           name: Setup Coverage Directory
           command: mkdir -p /tmp/coverage
@@ -369,13 +370,49 @@ workflows:
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.0'], database: ['mysql'], paperclip: [true] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1", "7.2"],
+                  ruby: ["3.1"],
+                  database: ["mysql"],
+                  paperclip: [true],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1", "7.2"],
+                  ruby: ["3.1"],
+                  database: ["postgres"],
+                  paperclip: [false],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.1"],
+                  ruby: ["3.2"],
+                  database: ["sqlite"],
+                  paperclip: [false],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.1', 'main'], ruby: ['3.3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.2", "main"],
+                  ruby: ["3.3.5"],
+                  database: ["sqlite"],
+                  paperclip: [false],
+                },
+            }

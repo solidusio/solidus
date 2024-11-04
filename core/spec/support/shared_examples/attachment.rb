@@ -16,7 +16,7 @@ RSpec.shared_examples 'an attachment' do
 
     it 'returns definition' do
       expect(subject.class.attachment_definitions[attachment_name])
-        .to include(default_style: default_style)
+        .to include(default_style:)
     end
 
     it 'returns if present' do

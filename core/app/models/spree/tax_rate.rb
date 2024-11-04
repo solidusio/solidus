@@ -11,10 +11,10 @@ module Spree
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
 
-    enum level: {
+    enum :level, {
       item: 0,
       order: 1
-    }, _suffix: true
+    }, suffix: true
 
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
 
@@ -37,7 +37,7 @@ module Spree
     # Finds all tax rates whose zones match a given address
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
     scope :for_country,
-          ->(country) { for_address(Spree::Tax::TaxLocation.new(country: country)) }
+          ->(country) { for_address(Spree::Tax::TaxLocation.new(country:)) }
     scope :active, -> do
       table = arel_table
       time = Time.current

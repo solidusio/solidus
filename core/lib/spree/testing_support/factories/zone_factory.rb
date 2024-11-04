@@ -6,7 +6,7 @@ FactoryBot.define do
     zone_members do |proxy|
       zone = proxy.instance_eval { @instance }
       Spree::Country.all.map do |c|
-        Spree::ZoneMember.create(zoneable: c, zone: zone)
+        Spree::ZoneMember.create(zoneable: c, zone:)
       end
     end
   end

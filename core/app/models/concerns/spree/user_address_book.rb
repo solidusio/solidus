@@ -120,7 +120,7 @@ module Spree
         remove_from_address_book(address_attributes[:id])
       end
 
-      user_addresses.mark_default(user_address, address_type: address_type) if default || first_one
+      user_addresses.mark_default(user_address, address_type:) if default || first_one
 
       if persisted?
         user_address.save!
@@ -140,15 +140,15 @@ module Spree
     end
 
     def mark_default_ship_address(address)
-      user_addresses.mark_default(user_addresses.find_by(address: address))
+      user_addresses.mark_default(user_addresses.find_by(address:))
     end
 
     def mark_default_bill_address(address)
-      user_addresses.mark_default(user_addresses.find_by(address: address), address_type: :billing)
+      user_addresses.mark_default(user_addresses.find_by(address:), address_type: :billing)
     end
 
     def remove_from_address_book(address_id)
-      user_address = user_addresses.find_by(address_id: address_id)
+      user_address = user_addresses.find_by(address_id:)
       if user_address
         remove_user_address_reference(address_id)
         user_address.update(archived: true, default: false)

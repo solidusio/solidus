@@ -6,7 +6,7 @@ module Spree::Api
   describe 'Stock movements', type: :request do
     let!(:stock_location) { create(:stock_location_with_items) }
     let!(:stock_item) { stock_location.stock_items.order(:id).first }
-    let!(:stock_movement) { create(:stock_movement, stock_item: stock_item) }
+    let!(:stock_movement) { create(:stock_movement, stock_item:) }
     let!(:attributes) { [:id, :quantity, :stock_item_id] }
 
     before do
@@ -31,7 +31,7 @@ module Spree::Api
           }
         }
 
-        post spree.api_stock_location_stock_movements_path(stock_location), params: params
+        post(spree.api_stock_location_stock_movements_path(stock_location), params:)
         expect(response.status).to eq(401)
       end
     end
@@ -46,7 +46,7 @@ module Spree::Api
       end
 
       it 'can control the page size through a parameter' do
-        create(:stock_movement, stock_item: stock_item)
+        create(:stock_movement, stock_item:)
         get spree.api_stock_location_stock_movements_path(stock_location), params: { per_page: 1 }
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
@@ -54,7 +54,7 @@ module Spree::Api
       end
 
       it 'can query the results through a paramter' do
-        create(:stock_movement, :received, quantity: 10, stock_item: stock_item)
+        create(:stock_movement, :received, quantity: 10, stock_item:)
         get spree.api_stock_location_stock_movements_path(stock_location), params: { q: { quantity_eq: '10' } }
         expect(json_response['count']).to eq(1)
       end
@@ -72,7 +72,7 @@ module Spree::Api
           }
         }
 
-        post spree.api_stock_location_stock_movements_path(stock_location), params: params
+        post(spree.api_stock_location_stock_movements_path(stock_location), params:)
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
       end

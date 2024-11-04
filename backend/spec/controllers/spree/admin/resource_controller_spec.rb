@@ -101,7 +101,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       { widget: { name: 'a widget' } }
     end
 
-    subject { post :create, params: params }
+    subject { post :create, params: }
 
     it 'creates the resource' do
       expect { subject }.to change { Widget.count }.by(1)
@@ -141,7 +141,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       }
     end
 
-    subject { put :update, params: params }
+    subject { put :update, params: }
 
     it 'updates the resource' do
       expect { subject }.to change { widget.reload.name }.from('a widget').to('widget renamed')
@@ -167,7 +167,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       end
 
       it 'returns to edit page with error' do
-        put :update, params: params
+        put(:update, params:)
         expect(flash[:error]).to eq('Record invalid')
       end
     end
@@ -178,7 +178,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
     let(:params) { { id: widget.id } }
 
     subject {
-      delete :destroy, params: params
+      delete :destroy, params:
     }
 
     it 'destroys the resource' do
@@ -190,7 +190,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       let(:params) { { id: widget.id } }
 
       context 'js format' do
-        subject { delete :destroy, params: params, format: 'js' }
+        subject { delete :destroy, params:, format: 'js' }
 
         it 'responds with error message' do
           subject
@@ -200,7 +200,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       end
 
       context 'html format' do
-        subject { delete :destroy, params: params }
+        subject { delete :destroy, params: }
 
         it 'responds with error message' do
           subject

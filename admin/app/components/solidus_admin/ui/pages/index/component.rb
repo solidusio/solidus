@@ -61,8 +61,8 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
       value: search_params,
       url: search_url,
       searchbar_key: search_key,
-      filters: filters,
-      scopes: scopes,
+      filters:,
+      scopes:,
     }
   end
 
@@ -80,12 +80,12 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
       id: stimulus_id,
       data: {
         class: model_class,
-        rows: rows,
+        rows:,
         fade: -> { row_fade(_1) },
         prev: prev_page_path,
         next: next_page_path,
-        columns: columns,
-        batch_actions: batch_actions,
+        columns:,
+        batch_actions:,
         url: -> { row_url(_1) },
       },
       search: search_options,

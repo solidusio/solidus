@@ -8,7 +8,7 @@ gemspec require: false
 if /(stable|main)/.match? ENV['RAILS_VERSION']
   gem 'rails', github: 'rails', require: false, branch: ENV['RAILS_VERSION']
 else
-  gem 'rails', ENV['RAILS_VERSION'] || '< 7.2', require: false
+  gem 'rails', ENV['RAILS_VERSION'] || ['> 7.0', '< 8.0.0.beta1'], require: false
 end
 # rubocop:enable Bundler/DuplicatedGem
 
@@ -21,6 +21,7 @@ gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 gem 'sqlite3', '~> 1.4', require: false if dbs.match?(/all|sqlite/)
 
+
 gem 'database_cleaner', '~> 2.0', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
 gem 'rspec-rails', '~> 6.0.3', require: false
@@ -30,7 +31,12 @@ gem 'simplecov-cobertura', require: false
 gem 'rack', '< 3', require: false
 gem 'rake', require: false, groups: [:lint, :release]
 gem 'rails-controller-testing', require: false
-gem 'puma', '< 7', require: false
+
+# Temporarily use the master branch of puma until the next release
+# The current release, 6.4.3, has bug that causes Capybara to crash.
+# See https://github.com/puma/puma/pull/3532
+gem 'puma', github: 'puma/puma', branch: 'master', require: false
+
 gem 'i18n-tasks', '~> 0.9', require: false
 gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
@@ -62,6 +68,15 @@ group :legacy_promotions do
   gem 'solidus_backend', path: 'backend', require: false
   gem 'axe-core-rspec', '~> 4.8', require: false
   gem 'axe-core-capybara', '~> 4.8', require: false
+end
+
+group :promotions do
+  gem 'solidus_promotions', path: 'promotions', require: false
+  gem 'solidus_admin', path: 'admin', require: false
+  gem 'solidus_backend', path: 'backend', require: false
+  gem 'axe-core-rspec', '~> 4.8', require: false
+  gem 'axe-core-capybara', '~> 4.8', require: false
+  gem 'shoulda-matchers', '~> 5.0', require: false
 end
 
 group :lint do

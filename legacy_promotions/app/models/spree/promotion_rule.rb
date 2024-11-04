@@ -9,7 +9,7 @@ module Spree
 
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_rules, optional: true
 
-    scope :of_type, ->(type) { where(type: type) }
+    scope :of_type, ->(type) { where(type:) }
 
     validates :promotion, presence: true
     validate :unique_per_promotion, on: :create
@@ -43,7 +43,7 @@ module Spree
     private
 
     def unique_per_promotion
-      if Spree::PromotionRule.exists?(promotion_id: promotion_id, type: self.class.name)
+      if Spree::PromotionRule.exists?(promotion_id:, type: self.class.name)
         errors[:base] << "Promotion already contains this rule type"
       end
     end

@@ -252,4 +252,57 @@ describe "Users", :js, type: :feature do
       end
     end
   end
+
+  context "when viewing a user's store credits" do
+    context "when a user has no store credits" do
+      before do
+        create(:user, email: "customer@example.com")
+        visit "/admin/users"
+        find_row("customer@example.com").click
+        click_on "Store Credit"
+      end
+
+      it "shows the store credits page" do
+        expect(page).to have_content("Users / customer@example.com / Store Credit")
+        expect(page).to have_content("Lifetime Stats")
+        expect(page).to have_content("Store Credit")
+        expect(page).to be_axe_clean
+      end
+
+      it "shows the appropriate content" do
+        expect(page).to have_content("No Store Credits found.")
+      end
+    end
+
+    context "when a user has store credits" do
+      let!(:store_credit) { create(:store_credit, amount: 199.00, currency: "USD") }
+
+      before do
+        store_credit.user.update(email: "customer@example.com")
+
+        visit "/admin/users"
+        find_row("customer@example.com").click
+        click_on "Store Credit"
+      end
+
+      it "shows the store credits page" do
+        expect(page).to have_content("Users / customer@example.com / Store Credit")
+        expect(page).to have_content("Lifetime Stats")
+        expect(page).to have_content("Store Credit")
+        expect(page).to be_axe_clean
+      end
+
+      it "lists the user's store credit" do
+        expect(page).to have_content("Current balance: $199.00")
+        expect(page).to have_content("Credited")
+        expect(page).to have_content("Authorized")
+        expect(page).to have_content("Used")
+        expect(page).to have_content("Type")
+        expect(page).to have_content("Created by")
+        expect(page).to have_content("Issued on")
+        expect(page).to have_content("Invalidated")
+        expect(page).not_to have_content("No Store Credits found.")
+      end
+    end
+  end
 end

@@ -12,7 +12,7 @@ end
 RSpec.describe Spree::Product, type: :model do
   context 'product instance' do
     let(:product) { create(:product) }
-    let(:variant) { create(:variant, product: product) }
+    let(:variant) { create(:variant, product:) }
 
     context '#duplicate' do
       before do
@@ -122,7 +122,7 @@ RSpec.describe Spree::Product, type: :model do
 
     context "product has variants" do
       before do
-        create(:variant, product: product)
+        create(:variant, product:)
       end
 
       context "#discard" do
@@ -242,8 +242,8 @@ RSpec.describe Spree::Product, type: :model do
     end
 
     context "variants_and_option_values_for" do
-      let!(:high) { create(:variant, product: product) }
-      let!(:low) { create(:variant, product: product) }
+      let!(:high) { create(:variant, product:) }
+      let!(:low) { create(:variant, product:) }
 
       context "when one product does not have option values" do
         before { high.option_values.destroy_all }
@@ -284,7 +284,7 @@ RSpec.describe Spree::Product, type: :model do
       let(:size_small) { create(:option_value, name: 'small', option_type: size, position: 3) }
       let(:size_medium) { create(:option_value, name: 'medium', option_type: size, position: 1) }
       let(:size_large) { create(:option_value, name: 'large', option_type: size, position: 2) }
-      let!(:variant) { create(:variant, product: product, option_values: [size_small, size_medium]) }
+      let!(:variant) { create(:variant, product:, option_values: [size_small, size_medium]) }
 
       subject { product.variant_option_values_by_option_type }
 
@@ -300,7 +300,7 @@ RSpec.describe Spree::Product, type: :model do
 
       context "a matching rule exists" do
         let!(:rule) do
-          create(:variant_property_rule, product: product, option_value: option_value)
+          create(:variant_property_rule, product:, option_value:)
         end
 
         it "returns the rule" do
@@ -318,9 +318,9 @@ RSpec.describe Spree::Product, type: :model do
     describe 'Variants sorting' do
       let(:master){ product.master }
 
-      let!(:second) { create(:variant, product: product) }
-      let!(:third)  { create(:variant, product: product) }
-      let!(:first)  { create(:variant, product: product) }
+      let!(:second) { create(:variant, product:) }
+      let!(:third)  { create(:variant, product:) }
+      let!(:first)  { create(:variant, product:) }
 
       before do
         first.update_columns(position: 2)
@@ -347,7 +347,7 @@ RSpec.describe Spree::Product, type: :model do
       let(:stock_item) { variant.stock_items.first }
 
       it "doesnt raise ReadOnlyRecord error" do
-        Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
+        Spree::StockMovement.create!(stock_item:, quantity: 1)
         product.discard
       end
     end
@@ -401,7 +401,7 @@ RSpec.describe Spree::Product, type: :model do
       let(:product) { create(:product, slug: 'my-awesome-product') }
 
       it "destroys related associations" do
-        create(:variant, product: product)
+        create(:variant, product:)
         product.option_types = [create(:option_type)]
         product.master.images = [create(:image)]
         product.taxons = [create(:taxon)]

@@ -7,6 +7,12 @@ RSpec.describe Spree::Order do
   it { is_expected.to respond_to(:order_promotions) }
   it { is_expected.to respond_to(:promotions) }
 
+  describe ".ransackable_associations" do
+    subject { described_class.ransackable_associations }
+
+    it { is_expected.to include("promotions", "order_promotions") }
+  end
+
   context "#apply_shipping_promotions" do
     let(:order) { build(:order) }
 
@@ -47,10 +53,10 @@ RSpec.describe Spree::Order do
     let(:code) { promotion.codes.first }
 
     before do
-      create(:line_item, order: order)
-      create(:shipment, order: order)
-      create(:adjustment, adjustable: order, order: order)
-      promotion.activate(order: order, promotion_code: code)
+      create(:line_item, order:)
+      create(:shipment, order:)
+      create(:adjustment, adjustable: order, order:)
+      promotion.activate(order:, promotion_code: code)
       order.recalculate
 
       # Make sure we are asserting changes
@@ -92,7 +98,7 @@ RSpec.describe Spree::Order do
   end
 
   describe "#can_add_coupon?" do
-    let(:order) { Spree::Order.new(state: state) }
+    let(:order) { Spree::Order.new(state:) }
 
     subject { order.can_add_coupon? }
 

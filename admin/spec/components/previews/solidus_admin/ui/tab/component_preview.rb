@@ -6,7 +6,7 @@ class SolidusAdmin::UI::Tab::ComponentPreview < ViewComponent::Preview
 
   # @param text text
   def overview(text: "text")
-    render_with_template locals: { text: text }
+    render_with_template locals: { text: }
   end
 
   # @param text text
@@ -14,6 +14,6 @@ class SolidusAdmin::UI::Tab::ComponentPreview < ViewComponent::Preview
   # @param current toggle
   # @param disabled toggle
   def playground(text: "Tab", size: :m, current: false, disabled: false)
-    render current_component.new(text: text, size: size, current: current, disabled: disabled)
+    render current_component.new(text:, size:, current:, disabled:)
   end
 end

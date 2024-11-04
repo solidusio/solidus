@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Order, type: :model do
   let!(:store) { create(:store) }
-  let(:order) { create(:order, store: store) }
+  let(:order) { create(:order, store:) }
 
   context "from delivery", partial_double_verification: false do
     before do

@@ -7,7 +7,7 @@ RSpec.describe Spree::Promotion::Rules::OneUsePerUser, type: :model do
 
   describe '#eligible?(order)' do
     subject { rule.eligible?(order) }
-    let(:order) { double Spree::Order, user: user }
+    let(:order) { double Spree::Order, user: }
     let(:user) { double Spree::LegacyUser }
     let(:promotion) { stub_model Spree::Promotion, used_by?: used_by }
     let(:used_by) { false }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if params[:set] == "nested"
-  json.partial!("spree/api/taxonomies/nested", taxonomy: taxonomy)
+  json.partial!("spree/api/taxonomies/nested", taxonomy:)
 else
   json.(taxonomy, *taxonomy_attributes)
   json.root do

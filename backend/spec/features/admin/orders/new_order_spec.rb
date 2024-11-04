@@ -170,11 +170,11 @@ describe "New Order", type: :feature do
   end
 
   context "when changing customer", :js do
-    let!(:other_user) { create :user, bill_address: bill_address }
+    let!(:other_user) { create :user, bill_address: }
 
     context "when one customer address have only textual state" do
       let(:country) { create :country, iso: "IT" }
-      let(:bill_address) { create :address, country: country, state: nil, state_name: "Veneto" }
+      let(:bill_address) { create :address, country:, state: nil, state_name: "Veneto" }
 
       it "changes the bill address state accordingly" do
         click_on "Customer"
@@ -219,7 +219,7 @@ describe "New Order", type: :feature do
 
   # Regression test for https://github.com/spree/spree/issues/5327
   context "customer with default credit card", js: true do
-    let!(:credit_card) { create(:credit_card, user: user) }
+    let!(:credit_card) { create(:credit_card, user:) }
 
     before do
       user.wallet.add(credit_card)

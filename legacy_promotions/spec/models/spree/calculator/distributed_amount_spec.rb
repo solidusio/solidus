@@ -20,7 +20,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     before do
       calculator.preferred_amount = 15
       calculator.preferred_currency = currency
-      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
+      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
     end
 
     context "when the order currency matches the store's currency" do

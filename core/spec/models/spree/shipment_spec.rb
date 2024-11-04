@@ -13,18 +13,18 @@ RSpec.describe Spree::Shipment, type: :model do
       cost: 1,
       inventory_units: order.inventory_units,
       shipping_rates: [shipping_rate],
-      stock_location: stock_location
+      stock_location:
     )
   end
   let(:shipping_rate) do
     Spree::ShippingRate.create!(
-      shipping_method: shipping_method,
+      shipping_method:,
       selected: true
     )
   end
 
   let(:variant) { mock_model(Spree::Variant) }
-  let(:line_item) { mock_model(Spree::LineItem, variant: variant) }
+  let(:line_item) { mock_model(Spree::LineItem, variant:) }
 
   # Regression test for https://github.com/spree/spree/issues/4063
   context "number generation" do
@@ -103,8 +103,8 @@ RSpec.describe Spree::Shipment, type: :model do
     let(:order) do
       create(
         :order_ready_to_ship,
-        line_items_attributes: [{ price: 10, variant: variant }],
-        ship_address: ship_address,
+        line_items_attributes: [{ price: 10, variant: }],
+        ship_address:,
       )
     end
 
@@ -112,7 +112,7 @@ RSpec.describe Spree::Shipment, type: :model do
     let!(:tax_zone) { create(:global_zone) } # will include the above address
     let!(:tax_rate) { create(:tax_rate, amount: 0.1, zone: tax_zone, tax_categories: [tax_category]) }
     let(:tax_category) { create(:tax_category) }
-    let(:variant) { create(:variant, tax_category: tax_category) }
+    let(:variant) { create(:variant, tax_category:) }
 
     it 'should equal line items final amount with tax' do
       expect(shipment.item_cost).to eql(11.0)
@@ -190,7 +190,7 @@ RSpec.describe Spree::Shipment, type: :model do
     end
 
     context 'refresh_rates' do
-      let(:mock_estimator) { double('estimator', shipping_rates: shipping_rates) }
+      let(:mock_estimator) { double('estimator', shipping_rates:) }
       before { allow(shipment).to receive(:can_get_rates?){ true } }
 
       it 'should request new rates, and maintain shipping_method selection' do
@@ -227,8 +227,8 @@ RSpec.describe Spree::Shipment, type: :model do
 
       context 'to_package' do
         let(:inventory_units) do
-          [build(:inventory_unit, line_item: line_item, variant: variant, state: 'on_hand'),
-           build(:inventory_unit, line_item: line_item, variant: variant, state: 'backordered')]
+          [build(:inventory_unit, line_item:, variant:, state: 'on_hand'),
+           build(:inventory_unit, line_item:, variant:, state: 'backordered')]
         end
 
         before do
@@ -339,7 +339,7 @@ RSpec.describe Spree::Shipment, type: :model do
       # Regression test for https://github.com/spree/spree/issues/4347
       context "with adjustments" do
         before do
-          shipment.adjustments << Spree::Adjustment.create(order: order, label: "Label", amount: 5)
+          shipment.adjustments << Spree::Adjustment.create(order:, label: "Label", amount: 5)
         end
 
         it "transitions to shipped" do
@@ -474,7 +474,7 @@ RSpec.describe Spree::Shipment, type: :model do
     context "when the shipment is canceled" do
       let(:address){ create(:address) }
       let(:order){ create(:order_with_line_items, ship_address: address) }
-      let(:shipment_with_inventory_units) { create(:shipment, order: order, state: 'canceled') }
+      let(:shipment_with_inventory_units) { create(:shipment, order:, state: 'canceled') }
       let(:subject) { shipment_with_inventory_units.ship! }
 
       it 'unstocks them items' do
@@ -486,7 +486,7 @@ RSpec.describe Spree::Shipment, type: :model do
     ['ready', 'canceled'].each do |state|
       context "from #{state}" do
         before do
-          allow(shipment).to receive_messages(state: state)
+          allow(shipment).to receive_messages(state:)
         end
 
         it "finalizes adjustments" do
@@ -527,7 +527,7 @@ RSpec.describe Spree::Shipment, type: :model do
     let(:order) do
       create(
         :order_ready_to_ship,
-        ship_address: ship_address,
+        ship_address:,
         shipment_cost: 10,
         shipping_method: ten_dollar_shipping_method,
         line_items_count: 1,
@@ -535,13 +535,13 @@ RSpec.describe Spree::Shipment, type: :model do
       )
     end
 
-    let(:ten_dollar_shipping_method)    { create(:shipping_method, tax_category: tax_category, zones: [tax_zone], cost: 10) }
-    let(:twenty_dollar_shipping_method) { create(:shipping_method, tax_category: tax_category, zones: [tax_zone], cost: 20) }
+    let(:ten_dollar_shipping_method)    { create(:shipping_method, tax_category:, zones: [tax_zone], cost: 10) }
+    let(:twenty_dollar_shipping_method) { create(:shipping_method, tax_category:, zones: [tax_zone], cost: 20) }
 
     let(:shipment) { order.shipments[0] }
 
     let(:twenty_dollar_shipping_rate) do
-      create(:shipping_rate, cost: 20, shipment: shipment, shipping_method: twenty_dollar_shipping_method)
+      create(:shipping_rate, cost: 20, shipment:, shipping_method: twenty_dollar_shipping_method)
     end
 
     it "updates everything around order shipment total and state" do
@@ -617,7 +617,7 @@ RSpec.describe Spree::Shipment, type: :model do
       { variant_id: variant.id, state: 'on_hand', line_item_id: line_item.id }
     end
 
-    before { allow(shipment).to receive_messages inventory_units: inventory_units }
+    before { allow(shipment).to receive_messages(inventory_units:) }
 
     it "associates variant and order" do
       expect(inventory_units).to receive(:create).with(params)
@@ -629,7 +629,7 @@ RSpec.describe Spree::Shipment, type: :model do
   context "#destroy" do
     let(:shipping_rate) do
       Spree::ShippingRate.create!(
-        shipping_method: shipping_method,
+        shipping_method:,
         selected: true,
         taxes: [Spree::ShippingRateTax.new(amount: 20)]
       )
@@ -669,8 +669,8 @@ RSpec.describe Spree::Shipment, type: :model do
     let(:unshippable_shipment) do
       create(
         :shipment,
-        order: order,
-        stock_location: stock_location
+        order:,
+        stock_location:
       )
     end
 
@@ -721,7 +721,7 @@ RSpec.describe Spree::Shipment, type: :model do
 
   describe "#finalize!" do
     let(:inventory_unit) { shipment.inventory_units.first }
-    let(:stock_item) { inventory_unit.variant.stock_items.find_by(stock_location: stock_location) }
+    let(:stock_item) { inventory_unit.variant.stock_items.find_by(stock_location:) }
     let(:inventory_unit_finalizer) { double(:inventory_unit_finalizer, run!: [true]) }
 
     before do
@@ -835,7 +835,7 @@ RSpec.describe Spree::Shipment, type: :model do
   end
 
   describe '#can_transition_from_pending_to_ready?' do
-    let(:shipment) { create(:shipment, order: order) }
+    let(:shipment) { create(:shipment, order:) }
 
     subject { shipment.can_transition_from_pending_to_ready? }
 

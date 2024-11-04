@@ -21,7 +21,7 @@ products = {
 }
 
 products.each do |key, name|
-  products[key] = Spree::Product.find_by!(name: name)
+  products[key] = Spree::Product.find_by!(name:)
 end
 
 taxons = [

@@ -221,7 +221,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe "#try_void" do
-    let(:payment) { create(:payment, payment_method: payment_method) }
+    let(:payment) { create(:payment, payment_method:) }
 
     context "when the payment method supports payment profiles" do
       let(:payment_method) { create(:credit_card_payment_method) }

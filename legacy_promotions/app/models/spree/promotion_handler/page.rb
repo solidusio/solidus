@@ -12,14 +12,14 @@ module Spree
 
       def activate
         if promotion && promotion.eligible?(order)
-          promotion.activate(order: order)
+          promotion.activate(order:)
         end
       end
 
       private
 
       def promotion
-        @promotion ||= Spree::Promotion.active.find_by(path: path)
+        @promotion ||= Spree::Promotion.active.find_by(path:)
       end
     end
   end

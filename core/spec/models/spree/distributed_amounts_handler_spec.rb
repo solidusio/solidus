@@ -6,7 +6,7 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
   let(:order) do
     FactoryBot.create(
       :order_with_line_items,
-      line_items_attributes: line_items_attributes
+      line_items_attributes:
     )
   end
 

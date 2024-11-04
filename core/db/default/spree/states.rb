@@ -2,7 +2,7 @@
 
 def create_states(subregions, country)
   subregions.each do |subregion|
-    Spree::State.where(abbr: subregion.code, country: country).first_or_create!(
+    Spree::State.where(abbr: subregion.code, country:).first_or_create!(
       name: subregion.name
     )
   end

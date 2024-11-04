@@ -69,7 +69,7 @@ RSpec.describe Spree::BackendConfiguration::MenuItem do
   end
 
   describe "#url" do
-    subject { described_class.new(url: url).url }
+    subject { described_class.new(url:).url }
 
     context "if url is a string" do
       let(:url) { "/admin/orders" }

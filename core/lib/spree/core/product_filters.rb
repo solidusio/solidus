@@ -112,7 +112,7 @@ module Spree
         {
           name:   'Brands',
           scope:  :brand_any,
-          conds:  conds,
+          conds:,
           labels: brands.sort.map { |key| [key, key] }
         }
       end

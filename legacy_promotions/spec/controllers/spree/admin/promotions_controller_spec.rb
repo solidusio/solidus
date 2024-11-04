@@ -59,7 +59,7 @@ RSpec.describe Spree::Admin::PromotionsController, type: :controller do
   end
 
   describe "#create" do
-    subject { post :create, params: params }
+    subject { post :create, params: }
     let(:params) { { promotion: { name: 'some promo' } } }
 
     context "it succeeds" do

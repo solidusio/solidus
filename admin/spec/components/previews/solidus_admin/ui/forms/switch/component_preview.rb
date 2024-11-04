@@ -29,6 +29,6 @@ class SolidusAdmin::UI::Forms::Switch::ComponentPreview < ViewComponent::Preview
   # @param checked toggle
   # @param disabled toggle
   def playground(size: :m, checked: false, disabled: false)
-    render current_component.new(id: 1, size: size.to_sym, checked: checked, disabled: disabled)
+    render current_component.new(id: 1, size: size.to_sym, checked:, disabled:)
   end
 end

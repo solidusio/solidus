@@ -7,7 +7,7 @@ module Spree
 
       def update_values_positions
         params[:positions].each do |id, index|
-          Spree::OptionValue.where(id: id).update_all(position: index)
+          Spree::OptionValue.where(id:).update_all(position: index)
         end
 
         respond_to do |format|

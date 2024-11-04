@@ -30,7 +30,7 @@ RSpec.describe 'order factory' do
     context 'with a promotion with an action' do
       let(:promotion) { create(:promotion, :with_line_item_adjustment) }
       it "has the expected attributes" do
-        order = create(factory, promotion: promotion)
+        order = create(factory, promotion:)
         aggregate_failures do
           expect(order).to be_completed
           expect(order).to be_complete

@@ -14,7 +14,7 @@ json.cache! [I18n.locale, @current_user_roles.include?('admin'), current_pricing
       json.partial!("spree/api/variants/small", variant: product.master)
     end
     json.variants(product.variants) do |variant|
-      json.partial!("spree/api/variants/small", variant: variant)
+      json.partial!("spree/api/variants/small", variant:)
     end
   end
   unless @exclude_data[:option_types]

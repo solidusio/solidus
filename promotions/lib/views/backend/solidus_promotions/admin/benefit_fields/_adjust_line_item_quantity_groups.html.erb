@@ -1,0 +1,13 @@
+<%= fields_for param_prefix, benefit do |form| %>
+  <div class="form-group">
+    <%= form.label :preferred_group_size %>
+    <%= form.number_field :preferred_group_size, class: "fullwidth", min: 1 %>
+  </div>
+<% end %>
+
+<%= render(
+  "solidus_promotions/admin/benefit_fields/calculator_fields",
+  benefit: benefit,
+  param_prefix: param_prefix,
+  form: form
+) %>

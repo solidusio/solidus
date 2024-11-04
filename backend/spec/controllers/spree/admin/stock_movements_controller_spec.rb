@@ -28,7 +28,7 @@ module Spree
       end
 
       describe '#index' do
-        subject { get :index, params: params }
+        subject { get :index, params: }
 
         context 'with no params' do
           let(:params) { { stock_location_id: stock_location.id } }

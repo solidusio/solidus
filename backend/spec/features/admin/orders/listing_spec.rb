@@ -65,7 +65,7 @@ describe "Orders Listing", type: :feature, js: true do
 
       before do
         stores.each do |store|
-          FactoryBot.create(:completed_order_with_totals, number: "R#{store.id}999", store: store)
+          FactoryBot.create(:completed_order_with_totals, number: "R#{store.id}999", store:)
         end
       end
 

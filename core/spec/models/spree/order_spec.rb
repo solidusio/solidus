@@ -5,7 +5,13 @@ require 'rails_helper'
 RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user, email: "solidus@example.com") }
-  let(:order) { create(:order, user: user, store: store) }
+  let(:order) { create(:order, user:, store:) }
+
+  describe ".ransackable_associations" do
+    subject { described_class.ransackable_associations }
+
+    it { is_expected.to contain_exactly("user", "line_items", "shipments", "bill_address", "ship_address") }
+  end
 
   context '#store' do
     it { is_expected.to respond_to(:store) }
@@ -77,10 +83,10 @@ RSpec.describe Spree::Order, type: :model do
     context "when the payment is fully refunded" do
       let(:order) { create(:completed_order_with_totals) }
       let(:payment_amount) { 50 }
-      let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
+      let(:payment) { create(:payment, order:, amount: payment_amount, state: 'completed') }
 
       it "cancels the order" do
-        create(:refund, payment: payment, amount: payment_amount)
+        create(:refund, payment:, amount: payment_amount)
 
         expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
         expect(order).to be_canceled
@@ -117,7 +123,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context 'with a store credit payment' do
       let(:order) { create(:completed_order_with_totals) }
-      let(:payment) { create(:store_credit_payment, amount: order.total, order: order) }
+      let(:payment) { create(:store_credit_payment, amount: order.total, order:) }
 
       context 'when the payment is pending' do
         let(:store_credit) { payment.source }
@@ -239,9 +245,9 @@ RSpec.describe Spree::Order, type: :model do
     let!(:order) { create(:order) }
 
     before do
-      create(:line_item, order: order)
-      create(:shipment, order: order)
-      create(:adjustment, source: nil, adjustable: order, order: order)
+      create(:line_item, order:)
+      create(:shipment, order:)
+      create(:adjustment, source: nil, adjustable: order, order:)
       order.recalculate
 
       # Make sure we are asserting changes
@@ -274,7 +280,7 @@ RSpec.describe Spree::Order, type: :model do
       order.cancellations.short_ship([order.inventory_units.first])
       expect(order.outstanding_balance).to be_negative
       expect(order.payment_state).to eq('credit_owed')
-      create(:refund, amount: order.outstanding_balance.abs, payment: payment, transaction_id: nil).perform!
+      create(:refund, amount: order.outstanding_balance.abs, payment:, transaction_id: nil).perform!
       order.reload
       expect(order.outstanding_balance).to eq(0)
       expect(order.payment_state).to eq('paid')
@@ -373,7 +379,7 @@ RSpec.describe Spree::Order, type: :model do
   context "ensure shipments will be updated" do
     subject(:order) { create :order }
     before do
-      Spree::Shipment.create!(order: order)
+      Spree::Shipment.create!(order:)
     end
 
     ['payment', 'confirm'].each do |order_state|
@@ -485,10 +491,10 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#tax_address" do
-    let(:order) { build(:order, ship_address: ship_address, bill_address: bill_address, store: store) }
+    let(:order) { build(:order, ship_address:, bill_address:, store:) }
     let(:store) { build(:store) }
 
-    before { stub_spree_preferences(tax_using_ship_address: tax_using_ship_address) }
+    before { stub_spree_preferences(tax_using_ship_address:) }
     subject { order.tax_address }
 
     context "when the order has no addresses" do
@@ -988,7 +994,7 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#amount" do
     before do
-      @order = create(:order, user: user)
+      @order = create(:order, user:)
       @order.line_items = [create(:line_item, price: 1.0, quantity: 2),
                            create(:line_item, price: 1.0, quantity: 1)]
     end
@@ -1084,8 +1090,8 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#refund_total" do
     let(:order) { create(:order_with_line_items) }
-    let!(:payment) { create(:payment_with_refund, order: order, amount: 5, refund_amount: 3) }
-    let!(:payment2) { create(:payment_with_refund, order: order, amount: 5, refund_amount: 2.5) }
+    let!(:payment) { create(:payment_with_refund, order:, amount: 5, refund_amount: 3) }
+    let!(:payment2) { create(:payment_with_refund, order:, amount: 5, refund_amount: 2.5) }
 
     it "sums the reimbursment refunds on the order" do
       expect(order.refund_total).to eq(5.5)
@@ -1215,7 +1221,7 @@ RSpec.describe Spree::Order, type: :model do
       context "with valid payments" do
         let(:order)           { payment.order }
         let!(:payment)        { create(:store_credit_payment) }
-        let!(:second_payment) { create(:store_credit_payment, order: order) }
+        let!(:second_payment) { create(:store_credit_payment, order:) }
 
         subject { order }
 
@@ -1246,7 +1252,7 @@ RSpec.describe Spree::Order, type: :model do
         let(:order)       { create(:order, total: order_total) }
 
         context "there is a credit card payment" do
-          let!(:cc_payment) { create(:payment, order: order, amount: order_total) }
+          let!(:cc_payment) { create(:payment, order:, amount: order_total) }
 
           before do
             # callbacks recalculate total based on line items
@@ -1266,9 +1272,9 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context 'there is store credit in another currency' do
-        let(:order) { create(:order_with_totals, user: user, line_items_price: order_total).tap(&:recalculate) }
-        let!(:store_credit_usd) { create(:store_credit, user: user, amount: 1, currency: 'USD') }
-        let!(:store_credit_gbp) { create(:store_credit, user: user, amount: 1, currency: 'GBP') }
+        let(:order) { create(:order_with_totals, user:, line_items_price: order_total).tap(&:recalculate) }
+        let!(:store_credit_usd) { create(:store_credit, user:, amount: 1, currency: 'USD') }
+        let!(:store_credit_gbp) { create(:store_credit, user:, amount: 1, currency: 'GBP') }
         let(:user) { create(:user) }
 
         it 'only adds the credit in the matching currency' do
@@ -1303,7 +1309,7 @@ RSpec.describe Spree::Order, type: :model do
 
         context "there is a credit card payment" do
           it "invalidates the credit card payment" do
-            cc_payment = create(:payment, order: order)
+            cc_payment = create(:payment, order:)
             expect { subject }.to change { cc_payment.reload.state }.to 'invalid'
           end
         end
@@ -1323,7 +1329,7 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         context "there is a completed credit card payment" do
-          let!(:cc_payment) { create(:payment, order: order, state: "completed", amount: 100) }
+          let!(:cc_payment) { create(:payment, order:, state: "completed", amount: 100) }
 
           it "successfully creates the store credit payments" do
             expect { subject }.to change { order.payments.count }.from(1).to(2)
@@ -1332,7 +1338,7 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         context "there is a credit card payment" do
-          let!(:cc_payment) { create(:payment, order: order, state: "checkout") }
+          let!(:cc_payment) { create(:payment, order:, state: "checkout") }
 
           before do
             subject
@@ -1393,7 +1399,7 @@ RSpec.describe Spree::Order, type: :model do
         order.covered_by_store_credit
       end
 
-      let(:order) { create(:order_with_line_items, user: user, store: store) }
+      let(:order) { create(:order_with_line_items, user:, store:) }
 
       context "order doesn't have an associated user" do
         let(:user) { nil }
@@ -1402,12 +1408,12 @@ RSpec.describe Spree::Order, type: :model do
 
       context "order has an associated user" do
         context "user has enough store credit to pay for the order" do
-          let!(:credit) { create(:store_credit, user: user, amount: 1000) }
+          let!(:credit) { create(:store_credit, user:, amount: 1000) }
           it { is_expected.to eq(true) }
         end
 
         context "user does not have enough store credit to pay for the order" do
-          let!(:credit) { create(:store_credit, user: user, amount: 1) }
+          let!(:credit) { create(:store_credit, user:, amount: 1) }
           it { is_expected.to eq(false) }
         end
       end
@@ -1424,7 +1430,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context "order has an associated user" do
-        let!(:credit) { create(:store_credit, user: user, amount: 25) }
+        let!(:credit) { create(:store_credit, user:, amount: 25) }
         it { is_expected.to eq(25) }
       end
     end
@@ -1519,7 +1525,7 @@ RSpec.describe Spree::Order, type: :model do
 
       subject { create(:order) }
 
-      before { allow(subject).to receive_messages(total_applicable_store_credit: total_applicable_store_credit) }
+      before { allow(subject).to receive_messages(total_applicable_store_credit:) }
 
       it "returns a money instance" do
         expect(subject.display_total_applicable_store_credit).to be_a(Spree::Money)
@@ -1562,7 +1568,7 @@ RSpec.describe Spree::Order, type: :model do
 
       subject { create(:order) }
 
-      before { allow(subject).to receive_messages(order_total_after_store_credit: order_total_after_store_credit) }
+      before { allow(subject).to receive_messages(order_total_after_store_credit:) }
 
       it "returns a money instance" do
         expect(subject.display_order_total_after_store_credit).to be_a(Spree::Money)
@@ -1578,7 +1584,7 @@ RSpec.describe Spree::Order, type: :model do
 
       subject { create(:order) }
 
-      before { allow(subject).to receive_messages(total_available_store_credit: total_available_store_credit) }
+      before { allow(subject).to receive_messages(total_available_store_credit:) }
 
       it "returns a money instance" do
         expect(subject.display_total_available_store_credit).to be_a(Spree::Money)
@@ -1596,8 +1602,8 @@ RSpec.describe Spree::Order, type: :model do
       subject { create(:order) }
 
       before do
-        allow(subject).to receive_messages(total_available_store_credit: total_available_store_credit,
-                     total_applicable_store_credit: total_applicable_store_credit)
+        allow(subject).to receive_messages(total_available_store_credit:,
+                     total_applicable_store_credit:)
       end
 
       it "returns a money instance" do
@@ -1667,7 +1673,7 @@ RSpec.describe Spree::Order, type: :model do
     subject { order.create_shipments_for_line_item(line_item) }
 
     let(:order) { create :order, shipments: [] }
-    let(:line_item) { build(:line_item, order: order) }
+    let(:line_item) { build(:line_item, order:) }
 
     it 'creates at least one new shipment for the order' do
       expect { subject }.to change { order.shipments.count }.from(0).to(1)
@@ -1699,7 +1705,7 @@ RSpec.describe Spree::Order, type: :model do
         Object.send(:remove_const, :TestInventoryUnitBuilder)
       end
 
-      let(:arbitrary_inventory_unit) { build :inventory_unit, order: order, line_item: line_item, variant: line_item.variant }
+      let(:arbitrary_inventory_unit) { build :inventory_unit, order:, line_item:, variant: line_item.variant }
 
       it "relies on the custom builder" do
         expect { subject }.to change { order.shipments.count }.from(0).to(1)
@@ -1846,7 +1852,7 @@ RSpec.describe Spree::Order, type: :model do
 
   describe ".by_customer" do
     let(:user) { create(:user, email: "customer@example.com") }
-    let!(:order) { create(:order, user: user) }
+    let!(:order) { create(:order, user:) }
     let!(:other_order) { create(:order) }
     let(:email) { user.email }
 
@@ -1914,7 +1920,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#shipped_shipments" do
-    let(:order) { create(:order, shipments: shipments) }
+    let(:order) { create(:order, shipments:) }
     let(:shipments) { [shipped_shipment, unshipped_shipment] }
     let(:shipped_shipment) { create(:shipment, state: "shipped") }
     let(:unshipped_shipment) { create(:shipment, state: "ready") }
@@ -1930,7 +1936,7 @@ RSpec.describe Spree::Order, type: :model do
     let(:bill_address) { create(:address, name: "John Doe") }
     let(:ship_address) { create(:address, name: "Jane Doe") }
 
-    let(:order) { create(:order, bill_address: bill_address, ship_address: ship_address) }
+    let(:order) { create(:order, bill_address:, ship_address:) }
 
     subject { order.name }
 
@@ -1998,7 +2004,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#shipping_eq_billing_address?" do
-    let(:order) { create(:order, bill_address: bill_address, ship_address: ship_address) }
+    let(:order) { create(:order, bill_address:, ship_address:) }
     let(:bill_address) { create(:address) }
     let(:ship_address) { create(:address) }
 
@@ -2014,7 +2020,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#can_approve?" do
-    let(:order) { create(:order, approved_at: approved_at) }
+    let(:order) { create(:order, approved_at:) }
     let(:approved_at) { nil }
 
     subject { order.can_approve? }
@@ -2082,7 +2088,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#shipped?" do
-    let(:order) { Spree::Order.new(shipment_state: shipment_state) }
+    let(:order) { Spree::Order.new(shipment_state:) }
     let(:shipment_state) { "ready" }
 
     subject { order.shipped? }

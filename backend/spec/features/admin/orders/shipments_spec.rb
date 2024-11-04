@@ -127,7 +127,7 @@ describe "Shipments", type: :feature do
         create(
           :order_ready_to_ship,
           number: "R100",
-          line_items_attributes: [{ variant: variant, quantity: 5 }]
+          line_items_attributes: [{ variant:, quantity: 5 }]
         )
       end
 

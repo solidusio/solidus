@@ -24,7 +24,7 @@ RSpec.describe Spree::OrderPromotion do
 
     context "when the promotion has a code" do
       let!(:promotion_code) do
-        promotion.codes << build(:promotion_code, promotion: promotion)
+        promotion.codes << build(:promotion_code, promotion:)
       end
 
       it { is_expected.to include("can't be blank") }
@@ -48,7 +48,7 @@ RSpec.describe Spree::OrderPromotion do
 
     context "when the promotion has a code" do
       let!(:promotion_code) do
-        promotion.codes << build(:promotion_code, promotion: promotion)
+        promotion.codes << build(:promotion_code, promotion:)
       end
 
       it { is_expected.to be_blank }

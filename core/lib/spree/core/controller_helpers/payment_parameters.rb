@@ -106,7 +106,7 @@ module Spree
       params[:order][:payments_attributes] = [
         {
           source_attributes: {
-            wallet_payment_source_id: wallet_payment_source_id,
+            wallet_payment_source_id:,
             verification_value: cvc_confirm
           }
         }

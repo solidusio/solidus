@@ -1,0 +1,14 @@
+<ul class="admin-subnav" data-hook="admin_promotion_sub_tabs">
+  <% if can? :admin, SolidusPromotions::Promotion %>
+    <%= tab url: solidus_promotions.admin_promotions_path, label: :promotions %>
+  <% end %>
+  <% if can? :admin, SolidusPromotions::PromotionCategory %>
+    <%= tab url: solidus_promotions.admin_promotion_categories_path, label: :promotion_categories %>
+  <% end %>
+  <% if can?(:admin, Spree::Promotion) && Spree::Promotion.any? %>
+    <%= tab url: spree.admin_promotions_path, label: :legacy_promotions %>
+  <% end %>
+  <% if can?(:admin, Spree::PromotionCategory) && Spree::PromotionCategory.any? %>
+    <%= tab url: spree.admin_promotion_categories_path, label: :legacy_promotion_categories %>
+  <% end %>
+</ul>

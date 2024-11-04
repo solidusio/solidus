@@ -29,7 +29,7 @@ module Spree
       end
 
       context "activates in LineItem level" do
-        let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
+        let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion:, calculator:) }
         let(:adjustable) { line_item }
 
         context "promotion with no rules" do
@@ -54,7 +54,7 @@ module Spree
         end
 
         context "promotion includes item involved" do
-          let!(:rule) { Promotion::Rules::Product.create(products: [line_item.product], promotion: promotion) }
+          let!(:rule) { Promotion::Rules::Product.create(products: [line_item.product], promotion:) }
 
           include_context "creates the adjustment"
           include_context "creates an order promotion"
@@ -62,7 +62,7 @@ module Spree
 
         context "promotion has item total rule" do
           let(:shirt) { create(:product) }
-          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion: promotion) }
+          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion:) }
 
           before do
             # Makes the order eligible for this promotion
@@ -76,7 +76,7 @@ module Spree
       end
 
       context "activates in Order level" do
-        let!(:action) { Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
+        let!(:action) { Promotion::Actions::CreateAdjustment.create(promotion:, calculator:) }
         let(:adjustable) { order }
 
         context "promotion with no rules" do
@@ -92,7 +92,7 @@ module Spree
 
         context "promotion has item total rule" do
           let(:shirt) { create(:product) }
-          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion: promotion) }
+          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion:) }
 
           before do
             # Makes the order eligible for this promotion
@@ -111,7 +111,7 @@ module Spree
         let(:adjustable) { order }
 
         before do
-          Spree::OrderPromotion.create!(promotion: promotion, order: order, promotion_code: promotion_code)
+          Spree::OrderPromotion.create!(promotion:, order:, promotion_code:)
           order.recalculate
         end
 
@@ -123,7 +123,7 @@ module Spree
         end
 
         it "checks if the promotion code is eligible" do
-          expect_any_instance_of(Spree::Promotion).to receive(:eligible?).at_least(2).times.with(anything, promotion_code: promotion_code).and_return(false)
+          expect_any_instance_of(Spree::Promotion).to receive(:eligible?).at_least(2).times.with(anything, promotion_code:).and_return(false)
           subject.activate
         end
       end

@@ -19,13 +19,13 @@ RSpec.describe Spree::OrderMailerSubscriber do
 
       expect(Spree::OrderMailer).to receive(:confirm_email).and_call_original
 
-      bus.publish(:order_finalized, order: order)
+      bus.publish(:order_finalized, order:)
     end
 
     it 'marks the order as having the confirmation email delivered' do
       order = create(:order, confirmation_delivered: false)
 
-      bus.publish(:order_finalized, order: order)
+      bus.publish(:order_finalized, order:)
 
       expect(order.confirmation_delivered).to be(true)
     end
@@ -35,7 +35,7 @@ RSpec.describe Spree::OrderMailerSubscriber do
 
       expect(Spree::OrderMailer).not_to receive(:confirm_email)
 
-      bus.publish(:order_finalized, order: order)
+      bus.publish(:order_finalized, order:)
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe Spree::OrderMailerSubscriber do
 
       expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).and_call_original
 
-      bus.publish(:reimbursement_reimbursed, reimbursement: reimbursement)
+      bus.publish(:reimbursement_reimbursed, reimbursement:)
     end
   end
 end

@@ -8,7 +8,7 @@ RSpec.shared_examples "shipping methods are assigned" do
       expect(
         create(
           factory,
-          shipping_method: shipping_method
+          shipping_method:
         ).shipments.map(&:shipping_method)
       ).to all(eq(shipping_method))
     end
@@ -17,7 +17,7 @@ RSpec.shared_examples "shipping methods are assigned" do
       expect(
         build(
           factory,
-          shipping_method: shipping_method
+          shipping_method:
         ).shipments.map(&:shipping_method)
       ).to all(eq(shipping_method))
     end
@@ -35,13 +35,13 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
     let(:order) do
       create(
         factory,
-        stock_location: stock_location,
+        stock_location:,
         line_items_attributes: [
           { variant: first_variant, quantity: 1, price: 1 },
           { variant: second_variant, quantity: 2, price: 2 }
         ],
         shipment_cost: 3,
-        shipping_method: shipping_method
+        shipping_method:
       )
     end
 
@@ -62,7 +62,7 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
         expect(order.shipments.count).to eq 1
         expect(order.shipments[0]).to have_attributes(
           amount: 3.0,
-          stock_location: stock_location
+          stock_location:
         )
 
         expect(order.shipments[0].shipping_method).to eq(shipping_method)
@@ -73,21 +73,21 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
 
         expect(inventory_units.count).to eq(3)
         expect(inventory_units[0]).to have_attributes(
-          order: order,
+          order:,
           shipment: order.shipments[0],
           line_item: order.line_items[0],
           variant: order.line_items[0].variant,
           state: expected_inventory_unit_state
         )
         expect(inventory_units[1]).to have_attributes(
-          order: order,
+          order:,
           shipment: order.shipments[0],
           line_item: order.line_items[1],
           variant: order.line_items[1].variant,
           state: expected_inventory_unit_state
         )
         expect(inventory_units[2]).to have_attributes(
-          order: order,
+          order:,
           shipment: order.shipments[0],
           line_item: order.line_items[1],
           variant: order.line_items[1].variant,
@@ -110,10 +110,10 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
     let!(:tax_rate) { create(:tax_rate, amount: 0.10, zone: tax_zone, tax_categories: [tax_category]) }
 
     let(:tax_category) { create(:tax_category) }
-    let(:shipping_method) { create(:shipping_method, tax_category: tax_category, zones: [tax_zone]) }
+    let(:shipping_method) { create(:shipping_method, tax_category:, zones: [tax_zone]) }
 
     it 'shipments get a tax adjustment' do
-      order = create(factory, ship_address: ship_address, shipping_method: shipping_method)
+      order = create(factory, ship_address:, shipping_method:)
       shipment = order.shipments[0]
 
       expect(shipment.additional_tax_total).to be > 0
@@ -124,7 +124,7 @@ end
 RSpec.shared_examples 'supplied completed_at is respected' do
   context 'when passed a completed_at timestamp' do
     let(:completed_at) { 2.days.ago }
-    let(:order) { create(factory, completed_at: completed_at) }
+    let(:order) { create(factory, completed_at:) }
 
     it 'respects the timestamp' do
       expect(order.completed_at).to be_within(5.seconds).of(completed_at)

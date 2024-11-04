@@ -7,8 +7,8 @@ RSpec.describe Spree::Address, type: :model do
 
   context "validation" do
     let(:country) { create :country, states_required: true }
-    let(:state) { create :state, name: 'maryland', abbr: 'md', country: country }
-    let(:address) { build(:address, country: country) }
+    let(:state) { create :state, name: 'maryland', abbr: 'md', country: }
+    let(:address) { build(:address, country:) }
 
     context 'state validation' do
       let(:state_validator) { instance_spy(Spree::Address.state_validator_class) }
@@ -278,13 +278,13 @@ RSpec.describe Spree::Address, type: :model do
 
     context 'both name and abbr is present' do
       let(:state) { Spree::State.new name: 'virginia', abbr: 'va' }
-      let(:address) { Spree::Address.new state: state }
+      let(:address) { Spree::Address.new state: }
       specify { expect(address.state_text).to eq('va') }
     end
 
     context 'only name is present' do
       let(:state) { Spree::State.new name: 'virginia', abbr: nil }
-      let(:address) { Spree::Address.new state: state }
+      let(:address) { Spree::Address.new state: }
       specify { expect(address.state_text).to eq('virginia') }
     end
   end
