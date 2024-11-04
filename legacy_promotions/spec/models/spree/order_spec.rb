@@ -7,6 +7,12 @@ RSpec.describe Spree::Order do
   it { is_expected.to respond_to(:order_promotions) }
   it { is_expected.to respond_to(:promotions) }
 
+  describe ".ransackable_associations" do
+    subject { described_class.ransackable_associations }
+
+    it { is_expected.to include("promotions", "order_promotions") }
+  end
+
   context "#apply_shipping_promotions" do
     let(:order) { build(:order) }
 
