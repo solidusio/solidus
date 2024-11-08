@@ -758,7 +758,7 @@ module Spree
       all_adjustments.each(&:finalize!)
 
       # update payment and shipment(s) states, and save
-      recalculator.update_payment_state
+      recalculator.recalculate_payment_state
       shipments.each do |shipment|
         shipment.update_state
         shipment.finalize!
