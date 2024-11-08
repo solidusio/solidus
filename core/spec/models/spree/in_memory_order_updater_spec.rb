@@ -255,7 +255,6 @@ module Spree
 
     context "updating payment state" do
       let(:order) { build(:order) }
-      let(:updater) { order.recalculator }
       before { allow(order).to receive(:refund_total).and_return(0) }
 
       context 'no valid payments with non-zero order total' do
@@ -264,7 +263,7 @@ module Spree
           order.total = 1
           order.payment_total = 0
 
-          updater.update_payment_state
+          updater.recalculate_payment_state
           expect(order.payment_state).to eq('failed')
         end
       end
@@ -276,7 +275,7 @@ module Spree
           order.payment_total = 0
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'paid'
         end
       end
@@ -287,7 +286,7 @@ module Spree
           order.total = 1
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'credit_owed'
         end
       end
@@ -298,7 +297,7 @@ module Spree
           order.total = 2
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'balance_due'
         end
       end
@@ -309,7 +308,7 @@ module Spree
           order.total = 30
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'paid'
         end
       end
@@ -324,7 +323,7 @@ module Spree
             order.payment_total = 0
             order.total = 30
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'void'
           end
         end
@@ -335,7 +334,7 @@ module Spree
             order.total = 30
             create(:payment, order: order, state: 'completed', amount: 30)
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'credit_owed'
           end
         end
@@ -345,7 +344,7 @@ module Spree
             order.payment_total = 0
             order.total = 30
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'void'
           end
         end
@@ -356,7 +355,7 @@ module Spree
       before { allow(order).to receive_messages completed?: true }
 
       it "updates payment state" do
-        expect(updater).to receive(:update_payment_state)
+        expect(updater).to receive(:recalculate_payment_state)
         updater.recalculate
       end
 
@@ -385,7 +384,7 @@ module Spree
       before { allow(order).to receive_messages completed?: false }
 
       it "doesnt update payment state" do
-        expect(updater).not_to receive(:update_payment_state)
+        expect(updater).not_to receive(:recalculate_payment_state)
         updater.recalculate
       end
 
