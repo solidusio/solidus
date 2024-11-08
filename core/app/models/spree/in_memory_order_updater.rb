@@ -22,7 +22,7 @@ module Spree
         update_shipment_amounts(persist:)
         update_totals(persist:)
         if order.completed?
-          update_payment_state
+          recalculate_payment_state
           update_shipments
           recalculate_shipment_state
         end
@@ -54,7 +54,7 @@ module Spree
     alias_method :update_shipment_state, :recalculate_shipment_state
     deprecate update_shipment_state: :recalculate_shipment_state, deprecator: Spree.deprecator
 
-    # Updates the +payment_state+ attribute according to the following logic:
+    # Recalculates the +payment_state+ attribute according to the following logic:
     #
     # paid          when +payment_total+ is equal to +total+
     # balance_due   when +payment_total+ is less than +total+
@@ -63,13 +63,15 @@ module Spree
     # void          when the order has been canceled and the payment total is 0
     #
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
-    def update_payment_state
+    def recalculate_payment_state
       log_state_change('payment') do
         order.payment_state = determine_payment_state
       end
 
       order.payment_state
     end
+    alias_method :update_payment_state, :recalculate_shipment_state
+    deprecate update_payment_state: :recalculate_shipment_state, deprecator: Spree.deprecator
 
     private
 
