@@ -418,7 +418,7 @@ module Spree
 
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
-      recalculator.update_shipment_state
+      recalculator.recalculate_shipment_state
       save!
     end
 
@@ -764,7 +764,7 @@ module Spree
         shipment.finalize!
       end
 
-      recalculator.update_shipment_state
+      recalculator.recalculate_shipment_state
       save!
 
       touch :completed_at
