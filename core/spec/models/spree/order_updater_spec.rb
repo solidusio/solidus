@@ -222,20 +222,20 @@ module Spree
 
       it "is backordered" do
         allow(order).to receive_messages backordered?: true
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
 
         expect(order.shipment_state).to eq('backorder')
       end
 
       it "is nil" do
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
         expect(order.shipment_state).to be_nil
       end
 
       ["shipped", "ready", "pending"].each do |state|
         it "is #{state}" do
           create(:shipment, order:, state:)
-          updater.update_shipment_state
+          updater.recalculate_shipment_state
           expect(order.shipment_state).to eq(state)
         end
       end
@@ -243,7 +243,7 @@ module Spree
       it "is partial" do
         create(:shipment, order:, state: 'pending')
         create(:shipment, order:, state: 'ready')
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
         expect(order.shipment_state).to eq('partial')
       end
     end
@@ -356,7 +356,7 @@ module Spree
       end
 
       it "updates shipment state" do
-        expect(updater).to receive(:update_shipment_state)
+        expect(updater).to receive(:recalculate_shipment_state)
         updater.recalculate
       end
 
@@ -385,7 +385,7 @@ module Spree
       end
 
       it "doesnt update shipment state" do
-        expect(updater).not_to receive(:update_shipment_state)
+        expect(updater).not_to receive(:recalculate_shipment_state)
         updater.recalculate
       end
 
