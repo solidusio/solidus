@@ -24,7 +24,7 @@ module Spree
         if order.completed?
           update_payment_state
           update_shipments
-          update_shipment_state
+          recalculate_shipment_state
         end
         Spree::Bus.publish :order_recalculated, order: order
 
@@ -34,7 +34,7 @@ module Spree
     alias_method :update, :recalculate
     deprecate update: :recalculate, deprecator: Spree.deprecator
 
-    # Updates the +shipment_state+ attribute according to the following logic:
+    # Recalculates the +shipment_state+ attribute according to the following logic:
     #
     # shipped   when all Shipments are in the "shipped" state
     # partial   when at least one Shipment has a state of "shipped" and there is another Shipment with a state other than "shipped"
@@ -44,13 +44,15 @@ module Spree
     # pending   when all Shipments are in the "pending" state
     #
     # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
-    def update_shipment_state
+    def recalculate_shipment_state
       log_state_change('shipment') do
         order.shipment_state = determine_shipment_state
       end
 
       order.shipment_state
     end
+    alias_method :update_shipment_state, :recalculate_shipment_state
+    deprecate update_shipment_state: :recalculate_shipment_state, deprecator: Spree.deprecator
 
     # Updates the +payment_state+ attribute according to the following logic:
     #

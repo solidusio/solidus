@@ -745,7 +745,7 @@ RSpec.describe Spree::Payment, type: :model do
 
       it "updates payment_state and shipments" do
         expect(order.recalculator).to receive(:update_payment_state)
-        expect(order.recalculator).to receive(:update_shipment_state)
+        expect(order.recalculator).to receive(:recalculate_shipment_state)
         Spree::Payment.create!(amount: 100, order:, payment_method:)
       end
     end
