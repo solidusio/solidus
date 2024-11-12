@@ -2,7 +2,7 @@
 
 require 'bundler/gem_tasks'
 
-SOLIDUS_GEM_NAMES = %w[core api backend sample]
+SOLIDUS_GEM_NAMES = %w[core api backend sample promotions]
 
 %w[build install].each do |task_name|
   desc "Run rake #{task} for each Solidus gem"
