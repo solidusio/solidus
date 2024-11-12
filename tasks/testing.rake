@@ -17,16 +17,15 @@ def subproject_task(project, task, title: project, task_name: nil)
   end
 end
 
-SOLIDUS_GEM_NAMES = %w[core api backend frontend sample promotions]
-
 %w[spec db:drop db:create db:migrate db:reset].each do |task|
-  SOLIDUS_GEM_NAMES.each do |project|
+  solidus_gem_names = %w[core api backend sample promotions]
+  solidus_gem_names.each do |project|
     desc "Run specs for #{project}" if task == 'spec'
     subproject_task(project, task)
   end
 
   desc "Run rake #{task} for each Solidus engine"
-  task task => SOLIDUS_GEM_NAMES.map { |p| "#{task}:#{p}" }
+  task task => solidus_gem_names.map { |p| "#{task}:#{p}" }
 end
 
 desc "Run backend JS specs"
