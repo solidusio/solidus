@@ -6,6 +6,7 @@
 [![codecov](https://codecov.io/gh/solidusio/solidus/branch/main/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus/branch/main)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-blue.svg)](LICENSE.md)
+[![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20Solidus%20Guru-006BFF)](https://gurubase.io/g/solidus)
 
 [![Supporters on Open Collective](https://opencollective.com/solidus/tiers/supporter/badge.svg?label=Supporters&color=brightgree)](https://opencollective.com/solidus)
 [![Bronze Partners on Open Collective](https://opencollective.com/solidus/tiers/bronze/badge.svg?label=Bronze&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
