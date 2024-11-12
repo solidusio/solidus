@@ -24,3 +24,6 @@ changelog:
     - title: Solidus Sample
       labels:
         - "changelog:solidus_sample"
+    - title: Solidus Promotions
+      labels:
+        - "changelog:solidus_promotions"
