@@ -872,4 +872,24 @@ RSpec.describe Spree::Shipment, type: :model do
 
     it { is_expected.to include carton }
   end
+
+  describe "metadata fields" do
+    it "responds to public_metadata" do
+      expect(shipment).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(shipment).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      shipment.public_metadata = { "tracking_info" => "UPS123456789" }
+      expect(shipment.public_metadata["tracking_info"]).to eq("UPS123456789")
+    end
+
+    it "can store data in private_metadata" do
+      shipment.private_metadata = { "internal_note" => "Handle with care" }
+      expect(shipment.private_metadata["internal_note"]).to eq("Handle with care")
+    end
+  end
 end

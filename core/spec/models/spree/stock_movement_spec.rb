@@ -59,4 +59,24 @@ RSpec.describe Spree::StockMovement, type: :model do
       end
     end
   end
+
+  describe "metadata fields" do
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "movement_reason" => "restock" }
+      expect(subject.public_metadata["movement_reason"]).to eq("restock")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "internal_note" => "Inventory verified" }
+      expect(subject.private_metadata["internal_note"]).to eq("Inventory verified")
+    end
+  end
 end

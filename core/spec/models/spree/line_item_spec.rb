@@ -187,4 +187,24 @@ RSpec.describe Spree::LineItem, type: :model do
       expect(subject.currency).to eq("USD")
     end
   end
+
+  describe "metadata fields" do
+    it "responds to public_metadata" do
+      expect(line_item).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(line_item).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      line_item.public_metadata = { "quantity" => "3" }
+      expect(line_item.public_metadata["quantity"]).to eq("3")
+    end
+
+    it "can store data in private_metadata" do
+      line_item.private_metadata = { "supplier_id" => "SUP-34567" }
+      expect(line_item.private_metadata["supplier_id"]).to eq("SUP-34567")
+    end
+  end
 end
