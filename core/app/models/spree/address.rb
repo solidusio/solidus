@@ -7,6 +7,7 @@ module Spree
   #
   class Address < Spree::Base
     extend ActiveModel::ForbiddenAttributesProtection
+    include Metadata
 
     mattr_accessor :state_validator_class
     self.state_validator_class = Spree::Address::StateValidator
