@@ -64,29 +64,32 @@ module SolidusPromotions
       if SolidusSupport.backend_available?
         # Replace the promotions menu from core with ours
         Spree::Backend::Config.configure do |config|
-          config.menu_items = config.menu_items.flat_map do |item|
-            next item unless item.label.to_sym == :promotions
+          config.menu_items.insert(
+            3,
+            Spree::BackendConfiguration::MenuItem.new(
+              label: :promotions,
+              icon: config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
+              condition: -> { can?(:admin, SolidusPromotions::Promotion) },
+              url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
+              data_hook: :admin_solidus_promotion_sub_tabs,
+              children: [
+                Spree::BackendConfiguration::MenuItem.new(
+                  label: :promotions,
+                  url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
+                  condition: -> { can?(:admin, SolidusPromotions::Promotion) }
+                ),
+                Spree::BackendConfiguration::MenuItem.new(
+                  label: :promotion_categories,
+                  url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotion_categories_path },
+                  condition: -> { can?(:admin, SolidusPromotions::PromotionCategory) }
+                )
+              ]
+            )
+          )
 
-            [
-              Spree::BackendConfiguration::MenuItem.new(
-                label: :promotions,
-                icon: config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
-                condition: -> { can?(:admin, SolidusPromotions::Promotion) },
-                url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
-                data_hook: :admin_solidus_promotion_sub_tabs,
-                children: [
-                  Spree::BackendConfiguration::MenuItem.new(
-                    label: :promotions,
-                    url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
-                    condition: -> { can?(:admin, SolidusPromotions::Promotion) }
-                  ),
-                  Spree::BackendConfiguration::MenuItem.new(
-                    label: :promotion_categories,
-                    url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotion_categories_path },
-                    condition: -> { can?(:admin, SolidusPromotions::PromotionCategory) }
-                  )
-                ]
-              ),
+          if defined?(Spree::Promotion)
+            config.menu_items.insert(
+              3,
               Spree::BackendConfiguration::MenuItem.new(
                 label: :legacy_promotions,
                 icon: config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
@@ -106,7 +109,7 @@ module SolidusPromotions
                   )
                 ]
               )
-            ]
+            )
           end
         end
       end
