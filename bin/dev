@@ -9,5 +9,5 @@ if ! test -d sandbox; then
   bin/sandbox
 fi
 
-export PORT=3000
+export PORT=${PORT:-3000}
 exec foreman start -f Procfile.dev "$@"
