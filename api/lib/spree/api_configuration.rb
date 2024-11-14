@@ -7,14 +7,14 @@ module Spree
     preference :product_attributes, :array, default: [
       :id, :name, :description, :available_on,
       :slug, :meta_description, :meta_keywords, :shipping_category_id,
-      :taxon_ids, :total_on_hand, :meta_title
+      :taxon_ids, :total_on_hand, :meta_title, :private_metadata, :public_metadata
     ]
 
     preference :product_property_attributes, :array, default: [:id, :product_id, :property_id, :value, :property_name]
 
     preference :variant_attributes, :array, default: [
       :id, :name, :sku, :weight, :height, :width, :depth, :is_master,
-      :slug, :description, :track_inventory
+      :slug, :description, :track_inventory, :private_metadata, :public_metadata
     ]
 
     preference :image_attributes, :array, default: [
@@ -36,34 +36,36 @@ module Spree
       :covered_by_store_credit, :display_total_applicable_store_credit,
       :order_total_after_store_credit, :display_order_total_after_store_credit,
       :total_applicable_store_credit, :display_total_available_store_credit,
-      :display_store_credit_remaining_after_capture, :canceler_id
+      :display_store_credit_remaining_after_capture, :canceler_id, :private_metadata, :public_metadata
     ]
 
-    preference :line_item_attributes, :array, default: [:id, :quantity, :price, :variant_id]
+    preference :line_item_attributes, :array, default: [:id, :quantity, :price, :variant_id,
+                                                        :private_metadata, :public_metadata]
 
     preference :option_type_attributes, :array, default: [:id, :name, :presentation, :position]
 
     preference :payment_attributes, :array, default: [
       :id, :source_type, :source_id, :amount, :display_amount,
       :payment_method_id, :state, :avs_response, :created_at,
-      :updated_at
+      :updated_at, :private_metadata, :public_metadata
     ]
 
     preference :payment_method_attributes, :array, default: [:id, :name, :description]
 
-    preference :shipment_attributes, :array, default: [:id, :tracking, :tracking_url, :number, :cost, :shipped_at, :state]
+    preference :shipment_attributes, :array, default: [:id, :tracking, :tracking_url, :number, :cost, :shipped_at, :state,
+                                                       :private_metadata, :public_metadata]
 
-    preference :taxonomy_attributes, :array, default: [:id, :name]
+    preference :taxonomy_attributes, :array, default: [:id, :name, :private_metadata, :public_metadata]
 
     preference :taxon_attributes, :array, default: [
       :id, :name, :pretty_name, :permalink, :parent_id,
-      :taxonomy_id
+      :taxonomy_id, :private_metadata, :public_metadata
     ]
 
     preference :address_attributes, :array, default: [
       :id, :name, :address1, :address2, :city, :zipcode, :phone, :company,
       :alternative_phone, :country_id, :country_iso, :state_id, :state_name,
-      :state_text
+      :state_text, :private_metadata, :public_metadata
     ]
 
     preference :country_attributes, :array, default: [:id, :iso_name, :iso, :iso3, :name, :numcode]
@@ -81,11 +83,13 @@ module Spree
     ]
 
     preference :customer_return_attributes, :array, default: [
-      :id, :number, :stock_location_id, :created_at, :updated_at
+      :id, :number, :stock_location_id, :created_at, :updated_at, :private_metadata,
+      :public_metadata
     ]
 
     preference :return_authorization_attributes, :array, default: [
-      :id, :number, :state, :order_id, :memo, :created_at, :updated_at
+      :id, :number, :state, :order_id, :memo, :created_at, :updated_at,
+      :private_metadata, :public_metadata
     ]
 
     preference :creditcard_attributes, :array, default: [
@@ -96,16 +100,18 @@ module Spree
       :id, :month, :year, :cc_type, :last_digits, :name
     ]
 
-    preference :user_attributes, :array, default: [:id, :email, :created_at, :updated_at]
+    preference :user_attributes, :array, default: [:id, :email, :created_at, :updated_at,
+                                                   :private_metadata, :public_metadata]
 
     preference :property_attributes, :array, default: [:id, :name, :presentation]
 
     preference :stock_location_attributes, :array, default: [
       :id, :name, :address1, :address2, :city, :state_id, :state_name,
-      :country_id, :zipcode, :phone, :active
+      :country_id, :zipcode, :phone, :active, :private_metadata, :public_metadata
     ]
 
-    preference :stock_movement_attributes, :array, default: [:id, :quantity, :stock_item_id]
+    preference :stock_movement_attributes, :array, default: [:id, :quantity, :stock_item_id,
+                                                             :private_metadata, :public_metadata]
 
     preference :stock_item_attributes, :array, default: [
       :id, :count_on_hand, :backorderable, :stock_location_id,
@@ -127,12 +133,12 @@ module Spree
     preference :store_attributes, :array, default: [
       :id, :name, :url, :meta_description, :meta_keywords, :seo_title,
       :mail_from_address, :default_currency, :code, :default, :available_locales,
-      :bcc_email
+      :bcc_email, :private_metadata, :public_metadata
     ]
 
     preference :store_credit_history_attributes, :array, default: [
       :display_amount, :display_user_total_amount, :display_action,
-      :display_event_date, :display_remaining_amount
+      :display_event_date, :display_remaining_amount, :private_metadata, :public_metadata
     ]
 
     preference :variant_property_attributes, :array, default: [
