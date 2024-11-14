@@ -5,10 +5,8 @@ en:
   spree:
     admin:
       tab:
-        promotions: Promotions
-        promotion_categories: Promotion Categories
-        legacy_promotions: Legacy Promotions
-        legacy_promotion_categories: Legacy Promotion Categories
+        solidus_promotions: Promotions
+        solidus_promotion_categories: Promotion Categories
     hints:
       solidus_promotions/promotion:
         expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
