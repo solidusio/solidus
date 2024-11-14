@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.metadata['rubygems_mfa_required'] = 'true'
 
   s.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(spec|script)/})
+    f.match(%r{^(spec|bin)/})
   end
 
   s.required_ruby_version = '>= 3.1.0'
