@@ -35,5 +35,19 @@ describe "Properties", :js, type: :feature do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
     end
+
+    it "enables creation of a new property" do
+      within("dialog") do
+        fill_in "Name", with: "new prop"
+        fill_in "Presentation", with: "New prop"
+
+        click_on "Add Property"
+      end
+
+      expect(page).not_to have_selector("dialog")
+      expect(page).to have_content("Property was successfully created.")
+
+      expect(page).to have_content("New prop")
+    end
   end
 end
