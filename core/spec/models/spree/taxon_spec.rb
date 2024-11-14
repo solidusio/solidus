@@ -269,4 +269,26 @@ RSpec.describe Spree::Taxon, type: :model do
       end
     end
   end
+
+  describe "metadata fields" do
+    subject { described_class.new }
+
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "type_preferred" => "custom" }
+      expect(subject.public_metadata["type_preferred"]).to eq("custom")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "additional_informatio" => "testing" }
+      expect(subject.private_metadata["additional_informatio"]).to eq("testing")
+    end
+  end
 end

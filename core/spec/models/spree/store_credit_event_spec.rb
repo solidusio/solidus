@@ -325,4 +325,26 @@ RSpec.describe Spree::StoreCreditEvent do
       end
     end
   end
+
+  describe "metadata fields" do
+    subject { described_class.new }
+
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "credits_type" => "gift_cards" }
+      expect(subject.public_metadata["credits_type"]).to eq("gift_cards")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "preferred_options" => "points" }
+      expect(subject.private_metadata["preferred_options"]).to eq("points")
+    end
+  end
 end

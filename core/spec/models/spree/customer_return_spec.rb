@@ -303,4 +303,26 @@ RSpec.describe Spree::CustomerReturn, type: :model do
       end
     end
   end
+
+  describe "metadata fields" do
+    subject { described_class.new }
+
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "return_details" => "canceled" }
+      expect(subject.public_metadata["return_details"]).to eq("canceled")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "stock_details" => "coffee_beans" }
+      expect(subject.private_metadata["stock_details"]).to eq("coffee_beans")
+    end
+  end
 end

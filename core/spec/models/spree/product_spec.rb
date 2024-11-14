@@ -709,4 +709,26 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
   end
+
+  describe "metadata fields" do
+    subject { described_class.new }
+
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "delivery_required" => "no" }
+      expect(subject.public_metadata["delivery_required"]).to eq("no")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "preferred_delivery_time" => "n/a" }
+      expect(subject.private_metadata["preferred_delivery_time"]).to eq("n/a")
+    end
+  end
 end

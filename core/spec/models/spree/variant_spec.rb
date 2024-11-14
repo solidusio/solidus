@@ -1083,4 +1083,26 @@ RSpec.describe Spree::Variant, type: :model do
     expect { variant.option_values << variant.option_values.first }
       .to raise_error ActiveRecord::RecordNotUnique
   end
+
+  describe "metadata fields" do
+    subject { described_class.new }
+
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "variant_type" => "veg" }
+      expect(subject.public_metadata["variant_type"]).to eq("veg")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "variant_details" => "veg" }
+      expect(subject.private_metadata["variant_details"]).to eq("veg")
+    end
+  end
 end
