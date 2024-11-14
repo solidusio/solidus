@@ -22,7 +22,8 @@ module SolidusLegacyPromotions
             ),
             Spree::BackendConfiguration::MenuItem.new(
               label: :promotion_categories,
-              condition: -> { can?(:admin, Spree::PromotionCategory) }
+              condition: -> { can?(:admin, Spree::PromotionCategory) },
+              url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path },
             )
           ]
         )

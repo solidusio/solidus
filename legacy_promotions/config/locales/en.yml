@@ -23,8 +23,8 @@ en:
           general: General
           starts_at_placeholder: Immediately
       tab:
-        promotion_categories: Promotion Categories
-        promotions: Promotions
+        promotions: Legacy Promotions
+        promotion_categories: Legacy Promotion Categories
     back_to_promotion_categories_list: Back To Promotions Categories List
     back_to_promotions_list: Back To Promotions List
     base_amount: Base Amount
