@@ -6,6 +6,7 @@ module Spree
   #
   class StockLocation < Spree::Base
     class InvalidMovementError < StandardError; end
+    include Metadata
 
     acts_as_list
 

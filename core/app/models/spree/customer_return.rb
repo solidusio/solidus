@@ -2,6 +2,8 @@
 
 module Spree
   class CustomerReturn < Spree::Base
+    include Metadata
+
     belongs_to :stock_location, optional: true
 
     has_many :return_items, inverse_of: :customer_return

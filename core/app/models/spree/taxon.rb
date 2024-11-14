@@ -6,6 +6,8 @@ module Spree
   class Taxon < Spree::Base
     acts_as_nested_set dependent: :destroy
 
+    include Metadata
+
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications

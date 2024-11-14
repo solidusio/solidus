@@ -10,6 +10,7 @@ module Spree
     friendly_id :slug_candidates, use: :history
 
     include Spree::SoftDeletable
+    include Metadata
 
     after_discard do
       variants_including_master.discard_all
