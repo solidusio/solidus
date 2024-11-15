@@ -18,6 +18,16 @@
   - changed-files:
     - any-glob-to-any-file:
       - "admin/**/*"
+"changelog:solidus_promotions":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "promotions/**/*"
+"changelog:solidus_legacy_promotions":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "legacy_promotions/**/*"
 "changelog:solidus_sample":
 - any:
   - changed-files:
@@ -40,6 +50,8 @@
       - "!backend/**/*"
       - "!api/**/*"
       - "!admin/**/*"
+      - "!promotions/**/*"
+      - "!legacy_promotions/**/*"
       - "!sample/**/*"
       - "!lib/**/*"
       - "!README.md"
