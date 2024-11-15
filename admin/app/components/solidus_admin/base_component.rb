@@ -38,12 +38,22 @@ module SolidusAdmin
 
     delegate :stimulus_id, to: :class
 
-    def spree
-      @spree ||= Spree::Core::Engine.routes.url_helpers
+    class << self
+      private
+
+      def engines_with_routes
+        Rails::Engine.subclasses.map(&:instance).reject do |engine|
+          engine.routes.empty?
+        end
+      end
     end
 
-    def solidus_admin
-      @solidus_admin ||= SolidusAdmin::Engine.routes.url_helpers
+    # For each engine with routes, define a method that returns the routes proxy.
+    # This allows us to use the routes in the context of a component class.
+    engines_with_routes.each do |engine|
+      define_method(engine.engine_name) do
+        engine.routes.url_helpers
+      end
     end
   end
 end
