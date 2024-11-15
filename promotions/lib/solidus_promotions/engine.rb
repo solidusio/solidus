@@ -52,11 +52,14 @@ module SolidusPromotions
       end
     end
 
-    initializer "solidus_promotions.add_admin_order_index_component", after: "solidus_legacy_promotions.add_admin_order_index_component" do
+    initializer "solidus_promotions.add_admin_order_index_component", after: "spree.load_config_initializers" do
       if SolidusSupport.admin_available?
-        SolidusAdmin::Config.components["orders/index"] = "SolidusPromotions::Orders::Index::Component"
-        SolidusAdmin::Config.components["promotions/index"] = "SolidusPromotions::Promotions::Index::Component"
-        SolidusAdmin::Config.components["promotion_categories/index"] = "SolidusPromotions::PromotionCategories::Index::Component"
+        if Spree::Config.promotions.is_a?(SolidusPromotions::Configuration)
+          SolidusAdmin::Config.components["orders/index"] = "SolidusPromotions::Orders::Index::Component"
+        end
+
+        SolidusAdmin::Config.components["solidus_promotions/promotions/index"] = "SolidusPromotions::Promotions::Index::Component"
+        SolidusAdmin::Config.components["solidus_promotions/categories/index"] = "SolidusPromotions::PromotionCategories::Index::Component"
       end
     end
 
