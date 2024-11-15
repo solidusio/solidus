@@ -12,10 +12,10 @@ RSpec.describe "Main Menu", type: :feature do
       end
 
       it "should have a link to promotions" do
-        expect(page).to have_link("Promotions", href: solidus_promotions.admin_promotions_path, count: 2)
+        expect(page).to have_link("Promotions (new)", href: solidus_promotions.admin_promotions_path, count: 2)
       end
       it "should have a link to legacy promotions" do
-        expect(page).to have_link("Legacy Promotions", href: spree.admin_promotions_path, count: 2)
+        expect(page).to have_link("Promotions", href: spree.admin_promotions_path, count: 2)
       end
     end
 
@@ -25,11 +25,11 @@ RSpec.describe "Main Menu", type: :feature do
       end
 
       it "should have a link to promotions" do
-        within(".selected .admin-subnav") { expect(page).to have_link("Promotions", href: solidus_promotions.admin_promotions_path) }
+        within(".selected .admin-subnav") { expect(page).to have_link("Promotions (new)", href: solidus_promotions.admin_promotions_path) }
       end
 
       it "should have a link to promotion categories" do
-        within(".selected .admin-subnav") { expect(page).to have_link("Promotion Categories", href: solidus_promotions.admin_promotion_categories_path) }
+        within(".selected .admin-subnav") { expect(page).to have_link("Promotion Categories (new)", href: solidus_promotions.admin_promotion_categories_path) }
       end
     end
 
@@ -39,11 +39,11 @@ RSpec.describe "Main Menu", type: :feature do
       end
 
       it "should have a link to promotions" do
-        within(".selected .admin-subnav") { expect(page).to have_link("Legacy Promotions", href: spree.admin_promotions_path) }
+        within(".selected .admin-subnav") { expect(page).to have_link("Promotions", href: spree.admin_promotions_path) }
       end
 
       it "should have a link to promotion categories" do
-        within(".selected .admin-subnav") { expect(page).to have_link("Legacy Promotion Categories", href: spree.admin_promotion_categories_path) }
+        within(".selected .admin-subnav") { expect(page).to have_link("Promotion Categories", href: spree.admin_promotion_categories_path) }
       end
     end
   end
