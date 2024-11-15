@@ -1,3 +1,5 @@
 en:
   filters:
     promotions: Promotions
+  scopes:
+    promotions: Promotions

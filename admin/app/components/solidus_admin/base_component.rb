@@ -25,6 +25,10 @@ module SolidusAdmin
       end
     end
 
+    def self.i18n_scope
+      @i18n_scope ||= name.underscore.tr("/", ".")
+    end
+
     def self.stimulus_id
       @stimulus_id ||= name.underscore
         .sub(/^solidus_admin\/(.*)\/component$/, '\1')
