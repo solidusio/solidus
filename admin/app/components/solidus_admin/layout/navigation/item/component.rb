@@ -6,22 +6,19 @@ class SolidusAdmin::Layout::Navigation::Item::Component < SolidusAdmin::BaseComp
 
   # @param item [SolidusAdmin::MenuItem]
   # @param fullpath [String] the current path
-  # @param url_helpers [#solidus_admin, #spree] context for generating paths
   def initialize(
     item:,
-    fullpath: "#",
-    url_helpers: Struct.new(:spree, :solidus_admin).new(spree, solidus_admin)
+    fullpath: "#"
   )
     @item = item
-    @url_helpers = url_helpers
     @fullpath = fullpath
   end
 
   def path
-    @item.path(@url_helpers)
+    @item.path(self)
   end
 
   def active?
-    @item.active?(@url_helpers, @fullpath)
+    @item.active?(self, @fullpath)
   end
 end

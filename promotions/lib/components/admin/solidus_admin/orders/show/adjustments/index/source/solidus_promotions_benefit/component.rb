@@ -10,8 +10,4 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Source::SolidusPromotionsB
   def promotion_name
     source.promotion.name
   end
-
-  def solidus_promotions
-    @solidus_promotions ||= SolidusPromotions::Engine.routes.url_helpers
-  end
 end
