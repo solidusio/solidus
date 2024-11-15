@@ -9,6 +9,12 @@ RSpec.describe "Orders", type: :feature, solidus_admin: true do
 
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
+  around do |example|
+    SolidusAdmin::Config.components["orders/index"] = "SolidusPromotions::Orders::Index::Component"
+    example.run
+    SolidusAdmin::Config.components["orders/index"] = "SolidusAdmin::Orders::Index::Component"
+  end
+
   it "lists products", :js, :flaky do
     visit "/admin/orders"
 
