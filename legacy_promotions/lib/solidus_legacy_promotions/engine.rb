@@ -86,12 +86,17 @@ module SolidusLegacyPromotions
     end
 
     initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
-      Spree::Config.order_contents_class = "Spree::OrderContents"
-      Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
-      Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
+      # Only set these if there is no promotion configuration set. In this case,
+      # we're running on a store without the new `solidus_promotions` gem and we
+      # need to set the configuration to the legacy one.
+      if Spree::Config.promotions.is_a?(Spree::Core::NullPromotionConfiguration)
+        Spree::Config.order_contents_class = "Spree::OrderContents"
+        Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
+      end
 
       Spree::Api::Config.adjustment_attributes << :promotion_code_id
       Spree::Api::Config.adjustment_attributes << :eligible
+      Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
     end
   end
 end
