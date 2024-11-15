@@ -2,11 +2,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  solidus_admin:
+    menu_item:
+      promotions: Promotions (new)
+      promotion_categories: Promotion Categories (new)
   spree:
     admin:
       tab:
-        solidus_promotions: Promotions
-        solidus_promotion_categories: Promotion Categories
+        promotions: Promotions (new)
+        promotion_categories: Promotion Categories (new)
     hints:
       solidus_promotions/promotion:
         expires_at: This determines when the promotion expires. <br> If no value is specified, the promotion will never expire.
