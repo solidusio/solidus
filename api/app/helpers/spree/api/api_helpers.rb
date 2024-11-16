@@ -5,6 +5,7 @@ module Spree
     module ApiHelpers
       ATTRIBUTES = [
         :product_attributes,
+        :metadata_attributes,
         :product_property_attributes,
         :variant_attributes,
         :image_attributes,

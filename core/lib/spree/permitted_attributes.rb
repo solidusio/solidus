@@ -33,7 +33,8 @@ module Spree
       :taxon_attributes,
       :taxonomy_attributes,
       :user_attributes,
-      :variant_attributes
+      :variant_attributes,
+      :metadata_attributes
     ]
 
     mattr_reader(*ATTRIBUTES)
@@ -78,8 +79,10 @@ module Spree
       :meta_keywords, :price, :sku, :deleted_at,
       :option_values_hash, :weight, :height, :width, :depth,
       :shipping_category_id, :tax_category_id,
-      :taxon_ids, :option_type_ids, :cost_currency, :cost_price
+      :taxon_ids, :option_type_ids, :cost_currency, :cost_price # , :private_metadata, :public_metadata
     ]
+
+    @@metadata_attributes = [private_metadata: {}, public_metadata: {}]
 
     @@property_attributes = [:name, :presentation]
 
