@@ -3,6 +3,6 @@
 <% admin_breadcrumb(plural_resource_name(SolidusPromotions::PromotionCodeBatch)) %>
 <%= form_for :promotion_code_batch, url: collection_url do |batch| %>
   <%= batch.hidden_field :promotion_id, value: params[:promotion_id] %>
-  <%= render partial: 'form_fields', locals: {batch: batch, promotion_id: params[:promotion_id]} %>
+  <%= render partial: 'form_fields', locals: {batch: batch, promotion: @promotion, disabled: false, promotion_id: params[:promotion_id]} %>
   <%= batch.submit t('spree.actions.create'), class: 'btn btn-primary' %>
 <% end %>

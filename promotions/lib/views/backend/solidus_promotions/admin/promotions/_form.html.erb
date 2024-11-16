@@ -85,40 +85,81 @@
   </div>
 </fieldset>
 
-<fieldset class="form-group row no-border-bottom">
+<fieldset class="no-border-bottom">
   <legend><%= t '.activation' %></legend>
-
-  <div class="col-4">
-    <%= f.field_container :apply_automatically do %>
-      <%= f.label :apply_automatically do %>
-        <%= f.check_box :apply_automatically, disabled: f.object.codes.any? || f.object.path.present? %>
-        <%= SolidusPromotions::Promotion.human_attribute_name(:apply_automatically) %>
-        <%= f.field_hint :promo_code_will_be_disabled %>
-      <% end %>
-    <% end %>
+  <div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link mb-1 active" id="v-pills-automatic-tab" data-toggle="pill" data-target="#v-pills-automatic" type="button" role="tab" aria-controls="v-pills-automatic" aria-selected="true">
+          <%= t(".automatic") %>
+        </button>
+        <button class="nav-link mb-1" id="v-pills-path-tab" data-toggle="pill" data-target="#v-pills-path" type="button" role="tab" aria-controls="v-pills-path" aria-selected="false">
+          <%= t(".path") %>
+        </button>
+        <button class="nav-link mb-1" id="v-pills-single-code-tab" data-toggle="pill" data-target="#v-pills-single-code" type="button" role="tab" aria-controls="v-pills-single-code" aria-selected="false">
+          <%= t(".single_code") %>
+        </button>
+        <button class="nav-link mb-1" id="v-pills-multiple-codes-tab" data-toggle="pill" data-target="#v-pills-multiple-codes" type="button" role="tab" aria-controls="v-pills-multiple-codes" aria-selected="false">
+          <%= t(".multiple_codes") %>
+        </button>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-automatic" role="tabpanel" aria-labelledby="v-pills-automatic-tab">
+          <%= f.field_container :apply_automatically do %>
+            <%= f.label :apply_automatically do %>
+              <%= f.check_box :apply_automatically, {disabled: !f.object.can_change_apply_automatically?, class: "#{'enable' if f.object.can_change_apply_automatically?}"} %>
+              <%= SolidusPromotions::Promotion.human_attribute_name(:apply_automatically) %>
+              <%= f.field_hint :promo_code_will_be_disabled %>
+            <% end %>
+            <% if f.object.codes.present? %>
+              <div class="codes-present">
+                <p>
+                  <%= t('.codes_present') %>
+                </p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="tab-pane fade" id="v-pills-path" role="tabpanel" aria-labelledby="v-pills-path-tab">
+          <%= f.field_container :path do %>
+            <%= f.label :path %>
+            <%= f.text_field :path, class: "fullwidth #{'enable' if f.object.can_change_path?}", disabled: true %>
+          <% end %>
+        </div>
+        <div class="tab-pane fade" id="v-pills-single-code" role="tabpanel" aria-labelledby="v-pills-single-code-tab">
+          <%= f.field_container :single_code do%>
+            <%= label_tag :single_code, SolidusPromotions::PromotionCode.model_name.human %>
+            <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth #{'enable' if f.object.can_change_codes?}", disabled: true %>
+          <% end %>
+        </div>
+        <div class="tab-pane fade" id="v-pills-multiple-codes" role="tabpanel" aria-labelledby="v-pills-multiple-codes-tab">
+          <%= fields_for :promotion_code_batch, @promotion.code_batches.new do |batch| %>
+            <%= render partial: 'solidus_promotions/admin/promotion_code_batches/form_fields', locals: {f: f, batch: batch, promotion: @promotion, disabled: true, promotion_id: params[:promotion_id]} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <% if f.object.new_record? || f.object.present? %>
-    <div class="col-4">
-      <%= f.field_container :path do %>
-        <%= f.label :path %>
-        <%= f.text_field :path, class: "fullwidth", disabled: f.object.apply_automatically || f.object.codes.present? %>
-      <% end %>
-    </div>
-  <% end %>
-
-    <div class="col-4">
-      <% if f.object.new_record? %>
-        <div id="promotion_single_code" class="form-group">
-          <%= label_tag :single_code, SolidusPromotions::PromotionCode.model_name.human %>
-          <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth", disabled: f.object.apply_automatically || f.object.path.present? %>
-        </div>
-      <% else %>
-        <div class="codes-present">
-          <p>
-            <%= t('.codes_present') %>
-          </p>
-        </div>
-      <% end %>
-    </div>
 </fieldset>
+
+<script>
+  function disableInactiveTabFields(event) {
+    const panes = document.querySelectorAll(".tab-pane");
+    panes.forEach(pane => {
+      if (pane.id == event.target.dataset.target.slice(1)) {
+        pane.querySelectorAll("input.enable, select.enable").forEach(input => {
+          input.removeAttribute("disabled");
+        });
+      } else {
+        pane.querySelectorAll("input, select").forEach(input => {
+          input.setAttribute("disabled", true);
+        });
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    $(".nav-link").on("show.bs.tab", disableInactiveTabFields);
+  });
+</script>

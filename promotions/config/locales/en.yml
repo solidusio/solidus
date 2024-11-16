@@ -167,6 +167,10 @@ en:
           general: General
           starts_at_placeholder: Immediately
           codes_present: This promotion has promotion codes defined. You cannot select the apply automatically option.
+          automatic: "Automatic"
+          path: "Path"
+          single_code: "Single code"
+          multiple_codes: "Multiple codes"
         edit:
           order_conditions: Order Conditions
         calculator:
