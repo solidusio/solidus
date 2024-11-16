@@ -138,6 +138,18 @@ module SolidusPromotions
       @eligibility_results ||= SolidusPromotions::EligibilityResults.new(self)
     end
 
+    def can_change_apply_automatically?
+      path.blank? && codes.empty?
+    end
+
+    def can_change_path?
+      !apply_automatically? && codes.empty?
+    end
+
+    def can_change_codes?
+      !apply_automatically? && path.blank?
+    end
+
     private
 
     def normalize_blank_values

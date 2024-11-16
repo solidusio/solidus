@@ -686,4 +686,82 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
       expect(subject).to be_nil
     end
   end
+
+  describe "#can_change_apply_automatically?" do
+    subject { promotion.can_change_apply_automatically? }
+
+    let(:promotion) { create :solidus_promotion }
+
+    context "when the promotion has a path" do
+      before { promotion.path = "foo" }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the promotion has a code" do
+      before { promotion.codes.new(value: "foo") }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the promotion has neither a path nor a code" do
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#can_change_path?" do
+    subject { promotion.can_change_path? }
+
+    let(:promotion) { create :solidus_promotion }
+
+    context "when the promotion has a code" do
+      before { promotion.codes.new(value: "foo") }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the promotion has a path" do
+      before { promotion.path = "foo" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the promotion has neither a path nor a code" do
+      it { is_expected.to be true }
+    end
+
+    context "when the promotion applies automatically" do
+      before { promotion.apply_automatically = true }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_change_codes?" do
+    subject { promotion.can_change_codes? }
+
+    let(:promotion) { create :solidus_promotion }
+
+    context "when the promotion has a code" do
+      before { promotion.codes.new(value: "foo") }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the promotion has a path" do
+      before { promotion.path = "foo" }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the promotion has neither a path nor a code" do
+      it { is_expected.to be true }
+    end
+
+    context "when the promotion applies automatically" do
+      before { promotion.apply_automatically = true }
+
+      it { is_expected.to be false }
+    end
+  end
 end
