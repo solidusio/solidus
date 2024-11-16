@@ -11,8 +11,7 @@ module SolidusPromotions
 
       def create
         @promotion = model_class.new(permitted_resource_params)
-        @promotion.codes.new(value: params[:single_code]) if params[:single_code].present?
-
+        @promotion.codes.new(promotion: @promotion, value: params[:single_code]) if params[:single_code].present?
         if params[:code_batch]
           @code_batch = @promotion.code_batches.new(code_batch_params)
         end
