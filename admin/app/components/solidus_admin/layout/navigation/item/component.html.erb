@@ -1,7 +1,7 @@
 <li class="group <%= "active" if active? %>">
   <a
     href="<%= path %>"
-    aria-current="<%= @item.current?(@url_helpers, @fullpath) ? "page" : "false" %>"
+    aria-current="<%= @item.current?(self, @fullpath) ? "page" : "false" %>"
     class="
       flex gap-3 items-center
       py-1 px-3 rounded
@@ -20,7 +20,7 @@
 
   <% if @item.children? %>
     <ul class="flex flex-col gap-0.5 pt-0.5 <%= "hidden" unless active? %>">
-      <%= render self.class.with_collection(@item.children, url_helpers: @url_helpers, fullpath: @fullpath) %>
+      <%= render self.class.with_collection(@item.children, fullpath: @fullpath) %>
     </ul>
   <% end %>
 </li>

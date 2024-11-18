@@ -101,8 +101,4 @@ class SolidusPromotions::Promotions::Index::Component < SolidusAdmin::UI::Pages:
       }
     ]
   end
-
-  def solidus_promotions
-    @solidus_promotions ||= SolidusPromotions::Engine.routes.url_helpers
-  end
 end
