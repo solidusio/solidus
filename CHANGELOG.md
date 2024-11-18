@@ -1,3 +1,34 @@
+## Solidus v4.4.1 (2024-11-18)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.4] Move Line Item Actions to solidus_legacy_promotions by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5919
+* [v4.4] Remove rails binstubs from built gems by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5922
+
+## Solidus Admin
+
+* [v4.4] Remove rails binstubs from built gems by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5922
+* [v4.4] Fix component translation scopes by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5930
+* [v4.4] Feat(Admin): Dynamic routing proxies by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5937
+
+## Solidus Backend
+
+* [v4.4] Remove rails binstubs from built gems by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5922
+
+## Solidus API
+
+* [v4.4] Remove rails binstubs from built gems by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5922
+
+## Solidus Promotions
+
+* [v4.4] Fix component translation scopes by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5930
+* [v4.4] Better promotion menus by @tvdeyen in https://github.com/solidusio/solidus/pull/5938
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.4.0...v4.4.1
+
+
 ## Solidus v4.4.0 (2024-11-12)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
