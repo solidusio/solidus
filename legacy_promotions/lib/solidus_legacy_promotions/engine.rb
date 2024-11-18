@@ -9,7 +9,7 @@ module SolidusLegacyPromotions
     initializer "solidus_legacy_promotions.add_backend_menu_item" do
       if SolidusSupport.backend_available?
         promotions_menu_item = Spree::BackendConfiguration::MenuItem.new(
-          label: :promotions,
+          label: :legacy_promotions,
           icon: Spree::Backend::Config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
           partial: "spree/admin/shared/promotion_sub_menu",
           condition: -> { can?(:admin, Spree::Promotion) },
@@ -17,11 +17,12 @@ module SolidusLegacyPromotions
           data_hook: :admin_promotion_sub_tabs,
           children: [
             Spree::BackendConfiguration::MenuItem.new(
-              label: :promotions,
-              condition: -> { can?(:admin, Spree::Promotion) }
+              label: :legacy_promotions,
+              condition: -> { can?(:admin, Spree::Promotion) },
+              url: :admin_promotions_path
             ),
             Spree::BackendConfiguration::MenuItem.new(
-              label: :promotion_categories,
+              label: :legacy_promotion_categories,
               condition: -> { can?(:admin, Spree::PromotionCategory) },
               url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path },
             )
@@ -42,10 +43,22 @@ module SolidusLegacyPromotions
       if SolidusSupport.admin_available?
         SolidusAdmin::Config.configure do |config|
           config.menu_items << {
-            key: "promotions",
+            key: "legacy_promotions",
             route: -> { spree.admin_promotions_path },
             icon: "megaphone-line",
-            position: 30
+            position: 1.5,
+            children: [
+              {
+                key: "legacy_promotions",
+                route: -> { spree.admin_promotions_path },
+                position: 1
+              },
+              {
+                key: "legacy_promotion_categories",
+                route: -> { spree.admin_promotion_categories_path },
+                position: 2
+              }
+            ]
           }
         end
       end
