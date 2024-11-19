@@ -18,7 +18,7 @@ def subproject_task(project, task, title: project, task_name: nil)
 end
 
 %w[spec db:drop db:create db:migrate db:reset].each do |task|
-  solidus_gem_names = %w[core api backend sample promotions]
+  solidus_gem_names = %w[core api backend sample promotions legacy_promotions]
   solidus_gem_names.each do |project|
     desc "Run specs for #{project}" if task == 'spec'
     subproject_task(project, task)
