@@ -731,4 +731,79 @@ RSpec.describe Spree::Product, type: :model do
       expect(subject.private_metadata["preferred_delivery_time"]).to eq("n/a")
     end
   end
+
+  describe "metadata validations" do
+    let(:invalid_metadata_keys) do
+      {
+        "company_name" => "demo company",
+        "warehouse_name" => "warehouse",
+        "serial_number" => "SN-4567890",
+        "manufactured_at" => "head office",
+        "under_warranty" => "true",
+        "delivered_by" => "FedEx",
+        "product_type" => "fragile" # Exceeds 6 keys
+      }
+    end
+
+    let(:valid_metadata_keys) do
+      {
+        "company_name" => "demo company",
+        "warehouse_name" => "warehouse",
+        "serial_number" => "SN-4567890",
+        "manufactured_at" => "head office",
+        "under_warranty" => "true",
+        "delivered_by" => "FedEx"
+      }
+    end
+
+    let(:oversized_value_metadata) { { "product_details" => "This is an amazing product built to last long" * 10 } } # Exceeds 256 characters
+    let(:valid_value_metadata) { { "product_details" => "This is an amazing product built to last long" } }
+    let(:oversized_key_metadata) { { "company_details_for_products" => 'This is made by demo company' } } #  Exceeds 16 characters
+    let(:valid_key_metadata) { { "company_details" => 'This is made by demo company' } }
+
+    subject { create(:product) }
+
+    %w[public_metadata private_metadata].each do |metadata_type|
+      describe metadata_type.to_s do
+        it "does not allow more than 6 keys" do
+          subject.send("#{metadata_type}=", invalid_metadata_keys)
+
+          expect(subject).not_to be_valid
+          expect(subject.errors[metadata_type.to_sym]).to include("must not have more than 6 keys")
+        end
+
+        it "allow less than 6 keys" do
+          subject.send("#{metadata_type}=", valid_metadata_keys)
+
+          expect(subject).to be_valid
+        end
+
+        it "does not allow values longer than 256 characters" do
+          subject.send("#{metadata_type}=", oversized_value_metadata)
+
+          expect(subject).not_to be_valid
+          expect(subject.errors[metadata_type.to_sym]).to include("value for key 'product_details' exceeds 256 characters")
+        end
+
+        it "allow values shorter than 256 characters" do
+          subject.send("#{metadata_type}=", valid_value_metadata)
+
+          expect(subject).to be_valid
+        end
+
+        it "does not allow keys longer than 16 characters" do
+          subject.send("#{metadata_type}=", oversized_key_metadata)
+
+          expect(subject).not_to be_valid
+          expect(subject.errors[metadata_type.to_sym]).to include("key 'company_details_for_products' exceeds 16 characters")
+        end
+
+        it "allow keys shorter than 16 characters" do
+          subject.send("#{metadata_type}=", valid_key_metadata)
+
+          expect(subject).to be_valid
+        end
+      end
+    end
+  end
 end
