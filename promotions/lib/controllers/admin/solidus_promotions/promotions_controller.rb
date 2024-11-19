@@ -42,5 +42,9 @@ module SolidusPromotions
     def promotion_params
       params.require(:promotion).permit(:user_id, permitted_promotion_attributes)
     end
+
+    def authorization_subject
+      SolidusPromotions::Promotion
+    end
   end
 end
