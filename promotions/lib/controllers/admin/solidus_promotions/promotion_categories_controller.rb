@@ -25,5 +25,11 @@ module SolidusPromotions
       flash[:notice] = t(".success")
       redirect_back_or_to solidus_promotions.promotion_categories_path, status: :see_other
     end
+
+    private
+
+    def authorization_subject
+      SolidusPromotions::PromotionCategory
+    end
   end
 end
