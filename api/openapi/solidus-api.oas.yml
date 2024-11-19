@@ -5655,10 +5655,6 @@ components:
             $ref: '#/components/schemas/option-type'
         price:
           type: string
-        public_metadata:
-          type: jsonb
-        private_metadata:
-          type: hash
         product_properties:
           type: array
           items:
