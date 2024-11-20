@@ -557,6 +557,7 @@ module Spree
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
+
     # Set of classes that can be promotion adjustment sources
     add_class_set :adjustment_promotion_source_types, default: []
 
