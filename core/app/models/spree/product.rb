@@ -292,7 +292,7 @@ module Spree
     end
 
     def brand
-      Spree::Config.brand_selector_class.new(product).call
+      Spree::Config.brand_selector_class.new(self).call
     end
 
     private
