@@ -2,7 +2,7 @@
 
 ## Source Code
 
-### Solidus Source Code (FreeBSD License)
+### Solidus Source Code where not otherwise declared below or in separate license files present  (FreeBSD License)
 
 Copyright © 2015-2024, solidus.io and other contributors.
 All rights reserved.
