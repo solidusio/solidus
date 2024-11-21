@@ -43,7 +43,15 @@ FactoryBot.define do
         evaluator.stock_location # must evaluate before creating line items
 
         evaluator.line_items_attributes.each do |attributes|
-          attributes = { order:, price: evaluator.line_items_price }.merge(attributes)
+          attributes = { order:, price: evaluator.line_items_price }.merge(attributes).tap do |attrs|
+            tax_category = attributes.delete(:tax_category)
+            if attrs[:variant] && tax_category
+              attrs[:variant].update(tax_category: )
+            elsif tax_category
+              attrs[:variant] = create(:variant, tax_category: )
+            end
+          end
+
           create(:line_item, attributes)
         end
         order.line_items.reload
