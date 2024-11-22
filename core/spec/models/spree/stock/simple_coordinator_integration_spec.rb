@@ -235,7 +235,7 @@ RSpec.describe "Integrating with the simple coordinator" do
   end
 
   context "when custom coordinator options are passed" do
-    let(:order) {
+    let!(:order) {
       create :order_with_line_items, line_items_attributes: [{variant: create(:product_in_stock).master }]
     }
 
@@ -326,6 +326,34 @@ RSpec.describe "Integrating with the simple coordinator" do
 
       it "uses the options to force a specific stock location" do
         expect(subject.shipments.map(&:stock_location)).to eq [specific_stock_location]
+      end
+    end
+
+    describe "to customize the stock location sorters behavior" do
+      let(:coordinator_options) { {force_stock_location_order: [stock_location_2, stock_location_1]} }
+      let!(:stock_location_1) { create(:stock_location, active: true, propagate_all_variants: true) }
+      let!(:stock_location_2) { create(:stock_location, active: true, propagate_all_variants: true) }
+
+      before do
+        Spree::StockItem.update_all(count_on_hand: 999)
+      end
+
+      around do |example|
+        MyLocationSorter = Class.new(Spree::Stock::LocationSorter::DefaultFirst) do
+          def sort
+            coordinator_options[:force_stock_location_order] || super
+          end
+        end
+
+        original_location_sorter_class = Spree::Config.stock.location_sorter_class
+        Spree::Config.stock.location_sorter_class = MyLocationSorter.to_s
+        example.run
+        Spree::Config.stock.location_sorter_class =
+          original_location_sorter_class.to_s
+      end
+
+      it "uses the options to force a specific stock location order" do
+        expect(subject.shipments.map(&:stock_location)).to all(eq(stock_location_2))
       end
     end
   end
