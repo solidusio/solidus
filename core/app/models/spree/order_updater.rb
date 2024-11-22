@@ -18,7 +18,7 @@ module Spree
     # associations try to save and then in turn try to call +update!+ again.)
     def recalculate
       order.transaction do
-        update_item_count
+        recalculate_item_count
         update_shipment_amounts
         update_totals
         if order.completed?
@@ -118,7 +118,7 @@ module Spree
       # http://www.boe.ca.gov/formspubs/pub113/
       update_promotions
       update_tax_adjustments
-      update_item_totals
+      recalculate_item_totals
     end
 
     # Updates the following Order total values:
@@ -129,9 +129,9 @@ module Spree
     # +promo_total+        The total value of all promotion adjustments
     # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +adjustment_total+.
     def update_totals
-      update_payment_total
-      update_item_total
-      update_shipment_total
+      recalculate_payment_total
+      recalculate_item_total
+      recalculate_shipment_total
       update_adjustment_total
     end
 
@@ -144,18 +144,24 @@ module Spree
       shipments.each(&:update_state)
     end
 
-    def update_payment_total
+    def recalculate_payment_total
       order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
     end
+    alias_method :update_payment_total, :recalculate_payment_total
+    deprecate update_payment_total: :recalculate_payment_total, deprecator: Spree.deprecator
 
-    def update_shipment_total
+    def recalculate_shipment_total
       order.shipment_total = shipments.to_a.sum(&:cost)
-      update_order_total
+      recalculate_order_total
     end
+    alias_method :update_shipment_total, :recalculate_shipment_total
+    deprecate update_shipment_total: :recalculate_shipment_total, deprecator: Spree.deprecator
 
-    def update_order_total
+    def recalculate_order_total
       order.total = order.item_total + order.shipment_total + order.adjustment_total
     end
+    alias_method :update_order_total, :recalculate_order_total
+    deprecate update_order_total: :recalculate_order_total, deprecator: Spree.deprecator
 
     def update_adjustment_total
       recalculate_adjustments
@@ -170,17 +176,21 @@ module Spree
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
-      update_order_total
+      recalculate_order_total
     end
 
-    def update_item_count
+    def recalculate_item_count
       order.item_count = line_items.to_a.sum(&:quantity)
     end
+    alias_method :update_item_count, :recalculate_item_count
+    deprecate update_item_count: :recalculate_item_count, deprecator: Spree.deprecator
 
-    def update_item_total
+    def recalculate_item_total
       order.item_total = line_items.to_a.sum(&:amount)
-      update_order_total
+      recalculate_order_total
     end
+    alias_method :update_item_total, :recalculate_item_total
+    deprecate update_item_total: :recalculate_item_total, deprecator: Spree.deprecator
 
     def persist_totals
       order.save!
@@ -214,7 +224,7 @@ module Spree
     end
     deprecate :update_cancellations, deprecator: Spree.deprecator
 
-    def update_item_totals
+    def recalculate_item_totals
       [*line_items, *shipments].each do |item|
         Spree::Config.item_total_class.new(item).recalculate!
 

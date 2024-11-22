@@ -12,10 +12,10 @@ module SolidusLegacyPromotions
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
-      update_order_total
+      recalculate_order_total
     end
 
-    def update_item_totals
+    def recalculate_item_totals
       [*line_items, *shipments].each do |item|
         Spree::Config.item_total_class.new(item).recalculate!
 
