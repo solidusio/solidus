@@ -180,11 +180,7 @@ module Spree
 
     def update_item_totals(persist:)
       [*line_items, *shipments].each do |item|
-        # The cancellation_total isn't persisted anywhere but is included in
-        # the adjustment_total
-        item.adjustment_total = item.adjustments.
-          reject(&:included?).
-          sum(&:amount)
+        Spree::ItemTotalUpdater.recalculate(item)
 
         if persist && item.changed?
           item.update_columns(
