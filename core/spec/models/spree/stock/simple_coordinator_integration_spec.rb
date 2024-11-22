@@ -303,5 +303,30 @@ RSpec.describe "Integrating with the simple coordinator" do
         expect(subject.shipments.flat_map(&:inventory_units).all?(&:backordered?)).to be true
       end
     end
+
+    describe "to customize the stock locator filter behavior" do
+      let(:coordinator_options) { {force_specific_stock_location: specific_stock_location} }
+      let(:specific_stock_location) { create(:stock_location) }
+
+      around do |example|
+        MyLocatorFilter = Class.new(Spree::Stock::LocationFilter::Active) do
+          def filter
+            coordinator_options[:force_specific_stock_location] ?
+              [coordinator_options[:force_specific_stock_location]]
+              : super
+          end
+        end
+
+        original_locator_filter_class = Spree::Config.stock.location_filter_class
+        Spree::Config.stock.location_filter_class = MyLocatorFilter.to_s
+        example.run
+        Spree::Config.stock.location_filter_class =
+          original_locator_filter_class.to_s
+      end
+
+      it "uses the options to force a specific stock location" do
+        expect(subject.shipments.map(&:stock_location)).to eq [specific_stock_location]
+      end
+    end
   end
 end
