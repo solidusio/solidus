@@ -21,6 +21,8 @@ module Spree
 
       private
 
+      attr_reader :coordinator_options
+
       def build_units(line_item, quantity)
         Array.new(quantity) do
           Spree::InventoryUnit.new(
