@@ -1,6 +1,7 @@
 In-Memory Order Updater TODO
 ===
 
+- [ ] Add additional cases to item_total_updater_spec (doesn't currently account for included adjustments)
 - [ ] Consider Sofia's recommendation to break this class into POROs to simplify testing
 - [ ] Add test coverage for `update_item_total` when line item totals change
 - [ ] Test coverage to ensure state changes aren't persisted (if someone changes current implementation)
