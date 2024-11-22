@@ -140,24 +140,6 @@ module Spree
       shipments.each { _1.update_amounts(persist:) }
     end
 
-    # give each of the shipments a chance to update themselves
-    def update_shipments
-      shipments.each(&:update_state)
-    end
-
-    def recalculate_payment_total
-      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
-    end
-
-    def recalculate_shipment_total
-      order.shipment_total = shipments.to_a.sum(&:cost)
-      recalculate_order_total
-    end
-
-    def recalculate_order_total
-      order.total = order.item_total + order.shipment_total + order.adjustment_total
-    end
-
     def update_adjustment_total(persist:)
       update_adjustments(persist:)
 
@@ -172,34 +154,6 @@ module Spree
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
       recalculate_order_total
-    end
-
-    def recalculate_item_count
-      order.item_count = line_items.to_a.sum(&:quantity)
-    end
-
-    def recalculate_item_total
-      order.item_total = line_items.to_a.sum(&:amount)
-      recalculate_order_total
-    end
-
-    def persist_totals
-      order.save!
-    end
-
-    def log_state_change(name)
-      state = "#{name}_state"
-      old_state = order.public_send(state)
-      yield
-      new_state = order.public_send(state)
-      if old_state != new_state
-        order.state_changes.new(
-          previous_state: old_state,
-          next_state:     new_state,
-          name:           name,
-          user_id:        order.user_id
-        )
-      end
     end
 
     def update_promotions
@@ -226,6 +180,52 @@ module Spree
           additional_tax_total: item.additional_tax_total,
           adjustment_total:     item.adjustment_total,
           updated_at:           Time.current,
+        )
+      end
+    end
+
+    # give each of the shipments a chance to update themselves
+    def update_shipments
+      shipments.each(&:update_state)
+    end
+
+    def recalculate_payment_total
+      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
+    end
+
+    def recalculate_shipment_total
+      order.shipment_total = shipments.to_a.sum(&:cost)
+      recalculate_order_total
+    end
+
+    def recalculate_order_total
+      order.total = order.item_total + order.shipment_total + order.adjustment_total
+    end
+
+    def recalculate_item_count
+      order.item_count = line_items.to_a.sum(&:quantity)
+    end
+
+    def recalculate_item_total
+      order.item_total = line_items.to_a.sum(&:amount)
+      recalculate_order_total
+    end
+
+    def persist_totals
+      order.save!
+    end
+
+    def log_state_change(name)
+      state = "#{name}_state"
+      old_state = order.public_send(state)
+      yield
+      new_state = order.public_send(state)
+      if old_state != new_state
+        order.state_changes.new(
+          previous_state: old_state,
+          next_state:     new_state,
+          name:           name,
+          user_id:        order.user_id
         )
       end
     end
