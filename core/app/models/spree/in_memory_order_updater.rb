@@ -111,7 +111,7 @@ module Spree
     # fields (promo_total, included_tax_total, additional_tax_total, and
     # adjustment_total) on the item.
     # @return [void]
-    def recalculate_adjustments(persist:)
+    def update_adjustments(persist:)
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
@@ -159,7 +159,7 @@ module Spree
     end
 
     def update_adjustment_total(persist:)
-      recalculate_adjustments(persist:)
+      update_adjustments(persist:)
 
       all_items = line_items + shipments
       order_tax_adjustments = adjustments.select(&:tax?)
