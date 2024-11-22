@@ -234,39 +234,44 @@ RSpec.describe "Integrating with the simple coordinator" do
     end
   end
 
-  describe "passing custom coordinator options" do
+  context "when custom coordinator options are passed" do
+    let(:order) { create :order_with_line_items }
+
     subject {
       Spree::Stock::SimpleCoordinator.new(order, coordinator_options:)
     }
 
-    let(:coordinator_options) { {arbitrary_shipping_rates: [my_shipping_rate]} }
-    let(:order) { create :order_with_line_items }
-    let(:my_shipping_rate) { create(:shipping_method).shipping_rates.new }
+    describe "to customize the estimator's behavior" do
+      let(:coordinator_options) { {arbitrary_shipping_rates: [my_shipping_rate]} }
+      let(:my_shipping_rate) { create(:shipping_method).shipping_rates.new }
 
-    it "uses coordinator options passed in to the simple coordinator to the stock estimator" do
-      MyEstimator = Class.new(Spree::Stock::Estimator) do
-        def shipping_rates(package, _frontend_only = true)
-          raise ShipmentRequired if package.shipment.nil?
-          raise OrderRequired if package.shipment.order.nil?
+      around do |example|
+        MyEstimator = Class.new(Spree::Stock::Estimator) do
+          def shipping_rates(package, _frontend_only = true)
+            raise ShipmentRequired if package.shipment.nil?
+            raise OrderRequired if package.shipment.order.nil?
 
-          first_shipping_rate = coordinator_options[:arbitrary_shipping_rates]&.first
+            first_shipping_rate = coordinator_options[:arbitrary_shipping_rates]&.first
 
-          if first_shipping_rate
-            first_shipping_rate.selected = true
-            return [first_shipping_rate]
-          else
-            raise StandardError, "no shipping rate!"
+            if first_shipping_rate
+              first_shipping_rate.selected = true
+              return [first_shipping_rate]
+            else
+              raise StandardError, "no shipping rate!"
+            end
           end
         end
+
+        original_estimator_class = Spree::Config.stock.estimator_class.to_s
+        Spree::Config.stock.estimator_class = MyEstimator.to_s
+        example.run
+        Spree::Config.stock.estimator_class = original_estimator_class
       end
 
-      original_estimator_class = Spree::Config.stock.estimator_class.to_s
-      Spree::Config.stock.estimator_class = MyEstimator.to_s
-
-      expect(subject.shipments.first.selected_shipping_rate)
-        .to eq my_shipping_rate
-    ensure
-      Spree::Config.stock.estimator_class = original_estimator_class
+      it "uses the options" do
+        expect(subject.shipments.first.selected_shipping_rate)
+          .to eq my_shipping_rate
+      end
     end
   end
 end
