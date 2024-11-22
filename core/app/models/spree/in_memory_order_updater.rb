@@ -18,7 +18,7 @@ module Spree
     # associations try to save and then in turn try to call +update!+ again.)
     def recalculate(persist: true)
       order.transaction do
-        update_item_count
+        recalculate_item_count
         update_shipment_amounts(persist:)
         update_totals(persist:)
         if order.completed?
@@ -130,9 +130,9 @@ module Spree
     # +promo_total+        The total value of all promotion adjustments
     # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +adjustment_total+.
     def update_totals(persist:)
-      update_payment_total
-      update_item_total
-      update_shipment_total
+      recalculate_payment_total
+      recalculate_item_total
+      recalculate_shipment_total
       update_adjustment_total(persist:)
     end
 
@@ -145,16 +145,16 @@ module Spree
       shipments.each(&:update_state)
     end
 
-    def update_payment_total
+    def recalculate_payment_total
       order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
     end
 
-    def update_shipment_total
+    def recalculate_shipment_total
       order.shipment_total = shipments.to_a.sum(&:cost)
-      update_order_total
+      recalculate_order_total
     end
 
-    def update_order_total
+    def recalculate_order_total
       order.total = order.item_total + order.shipment_total + order.adjustment_total
     end
 
@@ -168,16 +168,16 @@ module Spree
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
-      update_order_total
+      recalculate_order_total
     end
 
-    def update_item_count
+    def recalculate_item_count
       order.item_count = line_items.to_a.sum(&:quantity)
     end
 
-    def update_item_total
+    def recalculate_item_total
       order.item_total = line_items.to_a.sum(&:amount)
-      update_order_total
+      recalculate_order_total
     end
 
     def persist_totals
