@@ -235,7 +235,9 @@ RSpec.describe "Integrating with the simple coordinator" do
   end
 
   context "when custom coordinator options are passed" do
-    let(:order) { create :order_with_line_items }
+    let(:order) {
+      create :order_with_line_items, line_items_attributes: [{variant: create(:product_in_stock).master }]
+    }
 
     subject {
       Spree::Stock::SimpleCoordinator.new(order, coordinator_options:)
@@ -271,6 +273,34 @@ RSpec.describe "Integrating with the simple coordinator" do
       it "uses the options" do
         expect(subject.shipments.first.selected_shipping_rate)
           .to eq my_shipping_rate
+      end
+    end
+
+    describe "to customize the allocator's behavior" do
+      let(:coordinator_options) { {force_backordered: true} }
+
+      around do |example|
+        MyAllocator = Class.new(Spree::Stock::Allocator::OnHandFirst) do
+          def allocate_inventory(desired)
+            if coordinator_options[:force_backordered]
+              backordered = allocate(availability.backorderable_by_stock_location_id, desired)
+              desired -= backordered.values.reduce(&:+) if backordered.present?
+              [{}, backordered, desired]
+            else
+              super
+            end
+          end
+        end
+
+        original_allocator_class = Spree::Config.stock.allocator_class
+        Spree::Config.stock.allocator_class = MyAllocator.to_s
+        example.run
+        Spree::Config.stock.allocator_class =
+          original_allocator_class.to_s
+      end
+
+      it "uses the options to force backordered allocation" do
+        expect(subject.shipments.flat_map(&:inventory_units).all?(&:backordered?)).to be true
       end
     end
   end
