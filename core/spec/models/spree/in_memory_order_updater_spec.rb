@@ -128,159 +128,157 @@ module Spree
       end
     end
 
-    describe '#recalculate_adjustments ' do
-      describe 'promotion recalculation' do
-        it "calls the Promotion Adjustments Recalculator" do
-          adjuster = double(:call)
-          expect(Spree::Config.promotions.order_adjuster_class).to receive(:new).and_return(adjuster)
-          expect(adjuster).to receive(:call)
-          updater.recalculate
+    describe 'promotion recalculation' do
+      it "calls the Promotion Adjustments Recalculator" do
+        adjuster = double(:call)
+        expect(Spree::Config.promotions.order_adjuster_class).to receive(:new).and_return(adjuster)
+        expect(adjuster).to receive(:call)
+        updater.recalculate
+      end
+    end
+
+    describe 'tax recalculation' do
+      let(:tax_category) { create(:tax_category) }
+      let(:ship_address) { create(:address, state: new_york) }
+      let(:new_york) { create(:state, state_code: "NY") }
+      let(:tax_zone) { create(:zone, states: [new_york]) }
+
+      let!(:tax_rate) do
+        create(
+          :tax_rate,
+          name: "New York Sales Tax",
+          tax_categories: [tax_category],
+          zone: tax_zone,
+          included_in_price: false,
+          amount: 0.1
+        )
+      end
+
+      let(:order) do
+        create(
+          :order_with_line_items,
+          line_items_attributes: [{ price: 10, variant: variant }],
+          ship_address: ship_address,
+        )
+      end
+      let(:line_item) { order.line_items[0] }
+
+      let(:variant) { create(:variant, tax_category:) }
+
+      context 'when the item quantity has changed' do
+        before do
+          line_item.update!(quantity: 2)
+        end
+
+        it 'updates the additional_tax_total' do
+          expect {
+            updater.recalculate
+          }.to change {
+            line_item.additional_tax_total
+          }.from(1).to(2)
         end
       end
 
-      describe 'tax recalculation' do
-        let(:tax_category) { create(:tax_category) }
-        let(:ship_address) { create(:address, state: new_york) }
-        let(:new_york) { create(:state, state_code: "NY") }
-        let(:tax_zone) { create(:zone, states: [new_york]) }
+      context 'when the address has changed to a different state' do
+        let(:new_shipping_address) { create(:address) }
 
-        let!(:tax_rate) do
+        before do
+          order.ship_address = new_shipping_address
+        end
+
+        it 'removes the old taxes' do
+          expect {
+            updater.recalculate
+          }.to change {
+            order.all_adjustments.tax.count
+          }.from(1).to(0)
+
+          expect(order.additional_tax_total).to eq 0
+          expect(order.adjustment_total).to eq 0
+        end
+      end
+
+      context "with an order-level tax adjustment" do
+        let(:colorado) { create(:state, state_code: "CO") }
+        let(:colorado_tax_zone) { create(:zone, states: [colorado]) }
+        let(:ship_address) { create(:address, state: colorado) }
+
+        let!(:colorado_delivery_fee) do
           create(
             :tax_rate,
-            name: "New York Sales Tax",
+            amount: 0.27,
+            calculator: Spree::Calculator::FlatFee.new,
+            level: "order",
+            name: "Colorado Delivery Fee",
             tax_categories: [tax_category],
-            zone: tax_zone,
-            included_in_price: false,
-            amount: 0.1
+            zone: colorado_tax_zone
           )
         end
 
-        let(:order) do
-          create(
-            :order_with_line_items,
-            line_items_attributes: [{ price: 10, variant: variant }],
-            ship_address: ship_address,
-          )
-        end
-        let(:line_item) { order.line_items[0] }
+        before { updater.recalculate }
 
-        let(:variant) { create(:variant, tax_category:) }
-
-        context 'when the item quantity has changed' do
-          before do
-            line_item.update!(quantity: 2)
-          end
-
-          it 'updates the additional_tax_total' do
-            expect {
-              updater.recalculate
-            }.to change {
-              line_item.additional_tax_total
-            }.from(1).to(2)
-          end
-        end
-
-        context 'when the address has changed to a different state' do
-          let(:new_shipping_address) { create(:address) }
-
-          before do
-            order.ship_address = new_shipping_address
-          end
-
-          it 'removes the old taxes' do
-            expect {
-              updater.recalculate
-            }.to change {
-              order.all_adjustments.tax.count
-            }.from(1).to(0)
-
-            expect(order.additional_tax_total).to eq 0
-            expect(order.adjustment_total).to eq 0
-          end
-        end
-
-        context "with an order-level tax adjustment" do
-          let(:colorado) { create(:state, state_code: "CO") }
-          let(:colorado_tax_zone) { create(:zone, states: [colorado]) }
-          let(:ship_address) { create(:address, state: colorado) }
-
-          let!(:colorado_delivery_fee) do
-            create(
-              :tax_rate,
-              amount: 0.27,
-              calculator: Spree::Calculator::FlatFee.new,
-              level: "order",
-              name: "Colorado Delivery Fee",
-              tax_categories: [tax_category],
-              zone: colorado_tax_zone
-            )
-          end
-
-          before { updater.recalculate }
-
-          it "updates the order-level tax adjustment" do
-            expect {
-              order.ship_address = create(:address)
-              updater.recalculate
-            }.to change { order.additional_tax_total }.from(0.27).to(0).
-                and change { order.adjustment_total }.from(0.27).to(0)
-          end
-
-          it "deletes the order-level tax adjustments when it persists the order" do
-            expect {
-              order.ship_address = create(:address)
-              updater.recalculate
-            }.to change { order.all_adjustments.count }.from(1).to(0)
-          end
-        end
-
-        context 'with a custom tax_calculator_class' do
-          let(:custom_calculator_class) { double }
-          let(:custom_calculator_instance) { double }
-
-          before do
-            order # generate this first so we can expect it
-            stub_spree_preferences(tax_calculator_class: custom_calculator_class)
-
-            allow(custom_calculator_class).to receive(:new).and_return(custom_calculator_instance)
-            allow(custom_calculator_instance).to receive(:calculate).and_return(
-              Spree::Tax::OrderTax.new(
-                order_id: order.id,
-                order_taxes: [
-                  Spree::Tax::ItemTax.new(
-                    label: "Delivery Fee",
-                    tax_rate:,
-                    amount: 2.60,
-                    included_in_price: false
-                  )
-                ],
-                line_item_taxes: [
-                  Spree::Tax::ItemTax.new(
-                    item_id: line_item.id,
-                    label: "Item Tax",
-                    tax_rate:,
-                    amount: 1.40,
-                    included_in_price: false
-                  )
-                ],
-                shipment_taxes: []
-              )
-            )
-          end
-
-          it 'uses the configured class' do
+        it "updates the order-level tax adjustment" do
+          expect {
+            order.ship_address = create(:address)
             updater.recalculate
+          }.to change { order.additional_tax_total }.from(0.27).to(0).
+              and change { order.adjustment_total }.from(0.27).to(0)
+        end
 
-            expect(custom_calculator_class).to have_received(:new).with(order).at_least(:once)
-            expect(custom_calculator_instance).to have_received(:calculate).at_least(:once)
-          end
+        it "deletes the order-level tax adjustments when it persists the order" do
+          expect {
+            order.ship_address = create(:address)
+            updater.recalculate
+          }.to change { order.all_adjustments.count }.from(1).to(0)
+        end
+      end
 
-          it 'updates the aggregate columns' do
-            expect {
-              updater.recalculate
-            }.to change { order.reload.additional_tax_total }.to(4.00)
-              .and change { order.reload.adjustment_total }.to(4.00)
-          end
+      context 'with a custom tax_calculator_class' do
+        let(:custom_calculator_class) { double }
+        let(:custom_calculator_instance) { double }
+
+        before do
+          order # generate this first so we can expect it
+          stub_spree_preferences(tax_calculator_class: custom_calculator_class)
+
+          allow(custom_calculator_class).to receive(:new).and_return(custom_calculator_instance)
+          allow(custom_calculator_instance).to receive(:calculate).and_return(
+            Spree::Tax::OrderTax.new(
+              order_id: order.id,
+              order_taxes: [
+                Spree::Tax::ItemTax.new(
+                  label: "Delivery Fee",
+                  tax_rate:,
+                  amount: 2.60,
+                  included_in_price: false
+                )
+              ],
+              line_item_taxes: [
+                Spree::Tax::ItemTax.new(
+                  item_id: line_item.id,
+                  label: "Item Tax",
+                  tax_rate:,
+                  amount: 1.40,
+                  included_in_price: false
+                )
+              ],
+              shipment_taxes: []
+            )
+          )
+        end
+
+        it 'uses the configured class' do
+          updater.recalculate
+
+          expect(custom_calculator_class).to have_received(:new).with(order).at_least(:once)
+          expect(custom_calculator_instance).to have_received(:calculate).at_least(:once)
+        end
+
+        it 'updates the aggregate columns' do
+          expect {
+            updater.recalculate
+          }.to change { order.reload.additional_tax_total }.to(4.00)
+            .and change { order.reload.adjustment_total }.to(4.00)
         end
       end
     end
