@@ -83,15 +83,21 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
       },
       {
         header: :order_count,
-        data: ->(user) { user.order_count },
+        data: ->(user) do
+          content_tag :div, user.order_count
+        end
       },
       {
         header: :lifetime_value,
-        data: -> { _1.display_lifetime_value.to_html },
+        data: ->(user) do
+          content_tag :div, user.display_lifetime_value.to_html
+        end
       },
       {
         header: :last_active,
-        data: ->(user) { last_login(user) },
+        data: ->(user) do
+          content_tag :div, last_login(user)
+        end
       },
     ]
   end

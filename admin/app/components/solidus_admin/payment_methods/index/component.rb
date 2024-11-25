@@ -59,13 +59,13 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
       {
         header: :name,
         data: ->(payment_method) do
-          content_tag :div, payment_method.name
+          link_to payment_method.name, row_url(payment_method), class: "underline cursor-pointer"
         end
       },
       {
         header: :type,
         data: ->(payment_method) do
-          content_tag :div, payment_method.model_name.human
+          link_to payment_method.model_name.human, row_url(payment_method), class: "underline cursor-pointer"
         end
       },
       {

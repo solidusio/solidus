@@ -106,7 +106,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
     {
       header: :name,
       data: ->(product) do
-        content_tag :div, product.name
+        link_to product.name, row_url(product), class: "underline cursor-pointer"
       end
     }
   end

@@ -63,7 +63,7 @@ class SolidusPromotions::Promotions::Index::Component < SolidusAdmin::UI::Pages:
       {
         header: :name,
         data: ->(promotion) do
-          link_to promotion.name, row_url(promotion)
+          link_to promotion.name, row_url(promotion), class: "underline cursor-pointer"
         end
       },
       {

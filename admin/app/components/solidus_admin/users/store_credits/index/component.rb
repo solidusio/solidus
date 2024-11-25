@@ -56,21 +56,21 @@ class SolidusAdmin::Users::StoreCredits::Index::Component < SolidusAdmin::BaseCo
         header: :credited,
         col: { class: "w-[12%]" },
         data: ->(store_credit) do
-          content_tag :div, store_credit.display_amount.to_html, class: "text-sm"
+          link_to store_credit.display_amount.to_html, row_url(store_credit), class: "text-sm underline cursor-pointer"
         end
       },
       {
         header: :authorized,
         col: { class: "w-[13%]" },
         data: ->(store_credit) do
-          content_tag :div, store_credit.display_amount_authorized.to_html, class: "text-sm"
+          link_to store_credit.display_amount_authorized.to_html, row_url(store_credit), class: "text-sm underline cursor-pointer"
         end
       },
       {
         header: :used,
         col: { class: "w-[9%]" },
         data: ->(store_credit) do
-          content_tag :div, store_credit.display_amount_used.to_html, class: "text-sm"
+          link_to store_credit.display_amount_used.to_html, row_url(store_credit), class: "text-sm underline cursor-pointer"
         end
       },
       {
@@ -90,9 +90,7 @@ class SolidusAdmin::Users::StoreCredits::Index::Component < SolidusAdmin::BaseCo
       {
         header: :issued_on,
         col: { class: "w-[16%]" },
-        data: ->(store_credit) do
-          I18n.l(store_credit.created_at.to_date)
-        end
+        data: ->(store_credit) { I18n.l(store_credit.created_at.to_date) }
       },
       {
         header: :invalidated,

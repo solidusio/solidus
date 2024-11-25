@@ -70,9 +70,9 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
       header: :order,
       data: ->(order) do
         if !row_fade(order)
-          content_tag :div, order.number, class: 'font-semibold'
+          link_to order.number, row_url(order), class: "font-semibold underline cursor-pointer"
         else
-          content_tag :div, order.number
+          link_to order.number, row_url(order), class: "underline cursor-pointer"
         end
       end
     }

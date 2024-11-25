@@ -149,7 +149,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
       col: { class: "w-[18%]" },
       header: t(".number_column_header"),
       data: ->(item) do
-        content_tag :div, item.order.number, class: "font-semibold text-sm"
+        link_to item.order.number, row_url(item.order), class: "underline cursor-pointer font-semibold text-sm"
       end
     }
   end
@@ -164,7 +164,7 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
 
     # The `.html_safe` is required for the description to display as desired.
     # rubocop:disable Rails/OutputSafety
-    safe_join([content_tag(:div, content.join("<br>").html_safe, class: "text-sm")])
+    safe_join([link_to(content.join("<br>").html_safe, row_url(item.order), class: "underline cursor-pointer text-sm")])
     # rubocop:enable Rails/OutputSafety
   end
 end

@@ -55,7 +55,7 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
     {
       header: :name,
       data: ->(option_type) do
-        content_tag :div, option_type.name
+        link_to option_type.name, row_url(option_type), class: "underline cursor-pointer"
       end
     }
   end
@@ -64,7 +64,7 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
     {
       header: :presentation,
       data: ->(option_type) do
-        content_tag :div, option_type.presentation
+        link_to option_type.presentation, row_url(option_type), class: "underline cursor-pointer"
       end
     }
   end

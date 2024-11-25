@@ -44,7 +44,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
       {
         header: :slug,
         data: ->(store) do
-          content_tag :div, store.code
+          link_to store.code, row_url(store), class: "underline cursor-pointer"
         end
       },
       {

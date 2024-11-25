@@ -46,7 +46,7 @@ class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :name,
       data: ->(taxonomy) do
-        content_tag :div, taxonomy.name
+        link_to taxonomy.name, row_url(taxonomy), class: "underline cursor-pointer"
       end
     }
   end

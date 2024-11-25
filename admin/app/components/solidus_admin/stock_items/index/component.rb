@@ -90,7 +90,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :name,
       data: ->(stock_item) do
-        content_tag :div, stock_item.variant.name
+        link_to stock_item.variant.name, row_url(stock_item), class: "underline cursor-pointer"
       end
     }
   end
@@ -99,7 +99,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :sku,
       data: ->(stock_item) do
-        content_tag :div, stock_item.variant.sku
+        link_to stock_item.variant.sku, row_url(stock_item), class: "underline cursor-pointer"
       end
     }
   end
@@ -122,7 +122,9 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
   def stock_location_column
     {
       header: :stock_location,
-      data: ->(stock_item) { stock_item.stock_location.name },
+      data: ->(stock_item) do
+        content_tag :div, stock_item.stock_location.name
+      end
     }
   end
 

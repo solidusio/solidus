@@ -48,7 +48,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :name,
       data: ->(property) do
-        content_tag :div, property.name
+        link_to property.name, row_url(property), class: "underline cursor-pointer"
       end
     }
   end
@@ -57,7 +57,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :presentation,
       data: ->(property) do
-        content_tag :div, property.presentation
+        link_to property.presentation, row_url(property), class: "underline cursor-pointer"
       end
     }
   end
