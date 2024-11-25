@@ -158,10 +158,10 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     }, **attrs)
   end
 
-  def render_data_cell(column, data)
+  def render_data_cell(column, data, url = nil)
     cell = column.data
     cell = cell.call(data) if cell.respond_to?(:call)
-    cell = data.public_send(cell) if cell.is_a?(Symbol)
+    cell = link_to data.public_send(cell), url, class: "underline cursor-pointer" if cell.is_a?(Symbol)
     cell = cell.render_in(self) if cell.respond_to?(:render_in)
     cell = tag.div(cell, class: "flex items-center gap-1.5 justify-start overflow-x-hidden") if column.wrap
 

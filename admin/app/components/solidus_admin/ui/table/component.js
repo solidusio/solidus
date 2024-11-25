@@ -98,21 +98,11 @@ export default class extends Controller {
   }
 
   rowClicked(event) {
-    // If the user clicked on a link, button, input or summary, skip the row url visit
+    // Skip if the user clicked on a link, button, input or summary
     if (event.target.closest("td").contains(event.target.closest("a,select,textarea,button,input,summary"))) return
 
     if (this.modeValue === "batch") {
       this.toggleCheckbox(event.currentTarget)
-    } else {
-      const url = new URL(event.params.url, "http://dummy.com")
-      const params = new URLSearchParams(url.search)
-      const frameId = params.get('_turbo_frame')
-      const frame = frameId ? { frame: frameId } : {}
-      // remove the custom _turbo_frame param from url search:
-      params.delete('_turbo_frame')
-      url.search = params.toString()
-
-      window.Turbo.visit(url.pathname + url.search, frame)
     }
   }
 
