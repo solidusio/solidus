@@ -217,6 +217,18 @@ module Spree
     #   @return [Integer] Products to show per-page in the frontend (default: +12+)
     preference :products_per_page, :integer, default: 12
 
+    # @!attribute [rw] max_keys
+    #   @return [Integer] Maximum keys that can be allocated in public and private metadata column(default: +6+)
+    preference :max_keys, :integer, default: 6
+
+    # @!attribute [rw] max_key_length
+    #   @return [Integer] Maximum length that key can have in public and private metadata column(default: +16+)
+    preference :max_key_length, :integer, default: 16
+
+    # @!attribute [rw] max_value_length
+    #   @return [Integer] Maximum length that value can have in public and private metadata column(default: +256+)
+    preference :max_value_length, :integer, default: 256
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true

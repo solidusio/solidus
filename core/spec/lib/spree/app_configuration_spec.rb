@@ -132,6 +132,24 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  describe '@max_keys' do
+    it 'is 6 by default' do
+      expect(prefs[:max_keys]).to eq(6)
+    end
+  end
+
+  describe '@max_key_length' do
+    it 'is 16 by default' do
+      expect(prefs[:max_key_length]).to eq(16)
+    end
+  end
+
+  describe '@max_value_length' do
+    it 'is 256 by default' do
+      expect(prefs[:max_value_length]).to eq(256)
+    end
+  end
+
   describe '#environment' do
     class DummyClass; end;
 
