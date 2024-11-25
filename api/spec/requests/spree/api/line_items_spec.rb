@@ -24,7 +24,7 @@ module Spree::Api
 
     it "can learn how to create a new line item" do
       get spree.new_api_order_line_item_path(order)
-      expect(json_response["attributes"]).to eq(["quantity", "price", "variant_id"])
+      expect(json_response["attributes"]).to eq(["quantity", "price", "variant_id", "private_metadata", "public_metadata"])
       required_attributes = json_response["required_attributes"]
       expect(required_attributes).to include("quantity", "variant_id")
     end

@@ -8,7 +8,7 @@ module Spree::Api
     let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy:) }
     let!(:taxon2) { create(:taxon, name: "Rails", parent: taxon, taxonomy:) }
     let!(:rails_v3_2_2) { create(:taxon, name: "3.2.2", parent: taxon2, taxonomy:) }
-    let(:attributes) { ["id", "name", "pretty_name", "permalink", "parent_id", "taxonomy_id"] }
+    let(:attributes) { ["id", "name", "pretty_name", "permalink", "parent_id", "taxonomy_id",  "private_metadata", "public_metadata"] }
 
     before do
       stub_authentication!

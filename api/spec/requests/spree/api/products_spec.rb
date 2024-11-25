@@ -49,6 +49,11 @@ module Spree::Api
         end
       end
 
+      it "cannot see private_metadata" do
+        get spree.api_product_path(product)
+        expect(json_response).not_to have_key('private_metadata')
+      end
+
       it "retrieves a list of products" do
         get spree.api_products_path
         expect(json_response["products"].first).to have_attributes(show_attributes)
@@ -242,7 +247,9 @@ module Spree::Api
           post spree.api_products_path, params: {
                                           product: { name: "The Other Product",
                                                                           price: 19.99,
-                                                                          shipping_category_id: create(:shipping_category).id }
+                                                                          shipping_category_id: create(:shipping_category).id,
+                                                                          public_metadata: { 'Company' => 'Sample Company'},
+                                                                          private_metadata: { 'Serial_number' => 'Sn12345'} }
           }
           expect(json_response).to have_attributes(base_attributes)
           expect(response.status).to eq(201)
@@ -351,6 +358,11 @@ module Spree::Api
           expect(response.status).to eq(200)
         end
 
+        it "can update a product private_metadta" do
+          put spree.api_product_path(product), params: { product: { private_metadata: {'product_number' => 'PN345678'} } }
+          expect(response.status).to eq(200)
+        end
+
         it "can create new option types on a product" do
           put spree.api_product_path(product), params: { product: { option_types: ['shape', 'color'] } }
           expect(json_response['option_types'].count).to eq(2)
@@ -416,6 +428,11 @@ module Spree::Api
         delete spree.api_product_path(product)
         expect(response.status).to eq(204)
         expect(product.reload.deleted_at).not_to be_nil
+      end
+
+      it "can see private_metadata" do
+        get spree.api_product_path(product)
+        expect(json_response).to have_key('private_metadata')
       end
     end
   end

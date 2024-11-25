@@ -121,7 +121,7 @@ module Spree::Api
 
       it "can learn how to create a new return authorization" do
         get spree.new_api_order_return_authorization_path(order)
-        expect(json_response["attributes"]).to eq(["id", "number", "state", "order_id", "memo", "created_at", "updated_at"])
+        expect(json_response["attributes"]).to eq(["id", "number", "state", "order_id", "memo", "created_at", "updated_at", "private_metadata", "public_metadata"])
         required_attributes = json_response["required_attributes"]
         expect(required_attributes).to include("order")
       end

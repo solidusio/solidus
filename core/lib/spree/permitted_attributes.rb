@@ -34,7 +34,8 @@ module Spree
       :taxonomy_attributes,
       :user_attributes,
       :variant_attributes,
-      :metadata_attributes
+      :metadata_attributes,
+      :public_metadata_attributes
     ]
 
     mattr_reader(*ATTRIBUTES)
@@ -83,6 +84,8 @@ module Spree
     ]
 
     @@metadata_attributes = [private_metadata: {}, public_metadata: {}]
+
+    @@public_metadata_attributes = [public_metadata: {}]
 
     @@property_attributes = [:name, :presentation]
 

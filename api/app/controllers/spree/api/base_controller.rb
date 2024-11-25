@@ -18,6 +18,9 @@ module Spree
       class_attribute :admin_line_item_attributes
       self.admin_line_item_attributes = [:price, :variant_id, :sku]
 
+      class_attribute :private_metadata_attributes
+      self.private_metadata_attributes =  [{ private_metadata: {} }]
+
       attr_accessor :current_api_user
 
       before_action :load_user
@@ -39,6 +42,14 @@ module Spree
       def permitted_line_item_attributes
         if can?(:admin, Spree::LineItem)
           super + admin_line_item_attributes
+        else
+          super
+        end
+      end
+
+      def permitted_product_attributes
+        if can?(:admin, Spree::Product)
+          super + private_metadata_attributes
         else
           super
         end

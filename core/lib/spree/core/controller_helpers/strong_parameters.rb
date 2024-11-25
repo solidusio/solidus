@@ -56,9 +56,9 @@ module Spree
         end
 
         def permitted_product_attributes
-          permitted_attributes.product_attributes + metadata_attributes + [
-            product_properties_attributes: permitted_product_properties_attributes
-          ]
+          permitted_attributes.product_attributes +
+          permitted_attributes.public_metadata_attributes +
+          [product_properties_attributes: permitted_product_properties_attributes]
         end
 
         def metadata_attributes

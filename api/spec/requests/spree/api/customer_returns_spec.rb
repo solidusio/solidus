@@ -97,7 +97,7 @@ module Spree::Api
       it "can learn how to create a new customer return" do
         get spree.new_api_order_customer_return_path(order)
 
-        expect(json_response["attributes"]).to eq(["id", "number", "stock_location_id", "created_at", "updated_at"])
+        expect(json_response["attributes"]).to eq(["id", "number", "stock_location_id", "created_at", "updated_at", "private_metadata", "public_metadata"])
       end
 
       it "can update a customer return" do
