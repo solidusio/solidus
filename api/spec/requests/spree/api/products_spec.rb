@@ -211,6 +211,52 @@ module Spree::Api
       it_behaves_like "modifying product actions are restricted"
     end
 
+    context "when the user is not admin but has ability to create and update products" do
+      # Define custom authorization to grant permissions
+      custom_authorization! do |_|
+        can [:create, :update], Spree::Product
+      end
+
+      let(:product_data_with_private_metadata) do
+        {
+          name: "The Other Product",
+          price: 19.99,
+          shipping_category_id: create(:shipping_category).id,
+          public_metadata: { 'Company' => 'Sample Company' },
+          private_metadata: { 'Serial_number' => 'Sn12345' }
+        }
+      end
+
+      let(:product_update_data_with_private_metadata) do
+        {
+          name: "Updated Product",
+          price: 29.99,
+          private_metadata: { 'Serial_number' => 'Sn98765' }
+        }
+      end
+
+      it "allows creating products with public metadata but not private metadata" do
+        post spree.api_products_path, params: { product: product_data_with_private_metadata }
+
+        expect(json_response['public_metadata']).to eq({ "Company" => "Sample Company" })
+        expect(json_response).not_to have_key('private_metadata')
+
+        created_product = Spree::Product.last
+        expect(created_product.private_metadata).to eq({})
+      end
+
+      it "allows updating products but ignores private metadata" do
+        product = create(:product)
+
+        put spree.api_product_path(product), params: { product: product_update_data_with_private_metadata }
+
+        expect(json_response['name']).to eq( "Updated Product" )
+        expect(json_response).not_to have_key('private_metadata')
+        product.reload
+        expect(product.private_metadata).to eq({})
+      end
+    end
+
     context "as an admin" do
       let(:taxon_1) { create(:taxon) }
       let(:taxon_2) { create(:taxon) }
@@ -248,8 +294,8 @@ module Spree::Api
                                           product: { name: "The Other Product",
                                                                           price: 19.99,
                                                                           shipping_category_id: create(:shipping_category).id,
-                                                                          public_metadata: { 'Company' => 'Sample Company'},
-                                                                          private_metadata: { 'Serial_number' => 'Sn12345'} }
+                                                                          public_metadata: { 'Company' => 'Sample Company' },
+                                                                          private_metadata: { 'Serial_number' => 'Sn12345' } }
           }
           expect(json_response).to have_attributes(base_attributes)
           expect(response.status).to eq(201)
@@ -359,7 +405,7 @@ module Spree::Api
         end
 
         it "can update a product private_metadta" do
-          put spree.api_product_path(product), params: { product: { private_metadata: {'product_number' => 'PN345678'} } }
+          put spree.api_product_path(product), params: { product: { private_metadata: { 'product_number' => 'PN345678' } } }
           expect(response.status).to eq(200)
         end
 
