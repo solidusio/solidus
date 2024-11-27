@@ -19,7 +19,7 @@ module SolidusPromotions
       set_page_and_extract_portion_from(promotions)
 
       respond_to do |format|
-        format.html { render component("promotions/index").new(page: @page) }
+        format.html { render component("solidus_promotions/promotions/index").new(page: @page) }
       end
     end
 
@@ -41,6 +41,10 @@ module SolidusPromotions
 
     def promotion_params
       params.require(:promotion).permit(:user_id, permitted_promotion_attributes)
+    end
+
+    def authorization_subject
+      SolidusPromotions::Promotion
     end
   end
 end
