@@ -32,5 +32,9 @@ RSpec.describe "Promotions", :js, type: :feature, solidus_admin: true do
     expect(page).to have_content("Promotions were successfully removed.")
     expect(page).not_to have_content("My active Promotion")
     expect(SolidusPromotions::Promotion.count).to eq(3)
+
+    click_link("My future Promotion")
+    expect(page).to have_content("My future Promotion")
+    expect(page).to have_content("Starts at")
   end
 end

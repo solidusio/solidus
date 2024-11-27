@@ -52,63 +52,70 @@ module SolidusPromotions
       end
     end
 
-    initializer "solidus_promotions.add_admin_order_index_component", after: "solidus_legacy_promotions.add_admin_order_index_component" do
+    initializer "solidus_promotions.add_admin_order_index_component", after: "spree.load_config_initializers" do
       if SolidusSupport.admin_available?
-        SolidusAdmin::Config.components["orders/index"] = "SolidusPromotions::Orders::Index::Component"
-        SolidusAdmin::Config.components["promotions/index"] = "SolidusPromotions::Promotions::Index::Component"
-        SolidusAdmin::Config.components["promotion_categories/index"] = "SolidusPromotions::PromotionCategories::Index::Component"
+        if Spree::Config.promotions.is_a?(SolidusPromotions::Configuration)
+          SolidusAdmin::Config.components["orders/index"] = "SolidusPromotions::Orders::Index::Component"
+        end
+
+        SolidusAdmin::Config.components["solidus_promotions/promotions/index"] = "SolidusPromotions::Promotions::Index::Component"
+        SolidusAdmin::Config.components["solidus_promotions/categories/index"] = "SolidusPromotions::PromotionCategories::Index::Component"
+      end
+    end
+
+    initializer "solidus_promotions.add_solidus_admin_menu_items", after: "spree.load_config_initializers" do
+      if SolidusSupport.admin_available?
+        SolidusAdmin::Config.configure do |config|
+          config.menu_items << {
+            key: "promotions",
+            route: -> { solidus_promotions.admin_promotions_path },
+            icon: "megaphone-line",
+            position: 1.6,
+            children: [
+              {
+                key: "promotions",
+                route: -> { solidus_promotions.admin_promotions_path },
+                position: 1
+              },
+              {
+                key: "promotion_categories",
+                route: -> { solidus_promotions.admin_promotion_categories_path },
+                position: 1
+              }
+            ]
+          }
+        end
       end
     end
 
     initializer "solidus_promotions.add_backend_menus", after: "spree.backend.environment" do
       if SolidusSupport.backend_available?
-        # Replace the promotions menu from core with ours
-        Spree::Backend::Config.configure do |config|
-          config.menu_items = config.menu_items.flat_map do |item|
-            next item unless item.label.to_sym == :promotions
+        promotions_menu_item = Spree::BackendConfiguration::MenuItem.new(
+          label: :promotions,
+          icon: Spree::Backend::Config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
+          condition: -> { can?(:admin, SolidusPromotions::Promotion) },
+          url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
+          data_hook: :admin_solidus_promotion_sub_tabs,
+          children: [
+            Spree::BackendConfiguration::MenuItem.new(
+              label: :promotions,
+              url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
+              condition: -> { can?(:admin, SolidusPromotions::Promotion) }
+            ),
+            Spree::BackendConfiguration::MenuItem.new(
+              label: :promotion_categories,
+              url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotion_categories_path },
+              condition: -> { can?(:admin, SolidusPromotions::PromotionCategory) }
+            )
+          ]
+        )
 
-            [
-              Spree::BackendConfiguration::MenuItem.new(
-                label: :promotions,
-                icon: config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
-                condition: -> { can?(:admin, SolidusPromotions::Promotion) },
-                url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
-                data_hook: :admin_solidus_promotion_sub_tabs,
-                children: [
-                  Spree::BackendConfiguration::MenuItem.new(
-                    label: :promotions,
-                    url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotions_path },
-                    condition: -> { can?(:admin, SolidusPromotions::Promotion) }
-                  ),
-                  Spree::BackendConfiguration::MenuItem.new(
-                    label: :promotion_categories,
-                    url: -> { SolidusPromotions::Engine.routes.url_helpers.admin_promotion_categories_path },
-                    condition: -> { can?(:admin, SolidusPromotions::PromotionCategory) }
-                  )
-                ]
-              ),
-              Spree::BackendConfiguration::MenuItem.new(
-                label: :legacy_promotions,
-                icon: config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
-                condition: -> { can?(:admin, SolidusPromotions::Promotion) },
-                url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotions_path },
-                data_hook: :admin_promotion_sub_tabs,
-                children: [
-                  Spree::BackendConfiguration::MenuItem.new(
-                    label: :legacy_promotions,
-                    condition: -> { can?(:admin, Spree::Promotion && Spree::Promotion.any?) },
-                    url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotions_path },
-                  ),
-                  Spree::BackendConfiguration::MenuItem.new(
-                    label: :legacy_promotion_categories,
-                    condition: -> { can?(:admin, Spree::PromotionCategory && Spree::Promotion.any?) },
-                    url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path },
-                  )
-                ]
-              )
-            ]
-          end
-        end
+        # We want to appear after the legacy promotions menu item if it exists, otherwise after the products menu item
+        product_menu_item_index = Spree::Backend::Config.menu_items.find_index { |item| item.label == :products }
+        legacy_promotions_menu_item = Spree::Backend::Config.menu_items.find_index { |item| item.label == :legacy_promotions }
+        promotions_menu_index = [product_menu_item_index, legacy_promotions_menu_item].compact.max + 1
+
+        Spree::Backend::Config.menu_items.insert(promotions_menu_index, promotions_menu_item)
       end
     end
   end

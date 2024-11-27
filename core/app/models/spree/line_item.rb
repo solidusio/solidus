@@ -21,9 +21,6 @@ module Spree
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
     has_many :inventory_units, inverse_of: :line_item
 
-    has_many :line_item_actions, dependent: :destroy
-    has_many :actions, through: :line_item_actions
-
     before_validation :normalize_quantity
     before_validation :set_required_attributes
 

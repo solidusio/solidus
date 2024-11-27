@@ -9,7 +9,7 @@ module SolidusLegacyPromotions
     initializer "solidus_legacy_promotions.add_backend_menu_item" do
       if SolidusSupport.backend_available?
         promotions_menu_item = Spree::BackendConfiguration::MenuItem.new(
-          label: :promotions,
+          label: :legacy_promotions,
           icon: Spree::Backend::Config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
           partial: "spree/admin/shared/promotion_sub_menu",
           condition: -> { can?(:admin, Spree::Promotion) },
@@ -17,12 +17,14 @@ module SolidusLegacyPromotions
           data_hook: :admin_promotion_sub_tabs,
           children: [
             Spree::BackendConfiguration::MenuItem.new(
-              label: :promotions,
-              condition: -> { can?(:admin, Spree::Promotion) }
+              label: :legacy_promotions,
+              condition: -> { can?(:admin, Spree::Promotion) },
+              url: :admin_promotions_path
             ),
             Spree::BackendConfiguration::MenuItem.new(
-              label: :promotion_categories,
-              condition: -> { can?(:admin, Spree::PromotionCategory) }
+              label: :legacy_promotion_categories,
+              condition: -> { can?(:admin, Spree::PromotionCategory) },
+              url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path },
             )
           ]
         )
@@ -41,10 +43,22 @@ module SolidusLegacyPromotions
       if SolidusSupport.admin_available?
         SolidusAdmin::Config.configure do |config|
           config.menu_items << {
-            key: "promotions",
+            key: "legacy_promotions",
             route: -> { spree.admin_promotions_path },
             icon: "megaphone-line",
-            position: 30
+            position: 1.5,
+            children: [
+              {
+                key: "legacy_promotions",
+                route: -> { spree.admin_promotions_path },
+                position: 1
+              },
+              {
+                key: "legacy_promotion_categories",
+                route: -> { spree.admin_promotion_categories_path },
+                position: 2
+              }
+            ]
           }
         end
       end
@@ -86,12 +100,17 @@ module SolidusLegacyPromotions
     end
 
     initializer "solidus_legacy_promotions", after: "spree.load_config_initializers" do
-      Spree::Config.order_contents_class = "Spree::OrderContents"
-      Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
-      Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
+      # Only set these if there is no promotion configuration set. In this case,
+      # we're running on a store without the new `solidus_promotions` gem and we
+      # need to set the configuration to the legacy one.
+      if Spree::Config.promotions.is_a?(Spree::Core::NullPromotionConfiguration)
+        Spree::Config.order_contents_class = "Spree::OrderContents"
+        Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
+      end
 
       Spree::Api::Config.adjustment_attributes << :promotion_code_id
       Spree::Api::Config.adjustment_attributes << :eligible
+      Spree::Config.adjustment_promotion_source_types << "Spree::PromotionAction"
     end
   end
 end
