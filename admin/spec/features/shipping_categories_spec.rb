@@ -65,7 +65,7 @@ describe "Shipping Categories", :js, type: :feature do
     before do
       Spree::ShippingCategory.create(name: "Letter Mail")
       visit "/admin/shipping_categories#{query}"
-      find_row("Letter Mail").click
+      within("table tbody") { click_on "Letter Mail" }
       expect(page).to have_content("Edit Shipping Category")
       expect(page).to be_axe_clean
     end

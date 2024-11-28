@@ -120,7 +120,7 @@ describe "Roles", :js, type: :feature do
     before do
       Spree::Role.create(name: "Reviewer", permission_sets: [settings_edit_permission])
       visit "/admin/roles#{query}"
-      find_row("Reviewer").click
+      within("table tbody") { click_on "Reviewer" }
       expect(page).to have_content("Edit Role")
       expect(page).to be_axe_clean
       expect(Spree::Role.find_by(name: "Reviewer").permission_set_ids)

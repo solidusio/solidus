@@ -15,7 +15,12 @@ class SolidusAdmin::ReimbursementTypes::Index::Component < SolidusAdmin::Refunds
 
   def columns
     [
-      :name,
+      {
+        header: :name,
+        data: ->(reimbursement_type) do
+          reimbursement_type.name
+        end
+      },
       {
         header: :active,
         data: ->(reimbursement_type) do

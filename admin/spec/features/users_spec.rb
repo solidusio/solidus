@@ -65,7 +65,7 @@ describe "Users", :js, type: :feature do
 
       create(:user, email: "customer@example.com")
       visit "/admin/users"
-      find_row("customer@example.com").click
+      within("table tbody") { click_on "customer@example.com" }
     end
 
     it "shows the edit page" do
@@ -114,7 +114,7 @@ describe "Users", :js, type: :feature do
     before do
       create(:user_with_addresses, email: "customer@example.com")
       visit "/admin/users"
-      find_row("customer@example.com").click
+      within("table tbody") { click_on "customer@example.com" }
       click_on "Addresses"
     end
 
@@ -167,7 +167,7 @@ describe "Users", :js, type: :feature do
       before do
         create(:user, email: "customer@example.com")
         visit "/admin/users"
-        find_row("customer@example.com").click
+        within("table tbody") { click_on "customer@example.com" }
         click_on "Order History"
       end
 
@@ -187,7 +187,7 @@ describe "Users", :js, type: :feature do
       before do
         create(:user, :with_orders, email: "loyal_customer@example.com")
         visit "/admin/users"
-        find_row("loyal_customer@example.com").click
+        within("table tbody") { click_on "loyal_customer@example.com" }
         click_on "Order History"
       end
 
@@ -212,7 +212,7 @@ describe "Users", :js, type: :feature do
       before do
         create(:user, email: "customer@example.com")
         visit "/admin/users"
-        find_row("customer@example.com").click
+        within("table tbody") { click_on "customer@example.com" }
         click_on "Items"
       end
 
@@ -232,7 +232,7 @@ describe "Users", :js, type: :feature do
       before do
         create(:order_with_line_items, user: create(:user, email: "loyal_customer@example.com"))
         visit "/admin/users"
-        find_row("loyal_customer@example.com").click
+        within("table tbody") { click_on "loyal_customer@example.com" }
         click_on "Items"
       end
 
@@ -258,7 +258,7 @@ describe "Users", :js, type: :feature do
       before do
         create(:user, email: "customer@example.com")
         visit "/admin/users"
-        find_row("customer@example.com").click
+        within("table tbody") { click_on "customer@example.com" }
         click_on "Store Credit"
       end
 
@@ -281,7 +281,8 @@ describe "Users", :js, type: :feature do
         store_credit.user.update(email: "customer@example.com")
 
         visit "/admin/users"
-        find_row("customer@example.com").click
+        within("table tbody") { click_on "customer@example.com" }
+
         click_on "Store Credit"
       end
 

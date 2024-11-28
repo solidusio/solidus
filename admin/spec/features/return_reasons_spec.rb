@@ -67,7 +67,7 @@ describe "Return Reasons", :js, type: :feature do
     before do
       Spree::ReturnReason.create(name: "Good Reason")
       visit "/admin/return_reasons#{query}"
-      find_row("Good Reason").click
+      within("table tbody") { click_on "Good Reason" }
       expect(page).to have_content("Edit Return Reason")
       expect(page).to be_axe_clean
     end

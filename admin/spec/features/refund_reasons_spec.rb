@@ -65,7 +65,7 @@ describe "Refund Reasons", :js, type: :feature do
     before do
       Spree::RefundReason.create(name: "Return process")
       visit "/admin/refund_reasons#{query}"
-      find_row("Return process").click
+      within("table tbody") { click_on "Return process" }
       expect(page).to have_content("Edit Refund Reason")
       expect(page).to be_axe_clean
     end

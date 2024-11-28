@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'pry'
 
 describe "Stock Items", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }

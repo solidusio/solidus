@@ -45,14 +45,14 @@ Capybara.exact = true
 Capybara.disable_animation = true
 Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
+  # browser_options.args << '--headless'
   browser_options.args << '--disable-gpu'
   browser_options.args << '--window-size=1920,1080'
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
+  # browser_options.args << '--headless'
   browser_options.args << '--disable-gpu'
   # Sandbox cannot be used inside unprivileged Docker container
   browser_options.args << '--no-sandbox'

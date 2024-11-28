@@ -68,7 +68,7 @@ describe "Adjustment Reasons", :js, type: :feature do
     before do
       Spree::AdjustmentReason.create(name: "Good Reason", code: 5999)
       visit "/admin/adjustment_reasons#{query}"
-      find_row("Good Reason").click
+      within("table tbody") { click_on "Good Reason" }
       expect(page).to have_content("Edit Adjustment Reason")
       expect(page).to be_axe_clean
     end
