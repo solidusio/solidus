@@ -17,11 +17,14 @@
     JSON.dump(
       Spree::Config.available_currencies.map { |c|
         format =
-          if c.symbol == "" || c.symbol_first
+          if c.format.present?
+            c.format.gsub("%u", "%s").gsub("%n", "%v")
+          elsif c.symbol == "" || c.symbol_first
             "%s%v"
           else
             "%v %s"
           end
+
         [c.id.to_s.upcase, [
           c.symbol || "¤",
           c.exponent,
