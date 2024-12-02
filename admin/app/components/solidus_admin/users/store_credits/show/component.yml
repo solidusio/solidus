@@ -1,0 +1,17 @@
+en:
+  title: "Users / %{email} / Store Credit / %{amount}"
+  account: Account
+  addresses: Addresses
+  order_history: Order History
+  items: Items
+  store_credit: Store Credit
+  last_active: Last Active
+  add_store_credit: Add Store Credit
+  change_amount: Change Amount
+  invalidate: Invalidate
+  store_credit_history: Store Credit History
+  credited: Credited
+  created_by: Created By
+  type: Type
+  memo: Memo
+  back: Back

@@ -1,0 +1,59 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.users_path) %>
+    <%= page_header_title(t(".title", email: @user.email, amount: @store_credit.display_amount)) %>
+
+    <%= page_header_actions do %>
+        <%# TODO: can? actions in admin %>
+        <%# if @store_credit.editable? && can?(:edit, @store_credit) %>
+        <% if @store_credit.editable? %>
+          <%= render component("ui/button").new(tag: :a, text: t(".change_amount"), href: spree.edit_amount_admin_user_store_credit_path(@user, @store_credit)) %>
+        <% end %>
+        <%# TODO: can? actions in admin %>
+        <%# if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
+        <% if @store_credit.invalidateable? %>
+          <%= render component("ui/button").new(scheme: :danger, tag: :a, text: t(".invalidate"), href: spree.edit_validity_admin_user_store_credit_path(@user, @store_credit)) %>
+        <% end %>
+
+    <% end %>
+  <% end %>
+
+  <%= page_header do %>
+    <% tabs.each do |tab| %>
+      <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: tab[:text], 'aria-current': tab[:current], href: tab[:href])) %>
+    <% end %>
+  <% end %>
+
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new(title: t(".store_credit")) do %>
+        <%= render component('ui/details_list').new(
+          items: [
+            { label: t('.credited'), value: @store_credit.display_amount },
+            { label: t('.created_by'), value: @store_credit.created_by_email },
+            { label: t('.type'), value: @store_credit.category_name },
+            { label: t('.memo'), value: @store_credit.memo }
+          ]
+        ) %>
+      <% end %>
+
+
+      <% if @events.present? %>
+        <h1 class="font-semibold text-base text-center w-[100%]"><%= t(".store_credit_history") %></h1>
+        <%= render component('ui/table').new(
+          id: stimulus_id,
+          data: {
+            class: event_model_class,
+            rows: @events,
+            columns: columns,
+            url: -> { row_url(_1) },
+          },
+        )%>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component("users/stats").new(user: @user) %>
+    <% end %>
+  <% end %>
+<% end %>
