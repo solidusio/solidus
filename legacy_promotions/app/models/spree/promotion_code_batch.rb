@@ -14,5 +14,14 @@ module Spree
     def finished?
       state == "completed"
     end
+
+    def process
+      if state == "pending"
+        update!(state: "processing")
+        PromotionCodeBatchJob.perform_later(self)
+      else
+        raise CantProcessStartedBatch.new("Batch #{id} already started")
+      end
+    end
   end
 end
