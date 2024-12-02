@@ -278,6 +278,11 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
+    # @!attribute [rw] disable_adding_default_payment_to_order
+    #   @return [Boolean] Disable Spree::Order#add_default_payment_from_wallet transition (default: +false+)
+    preference :disable_adding_default_payment_to_order, :boolean, default: false
+
+
     # Other configurations
 
     # Allows restricting what currencies will be available.
@@ -387,7 +392,12 @@ module Spree
     # @!attribute [rw] default_payment_builder_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::Wallet::DefaultPaymentBuilder.
-    class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
+    attr_writer :default_payment_builder_class
+    def default_payment_builder_class
+      Spree::Deprecation.warn("`Spree::Config.default_payment_builder_class` is deprecated and will be removed.")
+
+      @default_payment_builder_class ||= Spree::Wallet::DefaultPaymentBuilder
+    end
 
     # Allows providing your own class for managing the contents of an order.
     #

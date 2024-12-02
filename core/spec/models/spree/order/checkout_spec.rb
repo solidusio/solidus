@@ -363,6 +363,9 @@ RSpec.describe Spree::Order, type: :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
+        stub_spree_preferences(disable_adding_default_payment_to_order: disable_adding_default_payment_to_order)
+        Spree::Order.define_state_machine!
+
         user = create(:user, email: 'solidus@example.org', bill_address: user_bill_address)
         default_credit_card.update(user:)
         wallet_payment_source = user.wallet.add(default_credit_card)
@@ -377,23 +380,50 @@ RSpec.describe Spree::Order, type: :model do
         order.reload
       end
 
-      it "assigns the user's default credit card" do
-        expect(order.state).to eq 'payment'
-        expect(order.payments.count).to eq 1
-        expect(order.payments.first.source).to eq default_credit_card
-      end
+      context "with default payment transition enabled" do
+        let(:disable_adding_default_payment_to_order) { false }
 
-      context "order already has a billing address" do
-        let(:order_bill_address) { create(:address) }
+        it "assigns the user's default credit card" do
+          expect(order.state).to eq 'payment'
+          expect(order.payments.count).to eq 1
+          expect(order.payments.first.source).to eq default_credit_card
+        end
 
-        it "keeps the order's billing address" do
-          expect(order.bill_address).to eq order_bill_address
+        context "order already has a billing address" do
+          let(:order_bill_address) { create(:address) }
+
+          it "keeps the order's billing address" do
+            expect(order.bill_address).to eq order_bill_address
+          end
+        end
+
+        context "order doesn't have a billing address" do
+          it "assigns the user's default_credit_card's address to the order" do
+            expect(order.bill_address).to eq default_credit_card.address
+          end
         end
       end
 
-      context "order doesn't have a billing address" do
-        it "assigns the user's default_credit_card's address to the order" do
-          expect(order.bill_address).to eq default_credit_card.address
+      context "with default payment transition disabled" do
+        let(:disable_adding_default_payment_to_order) { true }
+
+        it "assigns no default credit card" do
+          expect(order.state).to eq 'payment'
+          expect(order.payments).to eq []
+        end
+
+        context "order already has a billing address" do
+          let(:order_bill_address) { create(:address) }
+
+          it "keeps the order's billing address" do
+            expect(order.bill_address).to eq order_bill_address
+          end
+        end
+
+        context "order doesn't have a billing address" do
+          it "does not assign default credit card address" do
+            expect(order.bill_address).to_not eq default_credit_card.address
+          end
         end
       end
     end

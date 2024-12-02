@@ -682,6 +682,11 @@ module Spree
     end
 
     def add_default_payment_from_wallet
+      Spree::Deprecation.warn(
+        "`Spree::Order#add_default_payment_from_wallet` transition is deprecated and will be removed." \
+        "Disable it by setting `Spree::Config.disable_adding_default_payment_to_order = true`."
+      )
+
       builder = Spree::Config.default_payment_builder_class.new(self)
 
       if payment = builder.build
