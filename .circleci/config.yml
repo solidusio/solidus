@@ -222,8 +222,9 @@ commands:
             mkdir -p /tmp/dummy_extension
             cd /tmp/dummy_extension
             bundle init
-            bundle add rails sqlite3 <<parameters.extra_gems>> --skip-install
-            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            bundle add rails -v "< 7.1" --skip-install
+            bundle add sqlite3 -v "~> 1.3" --skip-install
+            test -n "<<parameters.extra_gems>>" && bundle add <<parameters.extra_gems>> --skip-install
             export LIB_NAME=set # dummy requireable file
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
 
