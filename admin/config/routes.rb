@@ -51,8 +51,9 @@ SolidusAdmin::Engine.routes.draw do
       put :update_addresses
       get :orders
       get :items
-      get :store_credits, controller: "store_credits", action: "index"
     end
+
+    resources :store_credits, only: [:index, :show], controller: "store_credits"
   end
 
   admin_resources :promotions, only: [:index, :destroy]

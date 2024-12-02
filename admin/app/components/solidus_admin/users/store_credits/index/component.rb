@@ -36,7 +36,7 @@ class SolidusAdmin::Users::StoreCredits::Index::Component < SolidusAdmin::BaseCo
       },
       {
         text: t('.store_credit'),
-        href: solidus_admin.store_credits_user_path(@user),
+        href: solidus_admin.user_store_credits_path(@user),
         current: true,
       },
     ]
