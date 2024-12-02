@@ -55,7 +55,7 @@ taxons = [
   },
   {
     name: "Brands",
-    taxonomy: Brands,
+    taxonomy: brands,
   },
   {
     name: "Solidus",
