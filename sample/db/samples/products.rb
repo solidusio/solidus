@@ -153,6 +153,17 @@ products = [
     height: 20,
     width: 10,
     depth: 5
+  },
+  {
+    name: "Solidus laptop",
+    tax_category:,
+    shipping_category:,
+    price: 18.99,
+    eur_price: 20,
+    weight: 10,
+    height: 20,
+    width: 10,
+    depth: 5
   }
 ]
 
