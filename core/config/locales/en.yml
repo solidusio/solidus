@@ -1516,6 +1516,7 @@ en:
     end: End
     ending_in: Ending in
     error: error
+    error_user_destroy_with_orders: Cannot delete a user with orders
     errors:
       messages:
         cannot_delete_finalized_stock_location: Stock Location cannot be destroyed if you have open stock transfers.
