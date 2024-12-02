@@ -4,7 +4,6 @@ Spree::Sample.load_sample("taxonomies")
 Spree::Sample.load_sample("products")
 
 categories = Spree::Taxonomy.find_by!(name: "Categories")
-brands = Spree::Taxonomy.find_by!(name: "Brands")
 
 products = {
   solidus_bottles: "Solidus Water Bottle",
@@ -29,6 +28,18 @@ taxons = [
   {
     name: "Categories",
     taxonomy: categories,
+  },
+  {
+    name: "Brands",
+    taxonomy: Brands,
+  },
+  {
+    name: "Solidus",
+    taxonomy: categories,
+    parent: "Brands",
+    products: [
+      products[:solidus_cap]
+    ]
   },
   {
     name: "Clothing",
@@ -86,7 +97,7 @@ taxons = [
   },
   {
     name: "Hoodies",
-    taxonomy: brands,
+    taxonomy: categories,
     parent: "Clothing",
     products: [
       products[:solidus_hoodie],
