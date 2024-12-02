@@ -18,8 +18,7 @@ products = {
   solidus_long_sleeve_tee: "Solidus long sleeve tee",
   solidus_dark_tee: "Solidus dark tee",
   solidus_canvas_tote: "Solidus canvas tote bag",
-  solidus_cap: "Solidus cap",
-  solidus_laptop: "Solidus laptop"
+  solidus_cap: "Solidus cap"
 }
 
 products.each do |key, name|
@@ -87,18 +86,10 @@ taxons = [
   },
   {
     name: "Hoodies",
-    taxonomy: categories,
+    taxonomy: brands,
     parent: "Clothing",
     products: [
       products[:solidus_hoodie],
-    ]
-  },
-  {
-    name: "Laptop",
-    taxonomy: brands,
-    parent: "Brands",
-    products: [
-      products[:solidus_laptop]
     ]
   }
 ]
