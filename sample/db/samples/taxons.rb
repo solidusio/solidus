@@ -26,6 +26,30 @@ end
 
 taxons = [
   {
+    name: "Brands",
+    taxonomy: brands
+  },
+  {
+    name: "Solidus",
+    taxonomy: brands,
+    parent: "Brands",
+    products: [
+      products[:solidus_bottles],
+      products[:solidus_tote],
+      products[:solidus_hoodie],
+      products[:solidus_mug_set],
+      products[:solidus_hat],
+      products[:solidus_sticker],
+      products[:solidus_notebook],
+      products[:solidus_tshirt],
+      products[:solidus_long_sleeve_tee],
+      products[:solidus_dark_tee],
+      products[:solidus_bottles],
+      products[:solidus_canvas_tote],
+      products[:solidus_cap]
+    ]
+  },
+  {
     name: "Categories",
     taxonomy: categories,
   },
@@ -85,7 +109,7 @@ taxons = [
   },
   {
     name: "Hoodies",
-    taxonomy: brands,
+    taxonomy: categories,
     parent: "Clothing",
     products: [
       products[:solidus_hoodie],
