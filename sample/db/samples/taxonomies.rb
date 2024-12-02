@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-store = Spree::Store.where(code: 'sample-store').first
+store = Spree::Store.find_by!(code: 'sample-store')
 
 taxonomies = [
   { name: "Categories", store:  },
