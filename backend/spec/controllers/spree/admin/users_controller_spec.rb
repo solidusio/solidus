@@ -505,7 +505,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it "cannot be destroyed" do
         is_expected.to be_forbidden
-        expect(subject.body).to eq I18n.t("spree.error_user_destroy_with_orders")
+        expect(subject.body).to eq("Cannot delete a user with orders")
       end
     end
   end
