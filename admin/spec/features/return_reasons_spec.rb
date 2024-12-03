@@ -26,12 +26,12 @@ describe "Return Reasons", :js, type: :feature do
     before do
       visit "/admin/return_reasons#{query}"
       click_on "Add new"
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Return Reason")
       expect(page).to be_axe_clean
     end
 
-    it "opens a modal" do
-      expect(page).to have_selector("dialog")
+    it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
@@ -68,12 +68,12 @@ describe "Return Reasons", :js, type: :feature do
       Spree::ReturnReason.create(name: "Good Reason")
       visit "/admin/return_reasons#{query}"
       find_row("Good Reason").click
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("Edit Return Reason")
       expect(page).to be_axe_clean
     end
 
-    it "opens a modal" do
-      expect(page).to have_selector("dialog")
+    it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
