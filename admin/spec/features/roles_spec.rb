@@ -54,12 +54,12 @@ describe "Roles", :js, type: :feature do
     before do
       visit "/admin/roles#{query}"
       click_on "Add new"
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Role")
       expect(page).to be_axe_clean
     end
 
-    it "opens a modal" do
-      expect(page).to have_selector("dialog")
+    it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
@@ -121,14 +121,14 @@ describe "Roles", :js, type: :feature do
       Spree::Role.create(name: "Reviewer", permission_sets: [settings_edit_permission])
       visit "/admin/roles#{query}"
       find_row("Reviewer").click
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("Edit Role")
       expect(page).to be_axe_clean
       expect(Spree::Role.find_by(name: "Reviewer").permission_set_ids)
         .to contain_exactly(settings_edit_permission.id)
     end
 
-    it "opens a modal" do
-      expect(page).to have_selector("dialog")
+    it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
