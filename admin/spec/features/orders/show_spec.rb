@@ -48,7 +48,7 @@ describe "Order", :js, type: :feature do
     expect(page).to have_content("Order R123456789")
     open_customer_menu
     click_on "Edit billing address"
-    expect(page).to have_css("dialog", wait: 30)
+    expect(page).to have_css("dialog", wait: 5)
 
     within("dialog") do
       fill_in "Name", with: "John Doe"
@@ -74,7 +74,7 @@ describe "Order", :js, type: :feature do
 
     open_customer_menu
     click_on "Edit shipping address"
-    expect(page).to have_css("dialog", wait: 30)
+    expect(page).to have_css("dialog", wait: 5)
 
     within("dialog") do
       fill_in "Name", with: "Jane Doe"
@@ -119,18 +119,18 @@ describe "Order", :js, type: :feature do
       expect(Spree::Order.last.line_items.count).to eq(0)
 
       find("[aria-selected]", text: "Just another product").click
-      expect(page).to have_content("Variant added to cart successfully", wait: 30)
+      expect(page).to have_content("Variant added to cart successfully", wait: 5)
 
       expect(Spree::Order.last.line_items.count).to eq(1)
       expect(Spree::Order.last.line_items.last.quantity).to eq(1)
 
       fill_in "line_item[quantity]", with: 4
-      expect(page).to have_content("Quantity updated successfully", wait: 30)
+      expect(page).to have_content("Quantity updated successfully", wait: 5)
 
       expect(Spree::Order.last.line_items.last.quantity).to eq(4)
 
       accept_confirm("Are you sure?") { click_on "Delete" }
-      expect(page).to have_content("Line item removed successfully", wait: 30)
+      expect(page).to have_content("Line item removed successfully", wait: 5)
 
       expect(Spree::Order.last.line_items.count).to eq(0)
       expect(page).to be_axe_clean

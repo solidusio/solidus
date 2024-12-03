@@ -14,13 +14,13 @@ RSpec.describe "Promotions", :js, type: :feature, solidus_admin: true do
     visit "/admin/solidus/promotions"
     expect(page).to have_content("My active Promotion")
     click_on "Draft"
-    expect(page).to have_content("My draft Promotion", wait: 30)
+    expect(page).to have_content("My draft Promotion", wait: 5)
     click_on "Future"
-    expect(page).to have_content("My future Promotion", wait: 30)
+    expect(page).to have_content("My future Promotion", wait: 5)
     click_on "Expired"
-    expect(page).to have_content("My expired Promotion", wait: 30)
+    expect(page).to have_content("My expired Promotion", wait: 5)
     click_on "All"
-    expect(page).to have_content("My active Promotion", wait: 30)
+    expect(page).to have_content("My active Promotion", wait: 5)
     expect(page).to have_content("My draft Promotion")
     expect(page).to have_content("My future Promotion")
     expect(page).to have_content("My expired Promotion")
