@@ -2097,6 +2097,7 @@ en:
     scope: Scope
     search: Search
     search_results: Search results for '%{keywords}'
+    search_results_all: Show all results for '%{keywords}'
     searching: Searching
     secure_connection_type: Secure Connection Type
     security_settings: Security Settings
