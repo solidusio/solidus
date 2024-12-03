@@ -522,6 +522,13 @@ module Spree
     #   Spree::StoreCreditPrioritizer.
     class_name_attribute :store_credit_prioritizer_class, default: 'Spree::StoreCreditPrioritizer'
 
+    # Allows finding brand for product.
+    #
+    # @!attribute [rw] brand_selector_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::TaxonBrandSelector.
+    class_name_attribute :brand_selector_class, default: 'Spree::TaxonBrandSelector'
+
     # @!attribute [rw] taxon_image_style_default
     #
     # Defines which style to default to when style is not provided
