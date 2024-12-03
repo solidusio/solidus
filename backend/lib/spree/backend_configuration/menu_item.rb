@@ -34,7 +34,6 @@ module Spree
         position: nil,
         match_path: nil
       )
-
         @condition = condition || -> { true }
         @sections = sections
         @icon = icon
