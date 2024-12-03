@@ -26,12 +26,12 @@ describe "Shipping Categories", :js, type: :feature do
     before do
       visit "/admin/shipping_categories#{query}"
       click_on "Add new"
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Shipping Category")
       expect(page).to be_axe_clean
     end
 
-    it "opens a modal" do
-      expect(page).to have_selector("dialog")
+    it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
@@ -66,12 +66,12 @@ describe "Shipping Categories", :js, type: :feature do
       Spree::ShippingCategory.create(name: "Letter Mail")
       visit "/admin/shipping_categories#{query}"
       find_row("Letter Mail").click
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("Edit Shipping Category")
       expect(page).to be_axe_clean
     end
 
-    it "opens a modal" do
-      expect(page).to have_selector("dialog")
+    it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
