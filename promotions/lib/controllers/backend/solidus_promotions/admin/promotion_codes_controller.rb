@@ -53,6 +53,10 @@ module SolidusPromotions
           .accessible_by(current_ability, :show)
           .find(params[:promotion_id])
       end
+
+      def model_class
+        SolidusPromotions::PromotionCode
+      end
     end
   end
 end
