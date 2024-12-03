@@ -28,6 +28,7 @@ module Spree
 
       @order.line_items.each do |item|
         taxed_items = taxes.line_item_taxes.select { |element| element.item_id == item.id }
+        item.tax_category_id = item.variant_tax_category_id
         update_adjustments(item, taxed_items)
       end
 
