@@ -41,7 +41,8 @@ echo "~~~> Removing the old sandbox"
 rm -rf ./sandbox
 
 echo "~~~> Creating a pristine Rails app"
-rails new sandbox \
+rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
+rails _${rails_version}_ new sandbox \
   --database="$RAILSDB" \
   --skip-git \
   --skip-keeps \
