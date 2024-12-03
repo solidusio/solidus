@@ -14,12 +14,12 @@ module SolidusPromotions
       def create
         @benefit = @benefit_type.new(benefit_params)
         @benefit.promotion = @promotion
-        if @benefit.save(validate: false)
+        if @benefit.save
           flash[:success] =
             t("spree.successfully_created", resource: SolidusPromotions::Benefit.model_name.human)
           redirect_to location_after_save, format: :html
         else
-          render :new, layout: false
+          render :new, layout: false, status: :unprocessable_entity
         end
       end
 
@@ -28,7 +28,7 @@ module SolidusPromotions
         if params.dig(:benefit, :calculator_type)
           @benefit.calculator_type = params[:benefit][:calculator_type]
         end
-        render layout: false
+        render layout: false, status: :unprocessable_entity
       end
 
       def update
@@ -39,7 +39,7 @@ module SolidusPromotions
             t("spree.successfully_updated", resource: SolidusPromotions::Benefit.model_name.human)
           redirect_to location_after_save, format: :html
         else
-          render :edit
+          render :edit, status: :unprocessable_entity
         end
       end
 
