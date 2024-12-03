@@ -14,7 +14,7 @@ module SolidusPromotions
       def create
         @benefit = @benefit_type.new(benefit_params)
         @benefit.promotion = @promotion
-        if @benefit.save(validate: false)
+        if @benefit.save
           flash[:success] =
             t("spree.successfully_created", resource: SolidusPromotions::Benefit.model_name.human)
           redirect_to location_after_save, format: :html
