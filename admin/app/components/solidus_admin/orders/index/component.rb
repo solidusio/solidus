@@ -143,7 +143,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
       col: { class: "w-[400px]" },
       header: :customer,
       data: ->(order) do
-        customer_email = order.user&.email
+        customer_email = order.email
         content_tag :div, String(customer_email)
       end
     }
