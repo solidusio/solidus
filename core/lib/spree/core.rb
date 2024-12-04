@@ -36,6 +36,10 @@ module Spree
     end
   end
 
+  def self.user_class_name
+    @@user_class
+  end
+
   # Load the same version defaults for all available Solidus components
   #
   # @see Spree::Preferences::Configuration#load_defaults
