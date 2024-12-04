@@ -26,7 +26,7 @@ describe "Shipping Categories", :js, type: :feature do
     before do
       visit "/admin/shipping_categories#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog")
+      expect(page).to have_css("dialog", wait: 5)
       expect(page).to have_content("New Shipping Category")
       expect(page).to be_axe_clean
     end
@@ -66,7 +66,7 @@ describe "Shipping Categories", :js, type: :feature do
       Spree::ShippingCategory.create(name: "Letter Mail")
       visit "/admin/shipping_categories#{query}"
       find_row("Letter Mail").click
-      expect(page).to have_selector("dialog")
+      expect(page).to have_css("dialog", wait: 5)
       expect(page).to have_content("Edit Shipping Category")
       expect(page).to be_axe_clean
     end
