@@ -26,7 +26,7 @@ describe "Refund Reasons", :js, type: :feature do
     before do
       visit "/admin/refund_reasons/#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog")
+      expect(page).to have_css("dialog", wait: 5)
       expect(page).to have_content("New Refund Reason")
       expect(page).to be_axe_clean
     end
@@ -66,7 +66,7 @@ describe "Refund Reasons", :js, type: :feature do
       Spree::RefundReason.create(name: "Return process")
       visit "/admin/refund_reasons#{query}"
       find_row("Return process").click
-      expect(page).to have_selector("dialog")
+      expect(page).to have_css("dialog", wait: 5)
       expect(page).to have_content("Edit Refund Reason")
       expect(page).to be_axe_clean
     end
