@@ -28,7 +28,7 @@ module SolidusPromotions
         if params.dig(:benefit, :calculator_type)
           @benefit.calculator_type = params[:benefit][:calculator_type]
         end
-        render layout: false, status: :unprocessable_entity
+        render layout: false
       end
 
       def update
