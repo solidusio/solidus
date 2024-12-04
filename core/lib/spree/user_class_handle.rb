@@ -21,8 +21,8 @@ module Spree
     # @return [String] the name of the user class as a string.
     # @raise [RuntimeError] if Spree.user_class is nil
     def to_s
-      fail "'Spree.user_class' has not been set yet." unless Spree.user_class
-      "::#{Spree.user_class}"
+      fail "'Spree.user_class' has not been set yet." unless Spree.user_class_name
+      "::#{Spree.user_class_name}"
     end
   end
 end
