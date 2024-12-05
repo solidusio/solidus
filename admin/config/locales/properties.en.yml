@@ -2,5 +2,9 @@ en:
   solidus_admin:
     properties:
       title: "Properties"
+      create:
+        success: "Property was successfully created."
+      update:
+        success: "Property was successfully updated."
       destroy:
         success: "Properties were successfully removed."
