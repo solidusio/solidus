@@ -14,6 +14,7 @@ executors:
     environment: &environment
       DEFAULT_MAX_WAIT_TIME: 10
       SOLIDUS_RAISE_DEPRECATIONS: true
+      RAILS_DEPRECATIONS_BEHAVIOR: raise
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
       BUNDLE_WITHOUT: "lint,release"
