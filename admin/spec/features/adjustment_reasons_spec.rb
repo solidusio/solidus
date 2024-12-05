@@ -26,7 +26,7 @@ describe "Adjustment Reasons", :js, type: :feature do
     before do
       visit "/admin/adjustment_reasons#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog")
+      expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("New Adjustment Reason")
       expect(page).to be_axe_clean
     end
@@ -69,7 +69,7 @@ describe "Adjustment Reasons", :js, type: :feature do
       Spree::AdjustmentReason.create(name: "Good Reason", code: 5999)
       visit "/admin/adjustment_reasons#{query}"
       find_row("Good Reason").click
-      expect(page).to have_selector("dialog")
+      expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("Edit Adjustment Reason")
       expect(page).to be_axe_clean
     end
