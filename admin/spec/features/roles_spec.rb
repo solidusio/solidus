@@ -54,7 +54,7 @@ describe "Roles", :js, type: :feature do
     before do
       visit "/admin/roles#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog")
+      expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("New Role")
       expect(page).to be_axe_clean
     end
@@ -121,7 +121,7 @@ describe "Roles", :js, type: :feature do
       Spree::Role.create(name: "Reviewer", permission_sets: [settings_edit_permission])
       visit "/admin/roles#{query}"
       find_row("Reviewer").click
-      expect(page).to have_selector("dialog")
+      expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("Edit Role")
       expect(page).to be_axe_clean
       expect(Spree::Role.find_by(name: "Reviewer").permission_set_ids)

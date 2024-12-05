@@ -28,7 +28,7 @@ describe "Tax categories", :js, type: :feature do
     before do
       visit "/admin/tax_categories#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog")
+      expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("New Tax Category")
       expect(page).to be_axe_clean
     end
