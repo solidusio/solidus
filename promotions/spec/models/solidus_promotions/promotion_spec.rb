@@ -686,4 +686,56 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
       expect(subject).to be_nil
     end
   end
+
+  describe ".order_activatable" do
+    let(:order) { create :order }
+
+    subject { described_class.order_activatable?(order) }
+
+    it "is true" do
+      expect(subject).to be true
+    end
+
+    context "when the order is in the cart state" do
+      let(:order) { create :order, state: "cart" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the order is shipped" do
+      let(:order) { create :order, state: "complete", shipment_state: "shipped" }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the order is completed but not shipped" do
+      let(:order) { create :order, state: "complete", shipment_state: "ready" }
+
+      it { is_expected.to be true }
+
+      context "when the promotion system is configured to prohibit applying promotions to completed orders" do
+        before { stub_spree_preferences(SolidusPromotions.configuration, recalculate_complete_orders: false) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the order is canceled" do
+      let(:order) { create :order, state: "canceled" }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the order is awaiting return" do
+      let(:order) { create :order, state: "awaiting_return" }
+
+      it { is_expected.to be false }
+    end
+
+    context "when the order is returned" do
+      let(:order) { create :order, state: "returned" }
+
+      it { is_expected.to be false }
+    end
+  end
 end

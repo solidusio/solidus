@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Adjustments", :pending, type: :feature do
+RSpec.describe "Adjustments", type: :feature do
   stub_authorization!
 
   let!(:ship_address) { create(:address) }
@@ -13,8 +13,10 @@ RSpec.describe "Adjustments", :pending, type: :feature do
 
   let(:tax_category) { create(:tax_category) }
   let(:variant) { create(:variant, tax_category:) }
+  let(:preferences) { {} }
 
   before(:each) do
+    stub_spree_preferences(SolidusPromotions.configuration, preferences)
     order.recalculate
 
     visit spree.admin_path
@@ -43,10 +45,6 @@ RSpec.describe "Adjustments", :pending, type: :feature do
     end
 
     context "when the promotion system is configured to allow applying promotions to completed orders" do
-      before do
-        expect(SolidusPromotions.config).to receive(:recalculate_complete_orders).and_return(true)
-      end
-
       it "shows input field for promotion code" do
         expect(page).to have_content("Adjustments")
         expect(page).to have_field("coupon_code")
@@ -54,9 +52,7 @@ RSpec.describe "Adjustments", :pending, type: :feature do
     end
 
     context "when the promotion system is configured to not allow applying promotions to completed orders" do
-      before do
-        expect(SolidusPromotions.config).to receive(:recalculate_complete_orders).and_return(false)
-      end
+      let(:preferences) { { recalculate_complete_orders: false } }
 
       it "does not show input field for promotion code" do
         expect(page).to have_content("Adjustments")
