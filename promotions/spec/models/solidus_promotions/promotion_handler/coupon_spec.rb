@@ -452,4 +452,15 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
       )
     end
   end
+
+  describe "#can_apply?", :pending do
+    let(:order) { double("Order").as_null_object }
+
+    subject { described_class.new(order).can_apply? }
+
+    it "forwards to SolidusPromotions::Promotion.order_activatable?" do
+      expect(SolidusPromotions::Promotion).to receive(:order_activatable?).with(order)
+      subject
+    end
+  end
 end

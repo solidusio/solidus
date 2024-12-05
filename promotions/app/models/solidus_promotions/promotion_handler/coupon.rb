@@ -26,6 +26,10 @@ module SolidusPromotions
         self
       end
 
+      def can_apply?
+        SolidusPromotions::Promotion.order_activatable?(order)
+      end
+
       def remove
         if promotion.blank?
           set_error_code :coupon_code_not_found
