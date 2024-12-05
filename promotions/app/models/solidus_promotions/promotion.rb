@@ -2,6 +2,8 @@
 
 module SolidusPromotions
   class Promotion < Spree::Base
+    UNACTIVATABLE_ORDER_STATES = ["awaiting_return", "returned", "canceled"]
+
     include Spree::SoftDeletable
 
     belongs_to :category, class_name: "SolidusPromotions::PromotionCategory",
@@ -57,6 +59,14 @@ module SolidusPromotions
 
     def self.ordered_lanes
       lanes.sort_by(&:last).to_h
+    end
+
+    def self.order_activatable?(order)
+      return false if UNACTIVATABLE_ORDER_STATES.include?(order.state)
+      return false if order.shipped?
+      return false if order.complete? && !SolidusPromotions.config.recalculate_complete_orders
+
+      true
     end
 
     self.allowed_ransackable_associations = ["codes"]
