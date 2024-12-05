@@ -6,7 +6,11 @@ class SolidusPromotions::PromotionCategories::Index::Component < SolidusAdmin::U
   end
 
   def row_url(promotion_category)
-    solidus_promotions.edit_admin_promotion_category_path(promotion_category)
+    edit_path(promotion_category)
+  end
+
+  def edit_path(promotion_category)
+    solidus_promotions.edit_admin_promotion_category_path(promotion_category, **search_filter_params)
   end
 
   def page_actions
@@ -40,7 +44,7 @@ class SolidusPromotions::PromotionCategories::Index::Component < SolidusAdmin::U
     {
       header: :name,
       data: ->(promotion_category) do
-        content_tag :div, promotion_category.name
+        link_to promotion_category.name, edit_path(promotion_category), class: "body-link"
       end
     }
   end
@@ -49,7 +53,7 @@ class SolidusPromotions::PromotionCategories::Index::Component < SolidusAdmin::U
     {
       header: :code,
       data: ->(promotion_category) do
-        content_tag :div, promotion_category.code
+        link_to promotion_category.code, edit_path(promotion_category), class: "body-link"
       end
     }
   end

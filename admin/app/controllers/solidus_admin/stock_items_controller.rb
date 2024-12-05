@@ -30,10 +30,8 @@ module SolidusAdmin
       @stock_item.stock_movements.build(quantity: quantity_adjustment, originator: current_solidus_admin_user)
 
       if @stock_item.save
-        respond_to do |format|
-          format.html { redirect_to solidus_admin.stock_items_path, status: :see_other }
-          format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
-        end
+        flash[:notice] = t('.success')
+        redirect_to solidus_admin.stock_items_path, status: :see_other
       else
         respond_to do |format|
           format.html { render component('stock_items/edit').new(stock_item: @stock_item, page: @page), status: :unprocessable_entity }

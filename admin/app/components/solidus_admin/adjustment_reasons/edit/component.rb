@@ -9,4 +9,8 @@ class SolidusAdmin::AdjustmentReasons::Edit::Component < SolidusAdmin::BaseCompo
   def form_id
     dom_id(@adjustment_reason, "#{stimulus_id}_edit_adjustment_reason_form")
   end
+
+  def close_path
+    solidus_admin.adjustment_reasons_path(**search_filter_params)
+  end
 end

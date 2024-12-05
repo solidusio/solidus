@@ -14,6 +14,10 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
   end
 
   def row_url(store)
+    edit_path(store)
+  end
+
+  def edit_path(store)
     spree.edit_admin_store_path(store)
   end
 
@@ -39,12 +43,22 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
 
   def columns
     [
-      :name,
-      :url,
+      {
+        header: :name,
+        data: ->(store) do
+          link_to store.name, edit_path(store), class: "body-link"
+        end
+      },
+      {
+        header: :url,
+        data: ->(store) do
+          link_to store.url, edit_path(store), class: "body-link"
+        end
+      },
       {
         header: :slug,
         data: ->(store) do
-          content_tag :div, store.code
+          link_to store.code, edit_path(store), class: "body-link"
         end
       },
       {

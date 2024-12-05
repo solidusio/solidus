@@ -14,7 +14,11 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
   end
 
   def row_url(payment_method)
-    spree.edit_admin_payment_method_path(payment_method)
+    edit_path(payment_method)
+  end
+
+  def edit_path(payment_method)
+    spree.edit_admin_payment_method_path(payment_method, **search_filter_params)
   end
 
   def sortable_options
@@ -59,7 +63,7 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
       {
         header: :name,
         data: ->(payment_method) do
-          content_tag :div, payment_method.name
+          link_to payment_method.name, edit_path(payment_method), class: "body-link"
         end
       },
       {

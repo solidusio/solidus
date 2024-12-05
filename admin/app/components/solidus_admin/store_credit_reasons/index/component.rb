@@ -23,7 +23,11 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
   end
 
   def row_url(store_credit_reason)
-    spree.edit_admin_store_credit_reason_path(store_credit_reason, _turbo_frame: :edit_store_credit_reason_modal)
+    edit_path(store_credit_reason)
+  end
+
+  def edit_path(store_credit_reason)
+    spree.edit_admin_store_credit_reason_path(store_credit_reason, **search_filter_params)
   end
 
   def search_url
@@ -47,7 +51,12 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
 
   def columns
     [
-      :name,
+      {
+        header: :name,
+        data: ->(store_credit_reason) do
+          link_to store_credit_reason.name, edit_path(store_credit_reason), class: "body-link"
+        end
+      },
       {
         header: :active,
         data: ->(store_credit_reason) do

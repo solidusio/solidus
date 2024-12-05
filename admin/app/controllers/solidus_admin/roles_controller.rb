@@ -64,17 +64,8 @@ module SolidusAdmin
 
     def update
       if @role.update(role_params)
-        respond_to do |format|
-          flash[:notice] = t('.success')
-
-          format.html do
-            redirect_to solidus_admin.roles_path, status: :see_other
-          end
-
-          format.turbo_stream do
-            render turbo_stream: '<turbo-stream action="refresh" />'
-          end
-        end
+        flash[:notice] = t('.success')
+        redirect_to solidus_admin.roles_path(**search_filter_params), status: :see_other
       else
         set_index_page
 

@@ -14,7 +14,11 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(promotion)
-    spree.admin_promotion_path(promotion)
+    edit_path(promotion)
+  end
+
+  def edit_path(promotion)
+    spree.edit_admin_promotion_path(promotion, **search_filter_params)
   end
 
   def page_actions
@@ -63,14 +67,16 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
       {
         header: :name,
         data: ->(promotion) do
-          content_tag :div, promotion.name
+          link_to promotion.name, edit_path(promotion), class: "body-link"
         end
       },
       {
         header: :code,
         data: ->(promotion) do
-          count = promotion.codes.count
-          (count == 1) ? promotion.codes.pick(:value) : t('spree.number_of_codes', count:)
+          link_to edit_path(promotion), class: "body-link" do
+            count = promotion.codes.count
+            (count == 1) ? promotion.codes.pick(:value) : t('spree.number_of_codes', count:)
+          end
         end
       },
       {

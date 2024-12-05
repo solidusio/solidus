@@ -14,7 +14,11 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   end
 
   def row_url(product)
-    solidus_admin.product_path(product)
+    edit_path(product)
+  end
+
+  def edit_path(product)
+    solidus_admin.edit_product_path(product, **search_filter_params)
   end
 
   def page_actions
@@ -106,7 +110,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
     {
       header: :name,
       data: ->(product) do
-        content_tag :div, product.name
+        link_to product.name, edit_path(product), class: "body-link"
       end
     }
   end

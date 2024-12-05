@@ -31,7 +31,11 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
   end
 
   def row_url(adjustment_reason)
-    spree.edit_admin_adjustment_reason_path(adjustment_reason, _turbo_frame: :edit_adjustment_reason_modal)
+    edit_path(adjustment_reason)
+  end
+
+  def edit_path(adjustment_reason)
+    spree.edit_admin_adjustment_reason_path(adjustment_reason, **search_filter_params)
   end
 
   def batch_actions
@@ -47,8 +51,18 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
 
   def columns
     [
-      :name,
-      :code,
+      {
+        header: :name,
+        data: ->(adjustment_reason) do
+          link_to adjustment_reason.name, edit_path(adjustment_reason), class: "body-link"
+        end
+      },
+      {
+        header: :code,
+        data: ->(adjustment_reason) do
+          link_to adjustment_reason.code, edit_path(adjustment_reason), class: "body-link"
+        end
+      },
       {
         header: :active,
         data: ->(adjustment_reason) do

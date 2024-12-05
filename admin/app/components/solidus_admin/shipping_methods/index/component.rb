@@ -6,6 +6,10 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
   end
 
   def row_url(shipping_method)
+    edit_path(shipping_method)
+  end
+
+  def edit_path(shipping_method)
     spree.edit_admin_shipping_method_path(shipping_method)
   end
 
@@ -42,7 +46,11 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     [
       {
         header: :name,
-        data: -> { [_1.admin_name.presence, _1.name].compact.join(' / ') },
+        data: ->(shipping_method) do
+          link_to edit_path(shipping_method), class: "body-link" do
+            [shipping_method.admin_name.presence, shipping_method.name].compact.join(' / ')
+          end
+        end
       },
       {
         header: :zone,

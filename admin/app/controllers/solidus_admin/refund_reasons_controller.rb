@@ -61,17 +61,8 @@ module SolidusAdmin
 
     def update
       if @refund_reason.update(refund_reason_params)
-        respond_to do |format|
-          flash[:notice] = t('.success')
-
-          format.html do
-            redirect_to solidus_admin.refund_reasons_path, status: :see_other
-          end
-
-          format.turbo_stream do
-            render turbo_stream: '<turbo-stream action="refresh" />'
-          end
-        end
+        flash[:notice] = t('.success')
+        redirect_to solidus_admin.refund_reasons_path(**search_filter_params), status: :see_other
       else
         set_index_page
 

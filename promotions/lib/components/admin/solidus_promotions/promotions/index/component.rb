@@ -63,13 +63,13 @@ class SolidusPromotions::Promotions::Index::Component < SolidusAdmin::UI::Pages:
       {
         header: :name,
         data: ->(promotion) do
-          link_to promotion.name, row_url(promotion)
+          link_to promotion.name, row_url(promotion), class: "body-link"
         end
       },
       {
         header: :code,
         data: ->(promotion) do
-          link_to solidus_promotions.admin_promotion_promotion_codes_path(promotion), title: t(".codes") do
+          link_to solidus_promotions.admin_promotion_promotion_codes_path(promotion), title: t(".codes"), class: "body-link" do
             count = promotion.codes.count
             (count == 1) ? promotion.codes.pick(:value) : t("spree.number_of_codes", count: count)
           end

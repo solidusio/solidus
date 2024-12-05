@@ -12,6 +12,10 @@ class SolidusAdmin::Roles::Edit::Component < SolidusAdmin::BaseComponent
     dom_id(@role, "#{stimulus_id}_edit_role_form")
   end
 
+  def close_path
+    solidus_admin.roles_path(**search_filter_params)
+  end
+
   private
 
   def permission_set_options

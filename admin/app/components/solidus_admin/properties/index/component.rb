@@ -14,7 +14,11 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(property)
-    spree.admin_property_path(property)
+    edit_path(property)
+  end
+
+  def edit_path(property)
+    spree.admin_property_path(property, **search_filter_params)
   end
 
   def page_actions
@@ -48,7 +52,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :name,
       data: ->(property) do
-        content_tag :div, property.name
+        link_to property.name, edit_path(property), class: "body-link"
       end
     }
   end
@@ -57,7 +61,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :presentation,
       data: ->(property) do
-        content_tag :div, property.presentation
+        link_to property.presentation, edit_path(property), class: "body-link"
       end
     }
   end

@@ -6,6 +6,10 @@ class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(taxonomy)
+    edit_path(taxonomy)
+  end
+
+  def edit_path(taxonomy)
     spree.edit_admin_taxonomy_path(taxonomy)
   end
 
@@ -46,7 +50,7 @@ class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :name,
       data: ->(taxonomy) do
-        content_tag :div, taxonomy.name
+        link_to taxonomy.name, edit_path(taxonomy), class: "body-link"
       end
     }
   end

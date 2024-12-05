@@ -33,7 +33,11 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
   end
 
   def row_url(shipping_category)
-    spree.edit_admin_shipping_category_path(shipping_category, _turbo_frame: :edit_shipping_category_modal)
+    edit_path(shipping_category)
+  end
+
+  def edit_path(shipping_category)
+    spree.edit_admin_shipping_category_path(shipping_category, **search_filter_params)
   end
 
   def search_key
@@ -57,7 +61,12 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
 
   def columns
     [
-      :name
+      {
+        header: :name,
+        data: ->(shipping_category) do
+          link_to shipping_category.name, edit_path(shipping_category), class: "body-link"
+        end
+      }
     ]
   end
 end

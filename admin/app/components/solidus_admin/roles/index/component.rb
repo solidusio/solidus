@@ -14,7 +14,11 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   end
 
   def row_url(role)
-    solidus_admin.edit_role_path(role, _turbo_frame: :edit_role_modal)
+    edit_path(role)
+  end
+
+  def edit_path(role)
+    solidus_admin.edit_role_path(role, **search_filter_params)
   end
 
   def page_actions
@@ -58,8 +62,10 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   def columns
     [
       {
-        header: :role,
-        data: :name,
+        header: :name,
+        data: ->(role) do
+          link_to role.name, edit_path(role), class: "body-link"
+        end
       },
       {
         header: :description,

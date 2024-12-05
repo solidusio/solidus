@@ -14,7 +14,11 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
   end
 
   def row_url(return_reason)
-    spree.edit_admin_return_reason_path(return_reason, _turbo_frame: :edit_return_reason_modal)
+    edit_path(return_reason)
+  end
+
+  def edit_path(return_reason)
+    spree.edit_admin_return_reason_path(return_reason, **search_filter_params)
   end
 
   def turbo_frames
@@ -48,7 +52,12 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
 
   def columns
     [
-      :name,
+      {
+        header: :name,
+        data: ->(return_reason) do
+          link_to return_reason.name, edit_path(return_reason), class: "body-link"
+        end
+      },
       {
         header: :active,
         data: ->(return_reason) do

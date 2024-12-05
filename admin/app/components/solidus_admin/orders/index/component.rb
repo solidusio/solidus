@@ -14,7 +14,11 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
   end
 
   def row_url(order)
-    spree.edit_admin_order_path(order)
+    edit_path(order)
+  end
+
+  def edit_path(order)
+    spree.edit_admin_order_path(order, **search_filter_params)
   end
 
   def row_fade(order)
@@ -105,11 +109,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :order,
       data: ->(order) do
-        if !row_fade(order)
-          content_tag :div, order.number, class: 'font-semibold'
-        else
-          content_tag :div, order.number
-        end
+        link_to order.number, edit_path(order), class: row_fade(order) ? 'body-link' : 'body-link font-semibold'
       end
     }
   end

@@ -9,4 +9,8 @@ class SolidusAdmin::ReturnReasons::Edit::Component < SolidusAdmin::BaseComponent
   def form_id
     dom_id(@return_reason, "#{stimulus_id}_edit_return_reason_form")
   end
+
+  def close_path
+    solidus_admin.return_reasons_path(**search_filter_params)
+  end
 end

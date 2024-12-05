@@ -15,4 +15,8 @@ class SolidusAdmin::StockItems::Edit::Component < SolidusAdmin::BaseComponent
   def form_id
     "#{stimulus_id}-#{dom_id(@stock_item)}"
   end
+
+  def close_path
+    solidus_admin.stock_items_path(**search_filter_params)
+  end
 end

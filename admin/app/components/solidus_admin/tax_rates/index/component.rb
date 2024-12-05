@@ -2,6 +2,10 @@
 
 class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
   def row_url(tax_rate)
+    edit_path(tax_rate)
+  end
+
+  def edit_path(tax_rate)
     spree.edit_admin_tax_rate_path(tax_rate)
   end
 
@@ -61,7 +65,12 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
         header: :zone,
         data: -> { _1.zone&.name },
       },
-      :name,
+      {
+        header: :name,
+        data: ->(tax_rate) do
+          link_to tax_rate.name, edit_path(tax_rate), class: "body-link"
+        end
+      },
       {
         header: :tax_categories,
         data: -> { _1.tax_categories.map(&:name).join(', ') },

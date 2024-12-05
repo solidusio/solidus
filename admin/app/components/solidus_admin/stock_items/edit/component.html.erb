@@ -3,8 +3,8 @@
   data-<%= stimulus_id %>-initial-count-on-hand-value="<%= @stock_item.count_on_hand_was || @stock_item.count_on_hand %>"
   data-action="input-><%= stimulus_id %>#updateCountOnHand"
 >
-  <%= turbo_frame_tag :edit_stock_item_modal do %>
-    <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
+  <%= turbo_frame_tag :edit_stock_item_modal, target: "_top" do %>
+    <%= render component("ui/modal").new(title: t(".title"), close_path: close_path) do |modal| %>
       <%= form_for @stock_item, url: solidus_admin.stock_item_path(@stock_item), html: { id: form_id } do |f| %>
         <div class="flex flex-col gap-6 pb-4">
           <div class="flex gap-4">
@@ -65,6 +65,8 @@
       <% modal.with_actions do %>
         <form method="dialog">
           <%= render component("ui/button").new(
+            tag: :a,
+            href: close_path,
             scheme: :secondary,
             text: t(".cancel"),
           ) %>

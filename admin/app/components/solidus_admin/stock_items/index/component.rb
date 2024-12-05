@@ -14,7 +14,11 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(stock_item)
-    solidus_admin.edit_stock_item_path(stock_item, _turbo_frame: :edit_stock_item_modal)
+    edit_path(stock_item)
+  end
+
+  def edit_path(stock_item)
+    solidus_admin.edit_stock_item_path(stock_item)
   end
 
   def scopes
@@ -90,7 +94,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :name,
       data: ->(stock_item) do
-        content_tag :div, stock_item.variant.name
+        link_to stock_item.variant.name, edit_path(stock_item), class: "body-link"
       end
     }
   end
@@ -99,7 +103,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
     {
       header: :sku,
       data: ->(stock_item) do
-        content_tag :div, stock_item.variant.sku
+        link_to stock_item.variant.sku, edit_path(stock_item), class: "body-link"
       end
     }
   end

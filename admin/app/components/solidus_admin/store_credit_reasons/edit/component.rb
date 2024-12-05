@@ -9,4 +9,8 @@ class SolidusAdmin::StoreCreditReasons::Edit::Component < SolidusAdmin::BaseComp
   def form_id
     dom_id(@store_credit_reason, "#{stimulus_id}_edit_store_credit_reason_form")
   end
+
+  def close_path
+    solidus_admin.store_credit_reasons_path(**search_filter_params)
+  end
 end

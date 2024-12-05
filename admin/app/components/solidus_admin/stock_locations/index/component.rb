@@ -16,6 +16,10 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   end
 
   def row_url(stock_location)
+    edit_path(stock_location)
+  end
+
+  def edit_path(stock_location)
     spree.edit_admin_stock_location_path(stock_location)
   end
 
@@ -48,7 +52,12 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
 
   def columns
     [
-      :name,
+      {
+        header: :name,
+        data: ->(stock_location) do
+          link_to stock_location.name, edit_path(stock_location), class: "body-link"
+        end
+      },
       :code,
       :admin_name,
       {

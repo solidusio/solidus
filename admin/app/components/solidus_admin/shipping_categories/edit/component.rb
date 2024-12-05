@@ -9,4 +9,8 @@ class SolidusAdmin::ShippingCategories::Edit::Component < SolidusAdmin::Shipping
   def form_id
     dom_id(@shipping_category, "#{stimulus_id}_edit_shipping_category_form")
   end
+
+  def close_path
+    solidus_admin.shipping_categories_path(**search_filter_params)
+  end
 end

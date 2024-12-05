@@ -2,7 +2,11 @@
 
 class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Component
   def row_url(tax_category)
-    spree.edit_admin_tax_category_path(tax_category, _turbo_frame: :edit_tax_category_modal)
+    edit_path(tax_category)
+  end
+
+  def edit_path(tax_category)
+    spree.edit_admin_tax_category_path(tax_category)
   end
 
   def model_class
@@ -47,9 +51,24 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
 
   def columns
     [
-      :name,
-      :tax_code,
-      :description,
+      {
+        header: :name,
+        data: ->(tax_category) do
+          link_to tax_category.name, edit_path(tax_category), class: "body-link"
+        end
+      },
+      {
+        header: :tax_code,
+        data: ->(tax_category) do
+          link_to_if tax_category.tax_code, tax_category.tax_code, edit_path(tax_category), class: "body-link"
+        end
+      },
+      {
+        header: :description,
+        data: ->(tax_category) do
+          link_to tax_category.description, edit_path(tax_category), class: "body-link"
+        end
+      },
       {
         header: :is_default,
         data: ->(tax_category) {
