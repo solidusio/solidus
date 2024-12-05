@@ -13,7 +13,7 @@ module SolidusPromotions
     def call
       order.reset_current_discounts
 
-      return order if (!SolidusPromotions.config.recalculate_complete_orders && order.complete?) || order.shipped?
+      return order unless SolidusPromotions::Promotion.order_activatable?(order)
 
       discounted_order = DiscountOrder.new(order, promotions, dry_run: dry_run).call
 
