@@ -375,7 +375,7 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.0", "7.1", "7.2"],
+                  rails: ["7.2"],
                   ruby: ["3.1"],
                   database: ["mysql"],
                   paperclip: [true],
@@ -387,8 +387,8 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.0", "7.1", "7.2"],
-                  ruby: ["3.1"],
+                  rails: ["7.2"],
+                  ruby: ["3.2"],
                   database: ["postgres"],
                   paperclip: [false],
                 },
@@ -399,8 +399,8 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.1"],
-                  ruby: ["3.2"],
+                  rails: ["7.2"],
+                  ruby: ["3.3"],
                   database: ["sqlite"],
                   paperclip: [false],
                 },
@@ -411,8 +411,8 @@ workflows:
             {
               parameters:
                 {
-                  rails: ["7.2", "main"],
-                  ruby: ["3.3.5"],
+                  rails: ["8.0"],
+                  ruby: ["3.3"],
                   database: ["sqlite"],
                   paperclip: [false],
                 },
