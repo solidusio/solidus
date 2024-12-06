@@ -57,7 +57,7 @@ SolidusAdmin::Engine.routes.draw do
   end
 
   admin_resources :promotions, only: [:index, :destroy]
-  admin_resources :properties, only: [:index, :destroy]
+  admin_resources :properties, except: [:show]
   admin_resources :option_types, only: [:index, :destroy], sortable: true
   admin_resources :taxonomies, only: [:index, :destroy], sortable: true
   admin_resources :promotion_categories, only: [:index, :destroy]

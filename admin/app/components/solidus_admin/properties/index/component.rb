@@ -5,6 +5,10 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
     Spree::Property
   end
 
+  def title
+    t('solidus_admin.properties.title')
+  end
+
   def search_key
     :name_cont
   end
@@ -14,14 +18,21 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def row_url(property)
-    spree.admin_property_path(property)
+    solidus_admin.edit_property_path(property, _turbo_frame: :edit_property_modal)
+  end
+
+  def turbo_frames
+    %w[
+      new_property_modal
+      edit_property_modal
+    ]
   end
 
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_property_path,
+      href: solidus_admin.new_property_path, data: { turbo_frame: :new_property_modal },
       icon: "add-line",
     )
   end
