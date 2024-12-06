@@ -3,6 +3,7 @@
 module Spree
   class InMemoryOrderUpdater
     attr_reader :order
+
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :quantity, to: :order
 
     def initialize(order)
@@ -27,7 +28,7 @@ module Spree
           recalculate_shipment_state
         end
 
-        Spree::Bus.publish :order_recalculated, order: order
+        Spree::Bus.publish(:order_recalculated, order:)
 
         persist_totals if persist
       end
@@ -121,7 +122,7 @@ module Spree
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
       # It also fits the criteria for sales tax as outlined here:
       # http://www.boe.ca.gov/formspubs/pub113/
-      update_promotions
+      update_promotions(persist:)
       update_tax_adjustments
       update_item_totals(persist:)
     end
@@ -160,8 +161,8 @@ module Spree
       recalculate_order_total
     end
 
-    def update_promotions
-      Spree::Config.promotions.order_adjuster_class.new(order).call
+    def update_promotions(persist:)
+      Spree::Config.promotions.order_adjuster_class.new(order).call(persist:)
     end
 
     def update_tax_adjustments
@@ -223,8 +224,8 @@ module Spree
         order.state_changes.new(
           previous_state: old_state,
           next_state:     new_state,
-          name:           name,
-          user_id:        order.user_id
+          user_id:        order.user_id,
+          name:
         )
       end
     end

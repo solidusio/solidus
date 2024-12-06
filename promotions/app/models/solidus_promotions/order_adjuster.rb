@@ -13,7 +13,7 @@ module SolidusPromotions
       ).call
     end
 
-    def call
+    def call(persist: true) # rubocop:disable Lint/UnusedMethodArgument
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
 
       SetDiscountsToZero.call(order)

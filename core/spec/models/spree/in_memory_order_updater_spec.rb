@@ -141,7 +141,7 @@ module Spree
       it "calls the Promotion Adjustments Recalculator" do
         adjuster = double(:call)
         expect(Spree::Config.promotions.order_adjuster_class).to receive(:new).and_return(adjuster)
-        expect(adjuster).to receive(:call)
+        expect(adjuster).to receive(:call).with(persist: true)
         updater.recalculate
       end
     end
