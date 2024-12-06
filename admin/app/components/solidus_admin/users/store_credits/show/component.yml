@@ -7,7 +7,7 @@ en:
   store_credit: Store Credit
   last_active: Last Active
   add_store_credit: Add Store Credit
-  change_amount: Change Amount
+  edit: Edit Store Credit
   invalidate: Invalidate
   store_credit_history: Store Credit History
   credited: Credited

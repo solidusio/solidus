@@ -46,7 +46,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         tag: :select,
         choices:,
         size:,
-        value: object.public_send(method),
+        value: (object.public_send(method) if object.respond_to?(method)),
         error: (errors.to_sentence.capitalize if errors),
         **attributes,
       }
