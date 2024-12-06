@@ -121,7 +121,7 @@ module Spree
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
       # It also fits the criteria for sales tax as outlined here:
       # http://www.boe.ca.gov/formspubs/pub113/
-      update_promotions
+      update_promotions(persist:)
       update_taxes
       update_item_totals(persist:)
     end
@@ -203,8 +203,12 @@ module Spree
       end
     end
 
-    def update_promotions
-      Spree::Config.promotions.order_adjuster_class.new(order).call
+    def update_promotions(persist:)
+      if persist
+        Spree::Config.promotions.order_adjuster_class
+      else
+        InMemoryOrderAdjuster
+      end.new(order).call
     end
 
     def update_taxes
@@ -245,6 +249,14 @@ module Spree
             updated_at:           Time.current,
           )
         end
+      end
+    end
+
+    class InMemoryOrderAdjuster
+      def initialize(order)
+      end
+
+      def call
       end
     end
   end
