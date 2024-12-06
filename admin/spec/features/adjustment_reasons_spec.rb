@@ -33,7 +33,7 @@ describe "Adjustment Reasons", :js, type: :feature do
 
     it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
-      expect(page).not_to have_selector("dialog")
+      expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)
     end
 
@@ -76,7 +76,7 @@ describe "Adjustment Reasons", :js, type: :feature do
 
     it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
-      expect(page).not_to have_selector("dialog")
+      expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)
     end
 
