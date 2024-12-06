@@ -48,6 +48,10 @@ module SolidusPromotions
 
       private
 
+      def model_class
+        SolidusPromotions::PromotionCode
+      end
+
       def load_promotion
         @promotion = SolidusPromotions::Promotion
           .accessible_by(current_ability, :show)
