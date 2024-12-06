@@ -6,7 +6,7 @@ module Spree
       @order = order
     end
 
-    def call
+    def call(persist: true)
       @order
     end
   end
