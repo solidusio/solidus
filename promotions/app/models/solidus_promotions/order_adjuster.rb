@@ -10,7 +10,7 @@ module SolidusPromotions
       @promotions = LoadPromotions.new(order: order, dry_run_promotion: dry_run_promotion).call
     end
 
-    def call
+    def call(persist: true) # rubocop:disable Lint/UnusedMethodArgument
       order.reset_current_discounts
 
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
