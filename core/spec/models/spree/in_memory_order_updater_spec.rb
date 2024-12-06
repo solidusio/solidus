@@ -166,6 +166,17 @@ module Spree
             line_item.additional_tax_total
           }.from(1).to(2)
         end
+
+        context "when recalculating the order in memory" do
+          it "raises an error" do
+            order_adjuster = double
+            allow(order_adjuster).to receive(:call) { raise NotImplementedError }
+            allow(Spree::InMemoryOrderUpdater::InMemoryOrderAdjuster).to receive(:new).and_return(order_adjuster)
+
+            expect{described_class.new(order).recalculate(persist: false)}
+              .to raise_error(NotImplementedError)
+          end
+        end
       end
 
       context 'with a custom tax_calculator_class' do
