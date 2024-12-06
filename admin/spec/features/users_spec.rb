@@ -276,6 +276,7 @@ describe "Users", :js, type: :feature do
 
     context "when a user has store credits" do
       let!(:store_credit) { create(:store_credit, amount: 199.00, currency: "USD") }
+      let!(:store_credit_reason) { create(:store_credit_reason, name: "credit given in error") }
 
       before do
         store_credit.user.update(email: "customer@example.com")
@@ -302,6 +303,31 @@ describe "Users", :js, type: :feature do
         expect(page).to have_content("Issued on")
         expect(page).to have_content("Invalidated")
         expect(page).not_to have_content("No Store Credits found.")
+      end
+
+      context "when clicking through to a single store credit" do
+        let!(:store_credit_reason) { create(:store_credit_reason, name: "credit given in error") }
+
+        before do
+          stub_authorization!(admin)
+        end
+
+        it "shows individual store credit details" do
+          find_row("$199.00").click
+          expect(page).to have_content("Users / customer@example.com / Store Credit / $199.00")
+          expect(page).to have_content("Store Credit History")
+          expect(page).to have_content("Action")
+          expect(page).to have_content("Added")
+          click_on "Invalidate"
+          select "credit given in error", from: "store_credit_reason_id"
+          click_on "Invalidate"
+          expect(page).to have_content("Store Credit History")
+          expect(page).to have_content("Action")
+          expect(page).to have_content("Added")
+          expect(page).to have_content("Invalidated")
+          expect(page).to have_content("Reason for updating")
+          expect(page).to have_content("credit given in error")
+        end
       end
     end
   end

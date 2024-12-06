@@ -99,13 +99,6 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
     end
   end
 
-  describe "GET /store_credits" do
-    it "renders the store credits template with a 200 OK status" do
-      get solidus_admin.store_credits_user_path(user)
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe "GET /addresses" do
     it "renders the addresses template with a 200 OK status" do
       get solidus_admin.addresses_user_path(user)
