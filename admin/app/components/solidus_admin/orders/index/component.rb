@@ -74,7 +74,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::BaseComponent
       class_name: "w-[400px]",
       header: :customer,
       data: ->(order) do
-        customer_email = order.user&.email
+        customer_email = order.email
         content_tag :div, String(customer_email)
       end
     }
