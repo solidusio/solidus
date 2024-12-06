@@ -10,7 +10,7 @@ jobs:
       github.event.pull_request.merged == true
       && contains(
            join(github.event.pull_request.labels.*.name, '---'),
-           '---backport'
+           'backport'
          )
       && (
         (github.event.action == 'labeled' && startsWith(github.event.label.name, 'backport')) ||
