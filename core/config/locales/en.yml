@@ -1075,6 +1075,8 @@ en:
     billing: Billing
     billing_address: Billing Address
     both: Both
+    brand: Brand
+    brands: Brands
     calculated_reimbursements: Calculated Reimbursements
     calculator: Calculator
     calculator_settings_warning: If you are changing the calculator type or preference source, you must save first before you can edit the calculator settings

@@ -291,6 +291,10 @@ module Spree
       @gallery ||= Spree::Config.product_gallery_class.new(self)
     end
 
+    def brand
+      Spree::Config.brand_selector_class.new(self).call
+    end
+
     private
 
     def any_variants_not_track_inventory?
