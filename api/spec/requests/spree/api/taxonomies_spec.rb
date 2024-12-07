@@ -7,7 +7,7 @@ module Spree::Api
     let(:taxonomy) { create(:taxonomy) }
     let(:taxon) { create(:taxon, name: "Ruby", taxonomy:) }
     let(:taxon2) { create(:taxon, name: "Rails", taxonomy:) }
-    let(:attributes) { [:id, :name] }
+    let(:attributes) { [:id, :name, :private_metadata, :public_metadata] }
 
     before do
       stub_authentication!
