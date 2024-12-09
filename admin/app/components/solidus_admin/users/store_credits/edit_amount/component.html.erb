@@ -1,0 +1,33 @@
+ <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
+    <%= form_for @store_credit, url: solidus_admin.update_amount_user_store_credit_path(@user, @store_credit), method: :put, data: { turbo: false }, html: { id: form_id } do |f| %>
+      <div class="flex flex-col gap-6 pb-4">
+        <%= render component("ui/forms/field").text_field(f, :amount, class: "required") %>
+        <%= render component("ui/forms/field").select(
+          f,
+          :store_credit_reason_id,
+          store_credit_reasons_select_options.html_safe,
+          include_blank: t('spree.choose_reason'),
+          html: { required: true }
+        ) %>
+        <!-- Display error messages from :base -->
+        <% if @store_credit.errors.any? %>
+          <div class="alert alert-error">
+            <ul>
+              <% @store_credit.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= render component("ui/forms/field").text_field(f, :memo, class: "required") %>
+      </div>
+      <% modal.with_actions do %>
+        <form method="dialog">
+          <%= render component("ui/button").new(scheme: :secondary, tag: :a, href: solidus_admin.user_store_credit_path(@user, @store_credit), text: t('.cancel')) %>
+        </form>
+        <%= render component("ui/button").new(form: form_id, type: :submit, text: t('.submit')) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<%= render component("users/store_credits/show").new(user: @user, store_credit: @store_credit, events: @store_credit_events) %>
+

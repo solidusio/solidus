@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    store_credits:
+      title: "Store Credits"
+      destroy:
+        success: "Store credit was successfully removed."
+      create:
+        success: "Store credit was successfully created."
+      update_amount:
+        success: "Store credit was successfully updated."
