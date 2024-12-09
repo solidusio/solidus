@@ -1,3 +1,37 @@
+## Solidus v4.4.2 (2024-12-09)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.4] [FIX] Remove spacing at top of OrderShipping#ship method by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5974
+* [v4.4] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5986
+* [v4.4] Test app task: Allow passing in user class by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5961
+* [v4.4] Add show all results to en.yml by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5996
+* [v4.4] Do not constantize Spree.user_class in UserClassHandle by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6004
+
+## Solidus Admin
+
+* [v4.4] test: Wait for modal to open before testing its content by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5994
+* [v4.4] [specs] Wait for modal before testing its content by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6005
+* [v4.4] Use Order#email to show the order&#x27;s email in new admin by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6006
+* [v4.4] tests: Give even more dialogs more time to open in tests by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6018
+
+## Solidus Backend
+
+* [v4.4] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5986
+
+## Solidus Promotions
+
+* [v4.4] test: Wait for modal to open before testing its content by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5994
+* [v4.4] [FIX] A few small tweaks for the new promotion admin by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6021
+* [v4.4] Fix(promotions): Validate benefits on save by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6023
+* [v4.4] Add can apply to promotions by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6024
+* [v4.4] Fix admin promotions controller by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6020
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.4.1...v4.4.2
+
+
 ## Solidus v4.4.1 (2024-11-18)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
