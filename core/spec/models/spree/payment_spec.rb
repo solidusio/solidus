@@ -1331,4 +1331,24 @@ RSpec.describe Spree::Payment, type: :model do
       expect(described_class.valid).to be_empty
     end
   end
+
+  describe "metadata fields" do
+    it "responds to public_metadata" do
+      expect(payment).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(payment).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      payment.public_metadata = { "transaction_id" => "12345" }
+      expect(payment.public_metadata["transaction_id"]).to eq("12345")
+    end
+
+    it "can store data in private_metadata" do
+      payment.private_metadata = { "internal_note" => "Verified transaction" }
+      expect(payment.private_metadata["internal_note"]).to eq("Verified transaction")
+    end
+  end
 end

@@ -179,7 +179,9 @@ en:
         name: Name
         on_hand: On Hand
         price: Master Price
+        private_metadata: Private Metadata
         promotionable: Promotable
+        public_metadata: Public Metadata
         shipping_category: Shipping Category
         sku: Master SKU
         slug: Slug

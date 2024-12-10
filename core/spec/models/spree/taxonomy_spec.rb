@@ -25,4 +25,26 @@ RSpec.describe Spree::Taxonomy, type: :model do
       expect(association_options[:dependent]).to eq :destroy
     end
   end
+
+  describe "metadata fields" do
+    subject { described_class.new }
+
+    it "responds to public_metadata" do
+      expect(subject).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(subject).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      subject.public_metadata = { "options" => "critical" }
+      expect(subject.public_metadata["options"]).to eq("critical")
+    end
+
+    it "can store data in private_metadata" do
+      subject.private_metadata = { "types" => "test" }
+      expect(subject.private_metadata["types"]).to eq("test")
+    end
+  end
 end

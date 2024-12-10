@@ -35,6 +35,8 @@ module Spree::Api
             "mail_from_address" => "solidus@example.org",
             "bcc_email" => nil,
             "default_currency" => nil,
+            "private_metadata"=>{},
+            "public_metadata"=>{},
             "code" => store.code,
             "default" => true,
             "available_locales" => ["en"]
@@ -49,6 +51,8 @@ module Spree::Api
             "mail_from_address" => "solidus@example.org",
             "bcc_email" => nil,
             "default_currency" => nil,
+            "private_metadata"=>{},
+            "public_metadata"=>{},
             "code" => non_default_store.code,
             "default" => false,
             "available_locales" => ["en"]
@@ -67,6 +71,8 @@ module Spree::Api
           "seo_title" => nil,
           "mail_from_address" => "solidus@example.org",
           "bcc_email" => nil,
+          "private_metadata"=>{},
+          "public_metadata"=>{},
           "default_currency" => nil,
           "code" => store.code,
           "default" => true,

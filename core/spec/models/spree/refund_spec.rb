@@ -236,5 +236,25 @@ RSpec.describe Spree::Refund, type: :model do
         expect(amount).to eq 0
       end
     end
+
+    describe "metadata fields" do
+      it "responds to public_metadata" do
+        expect(refund).to respond_to(:public_metadata)
+      end
+
+      it "responds to private_metadata" do
+        expect(refund).to respond_to(:private_metadata)
+      end
+
+      it "can store data in public_metadata" do
+        refund.public_metadata = { "refund_reason" => "price_adjustment" }
+        expect(refund.public_metadata["refund_reason"]).to eq("price_adjustment")
+      end
+
+      it "can store data in private_metadata" do
+        refund.private_metadata = { "internal_notes" => "Refund processed manually" }
+        expect(refund.private_metadata["internal_notes"]).to eq("Refund processed manually")
+      end
+    end
   end
 end

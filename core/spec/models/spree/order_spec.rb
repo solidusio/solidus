@@ -2107,4 +2107,24 @@ RSpec.describe Spree::Order, type: :model do
       it { is_expected.to eq(true) }
     end
   end
+
+  describe "metadata fields" do
+    it "responds to public_metadata" do
+      expect(order).to respond_to(:public_metadata)
+    end
+
+    it "responds to private_metadata" do
+      expect(order).to respond_to(:private_metadata)
+    end
+
+    it "can store data in public_metadata" do
+      order.public_metadata = { "order_id" => "OD34236" }
+      expect(order.public_metadata["order_id"]).to eq("OD34236")
+    end
+
+    it "can store data in private_metadata" do
+      order.private_metadata = { "internal_note" => "gift wrap the item" }
+      expect(order.private_metadata["internal_note"]).to eq("gift wrap the item")
+    end
+  end
 end
