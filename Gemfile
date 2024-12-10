@@ -56,26 +56,22 @@ group :backend do
 end
 
 group :admin do
-  gem 'solidus_admin', path: 'admin', require: false
   gem 'tailwindcss-rails', '~> 3.0', require: false
+end
+
+group :admin, :legacy_promotions, :promotions do
+  gem 'solidus_admin', path: 'admin', require: false
   gem 'axe-core-rspec', '~> 4.8', require: false
   gem 'axe-core-capybara', '~> 4.8', require: false
 end
 
-group :legacy_promotions do
+group :legacy_promotions, :promotions do
   gem 'solidus_legacy_promotions', path: 'legacy_promotions', require: false
-  gem 'solidus_admin', path: 'admin', require: false
   gem 'solidus_backend', path: 'backend', require: false
-  gem 'axe-core-rspec', '~> 4.8', require: false
-  gem 'axe-core-capybara', '~> 4.8', require: false
 end
 
 group :promotions do
   gem 'solidus_promotions', path: 'promotions', require: false
-  gem 'solidus_admin', path: 'admin', require: false
-  gem 'solidus_backend', path: 'backend', require: false
-  gem 'axe-core-rspec', '~> 4.8', require: false
-  gem 'axe-core-capybara', '~> 4.8', require: false
   gem 'shoulda-matchers', '~> 5.0', require: false
 end
 
