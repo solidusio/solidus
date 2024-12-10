@@ -1,14 +1,3 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
-<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
-<% admin_breadcrumb(link_to plural_resource_name(Spree::StoreCredit), spree.admin_user_store_credits_path(@user)) %>
-<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, admin_user_store_credit_path(@user, @store_credit)) %>
-<% admin_breadcrumb(t('spree.edit')) %>
-
-<%= render 'spree/admin/users/sidebar' %>
-<%= render 'spree/admin/users/tabs', current: :store_credits %>
-<% content_for :page_actions do %>
-<% end %>
-
 <%= form_for [:admin, @user, @store_credit], url: update_amount_admin_user_store_credit_path, method: :put do |f| %>
   <fieldset>
     <legend align="center"><%= t('spree.admin.store_credits.edit_amount') %></legend>
@@ -16,16 +5,52 @@
       <div class="col-6">
         <%= f.field_container :amount do %>
           <%= f.label :amount, class: 'required' %><br>
-          <%= render "spree/admin/shared/number_with_currency", f: f,
-            amount_attr: :amount, currency: @store_credit.currency, required: true %>
+
+
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency: @store_credit.currency, required: true %>
+
+
+          <% amount_attr ||= :amount %>
+          <% currency_attr ||= :currency %>
+          <% currency ||= nil %>
+          <% required ||= nil %>
+
+          <div class="input-group number-with-currency <%= "number-with-currency-with-select" unless currency %> js-number-with-currency">
+            <div class="input-group-prepend">
+              <span class="input-group-text number-with-currency-symbol"></span>
+            </div>
+            <%= f.text_field amount_attr, value: number_to_currency(f.object.public_send(amount_attr), unit: '', delimiter: ''), class: 'form-control number-with-currency-amount', required: required %>
+            <% if currency %>
+              <div class="input-group-append">
+      <span class="input-group-text number-with-currency-addon" data-currency="<%= currency %>">
+        <%= ::Money::Currency.find(currency).iso_code %>
+      </span>
+              </div>
+            <% else %>
+              <%= f.select currency_attr, Spree::Config.available_currencies.map(&:iso_code), {selected: Spree::Config.currency}, {required: required, class: 'number-with-currency-select'} %>
+            <% end %>
+          </div>
+
+
           <%= f.error_message_on :amount %>
         <% end %>
       </div>
       <div class="col-6">
+
+
         <%= render 'store_credit_reason_field', f: f %>
+
+
+        <%= f.field_container :reason do %>
+          <%= f.label :store_credit_reason, t('spree.reason'), class: 'required' %>
+          <%= select_tag :store_credit_reason_id, options_from_collection_for_select(@store_credit_reasons, :id, :name),
+            include_blank: t('spree.choose_reason'), class: 'custom-select fullwidth',
+            placeholder: t('spree.admin.store_credits.select_amount_store_credit_reason') %>
+          <%= f.error_message_on :store_credit_reason %>
+        <% end %>
+
+
       </div>
     </div>
-    <%= render 'spree/admin/shared/edit_resource_links',
-      collection_url: admin_user_store_credits_path(@user, @store_credit) %>
   </fieldset>
 <% end %>

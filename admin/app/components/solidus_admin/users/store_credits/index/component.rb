@@ -47,7 +47,7 @@ class SolidusAdmin::Users::StoreCredits::Index::Component < SolidusAdmin::BaseCo
   end
 
   def row_url(store_credit)
-    spree.admin_user_store_credit_path(@user, store_credit)
+    solidus_admin.user_store_credit_path(@user, store_credit)
   end
 
   def columns
