@@ -72,6 +72,7 @@ end
 
 group :promotions do
   gem 'solidus_promotions', path: 'promotions', require: false
+  gem 'solidus_legacy_promotions', path: 'legacy_promotions', require: false
   gem 'solidus_admin', path: 'admin', require: false
   gem 'solidus_backend', path: 'backend', require: false
   gem 'axe-core-rspec', '~> 4.8', require: false
