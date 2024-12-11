@@ -310,14 +310,17 @@ describe "Users", :js, type: :feature do
 
         before do
           stub_authorization!(admin)
+          find_row("$199.00").click
         end
 
         it "shows individual store credit details" do
-          find_row("$199.00").click
           expect(page).to have_content("Users / customer@example.com / Store Credit / $199.00")
           expect(page).to have_content("Store Credit History")
           expect(page).to have_content("Action")
           expect(page).to have_content("Added")
+        end
+
+        it "allows invalidating of the store credit" do
           click_on "Invalidate"
           select "credit given in error", from: "store_credit_reason_id"
           click_on "Invalidate"
@@ -327,6 +330,57 @@ describe "Users", :js, type: :feature do
           expect(page).to have_content("Invalidated")
           expect(page).to have_content("Reason for updating")
           expect(page).to have_content("credit given in error")
+        end
+
+        context "when editing the store credit amount" do
+          context "with invalid amount" do
+            it "shows the appropriate error message" do
+              click_on "Edit Amount"
+              expect(page).to have_selector("dialog", wait: 5)
+              expect(page).to have_content("Edit Store Credit")
+
+              within("dialog") do
+                fill_in "Amount", with: ""
+                click_on "Update Store Credit"
+                expect(page).to have_content("must be greater than 0")
+                click_on "Cancel"
+              end
+            end
+          end
+
+          context "without a valid reason" do
+            it "shows the appropriate error message" do
+              click_on "Edit Amount"
+              expect(page).to have_selector("dialog", wait: 5)
+              expect(page).to have_content("Edit Store Credit")
+
+              within("dialog") do
+                fill_in "Amount", with: "100"
+                click_on "Update Store Credit"
+                expect(page).to have_content("Store Credit reason must be provided")
+                click_on "Cancel"
+              end
+            end
+          end
+
+          context "with valid params" do
+            it "allows editing of the store credit amount" do
+              click_on "Edit Amount"
+              expect(page).to have_selector("dialog", wait: 5)
+              expect(page).to have_content("Edit Store Credit")
+
+              # Invalid amount
+              within("dialog") do
+                fill_in "Amount", with: "666"
+                select "credit given in error", from: "store_credit[store_credit_reason_id]"
+                click_on "Update Store Credit"
+              end
+
+              expect(page).to have_content("Users / customer@example.com / Store Credit / $666.00")
+              expect(page).to have_content("Adjustment")
+              expect(page).to have_content("credit given in error")
+            end
+          end
         end
       end
     end

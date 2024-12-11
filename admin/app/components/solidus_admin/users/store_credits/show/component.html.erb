@@ -2,20 +2,6 @@
   <%= page_header do %>
     <%= page_header_back(solidus_admin.users_path) %>
     <%= page_header_title(t(".title", email: @user.email, amount: @store_credit.display_amount)) %>
-
-    <%= page_header_actions do %>
-        <%# TODO: can? actions in admin %>
-        <%# if @store_credit.editable? && can?(:edit, @store_credit) %>
-        <% if @store_credit.editable? %>
-          <%= render component("ui/button").new(tag: :a, text: t(".change_amount"), href: spree.edit_amount_admin_user_store_credit_path(@user, @store_credit)) %>
-        <% end %>
-        <%# TODO: can? actions in admin %>
-        <%# if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
-        <% if @store_credit.invalidateable? %>
-          <%= render component("ui/button").new(scheme: :danger, tag: :a, text: t(".invalidate"), href: spree.edit_validity_admin_user_store_credit_path(@user, @store_credit)) %>
-        <% end %>
-
-    <% end %>
   <% end %>
 
   <%= page_header do %>
@@ -26,17 +12,40 @@
 
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
-      <%= render component('ui/panel').new(title: t(".store_credit")) do %>
-        <%= render component('ui/details_list').new(
-          items: [
-            { label: t('.credited'), value: @store_credit.display_amount },
-            { label: t('.created_by'), value: @store_credit.created_by_email },
-            { label: t('.type'), value: @store_credit.category_name },
-            { label: t('.memo'), value: @store_credit.memo }
-          ]
-        ) %>
-      <% end %>
+      <%= render component('ui/panel').new(title: t(".store_credit")) do |panel| %>
+        <% panel.with_section do %>
+          <%= render component('ui/details_list').new(
+            items: [
+              { label: t('.credited'), value: @store_credit.display_amount },
+              { label: t('.created_by'), value: @store_credit.created_by_email },
+              { label: t('.type'), value: @store_credit.category_name },
+              { label: t('.memo'), value: @store_credit.memo }
+            ]
+          ) %>
+        <% end %>
 
+       <% if @store_credit.editable? || @store_credit.invalidateable? %>
+          <% panel.with_section do %>
+            <div class="w-[100%] text-right">
+              <% if @store_credit.invalidateable? %>
+                <%= render component("ui/button").new(
+                  scheme: :danger,
+                  tag: :a,
+                  text: t(".invalidate"),
+                  href: spree.edit_validity_admin_user_store_credit_path(@user, @store_credit)
+                )%>
+              <% end %>
+              <% if @store_credit.editable? %>
+                <%= render component("ui/button").new(
+                  "data-action": "click->#{stimulus_id}#actionButtonClicked",
+                  "data-#{stimulus_id}-url-param": solidus_admin.edit_amount_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_amount_modal),
+                  text: t(".edit"),
+                )%>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
 
       <% if @events.present? %>
         <h1 class="font-semibold text-base text-center w-[100%]"><%= t(".store_credit_history") %></h1>
@@ -55,5 +64,9 @@
     <%= page_with_sidebar_aside do %>
       <%= render component("users/stats").new(user: @user) %>
     <% end %>
+  <% end %>
+
+  <% turbo_frames.each do |frame| %>
+    <%= turbo_frame_tag frame %>
   <% end %>
 <% end %>
