@@ -24,26 +24,29 @@
           ) %>
         <% end %>
 
-       <% if @store_credit.editable? || @store_credit.invalidateable? %>
-          <% panel.with_section do %>
-            <div class="w-[100%] text-right">
-              <% if @store_credit.invalidateable? %>
-                <%= render component("ui/button").new(
-                  scheme: :danger,
-                  tag: :a,
-                  text: t(".invalidate"),
-                  href: spree.edit_validity_admin_user_store_credit_path(@user, @store_credit)
-                )%>
-              <% end %>
-              <% if @store_credit.editable? %>
-                <%= render component("ui/button").new(
-                  "data-action": "click->#{stimulus_id}#actionButtonClicked",
-                  "data-#{stimulus_id}-url-param": solidus_admin.edit_amount_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_amount_modal),
-                  text: t(".edit"),
-                )%>
-              <% end %>
-            </div>
-          <% end %>
+        <% panel.with_section do %>
+          <div class="w-[100%] text-right">
+            <% if @store_credit.invalidateable? %>
+              <%= render component("ui/button").new(
+                scheme: :danger,
+                tag: :a,
+                text: t(".invalidate"),
+                href: spree.edit_validity_admin_user_store_credit_path(@user, @store_credit)
+              )%>
+            <% end %>
+            <%= render component("ui/button").new(
+              "data-action": "click->#{stimulus_id}#actionButtonClicked",
+              "data-#{stimulus_id}-url-param": solidus_admin.edit_memo_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_memo_modal),
+              text: t(".edit_memo"),
+            )%>
+            <% if @store_credit.editable? %>
+              <%= render component("ui/button").new(
+                "data-action": "click->#{stimulus_id}#actionButtonClicked",
+                "data-#{stimulus_id}-url-param": solidus_admin.edit_amount_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_amount_modal),
+                text: t(".edit_amount"),
+              )%>
+            <% end %>
+          </div>
         <% end %>
       <% end %>
 

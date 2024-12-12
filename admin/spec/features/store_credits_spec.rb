@@ -92,7 +92,7 @@ describe "StoreCredits", :js, type: :feature do
           it "shows the appropriate error message" do
             click_on "Edit Amount"
             expect(page).to have_selector("dialog", wait: 5)
-            expect(page).to have_content("Edit Store Credit")
+            expect(page).to have_content("Edit Store Credit Amount")
 
             within("dialog") do
               fill_in "Amount", with: ""
@@ -107,7 +107,7 @@ describe "StoreCredits", :js, type: :feature do
           it "shows the appropriate error message" do
             click_on "Edit Amount"
             expect(page).to have_selector("dialog", wait: 5)
-            expect(page).to have_content("Edit Store Credit")
+            expect(page).to have_content("Edit Store Credit Amount")
 
             within("dialog") do
               fill_in "Amount", with: "100"
@@ -122,9 +122,8 @@ describe "StoreCredits", :js, type: :feature do
           it "allows editing of the store credit amount" do
             click_on "Edit Amount"
             expect(page).to have_selector("dialog", wait: 5)
-            expect(page).to have_content("Edit Store Credit")
+            expect(page).to have_content("Edit Store Credit Amount")
 
-            # Invalid amount
             within("dialog") do
               fill_in "Amount", with: "666"
               select "credit given in error", from: "store_credit[store_credit_reason_id]"
@@ -135,6 +134,22 @@ describe "StoreCredits", :js, type: :feature do
             expect(page).to have_content("Adjustment")
             expect(page).to have_content("credit given in error")
           end
+        end
+      end
+
+      context "when editing the store credit memo" do
+        it "allows editing of the store credit memo" do
+          click_on "Edit Memo"
+          expect(page).to have_selector("dialog", wait: 5)
+          expect(page).to have_content("Edit Store Credit Memo")
+
+          within("dialog") do
+            fill_in "Memo", with: "dogtown"
+            click_on "Update Store Credit"
+          end
+
+          expect(page).to have_content("Store credit was successfully updated.")
+          expect(page).to have_content("dogtown")
         end
       end
     end
