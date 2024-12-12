@@ -48,6 +48,12 @@ class SolidusAdmin::Users::StoreCredits::Show::Component < SolidusAdmin::BaseCom
     ]
   end
 
+  def turbo_frames
+    %w[
+      edit_amount_modal
+    ]
+  end
+
   def form_id
     @form_id ||= "#{stimulus_id}--form-#{@store_credit.id}"
   end

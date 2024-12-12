@@ -53,7 +53,12 @@ SolidusAdmin::Engine.routes.draw do
       get :items
     end
 
-    resources :store_credits, only: [:index, :show], controller: "store_credits"
+    resources :store_credits, only: [:index, :show], constraints: { id: /\d+/ }, controller: "store_credits" do
+      member do
+        get :edit_amount
+        put :update_amount
+      end
+    end
   end
 
   admin_resources :promotions, only: [:index, :destroy]
