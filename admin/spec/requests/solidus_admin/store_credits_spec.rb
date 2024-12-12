@@ -58,6 +58,18 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
         follow_redirect!
         expect(response.body).to include("Store credit was successfully updated.")
       end
+
+      context "when update_amount fails" do
+        before do
+          allow_any_instance_of(Spree::StoreCredit).to receive(:update_amount).and_return(false)
+        end
+
+        it "renders the edit_amount template with errors" do
+          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
     end
 
     context "with invalid parameters" do
