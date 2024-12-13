@@ -57,6 +57,8 @@ SolidusAdmin::Engine.routes.draw do
       member do
         get :edit_amount
         put :update_amount
+        get :edit_memo
+        put :update_memo
       end
     end
   end

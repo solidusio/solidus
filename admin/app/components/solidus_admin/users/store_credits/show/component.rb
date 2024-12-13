@@ -51,6 +51,7 @@ class SolidusAdmin::Users::StoreCredits::Show::Component < SolidusAdmin::BaseCom
   def turbo_frames
     %w[
       edit_amount_modal
+      edit_memo_modal
     ]
   end
 

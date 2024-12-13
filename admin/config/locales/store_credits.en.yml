@@ -8,3 +8,6 @@ en:
         success: "Store credit was successfully created."
       update_amount:
         success: "Store credit was successfully updated."
+      update_memo:
+        success: "Store credit was successfully updated."
+        failure: "Something went wrong. Store credit could not be updated."
