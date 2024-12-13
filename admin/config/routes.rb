@@ -59,6 +59,8 @@ SolidusAdmin::Engine.routes.draw do
         put :update_amount
         get :edit_memo
         put :update_memo
+        get :edit_validity
+        put :invalidate
       end
     end
   end

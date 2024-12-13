@@ -75,18 +75,6 @@ describe "StoreCredits", :js, type: :feature do
         expect(page).to have_content("Added")
       end
 
-      it "allows invalidating of the store credit" do
-        click_on "Invalidate"
-        select "credit given in error", from: "store_credit_reason_id"
-        click_on "Invalidate"
-        expect(page).to have_content("Store Credit History")
-        expect(page).to have_content("Action")
-        expect(page).to have_content("Added")
-        expect(page).to have_content("Invalidated")
-        expect(page).to have_content("Reason for updating")
-        expect(page).to have_content("credit given in error")
-      end
-
       context "when editing the store credit amount" do
         context "with invalid amount" do
           it "shows the appropriate error message" do
@@ -133,6 +121,40 @@ describe "StoreCredits", :js, type: :feature do
             expect(page).to have_content("Users / customer@example.com / Store Credit / $666.00")
             expect(page).to have_content("Adjustment")
             expect(page).to have_content("credit given in error")
+          end
+        end
+      end
+
+      context "when invalidating" do
+        context "without a valid reason" do
+          it "shows the appropriate error message" do
+            click_on "Invalidate"
+            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_content("Invalidate Store Credit")
+
+            within("dialog") do
+              click_on "Invalidate"
+              expect(page).to have_content("Store Credit reason must be provided")
+              click_on "Cancel"
+            end
+          end
+        end
+
+        context "with a valid reason" do
+          it "invalidates the store credit" do
+            click_on "Invalidate"
+            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_content("Invalidate Store Credit")
+
+            within("dialog") do
+              select "credit given in error", from: "store_credit[store_credit_reason_id]"
+              click_on "Invalidate"
+            end
+
+            expect(page).to have_content("Store credit was successfully invalidated.")
+            expect(page).to have_content("Invalidated")
+            expect(page).to have_content("credit given in error")
+            expect(page).not_to have_content("Edit Amount")
           end
         end
       end

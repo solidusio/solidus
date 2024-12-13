@@ -52,6 +52,7 @@ class SolidusAdmin::Users::StoreCredits::Show::Component < SolidusAdmin::BaseCom
     %w[
       edit_amount_modal
       edit_memo_modal
+      edit_validity_modal
     ]
   end
 
