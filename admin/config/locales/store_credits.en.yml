@@ -11,3 +11,6 @@ en:
       update_memo:
         success: "Store credit was successfully updated."
         failure: "Something went wrong. Store credit could not be updated."
+      invalidate:
+        success: "Store credit was successfully invalidated."
+        failure: "Something went wrong. Store credit could not be invalidated."

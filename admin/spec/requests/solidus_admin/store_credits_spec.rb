@@ -10,6 +10,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
   let(:valid_params) { { amount: 100, store_credit_reason_id: create(:store_credit_reason).id } }
   let(:invalid_params) { { amount: nil } }
   let(:valid_memo_params) { { memo: "Updated memo text" } }
+  let(:invalid_reason_params) { { store_credit_reason_id: nil } }
 
   before do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
@@ -87,6 +88,80 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
       it "displays error messages in the response" do
         put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: invalid_params }
         expect(response.body).to include("must be greater than 0")
+      end
+    end
+  end
+
+  describe "GET /edit_validity" do
+    it "renders the edit_validity template with a 200 OK status" do
+      get solidus_admin.edit_validity_user_store_credit_path(user, store_credit)
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(store_credit.amount.to_s)
+    end
+  end
+
+  describe "PUT /invalidate" do
+    context "with valid parameters" do
+      let(:store_credit_reason) { create(:store_credit_reason) }
+
+      it "invalidates the store credit" do
+        expect {
+          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: { store_credit_reason_id: store_credit_reason.id } }
+        }.to change { store_credit.reload.invalidated? }.from(false).to(true)
+      end
+
+      it "redirects to the store credit show page with a 303 See Other status" do
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: { store_credit_reason_id: store_credit_reason.id } }
+        expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
+        expect(response).to have_http_status(:see_other)
+      end
+
+      it "displays a success flash message" do
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: { store_credit_reason_id: store_credit_reason.id } }
+        follow_redirect!
+        expect(response.body).to include("Store credit was successfully invalidated.")
+      end
+    end
+
+    context "with invalid parameters" do
+      it "does not invalidate the store credit" do
+        expect {
+          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
+        }.not_to change { store_credit.reload.invalidated? }
+      end
+
+      it "renders the edit_validity template with unprocessable_entity status" do
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "displays error messages in the response" do
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
+        expect(response.body).to include("Store Credit reason must be provided")
+      end
+    end
+
+    context "when the database update fails" do
+      before do
+        allow_any_instance_of(Spree::StoreCredit).to receive(:invalidate).and_return(false)
+      end
+
+      it "does not invalidate the store credit" do
+        expect {
+          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        }.not_to change { store_credit.reload.invalidated? }
+      end
+
+      it "redirects to the store credit show page with a 303 See Other status" do
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
+        expect(response).to have_http_status(:see_other)
+      end
+
+      it "displays a failure flash message" do
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        follow_redirect!
+        expect(response.body).to include("Something went wrong. Store credit could not be invalidated.")
       end
     end
   end
