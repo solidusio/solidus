@@ -35,8 +35,8 @@ module SolidusAdmin
     end
 
     def update_amount
-      return unless ensure_amount
-      return unless ensure_store_credit_reason
+      return unless ensure_amount { render_edit_with_errors }
+      return unless ensure_store_credit_reason { render_edit_with_errors }
 
       if @store_credit.update_amount(permitted_store_credit_params[:amount], @store_credit_reason, spree_current_user)
         respond_to do |format|
@@ -100,7 +100,7 @@ module SolidusAdmin
     end
 
     def invalidate
-      return unless ensure_store_credit_reason
+      return unless ensure_store_credit_reason { render_edit_with_errors }
 
       if @store_credit.invalidate(@store_credit_reason, spree_current_user)
         flash[:notice] = t('.success')
@@ -171,7 +171,7 @@ module SolidusAdmin
     def ensure_amount
       if permitted_store_credit_params[:amount].blank?
         @store_credit.errors.add(:amount, :greater_than, count: 0, value: permitted_store_credit_params[:amount])
-        render_edit_with_errors
+        yield if block_given? # Block is for error template rendering on a per-action basis so this can be re-used.
         return false
       end
       true
@@ -182,7 +182,7 @@ module SolidusAdmin
 
       if @store_credit_reason.blank?
         @store_credit.errors.add(:store_credit_reason_id, "Store Credit reason must be provided")
-        render_edit_with_errors
+        yield if block_given? # Block is for error template rendering on a per-action basis so this can be re-used.
         return false
       end
       true
