@@ -98,7 +98,7 @@ describe "Properties", :js, type: :feature do
     it "shows validation errors" do
       visit "/admin/properties"
       find_row("Color").click
-
+      expect(page).to have_field("Name", with: "Color")
       fill_in "Name", with: ""
       click_on "Update Property"
 
