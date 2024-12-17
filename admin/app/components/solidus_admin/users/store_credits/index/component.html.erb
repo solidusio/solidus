@@ -4,7 +4,11 @@
     <%= page_header_title(t(".title", email: @user.email)) %>
 
     <%= page_header_actions do %>
-      <%= render component("ui/button").new(tag: :a, text: t(".add_store_credit"), href: spree.new_admin_user_store_credit_url(user_id: @user.id, only_path: true)) %>
+      <%= render component("ui/button").new(
+        "data-action": "click->#{stimulus_id}#actionButtonClicked",
+        "data-#{stimulus_id}-url-param": solidus_admin.new_user_store_credit_path(user_id: @user.id, _turbo_frame: :new_store_credit_modal),
+        text: t(".add_store_credit"),
+      )%>
     <% end %>
   <% end %>
 
@@ -37,7 +41,11 @@
       <% else %>
         <%= render component('ui/panel').new(title: t(".store_credit")) do %>
           <%= t(".no_credits_found") %>
-          <%= render component("ui/button").new(tag: :a, text: t(".create_one"), href: spree.new_admin_user_store_credit_url(user_id: @user.id, only_path: true)) %>
+          <%= render component("ui/button").new(
+            "data-action": "click->#{stimulus_id}#actionButtonClicked",
+            "data-#{stimulus_id}-url-param": solidus_admin.new_user_store_credit_path(user_id: @user.id, _turbo_frame: :new_store_credit_modal),
+            text: t(".create_one"),
+          )%>
         <% end %>
       <% end %>
     <% end %>
@@ -45,5 +53,9 @@
     <%= page_with_sidebar_aside do %>
       <%= render component("users/stats").new(user: @user) %>
     <% end %>
+  <% end %>
+
+  <% turbo_frames.each do |frame| %>
+    <%= turbo_frame_tag frame %>
   <% end %>
 <% end %>

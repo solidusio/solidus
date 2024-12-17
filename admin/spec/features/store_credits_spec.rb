@@ -4,6 +4,9 @@ require "spec_helper"
 
 describe "StoreCredits", :js, type: :feature do
   let(:admin) { create(:admin_user, email: "admin@example.com") }
+  let!(:store_credit_reason) { create(:store_credit_reason, name: "credit given in error") }
+  let!(:store_credit_category) { create(:store_credit_category, name: "Gift Card") }
+  let!(:store_credit_type) { create(:primary_credit_type) }
 
   before do
     sign_in admin
@@ -27,11 +30,40 @@ describe "StoreCredits", :js, type: :feature do
     it "shows the appropriate content" do
       expect(page).to have_content("No Store Credits found.")
     end
+
+    it "allows creation of a new store credit" do
+      click_on "Create One"
+
+      expect(page).to have_selector("dialog", wait: 5)
+      expect(page).to have_content("New Store Credit")
+
+      within("dialog") do
+        fill_in "Amount", with: ""
+        select "Gift Card", from: "store_credit[category_id]"
+        click_on "Create"
+        expect(page).to have_content("must be greater than 0")
+        click_on "Cancel"
+      end
+
+      click_on "Create One"
+
+      expect(page).to have_selector("dialog", wait: 5)
+      expect(page).to have_content("New Store Credit")
+
+      within("dialog") do
+        fill_in "Amount", with: "666.66"
+        select "Gift Card", from: "store_credit[category_id]"
+        fill_in "Memo", with: "A brand new store credit, how nice!"
+        click_on "Create"
+      end
+
+      expect(page).to have_content("Store credit was successfully created.")
+      expect(page).to have_content("Current balance: $666.66")
+    end
   end
 
   context "when a user has store credits" do
     let!(:store_credit) { create(:store_credit, amount: 199.00, currency: "USD") }
-    let!(:store_credit_reason) { create(:store_credit_reason, name: "credit given in error") }
 
     before do
       store_credit.user.update(email: "customer@example.com")
@@ -61,8 +93,6 @@ describe "StoreCredits", :js, type: :feature do
     end
 
     context "when clicking through to a single store credit" do
-      let!(:store_credit_reason) { create(:store_credit_reason, name: "credit given in error") }
-
       before do
         stub_authorization!(admin)
         find_row("$199.00").click

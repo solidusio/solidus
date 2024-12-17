@@ -6,6 +6,7 @@ module SolidusAdmin
     before_action :set_store_credit, only: [:show, :edit_amount, :update_amount, :edit_memo, :update_memo, :edit_validity, :invalidate]
     before_action :set_store_credit_reasons, only: [:edit_amount, :update_amount, :edit_validity, :invalidate]
     before_action :set_store_credit_events, only: [:show, :edit_amount, :edit_memo, :edit_validity]
+    before_action :set_store_credit_categories, only: [:new]
 
     def index
       @store_credits = Spree::StoreCredit.where(user_id: @user.id).order(id: :desc)
@@ -18,6 +19,48 @@ module SolidusAdmin
     def show
       respond_to do |format|
         format.html { render component("users/store_credits/show").new(user: @user, store_credit: @store_credit, events: @store_credit_events) }
+      end
+    end
+
+    def new
+      @store_credit ||= Spree::StoreCredit.new
+
+      respond_to do |format|
+        format.html {
+          render component("users/store_credits/new").new(
+            user: @user,
+            store_credit: @store_credit,
+            categories: @store_credit_categories
+          )
+        }
+      end
+    end
+
+    def create
+      @store_credit = @user.store_credits.build(
+        permitted_store_credit_params.merge({
+          created_by: spree_current_user,
+          action_originator: spree_current_user
+        })
+      )
+
+      return unless ensure_amount { render_new_with_errors }
+      return unless ensure_store_credit_category { render_new_with_errors }
+
+      if @store_credit.save
+        respond_to do |format|
+          flash[:notice] = t('.success')
+
+          format.html do
+            redirect_to solidus_admin.user_store_credits_path(@user), status: :see_other
+          end
+
+          format.turbo_stream do
+            render turbo_stream: '<turbo-stream action="refresh" />'
+          end
+        end
+      else
+        render_new_with_errors
       end
     end
 
@@ -135,19 +178,39 @@ module SolidusAdmin
       @store_credit_reasons = Spree::StoreCreditReason.active.order(:name)
     end
 
+    def set_store_credit_categories
+      @store_credit_categories = Spree::StoreCreditCategory.all.order(:name)
+    end
+
     def set_store_credit_events
       @store_credit_events = @store_credit.store_credit_events.chronological
     end
 
     def permitted_store_credit_params
       permitted_params = [:amount, :currency, :category_id, :memo]
+      permitted_params << :category_id if action_name.to_sym == :create
       permitted_params << :store_credit_reason_id if [:update_amount, :invalidate].include?(action_name.to_sym)
 
       params.require(:store_credit).permit(permitted_params).merge(created_by: spree_current_user)
     end
 
+    def render_new_with_errors
+      set_store_credit_categories
+
+      respond_to do |format|
+        format.html do
+          render component("users/store_credits/new").new(
+            user: @user,
+            store_credit: @store_credit,
+            categories: @store_credit_categories
+          ),
+            status: :unprocessable_entity
+        end
+      end
+    end
+
     def render_edit_with_errors
-      @store_credit_events = @store_credit.store_credit_events.chronological
+      set_store_credit_events
 
       template = if action_name.to_sym == :invalidate
         "edit_validity"
@@ -182,6 +245,17 @@ module SolidusAdmin
 
       if @store_credit_reason.blank?
         @store_credit.errors.add(:store_credit_reason_id, "Store Credit reason must be provided")
+        yield if block_given? # Block is for error template rendering on a per-action basis so this can be re-used.
+        return false
+      end
+      true
+    end
+
+    def ensure_store_credit_category
+      @store_credit_category = Spree::StoreCreditCategory.find_by(id: permitted_store_credit_params[:category_id])
+
+      if @store_credit_category.blank?
+        @store_credit.errors.add(:category_id, "Store Credit category must be provided")
         yield if block_given? # Block is for error template rendering on a per-action basis so this can be re-used.
         return false
       end

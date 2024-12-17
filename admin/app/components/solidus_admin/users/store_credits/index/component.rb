@@ -42,6 +42,12 @@ class SolidusAdmin::Users::StoreCredits::Index::Component < SolidusAdmin::BaseCo
     ]
   end
 
+  def turbo_frames
+    %w[
+      new_store_credit_modal
+    ]
+  end
+
   def rows
     @store_credits
   end
