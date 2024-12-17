@@ -5,6 +5,7 @@ module SolidusAdmin
     before_action :set_user
     before_action :set_store_credit, only: [:show, :edit_amount, :update_amount, :edit_memo, :update_memo, :edit_validity, :invalidate]
     before_action :set_store_credit_reasons, only: [:edit_amount, :update_amount, :edit_validity, :invalidate]
+    before_action :set_store_credit_events, only: [:show, :edit_amount, :edit_memo, :edit_validity]
 
     def index
       @store_credits = Spree::StoreCredit.where(user_id: @user.id).order(id: :desc)
@@ -15,16 +16,12 @@ module SolidusAdmin
     end
 
     def show
-      @store_credit_events = @store_credit.store_credit_events.chronological
-
       respond_to do |format|
         format.html { render component("users/store_credits/show").new(user: @user, store_credit: @store_credit, events: @store_credit_events) }
       end
     end
 
     def edit_amount
-      @store_credit_events = @store_credit.store_credit_events.chronological
-
       respond_to do |format|
         format.html {
           render component("users/store_credits/edit_amount").new(
@@ -59,8 +56,6 @@ module SolidusAdmin
     end
 
     def edit_memo
-      @store_credit_events = @store_credit.store_credit_events.chronological
-
       respond_to do |format|
         format.html {
           render component("users/store_credits/edit_memo").new(
@@ -92,8 +87,6 @@ module SolidusAdmin
     end
 
     def edit_validity
-      @store_credit_events = @store_credit.store_credit_events.chronological
-
       respond_to do |format|
         format.html {
           render component("users/store_credits/edit_validity").new(
@@ -142,6 +135,10 @@ module SolidusAdmin
 
     def set_store_credit_reasons
       @store_credit_reasons = Spree::StoreCreditReason.active.order(:name)
+    end
+
+    def set_store_credit_events
+      @store_credit_events = @store_credit.store_credit_events.chronological
     end
 
     def permitted_store_credit_params
