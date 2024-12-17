@@ -111,8 +111,6 @@ module SolidusAdmin
       end
 
       respond_to do |format|
-        flash[:notice] = t('.success')
-
         format.html do
           redirect_to solidus_admin.user_store_credit_path(@user, @store_credit), status: :see_other
         end
