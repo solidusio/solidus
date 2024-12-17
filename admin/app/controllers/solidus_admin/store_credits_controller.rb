@@ -51,7 +51,7 @@ module SolidusAdmin
           end
         end
       else
-        render_edit_with_errors and return
+        render_edit_with_errors
       end
     end
 
