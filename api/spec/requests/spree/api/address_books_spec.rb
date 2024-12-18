@@ -59,7 +59,13 @@ module Spree::Api
             put "/api/users/#{user.id}/address_book",
               params:  { address_book: harry_address_attributes.merge('id' => address.id) },
               headers: { Authorization: 'Bearer galleon' }
-          }.to change { Spree::UserAddress.count }.from(1).to(2)
+          }.to change { Spree::Address.count }.from(1).to(2)
+
+          expect {
+            put "/api/users/#{user.id}/address_book",
+              params:  { address_book: harry_address_attributes.merge('id' => address.id) },
+              headers: { Authorization: 'Bearer galleon' }
+          }.not_to change { Spree::UserAddress.count }.from(1)
 
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).first).to include(harry_address_attributes)
@@ -119,7 +125,7 @@ module Spree::Api
           end
         end
 
-        it 'archives my address' do
+        it 'removes the address from my address book' do
           address = create(:address)
           user = create(:user, spree_api_key: 'galleon')
           user.save_in_address_book(address.attributes, false)
@@ -168,13 +174,19 @@ module Spree::Api
             put "/api/users/#{other_user.id}/address_book",
             params:  { address_book: updated_harry_address.merge('id' => address.id) },
             headers: { Authorization: 'Bearer galleon' }
-          }.to change { Spree::UserAddress.count }.from(1).to(2)
+          }.to change { Spree::Address.count }.from(1).to(2)
+
+          expect {
+            put "/api/users/#{other_user.id}/address_book",
+            params:  { address_book: updated_harry_address.merge('id' => address.id) },
+            headers: { Authorization: 'Bearer galleon' }
+          }.not_to change { Spree::UserAddress.count }.from(1)
 
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).first).to include(updated_harry_address)
         end
 
-        it "archives another user's address" do
+        it "removes the address from the other user's address book" do
           address = create(:address)
           other_user = create(:user)
           other_user.save_in_address_book(address.attributes, false)
