@@ -2,6 +2,8 @@
 
 module Spree
   class StockMovement < Spree::Base
+    include Metadata
+
     belongs_to :stock_item, class_name: 'Spree::StockItem', inverse_of: :stock_movements, optional: true
     belongs_to :originator, polymorphic: true, optional: true
     has_one :variant, through: :stock_item

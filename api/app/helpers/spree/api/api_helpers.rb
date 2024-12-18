@@ -64,6 +64,14 @@ module Spree
         end
       end
 
+      def product_attributes
+        if can?(:admin, Spree::Product)
+          Spree::Api::Config.product_attributes + [:private_metadata]
+        else
+          Spree::Api::Config.product_attributes
+        end
+      end
+
       def total_on_hand_for(object)
         object.total_on_hand.finite? ? object.total_on_hand : nil
       end
