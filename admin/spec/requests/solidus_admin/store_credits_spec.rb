@@ -11,6 +11,38 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
   let(:invalid_params) { { amount: nil } }
   let(:valid_memo_params) { { memo: "Updated memo text" } }
   let(:invalid_reason_params) { { store_credit_reason_id: nil } }
+  let(:valid_create_params) do
+    {
+      store_credit: {
+        amount: 150,
+        currency: "USD",
+        category_id: create(:store_credit_category).id,
+        memo: "Initial store credit"
+      }
+    }
+  end
+
+  let(:invalid_create_amount_params) do
+    {
+      store_credit: {
+        amount: nil,
+        currency: "USD",
+        category_id: create(:store_credit_category).id,
+        memo: "Invalid store credit"
+      }
+    }
+  end
+
+  let(:invalid_create_category_params) do
+    {
+      store_credit: {
+        amount: 100,
+        currency: "USD",
+        category_id: nil,
+        memo: "Invalid store credit"
+      }
+    }
+  end
 
   before do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
@@ -21,6 +53,65 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
       get solidus_admin.user_store_credits_path(user)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(store_credit.amount.to_s)
+    end
+  end
+
+  describe "GET /new" do
+    it "renders the new store credit template with a 200 OK status" do
+      get solidus_admin.new_user_store_credit_path(user)
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(store_credit.amount.to_s)
+    end
+  end
+
+  describe "POST /create" do
+    context "with valid parameters" do
+      it "creates a new store credit" do
+        expect {
+          post solidus_admin.user_store_credits_path(user), params: valid_create_params
+        }.to change(Spree::StoreCredit, :count).by(1)
+      end
+
+      it "redirects to the store credits index page with a success message" do
+        post solidus_admin.user_store_credits_path(user), params: valid_create_params
+        expect(response).to redirect_to(solidus_admin.user_store_credits_path(user))
+        follow_redirect!
+        expect(response.body).to include("Store credit was successfully created.")
+      end
+
+      it "returns a turbo_stream response when requested" do
+        post solidus_admin.user_store_credits_path(user, format: :turbo_stream), params: valid_create_params
+        expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+        expect(response.body).to include('<turbo-stream action="refresh" />')
+      end
+    end
+
+    context "with invalid amount parameters" do
+      it "does not create a new store credit" do
+        expect {
+          post solidus_admin.user_store_credits_path(user), params: invalid_create_amount_params
+        }.not_to change(Spree::StoreCredit, :count)
+      end
+
+      it "renders the new template with amount errors" do
+        post solidus_admin.user_store_credits_path(user), params: invalid_create_amount_params
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include("must be greater than 0")
+      end
+    end
+
+    context "with invalid category parameters" do
+      it "does not create a new store credit" do
+        expect {
+          post solidus_admin.user_store_credits_path(user), params: invalid_create_category_params
+        }.not_to change(Spree::StoreCredit, :count)
+      end
+
+      it "renders the new template with category errors" do
+        post solidus_admin.user_store_credits_path(user), params: invalid_create_category_params
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include("Store Credit category must be provided")
+      end
     end
   end
 
@@ -233,6 +324,15 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
       it "adds an error when the store credit reason is blank" do
         put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: { amount: 100, store_credit_reason_id: nil } }
         expect(response.body).to include("Store Credit reason must be provided")
+      end
+    end
+
+    describe "private methods" do
+      describe "#ensure_store_credit_category" do
+        it "adds an error when category_id is blank" do
+          post solidus_admin.user_store_credits_path(user), params: { store_credit: { amount: 100, category_id: nil } }
+          expect(response.body).to include("Store Credit category must be provided")
+        end
       end
     end
   end
