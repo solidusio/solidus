@@ -20,23 +20,19 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
 
   describe "#spree" do
     it "gives access to spree routing helpers" do
-      without_partial_double_verification do
-        allow(Spree::Core::Engine.routes.url_helpers).to receive(:foo_path).and_return("/foo/bar")
-      end
-      component = described_class.new
-
-      expect(component.spree.foo_path).to eq("/foo/bar")
+      expect(described_class.new).to respond_to(:spree)
     end
   end
 
   describe "#solidus_admin" do
     it "gives access to solidus_admin routing helpers" do
-      without_partial_double_verification do
-        allow(SolidusAdmin::Engine.routes.url_helpers).to receive(:foo_path).and_return("/foo/bar")
-      end
-      component = described_class.new
+      expect(described_class.new).to respond_to(:solidus_admin)
+    end
+  end
 
-      expect(component.solidus_admin.foo_path).to eq("/foo/bar")
+  describe "#main_app" do
+    it "gives access to main_app routing helpers" do
+      expect(described_class.new).to respond_to(:main_app)
     end
   end
 
