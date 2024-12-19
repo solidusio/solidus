@@ -20,6 +20,10 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
   def filters; []; end
   def columns; []; end
 
+  def self.stimulus_id
+    "ui--pages--index"
+  end
+
   def initialize(page:)
     @page = page
     @tabs = tabs&.map { |tab| Tab.new(**tab) }

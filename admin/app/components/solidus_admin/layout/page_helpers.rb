@@ -2,7 +2,7 @@
 
 module SolidusAdmin::Layout::PageHelpers
   def page(**attrs, &block)
-    tag.div(capture(&block), class: "px-4 relative", "data-controller": stimulus_id, **attrs) +
+    tag.div(capture(&block), class: "px-4 relative", "data-controller": attrs.fetch(:stimulus_id, stimulus_id), **attrs) +
       tag.div(render(component("layout/feedback").new), class: "flex justify-center py-10")
   end
 
