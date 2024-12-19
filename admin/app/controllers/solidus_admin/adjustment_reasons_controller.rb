@@ -17,10 +17,8 @@ module SolidusAdmin
     def new
       @adjustment_reason = Spree::AdjustmentReason.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('adjustment_reasons/new').new(page: @page, adjustment_reason: @adjustment_reason) }
+        format.html { render component('adjustment_reasons/new').new(adjustment_reason: @adjustment_reason) }
       end
     end
 
@@ -40,11 +38,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('adjustment_reasons/new').new(page: @page, adjustment_reason: @adjustment_reason)
+            page_component = component('adjustment_reasons/new').new(adjustment_reason: @adjustment_reason)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -52,10 +48,10 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('adjustment_reasons/edit').new(page: @page, adjustment_reason: @adjustment_reason) }
+        format.html do
+          render component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason)
+        end
       end
     end
 
@@ -73,11 +69,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('adjustment_reasons/edit').new(page: @page, adjustment_reason: @adjustment_reason)
+            page_component = component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason)
             render page_component, status: :unprocessable_entity
           end
         end
