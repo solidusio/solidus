@@ -5,35 +5,20 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
     Spree::ShippingCategory
   end
 
-  def actions
-    render component("ui/button").new(
-      tag: :a,
-      text: t('.add'),
-      href: spree.new_admin_shipping_category_path,
-      icon: "add-line",
-      class: "align-self-end w-full",
-    )
-  end
-
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_shipping_category_path, data: { turbo_frame: :new_shipping_category_modal },
+      href: solidus_admin.new_shipping_category_path, data: {
+        action: "click->ui--pages--index#openModal"
+      },
       icon: "add-line",
       class: "align-self-end w-full",
     )
   end
 
-  def turbo_frames
-    %w[
-      new_shipping_category_modal
-      edit_shipping_category_modal
-    ]
-  end
-
-  def row_url(shipping_category)
-    spree.edit_admin_shipping_category_path(shipping_category, _turbo_frame: :edit_shipping_category_modal)
+  def edit_url(shipping_category)
+    spree.edit_admin_shipping_category_path(shipping_category)
   end
 
   def search_key
@@ -57,7 +42,14 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
 
   def columns
     [
-      :name
+      {
+        header: :name,
+        data: ->(shipping_category) do
+          link_to shipping_category.name, edit_url(shipping_category),
+            data: { action: "click->ui--pages--index#openModal" },
+            class: "body-link"
+        end
+      },
     ]
   end
 end

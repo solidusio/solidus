@@ -12,7 +12,9 @@ module SolidusAdmin
       set_index_page
 
       respond_to do |format|
-        format.html { render component('shipping_categories/new').new(page: @page, shipping_category: @shipping_category) }
+        format.html do
+          render component('shipping_categories/new').new(page: @page, shipping_category: @shipping_category), layout: false
+        end
       end
     end
 
@@ -57,7 +59,9 @@ module SolidusAdmin
       set_index_page
 
       respond_to do |format|
-        format.html { render component('shipping_categories/edit').new(page: @page, shipping_category: @shipping_category) }
+        format.html do
+          render component('shipping_categories/edit').new(page: @page, shipping_category: @shipping_category), layout: false
+        end
       end
     end
 

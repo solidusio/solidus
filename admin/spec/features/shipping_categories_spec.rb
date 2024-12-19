@@ -65,15 +65,15 @@ describe "Shipping Categories", :js, type: :feature do
     before do
       Spree::ShippingCategory.create(name: "Letter Mail")
       visit "/admin/shipping_categories#{query}"
-      find_row("Letter Mail").click
-      expect(page).to have_css("dialog", wait: 5)
+      click_on "Letter Mail"
+      expect(page).to have_css("dialog")
       expect(page).to have_content("Edit Shipping Category")
       expect(page).to be_axe_clean
     end
 
     it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
-      expect(page).not_to have_selector("dialog", wait: 5)
+      expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
     end
 
