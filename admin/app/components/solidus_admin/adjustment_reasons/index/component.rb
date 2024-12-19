@@ -47,8 +47,22 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
 
   def columns
     [
-      :name,
-      :code,
+      {
+        header: :name,
+        data: ->(adjustment_reason) do
+          link_to adjustment_reason.name, row_url(adjustment_reason),
+            class: 'body-link',
+            data: { turbo_frame: :edit_adjustment_reason_modal, turbo_prefetch: false }
+        end
+      },
+      {
+        header: :code,
+        data: ->(adjustment_reason) do
+          link_to adjustment_reason.code, row_url(adjustment_reason),
+            class: 'body-link',
+            data: { turbo_frame: :edit_adjustment_reason_modal, turbo_prefetch: false }
+        end
+      },
       {
         header: :active,
         data: ->(adjustment_reason) do

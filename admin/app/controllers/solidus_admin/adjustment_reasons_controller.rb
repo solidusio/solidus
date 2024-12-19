@@ -6,6 +6,8 @@ module SolidusAdmin
 
     before_action :set_adjustment_reason, only: %i[edit update]
 
+    turbo_actions :edit
+
     def index
       set_index_page
 
@@ -52,10 +54,10 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('adjustment_reasons/edit').new(page: @page, adjustment_reason: @adjustment_reason) }
+        format.html do
+          render component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason), layout: false
+        end
       end
     end
 
@@ -77,7 +79,7 @@ module SolidusAdmin
 
         respond_to do |format|
           format.html do
-            page_component = component('adjustment_reasons/edit').new(page: @page, adjustment_reason: @adjustment_reason)
+            page_component = component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason)
             render page_component, status: :unprocessable_entity
           end
         end
