@@ -17,7 +17,8 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_adjustment_reason_path, data: { turbo_frame: :new_adjustment_reason_modal },
+      href: solidus_admin.new_adjustment_reason_path(**search_filter_params),
+      data: { turbo_frame: :resource_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -25,13 +26,12 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
 
   def turbo_frames
     %w[
-      new_adjustment_reason_modal
-      edit_adjustment_reason_modal
+      resource_modal
     ]
   end
 
-  def row_url(adjustment_reason)
-    spree.edit_admin_adjustment_reason_path(adjustment_reason, _turbo_frame: :edit_adjustment_reason_modal)
+  def edit_path(adjustment_reason)
+    spree.edit_admin_adjustment_reason_path(adjustment_reason, **search_filter_params)
   end
 
   def batch_actions
@@ -47,8 +47,22 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
 
   def columns
     [
-      :name,
-      :code,
+      {
+        header: :name,
+        data: ->(adjustment_reason) do
+          link_to adjustment_reason.name, edit_path(adjustment_reason),
+            class: 'body-link',
+            data: { turbo_frame: :resource_modal }
+        end
+      },
+      {
+        header: :code,
+        data: ->(adjustment_reason) do
+          link_to adjustment_reason.code, edit_path(adjustment_reason),
+            class: 'body-link',
+            data: { turbo_frame: :resource_modal }
+        end
+      },
       {
         header: :active,
         data: ->(adjustment_reason) do
