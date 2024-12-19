@@ -36,9 +36,9 @@ export default class extends Controller {
     const shouldSetSortable = this.sortableValue && this.modeValue !== "batch" && this.modeValue !== "search"
 
     if (shouldSetSortable) {
-      this.tableBodyTarget.setAttribute('data-controller', 'sortable')
+      this.tableBodyTarget.setAttribute("data-controller", "sortable")
     } else {
-      this.tableBodyTarget.removeAttribute('data-controller')
+      this.tableBodyTarget.removeAttribute("data-controller")
     }
   }
 
@@ -54,13 +54,13 @@ export default class extends Controller {
   }
 
   clearSearch() {
-    this.searchFieldTarget.value = ''
+    this.searchFieldTarget.value = ""
     this.search()
   }
 
   resetSearchAndFilters() {
     if (this.hasFilterToolbarTarget) {
-      this.filterToolbarTarget.querySelectorAll('fieldset').forEach(fieldset => fieldset.disabled = true)
+      this.filterToolbarTarget.querySelectorAll("fieldset").forEach((fieldset) => (fieldset.disabled = true))
     }
 
     this.searchFieldTarget.disabled = true
@@ -70,7 +70,7 @@ export default class extends Controller {
   selectRow(event) {
     if (this.checkboxTargets.some((checkbox) => checkbox.checked)) {
       this.modeValue = "batch"
-    } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
+    } else if (this.hasSearchFieldTarget && this.searchFieldTarget.value !== "") {
       this.modeValue = "search"
     } else if (this.hasScopesToolbarTarget) {
       this.modeValue = "scopes"
@@ -84,7 +84,7 @@ export default class extends Controller {
   selectAllRows(event) {
     if (event.target.checked) {
       this.modeValue = "batch"
-    } else if (this.hasSearchFieldTarget && (this.searchFieldTarget.value !== '')) {
+    } else if (this.hasSearchFieldTarget && this.searchFieldTarget.value !== "") {
       this.modeValue = "search"
     } else if (this.hasScopesToolbarTarget) {
       this.modeValue = "scopes"
@@ -106,10 +106,10 @@ export default class extends Controller {
     } else {
       const url = new URL(event.params.url, "http://dummy.com")
       const params = new URLSearchParams(url.search)
-      const frameId = params.get('_turbo_frame')
+      const frameId = params.get("_turbo_frame")
       const frame = frameId ? { frame: frameId } : {}
       // remove the custom _turbo_frame param from url search:
-      params.delete('_turbo_frame')
+      params.delete("_turbo_frame")
       url.search = params.toString()
 
       window.Turbo.visit(url.pathname + url.search, frame)
@@ -117,7 +117,7 @@ export default class extends Controller {
   }
 
   toggleCheckbox(row) {
-    const checkbox = this.checkboxTargets.find(selection => row.contains(selection))
+    const checkbox = this.checkboxTargets.find((selection) => row.contains(selection))
 
     if (checkbox) {
       checkbox.checked = !checkbox.checked
@@ -131,14 +131,10 @@ export default class extends Controller {
 
   confirmAction(event) {
     const message = event.params.message
+      .replace("${count}", this.selectedRows().length)
       .replace(
-        "${count}",
-        this.selectedRows().length
-      ).replace(
         "${resource}",
-        this.selectedRows().length > 1 ?
-        event.params.resourcePlural :
-        event.params.resourceSingular
+        this.selectedRows().length > 1 ? event.params.resourcePlural : event.params.resourceSingular
       )
 
     if (!confirm(message)) {
@@ -167,7 +163,7 @@ export default class extends Controller {
 
     // Update the rows background color
     this.checkboxTargets.filter((checkbox) =>
-      checkbox.closest("tr").classList.toggle(this.selectedRowClass, checkbox.checked),
+      checkbox.closest("tr").classList.toggle(this.selectedRowClass, checkbox.checked)
     )
 
     // Update the selected rows count

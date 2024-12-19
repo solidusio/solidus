@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static values = {
@@ -6,11 +6,10 @@ export default class extends Controller {
   }
 
   connect() {
-    if (this.customValidityValue)
-      this.element.setCustomValidity(this.customValidityValue)
+    if (this.customValidityValue) this.element.setCustomValidity(this.customValidityValue)
   }
 
   clearCustomValidity() {
-    this.element.setCustomValidity('')
+    this.element.setCustomValidity("")
   }
 }
