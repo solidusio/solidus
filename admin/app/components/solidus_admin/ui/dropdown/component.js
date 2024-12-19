@@ -1,5 +1,5 @@
-import { Controller } from '@hotwired/stimulus'
-import { useClickOutside } from 'stimulus-use'
+import { Controller } from "@hotwired/stimulus"
+import { useClickOutside } from "stimulus-use"
 
 export default class extends Controller {
   connect() {
@@ -11,6 +11,6 @@ export default class extends Controller {
   }
 
   close() {
-    this.element.removeAttribute('open')
+    this.element.removeAttribute("open")
   }
 }

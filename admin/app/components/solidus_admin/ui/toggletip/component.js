@@ -1,30 +1,30 @@
-import { Controller } from '@hotwired/stimulus'
-import { useClickOutside } from 'stimulus-use'
+import { Controller } from "@hotwired/stimulus"
+import { useClickOutside } from "stimulus-use"
 
 export default class extends Controller {
-  static targets = ['bubble']
+  static targets = ["bubble"]
 
-  connect () {
+  connect() {
     useClickOutside(this)
     this.open = false
   }
 
-  clickOutside () {
+  clickOutside() {
     this.close()
   }
 
-  toggle (e) {
+  toggle(e) {
     e.preventDefault()
     this.open = !this.open
     this.render()
   }
 
-  open () {
+  open() {
     this.open = true
     this.render()
   }
 
-  close () {
+  close() {
     this.open = false
     this.render()
   }
@@ -35,10 +35,12 @@ export default class extends Controller {
 
     if (needsPositioning) {
       const bubbleRect = this.bubbleTarget.getBoundingClientRect()
-      if (bubbleRect.right  > window.innerWidth) this.bubbleTarget.style.left = `${window.innerWidth - bubbleRect.width}px`
-      if (bubbleRect.bottom > window.innerHeight) this.bubbleTarget.style.top = `${window.innerHeight - bubbleRect.height}px`
-      if (bubbleRect.left < 0) this.bubbleTarget.style.left = '0px'
-      if (bubbleRect.top < 0) this.bubbleTarget.style.top = '0px'
+      if (bubbleRect.right > window.innerWidth)
+        this.bubbleTarget.style.left = `${window.innerWidth - bubbleRect.width}px`
+      if (bubbleRect.bottom > window.innerHeight)
+        this.bubbleTarget.style.top = `${window.innerHeight - bubbleRect.height}px`
+      if (bubbleRect.left < 0) this.bubbleTarget.style.left = "0px"
+      if (bubbleRect.top < 0) this.bubbleTarget.style.top = "0px"
     }
   }
 }
