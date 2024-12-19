@@ -103,7 +103,7 @@ export default class extends Controller {
 
     if (this.modeValue === "batch") {
       this.toggleCheckbox(event.currentTarget)
-    } else {
+    } else if (event.params.url) {
       const url = new URL(event.params.url, "http://dummy.com")
       const params = new URLSearchParams(url.search)
       const frameId = params.get("_turbo_frame")
