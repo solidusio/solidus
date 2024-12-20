@@ -9,10 +9,8 @@ module SolidusAdmin
     def new
       @shipping_category = Spree::ShippingCategory.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('shipping_categories/new').new(page: @page, shipping_category: @shipping_category) }
+        format.html { render component('shipping_categories/new').new(shipping_category: @shipping_category) }
       end
     end
 
@@ -34,11 +32,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('shipping_categories/new').new(page: @page, shipping_category: @shipping_category)
+            page_component = component('shipping_categories/new').new(shipping_category: @shipping_category)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -54,10 +50,8 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('shipping_categories/edit').new(page: @page, shipping_category: @shipping_category) }
+        format.html { render component('shipping_categories/edit').new(shipping_category: @shipping_category) }
       end
     end
 
@@ -75,11 +69,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('shipping_categories/edit').new(page: @page, shipping_category: @shipping_category)
+            page_component = component('shipping_categories/edit').new(shipping_category: @shipping_category)
             render page_component, status: :unprocessable_entity
           end
         end

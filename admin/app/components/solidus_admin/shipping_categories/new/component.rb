@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::ShippingCategories::New::Component < SolidusAdmin::ShippingCategories::Index::Component
-  def initialize(page:, shipping_category:)
-    @page = page
+  def initialize(shipping_category:)
     @shipping_category = shipping_category
   end
 
