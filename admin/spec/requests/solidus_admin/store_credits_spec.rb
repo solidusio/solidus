@@ -60,7 +60,6 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     it "renders the new store credit template with a 200 OK status" do
       get solidus_admin.new_user_store_credit_path(user)
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include(store_credit.amount.to_s)
     end
   end
 

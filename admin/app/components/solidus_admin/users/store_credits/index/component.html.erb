@@ -5,9 +5,14 @@
 
     <%= page_header_actions do %>
       <%= render component("ui/button").new(
-        "data-action": "click->#{stimulus_id}#actionButtonClicked",
-        "data-#{stimulus_id}-url-param": solidus_admin.new_user_store_credit_path(user_id: @user.id, _turbo_frame: :new_store_credit_modal),
+        tag: :a,
+        href: solidus_admin.new_user_store_credit_path(user_id: @user.id),
+        data: {
+          turbo_frame: :new_store_credit_modal,
+          turbo_prefetch: false
+        },
         text: t(".add_store_credit"),
+        icon: "add-line"
       )%>
     <% end %>
   <% end %>
