@@ -173,7 +173,7 @@ module Spree
             allow(order_adjuster).to receive(:call) { raise NotImplementedError }
             allow(Spree::InMemoryOrderUpdater::InMemoryOrderAdjuster).to receive(:new).and_return(order_adjuster)
 
-            expect{described_class.new(order).recalculate(persist: false)}
+            expect{ described_class.new(order).recalculate(persist: false) }
               .to raise_error(NotImplementedError)
           end
         end

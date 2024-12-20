@@ -3,6 +3,7 @@
 module Spree
   class InMemoryOrderUpdater
     attr_reader :order
+
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :quantity, to: :order
 
     def initialize(order)
@@ -26,7 +27,8 @@ module Spree
           update_shipments
           recalculate_shipment_state
         end
-        Spree::Bus.publish :order_recalculated, order: order
+
+        Spree::Bus.publish(:order_recalculated, order:)
 
         persist_totals if persist
       end
@@ -238,8 +240,8 @@ module Spree
         order.state_changes.new(
           previous_state: old_state,
           next_state:     new_state,
-          name:           name,
-          user_id:        order.user_id
+          user_id:        order.user_id,
+          name:
         )
       end
     end

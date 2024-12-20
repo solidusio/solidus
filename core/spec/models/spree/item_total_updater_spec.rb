@@ -7,7 +7,7 @@ RSpec.describe Spree::ItemTotalUpdater do
     subject { described_class.recalculate(item) }
 
     let(:item) { create :line_item, adjustments: [adjustment] }
-    let(:adjustment) { create :adjustment, amount: 1}
+    let(:adjustment) { create :adjustment, amount: 1 }
 
     it "sets the adjustment total on the item" do
       expect { subject }
