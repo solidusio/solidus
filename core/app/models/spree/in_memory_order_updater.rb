@@ -120,8 +120,9 @@ module Spree
       # It also fits the criteria for sales tax as outlined here:
       # http://www.boe.ca.gov/formspubs/pub113/
       update_promotions(persist:)
-      update_taxes
-      update_item_totals(persist:)
+      update_tax_adjustments
+      recalculate_item_totals
+      persist_changes_to_items if persist
     end
 
     # Updates the following Order total values:
@@ -163,40 +164,32 @@ module Spree
       end.new(order).call
     end
 
-    def update_taxes
+    # TODO: split implementation based on 'persist'
+    def update_tax_adjustments
       Spree::Config.tax_adjuster_class.new(order).adjust!
-
-      [*line_items, *shipments].each do |item|
-        tax_adjustments = item.adjustments.select(&:tax?)
-        # Tax adjustments come in not one but *two* exciting flavours:
-        # Included & additional
-
-        # Included tax adjustments are those which are included in the price.
-        # These ones should not affect the eventual total price.
-        #
-        # Additional tax adjustments are the opposite, affecting the final total.
-        item.included_tax_total   = tax_adjustments.select(&:included?).sum(&:amount)
-        item.additional_tax_total = tax_adjustments.reject(&:included?).sum(&:amount)
-      end
     end
 
     def update_cancellations
     end
     deprecate :update_cancellations, deprecator: Spree.deprecator
 
-    def update_item_totals(persist:)
+    def recalculate_item_totals
       [*line_items, *shipments].each do |item|
-        Spree::ItemTotalUpdater.recalculate(item)
+        Spree::ItemTotal.new(item).recalculate!
+      end
+    end
 
-        if persist && item.changed?
-          item.update_columns(
-            promo_total:          item.promo_total,
-            included_tax_total:   item.included_tax_total,
-            additional_tax_total: item.additional_tax_total,
-            adjustment_total:     item.adjustment_total,
-            updated_at:           Time.current,
-          )
-        end
+    def persist_item_changes
+      [*line_items, *shipments].each do |item|
+        next unless item.changed?
+
+        item.update_columns(
+          promo_total:          item.promo_total,
+          included_tax_total:   item.included_tax_total,
+          additional_tax_total: item.additional_tax_total,
+          adjustment_total:     item.adjustment_total,
+          updated_at:           Time.current,
+        )
       end
     end
 
