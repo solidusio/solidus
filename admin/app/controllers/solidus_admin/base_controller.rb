@@ -12,7 +12,6 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Authorization
     include SolidusAdmin::ControllerHelpers::Locale
     include SolidusAdmin::ControllerHelpers::Theme
-    include SolidusAdmin::ControllerHelpers::TurboActions
     include SolidusAdmin::ComponentsHelper
     include SolidusAdmin::AuthenticationAdapters::Backend if defined?(Spree::Backend)
 

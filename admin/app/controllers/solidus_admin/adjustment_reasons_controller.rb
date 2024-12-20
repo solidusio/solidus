@@ -6,8 +6,6 @@ module SolidusAdmin
 
     before_action :set_adjustment_reason, only: %i[edit update]
 
-    turbo_actions :edit
-
     def index
       set_index_page
 
@@ -56,7 +54,11 @@ module SolidusAdmin
     def edit
       respond_to do |format|
         format.html do
-          render component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason), layout: false
+          if turbo_frame_request?
+            render component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason), layout: false
+          else
+            set_index_page
+          end
         end
       end
     end

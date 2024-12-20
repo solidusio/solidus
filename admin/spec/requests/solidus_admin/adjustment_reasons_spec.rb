@@ -64,9 +64,9 @@ RSpec.describe "SolidusAdmin::AdjustmentReasonsController", type: :request do
   end
 
   describe "GET /edit" do
-    it "redirects when the request is not Turbo-Frame" do
+    it "renders the edit template with a 200 OK status" do
       get solidus_admin.edit_adjustment_reason_path(adjustment_reason)
-      expect(response).to have_http_status(:redirect)
+      expect(response).to have_http_status(:ok)
     end
 
     it "renders the edit template with a 200 OK status for Turbo-Frame request" do
