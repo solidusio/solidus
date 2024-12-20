@@ -13,8 +13,8 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
     :name_or_code_cont
   end
 
-  def row_url(refund_reason)
-    spree.edit_admin_refund_reason_path(refund_reason, _turbo_frame: :edit_refund_reason_modal)
+  def edit_path(refund_reason)
+    spree.edit_admin_refund_reason_path(refund_reason)
   end
 
   def turbo_frames
@@ -28,7 +28,10 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_refund_reason_path, data: { turbo_frame: :new_refund_reason_modal },
+      href: solidus_admin.new_refund_reason_path, data: {
+        turbo_frame: :new_refund_reason_modal,
+        turbo_prefetch: false
+      },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -47,8 +50,22 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
 
   def columns
     [
-      :name,
-      :code,
+      {
+        header: :name,
+        data: ->(refund_reason) do
+          link_to refund_reason.name, edit_path(refund_reason),
+            data: { turbo_frame: :edit_refund_reason_modal, turbo_prefetch: false },
+            class: 'body-link'
+        end
+      },
+      {
+        header: :code,
+        data: ->(refund_reason) do
+          link_to_if refund_reason.code, refund_reason.code, edit_path(refund_reason),
+            data: { turbo_frame: :edit_refund_reason_modal, turbo_prefetch: false },
+            class: 'body-link'
+        end
+      },
       {
         header: :active,
         data: ->(refund_reason) do

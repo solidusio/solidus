@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::RefundReasons::Edit::Component < SolidusAdmin::BaseComponent
-  def initialize(page:, refund_reason:)
-    @page = page
+  def initialize(refund_reason:)
     @refund_reason = refund_reason
   end
 

@@ -17,10 +17,8 @@ module SolidusAdmin
     def new
       @refund_reason = Spree::RefundReason.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('refund_reasons/new').new(page: @page, refund_reason: @refund_reason) }
+        format.html { render component('refund_reasons/new').new(refund_reason: @refund_reason) }
       end
     end
 
@@ -40,11 +38,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('refund_reasons/new').new(page: @page, refund_reason: @refund_reason)
+            page_component = component('refund_reasons/new').new(refund_reason: @refund_reason)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -52,10 +48,8 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('refund_reasons/edit').new(page: @page, refund_reason: @refund_reason) }
+        format.html { render component('refund_reasons/edit').new(refund_reason: @refund_reason) }
       end
     end
 
@@ -73,11 +67,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('refund_reasons/edit').new(page: @page, refund_reason: @refund_reason)
+            page_component = component('refund_reasons/edit').new(refund_reason: @refund_reason)
             render page_component, status: :unprocessable_entity
           end
         end
