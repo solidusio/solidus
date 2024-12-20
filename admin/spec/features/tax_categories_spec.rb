@@ -28,14 +28,14 @@ describe "Tax categories", :js, type: :feature do
     before do
       visit "/admin/tax_categories#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog", wait: 5)
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Tax Category")
       expect(page).to be_axe_clean
     end
 
     it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
-      expect(page).not_to have_selector("dialog", wait: 5)
+      expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
     end
 
