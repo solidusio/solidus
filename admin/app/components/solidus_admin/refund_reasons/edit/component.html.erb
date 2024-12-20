@@ -1,6 +1,6 @@
-<%= turbo_frame_tag :edit_refund_reason_modal do %>
+<%= turbo_frame_tag :resource_modal, target: "_top" do %>
   <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
-    <%= form_for @refund_reason, url: solidus_admin.refund_reason_path(@refund_reason), html: { id: form_id } do |f| %>
+    <%= form_for @refund_reason, url: form_url, html: { id: form_id } do |f| %>
       <div class="flex flex-col gap-6 pb-4">
         <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
         <%= render component("ui/forms/field").text_field(f, :code, class: "required") %>
@@ -24,4 +24,3 @@
     <% end %>
   <% end %>
 <% end %>
-<%= render component("refund_reasons/index").new(page: @page) %>
