@@ -17,10 +17,8 @@ module SolidusAdmin
     def new
       @return_reason = Spree::ReturnReason.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('return_reasons/new').new(page: @page, return_reason: @return_reason) }
+        format.html { render component('return_reasons/new').new(return_reason: @return_reason) }
       end
     end
 
@@ -40,11 +38,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('return_reasons/new').new(page: @page, return_reason: @return_reason)
+            page_component = component('return_reasons/new').new(return_reason: @return_reason)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -52,10 +48,8 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('return_reasons/edit').new(page: @page, return_reason: @return_reason) }
+        format.html { render component('return_reasons/edit').new(return_reason: @return_reason) }
       end
     end
 
@@ -73,11 +67,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('return_reasons/edit').new(page: @page, return_reason: @return_reason)
+            page_component = component('return_reasons/edit').new(return_reason: @return_reason)
             render page_component, status: :unprocessable_entity
           end
         end
