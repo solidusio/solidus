@@ -5,21 +5,12 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
     Spree::ShippingCategory
   end
 
-  def actions
-    render component("ui/button").new(
-      tag: :a,
-      text: t('.add'),
-      href: spree.new_admin_shipping_category_path,
-      icon: "add-line",
-      class: "align-self-end w-full",
-    )
-  end
-
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_shipping_category_path, data: { turbo_frame: :new_shipping_category_modal },
+      href: solidus_admin.new_shipping_category_path(**search_filter_params),
+      data: { turbo_frame: :resource_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -27,13 +18,12 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
 
   def turbo_frames
     %w[
-      new_shipping_category_modal
-      edit_shipping_category_modal
+      resource_modal
     ]
   end
 
-  def row_url(shipping_category)
-    spree.edit_admin_shipping_category_path(shipping_category, _turbo_frame: :edit_shipping_category_modal)
+  def edit_url(shipping_category)
+    spree.edit_admin_shipping_category_path(shipping_category, **search_filter_params)
   end
 
   def search_key
@@ -48,7 +38,7 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
     [
       {
         label: t('.batch_actions.delete'),
-        action: solidus_admin.shipping_categories_path,
+        action: solidus_admin.shipping_categories_path(**search_filter_params),
         method: :delete,
         icon: 'delete-bin-7-line',
       },
@@ -57,7 +47,14 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
 
   def columns
     [
-      :name
+      {
+        header: :name,
+        data: ->(shipping_category) do
+          link_to shipping_category.name, edit_url(shipping_category),
+            data: { turbo_frame: :resource_modal },
+            class: "body-link"
+        end
+      },
     ]
   end
 end

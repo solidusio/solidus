@@ -38,7 +38,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
     [
       {
         label: t('.batch_actions.delete'),
-        action: solidus_admin.adjustment_reasons_path,
+        action: solidus_admin.adjustment_reasons_path(**search_filter_params),
         method: :delete,
         icon: 'delete-bin-7-line',
       },
