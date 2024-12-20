@@ -3,8 +3,7 @@
 class SolidusAdmin::Roles::Edit::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::PermissionSetsHelper
 
-  def initialize(page:, role:)
-    @page = page
+  def initialize(role:)
     @role = role
   end
 
