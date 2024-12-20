@@ -1,4 +1,4 @@
-<%= turbo_frame_tag :edit_adjustment_reason_modal do %>
+<%= turbo_frame_tag @adjustment_reason, :edit, target: '_top' do %>
   <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
     <%= form_for @adjustment_reason, url: solidus_admin.adjustment_reason_path(@adjustment_reason), html: { id: form_id } do |f| %>
       <div class="flex flex-col gap-6 pb-4">

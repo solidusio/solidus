@@ -58,6 +58,9 @@ module SolidusAdmin
             render component('adjustment_reasons/edit').new(adjustment_reason: @adjustment_reason), layout: false
           else
             set_index_page
+            component = component('adjustment_reasons/index').new(page: @page)
+            component.eager_loaded_frame(dom_id(@adjustment_reason, :edit), solidus_admin.edit_adjustment_reason_path(@adjustment_reason))
+            render component
           end
         end
       end

@@ -24,14 +24,18 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
   end
 
   def turbo_frames
-    %w[
-      new_adjustment_reason_modal
-      edit_adjustment_reason_modal
+    return @turbo_frames if defined? @turbo_frames
+
+    @turbo_frames = [
+      component('utils/turbo_frame').new(id: dom_id(Spree::AdjustmentReason, :new)),
     ]
+
+    @page.records.each { @turbo_frames << component('utils/turbo_frame').new(id: dom_id(_1, :edit)) }
+    @turbo_frames
   end
 
   def row_url(adjustment_reason)
-    spree.edit_admin_adjustment_reason_path(adjustment_reason, _turbo_frame: :edit_adjustment_reason_modal)
+    spree.edit_admin_adjustment_reason_path(adjustment_reason, _turbo_frame: dom_id(adjustment_reason, :edit))
   end
 
   def batch_actions
@@ -52,7 +56,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
         data: ->(adjustment_reason) do
           link_to adjustment_reason.name, row_url(adjustment_reason),
             class: 'body-link',
-            data: { turbo_frame: :edit_adjustment_reason_modal, turbo_prefetch: false }
+            data: { turbo_frame: dom_id(adjustment_reason, :edit), turbo_prefetch: false }
         end
       },
       {
@@ -60,7 +64,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
         data: ->(adjustment_reason) do
           link_to adjustment_reason.code, row_url(adjustment_reason),
             class: 'body-link',
-            data: { turbo_frame: :edit_adjustment_reason_modal, turbo_prefetch: false }
+            data: { turbo_frame: dom_id(adjustment_reason, :edit), turbo_prefetch: false }
         end
       },
       {
@@ -70,5 +74,12 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
         end
       },
     ]
+  end
+
+  def eager_loaded_frame(frame_id, src)
+    frame = turbo_frames.index_by(&:id)[frame_id]
+    return unless frame
+
+    frame.src = src
   end
 end

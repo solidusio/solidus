@@ -7,6 +7,7 @@ module SolidusAdmin
     include ActiveStorage::SetCurrent
     include Spree::Core::ControllerHelpers::Store
     include GearedPagination::Controller
+    include ActionView::RecordIdentifier
 
     include SolidusAdmin::ControllerHelpers::Authentication
     include SolidusAdmin::ControllerHelpers::Authorization
