@@ -1,12 +1,12 @@
 <%= page do %>
-  <% if @tabs %>
+  <% if tabs %>
     <%= page_header do %>
       <%= render_title %>
     <% end %>
 
     <%= page_header do %>
       <% rendered_tabs = capture do %>
-        <% @tabs.each do %>
+        <% renderable_tabs.each do %>
           <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: _1.text, 'aria-current': _1.current, href: _1.href)) %>
         <% end %>
       <% end %>
