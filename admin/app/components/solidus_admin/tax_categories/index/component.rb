@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Component
-  def row_url(tax_category)
-    spree.edit_admin_tax_category_path(tax_category, _turbo_frame: :edit_tax_category_modal)
+  def edit_path(tax_category)
+    spree.edit_admin_tax_category_path(tax_category)
   end
 
   def model_class
@@ -17,7 +17,10 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_tax_category_path, data: { turbo_frame: :new_tax_category_modal },
+      href: solidus_admin.new_tax_category_path, data: {
+        turbo_frame: :new_tax_category_modal,
+        turbo_prefetch: false,
+      },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -47,9 +50,30 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
 
   def columns
     [
-      :name,
-      :tax_code,
-      :description,
+      {
+        header: :name,
+        data: ->(tax_category) do
+          link_to tax_category.name, edit_path(tax_category),
+            data: { turbo_frame: :edit_tax_category_modal, turbo_prefetch: false },
+            class: 'body-link'
+        end
+      },
+      {
+        header: :tax_code,
+        data: ->(tax_category) do
+          link_to_if tax_category.tax_code, tax_category.tax_code, edit_path(tax_category),
+            data: { turbo_frame: :edit_tax_category_modal, turbo_prefetch: false },
+            class: 'body-link'
+        end
+      },
+      {
+        header: :description,
+        data: ->(tax_category) do
+          link_to_if tax_category.description, tax_category.description, edit_path(tax_category),
+            data: { turbo_frame: :edit_tax_category_modal, turbo_prefetch: false },
+            class: 'body-link'
+        end
+      },
       {
         header: :is_default,
         data: ->(tax_category) {

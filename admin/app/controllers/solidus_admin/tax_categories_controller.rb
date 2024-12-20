@@ -9,20 +9,16 @@ module SolidusAdmin
     def new
       @tax_category = Spree::TaxCategory.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('tax_categories/new').new(page: @page, tax_category: @tax_category) }
+        format.html { render component('tax_categories/new').new(tax_category: @tax_category) }
       end
     end
 
     def edit
       @tax_category = Spree::TaxCategory.find(params[:id])
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('tax_categories/edit').new(page: @page, tax_category: @tax_category) }
+        format.html { render component('tax_categories/edit').new(tax_category: @tax_category) }
       end
     end
 
@@ -44,11 +40,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('tax_categories/new').new(page: @page, tax_category: @tax_category)
+            page_component = component('tax_categories/new').new(tax_category: @tax_category)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -69,11 +63,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('tax_categories/edit').new(page: @page, tax_category: @tax_category)
+            page_component = component('tax_categories/edit').new(tax_category: @tax_category)
             render page_component, status: :unprocessable_entity
           end
         end
