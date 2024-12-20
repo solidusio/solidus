@@ -28,25 +28,34 @@
           <div class="w-[100%] text-right">
             <% if @store_credit.invalidateable? %>
               <%= render component("ui/button").new(
+                tag: :a,
                 scheme: :danger,
-                "data-action": "click->#{stimulus_id}#actionButtonClicked",
-                "data-#{stimulus_id}-url-param": solidus_admin.edit_validity_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_validity_modal),
+                data: {
+                  turbo_frame: :resource_modal
+                },
+                href: edit_validity_url,
                 text: t(".invalidate"),
-              )%>
+              ) %>
             <% end %>
 
             <%= render component("ui/button").new(
-              "data-action": "click->#{stimulus_id}#actionButtonClicked",
-              "data-#{stimulus_id}-url-param": solidus_admin.edit_memo_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_memo_modal),
+              tag: :a,
+              data: {
+                turbo_frame: :resource_modal
+              },
+              href: edit_memo_url,
               text: t(".edit_memo"),
-            )%>
+            ) %>
 
             <% if @store_credit.editable? %>
               <%= render component("ui/button").new(
-                "data-action": "click->#{stimulus_id}#actionButtonClicked",
-                "data-#{stimulus_id}-url-param": solidus_admin.edit_amount_user_store_credit_path(@user, @store_credit, _turbo_frame: :edit_amount_modal),
+                tag: :a,
+                data: {
+                  turbo_frame: :resource_modal
+                },
+                href: edit_amount_url,
                 text: t(".edit_amount"),
-              )%>
+              ) %>
             <% end %>
           </div>
         <% end %>
@@ -60,7 +69,6 @@
             class: event_model_class,
             rows: @events,
             columns: columns,
-            url: -> { row_url(_1) },
           },
         )%>
       <% end %>
@@ -71,7 +79,5 @@
     <% end %>
   <% end %>
 
-  <% turbo_frames.each do |frame| %>
-    <%= turbo_frame_tag frame %>
-  <% end %>
+  <%= turbo_frame_tag :resource_modal, target: "_top" %>
 <% end %>
