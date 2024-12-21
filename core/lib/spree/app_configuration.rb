@@ -168,6 +168,13 @@ module Spree
     #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
     preference :layout, :string, default: 'spree/layouts/spree_application'
 
+    # !@attribute [rw] line_item_comparison_hooks
+    #   @return [Array<Symbol>] An array of methods to call on {Spree::Order} to determine if a line item is equal to another
+    #   (default: +[]+)
+    #   @example
+    #   config.line_item_comparison_hooks << :my_custom_method
+    preference :line_item_comparison_hooks, :array, default: []
+
     # @!attribute [rw] logo
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
     preference :logo, :string, default: 'logo/solidus.svg'
