@@ -140,6 +140,13 @@ module Spree
     autoload :STOCK_TABS, 'spree/backend_configuration/deprecated_tab_constants'
     autoload :USER_TABS, 'spree/backend_configuration/deprecated_tab_constants'
 
+    # By default, this is set to +Spree::UnauthorizedRedirectHandler+. If you need your admin to behave
+    # differently when a user is unauthorized, you can create your own class that respects the same interface.
+    #
+    # @!attribute [rw] unauthorized_redirect_handler_class
+    #   @return [Class] The class that will handle unauthorized access errors.
+    class_name_attribute :unauthorized_redirect_handler_class, default: "Spree::UnauthorizedRedirectHandler"
+
     # Items can be added to the menu by using code like the following:
     #
     # Spree::Backend::Config.configure do |config|

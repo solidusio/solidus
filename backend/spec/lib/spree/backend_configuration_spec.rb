@@ -124,4 +124,10 @@ RSpec.describe Spree::BackendConfiguration do
       end
     end
   end
+
+  describe "unauthorized_redirect_handler_class" do
+    it "defaults to Spree::UnauthorizedRedirectHandler" do
+      expect(described_class.new.unauthorized_redirect_handler_class).to eq(Spree::UnauthorizedRedirectHandler)
+    end
+  end
 end
