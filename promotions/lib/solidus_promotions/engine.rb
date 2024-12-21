@@ -6,7 +6,6 @@ require "solidus_support"
 module SolidusPromotions
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
-
     Flickwerk.aliases["Spree::Config.order_recalculator_class"] = Spree::Config.order_recalculator_class_name
 
     isolate_namespace ::SolidusPromotions

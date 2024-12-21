@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusLegacyPromotions
-  module SpreeAdjustmentDecorator
+  module SpreeAdjustmentPatch
     def self.prepended(base)
       base.belongs_to :promotion_code, class_name: 'Spree::PromotionCode', optional: true
       base.validates :promotion_code, presence: true, if: :require_promotion_code?

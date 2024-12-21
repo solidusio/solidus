@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusLegacyPromotions
-  module SpreeCalculatorReturnsDefaultRefundAmountDecorator
+  module SpreeCalculatorReturnsDefaultRefundAmountPatch
     private
 
     def weighted_order_adjustment_amount(inventory_unit)

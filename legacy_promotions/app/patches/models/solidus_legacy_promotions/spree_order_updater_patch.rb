@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusLegacyPromotions
-  module SpreeOrderUpdaterDecorator
+  module SpreeOrderUpdaterPatch
     def update_adjustment_total
       recalculate_adjustments
 

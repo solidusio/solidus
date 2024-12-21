@@ -26,5 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'csv', '~> 3.0'
   s.add_dependency 'solidus_api', s.version
   s.add_dependency 'solidus_core', s.version
-  s.add_dependency 'solidus_support', '>= 0.12.0'
+  s.add_dependency 'solidus_support', '>= 0.13.1', '< 1'
 end
