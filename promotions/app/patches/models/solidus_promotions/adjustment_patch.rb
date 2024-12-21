@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  module AdjustmentDecorator
+  module AdjustmentPatch
     def self.prepended(base)
       base.scope :solidus_promotion, -> { where(source_type: "SolidusPromotions::Benefit") }
     end

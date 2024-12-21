@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  module ShipmentDecorator
+  module ShipmentPatch
     Spree::Shipment.prepend SolidusPromotions::DiscountableAmount
 
     def reset_current_discounts

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  module OrderDecorator
+  module OrderPatch
     module ClassMethods
       def allowed_ransackable_associations
         super + ["solidus_promotions", "solidus_order_promotions"]
