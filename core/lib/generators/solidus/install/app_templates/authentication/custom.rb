@@ -9,11 +9,6 @@ initializer 'spree_authentication.rb', <<~RUBY
       nil
     end
   end
-
-  # Re-raise the original authorization error on anauthorized access
-  Rails.application.config.to_prepare do
-    Spree::BaseController.unauthorized_redirect = -> { raise "Define the behavior for unauthorized access in \#{__FILE__}." }
-  end
 RUBY
 
 create_file 'app/views/spree/admin/shared/_navigation_footer.html.erb', <<~ERB
