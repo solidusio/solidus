@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Spree's rpsec controller tests get the Spree::ControllerHacks
-# we don't need those for the anonymous controller here, so
-# we call process directly instead of get
 require 'spec_helper'
 
 describe Spree::Admin::BaseController, type: :controller do
@@ -21,6 +18,19 @@ describe Spree::Admin::BaseController, type: :controller do
     it "redirects to unauthorized" do
       get :index
       expect(response).to redirect_to '/unauthorized'
+    end
+
+    context "when an unauthorized redirect handler is provided" do
+      before do
+        Spree.deprecator.silence do
+          Spree::Admin::BaseController.unauthorized_redirect = -> { redirect_to '/custom_unauthorized' }
+        end
+      end
+
+      it "redirects to the custom unauthorized path" do
+        get :index
+        expect(response).to redirect_to '/custom_unauthorized'
+      end
     end
   end
 end

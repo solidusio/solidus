@@ -68,6 +68,14 @@ module Spree
         redirect_to redirect_url
         nil
       end
+
+      def handle_unauthorized_access
+        if unauthorized_redirect
+          instance_exec(&unauthorized_redirect)
+        else
+          Spree::Backend::Config.unauthorized_redirect_handler_class.new(self).call
+        end
+      end
     end
   end
 end
