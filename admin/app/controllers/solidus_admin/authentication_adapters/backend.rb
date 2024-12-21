@@ -13,7 +13,7 @@ module SolidusAdmin::AuthenticationAdapters::Backend
   def authenticate_solidus_backend_user!
     return if spree_current_user
 
-    instance_exec(&Spree::Admin::BaseController.unauthorized_redirect)
+    Spree::Backend::Config.unauthorized_redirect_handler_class.new(self).call
   end
 
   def store_location
