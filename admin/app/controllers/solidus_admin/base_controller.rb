@@ -20,7 +20,13 @@ module SolidusAdmin
     helper 'solidus_admin/components'
     helper 'solidus_admin/layout'
 
+    helper_method :search_filter_params
+
     private
+
+    def search_filter_params
+      request.params.slice(:q, :page)
+    end
 
     def set_layout
       if turbo_frame_request?

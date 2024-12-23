@@ -14,7 +14,7 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
   end
 
   def edit_path(return_reason)
-    spree.edit_admin_return_reason_path(return_reason)
+    spree.edit_admin_return_reason_path(return_reason, **search_filter_params)
   end
 
   def turbo_frames
@@ -28,7 +28,7 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_return_reason_path,
+      href: solidus_admin.new_return_reason_path(**search_filter_params),
       data: { turbo_frame: :new_return_reason_modal, turbo_prefetch: false },
       icon: "add-line",
       class: "align-self-end w-full",

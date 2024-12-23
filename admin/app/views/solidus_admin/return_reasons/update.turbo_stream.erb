@@ -1,0 +1,3 @@
+<%= turbo_stream.replace :edit_return_reason_modal do %>
+  <%= render component('return_reasons/edit').new(return_reason: @return_reason) %>
+<% end %>

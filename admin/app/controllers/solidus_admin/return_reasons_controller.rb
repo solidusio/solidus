@@ -26,51 +26,37 @@ module SolidusAdmin
       @return_reason = Spree::ReturnReason.new(return_reason_params)
 
       if @return_reason.save
-        respond_to do |format|
-          flash[:notice] = t('.success')
-
-          format.html do
-            redirect_to solidus_admin.return_reasons_path, status: :see_other
-          end
-
-          format.turbo_stream do
-            render turbo_stream: '<turbo-stream action="refresh" />'
-          end
-        end
+        flash[:notice] = t('.success')
+        redirect_to solidus_admin.return_reasons_path(**search_filter_params), status: :see_other
       else
         respond_to do |format|
           format.html do
             page_component = component('return_reasons/new').new(return_reason: @return_reason)
             render page_component, status: :unprocessable_entity
           end
+          format.turbo_stream do
+            render status: :unprocessable_entity
+          end
         end
       end
     end
 
     def edit
-      respond_to do |format|
-        format.html { render component('return_reasons/edit').new(return_reason: @return_reason) }
-      end
+      render component('return_reasons/edit').new(return_reason: @return_reason)
     end
 
     def update
       if @return_reason.update(return_reason_params)
-        respond_to do |format|
-          flash[:notice] = t('.success')
-
-          format.html do
-            redirect_to solidus_admin.return_reasons_path, status: :see_other
-          end
-
-          format.turbo_stream do
-            render turbo_stream: '<turbo-stream action="refresh" />'
-          end
-        end
+        flash[:notice] = t('.success')
+        redirect_to solidus_admin.return_reasons_path(**search_filter_params), status: :see_other
       else
         respond_to do |format|
           format.html do
             page_component = component('return_reasons/edit').new(return_reason: @return_reason)
             render page_component, status: :unprocessable_entity
+          end
+          format.turbo_stream do
+            render status: :unprocessable_entity
           end
         end
       end
@@ -82,7 +68,7 @@ module SolidusAdmin
       Spree::ReturnReason.transaction { @return_reason.destroy }
 
       flash[:notice] = t('.success')
-      redirect_back_or_to return_reasons_path, status: :see_other
+      redirect_back_or_to return_reasons_path(**search_filter_params), status: :see_other
     end
 
     private
