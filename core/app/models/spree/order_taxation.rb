@@ -77,7 +77,8 @@ module Spree
         label: tax_item.label,
         included: tax_item.included_in_price
       )
-      tax_adjustment.update!(amount: tax_item.amount)
+
+      tax_adjustment.amount = tax_item.amount
       tax_adjustment
     end
   end

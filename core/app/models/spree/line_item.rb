@@ -18,7 +18,7 @@ module Spree
 
     has_one :product, through: :variant
 
-    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
+    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy, autosave: true
     has_many :inventory_units, inverse_of: :line_item
 
     before_validation :normalize_quantity
