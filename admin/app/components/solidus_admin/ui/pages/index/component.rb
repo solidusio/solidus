@@ -22,11 +22,16 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
 
   def initialize(page:)
     @page = page
-    @tabs = tabs&.map { |tab| Tab.new(**tab) }
   end
 
   def row_fade(_record)
     false
+  end
+
+  def renderable_tabs
+    return unless tabs
+
+    tabs.map { |tab| Tab.new(**tab) }
   end
 
   def title
