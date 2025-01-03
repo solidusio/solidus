@@ -56,6 +56,8 @@ module Spree
 
       # Remove any tax adjustments tied to rates which no longer match.
       unmatched_adjustments = tax_adjustments - active_adjustments
+      # FIXME: Find a way to not have to destroy for in-memory recalculating
+      # https://api.rubyonrails.org/classes/ActiveRecord/AutosaveAssociation.html#method-i-mark_for_destruction
       item.adjustments.destroy(unmatched_adjustments)
     end
 
@@ -76,7 +78,8 @@ module Spree
         label: tax_item.label,
         included: tax_item.included_in_price
       )
-      tax_adjustment.update!(amount: tax_item.amount)
+
+      tax_adjustment.amount = tax_item.amount
       tax_adjustment
     end
   end
