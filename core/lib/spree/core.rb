@@ -105,7 +105,6 @@ require 'spree/core/engine'
 
 require 'spree/i18n'
 require 'spree/localized_number'
-require 'spree/money'
 require 'spree/permitted_attributes'
 
 require 'spree/core/importer'
