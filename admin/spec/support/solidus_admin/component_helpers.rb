@@ -11,14 +11,9 @@ module SolidusAdmin
     #      "Rendered"
     #    end
     #  end
-    def mock_component(&definition)
-      Class.new(SolidusAdmin::BaseComponent) do
-        # ViewComponent will complain if we don't fake a class name:
-        # @see https://github.com/ViewComponent/view_component/blob/5decd07842c48cbad82527daefa3fe9c65a4226a/lib/view_component/base.rb#L371
-        def self.name
-          "Foo"
-        end
-      end.tap { |klass| klass.class_eval(&definition) if definition }
+    def mock_component(class_name = "Foo::Component", &definition)
+      component_class = stub_const(class_name, Class.new(described_class, &definition))
+      component_class.new
     end
   end
 end
