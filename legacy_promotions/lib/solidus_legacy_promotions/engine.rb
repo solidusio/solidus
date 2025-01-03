@@ -1,10 +1,18 @@
 # frozen_string_literal: true
 
 require 'solidus_legacy_promotions'
-
+require 'flickwerk'
 module SolidusLegacyPromotions
   class Engine < ::Rails::Engine
     include SolidusSupport::EngineExtensions
+
+    include Flickwerk
+
+    initializer "solidus_legacy_promotions.patch_state_machine" do
+      config.to_prepare do
+        SolidusLegacyPromotions::SpreeOrderStateMachinePatch
+      end
+    end
 
     initializer "solidus_legacy_promotions.add_backend_menu_item" do
       if SolidusSupport.backend_available?

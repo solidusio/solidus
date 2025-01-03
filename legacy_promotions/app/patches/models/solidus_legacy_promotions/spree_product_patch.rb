@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusLegacyPromotions
-  module SpreeProductDecorator
+  module SpreeProductPatch
     def self.prepended(base)
       base.has_many :product_promotion_rules, dependent: :destroy
       base.has_many :promotion_rules, through: :product_promotion_rules
