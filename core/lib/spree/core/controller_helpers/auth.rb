@@ -20,14 +20,9 @@ module Spree
           helper_method :spree_current_user
 
           class_attribute :unauthorized_redirect
-          self.unauthorized_redirect = -> do
-            flash[:error] = I18n.t('spree.authorization_failure')
-            redirect_back(fallback_location: "/unauthorized")
-          end
+          deprecate :unauthorized_redirect= => "Use a custom Spree::Config.unauthorized_redirect_handler_class instead", :deprecator => Spree.deprecator
 
-          rescue_from CanCan::AccessDenied do
-            instance_exec(&unauthorized_redirect)
-          end
+          rescue_from CanCan::AccessDenied, with: :handle_unauthorized_access
         end
 
         # Needs to be overriden so that we use Spree's Ability rather than anyone else's.
@@ -56,6 +51,14 @@ module Spree
         # Auth extensions are expected to define it, otherwise it's a no-op
         def spree_current_user
           defined?(super) ? super : nil
+        end
+
+        def handle_unauthorized_access
+          if unauthorized_redirect
+            instance_exec(&unauthorized_redirect)
+          else
+            Spree::Config.unauthorized_redirect_handler_class.new(self).call
+          end
         end
       end
     end

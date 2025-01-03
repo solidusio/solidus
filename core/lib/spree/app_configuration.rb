@@ -558,6 +558,13 @@ module Spree
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
 
+    # Allows changing the default behavior for redirects when a user is not authorized
+    #
+    # @!attribute [rw] unauthorized_redirect_handler_class
+    # @return [Class] a class with the same public interfaces as
+    #  Spree::UnauthorizedRedirectHandler.
+    class_name_attribute :unauthorized_redirect_handler_class, default: "Spree::UnauthorizedRedirectHandler"
+
     # Set of classes that can be promotion adjustment sources
     add_class_set :adjustment_promotion_source_types, default: []
 
