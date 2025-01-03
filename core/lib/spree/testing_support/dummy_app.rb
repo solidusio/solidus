@@ -84,7 +84,7 @@ module DummyApp
     config.log_level = :debug
 
     # Improve test suite performance:
-    config.eager_load = false
+    config.eager_load = ENV['CI'].present?
     config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
     config.cache_store = :memory_store
 
