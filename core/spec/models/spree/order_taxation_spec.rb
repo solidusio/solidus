@@ -68,7 +68,7 @@ RSpec.describe Spree::OrderTaxation do
 
     it "creates a new tax adjustment", aggregate_failures: true do
       apply
-      expect(line_item.adjustments.count).to eq 1
+      expect(line_item.adjustments.size).to eq 1
 
       tax_adjustment = line_item.adjustments.first
       expect(tax_adjustment.label).to eq "Tax!"
@@ -136,7 +136,7 @@ RSpec.describe Spree::OrderTaxation do
         expect {
           taxation.apply(new_taxes)
         }.to change {
-          line_item.adjustments.count
+          line_item.adjustments.size
         }.from(1).to(0)
       end
     end
@@ -174,7 +174,7 @@ RSpec.describe Spree::OrderTaxation do
       end
 
       it "creates a new tax adjustment", aggregate_failures: true do
-        expect(order.adjustments.count).to eq 1
+        expect(order.adjustments.size).to eq 1
 
         tax_adjustment = order.adjustments.first
         expect(tax_adjustment.label).to eq "Order Tax!"
