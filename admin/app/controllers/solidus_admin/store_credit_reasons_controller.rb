@@ -17,10 +17,8 @@ module SolidusAdmin
     def new
       @store_credit_reason = Spree::StoreCreditReason.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('store_credit_reasons/new').new(page: @page, store_credit_reason: @store_credit_reason) }
+        format.html { render component('store_credit_reasons/new').new(store_credit_reason: @store_credit_reason) }
       end
     end
 
@@ -40,11 +38,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('store_credit_reasons/new').new(page: @page, store_credit_reason: @store_credit_reason)
+            page_component = component('store_credit_reasons/new').new(store_credit_reason: @store_credit_reason)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -52,10 +48,8 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('store_credit_reasons/edit').new(page: @page, store_credit_reason: @store_credit_reason) }
+        format.html { render component('store_credit_reasons/edit').new(store_credit_reason: @store_credit_reason) }
       end
     end
 
@@ -73,11 +67,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('store_credit_reasons/edit').new(page: @page, store_credit_reason: @store_credit_reason)
+            page_component = component('store_credit_reasons/edit').new(store_credit_reason: @store_credit_reason)
             render page_component, status: :unprocessable_entity
           end
         end

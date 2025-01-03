@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::StockItems::Edit::Component < SolidusAdmin::BaseComponent
-  def initialize(stock_item:, page:)
+  def initialize(stock_item:)
     @stock_item = stock_item
-    @page = page
   end
 
   def title

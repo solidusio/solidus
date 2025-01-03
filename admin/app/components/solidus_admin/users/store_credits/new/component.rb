@@ -5,7 +5,6 @@ class SolidusAdmin::Users::StoreCredits::New::Component < SolidusAdmin::BaseComp
     @user = user
     @store_credit = store_credit
     @store_credit_categories = categories
-    @store_credits = Spree::StoreCredit.where(user_id: @user.id).order(id: :desc)
   end
 
   def form_id

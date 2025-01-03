@@ -12,6 +12,7 @@ if ENV["COVERAGE"]
 end
 
 require 'solidus_admin'
+require 'rails-controller-testing'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 

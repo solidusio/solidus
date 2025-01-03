@@ -13,15 +13,18 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
     solidus_admin.roles_path
   end
 
-  def row_url(role)
-    solidus_admin.edit_role_path(role, _turbo_frame: :edit_role_modal)
+  def edit_path(role)
+    solidus_admin.edit_role_path(role)
   end
 
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_role_path, data: { turbo_frame: :new_role_modal },
+      href: solidus_admin.new_role_path, data: {
+        turbo_frame: :new_role_modal,
+        turbo_prefetch: false,
+      },
       icon: "add-line",
     )
   end
@@ -59,11 +62,19 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
     [
       {
         header: :role,
-        data: :name,
+        data: ->(role) do
+          link_to role.name, edit_path(role),
+            data: { turbo_frame: :edit_role_modal, turbo_prefetch: false },
+            class: "body-link"
+        end,
       },
       {
         header: :description,
-        data: :description,
+        data: ->(role) do
+          link_to_if role.description, role.description, edit_path(role),
+            data: { turbo_frame: :edit_role_modal, turbo_prefetch: false },
+            class: "body-link"
+        end
       }
     ]
   end

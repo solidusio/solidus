@@ -11,7 +11,9 @@
             <%= link_to spree.edit_admin_product_variant_path(
               @stock_item.variant.product,
               @stock_item.variant,
-            ), class: 'hover:bg-gray-25 rounded p-1 w-1/2 border border-gray-100' do %>
+            ),
+            data: {turbo_frame: "_top"},
+            class: 'hover:bg-gray-25 rounded p-1 w-1/2 border border-gray-100' do %>
               <%= render component("ui/resource_item").new(
                 thumbnail:
                   (
@@ -23,7 +25,9 @@
                   "#{@stock_item.variant.sku}#{@stock_item.variant.options_text.presence&.prepend(" - ")}",
               ) %>
             <% end %>
-            <%= link_to spree.edit_admin_stock_location_path(@stock_item.stock_location), class: 'hover:bg-gray-25 rounded p-1 w-1/2 border border-gray-100' do %>
+            <%= link_to spree.edit_admin_stock_location_path(@stock_item.stock_location),
+              data: {turbo_frame: "_top"},
+              class: 'hover:bg-gray-25 rounded p-1 w-1/2 border border-gray-100' do %>
               <%= render component("ui/resource_item").new(
                 title: @stock_item.stock_location.name,
                 subtitle: "#{Spree::StockLocation.model_name.human} #{@stock_item.stock_location.code}",
@@ -78,6 +82,4 @@
       <% end %>
     <% end %>
   <% end %>
-
-  <%= render component("stock_items/index").new(page: @page) %>
 </div>

@@ -20,10 +20,8 @@ module SolidusAdmin
     def new
       @role = Spree::Role.new
 
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('roles/new').new(page: @page, role: @role) }
+        format.html { render component('roles/new').new(role: @role) }
       end
     end
 
@@ -43,11 +41,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('roles/new').new(page: @page, role: @role)
+            page_component = component('roles/new').new(role: @role)
             render page_component, status: :unprocessable_entity
           end
         end
@@ -55,10 +51,8 @@ module SolidusAdmin
     end
 
     def edit
-      set_index_page
-
       respond_to do |format|
-        format.html { render component('roles/edit').new(page: @page, role: @role) }
+        format.html { render component('roles/edit').new(role: @role) }
       end
     end
 
@@ -76,11 +70,9 @@ module SolidusAdmin
           end
         end
       else
-        set_index_page
-
         respond_to do |format|
           format.html do
-            page_component = component('roles/edit').new(page: @page, role: @role)
+            page_component = component('roles/edit').new(role: @role)
             render page_component, status: :unprocessable_entity
           end
         end

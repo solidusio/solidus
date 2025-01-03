@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::StoreCreditReasons::New::Component < SolidusAdmin::BaseComponent
-  def initialize(page:, store_credit_reason:)
-    @page = page
+  def initialize(store_credit_reason:)
     @store_credit_reason = store_credit_reason
   end
 

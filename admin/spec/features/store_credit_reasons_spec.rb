@@ -65,7 +65,7 @@ describe "Store Credit Reasons", :js, type: :feature do
     before do
       Spree::StoreCreditReason.create(name: "New Customer Reward")
       visit "/admin/store_credit_reasons#{query}"
-      find_row("New Customer Reward").click
+      click_on "New Customer Reward"
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("Edit Store Credit Reason")
       expect(page).to be_axe_clean

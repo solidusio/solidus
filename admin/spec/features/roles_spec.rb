@@ -120,7 +120,7 @@ describe "Roles", :js, type: :feature do
     before do
       Spree::Role.create(name: "Reviewer", permission_sets: [settings_edit_permission])
       visit "/admin/roles#{query}"
-      find_row("Reviewer").click
+      click_on "Reviewer"
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("Edit Role")
       expect(page).to be_axe_clean

@@ -3,7 +3,7 @@
 module SolidusAdmin
   class StockItemsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
-    before_action :load_stock_items, only: [:index, :edit, :update]
+    before_action :load_stock_items, only: [:index]
     before_action :load_stock_item, only: [:edit, :update]
 
     search_scope(:all, default: true) { _1 }
@@ -20,7 +20,7 @@ module SolidusAdmin
 
     def edit
       respond_to do |format|
-        format.html { render component('stock_items/edit').new(stock_item: @stock_item, page: @page) }
+        format.html { render component('stock_items/edit').new(stock_item: @stock_item) }
       end
     end
 
@@ -36,7 +36,10 @@ module SolidusAdmin
         end
       else
         respond_to do |format|
-          format.html { render component('stock_items/edit').new(stock_item: @stock_item, page: @page), status: :unprocessable_entity }
+          format.html {
+            render component('stock_items/edit').new(stock_item: @stock_item),
+            status: :unprocessable_entity
+          }
         end
       end
     end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::TaxCategories::Edit::Component < SolidusAdmin::TaxCategories::Index::Component
-  def initialize(page:, tax_category:)
-    @page = page
+  def initialize(tax_category:)
     @tax_category = tax_category
   end
 
