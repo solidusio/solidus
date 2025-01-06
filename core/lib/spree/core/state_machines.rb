@@ -2,87 +2,54 @@
 
 module Spree
   module Core
-    class StateMachines
-      attr_writer :reimbursement,
-                  :return_authorization,
-                  :return_item_acceptance,
-                  :return_item_reception,
-                  :payment,
-                  :inventory_unit,
-                  :shipment,
-                  :order
+    class StateMachines < Spree::Preferences::Configuration
+      # State Machine module for Reimbursements
+      #
+      # @!attribute [rw] reimbursement
+      # @return [Module] a module that implements the state machine for the `Spree::Reimbursement` model.
+      class_name_attribute :reimbursement, default: "Spree::Core::StateMachines::Reimbursement"
 
-      def return_authorization
-        @return_authorization ||= begin
-          require 'spree/core/state_machines/return_authorization'
-          'Spree::Core::StateMachines::ReturnAuthorization'
-        end
+      # State Machine module for Return Authorizations
+      #
+      # @!attribute [rw] return_authorization
+      # @return [Module] a module that implements the state machine for the `Spree::ReturnAuthorization` model.
+      class_name_attribute :return_authorization, default: "Spree::Core::StateMachines::ReturnAuthorization"
 
-        @return_authorization.constantize
-      end
+      # State Machine module for Return Item Acceptances
+      #
+      # @!attribute [rw] return_item_acceptance
+      # @return [Module] a module that implements the acceptance part of the state machine for the `Spree::ReturnItem` model.
+      class_name_attribute :return_item_acceptance, default: "Spree::Core::StateMachines::ReturnItem::AcceptanceStatus"
 
-      def return_item_reception
-        @return_item_reception_status ||= begin
-          require 'spree/core/state_machines/return_item/reception_status'
-          'Spree::Core::StateMachines::ReturnItem::ReceptionStatus'
-        end
+      # State Machine module for Return Item Receptions
+      #
+      # @!attribute [rw] return_item_reception
+      # @return [Module] a module that implements the reception part of the state machine for the `Spree::ReturnItem` model.
+      class_name_attribute :return_item_reception, default: "Spree::Core::StateMachines::ReturnItem::ReceptionStatus"
 
-        @return_item_reception_status.constantize
-      end
+      # State Machine module for Payments
+      #
+      # @!attribute [rw] payment
+      # @return [Module] a module that implements the state machine for the `Spree::Payment` model.
+      class_name_attribute :payment, default: "Spree::Core::StateMachines::Payment"
 
-      def return_item_acceptance
-        @return_item_acceptance_status ||= begin
-          require 'spree/core/state_machines/return_item/acceptance_status'
-          'Spree::Core::StateMachines::ReturnItem::AcceptanceStatus'
-        end
+      # State Machine module for Inventory Units
+      #
+      # @!attribute [rw] inventory_unit
+      # @return [Module] a module that implements the state machine for the `Spree::InventoryUnit` model.
+      class_name_attribute :inventory_unit, default: "Spree::Core::StateMachines::InventoryUnit"
 
-        @return_item_acceptance_status.constantize
-      end
+      # State Machine module for Shipments
+      #
+      # @!attribute [rw] shipment
+      # @return [Module] a module that implements the state machine for the `Spree::Shipment` model.
+      class_name_attribute :shipment, default: "Spree::Core::StateMachines::Shipment"
 
-      def payment
-        @payment ||= begin
-          require 'spree/core/state_machines/payment'
-          'Spree::Core::StateMachines::Payment'
-        end
-
-        @payment.constantize
-      end
-
-      def inventory_unit
-        @inventory_unit ||= begin
-          require 'spree/core/state_machines/inventory_unit'
-          'Spree::Core::StateMachines::InventoryUnit'
-        end
-
-        @inventory_unit.constantize
-      end
-
-      def shipment
-        @shipment ||= begin
-          require 'spree/core/state_machines/shipment'
-          'Spree::Core::StateMachines::Shipment'
-        end
-
-        @shipment.constantize
-      end
-
-      def order
-        @order ||= begin
-          require 'spree/core/state_machines/order'
-          'Spree::Core::StateMachines::Order'
-        end
-
-        @order.constantize
-      end
-
-      def reimbursement
-        @reimbursement ||= begin
-          require 'spree/core/state_machines/reimbursement'
-          'Spree::Core::StateMachines::Reimbursement'
-        end
-
-        @reimbursement.constantize
-      end
+      # State Machine module for Orders
+      #
+      # @!attribute [rw] order
+      # @return [Module] a module that implements the state machine for the `Spree::Order` model.
+      class_name_attribute :order, default: "Spree::Core::StateMachines::Order"
     end
   end
 end
