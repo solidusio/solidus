@@ -10,9 +10,7 @@ module Spree
 
         module ClassMethods
           attr_accessor :previous_states
-          attr_writer :next_event_transitions
-          attr_writer :checkout_steps
-          attr_writer :removed_transitions
+          attr_writer :next_event_transitions, :checkout_steps, :removed_transitions
 
           def checkout_flow(&block)
             if block_given?

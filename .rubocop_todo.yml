@@ -512,7 +512,6 @@ Style/AccessorGrouping:
     - "core/app/models/spree/order.rb"
     - "core/lib/generators/spree/dummy/dummy_generator.rb"
     - "core/lib/spree/core/search/base.rb"
-    - "core/lib/spree/core/state_machines/order.rb"
     - "core/lib/spree/core/stock_configuration.rb"
 
 # Offense count: 1
