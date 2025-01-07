@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Integrating with the simple coordinator" do
@@ -97,11 +99,9 @@ RSpec.describe "Integrating with the simple coordinator" do
       end
 
       it 'raises exception and includes unfulfillable items' do
-        begin
           expect(shipments).not_to be_empty
-        rescue Spree::Order::InsufficientStock => e
+      rescue Spree::Order::InsufficientStock => e
           expect(e.items.keys.map(&:id)).to contain_exactly(variant.id)
-        end
       end
     end
 
@@ -236,7 +236,7 @@ RSpec.describe "Integrating with the simple coordinator" do
 
   context "when custom coordinator options are passed" do
     let!(:order) {
-      create :order_with_line_items, line_items_attributes: [{variant: create(:product_in_stock).master }]
+      create :order_with_line_items, line_items_attributes: [{ variant: create(:product_in_stock).master }]
     }
 
     subject {
@@ -244,12 +244,12 @@ RSpec.describe "Integrating with the simple coordinator" do
     }
 
     describe "to customize the estimator's behavior" do
-      let(:coordinator_options) { {arbitrary_shipping_rates: [my_shipping_rate]} }
+      let(:coordinator_options) { { arbitrary_shipping_rates: [my_shipping_rate] } }
       let(:my_shipping_rate) { create(:shipping_method).shipping_rates.new }
 
       around do |example|
         MyEstimator = Class.new(Spree::Stock::Estimator) do
-          def shipping_rates(package, _frontend_only = true)
+          def shipping_rates(package)
             raise ShipmentRequired if package.shipment.nil?
             raise OrderRequired if package.shipment.order.nil?
 
@@ -257,7 +257,7 @@ RSpec.describe "Integrating with the simple coordinator" do
 
             if first_shipping_rate
               first_shipping_rate.selected = true
-              return [first_shipping_rate]
+              [first_shipping_rate]
             else
               raise StandardError, "no shipping rate!"
             end
@@ -277,14 +277,14 @@ RSpec.describe "Integrating with the simple coordinator" do
     end
 
     describe "to customize the inventory unit builder's behavior" do
-      let(:coordinator_options) { {multiplier: 4} }
+      let(:coordinator_options) { { multiplier: 4 } }
 
       around do |example|
         MyInventoryUnitBuilder = Class.new(Spree::Stock::InventoryUnitBuilder) do
           def units
             units = []
             coordinator_options[:multiplier].times do
-              units = units.concat(super)
+              units.concat(super)
             end
             units
           end
@@ -305,7 +305,7 @@ RSpec.describe "Integrating with the simple coordinator" do
     end
 
     describe "to customize the allocator's behavior" do
-      let(:coordinator_options) { {force_backordered: true} }
+      let(:coordinator_options) { { force_backordered: true } }
 
       around do |example|
         MyAllocator = Class.new(Spree::Stock::Allocator::OnHandFirst) do
@@ -333,15 +333,17 @@ RSpec.describe "Integrating with the simple coordinator" do
     end
 
     describe "to customize the stock locator filter behavior" do
-      let(:coordinator_options) { {force_specific_stock_location: specific_stock_location} }
+      let(:coordinator_options) { { force_specific_stock_location: specific_stock_location } }
       let(:specific_stock_location) { create(:stock_location) }
 
       around do |example|
         MyLocatorFilter = Class.new(Spree::Stock::LocationFilter::Active) do
           def filter
-            coordinator_options[:force_specific_stock_location] ?
+            if coordinator_options[:force_specific_stock_location]
               [coordinator_options[:force_specific_stock_location]]
-              : super
+            else
+              super
+            end
           end
         end
 
@@ -358,7 +360,7 @@ RSpec.describe "Integrating with the simple coordinator" do
     end
 
     describe "to customize the stock location sorters behavior" do
-      let(:coordinator_options) { {force_stock_location_order: [stock_location_2, stock_location_1]} }
+      let(:coordinator_options) { { force_stock_location_order: [stock_location_2, stock_location_1] } }
       let!(:stock_location_1) { create(:stock_location, active: true, propagate_all_variants: true) }
       let!(:stock_location_2) { create(:stock_location, active: true, propagate_all_variants: true) }
 
