@@ -276,6 +276,34 @@ RSpec.describe "Integrating with the simple coordinator" do
       end
     end
 
+    describe "to customize the inventory unit builder's behavior" do
+      let(:coordinator_options) { {multiplier: 4} }
+
+      around do |example|
+        MyInventoryUnitBuilder = Class.new(Spree::Stock::InventoryUnitBuilder) do
+          def units
+            units = []
+            coordinator_options[:multiplier].times do
+              units = units.concat(super)
+            end
+            units
+          end
+        end
+
+        original_inventory_unit_builder_class =
+          Spree::Config.stock.inventory_unit_builder_class
+        Spree::Config.stock.inventory_unit_builder_class =
+          MyInventoryUnitBuilder.to_s
+        example.run
+        Spree::Config.stock.inventory_unit_builder_class =
+          original_inventory_unit_builder_class.to_s
+      end
+
+      it "" do
+        expect(subject.shipments.first.inventory_units.size).to eq(4)
+      end
+    end
+
     describe "to customize the allocator's behavior" do
       let(:coordinator_options) { {force_backordered: true} }
 
