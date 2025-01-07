@@ -63,5 +63,11 @@ module SolidusAdmin
         SolidusAdmin::Engine.root.join("app/components"),
       ]
     end
+
+    initializer "solidus_admin.routing_proxies" do |app|
+      ActiveSupport.on_load(:after_routes_loaded) do
+        SolidusAdmin::BaseComponent.include app.routes.mounted_helpers
+      end
+    end
   end
 end
