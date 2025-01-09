@@ -166,7 +166,6 @@ Layout/SpaceAroundOperators:
     - "backend/spec/features/admin/orders/order_details_spec.rb"
     - "bin/__rspec"
     - "bin/rspec"
-    - "core/lib/spree/money.rb"
     - "core/spec/models/spree/order/number_generator_spec.rb"
 
 # Offense count: 8
@@ -413,7 +412,7 @@ Rails/OutputSafety:
     - "core/app/helpers/spree/base_helper.rb"
     - "core/app/helpers/spree/checkout_helper.rb"
     - "core/app/helpers/spree/products_helper.rb"
-    - "core/lib/spree/money.rb"
+    - "core/app/models/spree/money.rb"
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
