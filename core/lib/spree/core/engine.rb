@@ -21,6 +21,11 @@ module Spree
           [Symbol, BigDecimal, ActiveSupport::HashWithIndifferentAccess]
       end
 
+      initializer "spree.zeitwerk_ignores" do
+        old_helpers = Engine.root.join("lib", "spree", "core", "controller_helpers", "*", "*.rb")
+        Rails.application.autoloaders.main.ignore(old_helpers)
+      end
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
       end
