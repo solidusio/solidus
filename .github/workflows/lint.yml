@@ -1,0 +1,62 @@
+name: Lint
+
+on: [pull_request]
+
+concurrency:
+  group: lint-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+permissions:
+  contents: read
+
+env:
+  BUNDLE_ONLY: "lint"
+
+jobs:
+  ruby:
+    name: Check Ruby
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Lint Ruby files
+        run: bin/rake lint:rb
+      - name: Store test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: rubocop-results
+          path: test-results
+
+  erb:
+    name: Check ERB
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Lint ERB files
+        run: bin/rake lint:erb
+
+  javascript:
+    name: Check JavaScript
+    runs-on: ubuntu-22.04
+    env:
+      ESLINT_USE_FLAT_CONFIG: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Lint JS files
+        run: bin/rake lint:js
