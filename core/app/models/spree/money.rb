@@ -7,7 +7,7 @@ module Spree
     include Comparable
     DifferentCurrencyError = Class.new(StandardError)
 
-    class <<self
+    class << self
       attr_accessor :default_formatting_rules
 
       def parse(amount, currency = Spree::Config[:currency])

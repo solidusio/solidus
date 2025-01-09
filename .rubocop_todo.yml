@@ -166,7 +166,6 @@ Layout/SpaceAroundOperators:
     - "backend/spec/features/admin/orders/order_details_spec.rb"
     - "bin/__rspec"
     - "bin/rspec"
-    - "core/app/models/spree/money.rb"
     - "core/spec/models/spree/order/number_generator_spec.rb"
 
 # Offense count: 8
