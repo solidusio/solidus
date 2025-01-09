@@ -48,9 +48,9 @@ module Spree
 
         def permitted_order_attributes
           permitted_checkout_address_attributes +
-          permitted_checkout_delivery_attributes +
-          permitted_checkout_payment_attributes +
-          permitted_checkout_confirm_attributes + [
+            permitted_checkout_delivery_attributes +
+            permitted_checkout_payment_attributes +
+            permitted_checkout_confirm_attributes + [
             line_items_attributes: permitted_line_item_attributes
           ]
         end

@@ -24,7 +24,7 @@ module Spree
         attr_writer :title
 
         def title
-          title_string = @title.present? ? @title : accurate_title
+          title_string = @title.presence || accurate_title
           if title_string.present?
             if Spree::Config[:always_put_site_name_in_title]
               [title_string, default_title].join(' - ')
