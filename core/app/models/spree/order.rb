@@ -102,7 +102,7 @@ module Spree
     has_many :cartons, -> { distinct }, through: :inventory_units
 
     # Adjustments and promotions
-    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
+    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy, autosave: true
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :all_adjustments,
