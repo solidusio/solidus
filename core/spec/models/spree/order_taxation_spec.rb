@@ -132,12 +132,11 @@ RSpec.describe Spree::OrderTaxation do
         )
       end
 
-      it "removes the tax adjustment" do
-        expect {
-          taxation.apply(new_taxes)
-        }.to change {
-          line_item.adjustments.size
-        }.from(1).to(0)
+      it "marks the tax adjustment for destruction" do
+        order.save!
+        taxation.apply(new_taxes)
+
+        expect(line_item.adjustments.first).to be_marked_for_destruction
       end
     end
 
