@@ -94,6 +94,26 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
       get :index
       expect(response).to redirect_to('/unauthorized')
     end
+
+    context "when unauthorized_redirect is set" do
+      before do
+        Spree.deprecator.silence do
+          controller.unauthorized_redirect = -> { render plain: 'unauthorized', status: :unauthorized }
+        end
+      end
+
+      after do
+        Spree.deprecator.silence do
+          controller.unauthorized_redirect = nil
+        end
+      end
+
+      it "executes unauthorized_redirect" do
+        get :index
+        expect(response.body).to eq 'unauthorized'
+        expect(response.status).to eq 401
+      end
+    end
   end
 
   describe "#spree_current_user" do
