@@ -232,27 +232,6 @@ commands:
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
 
 jobs:
-  lint_code:
-    docker:
-      - image: cimg/ruby:3.2-node
-        environment:
-          BUNDLE_ONLY: "lint"
-          ESLINT_USE_FLAT_CONFIG: false
-    steps:
-      - checkout
-      - run: "bundle install"
-      - run:
-          name: Check Ruby
-          command: "bin/rake lint:rb"
-      - run:
-          name: Check ERB
-          command: "bin/rake lint:erb"
-      - run:
-          name: Check JavaScript
-          command: "bin/rake lint:js"
-      - store_test_results:
-          path: test-results
-
   solidus_installer:
     executor:
       name: sqlite
@@ -362,7 +341,6 @@ jobs:
 workflows:
   build:
     jobs:
-      - lint_code
       - solidus_installer
       - test_solidus_with_coverage # Only test with coverage support with the default versions
 
