@@ -243,10 +243,11 @@ RSpec.describe Spree::Money do
   describe "<=>" do
     let(:usd_10) { Spree::Money.new(10, currency: "USD") }
     let(:usd_20) { Spree::Money.new(20, currency: "USD") }
+    let(:other_usd_20) { Spree::Money.new(20, currency: "USD") }
     let(:usd_30) { Spree::Money.new(30, currency: "USD") }
 
     it "compares the two amounts" do
-      expect(usd_20 <=> usd_20).to eq 0
+      expect(usd_20 <=> other_usd_20).to eq 0
       expect(usd_20 <=> usd_10).to be > 0
       expect(usd_20 <=> usd_30).to be < 0
     end

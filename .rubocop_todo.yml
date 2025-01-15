@@ -213,11 +213,6 @@ Lint/AmbiguousOperator:
     - "bin/rails-application-template"
     - "bin/rspec"
 
-# Offense count: 1
-Lint/BinaryOperatorWithIdenticalOperands:
-  Exclude:
-    - "core/spec/lib/spree/money_spec.rb"
-
 # Offense count: 43
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
