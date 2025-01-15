@@ -36,6 +36,7 @@ module Spree
     before_destroy :destroy_inventory_units
 
     delegate :name, :description, :sku, :should_track_inventory?, to: :variant
+    delegate :tax_category, :tax_category_id, to: :variant, prefix: true
     delegate :currency, to: :order, allow_nil: true
 
     attr_accessor :target_shipment, :price_currency
@@ -126,6 +127,24 @@ module Spree
 
     def pricing_options
       Spree::Config.pricing_options_class.from_line_item(self)
+    end
+
+    # @return [Spree::TaxCategory] the variant's tax category
+    #
+    # This returns the variant's tax category if the tax category ID on the line_item is nil. It looks
+    # like an association, but really is an override.
+    #
+    def tax_category
+      super || variant_tax_category
+    end
+
+    # @return [Integer] the variant's tax category ID
+    #
+    # This returns the variant's tax category ID if the tax category ID on the line_id is nil. It looks
+    # like an association, but really is an override.
+    #
+    def tax_category_id
+      super || variant_tax_category_id
     end
 
     private

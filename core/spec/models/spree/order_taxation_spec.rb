@@ -26,14 +26,19 @@ RSpec.describe Spree::OrderTaxation do
       :product,
       price: 20,
       name: "Book",
-      tax_category: books_category,
+      tax_category: create(:tax_category),
     )
   end
 
   let(:taxation) { described_class.new(order) }
 
+  before do
+    order.contents.add(book.master)
+    book.update(tax_category: books_category)
+  end
+
   describe "#apply" do
-    let(:line_item) { order.contents.add(book.master) }
+    let(:line_item) { order.line_items.first }
 
     let(:line_item_tax) do
       Spree::Tax::ItemTax.new(
@@ -53,9 +58,16 @@ RSpec.describe Spree::OrderTaxation do
       )
     end
 
-    before { taxation.apply(taxes) }
+    subject(:apply) { taxation.apply(taxes) }
+
+    it "updates the line_item's tax_category_id" do
+      expect { apply }.to change {
+        line_item[:tax_category_id]
+      }.to(books_category.id)
+    end
 
     it "creates a new tax adjustment", aggregate_failures: true do
+      apply
       expect(line_item.adjustments.count).to eq 1
 
       tax_adjustment = line_item.adjustments.first
@@ -66,6 +78,8 @@ RSpec.describe Spree::OrderTaxation do
     end
 
     context "when new taxes are applied" do
+      before { apply }
+
       let(:new_line_item_tax) do
         Spree::Tax::ItemTax.new(
           item_id: line_item.id,
@@ -108,6 +122,8 @@ RSpec.describe Spree::OrderTaxation do
     end
 
     context "when taxes are removed" do
+      before { apply }
+
       let(:new_taxes) do
         Spree::Tax::OrderTax.new(
           order_id: order.id,
@@ -126,6 +142,8 @@ RSpec.describe Spree::OrderTaxation do
     end
 
     context "with order-level taxes" do
+      before { apply }
+
       let(:delivery_fee) do
         FactoryBot.create(
           :tax_rate,
