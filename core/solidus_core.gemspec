@@ -35,6 +35,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'awesome_nested_set', '~> 3.3'
   s.add_dependency 'cancancan', ['>= 2.2', '< 4.0']
   s.add_dependency 'carmen', '~> 1.1.0'
+  # Adding a constraint here to make sure Rails 7.0 does not crash on startup
+  # https://github.com/rails/rails/pull/54264
+  s.add_dependency 'concurrent-ruby', '< 1.3.5'
   s.add_dependency 'discard', '~> 1.0'
   s.add_dependency 'friendly_id', '~> 5.0'
   s.add_dependency 'image_processing', '~> 1.10'
