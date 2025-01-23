@@ -9,7 +9,7 @@ module Spree::Api
     let!(:attributes) {
       [:id, :source_type, :source_id, :amount, :display_amount,
        :payment_method_id, :state, :avs_response,
-       :created_at, :updated_at]
+       :created_at, :updated_at, :private_metadata, :public_metadata]
     }
 
     before do

@@ -4,6 +4,8 @@ module Spree
   class Taxonomy < Spree::Base
     acts_as_list
 
+    include Metadata
+
     validates :name, presence: true
     validates :name, uniqueness: true
 
