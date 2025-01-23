@@ -38,6 +38,7 @@ module Spree
       private
 
       attr_reader :ability
+
       delegate :can, :cannot, :user, to: :ability
     end
   end

@@ -49,10 +49,10 @@ module Spree
         can :create, Order do |order, token|
           # same user, or both nil
           order.user == user ||
-          # guest checkout order
-          order.email.present? ||
-          # via API, just like with show and update
-          (order.guest_token.present? && token == order.guest_token)
+            # guest checkout order
+            order.email.present? ||
+            # via API, just like with show and update
+            (order.guest_token.present? && token == order.guest_token)
         end
         can [:show, :update], Order, Order.where(user:) do |order, token|
           order.user == user || (order.guest_token.present? && token == order.guest_token)
