@@ -92,7 +92,6 @@ Layout/EmptyLinesAroundAttributeAccessor:
     - "core/app/models/spree/stock_quantities.rb"
     - "core/app/models/spree/variant.rb"
     - "core/lib/spree/app_configuration.rb"
-    - "core/lib/spree/permission_sets/base.rb"
     - "core/lib/spree/preferences/configuration.rb"
     - "core/spec/lib/spree/core/validators/email_spec.rb"
     - "core/spec/models/spree/preferences/statically_configurable_spec.rb"
@@ -145,7 +144,6 @@ Layout/MultilineOperationIndentation:
   Exclude:
     - "core/lib/spree/core/engine.rb"
     - "core/lib/spree/core/importer/order.rb"
-    - "core/lib/spree/permission_sets/default_customer.rb"
     - "core/lib/spree/testing_support/factories/address_factory.rb"
 
 # Offense count: 3
@@ -525,7 +523,6 @@ Style/CommentAnnotation:
     - "backend/app/controllers/spree/admin/products_controller.rb"
     - "backend/app/controllers/spree/admin/resource_controller.rb"
     - "core/app/models/spree/payment_method/store_credit.rb"
-    - "core/lib/spree/permission_sets/user_management.rb"
     - "core/lib/spree/testing_support/rake.rb"
     - "core/spec/models/spree/variant/scopes_spec.rb"
 
