@@ -13,14 +13,13 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
     :name_or_code_cont
   end
 
-  def row_url(refund_reason)
-    spree.edit_admin_refund_reason_path(refund_reason, _turbo_frame: :edit_refund_reason_modal)
+  def edit_path(refund_reason)
+    spree.edit_admin_refund_reason_path(refund_reason, **search_filter_params)
   end
 
   def turbo_frames
     %w[
-      new_refund_reason_modal
-      edit_refund_reason_modal
+      resource_modal
     ]
   end
 
@@ -28,7 +27,8 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_refund_reason_path, data: { turbo_frame: :new_refund_reason_modal },
+      href: solidus_admin.new_refund_reason_path(**search_filter_params),
+      data: { turbo_frame: :resource_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -38,7 +38,7 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
     [
       {
         label: t('.batch_actions.delete'),
-        action: solidus_admin.refund_reasons_path,
+        action: solidus_admin.refund_reasons_path(**search_filter_params),
         method: :delete,
         icon: 'delete-bin-7-line',
       },
@@ -47,8 +47,22 @@ class SolidusAdmin::RefundReasons::Index::Component < SolidusAdmin::RefundsAndRe
 
   def columns
     [
-      :name,
-      :code,
+      {
+        header: :name,
+        data: ->(refund_reason) do
+          link_to refund_reason.name, edit_path(refund_reason),
+            data: { turbo_frame: :resource_modal },
+            class: 'body-link'
+        end
+      },
+      {
+        header: :code,
+        data: ->(refund_reason) do
+          link_to_if refund_reason.code, refund_reason.code, edit_path(refund_reason),
+            data: { turbo_frame: :resource_modal },
+            class: 'body-link'
+        end
+      },
       {
         header: :active,
         data: ->(refund_reason) do

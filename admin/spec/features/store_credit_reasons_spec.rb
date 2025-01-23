@@ -26,14 +26,14 @@ describe "Store Credit Reasons", :js, type: :feature do
     before do
       visit "/admin/store_credit_reasons#{query}"
       click_on "Add new"
-      expect(page).to have_selector("dialog", wait: 5)
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Store Credit Reason")
       expect(page).to be_axe_clean
     end
 
     it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
-      expect(page).not_to have_selector("dialog", wait: 5)
+      expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
     end
 
@@ -65,15 +65,15 @@ describe "Store Credit Reasons", :js, type: :feature do
     before do
       Spree::StoreCreditReason.create(name: "New Customer Reward")
       visit "/admin/store_credit_reasons#{query}"
-      find_row("New Customer Reward").click
-      expect(page).to have_selector("dialog", wait: 5)
+      click_on "New Customer Reward"
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("Edit Store Credit Reason")
       expect(page).to be_axe_clean
     end
 
     it "closing the modal keeps query params" do
       within("dialog") { click_on "Cancel" }
-      expect(page).not_to have_selector("dialog", wait: 5)
+      expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
     end
 

@@ -34,7 +34,7 @@ describe "StoreCredits", :js, type: :feature do
     it "allows creation of a new store credit" do
       click_on "Create One"
 
-      expect(page).to have_selector("dialog", wait: 5)
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Store Credit")
 
       within("dialog") do
@@ -47,7 +47,7 @@ describe "StoreCredits", :js, type: :feature do
 
       click_on "Create One"
 
-      expect(page).to have_selector("dialog", wait: 5)
+      expect(page).to have_selector("dialog")
       expect(page).to have_content("New Store Credit")
 
       within("dialog") do
@@ -95,7 +95,7 @@ describe "StoreCredits", :js, type: :feature do
     context "when clicking through to a single store credit" do
       before do
         stub_authorization!(admin)
-        find_row("$199.00").click
+        click_on("$199.00")
       end
 
       it "shows individual store credit details" do
@@ -109,7 +109,7 @@ describe "StoreCredits", :js, type: :feature do
         context "with invalid amount" do
           it "shows the appropriate error message" do
             click_on "Edit Amount"
-            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_selector("dialog")
             expect(page).to have_content("Edit Store Credit Amount")
 
             within("dialog") do
@@ -124,7 +124,7 @@ describe "StoreCredits", :js, type: :feature do
         context "without a valid reason" do
           it "shows the appropriate error message" do
             click_on "Edit Amount"
-            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_selector("dialog")
             expect(page).to have_content("Edit Store Credit Amount")
 
             within("dialog") do
@@ -139,7 +139,7 @@ describe "StoreCredits", :js, type: :feature do
         context "with valid params" do
           it "allows editing of the store credit amount" do
             click_on "Edit Amount"
-            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_selector("dialog")
             expect(page).to have_content("Edit Store Credit Amount")
 
             within("dialog") do
@@ -159,7 +159,7 @@ describe "StoreCredits", :js, type: :feature do
         context "without a valid reason" do
           it "shows the appropriate error message" do
             click_on "Invalidate"
-            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_selector("dialog")
             expect(page).to have_content("Invalidate Store Credit")
 
             within("dialog") do
@@ -173,7 +173,7 @@ describe "StoreCredits", :js, type: :feature do
         context "with a valid reason" do
           it "invalidates the store credit" do
             click_on "Invalidate"
-            expect(page).to have_selector("dialog", wait: 5)
+            expect(page).to have_selector("dialog")
             expect(page).to have_content("Invalidate Store Credit")
 
             within("dialog") do
@@ -192,7 +192,7 @@ describe "StoreCredits", :js, type: :feature do
       context "when editing the store credit memo" do
         it "allows editing of the store credit memo" do
           click_on "Edit Memo"
-          expect(page).to have_selector("dialog", wait: 5)
+          expect(page).to have_selector("dialog")
           expect(page).to have_content("Edit Store Credit Memo")
 
           within("dialog") do

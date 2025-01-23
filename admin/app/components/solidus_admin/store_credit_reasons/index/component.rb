@@ -9,7 +9,8 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: solidus_admin.new_store_credit_reason_path, data: { turbo_frame: :new_store_credit_reason_modal },
+      href: solidus_admin.new_store_credit_reason_path(**search_filter_params),
+      data: { turbo_frame: :resource_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -17,13 +18,12 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
 
   def turbo_frames
     %w[
-      new_store_credit_reason_modal
-      edit_store_credit_reason_modal
+      resource_modal
     ]
   end
 
-  def row_url(store_credit_reason)
-    spree.edit_admin_store_credit_reason_path(store_credit_reason, _turbo_frame: :edit_store_credit_reason_modal)
+  def edit_path(store_credit_reason)
+    spree.edit_admin_store_credit_reason_path(store_credit_reason, **search_filter_params)
   end
 
   def search_url
@@ -38,7 +38,7 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
     [
       {
         label: t('.batch_actions.delete'),
-        action: solidus_admin.store_credit_reasons_path,
+        action: solidus_admin.store_credit_reasons_path(**search_filter_params),
         method: :delete,
         icon: 'delete-bin-7-line',
       },
@@ -47,7 +47,14 @@ class SolidusAdmin::StoreCreditReasons::Index::Component < SolidusAdmin::Refunds
 
   def columns
     [
-      :name,
+      {
+        header: :name,
+        data: ->(store_credit_reason) do
+          link_to store_credit_reason.name, edit_path(store_credit_reason),
+            data: { turbo_frame: :resource_modal },
+            class: 'body-link'
+        end
+      },
       {
         header: :active,
         data: ->(store_credit_reason) do

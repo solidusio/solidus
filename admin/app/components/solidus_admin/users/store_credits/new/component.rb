@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Users::StoreCredits::New::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Users::StoreCredits::New::Component < SolidusAdmin::Resources::New::Component
   def initialize(user:, store_credit:, categories:)
     @user = user
-    @store_credit = store_credit
+    super(store_credit)
     @store_credit_categories = categories
-    @store_credits = Spree::StoreCredit.where(user_id: @user.id).order(id: :desc)
   end
 
-  def form_id
-    dom_id(@store_credit, "#{stimulus_id}_new_form")
+  def form_url
+    solidus_admin.user_store_credits_path(@user, **search_filter_params)
   end
 
   def currency_select_options

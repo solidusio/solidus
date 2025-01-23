@@ -54,7 +54,7 @@ describe "Properties", :js, type: :feature do
 
     it "updates the property" do
       visit "/admin/properties"
-      find_row("Color").click
+      click_on "Color"
 
       fill_in "Name", with: "Size"
       fill_in "Presentation", with: "Cool Size"
@@ -68,7 +68,7 @@ describe "Properties", :js, type: :feature do
 
     it "shows validation errors" do
       visit "/admin/properties"
-      find_row("Color").click
+      click_on "Color"
 
       fill_in "Name", with: ""
       click_on "Update Property"
@@ -83,7 +83,7 @@ describe "Properties", :js, type: :feature do
 
     it "updates the property" do
       visit "/admin/properties"
-      find_row("Color").click
+      click_on "Color"
 
       fill_in "Name", with: "Size"
       fill_in "Presentation", with: "Cool Size"
@@ -97,7 +97,7 @@ describe "Properties", :js, type: :feature do
 
     it "shows validation errors" do
       visit "/admin/properties"
-      find_row("Color").click
+      click_on "Color"
       expect(page).to have_field("Name", with: "Color")
       fill_in "Name", with: ""
       click_on "Update Property"

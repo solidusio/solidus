@@ -39,6 +39,6 @@
   <% end %>
 
   <% turbo_frames.each do |frame| %>
-    <%= turbo_frame_tag frame %>
+    <%= turbo_frame_tag frame, target: "_top" %>
   <% end %>
 <% end %>

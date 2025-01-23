@@ -1,16 +1,7 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Roles::New::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Roles::New::Component < SolidusAdmin::Resources::New::Component
   include SolidusAdmin::PermissionSetsHelper
-
-  def initialize(page:, role:)
-    @page = page
-    @role = role
-  end
-
-  def form_id
-    dom_id(@role, "#{stimulus_id}_new_role_form")
-  end
 
   private
 

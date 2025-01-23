@@ -44,4 +44,28 @@ describe SolidusAdmin::BaseController, type: :controller do
       expect(response.code).to eq "200"
     end
   end
+
+  describe "layout rendering" do
+    subject { controller.send(:set_layout) }
+
+    context "with turbo frame request" do
+      before do
+        allow_any_instance_of(described_class).to receive(:turbo_frame_request?).and_return(true)
+      end
+
+      it "renders minimal turbo frame layout" do
+        is_expected.to be "turbo_rails/frame"
+      end
+    end
+
+    context "without turbo frame request" do
+      before do
+        allow_any_instance_of(described_class).to receive(:turbo_frame_request?).and_return(false)
+      end
+
+      it "renders the default layout" do
+        is_expected.to eq "solidus_admin/application"
+      end
+    end
+  end
 end
