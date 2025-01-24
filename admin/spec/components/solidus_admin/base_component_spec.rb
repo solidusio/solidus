@@ -9,7 +9,7 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
         def call
           icon_tag("user-line")
         end
-      end.new
+      end
 
       render_inline(component)
 
@@ -42,7 +42,7 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
 
   describe ".stimulus_id" do
     it "returns the stimulus id for the component" do
-      stub_const("SolidusAdmin::Foo::Bar::Component", Class.new(described_class))
+      mock_component("SolidusAdmin::Foo::Bar::Component") { erb_template "" }
 
       expect(SolidusAdmin::Foo::Bar::Component.stimulus_id).to eq("foo--bar")
       expect(SolidusAdmin::Foo::Bar::Component.new.stimulus_id).to eq("foo--bar")
