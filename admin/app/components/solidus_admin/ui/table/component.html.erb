@@ -137,11 +137,12 @@
       <%= "data-sortable-animation-value=#{@sortable.animation}" if @sortable&.animation %>
     >
       <% @data.rows.each do |row| %>
+        <% row_url = @data.url&.call(row) %>
         <tr
-          class="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer <%= 'bg-gray-15 text-gray-700' if @data.fade&.call(row) %>"
-          <% if @data.url %>
+          class="border-b border-gray-100 last:border-0 <%= 'hover:bg-gray-50 cursor-pointer' if row_url %> <%= 'bg-gray-15 text-gray-700' if @data.fade&.call(row) %>"
+          <% if row_url %>
             data-action="click-><%= stimulus_id %>#rowClicked"
-            data-<%= stimulus_id %>-url-param="<%= @data.url.call(row) %>"
+            data-<%= stimulus_id %>-url-param="<%= row_url %>"
             <%= "data-sortable-url=#{@sortable.url.call(row)}" if @sortable&.url %>
           <% end %>
         >

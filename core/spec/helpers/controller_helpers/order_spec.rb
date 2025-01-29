@@ -46,7 +46,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
         expect {
           subject
         }.to change {
-          Spree::Order.last.try!(:last_ip_address)
+          Spree::Order.last&.last_ip_address
         }.from(nil).to("0.0.0.0")
       end
     end

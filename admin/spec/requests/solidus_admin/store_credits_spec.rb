@@ -60,7 +60,6 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     it "renders the new store credit template with a 200 OK status" do
       get solidus_admin.new_user_store_credit_path(user)
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include(store_credit.amount.to_s)
     end
   end
 
@@ -72,17 +71,22 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
         }.to change(Spree::StoreCredit, :count).by(1)
       end
 
-      it "redirects to the store credits index page with a success message" do
-        post solidus_admin.user_store_credits_path(user), params: valid_create_params
-        expect(response).to redirect_to(solidus_admin.user_store_credits_path(user))
-        follow_redirect!
-        expect(response.body).to include("Store credit was successfully created.")
+      context "for html requests" do
+        it "redirects to the store credits index page with a success message" do
+          post solidus_admin.user_store_credits_path(user), params: valid_create_params
+          expect(response).to redirect_to(solidus_admin.user_store_credits_path(user))
+          follow_redirect!
+          expect(response.body).to include("Store credit was successfully created.")
+        end
       end
 
-      it "returns a turbo_stream response when requested" do
-        post solidus_admin.user_store_credits_path(user, format: :turbo_stream), params: valid_create_params
-        expect(response.media_type).to eq("text/vnd.turbo-stream.html")
-        expect(response.body).to include('<turbo-stream action="refresh" />')
+      context "for turbo_stream requests" do
+        it "returns a turbo_stream response when requested" do
+          post solidus_admin.user_store_credits_path(user, format: :turbo_stream), params: valid_create_params
+          expect(response).to redirect_to(solidus_admin.user_store_credits_path(user))
+          follow_redirect!
+          expect(response.body).to include("Store credit was successfully created.")
+        end
       end
     end
 
@@ -187,7 +191,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     it "renders the edit_validity template with a 200 OK status" do
       get solidus_admin.edit_validity_user_store_credit_path(user, store_credit)
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include(store_credit.amount.to_s)
+      expect(response.body).to include("Choose Reason For Invalidating")
     end
   end
 

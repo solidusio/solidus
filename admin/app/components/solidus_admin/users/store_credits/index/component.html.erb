@@ -5,9 +5,13 @@
 
     <%= page_header_actions do %>
       <%= render component("ui/button").new(
-        "data-action": "click->#{stimulus_id}#actionButtonClicked",
-        "data-#{stimulus_id}-url-param": solidus_admin.new_user_store_credit_path(user_id: @user.id, _turbo_frame: :new_store_credit_modal),
+        tag: :a,
+        href: new_store_credit_path,
+        data: {
+          turbo_frame: :resource_modal
+        },
         text: t(".add_store_credit"),
+        icon: "add-line"
       )%>
     <% end %>
   <% end %>
@@ -27,23 +31,25 @@
 
           <%= render component('ui/panel').new(title: title) do %>
             <%= render component('ui/table').new(
-                id: stimulus_id,
-                data: {
-                  class: model_class,
-                  rows: credits,
-                  fade: -> (_order) { false },
-                  columns: columns,
-                  url: -> { row_url(_1) },
-                },
-            )%>
+              id: stimulus_id,
+              data: {
+                class: model_class,
+                rows: credits,
+                fade: -> (_order) { false },
+                columns: columns
+              }
+            ) %>
           <% end %>
         <% end %>
       <% else %>
         <%= render component('ui/panel').new(title: t(".store_credit")) do %>
           <%= t(".no_credits_found") %>
           <%= render component("ui/button").new(
-            "data-action": "click->#{stimulus_id}#actionButtonClicked",
-            "data-#{stimulus_id}-url-param": solidus_admin.new_user_store_credit_path(user_id: @user.id, _turbo_frame: :new_store_credit_modal),
+            tag: :a,
+            data: {
+              turbo_frame: :resource_modal
+            },
+            href: new_store_credit_path,
             text: t(".create_one"),
           )%>
         <% end %>
@@ -55,7 +61,5 @@
     <% end %>
   <% end %>
 
-  <% turbo_frames.each do |frame| %>
-    <%= turbo_frame_tag frame %>
-  <% end %>
+  <%= turbo_frame_tag :resource_modal, target: "_top" %>
 <% end %>

@@ -120,7 +120,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     context "when an ancestor defines it" do
       it "delegates" do
         controller = Class.new(ApplicationController) do
-          include (Module.new do
+          include(Module.new do
             def spree_current_user
               :user
             end

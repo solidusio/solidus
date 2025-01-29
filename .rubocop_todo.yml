@@ -143,7 +143,6 @@ Layout/LeadingEmptyLines:
 # SupportedStyles: aligned, indented
 Layout/MultilineOperationIndentation:
   Exclude:
-    - "core/lib/spree/core/controller_helpers/strong_parameters.rb"
     - "core/lib/spree/core/engine.rb"
     - "core/lib/spree/core/importer/order.rb"
     - "core/lib/spree/permission_sets/default_customer.rb"
@@ -225,12 +224,6 @@ Lint/ConstantDefinitionInBlock:
 Lint/EmptyConditionalBody:
   Exclude:
     - "core/lib/spree/preferences/statically_configurable.rb"
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/ParenthesesAsGroupedExpression:
-  Exclude:
-    - "core/spec/lib/spree/core/controller_helpers/auth_spec.rb"
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -325,7 +318,6 @@ Rails/Blank:
     - "core/app/models/spree/reimbursement_type/exchange.rb"
     - "core/app/models/spree/wallet_payment_source.rb"
     - "core/app/models/spree/zone.rb"
-    - "core/lib/spree/core/controller_helpers/auth.rb"
     - "core/lib/spree/core/importer/order.rb"
     - "core/lib/spree/core/search/base.rb"
 
@@ -409,12 +401,6 @@ Rails/OutputSafety:
     - "core/app/helpers/spree/products_helper.rb"
     - "core/app/models/spree/money.rb"
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Rails/Presence:
-  Exclude:
-    - "core/lib/spree/core/controller_helpers/common.rb"
-
 # Offense count: 10
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: NotNilAndNotEmpty, NotBlank, UnlessBlank.
@@ -471,7 +457,6 @@ Rails/SafeNavigation:
     - "core/app/models/spree/variant/pricing_options.rb"
     - "core/app/models/spree/wallet.rb"
     - "core/app/models/spree/wallet/default_payment_builder.rb"
-    - "core/spec/lib/spree/core/controller_helpers/order_spec.rb"
     - "core/spec/models/spree/variant/vat_price_generator_spec.rb"
 
 # Offense count: 43
@@ -691,7 +676,6 @@ Style/RedundantRegexpEscape:
 # Configuration parameters: AllowMultipleReturnValues.
 Style/RedundantReturn:
   Exclude:
-    - "core/lib/spree/core/controller_helpers/order.rb"
     - "core/lib/spree/preferences/store.rb"
 
 # Offense count: 2
@@ -712,13 +696,6 @@ Style/RedundantSort:
 # AllowedMethods: present?, blank?, presence, try, try!
 Style/SafeNavigation:
   Enabled: false
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowModifier.
-Style/SoleNestedConditional:
-  Exclude:
-    - "core/lib/spree/core/controller_helpers/order.rb"
 
 # Offense count: 13
 # This cop supports unsafe autocorrection (--autocorrect-all).
