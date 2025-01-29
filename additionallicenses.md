@@ -3,10 +3,10 @@
 ## Components with diverging Licenses
 ### Solidus Promotions System
 
-Copyright © 2024-2025, Blish GmbH for the individual contributions by Blish.
-Copyright © 2024-2025, Martin Meyerhoff
-Copyright © 2024-2025, Nebulab Srl for the individual contributions by Nebulab.
-Copyright © 2024-2025, Super Good Software Inc. for the individual contributions by Super Good Software
+Copyright © 2024-2025, Blish GmbH for the individual contributions by Blish.<br>
+Copyright © 2024-2025, Martin Meyerhoff.<br>
+Copyright © 2024-2025, Nebulab Srl for the individual contributions by Nebulab.<br>
+Copyright © 2024-2025, Super Good Software Inc. for the individual contributions by Super Good Software.<br>
 Copyright © 2024-2025, All other contributors individually as stated in the Github commit history collectively referred to as Contributors.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
