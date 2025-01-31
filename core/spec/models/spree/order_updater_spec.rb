@@ -129,6 +129,41 @@ module Spree
           end
         end
 
+        context "with an order-level tax adjustment" do
+          let(:colorado) { create(:state, state_code: "CO") }
+          let(:colorado_tax_zone) { create(:zone, states: [colorado]) }
+          let(:ship_address) { create(:address, state: colorado) }
+
+          let!(:colorado_delivery_fee) do
+            create(
+              :tax_rate,
+              amount: 0.27,
+              calculator: Spree::Calculator::FlatFee.new,
+              level: "order",
+              name: "Colorado Delivery Fee",
+              tax_categories: [tax_category],
+              zone: colorado_tax_zone
+            )
+          end
+
+          before { order.recalculate }
+
+          it "updates the order-level tax adjustment" do
+            expect {
+              order.ship_address = create(:address)
+              order.recalculate
+            }.to change { order.additional_tax_total }.from(0.27).to(0).
+                and change { order.adjustment_total }.from(0.27).to(0)
+          end
+
+          it "deletes the order-level tax adjustments when it persists the order" do
+            expect {
+              order.ship_address = create(:address)
+              order.recalculate
+            }.to change { order.all_adjustments.count }.from(1).to(0)
+          end
+        end
+
         context 'with a custom tax_calculator_class' do
           let(:custom_calculator_class) { double }
           let(:custom_calculator_instance) { double }
