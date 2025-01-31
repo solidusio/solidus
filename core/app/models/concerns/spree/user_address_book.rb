@@ -5,7 +5,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, -> { active }, foreign_key: "user_id", class_name: "Spree::UserAddress" do
+      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress" do
         def find_first_by_address_values(address_attrs)
           detect { |ua| ua.address == Spree::Address.new(address_attrs) }
         end
@@ -22,7 +22,7 @@ module Spree
             end
 
             if user_address.persisted?
-              user_address.update!(column_for_default => true, archived: false)
+              user_address.update!(column_for_default => true)
             else
               user_address.write_attribute(column_for_default, true)
             end
@@ -151,7 +151,7 @@ module Spree
       user_address = user_addresses.find_by(address_id:)
       if user_address
         remove_user_address_reference(address_id)
-        user_address.update(archived: true, default: false)
+        user_address.destroy!
       else
         false
       end
@@ -160,10 +160,9 @@ module Spree
     private
 
     def prepare_user_address(new_address)
-      user_address = user_addresses.all_historical.find_first_by_address_values(new_address.attributes)
+      user_address = user_addresses.find_first_by_address_values(new_address.attributes)
       user_address ||= user_addresses.build
       user_address.address = new_address
-      user_address.archived = false
       user_address
     end
 
