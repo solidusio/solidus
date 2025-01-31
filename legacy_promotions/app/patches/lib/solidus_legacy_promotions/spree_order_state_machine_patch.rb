@@ -3,7 +3,7 @@
 require_dependency "spree/core/state_machines/order"
 
 module SolidusLegacyPromotions
-  module SpreeOrderStateMachineDecorator
+  module SpreeOrderStateMachinePatch
     def define_state_machine!
       super
       state_machine do

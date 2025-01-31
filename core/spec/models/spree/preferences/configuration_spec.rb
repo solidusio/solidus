@@ -7,6 +7,7 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
     Class.new(Spree::Preferences::Configuration) do
       preference :color, :string, default: :blue
       versioned_preference :foo, :boolean, initial_value: true, boundaries: { "3.0" => false }
+      class_name_attribute :order_recalculator_class, default: 'Spree::OrderUpdater'
     end.new
   end
 
@@ -82,6 +83,18 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
 
         config.check_load_defaults_called('Spree::Config')
       end
+    end
+  end
+
+  describe ".class_name_attribute" do
+    it "allows getting the constant of a configurable class" do
+      config.order_recalculator_class = 'Spree::OrderUpdater'
+      expect(config.order_recalculator_class).to eq Spree::OrderUpdater
+    end
+
+    it "allows getting the string name of the class" do
+      config.order_recalculator_class = 'Spree::OrderUpdater'
+      expect(config.order_recalculator_class_name).to eq 'Spree::OrderUpdater'
     end
   end
 end

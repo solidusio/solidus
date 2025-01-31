@@ -63,6 +63,7 @@ end
 group :legacy_promotions, :promotions do
   gem 'solidus_legacy_promotions', path: 'legacy_promotions', require: false
   gem 'solidus_backend', path: 'backend', require: false
+  gem 'solidus_support', github: "mamhoff/solidus_support", branch: "re-enable-flickwerk"
 end
 
 group :promotions do

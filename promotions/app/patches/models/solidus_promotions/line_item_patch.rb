@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  module LineItemDecorator
+  module LineItemPatch
     def self.prepended(base)
       base.attr_accessor :quantity_setter
       base.belongs_to :managed_by_order_benefit, class_name: "SolidusPromotions::Benefit", optional: true
