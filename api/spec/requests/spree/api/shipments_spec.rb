@@ -75,7 +75,7 @@ module Spree::Api
           it 'returns proper error' do
             subject
             expect(response.status).to eq(422)
-            expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
+            expect(json_response['exception']).to match(/param is missing or the value is empty( or invalid)?: stock_location_id/)
           end
         end
       end
