@@ -430,6 +430,13 @@ module Spree
     #   as Spree::Wallet::AddPaymentSourcesToWallet.
     class_name_attribute :add_payment_sources_to_wallet_class, default: 'Spree::Wallet::AddPaymentSourcesToWallet'
 
+    # Allows providing your own class for recalculating totals on an item.
+    #
+    # @!attribute [rw] item_total_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::ItemTotal
+    class_name_attribute :item_total_class, default: 'Spree::ItemTotal'
+
     # Allows providing your own class for calculating taxes on an order.
     #
     # This extension point is under development and may change in a future minor release.

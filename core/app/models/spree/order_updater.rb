@@ -208,7 +208,7 @@ module Spree
 
     def update_item_totals
       [*line_items, *shipments].each do |item|
-        Spree::ItemTotal.new(item).recalculate!
+        Spree::Config.item_total_class.new(item).recalculate!
 
         next unless item.changed?
 
