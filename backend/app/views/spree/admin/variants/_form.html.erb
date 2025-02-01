@@ -45,7 +45,7 @@
   <fieldset class="no-border-bottom">
     <legend><%= t(".properties") %></legend>
     <div class="row">
-      <% [:weight, :height, :width, :depth].each_with_index do |field, index| %>
+      <% [:weight, :height, :width, :depth, :gtin].each_with_index do |field, index| %>
         <div class="col-3">
           <div class="field" data-hook="<%= field %>">
             <%= f.label field %>
@@ -55,6 +55,16 @@
           </div>
         </div>
       <% end %>
+
+      <div class="col-3">
+        <div class="field" data-hook="condition">
+          <%= f.label :condition %>
+          <%= f.select :condition,
+                       Spree::Variant::CONDITIONS.map { |c| [c, c] },
+                       { include_blank: t(:select_condition) },
+                       { class: 'custom-select fullwidth' } %>
+        </div>
+      </div>
     </div>
   </fieldset>
 </div>

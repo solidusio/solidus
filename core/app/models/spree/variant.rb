@@ -28,6 +28,8 @@ module Spree
     attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice
 
+    CONDITIONS = %w[New Refurbished Used Damaged].freeze
+
     belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants_including_master, optional: false
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
     belongs_to :shipping_category, class_name: "Spree::ShippingCategory", optional: true
@@ -70,6 +72,7 @@ module Spree
 
     validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
     validates :price,      numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+    validates :condition, inclusion: { in: CONDITIONS }, allow_nil: true
     validates_uniqueness_of :sku, allow_blank: true, case_sensitive: true, conditions: -> { where(deleted_at: nil) }, if: :enforce_unique_sku?
 
     after_create :create_stock_items
