@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
     actionmailer actionpack actionview activejob activemodel activerecord
     activestorage activesupport railties
   ].each do |rails_dep|
-    s.add_dependency rails_dep, ['>= 7.0', '< 8.0.0.beta1']
+    s.add_dependency rails_dep, ['>= 7.0', '< 8.1.0.beta1']
   end
 
   s.add_dependency 'activemerchant', '~> 1.66'
