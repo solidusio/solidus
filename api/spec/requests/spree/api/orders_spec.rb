@@ -128,6 +128,17 @@ module Spree::Api
 
           expect(json_response).not_to have_key('admin_metadata')
         end
+
+        it "cannot update customer metadata if the order is complete" do
+          order = create(:order)
+          order.completed_at = Time.current
+          order.state = 'complete'
+          order.save!
+
+          put spree.api_order_path(order), params: { order: attributes_with_metadata }
+
+          expect(json_response['customer_metadata']).to eq({})
+        end
       end
 
       context "when the current user can administrate the order" do
