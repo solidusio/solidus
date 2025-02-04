@@ -325,4 +325,6 @@ RSpec.describe Spree::StoreCreditEvent do
       end
     end
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :store_credit_event
 end

@@ -2,6 +2,8 @@
 
 module Spree
   class Refund < Spree::Base
+    include Metadata
+
     belongs_to :payment, inverse_of: :refunds, optional: true
     belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id, optional: true
     belongs_to :reimbursement, inverse_of: :refunds, optional: true

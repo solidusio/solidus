@@ -1331,4 +1331,6 @@ RSpec.describe Spree::Payment, type: :model do
       expect(described_class.valid).to be_empty
     end
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :payment
 end
