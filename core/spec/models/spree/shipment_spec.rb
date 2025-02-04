@@ -872,4 +872,24 @@ RSpec.describe Spree::Shipment, type: :model do
 
     it { is_expected.to include carton }
   end
+
+  describe "metadata fields" do
+    it "responds to customer_metadata" do
+      expect(shipment).to respond_to(:customer_metadata)
+    end
+
+    it "responds to admin_metadata" do
+      expect(shipment).to respond_to(:admin_metadata)
+    end
+
+    it "can store data in customer_metadata" do
+      shipment.customer_metadata = { "tracking_info" => "UPS123456789" }
+      expect(shipment.customer_metadata["tracking_info"]).to eq("UPS123456789")
+    end
+
+    it "can store data in admin_metadata" do
+      shipment.admin_metadata = { "internal_note" => "Handle with care" }
+      expect(shipment.admin_metadata["internal_note"]).to eq("Handle with care")
+    end
+  end
 end
