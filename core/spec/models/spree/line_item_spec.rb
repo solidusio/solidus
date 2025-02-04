@@ -189,4 +189,6 @@ RSpec.describe Spree::LineItem, type: :model do
       expect(subject.currency).to eq("USD")
     end
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :line_item
 end
