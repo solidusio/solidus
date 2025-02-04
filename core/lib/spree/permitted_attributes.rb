@@ -144,7 +144,7 @@ module Spree
       :position, :track_inventory,
       :product_id, :product, :price,
       :weight, :height, :width, :depth, :sku, :cost_currency,
-      :tax_category_id, :shipping_category_id, customer_metadata: {},
+      :tax_category_id, :shipping_category_id,
       option_value_ids: [],
       options: [:name, :value]
     ]

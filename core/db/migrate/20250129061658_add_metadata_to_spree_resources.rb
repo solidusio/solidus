@@ -11,7 +11,6 @@ class AddMetadataToSpreeResources < ActiveRecord::Migration[7.2]
       spree_refunds
       spree_customer_returns
       spree_store_credit_events
-      spree_variants
       spree_users
       spree_return_authorizations
     ].each do |table_name|

@@ -19,7 +19,6 @@ module Spree
     acts_as_list scope: :product
 
     include Spree::SoftDeletable
-    include Metadata
 
     after_discard do
       stock_items.discard_all
