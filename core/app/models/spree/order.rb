@@ -163,8 +163,16 @@ module Spree
     delegate :name, to: :bill_address, prefix: true, allow_nil: true
     alias_method :billing_name, :bill_address_name
 
-    class_attribute :line_item_comparison_hooks
-    self.line_item_comparison_hooks = Set.new
+    def line_item_comparison_hooks
+      Set.new(Spree::Config.line_item_comparison_hooks)
+    end
+
+    class << self
+      def line_item_comparison_hooks=(value)
+        Spree::Config.line_item_comparison_hooks = value.to_a
+      end
+      deprecate :line_item_comparison_hooks=, deprecator: Spree.deprecator
+    end
 
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
     scope :completed_between, ->(start_date, end_date) { where(completed_at: start_date..end_date) }

@@ -67,12 +67,7 @@ module Spree
 
     context "merging using extension-specific line_item_comparison_hooks" do
       before do
-        Spree::Order.register_line_item_comparison_hook(:foos_match)
-      end
-
-      after do
-        # reset to avoid test pollution
-        Spree::Order.line_item_comparison_hooks = Set.new
+        stub_spree_preferences(line_item_comparison_hooks: [:foos_match])
       end
 
       context "2 equal line items" do
