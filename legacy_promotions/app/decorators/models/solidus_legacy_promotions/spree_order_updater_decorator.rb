@@ -17,8 +17,14 @@ module SolidusLegacyPromotions
 
     def update_item_totals
       [*line_items, *shipments].each do |item|
+        Spree::ItemTotal.new(item).recalculate!
+
         # The cancellation_total isn't persisted anywhere but is included in
-        # the adjustment_total
+        # the adjustment_total.
+        #
+        # Core doesn't have "eligible" adjustments anymore, so we need to
+        # override the adjustment_total calculation to exclude them for legacy
+        # promotions.
         item.adjustment_total = item.adjustments.
           select(&:eligible?).
           reject(&:included?).
