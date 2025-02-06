@@ -1132,6 +1132,11 @@ en:
     company: Company
     complete: complete
     complete_order: Complete Order
+    condition:
+      damaged: Damaged
+      new: New
+      refurbished: Refurbished
+      used: Used
     configuration: Configuration
     configurations: Configurations
     confirm: Confirm
@@ -1580,6 +1585,7 @@ en:
     general: General
     google_analytics: Google Analytics
     google_analytics_id: Analytics ID
+    gtin: GTIN
     guest_checkout: Guest Checkout
     guest_user_account: Checkout as a Guest
     has_no_shipped_units: has no shipped units
@@ -2106,6 +2112,7 @@ en:
     select: Select
     select_a_reason: Select a reason
     select_a_stock_location: Select a stock location
+    select_condition: Select condition
     selected_quantity_not_available: selected of %{item} is not available.
     send_copy_of_all_mails_to: Send Copy of All Mails To
     send_mailer: Send Shipment Email
