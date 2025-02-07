@@ -44,7 +44,7 @@ module SolidusAdmin
     #                     Setting this to `true` enables access to alpha stage features that might still be in testing or development.
     #                     Use with caution, as these features may not be fully stable or complete.
     #                     Default: false
-    preference :enable_alpha_features, :boolean, default: false
+    preference :enable_alpha_features, :boolean, default: true
 
     alias enable_alpha_features? enable_alpha_features
 
