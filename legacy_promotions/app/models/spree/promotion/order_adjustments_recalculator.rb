@@ -36,6 +36,8 @@ module Spree
                               select(&:eligible?).
                               select(&:promotion?).
                               sum(&:amount)
+
+        order.save! if persist
         order
       end
 
