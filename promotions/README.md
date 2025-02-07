@@ -122,4 +122,4 @@ SolidusDevSupport::TestingSupport::Factories.load_for(SolidusPromotions::Engine)
 
 ## License
 
-Copyright (c) 2024 Martin Meyerhoff, Solidus Team, released under the license of the parent repository.
+Copyright (c) 2024 Martin Meyerhoff, Solidus Team, released under the [license of the parent repository](https://github.com/solidusio/solidus/blob/main/LICENSE.md).
