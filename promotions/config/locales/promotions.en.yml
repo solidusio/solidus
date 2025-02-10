@@ -1,4 +1,7 @@
 en:
+  solidus_admin:
+    promotions:
+      title: "Promotions"
   solidus_promotions:
     promotions:
       title: "Promotions"

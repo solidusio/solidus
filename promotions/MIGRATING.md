@@ -44,7 +44,7 @@ bundle exec rails solidus_promotions:migrate_existing_promotions
 
 This will create equivalents of the legacy promotion configuration in SolidusPromotions.
 
-Now, change `config/initializers/solidus_promotions.rb` to use your new promotion configuration:
+Now, change `config/initializers/spree.rb` to use your new promotion configuration:
 
 ## Change store behavior to use SolidusPromotions
 

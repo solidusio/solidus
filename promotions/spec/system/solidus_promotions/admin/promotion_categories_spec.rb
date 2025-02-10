@@ -1,24 +1,12 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
+require 'solidus_admin/testing_support/shared_examples/promotion_categories_features'
 
 RSpec.describe "Promotion Categories", :js, type: :feature, solidus_admin: true do
-  before { sign_in create(:admin_user, email: "admin@example.com") }
-
-  it "lists promotion categories and allows deleting them" do
-    create(:solidus_promotion_category, name: "test1", code: "code1")
-    create(:solidus_promotion_category, name: "test2", code: "code2")
-
-    visit "/admin/solidus/promotion_categories"
-    expect(page).to have_content("test1")
-    expect(page).to have_content("test2")
-
-    expect(page).to be_axe_clean
-
-    select_row("test1")
-    click_on "Delete"
-    expect(page).to have_content("Promotion Categories were successfully removed.")
-    expect(page).not_to have_content("test1")
-    expect(SolidusPromotions::PromotionCategory.count).to eq(1)
+  include_examples 'promotion categories features' do
+    let(:factory_name) { :solidus_promotion_category }
+    let(:model_class) { SolidusPromotions::PromotionCategory }
+    let(:index_path) { "/admin/solidus/promotion_categories" }
   end
 end
