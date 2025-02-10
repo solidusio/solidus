@@ -269,4 +269,28 @@ RSpec.describe Spree::Taxon, type: :model do
       end
     end
   end
+
+  context 'stores history of permalinks' do
+    let(:taxonomy) { create(:taxonomy, name: 'brands') }
+    let(:root) { taxonomy.root }
+    let(:taxon_name) { "ruby on rails" }
+    let(:new_permalink) { "rails for ruby" }
+    let(:expected_initial_slug) { "brands/ruby-on-rails" }
+    let(:expected_updated_slug) { "brands/rails-for-ruby" }
+
+    let!(:taxon) { create(:taxon, name: taxon_name, parent: root) }
+
+    it 'should store the previous slug when permalink is updated' do
+      expect(taxon.slugs.count).to eq(1)
+      expect(expected_initial_slug).to eq(taxon.slugs.last.slug)
+
+      taxon.update(permalink: new_permalink)
+
+      expect(expected_updated_slug).to eq(taxon.permalink)
+      expect(taxon.slugs.count).to eq(2)
+
+      expect(taxon.slugs.pluck(:slug)).to include(expected_initial_slug)
+      expect(taxon.slugs.pluck(:slug)).to include(expected_updated_slug)
+    end
+  end
 end
