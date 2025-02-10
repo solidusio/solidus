@@ -5,15 +5,24 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
     Spree::PromotionCategory
   end
 
-  def row_url(promotion_category)
-    spree.edit_admin_promotion_category_path(promotion_category)
+  def title
+    t('solidus_admin.promotion_categories.title')
+  end
+
+  def edit_path(record)
+    solidus_admin.edit_promotion_category_path(record, **search_filter_params)
+  end
+
+  def turbo_frames
+    %w[resource_modal]
   end
 
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_promotion_category_path,
+      href: solidus_admin.new_promotion_category_path(**search_filter_params),
+      data: { turbo_frame: :resource_modal },
       icon: "add-line",
     )
   end
@@ -22,7 +31,7 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
     [
       {
         label: t('.batch_actions.delete'),
-        action: solidus_admin.promotion_categories_path,
+        action: solidus_admin.promotion_categories_path(**search_filter_params),
         method: :delete,
         icon: 'delete-bin-7-line',
       },
@@ -39,8 +48,10 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
   def name_column
     {
       header: :name,
-      data: ->(promotion_category) do
-        content_tag :div, promotion_category.name
+      data: ->(record) do
+        link_to record.name, edit_path(record),
+          data: { turbo_frame: :resource_modal },
+          class: 'body-link'
       end
     }
   end
@@ -48,8 +59,10 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
   def code_column
     {
       header: :code,
-      data: ->(promotion_category) do
-        content_tag :div, promotion_category.code
+      data: ->(record) do
+        link_to record.code, edit_path(record),
+          data: { turbo_frame: :resource_modal },
+          class: 'body-link'
       end
     }
   end
