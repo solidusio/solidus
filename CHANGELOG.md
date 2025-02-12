@@ -1,3 +1,32 @@
+## Solidus v4.1.6 (2025-02-12)
+
+## Solidus Core
+* [v4.1] Fix specs failing after Money 6.18.0 release by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5749
+* [v4.1] [FIX] Remove spacing at top of OrderShipping#ship method by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5971
+* [v4.1] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5983
+* [v4.1] Test app task: Allow passing in user class by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5958
+* [v4.1] Do not constantize Spree.user_class in UserClassHandle by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6001
+* [v4.1] 4.2: Limit &#x60;concurrent-ruby&#x60; to &lt; 1.3.5 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6087
+* [v4.1] Deprecate `Spree::Deprecation` in favor of `Spree.deprecator` by @mamhoff in https://github.com/solidusio/solidus/pull/6103
+
+## Solidus Backend
+* [v4.1] Fix JS locale data for release of Money 6.19 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5976
+* Fix(v4.1): Fix linting error by @mamhoff in https://github.com/solidusio/solidus/pull/5987
+* [v4.1] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5983
+* Fix(v4.1): Collapse admin nav on small windows by @mamhoff in https://github.com/solidusio/solidus/pull/5990
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.1.5...v4.1.6
+
+
 ## Solidus v4.1.5 (2024-04-05)
 
 ## Solidus Core
