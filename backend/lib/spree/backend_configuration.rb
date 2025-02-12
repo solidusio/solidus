@@ -211,12 +211,6 @@ module Spree
               label: :taxonomies,
               condition: -> { can? :admin, Spree::Taxonomy },
             ),
-            MenuItem.new(
-              url: :admin_taxons_path,
-              condition: -> { can? :admin, Spree::Taxon },
-              label: :display_order,
-              match_path: '/taxons',
-            ),
           ],
         ),
         MenuItem.new(
