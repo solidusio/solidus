@@ -64,7 +64,7 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
       it 'does not emit a warning' do
         config.load_defaults '3.1'
 
-        expect(Spree::Deprecation).not_to receive(:warn)
+        expect(Spree.deprecator).not_to receive(:warn)
 
         config.check_load_defaults_called
       end
@@ -72,13 +72,13 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
 
     context 'when load_defaults_called is false' do
       it 'emits a warning' do
-        expect(Spree::Deprecation).to receive(:warn).with(/adding.*load_defaults/m)
+        expect(Spree.deprecator).to receive(:warn).with(/adding.*load_defaults/m)
 
         config.check_load_defaults_called
       end
 
       it 'includes constant name in the message when given' do
-        expect(Spree::Deprecation).to receive(:warn).with(/Spree::Config/, any_args)
+        expect(Spree.deprecator).to receive(:warn).with(/Spree::Config/, any_args)
 
         config.check_load_defaults_called('Spree::Config')
       end

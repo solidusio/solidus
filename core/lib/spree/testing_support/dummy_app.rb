@@ -142,5 +142,5 @@ end
 
 # Raise on deprecation warnings
 if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
-  Spree::Deprecation.behavior = :raise
+  Spree.deprecator.behavior = :raise
 end

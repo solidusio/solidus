@@ -9,6 +9,8 @@ require "active_record/railtie"
 require "active_storage/engine"
 require "sprockets/railtie"
 
+require 'active_support/deprecation'
+require 'spree/deprecated_instance_variable_proxy'
 require 'acts_as_list'
 require 'awesome_nested_set'
 require 'cancan'
@@ -19,13 +21,17 @@ require 'paperclip'
 require 'ransack'
 require 'state_machines-activerecord'
 
-require 'spree/deprecation'
-
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
 StateMachines::Machine.ignore_method_conflicts = true
 
 module Spree
+  def self.deprecator
+    @deprecator ||= ActiveSupport::Deprecation.new('5.0', 'Solidus')
+  end
+
+  autoload :Deprecation, 'spree/deprecation'
+
   mattr_accessor :user_class, default: 'Spree::LegacyUser'
 
   def self.user_class

@@ -31,7 +31,7 @@ module Spree
       end
     end
     alias_method :update, :recalculate
-    deprecate update: :recalculate, deprecator: Spree::Deprecation
+    deprecate update: :recalculate, deprecator: Spree.deprecator
 
     # Updates the +shipment_state+ attribute according to the following logic:
     #
