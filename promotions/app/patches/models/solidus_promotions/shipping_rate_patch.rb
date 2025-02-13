@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  module ShippingRateDecorator
+  module ShippingRatePatch
     def self.prepended(base)
       base.class_eval do
         has_many :discounts,

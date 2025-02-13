@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusLegacyPromotions
-  module SolidusAdminAdjustmentsControllerDecorator
+  module SolidusAdminAdjustmentsControllerPatch
     private
 
     def load_adjustments
