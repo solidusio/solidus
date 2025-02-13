@@ -8,7 +8,7 @@ module Spree
       attribute :customer_metadata, :json, default: {}
       attribute :admin_metadata, :json, default: {}
 
-      validate :validate_metadata_limits
+      validate :validate_metadata_limits, if: :validate_metadata_enabled?
     end
 
     class_methods do
@@ -18,6 +18,10 @@ module Spree
     end
 
     private
+
+    def validate_metadata_enabled?
+      Spree::Config.meta_data_validation_enabled
+    end
 
     def validate_metadata_limits
       self.class.meta_data_columns.each { |column| validate_metadata_column(column) }
