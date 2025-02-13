@@ -4,10 +4,11 @@ module Spree
   module Stock
     module Allocator
       class Base
-        attr_reader :availability
+        attr_reader :availability, :coordinator_options
 
-        def initialize(availability)
+        def initialize(availability, coordinator_options: {})
           @availability = availability
+          @coordinator_options = coordinator_options
         end
 
         def allocate_inventory(_desired)
