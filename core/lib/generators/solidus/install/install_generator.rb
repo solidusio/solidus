@@ -121,6 +121,7 @@ module Solidus
 
     def add_files
       template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
+      template "app/assets/config/manifest.js", "app/assets/config/manifest.js", force: true
     end
 
     def install_file_attachment
