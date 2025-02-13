@@ -8,7 +8,9 @@ if ENV["COVERAGE"]
   end
   SimpleCov.command_name('solidus:admin')
   SimpleCov.merge_timeout(3600)
-  SimpleCov.start('rails')
+  SimpleCov.start('rails') do
+    add_filter '/shared_examples/'
+  end
 end
 
 require 'solidus_admin'

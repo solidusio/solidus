@@ -74,6 +74,26 @@ SolidusPromotions::TestingSupport::FactoryBot.add_paths_and_load!
 Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 Spree::Config.promotions = SolidusPromotions.configuration
 ActiveJob::Base.queue_adapter = :test
+
+Capybara.register_driver :selenium_chrome_headless do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  browser_options.args << '--window-size=1920,1080'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  # Sandbox cannot be used inside unprivileged Docker container
+  browser_options.args << '--no-sandbox'
+  browser_options.args << '--window-size=1240,1400'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 # Allow Capybara to find elements by aria-label attributes
 Capybara.enable_aria_label = true
 
@@ -85,11 +105,12 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Shoulda::Matchers::ActiveRecord, type: :model
 
-  config.around :each, :solidus_admin, :js do |example|
+  config.around :each, :solidus_admin do |example|
     SolidusPromotions.config.use_new_admin = true
     example.run
     SolidusPromotions.config.use_new_admin = false
   end
+
   config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature, solidus_admin: true
 end
 

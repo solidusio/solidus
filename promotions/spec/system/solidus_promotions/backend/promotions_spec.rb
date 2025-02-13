@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Promotions admin", type: :system do
+RSpec.feature "Promotions admin" do
   stub_authorization!
 
   describe "#index" do

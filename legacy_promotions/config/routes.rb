@@ -23,6 +23,6 @@ if SolidusSupport.admin_available?
     extend SolidusAdmin::AdminResources
 
     admin_resources :promotions, only: [:index, :destroy]
-    admin_resources :promotion_categories, only: [:index, :destroy]
+    admin_resources :promotion_categories, except: [:show]
   end
 end
