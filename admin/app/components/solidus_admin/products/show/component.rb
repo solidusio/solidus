@@ -25,4 +25,10 @@ class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
       ["#{_1} (#{_2})", _3]
     end
   end
+
+  def condition_options
+    @condition_options ||= Spree::Variant.conditions.map do |key, value|
+      [t("spree.condition.#{key}"), value]
+    end
+  end
 end
