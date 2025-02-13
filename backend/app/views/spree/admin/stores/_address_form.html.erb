@@ -1,0 +1,65 @@
+
+<% s_or_b = type.chars.first %>
+<hr>
+
+<div class="row" id="<%= type %>" data-hook="address_fields">
+  <div class="col-12 col-md-6">
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :legal_name %>
+      <%= f.text_field :legal_name, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :address1 %>
+      <%= f.text_field :address1, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :address2 %>
+      <%= f.text_field :address2, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :contact_phone %>
+      <%= f.phone_field :contact_phone, class: 'fullwidth' %>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :zipcode %>
+      <%= f.text_field :zipcode, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :country_id, Spree::Country.model_name.human %>
+      <span id="<%= s_or_b %>country">
+        <%= f.collection_select :country_id, available_countries, :id, :name, { include_blank: true }, {class: 'custom-select fullwidth js-country_id'} %>
+      </span>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :state_id, Spree::State.model_name.human %>
+      <span id="<%= s_or_b %>state">
+        <%= f.hidden_field :state_name, value: nil %>
+        <% states = f.object.country.try(:states).nil? ? [] : f.object.country.states %>
+        <%= f.text_field :state_name,
+              style: "display: #{states.empty? ? 'block' : 'none' };",
+              disabled: !states.empty?, class: 'fullwidth state_name js-state_name' %>
+        <%= f.hidden_field :state_id, value: nil %>
+        <%= f.collection_select :state_id,
+              states.sort,
+              :id, :name,
+              { include_blank: true },
+              { class: 'custom-select fullwidth js-state_id',
+                style: "display: #{states.empty? ? 'none' : 'block' };",
+                disabled: states.empty? } %>
+      </span>
+    </div>
+  </div>
+</div>
