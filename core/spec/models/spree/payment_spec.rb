@@ -1331,4 +1331,24 @@ RSpec.describe Spree::Payment, type: :model do
       expect(described_class.valid).to be_empty
     end
   end
+
+  describe "metadata fields" do
+    it "responds to customer_metadata" do
+      expect(payment).to respond_to(:customer_metadata)
+    end
+
+    it "responds to admin_metadata" do
+      expect(payment).to respond_to(:admin_metadata)
+    end
+
+    it "can store data in customer_metadata" do
+      payment.customer_metadata = { "transaction_id" => "12345" }
+      expect(payment.customer_metadata["transaction_id"]).to eq("12345")
+    end
+
+    it "can store data in admin_metadata" do
+      payment.admin_metadata = { "internal_note" => "Verified transaction" }
+      expect(payment.admin_metadata["internal_note"]).to eq("Verified transaction")
+    end
+  end
 end
