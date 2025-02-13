@@ -61,7 +61,6 @@ module Spree
       template "rails/application.rb.tt", "#{dummy_path}/config/application.rb", force: true
       template "rails/routes.rb", "#{dummy_path}/config/routes.rb", force: true
       template "rails/test.rb", "#{dummy_path}/config/environments/test.rb", force: true
-      template "rails/script/rails", "#{dummy_path}/spec/dummy/script/rails", force: true
     end
 
     def test_dummy_inject_extension_requirements
