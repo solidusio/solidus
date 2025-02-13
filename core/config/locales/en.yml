@@ -179,6 +179,8 @@ en:
         name: Name
         on_hand: On Hand
         price: Master Price
+        primary_taxon: Primary Taxon
+        primary_taxon_id: Primary Taxon
         promotionable: Promotable
         shipping_category: Shipping Category
         sku: Master SKU
