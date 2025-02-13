@@ -394,3 +394,15 @@ workflows:
                   paperclip: [false],
                 },
             }
+      - test_solidus:
+          name: *name
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.2", "8.0"],
+                  ruby: ["3.4.1"],
+                  database: ["postgres"],
+                  paperclip: [false],
+                },
+            }
