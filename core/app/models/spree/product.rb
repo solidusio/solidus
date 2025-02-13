@@ -32,6 +32,7 @@ module Spree
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products, optional: true
+    belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: true
 
     has_one :master,
       -> { where(is_master: true).with_discarded },
