@@ -163,8 +163,24 @@ module Spree
     delegate :name, to: :bill_address, prefix: true, allow_nil: true
     alias_method :billing_name, :bill_address_name
 
-    class_attribute :line_item_comparison_hooks
-    self.line_item_comparison_hooks = Set.new
+    delegate :line_item_comparison_hooks, to: :class
+    class << self
+      def line_item_comparison_hooks=(value)
+        Spree::Config.line_item_comparison_hooks = value.to_a
+      end
+      line_item_hooks_deprecation_msg = "Use Spree::Config.line_item_comparison_hooks instead."
+      deprecate :line_item_comparison_hooks= => line_item_hooks_deprecation_msg, :deprecator => Spree.deprecator
+
+      def line_item_comparison_hooks
+        Spree::Config.line_item_comparison_hooks
+      end
+      deprecate line_item_comparison_hooks: line_item_hooks_deprecation_msg, deprecator: Spree.deprecator
+
+      def register_line_item_comparison_hook(hook)
+        Spree::Config.line_item_comparison_hooks << hook
+      end
+      deprecate register_line_item_comparison_hook: line_item_hooks_deprecation_msg, deprecator: Spree.deprecator
+    end
 
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
     scope :completed_between, ->(start_date, end_date) { where(completed_at: start_date..end_date) }
@@ -196,12 +212,6 @@ module Spree
 
     def self.not_canceled
       where.not(state: 'canceled')
-    end
-
-    # Use this method in other gems that wish to register their own custom logic
-    # that should be called when determining if two line items are equal.
-    def self.register_line_item_comparison_hook(hook)
-      line_item_comparison_hooks.add(hook)
     end
 
     # For compatiblity with Calculator::PriceSack
@@ -356,7 +366,7 @@ module Spree
     def line_item_options_match(line_item, options)
       return true unless options
 
-      line_item_comparison_hooks.all? { |hook|
+      Spree::Config.line_item_comparison_hooks.all? { |hook|
         send(hook, line_item, options)
       }
     end
