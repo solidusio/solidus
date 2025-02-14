@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
-  subject(:discounter) { described_class.new(order) }
+  subject(:order_adjuster) { described_class.new(order) }
 
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
@@ -18,7 +18,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
 
     subject do
       benefit
-      discounter.call
+      order_adjuster.call
     end
 
     context "promotion with conditionless benefit" do
@@ -144,7 +144,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
 
     subject do
       promotion
-      discounter.call
+      order_adjuster.call
     end
 
     it "creates shipping rate discounts" do
