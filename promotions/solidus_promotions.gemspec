@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   files = Dir.chdir(__dir__) { `git ls-files -z`.split("\x0") }
   spec.files = files.grep_v(%r{^(spec|bin)/})
 
+  spec.add_dependency "csv", "~> 3.0"
   spec.add_dependency "importmap-rails", "~> 1.2"
   spec.add_dependency "ransack-enum", "~> 1.0"
   spec.add_dependency "solidus_core", [">= 4.0.0", "< 5"]
