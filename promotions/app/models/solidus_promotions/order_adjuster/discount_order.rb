@@ -17,6 +17,7 @@ module SolidusPromotions
         SolidusPromotions::Promotion.ordered_lanes.each_key do |lane|
           lane_promotions = promotions.select { |promotion| promotion.lane == lane }
           lane_benefits = eligible_benefits_for_promotable(lane_promotions.flat_map(&:benefits), order)
+          # TODO: - (Noah & Sofia) think we should actually build/mark_for_destruction line items make/removed by CreateDiscountedItem on a dry run, and that's an improvement that would make implementing the persist flag easier also
           perform_order_benefits(lane_benefits, lane) unless dry_run
           line_item_discounts = adjust_line_items(lane_benefits)
           shipment_discounts = adjust_shipments(lane_benefits)
