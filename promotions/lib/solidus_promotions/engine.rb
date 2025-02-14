@@ -60,6 +60,8 @@ module SolidusPromotions
 
         SolidusAdmin::Config.components["solidus_promotions/promotions/index"] = "SolidusPromotions::Promotions::Index::Component"
         SolidusAdmin::Config.components["solidus_promotions/categories/index"] = "SolidusPromotions::PromotionCategories::Index::Component"
+        SolidusAdmin::Config.components["solidus_promotions/categories/new"] = "SolidusPromotions::PromotionCategories::New::Component"
+        SolidusAdmin::Config.components["solidus_promotions/categories/edit"] = "SolidusPromotions::PromotionCategories::Edit::Component"
       end
     end
 

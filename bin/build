@@ -41,6 +41,16 @@ echo "* Testing Solidus Sample *"
 echo "**************************"
 bin/rspec sample/spec
 
+echo "**************************"
+echo "* Testing Legacy Promotions *"
+echo "**************************"
+bin/rspec legacy_promotions/spec
+
+echo "**************************"
+echo "* Testing Solidus Promotions *"
+echo "**************************"
+bin/rspec promotions/spec
+
 if [ -n "$COVERAGE" ]; then
   # Generate coverage report
   echo "******************************"

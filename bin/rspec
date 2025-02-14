@@ -9,6 +9,7 @@ LIBS = %w[
   core
   sample
   legacy_promotions
+  promotions
 ]
 
 # Ignore line info, e.g. foo/bar.rb:123 would become foo/bar.rb
