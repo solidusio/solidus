@@ -48,19 +48,19 @@ module SolidusPromotions
         active_adjustments = item_discounts.map do |item_discount|
           update_adjustment(item, item_discount)
         end
-        item.update(promo_total: active_adjustments.sum(&:amount))
+        item.promo_total = active_adjustments.sum(&:amount)
         # Remove any promotion adjustments tied to promotion benefits which no longer match.
         unmatched_adjustments = promotion_adjustments - active_adjustments
 
         item.adjustments.destroy(unmatched_adjustments)
       end
 
-      # Update or create a new promotion adjustment on an item.
+      # Update or build a new promotion adjustment on an item.
       #
       # @private
       # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
       # @param [SolidusPromotions::ItemDiscount] discount_item calculated discounts for an item
-      # @return [Spree::Adjustment] the created or updated promotion adjustment
+      # @return [Spree::Adjustment] the new or updated promotion adjustment
       def update_adjustment(item, discount_item)
         adjustment = item.adjustments.detect do |item_adjustment|
           item_adjustment.source == discount_item.source
@@ -71,7 +71,7 @@ module SolidusPromotions
           order_id: item.is_a?(Spree::Order) ? item.id : item.order_id,
           label: discount_item.label
         )
-        adjustment.update!(amount: discount_item.amount)
+        adjustment.amount = discount_item.amount
         adjustment
       end
     end
