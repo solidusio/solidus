@@ -3,12 +3,56 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
-  subject(:discounter) { described_class.new(order) }
+  subject(:order_adjuster) { described_class.new(order, dry_run_promotion: dry_run_promotion) }
 
+  let(:dry_run_promotion) { nil }
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
   let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
   let(:calculator) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 10) }
+
+  context "adding order level adjustments" do
+    let(:variant) { create(:variant, price: 100) }
+    let(:benefit) do
+      SolidusPromotions::Benefits::CreateDiscountedItem.create(promotion: promotion, calculator: calculator, preferences: { variant_id: variant.id })
+    end
+    let(:adjustable) { order }
+
+    subject do
+      benefit
+      order_adjuster.call
+    end
+
+    it "creates a line item of the given variant with a discount adjustment corresponding to the calculator" do
+      expect {
+        subject
+      }.to change { order.line_items.count }.by(1)
+
+      expect(order.line_items.last.variant).to eq(variant)
+      expect(order.line_items.last.adjustments.promotion.first&.amount).to eq(-10)
+    end
+
+    context 'when on a dry run' do
+      let(:dry_run_promotion) { create(:solidus_promotion, :with_adjustable_benefit, promotion_benefit_class: SolidusPromotions::Benefits::CreateDiscountedItem) }
+
+      subject do
+        benefit
+        order_adjuster.call
+      end
+
+      it 'builds the line item but does not save it' do
+        expect {
+          subject
+        }.to change { order.line_items.length }.by(1)
+
+        pending "currently on a dry run this just doesn't happen"
+        expect(order.line_items.last.variant).to eq(variant)
+        expect(order.line_items.last.adjustments.promotion.first&.amount).to eq(-10)
+
+        expect(order.reload.line_items.length).to eq(1)
+      end
+    end
+  end
 
   context "adjusting line items" do
     let(:benefit) do
@@ -18,7 +62,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
 
     subject do
       benefit
-      discounter.call
+      order_adjuster.call
     end
 
     context "promotion with conditionless benefit" do
@@ -144,7 +188,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
 
     subject do
       promotion
-      discounter.call
+      order_adjuster.call
     end
 
     it "creates shipping rate discounts" do
