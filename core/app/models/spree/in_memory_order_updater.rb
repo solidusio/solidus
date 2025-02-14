@@ -179,6 +179,8 @@ module Spree
 
         next unless persist && item.changed?
 
+        item.save! unless item.persisted?
+
         item.update_columns(
           promo_total:          item.promo_total,
           included_tax_total:   item.included_tax_total,
