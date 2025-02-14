@@ -102,11 +102,6 @@ module SolidusAdmin
               key: "taxonomies",
               route: -> { spree.admin_taxonomies_path },
               position: 30
-            },
-            {
-              key: "taxons",
-              route: -> { spree.admin_taxons_path },
-              position: 40
             }
           ]
         },
