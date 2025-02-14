@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  module OrderRecalculatorDecorator
+  module OrderRecalculatorPatch
     # This is only needed for stores upgrading from the legacy promotion system.
     # Once we've removed support for the legacy promotion system, we can remove this.
     def recalculate
