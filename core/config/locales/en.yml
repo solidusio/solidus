@@ -2081,6 +2081,10 @@ en:
     return_quantity: Return Quantity
     return_reasons: Return Reasons
     returned: Returned
+    reverse_charge_statuses:
+      disabled: Disabled
+      enabled: Enabled
+      not_validated: Not Validated
     review: Review
     risk: Risk
     risk_analysis: Risk Analysis
