@@ -32,6 +32,7 @@ module Spree::Api
             "meta_description" => nil,
             "meta_keywords" => nil,
             "seo_title" => nil,
+            "reverse_charge_status" => 'disabled',
             "mail_from_address" => "solidus@example.org",
             "bcc_email" => nil,
             "default_currency" => nil,
@@ -46,6 +47,7 @@ module Spree::Api
             "meta_description" => nil,
             "meta_keywords" => nil,
             "seo_title" => nil,
+            "reverse_charge_status" => 'disabled',
             "mail_from_address" => "solidus@example.org",
             "bcc_email" => nil,
             "default_currency" => nil,
@@ -65,6 +67,7 @@ module Spree::Api
           "meta_description" => nil,
           "meta_keywords" => nil,
           "seo_title" => nil,
+          "reverse_charge_status" => 'disabled',
           "mail_from_address" => "solidus@example.org",
           "bcc_email" => nil,
           "default_currency" => nil,
@@ -110,6 +113,36 @@ module Spree::Api
         it "will destroy the store" do
           delete spree.api_store_path(non_default_store)
           expect(response.status).to eq(204)
+        end
+      end
+
+      context "reverse_charge_status attribute" do
+        it "can create a new store with reverse_charge_status" do
+          store_hash = {
+            code: "spree123",
+            name: "Hack0rz",
+            url: "spree123.example.com",
+            mail_from_address: "me@example.com",
+            reverse_charge_status: "enabled"
+          }
+          post spree.api_stores_path, params: { store: store_hash }
+          expect(response.status).to eq(201)
+          expect(json_response["reverse_charge_status"]).to eq('enabled')
+        end
+
+        it "can update an existing store with reverse_charge_status" do
+          store_hash = {
+            url: "spree123.example.com",
+            mail_from_address: "me@example.com",
+            bcc_email: "bcc@example.net",
+            reverse_charge_status: "disabled"
+          }
+          put spree.api_store_path(store), params: { store: store_hash }
+          expect(response.status).to eq(200)
+          expect(store.reload.url).to eql "spree123.example.com"
+          expect(store.reload.mail_from_address).to eql "me@example.com"
+          expect(store.reload.bcc_email).to eql "bcc@example.net"
+          expect(store.reload.reverse_charge_status).to eql "disabled"
         end
       end
     end
