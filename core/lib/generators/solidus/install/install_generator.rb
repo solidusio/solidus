@@ -121,9 +121,6 @@ module Solidus
 
     def add_files
       template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
-      if Rails.version >= "8.0"
-        template "app/assets/config/manifest.js", "app/assets/config/manifest.js", force: true
-      end
     end
 
     def install_file_attachment
