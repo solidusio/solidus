@@ -3,8 +3,9 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
-  subject(:order_adjuster) { described_class.new(order) }
+  subject(:order_adjuster) { described_class.new(order, dry_run_promotion: dry_run_promotion) }
 
+  let(:dry_run_promotion) { nil }
   let(:line_item) { create(:line_item) }
   let(:order) { line_item.order }
   let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
@@ -31,6 +32,26 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       expect(order.line_items.last.adjustments.promotion.first&.amount).to eq(-10)
     end
 
+    context 'when on a dry run' do
+      let(:dry_run_promotion) { create(:solidus_promotion, :with_adjustable_benefit, promotion_benefit_class: SolidusPromotions::Benefits::CreateDiscountedItem) }
+
+      subject do
+        benefit
+        order_adjuster.call
+      end
+
+      it 'builds the line item but does not save it' do
+        expect {
+          subject
+        }.to change { order.line_items.length }.by(1)
+
+        pending "currently on a dry run this just doesn't happen"
+        expect(order.line_items.last.variant).to eq(variant)
+        expect(order.line_items.last.adjustments.promotion.first&.amount).to eq(-10)
+
+        expect(order.reload.line_items.length).to eq(1)
+      end
+    end
   end
 
   context "adjusting line items" do
