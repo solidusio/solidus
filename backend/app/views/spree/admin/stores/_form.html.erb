@@ -30,7 +30,21 @@
       <%= f.text_area :meta_description, class: 'fullwidth' %>
       <%= f.error_message_on :meta_description %>
     <% end %>
+
+    <%= f.field_container :tax_id do %>
+      <%= f.label :tax_id %>
+      <%= f.text_field :tax_id, class: 'fullwidth' %>
+      <%= f.error_message_on :tax_id %>
+    <% end %>
+
+    <%= f.field_container :vat_id do %>
+      <%= f.label :vat_id %>
+      <%= f.text_field :vat_id, class: 'fullwidth' %>
+      <%= f.error_message_on :vat_id %>
+    <% end %>
+
   </div>
+
   <div class="col-12 col-md-6">
     <%= f.field_container :url do %>
       <%= f.label :url, class: 'required' %>
@@ -81,5 +95,17 @@
         { class: 'select2 fullwidth', multiple: true } %>
       <%= f.error_message_on :default_currency %>
     <% end %>
+
+    <%= f.field_container :description do %>
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'fullwidth' %>
+      <%= f.error_message_on :description %>
+    <% end %>
+  </div>
+
+  <div class="col-12">
+    <div class="js-addresses-form">
+      <%= render partial: 'address_form', locals: { f: f, type: 'store' } %>
+    </div>
   </div>
 </div>
