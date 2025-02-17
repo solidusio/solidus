@@ -26,6 +26,7 @@ module Spree
     include ::Spree::Config.state_machines.order
 
     include Spree::Order::Payments
+    include Metadata
 
     class InsufficientStock < StandardError
       attr_reader :items

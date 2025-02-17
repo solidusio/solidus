@@ -216,6 +216,27 @@ module Spree
     #   @return [Integer] Orders to show per-page in the admin (default: +15+)
     preference :orders_per_page, :integer, default: 15
 
+    # @!attribute [rw] meta_data_validation_enabled
+    #   @return [Boolean] Indicates whether validation for customer and admin metadata columns is enabled.
+    #   When this is set to true, the following preferences will be used to validate the metadata:
+    #   - The maximum number of keys that can be added to the metadata columns (meta_data_max_keys).
+    #   - The maximum length of each key in the metadata columns (meta_data_max_key_length).
+    #   - The maximum length of each value in the metadata columns (meta_data_max_value_length).
+    #   (default: +true+)
+    preference :meta_data_validation_enabled, :boolean, default: false
+
+    # @!attribute [rw] meta_data_max_keys
+    #   @return [Integer] Maximum keys that can be allocated in customer and admin metadata column (default: +6+)
+    preference :meta_data_max_keys, :integer, default: 6
+
+    # @!attribute [rw] meta_data_max_key_length
+    #   @return [Integer] Maximum length that key can have in customer and admin metadata column (default: +16+)
+    preference :meta_data_max_key_length, :integer, default: 16
+
+    # @!attribute [rw] meta_data_max_value_length
+    #   @return [Integer] Maximum length that value can have in customer and admin metadata column (default: +256+)
+    preference :meta_data_max_value_length, :integer, default: 256
+
     # @!attribute [rw] properties_per_page
     #   @return [Integer] Properties to show per-page in the admin (default: +15+)
     preference :properties_per_page, :integer, default: 15

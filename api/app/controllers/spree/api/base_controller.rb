@@ -18,6 +18,9 @@ module Spree
       class_attribute :admin_line_item_attributes
       self.admin_line_item_attributes = [:price, :variant_id, :sku]
 
+      class_attribute :admin_metadata_attributes
+      self.admin_metadata_attributes = [{ admin_metadata: {} }]
+
       attr_accessor :current_api_user
 
       before_action :load_user
@@ -35,13 +38,27 @@ module Spree
 
       private
 
+      Spree::Api::Config.metadata_permit_parameters.each do |resource|
+        define_method("permitted_#{resource.to_s.underscore}_attributes") do
+          if can?(:admin, "Spree::#{resource}".constantize)
+            super() + admin_metadata_attributes
+          else
+            super()
+          end
+        end
+      end
+
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
         if can?(:admin, Spree::LineItem)
-          super + admin_line_item_attributes
+          super + admin_line_item_attributes + admin_metadata_attributes
         else
           super
         end
+      end
+
+      def permitted_user_attributes
+        can?(:admin, Spree.user_class) ? super + admin_metadata_attributes : super
       end
 
       def load_user

@@ -303,4 +303,6 @@ RSpec.describe Spree::CustomerReturn, type: :model do
       end
     end
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :customer_return
 end
