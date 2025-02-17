@@ -94,13 +94,9 @@ module SolidusPromotions
         end
         alias_method :amount, :discountable_amount
 
-        def order
-          @line_item.order
-        end
+        delegate :order, to: :@line_item
 
-        def currency
-          @line_item.currency
-        end
+        delegate :currency, to: :@line_item
       end
     end
   end

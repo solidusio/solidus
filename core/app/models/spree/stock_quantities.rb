@@ -21,9 +21,7 @@ module Spree
 
     # @param variant [Spree::Variant]
     # @return [Integer] the quantity of variant
-    def [](variant)
-      @quantities[variant]
-    end
+    delegate :[], to: :@quantities
 
     # @return [Array<Spree::Variant>] the variants being tracked
     def variants

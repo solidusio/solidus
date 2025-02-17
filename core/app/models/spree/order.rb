@@ -171,9 +171,7 @@ module Spree
       line_item_hooks_deprecation_msg = "Use Spree::Config.line_item_comparison_hooks instead."
       deprecate :line_item_comparison_hooks= => line_item_hooks_deprecation_msg, :deprecator => Spree.deprecator
 
-      def line_item_comparison_hooks
-        Spree::Config.line_item_comparison_hooks
-      end
+      delegate :line_item_comparison_hooks, to: :'Spree::Config'
       deprecate line_item_comparison_hooks: line_item_hooks_deprecation_msg, deprecator: Spree.deprecator
 
       def register_line_item_comparison_hook(hook)

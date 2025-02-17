@@ -109,9 +109,7 @@ module Spree
       end
 
       # @return [Array<Symbol>] All preferences defined on this class
-      def defined_preferences
-        self.class.defined_preferences
-      end
+      delegate :defined_preferences, to: :class
 
       # @return [Hash{Symbol => Object}] Default for all preferences defined on this class
       # This may raise an infinite loop error if any of the defaults are

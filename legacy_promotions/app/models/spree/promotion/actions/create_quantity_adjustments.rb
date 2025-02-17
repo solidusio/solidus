@@ -125,13 +125,9 @@ module Spree
             @line_item.price
           end
 
-          def order
-            @line_item.order
-          end
+          delegate :order, to: :@line_item
 
-          def currency
-            @line_item.currency
-          end
+          delegate :currency, to: :@line_item
         end
       end
     end

@@ -8,9 +8,7 @@ module SolidusAdmin
       @names = {}
     end
 
-    def []=(key, value)
-      @names[key] = value
-    end
+    delegate :[]=, to: :@names
 
     def [](key)
       if @names[key]
