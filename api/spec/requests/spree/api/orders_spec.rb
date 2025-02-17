@@ -987,6 +987,32 @@ module Spree::Api
           expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: 'order'))
           expect(response.status).to eq(422)
         end
+
+        it "can update a order admin_metadata" do
+          put spree.api_order_path(order), params: { order: { admin_metadata: { 'order_number' => 'PN345678' } } }
+
+          expect(response.status).to eq(200)
+
+          expect(json_response["admin_metadata"]).to eq({ 'order_number' => 'PN345678' })
+        end
+
+        it "can update customer metadata if the order is complete" do
+          order = create(:order)
+          order.completed_at = Time.current
+          order.state = 'complete'
+          order.save!
+
+          put spree.api_order_path(order), params: { order: { customer_metadata: { 'Note' => 'Do not ring the bell' }, admin_metadata: { 'order_number' => 'PN345678' } } }
+
+          expect(json_response['customer_metadata']).to eq({ 'Note' => 'Do not ring the bell' })
+          expect(json_response["admin_metadata"]).to eq({ 'order_number' => 'PN345678' })
+        end
+
+        it "can view admin_metadata" do
+          get spree.api_order_path(order)
+
+          expect(json_response).to have_key('admin_metadata')
+        end
       end
 
       context "can cancel an order" do

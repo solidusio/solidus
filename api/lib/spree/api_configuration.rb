@@ -14,7 +14,7 @@ module Spree
 
     preference :variant_attributes, :array, default: [
       :id, :name, :sku, :weight, :height, :width, :depth, :is_master,
-      :slug, :description, :track_inventory, :customer_metadata
+      :slug, :description, :track_inventory
     ]
 
     preference :image_attributes, :array, default: [
@@ -40,6 +40,28 @@ module Spree
     ]
 
     preference :line_item_attributes, :array, default: [:id, :quantity, :price, :variant_id, :customer_metadata]
+
+    # Spree::Api::Config.metadata_api_parameters contains the models
+    # to which the admin_metadata attribute is added
+    preference :metadata_api_parameters, :array, default: [
+      [:order, 'Spree::Order'],
+      [:customer_return, 'Spree::CustomerReturn'],
+      [:payment, 'Spree::Payment'],
+      [:return_authorization, 'Spree::ReturnAuthorization'],
+      [:shipment, 'Spree::Shipment'],
+      [:user, 'Spree.user_class'],
+      [:line_item, 'Spree::LineItem']
+    ]
+
+    # Spree::Api::Config.metadata_permit_parameters contains the models
+    # to which the admin_metadata attribute is permitted
+    preference :metadata_permit_parameters, :array, default: [
+      :Order,
+      :CustomerReturn,
+      :Payment,
+      :ReturnAuthorization,
+      :Shipment
+    ]
 
     preference :option_type_attributes, :array, default: [:id, :name, :presentation, :position]
 

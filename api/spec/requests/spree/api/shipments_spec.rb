@@ -92,6 +92,23 @@ module Spree::Api
         expect(json_response['stock_location_name']).to eq(stock_location.name)
       end
 
+      it "can update a shipment and it's metadata" do
+        params = {
+          shipment: {
+            stock_location_id: stock_location.to_param,
+            admin_metadata: { 'delivery_type' => 'express' },
+            customer_metadata: { 'timing' => 'standard' }
+          }
+        }
+
+        put(spree.api_shipment_path(shipment), params:)
+
+        expect(response.status).to eq(200)
+        expect(json_response['stock_location_name']).to eq(stock_location.name)
+        expect(json_response["admin_metadata"]).to eq({ 'delivery_type' => 'express' })
+        expect(json_response["customer_metadata"]).to eq({ 'timing' => 'standard' })
+      end
+
       it "can make a shipment ready" do
         allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
         put spree.ready_api_shipment_path(shipment)
