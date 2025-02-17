@@ -93,13 +93,24 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
       with_content options_for_select(@attributes.delete(:choices), @attributes.delete(:value))
     end
 
-    tag.public_send(
-      @tag,
-      content,
+    build_tag
+  end
+
+  private
+
+  def build_tag
+    args = [@tag]
+    args << content unless void_element?(@tag)
+
+    tag.public_send(*args, **tag_options)
+  end
+
+  def tag_options
+    @tag_options ||= {
       "data-controller": stimulus_id,
       "data-#{stimulus_id}-custom-validity-value": @error.presence,
       "data-action": "#{stimulus_id}#clearCustomValidity",
       **@attributes
-    )
+    }
   end
 end

@@ -36,6 +36,13 @@
           <% end %>
         </div>
 
+        <div data-hook="admin_product_form_primary_taxons">
+          <%= f.field_container :primary_taxon do %>
+            <%= f.label :primary_taxon_id %><br>
+            <%= f.hidden_field :primary_taxon_id, value: @product.primary_taxon_id %>
+          <% end %>
+        </div>
+
         <div data-hook="admin_product_form_option_types">
           <%= f.field_container :option_types do %>
             <%= f.label :option_type_ids, plural_resource_name(Spree::OptionType) %>

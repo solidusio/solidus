@@ -168,6 +168,13 @@ module Spree
     #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
     preference :layout, :string, default: 'spree/layouts/spree_application'
 
+    # !@attribute [rw] line_item_comparison_hooks
+    #   @return [Array<Symbol>] An array of methods to call on {Spree::Order} to determine if a line item is equal to another
+    #   (default: +[]+)
+    #   @example
+    #   config.line_item_comparison_hooks << :my_custom_method
+    preference :line_item_comparison_hooks, :array, default: []
+
     # @!attribute [rw] logo
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
     preference :logo, :string, default: 'logo/solidus.svg'
@@ -450,6 +457,13 @@ module Spree
     # @return [Class] a class with the same public interfaces
     #   as Spree::Wallet::AddPaymentSourcesToWallet.
     class_name_attribute :add_payment_sources_to_wallet_class, default: 'Spree::Wallet::AddPaymentSourcesToWallet'
+
+    # Allows providing your own class for recalculating totals on an item.
+    #
+    # @!attribute [rw] item_total_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::ItemTotal
+    class_name_attribute :item_total_class, default: 'Spree::ItemTotal'
 
     # Allows providing your own class for calculating taxes on an order.
     #

@@ -78,7 +78,7 @@ module Spree
     def find_matching_line_item(other_order_line_item)
       order.line_items.detect do |my_li|
         my_li.variant == other_order_line_item.variant &&
-          order.line_item_comparison_hooks.all? do |hook|
+          Spree::Config.line_item_comparison_hooks.all? do |hook|
             order.send(hook, my_li, other_order_line_item.serializable_hash)
           end
       end

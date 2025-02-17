@@ -13,6 +13,49 @@ RSpec.describe Spree::Order, type: :model do
     it { is_expected.to contain_exactly("user", "line_items", "shipments", "bill_address", "ship_address") }
   end
 
+  describe ".line_item_comparison_hooks=" do
+    it "allows setting the line item comparison hooks but emits a deprecation message" do
+      expect(Spree::Config).to receive(:line_item_comparison_hooks=).with([:foos_match])
+      expect(Spree.deprecator).to receive(:warn)
+        .with(
+          "line_item_comparison_hooks= is deprecated and will be removed from Solidus 5.0 (Use Spree::Config.line_item_comparison_hooks instead.)",
+          an_instance_of(Array)
+        )
+      described_class.line_item_comparison_hooks = [:foos_match]
+    end
+  end
+
+  describe ".line_item_comparison_hooks" do
+    before do |example|
+      stub_spree_preferences(line_item_comparison_hooks: [:foos_match])
+    end
+
+    it "allows getting the comparison hooks but emits a deprecation message" do
+      expect(Spree.deprecator).to receive(:warn)
+        .with(
+          "line_item_comparison_hooks is deprecated and will be removed from Solidus 5.0 (Use Spree::Config.line_item_comparison_hooks instead.)",
+          an_instance_of(Array)
+        )
+      described_class.line_item_comparison_hooks
+    end
+  end
+
+  describe ".register_line_item_comparison_hook" do
+    after do
+      expect(Spree::Config.line_item_comparison_hooks).to be_empty
+    end
+    it "allows setting the line item comparison hooks but emits a deprecation message" do
+      expect(Spree::Config.line_item_comparison_hooks).to receive(:<<).with(:foos_match)
+
+      expect(Spree.deprecator).to receive(:warn)
+        .with(
+          "register_line_item_comparison_hook is deprecated and will be removed from Solidus 5.0 (Use Spree::Config.line_item_comparison_hooks instead.)",
+          an_instance_of(Array)
+        )
+      Spree::Order.register_line_item_comparison_hook(:foos_match)
+    end
+  end
+
   context '#store' do
     it { is_expected.to respond_to(:store) }
 
@@ -741,12 +784,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "match line item with options", partial_double_verification: false do
       before do
-        Spree::Order.register_line_item_comparison_hook(:foos_match)
-      end
-
-      after do
-        # reset to avoid test pollution
-        Spree::Order.line_item_comparison_hooks = Set.new
+        stub_spree_preferences(line_item_comparison_hooks: [:foos_match])
       end
 
       it "matches line item when options match" do

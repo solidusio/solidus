@@ -26,7 +26,10 @@ describe "Product Display Order", type: :feature do
       visit spree.edit_admin_product_path(product)
 
       assert_selected_taxons([taxon_1])
-      select2_search "Clothing", from: "Taxon"
+      within("[data-hook='admin_product_form_taxons']") do
+        select2_search "Clothing", from: "Taxon"
+      end
+
       assert_selected_taxons([taxon_1, taxon_2])
 
       # Without this line we have a flaky spec probably due to select2 not

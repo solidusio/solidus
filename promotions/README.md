@@ -2,17 +2,22 @@
 
 This gem contains Solidus' recommended promotion system. It is slated to replace the promotion system in the `legacy_promotions` gem.
 
-The basic architecture is very similar to the legacy promotion system, but with a few decisive tweaks, which I'll explain in the coming sections.
+The basic architecture is very similar to the legacy promotion system, but with a few decisive tweaks, which are explained in the subsequent sections.
+
+> [!IMPORTANT]  
+> If you are upgrading from a previous version of Solidus, it is advised that you update also the promotion system to the new gem. Please consult the [Migration Guide](./MIGRATING.md).
+> While the current version of Solidus still installs the legacy promotion system, we advise a migration at the earliest convinience to avoid having to rush the migration in the future. 
+
 
 ## Architecture
 
-This extension centralizes promotion handling in the order updater. A service class, the `SolidusPromotions::OrderAdjuster` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
+This extension centralizes promotion handling in the order updater significantly improving the performance of cart calculations. A service class, the `SolidusPromotions::OrderAdjuster` applies the current promotion configuration to the order, adjusting or removing adjustments as necessary.
 
 `SolidusPromotions::Promotion` objects have benefits, and benefits have conditions. For example, a promotion that is "20% off shirts" would have a benefit of type "AdjustLineItem", and that benefit would have a condition of type "LineItemTaxon" that makes sure only line items with the "shirts" taxon will get the benefit.
 
 ### Promotion lanes
 
-Promotions get applied by "lane". Promotions within a lane conflict with each other, whereas promotions that do not share a lane will apply sequentially in the order of the lanes. By default these are "pre", "default" and "post", but you can configure this using the SolidusPromotions initializer:
+Promotions get applied by "lane". Promotions within a lane conflict with each other, whereas promotions that do not share a lane will apply sequentially in the order of the lanes. By default these are "pre", "default" and "post", but they can be configured using the SolidusPromotions initializer:
 
 ```rb
 SolidusPromotions.configure do |config|
@@ -25,11 +30,9 @@ SolidusPromotions.configure do |config|
 end
 ```
 
-### Benefits
+### Types of Benefits
 
-Solidus Friendly Promotions ships with only three benefit types by default that should cover most use cases: `AdjustLineItem`, `AdjustShipment` and `CreateDiscountedItem`. There is no benefit that creates order-level adjustments, as this feature of Solidus' legacy promotions system has proven to be very difficult for customer service and finance departments due to the difficulty of accruing order-level adjustments to individual line items when e.g. processing returns. In order to give a fixed discount to all line items in an order, use the `AdjustLineItem` benefit with the `DistributedAmount` calculator.
-
-Alle benefits are calculable. By setting their `calculator` to one of the classes provided, a great range of discounts is possible.
+The new Solidus Promotions Systems ships with three benefit types: `AdjustLineItem`, `AdjustShipment` and `CreateDiscountedItem`. To allow more efficient processing of returns and reduce the complexity for bookkeping and support departmentes fixed discount to all line items in an order can now be given through the `AdjustLineItem` benefit through the `DistributedAmount` calculator significantly reducing amministration issues with refunds. 
 
 #### `AdjustLineItem`
 
@@ -119,4 +122,4 @@ SolidusDevSupport::TestingSupport::Factories.load_for(SolidusPromotions::Engine)
 
 ## License
 
-Copyright (c) 2024 Martin Meyerhoff, Solidus Team, released under the New BSD License.
+Copyright (c) 2024 Martin Meyerhoff, Solidus Team, released under the [license of the parent repository](https://github.com/solidusio/solidus/blob/main/LICENSE.md).

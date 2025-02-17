@@ -452,6 +452,22 @@ RSpec.describe Spree::Product, type: :model do
           end
         end
       end
+
+      describe "primary_taxon" do
+        it 'should belong to primary_taxon' do
+          expect(Spree::Product.reflect_on_association(:primary_taxon).macro).to eq(:belongs_to)
+        end
+
+        it 'should be optional' do
+          association = Spree::Product.reflect_on_association(:primary_taxon)
+          expect(association.options[:optional]).to be(true)
+        end
+
+        it 'should have a class_name of Spree::Taxon' do
+          association = Spree::Product.reflect_on_association(:primary_taxon)
+          expect(association.class_name).to eq('Spree::Taxon')
+        end
+      end
     end
   end
 
@@ -708,5 +724,14 @@ RSpec.describe Spree::Product, type: :model do
         expect(product.track_inventory).to be(true)
       end
     end
+  end
+
+  it 'is valid with or without a primary_taxon' do
+    product_with_taxon = create(:product, primary_taxon: create(:taxon))
+
+    product_without_taxon = create(:product, primary_taxon: nil)
+
+    expect(product_with_taxon).to be_valid
+    expect(product_without_taxon).to be_valid
   end
 end

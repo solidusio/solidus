@@ -12,7 +12,7 @@ SolidusPromotions::Engine.routes.draw do
                 }) do
       scope :admin do
         scope :solidus do
-          admin_resources :promotion_categories, only: [:index, :destroy]
+          admin_resources :promotion_categories, except: [:show]
           admin_resources :promotions, only: [:index, :destroy]
         end
       end

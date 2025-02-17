@@ -2,5 +2,9 @@ en:
   solidus_admin:
     promotion_categories:
       title: "Promotion Categories"
+      create:
+        success: "Promotion Category was successfully created."
+      update:
+        success: "Promotion Category was successfully updated."
       destroy:
         success: "Promotion Categories were successfully removed."

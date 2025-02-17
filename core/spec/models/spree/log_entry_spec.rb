@@ -128,7 +128,7 @@ RSpec.describe Spree::LogEntry, type: :model do
 
       expect(details.success?).to eq(true)
       expect(details.message).to eq("[WARNING: An error occurred while trying to serialize the payment response] FooBar")
-      expect(details.params['data']).to include(':bar=>"Symbol keys are not allowed"')
+      expect(details.params['data']).to include('"Symbol keys are not allowed"')
       expect(details.params['error']).to include('Tried to dump unspecified class: Symbol')
     end
   end
