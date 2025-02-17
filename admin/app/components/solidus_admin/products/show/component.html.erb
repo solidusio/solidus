@@ -54,7 +54,24 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: 'Stock') do |panel| %>
+          <label class="flex gap-2 items-center">
+            <%= render component("ui/forms/checkbox").new(
+              name: "#{f.object_name}[track_inventory]",
+              checked: f.object.track_inventory
+            ) %>
+            <span class="font-normal text-sm"><%= Spree::Product.human_attribute_name :track_inventory %></span>
+          </label>
+
           <%= render component("ui/forms/field").text_field(f, :sku) %>
+
+          <%#= render component("ui/forms/switch_field").new(
+            name: "#{f.object_name}[backorderable]",
+            label: Spree::StockItem.human_attribute_name(:backorderable),
+            error: f.object.errors[:backorderable],
+            hint: t(".backorderable_hint_html"),
+            checked: f.object.backorderable?,
+            include_hidden: true,
+          ) %>
 
           <% panel.with_action(
             name: t(".manage_stock"),
