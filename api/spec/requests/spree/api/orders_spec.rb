@@ -14,7 +14,7 @@ module Spree::Api
        :user_id, :created_at, :updated_at,
        :completed_at, :payment_total, :shipment_state,
        :payment_state, :email, :special_instructions,
-       :total_quantity, :display_item_total, :currency]
+       :total_quantity, :display_item_total, :currency, :customer_metadata]
     }
 
     let(:address_params) { { country_id: Country.first.id, state_id: State.first.id } }
@@ -76,6 +76,57 @@ module Spree::Api
               }.not_to change { Spree::Payment.count }
             end
           end
+        end
+      end
+
+      context "when the user is not admin but has ability to create and update orders" do
+        custom_authorization! do |_|
+          can [:update, :create], Spree::Order
+        end
+
+        let(:attributes_with_metadata) {
+          { email: "foo@foobar.com",
+            customer_metadata: { 'Note' => 'Do not ring the bell' },
+            admin_metadata: { 'Customer_type' => 'Corporate giant' } }
+        }
+
+        let(:order_update_data_with_admin_metadata){
+          {
+            email: "new_email@update.com",
+            admin_metadata: { 'Serial_number' => 'Sn98765' }
+          }
+        }
+
+        it "allows creating order with customer metadata but not admin metadata" do
+          post spree.api_orders_path, params: { order: attributes_with_metadata }
+
+          expect(json_response['customer_metadata']).to eq({ 'Note' => 'Do not ring the bell' })
+          expect(json_response).not_to have_key('admin_metadata')
+
+          created_order = Spree::Order.last
+
+          expect(created_order.admin_metadata).to eq({})
+        end
+
+        it "allows updating order but ignores admin metadata" do
+          order = create(:order)
+
+          put spree.api_order_path(order), params: { order: order_update_data_with_admin_metadata }
+
+          expect(json_response['email']).to eq( "new_email@update.com" )
+          expect(json_response).not_to have_key('admin_metadata')
+
+          order.reload
+
+          expect(order.admin_metadata).to eq({})
+        end
+
+        it "cannot view admin_metadata" do
+          allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
+
+          get spree.api_order_path(order)
+
+          expect(json_response).not_to have_key('admin_metadata')
         end
       end
 

@@ -24,7 +24,7 @@ module Spree::Api
 
     it "can learn how to create a new line item" do
       get spree.new_api_order_line_item_path(order)
-      expect(json_response["attributes"]).to eq(["quantity", "price", "variant_id"])
+      expect(json_response["attributes"]).to eq(["quantity", "price", "variant_id", "customer_metadata"])
       required_attributes = json_response["required_attributes"]
       expect(required_attributes).to include("quantity", "variant_id")
     end
@@ -95,6 +95,29 @@ module Spree::Api
         expect(response.status).to eq(201)
       end
 
+      it "cannot see admin_metadata" do
+        post spree.api_order_line_items_path(order),
+        params: {
+          line_item: { variant_id: product.master.to_param, quantity: 1 },
+          order_token: order.guest_token
+        }
+
+        expect(response.status).to eq(201)
+        expect(json_response).not_to have_key('admin_metadata')
+      end
+
+      it "allows creating line item with customer metadata but not admin metadata" do
+        post spree.api_order_line_items_path(order),
+        params: {
+          line_item: { variant_id: product.master.to_param,
+                       quantity: 1,
+                       customer_metadata: { "Company" => "Sample Company" } }
+        }
+
+        expect(json_response['customer_metadata']).to eq({ "Company" => "Sample Company" })
+        expect(json_response).not_to have_key('admin_metadata')
+      end
+
       it '#create calls #invalid_resource! if adding a line item fails validation' do
         allow_any_instance_of(Spree::LineItem).to receive(:valid?).and_return(false)
         expect_any_instance_of(Spree::Api::BaseController).to receive(:invalid_resource!).once
@@ -126,6 +149,22 @@ module Spree::Api
         expect(order.total).to eq(1010) # 10 original due to factory, + 1000 in this test
         expect(json_response).to have_attributes(attributes)
         expect(json_response["quantity"]).to eq(101)
+      end
+
+      it "can update a line item customer metadata on the order" do
+        line_item = order.line_items.first
+
+        put spree.api_order_line_item_path(order, line_item),
+        params: { line_item: { quantity: 101, customer_metadata: { "adding_quantity" => "true" } } }
+
+        expect(response.status).to eq(200)
+
+        order.reload
+
+        expect(order.total).to eq(1010) # 10 original due to factory, + 1000 in this test
+        expect(json_response).to have_attributes(attributes)
+        expect(json_response["quantity"]).to eq(101)
+        expect(json_response['customer_metadata']).to eq({ "adding_quantity" => "true" })
       end
 
       it "can update a line item's options on the order" do
