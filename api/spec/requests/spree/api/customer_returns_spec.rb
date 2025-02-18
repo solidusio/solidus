@@ -59,6 +59,14 @@ module Spree::Api
         expect(json_response).to have_attributes(attributes)
       end
 
+      it "can view admin_metadata" do
+        customer_return = FactoryBot.create(:customer_return)
+
+        get spree.api_order_customer_return_path(customer_return.order, customer_return.id)
+
+        expect(json_response).to have_key('admin_metadata')
+      end
+
       it "can get a list of customer returns" do
         FactoryBot.create(:customer_return, shipped_order: order)
         FactoryBot.create(:customer_return, shipped_order: order)
@@ -97,7 +105,7 @@ module Spree::Api
       it "can learn how to create a new customer return" do
         get spree.new_api_order_customer_return_path(order)
 
-        expect(json_response["attributes"]).to eq(["id", "number", "stock_location_id", "created_at", "updated_at"])
+        expect(json_response["attributes"]).to eq(["id", "number", "stock_location_id", "created_at", "updated_at", "customer_metadata", "admin_metadata"])
       end
 
       it "can update a customer return" do
@@ -110,6 +118,23 @@ module Spree::Api
         expect(response.status).to eq(200)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["stock_location_id"]).to eq final_stock_location.id
+      end
+
+      it "can update a customer return admin_metadata" do
+        initial_stock_location = FactoryBot.create(:stock_location)
+        final_stock_location = FactoryBot.create(:stock_location)
+        customer_return = FactoryBot.create(:customer_return, stock_location: initial_stock_location)
+
+        put spree.api_order_customer_return_path(customer_return.order, customer_return.id),
+        params: {
+          order_id: customer_return.order.number,
+          customer_return: { stock_location_id: final_stock_location.id, admin_metadata: { 'order_number' => 'PN345678' } }
+        }
+
+        expect(response.status).to eq(200)
+        expect(json_response).to have_attributes(attributes)
+        expect(json_response["stock_location_id"]).to eq final_stock_location.id
+        expect(json_response["admin_metadata"]).to eq({ 'order_number' => 'PN345678' })
       end
 
       context "when creating new return items" do

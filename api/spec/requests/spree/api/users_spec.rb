@@ -188,6 +188,18 @@ module Spree::Api
         expect(json_response['users'].first['email']).to eq expected_result.email
       end
 
+      it 'can view admin_metadata' do
+        allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+
+        2.times { create(:user) }
+
+        get spree.api_users_path
+        expect(Spree.user_class.count).to eq 2
+        expect(json_response['count']).to eq 2
+        expect(json_response['users'].size).to eq 2
+        expect(json_response['users'].first).to have_key('admin_metadata')
+      end
+
       it "can create" do
         post spree.api_users_path, params: { user: { email: "new@example.com", password: 'spree123', password_confirmation: 'spree123' } }
         expect(json_response).to have_attributes(attributes)
@@ -198,6 +210,14 @@ module Spree::Api
         post spree.api_users_path, params: { user: { email: "existing@example.com" } }
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
+      end
+
+      it "can update admin_metadata" do
+        post spree.api_users_path, params: { user: { email: "existing@example.com", admin_metadata: { 'user_type' => 'regular' } } }
+
+        expect(json_response).to have_attributes(attributes)
+        expect(response.status).to eq(201)
+        expect(json_response["admin_metadata"]).to eq({ 'user_type' => 'regular' })
       end
 
       it "can destroy user without orders" do

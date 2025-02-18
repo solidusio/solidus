@@ -228,6 +228,34 @@ module Spree::Api
       end
     end
 
+    context "as an admin" do
+      sign_in_as_admin!
+
+      it "can see admin_metadata" do
+        post spree.api_order_line_items_path(order),
+        params: {
+          line_item: { variant_id: product.master.to_param, quantity: 1 },
+          order_token: order.guest_token
+        }
+
+        expect(response.status).to eq(201)
+        expect(json_response).to have_key('admin_metadata')
+      end
+
+      it "allows creating line item with customer metadata and admin metadata" do
+        post spree.api_order_line_items_path(order),
+        params: {
+          line_item: { variant_id: product.master.to_param,
+                       quantity: 1,
+                       customer_metadata: { "Company" => "Sample Company" },
+                       admin_metadata: { "discount" => "not_applicable" } }
+        }
+
+        expect(json_response['customer_metadata']).to eq({ "Company" => "Sample Company" })
+        expect(json_response['admin_metadata']).to eq({ "discount" => "not_applicable" })
+      end
+    end
+
     context "as just another user" do
       before do
         user = create(:user)

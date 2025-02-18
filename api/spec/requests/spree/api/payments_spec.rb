@@ -187,6 +187,26 @@ module Spree::Api
               expect(response.status).to eq(403)
               expect(json_response["error"]).to eq("This payment cannot be updated because it is completed.")
             end
+
+            it "can update a payment admin_metadata" do
+              payment.update(state: 'pending')
+
+              put spree.api_order_payment_path(order, payment),
+              params: {
+                payment: {
+                  amount: 2.01,
+                  admin_metadata: { 'order_number' => 'PN345678' }
+                }
+              }
+
+              expect(response.status).to eq(200)
+              expect(json_response["admin_metadata"]).to eq({ 'order_number' => 'PN345678' })
+            end
+
+            it "can view admin_metadata" do
+              get spree.api_order_payments_path(order)
+              expect(json_response["payments"].first).to have_key('admin_metadata')
+            end
           end
         end
 
