@@ -18,17 +18,3 @@ RSpec.shared_examples_for 'feature: bulk delete resources' do
     expect(page).not_to have_content('Bulk delete item 2')
   end
 end
-
-RSpec.shared_examples_for 'request: bulk delete resources' do
-  let!(:ids) do
-    [create(resource_factory), create(resource_factory)].map(&:id)
-  end
-
-  let(:run_request) { delete bulk_delete_path.call(ids) }
-
-  it 'allows to bulk delete resources' do
-    expect { run_request }.to change { resource_class.count }.by(-ids.size)
-    expect(response).to redirect_to(redirect_path)
-    expect(response).to have_http_status(:see_other)
-  end
-end
