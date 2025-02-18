@@ -81,7 +81,8 @@ module Spree
       :meta_keywords, :price, :sku, :deleted_at,
       :option_values_hash, :weight, :height, :width, :depth,
       :shipping_category_id, :tax_category_id,
-      :taxon_ids, :option_type_ids, :cost_currency, :cost_price, :primary_taxon_id
+      :taxon_ids, :option_type_ids, :cost_currency, :cost_price, :primary_taxon_id,
+      :gtin, :condition
     ]
 
     @@property_attributes = [:name, :presentation]

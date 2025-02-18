@@ -74,6 +74,8 @@ paths:
                   product:
                     name: The Majestic Product
                     price: '19.99'
+                    gtin: 12345678
+                    condition: New
                     shipping_category_id: 8
                     product_properties_attributes:
                       - property_name: fabric
@@ -86,6 +88,8 @@ paths:
                       - price: 19.99
                         cost_price: 17
                         sku: SKU-3
+                        gtin: 12345678
+                        condition: New
                         track_inventory: true
                         options:
                           - name: size

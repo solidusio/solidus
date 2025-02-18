@@ -108,6 +108,21 @@ RSpec.describe Spree::Product, type: :model do
           expect(product.reload.master.default_price.price).to eq 12
         end
       end
+
+      context "when master variant attributes change" do
+        before do
+          product.master.gtin = "1234567890123"
+          product.master.condition = "new"
+        end
+
+        it_behaves_like "a change occurred"
+
+        it "saves the master with updated gtin and condition" do
+          product.save!
+          expect(product.reload.master.gtin).to eq "1234567890123"
+          expect(product.reload.master.condition).to eq "new"
+        end
+      end
     end
 
     context "product has no variants" do

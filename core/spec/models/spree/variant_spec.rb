@@ -44,6 +44,38 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe 'enums' do
+    it 'has the correct enum values' do
+      expect(described_class.conditions).to eq({
+        "damaged" => "damaged",
+        "new" => "new",
+        "refurbished" => "refurbished",
+        "used" => "used"
+      })
+    end
+
+    it 'correctly assigns and reads condition values' do
+      variant = create(:variant, condition: 'new')
+      expect(variant.reload.condition).to eq('new')
+    end
+
+    it 'does not accept invalid enum values' do
+      expect { create(:variant, condition: 'invalid_value') }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe 'gtin and condition attributes' do
+    let(:variant) { create(:variant, gtin: '1234567890123', condition: 'new') }
+
+    it 'has a GTIN' do
+      expect(variant.gtin).to eq('1234567890123')
+    end
+
+    it 'has a condition' do
+      expect(variant.condition).to eq('new')
+    end
+  end
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant = build(:variant, price: -1)

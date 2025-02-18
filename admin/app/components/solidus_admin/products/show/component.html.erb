@@ -36,8 +36,14 @@
           <%= render component("ui/forms/field").text_field(f, :meta_title) %>
           <%= render component("ui/forms/field").text_field(f, :meta_description) %>
           <%= render component("ui/forms/field").text_area(f, :meta_keywords) %>
+          <%= render component("ui/forms/field").text_field(f, :gtin) %>
+          <%= render component("ui/forms/field").select(
+            f,
+            :condition,
+            condition_options,
+            include_blank: t('spree.unset'),
+          ) %>
         <% end %>
-
         <%= render component('ui/panel').new(title: "Media") do |panel| %>
           <% panel.with_action(
             name: t(".manage_images"),

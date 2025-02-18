@@ -7,6 +7,23 @@
           <%= f.text_field :sku, class: 'fullwidth' %>
         </div>
       </div>
+
+      <div class="col-3">
+        <div class="field" data-hook="gtin">
+          <%= f.label :gtin %>
+          <%= f.text_field :gtin, class: 'fullwidth' %>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="field" data-hook="condition">
+          <%= f.label :condition %>
+          <%= f.select :condition,
+                Spree::Variant.conditions.map { |key, value| [t("spree.condition.#{key}"), value] },
+                { include_blank: t('spree.unset') },
+                class: 'custom-select fullwidth' %>
+        </div>
+      </div>
       <div class="col-3">
         <div class="field checkbox" data-hook="track_inventory">
           <label>
