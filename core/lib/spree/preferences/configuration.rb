@@ -173,6 +173,10 @@ module Spree::Preferences
         class_name = class_name.constantize if class_name.is_a?(String)
         class_name
       end
+
+      define_method("#{name}_name") do
+        instance_variable_get(ivar) || default
+      end
     end
 
     def self.by_version(*args)
