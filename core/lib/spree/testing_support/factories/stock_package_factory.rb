@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :stock_package, class: 'Spree::Stock::Package' do
+  factory :stock_package, class: "Spree::Stock::Package" do
     skip_create
 
     transient do
       stock_location { build(:stock_location) }
-      contents       { [] }
+      contents { [] }
       variants_contents { {} }
     end
 
@@ -19,7 +19,7 @@ FactoryBot.define do
     end
 
     factory :stock_package_fulfilled do
-      transient { variants_contents { { build(:variant) => 2 } } }
+      transient { variants_contents { {build(:variant) => 2} } }
     end
   end
 end

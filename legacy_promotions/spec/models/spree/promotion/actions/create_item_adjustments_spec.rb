@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Promotion::Actions::CreateItemAdjustments, type: :model do
@@ -9,7 +9,7 @@ module Spree
     let(:adjustment_amount) { 10 }
     let(:action) { promotion.actions.first! }
     let(:line_item) { order.line_items.to_a.first }
-    let(:payload) { { order:, promotion: } }
+    let(:payload) { {order:, promotion:} }
 
     before do
       allow(action).to receive(:promotion).and_return(promotion)
@@ -80,7 +80,7 @@ module Spree
 
         context "when a promotion code is used" do
           let!(:promotion_code) { create(:promotion_code, promotion:) }
-          let(:payload) { { order:, promotion:, promotion_code: } }
+          let(:payload) { {order:, promotion:, promotion_code:} }
 
           it "should connect the adjustment to the promotion_code" do
             expect {
@@ -116,13 +116,13 @@ module Spree
       context "when the adjustable is not actionable" do
         before { allow(promotion).to receive(:line_item_actionable?) { false } }
 
-        it 'returns 0' do
+        it "returns 0" do
           expect(action.compute_amount(line_item)).to eql(0)
         end
       end
     end
 
-    describe '#remove_from' do
+    describe "#remove_from" do
       # this adjustment should not get removed
       let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order:, source: nil) }
 
@@ -131,7 +131,7 @@ module Spree
         @action_adjustment = line_item.adjustments.where(source: action).first!
       end
 
-      it 'removes the action adjustment' do
+      it "removes the action adjustment" do
         expect(line_item.adjustments).to match_array([other_adjustment, @action_adjustment])
 
         action.remove_from(order)
@@ -146,11 +146,11 @@ module Spree
       let(:promotion) { create(:promotion, :with_line_item_adjustment) }
       let(:other_promotion) { create(:promotion, :with_line_item_adjustment) }
 
-      context 'with incomplete orders' do
+      context "with incomplete orders" do
         let(:order) { create(:order) }
 
-        it 'destroys adjustments' do
-          order.adjustments.create!(label: 'Check', amount: 0, order:, source: action)
+        it "destroys adjustments" do
+          order.adjustments.create!(label: "Check", amount: 0, order:, source: action)
 
           expect {
             subject
@@ -158,7 +158,7 @@ module Spree
         end
       end
 
-      context 'with complete orders' do
+      context "with complete orders" do
         let(:order) { create(:completed_order_with_totals) }
 
         it "does not change adjustments for completed orders" do

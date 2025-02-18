@@ -5,7 +5,7 @@ require_dependency "spree/calculator"
 module SolidusPromotions
   module Calculators
     class TieredPercentOnEligibleItemQuantity < SolidusPromotions::Calculators::TieredPercent
-      preference :tiers, :hash, default: { 10 => 5 }
+      preference :tiers, :hash, default: {10 => 5}
 
       before_validation do
         # Convert tier values to decimals. Strings don't do us much good.

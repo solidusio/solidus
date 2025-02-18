@@ -4,12 +4,12 @@ module Spree
   module Api
     class TaxonsController < Spree::Api::BaseController
       def index
-        if taxonomy
-          @taxons = taxonomy.root.children
+        @taxons = if taxonomy
+          taxonomy.root.children
         elsif params[:ids]
-          @taxons = Spree::Taxon.accessible_by(current_ability).where(id: params[:ids].split(','))
+          Spree::Taxon.accessible_by(current_ability).where(id: params[:ids].split(","))
         else
-          @taxons = Spree::Taxon.accessible_by(current_ability).order(:taxonomy_id, :lft).ransack(params[:q]).result
+          Spree::Taxon.accessible_by(current_ability).order(:taxonomy_id, :lft).ransack(params[:q]).result
         end
 
         unless params[:without_children]
@@ -36,7 +36,7 @@ module Spree
         taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
         if taxonomy.nil?
-          @taxon.errors.add(:taxonomy_id, I18n.t('spree.api.invalid_taxonomy_id'))
+          @taxon.errors.add(:taxonomy_id, I18n.t("spree.api.invalid_taxonomy_id"))
           invalid_resource!(@taxon) && return
         end
 
@@ -78,7 +78,7 @@ module Spree
             product_properties: true,
             classifications: true
           }
-          @product_attributes = %i(id name display_price)
+          @product_attributes = %i[id name display_price]
         end
         render "spree/api/products/index"
       end

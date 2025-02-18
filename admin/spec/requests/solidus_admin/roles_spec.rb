@@ -8,7 +8,7 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
 
   before do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
-    Spree::Role.find_or_create_by(name: 'admin')
+    Spree::Role.find_or_create_by(name: "admin")
   end
 
   describe "GET /index" do
@@ -27,38 +27,38 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Customer", description: "A person who buys stuff" } }
+      let(:valid_attributes) { {name: "Customer", description: "A person who buys stuff"} }
 
       it "creates a new Role" do
         expect {
-          post solidus_admin.roles_path, params: { role: valid_attributes }
+          post solidus_admin.roles_path, params: {role: valid_attributes}
         }.to change(Spree::Role, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.roles_path, params: { role: valid_attributes }
+        post solidus_admin.roles_path, params: {role: valid_attributes}
         expect(response).to redirect_to(solidus_admin.roles_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.roles_path, params: { role: valid_attributes }
+        post solidus_admin.roles_path, params: {role: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Role was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "" } }
+      let(:invalid_attributes) { {name: ""} }
 
       it "does not create a new Role" do
         expect {
-          post solidus_admin.roles_path, params: { role: invalid_attributes }
+          post solidus_admin.roles_path, params: {role: invalid_attributes}
         }.not_to change(Spree::Role, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.roles_path, params: { role: invalid_attributes }
+        post solidus_admin.roles_path, params: {role: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -73,39 +73,39 @@ RSpec.describe "SolidusAdmin::RolesController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Publisher", description: "A person who publishes stuff" } }
+      let(:valid_attributes) { {name: "Publisher", description: "A person who publishes stuff"} }
 
       it "updates the role" do
-        patch solidus_admin.role_path(role), params: { role: valid_attributes }
+        patch solidus_admin.role_path(role), params: {role: valid_attributes}
         role.reload
         expect(role.name).to eq("Publisher")
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.role_path(role), params: { role: valid_attributes }
+        patch solidus_admin.role_path(role), params: {role: valid_attributes}
         expect(response).to redirect_to(solidus_admin.roles_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.role_path(role), params: { role: valid_attributes }
+        patch solidus_admin.role_path(role), params: {role: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Role was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "" } }
+      let(:invalid_attributes) { {name: ""} }
 
       it "does not update the role" do
         original_name = role.name
-        patch solidus_admin.role_path(role), params: { role: invalid_attributes }
+        patch solidus_admin.role_path(role), params: {role: invalid_attributes}
         role.reload
         expect(role.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.role_path(role), params: { role: invalid_attributes }
+        patch solidus_admin.role_path(role), params: {role: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

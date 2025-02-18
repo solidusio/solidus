@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Rules::Product, type: :model do
   let(:rule) { Spree::Promotion::Rules::Product.new(rule_options) }
@@ -15,7 +15,7 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
     end
 
     before do
-      3.times { |i| instance_variable_set("@product#{i}", mock_model(Spree::Product)) }
+      3.times { |i| instance_variable_set(:"@product#{i}", mock_model(Spree::Product)) }
     end
 
     context "with 'any' match policy" do
@@ -35,13 +35,13 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "You need to add an applicable product before applying this coupon code."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "You need to add an applicable product before applying this coupon code."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :no_applicable_products
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :no_applicable_products
         end
       end
     end
@@ -63,13 +63,13 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "This coupon code can't be applied because you don't have all of the necessary products in your cart."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "This coupon code can't be applied because you don't have all of the necessary products in your cart."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :missing_product
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :missing_product
         end
       end
     end
@@ -91,13 +91,13 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
         it { expect(rule).not_to be_eligible(order) }
         it "sets an error message" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.full_messages.first).
-            to eq "Your cart contains a product that prevents this coupon code from being applied."
+          expect(rule.eligibility_errors.full_messages.first)
+            .to eq "Your cart contains a product that prevents this coupon code from being applied."
         end
         it "sets an error code" do
           rule.eligible?(order)
-          expect(rule.eligibility_errors.details[:base].first[:error_code]).
-            to eq :has_excluded_product
+          expect(rule.eligibility_errors.details[:base].first[:error_code])
+            .to eq :has_excluded_product
         end
       end
     end
@@ -107,17 +107,17 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
         Spree::Promotion::Rules::Product.create!(
           promotion: create(:promotion),
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product:),
-          ],
+            Spree::ProductPromotionRule.new(product:)
+          ]
         ).tap do |rule|
-          rule.preferred_match_policy = 'invalid'
+          rule.preferred_match_policy = "invalid"
           rule.save!(validate: false)
         end
       end
       let(:product) { order.line_items.first!.product }
       let(:order) { create(:order_with_line_items, line_items_count: 1) }
 
-      it 'raises' do
+      it "raises" do
         expect {
           rule.eligible?(order)
         }.to raise_error('unexpected match policy: "invalid"')
@@ -125,7 +125,7 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
     end
   end
 
-  describe '#actionable?' do
+  describe "#actionable?" do
     subject do
       rule.actionable?(line_item)
     end
@@ -138,52 +138,52 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
     let(:other_product) { mock_model(Spree::Product) }
 
     context "with 'any' match policy" do
-      let(:rule_options) { super().merge(preferred_match_policy: 'any') }
+      let(:rule_options) { super().merge(preferred_match_policy: "any") }
 
-      context 'for product in rule' do
+      context "for product in rule" do
         let(:line_item) { rule_line_item }
         it { is_expected.to be_truthy }
       end
 
-      context 'for product not in rule' do
+      context "for product not in rule" do
         let(:line_item) { other_line_item }
         it { is_expected.to be_falsey }
       end
     end
 
     context "with 'all' match policy" do
-      let(:rule_options) { super().merge(preferred_match_policy: 'all') }
+      let(:rule_options) { super().merge(preferred_match_policy: "all") }
 
-      context 'for product in rule' do
+      context "for product in rule" do
         let(:line_item) { rule_line_item }
         it { is_expected.to be_truthy }
       end
 
-      context 'for product not in rule' do
+      context "for product not in rule" do
         let(:line_item) { other_line_item }
         it { is_expected.to be_falsey }
       end
     end
 
     context "with 'none' match policy" do
-      let(:rule_options) { super().merge(preferred_match_policy: 'none') }
+      let(:rule_options) { super().merge(preferred_match_policy: "none") }
 
-      context 'for product in rule' do
+      context "for product in rule" do
         let(:line_item) { rule_line_item }
         it { is_expected.to be_falsey }
       end
 
-      context 'for product not in rule' do
+      context "for product not in rule" do
         let(:line_item) { other_line_item }
         it { is_expected.to be_truthy }
       end
     end
 
-    context 'with an invalid match policy' do
-      let(:rule_options) { super().merge(preferred_match_policy: 'invalid') }
+    context "with an invalid match policy" do
+      let(:rule_options) { super().merge(preferred_match_policy: "invalid") }
       let(:line_item) { rule_line_item }
 
-      it 'raises' do
+      it "raises" do
         expect {
           rule.actionable?(line_item)
         }.to raise_error('unexpected match policy: "invalid"')

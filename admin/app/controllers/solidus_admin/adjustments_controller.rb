@@ -9,9 +9,9 @@ class SolidusAdmin::AdjustmentsController < SolidusAdmin::BaseController
 
     respond_to do |format|
       format.html do
-        render component('orders/show/adjustments/index').new(
+        render component("orders/show/adjustments/index").new(
           order: @order,
-          adjustments: @adjustments,
+          adjustments: @adjustments
         )
       end
     end
@@ -20,7 +20,7 @@ class SolidusAdmin::AdjustmentsController < SolidusAdmin::BaseController
   def lock
     @adjustments = @order.all_adjustments.not_finalized.where(id: params[:id])
     @adjustments.each(&:finalize!)
-    flash[:success] = t('.success')
+    flash[:success] = t(".success")
 
     redirect_to order_adjustments_path(@order), status: :see_other
   end
@@ -28,7 +28,7 @@ class SolidusAdmin::AdjustmentsController < SolidusAdmin::BaseController
   def unlock
     @adjustments = @order.all_adjustments.finalized.where(id: params[:id])
     @adjustments.each(&:unfinalize!)
-    flash[:success] = t('.success')
+    flash[:success] = t(".success")
 
     redirect_to order_adjustments_path(@order), status: :see_other
   end
@@ -36,7 +36,7 @@ class SolidusAdmin::AdjustmentsController < SolidusAdmin::BaseController
   def destroy
     @adjustments = @order.all_adjustments.where(id: params[:id])
     @adjustments.destroy_all
-    flash[:success] = t('.success')
+    flash[:success] = t(".success")
 
     redirect_to order_adjustments_path(@order), status: :see_other
   end

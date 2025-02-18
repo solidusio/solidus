@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "require 'spree/core/state_machines" do
-  %w(
+  %w[
     inventory_unit
     order
     payment
@@ -12,7 +12,7 @@ RSpec.describe "require 'spree/core/state_machines" do
     shipment
     return_item/acceptance_status
     return_item/reception_status
-  ).each do |helper_name|
+  ].each do |helper_name|
     describe "require 'spree/core/state_machines/#{helper_name}" do
       it "exists but will print a deprecation warning" do
         expect(Spree.deprecator).to receive(:warn).with(

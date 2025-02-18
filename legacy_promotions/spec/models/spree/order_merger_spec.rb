@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 # Regression test for https://github.com/spree/spree/issues/2179
 RSpec.describe Spree::OrderMerger, type: :model do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderInventory, type: :model do
   let(:order) { create :completed_order_with_totals }
@@ -22,7 +22,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       subject.line_item.reload
     end
 
-    it 'creates the proper number of inventory units' do
+    it "creates the proper number of inventory units" do
       expect(line_item.inventory_units.count).to eq(old_quantity)
       subject.verify(shipment)
       expect(line_item.inventory_units.count).to eq(new_quantity)
@@ -55,7 +55,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       before { shipment.inventory_units.destroy_all }
       let(:new_quantity) { 5 }
 
-      it 'sets inventory_units state as per stock location availability' do
+      it "sets inventory_units state as per stock location availability" do
         stock_item.update_columns(
           backorderable: true,
           count_on_hand: 3
@@ -64,8 +64,8 @@ RSpec.describe Spree::OrderInventory, type: :model do
         subject.verify
 
         units = shipment.inventory_units_for(subject.variant).group_by(&:state)
-        expect(units['backordered'].size).to eq(2)
-        expect(units['on_hand'].size).to eq(3)
+        expect(units["backordered"].size).to eq(2)
+        expect(units["on_hand"].size).to eq(3)
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       end
     end
 
-    it 'should create stock_movement' do
+    it "should create stock_movement" do
       expect(subject.send(:add_to_shipment, shipment, 5)).to eq(5)
 
       stock_item = shipment.stock_location.stock_item(subject.variant)
@@ -132,10 +132,10 @@ RSpec.describe Spree::OrderInventory, type: :model do
       order.shipments.create(stock_location_id: stock_location.id, cost: 5)
 
       shipped = order.shipments.create(stock_location_id: order.shipments.first.stock_location.id, cost: 10)
-      shipped.update_column(:state, 'shipped')
+      shipped.update_column(:state, "shipped")
     end
 
-    it 'should select first non-shipped shipment that already contains given variant' do
+    it "should select first non-shipped shipment that already contains given variant" do
       shipment = subject.send(:determine_target_shipment, 1)
       expect(shipment.shipped?).to be false
       expect(shipment.inventory_units_for(variant)).not_to be_empty
@@ -149,7 +149,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
         subject.inventory_units.destroy_all
       end
 
-      context 'when availability should be considered' do
+      context "when availability should be considered" do
         let(:stock_item) { variant.stock_items.max_by(&:id) }
 
         before do
@@ -157,10 +157,10 @@ RSpec.describe Spree::OrderInventory, type: :model do
           variant.stock_items.reload
         end
 
-        context 'when there is enough availability at one stock location' do
+        context "when there is enough availability at one stock location" do
           before { stock_item.set_count_on_hand 1 }
 
-          it 'favors first non-shipped shipment from same stock location that have enough availability' do
+          it "favors first non-shipped shipment from same stock location that have enough availability" do
             shipment = subject.send(:determine_target_shipment, 1)
             shipment.reload
 
@@ -170,10 +170,10 @@ RSpec.describe Spree::OrderInventory, type: :model do
           end
         end
 
-        context 'when there is not enough availability at any stock location' do
+        context "when there is not enough availability at any stock location" do
           before { stock_item.set_count_on_hand 0 }
 
-          it 'falls-back selecting first non-shipped shipment that leaves from same stock_location' do
+          it "falls-back selecting first non-shipped shipment that leaves from same stock_location" do
             required_quantity = 1
             shipment = subject.send(:determine_target_shipment, required_quantity)
             shipment.reload
@@ -192,7 +192,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
     end
   end
 
-  context 'when order has too many inventory units' do
+  context "when order has too many inventory units" do
     let(:old_quantity) { 3 }
     let(:new_quantity) { 2 }
 
@@ -203,12 +203,12 @@ RSpec.describe Spree::OrderInventory, type: :model do
       subject.line_item.reload
     end
 
-    it 'should be a messed up order' do
+    it "should be a messed up order" do
       expect(order.shipments.first.inventory_units_for(line_item.variant).size).to eq(3)
       expect(line_item.quantity).to eq(2)
     end
 
-    it 'should decrease the number of inventory units' do
+    it "should decrease the number of inventory units" do
       subject.verify
       expect(line_item.inventory_units.count).to eq 2
       expect(order.inventory_units.count).to eq 2
@@ -228,13 +228,13 @@ RSpec.describe Spree::OrderInventory, type: :model do
       end
     end
 
-    it 'should change count_on_hand' do
+    it "should change count_on_hand" do
       expect {
         subject.verify(shipment)
       }.to change { stock_item.reload.count_on_hand }.by(1)
     end
 
-    it 'should create stock_movement' do
+    it "should create stock_movement" do
       stock_item = shipment.stock_location.stock_item(variant)
 
       expect {
@@ -246,17 +246,17 @@ RSpec.describe Spree::OrderInventory, type: :model do
       expect(movement.quantity).to eq(1)
     end
 
-    context 'with some backordered' do
+    context "with some backordered" do
       let(:new_quantity) { 1 }
 
       before do
-        line_item.inventory_units[0].update_columns(state: 'backordered')
-        line_item.inventory_units[1].update_columns(state: 'on_hand')
-        line_item.inventory_units[2].update_columns(state: 'backordered')
+        line_item.inventory_units[0].update_columns(state: "backordered")
+        line_item.inventory_units[1].update_columns(state: "on_hand")
+        line_item.inventory_units[2].update_columns(state: "backordered")
       end
 
-      it 'should destroy backordered units first' do
-        on_hand_unit = line_item.inventory_units.find_by state: 'on_hand'
+      it "should destroy backordered units first" do
+        on_hand_unit = line_item.inventory_units.find_by state: "on_hand"
 
         subject.verify(shipment)
 
@@ -264,25 +264,25 @@ RSpec.describe Spree::OrderInventory, type: :model do
       end
     end
 
-    context 'with some shipped items' do
+    context "with some shipped items" do
       let(:old_quantity) { 2 }
       let(:new_quantity) { 1 }
 
       let(:shipped_unit) { line_item.inventory_units[0] }
       before do
-        shipped_unit.update_columns(state: 'shipped')
+        shipped_unit.update_columns(state: "shipped")
       end
 
-      it 'should destroy unshipped units first' do
+      it "should destroy unshipped units first" do
         subject.verify(shipment)
 
         expect(line_item.inventory_units.reload).to eq([shipped_unit])
       end
 
-      context 'trying to remove shipped units' do
+      context "trying to remove shipped units" do
         let(:new_quantity) { 0 }
 
-        it 'only attempts to destroy as many units as are eligible, and return amount destroyed' do
+        it "only attempts to destroy as many units as are eligible, and return amount destroyed" do
           subject.verify(shipment)
 
           expect(line_item.inventory_units.reload).to eq([shipped_unit])
@@ -290,13 +290,13 @@ RSpec.describe Spree::OrderInventory, type: :model do
       end
     end
 
-    context 'destroying all units' do
+    context "destroying all units" do
       let(:new_quantity) { 0 }
 
-      it 'should destroy shipment' do
+      it "should destroy shipment" do
         expect {
           subject.verify(shipment)
-        }.to change{ order.shipments.count }.from(1).to(0)
+        }.to change { order.shipments.count }.from(1).to(0)
       end
     end
 
@@ -316,7 +316,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
     end
   end
 
-  context 'when the order has no suitable shipment for the variant' do
+  context "when the order has no suitable shipment for the variant" do
     let(:new_line_item) { create :line_item, order: }
 
     before do
@@ -328,7 +328,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
 
     subject { described_class.new(order, new_line_item.reload) }
 
-    it 'creates a new shipment' do
+    it "creates a new shipment" do
       expect do
         subject.verify
       end.to change { order.shipments.count }.from(1).to 2

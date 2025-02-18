@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'discard'
+require "discard"
 
 module Spree
   module SoftDeletable

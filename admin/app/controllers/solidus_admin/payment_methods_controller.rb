@@ -15,13 +15,13 @@ module SolidusAdmin
     def index
       payment_methods = apply_search_to(
         Spree::PaymentMethod.ordered_by_position,
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(payment_methods)
 
       respond_to do |format|
-        format.html { render component('payment_methods/index').new(page: @page) }
+        format.html { render component("payment_methods/index").new(page: @page) }
       end
     end
 
@@ -38,14 +38,14 @@ module SolidusAdmin
 
       Spree::PaymentMethod.transaction { @payment_methods.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to payment_methods_path, status: :see_other
     end
 
     private
 
     def load_payment_method
-      @payment_method = Spree::PaymentMethod.find_by!(id: params[:id])
+      @payment_method = Spree::PaymentMethod.find(params[:id])
       authorize! action_name, @payment_method
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/backend/config'
+require "spree/backend/config"
 
 module Spree
   module Backend
@@ -10,7 +10,7 @@ module Spree
       initializer "spree.backend.environment", before: :load_config_initializers do; end
 
       config.after_initialize do
-        Spree::Backend::Config.check_load_defaults_called('Spree::Backend::Config')
+        Spree::Backend::Config.check_load_defaults_called("Spree::Backend::Config")
       end
     end
   end

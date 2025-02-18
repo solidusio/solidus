@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Payments', type: :feature do
+describe "Payments", type: :feature do
   stub_authorization!
 
-  let(:state) { 'checkout' }
+  let(:state) { "checkout" }
 
   context "with a pre-existing payment" do
     let!(:payment) { create_payment }
 
-    let(:order) { create(:completed_order_with_totals, number: 'R100', line_items_price: 50) }
+    let(:order) { create(:completed_order_with_totals, number: "R100", line_items_price: 50) }
 
     before do
       visit "/admin/orders/#{order.number}/payments"
@@ -29,41 +29,41 @@ describe 'Payments', type: :feature do
     end
 
     # Regression tests for https://github.com/spree/spree/issues/1453
-    context 'with a check payment', js: true do
-      let(:order) { create(:completed_order_with_totals, number: 'R100') }
+    context "with a check payment", js: true do
+      let(:order) { create(:completed_order_with_totals, number: "R100") }
       let!(:payment) { create_payment(payment_method: create(:check_payment_method, available_to_admin: true)) }
 
-      it 'capturing a check payment from a new order' do
+      it "capturing a check payment from a new order" do
         click_icon(:capture)
-        expect(page).not_to have_content('Cannot perform requested operation')
-        expect(page).to have_content('Payment Updated')
+        expect(page).not_to have_content("Cannot perform requested operation")
+        expect(page).to have_content("Payment Updated")
       end
 
-      it 'voids a check payment from a new order' do
+      it "voids a check payment from a new order" do
         click_icon(:void)
-        expect(page).to have_content('Payment Updated')
+        expect(page).to have_content("Payment Updated")
       end
     end
 
-    it 'should list all captures for a payment' do
+    it "should list all captures for a payment" do
       capture_amount = order.outstanding_balance / 2 * 100
       payment.capture!(capture_amount)
 
       visit spree.admin_order_payment_path(order, payment)
-      expect(page).to have_content 'Capture Events'
-      within '#capture_events' do
+      expect(page).to have_content "Capture Events"
+      within "#capture_events" do
         expect(page).to have_content(capture_amount / 100)
       end
     end
 
-    it 'displays the address for a credit card when present' do
-      payment.source.update!(address: create(:address, address1: 'my cc address'))
+    it "displays the address for a credit card when present" do
+      payment.source.update!(address: create(:address, address1: "my cc address"))
       visit spree.admin_order_payment_path(order, payment)
-      expect(page).to have_content 'my cc address'
+      expect(page).to have_content "my cc address"
     end
 
-    context 'when there are multiple pending payments', :js do
-      context 'while marking all payments as void' do
+    context "when there are multiple pending payments", :js do
+      context "while marking all payments as void" do
         let(:card_payment_method) { create(:credit_card_payment_method) }
 
         let!(:payment) do
@@ -80,115 +80,115 @@ describe 'Payments', type: :feature do
           )
         end
 
-        it 'updates the order payment state correctly at each iteration' do
+        it "updates the order payment state correctly at each iteration" do
           visit current_path
-          expect(page).to have_css('#payment_status', text: 'Balance due')
+          expect(page).to have_css("#payment_status", text: "Balance due")
 
-          within '#payments' do
-            expect(page).to have_selector('.pill-pending', count: 2)
+          within "#payments" do
+            expect(page).to have_selector(".pill-pending", count: 2)
             within "#payment_#{payment.id}" do
-              find('.fa-void').click
+              find(".fa-void").click
             end
           end
 
-          expect(page).to have_css('#payment_status', text: 'Balance due')
+          expect(page).to have_css("#payment_status", text: "Balance due")
 
-          within '#payments' do
-            expect(page).to have_selector('.pill-pending', count: 1)
+          within "#payments" do
+            expect(page).to have_selector(".pill-pending", count: 1)
             within "#payment_#{payment.id}" do
-              expect(page).to have_selector('.pill-void', count: 1)
+              expect(page).to have_selector(".pill-void", count: 1)
             end
           end
 
           within "#payment_#{second_payment.id}" do
-            find('.fa-void').click
+            find(".fa-void").click
           end
 
-          within '#payments' do
-            expect(page).not_to have_selector('.pill-pending')
-            expect(page).to have_selector('.pill-void', count: 2)
+          within "#payments" do
+            expect(page).not_to have_selector(".pill-pending")
+            expect(page).to have_selector(".pill-void", count: 2)
           end
-          expect(page).to have_css('#payment_status', text: 'Failed')
+          expect(page).to have_css("#payment_status", text: "Failed")
         end
       end
     end
 
-    it 'lists, updates and creates payments for an order', js: true do
+    it "lists, updates and creates payments for an order", js: true do
       within_row(1) do
-        expect(column_text(3)).to eq('Credit Card')
-        expect(column_text(5)).to eq('Checkout')
-        expect(column_text(6)).to have_content('$150.00')
+        expect(column_text(3)).to eq("Credit Card")
+        expect(column_text(5)).to eq("Checkout")
+        expect(column_text(6)).to have_content("$150.00")
       end
 
       click_icon :void
-      expect(page).to have_css('#payment_status', text: 'Failed')
-      expect(page).to have_content('Payment Updated')
+      expect(page).to have_css("#payment_status", text: "Failed")
+      expect(page).to have_content("Payment Updated")
 
       within_row(1) do
-        expect(column_text(5)).to eq('Void')
+        expect(column_text(5)).to eq("Void")
       end
 
-      click_on 'New Payment'
-      expect(page).to have_content('New Payment')
-      click_button 'Update'
-      expect(page).to have_content('successfully created!')
+      click_on "New Payment"
+      expect(page).to have_content("New Payment")
+      click_button "Update"
+      expect(page).to have_content("successfully created!")
 
       click_icon(:capture)
 
-      expect(page).to have_selector('#payment_status', text: 'Paid')
-      expect(page).not_to have_selector('#new_payment_section')
+      expect(page).to have_selector("#payment_status", text: "Paid")
+      expect(page).not_to have_selector("#new_payment_section")
     end
 
     # Regression test for https://github.com/spree/spree/issues/1269
-    it 'cannot create a payment for an order with no payment methods' do
+    it "cannot create a payment for an order with no payment methods" do
       Spree::PaymentMethod.delete_all
       order.payments.delete_all
 
-      click_on 'New Payment'
-      expect(page).to have_content('You cannot create a payment for an order without any payment methods defined.')
-      expect(page).to have_content('Please define some payment methods first.')
+      click_on "New Payment"
+      expect(page).to have_content("You cannot create a payment for an order without any payment methods defined.")
+      expect(page).to have_content("Please define some payment methods first.")
     end
 
-    context 'payment is pending', js: true do
-      let(:state) { 'pending' }
+    context "payment is pending", js: true do
+      let(:state) { "pending" }
 
-      it 'allows the amount to be edited by clicking on the edit button then saving' do
+      it "allows the amount to be edited by clicking on the edit button then saving" do
         within_row(1) do
           click_icon(:edit)
-          fill_in('amount', with: '$1')
+          fill_in("amount", with: "$1")
           click_icon(:ok)
-          expect(page).to have_selector('td.amount span', text: '$1.00')
+          expect(page).to have_selector("td.amount span", text: "$1.00")
           expect(payment.reload.amount).to eq(1.00)
         end
       end
 
-      it 'allows the amount change to be cancelled by clicking on the cancel button' do
+      it "allows the amount change to be cancelled by clicking on the cancel button" do
         within_row(1) do
           click_icon(:edit)
-          fill_in 'amount', with: '$1'
+          fill_in "amount", with: "$1"
           click_icon(:cancel)
-          expect(page).to have_selector('td.amount span', text: '$150.00')
+          expect(page).to have_selector("td.amount span", text: "$150.00")
           expect(payment.reload.amount).to eq(150.00)
         end
       end
 
-      it 'displays an error when the amount is invalid' do
+      it "displays an error when the amount is invalid" do
         within_row(1) do
           click_icon(:edit)
-          fill_in('amount', with: 'invalid')
+          fill_in("amount", with: "invalid")
           click_icon(:ok)
         end
-        expect(page).to have_selector('.flash.error', text: 'Invalid resource. Please fix errors and try again.')
+        expect(page).to have_selector(".flash.error", text: "Invalid resource. Please fix errors and try again.")
         expect(payment.reload.amount).to eq(150.00)
       end
     end
 
-    context 'payment is completed', js: true do
-      let(:state) { 'completed' }
+    context "payment is completed", js: true do
+      let(:state) { "completed" }
 
-      it 'does not allow the amount to be edited' do
+      it "does not allow the amount to be edited" do
         within_row(1) do
-          expect(page).not_to have_selector('.fa-edit')
+          expect(page).not_to have_selector(".fa-edit")
         end
       end
     end
@@ -249,14 +249,14 @@ describe 'Payments', type: :feature do
       end
 
       it "can successfully be created and captured", js: true do
-        click_on 'Update'
+        click_on "Update"
         expect(page).to have_content("Payment has been successfully created!")
         click_icon(:capture)
         expect(page).to have_content("Payment Updated")
       end
     end
 
-    context 'with a soft-deleted payment method' do
+    context "with a soft-deleted payment method" do
       let(:order) { create(:completed_order_with_totals, line_items_count: 1) }
       let!(:payment_method) { create(:check_payment_method) }
       let!(:payment) { create_payment(payment_method:) }
@@ -299,7 +299,7 @@ describe 'Payments', type: :feature do
     let(:order) do
       create(:order_with_line_items, {
         line_items_count: 1,
-        line_items_attributes: [{ quantity: 11, product: }],
+        line_items_attributes: [{quantity: 11, product:}],
         stock_location: product.master.stock_locations.first
       })
     end
@@ -315,7 +315,7 @@ describe 'Payments', type: :feature do
       choose payment_method.name
       fill_in_credit_card_form
       click_button "Continue"
-      expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
+      expect(page).to have_content I18n.t("spree.insufficient_stock_for_order")
     end
   end
 
@@ -334,7 +334,7 @@ describe 'Payments', type: :feature do
   end
 
   def fill_in_credit_card_form
-    within('.js-new-credit-card-form') do
+    within(".js-new-credit-card-form") do
       fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
       fill_in "Name", with: "Test User"
       fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"

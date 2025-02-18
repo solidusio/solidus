@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::FlatRate, type: :model do
   let(:calculator) { Spree::Calculator::FlatRate.new }
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   let(:order) do
     mock_model(

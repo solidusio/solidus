@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::FulfilmentChanger do
   let(:variant) { create(:variant) }
@@ -89,13 +89,13 @@ RSpec.describe Spree::FulfilmentChanger do
       subject
     end
 
-    it 'updates order totals' do
+    it "updates order totals" do
       original_total = order.total
       original_shipment_total = order.shipment_total
 
-      expect { subject }.
-        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
-        and change { order.shipment_total }.by(original_shipment_total)
+      expect { subject }
+        .to change { order.total }.from(original_total).to(original_total + original_shipment_total)
+        .and change { order.shipment_total }.by(original_shipment_total)
     end
 
     context "when transferring to another stock location" do
@@ -103,7 +103,7 @@ RSpec.describe Spree::FulfilmentChanger do
       let!(:stock_item) do
         variant.stock_items.find_or_create_by!(
           stock_location: desired_stock_location,
-          variant:,
+          variant:
         )
       end
 
@@ -139,13 +139,13 @@ RSpec.describe Spree::FulfilmentChanger do
       subject
     end
 
-    it 'updates order totals' do
+    it "updates order totals" do
       original_total = order.total
       original_shipment_total = order.shipment_total
 
-      expect { subject }.
-        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
-        and change { order.shipment_total }.by(original_shipment_total)
+      expect { subject }
+        .to change { order.total }.from(original_total).to(original_total + original_shipment_total)
+        .and change { order.shipment_total }.by(original_shipment_total)
     end
 
     context "when transferring to another stock location" do
@@ -153,7 +153,7 @@ RSpec.describe Spree::FulfilmentChanger do
       let!(:stock_item) do
         variant.stock_items.find_or_create_by!(
           stock_location: desired_stock_location,
-          variant:,
+          variant:
         )
       end
 
@@ -193,13 +193,13 @@ RSpec.describe Spree::FulfilmentChanger do
       subject
     end
 
-    it 'updates order totals' do
+    it "updates order totals" do
       original_total = order.total
       original_shipment_total = order.shipment_total
 
-      expect { subject }.
-        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
-        and change { order.shipment_total }.by(original_shipment_total)
+      expect { subject }
+        .to change { order.total }.from(original_total).to(original_total + original_shipment_total)
+        .and change { order.shipment_total }.by(original_shipment_total)
     end
 
     context "when transferring to another stock location" do
@@ -207,7 +207,7 @@ RSpec.describe Spree::FulfilmentChanger do
       let!(:stock_item) do
         variant.stock_items.find_or_create_by!(
           stock_location: desired_stock_location,
-          variant:,
+          variant:
         )
       end
 
@@ -302,7 +302,7 @@ RSpec.describe Spree::FulfilmentChanger do
         context "when the original shipment had some backordered units" do
           let(:current_stock_item) { current_shipment.stock_location.stock_items.find_by(variant:) }
           let(:desired_stock_item) { desired_shipment.stock_location.stock_items.find_by(variant:) }
-          let(:backordered_units)  { 6 }
+          let(:backordered_units) { 6 }
 
           before do
             current_shipment.inventory_units.limit(backordered_units).update_all(state: :backordered)

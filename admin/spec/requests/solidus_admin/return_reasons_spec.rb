@@ -33,40 +33,40 @@ RSpec.describe "SolidusAdmin::ReturnReasonsController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated Return Reason", active: false } }
+      let(:valid_attributes) { {name: "Updated Return Reason", active: false} }
 
       it "updates the return reason" do
-        patch solidus_admin.return_reason_path(return_reason), params: { return_reason: valid_attributes }
+        patch solidus_admin.return_reason_path(return_reason), params: {return_reason: valid_attributes}
         return_reason.reload
         expect(return_reason.name).to eq("Updated Return Reason")
         expect(return_reason.active).to be(false)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.return_reason_path(return_reason), params: { return_reason: valid_attributes }
+        patch solidus_admin.return_reason_path(return_reason), params: {return_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.return_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.return_reason_path(return_reason), params: { return_reason: valid_attributes }
+        patch solidus_admin.return_reason_path(return_reason), params: {return_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Return reason was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", active: false } }
+      let(:invalid_attributes) { {name: "", active: false} }
 
       it "does not update the return reason" do
         original_name = return_reason.name
-        patch solidus_admin.return_reason_path(return_reason), params: { return_reason: invalid_attributes }
+        patch solidus_admin.return_reason_path(return_reason), params: {return_reason: invalid_attributes}
         return_reason.reload
         expect(return_reason.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.return_reason_path(return_reason), params: { return_reason: invalid_attributes }
+        patch solidus_admin.return_reason_path(return_reason), params: {return_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -74,38 +74,38 @@ RSpec.describe "SolidusAdmin::ReturnReasonsController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Damaged item", active: true } }
+      let(:valid_attributes) { {name: "Damaged item", active: true} }
 
       it "creates a new ReturnReason" do
         expect {
-          post solidus_admin.return_reasons_path, params: { return_reason: valid_attributes }
+          post solidus_admin.return_reasons_path, params: {return_reason: valid_attributes}
         }.to change(Spree::ReturnReason, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.return_reasons_path, params: { return_reason: valid_attributes }
+        post solidus_admin.return_reasons_path, params: {return_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.return_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.return_reasons_path, params: { return_reason: valid_attributes }
+        post solidus_admin.return_reasons_path, params: {return_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Return reason was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "" } }
+      let(:invalid_attributes) { {name: ""} }
 
       it "does not create a new ReturnReason" do
         expect {
-          post solidus_admin.return_reasons_path, params: { return_reason: invalid_attributes }
+          post solidus_admin.return_reasons_path, params: {return_reason: invalid_attributes}
         }.not_to change(Spree::ReturnReason, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.return_reasons_path, params: { return_reason: invalid_attributes }
+        post solidus_admin.return_reasons_path, params: {return_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

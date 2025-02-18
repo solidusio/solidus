@@ -10,11 +10,11 @@ module SolidusAdmin
     def show
       respond_to do |format|
         format.html do
-          render component('orders/show/address').new(
+          render component("orders/show/address").new(
             order: @order,
             user: @order.user,
             address: @address,
-            type: address_type,
+            type: address_type
           )
         end
       end
@@ -27,7 +27,7 @@ module SolidusAdmin
     def update
       if @order.contents.update_cart(order_params)
         respond_to do |format|
-          flash[:notice] = t('.success')
+          flash[:notice] = t(".success")
 
           format.html { redirect_to order_path(@order), status: :see_other }
           format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
@@ -37,11 +37,11 @@ module SolidusAdmin
 
         respond_to do |format|
           format.html do
-            render component('orders/show/address').new(
+            render component("orders/show/address").new(
               order: @order,
               user: @order.user,
-              address: @order.send("#{address_type}_address"),
-              type: address_type,
+              address: @order.send(:"#{address_type}_address"),
+              type: address_type
             ), status: :unprocessable_entity
           end
         end
@@ -51,14 +51,12 @@ module SolidusAdmin
     private
 
     def load_address
-      if params[:address_id].present? && @order.user
-        @address =
-          @order.user.addresses.find_by(id: params[:address_id]) ||
+      @address = if params[:address_id].present? && @order.user
+        @order.user.addresses.find_by(id: params[:address_id]) ||
           @order.user.addresses.build(country: default_country)
       else
-        @address =
-          @order.public_send("#{address_type}_address") ||
-          @order.public_send("build_#{address_type}_address", country: default_country)
+        @order.public_send(:"#{address_type}_address") ||
+          @order.public_send(:"build_#{address_type}_address", country: default_country)
       end
     end
 
@@ -68,7 +66,7 @@ module SolidusAdmin
 
     def validate_address_type
       unless address_type
-        flash[:error] = t('.errors.address_type_invalid')
+        flash[:error] = t(".errors.address_type_invalid")
         redirect_to spree.admin_order_url(@order)
       end
     end

@@ -70,9 +70,9 @@ class Spree::Wallet
 
     Spree::WalletPaymentSource.transaction do
       # Unset old default
-      default_wallet_payment_source.try!(:update!, default: false)
+      default_wallet_payment_source&.update!(default: false)
       # Set new default
-      wallet_payment_source.try!(:update!, default: true)
+      wallet_payment_source&.update!(default: true)
     end
   end
 end

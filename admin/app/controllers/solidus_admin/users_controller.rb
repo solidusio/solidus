@@ -8,28 +8,28 @@ module SolidusAdmin
     before_action :set_user, only: [:edit, :addresses, :update_addresses, :orders, :items]
 
     search_scope(:all, default: true)
-    search_scope(:customers) { _1.left_outer_joins(:role_users).where(role_users: { id: nil }) }
+    search_scope(:customers) { _1.where.missing(:role_users) }
     search_scope(:admin) { _1.joins(:role_users).distinct }
     search_scope(:with_orders) { _1.joins(:orders).distinct }
-    search_scope(:without_orders) { _1.left_outer_joins(:orders).where(orders: { id: nil }) }
+    search_scope(:without_orders) { _1.where.missing(:orders) }
 
     def index
       users = apply_search_to(
         Spree.user_class.order(created_at: :desc, id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(users)
 
       respond_to do |format|
-        format.html { render component('users/index').new(page: @page) }
+        format.html { render component("users/index").new(page: @page) }
       end
     end
 
     def addresses
       respond_to do |format|
         format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
-        format.html { render component('users/addresses').new(user: @user) }
+        format.html { render component("users/addresses").new(user: @user) }
       end
     end
 
@@ -41,11 +41,11 @@ module SolidusAdmin
 
         respond_to do |format|
           format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
-          format.html { render component('users/addresses').new(user: @user) }
+          format.html { render component("users/addresses").new(user: @user) }
         end
       else
         respond_to do |format|
-          format.html { render component('users/addresses').new(user: @user, address: @address, type: @type), status: :unprocessable_entity }
+          format.html { render component("users/addresses").new(user: @user, address: @address, type: @type), status: :unprocessable_entity }
         end
       end
     end
@@ -54,7 +54,7 @@ module SolidusAdmin
       set_orders
 
       respond_to do |format|
-        format.html { render component('users/orders').new(user: @user, orders: @orders) }
+        format.html { render component("users/orders").new(user: @user, orders: @orders) }
       end
     end
 
@@ -62,13 +62,13 @@ module SolidusAdmin
       set_items
 
       respond_to do |format|
-        format.html { render component('users/items').new(user: @user, items: @items) }
+        format.html { render component("users/items").new(user: @user, items: @items) }
       end
     end
 
     def edit
       respond_to do |format|
-        format.html { render component('users/edit').new(user: @user) }
+        format.html { render component("users/edit").new(user: @user) }
       end
     end
 
@@ -77,7 +77,7 @@ module SolidusAdmin
 
       Spree.user_class.transaction { @users.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to users_path, status: :see_other
     end
 
@@ -117,7 +117,7 @@ module SolidusAdmin
 
     def set_items
       params[:q] ||= {}
-      @search = Spree::Order.reverse_chronological.includes(line_items: { variant: [:product, { option_values: :option_type }] }).ransack(params[:q].merge(user_id_eq: @user.id))
+      @search = Spree::Order.reverse_chronological.includes(line_items: {variant: [:product, {option_values: :option_type}]}).ransack(params[:q].merge(user_id_eq: @user.id))
       @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
       @items = @orders&.map(&:line_items)&.flatten
     end

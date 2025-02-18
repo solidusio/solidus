@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-RSpec.feature 'Promotion with user rule', js: true do
+RSpec.feature "Promotion with user rule", js: true do
   stub_authorization!
 
   given(:promotion) { create :promotion }
@@ -12,8 +12,8 @@ RSpec.feature 'Promotion with user rule', js: true do
   end
 
   context "multiple users" do
-    let!(:user) { create(:user, email: 'foo@example.com') }
-    let!(:other_user) { create(:user, email: 'bar@example.com') }
+    let!(:user) { create(:user, email: "foo@example.com") }
+    let!(:other_user) { create(:user, email: "bar@example.com") }
 
     scenario "searching a user" do
       select "User", from: "Discount Rules"
@@ -21,8 +21,8 @@ RSpec.feature 'Promotion with user rule', js: true do
 
       select2_search "foo", from: "Choose users", select: false
 
-      expect(page).to have_content('foo@example.com')
-      expect(page).not_to have_content('bar@example.com')
+      expect(page).to have_content("foo@example.com")
+      expect(page).not_to have_content("bar@example.com")
     end
   end
 

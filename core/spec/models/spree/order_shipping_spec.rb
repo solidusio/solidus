@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderShipping do
   include ActiveSupport::Testing::TimeHelpers
@@ -11,9 +11,9 @@ RSpec.describe Spree::OrderShipping do
     ActionMailer::Base.deliveries
   end
 
-  shared_examples 'shipment shipping' do
+  shared_examples "shipment shipping" do
     it "marks the inventory units as shipped" do
-      expect { subject }.to change { order.inventory_units.reload.map(&:state) }.from(['on_hand']).to(['shipped'])
+      expect { subject }.to change { order.inventory_units.reload.map(&:state) }.from(["on_hand"]).to(["shipped"])
     end
 
     it "creates a carton with the shipment's inventory units" do
@@ -33,7 +33,7 @@ RSpec.describe Spree::OrderShipping do
     end
 
     it "updates the order shipment state" do
-      expect { subject }.to change { order.reload.shipment_state }.from('ready').to('shipped')
+      expect { subject }.to change { order.reload.shipment_state }.from("ready").to("shipped")
     end
 
     it "updates shipment.shipped_at" do
@@ -69,7 +69,7 @@ RSpec.describe Spree::OrderShipping do
     let(:address) { order.ship_address }
     let(:shipping_method) { shipment.shipping_method }
 
-    it_behaves_like 'shipment shipping'
+    it_behaves_like "shipment shipping"
 
     context "with an external_number" do
       subject do
@@ -78,12 +78,12 @@ RSpec.describe Spree::OrderShipping do
           stock_location:,
           address:,
           shipping_method:,
-          external_number: 'some-external-number'
+          external_number: "some-external-number"
         )
       end
 
       it "sets the external_number" do
-        expect(subject.external_number).to eq 'some-external-number'
+        expect(subject.external_number).to eq "some-external-number"
       end
     end
 
@@ -94,12 +94,12 @@ RSpec.describe Spree::OrderShipping do
           stock_location:,
           address:,
           shipping_method:,
-          tracking_number: 'tracking-number'
+          tracking_number: "tracking-number"
         )
       end
 
       it "sets the tracking-number" do
-        expect(subject.tracking).to eq 'tracking-number'
+        expect(subject.tracking).to eq "tracking-number"
       end
     end
 
@@ -125,7 +125,7 @@ RSpec.describe Spree::OrderShipping do
 
     let(:shipment) { order.shipments.to_a.first }
 
-    it_behaves_like 'shipment shipping'
+    it_behaves_like "shipment shipping"
 
     context "when not all units are shippable" do
       let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
@@ -147,7 +147,7 @@ RSpec.describe Spree::OrderShipping do
       before { Spree::OrderCancellations.new(order).short_ship([order.inventory_units.first]) }
 
       it "updates the order shipment state" do
-        expect { subject }.to change { order.reload.shipment_state }.from('ready').to('shipped')
+        expect { subject }.to change { order.reload.shipment_state }.from("ready").to("shipped")
       end
     end
 
@@ -155,12 +155,12 @@ RSpec.describe Spree::OrderShipping do
       subject do
         order.shipping.ship_shipment(
           shipment,
-          external_number: 'some-external-number'
+          external_number: "some-external-number"
         )
       end
 
       it "sets the external_number" do
-        expect(subject.external_number).to eq 'some-external-number'
+        expect(subject.external_number).to eq "some-external-number"
       end
     end
 
@@ -168,12 +168,12 @@ RSpec.describe Spree::OrderShipping do
       subject do
         order.shipping.ship_shipment(
           shipment,
-          tracking_number: 'tracking-number'
+          tracking_number: "tracking-number"
         )
       end
 
       it "sets the tracking-number" do
-        expect(subject.tracking).to eq 'tracking-number'
+        expect(subject.tracking).to eq "tracking-number"
       end
     end
 
@@ -181,11 +181,11 @@ RSpec.describe Spree::OrderShipping do
     # OrderShipping#ship rather than vice versa
     context "when the tracking number is already on the shipment" do
       before do
-        shipment.update!(tracking: 'tracking-number')
+        shipment.update!(tracking: "tracking-number")
       end
 
       it "sets the tracking-number" do
-        expect(subject.tracking).to eq 'tracking-number'
+        expect(subject.tracking).to eq "tracking-number"
       end
     end
 
@@ -205,7 +205,7 @@ RSpec.describe Spree::OrderShipping do
       end
 
       it "marks the inventory units as shipped" do
-        expect { subject }.to change { unshipped_inventory.map(&:reload).map(&:state) }.from(['on_hand']).to(['shipped'])
+        expect { subject }.to change { unshipped_inventory.map(&:reload).map(&:state) }.from(["on_hand"]).to(["shipped"])
       end
 
       it "creates a carton with the shipment's inventory units" do

@@ -4,14 +4,14 @@ class SolidusAdmin::Products::Stock::Component < SolidusAdmin::BaseComponent
   def self.from_product(product)
     new(
       on_hand: product.total_on_hand,
-      variants_count: product.variants.count,
+      variants_count: product.variants.count
     )
   end
 
   def self.from_variant(variant)
     new(
       on_hand: variant.total_on_hand,
-      variants_count: nil,
+      variants_count: nil
     )
   end
 
@@ -24,15 +24,15 @@ class SolidusAdmin::Products::Stock::Component < SolidusAdmin::BaseComponent
     stock_info =
       case @on_hand
       when Float::INFINITY
-        tag.span t('.stock.in_stock', on_hand: t('.stock.infinity')), class: 'text-forest'
+        tag.span t(".stock.in_stock", on_hand: t(".stock.infinity")), class: "text-forest"
       when 1..Float::INFINITY
-        tag.span t('.stock.in_stock', on_hand: @on_hand), class: 'text-forest'
+        tag.span t(".stock.in_stock", on_hand: @on_hand), class: "text-forest"
       else
-        tag.span t('.stock.in_stock', on_hand: @on_hand), class: 'text-red-500'
+        tag.span t(".stock.in_stock", on_hand: @on_hand), class: "text-red-500"
       end
 
-    variant_info = t('.for_variants', count: @variants_count) if @variants_count
+    variant_info = t(".for_variants", count: @variants_count) if @variants_count
 
-    tag.span safe_join([stock_info, variant_info], ' ')
+    tag.span safe_join([stock_info, variant_info], " ")
   end
 end

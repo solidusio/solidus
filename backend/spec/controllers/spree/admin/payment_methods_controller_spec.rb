@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   class GatewayWithPassword < PaymentMethod
@@ -20,7 +20,7 @@ module Spree
       # regression test for https://github.com/spree/spree/issues/2094
       it "does not clear password on update" do
         expect(payment_method.preferred_password).to eq("haxme")
-        put :update, params: { id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" } }
+        put :update, params: {id: payment_method.id, payment_method: {type: payment_method.class.to_s, preferred_password: ""}}
         expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
 
         payment_method.reload
@@ -30,13 +30,13 @@ module Spree
 
     context "tries to save invalid payment" do
       it "doesn't break, responds nicely" do
-        post :create, params: { payment_method: { name: "", type: "Spree::PaymentMethod::BogusCreditCard" } }
+        post :create, params: {payment_method: {name: "", type: "Spree::PaymentMethod::BogusCreditCard"}}
       end
     end
 
     it "can create a payment method of a valid type" do
       expect {
-        post :create, params: { payment_method: { name: "Test Method", type: "Spree::PaymentMethod::BogusCreditCard" } }
+        post :create, params: {payment_method: {name: "Test Method", type: "Spree::PaymentMethod::BogusCreditCard"}}
       }.to change(Spree::PaymentMethod, :count).by(1)
 
       expect(response).to be_redirect
@@ -45,7 +45,7 @@ module Spree
 
     it "can not create a payment method of an invalid type" do
       expect {
-        post :create, params: { payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType" } }
+        post :create, params: {payment_method: {name: "Invalid Payment Method", type: "Spree::InvalidType"}}
       }.to change(Spree::PaymentMethod, :count).by(0)
 
       expect(response).to be_redirect
@@ -78,7 +78,7 @@ module Spree
       end
 
       it { is_expected.to be_successful }
-      it { is_expected.to render_template "index"  }
+      it { is_expected.to render_template "index" }
 
       it "respects the order of payment methods by position" do
         subject
@@ -92,18 +92,18 @@ module Spree
         {
           id: payment_method.id,
           payment_method: {
-            name: 'Check',
-            type: 'Spree::PaymentMethod::Check'
+            name: "Check",
+            type: "Spree::PaymentMethod::Check"
           }
         }
       end
 
-      it 'updates the resource' do
+      it "updates the resource" do
         put(:update, params:)
 
         expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
         response_payment_method = Spree::PaymentMethod.find(payment_method.id)
-        expect(response_payment_method.name).to eql('Check')
+        expect(response_payment_method.name).to eql("Check")
       end
     end
   end

@@ -19,7 +19,7 @@ module Spree
 
     accepts_nested_attributes_for :return_items
 
-    self.allowed_ransackable_attributes = ['number']
+    self.allowed_ransackable_attributes = ["number"]
 
     extend DisplayMoney
     money_methods :total, :total_excluding_vat, :amount
@@ -62,14 +62,14 @@ module Spree
 
     def generate_number
       self.number ||= loop do
-        random = "CR#{Array.new(9){ rand(9) }.join}"
+        random = "CR#{Array.new(9) { rand(9) }.join}"
         break random unless self.class.exists?(number: random)
       end
     end
 
     def return_items_belong_to_same_order
-      if return_items.reject{ |return_item| return_item.inventory_unit&.order_id == order_id }.any?
-        errors.add(:base, I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
+      if return_items.reject { |return_item| return_item.inventory_unit&.order_id == order_id }.any?
+        errors.add(:base, I18n.t("spree.return_items_cannot_be_associated_with_multiple_orders"))
       end
     end
 

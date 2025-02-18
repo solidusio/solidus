@@ -44,7 +44,7 @@ module Spree
     #
     # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def update_shipment_state
-      log_state_change('shipment') do
+      log_state_change("shipment") do
         order.shipment_state = determine_shipment_state
       end
 
@@ -61,7 +61,7 @@ module Spree
     #
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def update_payment_state
-      log_state_change('payment') do
+      log_state_change("payment") do
         order.payment_state = determine_payment_state
       end
 
@@ -72,28 +72,28 @@ module Spree
 
     def determine_payment_state
       if payments.present? && payments.valid.empty? && order.outstanding_balance != 0
-        'failed'
-      elsif order.state == 'canceled' && order.payment_total.zero?
-        'void'
+        "failed"
+      elsif order.state == "canceled" && order.payment_total.zero?
+        "void"
       elsif order.outstanding_balance > 0
-        'balance_due'
+        "balance_due"
       elsif order.outstanding_balance < 0
-        'credit_owed'
+        "credit_owed"
       else
         # outstanding_balance == 0
-        'paid'
+        "paid"
       end
     end
 
     def determine_shipment_state
       if order.backordered?
-        'backorder'
+        "backorder"
       else
         # get all the shipment states for this order
         shipment_states = shipments.states
         if shipment_states.size > 1
           # multiple shiment states means it's most likely partially shipped
-          'partial'
+          "partial"
         else
           # will return nil if no shipments are found
           shipment_states.first
@@ -187,9 +187,9 @@ module Spree
       if old_state != new_state
         order.state_changes.new(
           previous_state: old_state,
-          next_state:     new_state,
+          next_state: new_state,
           name:,
-          user_id:        order.user_id
+          user_id: order.user_id
         )
       end
     end
@@ -213,11 +213,11 @@ module Spree
         next unless item.changed?
 
         item.update_columns(
-          promo_total:          item.promo_total,
-          included_tax_total:   item.included_tax_total,
+          promo_total: item.promo_total,
+          included_tax_total: item.included_tax_total,
           additional_tax_total: item.additional_tax_total,
-          adjustment_total:     item.adjustment_total,
-          updated_at:           Time.current,
+          adjustment_total: item.adjustment_total,
+          updated_at: Time.current
         )
       end
     end

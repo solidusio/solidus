@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'thor'
+require "thor"
 shell = Thor::Base.shell.new
 
 Spree::Sample.load_sample("products")
@@ -94,7 +94,7 @@ images = {
     {
       attachment: image("solidus_cap_black_1")
     }
-  ],
+  ]
 }
 
 products.each do |key, product|
@@ -103,7 +103,7 @@ products.each do |key, product|
     index = 1
 
     loop do
-      image_path = image("#{key}_#{color}_#{index}", 'png')
+      image_path = image("#{key}_#{color}_#{index}", "png")
       break unless image_path
 
       File.open(image_path) do |f|

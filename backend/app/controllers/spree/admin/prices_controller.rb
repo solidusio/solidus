@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class PricesController < ResourceController
-      belongs_to 'spree/product', find_by: :slug
+      belongs_to "spree/product", find_by: :slug
 
       def index
         params[:q] ||= {}

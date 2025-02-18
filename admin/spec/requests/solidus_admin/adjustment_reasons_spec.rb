@@ -26,38 +26,38 @@ RSpec.describe "SolidusAdmin::AdjustmentReasonsController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Price Adjustment", code: "PRICE_ADJUST", active: true } }
+      let(:valid_attributes) { {name: "Price Adjustment", code: "PRICE_ADJUST", active: true} }
 
       it "creates a new AdjustmentReason" do
         expect {
-          post solidus_admin.adjustment_reasons_path, params: { adjustment_reason: valid_attributes }
+          post solidus_admin.adjustment_reasons_path, params: {adjustment_reason: valid_attributes}
         }.to change(Spree::AdjustmentReason, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.adjustment_reasons_path, params: { adjustment_reason: valid_attributes }
+        post solidus_admin.adjustment_reasons_path, params: {adjustment_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.adjustment_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.adjustment_reasons_path, params: { adjustment_reason: valid_attributes }
+        post solidus_admin.adjustment_reasons_path, params: {adjustment_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Adjustment reason was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "", active: true } }
+      let(:invalid_attributes) { {name: "", code: "", active: true} }
 
       it "does not create a new AdjustmentReason" do
         expect {
-          post solidus_admin.adjustment_reasons_path, params: { adjustment_reason: invalid_attributes }
+          post solidus_admin.adjustment_reasons_path, params: {adjustment_reason: invalid_attributes}
         }.not_to change(Spree::AdjustmentReason, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.adjustment_reasons_path, params: { adjustment_reason: invalid_attributes }
+        post solidus_admin.adjustment_reasons_path, params: {adjustment_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -72,10 +72,10 @@ RSpec.describe "SolidusAdmin::AdjustmentReasonsController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated Adjustment Reason", code: "UPD_ADJ", active: false } }
+      let(:valid_attributes) { {name: "Updated Adjustment Reason", code: "UPD_ADJ", active: false} }
 
       it "updates the adjustment reason" do
-        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: { adjustment_reason: valid_attributes }
+        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: {adjustment_reason: valid_attributes}
         adjustment_reason.reload
         expect(adjustment_reason.name).to eq("Updated Adjustment Reason")
         expect(adjustment_reason.code).to eq("UPD_ADJ")
@@ -83,30 +83,30 @@ RSpec.describe "SolidusAdmin::AdjustmentReasonsController", type: :request do
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: { adjustment_reason: valid_attributes }
+        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: {adjustment_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.adjustment_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: { adjustment_reason: valid_attributes }
+        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: {adjustment_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Adjustment reason was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "UPD_ADJ", active: false } }
+      let(:invalid_attributes) { {name: "", code: "UPD_ADJ", active: false} }
 
       it "does not update the adjustment reason" do
         original_name = adjustment_reason.name
-        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: { adjustment_reason: invalid_attributes }
+        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: {adjustment_reason: invalid_attributes}
         adjustment_reason.reload
         expect(adjustment_reason.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: { adjustment_reason: invalid_attributes }
+        patch solidus_admin.adjustment_reason_path(adjustment_reason), params: {adjustment_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

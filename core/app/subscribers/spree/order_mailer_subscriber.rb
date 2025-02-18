@@ -6,12 +6,12 @@ module Spree
     include Omnes::Subscriber
 
     handle :order_finalized,
-           with: :send_confirmation_email,
-           id: :spree_order_mailer_send_confirmation_email
+      with: :send_confirmation_email,
+      id: :spree_order_mailer_send_confirmation_email
 
     handle :reimbursement_reimbursed,
-           with: :send_reimbursement_email,
-           id: :spree_order_mailer_send_reimbursement_email
+      with: :send_reimbursement_email,
+      id: :spree_order_mailer_send_reimbursement_email
 
     # Sends confirmation email to the user
     #

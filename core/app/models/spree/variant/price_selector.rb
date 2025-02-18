@@ -45,7 +45,7 @@ module Spree
           [
             price.country_iso.nil? ? 0 : 1,
             price.updated_at || Time.zone.now,
-            price.id || Float::INFINITY,
+            price.id || Float::INFINITY
           ]
         end.reverse
       end

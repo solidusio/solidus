@@ -8,7 +8,7 @@ module SolidusAdmin
 
       @line_item.destroy!
 
-      redirect_to order_path(@order), status: :see_other, notice: t('.success')
+      redirect_to order_path(@order), status: :see_other, notice: t(".success")
     end
 
     def create
@@ -17,7 +17,7 @@ module SolidusAdmin
       @variant = Spree::Variant.find(variant_id)
       @line_item = @order.contents.add(@variant)
 
-      redirect_to order_path(@order), status: :see_other, notice: t('.success')
+      redirect_to order_path(@order), status: :see_other, notice: t(".success")
     end
 
     def update
@@ -28,7 +28,7 @@ module SolidusAdmin
 
       @line_item = @order.contents.add(@line_item.variant, desired_quantity - @line_item.quantity)
 
-      redirect_to order_path(@order), status: :see_other, notice: t('.success')
+      redirect_to order_path(@order), status: :see_other, notice: t(".success")
     end
 
     private

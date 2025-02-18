@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples_for 'promotion categories features' do
+RSpec.shared_examples_for "promotion categories features" do
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists promotion categories" do
@@ -14,7 +14,7 @@ RSpec.shared_examples_for 'promotion categories features' do
     expect(page).to be_axe_clean
   end
 
-  it 'allows to create new promo category' do
+  it "allows to create new promo category" do
     visit index_path
 
     click_on "Add new"
@@ -34,7 +34,7 @@ RSpec.shared_examples_for 'promotion categories features' do
     expect(model_class.count).to eq(1)
   end
 
-  it 'allows to update promo category' do
+  it "allows to update promo category" do
     create(factory_name, name: "Soon to expire", code: "ste.1")
 
     visit index_path
@@ -51,7 +51,7 @@ RSpec.shared_examples_for 'promotion categories features' do
     expect(page).to have_content("exp.2")
   end
 
-  it 'allows to delete promo category' do
+  it "allows to delete promo category" do
     create(factory_name, name: "Soon to expire", code: "ste.1")
     create(factory_name, name: "Expired", code: "exp.2")
 

@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Spree::Api
-  describe 'Stores', type: :request do
+  describe "Stores", type: :request do
     let!(:store) do
       create(:store, name: "My Spree Store", url: "spreestore.example.com")
     end
@@ -81,7 +81,7 @@ module Spree::Api
           url: "spree123.example.com",
           mail_from_address: "me@example.com"
         }
-        post spree.api_stores_path, params: { store: store_hash }
+        post spree.api_stores_path, params: {store: store_hash}
         expect(response.status).to eq(201)
       end
 
@@ -91,7 +91,7 @@ module Spree::Api
           mail_from_address: "me@example.com",
           bcc_email: "bcc@example.net"
         }
-        put spree.api_store_path(store), params: { store: store_hash }
+        put spree.api_store_path(store), params: {store: store_hash}
         expect(response.status).to eq(200)
         expect(store.reload.url).to eql "spree123.example.com"
         expect(store.reload.mail_from_address).to eql "me@example.com"
@@ -126,12 +126,12 @@ module Spree::Api
       end
 
       it "cannot create a new store" do
-        post spree.api_stores_path, params: { store: {} }
+        post spree.api_stores_path, params: {store: {}}
         expect(response.status).to eq(401)
       end
 
       it "cannot update an existing store" do
-        put spree.api_store_path(store), params: { store: {} }
+        put spree.api_store_path(store), params: {store: {}}
         expect(response.status).to eq(401)
       end
     end

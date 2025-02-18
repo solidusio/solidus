@@ -9,13 +9,13 @@ module SolidusAdmin
     def index
       option_types = apply_search_to(
         Spree::OptionType.all,
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(option_types)
 
       respond_to do |format|
-        format.html { render component('option_types/index').new(page: @page) }
+        format.html { render component("option_types/index").new(page: @page) }
       end
     end
 
@@ -32,7 +32,7 @@ module SolidusAdmin
 
       Spree::OptionType.transaction { @option_types.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to option_types_path, status: :see_other
     end
 

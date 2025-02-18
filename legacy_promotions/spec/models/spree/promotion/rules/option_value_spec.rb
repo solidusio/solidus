@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Rules::OptionValue do
   let(:rule) { Spree::Promotion::Rules::OptionValue.new }
@@ -51,20 +51,20 @@ RSpec.describe Spree::Promotion::Rules::OptionValue do
     let(:option_value_blue) do
       create(
         :option_value,
-        name: 'Blue',
-        presentation: 'Blue',
+        name: "Blue",
+        presentation: "Blue",
         option_type: create(
           :option_type,
-          name: 'foo-colour',
-          presentation: 'Colour'
+          name: "foo-colour",
+          presentation: "Colour"
         )
       )
     end
     let(:option_value_medium) do
       create(
         :option_value,
-        name: 'Medium',
-        presentation: 'M'
+        name: "Medium",
+        presentation: "M"
       )
     end
     before do

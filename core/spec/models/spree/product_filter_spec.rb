@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/core/product_filters'
+require "rails_helper"
+require "spree/core/product_filters"
 
-RSpec.describe 'product filters', type: :model do
+RSpec.describe "product filters", type: :model do
   # Regression test for https://github.com/spree/spree/issues/1709
-  context 'finds products filtered by brand' do
+  context "finds products filtered by brand" do
     let(:product) { create(:product) }
     before do
       Spree::Property.create!(name: "brand", presentation: "brand")

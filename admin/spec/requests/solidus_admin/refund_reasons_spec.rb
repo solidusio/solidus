@@ -26,38 +26,38 @@ RSpec.describe "SolidusAdmin::RefundReasonsController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Refund for Defective Item", code: "DEFECT", active: true } }
+      let(:valid_attributes) { {name: "Refund for Defective Item", code: "DEFECT", active: true} }
 
       it "creates a new RefundReason" do
         expect {
-          post solidus_admin.refund_reasons_path, params: { refund_reason: valid_attributes }
+          post solidus_admin.refund_reasons_path, params: {refund_reason: valid_attributes}
         }.to change(Spree::RefundReason, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.refund_reasons_path, params: { refund_reason: valid_attributes }
+        post solidus_admin.refund_reasons_path, params: {refund_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.refund_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.refund_reasons_path, params: { refund_reason: valid_attributes }
+        post solidus_admin.refund_reasons_path, params: {refund_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Refund reason was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "", active: true } }
+      let(:invalid_attributes) { {name: "", code: "", active: true} }
 
       it "does not create a new RefundReason" do
         expect {
-          post solidus_admin.refund_reasons_path, params: { refund_reason: invalid_attributes }
+          post solidus_admin.refund_reasons_path, params: {refund_reason: invalid_attributes}
         }.not_to change(Spree::RefundReason, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.refund_reasons_path, params: { refund_reason: invalid_attributes }
+        post solidus_admin.refund_reasons_path, params: {refund_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -72,10 +72,10 @@ RSpec.describe "SolidusAdmin::RefundReasonsController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated Refund Reason", code: "UPD", active: false } }
+      let(:valid_attributes) { {name: "Updated Refund Reason", code: "UPD", active: false} }
 
       it "updates the refund reason" do
-        patch solidus_admin.refund_reason_path(refund_reason), params: { refund_reason: valid_attributes }
+        patch solidus_admin.refund_reason_path(refund_reason), params: {refund_reason: valid_attributes}
         refund_reason.reload
         expect(refund_reason.name).to eq("Updated Refund Reason")
         expect(refund_reason.code).to eq("UPD")
@@ -83,30 +83,30 @@ RSpec.describe "SolidusAdmin::RefundReasonsController", type: :request do
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.refund_reason_path(refund_reason), params: { refund_reason: valid_attributes }
+        patch solidus_admin.refund_reason_path(refund_reason), params: {refund_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.refund_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.refund_reason_path(refund_reason), params: { refund_reason: valid_attributes }
+        patch solidus_admin.refund_reason_path(refund_reason), params: {refund_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Refund reason was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "UPD", active: false } }
+      let(:invalid_attributes) { {name: "", code: "UPD", active: false} }
 
       it "does not update the refund reason" do
         original_name = refund_reason.name
-        patch solidus_admin.refund_reason_path(refund_reason), params: { refund_reason: invalid_attributes }
+        patch solidus_admin.refund_reason_path(refund_reason), params: {refund_reason: invalid_attributes}
         refund_reason.reload
         expect(refund_reason.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.refund_reason_path(refund_reason), params: { refund_reason: invalid_attributes }
+        patch solidus_admin.refund_reason_path(refund_reason), params: {refund_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

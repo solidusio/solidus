@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 module Spree
   module Calculator::Shipping
@@ -9,10 +9,10 @@ module Spree
       let(:variant1) { build(:variant, price: 10) }
       let(:variant2) { build(:variant, price: 20) }
 
-      it_behaves_like 'a calculator with a description'
+      it_behaves_like "a calculator with a description"
 
       let(:package) do
-        build(:stock_package, variants_contents: { variant1 => 4, variant2 => 6 })
+        build(:stock_package, variants_contents: {variant1 => 4, variant2 => 6})
       end
 
       let(:subject) { described_class.new }
@@ -47,8 +47,8 @@ module Spree
 
         it "should allow creation of new object with all the attributes" do
           described_class.new(preferred_first_item: 1,
-                        preferred_additional_item: 1,
-                        preferred_max_items: 1)
+            preferred_additional_item: 1,
+            preferred_max_items: 1)
         end
       end
     end

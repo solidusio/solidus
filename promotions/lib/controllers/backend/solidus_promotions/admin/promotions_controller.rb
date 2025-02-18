@@ -32,7 +32,7 @@ module SolidusPromotions
       def collection
         return @collection if @collection
 
-        params[:q] ||= HashWithIndifferentAccess.new
+        params[:q] ||= ActiveSupport::HashWithIndifferentAccess.new
         params[:q][:s] ||= "updated_at desc"
 
         @collection = super

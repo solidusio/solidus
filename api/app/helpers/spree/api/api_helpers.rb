@@ -44,7 +44,7 @@ module Spree
       end
 
       Spree::Api::Config.metadata_api_parameters.each do |method_name, resource|
-        define_method("#{method_name}_attributes") do
+        define_method(:"#{method_name}_attributes") do
           authorized_attributes(resource, "#{method_name}_attributes")
         end
       end

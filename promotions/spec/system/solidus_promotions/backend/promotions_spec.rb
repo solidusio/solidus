@@ -51,39 +51,39 @@ RSpec.feature "Promotions admin" do
       end
 
       it "filters by name" do
-        visit solidus_promotions.admin_promotions_path(q: { name_cont: promotion1.name })
+        visit solidus_promotions.admin_promotions_path(q: {name_cont: promotion1.name})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
       end
 
       it "filters by code" do
-        visit solidus_promotions.admin_promotions_path(q: { codes_value_cont: promotion1.codes.first.value })
+        visit solidus_promotions.admin_promotions_path(q: {codes_value_cont: promotion1.codes.first.value})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
       end
 
       it "filters by path" do
-        visit solidus_promotions.admin_promotions_path(q: { path_cont: promotion1.path })
+        visit solidus_promotions.admin_promotions_path(q: {path_cont: promotion1.path})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
       end
 
       it "filters by active date" do
-        visit solidus_promotions.admin_promotions_path(q: { active: Time.current })
+        visit solidus_promotions.admin_promotions_path(q: {active: Time.current})
         expect(page).to have_content(promotion1.name)
         expect(page).to have_content(promotion2.name)
         expect(page).not_to have_content(promotion3.name)
       end
 
       it "filters by active the day before yesterday" do
-        visit solidus_promotions.admin_promotions_path(q: { active: 2.days.ago })
+        visit solidus_promotions.admin_promotions_path(q: {active: 2.days.ago})
         expect(page).to have_content(promotion1.name)
         expect(page).to have_content(promotion2.name)
         expect(page).to have_content(promotion3.name)
       end
 
       it "filters by lane" do
-        visit solidus_promotions.admin_promotions_path(q: { lane_eq: :pre })
+        visit solidus_promotions.admin_promotions_path(q: {lane_eq: :pre})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
         expect(page).not_to have_content(promotion3.name)

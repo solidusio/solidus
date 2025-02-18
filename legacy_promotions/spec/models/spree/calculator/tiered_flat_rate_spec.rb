@@ -1,58 +1,58 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
   let(:calculator) { Spree::Calculator::TieredFlatRate.new }
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   describe "#valid?" do
     subject { calculator.valid? }
     context "when tiers is a hash" do
       context "and the key is not a positive number" do
-        before { calculator.preferred_tiers = { "nope" => 20 } }
+        before { calculator.preferred_tiers = {"nope" => 20} }
         it { is_expected.to be false }
       end
 
       context "and the key is an integer" do
-        before { calculator.preferred_tiers = { 20 => 20 } }
+        before { calculator.preferred_tiers = {20 => 20} }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
+          expect(calculator.preferred_tiers).to eq({BigDecimal(20) => BigDecimal(20)})
         end
       end
 
       context "and the key is a float" do
-        before { calculator.preferred_tiers = { 20.5 => 20.5 } }
+        before { calculator.preferred_tiers = {20.5 => 20.5} }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal('20.5') => BigDecimal('20.5') })
+          expect(calculator.preferred_tiers).to eq({BigDecimal("20.5") => BigDecimal("20.5")})
         end
       end
 
       context "and the key is a string number" do
-        before { calculator.preferred_tiers = { "20" => 20 } }
+        before { calculator.preferred_tiers = {"20" => 20} }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
+          expect(calculator.preferred_tiers).to eq({BigDecimal(20) => BigDecimal(20)})
         end
       end
 
       context "and the key is a numeric string with spaces" do
-        before { calculator.preferred_tiers = { "  20 " => 20 } }
+        before { calculator.preferred_tiers = {"  20 " => 20} }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
+          expect(calculator.preferred_tiers).to eq({BigDecimal(20) => BigDecimal(20)})
         end
       end
 
       context "and the key is a string number with decimals" do
-        before { calculator.preferred_tiers = { "20.5" => "20.5" } }
+        before { calculator.preferred_tiers = {"20.5" => "20.5"} }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal('20.5') => BigDecimal('20.5') })
+          expect(calculator.preferred_tiers).to eq({BigDecimal("20.5") => BigDecimal("20.5")})
         end
       end
     end

@@ -26,38 +26,38 @@ RSpec.describe "SolidusAdmin::StoreCreditReasonsController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Customer Loyalty", active: true } }
+      let(:valid_attributes) { {name: "Customer Loyalty", active: true} }
 
       it "creates a new StoreCreditReason" do
         expect {
-          post solidus_admin.store_credit_reasons_path, params: { store_credit_reason: valid_attributes }
+          post solidus_admin.store_credit_reasons_path, params: {store_credit_reason: valid_attributes}
         }.to change(Spree::StoreCreditReason, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.store_credit_reasons_path, params: { store_credit_reason: valid_attributes }
+        post solidus_admin.store_credit_reasons_path, params: {store_credit_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.store_credit_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.store_credit_reasons_path, params: { store_credit_reason: valid_attributes }
+        post solidus_admin.store_credit_reasons_path, params: {store_credit_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Store credit reason was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", active: true } }
+      let(:invalid_attributes) { {name: "", active: true} }
 
       it "does not create a new StoreCreditReason" do
         expect {
-          post solidus_admin.store_credit_reasons_path, params: { store_credit_reason: invalid_attributes }
+          post solidus_admin.store_credit_reasons_path, params: {store_credit_reason: invalid_attributes}
         }.not_to change(Spree::StoreCreditReason, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.store_credit_reasons_path, params: { store_credit_reason: invalid_attributes }
+        post solidus_admin.store_credit_reasons_path, params: {store_credit_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -72,40 +72,40 @@ RSpec.describe "SolidusAdmin::StoreCreditReasonsController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated Reason", active: false } }
+      let(:valid_attributes) { {name: "Updated Reason", active: false} }
 
       it "updates the store credit reason" do
-        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: { store_credit_reason: valid_attributes }
+        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: {store_credit_reason: valid_attributes}
         store_credit_reason.reload
         expect(store_credit_reason.name).to eq("Updated Reason")
         expect(store_credit_reason.active).to be(false)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: { store_credit_reason: valid_attributes }
+        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: {store_credit_reason: valid_attributes}
         expect(response).to redirect_to(solidus_admin.store_credit_reasons_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: { store_credit_reason: valid_attributes }
+        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: {store_credit_reason: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Store credit reason was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", active: false } }
+      let(:invalid_attributes) { {name: "", active: false} }
 
       it "does not update the store credit reason" do
         original_name = store_credit_reason.name
-        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: { store_credit_reason: invalid_attributes }
+        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: {store_credit_reason: invalid_attributes}
         store_credit_reason.reload
         expect(store_credit_reason.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: { store_credit_reason: invalid_attributes }
+        patch solidus_admin.store_credit_reason_path(store_credit_reason), params: {store_credit_reason: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

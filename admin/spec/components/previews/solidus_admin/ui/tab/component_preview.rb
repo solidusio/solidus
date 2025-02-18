@@ -6,7 +6,7 @@ class SolidusAdmin::UI::Tab::ComponentPreview < ViewComponent::Preview
 
   # @param text text
   def overview(text: "text")
-    render_with_template locals: { text: }
+    render_with_template locals: {text:}
   end
 
   # @param text text

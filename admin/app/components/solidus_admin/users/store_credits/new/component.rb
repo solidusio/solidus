@@ -17,6 +17,6 @@ class SolidusAdmin::Users::StoreCredits::New::Component < SolidusAdmin::Resource
 
   def store_credit_categories_select_options
     # Placeholder + Store Credit Categories
-    "<option value>#{t('.choose_category')}</option>" + options_from_collection_for_select(@store_credit_categories, :id, :name)
+    "<option value>#{t(".choose_category")}</option>" + options_from_collection_for_select(@store_credit_categories, :id, :name)
   end
 end

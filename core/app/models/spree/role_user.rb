@@ -13,7 +13,7 @@ module Spree
     private
 
     def auto_generate_spree_api_key
-      user.try!(:auto_generate_spree_api_key)
+      user&.auto_generate_spree_api_key
     end
   end
 end

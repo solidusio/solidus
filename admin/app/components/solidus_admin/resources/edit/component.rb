@@ -6,6 +6,6 @@ class SolidusAdmin::Resources::Edit::Component < SolidusAdmin::Resources::BaseCo
   end
 
   def form_url
-    solidus_admin.send("#{resource_name}_path", @resource, **search_filter_params)
+    solidus_admin.send(:"#{resource_name}_path", @resource, **search_filter_params)
   end
 end

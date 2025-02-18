@@ -4,9 +4,9 @@ module Spree
   class Price < Spree::Base
     include Spree::SoftDeletable
 
-    MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
+    MAXIMUM_AMOUNT = BigDecimal("99_999_999.99")
 
-    belongs_to :variant, -> { with_discarded }, class_name: 'Spree::Variant', touch: true, optional: true
+    belongs_to :variant, -> { with_discarded }, class_name: "Spree::Variant", touch: true, optional: true
     belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso", optional: true
 
     delegate :product, to: :variant
@@ -17,12 +17,12 @@ module Spree
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
-    validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
+    validates :currency, inclusion: {in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code}
     validates :country, presence: true, unless: -> { for_any_country? }
 
     scope :currently_valid, -> { order(Arel.sql("country_iso IS NULL")).order(updated_at: :DESC, id: :DESC) }
-    scope :for_master, -> { joins(:variant).where(spree_variants: { is_master: true }) }
-    scope :for_variant, -> { joins(:variant).where(spree_variants: { is_master: false }) }
+    scope :for_master, -> { joins(:variant).where(spree_variants: {is_master: true}) }
+    scope :for_variant, -> { joins(:variant).where(spree_variants: {is_master: false}) }
     scope :for_any_country, -> { where(country: nil) }
     scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
 
@@ -30,7 +30,7 @@ module Spree
     money_methods :amount, :price
     alias_method :money, :display_amount
 
-    self.allowed_ransackable_attributes = %w(amount variant_id currency country_iso)
+    self.allowed_ransackable_attributes = %w[amount variant_id currency country_iso]
 
     # An alias for #amount
     def price
@@ -57,7 +57,7 @@ module Spree
       if country_iso
         "#{country_iso} (#{I18n.t(country_iso, scope: [:spree, :country_names])})"
       else
-        I18n.t(:any_country, scope: [:spree, :admin, :prices])
+        I18n.t("spree.admin.prices.any_country")
       end
     end
 

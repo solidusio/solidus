@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'stock item factory' do
+RSpec.describe "stock item factory" do
   let(:factory_class) { Spree::StockItem }
 
-  describe 'plain stock item' do
+  describe "plain stock item" do
     let(:factory) { :stock_item }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

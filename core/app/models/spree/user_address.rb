@@ -2,7 +2,7 @@
 
 module Spree
   class UserAddress < Spree::Base
-    belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id", optional: true
+    belongs_to :user, class_name: UserClassHandle.new, optional: true
     belongs_to :address, class_name: "Spree::Address", optional: true
 
     validates_uniqueness_of :address_id, scope: :user_id

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-RSpec.describe 'Promotion Categories', type: :feature do
+RSpec.describe "Promotion Categories", type: :feature do
   stub_authorization!
 
   context "index" do
     before do
-      create(:promotion_category, name: 'name1', code: 'code1')
-      create(:promotion_category, name: 'name2', code: 'code2')
+      create(:promotion_category, name: "name1", code: "code1")
+      create(:promotion_category, name: "name2", code: "code2")
       visit spree.admin_promotion_categories_path
     end
 
@@ -50,7 +50,7 @@ RSpec.describe 'Promotion Categories', type: :feature do
 
   context "edit" do
     before(:each) do
-      create(:promotion_category, name: 'name1')
+      create(:promotion_category, name: "name1")
       visit spree.admin_promotion_categories_path
       within_row(1) { click_icon :edit }
     end
@@ -71,7 +71,7 @@ RSpec.describe 'Promotion Categories', type: :feature do
 
   context "delete" do
     before(:each) do
-      create(:promotion_category, name: 'name1')
+      create(:promotion_category, name: "name1")
       visit spree.admin_promotion_categories_path
     end
 

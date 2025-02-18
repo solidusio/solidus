@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe OrderUpdater, type: :model do
@@ -15,7 +15,7 @@ module Spree
         end
       end
 
-      context 'with refund' do
+      context "with refund" do
         it "updates payment totals" do
           create(:payment_with_refund, order:, amount: 33.25, refund_amount: 3)
           updater.recalculate
@@ -36,7 +36,7 @@ module Spree
         }.to change { order.shipment_total }.to 10
       end
 
-      context 'with a source-less line item adjustment' do
+      context "with a source-less line item adjustment" do
         let(:line_item) { create(:line_item, order:, price: 10) }
         before do
           create(:adjustment, source: nil, adjustable: line_item, order:, amount: -5)
@@ -58,8 +58,8 @@ module Spree
       end
     end
 
-    describe '#recalculate_adjustments ' do
-      describe 'promotion recalculation' do
+    describe "#recalculate_adjustments " do
+      describe "promotion recalculation" do
         it "calls the Promotion Adjustments Recalculator" do
           adjuster = double(:call)
           expect(Spree::Config.promotions.order_adjuster_class).to receive(:new).and_return(adjuster)
@@ -68,7 +68,7 @@ module Spree
         end
       end
 
-      describe 'tax recalculation' do
+      describe "tax recalculation" do
         let!(:ship_address) { create(:address) }
         let!(:tax_zone) { create(:global_zone) } # will include the above address
         let!(:tax_rate) { create(:tax_rate, zone: tax_zone, tax_categories: [tax_category]) }
@@ -76,8 +76,8 @@ module Spree
         let(:order) do
           create(
             :order_with_line_items,
-            line_items_attributes: [{ price: 10, variant: }],
-            ship_address:,
+            line_items_attributes: [{price: 10, variant:}],
+            ship_address:
           )
         end
         let(:line_item) { order.line_items[0] }
@@ -85,12 +85,12 @@ module Spree
         let(:variant) { create(:variant, tax_category:) }
         let(:tax_category) { create(:tax_category) }
 
-        context 'when the item quantity has changed' do
+        context "when the item quantity has changed" do
           before do
             line_item.update!(quantity: 2)
           end
 
-          it 'updates the promotion amount' do
+          it "updates the promotion amount" do
             expect {
               order.recalculate
             }.to change {
@@ -99,7 +99,7 @@ module Spree
           end
         end
 
-        context 'with a custom tax_calculator_class' do
+        context "with a custom tax_calculator_class" do
           let(:custom_calculator_class) { double }
           let(:custom_calculator_instance) { double }
 
@@ -133,14 +133,14 @@ module Spree
             )
           end
 
-          it 'uses the configured class' do
+          it "uses the configured class" do
             order.recalculate
 
             expect(custom_calculator_class).to have_received(:new).with(order).at_least(:once)
             expect(custom_calculator_instance).to have_received(:calculate).at_least(:once)
           end
 
-          it 'updates the aggregate columns' do
+          it "updates the aggregate columns" do
             expect {
               order.recalculate
             }.to change { order.reload.additional_tax_total }.to(4.00)
@@ -159,7 +159,7 @@ module Spree
         allow(order).to receive_messages backordered?: true
         updater.update_shipment_state
 
-        expect(order.shipment_state).to eq('backorder')
+        expect(order.shipment_state).to eq("backorder")
       end
 
       it "is nil" do
@@ -176,10 +176,10 @@ module Spree
       end
 
       it "is partial" do
-        create(:shipment, order:, state: 'pending')
-        create(:shipment, order:, state: 'ready')
+        create(:shipment, order:, state: "pending")
+        create(:shipment, order:, state: "ready")
         updater.update_shipment_state
-        expect(order.shipment_state).to eq('partial')
+        expect(order.shipment_state).to eq("partial")
       end
     end
 
@@ -188,26 +188,26 @@ module Spree
       let(:updater) { order.recalculator }
       before { allow(order).to receive(:refund_total).and_return(0) }
 
-      context 'no valid payments with non-zero order total' do
+      context "no valid payments with non-zero order total" do
         it "is failed" do
-          create(:payment, order:, state: 'invalid')
+          create(:payment, order:, state: "invalid")
           order.total = 1
           order.payment_total = 0
 
           updater.update_payment_state
-          expect(order.payment_state).to eq('failed')
+          expect(order.payment_state).to eq("failed")
         end
       end
 
-      context 'invalid payments are present but order total is zero' do
-        it 'is paid' do
-          order.payments << Spree::Payment.new(state: 'invalid')
+      context "invalid payments are present but order total is zero" do
+        it "is paid" do
+          order.payments << Spree::Payment.new(state: "invalid")
           order.total = 0
           order.payment_total = 0
 
           expect {
             updater.update_payment_state
-          }.to change { order.payment_state }.to 'paid'
+          }.to change { order.payment_state }.to "paid"
         end
       end
 
@@ -218,7 +218,7 @@ module Spree
 
           expect {
             updater.update_payment_state
-          }.to change { order.payment_state }.to 'credit_owed'
+          }.to change { order.payment_state }.to "credit_owed"
         end
       end
 
@@ -229,7 +229,7 @@ module Spree
 
           expect {
             updater.update_payment_state
-          }.to change { order.payment_state }.to 'balance_due'
+          }.to change { order.payment_state }.to "balance_due"
         end
       end
 
@@ -240,13 +240,13 @@ module Spree
 
           expect {
             updater.update_payment_state
-          }.to change { order.payment_state }.to 'paid'
+          }.to change { order.payment_state }.to "paid"
         end
       end
 
       context "order is canceled" do
         before do
-          order.state = 'canceled'
+          order.state = "canceled"
         end
 
         context "and is still unpaid" do
@@ -255,7 +255,7 @@ module Spree
             order.total = 30
             expect {
               updater.update_payment_state
-            }.to change { order.payment_state }.to 'void'
+            }.to change { order.payment_state }.to "void"
           end
         end
 
@@ -263,10 +263,10 @@ module Spree
           it "is credit_owed" do
             order.payment_total = 30
             order.total = 30
-            create(:payment, order:, state: 'completed', amount: 30)
+            create(:payment, order:, state: "completed", amount: 30)
             expect {
               updater.update_payment_state
-            }.to change { order.payment_state }.to 'credit_owed'
+            }.to change { order.payment_state }.to "credit_owed"
           end
         end
 
@@ -276,7 +276,7 @@ module Spree
             order.total = 30
             expect {
               updater.update_payment_state
-            }.to change { order.payment_state }.to 'void'
+            }.to change { order.payment_state }.to "void"
           end
         end
       end
@@ -295,9 +295,9 @@ module Spree
         updater.recalculate
       end
 
-      context 'with a shipment' do
+      context "with a shipment" do
         before { create(:shipment, order:) }
-        let(:shipment){ order.shipments[0] }
+        let(:shipment) { order.shipments[0] }
 
         it "updates each shipment" do
           expect(shipment).to receive(:update_state)
@@ -346,7 +346,7 @@ module Spree
     end
 
     context "with 'order_recalculated' event subscription" do
-      let(:item) { spy('object') }
+      let(:item) { spy("object") }
       let(:bus) { Spree::Bus }
 
       let!(:subscription) do

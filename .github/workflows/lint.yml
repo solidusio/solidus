@@ -26,11 +26,7 @@ jobs:
           bundler-cache: true
       - name: Lint Ruby files
         run: bin/rake lint:rb
-      - name: Store test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: rubocop-results
-          path: test-results
+        run: bin/rake lint:rb
 
   erb:
     name: Check ERB

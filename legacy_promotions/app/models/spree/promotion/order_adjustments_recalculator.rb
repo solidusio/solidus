@@ -32,10 +32,10 @@ module Spree
         Spree::Config.promotions.promotion_chooser_class.new(order_promotion_adjustments).update
 
         order.promo_total = all_items.sum(&:promo_total) +
-                            order_promotion_adjustments.
-                              select(&:eligible?).
-                              select(&:promotion?).
-                              sum(&:amount)
+          order_promotion_adjustments
+            .select(&:eligible?)
+            .select(&:promotion?)
+            .sum(&:amount)
         order
       end
 

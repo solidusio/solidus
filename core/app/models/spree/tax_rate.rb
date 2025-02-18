@@ -19,12 +19,12 @@ module Spree
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
 
     has_many :tax_rate_tax_categories,
-      class_name: 'Spree::TaxRateTaxCategory',
+      class_name: "Spree::TaxRateTaxCategory",
       dependent: :destroy,
       inverse_of: :tax_rate
     has_many :tax_categories,
       through: :tax_rate_tax_categories,
-      class_name: 'Spree::TaxCategory',
+      class_name: "Spree::TaxCategory",
       inverse_of: :tax_rates
 
     has_many :adjustments, as: :source
@@ -37,12 +37,12 @@ module Spree
     # Finds all tax rates whose zones match a given address
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
     scope :for_country,
-          ->(country) { for_address(Spree::Tax::TaxLocation.new(country:)) }
+      ->(country) { for_address(Spree::Tax::TaxLocation.new(country:)) }
     scope :active, -> do
       table = arel_table
       time = Time.current
-      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
-        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time)))
+        .where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
 
     # Finds geographically matching tax rates for a tax zone.
@@ -87,7 +87,7 @@ module Spree
     # Those rates should never come into play at all and only the French rates should apply.
     scope :for_zone, ->(zone) do
       if zone
-        where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
+        where(zone_id: Spree::Zone.with_shared_members(zone).select(:id))
       else
         none
       end

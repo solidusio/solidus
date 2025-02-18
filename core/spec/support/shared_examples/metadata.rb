@@ -12,12 +12,12 @@ RSpec.shared_examples "customer and admin metadata fields: storage and validatio
   end
 
   it "can store data in customer_metadata" do
-    object.customer_metadata = { "order_id" => "OD34236" }
+    object.customer_metadata = {"order_id" => "OD34236"}
     expect(object.customer_metadata["order_id"]).to eq("OD34236")
   end
 
   it "can store data in admin_metadata" do
-    object.admin_metadata = { "internal_note" => "Generate invoice after payment is received" }
+    object.admin_metadata = {"internal_note" => "Generate invoice after payment is received"}
     expect(object.admin_metadata["internal_note"]).to eq("Generate invoice after payment is received")
   end
 
@@ -44,10 +44,10 @@ RSpec.shared_examples "customer and admin metadata fields: storage and validatio
     }
   end
 
-  let(:oversized_value_metadata) { { "product_details" => "This is an amazing product built to last long" * 10 } } # Exceeds 256 characters
-  let(:valid_value_metadata) { { "product_details" => "This is an amazing product built to last long" } }
-  let(:oversized_key_metadata) { { "company_details_for_products" => 'This is made by demo company' } } #  Exceeds 16 characters
-  let(:valid_key_metadata) { { "company_details" => 'This is made by demo company' } }
+  let(:oversized_value_metadata) { {"product_details" => "This is an amazing product built to last long" * 10} } # Exceeds 256 characters
+  let(:valid_value_metadata) { {"product_details" => "This is an amazing product built to last long"} }
+  let(:oversized_key_metadata) { {"company_details_for_products" => "This is made by demo company"} } #  Exceeds 16 characters
+  let(:valid_key_metadata) { {"company_details" => "This is made by demo company"} }
 
   subject { create(metadata_class) }
 
@@ -59,40 +59,40 @@ RSpec.shared_examples "customer and admin metadata fields: storage and validatio
         end
 
         it "does not allow more than 6 keys" do
-          subject.send("#{metadata_type}=", invalid_metadata_keys)
+          subject.send(:"#{metadata_type}=", invalid_metadata_keys)
 
           expect(subject).not_to be_valid
           expect(subject.errors[metadata_type.to_sym]).to include("must not have more than 6 keys")
         end
 
         it "allows less than 6 keys" do
-          subject.send("#{metadata_type}=", valid_metadata_keys)
+          subject.send(:"#{metadata_type}=", valid_metadata_keys)
 
           expect(subject).to be_valid
         end
 
         it "does not allow values longer than 256 characters" do
-          subject.send("#{metadata_type}=", oversized_value_metadata)
+          subject.send(:"#{metadata_type}=", oversized_value_metadata)
 
           expect(subject).not_to be_valid
           expect(subject.errors[metadata_type.to_sym]).to include("value for key 'product_details' exceeds 256 characters")
         end
 
         it "allows values shorter than 256 characters" do
-          subject.send("#{metadata_type}=", valid_value_metadata)
+          subject.send(:"#{metadata_type}=", valid_value_metadata)
 
           expect(subject).to be_valid
         end
 
         it "does not allow keys longer than 16 characters" do
-          subject.send("#{metadata_type}=", oversized_key_metadata)
+          subject.send(:"#{metadata_type}=", oversized_key_metadata)
 
           expect(subject).not_to be_valid
           expect(subject.errors[metadata_type.to_sym]).to include("key 'company_details_for_products' exceeds 16 characters")
         end
 
         it "allows keys shorter than 16 characters" do
-          subject.send("#{metadata_type}=", valid_key_metadata)
+          subject.send(:"#{metadata_type}=", valid_key_metadata)
 
           expect(subject).to be_valid
         end
@@ -104,25 +104,25 @@ RSpec.shared_examples "customer and admin metadata fields: storage and validatio
         end
 
         it "does not validate the metadata" do
-          subject.send("#{metadata_type}=", invalid_metadata_keys)
+          subject.send(:"#{metadata_type}=", invalid_metadata_keys)
 
           expect(subject).to be_valid
         end
 
         it "allows more than 6 keys" do
-          subject.send("#{metadata_type}=", invalid_metadata_keys)
+          subject.send(:"#{metadata_type}=", invalid_metadata_keys)
 
           expect(subject).to be_valid
         end
 
         it "allows values longer than 256 characters" do
-          subject.send("#{metadata_type}=", oversized_value_metadata)
+          subject.send(:"#{metadata_type}=", oversized_value_metadata)
 
           expect(subject).to be_valid
         end
 
         it "allows keys longer than 16 characters" do
-          subject.send("#{metadata_type}=", oversized_key_metadata)
+          subject.send(:"#{metadata_type}=", oversized_key_metadata)
 
           expect(subject).to be_valid
         end

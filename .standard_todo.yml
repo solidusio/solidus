@@ -1,0 +1,120 @@
+# Auto generated files with errors to ignore.
+# Remove from this list as you refactor files.
+---
+ignore:
+- Gemfile:
+  - Security/Eval
+- api/app/controllers/spree/api/inventory_units_controller.rb:
+  - Lint/AssignmentInCondition
+- api/app/controllers/spree/api/option_types_controller.rb:
+  - Rails/UnusedRenderContent
+- api/app/controllers/spree/api/option_values_controller.rb:
+  - Rails/UnusedRenderContent
+- api/app/controllers/spree/api/orders_controller.rb:
+  - Lint/AssignmentInCondition
+- api/app/controllers/spree/api/products_controller.rb:
+  - Lint/AssignmentInCondition
+- api/lib/spree/api/engine.rb:
+  - Standard/BlockSingleLineBraces
+- backend/lib/spree/backend/engine.rb:
+  - Standard/BlockSingleLineBraces
+- backend/lib/spree/backend_configuration/deprecated_tab_constants.rb:
+  - Lint/OrAssignmentToConstant
+- backend/spec/controllers/spree/admin/payments_controller_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- backend/spec/controllers/spree/admin/resource_controller_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- backend/spec/controllers/spree/admin/users_controller_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- backend/spec/features/admin/configuration/payment_methods_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- backend/spec/features/admin/configuration/shipping_methods_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/app/models/concerns/spree/ordered_property_value_list.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/address.rb:
+  - Rails/IgnoredColumnsAssignment
+- core/app/models/spree/credit_card.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/order.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/payment/cancellation.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/payment_create.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/payment_method/bogus_credit_card.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/payment_method/store_credit.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/product.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/reimbursement_type/reimbursement_helpers.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/stock_location.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/store_credit.rb:
+  - Lint/AssignmentInCondition
+- core/app/models/spree/user_address.rb:
+  - Rails/DuplicateScope
+- core/app/models/spree/variant.rb:
+  - Rails/RedundantPresenceValidationOnBelongsTo
+- core/lib/generators/spree/dummy/dummy_generator.rb:
+  - Lint/Syntax
+- core/lib/spree/core.rb:
+  - Style/ClassEqualityComparison
+- core/lib/spree/core/engine.rb:
+  - Standard/BlockSingleLineBraces
+- core/lib/spree/core/importer/order.rb:
+  - Lint/AssignmentInCondition
+- core/lib/spree/preferences/store.rb:
+  - Lint/AssignmentInCondition
+- core/lib/spree/testing_support/factories/state_factory.rb:
+  - Style/RedundantSort
+- core/spec/lib/calculated_adjustments_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/lib/search/variant_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/lib/spree/app_configuration_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/lib/spree/core/role_configuration_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/lib/spree/core/validators/email_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/lib/spree/deprecator_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/calculator_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/order/state_machine_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/order_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/preferences/preferable_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/reimbursement/reimbursement_type_validator_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/reimbursement_type/credit_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/stock/estimator_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/user_last_url_storer_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/validations/db_maximum_length_validator_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- core/spec/models/spree/wallet_payment_source_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- legacy_promotions/db/migrate/20190106184413_remove_code_from_spree_promotions.rb:
+  - Rails/IgnoredColumnsAssignment
+- legacy_promotions/lib/controllers/backend/spree/admin/promotions_controller.rb:
+  - Style/SafeNavigation
+- legacy_promotions/spec/features/backend/promotion_adjustments_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- legacy_promotions/spec/features/backend/promotions/option_value_rule_spec.rb:
+  - Style/HashConversion
+- legacy_promotions/spec/models/spree/promotion/order_adjustments_recalculator_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- legacy_promotions/spec/models/spree/promotion/rules/option_value_spec.rb:
+  - Style/HashConversion
+- legacy_promotions/spec/models/spree/promotion_action_spec.rb:
+  - Lint/ConstantDefinitionInBlock
+- legacy_promotions/spec/models/spree/promotion_rule_spec.rb:
+  - Lint/ConstantDefinitionInBlock

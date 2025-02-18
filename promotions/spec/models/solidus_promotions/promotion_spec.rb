@@ -112,7 +112,7 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
   describe ".ordered_lanes" do
     subject { described_class.ordered_lanes }
 
-    it { is_expected.to eq({ "pre" => 0, "default" => 1, "post" => 2 }) }
+    it { is_expected.to eq({"pre" => 0, "default" => 1, "post" => 2}) }
   end
 
   describe "validations" do
@@ -385,28 +385,28 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
 
     it "is inactive if it hasn't started yet" do
-      promotion.starts_at = Time.current + 1.day
+      promotion.starts_at = 1.day.from_now
       expect(promotion).to be_inactive
     end
 
     it "is inactive if it has already ended" do
-      promotion.expires_at = Time.current - 1.day
+      promotion.expires_at = 1.day.ago
       expect(promotion).to be_inactive
     end
 
     it "is not inactive if it has started already" do
-      promotion.starts_at = Time.current - 1.day
+      promotion.starts_at = 1.day.ago
       expect(promotion).not_to be_inactive
     end
 
     it "is not inactive if it has not ended yet" do
-      promotion.expires_at = Time.current + 1.day
+      promotion.expires_at = 1.day.from_now
       expect(promotion).not_to be_inactive
     end
 
     it "is not inactive if current time is within starts_at and expires_at range" do
-      promotion.starts_at = Time.current - 1.day
-      promotion.expires_at = Time.current + 1.day
+      promotion.starts_at = 1.day.ago
+      promotion.expires_at = 1.day.from_now
       expect(promotion).not_to be_inactive
     end
   end
@@ -423,13 +423,13 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
 
     context "when starts_at date is in the past" do
-      let(:starts_at) { Time.current - 1.day }
+      let(:starts_at) { 1.day.ago }
 
       it { is_expected.to be_falsey }
     end
 
     context "when starts_at date is not already reached" do
-      let(:starts_at) { Time.current + 1.day }
+      let(:starts_at) { 1.day.from_now }
 
       it { is_expected.to be_truthy }
     end
@@ -447,13 +447,13 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
 
     context "when starts_at date is in the past" do
-      let(:starts_at) { Time.current - 1.day }
+      let(:starts_at) { 1.day.ago }
 
       it { is_expected.to be_truthy }
     end
 
     context "when starts_at date is not already reached" do
-      let(:starts_at) { Time.current + 1.day }
+      let(:starts_at) { 1.day.from_now }
 
       it { is_expected.to be_falsey }
     end
@@ -471,13 +471,13 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
 
     context "when expires_at date is not already reached" do
-      let(:expires_at) { Time.current + 1.day }
+      let(:expires_at) { 1.day.from_now }
 
       it { is_expected.to be_falsey }
     end
 
     context "when expires_at date is in the past" do
-      let(:expires_at) { Time.current - 1.day }
+      let(:expires_at) { 1.day.ago }
 
       it { is_expected.to be_truthy }
     end
@@ -495,13 +495,13 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
 
     context "when expires_at date is not already reached" do
-      let(:expires_at) { Time.current + 1.day }
+      let(:expires_at) { 1.day.from_now }
 
       it { is_expected.to be_truthy }
     end
 
     context "when expires_at date is in the past" do
-      let(:expires_at) { Time.current - 1.day }
+      let(:expires_at) { 1.day.ago }
 
       it { is_expected.to be_falsey }
     end
@@ -509,18 +509,18 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
 
   describe "#active" do
     it "is not active if it has started already" do
-      promotion.starts_at = Time.current - 1.day
+      promotion.starts_at = 1.day.ago
       expect(promotion.active?).to eq(false)
     end
 
     it "is not active if it has not ended yet" do
-      promotion.expires_at = Time.current + 1.day
+      promotion.expires_at = 1.day.from_now
       expect(promotion.active?).to eq(false)
     end
 
     it "is not active if current time is within starts_at and expires_at range" do
-      promotion.starts_at = Time.current - 1.day
-      promotion.expires_at = Time.current + 1.day
+      promotion.starts_at = 1.day.ago
+      promotion.expires_at = 1.day.from_now
       expect(promotion.active?).to eq(false)
     end
 
@@ -534,18 +534,18 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
       let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, name: "name1") }
 
       it "is active if it has started already" do
-        promotion.starts_at = Time.current - 1.day
+        promotion.starts_at = 1.day.ago
         expect(promotion.active?).to eq(true)
       end
 
       it "is active if it has not ended yet" do
-        promotion.expires_at = Time.current + 1.day
+        promotion.expires_at = 1.day.from_now
         expect(promotion.active?).to eq(true)
       end
 
       it "is active if current time is within starts_at and expires_at range" do
-        promotion.starts_at = Time.current - 1.day
-        promotion.expires_at = Time.current + 1.day
+        promotion.starts_at = 1.day.ago
+        promotion.expires_at = 1.day.from_now
         expect(promotion.active?).to eq(true)
       end
 

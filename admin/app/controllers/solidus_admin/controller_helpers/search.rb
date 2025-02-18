@@ -8,7 +8,7 @@ module SolidusAdmin::ControllerHelpers::Search
       search_scopes << SearchScope.new(
         name: name.to_s,
         block:,
-        default:,
+        default:
       )
     end
 

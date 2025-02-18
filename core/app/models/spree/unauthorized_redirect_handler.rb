@@ -11,7 +11,7 @@ module Spree
 
     # This method is responsible for handling unauthorized redirects
     def call
-      flash[:error] = I18n.t('spree.authorization_failure')
+      flash[:error] = I18n.t("spree.authorization_failure")
       redirect_back(fallback_location: "/unauthorized")
     end
 

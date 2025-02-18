@@ -6,11 +6,11 @@ order = Spree::Order.last
 inventory_unit = order.inventory_units.take!
 stock_location = inventory_unit.find_stock_item.stock_location
 return_reason = Spree::ReturnReason.active.take!
-preferred_reimbursement_type = Spree::ReimbursementType.where(name: 'Original').take!
+preferred_reimbursement_type = Spree::ReimbursementType.where(name: "Original").take!
 admin_user = if defined?(Spree::Auth)
   Spree.user_class.admin.take!
 else
-  Spree.user_class.find_or_create_by!(email: 'admin@example.com')
+  Spree.user_class.find_or_create_by!(email: "admin@example.com")
 end
 
 # Mark the order paid and shipped

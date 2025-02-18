@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Order", :js, type: :feature do
   before do
     allow(SolidusAdmin::Config).to receive(:enable_alpha_features?) { true }
-    sign_in create(:admin_user, email: 'admin@example.com')
+    sign_in create(:admin_user, email: "admin@example.com")
   end
 
   it "allows detaching a customer from an order" do
@@ -101,8 +101,8 @@ describe "Order", :js, type: :feature do
 
   context "in cart state" do
     it "allows managing the cart" do
-      create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
-      create(:product, name: "Just another product", slug: 'just-another-prod', price: 29.99)
+      create(:product, name: "Just a product", slug: "just-a-prod", price: 19.99)
+      create(:product, name: "Just another product", slug: "just-another-prod", price: 29.99)
       create(:order, number: "R123456789", total: 19.99, state: "cart")
 
       visit "/admin/orders/R123456789/edit"

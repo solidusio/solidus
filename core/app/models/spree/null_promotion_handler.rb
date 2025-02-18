@@ -38,7 +38,7 @@ module Spree
     end
 
     def status
-      I18n.t(:coupon_code_applied, scope: [:spree, :null_promotion_handler])
+      I18n.t("spree.null_promotion_handler.coupon_code_applied")
     end
   end
 end

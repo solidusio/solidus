@@ -20,20 +20,20 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_store_path,
-      icon: "add-line",
+      icon: "add-line"
     )
   end
 
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.stores_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
@@ -50,9 +50,9 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
       {
         header: :default,
         data: ->(store) do
-          store.default? ? component('ui/badge').yes : component('ui/badge').no
+          store.default? ? component("ui/badge").yes : component("ui/badge").no
         end
-      },
+      }
     ]
   end
 end

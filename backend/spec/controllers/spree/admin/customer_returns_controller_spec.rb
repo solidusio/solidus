@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   module Admin
@@ -8,11 +8,11 @@ module Spree
       stub_authorization!
 
       describe "#index" do
-        let(:order)           { customer_return.order }
+        let(:order) { customer_return.order }
         let(:customer_return) { create(:customer_return) }
 
         subject do
-          get :index, params: { order_id: customer_return.order.to_param }
+          get :index, params: {order_id: customer_return.order.to_param}
         end
 
         before { subject }
@@ -28,7 +28,7 @@ module Spree
 
       context "existent order id not given" do
         it "redirects and flashes about the non-existent order" do
-          get :index, params: { order_id: 'non-existent-order' }
+          get :index, params: {order_id: "non-existent-order"}
           expect(response).to redirect_to(spree.admin_orders_path)
           expect(flash[:error]).to eql("Order is not found")
         end
@@ -36,12 +36,12 @@ module Spree
 
       describe "#new" do
         let(:order) { create(:shipped_order, line_items_count: 1) }
-        let!(:inactive_reimbursement_type)      { create(:reimbursement_type, active: false) }
-        let!(:first_active_reimbursement_type)  { create(:reimbursement_type) }
+        let!(:inactive_reimbursement_type) { create(:reimbursement_type, active: false) }
+        let!(:first_active_reimbursement_type) { create(:reimbursement_type) }
         let!(:second_active_reimbursement_type) { create(:reimbursement_type) }
 
         subject do
-          get :new, params: { order_id: order.to_param }
+          get :new, params: {order_id: order.to_param}
         end
 
         it "loads the order" do
@@ -126,17 +126,17 @@ module Spree
       end
 
       describe "#edit" do
-        let(:order)           { customer_return.order }
+        let(:order) { customer_return.order }
         let(:customer_return) { create(:customer_return, line_items_count: 3) }
 
         let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
-        let!(:accepted_return_item)            { customer_return.return_items.order('id').first.tap(&:accept!) }
-        let!(:rejected_return_item)            { customer_return.return_items.order('id').second.tap(&:reject!) }
-        let!(:manual_intervention_return_item) { customer_return.return_items.order('id').third.tap(&:require_manual_intervention!) }
+        let!(:accepted_return_item) { customer_return.return_items.order("id").first.tap(&:accept!) }
+        let!(:rejected_return_item) { customer_return.return_items.order("id").second.tap(&:reject!) }
+        let!(:manual_intervention_return_item) { customer_return.return_items.order("id").third.tap(&:require_manual_intervention!) }
 
         subject do
-          get :edit, params: { order_id: order.to_param, id: customer_return.to_param }
+          get :edit, params: {order_id: order.to_param, id: customer_return.to_param}
         end
 
         it "loads the order" do
@@ -193,7 +193,7 @@ module Spree
 
       describe "#create" do
         let(:order) { create(:shipped_order, line_items_count: 1) }
-        let(:reception_status_event) { 'receive' }
+        let(:reception_status_event) { "receive" }
         let(:stock_location_id) { order.shipments.last.stock_location.id }
         let(:customer_return_params) do
           {
@@ -220,22 +220,28 @@ module Spree
           expect(response).to redirect_to spree.edit_admin_order_customer_return_path(order, id: Spree::CustomerReturn.last.id)
         end
 
-        it 'executes the reception status event on the return items' do
+        it "executes the reception status event on the return items" do
           subject
           customer_return = Spree::CustomerReturn.last
-          expect(customer_return.return_items.map(&:reception_status).uniq).to eq ['received']
+          expect(customer_return.return_items.map(&:reception_status).uniq).to eq ["received"]
         end
 
         context "missing stock location" do
-          let(:stock_location_id) { '' }
-          it { expect{ subject }.to_not change { Spree::CustomerReturn.count } }
-          it { subject; expect(response).to render_template(:new) }
+          let(:stock_location_id) { "" }
+          it { expect { subject }.to_not change { Spree::CustomerReturn.count } }
+          it {
+            subject
+            expect(response).to render_template(:new)
+          }
         end
 
         context "missing reception status event" do
-          let(:reception_status_event) { '' }
-          it { expect{ subject }.to_not change { Spree::CustomerReturn.count } }
-          it { subject; expect(response).to redirect_to spree.new_admin_order_customer_return_path(order) }
+          let(:reception_status_event) { "" }
+          it { expect { subject }.to_not change { Spree::CustomerReturn.count } }
+          it {
+            subject
+            expect(response).to redirect_to spree.new_admin_order_customer_return_path(order)
+          }
         end
       end
     end

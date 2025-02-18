@@ -87,13 +87,13 @@ module Spree
     @@property_attributes = [:name, :presentation]
 
     @@return_authorization_attributes = [:memo, :stock_location_id, :return_reason_id,
-                                         customer_metadata: {},
-                                         return_items_attributes: [
-                                           :inventory_unit_id,
-                                           :exchange_variant_id,
-                                           :return_reason_id,
-                                           :preferred_reimbursement_type_id
-                                         ]]
+      customer_metadata: {},
+      return_items_attributes: [
+        :inventory_unit_id,
+        :exchange_variant_id,
+        :return_reason_id,
+        :preferred_reimbursement_type_id
+      ]]
 
     @@shipment_attributes = [
       :special_instructions, :stock_location_id, :id, :tracking,
@@ -121,9 +121,9 @@ module Spree
     ]
 
     @@store_attributes = [:name, :url, :seo_title, :meta_keywords,
-                          :meta_description, :default_currency,
-                          :mail_from_address, :cart_tax_country_iso,
-                          :bcc_email]
+      :meta_description, :default_currency,
+      :mail_from_address, :cart_tax_country_iso,
+      :bcc_email]
 
     @@taxonomy_attributes = [:name]
 

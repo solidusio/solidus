@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderCancellations do
   describe "#cancel_unit" do
@@ -51,7 +51,7 @@ RSpec.describe Spree::OrderCancellations do
     let(:order) { create(:shipped_order, line_items_count: 2) }
     let(:inventory_units) { order.inventory_units }
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
-    let(:created_by_user) { create(:user, email: 'user@email.com') }
+    let(:created_by_user) { create(:user, email: "user@email.com") }
 
     it "creates and performs a reimbursement" do
       expect { subject }.to change { Spree::Reimbursement.count }.by(1)
@@ -87,11 +87,11 @@ RSpec.describe Spree::OrderCancellations do
     end
 
     it "updates the shipment.state" do
-      expect { subject }.to change { shipment.reload.state }.from('ready').to('shipped')
+      expect { subject }.to change { shipment.reload.state }.from("ready").to("shipped")
     end
 
     it "updates the order.shipment_state" do
-      expect { subject }.to change { order.shipment_state }.from('ready').to('shipped')
+      expect { subject }.to change { order.shipment_state }.from("ready").to("shipped")
     end
 
     it "adjusts the order" do
@@ -102,7 +102,7 @@ RSpec.describe Spree::OrderCancellations do
       subject { described_class.new(order).short_ship(inventory_units) }
 
       let(:quantity) { 4 }
-      let!(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: }]) }
+      let!(:order) { create(:order_with_line_items, line_items_attributes: [{quantity:}]) }
       let(:inventory_units) { Spree::InventoryUnit.find(order.line_items.first.inventory_units.pluck(:id)) }
 
       it "adjusts the order" do
@@ -134,7 +134,7 @@ RSpec.describe Spree::OrderCancellations do
     end
 
     context "when a created_by is specified" do
-      subject { order.cancellations.short_ship([inventory_unit], created_by: 'some automated system') }
+      subject { order.cancellations.short_ship([inventory_unit], created_by: "some automated system") }
 
       let(:user) { order.user }
 
@@ -157,9 +157,9 @@ RSpec.describe Spree::OrderCancellations do
         line_item.adjustments.create!(
           order:,
           amount: 0.01,
-          label: 'some promo',
+          label: "some promo",
           source: nil,
-          finalized: true,
+          finalized: true
         )
         order.recalculate
       end
@@ -171,15 +171,15 @@ RSpec.describe Spree::OrderCancellations do
           [
             0.01,  # promo adjustment
             -0.84, # short ship 1
-            -0.83, # short ship 2
+            -0.83 # short ship 2
           ]
         )
         expect(line_item.total).to eq 0
       end
     end
 
-    describe 'short_ship_tax_notifier' do
-      context 'when present' do
+    describe "short_ship_tax_notifier" do
+      context "when present" do
         let(:short_ship_tax_notifier) { double }
 
         before do
@@ -190,7 +190,7 @@ RSpec.describe Spree::OrderCancellations do
           described_class.short_ship_tax_notifier = @old_notifier
         end
 
-        it 'calls the short_ship_tax_notifier' do
+        it "calls the short_ship_tax_notifier" do
           expect(short_ship_tax_notifier).to receive(:call) do |unit_cancels|
             expect(unit_cancels.map(&:inventory_unit)).to match_array([inventory_unit])
           end

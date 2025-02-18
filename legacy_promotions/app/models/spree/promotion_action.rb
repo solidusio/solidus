@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
+require "spree/preferences/persistable"
 
 module Spree
   # Base class for all types of promotion action.
@@ -11,7 +11,7 @@ module Spree
     include Spree::Preferences::Persistable
     include Spree::SoftDeletable
 
-    belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true
+    belongs_to :promotion, class_name: "Spree::Promotion", inverse_of: :promotion_actions, optional: true
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
     scope :shipping, -> { of_type(Spree::Config.promotions.shipping_actions.to_a) }
@@ -27,7 +27,7 @@ module Spree
     #
     # @note This method should be overriden in subclassses.
     def perform(_options = {})
-      raise 'perform should be implemented in a sub-class of PromotionAction'
+      raise "perform should be implemented in a sub-class of PromotionAction"
     end
 
     # Removes the action from an order
@@ -37,7 +37,7 @@ module Spree
     # @param order [Spree::Order] the order to remove the action from
     # @return [void]
     def remove_from(_order)
-      raise 'remove_from should be implemented in a sub-class of PromotionAction'
+      raise "remove_from should be implemented in a sub-class of PromotionAction"
     end
 
     def to_partial_path
