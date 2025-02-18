@@ -9,7 +9,7 @@ class SolidusAdmin::UI::DetailsList::ComponentPreview < ViewComponent::Preview
   end
 
   # @param items select { choices: [[Order details, './data/example1.json'], [Product details, './data/example2.json'], [Account details, './data/example3.json']] }
-  def playground(items: './data/example1.json')
+  def playground(items: "./data/example1.json")
     parsed_items = JSON.parse(
       File.read(File.join(__dir__, items)),
       symbolize_names: true

@@ -2,10 +2,10 @@
 
 module Spree
   class PaymentCaptureEvent < Spree::Base
-    belongs_to :payment, class_name: 'Spree::Payment', optional: true
+    belongs_to :payment, class_name: "Spree::Payment", optional: true
 
     def display_amount
-      Spree::Money.new(amount, { currency: payment.currency })
+      Spree::Money.new(amount, {currency: payment.currency})
     end
   end
 end

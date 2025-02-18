@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe DisplayMoney do
     let(:test_class) do
       Class.new do
         extend DisplayMoney
-        def total; 10.0; end
+        def total
+          10.0
+        end
       end
     end
 
@@ -21,7 +23,13 @@ module Spree
       end
 
       context "currency is defined" do
-        before { test_class.class_eval { def currency; "USD"; end } }
+        before {
+          test_class.class_eval {
+            def currency
+              "USD"
+            end
+          }
+        }
 
         it "generates a display_* method that builds a Spree::Money with currency" do
           expect(test_class.new.display_total).to eq Spree::Money.new(10.0, currency: "USD")
@@ -30,8 +38,12 @@ module Spree
 
       context "with multiple + options" do
         before do
-          test_class.class_eval { def amount; 20.0; end }
-          test_class.money_methods :total, amount: { no_cents: true }
+          test_class.class_eval {
+            def amount
+              20.0
+            end
+          }
+          test_class.money_methods :total, amount: {no_cents: true}
         end
 
         it "generates a display_* method that builds a Spree::Money with the specified options" do

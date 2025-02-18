@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'importmap-rails'
+require "importmap-rails"
 
 module SolidusAdmin::Importmap
   class Reloader

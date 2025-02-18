@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'spree/i18n'
+require "spec_helper"
+require "spree/i18n"
 
 RSpec.describe "i18n" do
   before do
@@ -9,21 +9,21 @@ RSpec.describe "i18n" do
     I18n.reload!
 
     I18n.backend.store_translations(:en,
-    {
-      spree: {
-        i18n: {
-          this_file_language: "English"
-        },
-        foo: "bar",
-        bar: {
-          foo: "bar within bar scope",
+      {
+        spree: {
+          i18n: {
+            this_file_language: "English"
+          },
+          foo: "bar",
+          bar: {
+            foo: "bar within bar scope",
+            invalid: nil,
+            legacy_translation: "back in the day..."
+          },
           invalid: nil,
           legacy_translation: "back in the day..."
-        },
-        invalid: nil,
-        legacy_translation: "back in the day..."
-      }
-    })
+        }
+      })
   end
   after do
     I18n.reload!
@@ -38,9 +38,9 @@ RSpec.describe "i18n" do
       expect(Spree.i18n_available_locales).to eq([:en])
     end
 
-    context 'with unprefixed translations in another locale' do
+    context "with unprefixed translations in another locale" do
       before do
-        I18n.backend.store_translations(:fr, { cheese: "fromage" })
+        I18n.backend.store_translations(:fr, {cheese: "fromage"})
       end
 
       it "should only return :en" do
@@ -48,9 +48,9 @@ RSpec.describe "i18n" do
       end
     end
 
-    context 'with spree-prefixed translations in another locale' do
+    context "with spree-prefixed translations in another locale" do
       before do
-        I18n.backend.store_translations(:fr, spree: { cheese: "fromage" })
+        I18n.backend.store_translations(:fr, spree: {cheese: "fromage"})
       end
 
       it "should return :en and :fr" do
@@ -58,9 +58,9 @@ RSpec.describe "i18n" do
       end
     end
 
-    context 'with specific desired key' do
+    context "with specific desired key" do
       before do
-        I18n.backend.store_translations(:fr, spree: { i18n: { this_file_language: "Français" } })
+        I18n.backend.store_translations(:fr, spree: {i18n: {this_file_language: "Français"}})
       end
 
       it "should return :en and :fr" do

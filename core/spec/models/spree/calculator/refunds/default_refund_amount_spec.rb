@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:line_item_quantity) { 3 }
@@ -9,11 +9,11 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:line_item) { create(:line_item, price: line_item_price, quantity: line_item_quantity) }
   let(:shipment) { create(:shipment, order:) }
   let(:inventory_unit) { build(:inventory_unit, shipment:, line_item:) }
-  let(:return_item) { build(:return_item, inventory_unit: ) }
+  let(:return_item) { build(:return_item, inventory_unit:) }
   let(:calculator) { Spree::Calculator::Returns::DefaultRefundAmount.new }
   let(:order) { line_item.order }
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   subject { calculator.compute(return_item) }
 
@@ -28,22 +28,22 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
       before do
         order.adjustments << create(
           :adjustment,
-          adjustable:  order,
+          adjustable: order,
           order:,
-          amount:      adjustment_amount,
-          label:       'Adjustment',
-          source_type: 'Spree::Order'
+          amount: adjustment_amount,
+          label: "Adjustment",
+          source_type: "Spree::Order"
         )
 
         order.adjustments.first.update(amount: adjustment_amount)
       end
 
-      it 'will return the line item amount deducted of refund' do
+      it "will return the line item amount deducted of refund" do
         # line_item_price    = 100
         # line_item_quantity = 3
         # adjustment_amount  = 10
         # 100 - (10 / 3)     = 96.66666666666666667
-        expect(subject.round(17)).to eq BigDecimal('96.66666666666666667')
+        expect(subject.round(17)).to eq BigDecimal("96.66666666666666667")
       end
     end
 

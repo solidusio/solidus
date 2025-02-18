@@ -15,9 +15,9 @@ module Spree
   class VariantPropertyRule < Spree::Base
     belongs_to :product, touch: true, optional: true
 
-    has_many :values, class_name: 'Spree::VariantPropertyRuleValue', dependent: :destroy
+    has_many :values, class_name: "Spree::VariantPropertyRuleValue", dependent: :destroy
     has_many :properties, through: :values
-    has_many :conditions, class_name: 'Spree::VariantPropertyRuleCondition', dependent: :destroy
+    has_many :conditions, class_name: "Spree::VariantPropertyRuleCondition", dependent: :destroy
     has_many :option_values, through: :conditions
 
     accepts_nested_attributes_for :values, allow_destroy: true, reject_if: lambda { |val| val[:property_name].blank? }

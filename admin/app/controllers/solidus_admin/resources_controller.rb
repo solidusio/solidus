@@ -33,7 +33,7 @@ module SolidusAdmin
       @resource = resource_class.new(permitted_resource_params)
 
       if @resource.save
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
         redirect_to after_create_path, status: :see_other
       else
         page_component = new_component.new(@resource)
@@ -47,7 +47,7 @@ module SolidusAdmin
 
     def update
       if @resource.update(permitted_resource_params)
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
         redirect_to after_update_path, status: :see_other
       else
         page_component = edit_component.new(@resource)
@@ -56,11 +56,11 @@ module SolidusAdmin
     end
 
     def destroy
-      @resource = resource_class.find_by!(id: params[:id])
+      @resource = resource_class.find(params[:id])
 
       resource_class.transaction { @resource.destroy }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to after_destroy_path, status: :see_other
     end
 
@@ -73,16 +73,16 @@ module SolidusAdmin
     def set_paginated_resources
       @resources ||= apply_search_to(
         resources_collection,
-          param: :q,
-        ).tap do |resources|
-          instance_variable_set("@#{plural_resource_name}", resources)
-          # sets @page instance variable in geared_pagination gem
-          set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options)
-        end
+        param: :q
+      ).tap do |resources|
+        instance_variable_set(:"@#{plural_resource_name}", resources)
+        # sets @page instance variable in geared_pagination gem
+        set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options)
+      end
     end
 
     def resources_sorting_options
-      { id: :desc }
+      {id: :desc}
     end
 
     def resources_collection
@@ -91,7 +91,7 @@ module SolidusAdmin
 
     def set_resource
       @resource ||= resource_class.find(params[:id]).tap do |resource|
-          instance_variable_set("@#{resource_name}", resource)
+        instance_variable_set(:"@#{resource_name}", resource)
       end
     end
 
@@ -138,15 +138,15 @@ module SolidusAdmin
     end
 
     def after_create_path
-      solidus_admin.send("#{plural_resource_name}_path", **search_filter_params)
+      solidus_admin.send(:"#{plural_resource_name}_path", **search_filter_params)
     end
 
     def after_update_path
-      solidus_admin.send("#{plural_resource_name}_path", **search_filter_params)
+      solidus_admin.send(:"#{plural_resource_name}_path", **search_filter_params)
     end
 
     def after_destroy_path
-      solidus_admin.send("#{plural_resource_name}_path", **search_filter_params)
+      solidus_admin.send(:"#{plural_resource_name}_path", **search_filter_params)
     end
   end
 end

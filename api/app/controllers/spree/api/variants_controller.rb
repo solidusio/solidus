@@ -63,10 +63,10 @@ module Spree
       end
 
       def scope
-        if @product
-          variants = @product.variants_including_master
+        variants = if @product
+          @product.variants_including_master
         else
-          variants = Spree::Variant
+          Spree::Variant
         end
 
         if current_ability.can?(:manage, Variant) && params[:show_deleted]
@@ -89,7 +89,7 @@ module Spree
       end
 
       def include_list
-        [{ option_values: :option_type }, :product, :prices, :images, { stock_items: :stock_location }]
+        [{option_values: :option_type}, :product, :prices, :images, {stock_items: :stock_location}]
       end
     end
   end

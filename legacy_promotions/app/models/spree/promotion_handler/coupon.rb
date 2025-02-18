@@ -45,12 +45,12 @@ module Spree
 
       def set_success_code(status_code)
         @status_code = status_code
-        @success = I18n.t(status_code, scope: 'spree')
+        @success = I18n.t(status_code, scope: "spree")
       end
 
       def set_error_code(status_code, options = {})
         @status_code = status_code
-        @error = options[:error] || I18n.t(status_code, scope: 'spree')
+        @error = options[:error] || I18n.t(status_code, scope: "spree")
       end
 
       def promotion

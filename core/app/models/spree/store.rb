@@ -17,7 +17,7 @@ module Spree
 
     has_many :orders, class_name: "Spree::Order"
 
-    validates :code, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :code, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     validates :name, presence: true
     validates :url, presence: true
     validates :mail_from_address, presence: true
@@ -28,9 +28,9 @@ module Spree
     before_destroy :validate_not_default
 
     def available_locales
-      locales = super()
+      locales = super
       if locales
-        super().split(",").map(&:to_sym)
+        super.split(",").map(&:to_sym)
       else
         Spree.i18n_available_locales
       end

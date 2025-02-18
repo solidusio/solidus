@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Variants', type: :request do
+  describe "Variants", type: :request do
     let!(:product) { create(:product) }
     let!(:variant) do
       variant = product.master
@@ -30,35 +30,35 @@ module Spree::Api
         expect(json_response["pages"]).to eq(1)
       end
 
-      it 'can control the page size through a parameter' do
+      it "can control the page size through a parameter" do
         create(:variant)
-        get spree.api_variants_path, params: { per_page: 1 }
-        expect(json_response['count']).to eq(1)
-        expect(json_response['current_page']).to eq(1)
-        expect(json_response['pages']).to eq(3)
+        get spree.api_variants_path, params: {per_page: 1}
+        expect(json_response["count"]).to eq(1)
+        expect(json_response["current_page"]).to eq(1)
+        expect(json_response["pages"]).to eq(3)
       end
 
-      it 'can query the results through the search class' do
-        expected_result = create(:variant, sku: 'FOOBAR')
-        get spree.api_variants_path, params: { variant_search_term: 'FOO' }
-        expect(json_response['count']).to eq(1)
-        expect(json_response['variants'].first['sku']).to eq expected_result.sku
+      it "can query the results through the search class" do
+        expected_result = create(:variant, sku: "FOOBAR")
+        get spree.api_variants_path, params: {variant_search_term: "FOO"}
+        expect(json_response["count"]).to eq(1)
+        expect(json_response["variants"].first["sku"]).to eq expected_result.sku
       end
 
-      it 'can query the results through ransack' do
-        expected_result = create(:variant, sku: 'FOOBAR')
-        get spree.api_variants_path, params: { variant_search_term: nil, q: { sku_cont: 'FOO' } }
-        expect(json_response['count']).to eq(1)
-        expect(json_response['variants'].first['sku']).to eq expected_result.sku
+      it "can query the results through ransack" do
+        expected_result = create(:variant, sku: "FOOBAR")
+        get spree.api_variants_path, params: {variant_search_term: nil, q: {sku_cont: "FOO"}}
+        expect(json_response["count"]).to eq(1)
+        expect(json_response["variants"].first["sku"]).to eq expected_result.sku
       end
 
       it "variants returned contain option values data" do
         get spree.api_variants_path
         option_values = json_response["variants"].last["option_values"]
         expect(option_values.first).to have_attributes([:name,
-                                                        :presentation,
-                                                        :option_type_name,
-                                                        :option_type_id])
+          :presentation,
+          :option_type_name,
+          :option_type_id])
       end
 
       it "variants returned contain images data" do
@@ -67,14 +67,14 @@ module Spree::Api
         get spree.api_variants_path
 
         expect(json_response["variants"].last).to have_attributes([:images])
-        expect(json_response['variants'].first['images'].first).to have_attributes([:attachment_file_name,
-                                                                                    :attachment_width,
-                                                                                    :attachment_height,
-                                                                                    :attachment_content_type,
-                                                                                    :mini_url,
-                                                                                    :small_url,
-                                                                                    :product_url,
-                                                                                    :large_url])
+        expect(json_response["variants"].first["images"].first).to have_attributes([:attachment_file_name,
+          :attachment_width,
+          :attachment_height,
+          :attachment_content_type,
+          :mini_url,
+          :small_url,
+          :product_url,
+          :large_url])
       end
 
       # Regression test for https://github.com/spree/spree/issues/2141
@@ -89,14 +89,14 @@ module Spree::Api
         end
 
         it "is not returned even when show_deleted is passed" do
-          get spree.api_variants_path, params: { show_deleted: true }
+          get spree.api_variants_path, params: {show_deleted: true}
           expect(json_response["variants"].count).to eq(0)
         end
       end
 
       context "stock filtering" do
         context "only variants in stock" do
-          subject { get spree.api_variants_path, params: { in_stock_only: "true" } }
+          subject { get spree.api_variants_path, params: {in_stock_only: "true"} }
 
           context "variant is out of stock" do
             before do
@@ -122,7 +122,7 @@ module Spree::Api
         end
 
         context "only suplliable variants" do
-          subject { get spree.api_variants_path, params: { suppliable_only: "true" } }
+          subject { get spree.api_variants_path, params: {suppliable_only: "true"} }
 
           context "variant is backorderable" do
             before do
@@ -148,7 +148,7 @@ module Spree::Api
         end
 
         context "all variants" do
-          subject { get spree.api_variants_path, params: { in_stock_only: "false" } }
+          subject { get spree.api_variants_path, params: {in_stock_only: "false"} }
 
           context "variant is out of stock" do
             before do
@@ -177,7 +177,7 @@ module Spree::Api
       context "pagination" do
         it "can select the next page of variants" do
           create(:variant)
-          get spree.api_variants_path, params: { page: 2, per_page: 1 }
+          get spree.api_variants_path, params: {page: 2, per_page: 1}
           expect(json_response["variants"].first).to have_attributes(show_attributes)
           expect(json_response["total_count"]).to eq(3)
           expect(json_response["current_page"]).to eq(2)
@@ -191,8 +191,8 @@ module Spree::Api
 
         it "only returns stock items for active stock locations" do
           get spree.api_variants_path
-          variant = json_response['variants'].first
-          stock_items = variant['stock_items'].map { |si| si['stock_location_name'] }
+          variant = json_response["variants"].first
+          stock_items = variant["stock_items"].map { |si| si["stock_location_name"] }
 
           expect(stock_items).to include stock_location.name
           expect(stock_items).not_to include inactive_stock_location.name
@@ -211,9 +211,9 @@ module Spree::Api
         expect(json_response["stock_items"]).to be_present
         option_values = json_response["option_values"]
         expect(option_values.first).to have_attributes([:name,
-                                                        :presentation,
-                                                        :option_type_name,
-                                                        :option_type_id])
+          :presentation,
+          :option_type_name,
+          :option_type_id])
       end
 
       it "can see a single variant with images" do
@@ -224,9 +224,9 @@ module Spree::Api
         expect(json_response).to have_attributes(show_attributes + [:images])
         option_values = json_response["option_values"]
         expect(option_values.first).to have_attributes([:name,
-                                                        :presentation,
-                                                        :option_type_name,
-                                                        :option_type_id])
+          :presentation,
+          :option_type_name,
+          :option_type_id])
       end
 
       context "variant doesn't have variant properties" do
@@ -264,7 +264,7 @@ module Spree::Api
 
         it "still displays valid json with total_on_hand Float::INFINITY" do
           expect(response.status).to eq(200)
-          expect(json_response['total_on_hand']).to eq nil
+          expect(json_response["total_on_hand"]).to eq nil
         end
       end
     end
@@ -276,12 +276,12 @@ module Spree::Api
     end
 
     it "cannot create a new variant if not an admin" do
-      post spree.api_product_variants_path(product), params: { variant: { sku: "12345" } }
+      post spree.api_product_variants_path(product), params: {variant: {sku: "12345"}}
       assert_unauthorized!
     end
 
     it "cannot update a variant" do
-      put spree.api_variant_path(variant), params: { variant: { sku: "12345" } }
+      put spree.api_variant_path(variant), params: {variant: {sku: "12345"}}
       assert_not_found!
     end
 
@@ -301,13 +301,13 @@ module Spree::Api
         end
 
         it "are visible by admin" do
-          get spree.api_variants_path, params: { show_deleted: 1 }
+          get spree.api_variants_path, params: {show_deleted: 1}
           expect(json_response["variants"].count).to eq(1)
         end
       end
 
       it "can create a new variant" do
-        post spree.api_product_variants_path(product), params: { variant: { sku: "12345" } }
+        post spree.api_product_variants_path(product), params: {variant: {sku: "12345"}}
         expect(json_response).to have_attributes(new_attributes)
         expect(response.status).to eq(201)
         expect(json_response["sku"]).to eq("12345")
@@ -333,8 +333,8 @@ module Spree::Api
             variant: {
               sku: "12345",
               options: [{
-                name: 'Color',
-                value: 'White'
+                name: "Color",
+                value: "White"
               }]
             }
           }
@@ -344,13 +344,13 @@ module Spree::Api
       it "creates a new variant with tax category" do
         tax_category = create(:tax_category)
 
-        post spree.api_product_variants_path(product), params: { variant: { sku: "12345", tax_category_id: tax_category.id } }
+        post spree.api_product_variants_path(product), params: {variant: {sku: "12345", tax_category_id: tax_category.id}}
 
         expect(Spree::Variant.find_by_sku("12345").tax_category).to eq(tax_category)
       end
 
       it "can update a variant" do
-        put spree.api_variant_path(variant), params: { variant: { sku: "12345" } }
+        put spree.api_variant_path(variant), params: {variant: {sku: "12345"}}
         expect(response.status).to eq(200)
       end
 
@@ -360,7 +360,7 @@ module Spree::Api
         expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      it 'variants returned contain cost price data' do
+      it "variants returned contain cost price data" do
         get spree.api_variants_path
         expect(json_response["variants"].first.key?(:cost_price)).to eq true
       end

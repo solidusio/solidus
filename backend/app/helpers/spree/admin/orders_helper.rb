@@ -9,14 +9,14 @@ module Spree
       def event_links
         links = []
         @order_events.sort.each do |event|
-          next unless @order.send("can_#{event}?")
+          next unless @order.send(:"can_#{event}?")
 
           translated_event = t(event, scope: [:spree, :admin, :order, :events])
           links << button_to(
             translated_event,
             [event.to_sym, :admin, @order],
             method: :put,
-            data: { confirm: t(:order_sure_want_to, event: translated_event, scope: :spree) }
+            data: {confirm: t("spree.order_sure_want_to", event: translated_event)}
           )
         end
         safe_join(links, "&nbsp;".html_safe)
@@ -72,7 +72,7 @@ module Spree
           "P" => "Not Processed",
           "S" => "Issuer indicates that CVV2 data should be present on the card, but the merchant has indicated data is not present on the card",
           "U" => "Issuer has not certified for CVV2 or Issuer has not provided Visa with the CVV2 encryption keys",
-          ""  => "Transaction failed because wrong CVV2 number was entered or no CVV2 number was entered"
+          "" => "Transaction failed because wrong CVV2 number was entered or no CVV2 number was entered"
         }
       end
     end

@@ -30,7 +30,7 @@ RSpec.describe SolidusAdmin::MenuItem do
     context "when the route is a symbol" do
       it "calls that method on the solidus_admin url_helpers" do
         item = described_class.new(key: "foo", route: :foo_path, position: 1)
-        url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+        url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
         expect(item.path(url_helpers)).to eq("/foo")
       end
@@ -39,7 +39,7 @@ RSpec.describe SolidusAdmin::MenuItem do
     context "when the route is a Proc" do
       it "evaluates it in the url helpers context" do
         item = described_class.new(key: "foo", route: -> { solidus_admin.foo_path }, position: 1)
-        url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+        url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
         expect(item.path(url_helpers)).to eq("/foo")
       end
@@ -49,7 +49,7 @@ RSpec.describe SolidusAdmin::MenuItem do
   describe "#current?" do
     it "returns true when the path matches the current request path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
       expect(
         item.current?(url_helpers, "/foo")
@@ -58,7 +58,7 @@ RSpec.describe SolidusAdmin::MenuItem do
 
     it "returns true when the path matches the current request base path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
       expect(
         item.current?(url_helpers, "/foo?bar=baz")
@@ -67,7 +67,7 @@ RSpec.describe SolidusAdmin::MenuItem do
 
     it "returns false when the path does not match the current request base path" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
       expect(
         item.current?(url_helpers, "/bar")
@@ -78,7 +78,7 @@ RSpec.describe SolidusAdmin::MenuItem do
   describe "#active?" do
     it "returns true when it's the current item" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
       expect(
         item.active?(url_helpers, "/foo")
@@ -89,7 +89,7 @@ RSpec.describe SolidusAdmin::MenuItem do
       item = described_class.new(
         key: "foo", route: :foo_path, position: 1, children: [described_class.new(key: "bar", route: :bar_path, position: 1)]
       )
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo", bar_path: "/bar" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo", bar_path: "/bar"})
 
       expect(
         item.active?(url_helpers, "/bar")
@@ -97,7 +97,7 @@ RSpec.describe SolidusAdmin::MenuItem do
     end
 
     it "returns true when the match_path proc is present and matches" do
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
       item = described_class.new(
         key: "foo", route: :foo_path, position: 1, match_path: ->(path) { path.start_with?("/bar") }
       )
@@ -107,7 +107,7 @@ RSpec.describe SolidusAdmin::MenuItem do
 
     it "returns false otherwise" do
       item = described_class.new(key: "foo", route: :foo_path, position: 1)
-      url_helpers = url_helpers(solidus_admin: { foo_path: "/foo" })
+      url_helpers = url_helpers(solidus_admin: {foo_path: "/foo"})
 
       expect(
         item.active?(url_helpers, "/bar")

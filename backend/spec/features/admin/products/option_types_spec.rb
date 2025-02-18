@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Option Types", type: :feature do
   stub_authorization!
@@ -35,8 +35,8 @@ describe "Option Types", type: :feature do
       click_button "Create"
       expect(page).to have_content("successfully created!")
 
-      page.find('#option_type_option_values_attributes_0_name').set('color')
-      page.find('#option_type_option_values_attributes_0_presentation').set('black')
+      page.find("#option_type_option_values_attributes_0_name").set("color")
+      page.find("#option_type_option_values_attributes_0_presentation").set("black")
 
       click_button "Update"
       expect(page).to have_content("successfully updated!")
@@ -48,8 +48,8 @@ describe "Option Types", type: :feature do
       create(:option_type, name: "tshirt-color", presentation: "Color")
       create(:option_type, name: "tshirt-size", presentation: "Size")
       click_link "Option Types"
-      within('table#listing_option_types') do
-        find('tr', text: 'Size').click_link "Edit"
+      within("table#listing_option_types") do
+        find("tr", text: "Size").click_link "Edit"
       end
       fill_in "option_type_name", with: "foo-size 99"
       click_button "Update"
@@ -62,12 +62,12 @@ describe "Option Types", type: :feature do
   it "can remove an option value from an option type", js: true do
     option_value = create(:option_value)
     click_link "Option Types"
-    within('table#listing_option_types') { click_icon :edit }
+    within("table#listing_option_types") { click_icon :edit }
     expect(page).to have_title("#{option_value.option_type.name} - Option Types - Products")
     expect(page).to have_css("tbody#option_values tr", count: 1)
     within("tbody#option_values") do
       accept_alert do
-        find('.fa-trash').click
+        find(".fa-trash").click
       end
     end
     # Assert that the field is hidden automatically
@@ -91,7 +91,7 @@ describe "Option Types", type: :feature do
   it "can remove a non-persisted option value from an option type", js: true do
     create(:option_type)
     click_link "Option Types"
-    within('table#listing_option_types') { click_icon :edit }
+    within("table#listing_option_types") { click_icon :edit }
 
     expect(page).to have_css("tbody#option_values tr", count: 1)
 
@@ -102,7 +102,7 @@ describe "Option Types", type: :feature do
     # Remove default option type
     within("tbody#option_values") do
       within_row(1) do
-        find('.fa-trash').click
+        find(".fa-trash").click
       end
     end
     # Assert that the field is hidden automatically
@@ -110,7 +110,7 @@ describe "Option Types", type: :feature do
 
     # Remove added option type
     within("tbody#option_values") do
-      find('.fa-trash').click
+      find(".fa-trash").click
     end
     # Assert that the field is hidden automatically
     expect(page).to have_css("tbody#option_values tr", count: 0)

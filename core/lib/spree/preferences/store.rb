@@ -3,7 +3,7 @@
 # Use singleton class Spree::Preferences::Store.instance to access
 #
 
-require 'singleton'
+require "singleton"
 
 module Spree::Preferences
   class StoreInstance
@@ -35,19 +35,19 @@ module Spree::Preferences
         # has been cleared from the cache
 
         # does it exist in the database?
-        if preference = Spree::Preference.find_by(key:)
+        val = if preference = Spree::Preference.find_by(key:)
           # it does exist
-          val = preference.value
+          preference.value
         else
           # use the fallback value
-          val = yield
+          yield
         end
 
         # Cache either the value from the db or the fallback value.
         # This avoids hitting the db with subsequent queries.
         @cache.write(key, val)
 
-        return val
+        val
       else
         yield
       end

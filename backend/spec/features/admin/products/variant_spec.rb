@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Variants", type: :feature do
   stub_authorization!
@@ -18,14 +18,14 @@ describe "Variants", type: :feature do
       within_row(1) { click_icon :edit }
       click_link "Variants"
       click_on "New Variant"
-      expect(page).to have_field('variant_price', with: "1.99")
-      expect(page).to have_field('variant_cost_price', with: "1.00")
-      expect(page).to have_field('variant_weight', with: "2.50")
-      expect(page).to have_field('variant_height', with: "3.00")
-      expect(page).to have_field('variant_width', with: "1.00")
-      expect(page).to have_field('variant_depth', with: "1.50")
-      expect(page).to have_select('variant[tax_category_id]')
-      expect(page).to have_select('variant[shipping_category_id]')
+      expect(page).to have_field("variant_price", with: "1.99")
+      expect(page).to have_field("variant_cost_price", with: "1.00")
+      expect(page).to have_field("variant_weight", with: "2.50")
+      expect(page).to have_field("variant_height", with: "3.00")
+      expect(page).to have_field("variant_width", with: "1.00")
+      expect(page).to have_field("variant_depth", with: "1.50")
+      expect(page).to have_select("variant[tax_category_id]")
+      expect(page).to have_select("variant[shipping_category_id]")
     end
   end
 
@@ -50,38 +50,38 @@ describe "Variants", type: :feature do
       end
     end
 
-    context 'displaying discarded variants' do
-      let!(:existing_variant) { create(:variant, sku: 'existing_variant_sku', product:) }
-      let!(:discarded_variant) { create(:variant, sku: 'discarded_variant_sku', product:) }
+    context "displaying discarded variants" do
+      let!(:existing_variant) { create(:variant, sku: "existing_variant_sku", product:) }
+      let!(:discarded_variant) { create(:variant, sku: "discarded_variant_sku", product:) }
 
       before { discarded_variant.discard! }
 
-      it 'does not display deleted variants by default' do
+      it "does not display deleted variants by default" do
         visit spree.admin_product_variants_path(product)
 
         expect(page).to have_content(existing_variant.sku)
         expect(page).not_to have_content(discarded_variant.sku)
       end
 
-      it 'allows to display deleted variants with a filter' do
+      it "allows to display deleted variants with a filter" do
         visit spree.admin_product_variants_path(product)
-        check 'Show Deleted Variants'
-        click_button 'Filter Results'
+        check "Show Deleted Variants"
+        click_button "Filter Results"
 
         expect(page).to have_content(discarded_variant.sku)
       end
     end
 
-    context 'displaying variants with unconfigured prices' do
-      let!(:variant) { create(:variant, sku: 'priceless_variant', product:) }
+    context "displaying variants with unconfigured prices" do
+      let!(:variant) { create(:variant, sku: "priceless_variant", product:) }
 
       before { variant.prices.delete_all }
 
-      it 'renders the listing correctly' do
+      it "renders the listing correctly" do
         visit spree.admin_product_variants_path(product)
 
         expect(page.status_code).to be(200)
-        expect(page).to have_content('priceless_variant')
+        expect(page).to have_content("priceless_variant")
       end
     end
   end
@@ -101,7 +101,7 @@ describe "Variants", type: :feature do
       it "page has a field for editing the option value", js: true do
         visit spree.edit_admin_product_variant_path(product, variant)
         expect(page).to have_css("label", text: option_type.presentation)
-        expect(page).to have_select('Size', selected: 'S')
+        expect(page).to have_select("Size", selected: "S")
       end
     end
   end
@@ -113,13 +113,13 @@ describe "Variants", type: :feature do
 
     it "can delete a variant" do
       visit spree.admin_product_variants_path(product)
-      within 'tr', text: 'Size: S' do
+      within "tr", text: "Size: S" do
         accept_alert do
           click_icon :trash
         end
       end
 
-      expect(page).to have_no_text('Size: S')
+      expect(page).to have_no_text("Size: S")
     end
   end
 end

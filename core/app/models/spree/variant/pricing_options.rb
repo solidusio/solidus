@@ -33,10 +33,10 @@ module Spree
       # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
       #
       def self.from_line_item(line_item)
-        tax_address = line_item.order.try!(:tax_address)
+        tax_address = line_item.order&.tax_address
         new(
           currency: line_item.currency || Spree::Config.currency,
-          country_iso: tax_address && tax_address.country.try!(:iso)
+          country_iso: tax_address && tax_address.country&.iso
         )
       end
 
@@ -54,8 +54,8 @@ module Spree
       # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
       def self.from_context(context)
         new(
-          currency: context.current_store.try!(:default_currency).presence || Spree::Config[:currency],
-          country_iso: context.current_store.try!(:cart_tax_country_iso).presence
+          currency: context.current_store&.default_currency.presence || Spree::Config[:currency],
+          country_iso: context.current_store&.cart_tax_country_iso.presence
         )
       end
 

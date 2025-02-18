@@ -4,10 +4,10 @@ module Spree
   module Api
     class OptionValuesController < Spree::Api::BaseController
       def index
-        if params[:ids]
-          @option_values = scope.where(id: params[:ids])
+        @option_values = if params[:ids]
+          scope.where(id: params[:ids])
         else
-          @option_values = scope.ransack(params[:q]).result.distinct
+          scope.ransack(params[:q]).result.distinct
         end
         respond_with(@option_values)
       end
@@ -45,10 +45,10 @@ module Spree
       private
 
       def scope
-        if params[:option_type_id]
-          @scope ||= Spree::OptionType.find(params[:option_type_id]).option_values.accessible_by(current_ability)
+        @scope ||= if params[:option_type_id]
+          Spree::OptionType.find(params[:option_type_id]).option_values.accessible_by(current_ability)
         else
-          @scope ||= Spree::OptionValue.accessible_by(current_ability).load
+          Spree::OptionValue.accessible_by(current_ability).load
         end
       end
 

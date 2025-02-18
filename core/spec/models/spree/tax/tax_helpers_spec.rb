@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Tax::TaxHelpers do
   before do
-    stub_const('DummyClass', (Class.new do
+    stub_const("DummyClass", (Class.new do
       include Spree::Tax::TaxHelpers
 
       def valid_rates(item)
@@ -27,21 +27,21 @@ RSpec.describe Spree::Tax::TaxHelpers do
 
   subject { DummyClass.new.valid_rates(item) }
 
-  describe '#rates_for_item' do
-    it 'returns tax rates that match the tax category of the given item' do
+  describe "#rates_for_item" do
+    it "returns tax rates that match the tax category of the given item" do
       expect(subject).to contain_exactly(tax_rate)
     end
 
-    context 'when multiple rates exist that are currently not valid' do
+    context "when multiple rates exist that are currently not valid" do
       let(:starts_at) { 1.day.from_now }
       let(:expires_at) { 2.days.from_now }
 
       let!(:invalid_tax_rate) do
         create(:tax_rate, tax_categories: [tax_category], zone:,
-               starts_at:, expires_at:)
+          starts_at:, expires_at:)
       end
 
-      it 'returns only active rates that match the tax category of given item' do
+      it "returns only active rates that match the tax category of given item" do
         expect(Spree::TaxRate.for_address(tax_address)).to contain_exactly(tax_rate, invalid_tax_rate)
 
         expect(subject).to contain_exactly(tax_rate)

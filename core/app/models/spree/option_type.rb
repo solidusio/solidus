@@ -15,7 +15,7 @@ module Spree
     has_many :product_option_types, dependent: :destroy, inverse_of: :option_type
     has_many :products, through: :product_option_types
 
-    validates :name, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :name, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     validates :presentation, presence: true
 
     default_scope -> { order(:position) }

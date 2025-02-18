@@ -9,22 +9,22 @@ class Spree::Admin::PromotionActionsController < Spree::Admin::BaseController
     @calculators = @promotion_action.available_calculators
     @promotion_action.promotion = @promotion
     if @promotion_action.save
-      flash[:success] = t('spree.successfully_created', resource: t('spree.promotion_action'))
+      flash[:success] = t("spree.successfully_created", resource: t("spree.promotion_action"))
     end
     respond_to do |format|
       format.html { redirect_to spree.edit_admin_promotion_path(@promotion) }
-      format.js   { render layout: false }
+      format.js { render layout: false }
     end
   end
 
   def destroy
     @promotion_action = @promotion.promotion_actions.find(params[:id])
     if @promotion_action.discard
-      flash[:success] = t('spree.successfully_removed', resource: t('spree.promotion_action'))
+      flash[:success] = t("spree.successfully_removed", resource: t("spree.promotion_action"))
     end
     respond_to do |format|
       format.html { redirect_to spree.edit_admin_promotion_path(@promotion) }
-      format.js   { render layout: false }
+      format.js { render layout: false }
     end
   end
 
@@ -41,10 +41,10 @@ class Spree::Admin::PromotionActionsController < Spree::Admin::BaseController
       klass.name == requested_type
     end
     if !@promotion_action_type
-      flash[:error] = t('spree.invalid_promotion_action')
+      flash[:error] = t("spree.invalid_promotion_action")
       respond_to do |format|
         format.html { redirect_to spree.edit_admin_promotion_path(@promotion) }
-        format.js   { render layout: false }
+        format.js { render layout: false }
       end
     end
   end

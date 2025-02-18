@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :address, class: 'Spree::Address' do
+  factory :address, class: "Spree::Address" do
     transient do
       # There's `Spree::Address#country_iso=`, prohibiting me from using `country_iso` here
-      country_iso_code { 'US' }
-      state_code { 'AL' }
+      country_iso_code { "US" }
+      state_code { "AL" }
     end
 
-    name { 'John Von Doe' }
-    company { 'Company' }
-    address1 { '10 Lovely Street' }
-    address2 { 'Northwest' }
-    city { 'Herndon' }
+    name { "John Von Doe" }
+    company { "Company" }
+    address1 { "10 Lovely Street" }
+    address2 { "Northwest" }
+    city { "Herndon" }
     sequence(:zipcode, 10001) { |i| i.to_s }
-    phone { '555-555-0199' }
-    alternative_phone { '555-555-0199' }
+    phone { "555-555-0199" }
+    alternative_phone { "555-555-0199" }
 
     country do |address|
       if address.state
@@ -35,10 +35,10 @@ FactoryBot.define do
   end
 
   factory :ship_address, parent: :address do
-    address1 { 'A Different Road' }
+    address1 { "A Different Road" }
   end
 
   factory :bill_address, parent: :address do
-    address1 { 'PO Box 1337' }
+    address1 { "PO Box 1337" }
   end
 end

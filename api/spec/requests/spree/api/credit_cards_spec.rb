@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Credit cards', type: :request do
-    describe '#index' do
+  describe "Credit cards", type: :request do
+    describe "#index" do
       let!(:admin_user) do
         create(:admin_user)
       end
@@ -77,15 +77,15 @@ module Spree::Api
             create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "another-normal-user-random")
           end
 
-          it 'can control the page size through a parameter' do
-            get spree.api_user_credit_cards_path(current_api_user.id), params: { per_page: 1 }
-            expect(json_response['count']).to eq(1)
-            expect(json_response['current_page']).to eq(1)
-            expect(json_response['pages']).to eq(2)
+          it "can control the page size through a parameter" do
+            get spree.api_user_credit_cards_path(current_api_user.id), params: {per_page: 1}
+            expect(json_response["count"]).to eq(1)
+            expect(json_response["current_page"]).to eq(1)
+            expect(json_response["pages"]).to eq(2)
           end
 
           it "can query the results through a parameter" do
-            get spree.api_user_credit_cards_path(current_api_user.id), params: { q: { id_eq: normal_user_card.id } }
+            get spree.api_user_credit_cards_path(current_api_user.id), params: {q: {id_eq: normal_user_card.id}}
             expect(json_response["credit_cards"].count).to eq(1)
             expect(json_response["count"]).to eq(1)
             expect(json_response["current_page"]).to eq(1)
@@ -95,31 +95,31 @@ module Spree::Api
       end
     end
 
-    describe '#update' do
-      let(:credit_card) { create(:credit_card, name: 'Joe Shmoe', user: credit_card_user) }
+    describe "#update" do
+      let(:credit_card) { create(:credit_card, name: "Joe Shmoe", user: credit_card_user) }
       let(:credit_card_user) { create(:user) }
 
       before do
         stub_authentication!
       end
 
-      context 'when the user is authorized' do
+      context "when the user is authorized" do
         let(:current_api_user) { credit_card_user }
 
-        it 'updates the credit card' do
+        it "updates the credit card" do
           expect {
-            put spree.api_credit_card_path(credit_card.to_param), params: { credit_card: { name: 'Jordan Brough' } }
+            put spree.api_credit_card_path(credit_card.to_param), params: {credit_card: {name: "Jordan Brough"}}
           }.to change {
             credit_card.reload.name
-          }.from('Joe Shmoe').to('Jordan Brough')
+          }.from("Joe Shmoe").to("Jordan Brough")
         end
       end
 
-      context 'when the user is not authorized' do
+      context "when the user is not authorized" do
         let(:current_api_user) { create(:user) }
 
-        it 'rejects the request' do
-          put spree.api_credit_card_path(credit_card.to_param), params: { credit_card: { name: 'Jordan Brough' } }
+        it "rejects the request" do
+          put spree.api_credit_card_path(credit_card.to_param), params: {credit_card: {name: "Jordan Brough"}}
           expect(response.status).to eq(401)
         end
       end

@@ -44,7 +44,7 @@ module SolidusPromotions
 
     # Ensure a negative amount which does not exceed the object's amount
     def compute_amount(adjustable)
-      promotion_amount = calculator.compute(adjustable) || BigDecimal("0")
+      promotion_amount = calculator.compute(adjustable) || BigDecimal(0)
       [adjustable.discountable_amount, promotion_amount.abs].min * -1
     end
 
@@ -93,7 +93,7 @@ module SolidusPromotions
             condition: applicable_condition,
             success: eligible,
             code: eligible ? nil : (code || :coupon_code_unknown_error),
-            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_promotions, :eligibility_errors]))
+            message: eligible ? nil : (message || I18n.t("solidus_promotions.eligibility_errors.coupon_code_unknown_error"))
           )
         end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 module Spree
   module Calculator::Shipping
@@ -9,10 +9,10 @@ module Spree
       let(:variant1) { build(:variant) }
       let(:variant2) { build(:variant) }
 
-      it_behaves_like 'a calculator with a description'
+      it_behaves_like "a calculator with a description"
 
       let(:package) do
-        build(:stock_package, variants_contents: { variant1 => 5, variant2 => 3 })
+        build(:stock_package, variants_contents: {variant1 => 5, variant2 => 3})
       end
 
       subject { described_class.new(preferred_amount: 10) }

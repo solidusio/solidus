@@ -10,7 +10,7 @@ module Spree
     end
 
     def partial_name
-      'gateway'
+      "gateway"
     end
 
     def supports?(source)

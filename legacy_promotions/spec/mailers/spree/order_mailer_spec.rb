@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderMailer, type: :mailer do
   let(:order) do
     order = create(:order)
-    product = stub_model(Spree::Product, name: %{The "BEST" product})
+    product = stub_model(Spree::Product, name: %(The "BEST" product))
     variant = stub_model(Spree::Variant, product:)
     price = stub_model(Spree::Price, variant:, amount: 5.00)
     store = FactoryBot.build :store, mail_from_address: "store@example.com", bcc_email: "bcc@example.com"
@@ -22,16 +22,16 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
         :adjustment,
         adjustable: order,
         order:,
-        eligible:   true,
-        label:      'Eligible Adjustment'
+        eligible: true,
+        label: "Eligible Adjustment"
       )
 
       create(
         :adjustment,
         adjustable: order,
         order:,
-        eligible:   false,
-        label:      'Ineligible Adjustment'
+        eligible: false,
+        label: "Ineligible Adjustment"
       )
     end
 

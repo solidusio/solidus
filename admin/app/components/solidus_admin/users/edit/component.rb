@@ -14,38 +14,38 @@ class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
   def tabs
     [
       {
-        text: t('.account'),
+        text: t(".account"),
         href: solidus_admin.user_path(@user),
-        current: action_name == "edit",
+        current: action_name == "edit"
       },
       {
-        text: t('.addresses'),
+        text: t(".addresses"),
         href: solidus_admin.addresses_user_path(@user),
-        current: action_name == "addresses",
+        current: action_name == "addresses"
       },
       {
-        text: t('.order_history'),
+        text: t(".order_history"),
         href: solidus_admin.orders_user_path(@user),
-        current: action_name == "orders",
+        current: action_name == "orders"
       },
       {
-        text: t('.items'),
+        text: t(".items"),
         href: spree.items_admin_user_path(@user),
         # @todo: update this "current" logic once folded into new admin
-        current: action_name != "edit",
+        current: action_name != "edit"
       },
       {
-        text: t('.store_credit'),
+        text: t(".store_credit"),
         href: spree.admin_user_store_credits_path(@user),
         # @todo: update this "current" logic once folded into new admin
-        current: action_name != "edit",
-      },
+        current: action_name != "edit"
+      }
     ]
   end
 
   def role_options
     Spree::Role.all.map do |role|
-      { label: role.name, id: role.id }
+      {label: role.name, id: role.id}
     end
   end
 end

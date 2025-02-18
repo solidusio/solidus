@@ -34,7 +34,7 @@ module Spree
     def store_location
       return if self.class.rules.any? { |rule| rule.match? controller }
 
-      session[:spree_user_return_to] = request.fullpath.gsub('//', '/')
+      session[:spree_user_return_to] = request.fullpath.gsub("//", "/")
     end
 
     private

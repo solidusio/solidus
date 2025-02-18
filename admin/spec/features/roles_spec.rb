@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Roles", :js, type: :feature do
   before do
-    sign_in create(:admin_user, email: 'admin@example.com')
+    sign_in create(:admin_user, email: "admin@example.com")
   end
 
   let!(:settings_edit_permission) {
@@ -25,8 +25,8 @@ describe "Roles", :js, type: :feature do
   }
 
   it "lists roles and allows deleting them" do
-    create(:role, name: "Customer Role" )
-    Spree::Role.find_or_create_by(name: 'admin')
+    create(:role, name: "Customer Role")
+    Spree::Role.find_or_create_by(name: "admin")
 
     visit "/admin/roles"
     expect(page).to have_content("Users and Roles")
@@ -75,7 +75,7 @@ describe "Roles", :js, type: :feature do
           expect(page).to have_content("Settings")
           expect(page).to have_content("Edit")
           expect(page).to have_content("View")
-          find('label', text: 'View').find('input[type=checkbox]').click
+          find("label", text: "View").find("input[type=checkbox]").click
         end
 
         click_on "Add Role"
@@ -91,7 +91,7 @@ describe "Roles", :js, type: :feature do
     context "with invalid data" do
       context "with a non-unique name" do
         before do
-          create(:role, name: "Customer Role" )
+          create(:role, name: "Customer Role")
         end
 
         it "fails to create a new role, keeping page and q params" do
@@ -143,9 +143,9 @@ describe "Roles", :js, type: :feature do
         expect(page).to have_content("Settings")
         expect(page).to have_content("Edit")
         expect(page).to have_content("View")
-        expect(find('label', text: 'Edit').find('input[type=checkbox]').checked?).to eq(true)
-        find('label', text: 'Edit').find('input[type=checkbox]').uncheck
-        find('label', text: 'View').find('input[type=checkbox]').check
+        expect(find("label", text: "Edit").find("input[type=checkbox]").checked?).to eq(true)
+        find("label", text: "Edit").find("input[type=checkbox]").uncheck
+        find("label", text: "View").find("input[type=checkbox]").check
       end
 
       click_on "Update Role"
@@ -156,7 +156,7 @@ describe "Roles", :js, type: :feature do
       expect(Spree::Role.find_by(name: "Publisher")).to be_present
       expect(Spree::Role.find_by(name: "Publisher").permission_set_ids)
         .to contain_exactly(
-          settings_view_permission.id,
+          settings_view_permission.id
         )
       expect(page.current_url).to include(query)
     end

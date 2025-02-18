@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Customer Details", type: :feature, js: true do
   include OrderFeatureHelper
@@ -10,14 +10,14 @@ describe "Customer Details", type: :feature, js: true do
   let(:country) { create(:country, name: "Kangaland") }
   let(:state) { create(:state, name: "Alabama", country:) }
   let!(:shipping_method) { create(:shipping_method) }
-  let!(:order) { create(:order, ship_address:, bill_address:, state: 'complete', completed_at: "2011-02-01 12:36:15") }
+  let!(:order) { create(:order, ship_address:, bill_address:, state: "complete", completed_at: "2011-02-01 12:36:15") }
   let!(:product) { create(:product_in_stock) }
 
   # We need a unique name that will appear for the customer dropdown
   let!(:ship_address) { create(:address, country:, state:, name: "Jane Doe") }
   let!(:bill_address) { create(:address, country:, state:, name: "Jane Doe") }
 
-  let!(:user) { create(:user, email: 'foobar@example.com', ship_address:, bill_address:) }
+  let!(:user) { create(:user, email: "foobar@example.com", ship_address:, bill_address:) }
 
   context "brand new order" do
     let(:quantity) { 1 }
@@ -29,7 +29,7 @@ describe "Customer Details", type: :feature, js: true do
 
       add_line_item(product.name, quantity:)
 
-      expect(page).to have_css('.line-item')
+      expect(page).to have_css(".line-item")
       click_link "Customer"
       targetted_select2 "foobar@example.com", from: "#s2id_customer_search"
     end
@@ -37,14 +37,14 @@ describe "Customer Details", type: :feature, js: true do
     # Regression test for https://github.com/spree/spree/issues/3335 and https://github.com/spree/spree/issues/5317
     it "associates a user when not using guest checkout" do
       # 5317 - Address prefills using user's default.
-      expect(page).to have_field('Name', with: user.bill_address.name)
-      expect(page).to have_field('Street Address', with: user.bill_address.address1)
+      expect(page).to have_field("Name", with: user.bill_address.name)
+      expect(page).to have_field("Street Address", with: user.bill_address.address1)
       expect(page).to have_field("Street Address (cont'd)", with: user.bill_address.address2)
-      expect(page).to have_field('City', with: user.bill_address.city)
-      expect(page).to have_field('Zip Code', with: user.bill_address.zipcode)
-      expect(page).to have_select('Country', selected: "United States of America", visible: false)
-      expect(page).to have_select('State', selected: user.bill_address.state.name, visible: false)
-      expect(page).to have_field('Phone', with: user.bill_address.phone)
+      expect(page).to have_field("City", with: user.bill_address.city)
+      expect(page).to have_field("Zip Code", with: user.bill_address.zipcode)
+      expect(page).to have_select("Country", selected: "United States of America", visible: false)
+      expect(page).to have_select("State", selected: user.bill_address.state.name, visible: false)
+      expect(page).to have_field("Phone", with: user.bill_address.phone)
       click_button "Update"
       expect(Spree::Order.last.user).not_to be_nil
     end
@@ -53,7 +53,7 @@ describe "Customer Details", type: :feature, js: true do
     it "does not reset guest checkout to true when returning to customer tab" do
       click_button "Update"
       click_link "Customer"
-      expect(find('#guest_checkout_true')).not_to be_checked
+      expect(find("#guest_checkout_true")).not_to be_checked
     end
 
     context "when required quantity is more than available" do
@@ -62,7 +62,7 @@ describe "Customer Details", type: :feature, js: true do
 
       it "displays an error" do
         click_button "Update"
-        expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
+        expect(page).to have_content I18n.t("spree.insufficient_stock_for_order")
       end
     end
   end
@@ -76,7 +76,7 @@ describe "Customer Details", type: :feature, js: true do
 
       visit spree.admin_path
       click_link "Orders"
-      within('table#listing_orders') { click_icon(:edit) }
+      within("table#listing_orders") { click_icon(:edit) }
     end
 
     context "selected country has no state" do
@@ -138,10 +138,10 @@ describe "Customer Details", type: :feature, js: true do
         click_link "Customer"
         fill_in "order_email", with: "newemail@example.com"
         click_button "Update"
-        expect(page).to have_content 'Customer Details Updated'
+        expect(page).to have_content "Customer Details Updated"
         click_link "Customer"
-        expect(page).to have_field 'Customer Email', with: order.reload.email
-        within '#order_user_link' do
+        expect(page).to have_field "Customer Email", with: order.reload.email
+        within "#order_user_link" do
           expect(page).to have_link user.email
         end
       end
@@ -170,15 +170,15 @@ describe "Customer Details", type: :feature, js: true do
       specify do
         click_link "Customer"
         # Need to fill in valid information so it passes validations
-        fill_in "order_ship_address_attributes_name",       with: "John 99 Doe"
-        fill_in "order_ship_address_attributes_company",    with: "Company"
-        fill_in "order_ship_address_attributes_address1",   with: "100 first lane"
-        fill_in "order_ship_address_attributes_address2",   with: "#101"
-        fill_in "order_ship_address_attributes_city",       with: "Bethesda"
-        fill_in "order_ship_address_attributes_zipcode",    with: "20170"
+        fill_in "order_ship_address_attributes_name", with: "John 99 Doe"
+        fill_in "order_ship_address_attributes_company", with: "Company"
+        fill_in "order_ship_address_attributes_address1", with: "100 first lane"
+        fill_in "order_ship_address_attributes_address2", with: "#101"
+        fill_in "order_ship_address_attributes_city", with: "Bethesda"
+        fill_in "order_ship_address_attributes_zipcode", with: "20170"
 
         within("#shipping") do
-          select 'Alabama', from: "State"
+          select "Alabama", from: "State"
         end
 
         fill_in "order_ship_address_attributes_phone", with: "123-456-7890"
@@ -188,13 +188,13 @@ describe "Customer Details", type: :feature, js: true do
   end
 
   def fill_in_address
-    fill_in "Name",                    with: "John 99 Doe"
-    fill_in "Company",                 with: "Company"
-    fill_in "Street Address",          with: "100 first lane"
+    fill_in "Name", with: "John 99 Doe"
+    fill_in "Company", with: "Company"
+    fill_in "Street Address", with: "100 first lane"
     fill_in "Street Address (cont'd)", with: "#101"
-    fill_in "City",                    with: "Bethesda"
-    fill_in "Zip Code",                with: "20170"
-    select 'Alabama', from: "State"
+    fill_in "City", with: "Bethesda"
+    fill_in "Zip Code", with: "20170"
+    select "Alabama", from: "State"
     fill_in "Phone", with: "123-456-7890"
   end
 end

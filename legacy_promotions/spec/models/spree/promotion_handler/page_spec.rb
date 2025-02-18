@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module PromotionHandler
     RSpec.describe Page, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 1) }
 
-      let(:promotion) { Promotion.create(name: "10% off", path: '10off') }
+      let(:promotion) { Promotion.create(name: "10% off", path: "10off") }
       before do
         calculator = Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
         action = Promotion::Actions::CreateItemAdjustments.create(calculator:)
@@ -16,7 +16,7 @@ module Spree
 
       it "activates at the right path" do
         expect(order.line_item_adjustments.count).to eq(0)
-        Spree::PromotionHandler::Page.new(order, '10off').activate
+        Spree::PromotionHandler::Page.new(order, "10off").activate
         expect(order.line_item_adjustments.count).to eq(1)
       end
 
@@ -30,14 +30,14 @@ module Spree
 
         it "is not activated" do
           expect(order.line_item_adjustments.count).to eq(0)
-          Spree::PromotionHandler::Page.new(order, '10off').activate
+          Spree::PromotionHandler::Page.new(order, "10off").activate
           expect(order.line_item_adjustments.count).to eq(0)
         end
       end
 
       it "does not activate at the wrong path" do
         expect(order.line_item_adjustments.count).to eq(0)
-        Spree::PromotionHandler::Page.new(order, 'wrongpath').activate
+        Spree::PromotionHandler::Page.new(order, "wrongpath").activate
         expect(order.line_item_adjustments.count).to eq(0)
       end
     end

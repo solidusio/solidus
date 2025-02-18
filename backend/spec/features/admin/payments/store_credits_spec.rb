@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-RSpec.describe 'Store credits', type: :feature do
+RSpec.describe "Store credits", type: :feature do
   stub_authorization!
 
   let(:order) { FactoryBot.create(:completed_order_with_totals) }

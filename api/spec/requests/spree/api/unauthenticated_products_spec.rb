@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'shared_examples/protect_product_actions'
-require 'spec_helper'
+require "shared_examples/protect_product_actions"
+require "spec_helper"
 
 module Spree::Api
-  describe 'Unauthorized products', type: :request do
+  describe "Unauthorized products", type: :request do
     let!(:product) { create(:product) }
     let(:attributes) { [:id, :name, :description, :price, :available_on, :slug, :meta_description, :meta_keywords, :taxon_ids, :meta_title] }
 

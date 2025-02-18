@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spree/encryptor'
+require "spree/encryptor"
 
 module Spree::Preferences
   module PreferableClassMethods
-    DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i(
+    DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i[
       boolean
       decimal
       integer
@@ -12,7 +12,7 @@ module Spree::Preferences
       string
       text
       encrypted_string
-    )
+    ]
 
     def defined_preferences
       []
@@ -27,13 +27,13 @@ module Spree::Preferences
       end
 
       default = begin
-                  given = options[:default]
-                  if given.is_a?(Proc)
-                    given
-                  else
-                    proc { given }
-                  end
-                end
+        given = options[:default]
+        if given.is_a?(Proc)
+          given
+        else
+          proc { given }
+        end
+      end
 
       # The defined preferences on a class are all those defined directly on
       # that class as well as those defined on ancestors.
@@ -76,25 +76,25 @@ module Spree::Preferences
     end
 
     def preference_getter_method(name)
-      "preferred_#{name}".to_sym
+      :"preferred_#{name}"
     end
 
     def preference_setter_method(name)
-       "preferred_#{name}=".to_sym
+      :"preferred_#{name}="
     end
 
     def preference_default_getter_method(name)
-      "preferred_#{name}_default".to_sym
+      :"preferred_#{name}_default"
     end
 
     def preference_type_getter_method(name)
-      "preferred_#{name}_type".to_sym
+      :"preferred_#{name}_type"
     end
 
     def preference_encryptor(options)
       key = options[:encryption_key] ||
-            ENV['SOLIDUS_PREFERENCES_MASTER_KEY'] ||
-            Rails.application.credentials.secret_key_base
+        ENV["SOLIDUS_PREFERENCES_MASTER_KEY"] ||
+        Rails.application.credentials.secret_key_base
 
       Spree::Encryptor.new(key)
     end

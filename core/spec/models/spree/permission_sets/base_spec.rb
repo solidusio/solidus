@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::PermissionSets::Base do
   let(:ability) { Spree::Ability.new nil }
@@ -8,14 +8,14 @@ RSpec.describe Spree::PermissionSets::Base do
 
   describe "activate!" do
     it "raises a not implemented error" do
-      expect{ subject }.to raise_error(NotImplementedError)
+      expect { subject }.to raise_error(NotImplementedError)
     end
   end
 
   context "when the subclass does not define a privilege" do
     # Define a subclass that does not override privilege
     before do
-      stub_const('Spree::PermissionSets::ExampleSubclass', Class.new(Spree::PermissionSets::Base))
+      stub_const("Spree::PermissionSets::ExampleSubclass", Class.new(Spree::PermissionSets::Base))
     end
 
     it "raises a NotImplementedError" do
@@ -26,7 +26,7 @@ RSpec.describe Spree::PermissionSets::Base do
   context "when the subclass does not define a category" do
     # Define a subclass that does not override category
     before do
-      stub_const('Spree::PermissionSets::ExampleSubclass', Class.new(Spree::PermissionSets::Base))
+      stub_const("Spree::PermissionSets::ExampleSubclass", Class.new(Spree::PermissionSets::Base))
     end
 
     it "raises a NotImplementedError" do
@@ -37,7 +37,7 @@ RSpec.describe Spree::PermissionSets::Base do
   context "when the subclass defines privilege and category correctly" do
     # Define a subclass that correctly overrides privilege and category
     before do
-      stub_const('Spree::PermissionSets::ValidSubclass', Class.new(Spree::PermissionSets::Base) do
+      stub_const("Spree::PermissionSets::ValidSubclass", Class.new(Spree::PermissionSets::Base) do
         def self.privilege
           :valid_privilege
         end

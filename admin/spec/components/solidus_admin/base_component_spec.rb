@@ -56,7 +56,7 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
       translation = component.translate("foo.bar.baz")
 
       expect(translation).to eq("translation missing: en.foo.bar.baz")
-      expect(debug_logs).to include(%{  [Foo::Component] Missing translation: en.foo.bar.baz})
+      expect(debug_logs).to include(%(  [Foo::Component] Missing translation: en.foo.bar.baz))
     end
   end
 end

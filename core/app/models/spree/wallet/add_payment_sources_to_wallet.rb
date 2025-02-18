@@ -16,10 +16,10 @@ class Spree::Wallet::AddPaymentSourcesToWallet
     if !order.temporary_payment_source && order.user
       # select valid sources
       payments = order.payments.valid
-      sources = payments.map(&:source).
-        uniq.
-        compact.
-        select { |payment| payment.try(:reusable?) }
+      sources = payments.map(&:source)
+        .uniq
+        .compact
+        .select { |payment| payment.try(:reusable?) }
 
       # add valid sources to wallet and optionally set a default
       if sources.any?

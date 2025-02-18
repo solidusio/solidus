@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.(user, *user_attributes)
+json.call(user, *user_attributes)
 json.bill_address do
   if user.bill_address
     json.partial!("spree/api/addresses/address", address: user.bill_address)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/calculator'
+require_dependency "spree/calculator"
 
 module Spree
   # Very simple tax rate calculator. Can be used to apply a flat fee to any

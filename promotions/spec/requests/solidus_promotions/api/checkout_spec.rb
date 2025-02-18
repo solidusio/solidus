@@ -56,7 +56,7 @@ RSpec.describe "Api Feature Specs", type: :request do
   def create_line_item(variant, quantity = 1)
     expect {
       post "/api/orders/#{@order.number}/line_items",
-        params: { line_item: { variant_id: variant.id, quantity: quantity } }
+        params: {line_item: {variant_id: variant.id, quantity: quantity}}
     }.to change { @order.line_items.count }.by 1
     expect(response).to have_http_status(:created)
   end
@@ -64,7 +64,7 @@ RSpec.describe "Api Feature Specs", type: :request do
   def add_promotion(_promotion)
     expect {
       post "/api/orders/#{@order.number}/coupon_codes",
-        params: { coupon_code: promotion_code.value }
+        params: {coupon_code: promotion_code.value}
     }.to change { @order.solidus_promotions.count }.by 1
     expect(response).to have_http_status(:ok)
   end
@@ -74,14 +74,14 @@ RSpec.describe "Api Feature Specs", type: :request do
     # It seems we are missing an order-scoped address api endpoint since we need
     # to use update here.
     expect {
-      update_order(order_params: { order: { address_type => address.as_json.except("id") } })
+      update_order(order_params: {order: {address_type => address.as_json.except("id")}})
     }.to change { @order.reload.public_send(address_type) }.to address
   end
 
   def add_payment
     expect {
       post "/api/orders/#{@order.number}/payments",
-        params: { payment: { payment_method_id: payment_method.id } }
+        params: {payment: {payment_method_id: payment_method.id}}
     }.to change { @order.reload.payments.count }.by 1
     expect(response).to have_http_status(:created)
     expect(@order.payments.last.payment_method).to eq payment_method
@@ -141,8 +141,8 @@ RSpec.describe "Api Feature Specs", type: :request do
         bill_address: bill_address.as_json.except("id"),
         ship_address: ship_address.as_json.except("id"),
         line_items: {
-          0 => { variant_id: variant_1.id, quantity: 2 },
-          1 => { variant_id: variant_2.id, quantity: 2 }
+          0 => {variant_id: variant_1.id, quantity: 2},
+          1 => {variant_id: variant_2.id, quantity: 2}
         }
         # Would like to do this, but it puts the payment in a complete state,
         # which the order does not like when transitioning from confirm to complete
@@ -169,8 +169,8 @@ RSpec.describe "Api Feature Specs", type: :request do
         bill_address: bill_address.as_json.except("id"),
         ship_address: ship_address.as_json.except("id"),
         line_items: {
-          0 => { variant_id: variant_1.id, quantity: 2 },
-          1 => { variant_id: variant_2.id, quantity: 2 }
+          0 => {variant_id: variant_1.id, quantity: 2},
+          1 => {variant_id: variant_2.id, quantity: 2}
         }
         # Would like to do this, but it puts the payment in a complete state,
         # which the order does not like when transitioning from confirm to complete

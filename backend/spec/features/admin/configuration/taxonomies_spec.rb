@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Taxonomies", type: :feature do
   stub_authorization!
@@ -12,8 +12,8 @@ describe "Taxonomies", type: :feature do
 
   context "show" do
     it "should display existing taxonomies" do
-      create(:taxonomy, name: 'Brand')
-      create(:taxonomy, name: 'Categories')
+      create(:taxonomy, name: "Brand")
+      create(:taxonomy, name: "Categories")
       click_nav "Products", "Taxonomies"
       within_row(1) { expect(page).to have_content("Brand") }
       within_row(2) { expect(page).to have_content("Categories") }

@@ -32,7 +32,7 @@ module Spree
       @track_inventory = track_inventory
     end
 
-    validates :quantity, numericality: { greater_than: 0 }
+    validates :quantity, numericality: {greater_than: 0}
     validate :current_shipment_not_already_shipped
     validate :desired_shipment_different_from_current
     validates :desired_stock_location, presence: true
@@ -105,19 +105,19 @@ module Spree
         # These two statements are the heart of this class. We change the number
         # of inventory units requested from one shipment to the other.
         # We order by state, because `'backordered' < 'on_hand'`.
-        current_shipment.
-          inventory_units.
-          where(variant:).
-          order(state: :asc).
-          limit(new_on_hand_quantity).
-          update_all(shipment_id: desired_shipment.id, state: :on_hand)
+        current_shipment
+          .inventory_units
+          .where(variant:)
+          .order(state: :asc)
+          .limit(new_on_hand_quantity)
+          .update_all(shipment_id: desired_shipment.id, state: :on_hand)
 
-        current_shipment.
-          inventory_units.
-          where(variant:).
-          order(state: :asc).
-          limit(quantity - new_on_hand_quantity).
-          update_all(shipment_id: desired_shipment.id, state: :backordered)
+        current_shipment
+          .inventory_units
+          .where(variant:)
+          .order(state: :asc)
+          .limit(quantity - new_on_hand_quantity)
+          .update_all(shipment_id: desired_shipment.id, state: :backordered)
       end
     end
 
@@ -125,12 +125,12 @@ module Spree
     # to the other.
     def run_without_tracking_inventory
       ActiveRecord::Base.transaction do
-        current_shipment.
-          inventory_units.
-          where(variant:).
-          order(state: :asc).
-          limit(quantity).
-          update_all(shipment_id: desired_shipment.id)
+        current_shipment
+          .inventory_units
+          .where(variant:)
+          .order(state: :asc)
+          .limit(quantity)
+          .update_all(shipment_id: desired_shipment.id)
       end
     end
 

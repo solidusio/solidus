@@ -28,7 +28,7 @@ module SolidusAdmin
 
     initializer "solidus_admin.inflections" do
       # Support for UI as an acronym
-      ActiveSupport::Inflector.inflections { |inflect| inflect.acronym 'UI' }
+      ActiveSupport::Inflector.inflections { |inflect| inflect.acronym "UI" }
     end
 
     initializer "solidus_admin.importmap" do
@@ -60,7 +60,7 @@ module SolidusAdmin
     initializer "solidus_admin.importmap.assets" do |app|
       app.config.assets.paths += [
         SolidusAdmin::Engine.root.join("app/javascript"),
-        SolidusAdmin::Engine.root.join("app/components"),
+        SolidusAdmin::Engine.root.join("app/components")
       ]
     end
 

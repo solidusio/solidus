@@ -22,9 +22,9 @@ module Spree
       self.class.state_validator_class.new(self).perform
     end
 
-    self.ignored_columns = %w(firstname lastname)
-    DB_ONLY_ATTRS = %w(id updated_at created_at).freeze
-    TAXATION_ATTRS = %w(state_id country_id zipcode).freeze
+    self.ignored_columns = %w[firstname lastname]
+    DB_ONLY_ATTRS = %w[id updated_at created_at].freeze
+    TAXATION_ATTRS = %w[state_id country_id zipcode].freeze
 
     self.allowed_ransackable_attributes = %w[name]
 
@@ -89,9 +89,9 @@ module Spree
     # @note This compares the addresses based on only the fields that make up
     #   the logical "address" and excludes the database specific fields (id, created_at, updated_at).
     # @return [Boolean] true if the two addresses have the same address fields
-    def ==(other_address)
-      return false unless other_address && other_address.respond_to?(:value_attributes)
-      value_attributes == other_address.value_attributes
+    def ==(other)
+      return false unless other && other.respond_to?(:value_attributes)
+      value_attributes == other.value_attributes
     end
 
     # @return [Hash] an ActiveMerchant compatible address hash

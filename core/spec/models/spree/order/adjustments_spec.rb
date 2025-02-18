@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Order do
   context "when an order has an adjustment that zeroes the total, but another adjustment for shipping that raises it above zero" do
@@ -16,7 +16,7 @@ RSpec.describe Spree::Order do
     before do
       persisted_order.line_items << line_item
       create(:adjustment, amount: -line_item.amount, label: "Promotion", adjustable: line_item, order: persisted_order)
-      persisted_order.state = 'delivery'
+      persisted_order.state = "delivery"
       persisted_order.save # To ensure new state_change event
     end
 

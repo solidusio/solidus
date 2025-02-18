@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Store, type: :model do
   it { is_expected.to respond_to(:cart_tax_country_iso) }
@@ -31,10 +31,10 @@ RSpec.describe Spree::Store, type: :model do
     end
   end
 
-  describe '#default_cart_tax_location' do
+  describe "#default_cart_tax_location" do
     subject { described_class.new(cart_tax_country_iso:) }
     context "when there is no cart_tax_country_iso set" do
-      let(:cart_tax_country_iso) { '' }
+      let(:cart_tax_country_iso) { "" }
       it "responds with an empty default_cart_tax_location" do
         expect(subject.default_cart_tax_location).to be_empty
       end
@@ -50,11 +50,11 @@ RSpec.describe Spree::Store, type: :model do
     end
   end
 
-  describe '#available_locales' do
+  describe "#available_locales" do
     let(:store) { described_class.new(available_locales: locales) }
     subject { store.available_locales }
 
-    context 'with available_locales: []' do
+    context "with available_locales: []" do
       let(:locales) { [] }
 
       it "returns all available locales" do
@@ -66,7 +66,7 @@ RSpec.describe Spree::Store, type: :model do
       end
     end
 
-    context 'with available_locales: [:en]' do
+    context "with available_locales: [:en]" do
       let(:locales) { [:en] }
 
       it "returns [:en]" do
@@ -78,7 +78,7 @@ RSpec.describe Spree::Store, type: :model do
       end
     end
 
-    context 'with available_locales: [:en, :fr]' do
+    context "with available_locales: [:en, :fr]" do
       let(:locales) { [:en, :fr] }
 
       it "returns [:fr]" do
@@ -90,7 +90,7 @@ RSpec.describe Spree::Store, type: :model do
       end
     end
 
-    context 'with available_locales: [:fr]' do
+    context "with available_locales: [:fr]" do
       let(:locales) { [:fr] }
 
       it "returns [:fr]" do

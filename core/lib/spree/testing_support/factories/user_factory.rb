@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user, class: Spree::UserClassHandle.new do
     email { generate(:email) }
-    password { 'secret' }
+    password { "secret" }
     password_confirmation { password }
 
     trait :with_api_key do
@@ -20,7 +20,7 @@ FactoryBot.define do
 
     factory :admin_user do
       after(:create) do |user, _|
-        admin_role = Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')
+        admin_role = Spree::Role.find_by(name: "admin") || create(:role, name: "admin")
         user.spree_roles << admin_role
       end
     end

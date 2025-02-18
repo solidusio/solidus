@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Inventory units', type: :request do
+  describe "Inventory units", type: :request do
     let!(:inventory_unit) { create(:inventory_unit) }
 
     before do
@@ -16,38 +16,38 @@ module Spree::Api
 
       it "gets an inventory unit" do
         get spree.api_inventory_unit_path(inventory_unit)
-        expect(json_response['state']).to eq inventory_unit.state
+        expect(json_response["state"]).to eq inventory_unit.state
       end
 
       it "updates an inventory unit" do
         put spree.api_inventory_unit_path(inventory_unit), params: {
-          inventory_unit: { variant_id: variant.id }
+          inventory_unit: {variant_id: variant.id}
         }
-        expect(json_response['variant_id']).to eq variant.id
+        expect(json_response["variant_id"]).to eq variant.id
       end
 
-      context 'fires state event' do
-        it 'if supplied with :fire param' do
+      context "fires state event" do
+        it "if supplied with :fire param" do
           put spree.api_inventory_unit_path(inventory_unit), params: {
-            fire: 'ship',
-            inventory_unit: { variant_id: variant.id }
+            fire: "ship",
+            inventory_unit: {variant_id: variant.id}
           }
 
-          expect(json_response['state']).to eq 'shipped'
+          expect(json_response["state"]).to eq "shipped"
         end
 
-        it 'and returns exception if cannot fire' do
+        it "and returns exception if cannot fire" do
           put spree.api_inventory_unit_path(inventory_unit), params: {
-            fire: 'return'
+            fire: "return"
           }
-          expect(json_response['exception']).to match /cannot transition to return/
+          expect(json_response["exception"]).to match(/cannot transition to return/)
         end
 
-        it 'and returns exception bad state' do
+        it "and returns exception bad state" do
           put spree.api_inventory_unit_path(inventory_unit), params: {
-            fire: 'bad'
+            fire: "bad"
           }
-          expect(json_response['exception']).to match /cannot transition to bad/
+          expect(json_response["exception"]).to match(/cannot transition to bad/)
         end
       end
     end

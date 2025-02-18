@@ -20,21 +20,21 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_zone_path,
       icon: "add-line",
-      class: "align-self-end w-full",
+      class: "align-self-end w-full"
     )
   end
 
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.zones_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
@@ -52,12 +52,12 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
       :description,
       {
         header: :kind,
-        data: -> { component('ui/badge').new(name: _1.kind, color: _1.kind == 'country' ? :green : :blue) },
+        data: -> { component("ui/badge").new(name: _1.kind, color: (_1.kind == "country") ? :green : :blue) }
       },
       {
         header: :zone_members,
-        data: -> { _1.zone_members.map(&:zoneable).map(&:name).to_sentence },
-      },
+        data: -> { _1.zone_members.map(&:zoneable).map(&:name).to_sentence }
+      }
     ]
   end
 end

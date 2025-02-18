@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'yaml'
-require_relative '_helpers'
+require "yaml"
+require_relative "_helpers"
 
 path = "#{ROOT}/docker-compose.yml"
 from = YAML.load_file(path).dig(*%w[services app image])

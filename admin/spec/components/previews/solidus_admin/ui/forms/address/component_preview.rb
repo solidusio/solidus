@@ -5,7 +5,7 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
   include SolidusAdmin::Preview
 
   def overview
-    render_with_template(locals: { address: fake_address })
+    render_with_template(locals: {address: fake_address})
   end
 
   # @param disabled toggle

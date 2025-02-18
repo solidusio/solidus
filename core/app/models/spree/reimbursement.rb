@@ -8,7 +8,7 @@ module Spree
     belongs_to :customer_return, inverse_of: :reimbursements, touch: true, optional: true
 
     has_many :refunds, inverse_of: :reimbursement
-    has_many :credits, inverse_of: :reimbursement, class_name: 'Spree::Reimbursement::Credit'
+    has_many :credits, inverse_of: :reimbursement, class_name: "Spree::Reimbursement::Credit"
 
     has_many :return_items, inverse_of: :reimbursement
 
@@ -20,7 +20,7 @@ module Spree
     before_create :generate_number
     before_create :calculate_total
 
-    scope :reimbursed, -> { where(reimbursement_status: 'reimbursed') }
+    scope :reimbursed, -> { where(reimbursement_status: "reimbursed") }
 
     # The reimbursement_tax_calculator property should be set to an object that responds to "call"
     # and accepts a reimbursement object. Invoking "call" should update the tax fields on the
@@ -64,7 +64,7 @@ module Spree
     end
 
     def display_total
-      Spree::Money.new(total, { currency: order.currency })
+      Spree::Money.new(total, {currency: order.currency})
     end
 
     def calculated_total
@@ -150,7 +150,7 @@ module Spree
 
     def generate_number
       self.number ||= loop do
-        random = "RI#{Array.new(9){ rand(9) }.join}"
+        random = "RI#{Array.new(9) { rand(9) }.join}"
         break random unless self.class.exists?(number: random)
       end
     end
@@ -172,10 +172,10 @@ module Spree
         model.total_amount_reimbursed_for(self) > 0
       end
       leniency = if reimbursement_count > 0
-                   (reimbursement_count - 1) * 0.01.to_d
-                 else
-                   0
-                 end
+        (reimbursement_count - 1) * BigDecimal("0.01")
+      else
+        0
+      end
       unpaid_amount.abs.between?(0, leniency)
     end
   end

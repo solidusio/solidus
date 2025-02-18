@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class PromotionCodeBatchesController < ResourceController
-      belongs_to 'spree/promotion'
+      belongs_to "spree/promotion"
 
       create.after :build_promotion_code_batch
 

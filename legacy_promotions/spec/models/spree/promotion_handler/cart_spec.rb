@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module PromotionHandler
@@ -62,7 +62,7 @@ module Spree
 
         context "promotion has item total rule" do
           let(:shirt) { create(:product) }
-          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion:) }
+          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: "gt", preferred_amount: 50, promotion:) }
 
           before do
             # Makes the order eligible for this promotion
@@ -92,7 +92,7 @@ module Spree
 
         context "promotion has item total rule" do
           let(:shirt) { create(:product) }
-          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: 'gt', preferred_amount: 50, promotion:) }
+          let!(:rule) { Promotion::Rules::ItemTotal.create(preferred_operator: "gt", preferred_amount: 50, promotion:) }
 
           before do
             # Makes the order eligible for this promotion
@@ -106,7 +106,7 @@ module Spree
       end
 
       context "activates promotions associated with the order" do
-        let(:promotion) { create :promotion, :with_order_adjustment, code: 'promo' }
+        let(:promotion) { create :promotion, :with_order_adjustment, code: "promo" }
         let(:promotion_code) { promotion.codes.first }
         let(:adjustable) { order }
 

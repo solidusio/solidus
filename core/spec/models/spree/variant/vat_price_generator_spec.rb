@@ -26,9 +26,9 @@ RSpec.describe Spree::Variant::VatPriceGenerator do
       variant.save
       variant.reload
       expect(variant.default_price.for_any_country?).to be false
-      expect(variant.prices.detect { |p| p.country_iso == "DE" }.try!(:amount)).to eq(10.00)
-      expect(variant.prices.detect { |p| p.country_iso == "FR" }.try!(:amount)).to eq(10.08)
-      expect(variant.prices.detect { |p| p.country_iso.nil? }.try!(:amount)).to eq(8.40)
+      expect(variant.prices.detect { |p| p.country_iso == "DE" }&.amount).to eq(10.00)
+      expect(variant.prices.detect { |p| p.country_iso == "FR" }&.amount).to eq(10.08)
+      expect(variant.prices.detect { |p| p.country_iso.nil? }&.amount).to eq(8.40)
     end
 
     it "will not build prices that are already present" do
@@ -57,9 +57,9 @@ RSpec.describe Spree::Variant::VatPriceGenerator do
       variant.save
       variant.reload
       expect(variant.default_price.for_any_country?).to be true
-      expect(variant.prices.detect { |p| p.country_iso == "DE" }.try!(:amount)).to eq(11.90)
-      expect(variant.prices.detect { |p| p.country_iso == "FR" }.try!(:amount)).to eq(12.00)
-      expect(variant.prices.detect { |p| p.country_iso.nil? }.try!(:amount)).to eq(10.00)
+      expect(variant.prices.detect { |p| p.country_iso == "DE" }&.amount).to eq(11.90)
+      expect(variant.prices.detect { |p| p.country_iso == "FR" }&.amount).to eq(12.00)
+      expect(variant.prices.detect { |p| p.country_iso.nil? }&.amount).to eq(10.00)
     end
   end
 

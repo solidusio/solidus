@@ -5,8 +5,8 @@ module Spree
     class StockItemsController < ResourceController
       class_attribute :variant_display_attributes
       self.variant_display_attributes = [
-        { translation_key: :sku, attr_name: :sku },
-        { translation_key: :name, attr_name: :name }
+        {translation_key: :sku, attr_name: :sku},
+        {translation_key: :name, attr_name: :name}
       ]
 
       update.before :determine_backorderable
@@ -46,11 +46,11 @@ module Spree
           :@stock_locations,
           :stock_item_stock_locations,
           Spree.deprecator,
-          "Please, do not use @stock_item_stock_locations anymore in the views, use @stock_locations",
+          "Please, do not use @stock_item_stock_locations anymore in the views, use @stock_locations"
         )
         @variant_display_attributes = self.class.variant_display_attributes
-        @variants = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: variant_scope).results.
-            order(id: :desc).page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
+        @variants = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: variant_scope).results
+          .order(id: :desc).page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
       end
 
       def variant_scope

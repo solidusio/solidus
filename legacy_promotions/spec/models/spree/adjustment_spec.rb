@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Adjustment, type: :model do
   let!(:store) { create :store }
   let(:order) { create :order }
   let(:line_item) { create :line_item, order: }
 
-  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order:, amount: 5) }
+  let(:adjustment) { Spree::Adjustment.create!(label: "Adjustment", adjustable: order, order:, amount: 5) }
 
   it { is_expected.to respond_to(:promotion_code) }
-  context '#recalculate' do
+  context "#recalculate" do
     subject { adjustment.recalculate }
     let(:adjustment) do
       line_item.adjustments.create!(
-        label: 'Adjustment',
+        label: "Adjustment",
         order:,
         adjustable: order,
         amount: 5,
         finalized:,
-        source:,
+        source:
       )
     end
     let(:order) { create(:order_with_line_items, line_items_price: 100) }
@@ -34,27 +34,27 @@ RSpec.describe Spree::Adjustment, type: :model do
     context "when adjustment is finalized" do
       let(:finalized) { true }
 
-      context 'with a promotion adjustment' do
+      context "with a promotion adjustment" do
         let(:source) { promotion.actions.first! }
         let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 7) }
 
-        it 'does not update the adjustment' do
+        it "does not update the adjustment" do
           expect { subject }.not_to change { adjustment.amount }
         end
       end
 
-      context 'with a tax adjustment' do
+      context "with a tax adjustment" do
         let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
 
-        it 'updates the adjustment' do
+        it "updates the adjustment" do
           expect { subject }.to change { adjustment.amount }.from(5).to(10)
         end
       end
 
-      context 'with a sourceless adjustment' do
+      context "with a sourceless adjustment" do
         let(:source) { nil }
 
-        it 'does nothing' do
+        it "does nothing" do
           expect { subject }.not_to change { adjustment.amount }
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     context "when adjustment isn't finalized" do
       let(:finalized) { false }
 
-      context 'with a promotion adjustment' do
+      context "with a promotion adjustment" do
         let(:source) { promotion.actions.first! }
         let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 7) }
 
@@ -73,45 +73,45 @@ RSpec.describe Spree::Adjustment, type: :model do
           end
         end
 
-        context 'when the promotion is eligible' do
-          it 'updates the adjustment' do
+        context "when the promotion is eligible" do
+          it "updates the adjustment" do
             expect { subject }.to change { adjustment.amount }.from(5).to(-7)
           end
 
-          it 'sets the adjustment elgiible to true' do
+          it "sets the adjustment elgiible to true" do
             subject
             expect(adjustment.eligible).to eq(true)
           end
         end
 
-        context 'when the promotion is not eligible' do
+        context "when the promotion is not eligible" do
           before do
             promotion.update!(starts_at: 1.day.from_now)
           end
 
-          it 'zeros out the adjustment' do
+          it "zeros out the adjustment" do
             expect { subject }.to change { adjustment.amount }.from(5).to(0)
           end
 
-          it 'sets the adjustment elgiible to false' do
+          it "sets the adjustment elgiible to false" do
             subject
             expect(adjustment.eligible).to eq(false)
           end
         end
       end
 
-      context 'with a tax adjustment' do
+      context "with a tax adjustment" do
         let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
 
-        it 'updates the adjustment' do
+        it "updates the adjustment" do
           expect { subject }.to change { adjustment.amount }.from(5).to(10)
         end
       end
 
-      context 'with a sourceless adjustment' do
+      context "with a sourceless adjustment" do
         let(:source) { nil }
 
-        it 'does nothing' do
+        it "does nothing" do
           expect { subject }.to_not change { adjustment.amount }
         end
       end

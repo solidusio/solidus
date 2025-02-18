@@ -28,7 +28,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         size:,
         value: object.public_send(method),
         error: (errors.to_sentence.capitalize if errors),
-        **attributes,
+        **attributes
       }
     )
   end
@@ -48,7 +48,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         size:,
         value: (object.public_send(method) if object.respond_to?(method)),
         error: (errors.to_sentence.capitalize if errors),
-        **attributes,
+        **attributes
       }
     )
   end
@@ -67,7 +67,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         tag: :textarea,
         value: object.public_send(method),
         error: (errors.to_sentence.capitalize if errors),
-        **attributes,
+        **attributes
       }
     )
   end
@@ -79,14 +79,14 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
       label:,
       hint:,
       tip:,
-      error: errors,
+      error: errors
     ).with_content(
-      component('ui/forms/switch').new(
+      component("ui/forms/switch").new(
         name: "#{object_name}[#{method}]",
         size:,
         checked: object.public_send(method),
         include_hidden: true,
-        **attributes,
+        **attributes
       )
     )
   end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/preferable_class_methods'
-require 'active_support/concern'
-require 'active_support/core_ext/hash/keys'
+require "spree/preferences/preferable_class_methods"
+require "active_support/concern"
+require "active_support/core_ext/hash/keys"
 
 module Spree
   module Preferences
@@ -169,8 +169,8 @@ module Spree
           value.to_i
         when :boolean
           if !value ||
-             value.to_s =~ /\A(f|false|0|^)\Z/i ||
-             (value.respond_to?(:empty?) && value.empty?)
+              value.to_s =~ /\A(f|false|0|^)\Z/i ||
+              (value.respond_to?(:empty?) && value.empty?)
             false
           else
             true

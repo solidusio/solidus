@@ -20,11 +20,11 @@ module Spree
       end
 
       def index
-        @zones = Spree::Zone.
-          accessible_by(current_ability).
-          order('name ASC').
-          ransack(params[:q]).
-          result
+        @zones = Spree::Zone
+          .accessible_by(current_ability)
+          .order("name ASC")
+          .ransack(params[:q])
+          .result
 
         @zones = paginate(@zones)
 

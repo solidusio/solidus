@@ -9,13 +9,13 @@ module SolidusAdmin
     def index
       taxonomies = apply_search_to(
         Spree::Taxonomy.all,
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(taxonomies)
 
       respond_to do |format|
-        format.html { render component('taxonomies/index').new(page: @page) }
+        format.html { render component("taxonomies/index").new(page: @page) }
       end
     end
 
@@ -32,7 +32,7 @@ module SolidusAdmin
 
       Spree::Taxonomy.transaction { @taxonomies.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to taxonomies_path, status: :see_other
     end
 

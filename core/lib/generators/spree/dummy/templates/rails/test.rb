@@ -9,16 +9,16 @@ Dummy::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.public_file_server.enabled = true
-  config.public_file_server.headers = { 'Cache-Control' => "public, max-age=3600" }
+  config.public_file_server.headers = {"Cache-Control" => "public, max-age=3600"}
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   config.eager_load = false
 
   # Raise exceptions instead of rendering exception templates
-  if Rails.gem_version >= Gem::Version.new('7.1')
+  if Rails.gem_version >= Gem::Version.new("7.1")
     config.action_controller.raise_on_missing_callback_actions = true
     config.action_dispatch.show_exceptions = :none
   else
@@ -37,7 +37,7 @@ Dummy::Application.configure do
   config.active_storage.service = :test
 
   # Raise on deprecation warnings
-  if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
+  if ENV["SOLIDUS_RAISE_DEPRECATIONS"].present?
     Spree.deprecator.behavior = :raise
   end
 end

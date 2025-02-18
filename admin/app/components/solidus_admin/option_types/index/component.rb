@@ -12,16 +12,16 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
   def sortable_options
     {
       url: ->(option_type) { solidus_admin.move_option_type_path(option_type) },
-      param: 'position',
+      param: "position"
     }
   end
 
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_option_type_path,
-      icon: "add-line",
+      icon: "add-line"
     )
   end
 
@@ -36,18 +36,18 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.option_types_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
   def columns
     [
       name_column,
-      presentation_column,
+      presentation_column
     ]
   end
 

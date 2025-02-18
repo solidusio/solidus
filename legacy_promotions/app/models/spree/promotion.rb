@@ -27,10 +27,10 @@ module Spree
     validates_associated :rules
 
     validates :name, presence: true
-    validates :path, uniqueness: { allow_blank: true, case_sensitive: true }
-    validates :usage_limit, numericality: { greater_than: 0, allow_nil: true }
-    validates :per_code_usage_limit, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-    validates :description, length: { maximum: 255 }
+    validates :path, uniqueness: {allow_blank: true, case_sensitive: true}
+    validates :usage_limit, numericality: {greater_than: 0, allow_nil: true}
+    validates :per_code_usage_limit, numericality: {greater_than_or_equal_to: 0, allow_nil: true}
+    validates :description, length: {maximum: 255}
     validate :apply_automatically_disallowed_with_paths
 
     before_save :normalize_blank_values
@@ -42,15 +42,15 @@ module Spree
       table = arel_table
       time = Time.current
 
-      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
-        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time)))
+        .where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
     scope :has_actions, -> do
       joins(:promotion_actions).distinct
     end
     scope :applied, -> { joins(:order_promotions).distinct }
 
-    self.allowed_ransackable_associations = ['codes']
+    self.allowed_ransackable_associations = ["codes"]
     self.allowed_ransackable_attributes = %w[name path promotion_category_id]
     self.allowed_ransackable_scopes = %i[active]
 
@@ -66,9 +66,9 @@ module Spree
 
     # All orders that have been discounted using this promotion
     def discounted_orders
-      Spree::Order.
-        joins(:all_adjustments).
-        where(
+      Spree::Order
+        .joins(:all_adjustments)
+        .where(
           spree_adjustments: {
             source_type: "Spree::PromotionAction",
             source_id: actions.map(&:id),
@@ -131,7 +131,7 @@ module Spree
         # connect to the order
         order.order_promotions.find_or_create_by!(
           promotion: self,
-          promotion_code:,
+          promotion_code:
         )
         order.promotions.reset
         order_promotions.reset
@@ -192,11 +192,11 @@ module Spree
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
     def usage_count(excluded_orders: [])
-      discounted_orders.
-        complete.
-        where.not(id: [excluded_orders.map(&:id)]).
-        where.not(spree_orders: { state: :canceled }).
-        count
+      discounted_orders
+        .complete
+        .where.not(id: [excluded_orders.map(&:id)])
+        .where.not(spree_orders: {state: :canceled})
+        .count
     end
 
     def line_item_actionable?(order, line_item, promotion_code: nil)
@@ -215,12 +215,12 @@ module Spree
     end
 
     def used_by?(user, excluded_orders = [])
-      discounted_orders.
-        complete.
-        where.not(id: excluded_orders.map(&:id)).
-        where(user:).
-        where.not(spree_orders: { state: :canceled }).
-        exists?
+      discounted_orders
+        .complete
+        .where.not(id: excluded_orders.map(&:id))
+        .where(user:)
+        .where.not(spree_orders: {state: :canceled})
+        .exists?
     end
 
     # Removes a promotion and any adjustments or other side effects from an

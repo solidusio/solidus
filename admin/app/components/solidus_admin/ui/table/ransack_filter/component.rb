@@ -12,7 +12,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   def initialize(
     presentation:,
     combinator:, attribute:, predicate:, options:, form:, index:, search_param: :q
-)
+  )
     @presentation = presentation
     @group = "#{search_param}[g][#{index}]"
     @combinator = build(:combinator, combinator)
@@ -43,7 +43,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   # @param opt_index [Integer] The index of the option, if applicable.
   # @return [FormAttribute] The built form attribute.
   def build(type, value, opt_index = nil)
-    suffix = SUFFIXES[type] % { index: opt_index || @index }
+    suffix = SUFFIXES[type] % {index: opt_index || @index}
     Attribute.new("#{@group}#{suffix}", value)
   end
 
@@ -57,10 +57,10 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   end
 
   SUFFIXES = {
-    combinator: '[m]',
-    attribute: '[c][%<index>s][a][]',
-    predicate: '[c][%<index>s][p]',
-    option: '[c][%<index>s][v][]'
+    combinator: "[m]",
+    attribute: "[c][%<index>s][a][]",
+    predicate: "[c][%<index>s][p]",
+    option: "[c][%<index>s][v][]"
   }
 
   Selection = Struct.new(:id, :presentation, :attribute, :predicate, :option, :checked)

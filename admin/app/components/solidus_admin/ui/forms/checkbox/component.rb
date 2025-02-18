@@ -2,8 +2,8 @@
 
 class SolidusAdmin::UI::Forms::Checkbox::Component < SolidusAdmin::BaseComponent
   SIZES = {
-    s: 'w-4 h-4',
-    m: 'w-5 h-5',
+    s: "w-4 h-4",
+    m: "w-5 h-5"
   }.freeze
 
   def initialize(size: :m, **attributes)
@@ -13,7 +13,7 @@ class SolidusAdmin::UI::Forms::Checkbox::Component < SolidusAdmin::BaseComponent
 
   def call
     tag.input(
-      type: 'checkbox',
+      type: "checkbox",
       class: "
         #{SIZES.fetch(@size)}
         form-checkbox
@@ -36,7 +36,7 @@ class SolidusAdmin::UI::Forms::Checkbox::Component < SolidusAdmin::BaseComponent
         checked:focus:bg-gray-700
         checked:disabled:border-gray-300 checked:disabled:bg-gray-300
       ",
-      **@attributes,
+      **@attributes
     )
   end
 end

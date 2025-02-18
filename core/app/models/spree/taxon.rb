@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core/product_filters'
+require "spree/core/product_filters"
 
 module Spree
   class Taxon < Spree::Base
@@ -9,7 +9,7 @@ module Spree
 
     acts_as_nested_set dependent: :destroy
 
-    belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
+    belongs_to :taxonomy, class_name: "Spree::Taxonomy", inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications
 
@@ -20,11 +20,11 @@ module Spree
     after_update :update_child_permalinks, if: :saved_change_to_permalink?
 
     validates :name, presence: true
-    validates :name, uniqueness: { scope: :parent_id, message: :must_be_unique_under_same_parent }
-    validates :meta_keywords, length: { maximum: 255 }
-    validates :meta_description, length: { maximum: 255 }
-    validates :meta_title, length: { maximum: 255 }
-    validates :taxonomy_id, uniqueness: { scope: :parent_id, message: :can_have_only_one_root }, if: -> { root? }
+    validates :name, uniqueness: {scope: :parent_id, message: :must_be_unique_under_same_parent}
+    validates :meta_keywords, length: {maximum: 255}
+    validates :meta_description, length: {maximum: 255}
+    validates :meta_title, length: {maximum: 255}
+    validates :taxonomy_id, uniqueness: {scope: :parent_id, message: :can_have_only_one_root}, if: -> { root? }
 
     after_save :touch_ancestors_and_taxonomy
     after_touch :touch_ancestors_and_taxonomy
@@ -46,7 +46,7 @@ module Spree
     # Sets this taxons permalink to a valid url encoded string based on its
     # name and its parents permalink (if present.)
     def set_permalink
-      permalink_tail = permalink.present? ? permalink.split('/').last : name
+      permalink_tail = permalink.present? ? permalink.split("/").last : name
       self.permalink_part = Spree::Config.taxon_url_parametizer_class.parameterize(permalink_tail)
     end
 
@@ -78,7 +78,7 @@ module Spree
     def all_products
       scope = Product.joins(:taxons)
       scope.where(
-        spree_taxons: { id: self_and_descendants.select(:id) }
+        spree_taxons: {id: self_and_descendants.select(:id)}
       )
     end
 
@@ -112,14 +112,14 @@ module Spree
     end
 
     def permalink_part
-      permalink.split('/').last
+      permalink.split("/").last
     end
 
     def permalink_part=(value)
-      if parent.present?
-        self.permalink = "#{parent.permalink}/#{value}"
+      self.permalink = if parent.present?
+        "#{parent.permalink}/#{value}"
       else
-        self.permalink = value
+        value
       end
     end
 
@@ -132,13 +132,13 @@ module Spree
     # override for {FriendlyId::Slugged#normalize_friendly_id} method,
     # to control over the slug format
     def normalize_friendly_id(value)
-      return '' if value.blank?
+      return "" if value.blank?
 
-      parts = value.to_s.split('/')
+      parts = value.to_s.split("/")
       last_word = parts.pop
       corrected_last_word = Spree::Config.taxon_url_parametizer_class.parameterize(last_word)
 
-      (parts << corrected_last_word).join('/')
+      (parts << corrected_last_word).join("/")
     end
 
     private
@@ -147,7 +147,7 @@ module Spree
       # Touches all ancestors at once to avoid recursive taxonomy touch, and reduce queries.
       self.class.default_scoped.where(id: ancestors.pluck(:id)).update_all(updated_at: Time.current)
       # Have taxonomy touch happen in #touch_ancestors_and_taxonomy rather than association option in order for imports to override.
-      taxonomy.try!(:touch)
+      taxonomy&.touch
     end
   end
 end

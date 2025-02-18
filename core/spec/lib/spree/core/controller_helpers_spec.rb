@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "require 'spree/core/controller_helpers" do
-  %w(
+  %w[
     auth
     common
     order
@@ -12,7 +12,7 @@ RSpec.describe "require 'spree/core/controller_helpers" do
     search
     store
     strong_parameters
-  ).each do |helper_name|
+  ].each do |helper_name|
     describe "require 'spree/core/controller_helpers/#{helper_name}" do
       it "exists but will print a deprecation warning" do
         expect(Spree.deprecator).to receive(:warn).with(

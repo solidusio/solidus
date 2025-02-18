@@ -8,7 +8,7 @@ module Spree
           if @return_item.inventory_unit.order.completed?
             true
           else
-            add_error(:order_not_completed, I18n.t('spree.return_item_order_not_completed'))
+            add_error(:order_not_completed, I18n.t("spree.return_item_order_not_completed"))
             false
           end
         end

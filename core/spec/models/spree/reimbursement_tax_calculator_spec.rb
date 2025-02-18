@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
   let!(:tax_rate) { nil }
@@ -13,10 +13,10 @@ RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
     Spree::ReimbursementTaxCalculator.call(reimbursement)
   end
 
-  context 'without taxes' do
+  context "without taxes" do
     let!(:tax_rate) { nil }
 
-    it 'leaves the return items additional_tax_total and included_tax_total at zero' do
+    it "leaves the return items additional_tax_total and included_tax_total at zero" do
       subject
 
       expect(return_item.additional_tax_total).to eq 0
@@ -24,11 +24,11 @@ RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
     end
   end
 
-  context 'with additional tax' do
+  context "with additional tax" do
     let!(:tax_rate) { create(:tax_rate, name: "Sales Tax", amount: 0.10, included_in_price: false, zone: tax_zone) }
     let(:tax_zone) { create(:zone, :with_country) }
 
-    it 'sets additional_tax_total on the return items' do
+    it "sets additional_tax_total on the return items" do
       subject
       return_item.reload
 
@@ -37,11 +37,11 @@ RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
     end
   end
 
-  context 'with included tax' do
+  context "with included tax" do
     let!(:tax_rate) { create(:tax_rate, name: "VAT Tax", amount: 0.1, included_in_price: true, zone: tax_zone) }
     let(:tax_zone) { create(:zone, :with_country) }
 
-    it 'sets included_tax_total on the return items' do
+    it "sets included_tax_total on the return items" do
       subject
       return_item.reload
 

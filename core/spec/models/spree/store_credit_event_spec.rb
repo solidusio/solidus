@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::StoreCreditEvent do
   describe ".exposed_events" do
@@ -202,7 +202,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     it "uses the events amount attribute" do
-      expect(subject.display_amount).to eq Spree::Money.new(event_amount, { currency: subject.currency })
+      expect(subject.display_amount).to eq Spree::Money.new(event_amount, {currency: subject.currency})
     end
   end
 
@@ -216,7 +216,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     it "uses the events user_total_amount attribute" do
-      expect(subject.display_user_total_amount).to eq Spree::Money.new(user_total_amount, { currency: subject.currency })
+      expect(subject.display_user_total_amount).to eq Spree::Money.new(user_total_amount, {currency: subject.currency})
     end
   end
 
@@ -230,7 +230,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     it "uses the events amount_remaining attribute" do
-      expect(subject.display_remaining_amount).to eq Spree::Money.new(amount_remaining, { currency: subject.currency })
+      expect(subject.display_remaining_amount).to eq Spree::Money.new(amount_remaining, {currency: subject.currency})
     end
   end
 
@@ -315,8 +315,8 @@ RSpec.describe Spree::StoreCreditEvent do
 
     context "there is an associated payment with the event" do
       let(:authorization_code) { "1-SC-TEST" }
-      let(:order)              { create(:order) }
-      let!(:payment)           { create(:store_credit_payment, order:, response_code: authorization_code) }
+      let(:order) { create(:order) }
+      let!(:payment) { create(:store_credit_payment, order:, response_code: authorization_code) }
 
       subject { create(:store_credit_auth_event, action: Spree::StoreCredit::CAPTURE_ACTION, authorization_code:) }
 

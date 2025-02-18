@@ -12,33 +12,33 @@ class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Inde
   def sortable_options
     {
       url: ->(taxonomy) { solidus_admin.move_taxonomy_path(taxonomy) },
-      param: 'position',
+      param: "position"
     }
   end
 
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_taxonomy_path,
-      icon: "add-line",
+      icon: "add-line"
     )
   end
 
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.taxonomies_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
   def columns
     [
-      name_column,
+      name_column
     ]
   end
 

@@ -48,7 +48,7 @@ module SolidusAdmin
       return unless ensure_store_credit_category { render_new_with_errors }
 
       if @store_credit.save
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
         redirect_to after_create_path, status: :see_other
       else
         render_new_with_errors
@@ -72,7 +72,7 @@ module SolidusAdmin
       return unless ensure_store_credit_reason { render_edit_with_errors }
 
       if @store_credit.update_amount(permitted_resource_params[:amount], @store_credit_reason, spree_current_user)
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
         redirect_to after_update_path, status: :see_other
       else
         render_edit_with_errors
@@ -84,7 +84,7 @@ module SolidusAdmin
         format.html {
           render component("users/store_credits/edit_memo").new(
             user: @user,
-            store_credit: @store_credit,
+            store_credit: @store_credit
           )
         }
       end
@@ -92,10 +92,10 @@ module SolidusAdmin
 
     def update_memo
       if @store_credit.update(memo: permitted_resource_params[:memo])
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
       else
         # Memo update failures are nearly impossible to trigger due to lack of validation.
-        flash[:error] = t('.failure')
+        flash[:error] = t(".failure")
       end
 
       redirect_to after_update_path, status: :see_other
@@ -117,11 +117,11 @@ module SolidusAdmin
       return unless ensure_store_credit_reason { render_edit_with_errors }
 
       if @store_credit.invalidate(@store_credit_reason, spree_current_user)
-        flash[:notice] = t('.success')
+        flash[:notice] = t(".success")
       else
         # Ensure store_credit_reason handles invalid param/form submissions and modal re-rendering.
         # This is just a fallback error state in case anything goes wrong with StoreCredit#invalidate.
-        flash[:error] = t('.failure')
+        flash[:error] = t(".failure")
       end
 
       redirect_to after_update_path, status: :see_other

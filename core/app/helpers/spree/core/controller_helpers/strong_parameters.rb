@@ -9,8 +9,8 @@ module Spree
         end
 
         delegate(*Spree::PermittedAttributes::ATTRIBUTES,
-                 to: :permitted_attributes,
-                 prefix: :permitted)
+          to: :permitted_attributes,
+          prefix: :permitted)
 
         def permitted_credit_card_update_attributes
           permitted_attributes.credit_card_update_attributes + [
@@ -52,8 +52,8 @@ module Spree
             permitted_checkout_payment_attributes +
             permitted_attributes.customer_metadata_attributes +
             permitted_checkout_confirm_attributes + [
-            line_items_attributes: permitted_line_item_attributes
-          ]
+              line_items_attributes: permitted_line_item_attributes
+            ]
         end
 
         def permitted_product_attributes

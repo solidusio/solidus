@@ -18,11 +18,11 @@ module Spree
         end
 
         def find_by_param(value, *args)
-          send("find_by_#{permalink_field}", value, *args)
+          send(:"find_by_#{permalink_field}", value, *args)
         end
 
         def find_by_param!(value, *args)
-          send("find_by_#{permalink_field}!", value, *args)
+          send(:"find_by_#{permalink_field}!", value, *args)
         end
 
         def permalink_field
@@ -44,7 +44,7 @@ module Spree
       end
 
       def generate_permalink
-        "#{self.class.permalink_prefix}#{Array.new(self.class.permalink_length){ rand(9) }.join}"
+        "#{self.class.permalink_prefix}#{Array.new(self.class.permalink_length) { rand(9) }.join}"
       end
 
       def save_permalink(permalink_value = to_param)

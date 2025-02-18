@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Variant::PricingOptions do
   subject { described_class.new }
 
-  context '.default_price_attributes' do
+  context ".default_price_attributes" do
     subject { described_class.default_price_attributes }
 
     it { is_expected.to have_key(:currency) }
     it { is_expected.to have_key(:country_iso) }
 
-    it 'can be passed into a WHERE clause on Spree::Prices' do
+    it "can be passed into a WHERE clause on Spree::Prices" do
       expect(Spree::Price.where(subject).to_a).to eq([])
     end
 
     context "with a matching price present" do
       let!(:price) { create(:price) }
 
-      it 'returns a matching price' do
+      it "returns a matching price" do
         expect(Spree::Price.where(subject).to_a).to include(price)
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Spree::Variant::PricingOptions do
       expect(subject.desired_attributes[:country_iso]).to eq("US")
     end
 
-    context 'if order has no currency' do
+    context "if order has no currency" do
       before do
         expect(line_item.order).to receive(:currency).at_least(:once).and_return(nil)
         expect(Spree::Config).to receive(:currency).at_least(:once).and_return("RUB")
@@ -83,8 +83,8 @@ RSpec.describe Spree::Variant::PricingOptions do
       end
     end
 
-    context 'if the store has default_currency and cart_tax_country_iso' do
-      let(:store) { FactoryBot.create :store, default_currency: 'MXN' }
+    context "if the store has default_currency and cart_tax_country_iso" do
+      let(:store) { FactoryBot.create :store, default_currency: "MXN" }
 
       it "uses current_store information" do
         expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: store.default_currency, country_iso: store.cart_tax_country_iso)
@@ -93,7 +93,7 @@ RSpec.describe Spree::Variant::PricingOptions do
     end
   end
 
-  describe '#desired_attributes' do
+  describe "#desired_attributes" do
     context "when called with no arguments" do
       it "returns the default pricing options" do
         expect(subject.desired_attributes).to eq(described_class.default_price_attributes)
@@ -152,21 +152,21 @@ RSpec.describe Spree::Variant::PricingOptions do
   end
 
   describe "#cache_key" do
-    it 'creates a cache key out of the values of the attributes hash' do
+    it "creates a cache key out of the values of the attributes hash" do
       expect(subject.cache_key).to eq("USD")
     end
 
     context "with another currency" do
       subject { described_class.new(currency: "EUR") }
 
-      it 'creates the correct cache key' do
+      it "creates the correct cache key" do
         expect(subject.cache_key).to eq("EUR")
       end
 
       context "and another country" do
         subject { described_class.new(currency: "EUR", country_iso: "DE") }
 
-        it 'creates the correct cache key' do
+        it "creates the correct cache key" do
           expect(subject.cache_key).to eq("EUR/DE")
         end
       end
@@ -180,9 +180,9 @@ RSpec.describe Spree::Variant::PricingOptions do
     subject { described_class.new(options).search_arguments }
 
     context "with a currency given" do
-      let(:options) { { currency: "EUR" } }
+      let(:options) { {currency: "EUR"} }
 
-      it 'can be passed into a `where` clause' do
+      it "can be passed into a `where` clause" do
         expect(Spree::Price.where(subject)).to eq([price])
       end
     end
@@ -194,7 +194,7 @@ RSpec.describe Spree::Variant::PricingOptions do
     end
 
     context "with a country given" do
-      let(:options) { { country_iso: "DE" } }
+      let(:options) { {country_iso: "DE"} }
 
       it "is an array with the country and nil" do
         expect(subject[:country_iso]).to eq(["DE", nil])

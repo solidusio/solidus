@@ -25,12 +25,12 @@ module Spree
     def check
       return unless File.directory?(app_dir)
       return if missing_migrations.empty?
-      return if ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK']
+      return if ENV["SOLIDUS_SKIP_MIGRATIONS_CHECK"]
 
       prefix = "[WARNING #{engine_name.capitalize}]"
       warn <<~WARN
         #{prefix} Missing migrations.
-        #{missing_migrations.map {|m| "#{prefix} - #{m}"}.join("\n")}
+        #{missing_migrations.map { |m| "#{prefix} - #{m}" }.join("\n")}
         #{prefix}
         #{prefix} Run `bin/rails railties:install:migrations` to get them.
         #{prefix} You can silence this warning by setting the `SOLIDUS_SKIP_MIGRATIONS_CHECK` environment variable.

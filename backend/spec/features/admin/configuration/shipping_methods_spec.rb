@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Shipping Methods", type: :feature do
   stub_authorization!
@@ -50,7 +50,7 @@ describe "Shipping Methods", type: :feature do
       expect(page).to have_button("Create", disabled: true)
     end
 
-    context 'with shipping method having a calculator with array or hash preference type' do
+    context "with shipping method having a calculator with array or hash preference type" do
       before do
         class ComplexShipments < Spree::ShippingCalculator
           preference :amount, :decimal
@@ -80,13 +80,13 @@ describe "Shipping Methods", type: :feature do
         end
 
         click_on "Create"
-        select 'Complex Shipments', from: 'Base Calculator'
+        select "Complex Shipments", from: "Base Calculator"
         click_on "Update"
 
-        expect(page).to have_field('Amount')
-        expect(page).to have_field('Currency')
-        expect(page).to_not have_field('Mapping')
-        expect(page).to_not have_field('List')
+        expect(page).to have_field("Amount")
+        expect(page).to have_field("Currency")
+        expect(page).to_not have_field("Mapping")
+        expect(page).to_not have_field("List")
       end
     end
   end
@@ -98,12 +98,12 @@ describe "Shipping Methods", type: :feature do
         click_icon :edit
       end
 
-      fill_in 'Amount', with: 20
+      fill_in "Amount", with: 20
 
       click_button "Update"
 
-      expect(page).to have_content 'successfully updated'
-      expect(page).to have_field 'Amount', with: '20.0'
+      expect(page).to have_content "successfully updated"
+      expect(page).to have_field "Amount", with: "20.0"
     end
 
     it "can change the calculator", js: true do
@@ -111,16 +111,16 @@ describe "Shipping Methods", type: :feature do
         click_icon :edit
       end
 
-      select 'Flexible Rate per Package Item', from: 'Base Calculator'
+      select "Flexible Rate per Package Item", from: "Base Calculator"
 
-      fill_in 'First Item', with: 10
-      fill_in 'Additional Item', with: 20
+      fill_in "First Item", with: 10
+      fill_in "Additional Item", with: 20
 
       click_button "Update"
 
-      expect(page).to have_content 'successfully updated'
-      expect(page).to have_field 'First Item', with: '10.0'
-      expect(page).to have_field 'Additional Item', with: '20.0'
+      expect(page).to have_content "successfully updated"
+      expect(page).to have_field "First Item", with: "10.0"
+      expect(page).to have_field "Additional Item", with: "20.0"
     end
   end
 end

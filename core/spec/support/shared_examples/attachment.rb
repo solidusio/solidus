@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'an attachment' do
+RSpec.shared_examples "an attachment" do
   include ImageSpecHelper
-  context 'valid attachment' do
+  context "valid attachment" do
     before do
       subject.send(
         :"#{attachment_name}=",
-        open_image('blank.jpg')
+        open_image("blank.jpg")
       )
     end
 
-    it 'passes validations' do
+    it "passes validations" do
       expect(subject).to be_valid
     end
 
-    it 'returns definition' do
+    it "returns definition" do
       expect(subject.class.attachment_definitions[attachment_name])
         .to include(default_style:)
     end
 
-    it 'returns if present' do
+    it "returns if present" do
       expect(subject.send(:"#{attachment_name}_present?")).to be_truthy
     end
 
-    it 'returns an actual attachment' do
+    it "returns an actual attachment" do
       expect(subject.send(attachment_name)).to respond_to(
         :url,
         :exists?
@@ -31,8 +31,8 @@ RSpec.shared_examples 'an attachment' do
     end
   end
 
-  context 'invalid attachment' do
-    it 'fails validation' do
+  context "invalid attachment" do
+    it "fails validation" do
       invalid_file = File.open(__FILE__)
       subject.send(:"#{attachment_name}=", invalid_file)
 

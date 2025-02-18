@@ -43,7 +43,7 @@ class Spree::OrderShipping
   # @param tracking_number An option tracking number.
   # @return The carton created.
   def ship(inventory_units:, stock_location:, address:, shipping_method:,
-           shipped_at: Time.current, external_number: nil, tracking_number: nil, suppress_mailer: false)
+    shipped_at: Time.current, external_number: nil, tracking_number: nil, suppress_mailer: false)
     carton = nil
 
     Spree::InventoryUnit.transaction do

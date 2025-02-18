@@ -5,13 +5,13 @@ products =
     "Solidus tote" =>
     {
       "Type" => "Tote",
-      "Size" => %{15" x 18" x 6"},
+      "Size" => %(15" x 18" x 6"),
       "Material" => "Canvas"
     },
     "Solidus canvas tote bag" =>
     {
       "Type" => "Tote",
-      "Size" => %{15" x 18" x 6"},
+      "Size" => %(15" x 18" x 6"),
       "Material" => "Canvas"
     },
     "Solidus cap" =>
@@ -67,7 +67,7 @@ products =
     "Solidus Water Bottle" =>
     {
       "Type" => "Insulated Water Bottle",
-      "Size" => %{4.5" tall, 3.25" dia.}
+      "Size" => %(4.5" tall, 3.25" dia.)
     }
   }
 

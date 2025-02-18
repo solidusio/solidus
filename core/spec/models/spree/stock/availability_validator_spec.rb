@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -57,7 +57,7 @@ module Spree
         let!(:order) { create(:order_with_line_items) }
 
         context "has stock in one stock location" do
-          let(:line_item)         { order.line_items.first }
+          let(:line_item) { order.line_items.first }
 
           before do
             line_item.variant.stock_items.update_all(count_on_hand: 10, backorderable: false)
@@ -67,8 +67,8 @@ module Spree
         end
 
         context "with stock in multiple locations" do
-          let(:line_item)         { order.line_items.first }
-          let(:variant)           { line_item.variant }
+          let(:line_item) { order.line_items.first }
+          let(:variant) { line_item.variant }
           let!(:stock_location_1) { create(:stock_location, name: "Test Warehouse", active: false) }
 
           before do

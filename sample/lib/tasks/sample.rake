@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'pathname'
-require 'spree/sample'
+require "pathname"
+require "spree/sample"
 
 namespace :spree_sample do
-  desc 'Loads sample data'
+  desc "Loads sample data"
   task load: :environment do
     if ARGV.include?("db:migrate")
       puts <<~TEXT

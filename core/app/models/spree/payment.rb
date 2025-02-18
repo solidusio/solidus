@@ -9,17 +9,17 @@ module Spree
     include Spree::Payment::Processing
     include Metadata
 
-    IDENTIFIER_CHARS    = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
-    NON_RISKY_AVS_CODES = ['B', 'D', 'H', 'J', 'M', 'Q', 'T', 'V', 'X', 'Y'].freeze
-    RISKY_AVS_CODES     = ['A', 'C', 'E', 'F', 'G', 'I', 'K', 'L', 'N', 'O', 'P', 'R', 'S', 'U', 'W', 'Z'].freeze
+    IDENTIFIER_CHARS = (("A".."Z").to_a + ("0".."9").to_a - %w[0 1 I O]).freeze
+    NON_RISKY_AVS_CODES = ["B", "D", "H", "J", "M", "Q", "T", "V", "X", "Y"].freeze
+    RISKY_AVS_CODES = ["A", "C", "E", "F", "G", "I", "K", "L", "N", "O", "P", "R", "S", "U", "W", "Z"].freeze
 
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :payments, optional: true
+    belongs_to :order, class_name: "Spree::Order", touch: true, inverse_of: :payments, optional: true
     belongs_to :source, polymorphic: true, optional: true
-    belongs_to :payment_method, -> { with_discarded }, class_name: 'Spree::PaymentMethod', inverse_of: :payments, optional: true
+    belongs_to :payment_method, -> { with_discarded }, class_name: "Spree::PaymentMethod", inverse_of: :payments, optional: true
 
     has_many :log_entries, as: :source
     has_many :state_changes, as: :stateful
-    has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent'
+    has_many :capture_events, class_name: "Spree::PaymentCaptureEvent"
     has_many :refunds, inverse_of: :payment
 
     before_validation :validate_source, unless: :invalid?
@@ -43,17 +43,17 @@ module Spree
 
     default_scope -> { order(:created_at) }
 
-    scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
+    scope :from_credit_card, -> { where(source_type: "Spree::CreditCard") }
     scope :with_state, ->(state) { where(state: state.to_s) }
 
-    scope :checkout, -> { with_state('checkout') }
-    scope :completed, -> { with_state('completed') }
-    scope :pending, -> { with_state('pending') }
-    scope :processing, -> { with_state('processing') }
-    scope :failed, -> { with_state('failed') }
+    scope :checkout, -> { with_state("checkout") }
+    scope :completed, -> { with_state("completed") }
+    scope :pending, -> { with_state("pending") }
+    scope :processing, -> { with_state("processing") }
+    scope :failed, -> { with_state("failed") }
 
-    scope :risky, -> { failed.or(where(avs_response: RISKY_AVS_CODES)).or(where.not(cvv_response_code: [nil, '', 'M'])) }
-    scope :valid, -> { where.not(state: %w(failed invalid void)) }
+    scope :risky, -> { failed.or(where(avs_response: RISKY_AVS_CODES)).or(where.not(cvv_response_code: [nil, "", "M"])) }
+    scope :valid, -> { where.not(state: %w[failed invalid void]) }
 
     scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
     scope :not_store_credits, -> { where(arel_table[:source_type].not_eq(Spree::StoreCredit.to_s).or(arel_table[:source_type].eq(nil))) }
@@ -70,9 +70,9 @@ module Spree
 
     # @return [Spree::Money] this amount of this payment as money object
     def money
-      Spree::Money.new(amount, { currency: })
+      Spree::Money.new(amount, {currency:})
     end
-    alias display_amount money
+    alias_method :display_amount, :money
 
     # Sets the amount, parsing it based on i18n settings if it is a string.
     #
@@ -81,8 +81,8 @@ module Spree
       self[:amount] =
         case amount
         when String
-          separator = I18n.t('number.currency.format.separator')
-          number    = amount.delete("^0-9-#{separator}\.").tr(separator, '.')
+          separator = I18n.t("number.currency.format.separator")
+          number = amount.delete("^0-9-#{separator}.").tr(separator, ".")
           number.to_d if number.present?
         end || amount
     end
@@ -119,7 +119,7 @@ module Spree
 
     # @return [Boolean] true when this payment is risky
     def risky?
-      is_avs_risky? || is_cvv_risky? || state == 'failed'
+      is_avs_risky? || is_cvv_risky? || state == "failed"
     end
 
     # @return [Boolean] true when this payment is risky based on address
@@ -147,21 +147,21 @@ module Spree
 
     # @return [Boolean] true when the payment method exists and is a store credit payment method
     def store_credit?
-      payment_method.try!(:store_credit?)
+      payment_method&.store_credit?
     end
 
     private
 
     def source_actions
       return [] unless payment_source && payment_source.respond_to?(:actions)
-      payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") || payment_source.send("can_#{action}?", self) }
+      payment_source.actions.select { |action| !payment_source.respond_to?(:"can_#{action}?") || payment_source.send(:"can_#{action}?", self) }
     end
 
     def validate_source
       if source && !source.valid?
         source.errors.each do |error|
           field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
-          errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
+          errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: "spree"), "#{field_name} #{error.message}")
         end
       end
       if errors.any?
@@ -179,7 +179,7 @@ module Spree
 
     def create_payment_profile
       # Don't attempt to create on bad payments.
-      return if %w(invalid failed).include?(state)
+      return if %w[invalid failed].include?(state)
       # Payment profile cannot be created without source
       return unless source
       # Imported payments shouldn't create a payment profile.
@@ -191,9 +191,9 @@ module Spree
     end
 
     def invalidate_old_payments
-      if !store_credit? && !['invalid', 'failed'].include?(state)
+      if !store_credit? && !["invalid", "failed"].include?(state)
         order.payments.select { |payment|
-          payment.state == 'checkout' && !payment.store_credit? && payment.id != id
+          payment.state == "checkout" && !payment.store_credit? && payment.id != id
         }.each(&:invalidate!)
       end
     end
@@ -217,7 +217,7 @@ module Spree
     end
 
     def generate_identifier
-      Array.new(8){ IDENTIFIER_CHARS.sample }.join
+      Array.new(8) { IDENTIFIER_CHARS.sample }.join
     end
 
     def create_eligible_credit_event

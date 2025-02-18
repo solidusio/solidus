@@ -16,30 +16,30 @@ class SolidusAdmin::Users::Addresses::Component < SolidusAdmin::BaseComponent
   def tabs
     [
       {
-        text: t('.account'),
+        text: t(".account"),
         href: solidus_admin.user_path(@user),
-        current: false,
+        current: false
       },
       {
-        text: t('.addresses'),
+        text: t(".addresses"),
         href: solidus_admin.addresses_user_path(@user),
-        current: true,
+        current: true
       },
       {
-        text: t('.order_history'),
+        text: t(".order_history"),
         href: solidus_admin.orders_user_path(@user),
-        current: false,
+        current: false
       },
       {
-        text: t('.items'),
+        text: t(".items"),
         href: spree.items_admin_user_path(@user),
-        current: false,
+        current: false
       },
       {
-        text: t('.store_credit'),
+        text: t(".store_credit"),
         href: spree.admin_user_store_credits_path(@user),
-        current: false,
-      },
+        current: false
+      }
     ]
   end
 

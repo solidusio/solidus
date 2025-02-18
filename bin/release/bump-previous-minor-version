@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '_helpers'
+require_relative "_helpers"
 require_relative "#{ROOT}/core/lib/spree/core/version"
 
 path = "#{ROOT}/core/lib/spree/core/version.rb"

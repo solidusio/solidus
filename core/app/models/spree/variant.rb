@@ -28,13 +28,13 @@ module Spree
     attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice
 
-    belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants_including_master, optional: false
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
+    belongs_to :product, -> { with_discarded }, touch: true, class_name: "Spree::Product", inverse_of: :variants_including_master, optional: false
+    belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
     belongs_to :shipping_category, class_name: "Spree::ShippingCategory", optional: true
 
     delegate :name, :description, :slug, :available_on, :discontinue_on, :discontinued?,
-             :meta_description, :meta_keywords,
-             to: :product
+      :meta_description, :meta_keywords,
+      to: :product
     delegate :tax_category, :tax_category_id, to: :product, prefix: true
     delegate :shipping_category, :shipping_category_id,
       to: :product, prefix: true
@@ -56,7 +56,7 @@ module Spree
 
     has_many :prices,
       -> { with_discarded },
-      class_name: 'Spree::Price',
+      class_name: "Spree::Price",
       dependent: :destroy,
       inverse_of: :variant,
       autosave: true
@@ -68,8 +68,8 @@ module Spree
     validates :product, presence: true
     validate :check_price
 
-    validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-    validates :price,      numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+    validates :cost_price, numericality: {greater_than_or_equal_to: 0, allow_nil: true}
+    validates :price, numericality: {greater_than_or_equal_to: 0, allow_nil: true}
     validates_uniqueness_of :sku, allow_blank: true, case_sensitive: true, conditions: -> { where(deleted_at: nil) }, if: :enforce_unique_sku?
 
     after_create :create_stock_items
@@ -81,7 +81,7 @@ module Spree
     after_destroy :destroy_option_values_variants
 
     scope :template_variants, -> do
-      left_joins(product: { option_types: :option_values }).where(is_master: true).where.not(spree_option_values: { id: nil }).reorder(nil).distinct
+      left_joins(product: {option_types: :option_values}).where(is_master: true).where.not(spree_option_values: {id: nil}).reorder(nil).distinct
     end
     scope :non_template_variants, -> { where.not(id: template_variants) }
 
@@ -97,7 +97,7 @@ module Spree
       return all unless Spree::Config.track_inventory_levels
       in_stock_variants = joins(:stock_items).where(Spree::StockItem.arel_table[:count_on_hand].gt(0).or(arel_table[:track_inventory].eq(false)))
       if stock_locations.present?
-        in_stock_variants = in_stock_variants.where(spree_stock_items: { stock_location_id: stock_locations.map(&:id) })
+        in_stock_variants = in_stock_variants.where(spree_stock_items: {stock_location_id: stock_locations.map(&:id)})
       end
       in_stock_variants.distinct
     end
@@ -128,16 +128,16 @@ module Spree
     # @return [ActiveRecord::Relation]
     def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
       where(
-        Spree::Price.
-          where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).
+        Spree::Price
+          .where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).
           # This next clause should just be `where(pricing_options.search_arguments)`, but ActiveRecord
           # generates invalid SQL, so the SQL here is written manually.
           where(
             "spree_prices.currency = ? AND (spree_prices.country_iso IS NULL OR spree_prices.country_iso = ?)",
             pricing_options.search_arguments[:currency],
             pricing_options.search_arguments[:country_iso].compact
-          ).
-          arel.exists
+          )
+          .arel.exists
       )
     end
 
@@ -196,7 +196,7 @@ module Spree
     #
     # @return [Fixnum]
     def on_backorder
-      inventory_units.with_state('backordered').size
+      inventory_units.with_state("backordered").size
     end
 
     # @return [Boolean] true if this variant can be backordered
@@ -216,7 +216,7 @@ module Spree
         "#{ov.option_type.presentation}: #{ov.presentation}"
       end
 
-      values.to_sentence({ words_connector: ", ", two_words_connector: ", " })
+      values.to_sentence({words_connector: ", ", two_words_connector: ", "})
     end
 
     # Determines the name of an Exchange variant.
@@ -231,7 +231,7 @@ module Spree
     #
     # @return [String] the generated name
     def descriptive_name
-      is_master? ? name + ' - Master' : name + ' - ' + options_text
+      is_master? ? name + " - Master" : name + " - " + options_text
     end
 
     # Returns whether this variant has been deleted. Provided as a method of
@@ -401,7 +401,7 @@ module Spree
 
     def check_price
       if price.nil? && Spree::Config[:require_master_price] && is_master?
-        errors.add :price, 'Must supply price for variant or master.price for product.'
+        errors.add :price, "Must supply price for variant or master.price for product."
       end
     end
 
@@ -437,4 +437,4 @@ module Spree
   end
 end
 
-require_dependency 'spree/variant/scopes'
+require_dependency "spree/variant/scopes"

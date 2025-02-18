@@ -75,7 +75,7 @@ module SolidusAdmin
     # @param fullpath [String] the full path of the current request
     # @return [Boolean]
     def current?(url_helpers, fullpath)
-      path(url_helpers) == fullpath.gsub(/\?.*$/, '')
+      path(url_helpers) == fullpath.gsub(/\?.*$/, "")
     end
 
     # Returns whether the item should be marked as active

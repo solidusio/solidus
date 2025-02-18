@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Preferences::StaticModelPreferences do
@@ -10,56 +10,56 @@ module Spree
         preference :color, :string
       end
     end
-    let(:other_class){ Class.new }
-    let(:definitions){ subject.for_class(preference_class) }
+    let(:other_class) { Class.new }
+    let(:definitions) { subject.for_class(preference_class) }
 
     it "is empty by default" do
       expect(definitions).to be_empty
     end
 
     it "can store preferences" do
-      subject.add(preference_class, 'my_definition', {})
+      subject.add(preference_class, "my_definition", {})
       # just testing that it was added here
-      expect(definitions).to have_key('my_definition')
+      expect(definitions).to have_key("my_definition")
     end
 
     it "can replace preferences" do
-      subject.add(preference_class, 'my_definition', { color: "red" })
+      subject.add(preference_class, "my_definition", {color: "red"})
 
-      subject.add(preference_class, 'my_definition', { color: "blue" })
+      subject.add(preference_class, "my_definition", {color: "blue"})
 
-      expect(definitions['my_definition'].fetch(:color)).to eq("blue")
+      expect(definitions["my_definition"].fetch(:color)).to eq("blue")
     end
 
     context "with stored definitions" do
       before do
-        subject.add(preference_class, 'light', { color: 'white' })
-        subject.add(preference_class, 'dark', { color: 'black' })
-        subject.add(preference_class, 'no_preference', {})
+        subject.add(preference_class, "light", {color: "white"})
+        subject.add(preference_class, "dark", {color: "black"})
+        subject.add(preference_class, "no_preference", {})
       end
 
       describe "complete definition" do
-        let(:definition){ definitions['dark'] }
+        let(:definition) { definitions["dark"] }
         it "can fetch value" do
-          expect(definition.fetch(:color)).to eq 'black'
+          expect(definition.fetch(:color)).to eq "black"
         end
 
         it "can be converted to hash" do
-          expect(definition.to_hash).to eq({ color: 'black' })
+          expect(definition.to_hash).to eq({color: "black"})
         end
 
         it "ignores assignment" do
-          definition[:color] = 'maroon'
-          expect(definition.fetch(:color)).to eq 'black'
-          expect(definition.to_hash).to eq({ color: 'black' })
+          definition[:color] = "maroon"
+          expect(definition.fetch(:color)).to eq "black"
+          expect(definition.to_hash).to eq({color: "black"})
         end
       end
 
       describe "empty definition" do
-        let(:definition){ definitions['no_preference'] }
+        let(:definition) { definitions["no_preference"] }
 
         it "uses fallback value" do
-          expect(definition.fetch(:color){ 'red' }).to eq 'red'
+          expect(definition.fetch(:color) { "red" }).to eq "red"
         end
 
         it "can be converted to hash" do
@@ -67,8 +67,8 @@ module Spree
         end
 
         it "ignores assignment" do
-          definition[:color] = 'maroon'
-          expect(definition.fetch(:color){ 'red' }).to eq 'red'
+          definition[:color] = "maroon"
+          expect(definition.fetch(:color) { "red" }).to eq "red"
           expect(definition.to_hash).to eq({})
         end
       end
@@ -78,10 +78,10 @@ module Spree
       end
     end
 
-    describe '.validate!' do
+    describe ".validate!" do
       it "errors assigning invalid preferences" do
         stub_const("SomeClass", preference_class)
-        subject.add(preference_class, 'my_definition', { ice_cream: 'chocolate', spoon: true })
+        subject.add(preference_class, "my_definition", {ice_cream: "chocolate", spoon: true})
 
         expect {
           subject.validate!

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusAdmin::ComponentRegistry do
   let(:registry) { described_class.new }

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::UnitCancel do
   let(:unit_cancel) { described_class.create!(inventory_unit:, reason: described_class::SHORT_SHIP) }
   let(:inventory_unit) { create(:inventory_unit) }
 
-  describe '#adjust!' do
+  describe "#adjust!" do
     subject { unit_cancel.adjust! }
 
     it "creates an adjustment with the correct attributes" do
-      expect { subject }.to change{ Spree::Adjustment.count }.by(1)
+      expect { subject }.to change { Spree::Adjustment.count }.by(1)
 
       adjustment = Spree::Adjustment.last
       expect(adjustment.adjustable).to eq inventory_unit.line_item
@@ -30,7 +30,7 @@ RSpec.describe Spree::UnitCancel do
     end
   end
 
-  describe '#compute_amount' do
+  describe "#compute_amount" do
     subject { unit_cancel.compute_amount(line_item) }
 
     let(:line_item) { inventory_unit.line_item }
@@ -65,7 +65,7 @@ RSpec.describe Spree::UnitCancel do
 
     context "multiple inventory units" do
       let(:quantity) { 4 }
-      let(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: }]) }
+      let(:order) { create(:order_with_line_items, line_items_attributes: [{quantity:}]) }
       let(:line_item) { order.line_items.first }
       let(:inventory_units) { line_item.inventory_units }
 
@@ -82,14 +82,14 @@ RSpec.describe Spree::UnitCancel do
       end
     end
 
-    context 'when line item has additional taxes' do
+    context "when line item has additional taxes" do
       let(:world_zone) { create(:zone, :with_country) }
       let(:tax_category) { create :tax_category }
       let(:product) { create :product, tax_category: }
       let!(:additional_tax_rate) do
         create(
           :tax_rate,
-          name: 'Additional tax',
+          name: "Additional tax",
           tax_categories: [tax_category],
           zone: world_zone,
           included_in_price: false,
@@ -99,17 +99,17 @@ RSpec.describe Spree::UnitCancel do
       let(:shipping_category) { create :shipping_category }
       let(:shipping_method) do
         create :shipping_method,
-               cost: 8.00,
-               shipping_categories: [shipping_category],
-               tax_category:,
-               zones: [world_zone]
+          cost: 8.00,
+          shipping_categories: [shipping_category],
+          tax_category:,
+          zones: [world_zone]
       end
       let(:shipping_address) { create :address, country_iso_code: world_zone.countries.first.iso }
       let(:order) do
         create(
           :order_with_line_items,
           ship_address: shipping_address,
-          line_items_attributes: [{ product: }]
+          line_items_attributes: [{product:}]
         )
       end
       let(:line_item) { order.line_items.first }
@@ -117,7 +117,7 @@ RSpec.describe Spree::UnitCancel do
 
       before { order.recalculate }
 
-      it 'does not include line item additional taxes' do
+      it "does not include line item additional taxes" do
         expect(line_item.additional_tax_total).not_to eq 0
         expect(subject).to eq(-5.0)
       end

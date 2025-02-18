@@ -20,15 +20,13 @@ module Spree
 
         def disallowed_urls(controller)
           @disallowed_urls ||= {}
-          @disallowed_urls[controller.controller_name] ||= begin
-            [].tap do |disallowed_urls|
-              AUTHENTICATION_ROUTES.each do |route|
-                if controller.respond_to?(route)
-                  disallowed_urls << controller.send(route)
-                end
+          @disallowed_urls[controller.controller_name] ||= [].tap do |disallowed_urls|
+            AUTHENTICATION_ROUTES.each do |route|
+              if controller.respond_to?(route)
+                disallowed_urls << controller.send(route)
               end
-            end.map! { |url| url[/\/\w+$/] }
-          end
+            end
+          end.map! { |url| url[/\/\w+$/] }
         end
       end
     end

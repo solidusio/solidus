@@ -6,7 +6,7 @@ class SolidusAdmin::UI::Badge::ComponentPreview < ViewComponent::Preview
 
   # @param name text
   def overview(name: "Label")
-    render_with_template(locals: { name: })
+    render_with_template(locals: {name:})
   end
 
   # @param name text

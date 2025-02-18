@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
   let(:order) { create(:completed_order_with_totals) }
   let(:shipment) { order.shipments.to_a.first }
-  let(:promotion) { create(:promotion, code: 'somecode', promotion_actions: [action]) }
+  let(:promotion) { create(:promotion, code: "somecode", promotion_actions: [action]) }
   let(:action) { Spree::Promotion::Actions::FreeShipping.new }
-  let(:payload) { { order:, promotion_code: } }
+  let(:payload) { {order:, promotion_code:} }
   let(:promotion_code) { promotion.codes.first! }
 
   # From promotion spec:
@@ -53,7 +53,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
               amount: shipment.cost * -1,
               source: action,
               promotion_code:,
-              label: 'somelabel'
+              label: "somelabel"
             )
           end
         end
@@ -78,7 +78,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
             amount: shipment.cost * -1,
             source: action,
             promotion_code:,
-            label: 'somelabel'
+            label: "somelabel"
           )
         end
 
@@ -95,7 +95,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
     end
   end
 
-  describe '#remove_from' do
+  describe "#remove_from" do
     # this adjustment should not get removed
     let!(:other_adjustment) { create(:adjustment, adjustable: shipment, order:, source: nil) }
 
@@ -104,7 +104,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
       @action_adjustment = shipment.adjustments.where(source: action).first!
     end
 
-    it 'removes the action adjustment' do
+    it "removes the action adjustment" do
       expect(shipment.adjustments).to match_array([other_adjustment, @action_adjustment])
 
       action.remove_from(order)

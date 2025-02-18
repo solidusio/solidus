@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/core/product_filters'
+require "rails_helper"
+require "spree/core/product_filters"
 
 RSpec.describe Spree::Core::Search::Base do
   include ImageSpecHelper
@@ -16,19 +16,19 @@ RSpec.describe Spree::Core::Search::Base do
   end
 
   it "returns all products by default" do
-    params = { per_page: "" }
+    params = {per_page: ""}
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.retrieve_products.count).to eq(3)
   end
 
   context "when include_images is included in the initialization params" do
-    let(:params) { { include_images: true, keyword: @product1.name, taxon: @taxon.id } }
-    let(:image_file) { open_image('blank.jpg') }
+    let(:params) { {include_images: true, keyword: @product1.name, taxon: @taxon.id} }
+    let(:image_file) { open_image("blank.jpg") }
     subject { described_class.new(params).retrieve_products }
 
     before do
-      @product1.master.images.create(attachment_file_name: 'test', attachment: image_file, position: 2)
-      @product1.master.images.create(attachment_file_name: 'test1', attachment: image_file, position: 1)
+      @product1.master.images.create(attachment_file_name: "test", attachment: image_file, position: 2)
+      @product1.master.images.create(attachment_file_name: "test1", attachment: image_file, position: 1)
       @product1.reload
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::Core::Search::Base do
   end
 
   context "when ascend_by_master_price scope is included in the initialization params" do
-    let(:params) { { search: { ascend_by_master_price: nil } } }
+    let(:params) { {search: {ascend_by_master_price: nil}} }
 
     subject { described_class.new(params).retrieve_products }
 
@@ -49,7 +49,7 @@ RSpec.describe Spree::Core::Search::Base do
   end
 
   context "when descend_by_master_price scope is included in the initialization params" do
-    let(:params) { { search: { descend_by_master_price: nil } } }
+    let(:params) { {search: {descend_by_master_price: nil}} }
 
     subject { described_class.new(params).retrieve_products }
 
@@ -59,7 +59,7 @@ RSpec.describe Spree::Core::Search::Base do
   end
 
   it "switches to next page according to the page parameter" do
-    params = { per_page: "2" }
+    params = {per_page: "2"}
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.retrieve_products.count).to eq(2)
 
@@ -69,29 +69,29 @@ RSpec.describe Spree::Core::Search::Base do
   end
 
   it "maps search params to named scopes" do
-    params = { per_page: "",
-               search: { "price_range_any" => ["Under $10.00"] } }
+    params = {per_page: "",
+              search: {"price_range_any" => ["Under $10.00"]}}
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.retrieve_products.count).to eq(1)
   end
 
   it "maps multiple price_range_any filters" do
-    params = { per_page: "",
-               search: { "price_range_any" => ["Under $10.00", "$10.00 - $15.00"] } }
+    params = {per_page: "",
+              search: {"price_range_any" => ["Under $10.00", "$10.00 - $15.00"]}}
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.retrieve_products.count).to eq(2)
   end
 
   it "uses ransack if scope not found" do
-    params = { per_page: "",
-               search: { "name_not_cont" => "Shirt" } }
+    params = {per_page: "",
+              search: {"name_not_cont" => "Shirt"}}
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.retrieve_products.count).to eq(2)
   end
 
   it "raises a proper exception when search param is invalid" do
-    params = { per_page: "",
-               search: "blub" }
+    params = {per_page: "",
+              search: "blub"}
     searcher = Spree::Core::Search::Base.new(params)
     expect { searcher.retrieve_products }.to raise_error(described_class::InvalidOptions, "Invalid option passed to the searcher: 'search'")
   end
@@ -104,9 +104,9 @@ RSpec.describe Spree::Core::Search::Base do
   end
 
   it "finds products in alternate currencies" do
-    create(:price, currency: 'EUR', variant: @product1.master)
+    create(:price, currency: "EUR", variant: @product1.master)
     searcher = Spree::Core::Search::Base.new({})
-    searcher.pricing_options = Spree::Config.pricing_options_class.new(currency: 'EUR')
+    searcher.pricing_options = Spree::Config.pricing_options_class.new(currency: "EUR")
     expect(searcher.retrieve_products).to eq([@product1])
   end
 end

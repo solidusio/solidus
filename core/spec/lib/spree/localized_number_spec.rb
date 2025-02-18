@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'spree/localized_number'
+require "spec_helper"
+require "spree/localized_number"
 
 RSpec.describe Spree::LocalizedNumber do
   context ".parse" do
     before do
       I18n.enforce_available_locales = false
       I18n.locale = I18n.default_locale
-      I18n.backend.store_translations(:de, { number: { currency: { format: { delimiter: '.', separator: ',' } } } })
+      I18n.backend.store_translations(:de, {number: {currency: {format: {delimiter: ".", separator: ","}}}})
     end
 
     after do
@@ -24,14 +24,14 @@ RSpec.describe Spree::LocalizedNumber do
 
     context "with decimal point" do
       it "captures the proper amount for a formatted price" do
-        expect(subject.class.parse('1,599.99')).to eql 1599.99
+        expect(subject.class.parse("1,599.99")).to eql 1599.99
       end
     end
 
     context "with decimal comma" do
       it "captures the proper amount for a formatted price" do
         I18n.locale = :de
-        expect(subject.class.parse('1.599,99')).to eql 1599.99
+        expect(subject.class.parse("1.599,99")).to eql 1599.99
       end
     end
 

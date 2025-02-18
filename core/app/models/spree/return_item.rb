@@ -2,7 +2,7 @@
 
 module Spree
   class ReturnItem < Spree::Base
-    INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)
+    INTERMEDIATE_RECEPTION_STATUSES = %i[given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit]
     COMPLETED_RECEPTION_STATUSES = INTERMEDIATE_RECEPTION_STATUSES + [:received]
 
     # @!scope class
@@ -31,13 +31,13 @@ module Spree
 
     belongs_to :return_authorization, inverse_of: :return_items, optional: true
     belongs_to :inventory_unit, inverse_of: :return_items
-    belongs_to :exchange_variant, class_name: 'Spree::Variant', optional: true
-    belongs_to :exchange_inventory_unit, class_name: 'Spree::InventoryUnit', inverse_of: :original_return_item, optional: true
+    belongs_to :exchange_variant, class_name: "Spree::Variant", optional: true
+    belongs_to :exchange_inventory_unit, class_name: "Spree::InventoryUnit", inverse_of: :original_return_item, optional: true
     belongs_to :customer_return, inverse_of: :return_items, optional: true
     belongs_to :reimbursement, inverse_of: :return_items, optional: true
-    belongs_to :preferred_reimbursement_type, class_name: 'Spree::ReimbursementType', optional: true
-    belongs_to :override_reimbursement_type, class_name: 'Spree::ReimbursementType', optional: true
-    belongs_to :return_reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id, optional: true
+    belongs_to :preferred_reimbursement_type, class_name: "Spree::ReimbursementType", optional: true
+    belongs_to :override_reimbursement_type, class_name: "Spree::ReimbursementType", optional: true
+    belongs_to :return_reason, class_name: "Spree::ReturnReason", optional: true
 
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order
@@ -46,21 +46,21 @@ module Spree
 
     after_create :cancel_others, unless: :cancelled?
 
-    scope :awaiting_return, -> { where(reception_status: 'awaiting') }
+    scope :awaiting_return, -> { where(reception_status: "awaiting") }
     scope :expecting_return, -> { where.not(reception_status: COMPLETED_RECEPTION_STATUSES) }
-    scope :not_cancelled, -> { where.not(reception_status: 'cancelled') }
-    scope :valid, -> { where.not(reception_status: %w(cancelled expired unexchanged)) }
-    scope :not_expired, -> { where.not(reception_status: 'expired') }
-    scope :received, -> { where(reception_status: 'received') }
+    scope :not_cancelled, -> { where.not(reception_status: "cancelled") }
+    scope :valid, -> { where.not(reception_status: %w[cancelled expired unexchanged]) }
+    scope :not_expired, -> { where.not(reception_status: "expired") }
+    scope :received, -> { where(reception_status: "received") }
     INTERMEDIATE_RECEPTION_STATUSES.each do |reception_status|
       scope reception_status, -> { where(reception_status:) }
     end
-    scope :pending, -> { where(acceptance_status: 'pending') }
-    scope :accepted, -> { where(acceptance_status: 'accepted') }
-    scope :rejected, -> { where(acceptance_status: 'rejected') }
-    scope :manual_intervention_required, -> { where(acceptance_status: 'manual_intervention_required') }
-    scope :undecided, -> { where(acceptance_status: %w(pending manual_intervention_required)) }
-    scope :decided, -> { where.not(acceptance_status: %w(pending manual_intervention_required)) }
+    scope :pending, -> { where(acceptance_status: "pending") }
+    scope :accepted, -> { where(acceptance_status: "accepted") }
+    scope :rejected, -> { where(acceptance_status: "rejected") }
+    scope :manual_intervention_required, -> { where(acceptance_status: "manual_intervention_required") }
+    scope :undecided, -> { where(acceptance_status: %w[pending manual_intervention_required]) }
+    scope :decided, -> { where.not(acceptance_status: %w[pending manual_intervention_required]) }
     scope :reimbursed, -> { where.not(reimbursement_id: nil) }
     scope :not_reimbursed, -> { where(reimbursement_id: nil) }
     scope :exchange_requested, -> { where.not(exchange_variant: nil) }
@@ -168,13 +168,13 @@ module Spree
       event_paths.delete(:expired)
       event_paths.delete(:unexchange)
 
-      status_paths.map{ |status| I18n.t("spree.reception_states.#{status}", default: status.to_s.humanize) }.zip(event_paths)
+      status_paths.map { |status| I18n.t("spree.reception_states.#{status}", default: status.to_s.humanize) }.zip(event_paths)
     end
 
     def part_of_exchange?
       # test whether this ReturnItem was either a) one for which an exchange was sent or
       #   b) the exchanged item itself being returned in lieu of the original item
-      exchange_requested? || sibling_intended_for_exchange('unexchanged')
+      exchange_requested? || sibling_intended_for_exchange("unexchanged")
     end
 
     private
@@ -203,7 +203,7 @@ module Spree
     end
 
     def check_unexchange
-      original_ri = sibling_intended_for_exchange('awaiting')
+      original_ri = sibling_intended_for_exchange("awaiting")
       if original_ri
         original_ri.unexchange!
         set_default_amount
@@ -221,14 +221,14 @@ module Spree
       return unless customer_return && inventory_unit
 
       if customer_return.order_id != inventory_unit.order_id
-        errors.add(:base, I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
+        errors.add(:base, I18n.t("spree.return_items_cannot_be_associated_with_multiple_orders"))
       end
     end
 
     def eligible_exchange_variant
       return unless exchange_variant && exchange_variant_id_changed?
       unless eligible_exchange_variants.include?(exchange_variant)
-        errors.add(:base, I18n.t('spree.invalid_exchange_variant'))
+        errors.add(:base, I18n.t("spree.invalid_exchange_variant"))
       end
     end
 
@@ -243,7 +243,7 @@ module Spree
     end
 
     def set_exchange_amount
-      self.amount = 0.0.to_d if exchange_requested?
+      self.amount = BigDecimal("0.0") if exchange_requested?
     end
 
     def validate_no_other_completed_return_items
@@ -261,9 +261,9 @@ module Spree
 
     def cancel_others
       Spree::ReturnItem.where(inventory_unit_id:)
-                       .where.not(id:)
-                       .valid
-                       .each(&:cancel!)
+        .where.not(id:)
+        .valid
+        .each(&:cancel!)
     end
 
     def should_restock?

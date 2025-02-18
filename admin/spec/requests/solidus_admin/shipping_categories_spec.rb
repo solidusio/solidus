@@ -26,38 +26,38 @@ RSpec.describe "SolidusAdmin::ShippingCategoriesController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Express" } }
+      let(:valid_attributes) { {name: "Express"} }
 
       it "creates a new ShippingCategory" do
         expect {
-          post solidus_admin.shipping_categories_path, params: { shipping_category: valid_attributes }
+          post solidus_admin.shipping_categories_path, params: {shipping_category: valid_attributes}
         }.to change(Spree::ShippingCategory, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.shipping_categories_path, params: { shipping_category: valid_attributes }
+        post solidus_admin.shipping_categories_path, params: {shipping_category: valid_attributes}
         expect(response).to redirect_to(solidus_admin.shipping_categories_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.shipping_categories_path, params: { shipping_category: valid_attributes }
+        post solidus_admin.shipping_categories_path, params: {shipping_category: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Shipping category was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "" } }
+      let(:invalid_attributes) { {name: ""} }
 
       it "does not create a new ShippingCategory" do
         expect {
-          post solidus_admin.shipping_categories_path, params: { shipping_category: invalid_attributes }
+          post solidus_admin.shipping_categories_path, params: {shipping_category: invalid_attributes}
         }.not_to change(Spree::ShippingCategory, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.shipping_categories_path, params: { shipping_category: invalid_attributes }
+        post solidus_admin.shipping_categories_path, params: {shipping_category: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -72,39 +72,39 @@ RSpec.describe "SolidusAdmin::ShippingCategoriesController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated Shipping Category" } }
+      let(:valid_attributes) { {name: "Updated Shipping Category"} }
 
       it "updates the shipping category" do
-        patch solidus_admin.shipping_category_path(shipping_category), params: { shipping_category: valid_attributes }
+        patch solidus_admin.shipping_category_path(shipping_category), params: {shipping_category: valid_attributes}
         shipping_category.reload
         expect(shipping_category.name).to eq("Updated Shipping Category")
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.shipping_category_path(shipping_category), params: { shipping_category: valid_attributes }
+        patch solidus_admin.shipping_category_path(shipping_category), params: {shipping_category: valid_attributes}
         expect(response).to redirect_to(solidus_admin.shipping_categories_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.shipping_category_path(shipping_category), params: { shipping_category: valid_attributes }
+        patch solidus_admin.shipping_category_path(shipping_category), params: {shipping_category: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Shipping category was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "" } }
+      let(:invalid_attributes) { {name: ""} }
 
       it "does not update the shipping category" do
         original_name = shipping_category.name
-        patch solidus_admin.shipping_category_path(shipping_category), params: { shipping_category: invalid_attributes }
+        patch solidus_admin.shipping_category_path(shipping_category), params: {shipping_category: invalid_attributes}
         shipping_category.reload
         expect(shipping_category.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.shipping_category_path(shipping_category), params: { shipping_category: invalid_attributes }
+        patch solidus_admin.shipping_category_path(shipping_category), params: {shipping_category: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

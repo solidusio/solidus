@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Addresses', type: :request do
+  describe "Addresses", type: :request do
     before do
       stub_authentication!
       @address = create(:address)
@@ -18,21 +18,21 @@ module Spree::Api
       context "with their own address" do
         it "gets an address" do
           get spree.api_order_address_path(@order, @address.id)
-          expect(json_response['address1']).to eq @address.address1
+          expect(json_response["address1"]).to eq @address.address1
         end
 
         it "update replaces the readonly Address associated to the Order" do
-          put spree.api_order_address_path(@order, @address.id), params: { address: { address1: "123 Test Lane" } }
+          put spree.api_order_address_path(@order, @address.id), params: {address: {address1: "123 Test Lane"}}
           expect(Spree::Order.find(@order.id).bill_address_id).not_to eq @address.id
-          expect(json_response['address1']).to eq '123 Test Lane'
+          expect(json_response["address1"]).to eq "123 Test Lane"
         end
 
         it "receives the errors object if address is invalid" do
-          put spree.api_order_address_path(@order, @address.id), params: { address: { address1: "" } }
+          put spree.api_order_address_path(@order, @address.id), params: {address: {address1: ""}}
 
-          expect(json_response['error']).not_to be_nil
-          expect(json_response['errors']).not_to be_nil
-          expect(json_response['errors']['address1'].first).to eq "can't be blank"
+          expect(json_response["error"]).not_to be_nil
+          expect(json_response["errors"]).not_to be_nil
+          expect(json_response["errors"]["address1"].first).to eq "can't be blank"
         end
       end
     end

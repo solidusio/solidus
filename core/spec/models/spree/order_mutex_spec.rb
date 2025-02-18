@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderMutex do
   include ActiveSupport::Testing::TimeHelpers
@@ -22,7 +22,7 @@ RSpec.describe Spree::OrderMutex do
     end
 
     it "returns the value of the block" do
-      expect(Spree::OrderMutex.with_lock!(order) { 'yay for spree' }).to eq 'yay for spree'
+      expect(Spree::OrderMutex.with_lock!(order) { "yay for spree" }).to eq "yay for spree"
     end
   end
 

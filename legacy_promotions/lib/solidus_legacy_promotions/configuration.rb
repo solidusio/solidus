@@ -23,13 +23,13 @@ module SolidusLegacyPromotions
     ]
 
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
-    class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
+    class_name_attribute :promotion_chooser_class, default: "Spree::PromotionChooser"
 
     # order_adjuster_class allows extensions to provide their own Order Adjuster
-    class_name_attribute :order_adjuster_class, default: 'Spree::Promotion::OrderAdjustmentsRecalculator'
+    class_name_attribute :order_adjuster_class, default: "Spree::Promotion::OrderAdjustmentsRecalculator"
 
     # promotion_finder_class allows extensions to provide their own Promotion Finder
-    class_name_attribute :promotion_finder_class, default: 'Spree::PromotionFinder'
+    class_name_attribute :promotion_finder_class, default: "Spree::PromotionFinder"
 
     # Allows providing a different shipping promotion handler.
     # @!attribute [rw] shipping_promotion_handler_class
@@ -37,7 +37,7 @@ module SolidusLegacyPromotions
     # @return [Class] an object that conforms to the API of
     #   the standard shipping promotion handler class
     #   Spree::PromotionHandler::Coupon.
-    class_name_attribute :shipping_promotion_handler_class, default: 'Spree::PromotionHandler::Shipping'
+    class_name_attribute :shipping_promotion_handler_class, default: "Spree::PromotionHandler::Shipping"
 
     # Allows providing your own Mailer for promotion code batch mailer.
     #
@@ -46,7 +46,7 @@ module SolidusLegacyPromotions
     #   and "promotion_code_batch_errored"
     #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
     #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
-    class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
+    class_name_attribute :promotion_code_batch_mailer_class, default: "Spree::PromotionCodeBatchMailer"
 
     # Allows providing a different coupon code handler.
     # @!attribute [rw] coupon_code_handler_class
@@ -54,7 +54,7 @@ module SolidusLegacyPromotions
     # @return [Class] an object that conforms to the API of
     #   the standard coupon code handler class
     #   Spree::PromotionHandler::Coupon.
-    class_name_attribute :coupon_code_handler_class, default: 'Spree::PromotionHandler::Coupon'
+    class_name_attribute :coupon_code_handler_class, default: "Spree::PromotionHandler::Coupon"
 
     # Allows providing a different promotion advertiser.
     # @!attribute [rw] advertiser_class
@@ -62,7 +62,7 @@ module SolidusLegacyPromotions
     # @return [Class] an object that conforms to the API of
     #   the standard promotion advertiser class
     #   Spree::PromotionAdvertiser.
-    class_name_attribute :advertiser_class, default: 'Spree::PromotionAdvertiser'
+    class_name_attribute :advertiser_class, default: "Spree::PromotionAdvertiser"
 
     add_class_set :rules, default: %w[
       Spree::Promotion::Rules::ItemTotal

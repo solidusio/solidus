@@ -6,8 +6,8 @@ module Spree
   class Shipment < Spree::Base
     include Metadata
 
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments, optional: true
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
+    belongs_to :order, class_name: "Spree::Order", touch: true, inverse_of: :shipments, optional: true
+    belongs_to :stock_location, class_name: "Spree::StockLocation", optional: true
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
@@ -27,11 +27,11 @@ module Spree
 
     accepts_nested_attributes_for :inventory_units
 
-    make_permalink field: :number, length: 11, prefix: 'H'
+    make_permalink field: :number, length: 11, prefix: "H"
 
-    scope :pending, -> { with_state('pending') }
-    scope :ready,   -> { with_state('ready') }
-    scope :shipped, -> { with_state('shipped') }
+    scope :pending, -> { with_state("pending") }
+    scope :ready, -> { with_state("ready") }
+    scope :shipped, -> { with_state("shipped") }
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
     scope :with_state, ->(*state) { where(state:) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
@@ -43,8 +43,8 @@ module Spree
 
     include ::Spree::Config.state_machines.shipment
 
-    self.allowed_ransackable_associations = ['order']
-    self.allowed_ransackable_attributes = ['number']
+    self.allowed_ransackable_associations = ["order"]
+    self.allowed_ransackable_attributes = ["number"]
 
     delegate :tax_category, :tax_category_id, to: :selected_shipping_rate, allow_nil: true
 
@@ -65,7 +65,7 @@ module Spree
     extend DisplayMoney
     money_methods(
       :cost, :amount, :item_cost,
-      :total, :total_before_tax,
+      :total, :total_before_tax
     )
     alias_attribute :amount, :cost
 
@@ -144,14 +144,14 @@ module Spree
       return [] unless can_get_rates?
 
       # StockEstimator.new assigment below will replace the current shipping_method
-      original_shipping_method_id = shipping_method.try!(:id)
+      original_shipping_method_id = shipping_method&.id
 
       new_rates = Spree::Config.stock.estimator_class.new.shipping_rates(to_package)
 
       # If one of the new rates matches the previously selected shipping
       # method, select that instead of the default provided by the estimator.
       # Otherwise, keep the default.
-      selected_rate = new_rates.detect{ |rate| rate.shipping_method_id == original_shipping_method_id }
+      selected_rate = new_rates.detect { |rate| rate.shipping_method_id == original_shipping_method_id }
       if selected_rate
         new_rates.each do |rate|
           rate.selected = (rate == selected_rate)
@@ -207,13 +207,13 @@ module Spree
     # shipped    if already shipped (ie. does not change the state)
     # ready      all other cases
     def determine_state(order)
-      return 'canceled' if order.canceled?
-      return 'shipped' if shipped?
-      return 'pending' unless order.can_ship?
+      return "canceled" if order.canceled?
+      return "shipped" if shipped?
+      return "pending" unless order.can_ship?
       if can_transition_from_pending_to_ready?
-        'ready'
+        "ready"
       else
-        'pending'
+        "pending"
       end
     end
 
@@ -226,7 +226,7 @@ module Spree
     end
 
     def shipped=(value)
-      return unless value == '1' && shipped_at.nil?
+      return unless value == "1" && shipped_at.nil?
       self.shipped_at = Time.current
     end
 
@@ -298,7 +298,7 @@ module Spree
           state: new_state,
           updated_at: Time.current
         )
-        after_ship if new_state == 'shipped'
+        after_ship if new_state == "shipped"
       end
     end
 
@@ -323,7 +323,7 @@ module Spree
 
     def manifest_restock(item)
       if item.states["on_hand"].to_i > 0
-       stock_location.restock item.variant, item.states["on_hand"], self
+        stock_location.restock item.variant, item.states["on_hand"], self
       end
 
       if item.states["backordered"].to_i > 0

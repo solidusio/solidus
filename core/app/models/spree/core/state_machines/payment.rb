@@ -49,8 +49,8 @@ module Spree
             after_transition do |payment, transition|
               payment.state_changes.create!(
                 previous_state: transition.from,
-                next_state:     transition.to,
-                name:           'payment'
+                next_state: transition.to,
+                name: "payment"
               )
             end
           end

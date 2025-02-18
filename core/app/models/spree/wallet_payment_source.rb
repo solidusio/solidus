@@ -2,7 +2,7 @@
 
 module Spree
   class WalletPaymentSource < Spree::Base
-    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', inverse_of: :wallet_payment_sources, optional: true
+    belongs_to :user, class_name: Spree::UserClassHandle.new, inverse_of: :wallet_payment_sources, optional: true
     belongs_to :payment_source, polymorphic: true, inverse_of: :wallet_payment_sources, optional: true
 
     validates_presence_of :user
@@ -27,7 +27,7 @@ module Spree
       return unless payment_source.present?
 
       if payment_source.respond_to?(:user_id) &&
-         payment_source.user_id != user_id
+          payment_source.user_id != user_id
         errors.add(:payment_source, :not_owned_by_user)
       end
     end

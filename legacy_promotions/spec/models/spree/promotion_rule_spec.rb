@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Spree::PromotionRule, type: :model do
@@ -34,7 +34,7 @@ module Spree
 
     it "generates its own partial path" do
       rule = TestRule.new
-      expect(rule.to_partial_path).to eq 'spree/admin/promotions/rules/test_rule'
+      expect(rule.to_partial_path).to eq "spree/admin/promotions/rules/test_rule"
     end
   end
 end

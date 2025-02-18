@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
-require 'spree/preferences/statically_configurable'
+require "spree/preferences/persistable"
+require "spree/preferences/statically_configurable"
 
 module Spree
   # A base class which is used for implementing payment methods.
@@ -15,7 +15,7 @@ module Spree
     include Spree::Preferences::Persistable
     class UnsupportedPaymentMethod < StandardError; end
 
-    preference :server, :string, default: 'test'
+    preference :server, :string, default: "test"
     preference :test_mode, :boolean, default: true
 
     include Spree::SoftDeletable
@@ -54,7 +54,7 @@ module Spree
           options[:default],
           @human
         ].compact
-        options = { scope: [:activerecord, :models], count: 1, default: defaults }.merge!(options.except(:default))
+        options = {scope: [:activerecord, :models], count: 1, default: defaults}.merge!(options.except(:default))
         I18n.translate(defaults.shift, **options)
       end
     end
@@ -65,12 +65,12 @@ module Spree
       end
 
       def find_sti_class(type_name)
-        super(type_name)
+        super
       rescue ActiveRecord::SubclassNotFound
-        raise UnsupportedPaymentMethod, "Found invalid payment type '#{type_name}'.\n"\
-          "This may happen after switching payment service provider, when payment methods "\
-          "reference old types that are not supported any more.\n"\
-          "If that is the case, consider running 'rake payment_method:deactivate_unsupported_payment_methods' "\
+        raise UnsupportedPaymentMethod, "Found invalid payment type '#{type_name}'.\n" \
+          "This may happen after switching payment service provider, when payment methods " \
+          "reference old types that are not supported any more.\n" \
+          "If that is the case, consider running 'rake payment_method:deactivate_unsupported_payment_methods' " \
           "to fix the issue."
       end
     end
@@ -92,7 +92,7 @@ module Spree
       gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
 
       # All environments except production considered to be test
-      test_server = gateway_options[:server] != 'production'
+      test_server = gateway_options[:server] != "production"
       test_mode = gateway_options[:test_mode]
 
       gateway_options[:test] = (test_server || test_mode)
@@ -183,9 +183,9 @@ module Spree
     # @return [ActiveMerchant::Billing::Response|FalseClass]
     def try_void(payment)
       void_attempt = if payment.payment_method.payment_profiles_supported?
-        void(payment.transaction_id, payment.source, { originator: payment })
+        void(payment.transaction_id, payment.source, {originator: payment})
       else
-        void(payment.transaction_id, { originator: payment })
+        void(payment.transaction_id, {originator: payment})
       end
 
       return void_attempt if void_attempt.success?

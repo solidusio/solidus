@@ -8,7 +8,7 @@ module Spree
     # creating a refund about the full amount instead.
     #
     class Cancellation
-      DEFAULT_REASON = 'Order canceled'.freeze
+      DEFAULT_REASON = "Order canceled"
 
       attr_reader :reason
 

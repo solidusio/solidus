@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Migrations do
@@ -10,7 +10,7 @@ module Spree
     let(:config) { double("Config", root: "dir") }
 
     let(:engine_dir) { "dir/db/migrate" }
-    let(:app_dir) { 'app/db/migrate' }
+    let(:app_dir) { "app/db/migrate" }
 
     subject { described_class.new(config, "spree") }
 

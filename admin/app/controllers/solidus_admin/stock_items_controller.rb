@@ -6,13 +6,13 @@ module SolidusAdmin
 
     search_scope(:all, default: true) { _1 }
     search_scope(:back_orderable) { _1.where(backorderable: true) }
-    search_scope(:out_of_stock) { _1.where('count_on_hand <= 0') }
-    search_scope(:low_stock) { _1.where('count_on_hand > 0 AND count_on_hand < ?', SolidusAdmin::Config[:low_stock_value]) }
-    search_scope(:in_stock) { _1.where('count_on_hand > 0') }
+    search_scope(:out_of_stock) { _1.where("count_on_hand <= 0") }
+    search_scope(:low_stock) { _1.where("count_on_hand > 0 AND count_on_hand < ?", SolidusAdmin::Config[:low_stock_value]) }
+    search_scope(:in_stock) { _1.where("count_on_hand > 0") }
 
     def index
       respond_to do |format|
-        format.html { render component('stock_items/index').new(page: @page) }
+        format.html { render component("stock_items/index").new(page: @page) }
       end
     end
 
@@ -39,7 +39,7 @@ module SolidusAdmin
       {
         variant_id: :desc,
         stock_location_id: :desc,
-        id: :desc,
+        id: :desc
       }
     end
 

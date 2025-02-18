@@ -43,7 +43,7 @@ module Spree
       private
 
       def store_key
-        @request.headers['HTTP_SPREE_STORE'] || @request.env['SERVER_NAME']
+        @request.headers["HTTP_SPREE_STORE"] || @request.env["SERVER_NAME"]
       end
     end
   end

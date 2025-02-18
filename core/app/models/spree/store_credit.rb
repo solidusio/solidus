@@ -3,31 +3,31 @@
 class Spree::StoreCredit < Spree::PaymentSource
   include Spree::SoftDeletable
 
-  VOID_ACTION       = 'void'
-  CREDIT_ACTION     = 'credit'
-  CAPTURE_ACTION    = 'capture'
-  ELIGIBLE_ACTION   = 'eligible'
-  AUTHORIZE_ACTION  = 'authorize'
-  ALLOCATION_ACTION = 'allocation'
-  ADJUSTMENT_ACTION = 'adjustment'
-  INVALIDATE_ACTION = 'invalidate'
+  VOID_ACTION = "void"
+  CREDIT_ACTION = "credit"
+  CAPTURE_ACTION = "capture"
+  ELIGIBLE_ACTION = "eligible"
+  AUTHORIZE_ACTION = "authorize"
+  ALLOCATION_ACTION = "allocation"
+  ADJUSTMENT_ACTION = "adjustment"
+  INVALIDATE_ACTION = "invalidate"
 
   belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
   belongs_to :created_by, class_name: Spree::UserClassHandle.new, optional: true
   belongs_to :category, class_name: "Spree::StoreCreditCategory", optional: true
-  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', foreign_key: 'type_id', optional: true
+  belongs_to :credit_type, class_name: "Spree::StoreCreditType", foreign_key: "type_id", optional: true
   has_many :store_credit_events
 
   validates_presence_of :user_id, :category_id, :type_id, :created_by_id, :currency
-  validates_numericality_of :amount, { greater_than: 0 }
-  validates_numericality_of :amount_used, { greater_than_or_equal_to: 0 }
+  validates_numericality_of :amount, {greater_than: 0}
+  validates_numericality_of :amount_used, {greater_than_or_equal_to: 0}
   validate :amount_used_less_than_or_equal_to_amount
   validate :amount_authorized_less_than_or_equal_to_amount
 
   delegate :name, to: :category, prefix: true
   delegate :email, to: :created_by, prefix: true
 
-  scope :order_by_priority, -> { includes(:credit_type).order('spree_store_credit_types.priority ASC') }
+  scope :order_by_priority, -> { includes(:credit_type).order("spree_store_credit_types.priority ASC") }
 
   after_save :store_event
   before_validation :associate_credit_type
@@ -51,7 +51,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   end
 
   def amount_remaining
-    return 0.0.to_d if invalidated?
+    return BigDecimal("0.0") if invalidated?
     amount - amount_used - amount_authorized
   end
 
@@ -83,9 +83,9 @@ class Spree::StoreCredit < Spree::PaymentSource
 
   def validate_authorization(amount, order_currency)
     if amount_remaining.to_d < amount.to_d
-      errors.add(:base, I18n.t('spree.store_credit.insufficient_funds'))
+      errors.add(:base, I18n.t("spree.store_credit.insufficient_funds"))
     elsif currency != order_currency
-      errors.add(:base, I18n.t('spree.store_credit.currency_mismatch'))
+      errors.add(:base, I18n.t("spree.store_credit.currency_mismatch"))
     end
     errors.blank?
   end
@@ -96,7 +96,7 @@ class Spree::StoreCredit < Spree::PaymentSource
 
     if amount <= auth_event.amount
       if currency != order_currency
-        errors.add(:base, I18n.t('spree.store_credit.currency_mismatch'))
+        errors.add(:base, I18n.t("spree.store_credit.currency_mismatch"))
         false
       else
         update!({
@@ -111,7 +111,7 @@ class Spree::StoreCredit < Spree::PaymentSource
         authorization_code
       end
     else
-      errors.add(:base, I18n.t('spree.store_credit.insufficient_authorized_amount'))
+      errors.add(:base, I18n.t("spree.store_credit.insufficient_authorized_amount"))
       false
     end
   end
@@ -128,7 +128,7 @@ class Spree::StoreCredit < Spree::PaymentSource
       })
       true
     else
-      errors.add(:base, I18n.t('spree.store_credit.unable_to_void', auth_code: authorization_code))
+      errors.add(:base, I18n.t("spree.store_credit.unable_to_void", auth_code: authorization_code))
       false
     end
   end
@@ -138,7 +138,7 @@ class Spree::StoreCredit < Spree::PaymentSource
     capture_event = store_credit_events.find_by(action: CAPTURE_ACTION, authorization_code:)
 
     if currency != order_currency # sanity check to make sure the order currency hasn't changed since the auth
-      errors.add(:base, I18n.t('spree.store_credit.currency_mismatch'))
+      errors.add(:base, I18n.t("spree.store_credit.currency_mismatch"))
       false
     elsif capture_event && amount <= capture_event.amount
       action_attributes = {
@@ -150,7 +150,7 @@ class Spree::StoreCredit < Spree::PaymentSource
       create_credit_record(amount, action_attributes)
       true
     else
-      errors.add(:base, I18n.t('spree.store_credit.unable_to_credit', auth_code: authorization_code))
+      errors.add(:base, I18n.t("spree.store_credit.unable_to_credit", auth_code: authorization_code))
       false
     end
   end
@@ -162,10 +162,10 @@ class Spree::StoreCredit < Spree::PaymentSource
   def generate_authorization_code
     [
       id,
-      'SC',
-      Time.current.utc.strftime('%Y%m%d%H%M%S%6N'),
+      "SC",
+      Time.current.utc.strftime("%Y%m%d%H%M%S%6N"),
       SecureRandom.uuid
-    ].join('-')
+    ].join("-")
   end
 
   def editable?
@@ -198,7 +198,7 @@ class Spree::StoreCredit < Spree::PaymentSource
       self.invalidated_at = Time.current
       save
     else
-      errors.add(:invalidated_at, I18n.t('spree.store_credit.errors.cannot_invalidate_uncaptured_authorization'))
+      errors.add(:invalidated_at, I18n.t("spree.store_credit.errors.cannot_invalidate_uncaptured_authorization"))
       false
     end
   end
@@ -258,25 +258,25 @@ class Spree::StoreCredit < Spree::PaymentSource
     return true if amount_used.nil?
 
     if amount_used > amount
-      errors.add(:amount_used, I18n.t('spree.admin.store_credits.errors.amount_used_cannot_be_greater'))
+      errors.add(:amount_used, I18n.t("spree.admin.store_credits.errors.amount_used_cannot_be_greater"))
     end
   end
 
   def amount_authorized_less_than_or_equal_to_amount
     if (amount_used + amount_authorized) > amount
-      errors.add(:amount_authorized, I18n.t('spree.admin.store_credits.errors.amount_authorized_exceeds_total_credit'))
+      errors.add(:amount_authorized, I18n.t("spree.admin.store_credits.errors.amount_authorized_exceeds_total_credit"))
     end
   end
 
   def validate_category_unchanged
     if category_id_changed?
-      errors.add(:category, I18n.t('spree.admin.store_credits.errors.cannot_be_modified'))
+      errors.add(:category, I18n.t("spree.admin.store_credits.errors.cannot_be_modified"))
     end
   end
 
   def validate_no_amount_used
     if amount_used > 0
-      errors.add(:amount_used, 'is greater than zero. Can not delete store credit')
+      errors.add(:amount_used, "is greater than zero. Can not delete store credit")
       throw :abort
     end
   end

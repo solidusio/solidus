@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'solidus_legacy_promotions'
+require "solidus_legacy_promotions"
 
 module SolidusLegacyPromotions
   class Engine < ::Rails::Engine
@@ -24,7 +24,7 @@ module SolidusLegacyPromotions
             Spree::BackendConfiguration::MenuItem.new(
               label: :legacy_promotion_categories,
               condition: -> { can?(:admin, Spree::PromotionCategory) },
-              url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path },
+              url: -> { Spree::Core::Engine.routes.url_helpers.admin_promotion_categories_path }
             )
           ]
         )
@@ -73,13 +73,13 @@ module SolidusLegacyPromotions
           partial: "spree/admin/shared/search_fields/text_field",
           locals: {
             ransack: :order_promotions_promotion_code_value_start,
-            label: -> { I18n.t(:promotion, scope: :spree) }
+            label: -> { I18n.t("spree.promotion") }
           }
         })
       end
     end
 
-    initializer 'solidus_legacy_promotions.core.pub_sub', after: 'spree.core.pub_sub' do |app|
+    initializer "solidus_legacy_promotions.core.pub_sub", after: "spree.core.pub_sub" do |app|
       app.reloader.to_prepare do
         Spree::OrderPromotionSubscriber.new.subscribe_to(Spree::Bus)
       end

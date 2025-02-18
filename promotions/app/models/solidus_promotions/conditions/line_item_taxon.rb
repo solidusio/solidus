@@ -11,7 +11,7 @@ module SolidusPromotions
 
       MATCH_POLICIES = %w[include exclude].freeze
 
-      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
+      validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 

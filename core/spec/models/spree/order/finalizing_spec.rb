@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Order, type: :model do
   context "#complete!" do
@@ -21,7 +21,7 @@ RSpec.describe Spree::Order, type: :model do
     it "should change the shipment state to ready if order is paid" do
       order.payments.map(&:complete!)
 
-      expect { order.complete! }.to change { order.shipments.first.state }.from('pending').to('ready')
+      expect { order.complete! }.to change { order.shipments.first.state }.from("pending").to("ready")
     end
 
     it "should freeze all adjustments" do
@@ -43,7 +43,7 @@ RSpec.describe Spree::Order, type: :model do
         it "should leave order in complete state" do
           order.complete!
 
-          expect(order.state).to eq 'complete'
+          expect(order.state).to eq "complete"
         end
       end
     end
@@ -60,20 +60,20 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
-    context 'with event notifications' do
-      it 'sends an email' do
+    context "with event notifications" do
+      it "sends an email" do
         expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
 
         order.complete!
       end
 
-      it 'marks the order as confirmation_delivered' do
+      it "marks the order as confirmation_delivered" do
         expect do
           order.complete!
         end.to change(order, :confirmation_delivered).to true
       end
 
-      it 'sends the email' do
+      it "sends the email" do
         expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
 
         order.complete!

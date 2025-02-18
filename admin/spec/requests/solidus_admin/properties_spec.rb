@@ -26,38 +26,38 @@ RSpec.describe "SolidusAdmin::PropertiesController", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Material", presentation: "Material Type" } }
+      let(:valid_attributes) { {name: "Material", presentation: "Material Type"} }
 
       it "creates a new Property" do
         expect {
-          post solidus_admin.properties_path, params: { property: valid_attributes }
+          post solidus_admin.properties_path, params: {property: valid_attributes}
         }.to change(Spree::Property, :count).by(1)
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        post solidus_admin.properties_path, params: { property: valid_attributes }
+        post solidus_admin.properties_path, params: {property: valid_attributes}
         expect(response).to redirect_to(solidus_admin.properties_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        post solidus_admin.properties_path, params: { property: valid_attributes }
+        post solidus_admin.properties_path, params: {property: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Property was successfully created.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", presentation: "" } }
+      let(:invalid_attributes) { {name: "", presentation: ""} }
 
       it "does not create a new Property" do
         expect {
-          post solidus_admin.properties_path, params: { property: invalid_attributes }
+          post solidus_admin.properties_path, params: {property: invalid_attributes}
         }.not_to change(Spree::Property, :count)
       end
 
       it "renders the new template with unprocessable_entity status" do
-        post solidus_admin.properties_path, params: { property: invalid_attributes }
+        post solidus_admin.properties_path, params: {property: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -72,40 +72,40 @@ RSpec.describe "SolidusAdmin::PropertiesController", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated Name", presentation: "Updated Presentation" } }
+      let(:valid_attributes) { {name: "Updated Name", presentation: "Updated Presentation"} }
 
       it "updates the property" do
-        patch solidus_admin.property_path(property), params: { property: valid_attributes }
+        patch solidus_admin.property_path(property), params: {property: valid_attributes}
         property.reload
         expect(property.name).to eq("Updated Name")
         expect(property.presentation).to eq("Updated Presentation")
       end
 
       it "redirects to the index page with a 303 See Other status" do
-        patch solidus_admin.property_path(property), params: { property: valid_attributes }
+        patch solidus_admin.property_path(property), params: {property: valid_attributes}
         expect(response).to redirect_to(solidus_admin.properties_path)
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        patch solidus_admin.property_path(property), params: { property: valid_attributes }
+        patch solidus_admin.property_path(property), params: {property: valid_attributes}
         follow_redirect!
         expect(response.body).to include("Property was successfully updated.")
       end
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", presentation: "Updated Presentation" } }
+      let(:invalid_attributes) { {name: "", presentation: "Updated Presentation"} }
 
       it "does not update the property" do
         original_name = property.name
-        patch solidus_admin.property_path(property), params: { property: invalid_attributes }
+        patch solidus_admin.property_path(property), params: {property: invalid_attributes}
         property.reload
         expect(property.name).to eq(original_name)
       end
 
       it "renders the edit template with unprocessable_entity status" do
-        patch solidus_admin.property_path(property), params: { property: invalid_attributes }
+        patch solidus_admin.property_path(property), params: {property: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

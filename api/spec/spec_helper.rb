@@ -1,44 +1,44 @@
 # frozen_string_literal: true
 
 if ENV["COVERAGE"]
-  require 'simplecov'
+  require "simplecov"
   if ENV["COVERAGE_DIR"]
     SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
   end
-  SimpleCov.command_name('solidus:api')
+  SimpleCov.command_name("solidus:api")
   SimpleCov.merge_timeout(3600)
-  SimpleCov.start('rails')
+  SimpleCov.start("rails")
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= "test"
 
-require 'solidus_api'
-require 'spree/testing_support/dummy_app'
+require "solidus_api"
+require "spree/testing_support/dummy_app"
 DummyApp.setup(
-  gem_root: File.expand_path('..', __dir__),
-  lib_name: 'solidus_api'
+  gem_root: File.expand_path("..", __dir__),
+  lib_name: "solidus_api"
 )
 
-require 'rails-controller-testing'
-require 'rspec/rails'
-require 'rspec-activemodel-mocks'
+require "rails-controller-testing"
+require "rspec/rails"
+require "rspec-activemodel-mocks"
 
-require 'database_cleaner'
+require "database_cleaner"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 
-require 'spree/testing_support/factory_bot'
-require 'spree/testing_support/partial_double_verification'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/job_helpers'
+require "spree/testing_support/factory_bot"
+require "spree/testing_support/partial_double_verification"
+require "spree/testing_support/preferences"
+require "spree/testing_support/authorization_helpers"
+require "spree/testing_support/job_helpers"
 
-require 'spree/api/testing_support/caching'
-require 'spree/api/testing_support/helpers'
-require 'spree/api/testing_support/setup'
+require "spree/api/testing_support/caching"
+require "spree/api/testing_support/helpers"
+require "spree/api/testing_support/setup"
 
 ActiveJob::Base.queue_adapter = :test
 

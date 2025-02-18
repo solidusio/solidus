@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Promotion application', type: :request do
+RSpec.describe "Promotion application", type: :request do
   before do
     stub_authentication!
   end
@@ -19,7 +19,7 @@ RSpec.describe 'Promotion application', type: :request do
 
     it "can apply a coupon code to the order" do
       expect(order.total).to eq(110.00)
-      post spree.api_order_coupon_codes_path(order), params: { coupon_code: "10off", order_token: order.guest_token }
+      post spree.api_order_coupon_codes_path(order), params: {coupon_code: "10off", order_token: order.guest_token}
       expect(response.status).to eq(200)
       expect(order.reload.total).to eq(109.00)
       expect(json_response["success"]).to eq("The coupon code was successfully applied to your order.")
@@ -36,7 +36,7 @@ RSpec.describe 'Promotion application', type: :request do
       end
 
       it "fails to apply" do
-        post spree.api_order_coupon_codes_path(order), params: { coupon_code: "10off", order_token: order.guest_token }
+        post spree.api_order_coupon_codes_path(order), params: {coupon_code: "10off", order_token: order.guest_token}
         expect(response.status).to eq(422)
         expect(json_response["success"]).to be_blank
         expect(json_response["error"]).to eq("The coupon code is expired")

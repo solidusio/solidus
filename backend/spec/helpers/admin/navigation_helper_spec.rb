@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::NavigationHelper, type: :helper do
   before do
-    allow(controller).to receive(:controller_name).and_return('test')
+    allow(controller).to receive(:controller_name).and_return("test")
   end
 
   describe "#tab" do
@@ -63,7 +63,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
 
         it "should be selected if the fullpath matches" do
           allow(controller).to receive(:controller_name).and_return("bonobos")
-          tab = helper.tab(label: :orders, match_path: '/orders')
+          tab = helper.tab(label: :orders, match_path: "/orders")
           expect(tab).to include('class="selected"')
         end
 
@@ -75,7 +75,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
 
         it "should not be selected if the fullpath does not match" do
           allow(controller).to receive(:controller_name).and_return("bonobos")
-          tab = helper.tab(label: :orders, match_path: '/shady')
+          tab = helper.tab(label: :orders, match_path: "/shady")
           expect(tab).not_to include('class="selected"')
         end
 
@@ -104,7 +104,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
     end
 
     it "should accept a block of content to append" do
-      admin_tab = helper.tab(label: :orders){ 'foo' }
+      admin_tab = helper.tab(label: :orders) { "foo" }
       expect(admin_tab).to end_with("foo</li>")
     end
   end
@@ -152,7 +152,7 @@ describe Spree::Admin::NavigationHelper, type: :helper do
 
   describe "#solidus_icon" do
     context "if given an icon_name" do
-      subject(:solidus_icon) { helper.solidus_icon('example-icon-name') }
+      subject(:solidus_icon) { helper.solidus_icon("example-icon-name") }
 
       it { is_expected.to eq "<i class=\"example-icon-name\"></i>" }
     end

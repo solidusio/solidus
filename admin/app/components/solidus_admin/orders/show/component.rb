@@ -25,7 +25,7 @@ class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
       tag.br,
       address.country.name,
       tag.br,
-      address.phone,
+      address.phone
     ], " ")
   end
 

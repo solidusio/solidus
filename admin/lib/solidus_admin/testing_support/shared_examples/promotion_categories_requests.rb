@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples_for 'promotion categories requests' do
+RSpec.shared_examples_for "promotion categories requests" do
   let(:admin_user) { create(:admin_user) }
 
   before do
@@ -23,8 +23,8 @@ RSpec.shared_examples_for 'promotion categories requests' do
 
   describe "POST /create" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Expired", code: "exp.1" } }
-      let(:run_request) { post url_helpers.promotion_categories_path, params: { promotion_category: valid_attributes } }
+      let(:valid_attributes) { {name: "Expired", code: "exp.1"} }
+      let(:run_request) { post url_helpers.promotion_categories_path, params: {promotion_category: valid_attributes} }
 
       it "creates a new promotion category" do
         expect { run_request }.to change(model_class, :count).by(1)
@@ -44,8 +44,8 @@ RSpec.shared_examples_for 'promotion categories requests' do
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "" } }
-      let(:run_request) { post url_helpers.promotion_categories_path, params: { promotion_category: invalid_attributes } }
+      let(:invalid_attributes) { {name: "", code: ""} }
+      let(:run_request) { post url_helpers.promotion_categories_path, params: {promotion_category: invalid_attributes} }
 
       it "does not create a new promotion category" do
         expect { run_request }.not_to change(model_class, :count)
@@ -67,8 +67,8 @@ RSpec.shared_examples_for 'promotion categories requests' do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:valid_attributes) { { name: "Updated", code: "upd.1" } }
-      let(:run_request) { patch url_helpers.promotion_category_path(promotion_category), params: { promotion_category: valid_attributes } }
+      let(:valid_attributes) { {name: "Updated", code: "upd.1"} }
+      let(:run_request) { patch url_helpers.promotion_category_path(promotion_category), params: {promotion_category: valid_attributes} }
 
       it "updates the promotion category" do
         run_request
@@ -91,8 +91,8 @@ RSpec.shared_examples_for 'promotion categories requests' do
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "" } }
-      let(:run_request) { patch url_helpers.promotion_category_path(promotion_category), params: { promotion_category: invalid_attributes } }
+      let(:invalid_attributes) { {name: "", code: ""} }
+      let(:run_request) { patch url_helpers.promotion_category_path(promotion_category), params: {promotion_category: invalid_attributes} }
 
       it "does not update the promotion category" do
         expect { run_request }.not_to change { promotion_category.reload.name }

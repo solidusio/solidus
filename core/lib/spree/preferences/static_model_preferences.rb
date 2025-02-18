@@ -55,8 +55,8 @@ module Spree
           next if extra_keys.empty?
 
           raise \
-            "Unexpected keys found for #{klass} under #{name}: #{extra_keys.sort.join(', ')} " \
-            "(expected keys: #{klass_keys.sort.join(', ')})"
+            "Unexpected keys found for #{klass} under #{name}: #{extra_keys.sort.join(", ")} " \
+            "(expected keys: #{klass_keys.sort.join(", ")})"
         end
       end
     end

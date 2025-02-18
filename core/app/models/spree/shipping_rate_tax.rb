@@ -17,7 +17,7 @@ module Spree
 
     def label
       I18n.t translation_key,
-        scope: 'spree.shipping_rate_tax.label',
+        scope: "spree.shipping_rate_tax.label",
         amount: display_absolute_amount,
         tax_rate_name: tax_rate.name
     end
@@ -30,9 +30,9 @@ module Spree
 
     def translation_key
       if tax_rate.included_in_price?
-         :vat
-       else
-         :sales_tax
+        :vat
+      else
+        :sales_tax
       end
     end
   end

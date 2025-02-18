@@ -3,25 +3,25 @@
 module Spree
   module Admin
     class ReturnAuthorizationsController < ResourceController
-      belongs_to 'spree/order', find_by: :number
+      belongs_to "spree/order", find_by: :number
 
       before_action :load_form_data, only: [:new, :edit]
-      create.fails  :load_form_data
-      update.fails  :load_form_data
+      create.fails :load_form_data
+      update.fails :load_form_data
 
       def fire
         action_from_params = "#{params[:e]}!"
 
-        if @return_authorization.state_events.include?(params[:e].to_sym) &&
-           @return_authorization.send(action_from_params)
+        flash_message = if @return_authorization.state_events.include?(params[:e].to_sym) &&
+            @return_authorization.send(action_from_params)
 
-          flash_message = { success: t('spree.return_authorization_updated') }
+          {success: t("spree.return_authorization_updated")}
         else
-          flash_message = { error: t('spree.return_authorization_fire_error') }
+          {error: t("spree.return_authorization_fire_error")}
         end
 
         redirect_back(fallback_location: admin_order_return_authorizations_path(@order),
-                      flash: flash_message)
+          flash: flash_message)
       end
 
       private

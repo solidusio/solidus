@@ -4,9 +4,9 @@ module Spree
   # Tracks the state of line items' fulfillment.
   #
   class InventoryUnit < Spree::Base
-    PRE_SHIPMENT_STATES = %w(backordered on_hand)
-    POST_SHIPMENT_STATES = %w(returned)
-    CANCELABLE_STATES = ['on_hand', 'backordered', 'shipped']
+    PRE_SHIPMENT_STATES = %w[backordered on_hand]
+    POST_SHIPMENT_STATES = %w[returned]
+    CANCELABLE_STATES = ["on_hand", "backordered", "shipped"]
 
     belongs_to :variant, -> { with_discarded }, class_name: "Spree::Variant", inverse_of: :inventory_units, optional: true
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units, optional: true
@@ -29,20 +29,20 @@ module Spree
     before_destroy :ensure_can_destroy
 
     scope :pending, -> { where pending: true }
-    scope :backordered, -> { where state: 'backordered' }
-    scope :on_hand, -> { where state: 'on_hand' }
+    scope :backordered, -> { where state: "backordered" }
+    scope :on_hand, -> { where state: "on_hand" }
     scope :pre_shipment, -> { where(state: PRE_SHIPMENT_STATES) }
-    scope :shipped, -> { where state: 'shipped' }
+    scope :shipped, -> { where state: "shipped" }
     scope :post_shipment, -> { where(state: POST_SHIPMENT_STATES) }
-    scope :returned, -> { where state: 'returned' }
-    scope :canceled, -> { where(state: 'canceled') }
-    scope :not_canceled, -> { where.not(state: 'canceled') }
+    scope :returned, -> { where state: "returned" }
+    scope :canceled, -> { where(state: "canceled") }
+    scope :not_canceled, -> { where.not(state: "canceled") }
     scope :cancelable, -> { where(state: Spree::InventoryUnit::CANCELABLE_STATES, pending: false) }
     scope :backordered_per_variant, ->(stock_item) do
       includes(:shipment, :order)
         .where("spree_shipments.state != 'canceled'").references(:shipment)
         .where(variant_id: stock_item.variant_id)
-        .where('spree_orders.completed_at is not null')
+        .where.not(spree_orders: {completed_at: nil})
         .backordered.order(Spree::Order.arel_table[:completed_at].asc)
     end
 
@@ -53,7 +53,7 @@ module Spree
     #   inventory units for the given stock item
     scope :backordered_for_stock_item, ->(stock_item) do
       backordered_per_variant(stock_item)
-        .where(spree_shipments: { stock_location_id: stock_item.stock_location_id })
+        .where(spree_shipments: {stock_location_id: stock_item.stock_location_id})
     end
 
     scope :shippable, -> { on_hand }

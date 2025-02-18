@@ -13,7 +13,7 @@ module SolidusAdmin
       set_page_and_extract_portion_from(zones)
 
       respond_to do |format|
-        format.html { render component('zones/index').new(page: @page) }
+        format.html { render component("zones/index").new(page: @page) }
       end
     end
 
@@ -22,7 +22,7 @@ module SolidusAdmin
 
       Spree::Zone.transaction { @zones.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to zones_path, status: :see_other
     end
 
