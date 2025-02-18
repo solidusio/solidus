@@ -71,9 +71,9 @@ end
 
 group :lint do
   gem 'erb-formatter', '~> 0.7', require: false
-  gem 'rubocop', '~> 1', require: false
-  gem 'rubocop-performance', '~> 1.4', require: false
-  gem 'rubocop-rails', '~> 2.9', require: false
+  gem 'standard', require: false
+  gem 'standard-performance', require: false
+  gem 'standard-rails', require: false
 end
 
 group :release do
