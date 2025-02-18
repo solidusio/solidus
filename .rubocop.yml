@@ -118,6 +118,10 @@ Style/TrailingCommaInHashLiteral:
 Style/SymbolArray:
   Enabled: false
 
+# In some circumstances, this looks really unintuitive
+Rails/Delegate:
+  Enabled: false
+
 Rails/DynamicFindBy:
   Whitelist:
     - find_by_param
