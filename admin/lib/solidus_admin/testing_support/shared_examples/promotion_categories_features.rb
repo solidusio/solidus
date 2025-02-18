@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 RSpec.shared_examples_for 'promotion categories features' do
