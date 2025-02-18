@@ -6,13 +6,27 @@ module Spree::Api
   describe 'Users', type: :request do
     let(:user) { create(:user, spree_api_key: SecureRandom.hex) }
     let(:stranger) { create(:user, email: 'stranger@example.com') }
-    let(:attributes) { [:id, :email, :created_at, :updated_at] }
+    let(:attributes) { [:id, :email, :created_at, :updated_at, :customer_metadata] }
 
     context "as a normal user" do
       it "can get own details" do
         get spree.api_user_path(user.id), params: { token: user.spree_api_key }
 
         expect(json_response['email']).to eq user.email
+      end
+
+      it "can view customer_metadata" do
+        get spree.api_user_path(user.id), params: { token: user.spree_api_key }
+
+        expect(json_response['email']).to eq user.email
+        expect(json_response).to have_key('customer_metadata')
+      end
+
+      it "cannot view admin_metadata" do
+        get spree.api_user_path(user.id), params: { token: user.spree_api_key }
+
+        expect(json_response['email']).to eq user.email
+        expect(json_response).not_to have_key('admin_metadata')
       end
 
       it "cannot get other users details" do
@@ -33,6 +47,18 @@ module Spree::Api
 
         post spree.api_users_path, params: { user: user_params, token: user.spree_api_key }
         expect(json_response['email']).to eq 'new@example.com'
+      end
+
+      it "can create a new user with customer_metadata" do
+        user_params = {
+          email: 'new@example.com', password: 'spree123', password_confirmation: 'spree123', customer_metadata: { 'username' => 'newuser' }
+        }
+
+        post spree.api_users_path, params: { user: user_params, token: user.spree_api_key }
+
+        expect(json_response['email']).to eq 'new@example.com'
+        expect(json_response['customer_metadata']).to eq({ 'username' => 'newuser' })
+        expect(json_response).not_to have_key('admin_metadata')
       end
 
       it "cannot create a new user with invalid attributes" do
@@ -162,6 +188,18 @@ module Spree::Api
         expect(json_response['users'].first['email']).to eq expected_result.email
       end
 
+      it 'can view admin_metadata' do
+        allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+
+        2.times { create(:user) }
+
+        get spree.api_users_path
+        expect(Spree.user_class.count).to eq 2
+        expect(json_response['count']).to eq 2
+        expect(json_response['users'].size).to eq 2
+        expect(json_response['users'].first).to have_key('admin_metadata')
+      end
+
       it "can create" do
         post spree.api_users_path, params: { user: { email: "new@example.com", password: 'spree123', password_confirmation: 'spree123' } }
         expect(json_response).to have_attributes(attributes)
@@ -172,6 +210,14 @@ module Spree::Api
         post spree.api_users_path, params: { user: { email: "existing@example.com" } }
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
+      end
+
+      it "can update admin_metadata" do
+        post spree.api_users_path, params: { user: { email: "existing@example.com", admin_metadata: { 'user_type' => 'regular' } } }
+
+        expect(json_response).to have_attributes(attributes)
+        expect(response.status).to eq(201)
+        expect(json_response["admin_metadata"]).to eq({ 'user_type' => 'regular' })
       end
 
       it "can destroy user without orders" do

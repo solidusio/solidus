@@ -15,8 +15,10 @@ module Spree
           @line_item = @order.contents.add(
             variant,
             params[:line_item][:quantity] || 1,
-            options: line_item_params[:options].to_h
+            options: line_item_params[:options].to_h,
+            **extract_metadata
           )
+
           respond_with(@line_item, status: 201, default_template: :show)
         rescue ActiveRecord::RecordInvalid => error
           invalid_resource!(error.record)
@@ -56,8 +58,19 @@ module Spree
         { line_items_attributes: {
             id: params[:id],
             quantity: params[:line_item][:quantity],
-            options: line_item_params[:options] || {}
+            options: line_item_params[:options] || {},
+            **extract_metadata
         } }
+      end
+
+      def extract_metadata
+        metadata = { customer_metadata: line_item_params[:customer_metadata] }
+
+        if @current_user_roles&.include?("admin")
+          metadata[:admin_metadata] = line_item_params[:admin_metadata]
+        end
+
+        metadata
       end
 
       def line_item_params

@@ -223,4 +223,6 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
       it { is_expected.to eq true }
     end
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :return_authorization
 end

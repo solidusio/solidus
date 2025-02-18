@@ -237,4 +237,6 @@ RSpec.describe Spree::Refund, type: :model do
       end
     end
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :refund
 end

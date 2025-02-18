@@ -7,6 +7,7 @@ module Spree
   #   spree_auth_devise)
   class LegacyUser < Spree::Base
     include UserMethods
+    include Metadata
 
     self.table_name = 'spree_users'
 

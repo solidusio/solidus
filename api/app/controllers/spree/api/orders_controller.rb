@@ -112,10 +112,17 @@ module Spree
       def order_params
         if params[:order]
           normalize_params
+          prevent_customer_metadata_update
           params.require(:order).permit(permitted_order_attributes)
         else
           {}
         end
+      end
+
+      def prevent_customer_metadata_update
+        return unless @order&.completed? && cannot?(:admin, Spree::Order)
+
+        params[:order].delete(:customer_metadata) if params[:order]
       end
 
       def normalize_params

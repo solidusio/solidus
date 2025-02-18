@@ -43,6 +43,16 @@ module Spree
         end
       end
 
+      Spree::Api::Config.metadata_api_parameters.each do |method_name, resource|
+        define_method("#{method_name}_attributes") do
+          authorized_attributes(resource, "#{method_name}_attributes")
+        end
+      end
+
+      def authorized_attributes(resource, config_attribute)
+        can?(:admin, resource) ? Spree::Api::Config.public_send(config_attribute) + [:admin_metadata] : Spree::Api::Config.public_send(config_attribute)
+      end
+
       def required_fields_for(model)
         required_fields = model._validators.select do |_field, validations|
           validations.any? { |validation| validation.is_a?(ActiveModel::Validations::PresenceValidator) }

@@ -872,4 +872,6 @@ RSpec.describe Spree::Shipment, type: :model do
 
     it { is_expected.to include carton }
   end
+
+  it_behaves_like "customer and admin metadata fields: storage and validation", :shipment
 end

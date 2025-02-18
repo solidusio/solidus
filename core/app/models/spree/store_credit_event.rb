@@ -3,6 +3,7 @@
 module Spree
   class StoreCreditEvent < Spree::Base
     include Spree::SoftDeletable
+    include Metadata
 
     belongs_to :store_credit, optional: true
     belongs_to :originator, polymorphic: true, optional: true

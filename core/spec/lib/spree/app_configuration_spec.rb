@@ -222,4 +222,22 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.admin_vat_location.state_id).to eq(nil)
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
+
+  describe '@meta_data_max_keys' do
+    it 'is 6 by default' do
+      expect(prefs[:meta_data_max_keys]).to eq(6)
+    end
+  end
+
+  describe '@meta_data_max_key_length' do
+    it 'is 16 by default' do
+      expect(prefs[:meta_data_max_key_length]).to eq(16)
+    end
+  end
+
+  describe '@meta_data_max_value_length' do
+    it 'is 256 by default' do
+      expect(prefs[:meta_data_max_value_length]).to eq(256)
+    end
+  end
 end
