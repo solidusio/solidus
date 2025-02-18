@@ -134,7 +134,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
   describe "#pretty_time" do
     subject { pretty_time(date) }
 
-    let(:date) { Time.new(2012, 11, 6, 13, 33) }
+    let(:date) { Time.zone.local(2012, 11, 6, 13, 33) }
 
     it "pretty prints time in long format" do
       is_expected.to eq "November 06, 2012 1:33 PM"

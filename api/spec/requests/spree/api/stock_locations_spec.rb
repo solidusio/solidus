@@ -16,7 +16,7 @@ module Spree::Api
         it "can see active stock locations" do
           get spree.api_stock_locations_path
           expect(response).to be_successful
-          stock_locations = json_response["stock_locations"].map { |sl| sl["name"] }
+          stock_locations = json_response["stock_locations"].pluck("name")
           expect(stock_locations).to include stock_location.name
         end
 
@@ -24,7 +24,7 @@ module Spree::Api
           stock_location.update!(active: false)
           get spree.api_stock_locations_path
           expect(response).to be_successful
-          stock_locations = json_response["stock_locations"].map { |sl| sl["name"] }
+          stock_locations = json_response["stock_locations"].pluck("name")
           expect(stock_locations).not_to include stock_location.name
         end
       end
@@ -79,7 +79,7 @@ module Spree::Api
         it "can see active stock locations" do
           get spree.api_stock_locations_path
           expect(response).to be_successful
-          stock_locations = json_response["stock_locations"].map { |sl| sl["name"] }
+          stock_locations = json_response["stock_locations"].pluck("name")
           expect(stock_locations).to include stock_location.name
         end
 
@@ -87,7 +87,7 @@ module Spree::Api
           stock_location.update!(active: false)
           get spree.api_stock_locations_path
           expect(response).to be_successful
-          stock_locations = json_response["stock_locations"].map { |sl| sl["name"] }
+          stock_locations = json_response["stock_locations"].pluck("name")
           expect(stock_locations).to include stock_location.name
         end
 

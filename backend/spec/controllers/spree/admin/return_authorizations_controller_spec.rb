@@ -100,7 +100,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
         it "has 3 new @form_return_items" do
           subject
           expect(assigns(:form_return_items).size).to eq 3
-          expect(assigns(:form_return_items).select(&:new_record?).size).to eq 3
+          expect(assigns(:form_return_items).count(&:new_record?)).to eq 3
         end
       end
     end
@@ -113,7 +113,7 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
           subject
           expect(assigns(:form_return_items).size).to eq 3
           expect(assigns(:form_return_items).select(&:persisted?)).to eq [return_item_1]
-          expect(assigns(:form_return_items).select(&:new_record?).size).to eq 2
+          expect(assigns(:form_return_items).count(&:new_record?)).to eq 2
         end
       end
     end

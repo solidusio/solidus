@@ -22,7 +22,7 @@ module SolidusAdmin
       end
 
       def ignore_tailwind_build_files
-        append_file(".gitignore", "app/assets/builds/solidus_admin/") if File.exist?(Rails.root.join(".gitignore"))
+        append_file(".gitignore", "app/assets/builds/solidus_admin/") if Rails.root.join(".gitignore").exist?
       end
 
       def build_tailwind

@@ -5,7 +5,7 @@ require "solidus_legacy_promotions/migrations/promotions_with_code_handlers"
 class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
   class Promotion < ActiveRecord::Base
     self.table_name = "spree_promotions"
-    self.ignored_columns = %w[type]
+    self.ignored_columns += %w[type]
   end
 
   def up

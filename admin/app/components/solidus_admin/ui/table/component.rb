@@ -19,7 +19,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     end
 
     def singular_name
-      self[:class].model_name.human if self[:class]
+      self[:class]&.model_name&.human
     end
 
     def plural_name

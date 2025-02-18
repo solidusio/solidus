@@ -42,13 +42,13 @@ RSpec.describe Spree::LogEntry, type: :model do
     it "can parse user specified class instances" do
       stub_spree_preferences(log_entry_permitted_classes: ["Date"])
 
-      log_entry = described_class.new(details: Date.today)
+      log_entry = described_class.new(details: Time.zone.today)
 
       expect { log_entry.parsed_details }.not_to raise_error
     end
 
     it "raises a meaningful exception when a disallowed class is found" do
-      log_entry = described_class.new(details: Date.today)
+      log_entry = described_class.new(details: Time.zone.today)
 
       expect { log_entry.parsed_details }.to raise_error(described_class::DisallowedClass, /log_entry_permitted_classes/)
     end

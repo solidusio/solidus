@@ -42,9 +42,9 @@ module Solidus
     class_option :admin_password, type: :string
     class_option :mount_point, type: :string, desc: "Indicates where Solidus should be mounted. Defaults to '/'"
 
-    class_option :frontend, type: :string, enum: FRONTENDS.map { _1[:name] }, default: nil, desc: "Indicates which frontend to install."
-    class_option :authentication, type: :string, enum: AUTHENTICATIONS.map { _1[:name] }, default: nil, desc: "Indicates which authentication system to install."
-    class_option :payment_method, type: :string, enum: PAYMENT_METHODS.map { _1[:name] }, default: nil, desc: "Indicates which payment method to install."
+    class_option :frontend, type: :string, enum: FRONTENDS.pluck(:name), default: nil, desc: "Indicates which frontend to install."
+    class_option :authentication, type: :string, enum: AUTHENTICATIONS.pluck(:name), default: nil, desc: "Indicates which authentication system to install."
+    class_option :payment_method, type: :string, enum: PAYMENT_METHODS.pluck(:name), default: nil, desc: "Indicates which payment method to install."
 
     source_root "#{__dir__}/templates"
 
@@ -307,7 +307,7 @@ module Solidus
       default = available_options.find { _1[:default] }
       (options[:auto_accept] && default[:name]) || ask_with_description(
         default: default[:name],
-        limited_to: available_options.map { _1[:name] },
+        limited_to: available_options.pluck(:name),
         desc: <<~TEXT
           Which #{name} would you like to use?
           #{available_options.map { option_description[**_1] }.join("\n")}

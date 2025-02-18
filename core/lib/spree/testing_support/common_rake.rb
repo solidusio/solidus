@@ -80,7 +80,7 @@ class CommonRakeTasks
   end
 
   def generator_namespace
-    "#{ENV["LIB_NAMESPACE"]&.underscore || ENV["LIB_NAME"]}"
+    (ENV["LIB_NAMESPACE"]&.underscore || ENV["LIB_NAME"]).to_s
   end
 
   def rake_generator_namespace

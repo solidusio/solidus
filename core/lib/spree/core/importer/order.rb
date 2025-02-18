@@ -31,7 +31,7 @@ module Spree
 
             order.update!(params)
 
-            order.create_proposed_shipments unless shipments_attrs.present?
+            order.create_proposed_shipments if shipments_attrs.blank?
 
             if completed_at
               order.completed_at = completed_at
@@ -169,7 +169,7 @@ module Spree
 
         def self.ensure_variant_id_from_params(hash)
           sku = hash.delete(:sku)
-          unless hash[:variant_id].present?
+          if hash[:variant_id].blank?
             hash[:variant_id] = Spree::Variant.with_prices.find_by!(sku:).id
           end
           hash

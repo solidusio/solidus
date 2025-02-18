@@ -37,7 +37,7 @@ module Spree
     end
 
     def available_locales=(locales)
-      locales = locales.reject(&:blank?)
+      locales = locales.compact_blank
       if locales.empty?
         super(nil)
       else

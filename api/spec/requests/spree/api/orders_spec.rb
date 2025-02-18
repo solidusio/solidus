@@ -31,7 +31,7 @@ module Spree::Api
 
     describe "POST create" do
       let(:target_user) { create :user }
-      let(:date_override) { Time.parse("2015-01-01") }
+      let(:date_override) { Time.zone.parse("2015-01-01") }
       let(:attributes) { {user_id: target_user.id, created_at: date_override, email: target_user.email} }
 
       subject do
@@ -846,7 +846,7 @@ module Spree::Api
 
           orders = json_response[:orders]
           expect(orders.count).to be >= 3
-          expect(orders.map { |order| order[:id] }).to match_array Spree::Order.pluck(:id)
+          expect(orders.pluck(:id)).to match_array Spree::Order.pluck(:id)
         end
 
         after { ActionController::Base.perform_caching = false }
@@ -943,7 +943,7 @@ module Spree::Api
                 payment_method: create(:payment_method).name,
                 source: {
                   month: "01",
-                  year: Date.today.year.to_s.last(2),
+                  year: Time.zone.today.year.to_s.last(2),
                   cc_type: "123",
                   last_digits: "1111",
                   name: "Credit Card"

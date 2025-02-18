@@ -21,7 +21,7 @@ module Spree
     # @return [Hash<Integer, BigDecimal>] a hash of line item IDs and their
     #   corresponding weighted adjustments
     def distributed_amounts
-      Hash[line_item_ids.zip(allocated_amounts)]
+      line_item_ids.zip(allocated_amounts).to_h
     end
 
     def line_item_ids

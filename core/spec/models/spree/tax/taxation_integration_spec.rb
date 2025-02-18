@@ -655,7 +655,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it "should not delete adjustments for complete order when taxrate is soft-deleted" do
-          order.update_column :completed_at, Time.now
+          order.update_column :completed_at, Time.zone.now
           new_york_books_tax.discard
           federal_books_tax.discard
           expect(line_item.adjustments.count).to eq(2)

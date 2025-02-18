@@ -87,7 +87,7 @@ module Spree
     # Those rates should never come into play at all and only the French rates should apply.
     scope :for_zone, ->(zone) do
       if zone
-        where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
+        where(zone_id: Spree::Zone.with_shared_members(zone).select(:id))
       else
         none
       end

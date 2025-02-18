@@ -24,7 +24,7 @@ module Spree
     end
 
     def validate_payment_source_ownership
-      return unless payment_source.present?
+      return if payment_source.blank?
 
       if payment_source.respond_to?(:user_id) &&
           payment_source.user_id != user_id

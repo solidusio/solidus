@@ -17,7 +17,7 @@ module Spree
     after_save :remove_defunct_members
 
     scope :with_member_ids, ->(state_ids, country_ids) do
-      if !state_ids.present? && !country_ids.present?
+      if state_ids.blank? && country_ids.blank?
         none
       else
         spree_zone_members_table = Spree::ZoneMember.arel_table
@@ -137,7 +137,7 @@ module Spree
 
     def set_zone_members(ids, type)
       zone_members.destroy_all
-      ids.reject(&:blank?).map do |id|
+      ids.compact_blank.map do |id|
         member = Spree::ZoneMember.new
         member.zoneable_type = type
         member.zoneable_id = id

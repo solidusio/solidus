@@ -192,7 +192,7 @@ module Spree::Api
         it "only returns stock items for active stock locations" do
           get spree.api_variants_path
           variant = json_response["variants"].first
-          stock_items = variant["stock_items"].map { |si| si["stock_location_name"] }
+          stock_items = variant["stock_items"].pluck("stock_location_name")
 
           expect(stock_items).to include stock_location.name
           expect(stock_items).not_to include inactive_stock_location.name

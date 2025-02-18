@@ -206,7 +206,7 @@ RSpec.describe Spree::Zone, type: :model do
       end
 
       it "only returns each zone once" do
-        expect(zones_with_shared_members.select { |z| z == zone }.size).to be 1
+        expect(zones_with_shared_members.count { |z| z == zone }).to be 1
       end
     end
 
@@ -237,7 +237,7 @@ RSpec.describe Spree::Zone, type: :model do
       end
 
       it "only returns each zone once" do
-        expect(zones_with_shared_members.select { |z| z == zone }.size).to be 1
+        expect(zones_with_shared_members.count { |z| z == zone }).to be 1
       end
     end
   end

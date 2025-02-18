@@ -101,7 +101,7 @@ module Spree
       # @return [String] cache key to be used in views
       #
       def cache_key
-        desired_attributes.values.select(&:present?).map(&:to_s).join("/")
+        desired_attributes.values.compact_blank.map(&:to_s).join("/")
       end
     end
   end

@@ -62,7 +62,7 @@ module Spree
         end
 
         def add_search_scopes(base_scope)
-          return base_scope unless @properties[:search].present?
+          return base_scope if @properties[:search].blank?
           raise InvalidOptions.new(:search) unless @properties[:search].respond_to?(:each_pair)
 
           @properties[:search].each_pair do |name, scope_attribute|

@@ -40,7 +40,7 @@ module Spree::Api
 
         it "returns unique products" do
           get spree.api_products_path
-          product_ids = json_response["products"].map { |product| product["id"] }
+          product_ids = json_response["products"].pluck("id")
           expect(product_ids.uniq.count).to eq(product_ids.count)
         end
 

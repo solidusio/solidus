@@ -114,7 +114,7 @@ module Spree
     #
     # @param options [Hash] options for this line item
     def options=(options = {})
-      return unless options.present?
+      return if options.blank?
 
       assign_attributes options
 

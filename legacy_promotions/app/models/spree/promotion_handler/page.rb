@@ -11,7 +11,7 @@ module Spree
       end
 
       def activate
-        if promotion && promotion.eligible?(order)
+        if promotion&.eligible?(order)
           promotion.activate(order:)
         end
       end

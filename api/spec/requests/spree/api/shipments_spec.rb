@@ -214,7 +214,7 @@ module Spree::Api
           end
 
           describe "json output" do
-            let(:rendered_shipment_ids) { json_response["shipments"].map { |s| s["id"] } }
+            let(:rendered_shipment_ids) { json_response["shipments"].pluck("id") }
 
             it "contains the shipments" do
               subject

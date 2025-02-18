@@ -45,9 +45,7 @@ class Spree::OrderCancellations
 
       @order.recalculate
 
-      if short_ship_tax_notifier
-        short_ship_tax_notifier.call(unit_cancels)
-      end
+      short_ship_tax_notifier&.call(unit_cancels)
     end
 
     unit_cancels

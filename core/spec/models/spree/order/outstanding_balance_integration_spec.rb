@@ -16,7 +16,7 @@ RSpec.describe "Outstanding balance integration tests" do
   let!(:order) { create(:order_with_line_items, line_items_count: 2, line_items_price: 3, shipment_cost: 13) }
   let(:item_1) { order.line_items[0] }
   let(:item_2) { order.line_items[1] }
-  before { order.update!(state: "complete", completed_at: Time.now) }
+  before { order.update!(state: "complete", completed_at: Time.zone.now) }
 
   subject do
     order.reload

@@ -8,7 +8,7 @@ module Spree
 
       def initialize(order)
         @order = order
-        @coupon_code = order.coupon_code && order.coupon_code.downcase
+        @coupon_code = order.coupon_code&.downcase
       end
 
       def can_apply?
@@ -54,7 +54,7 @@ module Spree
       end
 
       def promotion
-        @promotion ||= if promotion_code && promotion_code.promotion.active?
+        @promotion ||= if promotion_code&.promotion&.active?
           promotion_code.promotion
         end
       end

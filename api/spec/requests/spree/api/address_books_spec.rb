@@ -103,7 +103,7 @@ module Spree::Api
             user_address = Spree::UserAddress.last
 
             expect(response.status).to eq(200)
-            update_target_ids = JSON.parse(response.body).select { |target| target["update_target"] }.map { |location| location["id"] }
+            update_target_ids = JSON.parse(response.body).select { |target| target["update_target"] }.pluck("id")
             expect(update_target_ids).to eq([user_address.address_id])
           end
         end
@@ -120,7 +120,7 @@ module Spree::Api
             }.to_not change { Spree::UserAddress.count }
 
             expect(response.status).to eq(200)
-            update_target_ids = JSON.parse(response.body).select { |target| target["update_target"] }.map { |location| location["id"] }
+            update_target_ids = JSON.parse(response.body).select { |target| target["update_target"] }.pluck("id")
             expect(update_target_ids).to eq([address.id])
           end
         end

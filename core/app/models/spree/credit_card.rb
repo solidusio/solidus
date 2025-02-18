@@ -47,7 +47,7 @@ module Spree
     # @param expiry [String] the desired new expiry date in one of the
     #   following formats: "mm/yy", "mm / yyyy", "mmyy", "mmyyyy"
     def expiry=(expiry)
-      return unless expiry.present?
+      return if expiry.blank?
 
       self[:month], self[:year] =
         if /\d{2}\s?\/\s?\d{2,4}/.match?(expiry) # will match mm/yy and mm / yyyy
@@ -167,7 +167,7 @@ module Spree
     private
 
     def require_card_numbers?
-      !encrypted_data.present? && !has_payment_profile?
+      encrypted_data.blank? && !has_payment_profile?
     end
   end
 end

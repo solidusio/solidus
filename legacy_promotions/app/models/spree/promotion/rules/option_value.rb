@@ -28,11 +28,11 @@ module Spree
 
         def preferred_eligible_values
           values = preferences[:eligible_values] || {}
-          Hash[values.keys.map(&:to_i).zip(
+          values.keys.map(&:to_i).zip(
             values.values.map do |value|
               (value.is_a?(Array) ? value : value.split(",")).map(&:to_i)
             end
-          )]
+          ).to_h
         end
 
         private
