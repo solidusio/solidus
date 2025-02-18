@@ -90,6 +90,18 @@ To add Solidus, begin with a newly created Rails application with its database.
 rails new my_store
 ```
 
+> [!CAUTION]
+> Due to [a bug in `sprockets-rails`](https://github.com/rails/sprockets-rails/pull/546) we need to manually add the sprockets manifest into the generated rails app **before** running any rails commands inside the rails app folder.
+
+```bash
+mkdir -p my_store/app/assets/config
+cat <<MANIFEST > my_store/app/assets/config/manifest.js
+//= link_tree ../images
+//= link_directory ../javascripts .js
+//= link_directory ../stylesheets .css
+MANIFEST
+```
+
 ### Installing Solidus
 
 In your application's root folder run:
@@ -98,6 +110,9 @@ In your application's root folder run:
 bundle add solidus
 bin/rails g solidus:install
 ```
+
+> [!NOTE]
+> Please make sure to generate the sprockets manifest before running the `solidus:install` generator.
 
 And follow the prompt's instructions.
 ### Accessing Solidus Store
