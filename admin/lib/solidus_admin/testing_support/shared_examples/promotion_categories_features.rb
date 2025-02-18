@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 RSpec.shared_examples_for 'promotion categories features' do
   before { sign_in create(:admin_user, email: "admin@example.com") }
@@ -62,5 +63,9 @@ RSpec.shared_examples_for 'promotion categories features' do
     expect(page).to have_content("Promotion Categories were successfully removed.")
     expect(page).not_to have_content("Expired")
     expect(model_class.count).to eq(1)
+  end
+
+  include_examples 'feature: bulk delete resources' do
+    let(:resource_factory) { factory_name }
   end
 end

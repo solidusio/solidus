@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 RSpec.describe "SolidusAdmin::ReturnReasonsController", type: :request do
   let(:admin_user) { create(:admin_user) }
@@ -121,6 +122,13 @@ RSpec.describe "SolidusAdmin::ReturnReasonsController", type: :request do
 
       expect(response).to redirect_to(solidus_admin.return_reasons_path)
       expect(response).to have_http_status(:see_other)
+    end
+
+    include_examples 'request: bulk delete resources' do
+      let(:resource_factory) { :return_reason }
+      let(:bulk_delete_path) { ->(ids) { solidus_admin.return_reasons_path(id: ids) } }
+      let(:resource_class) { Spree::ReturnReason }
+      let(:redirect_path) { solidus_admin.return_reasons_path }
     end
 
     it "displays a success flash message after deletion" do

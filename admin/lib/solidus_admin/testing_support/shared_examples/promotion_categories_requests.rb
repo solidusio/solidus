@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
+
 RSpec.shared_examples_for 'promotion categories requests' do
   let(:admin_user) { create(:admin_user) }
+  let(:promotion_category) { create(factory_name) }
 
   before do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
@@ -115,6 +118,13 @@ RSpec.shared_examples_for 'promotion categories requests' do
 
       expect(response).to redirect_to(url_helpers.promotion_categories_path)
       expect(response).to have_http_status(:see_other)
+    end
+
+    include_examples 'request: bulk delete resources' do
+      let(:resource_factory) { factory_name }
+      let(:bulk_delete_path) { ->(ids) { url_helpers.promotion_categories_path(id: ids) } }
+      let(:resource_class) { model_class }
+      let(:redirect_path) { url_helpers.promotion_categories_path }
     end
 
     it "displays a success flash message after deletion" do

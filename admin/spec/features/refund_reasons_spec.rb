@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 describe "Refund Reasons", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
@@ -18,6 +19,11 @@ describe "Refund Reasons", :js, type: :feature do
     expect(page).not_to have_content("Default-refund-reason")
     expect(Spree::RefundReason.count).to eq(0)
     expect(page).to be_axe_clean
+  end
+
+  include_examples 'feature: bulk delete resources' do
+    let(:resource_factory) { :refund_reason }
+    let(:index_path) { "/admin/refund_reasons" }
   end
 
   context "when creating a new refund reason" do
