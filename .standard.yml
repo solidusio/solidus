@@ -1,0 +1,11 @@
+plugins:
+  - standard-rails
+  - standard-performance
+
+ignore:
+  - '**/*.rb':
+    - Rails/ApplicationRecord
+    - Rails/ApplicationController
+    - Rails/ApplicationMailer
+    - Rails/ApplicationJob
+    - Rails/ReflectionClassName
