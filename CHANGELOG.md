@@ -1,3 +1,34 @@
+## Solidus v4.3.6 (2025-02-19)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.3] Allow Psych 5 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5794
+* [v4.3]  Add support for Sprockets v4 to the DummyApp (backports #3379) by @mamhoff in https://github.com/solidusio/solidus/pull/5806
+* [v4.3] Lock solidus_core.gemspec to ransack '< 4.2' by @tvdeyen in https://github.com/solidusio/solidus/pull/5839
+* [v4.3] [FIX] Remove spacing at top of OrderShipping#ship method by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5973
+* [v4.3] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5985
+* [v4.3] Test app task: Allow passing in user class by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5960
+* [v4.3] Do not constantize Spree.user_class in UserClassHandle by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6003
+
+## Solidus Admin
+
+* [v4.3] Lock solidus_core.gemspec to ransack '< 4.2' by @tvdeyen in https://github.com/solidusio/solidus/pull/5839
+* [v4.3] [SolidusAdmin] Remove inaccessible details/summary element by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5840
+* [v4.3] test: Wait for modal to open before testing its content by @tvdeyen in https://github.com/solidusio/solidus/pull/5995
+* [v4.3] Use Order#email to show the order's email in new admin by @tvdeyen in https://github.com/solidusio/solidus/pull/6007
+* [v4.3] [admin] Remove previews for non-UI components that didn't add much value by @tvdeyen in https://github.com/solidusio/solidus/pull/6073
+* [v4.3] Fix unsafe html view component, allow ViewComponent 3.21+ by @tvdeyen in https://github.com/solidusio/solidus/pull/6071
+
+## Solidus Backend
+
+* [v4.3] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5985
+* [v4.3] Format date with #to_fs by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5864
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.3.5...v4.3.6
+
+
 ## Solidus v4.3.5 (2024-05-24)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
