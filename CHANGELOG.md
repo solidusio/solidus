@@ -1,3 +1,29 @@
+## Solidus v4.2.5 (2025-02-19)
+
+## Solidus Core
+* [v4.2] Fix specs failing after Money 6.18.0 release by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5750
+* [v4.2] [FIX] Remove spacing at top of OrderShipping#ship method by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5972
+* [v4.2] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5984
+* [v4.2] Test app task: Allow passing in user class by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5959
+* [v4.2] Do not constantize Spree.user_class in UserClassHandle by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6002
+* 4.2: Limit `concurrent-ruby` to < 1.3.5 by @mamhoff in https://github.com/solidusio/solidus/pull/6077
+
+## Solidus Backend
+* [v4.2] Fix JS locale data for release of Money 6.19 by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5977
+* [v4.2] Backend: Add missing error translation by @github-actions[bot] in https://github.com/solidusio/solidus/pull/5984
+
+## Solidus API
+
+
+## Solidus Sample
+
+
+## Solidus
+
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.2.4...v4.2.5
+
+
 ## Solidus v4.2.4 (2024-04-05)
 
 ## Solidus Core
