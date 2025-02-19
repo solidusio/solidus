@@ -28,6 +28,7 @@ gem 'rspec-retry', '~> 0.6.2', require: false
 gem 'simplecov', require: false
 gem 'simplecov-cobertura', require: false
 gem 'rack', '< 3', require: false
+gem 'rake', require: false, groups: [:lint, :release]
 gem 'rails-controller-testing', require: false
 gem 'puma', '< 6', require: false
 gem 'i18n-tasks', '~> 0.9', require: false
@@ -57,7 +58,7 @@ group :admin do
 end
 
 group :lint do
-  gem 'erb-formatter', require: false
+  gem 'erb-formatter', '~> 0.7', require: false
   gem 'rubocop', '~> 1', require: false
   gem 'rubocop-performance', '~> 1.4', require: false
   gem 'rubocop-rails', '~> 2.9', require: false
