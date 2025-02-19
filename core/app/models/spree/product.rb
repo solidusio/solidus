@@ -85,6 +85,8 @@ module Spree
       :track_inventory,
       :weight,
       :width,
+      :gtin,
+      :condition
     ]
     MASTER_ATTRIBUTES.each do |attr|
       delegate :"#{attr}", :"#{attr}=", to: :find_or_build_master

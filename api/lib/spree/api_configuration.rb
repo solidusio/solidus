@@ -13,7 +13,7 @@ module Spree
     preference :product_property_attributes, :array, default: [:id, :product_id, :property_id, :value, :property_name]
 
     preference :variant_attributes, :array, default: [
-      :id, :name, :sku, :weight, :height, :width, :depth, :is_master,
+      :id, :name, :sku, :gtin, :condition, :weight, :height, :width, :depth, :is_master,
       :slug, :description, :track_inventory
     ]
 

@@ -179,6 +179,24 @@
           </div>
         </div>
       <% else %>
+        <div data-hook="admin_product_form_gtin">
+          <%= f.field_container :gtin do %>
+            <%= f.label :gtin %>
+            <%= f.text_field :gtin %>
+          <% end %>
+        </div>
+
+        <div data-hook="admin_product_form_condition">
+          <%= f.field_container :condition do %>
+            <%= f.label :condition %>
+            <%= f.select :condition,
+                Spree::Variant.conditions.map { |key, value| [t("spree.condition.#{key}"), value] },
+                { include_blank: t('spree.unset') },
+                class: 'custom-select'
+            %>
+          <% end %>
+        </div>
+
         <div id="shipping_specs" class="row">
           <% [:height, :width, :depth, :weight].each_with_index do |field, index| %>
             <div id="shipping_specs_<%= field %>_field" class="col-6">

@@ -166,11 +166,13 @@ en:
         variant: Variant
       spree/product:
         available_on: Available On
+        condition: Master Condition
         cost_currency: Cost Currency
         cost_price: Cost Price
         depth: Depth
         description: Description
         discontinue_on: Discontinue on
+        gtin: Master GTIN
         height: Height
         master_price: Master Price
         meta_description: Meta Description
@@ -418,9 +420,11 @@ en:
         password_confirmation: Password Confirmation
         spree_roles: Roles
       spree/variant:
+        condition: Condition
         cost_currency: Cost Currency
         cost_price: Cost Price
         depth: Depth
+        gtin: GTIN
         height: Height
         price: Price
         shipping_category: Variant Shipping Category
@@ -1134,6 +1138,11 @@ en:
     company: Company
     complete: complete
     complete_order: Complete Order
+    condition:
+      damaged: Damaged
+      new: New
+      refurbished: Refurbished
+      used: Used
     configuration: Configuration
     configurations: Configurations
     confirm: Confirm
@@ -2315,6 +2324,7 @@ en:
     unfinalize_all_adjustments: Unfinalize All Adjustments
     unlock: Unlock
     unrecognized_card_type: Unrecognized Card Type
+    unset: Unset
     unshippable_items: Unshippable Items
     update: Update
     updated_successfully: Updated Successfully

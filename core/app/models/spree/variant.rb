@@ -28,6 +28,10 @@ module Spree
     attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice
 
+    # Consider that not all platforms digest structured data in the same way,
+    # you might have to modify the output on the frontend or in feeds accordingly.
+    enum :condition, { damaged: "damaged", new: "new", refurbished: "refurbished", used: "used" }, prefix: true
+
     belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants_including_master, optional: false
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
     belongs_to :shipping_category, class_name: "Spree::ShippingCategory", optional: true
