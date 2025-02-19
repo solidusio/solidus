@@ -1,3 +1,19 @@
+## Solidus v4.4.3 (2025-02-19)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.4] Fix preferences serialization compatibility with Rails version check by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6086
+* [v4.4] Add Ruby 3.4 support by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6123
+
+## Solidus Promotions
+
+* [v4.4] Add Ruby 3.4 support by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6123
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.4.2...v4.4.3
+
+
 ## Solidus v4.4.2 (2024-12-09)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
