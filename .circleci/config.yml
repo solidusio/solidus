@@ -120,14 +120,14 @@ commands:
       - run:
           name: Setup Coverage Env Vars
           command: |
-              echo 'export COVERAGE_FILE=$COVERAGE_DIR/coverage.xml' >> $BASH_ENV
-              source $BASH_ENV
+            echo 'export COVERAGE_FILE=$COVERAGE_DIR/coverage.xml' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Verify Coverage Env Vars
           command: |
-              echo $COVERAGE
-              echo $COVERAGE_DIR
-              echo $COVERAGE_FILE
+            echo $COVERAGE
+            echo $COVERAGE_DIR
+            echo $COVERAGE_FILE
       - run:
           name: Setup Coverage Directory
           command: mkdir -p $COVERAGE_DIR
@@ -195,10 +195,10 @@ commands:
     parameters:
       app_root:
         type: string
-        default: '/tmp/my_app'
+        default: "/tmp/my_app"
       path:
         type: string
-        default: '/'
+        default: "/"
       expected_text:
         type: string
 
@@ -295,7 +295,7 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.2'
+        default: "3.2"
       rails:
         type: string
         default: "7.0"
@@ -321,13 +321,13 @@ jobs:
         default: postgres
       ruby:
         type: string
-        default: '3.1'
+        default: "3.1"
     executor:
       name: << parameters.database >>
       ruby: << parameters.ruby >>
     parallelism: &parallelism 3
     environment:
-      COVERAGE: 'true'
+      COVERAGE: "true"
       COVERAGE_DIR: /tmp/coverage
       DISABLE_ACTIVE_STORAGE: false
     steps:
@@ -349,10 +349,37 @@ workflows:
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.0'], database: ['mysql'], paperclip: [true] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1"],
+                  ruby: ["3.0"],
+                  database: ["mysql"],
+                  paperclip: [true],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.1'], database: ['postgres'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1"],
+                  ruby: ["3.1"],
+                  database: ["postgres"],
+                  paperclip: [false],
+                },
+            }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['7.0', '7.1'], ruby: ['3.2'], database: ['sqlite'], paperclip: [false] } }
+          matrix:
+            {
+              parameters:
+                {
+                  rails: ["7.0", "7.1"],
+                  ruby: ["3.2"],
+                  database: ["sqlite"],
+                  paperclip: [false],
+                },
+            }
