@@ -115,7 +115,7 @@ module Spree
     after_initialize :ensure_master
 
     after_save :run_touch_callbacks, if: :saved_changes?
-    after_touch :touch_taxons
+    after_commit :touch_taxons
 
     before_validation :normalize_slug, on: :update
     before_validation :validate_master

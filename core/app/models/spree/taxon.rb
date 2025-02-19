@@ -23,8 +23,7 @@ module Spree
     validates :meta_title, length: { maximum: 255 }
     validates :taxonomy_id, uniqueness: { scope: :parent_id, message: :can_have_only_one_root }, if: -> { root? }
 
-    after_save :touch_ancestors_and_taxonomy
-    after_touch :touch_ancestors_and_taxonomy
+    after_commit :touch_ancestors_and_taxonomy
 
     include ::Spree::Config.taxon_attachment_module
 
