@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 describe "Tax categories", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
@@ -20,6 +21,11 @@ describe "Tax categories", :js, type: :feature do
     expect(page).not_to have_content("Clothing")
     expect(Spree::TaxCategory.count).to eq(1)
     expect(page).to be_axe_clean
+  end
+
+  include_examples 'feature: bulk delete resources' do
+    let(:resource_factory) { :tax_category }
+    let(:index_path) { "/admin/tax_categories" }
   end
 
   context "when creating a new tax category" do

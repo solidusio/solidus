@@ -6,8 +6,8 @@ en:
     promotion_categories:
       title: "Promotion Categories"
       create:
-        success: "Promotion Category was successfully created."
+        success: "Promotion category was successfully created."
       update:
-        success: "Promotion Category was successfully updated."
+        success: "Promotion category was successfully updated."
       destroy:
-        success: "Promotion Categories were successfully removed."
+        success: "Promotion categories were successfully removed."

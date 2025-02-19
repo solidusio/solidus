@@ -56,9 +56,9 @@ module SolidusAdmin
     end
 
     def destroy
-      @resource = resource_class.find_by!(id: params[:id])
+      @resource = resource_class.where(id: params[:id])
 
-      resource_class.transaction { @resource.destroy }
+      resource_class.transaction { @resource.destroy_all }
 
       flash[:notice] = t('.success')
       redirect_back_or_to after_destroy_path, status: :see_other

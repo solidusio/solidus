@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
+
 RSpec.shared_examples_for 'promotion categories features' do
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
@@ -28,7 +30,7 @@ RSpec.shared_examples_for 'promotion categories features' do
     fill_in "Name", with: "Soon to expire"
     click_on "Add Promotion Category"
 
-    expect(page).to have_content("Promotion Category was successfully created.")
+    expect(page).to have_content("Promotion category was successfully created.")
     expect(page).to have_content("Soon to expire")
     expect(page).to have_content("ste.1")
     expect(model_class.count).to eq(1)
@@ -46,7 +48,7 @@ RSpec.shared_examples_for 'promotion categories features' do
     fill_in "Code", with: "exp.2"
     click_on "Update Promotion Category"
 
-    expect(page).to have_content("Promotion Category was successfully updated.")
+    expect(page).to have_content("Promotion category was successfully updated.")
     expect(page).to have_content("Expired")
     expect(page).to have_content("exp.2")
   end
@@ -59,8 +61,12 @@ RSpec.shared_examples_for 'promotion categories features' do
 
     select_row("Expired")
     click_on "Delete"
-    expect(page).to have_content("Promotion Categories were successfully removed.")
+    expect(page).to have_content("Promotion categories were successfully removed.")
     expect(page).not_to have_content("Expired")
     expect(model_class.count).to eq(1)
+  end
+
+  include_examples 'feature: bulk delete resources' do
+    let(:resource_factory) { factory_name }
   end
 end

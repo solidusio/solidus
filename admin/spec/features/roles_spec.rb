@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 describe "Roles", :js, type: :feature do
   before do
@@ -23,6 +24,11 @@ describe "Roles", :js, type: :feature do
       category: "configuration"
     )
   }
+
+  include_examples 'feature: bulk delete resources' do
+    let(:resource_factory) { :role }
+    let(:index_path) { "/admin/roles" }
+  end
 
   it "lists roles and allows deleting them" do
     create(:role, name: "Customer Role" )
