@@ -358,6 +358,13 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  describe "#promo_total" do
+    it "returns the value as a spree money" do
+      order.promo_total = 10.55
+      expect(order.display_promo_total).to eq(Spree::Money.new(10.55))
+    end
+  end
+
   context "#currency" do
     context "when object currency is ABC" do
       before { order.currency = "ABC" }
