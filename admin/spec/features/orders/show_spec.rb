@@ -137,6 +137,33 @@ describe "Order", :js, type: :feature do
     end
   end
 
+  describe 'summary panel' do
+    shared_examples_for 'summary panel' do
+      let!(:order) { create(:order, number: "R123456789", total: 4.99, currency:) }
+      let(:currency) { 'USD' }
+
+      it 'displays order summary correctly' do
+        visit "/admin/orders/R123456789"
+
+        expect(page).to have_content("Summary")
+        expect(page).to have_content(/Subtotal\s#{Regexp.escape(order.display_item_total.to_s)}/)
+        expect(page).to have_content(/Taxes\s#{Regexp.escape(order.display_additional_tax_total.to_s)}/)
+        expect(page).to have_content(/Shipping\s#{Regexp.escape(order.display_shipment_total.to_s)}/)
+        expect(page).to have_content(/Add Promo Code\s#{Regexp.escape(order.display_promo_total.to_s)}/)
+        expect(page).to have_content(/Adjustments\s#{Regexp.escape(order.display_adjustment_total.to_s)}/)
+        expect(page).to have_content(/Total\s#{Regexp.escape(order.display_total.to_s)}/)
+      end
+    end
+
+    include_examples "summary panel"
+
+    context 'with different currency' do
+      include_examples "summary panel" do
+        let(:currency) { 'EUR' }
+      end
+    end
+  end
+
   private
 
   def open_customer_menu
