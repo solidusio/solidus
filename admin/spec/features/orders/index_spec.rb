@@ -17,6 +17,23 @@ describe "Orders", type: :feature do
     expect(page).to be_axe_clean
   end
 
+  context 'with different currency' do
+    around do |example|
+      currency_was = Spree::Config.currency
+      Spree::Config.currency = 'EUR'
+      example.run
+      Spree::Config.currency = currency_was
+    end
+
+    it 'displays correct currency' do
+      create(:order, total: 19.99)
+      visit "/admin/orders"
+      click_on "In Progress"
+
+      expect(page).to have_content("€19.99")
+    end
+  end
+
   context "with multiple stores", :js do
     let!(:order_in_default_store) { create :order }
     let(:another_store) { create :store, name: "Another Store" }

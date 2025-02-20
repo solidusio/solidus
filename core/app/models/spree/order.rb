@@ -52,7 +52,8 @@ module Spree
       :total_available_store_credit,
       :item_total_before_tax,
       :shipment_total_before_tax,
-      :item_total_excluding_vat
+      :item_total_excluding_vat,
+      :promo_total
     )
     alias :display_ship_total :display_shipment_total
 

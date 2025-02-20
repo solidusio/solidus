@@ -153,7 +153,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :total,
       data: ->(order) do
-        content_tag :div, number_to_currency(order.total)
+        content_tag :div, order.display_total
       end
     }
   end
