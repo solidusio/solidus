@@ -23,7 +23,7 @@ Spree.Views.Order.Address = Backbone.View.extend({
 
   eachField: function(callback){
     var view = this;
-    var fields = ["name", "company", "address1", "address2",
+    var fields = ["name", "firstname", "lastname", "company", "address1", "address2",
       "city", "zipcode", "phone", "country_id", "state_name"];
     _.each(fields, function(field) {
       var el = view.$('[name$="[' + field + ']"]');

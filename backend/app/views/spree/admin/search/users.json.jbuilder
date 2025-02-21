@@ -6,6 +6,8 @@ json.array!(@users) do |user|
 
   address_fields = [
     :name,
+    :firstname,
+    :lastname,
     :address1,
     :address2,
     :city,
