@@ -11,7 +11,7 @@ module Spree
 
     handle :reimbursement_reimbursed,
            with: :send_reimbursement_email,
-           id: :spree_order_mailer_send_reimbursement_email
+           id: :deprecated_spree_order_mailer_send_reimbursement_email
 
     # Sends confirmation email to the user
     #
@@ -28,8 +28,13 @@ module Spree
     #
     # @param event [Omnes::UnstructuredEvent]
     def send_reimbursement_email(event)
-      reimbursement = event[:reimbursement]
-      Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
+      Spree.deprecator.warn(
+        "The `Spree::OrderMailerSubscriber#send_reimbursement_email` " \
+        "method is deprecated and will be removed in Solidus 5.0. Use " \
+        "`Spree::ReimbursementMailerSubscriber#send_reimbursement_email` " \
+        "instead."
+      )
+      Spree::ReimbursementMailerSubscriber.new.send_reimbursement_email(event)
     end
   end
 end
