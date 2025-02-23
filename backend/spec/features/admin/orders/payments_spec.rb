@@ -37,11 +37,20 @@ describe 'Payments', type: :feature do
         click_icon(:capture)
         expect(page).not_to have_content('Cannot perform requested operation')
         expect(page).to have_content('Payment Updated')
+        within_row(1) do
+          expect(page).to have_selector('.fa-reply')
+        end
       end
 
       it 'voids a check payment from a new order' do
         click_icon(:void)
         expect(page).to have_content('Payment Updated')
+      end
+
+      it 'voids refund option for incomplete payments' do
+        within_row(1) do
+          expect(page).not_to have_selector('.fa-reply')
+        end
       end
     end
 
