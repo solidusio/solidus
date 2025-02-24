@@ -11,17 +11,16 @@ class AddMetadataToSpreeResources < ActiveRecord::Migration[7.2]
       spree_refunds
       spree_customer_returns
       spree_store_credit_events
-      spree_users
       spree_return_authorizations
     ].each do |table_name|
       change_table table_name do |t|
         # Check if the database supports jsonb for efficient querying
         if t.respond_to?(:jsonb)
-          add_column table_name, :customer_metadata, :jsonb, default: {}
-          add_column table_name, :admin_metadata, :jsonb, default: {}
+          t.jsonb(:customer_metadata, default: {}) unless t.column_exists?(:customer_metadata)
+          t.jsonb(:admin_metadata, default: {}) unless t.column_exists?(:admin_metadata)
         else
-          add_column table_name, :customer_metadata, :json
-          add_column table_name, :admin_metadata, :json
+          t.json(:customer_metadata) unless t.column_exists?(:customer_metadata)
+          t.json(:admin_metadata) unless t.column_exists?(:admin_metadata)
         end
       end
     end
