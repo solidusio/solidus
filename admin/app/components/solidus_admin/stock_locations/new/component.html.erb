@@ -18,14 +18,7 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: t('.address')) do %>
-          <%= render component("ui/forms/field").text_field(f, :address1) %>
-          <%= render component("ui/forms/field").text_field(f, :address2) %>
-          <%= render component("ui/forms/field").text_field(f, :city) %>
-          <%= render component("ui/forms/field").text_field(f, :zipcode) %>
-          <%#= render component("ui/forms/field").select(
-            f,
-            :country_id
-          ) %>
+          <%= render component('ui/forms/address').new(address: @stock_location, name: 'stock_location') %>
         <% end %>
 
       <% end %>
