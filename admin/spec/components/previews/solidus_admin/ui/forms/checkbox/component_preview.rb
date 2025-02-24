@@ -4,55 +4,39 @@
 class SolidusAdmin::UI::Forms::Checkbox::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
-  # **With a form builder**
+  # Forms checkbox component utilises regular checkbox component and encapsulates some functionality
+  # that is shared between admin forms checkboxes:
+  # - adds `hidden_tag_field` to function properly
+  # - provides a way to customise label caption (font size/weight, custom styles)
+  # - optionally include a toggletip hint
   #
-  # The checkbox component is used to render a checkbox input.
-  # It can be used with a Rails form builder by setting the `name` attribute
-  # with `forom.object_name`.
+  # Requires `object_name` and `method` parameters that will form a name of the hidden input and checkbox input fields.
+  #
+  # Requires `checked` boolean parameter that will be passed directly to `ui/checkbox` component.
+  #
+  # Accepts and passes along to `ui/checkbox` component every other attribute that is accepted by it, e.g. `size`.
   #
   # ```erb
-  #   <%= form_for @product do |form| %>
-  #     ...
-  #     <%= render component('ui/forms/checkbox').new(
-  #       name: "#{form.object_name}[accept_tos]",
-  #       checked: form.object.accept_tos,
-  #     ) %>
-  #     ...
+  #   <%= render component('ui/forms/checkbox').new(object_name: 'stock_location', method: :default, checked: true) do |checkbox| %>
+  #     <%= checkbox.with_caption(text: "Default") %>
+  #     <%= checkbox.with_hint(text: "Will be used by default") %>
   #   <% end %>
   # ```
-  #
-  # **With stimulus**
-  #
-  # The checkbox component can be used with stimulus to toggle the `indeterminate`
-  # state of the checkbox.
-  #
-  # ```erb
-  #   <%= render component('ui/forms/checkbox').new(
-  #     "data-action": "click->#{stimulus_id}#toggleIndeterminate",
-  #     "data-#{stimulus_id}-target": "checkbox",
-  #   ) %>
-  # ```
-  #
-  # ```js
-  #   import { Controller } from "stimulus"
-  #
-  #   export default class extends Controller {
-  #     static targets = ["checkbox"]
-  #
-  #     toggleIndeterminate() {
-  #       this.checkboxTarget.indeterminate = !this.checkboxTarget.indeterminate
-  #     }
-  #   }
-  # ```
-  #
+
   def overview
     render_with_template
   end
 
-  # @param size select { choices: [s, m] }
-  # @param checked toggle
-  # @param disabled toggle
-  def playground(size: :m, checked: false, disabled: false)
-    render current_component.new(size: size.to_sym, checked:, disabled:)
+  # @param caption_size select { choices: [xs, s] }
+  # @param caption_weight select { choices: [normal, semibold] }
+  # @param caption_classes text
+  # @param hint toggle
+  # @param hint_text text
+  # @param hint_position select { choices: [above, below] }
+  def playground(caption_size: :s, caption_weight: :normal, caption_classes: '', hint: true, hint_text: "This will be helpful", hint_position: :above)
+    render current_component.new(object_name: "store", method: :active, checked: true) do |component|
+      component.with_caption(text: "Active", size: caption_size, weight: caption_weight, classes: caption_classes)
+      component.with_hint(text: hint_text, position: hint_position) if hint
+    end
   end
 end

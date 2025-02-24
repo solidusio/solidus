@@ -3,24 +3,31 @@
 class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
   extend SolidusAdmin::ComponentsHelper
 
-  def initialize(label:, hint: nil, tip: nil, error: nil, input_attributes: nil, **attributes)
+  WIDTHS = {
+    half: 'w-1/2',
+    full: 'w-full'
+  }.freeze
+
+  def initialize(label:, hint: nil, tip: nil, error: nil, input_attributes: nil, width: :full, **attributes)
     @label = label
     @hint = hint
     @tip = tip
     @error = [error] if error.present?
     @attributes = attributes
     @input_attributes = input_attributes
+    @width = width
 
     raise ArgumentError, "provide either a block or input_attributes" if content? && input_attributes
   end
 
-  def self.text_field(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
+  def self.text_field(form, method, object: nil, hint: nil, tip: nil, size: :m, width: :full, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
       label:,
       hint:,
       tip:,
+      width:,
       error: errors,
       input_attributes: {
         name: "#{object_name}[#{method}]",
@@ -33,13 +40,14 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
-  def self.select(form, method, choices, object: nil, hint: nil, tip: nil, size: :m, **attributes)
+  def self.select(form, method, choices, object: nil, hint: nil, tip: nil, size: :m, width: :full, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
       label:,
       hint:,
       tip:,
+      width:,
       error: errors,
       input_attributes: {
         name: "#{object_name}[#{method}]",
@@ -53,13 +61,14 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
-  def self.text_area(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
+  def self.text_area(form, method, object: nil, hint: nil, tip: nil, size: :m, width: :full, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
     new(
       label:,
       hint:,
       tip:,
+      width:,
       error: errors,
       input_attributes: {
         name: "#{object_name}[#{method}]",

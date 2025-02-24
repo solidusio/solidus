@@ -1,11 +1,8 @@
 en:
-  save: Save
-  discard: Discard
   title: "Order %{number}"
   customer: Customer
   no_name: No name available
   order_email: Order contact email
-  back: Back to orders
   same_as_shipping: Same as shipping address
 
   edit_email: "Edit order email"
