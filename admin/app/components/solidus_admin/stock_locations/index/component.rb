@@ -5,18 +5,14 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     Spree::StockLocation
   end
 
-  def actions
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_stock_location_path,
+      href: solidus_admin.new_stock_location_path,
       icon: "add-line",
       class: "align-self-end w-full",
     )
-  end
-
-  def row_url(stock_location)
-    spree.edit_admin_stock_location_path(stock_location)
   end
 
   def search_url
@@ -25,6 +21,10 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
 
   def search_key
     :name_or_description_cont
+  end
+
+  def edit_path(stock_location)
+    solidus_admin.edit_stock_location_path(stock_location)
   end
 
   def batch_actions
@@ -48,7 +48,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
 
   def columns
     [
-      :name,
+      name_column,
       :code,
       :admin_name,
       {
@@ -85,5 +85,14 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
         }
       }
     ]
+  end
+
+  def name_column
+    {
+      header: :name,
+      data: ->(stock_location) do
+        link_to stock_location.name, edit_path(stock_location), class: 'body-link'
+      end
+    }
   end
 end
