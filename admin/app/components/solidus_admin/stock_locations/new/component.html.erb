@@ -8,14 +8,26 @@
     <% end %>
   <% end %>
 
-  <%= form_for @stock_location, url: form_url, html: { id: form_id } do |f| %>
+  <%= form_for @stock_location, url: form_url, data: { turbo: false }, html: { id: form_id } do |f| %>
     <%= page_with_sidebar do %>
       <%= page_with_sidebar_main do %>
         <%= render component('ui/panel').new do %>
-          <%= render component("ui/forms/field").text_field(f, :name) %>
+          <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
           <%= render component("ui/forms/field").text_field(f, :admin_name) %>
-          <%= render component("ui/forms/field").text_area(f, :code) %>
+          <%= render component("ui/forms/field").text_field(f, :code) %>
         <% end %>
+
+        <%= render component('ui/panel').new(title: t('.address')) do %>
+          <%= render component("ui/forms/field").text_field(f, :address1) %>
+          <%= render component("ui/forms/field").text_field(f, :address2) %>
+          <%= render component("ui/forms/field").text_field(f, :city) %>
+          <%= render component("ui/forms/field").text_field(f, :zipcode) %>
+          <%#= render component("ui/forms/field").select(
+            f,
+            :country_id
+          ) %>
+        <% end %>
+
       <% end %>
     <% end %>
   <% end %>
