@@ -12,8 +12,10 @@
     <%= page_with_sidebar do %>
       <%= page_with_sidebar_main do %>
         <%= render component('ui/panel').new do %>
-          <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
-          <%= render component("ui/forms/field").text_field(f, :admin_name) %>
+          <div class="flex gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :name, class: "required", width: :half) %>
+            <%= render component("ui/forms/field").text_field(f, :admin_name, width: :half) %>
+          </div>
           <%= render component("ui/forms/field").text_field(f, :code) %>
         <% end %>
 
