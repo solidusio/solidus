@@ -90,6 +90,31 @@ module Spree::Api
           end
         end
 
+        context "when updating a default address with email, VAT-ID and reverse charge status" do
+          let(:user) { create(:user, spree_api_key: 'galleon') }
+          let(:changes) {
+            { name: "Hermione Granger", email: "hermoine@rowlingmags.com", vat_id: "AB1234567",
+                            reverse_charge_status: "enabled", id: user.ship_address.id}
+          }
+          before do
+            # Create "Harry Potter" default shipping address
+            user.save_in_address_book(harry_address_attributes, true)
+          end
+
+          it "changes the address and marks the changed address as default" do
+            expect {
+              put "/api/users/#{user.id}/address_book",
+                params:  { address_book: harry_address_attributes.merge(changes) },
+                headers: { Authorization: 'Bearer galleon' }
+            }.to change { user.reload.ship_address.name }.from("Harry Potter").to("Hermione Granger")
+
+            expect(json_response.first["reverse_charge_status"]).to eq("enabled")
+            expect(json_response.first["email"]).to eq("hermoine@rowlingmags.com")
+            expect(json_response.first["vat_id"]).to eq("AB1234567")
+            expect(response.status).to eq(200)
+          end
+        end
+
         context 'when creating an address' do
           it 'marks the update_target' do
             user = create(:user, spree_api_key: 'galleon')

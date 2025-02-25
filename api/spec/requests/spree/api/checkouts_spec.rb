@@ -77,7 +77,10 @@ module Spree::Api
             phone:      '3014445002',
             zipcode:    '20814',
             state_id:   @state.id,
-            country_id: @country.id
+            country_id: @country.id,
+            email: 'john@doe.com',
+            vat_id: 'ab1235',
+            reverse_charge_status: 'disabled'
           }
         end
 
@@ -95,7 +98,14 @@ module Spree::Api
             } }
           expect(json_response['state']).to eq('delivery')
           expect(json_response['bill_address']['name']).to eq('John Doe')
+          expect(json_response['bill_address']['email']).to eq('john@doe.com')
+          expect(json_response['bill_address']['vat_id']).to eq('ab1235')
+          expect(json_response['bill_address']['reverse_charge_status']).to eq('disabled')
           expect(json_response['ship_address']['name']).to eq('John Doe')
+          expect(json_response['ship_address']['email']).to eq('john@doe.com')
+          expect(json_response['ship_address']['vat_id']).to eq('ab1235')
+          expect(json_response['ship_address']['reverse_charge_status']).to eq('disabled')
+
           expect(response.status).to eq(200)
         end
 
