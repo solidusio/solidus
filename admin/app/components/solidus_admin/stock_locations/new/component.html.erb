@@ -44,6 +44,7 @@
               checked: f.object.default
             ) %>
             <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :default %></span>
+            <%= render component("ui/toggletip").new(text: t(".hints.default")) %>
           </label>
         <% end %>
       <% end %>
