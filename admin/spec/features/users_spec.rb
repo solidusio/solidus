@@ -129,14 +129,16 @@ describe "Users", :js, type: :feature do
       # Invalid submission
       within("form.ship_address") do
         fill_in "Name", with: ""
+        fill_in "First Name", with: ""
         fill_in "Street Address", with: ""
         click_on "Update"
       end
-      expect(page).to have_content("can't be blank").twice
+      expect(page).to have_content("can't be blank").thrice
 
       # Valid submission
       within("form.bill_address") do
         fill_in "Name", with: "Galadriel"
+        fill_in "First Name", with: "Galadriel"
         click_on "Update"
       end
       expect(page).to have_content("Billing Address has been successfully updated.")
@@ -144,6 +146,7 @@ describe "Users", :js, type: :feature do
       # Valid submission
       within("form.ship_address") do
         fill_in "Name", with: "Elrond"
+        fill_in "First Name", with: "Elrond"
         click_on "Update"
       end
       expect(page).to have_content("Shipping Address has been successfully updated.")
@@ -151,6 +154,7 @@ describe "Users", :js, type: :feature do
       # Cancel submission
       within("form.bill_address") do
         fill_in "Name", with: "Smeagol"
+        fill_in "First Name", with: "Smeagol"
         click_on "Cancel"
       end
       expect(page).to have_content("Users / customer@example.com / Addresses")
@@ -159,6 +163,8 @@ describe "Users", :js, type: :feature do
       # The address forms weirdly only have values rather than actual text on the page.
       expect(page).to have_field("user[bill_address_attributes][name]", with: "Galadriel")
       expect(page).to have_field("user[ship_address_attributes][name]", with: "Elrond")
+      expect(page).to have_field("user[bill_address_attributes][firstname]", with: "Galadriel")
+      expect(page).to have_field("user[ship_address_attributes][firstname]", with: "Elrond")
     end
   end
 

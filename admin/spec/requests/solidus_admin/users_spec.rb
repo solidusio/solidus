@@ -12,6 +12,8 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
       user: {
         bill_address_attributes: {
           name: address.name,
+          firstname: address.firstname,
+          lastname: address.lastname,
           address1: address.address1,
           address2: address.address2,
           city: address.city,
