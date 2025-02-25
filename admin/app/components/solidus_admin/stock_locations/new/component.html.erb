@@ -18,7 +18,7 @@
         <% end %>
 
         <%= render component('ui/panel').new(title: t('.address')) do %>
-          <%= render component('ui/forms/address').new(address: @stock_location, name: 'stock_location') %>
+          <%= render component('ui/forms/address').new(addressable: @stock_location, fieldset_name: 'stock_location', include_name_field: false) %>
         <% end %>
 
       <% end %>
