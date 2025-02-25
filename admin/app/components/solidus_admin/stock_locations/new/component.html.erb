@@ -20,7 +20,32 @@
         <%= render component('ui/panel').new(title: t('.address')) do %>
           <%= render component('ui/forms/address').new(addressable: @stock_location, fieldset_name: 'stock_location', include_name_field: false) %>
         <% end %>
+      <% end %>
 
+      <%= page_with_sidebar_aside do %>
+        <%= render component('ui/panel').new(title: t('.availability')) do %>
+          <label class="flex gap-2 items-center">
+            <%= hidden_field_tag "#{f.object_name}[active]", "0" %>
+            <%= render component("ui/forms/checkbox").new(
+              name: "#{f.object_name}[active]",
+              value: "1",
+              checked: f.object.active
+            ) %>
+            <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :active %></span>
+          </label>
+        <% end %>
+
+        <%= render component('ui/panel').new(title: t('.setup')) do %>
+          <label class="flex gap-2 items-center">
+            <%= hidden_field_tag "#{f.object_name}[default]", "0" %>
+            <%= render component("ui/forms/checkbox").new(
+              name: "#{f.object_name}[default]",
+              value: "1",
+              checked: f.object.default
+            ) %>
+            <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :default %></span>
+          </label>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
