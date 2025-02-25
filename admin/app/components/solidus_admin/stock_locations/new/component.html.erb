@@ -3,7 +3,7 @@
     <%= page_header_back(back_url) %>
     <%= page_header_title(title) %>
     <%= page_header_actions do %>
-      <%= render component("ui/button").discard(form: form_id) %>
+      <%= render component("ui/button").discard(path: back_url) %>
       <%= render component("ui/button").save(form: form_id) %>
     <% end %>
   <% end %>

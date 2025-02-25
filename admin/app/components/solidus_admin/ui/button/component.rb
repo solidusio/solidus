@@ -74,8 +74,14 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     )
   end
 
-  def self.discard(**options)
-    new(scheme: :secondary, text: t(".discard"), **options)
+  def self.discard(path:, **options)
+    new(
+      tag: :a,
+      text: t(".discard"),
+      scheme: :secondary,
+      href: path,
+      **options
+    )
   end
 
   def self.save(**options)
