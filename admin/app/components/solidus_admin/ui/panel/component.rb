@@ -31,7 +31,7 @@ class SolidusAdmin::UI::Panel::Component < SolidusAdmin::BaseComponent
 
   def render_section(wide: false, high: false, **args, &block)
     tag.section(**args, class: "
-      border-gray-100 w-full flex flex-col gap-6
+      border-gray-100 w-full flex flex-col gap-4
       #{'px-6' unless wide}
       #{'py-4' unless high}
       #{args[:class]}
