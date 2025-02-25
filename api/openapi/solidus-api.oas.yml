@@ -6474,6 +6474,33 @@ components:
           type: string
         url:
           type: string
+        legal_name:
+          type: string
+        contact_email:
+          type: string
+          nullable: true
+        contact_phone:
+          type: string
+        description:
+          type: string
+        vat_id:
+          type: string
+        tax_id:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        state_name:
+          type: string
+        country_id:
+          type: integer
+        state_id:
+          type: integer
     taxonomy:
       type: object
       properties:
@@ -6955,6 +6982,33 @@ components:
           type: string
         cart_tax_country_iso:
           type: string
+        legal_name:
+          type: string
+        contact_email:
+          type: string
+          nullable: true
+        contact_phone:
+          type: string
+        description:
+          type: string
+        vat_id:
+          type: string
+        tax_id:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        state_name:
+          type: string
+        country_id:
+          type: integer
+        state_id:
+          type: integer
     taxonomy-input:
       type: object
       title: Taxonomy input
