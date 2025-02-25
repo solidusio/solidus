@@ -1,5 +1,4 @@
 en:
-  save: Save
   title: "Order %{number}"
   customer: Customer
   no_name: No name available
