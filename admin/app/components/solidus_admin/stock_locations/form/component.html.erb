@@ -16,22 +16,16 @@
 
     <%= page_with_sidebar_aside do %>
       <%= render component('ui/panel').new(title: t('.availability')) do %>
-        <label class="flex gap-2 items-center">
-          <%= hidden_field_tag "#{f.object_name}[active]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
-            name: "#{f.object_name}[active]",
-            value: "1",
-            checked: f.object.active
-          ) %>
-          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :active %></span>
-          <%= render component("ui/toggletip").new(text: t(".hints.active")) %>
-        </label>
+        <%= render component("ui/forms/checkbox").new(field_name: "#{f.object_name}[active]" , checked: f.object.active) do |component| %>
+          <%= component.with_label_text(text: Spree::StockLocation.human_attribute_name(:active)) %>
+          <%= component.with_hint(text: t(".hints.active")) %>
+        <% end %>
       <% end %>
 
       <%= render component('ui/panel').new(title: t('.setup')) do %>
         <label class="flex gap-2 items-center">
           <%= hidden_field_tag "#{f.object_name}[default]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
+          <%= render component("ui/checkbox").new(
             name: "#{f.object_name}[default]",
             value: "1",
             checked: f.object.default
@@ -41,7 +35,7 @@
 
         <label class="flex gap-2 items-center">
           <%= hidden_field_tag "#{f.object_name}[backorderable_default]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
+          <%= render component("ui/checkbox").new(
             name: "#{f.object_name}[backorderable_default]",
             value: "1",
             checked: f.object.backorderable_default
@@ -52,7 +46,7 @@
 
         <label class="flex gap-2 items-center">
           <%= hidden_field_tag "#{f.object_name}[propagate_all_variants]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
+          <%= render component("ui/checkbox").new(
             name: "#{f.object_name}[propagate_all_variants]",
             value: "1",
             checked: f.object.propagate_all_variants
@@ -63,7 +57,7 @@
 
         <label class="flex gap-2 items-center">
           <%= hidden_field_tag "#{f.object_name}[restock_inventory]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
+          <%= render component("ui/checkbox").new(
             name: "#{f.object_name}[restock_inventory]",
             value: "1",
             checked: f.object.restock_inventory
@@ -74,7 +68,7 @@
 
         <label class="flex gap-2 items-center">
           <%= hidden_field_tag "#{f.object_name}[fulfillable]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
+          <%= render component("ui/checkbox").new(
             name: "#{f.object_name}[fulfillable]",
             value: "1",
             checked: f.object.fulfillable
@@ -85,7 +79,7 @@
 
         <label class="flex gap-2 items-center">
           <%= hidden_field_tag "#{f.object_name}[check_stock_on_transfer]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
+          <%= render component("ui/checkbox").new(
             name: "#{f.object_name}[check_stock_on_transfer]",
             value: "1",
             checked: f.object.check_stock_on_transfer
