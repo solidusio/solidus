@@ -106,4 +106,34 @@ RSpec.describe Spree::Store, type: :model do
       end
     end
   end
+
+  describe 'enum reverse_charge_status' do
+    it 'defines the expected enum values' do
+      expect(Spree::Store.reverse_charge_statuses).to eq({
+        'not_validated' => 0,
+        'enabled' => 1,
+        'disabled' => 2
+      })
+    end
+
+    it 'allows valid values' do
+      store = build(:store)
+      # Updates the reverse_charge_status to "not_validated"
+      expect(store).to be_valid
+      store.not_validated!
+
+      # Updates the reverse_charge_status to "disabled"
+      expect(store).to be_valid
+      store.disabled!
+      expect(store).to be_valid
+
+      # Updates the reverse_charge_status to "enabled"
+      store.enabled!
+      expect(store).to be_valid
+    end
+
+    it 'raises an error for invalid values' do
+      expect { Spree::Store.new(reverse_charge_status: :invalid_status) }.to raise_error(ArgumentError)
+    end
+  end
 end
