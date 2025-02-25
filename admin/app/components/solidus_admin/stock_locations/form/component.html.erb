@@ -1,0 +1,93 @@
+<%= form_for @stock_location, url: @url, data: { turbo: false }, html: { id: @id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new do %>
+        <div class="flex gap-4 w-full">
+          <%= render component("ui/forms/field").text_field(f, :name, class: "required", width: :half) %>
+          <%= render component("ui/forms/field").text_field(f, :admin_name, width: :half) %>
+        </div>
+        <%= render component("ui/forms/field").text_field(f, :code) %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.address')) do %>
+        <%= render component('ui/forms/address').new(addressable: @stock_location, fieldset_name: 'stock_location', include_name_field: false) %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component('ui/panel').new(title: t('.availability')) do %>
+        <%= render component("ui/forms/checkbox").new(field_name: "#{f.object_name}[active]" , checked: f.object.active) do |component| %>
+          <%= component.with_label_text(text: Spree::StockLocation.human_attribute_name(:active)) %>
+          <%= component.with_hint(text: t(".hints.active")) %>
+        <% end %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.setup')) do %>
+        <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[default]", "0" %>
+          <%= render component("ui/checkbox").new(
+            name: "#{f.object_name}[default]",
+            value: "1",
+            checked: f.object.default
+          ) %>
+          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :default %></span>
+        </label>
+
+        <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[backorderable_default]", "0" %>
+          <%= render component("ui/checkbox").new(
+            name: "#{f.object_name}[backorderable_default]",
+            value: "1",
+            checked: f.object.backorderable_default
+          ) %>
+          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :backorderable_default %></span>
+          <%= render component("ui/toggletip").new(text: t(".hints.backorderable_default")) %>
+        </label>
+
+        <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[propagate_all_variants]", "0" %>
+          <%= render component("ui/checkbox").new(
+            name: "#{f.object_name}[propagate_all_variants]",
+            value: "1",
+            checked: f.object.propagate_all_variants
+          ) %>
+          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :propagate_all_variants %></span>
+          <%= render component("ui/toggletip").new(text: t(".hints.propagate_all_variants")) %>
+        </label>
+
+        <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[restock_inventory]", "0" %>
+          <%= render component("ui/checkbox").new(
+            name: "#{f.object_name}[restock_inventory]",
+            value: "1",
+            checked: f.object.restock_inventory
+          ) %>
+          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :restock_inventory %></span>
+          <%= render component("ui/toggletip").new(text: t(".hints.restock_inventory")) %>
+        </label>
+
+        <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[fulfillable]", "0" %>
+          <%= render component("ui/checkbox").new(
+            name: "#{f.object_name}[fulfillable]",
+            value: "1",
+            checked: f.object.fulfillable
+          ) %>
+          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :fulfillable %></span>
+          <%= render component("ui/toggletip").new(text: t(".hints.fulfillable")) %>
+        </label>
+
+        <label class="flex gap-2 items-center">
+          <%= hidden_field_tag "#{f.object_name}[check_stock_on_transfer]", "0" %>
+          <%= render component("ui/checkbox").new(
+            name: "#{f.object_name}[check_stock_on_transfer]",
+            value: "1",
+            checked: f.object.check_stock_on_transfer
+          ) %>
+          <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name :check_stock_on_transfer %></span>
+          <%= render component("ui/toggletip").new(text: t(".hints.check_stock_on_transfer")) %>
+        </label>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
