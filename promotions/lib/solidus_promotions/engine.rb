@@ -6,7 +6,6 @@ require "solidus_support"
 module SolidusPromotions
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
-    Flickwerk.aliases["Spree::Config.order_recalculator_class"] = Spree::Config.order_recalculator_class_name
 
     isolate_namespace ::SolidusPromotions
 
@@ -15,6 +14,10 @@ module SolidusPromotions
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec
+    end
+
+    initializer "solidus_promotions.flickwerk_alias" do
+      Flickwerk.aliases["Spree::Config.order_recalculator_class"] = Spree::Config.order_recalculator_class_name
     end
 
     initializer "solidus_promotions.assets" do |app|
