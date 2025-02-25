@@ -1,7 +1,7 @@
 <%= page do %>
   <%= page_header do %>
     <%= page_header_back(back_url) %>
-    <%= page_header_title(@stock_location.name) %>
+    <%= page_header_title(title) %>
     <%= page_header_actions do %>
       <%= render component("ui/button").discard(form: form_id) %>
       <%= render component("ui/button").save(form: form_id) %>

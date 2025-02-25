@@ -63,6 +63,17 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     },
   }
 
+  def self.back(path:, **options)
+    new(
+      tag: :a,
+      title: t(".back"),
+      icon: "arrow-left-line",
+      scheme: :secondary,
+      href: path,
+      **options
+    )
+  end
+
   def self.discard(**options)
     new(scheme: :secondary, text: t(".discard"), **options)
   end

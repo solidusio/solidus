@@ -1,7 +1,6 @@
 en:
   address: "Address"
   availability: "Availability"
-  back: "Back"
   hints:
     active: "This determines whether stock from this location can be used when building packages"
     backorderable_default: "When checked, stock items in this location will default to allowing backorders"
@@ -10,3 +9,4 @@ en:
     propagate_all_variants: "When checked, this will create a stock item for each variant in this stock location"
     restock_inventory: "When checked, returned inventory can be added back to this location's stock levels"
   setup: "Setup"
+  title: "New Stock location"
