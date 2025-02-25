@@ -8,10 +8,6 @@ class SolidusAdmin::StockLocations::New::Component < SolidusAdmin::Resources::Ne
     ensure_country
   end
 
-  def title
-    t('.title')
-  end
-
   private
 
   def ensure_country
