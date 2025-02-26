@@ -204,11 +204,7 @@ module Spree
 
       if eligible?(order, promotion_code:)
         rules = eligible_rules(order)
-        if rules.blank?
-          true
-        else
-          rules.all? { |rule| rule.actionable? line_item }
-        end
+        rules.blank? || rules.all? { |rule| rule.actionable? line_item }
       else
         false
       end
