@@ -15,13 +15,13 @@ module Spree
     end
 
     scope :all_historical, -> {
-      Spree::Deprecation.warn("This scope does not do anything and will be removed from Solidus 5.")
+      Spree.deprecator.warn("The 'Spree::UserAddress.all_historical` scope does not do anything and will be removed from Solidus 5.")
       all
     }
     scope :default_shipping, -> { where(default: true) }
     scope :default_billing, -> { where(default_billing: true) }
     scope :active, -> {
-      Spree::Deprecation.warn("This scope does not do anything and will be removed from Solidus 5.")
+      Spree.deprecator.warn("The 'Spree::UserAddress.active` scope does not do anything and will be removed from Solidus 5.")
       all
     }
 
