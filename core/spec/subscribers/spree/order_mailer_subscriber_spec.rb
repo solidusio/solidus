@@ -40,9 +40,10 @@ RSpec.describe Spree::OrderMailerSubscriber do
   end
 
   describe 'on :reimbursement_reimbursed' do
-    it 'sends reimbursement email' do
+    it 'sends reimbursement email', :aggregate_failures do
       reimbursement = build(:reimbursement)
 
+      expect(Spree.deprecator).to receive(:warn).with(/Use `Spree::ReimbursementMailerSubscriber/)
       expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).and_call_original
 
       bus.publish(:reimbursement_reimbursed, reimbursement:)
