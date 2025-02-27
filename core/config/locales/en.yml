@@ -354,18 +354,31 @@ en:
         quantity: Quantity
         variant: Variant
       spree/store:
+        address: Address
+        address1: Street Address
+        address2: Street Address (cont'd)
         available_locales: Locales Available in the Storefront
         bcc_email: BCC Email
         cart_tax_country_iso: Tax Country for Empty Carts
+        city: City
         code: Slug
+        contact_email: Contact Email
+        contact_phone: Contact Phone
+        country_id: Country
         default: Default
         default_currency: Default Currency
+        description: Store Description
+        legal_name: Legal Name
         mail_from_address: Mail From Address
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         name: Site Name
+        postal_code: Postal Code
         seo_title: Seo Title
+        state_id: State
+        tax_id: Tax ID
         url: Site URL
+        vat_id: VAT ID
       spree/store_credit:
         amount: Amount
         amount_authorized: Amount Authorized

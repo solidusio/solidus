@@ -121,10 +121,12 @@ module Spree
       :quantity, :stock_item, :stock_item_id, :originator, :action
     ]
 
-    @@store_attributes = [:name, :url, :seo_title, :meta_keywords,
+    @@store_attributes = [:name, :legal_name, :url, :seo_title, :meta_keywords,
                           :meta_description, :default_currency,
                           :mail_from_address, :cart_tax_country_iso,
-                          :bcc_email]
+                          :bcc_email, :contact_email, :contact_phone, :code,
+                          :tax_id, :vat_id, :description, :address1, :address2,
+                          :city, :zipcode, :country_id, :state_id, :state_name]
 
     @@taxonomy_attributes = [:name]
 
