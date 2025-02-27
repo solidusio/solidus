@@ -29,4 +29,16 @@
       <%= f.text_area :description, class: 'fullwidth' %>
     <% end %>
   </div>
+
+  <% if Spree::Backend::Config.show_reverse_charge_fields %>
+    <div class="col-4">
+      <%= f.field_container :tax_reverse_charge_mode do %>
+        <%= f.label :tax_reverse_charge_mode %>
+        <%= f.select :tax_reverse_charge_mode,
+            Spree::TaxCategory.tax_reverse_charge_modes.keys.map { |key| [I18n.t("spree.tax_reverse_charge_modes.#{key}"), key] },
+            { include_blank: false },
+            { class: 'custom-select fullwidth' } %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
