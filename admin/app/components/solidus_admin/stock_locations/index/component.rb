@@ -9,7 +9,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_stock_location_path,
+      href: solidus_admin.new_stock_location_path,
       icon: "add-line",
       class: "align-self-end w-full",
     )
