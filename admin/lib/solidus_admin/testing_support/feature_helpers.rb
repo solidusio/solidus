@@ -29,6 +29,14 @@ module SolidusAdmin
       def select_row(text)
         find_row_checkbox(text).check
       end
+
+      def checkbox(locator)
+        find(:checkbox, locator)
+      end
+
+      def selected_option(select_locator)
+        find(:select, select_locator).find(:option, selected: true)
+      end
     end
   end
 end
