@@ -37,6 +37,12 @@ module SolidusAdmin
       def selected_option(select_locator)
         find(:select, select_locator).find(:option, selected: true)
       end
+
+      def clear_search
+        within('div[role="search"]') do
+          find('button[aria-label="Clear"]').click
+        end
+      end
     end
   end
 end
