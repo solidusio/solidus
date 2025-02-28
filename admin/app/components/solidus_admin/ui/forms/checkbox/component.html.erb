@@ -1,0 +1,14 @@
+<div class="flex gap-2 items-center">
+  <label class="flex gap-2 items-center">
+    <%= hidden_field_tag @name, "0" %>
+    <%= render component("ui/checkbox").new(
+      name: @name,
+      value: "1",
+      checked: @checked,
+      **@attributes
+    ) %>
+    <%= caption %>
+  </label>
+
+  <%= hint if hint? %>
+</div>
