@@ -2,5 +2,7 @@ en:
   solidus_admin:
     stock_locations:
       title: "Stock Locations"
+      create:
+        success: "Stock location was successfully created."
       destroy:
         success: "Stock locations were successfully removed."

@@ -1,0 +1,15 @@
+en:
+  back: Back
+  discard: Discard
+  save: Save
+  title: "New Stock Location"
+  address: "Address"
+  availability: "Availability"
+  hints:
+    active: "This determines whether stock from this location can be used when building packages"
+    backorderable_default: "When checked, stock items in this location will default to allowing backorders"
+    check_stock_on_transfer: "When checked, inventory levels will be checked when performing stock transfers"
+    fulfillable: "When unchecked, this indicates that items in this location don't require actual fulfilment. Stock will not be checked when shipping and emails will not be sent"
+    propagate_all_variants: "When checked, this will create a stock item for each variant in this stock location"
+    restock_inventory: "When checked, returned inventory can be added back to this location's stock levels"
+  setup: "Setup"

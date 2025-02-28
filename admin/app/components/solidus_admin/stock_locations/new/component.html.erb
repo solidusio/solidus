@@ -1,0 +1,125 @@
+<%= turbo_frame_tag :resource_form, target: "_top" do %>
+  <%= page do %>
+    <%= page_header do %>
+      <%= page_header_back(back_url) %>
+      <%= page_header_title(t('.title')) %>
+      <%= page_header_actions do %>
+        <%= render component("ui/button").new(
+        tag: :a,
+        text: t(".discard"),
+        scheme: :secondary,
+        href: back_url
+        ) %>
+      <%= render component("ui/button").new(text: t(".save"),form: form_id) %>
+      <% end %>
+    <% end %>
+
+    <%= form_for @stock_location, url: form_url, html: { id: form_id } do |f| %>
+      <%= page_with_sidebar do %>
+        <%= page_with_sidebar_main do %>
+          <%= render component('ui/panel').new do |panel| %>
+            <% panel.with_section(class: "flex flex-col gap-4") do %>
+              <div class="flex gap-4 w-full">
+                <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
+                <%= render component("ui/forms/field").text_field(f, :admin_name) %>
+              </div>
+              <%= render component("ui/forms/field").text_field(f, :code) %>
+            <% end %>
+          <% end %>
+
+          <%= render component('ui/panel').new(title: t('.address')) do %>
+            <%= render component('ui/forms/address').new(addressable: @stock_location, form_field_name: 'stock_location', fieldset: :location, excludes: :email) %>
+          <% end %>
+        <% end %>
+
+        <%= page_with_sidebar_aside do %>
+          <%= render component('ui/panel').new(title: t('.availability')) do %>
+            <label class="flex gap-2 items-center">
+              <%= hidden_field_tag "#{f.object_name}[active]", "0" %>
+              <%= render component("ui/forms/checkbox").new(
+                name: "#{f.object_name}[active]",
+                value: "1",
+                checked: f.object.active
+              ) %>
+              <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:active) %></span>
+              <%= render component("ui/toggletip").new(text: t(".hints.active")) %>
+            </label>
+          <% end %>
+
+          <%= render component('ui/panel').new(title: t('.setup')) do |panel| %>
+            <% panel.with_section(class: "flex flex-col gap-4") do %>
+              <label class="flex gap-2 items-center">
+                <%= hidden_field_tag "#{f.object_name}[default]", "0" %>
+                <%= render component("ui/forms/checkbox").new(
+                  name: "#{f.object_name}[default]",
+                  value: "1",
+                  checked: f.object.default
+                ) %>
+                <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:default) %></span>
+              </label>
+
+              <label class="flex gap-2 items-center">
+                <%= hidden_field_tag "#{f.object_name}[backorderable_default]", "0" %>
+                <%= render component("ui/forms/checkbox").new(
+                  name: "#{f.object_name}[backorderable_default]",
+                  value: "1",
+                  checked: f.object.backorderable_default
+                ) %>
+                <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:backorderable_default) %></span>
+                <%= render component("ui/toggletip").new(text: t(".hints.backorderable_default")) %>
+              </label>
+
+              <label class="flex gap-2 items-center">
+                <%= hidden_field_tag "#{f.object_name}[propagate_all_variants]", "0" %>
+                <%= render component("ui/forms/checkbox").new(
+                  name: "#{f.object_name}[propagate_all_variants]",
+                  value: "1",
+                  checked: f.object.propagate_all_variants
+                ) %>
+                <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:propagate_all_variants) %></span>
+                <%= render component("ui/toggletip").new(text: t(".hints.propagate_all_variants")) %>
+              </label>
+
+              <label class="flex gap-2 items-center">
+                <%= hidden_field_tag "#{f.object_name}[restock_inventory]", "0" %>
+                <%= render component("ui/forms/checkbox").new(
+                  name: "#{f.object_name}[restock_inventory]",
+                  value: "1",
+                  checked: f.object.restock_inventory
+                ) %>
+                <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:restock_inventory) %></span>
+                <%= render component("ui/toggletip").new(text: t(".hints.restock_inventory")) %>
+              </label>
+
+              <label class="flex gap-2 items-center">
+                <%= hidden_field_tag "#{f.object_name}[fulfillable]", "0" %>
+                <%= render component("ui/forms/checkbox").new(
+                  name: "#{f.object_name}[fulfillable]",
+                  value: "1",
+                  checked: f.object.fulfillable
+                ) %>
+                <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:fulfillable) %></span>
+                <%= render component("ui/toggletip").new(text: t(".hints.fulfillable")) %>
+              </label>
+
+              <label class="flex gap-2 items-center">
+                <%= hidden_field_tag "#{f.object_name}[check_stock_on_transfer]", "0" %>
+                <%= render component("ui/forms/checkbox").new(
+                  name: "#{f.object_name}[check_stock_on_transfer]",
+                  value: "1",
+                  checked: f.object.check_stock_on_transfer
+                ) %>
+                <span class="font-normal text-sm"><%= Spree::StockLocation.human_attribute_name(:check_stock_on_transfer) %></span>
+                <%= render component("ui/toggletip").new(text: t(".hints.check_stock_on_transfer")) %>
+              </label>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= page_footer do %>
+      <%= render component("ui/button").new(text: t(".save"), form: form_id) %>
+    <% end %>
+  <% end %>
+<% end %>
