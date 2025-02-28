@@ -61,6 +61,7 @@ module Spree
           Spree::Bus.clear
 
           %i[
+            order_canceled
             order_emptied
             order_finalized
             order_recalculated

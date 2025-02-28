@@ -848,6 +848,8 @@ module Spree
       send_cancel_email
       update_column(:canceled_at, Time.current)
       recalculate
+
+      Spree::Bus.publish :order_canceled, order: self
     end
 
     def cancel_shipments!

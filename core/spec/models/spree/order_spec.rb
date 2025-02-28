@@ -82,8 +82,17 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#cancel!" do
-    let!(:order) { create(:completed_order_with_totals) }
     subject { order.cancel! }
+
+    let!(:order) { create(:completed_order_with_totals) }
+
+    it "publishes a 'order_canceled' event" do
+      stub_spree_bus
+
+      subject
+
+      expect(:order_canceled).to have_been_published.with(order:)
+    end
 
     it "sends a cancel email" do
       perform_enqueued_jobs { subject }
