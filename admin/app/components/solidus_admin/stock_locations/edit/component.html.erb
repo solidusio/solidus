@@ -1,0 +1,23 @@
+<%= turbo_frame_tag :resource_form, target: "_top" do %>
+  <%= page do %>
+    <%= page_header do %>
+      <%= page_header_back(back_url) %>
+      <%= page_header_title(t('.title')) %>
+      <%= page_header_actions do %>
+        <%= render component("ui/button").new(
+        tag: :a,
+        text: t(".discard"),
+        scheme: :secondary,
+        href: back_url
+        ) %>
+      <%= render component("ui/button").new(text: t(".save"),form: form_id) %>
+      <% end %>
+    <% end %>
+
+    <%= render component("stock_locations/form").new(stock_location: @stock_location, url: form_url, id: form_id) %>
+
+    <%= page_footer do %>
+      <%= render component("ui/button").new(text: t(".save"), form: form_id) %>
+    <% end %>
+  <% end %>
+<% end %>
