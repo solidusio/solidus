@@ -36,7 +36,6 @@ module SolidusPromotions
 
       def perform_order_benefits(lane_benefits, lane)
         lane_benefits.select { |benefit| benefit.level == :order }.each do |benefit|
-          # TODO: - the enemy
           benefit.perform(order)
         end
 
@@ -48,7 +47,6 @@ module SolidusPromotions
         end
 
         ineligible_line_items.each do |line_item|
-          # TODO: - the enemy
           line_item.managed_by_order_benefit.remove_from(order)
         end
       end
