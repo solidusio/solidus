@@ -9,6 +9,5 @@ en:
   create_order_for_user: Create order for this user
   update: Update
   cancel: Cancel
-  back: Back
   billing_address: Billing Address
   shipping_address: Shipping Address

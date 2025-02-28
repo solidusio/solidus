@@ -3,19 +3,14 @@
     <%= page_header_back(back_url) %>
     <%= page_header_title(@stock_location.name) %>
     <%= page_header_actions do %>
-      <%= render component("ui/button").new(
-        tag: :a,
-        text: t(".discard"),
-        scheme: :secondary,
-        href: back_url
-      ) %>
-      <%= render component("ui/button").new(text: t(".save"), form: form_id) %>
+      <%= render component("ui/button").discard(path: back_url) %>
+      <%= render component("ui/button").save(form: form_id) %>
     <% end %>
   <% end %>
 
   <%= render component("stock_locations/form").new(stock_location: @stock_location, url: form_url, id: form_id) %>
 
   <%= page_footer do %>
-    <%= render component("ui/button").new(text: t(".save"), form: form_id) %>
+    <%= render component("ui/button").save(form: form_id) %>
   <% end %>
 <% end %>
