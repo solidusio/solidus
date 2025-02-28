@@ -50,6 +50,7 @@ class Spree::OrderCancellations
       end
     end
 
+    Spree::Bus.publish(:order_short_shipped, order: @order, inventory_units:)
     unit_cancels
   end
 

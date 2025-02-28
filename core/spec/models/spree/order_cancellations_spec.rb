@@ -94,6 +94,15 @@ RSpec.describe Spree::OrderCancellations do
       expect { subject }.to change { order.shipment_state }.from('ready').to('shipped')
     end
 
+    it "publishes an 'order_short_shipped' event" do
+      stub_spree_bus
+
+      subject
+
+      expect(:order_short_shipped)
+        .to have_been_published.with(order:, inventory_units: [inventory_unit])
+    end
+
     it "adjusts the order" do
       expect { subject }.to change { order.reload.total }.by(-10.0)
     end
