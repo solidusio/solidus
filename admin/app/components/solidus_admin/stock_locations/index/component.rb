@@ -24,7 +24,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   end
 
   def edit_path(stock_location)
-    spree.edit_admin_stock_location_path(stock_location)
+    solidus_admin.edit_stock_location_path(stock_location)
   end
 
   def batch_actions

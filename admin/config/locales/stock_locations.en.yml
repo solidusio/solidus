@@ -6,3 +6,5 @@ en:
         success: "Stock location was successfully created."
       destroy:
         success: "Stock locations were successfully removed."
+      update:
+        success: "Stock location was successfully updated."
