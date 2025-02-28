@@ -18,8 +18,9 @@ describe "Tax Categories", type: :feature do
       within_row(1) do
         expect(column_text(1)).to eq("Clothing")
         expect(column_text(2)).to eq("CL001")
-        expect(column_text(3)).to eq("For Clothing")
-        expect(column_text(4)).to eq("No")
+        expect(column_text(3)).to eq("Disabled")
+        expect(column_text(4)).to eq("For Clothing")
+        expect(column_text(5)).to eq("No")
       end
     end
   end
