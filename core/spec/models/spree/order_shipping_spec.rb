@@ -85,6 +85,12 @@ RSpec.describe Spree::OrderShipping do
       it "sets the external_number" do
         expect(subject.external_number).to eq 'some-external-number'
       end
+
+      it "publishes a 'carton_shipped' event" do
+        stub_spree_bus
+
+        expect(:carton_shipped).to have_been_published.with(carton: subject)
+      end
     end
 
     context "with a tracking number" do
