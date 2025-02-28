@@ -18,84 +18,42 @@
 
     <%= page_with_sidebar_aside do %>
       <%= render component('ui/panel').new(title: t('.availability')) do %>
-        <label class="flex gap-2 items-center">
-          <%= hidden_field_tag "#{f.object_name}[active]", "0" %>
-          <%= render component("ui/forms/checkbox").new(
-            name: "#{f.object_name}[active]",
-            value: "1",
-            checked: f.object.active
-          ) %>
-          <span class="font-normal text-sm"><%= t(".active") %></span>
-          <%= render component("ui/toggletip").new(text: t(".hints.active")) %>
-        </label>
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :active, checked: f.object.active) do |checkbox| %>
+          <%= checkbox.with_caption(text: t(".active")) %>
+          <%= checkbox.with_hint(text: t(".hints.active")) %>
+        <% end %>
       <% end %>
 
       <%= render component('ui/panel').new(title: t('.setup')) do |panel| %>
         <% panel.with_section(class: "flex flex-col gap-4") do %>
-          <label class="flex gap-2 items-center">
-            <%= hidden_field_tag "#{f.object_name}[default]", "0" %>
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[default]",
-              value: "1",
-              checked: f.object.default
-            ) %>
-            <span class="font-normal text-sm"><%= t(".default") %></span>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :default, checked: f.object.default) do |checkbox| %>
+            <%= checkbox.with_caption(text: t(".default")) %>
+          <% end %>
 
-          <label class="flex gap-2 items-center">
-            <%= hidden_field_tag "#{f.object_name}[backorderable_default]", "0" %>
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[backorderable_default]",
-              value: "1",
-              checked: f.object.backorderable_default
-            ) %>
-            <span class="font-normal text-sm"><%= t(".backorderable_default") %></span>
-            <%= render component("ui/toggletip").new(text: t(".hints.backorderable_default")) %>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :backorderable_default, checked: f.object.backorderable_default) do |checkbox| %>
+            <%= checkbox.with_caption(text: t(".backorderable_default")) %>
+            <%= checkbox.with_hint(text: t(".hints.backorderable_default")) %>
+          <% end %>
 
-          <label class="flex gap-2 items-center">
-            <%= hidden_field_tag "#{f.object_name}[propagate_all_variants]", "0" %>
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[propagate_all_variants]",
-              value: "1",
-              checked: f.object.propagate_all_variants
-            ) %>
-            <span class="font-normal text-sm"><%= t(".propagate_all_variants") %></span>
-            <%= render component("ui/toggletip").new(text: t(".hints.propagate_all_variants")) %>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :propagate_all_variants, checked: f.object.propagate_all_variants) do |checkbox| %>
+            <%= checkbox.with_caption(text: t(".propagate_all_variants")) %>
+            <%= checkbox.with_hint(text: t(".hints.propagate_all_variants")) %>
+          <% end %>
 
-          <label class="flex gap-2 items-center">
-            <%= hidden_field_tag "#{f.object_name}[restock_inventory]", "0" %>
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[restock_inventory]",
-              value: "1",
-              checked: f.object.restock_inventory
-            ) %>
-            <span class="font-normal text-sm"><%= t(".restock_inventory") %></span>
-            <%= render component("ui/toggletip").new(text: t(".hints.restock_inventory")) %>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :restock_inventory, checked: f.object.restock_inventory) do |checkbox| %>
+            <%= checkbox.with_caption(text: t(".restock_inventory")) %>
+            <%= checkbox.with_hint(text: t(".hints.restock_inventory")) %>
+          <% end %>
 
-          <label class="flex gap-2 items-center">
-            <%= hidden_field_tag "#{f.object_name}[fulfillable]", "0" %>
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[fulfillable]",
-              value: "1",
-              checked: f.object.fulfillable
-            ) %>
-            <span class="font-normal text-sm"><%= t(".fulfillable") %></span>
-            <%= render component("ui/toggletip").new(text: t(".hints.fulfillable")) %>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :fulfillable, checked: f.object.fulfillable) do |checkbox| %>
+            <%= checkbox.with_caption(text: t(".fulfillable")) %>
+            <%= checkbox.with_hint(text: t(".hints.fulfillable")) %>
+          <% end %>
 
-          <label class="flex gap-2 items-center">
-            <%= hidden_field_tag "#{f.object_name}[check_stock_on_transfer]", "0" %>
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[check_stock_on_transfer]",
-              value: "1",
-              checked: f.object.check_stock_on_transfer
-            ) %>
-            <span class="font-normal text-sm"><%= t(".check_stock_on_transfer") %></span>
-            <%= render component("ui/toggletip").new(text: t(".hints.check_stock_on_transfer")) %>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :check_stock_on_transfer, checked: f.object.check_stock_on_transfer) do |checkbox| %>
+            <%= checkbox.with_caption(text: t(".check_stock_on_transfer")) %>
+            <%= checkbox.with_hint(text: t(".hints.check_stock_on_transfer")) %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
