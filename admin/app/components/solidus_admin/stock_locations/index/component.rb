@@ -5,7 +5,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     Spree::StockLocation
   end
 
-  def actions
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
