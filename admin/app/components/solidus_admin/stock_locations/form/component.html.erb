@@ -1,0 +1,57 @@
+<%= form_for @stock_location, url: @url, data: { turbo: false }, html: { id: @id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new do %>
+        <div class="flex gap-4 w-full">
+          <%= render component("ui/forms/field").text_field(f, :name, class: "required", width: :half) %>
+          <%= render component("ui/forms/field").text_field(f, :admin_name, width: :half) %>
+        </div>
+        <%= render component("ui/forms/field").text_field(f, :code) %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.address')) do %>
+        <%= render component('ui/forms/address').new(addressable: @stock_location, fieldset_name: 'stock_location', include_name_field: false) %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component('ui/panel').new(title: t('.availability')) do %>
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :active, checked: f.object.active) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:active)) %>
+          <%= checkbox.with_hint(text: t(".hints.active")) %>
+        <% end %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.setup')) do %>
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :default, checked: f.object.default) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:default)) %>
+        <% end %>
+
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :backorderable_default, checked: f.object.backorderable_default) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:backorderable_default)) %>
+          <%= checkbox.with_hint(text: t(".hints.backorderable_default")) %>
+        <% end %>
+
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :propagate_all_variants, checked: f.object.propagate_all_variants) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:propagate_all_variants)) %>
+          <%= checkbox.with_hint(text: t(".hints.propagate_all_variants")) %>
+        <% end %>
+
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :restock_inventory, checked: f.object.restock_inventory) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:restock_inventory)) %>
+          <%= checkbox.with_hint(text: t(".hints.restock_inventory")) %>
+        <% end %>
+
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :fulfillable, checked: f.object.fulfillable) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:fulfillable)) %>
+          <%= checkbox.with_hint(text: t(".hints.fulfillable")) %>
+        <% end %>
+
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :check_stock_on_transfer, checked: f.object.check_stock_on_transfer) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::StockLocation.human_attribute_name(:check_stock_on_transfer)) %>
+          <%= checkbox.with_hint(text: t(".hints.check_stock_on_transfer")) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

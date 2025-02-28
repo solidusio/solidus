@@ -35,5 +35,5 @@
   <% end %>
 
   <%= render_section { content } if content.present? %>
-  <%= render_section { tag.div(action, class: "flex justify-between items-center") } if action? %>
+  <%= render_section(class: "border-t") { tag.div(action, class: "flex justify-between items-center") } if action? %>
 </div>

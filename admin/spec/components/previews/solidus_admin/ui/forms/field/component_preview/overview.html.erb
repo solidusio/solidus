@@ -24,3 +24,12 @@
     <%= render component('ui/forms/input').new(value: "HEllo world!", error: "The second letter should be lowecase") %>
   <% end %>
 </div>
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Half-wide input
+  </h6>
+
+  <%= render current_component.new(label: "Greeting", width: :half) do %>
+    <%= render component('ui/forms/input').new %>
+  <% end %>
+</div>
