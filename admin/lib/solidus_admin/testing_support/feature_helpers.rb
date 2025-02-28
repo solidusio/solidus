@@ -51,6 +51,14 @@ module SolidusAdmin
           expect(control).to have_text(val)
         end
       end
+
+      def solidus_select_control(field)
+        find_field(field, visible: :all).ancestor(".control")
+      end
+
+      def checkbox(locator)
+        find(:checkbox, locator)
+      end
     end
   end
 end
