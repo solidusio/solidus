@@ -16,6 +16,7 @@ require 'database_cleaner'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
+require 'spree/testing_support/bus_helpers'
 require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/rake'
@@ -45,6 +46,7 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.include Spree::TestingSupport::BusHelpers
   config.include Spree::TestingSupport::JobHelpers
 
   config.include FactoryBot::Syntax::Methods

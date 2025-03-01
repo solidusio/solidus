@@ -61,9 +61,12 @@ module Spree
           Spree::Bus.clear
 
           %i[
+            carton_shipped
+            order_canceled
             order_emptied
             order_finalized
             order_recalculated
+            order_short_shipped
             reimbursement_reimbursed
             reimbursement_errored
           ].each { |event_name| Spree::Bus.register(event_name) }

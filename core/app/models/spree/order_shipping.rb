@@ -72,6 +72,7 @@ class Spree::OrderShipping
     @order.shipments.reload
     @order.recalculate
 
+    Spree::Bus.publish(:carton_shipped, carton:)
     carton
   end
 
