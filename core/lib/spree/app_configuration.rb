@@ -222,7 +222,7 @@ module Spree
     #   - The maximum number of keys that can be added to the metadata columns (meta_data_max_keys).
     #   - The maximum length of each key in the metadata columns (meta_data_max_key_length).
     #   - The maximum length of each value in the metadata columns (meta_data_max_value_length).
-    #   (default: +true+)
+    #   (default: +false+)
     preference :meta_data_validation_enabled, :boolean, default: false
 
     # @!attribute [rw] meta_data_max_keys
