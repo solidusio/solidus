@@ -19,14 +19,16 @@
   <colgroup>
     <col style="width: 20%">
     <col style="width: 10%">
+    <col style="width: 10%">
     <col style="width: 40%">
-    <col style="width: 15%">
-    <col style="width: 15%">
+    <col style="width: 10%">
+    <col style="width: 10%">
   </colgroup>
   <thead>
     <tr data-hook="tax_header">
       <th><%= Spree::TaxCategory.human_attribute_name(:name) %></th>
       <th><%= Spree::TaxCategory.human_attribute_name(:tax_code) %></th>
+      <th><%= Spree::TaxCategory.human_attribute_name(:tax_reverse_charge_mode) %></th>
       <th><%= Spree::TaxCategory.human_attribute_name(:description) %></th>
       <th><%= Spree::TaxCategory.human_attribute_name(:is_default) %></th>
       <th class="actions"></th>
@@ -41,6 +43,7 @@
       <tr id="<%= spree_dom_id tax_category %>" data-hook="tax_row">
         <td><%= tax_category.name %></td>
         <td><%= tax_category.tax_code %></td>
+        <td><%= I18n.t("spree.tax_reverse_charge_modes.#{tax_category.tax_reverse_charge_mode}") %></td>
         <td><%= tax_category.description %></td>
         <td><%= tax_category.is_default? ? t('spree.say_yes') : t('spree.say_no') %></td>
         <td class="actions">
