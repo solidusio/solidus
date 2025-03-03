@@ -147,9 +147,10 @@ module Spree
     deprecate "promotion_attributes=" => promotion_attributes_deprecation_message, deprecator: Spree.deprecator
 
     preference :store_attributes, :array, default: [
-      :id, :name, :url, :meta_description, :meta_keywords, :seo_title,
-      :mail_from_address, :default_currency, :code, :default, :available_locales,
-      :bcc_email
+      :id, :name, :legal_name, :url, :meta_description, :meta_keywords, :seo_title,
+      :mail_from_address, :default_currency, :code, :default,
+      :bcc_email, :contact_phone, :contact_email, :tax_id, :vat_id, :description,
+      :address1, :address2, :city, :zipcode, :country_id, :state_id, :state_name, :available_locales
     ]
 
     preference :store_credit_history_attributes, :array, default: [

@@ -1,0 +1,49 @@
+<fieldset class="<%= stimulus_id %>"
+  data-controller="<%= stimulus_id %>"
+>
+  <div class="<%= stimulus_id %>--address-form flex flex-wrap gap-4 pb-4">
+    <%= render component("ui/forms/field").text_field(@name, :legal_name, object: @store) %>
+    <%= render component("ui/forms/field").text_field(@name, :address1, object: @store) %>
+    <%= render component("ui/forms/field").text_field(@name, :address2, object: @store) %>
+    <div class="flex gap-4 w-full">
+      <%= render component("ui/forms/field").text_field(@name, :city, object: @store) %>
+      <%= render component("ui/forms/field").text_field(@name, :zipcode, object: @store) %>
+    </div>
+
+    <%= render component("ui/forms/field").select(
+      @name,
+      :country_id,
+      Spree::Country.pluck(:name, :id),
+      object: @store,
+      value: @store.country_id,
+      "data-#{stimulus_id}-target": "country",
+      "data-action": "change->#{stimulus_id}#loadStates"
+    ) %>
+    <%= content_tag :div,
+      class: "flex flex-col gap-2 w-full #{'hidden' if @store.country&.states_required}",
+      data: { "#{stimulus_id}-target": "stateNameWrapper" } do %>
+      <%= render component("ui/forms/field").text_field(
+        @name, :state_name,
+        object: @store,
+        value: @store.state_name,
+        data: { "#{stimulus_id}-target": "stateName" }
+      ) %>
+    <% end %>
+
+    <input autocomplete="off" type="hidden" name=<%= "#{@name}[state_id]" %>>
+
+    <%= content_tag :div,
+      class: "flex flex-col gap-2 w-full #{'hidden' unless @store.country&.states_required}",
+      data: { "#{stimulus_id}-target": "stateWrapper" } do %>
+      <%= render component("ui/forms/field").select(
+        @name, :state_id,
+        state_options,
+        object: @store,
+        value: @store.state_id,
+        data: { "#{stimulus_id}-target": "state" }
+      ) %>
+    <% end %>
+    <%= render component("ui/forms/field").text_field(@name, :tax_id, object: @store) %>
+    <%= render component("ui/forms/field").text_field(@name, :vat_id, object: @store, hint: t(".hint.vat_id").html_safe) %>
+  </div>
+</fieldset>
