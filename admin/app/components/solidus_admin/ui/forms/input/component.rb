@@ -91,6 +91,8 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
   def call
     if @tag == :select && @attributes[:choices]
       with_content options_for_select(@attributes.delete(:choices), @attributes.delete(:value))
+    elsif @tag == :textarea && @attributes[:value]
+      with_content @attributes.delete(:value)
     end
 
     build_tag
