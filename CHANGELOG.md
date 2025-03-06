@@ -1,3 +1,25 @@
+## Solidus v4.5.1 (2025-03-06)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.5] Respect Spree.user_class&#x27; table name in metadata migration by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6158
+* [v4.5] Better Spree::UserAddress scope deprecation warnings by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6165
+* [v4.5] [Docs] Fix Meta Data Restriction Comment to reflect default setting by @tvdeyen in https://github.com/solidusio/solidus/pull/6181
+
+## Solidus Admin
+
+* [v4.5] [Admin] Fix Unclosed form_tag in table component by @tvdeyen in https://github.com/solidusio/solidus/pull/6182
+* [v4.5] Fix ui/forms/input component for tag: :textarea by @tvdeyen in https://github.com/solidusio/solidus/pull/6183
+
+## Solidus Promotions
+
+* [v4.5] [Promotions] Set Flickwerk patches in initializer by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6162
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.5.0...v4.5.1
+
+
 ## Solidus v4.5.0 (2025-02-19)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
