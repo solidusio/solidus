@@ -1,0 +1,75 @@
+<div data-hook="address_fields">
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <%= f.field_container :legal_name do %>
+        <%= f.label :legal_name %>
+        <%= f.text_field :legal_name, class: 'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :city do %>
+        <%= f.label :city %>
+        <%= f.text_field :city, class: 'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :address1 do %>
+        <%= f.label :address1 %>
+        <%= f.text_field :address1, class: 'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :zipcode do %>
+        <%= f.label :zipcode %>
+        <%= f.text_field :zipcode, class: 'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :address2 do %>
+        <%= f.label :address2 %>
+        <%= f.text_field :address2, class: 'fullwidth' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :country_id do %>
+        <%= f.label :country_id, Spree::Country.model_name.human %>
+        <span>
+          <%= f.collection_select :country_id, available_countries, :id, :name, { include_blank: true }, {class: 'custom-select fullwidth js-country_id'} %>
+        </span>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.label :state_id, Spree::State.model_name.human %>
+      <span>
+        <%= f.hidden_field :state_name, value: nil %>
+        <% states = f.object.country.try(:states).nil? ? [] : f.object.country.states %>
+        <%= f.text_field :state_name,
+              style: "display: #{states.empty? ? 'block' : 'none' };",
+              disabled: !states.empty?, class: 'fullwidth state_name js-state_name' %>
+        <%= f.hidden_field :state_id, value: nil %>
+        <%= f.collection_select :state_id,
+              states.sort,
+              :id, :name,
+              { include_blank: true },
+              { class: 'custom-select fullwidth js-state_id',
+                style: "display: #{states.empty? ? 'none' : 'block' };",
+                disabled: states.empty? } %>
+      </span>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :tax_id do %>
+        <%= f.label :tax_id %>
+        <%= f.text_field :tax_id, class: 'fullwidth' %>
+        <%= f.error_message_on :tax_id %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.field_container :vat_id do %>
+        <%= f.label :vat_id %>
+        <%= f.field_hint :vat_id %>
+        <%= f.text_field :vat_id, class: 'fullwidth' %>
+        <%= f.error_message_on :vat_id %>
+      <% end %>
+    </div>
+  </div>
+</div>
