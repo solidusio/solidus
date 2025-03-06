@@ -37,6 +37,8 @@ module Spree
         {
          address1: '123 Testable Way',
          name: 'Fox Mulder',
+         firstname: 'Fox',
+         lastname: 'Mulder',
          city: 'Washington',
          country_id: country.id,
          state_id: state.id,

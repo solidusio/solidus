@@ -37,7 +37,7 @@ describe Spree::Admin::SearchController, type: :controller do
         end
       end
 
-      context 'when searching by ship addresss name' do
+      context 'when searching by ship address name' do
         it_should_behave_like 'user found by search' do
           let(:search_query) { starting_letters(user.ship_address.name) }
         end
@@ -46,6 +46,30 @@ describe Spree::Admin::SearchController, type: :controller do
       context 'when searching by bill address name' do
         it_should_behave_like 'user found by search' do
           let(:search_query) { starting_letters(user.bill_address.name) }
+        end
+      end
+
+      context 'when searching by ship address first name' do
+        it_should_behave_like 'user found by search' do
+          let(:search_query) { starting_letters(user.ship_address.firstname) }
+        end
+      end
+
+      context 'when searching by bill address first name' do
+        it_should_behave_like 'user found by search' do
+          let(:search_query) { starting_letters(user.bill_address.firstname) }
+        end
+      end
+
+      context 'when searching by ship address last name' do
+        it_should_behave_like 'user found by search' do
+          let(:search_query) { starting_letters(user.ship_address.lastname) }
+        end
+      end
+
+      context 'when searching by bill address last name' do
+        it_should_behave_like 'user found by search' do
+          let(:search_query) { starting_letters(user.bill_address.lastname) }
         end
       end
     end
