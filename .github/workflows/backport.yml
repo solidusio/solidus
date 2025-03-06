@@ -5,10 +5,6 @@ on:
 
 jobs:
   backport:
-    permissions:
-      contents: read
-      pull-requests: write
-      actions: write
     runs-on: ubuntu-latest
     if: |
       github.event.pull_request.merged == true
