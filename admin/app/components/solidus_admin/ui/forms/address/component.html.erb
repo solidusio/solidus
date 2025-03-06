@@ -50,5 +50,13 @@
     <% end %>
 
     <%= render component("ui/forms/field").text_field(@name, :phone,  object: @address) %>
+    <%= render component("ui/forms/field").text_field(@name, :email,  object: @address) %>
+    <%= render component("ui/forms/field").text_field(@name, :vat_id,  object: @address) %>
+    <%= render component("ui/forms/field").select(
+      @name,
+      :reverse_charge_status,
+      Spree::Address.reverse_charge_statuses.keys.map { |key| [I18n.t("spree.reverse_charge_statuses.#{key}"), key] },
+      object: @address
+    ) %>
   </div>
 </fieldset>
