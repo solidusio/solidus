@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# We have gone through this file and identified locations that do persistence
+
 module SolidusPromotions
   module Benefits
     class CreateDiscountedItem < Benefit
@@ -15,8 +17,7 @@ module SolidusPromotions
       end
 
       def remove_from(order)
-        line_item = find_item(order)
-        order.line_items.destroy(line_item)
+        find_item(order)&.mark_for_destruction
       end
 
       private
@@ -26,7 +27,7 @@ module SolidusPromotions
       end
 
       def create_item(order)
-        order.line_items.create!(quantity: determine_item_quantity(order), variant: variant, managed_by_order_benefit: self)
+        order.line_items.build(quantity: determine_item_quantity(order), variant: variant, managed_by_order_benefit: self)
       end
 
       def determine_item_quantity(order)
