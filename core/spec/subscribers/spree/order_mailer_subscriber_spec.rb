@@ -8,7 +8,6 @@ RSpec.describe Spree::OrderMailerSubscriber do
 
   before do
     bus.register(:order_finalized)
-    bus.register(:reimbursement_reimbursed)
 
     described_class.new.subscribe_to(bus)
   end
@@ -39,13 +38,15 @@ RSpec.describe Spree::OrderMailerSubscriber do
     end
   end
 
-  describe 'on :reimbursement_reimbursed' do
-    it 'sends reimbursement email' do
-      reimbursement = build(:reimbursement)
+  describe "#send_reimbursement_email" do
+    subject { described_class.new.send_reimbursement_email({}) }
 
-      expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).and_call_original
-
-      bus.publish(:reimbursement_reimbursed, reimbursement:)
+    it "results in a deprecation warning" do
+      if ENV["SOLIDUS_RAISE_DEPRECATIONS"]
+        expect { subject }.to raise_error(ActiveSupport::DeprecationException)
+      else
+        expect(subject).to eq nil
+      end
     end
   end
 end

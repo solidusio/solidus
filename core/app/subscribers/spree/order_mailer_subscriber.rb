@@ -9,10 +9,6 @@ module Spree
            with: :send_confirmation_email,
            id: :spree_order_mailer_send_confirmation_email
 
-    handle :reimbursement_reimbursed,
-           with: :send_reimbursement_email,
-           id: :spree_order_mailer_send_reimbursement_email
-
     # Sends confirmation email to the user
     #
     # @param event [Omnes::UnstructuredEvent]
@@ -24,12 +20,9 @@ module Spree
       end
     end
 
-    # Sends reimbursement email to the user
-    #
-    # @param event [Omnes::UnstructuredEvent]
-    def send_reimbursement_email(event)
-      reimbursement = event[:reimbursement]
-      Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
-    end
+    def send_reimbursement_email(_event) = nil
+    deprecate send_reimbursement_email:
+      "use Spree::ReimbursementMailerSubscriber#send_reimbursement_email instead",
+      deprecator: Spree.deprecator
   end
 end
