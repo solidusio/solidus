@@ -93,6 +93,8 @@ RSpec.describe Spree::CreditCard, type: :model do
     let(:valid_address_attributes) do
       {
         name: "Hugo Furst",
+        firstname: "Hugo",
+        lastname: "Furst",
         address1: "123 Main",
         city: "Somewhere",
         country_id: country.id,
