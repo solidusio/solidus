@@ -24,8 +24,10 @@ en:
         address2: Street Address (cont'd)
         city: City
         company: Company
+        email: Email
         name: Name
         phone: Phone
+        vat_id: VAT-ID
         zipcode: Zip Code
       spree/adjustment:
         adjustable: Adjustable
@@ -390,6 +392,7 @@ en:
         is_default: Default
         name: Name
         tax_code: Tax Code
+        tax_reverse_charge_mode: Tax Reverse Charge Mode
       spree/tax_rate:
         amount: Rate
         expires_at: Expiration Date
@@ -2092,6 +2095,10 @@ en:
     return_quantity: Return Quantity
     return_reasons: Return Reasons
     returned: Returned
+    reverse_charge_statuses:
+      disabled: Disabled
+      enabled: Enabled
+      not_validated: Not Validated
     review: Review
     risk: Risk
     risk_analysis: Risk Analysis
@@ -2267,6 +2274,10 @@ en:
     tax_rate_amount_explanation: When using the "Default Tax" calculator, the amount is treated as a decimal amount to aid in calculations. (i.e. If the tax rate is 5% then enter 0.05) If using the "Flat Fee" calculator, the amount is used for the static fee.
     tax_rate_level: Tax Rate Level
     tax_rates: Tax Rates
+    tax_reverse_charge_modes:
+      disabled: Disabled
+      loose: Loose
+      strict: Strict
     taxon: Taxon
     taxon_attachment_removal_error: There was an error removing the attachment
     taxon_edit: Edit Taxon
@@ -2355,6 +2366,7 @@ en:
     variant_to_add: Variant to add
     variant_to_be_received: Variant to be received
     variants: Variants
+    vat_id: VAT-ID
     version: Version
     view_product: View Product On Store
     void: Void

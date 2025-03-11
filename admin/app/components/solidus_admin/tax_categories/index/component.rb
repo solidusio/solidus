@@ -64,6 +64,14 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
         end
       },
       {
+        header: :tax_reverse_charge_mode,
+        data: ->(tax_category) do
+          link_to_if tax_category.tax_reverse_charge_mode, I18n.t("spree.tax_reverse_charge_modes.#{tax_category.tax_reverse_charge_mode}"), edit_path(tax_category),
+            data: { turbo_frame: :resource_modal },
+            class: 'body-link'
+        end
+      },
+      {
         header: :description,
         data: ->(tax_category) do
           link_to_if tax_category.description, tax_category.description, edit_path(tax_category),
