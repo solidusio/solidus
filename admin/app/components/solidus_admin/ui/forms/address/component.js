@@ -54,5 +54,7 @@ export default class extends Controller {
       option.innerText = state.name
       stateSelect.appendChild(option)
     })
+
+    stateSelect.setAttribute("synced", "false");
   }
 }

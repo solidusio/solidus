@@ -1,0 +1,65 @@
+<section>
+  <div class="flex gap-6">
+    <div class="flex flex-col flex-grow gap-2">
+      <h3>Single</h3>
+
+      <% default_params = { label: "Country", name: "country", choices: ["", "Denmark", "Sweden"] } %>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
+        <%= render current_component.new(id: "single-default", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Selected</h6>
+        <%= render current_component.new(id: "single-selected", value: "Sweden", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Error</h6>
+        <%= render current_component.new(id: "single-error", value: "Sweden", error: "The value is wrong!", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled</h6>
+        <%= render current_component.new(id: "single-disabled", disabled: true, placeholder: "Select country", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
+        <%= render current_component.new(id: "single-disabled-filled", value: "Sweden", disabled: true, **default_params) %>
+      </div>
+    </div>
+
+    <div class="flex flex-col flex-grow gap-2">
+      <h3>Multiple</h3>
+
+      <% default_params = { label: "Countries", name: "countries", choices: ["", "Denmark", "Sweden", "United Kingdom"], multiple: true } %>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
+        <%= render current_component.new(id: "multiple-default", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Selected</h6>
+        <%= render current_component.new(id: "multiple-selected", value: %w[Sweden Denmark], **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Error</h6>
+        <%= render current_component.new(id: "multiple-error", value: "Sweden", error: "The value is wrong!", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled</h6>
+        <%= render current_component.new(id: "multiple-disabled", disabled: true, placeholder: "Select country", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
+        <%= render current_component.new(id: "multiple-disabled-filled", value: "Sweden", disabled: true, **default_params) %>
+      </div>
+    </div>
+  </div>
+</section>
