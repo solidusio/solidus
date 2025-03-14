@@ -130,7 +130,7 @@ describe "StoreCredits", :js, type: :feature do
             within("dialog") do
               fill_in "Amount", with: "100"
               click_on "Update Store Credit"
-              expect(page).to have_content("Store Credit reason must be provided")
+              expect(page).to have_content("Store credit reason must be provided")
               click_on "Cancel"
             end
           end
@@ -164,7 +164,7 @@ describe "StoreCredits", :js, type: :feature do
 
             within("dialog") do
               click_on "Invalidate"
-              expect(page).to have_content("Store Credit reason must be provided")
+              expect(page).to have_content("Store credit reason must be provided")
               click_on "Cancel"
             end
           end
