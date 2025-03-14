@@ -24,26 +24,6 @@ class SolidusAdmin::UI::Forms::Input::ComponentPreview < ViewComponent::Preview
 
   # @param error toggle
   # @param size select { choices: [s, m, l] }
-  # @param multiple toggle
-  # @param rows number
-  # @param options number
-  # @param include_blank toggle
-  def select_playground(error: false, include_blank: true, options: 3, rows: 1, size: "m", multiple: false)
-    options = (1..options).map { |i| ["Option #{i}", i] }
-    options.unshift(["", ""]) if include_blank
-    options.map! { tag.option(_1, value: _2) }
-
-    render component("ui/forms/input").new(
-      tag: :select,
-      "size" => rows > 1 ? rows : nil,
-      error: error ? "There is an error" : nil,
-      size: size.to_sym,
-      multiple:,
-    ).with_content(options.reduce(:+))
-  end
-
-  # @param error toggle
-  # @param size select { choices: [s, m, l] }
   # @param content textarea
   def textarea_playground(error: false, size: "m", content: "value")
     render component("ui/forms/input").new(
