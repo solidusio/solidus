@@ -2,11 +2,11 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static values = {
-    customValidity: String,
+    errorMessage: String,
   }
 
   connect() {
-    if (this.customValidityValue) this.element.setCustomValidity(this.customValidityValue)
+    if (this.errorMessageValue) this.element.setCustomValidity(this.errorMessageValue)
   }
 
   clearCustomValidity() {
