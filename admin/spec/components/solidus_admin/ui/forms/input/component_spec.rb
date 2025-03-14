@@ -6,7 +6,6 @@ RSpec.describe SolidusAdmin::UI::Forms::Input::Component, type: :component do
   it "renders the overview preview" do
     render_preview(:overview)
     render_preview(:input_playground)
-    render_preview(:select_playground)
     render_preview(:textarea_playground)
   end
 

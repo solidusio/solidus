@@ -36,20 +36,16 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
   def self.select(form, method, choices, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
-    new(
+    component("ui/forms/select").new(
       label:,
       hint:,
       tip:,
-      error: errors,
-      input_attributes: {
-        name: "#{object_name}[#{method}]",
-        tag: :select,
-        choices:,
-        size:,
-        value: (object.public_send(method) if object.respond_to?(method)),
-        error: (errors.to_sentence.capitalize if errors),
-        **attributes,
-      }
+      size: size,
+      name: "#{object_name}[#{method}]",
+      choices:,
+      value: (object.public_send(method) if object.respond_to?(method)),
+      error: (errors.to_sentence.capitalize if errors),
+      **attributes
     )
   end
 

@@ -32,6 +32,15 @@ module SolidusAdmin
           checkbox.synchronize { checkbox.checked? }
         end
       end
+
+      # Select an option from a "tomselect" field
+      #
+      # @param value [String] which option to select
+      # @param from [String] label of the select box
+      def tomselect(value, from:)
+        fill_in(from, with: value).send_keys(:return)
+        expect(find_field(from).ancestor(".control")).to have_text(value)
+      end
     end
   end
 end
