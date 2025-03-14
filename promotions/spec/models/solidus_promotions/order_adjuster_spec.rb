@@ -116,11 +116,12 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
           let(:old_promotion_benefit) { create(:promotion, :with_adjustable_action, apply_automatically: false).actions.first }
           let!(:adjustment) { create(:adjustment, source: old_promotion_benefit, adjustable: line_item) }
 
-          it "removes the old adjustment from the line item" do
+          it "marks the old adjustment for destruction" do
             adjustable.reload
             expect {
               subject
-            }.to change { adjustable.reload.adjustments.length }.by(-1)
+            }.to change { adjustable.adjustments.first.marked_for_destruction? }
+              .from(false).to(true)
           end
         end
       end
