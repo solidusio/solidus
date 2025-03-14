@@ -5,15 +5,10 @@
         <%= render component("ui/forms/field").text_field(f, :name) %>
         <%= render component("ui/forms/field").text_field(f, :tax_code) %>
         <%= render component("ui/forms/field").text_field(f, :description) %>
-        <label class="flex gap-2 items-center">
-          <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[is_default]",
-              value: "1",
-              checked: f.object.is_default
-            ) %>
-            <span class="font-semibold text-xs ml-2"><%= Spree::TaxCategory.human_attribute_name :is_default %></span>
-          <%= render component("ui/toggletip").new(text: t(".hints.is_default")) %>
-        </label>
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :is_default, checked: f.object.is_default) do |checkbox| %>
+          <%= checkbox.with_caption(text: Spree::TaxCategory.human_attribute_name(:is_default), weight: :semibold, size: :xs, classes: 'ml-2') %>
+          <%= checkbox.with_hint(text: t(".hints.is_default")) %>
+        <% end %>
       </div>
       <% modal.with_actions do %>
         <form method="dialog">
