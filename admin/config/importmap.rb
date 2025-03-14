@@ -13,3 +13,8 @@ pin "solidus_admin/application", preload: true
 pin "solidus_admin/utils"
 pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/controllers"), under: "solidus_admin/controllers"
 pin_all_from SolidusAdmin::Engine.root.join("app/components")
+pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/web_components"), under: "solidus_admin/web_components"
+
+pin "tom-select", to: "https://ga.jspm.io/npm:tom-select@2.4.3/dist/esm/tom-select.complete.js"
+pin "@orchidjs/sifter", to: "https://ga.jspm.io/npm:@orchidjs/sifter@1.1.0/dist/esm/sifter.js"
+pin "@orchidjs/unicode-variants", to: "https://ga.jspm.io/npm:@orchidjs/unicode-variants@1.1.2/dist/esm/index.js"
