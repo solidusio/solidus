@@ -102,7 +102,7 @@ module Spree
     has_many :cartons, -> { distinct }, through: :inventory_units
 
     # Adjustments and promotions
-    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
+    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy, autosave: true
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :all_adjustments,
@@ -804,7 +804,7 @@ module Spree
     end
 
     def ensure_promotions_eligible
-      Spree::Config.promotions.order_adjuster_class.new(self).call
+      Spree::Config.promotions.order_adjuster_class.new(self).call(persist: false)
 
       if promo_total_changed?
         restart_checkout_flow

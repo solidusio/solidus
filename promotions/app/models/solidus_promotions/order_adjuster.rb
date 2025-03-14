@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# We have gone through this file and identified locations that do persistence
 module SolidusPromotions
   class OrderAdjuster
     attr_reader :order, :promotions, :dry_run
@@ -10,11 +11,12 @@ module SolidusPromotions
       @promotions = LoadPromotions.new(order: order, dry_run_promotion: dry_run_promotion).call
     end
 
-    def call
+    def call(persist: true)
       order.reset_current_discounts
 
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
 
+      # TODO: - enemy identified
       discounted_order = DiscountOrder.new(order, promotions, dry_run: dry_run).call
 
       PersistDiscountedOrder.new(discounted_order).call unless dry_run
