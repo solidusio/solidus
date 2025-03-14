@@ -20,10 +20,10 @@
     <div class="
       font-normal text-xs
       [:disabled~&]:text-gray-300 text-gray-500
-      flex gap-1 flex-col
+      flex gap-1 flex-col [&>.error]:hidden [&>.error]:peer-invalid:block
     ">
       <%= tag.span @hint if @hint.present? %>
-      <%= tag.span safe_join(@error, tag.br), class: "text-red-600" if @error.present? %>
+      <%= tag.span safe_join(@error, tag.br), class: "error text-red-600" if @error.present? %>
     </div>
   <% end %>
 </label>

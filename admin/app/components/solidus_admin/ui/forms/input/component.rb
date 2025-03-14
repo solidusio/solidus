@@ -60,7 +60,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
 
     attributes[:class] = [
       %w[
-        w-full
+        peer w-full
         text-black bg-white border border-gray-300 rounded-sm placeholder:text-gray-400
         hover:border-gray-500
         focus:ring focus:ring-gray-300 focus:ring-0.5 focus:bg-white focus:ring-offset-0 [&:focus-visible]:outline-none
