@@ -109,9 +109,9 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
 
   def tag_options
     @tag_options ||= {
-      "data-controller": stimulus_id,
-      "data-#{stimulus_id}-custom-validity-value": @error.presence,
-      "data-action": "#{stimulus_id}#clearCustomValidity",
+      "data-controller": "custom-validity",
+      "data-custom-validity-error-message-value": @error.presence,
+      "data-action": "custom-validity#clearCustomValidity",
       **@attributes
     }
   end
