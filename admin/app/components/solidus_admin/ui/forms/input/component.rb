@@ -100,7 +100,6 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
     @tag_options ||= {
       "data-controller": "custom-validity",
       "data-custom-validity-error-message-value": @error.presence,
-      "data-action": "custom-validity#clearCustomValidity",
       **@attributes
     }
   end
