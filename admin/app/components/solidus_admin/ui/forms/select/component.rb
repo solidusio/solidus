@@ -37,7 +37,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
 
     @attributes = attributes
     @attributes[:name] = @name
-    @attributes[:is] = "tom-select"
+    @attributes[:is] = "solidus-select"
     @attributes[:id] ||= "#{stimulus_id}_#{@name}"
 
     general_classes = ["w-full relative text-black font-normal #{FONT_SIZES[size]}"]
