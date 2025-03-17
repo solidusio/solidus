@@ -1,6 +1,6 @@
 import TomSelect from "tom-select";
 
-class TomSelectElement extends HTMLSelectElement {
+class SolidusSelect extends HTMLSelectElement {
   static observedAttributes = ["synced"];
 
   connectedCallback() {
@@ -57,4 +57,4 @@ class TomSelectElement extends HTMLSelectElement {
   }
 }
 
-customElements.define("tom-select", TomSelectElement, { extends: "select" });
+customElements.define("solidus-select", SolidusSelect, { extends: "select" });
