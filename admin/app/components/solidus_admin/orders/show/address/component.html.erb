@@ -28,7 +28,7 @@
 
           <div class="w-full flex gap-4">
             <%= turbo_frame_tag address_frame_id do %>
-              <%= render component('ui/forms/address').new(address: @address, name: "order[#{@type}_address_attributes]") %>
+              <%= render component('ui/forms/address').new(addressable: @address, fieldset_name: "order[#{@type}_address_attributes]") %>
             <% end %>
           </div>
 
