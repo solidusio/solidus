@@ -39,6 +39,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     @attributes[:name] = @name
     @attributes[:is] = "solidus-select"
     @attributes[:id] ||= "#{stimulus_id}_#{@name}"
+    @attributes[:"data-error-message"] = @error.presence
 
     general_classes = ["w-full relative text-black font-normal #{FONT_SIZES[size]}"]
     control_classes = ["[&>.control]:peer-invalid:border-red-600 [&>.control]:peer-invalid:hover:border-red-600
@@ -89,33 +90,5 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
       option_classes,
       @attributes[:class]
     ].compact.join(" ")
-
-    merge_stimulus_data_attributes
-  end
-
-  private
-
-  def merge_stimulus_data_attributes
-    @attributes.deep_symbolize_keys!
-
-    controllers = ["custom-validity"]
-    actions = ["custom-validity#clearCustomValidity"]
-    data_controller, data_action = @attributes.values_at(:"data-controller", :"data-action")
-
-    controllers << data_controller
-    actions << data_action
-
-    if @attributes.key?(:data)
-      data_controller = @attributes[:data].delete(:controller)
-      data_action = @attributes[:data].delete(:action)
-      controllers << data_controller
-      actions << data_action
-    end
-
-    @attributes.merge!(
-      "data-controller": controllers.compact.join(" "),
-      "data-action": actions.compact.join(" "),
-      "data-custom-validity-error-message-value": @error.presence,
-    )
   end
 end

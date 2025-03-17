@@ -1,4 +1,5 @@
 import TomSelect from "tom-select";
+import { setValidity } from "solidus_admin/utils";
 
 class SolidusSelect extends HTMLSelectElement {
   static observedAttributes = ["synced"];
@@ -41,6 +42,8 @@ class SolidusSelect extends HTMLSelectElement {
 
     originalSelect.setAttribute("hidden", "true");
     originalSelect.setAttribute("aria-hidden", "true");
+
+    setValidity(originalSelect, originalSelect.dataset.errorMessage);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
