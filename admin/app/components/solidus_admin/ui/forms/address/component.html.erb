@@ -3,7 +3,7 @@
   <%= :disabled if @disabled %>
 >
   <div class="<%= stimulus_id %>--address-form flex flex-wrap gap-4 pb-4">
-    <%= render component("ui/forms/field").text_field(@fieldset_name, :name, object: @addressable) %>
+    <%= render component("ui/forms/field").text_field(@fieldset_name, :name, object: @addressable) if @include_name_field %>
     <%= render component("ui/forms/field").text_field(@fieldset_name, :address1, object: @addressable) %>
     <%= render component("ui/forms/field").text_field(@fieldset_name, :address2, object: @addressable) %>
     <div class="flex gap-4 w-full">
