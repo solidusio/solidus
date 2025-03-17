@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { setValidity } from "solidus_admin/utils";
 
 export default class extends Controller {
   static values = {
@@ -6,10 +7,6 @@ export default class extends Controller {
   }
 
   connect() {
-    if (this.errorMessageValue) this.element.setCustomValidity(this.errorMessageValue)
-  }
-
-  clearCustomValidity() {
-    this.element.setCustomValidity("")
+    setValidity(this.element, this.errorMessageValue);
   }
 }
