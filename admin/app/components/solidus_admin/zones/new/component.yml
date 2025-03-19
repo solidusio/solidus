@@ -1,0 +1,7 @@
+en:
+  title: "New Zone"
+  cancel: "Cancel"
+  kinds:
+    country: "Country based"
+    state: "State based"
+  submit: "Add Zone"
