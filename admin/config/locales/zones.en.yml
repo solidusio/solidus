@@ -6,3 +6,5 @@ en:
         success: "Zone was successfully created."
       destroy:
         success: "Zones were successfully removed."
+      update:
+        success: "Zone was successfully updated."
