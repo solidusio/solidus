@@ -1,7 +1,2 @@
 en:
   title: "Edit Zone"
-  cancel: "Cancel"
-  kinds:
-    country: "Country based"
-    state: "State based"
-  submit: "Update Zone"
