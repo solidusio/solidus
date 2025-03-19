@@ -17,8 +17,8 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
     solidus_admin.zones_path
   end
 
-  def row_url(zone)
-    spree.edit_admin_zone_path(zone)
+  def edit_path(zone)
+    solidus_admin.edit_zone_path(zone, **search_filter_params)
   end
 
   def turbo_frames
@@ -57,16 +57,46 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
 
   def columns
     [
-      :name,
-      :description,
-      {
-        header: :kind,
-        data: -> { component('ui/badge').new(name: _1.kind, color: _1.kind == 'country' ? :green : :blue) },
-      },
-      {
-        header: :zone_members,
-        data: -> { _1.zone_members.map(&:zoneable).map(&:name).to_sentence },
-      },
+      name_column,
+      description_column,
+      kind_column,
+      zone_members_column,
     ]
+  end
+
+  def name_column
+    {
+      header: :name,
+      data: ->(zone) do
+        link_to zone.name, edit_path(zone),
+          data: { turbo_frame: :resource_modal },
+          class: 'body-link'
+      end
+    }
+  end
+
+  def description_column
+    {
+      header: :description,
+      data: ->(zone) do
+        link_to zone.description, edit_path(zone),
+          data: { turbo_frame: :resource_modal },
+          class: 'body-link'
+      end
+    }
+  end
+
+  def kind_column
+    {
+      header: :kind,
+      data: -> { component('ui/badge').new(name: _1.kind, color: _1.kind == 'country' ? :green : :blue) },
+    }
+  end
+
+  def zone_members_column
+    {
+      header: :zone_members,
+      data: -> { _1.zone_members.map(&:zoneable).map(&:name).to_sentence },
+    }
   end
 end
