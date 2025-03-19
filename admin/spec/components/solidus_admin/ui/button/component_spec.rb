@@ -30,4 +30,13 @@ RSpec.describe SolidusAdmin::UI::Button::Component, type: :component do
       end
     end
   end
+
+  describe ".cancel" do
+    let(:component) { described_class.cancel }
+
+    it "renders Cancel button" do
+      render_inline(component)
+      expect(page).to have_content("Cancel")
+    end
+  end
 end
