@@ -2,5 +2,7 @@ en:
   solidus_admin:
     zones:
       title: "Zones"
+      create:
+        success: "Zone was successfully created."
       destroy:
         success: "Zones were successfully removed."

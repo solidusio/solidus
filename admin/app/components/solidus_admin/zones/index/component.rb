@@ -5,6 +5,10 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
     Spree::Zone
   end
 
+  def title
+    t('solidus_admin.zones.title')
+  end
+
   def search_key
     :name_or_description_cont
   end
@@ -17,11 +21,16 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
     spree.edit_admin_zone_path(zone)
   end
 
+  def turbo_frames
+    %w[resource_modal]
+  end
+
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_zone_path,
+      href: solidus_admin.new_zone_path(**search_filter_params),
+      data: { turbo_frame: :resource_modal },
       icon: "add-line",
       class: "align-self-end w-full",
     )

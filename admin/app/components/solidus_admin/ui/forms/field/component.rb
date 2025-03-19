@@ -41,7 +41,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
       hint:,
       tip:,
       size: size,
-      name: "#{object_name}[#{method}]",
+      name: "#{object_name}[#{method}]#{'[]' if attributes[:multiple].present?}",
       choices:,
       value: (object.public_send(method) if object.respond_to?(method)),
       error: (errors.to_sentence.capitalize if errors),
