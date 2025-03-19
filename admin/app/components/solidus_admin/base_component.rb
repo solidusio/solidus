@@ -7,6 +7,7 @@ module SolidusAdmin
   # BaseComponent is the base class for all components in Solidus Admin.
   class BaseComponent < ViewComponent::Base
     include SolidusAdmin::ComponentsHelper
+    include SolidusAdmin::StimulusHelper
     include SolidusAdmin::VoidElementsHelper
     include Turbo::FramesHelper
 
