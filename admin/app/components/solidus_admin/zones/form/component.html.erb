@@ -6,7 +6,7 @@
         <%= render component("ui/forms/field").select(
           f,
           :country_ids,
-          Spree::Country.all.map { |c| [c.name, c.id] },
+          Spree::Country.order(:name).map { |c| [c.name, c.id] },
           object: @zone,
           value: @zone.country_ids,
           multiple: true,
