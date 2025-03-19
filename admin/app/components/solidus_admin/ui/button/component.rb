@@ -97,6 +97,10 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     new(text:, type: :submit, **attrs)
   end
 
+  def self.cancel
+    new(scheme: :secondary, text: t('.cancel'))
+  end
+
   def call
     content = []
     content << render(component('ui/icon').new(name: @icon, class: @icon_classes)) if @icon
