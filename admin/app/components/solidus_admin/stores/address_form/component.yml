@@ -1,0 +1,3 @@
+en:
+  hint:
+    vat_id: Enter your VAT-ID without the Country Prefix (eg IT for Italy or DE for Germany) but solely the identification string.

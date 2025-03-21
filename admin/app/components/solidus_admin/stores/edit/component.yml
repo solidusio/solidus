@@ -1,0 +1,17 @@
+en:
+  address: Address
+  cancel: Cancel
+  contact_options: Contact Options
+  content_on_storefront: Content on Storefront
+  email_settings: Email Settings
+  hint:
+    available_locales: This determines which locales are available for your customers to choose from in the storefront.
+    cart_tax_country_iso: 'This determines which country is used for taxes on carts (orders which don''t yet have an address).<br> Default: None.'
+    code: An identifier for your store. Developers may need this value if you operate multiple storefronts.
+    default_currency: This determines which currency will be used for the storefront's product prices. Please, be aware that changing this configuration, only products that have prices in the selected currency will be listed on your storefront. <br>This setting won't change the default currency used when you create a product. For that, only the global `Spree::Config.currency` is taken into account.
+  regional_settings: Regional Settings
+  store_details: Store Details
+  store_legal_addres: Store Legal Address
+  store_settings: Store Name & URL / URI Settings
+  title: "%{store}"
+  update: Update
