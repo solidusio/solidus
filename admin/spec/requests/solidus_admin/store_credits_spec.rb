@@ -114,7 +114,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
       it "renders the new template with category errors" do
         post solidus_admin.user_store_credits_path(user), params: invalid_create_category_params
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include("Store Credit category must be provided")
+        expect(response.body).to include("Store credit category must be provided")
       end
     end
   end
@@ -232,7 +232,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
 
       it "displays error messages in the response" do
         put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
-        expect(response.body).to include("Store Credit reason must be provided")
+        expect(response.body).to include("Store credit reason must be provided")
       end
     end
 
@@ -327,7 +327,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     describe "#ensure_store_credit_reason" do
       it "adds an error when the store credit reason is blank" do
         put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: { amount: 100, store_credit_reason_id: nil } }
-        expect(response.body).to include("Store Credit reason must be provided")
+        expect(response.body).to include("Store credit reason must be provided")
       end
     end
 
@@ -335,7 +335,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
       describe "#ensure_store_credit_category" do
         it "adds an error when category_id is blank" do
           post solidus_admin.user_store_credits_path(user), params: { store_credit: { amount: 100, category_id: nil } }
-          expect(response.body).to include("Store Credit category must be provided")
+          expect(response.body).to include("Store credit category must be provided")
         end
       end
     end
