@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddMetadataToSpreeResources < ActiveRecord::Migration[7.2]
+class AddMetadataToSpreeResources < ActiveRecord::Migration[7.0]
   def change
     # List of Resources to add metadata columns to
     %i[
