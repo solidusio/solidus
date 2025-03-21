@@ -27,6 +27,12 @@ module Spree
     before_save :ensure_default_exists_and_is_unique
     before_destroy :validate_not_default
 
+    enum :reverse_charge_status, {
+      disabled: 0,
+      enabled: 1,
+      not_validated: 2
+    }, prefix: true
+
     def available_locales
       locales = super()
       if locales
