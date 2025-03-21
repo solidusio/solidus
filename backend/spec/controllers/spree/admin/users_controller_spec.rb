@@ -9,6 +9,8 @@ describe Spree::Admin::UsersController, type: :controller do
   let(:valid_address_attributes) do
     {
       name: 'Foo Bar',
+      firstname: 'Foo',
+      lastname: 'Bar',
       city: "New York",
       country_id: state.country.id,
       state_id: state.id,
