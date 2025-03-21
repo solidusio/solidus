@@ -10,6 +10,12 @@ module Spree
       self.tax_rate_tax_categories = []
     end
 
+    enum :tax_reverse_charge_mode, {
+      disabled: 0,
+      loose: 1,
+      strict: 2
+    }, prefix: true
+
     validates :name, presence: true
     validates_uniqueness_of :name, case_sensitive: true, unless: :deleted_at
 
