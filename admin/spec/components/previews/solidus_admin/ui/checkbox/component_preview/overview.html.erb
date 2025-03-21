@@ -1,0 +1,32 @@
+<table>
+  <tr>
+    <td></td>
+    <% current_component::SIZES.keys.each do |size| %>
+      <td class="px-3 py-1 text-gray-500 text-center text-[16px]" colspan="2"><%= size.to_s.humanize %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td></td>
+    <% current_component::SIZES.keys.each do |size| %>
+      <% %i[default disabled].each do |state| %>
+        <td class="px-3 py-1 text-gray-500 text-center"><%= state.to_s.humanize %></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% %i[off on intermediate].each do |checked| %>
+    <tr>
+      <td class="font-bold px-3 py-1"><%= checked.to_s.humanize %></td>
+      <% current_component::SIZES.keys.each do |size| %>
+        <% %i[default disabled].each do |state| %>
+          <% cell_id = SecureRandom.uuid %>
+          <td class="px-3 py-1 text-center" id="<%= cell_id %>">
+            <%= render current_component.new(size: size, checked: checked == :on, disabled: state == :disabled) %>
+            <script>
+              document.getElementById("<%= cell_id %>").querySelector("input").indeterminate = <%= checked == :intermediate %>
+            </script>
+          </td>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
