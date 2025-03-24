@@ -59,8 +59,8 @@ describe "Order", :js, type: :feature do
       fill_in "City", with: "John Doe City"
       fill_in "Zip Code", with: "12345"
       fill_in "Phone", with: "555-555-5555"
-      tomselect "Canada", from: "Country"
-      tomselect "Ontario", from: "State"
+      solidus_select "Canada", from: "Country"
+      solidus_select "Ontario", from: "State"
       click_on "Save"
     end
 
@@ -85,8 +85,8 @@ describe "Order", :js, type: :feature do
       fill_in "City", with: "Jane Doe City"
       fill_in "Zip Code", with: "54321"
       fill_in "Phone", with: "555-555-5555"
-      tomselect "Brazil", from: "Country"
-      tomselect "Bahia", from: "State"
+      solidus_select "Brazil", from: "Country"
+      solidus_select "Bahia", from: "State"
       click_on "Save"
     end
 

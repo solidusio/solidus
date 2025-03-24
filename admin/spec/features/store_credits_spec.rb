@@ -39,7 +39,7 @@ describe "StoreCredits", :js, type: :feature do
 
       within("dialog") do
         fill_in "Amount", with: ""
-        tomselect "Gift Card", from: "Category"
+        solidus_select "Gift Card", from: "Category"
         click_on "Create"
         expect(page).to have_content("must be greater than 0")
         click_on "Cancel"
@@ -52,7 +52,7 @@ describe "StoreCredits", :js, type: :feature do
 
       within("dialog") do
         fill_in "Amount", with: "666.66"
-        tomselect "Gift Card", from: "Category"
+        solidus_select "Gift Card", from: "Category"
         fill_in "Memo", with: "A brand new store credit, how nice!"
         click_on "Create"
       end
@@ -144,7 +144,7 @@ describe "StoreCredits", :js, type: :feature do
 
             within("dialog") do
               fill_in "Amount", with: "666"
-              tomselect "credit given in error", from: "Store credit reason"
+              solidus_select "credit given in error", from: "Store credit reason"
               click_on "Update Store Credit"
             end
 
@@ -177,7 +177,7 @@ describe "StoreCredits", :js, type: :feature do
             expect(page).to have_content("Invalidate Store Credit")
 
             within("dialog") do
-              tomselect "credit given in error", from: "Store credit reason"
+              solidus_select "credit given in error", from: "Store credit reason"
               click_on "Invalidate"
             end
 
