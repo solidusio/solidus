@@ -8,7 +8,7 @@ class AddOrderPromotionsForeignKey < ActiveRecord::Migration[7.0]
 
   def down
     if foreign_key_exists?(:spree_orders_promotions, :spree_orders, column: :order_id)
-      remove_foreign_key :spree_orders_promotions, :spree_orders_promotions
+      remove_foreign_key :spree_orders_promotions, :spree_orders, column: :order_id
     end
   end
 end
