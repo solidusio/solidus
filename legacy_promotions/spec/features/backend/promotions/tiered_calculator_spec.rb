@@ -34,6 +34,8 @@ RSpec.feature "Tiered Calculator Promotions" do
 
     within('#actions_container') { click_button "Update" }
 
+    expect(page).to have_content("Promotion \"#{promotion.name}\" has been successfully updated!")
+
     first_action = promotion.actions.first
     expect(first_action.class).to eq Spree::Promotion::Actions::CreateAdjustment
 
