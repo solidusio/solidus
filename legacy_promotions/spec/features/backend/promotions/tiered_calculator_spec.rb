@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.feature "Tiered Calculator Promotions" do
   stub_authorization!
@@ -33,6 +33,8 @@ RSpec.feature "Tiered Calculator Promotions" do
     end
 
     within('#actions_container') { click_button "Update" }
+
+    expect(page).to have_content("Promotion \"#{promotion.name}\" has been successfully updated!")
 
     first_action = promotion.actions.first
     expect(first_action.class).to eq Spree::Promotion::Actions::CreateAdjustment

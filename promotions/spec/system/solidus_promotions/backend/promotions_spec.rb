@@ -127,6 +127,7 @@ RSpec.feature "Promotions admin" do
         fill_in("benefit_calculator_attributes_preferred_amount", with: 30)
         click_button("Update")
       end
+      expect(page).to have_content("Benefit has been successfully updated!")
       expect(benefit.reload.calculator.preferred_amount).to eq(30)
 
       click_link("Add Condition")

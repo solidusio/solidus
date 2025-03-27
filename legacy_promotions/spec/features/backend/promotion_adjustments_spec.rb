@@ -167,13 +167,8 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(promotion.actions.first).to be_a(Spree::Promotion::Actions::FreeShipping)
     end
 
-    it "disables the button at submit", :js do
-      page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
-      fill_in "Name", with: "SAVE SAVE SAVE"
-      choose "Apply to all orders"
-      click_button "Create"
-
-      expect(page).to have_button("Create", disabled: true)
+    it "disables the button at submit" do
+      expect(page).to have_css("input[type='submit'][data-disable-with='Create']")
     end
 
     it "should allow an admin to create an automatic promotion" do

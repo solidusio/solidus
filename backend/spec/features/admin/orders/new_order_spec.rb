@@ -47,11 +47,14 @@ describe "New Order", type: :feature do
 
     click_on "Payments"
     click_on "Update"
+    expect(page).to have_content("Payment has been successfully created!")
 
     expect(current_path).to eql(spree.admin_order_payments_path(Spree::Order.last))
 
     click_on "Confirm"
     click_on "Complete Order"
+
+    expect(page).to have_content("Order completed")
 
     expect(current_path).to eql(spree.edit_admin_order_path(Spree::Order.last))
 
