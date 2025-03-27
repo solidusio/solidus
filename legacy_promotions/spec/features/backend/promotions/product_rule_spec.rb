@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "rails_helper"
 
 RSpec.feature 'Promotion with product rule', js: true do
   stub_authorization!
