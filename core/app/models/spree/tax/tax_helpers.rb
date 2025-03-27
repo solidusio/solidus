@@ -20,7 +20,31 @@ module Spree
         tax_category_id = item.try(:variant_tax_category_id) || item.tax_category_id
 
         @rates_for_item.select do |rate|
+          tax_category = rate.tax_categories.find { |tax_cat| tax_cat.id == tax_category_id }
+          next unless tax_category && tax_applicable?(tax_category, item.order.tax_address)
+
           rate.active? && rate.tax_categories.map(&:id).include?(tax_category_id)
+        end
+      end
+
+      # Determine if tax is applicable based on tax category and address
+      #
+      # @param [Spree::TaxCategory] tax_category
+      #   the tax category to check tax_reverse_charge_mode
+      # @param [Spree::Address] address
+      #   the address to check reverse_charge_status
+      # @return [Boolean] true if tax is applicable, false otherwise
+      def tax_applicable?(tax_category, address)
+        case tax_category.tax_reverse_charge_mode
+          # Strict mode: Tax applies only if the address is NOT enabled (reverse charge)
+        when 'strict'
+          !address.reverse_charge_status_enabled?
+          # Loose mode: Tax applies only if the address is explicitly disabled
+        when 'loose'
+          address.reverse_charge_status_disabled?
+          # Tax always applies
+        when 'disabled'
+          true
         end
       end
     end
