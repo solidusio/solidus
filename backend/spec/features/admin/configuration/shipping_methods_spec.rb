@@ -35,6 +35,7 @@ describe "Shipping Methods", type: :feature do
       end
 
       click_on "Create"
+      expect(page).to have_content("Shipping Method \"bullock cart\" has been successfully created!")
       expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
 
       visit spree.new_admin_shipping_method_path
