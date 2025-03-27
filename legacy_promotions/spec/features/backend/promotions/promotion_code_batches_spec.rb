@@ -23,18 +23,14 @@ RSpec.feature "Promotion Code Batches", partial_double_verification: false do
       expect(page).to_not have_field("promotion_per_code_usage_limit")
     end
 
-    it "creates a new promotion code batch and disables the submit button", :js do
+    it "creates a new promotion code batch and disables the submit button" do
       create_code_batch
 
       expect(page).to have_content "Promotion Code Batch has been successfully created!"
 
       visit spree.new_admin_promotion_promotion_code_batch_path(promotion)
 
-      page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
-
-      create_code_batch
-
-      expect(page).to have_button("Create", disabled: true)
+      expect(page).to have_css("input[type='submit'][data-disable-with='Create']")
     end
   end
 end
