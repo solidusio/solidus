@@ -28,6 +28,12 @@ module Spree
 
     self.allowed_ransackable_attributes = %w[name]
 
+    enum :reverse_charge_status, {
+      disabled: 0,
+      enabled: 1,
+      not_validated: 2
+    }, prefix: true
+
     unless ActiveRecord::Relation.method_defined? :with_values # Rails 7.1+
       scope :with_values, ->(attributes) do
         where(value_attributes(attributes))
