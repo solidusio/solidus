@@ -19,6 +19,10 @@ module Spree
       solidus_admin: 'spree/backend/themes/solidus_admin'
     }
 
+    # @!attribute [rw] show_reverse_charge_fields
+    #   @return [Boolean] Request reverse charge fields. (default: +false+)
+    preference :show_reverse_charge_fields, :boolean, default: false
+
     preference :search_fields, :hash, default: {
       "spree/admin/orders" => [
         {
