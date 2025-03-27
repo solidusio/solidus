@@ -98,6 +98,7 @@ describe "Product Images", type: :feature do
         end
 
         click_button "Update"
+        expect(page).to have_content("Image has been successfully created!")
         invalidate_attachment(Spree::Image.first.attachment)
         visit current_path
         expect(page).to have_xpath("//img[contains(@src, 'assets/noimage/mini')]")
