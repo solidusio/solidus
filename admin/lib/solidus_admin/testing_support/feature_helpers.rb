@@ -29,6 +29,20 @@ module SolidusAdmin
       def select_row(text)
         find_row_checkbox(text).check
       end
+
+      def checkbox(locator)
+        find(:checkbox, locator)
+      end
+
+      def selected_option(select_locator)
+        find(:select, select_locator).find(:option, selected: true)
+      end
+
+      def clear_search
+        within('div[role="search"]') do
+          find('button[aria-label="Clear"]').click
+        end
+      end
     end
   end
 end
