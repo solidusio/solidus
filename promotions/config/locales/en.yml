@@ -312,6 +312,9 @@ en:
       solidus_promotions/calculators/percent:
         description: Provides a discount calculated by percent of the discountable amount of the item being discounted
         preferred_percent: Percent
+      solidus_promotions/calculators/percent_with_cap:
+        description: Calculates a discount by percent of the discountable amount of the item being discounted, with a cap on the maximum discount.
+        preferred_max_amount: Maximum Amount
       solidus_promotions/calculators/distributed_amount:
         description: Distributes the configured amount among all eligible line items of the order.
         explanation: |
