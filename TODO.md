@@ -28,3 +28,8 @@ In-Memory Order Updater TODO
   - "By calling this in memory order updater, we are making a contract with the user that it will be in memory"
   - "This is really something which theoretically should be covered in tests"
 
+## Mar 28, 2025
+- [ ] Verify if it is a breaking change to call
+  `LineItem#set_required_attributes` in `after_initialize` instead of
+  `before_validation`. We think this may be a breaking change that requires
+  further investigation.
