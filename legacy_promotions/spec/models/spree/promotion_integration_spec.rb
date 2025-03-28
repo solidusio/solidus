@@ -84,6 +84,13 @@ RSpec.describe "Legacy promotion system" do
   end
 
   describe "distributing amount across line items" do
+    subject {
+      calculator.preferred_amount = 15
+      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
+
+      order.recalculate
+    }
+
     let(:calculator) { Spree::Calculator::DistributedAmount.new }
     let(:promotion) {
       create :promotion,
@@ -95,21 +102,52 @@ RSpec.describe "Legacy promotion system" do
         line_items_attributes: [{ price: 20 }, { price: 30 }, { price: 100 }]
     }
 
-    before do
-      calculator.preferred_amount = 15
-      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
-      order.recalculate
-    end
-
     it 'correctly distributes the entire discount' do
+      subject
+
       expect(order.promo_total).to eq(-15)
       expect(order.line_items.map(&:adjustment_total)).to eq([-2, -3, -10])
     end
 
+    context 'with the in memory order updater' do
+      subject {
+        calculator.preferred_amount = 15
+        Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
+
+        order.recalculate(persist: false)
+      }
+
+      around do |example|
+        default_order_recalculator = Spree::Config.order_recalculator_class.to_s
+
+        Spree::Config.order_recalculator_class = 'Spree::InMemoryOrderUpdater'
+
+        example.run
+
+        Spree::Config.order_recalculator_class = default_order_recalculator
+      end
+
+      it 'initializes the adjustments but does not persist them' do
+        subject
+
+        expect(order.promo_total).to eq(-15)
+        expect(order.line_items.map(&:adjustment_total)).to eq([-2, -3, -10])
+
+        order.reload
+
+        expect(order.promo_total).to eq(0)
+        expect(order.line_items.map(&:adjustment_total)).to eq([0, 0, 0])
+      end
+    end
+
     context 'with product promotion rule' do
+      subject { order.recalculate }
+
       let(:first_product) { order.line_items.first.product }
 
       before do
+        calculator.preferred_amount = 15
+        Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
         rule = Spree::Promotion::Rules::Product.create!(
           promotion:,
           product_promotion_rules: [
@@ -118,10 +156,11 @@ RSpec.describe "Legacy promotion system" do
         )
         promotion.rules << rule
         promotion.save!
-        order.recalculate
       end
 
       it 'still distributes the entire discount' do
+        subject
+
         expect(order.promo_total).to eq(-15)
         expect(order.line_items.map(&:adjustment_total)).to eq([-15, 0, 0])
       end
