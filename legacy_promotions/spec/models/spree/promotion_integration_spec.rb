@@ -24,7 +24,7 @@ RSpec.describe "Legacy promotion system" do
 
     # Regression test for https://github.com/solidusio/solidus/pull/1591
     context "with unsaved line_item changes" do
-      let(:calculator) { FactoryBot.create :flat_rate_calculator }
+      let(:calculator) { FactoryBot.create(:flat_rate_calculator) }
       let(:line_item) { order.line_items.first }
 
       before do
@@ -80,29 +80,63 @@ RSpec.describe "Legacy promotion system" do
           )
         end
       end
+
+      context "with the in-memory order updater" do
+        subject { order.recalculate(persist: false) }
+
+        before {
+          calculator.update!(preferred_amount: 5)
+        }
+
+        around do |example|
+          default_order_recalculator = Spree::Config.order_recalculator_class.to_s
+
+          Spree::Config.order_recalculator_class = 'Spree::InMemoryOrderUpdater'
+
+          example.run
+
+          Spree::Config.order_recalculator_class = default_order_recalculator
+        end
+
+        it "updates the adjustment total but does not persist it" do
+          expect(order.adjustment_total).to eq(-10.0)
+
+          expect { subject }.
+            to_not make_database_queries(manipulative: true)
+
+          expect(order).to have_attributes(
+            total: 105,
+            adjustment_total: -5
+          )
+
+          order.reload
+
+          expect(order.adjustment_total).to eq(-10)
+        end
+      end
     end
   end
 
   describe "distributing amount across line items" do
-    subject {
-      calculator.preferred_amount = 15
-      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
+    subject { order.recalculate }
 
-      order.recalculate
-    }
-
-    let(:calculator) { Spree::Calculator::DistributedAmount.new }
+    let(:calculator) { Spree::Calculator::DistributedAmount.new(preferred_amount: 15) }
     let(:promotion) {
       create :promotion,
         name: '15 spread'
     }
-    let(:order) {
+
+    before {
+      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
+    }
+
+    let!(:order) {
       create :completed_order_with_promotion,
         promotion:,
         line_items_attributes: [{ price: 20 }, { price: 30 }, { price: 100 }]
     }
 
-    it 'correctly distributes the entire discount' do
+    it 'correctly distributes the entire discount', :aggregate_failures do
       subject
 
       expect(order.promo_total).to eq(-15)
@@ -110,12 +144,7 @@ RSpec.describe "Legacy promotion system" do
     end
 
     context 'with the in memory order updater' do
-      subject {
-        calculator.preferred_amount = 15
-        Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator:, promotion:)
-
-        order.recalculate(persist: false)
-      }
+      subject { order.recalculate(persist: false) }
 
       around do |example|
         default_order_recalculator = Spree::Config.order_recalculator_class.to_s
@@ -128,7 +157,9 @@ RSpec.describe "Legacy promotion system" do
       end
 
       it 'initializes the adjustments but does not persist them' do
-        subject
+        expect {
+          subject
+        }.not_to make_database_queries(manipulative: true)
 
         expect(order.promo_total).to eq(-15)
         expect(order.line_items.map(&:adjustment_total)).to eq([-2, -3, -10])
