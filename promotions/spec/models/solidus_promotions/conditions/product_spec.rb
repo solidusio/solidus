@@ -192,8 +192,8 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
     let(:other_line_item) { Spree::LineItem.new(product: other_product) }
 
     let(:condition_options) { super().merge(products: [condition_product]) }
-    let(:condition_product) { mock_model(Spree::Product) }
-    let(:other_product) { mock_model(Spree::Product) }
+    let(:condition_product) { mock_model(Spree::Product, tax_category: nil) }
+    let(:other_product) { mock_model(Spree::Product, tax_category: nil) }
 
     it "is eligible if there are no products" do
       expect(condition).to be_eligible(condition_line_item)
