@@ -14,7 +14,7 @@ module Spree
       if best_promotion_adjustment
         @adjustments.select(&:eligible?).each do |adjustment|
           next if adjustment == best_promotion_adjustment
-          adjustment.update_columns(eligible: false, updated_at: Time.current)
+          adjustment.eligible = false
         end
         best_promotion_adjustment.amount
       else

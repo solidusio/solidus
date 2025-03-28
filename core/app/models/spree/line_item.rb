@@ -18,11 +18,11 @@ module Spree
 
     has_one :product, through: :variant
 
-    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
+    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy, autosave: true
     has_many :inventory_units, inverse_of: :line_item
 
     before_validation :normalize_quantity
-    before_validation :set_required_attributes
+    after_initialize :set_required_attributes
 
     validates :variant, presence: true
     validates :quantity, numericality: {
@@ -159,6 +159,7 @@ module Spree
     # Sets tax category, price-related attributes from
     # its variant if they are nil and a variant is present.
     def set_required_attributes
+      return if persisted?
       return unless variant
       self.tax_category ||= variant.tax_category
       set_pricing_attributes
