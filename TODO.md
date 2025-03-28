@@ -11,7 +11,7 @@ In-Memory Order Updater TODO
 - [x] ~Write the `InMemoryOrderAdjuster` (also, should we rename this to `InMemoryOrderPromotionAdjuster`)~
 - [ ] Fix CI failures from previous session (if any)
 - [ ] Add high level test for manipulative queries around new Promotion system
-- [ ] Add high level test for manipulative queries around Legacy Promotion system
+- [WIP] Add high level test for manipulative queries around Legacy Promotion system
 - [ ] Adding shared examples that could be used in both promotion system gems to
   ensure the above?
 - [In Progress] Handle persistence in all implementations of `promotions.order_adjuster_class`
