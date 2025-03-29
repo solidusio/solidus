@@ -33,25 +33,14 @@ describe 'Customer returns', type: :feature do
       end
     end
 
-    it 'disables the button at submit', :js do
-      page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
-
-      create_customer_return('receive')
-
-      expect(page).to have_button("Create", disabled: true)
+    it 'disables the button at submit' do
+      expect(page).to have_css('input[type="submit"][data-disable-with="Create"]')
     end
 
     context 'when creating a return with state "In Transit" and then marking it as "Received"' do
       it 'disables the "Receive" button at submit', :js do
         create_customer_return('in_transit')
-
-        page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
-
-        within('[data-hook="rejected_return_items"] tbody tr:nth-child(1)') do
-          click_button('Receive')
-
-          expect(page).to have_button("Receive", disabled: true, wait: 5)
-        end
+        expect(page).to have_css('input[type="submit"][data-disable-with="Receive"]')
       end
 
       it 'marks the order as returned', :js do

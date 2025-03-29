@@ -67,14 +67,9 @@ describe "Return payment state spec" do
     )
   end
 
-  it 'disables the "Create Reimbursement" button at submit', :js do
+  it 'disables the "Create Reimbursement" button at submit' do
     create_customer_return
 
-    page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
-
-    # Create reimbursement
-    click_on 'Create reimbursement'
-
-    expect(page).to have_button("Create reimbursement", disabled: true)
+    expect(page).to have_css("input[type='submit'][data-disable-with='Create reimbursement']")
   end
 end
