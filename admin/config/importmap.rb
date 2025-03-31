@@ -11,6 +11,8 @@ pin "@rails/request.js", to: "https://cdn.jsdelivr.net/npm/@rails/request.js@0.0
 
 pin "solidus_admin/application", preload: true
 pin "solidus_admin/utils"
+pin "vendor/custom_elements", preload: true
+
 pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/controllers"), under: "solidus_admin/controllers"
 pin_all_from SolidusAdmin::Engine.root.join("app/components")
 pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/web_components"), under: "solidus_admin/web_components"
