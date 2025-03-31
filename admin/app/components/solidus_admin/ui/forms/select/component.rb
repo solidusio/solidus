@@ -68,6 +68,10 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     input_classes = ["[&_input]:has-[.item]:placeholder:invisible [&_input:disabled]:cursor-not-allowed [&_input:disabled]:bg-gray-50
       [&_input]:peer-invalid:placeholder:text-red-400"]
 
+    unless @attributes[:multiple]
+      input_classes << "[&_input]:has-[.item]:opacity-0 [&_input]:has-[.item]:cursor-default"
+    end
+
     dropdown_classes = ["[&_.dropdown]:w-full [&_.dropdown]:absolute [&_.dropdown]:border [&_.dropdown]:border-gray-100
       [&_.dropdown]:mt-0.5 [&_.dropdown]:min-w-[10rem] [&_.dropdown]:p-2 [&_.dropdown]:rounded-sm [&_.dropdown]:z-10
       [&_.dropdown]:shadow-lg [&_.dropdown]:bg-white"]

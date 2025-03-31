@@ -26,6 +26,12 @@ class SolidusSelect extends HTMLSelectElement {
         this.setTextboxValue("");
         if (originalSelect.multiple) this.refreshOptions();
       },
+      onType: function() {
+        if (!originalSelect.multiple && !this.currentResults.items.length) {
+          this.setTextboxValue("");
+          this.refreshOptions();
+        }
+      },
     });
 
     originalSelect.setAttribute("synced", "true");
