@@ -42,29 +42,11 @@ Rails.application.config.i18n.raise_on_missing_translations = true
 # CAPYBARA & SELENIUM
 require "capybara/rspec"
 require 'capybara-screenshot/rspec'
-require "selenium/webdriver"
+require "spree/testing_support/capybara_driver"
+
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 Capybara.exact = true
 Capybara.disable_animation = true
-Capybara.register_driver :selenium_chrome_headless do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  browser_options.args << '--window-size=1920,1080'
-  browser_options.args << '--disable-backgrounding-occluded-windows'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
-Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  # Sandbox cannot be used inside unprivileged Docker container
-  browser_options.args << '--no-sandbox'
-  browser_options.args << '--window-size=1240,1400'
-  browser_options.args << '--disable-backgrounding-occluded-windows'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
-Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 Capybara.enable_aria_label = true
 
