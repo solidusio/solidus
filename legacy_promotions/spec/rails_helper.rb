@@ -43,34 +43,16 @@ require 'solidus_legacy_promotions/testing_support/factory_bot'
 require 'cancan/matchers'
 require 'spree/testing_support/capybara_ext'
 
-require "selenium/webdriver"
-
 ActiveJob::Base.queue_adapter = :test
 
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
-Capybara.register_driver :selenium_chrome_headless do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  browser_options.args << '--window-size=1920,1080'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
-Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  # Sandbox cannot be used inside unprivileged Docker container
-  browser_options.args << '--no-sandbox'
-  browser_options.args << '--window-size=1240,1400'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
+require "spree/testing_support/capybara_driver"
 
 # AXE - ACCESSIBILITY
 require 'axe-rspec'
 require 'axe-capybara'
 
-Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 Capybara.enable_aria_label = true
 
 # VIEW COMPONENTS

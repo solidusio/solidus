@@ -61,7 +61,7 @@ require "spree/testing_support/controller_requests"
 require "cancan/matchers"
 require "spree/testing_support/capybara_ext"
 
-require "selenium/webdriver"
+require "spree/testing_support/capybara_driver"
 # Requires factories defined in Solidus core and this extension.
 # See: lib/solidus_promotions/testing_support/factories.rb
 require "spree/testing_support/factory_bot"
