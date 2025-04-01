@@ -61,7 +61,6 @@ require "spree/testing_support/controller_requests"
 require "cancan/matchers"
 require "spree/testing_support/capybara_ext"
 
-require "selenium/webdriver"
 # Requires factories defined in Solidus core and this extension.
 # See: lib/solidus_promotions/testing_support/factories.rb
 require "spree/testing_support/factory_bot"
@@ -75,27 +74,8 @@ Spree::Config.order_contents_class = "Spree::SimpleOrderContents"
 Spree::Config.promotions = SolidusPromotions.configuration
 ActiveJob::Base.queue_adapter = :test
 
-Capybara.register_driver :selenium_chrome_headless do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  browser_options.args << '--window-size=1920,1080'
-  browser_options.args << '--disable-backgrounding-occluded-windows'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
+require "spree/testing_support/capybara_driver"
 
-Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  # Sandbox cannot be used inside unprivileged Docker container
-  browser_options.args << '--no-sandbox'
-  browser_options.args << '--window-size=1240,1400'
-  browser_options.args << '--disable-backgrounding-occluded-windows'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
-
-Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 # Allow Capybara to find elements by aria-label attributes
 Capybara.enable_aria_label = true
 
