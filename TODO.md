@@ -29,7 +29,7 @@ In-Memory Order Updater TODO
   - "This is really something which theoretically should be covered in tests"
 
 ## Mar 28, 2025
-- [ ] Verify if it is a breaking change to call
+- [x] Verify if it is a breaking change to call
   `LineItem#set_required_attributes` in `after_initialize` instead of
   `before_validation`. We think this may be a breaking change that requires
-  further investigation.
+  further investigation. (We investigated and don't believe it is a breaking change.)
