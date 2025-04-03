@@ -4,7 +4,7 @@ const adminRoot = __dirname.replace(/\/config$/, '')
 
 module.exports = {
   content: [
-    `${adminRoot}/{app/helpers,app/views,app/components,app/assets/javascripts,spec/components/previews}/**/*`,
+    `${adminRoot}/{app/helpers,app/views,app/components,app/assets/javascripts,app/javascript,spec/components/previews}/**/*`,
   ],
   theme: {
     extend: {
