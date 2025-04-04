@@ -134,6 +134,10 @@ module Spree
               expect(subject.city).to eq updated_address_attributes[:city]
             end
 
+            it "preserves firstname" do
+              expect(subject.firstname).to eq address.firstname
+            end
+
             it "preserves name" do
               expect(subject.name).to eq address.name
             end
@@ -158,9 +162,12 @@ module Spree
 
       context "updating an address and making default at once" do
         let(:address1) { create(:address) }
-        let(:address2) { create(:address, name: "Different") }
+        let(:address2) { create(:address, firstname: "Different", name: "Different") }
         let(:updated_attrs) do
-          address2.attributes.tap { |value| value[:name] = "Johnny" }
+          address2.attributes.tap do |value|
+            value[:firstname] = "Johnny"
+            value[:name] = "Johnny"
+          end
         end
 
         before do
@@ -170,6 +177,7 @@ module Spree
 
         it "returns the edit as the first address" do
           user.save_in_address_book(updated_attrs, true)
+          expect(user.user_addresses.first.address.firstname).to eq "Johnny"
           expect(user.user_addresses.first.address.name).to eq "Johnny"
         end
       end
@@ -229,7 +237,7 @@ module Spree
 
     context "#remove_from_address_book" do
       let(:address1) { create(:address) }
-      let(:address2) { create(:address, name: "Different") }
+      let(:address2) { create(:address, firstname: "Different", name: "Different") }
       let(:remove_id) { address1.id }
 
       subject { user.remove_from_address_book(remove_id) }
