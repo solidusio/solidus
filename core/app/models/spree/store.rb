@@ -15,12 +15,16 @@ module Spree
     has_many :store_shipping_methods, inverse_of: :store
     has_many :shipping_methods, through: :store_shipping_methods
 
+    belongs_to :state, class_name: 'Spree::State', optional: true
+    belongs_to :country, class_name: 'Spree::Country', optional: true
+
     has_many :orders, class_name: "Spree::Order"
 
     validates :code, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
     validates :name, presence: true
     validates :url, presence: true
     validates :mail_from_address, presence: true
+    validates :state, presence: true, if: -> { country&.states_required }
 
     self.allowed_ransackable_attributes = %w[name url code]
 
