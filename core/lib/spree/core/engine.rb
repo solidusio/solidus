@@ -71,10 +71,15 @@ module Spree
             reimbursement_errored
           ].each { |event_name| Spree::Bus.register(event_name) }
 
-          Spree::CartonShippedMailerSubscriber.new.subscribe_to(Spree::Bus)
-          Spree::OrderConfirmationMailerSubscriber.new.subscribe_to(Spree::Bus)
-          Spree::OrderCancelMailerSubscriber.new.subscribe_to(Spree::Bus)
-          Spree::ReimbursementMailerSubscriber.new.subscribe_to(Spree::Bus)
+          [
+            Spree::CartonShippedMailerSubscriber,
+            Spree::OrderCancelMailerSubscriber,
+            Spree::OrderConfirmationMailerSubscriber,
+            Spree::OrderInventoryCancellationMailerSubscriber,
+            Spree::ReimbursementMailerSubscriber
+          ].each do |subscriber_class|
+            subscriber_class.new.subscribe_to(Spree::Bus)
+          end
         end
       end
 
