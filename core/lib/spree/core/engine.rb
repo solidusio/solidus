@@ -73,6 +73,7 @@ module Spree
 
           Spree::CartonShippedMailerSubscriber.new.subscribe_to(Spree::Bus)
           Spree::OrderConfirmationMailerSubscriber.new.subscribe_to(Spree::Bus)
+          Spree::OrderCancelMailerSubscriber.new.subscribe_to(Spree::Bus)
           Spree::ReimbursementMailerSubscriber.new.subscribe_to(Spree::Bus)
         end
       end
