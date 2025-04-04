@@ -30,6 +30,17 @@
       <%= f.text_area :meta_description, class: 'fullwidth' %>
       <%= f.error_message_on :meta_description %>
     <% end %>
+
+    <% if Spree::Backend::Config.show_reverse_charge_fields %>
+      <%= f.field_container :reverse_charge_status do %>
+        <%= f.label :reverse_charge_status %>
+        <%= f.select :reverse_charge_status,
+          Spree::Store.reverse_charge_statuses.keys.map { |key| [I18n.t("spree.reverse_charge_statuses.#{key}"), key] },
+          { include_blank: false },
+          { class: 'custom-select fullwidth' } %>
+        <%= f.error_message_on :reverse_charge_status %>
+      <% end %>
+    <% end %>
   </div>
   <div class="col-12 col-md-6">
     <%= f.field_container :url do %>
