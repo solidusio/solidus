@@ -294,4 +294,58 @@ RSpec.describe Spree::Address, type: :model do
 
     it { is_expected.to be_require_phone }
   end
+
+  describe 'enum reverse_charge_status' do
+    it 'defines the expected enum values' do
+      expect(Spree::Address.reverse_charge_statuses).to eq({
+        'disabled' => 0,
+        'enabled' => 1,
+        'not_validated' => 2
+      })
+    end
+
+    context 'allows valid values' do
+      it 'has not_validated value' do
+        address = build(:address)
+        # Updates the reverse_charge_status to "not_validated"
+        address.reverse_charge_status_not_validated!
+
+        expect(address).to be_valid
+      end
+
+      it 'has disabled value' do
+        address = build(:address)
+        # Updates the reverse_charge_status to "disabled"
+        address.reverse_charge_status_disabled!
+
+        expect(address).to be_valid
+      end
+
+      it 'has enabled value' do
+        address = build(:address)
+        # Updates the reverse_charge_status to "enabled"
+        address.reverse_charge_status_enabled!
+
+        expect(address).to be_valid
+      end
+    end
+
+    it 'raises an error for invalid values' do
+      expect { Spree::Address.new(reverse_charge_status: :invalid_status) }.to raise_error(ArgumentError)
+    end
+  end
+
+  context 'ensure fields are stored' do
+    let(:address) { build(:address) }
+
+    it 'saves email correctly' do
+      address.email = 'test@example.com'
+      expect(address.save).to be true
+    end
+
+    it 'saves vat_id correctly' do
+      address.vat_id = 'AB123'
+      expect(address.save).to be true
+    end
+  end
 end
