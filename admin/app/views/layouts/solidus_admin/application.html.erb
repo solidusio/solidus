@@ -13,7 +13,7 @@
 
     <%= stylesheet_link_tag SolidusAdmin::Config.theme_path(session[:admin_light_theme]), media: '(prefers-color-scheme: light)', "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag SolidusAdmin::Config.theme_path(session[:admin_dark_theme]), media: '(prefers-color-scheme: dark)', "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags "solidus_admin/application", shim: false, importmap: SolidusAdmin.importmap %>
+    <%= javascript_importmap_tags "solidus_admin/application", importmap: SolidusAdmin.importmap %>
     <meta name="turbo-refresh-scroll", content="preserve">
   </head>
 
