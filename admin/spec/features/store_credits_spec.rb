@@ -39,7 +39,7 @@ describe "StoreCredits", :js, type: :feature do
 
       within("dialog") do
         fill_in "Amount", with: ""
-        select "Gift Card", from: "store_credit[category_id]"
+        solidus_select "Gift Card", from: "Category"
         click_on "Create"
         expect(page).to have_content("must be greater than 0")
         click_on "Cancel"
@@ -52,7 +52,7 @@ describe "StoreCredits", :js, type: :feature do
 
       within("dialog") do
         fill_in "Amount", with: "666.66"
-        select "Gift Card", from: "store_credit[category_id]"
+        solidus_select "Gift Card", from: "Category"
         fill_in "Memo", with: "A brand new store credit, how nice!"
         click_on "Create"
       end
@@ -130,7 +130,7 @@ describe "StoreCredits", :js, type: :feature do
             within("dialog") do
               fill_in "Amount", with: "100"
               click_on "Update Store Credit"
-              expect(page).to have_content("Store Credit reason must be provided")
+              expect(page).to have_content("Store credit reason must be provided")
               click_on "Cancel"
             end
           end
@@ -144,7 +144,7 @@ describe "StoreCredits", :js, type: :feature do
 
             within("dialog") do
               fill_in "Amount", with: "666"
-              select "credit given in error", from: "store_credit[store_credit_reason_id]"
+              solidus_select "credit given in error", from: "Store credit reason"
               click_on "Update Store Credit"
             end
 
@@ -164,7 +164,7 @@ describe "StoreCredits", :js, type: :feature do
 
             within("dialog") do
               click_on "Invalidate"
-              expect(page).to have_content("Store Credit reason must be provided")
+              expect(page).to have_content("Store credit reason must be provided")
               click_on "Cancel"
             end
           end
@@ -177,7 +177,7 @@ describe "StoreCredits", :js, type: :feature do
             expect(page).to have_content("Invalidate Store Credit")
 
             within("dialog") do
-              select "credit given in error", from: "store_credit[store_credit_reason_id]"
+              solidus_select "credit given in error", from: "Store credit reason"
               click_on "Invalidate"
             end
 

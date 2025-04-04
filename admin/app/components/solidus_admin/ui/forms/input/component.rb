@@ -37,7 +37,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
   ]).freeze
 
   def initialize(tag: :input, size: :m, error: nil, **attributes)
-    raise ArgumentError, "unsupported tag: #{tag}" unless %i[input textarea select].include?(tag)
+    raise ArgumentError, "unsupported tag: #{tag}" unless %i[input textarea].include?(tag)
 
     specialized_classes = []
     readonly_classes = "read-only:bg-gray-15 focus:read-only:bg-gray-15 focus:read-only:ring-0
@@ -56,20 +56,11 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
       specialized_classes << "form-textarea"
       specialized_classes << readonly_classes
       specialized_classes << MULTILINE_HEIGHTS[size]
-    when :select
-      if attributes[:multiple]
-        specialized_classes << "form-multiselect"
-        specialized_classes << MULTILINE_HEIGHTS[size]
-      else
-        specialized_classes << "form-select"
-        specialized_classes << "bg-arrow-down-s-fill-gray-700 invalid:bg-arrow-down-s-fill-red-400 aria-invalid:bg-arrow-down-s-fill-red-400"
-        specialized_classes << HEIGHTS[size]
-      end
     end
 
     attributes[:class] = [
       %w[
-        w-full
+        peer w-full
         text-black bg-white border border-gray-300 rounded-sm placeholder:text-gray-400
         hover:border-gray-500
         focus:ring focus:ring-gray-300 focus:ring-0.5 focus:bg-white focus:ring-offset-0 [&:focus-visible]:outline-none
@@ -89,9 +80,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
   end
 
   def call
-    if @tag == :select && @attributes[:choices]
-      with_content options_for_select(@attributes.delete(:choices), @attributes.delete(:value))
-    elsif @tag == :textarea && @attributes[:value]
+    if @tag == :textarea && @attributes[:value]
       with_content @attributes.delete(:value)
     end
 
@@ -109,9 +98,8 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
 
   def tag_options
     @tag_options ||= {
-      "data-controller": stimulus_id,
-      "data-#{stimulus_id}-custom-validity-value": @error.presence,
-      "data-action": "#{stimulus_id}#clearCustomValidity",
+      "data-controller": "custom-validity",
+      "data-custom-validity-error-message-value": @error.presence,
       **@attributes
     }
   end

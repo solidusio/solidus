@@ -42,6 +42,8 @@ describe "Order", :js, type: :feature do
 
   it "allows setting and changing the addresses" do
     create(:order, number: "R123456789", total: 19.99)
+    create(:state, name: "Ontario", country: create(:country, iso: "CA"))
+    create(:state, name: "Bahia", country: create(:country, iso: "BR"))
 
     visit "/admin/orders/R123456789/edit"
 
@@ -57,8 +59,8 @@ describe "Order", :js, type: :feature do
       fill_in "City", with: "John Doe City"
       fill_in "Zip Code", with: "12345"
       fill_in "Phone", with: "555-555-5555"
-      select "United States", from: "order[bill_address_attributes][country_id]"
-      select "Alabama", from: "order[bill_address_attributes][state_id]"
+      solidus_select "Canada", from: "Country"
+      solidus_select "Ontario", from: "State"
       click_on "Save"
     end
 
@@ -68,8 +70,8 @@ describe "Order", :js, type: :feature do
     expect(page).to have_content("Apartment 2")
     expect(page).to have_content("John Doe City")
     expect(page).to have_content("12345")
-    expect(page).to have_content("United States")
-    expect(page).to have_content("Alabama")
+    expect(page).to have_content("Canada")
+    expect(page).to have_content("Ontario")
     expect(page).to have_content("555-555-5555")
 
     open_customer_menu
@@ -83,8 +85,8 @@ describe "Order", :js, type: :feature do
       fill_in "City", with: "Jane Doe City"
       fill_in "Zip Code", with: "54321"
       fill_in "Phone", with: "555-555-5555"
-      select "United States", from: "order[ship_address_attributes][country_id]"
-      select "Alabama", from: "order[ship_address_attributes][state_id]"
+      solidus_select "Brazil", from: "Country"
+      solidus_select "Bahia", from: "State"
       click_on "Save"
     end
 
@@ -94,8 +96,8 @@ describe "Order", :js, type: :feature do
     expect(page).to have_content("Apartment 3")
     expect(page).to have_content("Jane Doe City")
     expect(page).to have_content("54321")
-    expect(page).to have_content("United States")
-    expect(page).to have_content("Alabama")
+    expect(page).to have_content("Brazil")
+    expect(page).to have_content("Bahia")
     expect(page).to have_content("555-555-5555")
   end
 

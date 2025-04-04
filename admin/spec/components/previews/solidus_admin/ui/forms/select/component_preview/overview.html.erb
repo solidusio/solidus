@@ -1,0 +1,91 @@
+<section>
+  <div class="flex gap-6">
+    <div class="flex flex-col flex-grow gap-2">
+      <h3>Single</h3>
+
+      <% default_params = { label: "Country", name: "country", choices: ["", "Denmark", "Sweden"] } %>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
+        <%= render current_component.new(id: "single-default", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Selected</h6>
+        <%= render current_component.new(id: "single-selected", value: "Sweden", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Error</h6>
+        <%= render current_component.new(id: "single-error", value: "Sweden", error: "The value is wrong!", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled</h6>
+        <%= render current_component.new(id: "single-disabled", disabled: true, placeholder: "Select country", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
+        <%= render current_component.new(id: "single-disabled-filled", value: "Sweden", disabled: true, **default_params) %>
+      </div>
+    </div>
+
+    <div class="flex flex-col flex-grow gap-2">
+      <h3>Multiple</h3>
+
+      <% default_params = { label: "Countries", name: "countries", choices: ["", "Denmark", "Sweden", "United Kingdom"], multiple: true } %>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
+        <%= render current_component.new(id: "multiple-default", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Selected</h6>
+        <%= render current_component.new(id: "multiple-selected", value: %w[Sweden Denmark], **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Error</h6>
+        <%= render current_component.new(id: "multiple-error", value: "Sweden", error: "The value is wrong!", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled</h6>
+        <%= render current_component.new(id: "multiple-disabled", disabled: true, placeholder: "Select country", **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
+        <%= render current_component.new(id: "multiple-disabled-filled", value: "Sweden", disabled: true, **default_params) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col">
+    <h3>In modal</h3>
+    <%= render component("ui/button").new(scheme: :secondary, text: "Open modal", class: "max-w-[10rem]", onclick: "document.querySelector('#modal-with-select').showModal()") %>
+    <dialog id="modal-with-select" class="fixed overflow-visible">
+      <div class="fixed inset-0 flex justify-center items-center">
+        <div class="min-w-[40rem] relative rounded-lg bg-white shadow-xl divide-y divide-gray-100">
+          <header class="p-4">
+            <h3 class="text-xl font-semibold text-gray-900">
+              <%= "Select country" %>
+            </h3>
+          </header>
+
+          <div class="p-4">
+            <%= render current_component.new(id: "single-modal-select", label: "Countries", name: "countries", choices: ["", "Denmark", "Sweden", "United Kingdom", "United States", "Canada", "Mexico", "France", "Spain"]) %>
+          </div>
+
+          <footer class="p-4 flex justify-end">
+            <form method="dialog">
+              <%= render component("ui/button").new(scheme: :secondary, text: "Close", autofocus: true) %>
+            </form>
+          </footer>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</section>
