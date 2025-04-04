@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 describe "Stock Locations", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
@@ -18,5 +19,10 @@ describe "Stock Locations", :js, type: :feature do
     expect(page).not_to have_content("Default-location")
     expect(Spree::StockLocation.count).to eq(0)
     expect(page).to be_axe_clean
+  end
+
+  include_examples 'feature: bulk delete resources' do
+    let(:resource_factory) { :stock_location }
+    let(:index_path) { "/admin/stock_locations" }
   end
 end
