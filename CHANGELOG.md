@@ -8,7 +8,7 @@
 
 ## Solidus Core
 
-* Move Line Item Actions to solidus_legacy_promotions by @mamhoff in https://github.com/solidusio/solidus/pull/5916
+* Move Line Items Actions to solidus_legacy_promotions by @mamhoff in https://github.com/solidusio/solidus/pull/5916
 * Remove rails binstubs from built gems by @tvdeyen in https://github.com/solidusio/solidus/pull/5917
 * [FIX] Remove spacing at top of OrderShipping#ship method by @adammathys in https://github.com/solidusio/solidus/pull/5954
 * Test app task: Allow passing in user class by @mamhoff in https://github.com/solidusio/solidus/pull/5956
