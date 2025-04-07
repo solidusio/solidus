@@ -5,36 +5,9 @@ class SolidusSelect extends HTMLSelectElement {
   static observedAttributes = ["synced"];
 
   connectedCallback() {
-    const originalSelect = this;
+    const tomselect = new TomSelect(this, this.getTomSelectSettings());
 
-    const tomselect = new TomSelect(originalSelect, {
-      controlClass: "control",
-      dropdownClass: "dropdown",
-      dropdownContentClass: "dropdown-content",
-      optionClass: "option",
-      wrapperClass: "wrapper",
-      maxOptions: null,
-      refreshThrottle: 0,
-      plugins: {
-        no_active_items: true,
-        remove_button: {
-          append: originalSelect.multiple,
-          className: "remove-button"
-        },
-      },
-      onItemAdd: function() {
-        this.setTextboxValue("");
-        if (originalSelect.multiple) this.refreshOptions();
-      },
-      onType: function() {
-        if (!originalSelect.multiple && !this.currentResults.items.length) {
-          this.setTextboxValue("");
-          this.refreshOptions();
-        }
-      },
-    });
-
-    originalSelect.setAttribute("synced", "true");
+    this.setAttribute("synced", "true");
 
     // set default style for inner input field
     tomselect.control_input.style =
@@ -46,10 +19,10 @@ class SolidusSelect extends HTMLSelectElement {
       "min-width: 7rem;\n" +
       "outline: none !important;"
 
-    originalSelect.setAttribute("hidden", "true");
-    originalSelect.setAttribute("aria-hidden", "true");
+    this.setAttribute("hidden", "true");
+    this.setAttribute("aria-hidden", "true");
 
-    setValidity(originalSelect, originalSelect.dataset.errorMessage);
+    setValidity(this, this.dataset.errorMessage);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -63,6 +36,78 @@ class SolidusSelect extends HTMLSelectElement {
         }
         break;
     }
+  }
+
+  getTomSelectSettings() {
+    const originalSelect = this;
+    const settings = {
+      controlClass: "control",
+      dropdownClass: "dropdown",
+      dropdownContentClass: "dropdown-content",
+      optionClass: "option",
+      wrapperClass: "wrapper",
+      maxOptions: 500,
+      refreshThrottle: 0,
+      plugins: {
+        no_active_items: true,
+        remove_button: {
+          append: originalSelect.multiple,
+          className: "remove-button"
+        },
+      },
+      onItemAdd: function() {
+        if (!originalSelect.multiple || !this.isOpen) return;
+
+        this.setTextboxValue("");
+        this.refreshOptions();
+      },
+      onLoad: function() {
+        originalSelect.tomselect.setValue(
+          originalSelect.getAttribute("data-selected")?.split(",") || [],
+          true
+        );
+      },
+      onType: function() {
+        if (!originalSelect.multiple && !this.currentResults.items.length) {
+          this.setTextboxValue("");
+          this.refreshOptions();
+        }
+      },
+    };
+
+    if (originalSelect.getAttribute("data-src")) {
+      settings.load = originalSelect.loadOnce.bind(originalSelect);
+      settings.preload = true;
+      settings.valueField = originalSelect.getAttribute("data-option-value-field") || "id";
+      settings.labelField = originalSelect.getAttribute("data-option-label-field") || "name";
+      settings.searchField = [settings.labelField];
+      settings.render = {
+        loading: function() {
+          return "<div class='loading'>Loading</div>";
+        }
+      }
+    }
+
+    return settings;
+  }
+
+  // Fetch all options from remote source and remove #load callback
+  // https://tom-select.js.org/examples/remote/
+  async loadOnce(query, callback) {
+    // Avoid queueing more load requests (e.g. searching while options are still loading) if there's one already running
+    if (this.tomselect.loading > 1) {
+      callback();
+      return;
+    }
+
+    const options = await this.fetchOptions();
+    callback(options);
+    this.tomselect.settings.load = null;
+  }
+
+  async fetchOptions() {
+    const response = await fetch(this.getAttribute("data-src"));
+    return await response.json();
   }
 }
 
