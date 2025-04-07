@@ -169,7 +169,7 @@ To join the stakeholders, you must be part of one of the groups described above.
 Partners are individuals or companies that are financially contributing to the platform’s Open Collective organization,
 in exchange for a pre-established set of benefits, mainly the ability to vote during stakeholder meetings.
 
-To join the stakeholders group as Partner, it's just needed that you setup a monthy donation via Open Collective with any of
+To join the stakeholders group as Partner, it's just needed that you setup a monthly donation via Open Collective with any of
 following partnership tiers:
 
 - **Supporter ($10/month)**: Doesn’t guarantee access to a partnership program.

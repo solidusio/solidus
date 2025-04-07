@@ -14,7 +14,7 @@
 [![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
 [![Slack](https://shields.io/badge/slack-start_chatting-blue?logo=slack)](http://slack.solidus.io)
 
-**A free, open-source ecommerce platform that gives you complete control over your store.**
+**A free, open-source e-commerce platform that gives you complete control over your store.**
 
 - **Visit our website**: [https://solidus.io/](https://solidus.io/)
 - **Read our Community Guidelines**: [https://guides.solidus.io/policies/community-guidelines/](https://guides.solidus.io/policies/community-guidelines/)
@@ -53,7 +53,7 @@ Support this project by becoming a Solidus Ambassador. Your logo will show up he
 
 ## Summary
 
-Solidus is a complete open source ecommerce solution built with Ruby on Rails.
+Solidus is a complete open source e-commerce solution built with Ruby on Rails.
 It is a fork of [Spree](https://spreecommerce.org).
 
 See the [Solidus class documentation](http://docs.solidus.io) and the [Solidus
@@ -69,7 +69,7 @@ Solidus consists of several gems. When you require the `solidus` gem in your
 - [`solidus_sample`](https://github.com/solidusio/solidus/tree/master/sample) (Sample data)
 
 All of the gems are designed to work together to provide a fully functional
-ecommerce platform. However, you may only want to use the
+e-commerce platform. However, you may only want to use the
 [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) gem
 combine it with your own custom frontend, admin interface, and API.
 

@@ -32,7 +32,7 @@ end
 
 ### Types of Benefits
 
-The new Solidus Promotions Systems ships with three benefit types: `AdjustLineItem`, `AdjustShipment` and `CreateDiscountedItem`. To allow more efficient processing of returns and reduce the complexity for bookkeping and support departmentes fixed discount to all line items in an order can now be given through the `AdjustLineItem` benefit through the `DistributedAmount` calculator significantly reducing amministration issues with refunds. 
+The new Solidus Promotions Systems ships with three benefit types: `AdjustLineItem`, `AdjustShipment` and `CreateDiscountedItem`. To allow more efficient processing of returns and reduce the complexity for bookkeping and support departments fixed discount to all line items in an order can now be given through the `AdjustLineItem` benefit through the `DistributedAmount` calculator significantly reducing administration issues with refunds. 
 
 #### `AdjustLineItem`
 

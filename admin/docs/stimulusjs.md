@@ -2,7 +2,7 @@
 
 This project uses [StimulusJS](https://stimulusjs.org) to add interactivity to the admin interface.
 
-## Using ther `stimulus_id` helper
+## Using the `stimulus_id` helper
 
 All JavaScript files are imported using `import-maps`, eliminating the need for compilation.
 

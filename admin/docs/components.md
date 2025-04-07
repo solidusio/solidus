@@ -2,11 +2,11 @@
 
 Components are the main building blocks of the admin interface. They are implemented as ViewComponents and are rendered directly by controllers.
 
-The following documentation assumes familiariry with ViewComponents. If you are not please refer to the [ViewComponent documentation](https://viewcomponent.org/guide/).
+The following documentation assumes familiarity with ViewComponents. If you are not please refer to the [ViewComponent documentation](https://viewcomponent.org/guide/).
 
 There are two types of components:
 
-- **UI components** are the building blocks of the interface. Tipically, they are small components that are used to build more complex components and are generic enough to be reused in various contexts. UI components are located under the `app/components/solidus_admin/ui` folder.
+- **UI components** are the building blocks of the interface. Typically, they are small components that are used to build more complex components and are generic enough to be reused in various contexts. UI components are located under the `app/components/solidus_admin/ui` folder.
 - **Page components** are the primary components rendered by the controllers. Generally, they are full-page components rendered directly by the controllers. They are located under the `app/components/solidus_admin` directory following the naming convention of the controller and action names they are used in. For example `app/components/solidus_admin/orders/index/component.rb` is the component that is rendered by the `SolidusAdmin::OrdersController#index` action.
 
 ## Generating components
