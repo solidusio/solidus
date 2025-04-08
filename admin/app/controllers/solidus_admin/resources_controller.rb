@@ -21,6 +21,7 @@ module SolidusAdmin
     def index
       respond_to do |format|
         format.html { render index_component.new(page: @page) }
+        format.json { render json: blueprint.render(@page.records, view: blueprint_view) }
       end
     end
 
@@ -77,7 +78,7 @@ module SolidusAdmin
         ).tap do |resources|
           instance_variable_set("@#{plural_resource_name}", resources)
           # sets @page instance variable in geared_pagination gem
-          set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options)
+          set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options, per_page:)
         end
     end
 
@@ -88,6 +89,8 @@ module SolidusAdmin
     def resources_collection
       resource_class.all
     end
+
+    def per_page; end
 
     def set_resource
       @resource ||= resource_class.find(params[:id]).tap do |resource|
