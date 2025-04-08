@@ -9,6 +9,8 @@ SolidusAdmin::Engine.routes.draw do
     get 'states', to: 'countries#states'
   end
 
+  resources :states, only: [:index], defaults: { format: :json }
+
   admin_resources :products, only: [:index, :update, :destroy] do
     collection do
       put :discontinue

@@ -19,11 +19,13 @@
           <%= render component("ui/forms/field").select(
             f,
             :state_ids,
-            Spree::State.includes(:country).order(:name).map { |c| [c.state_with_country, c.id] },
+            Spree::State.where(id: @zone.state_ids).map { |s| [s.state_with_country, s.id] },
             object: @zone,
             value: @zone.state_ids,
             multiple: true,
             class: "required",
+            src: solidus_admin.states_url(view: :state_with_country),
+            "data-query-param": "q[name_or_country_name_cont]",
             **stimulus_target("statesSelect")
           ) %>
         </div>
