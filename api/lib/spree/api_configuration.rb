@@ -7,7 +7,7 @@ module Spree
     preference :product_attributes, :array, default: [
       :id, :name, :description, :available_on,
       :slug, :meta_description, :meta_keywords, :shipping_category_id,
-      :taxon_ids, :total_on_hand, :meta_title, :primary_taxon_id
+      :taxon_ids, :total_on_hand, :meta_title, :primary_taxon_id, :brand_taxon_id
     ]
 
     preference :product_property_attributes, :array, default: [:id, :product_id, :property_id, :value, :property_name]

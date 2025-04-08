@@ -323,6 +323,13 @@ module Spree::Api
           expect(json_response["primary_taxon_id"]).to eq(taxon_1.id)
         end
 
+        it "puts brand taxon for the product" do
+          product_data[:brand_taxon_id] = taxon_1.id.to_s
+          post spree.api_products_path, params: { product: product_data }
+
+          expect(json_response["brand_taxon_id"]).to eq(taxon_1.id)
+        end
+
         # Regression test for https://github.com/spree/spree/issues/4123
         it "puts the created product in the given taxons" do
           product_data[:taxon_ids] = [taxon_1.id, taxon_2.id].join(',')
@@ -416,6 +423,13 @@ module Spree::Api
           put spree.api_product_path(product), params: { product: { primary_taxon_id: taxon_1.id } }
 
           expect(json_response["primary_taxon_id"]).to eq(taxon_1.id)
+        end
+
+        it "puts brand taxon for the updated product" do
+          product.brand_taxon_id = taxon_2.id
+          put spree.api_product_path(product), params: { product: { brand_taxon_id: taxon_1.id } }
+
+          expect(json_response["brand_taxon_id"]).to eq(taxon_1.id)
         end
 
         # Regression test for https://github.com/spree/spree/issues/4123
