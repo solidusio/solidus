@@ -166,6 +166,8 @@ en:
         variant: Variant
       spree/product:
         available_on: Available On
+        brand_taxon: Brand Taxon
+        brand_taxon_id: Brand Taxon
         condition: Master Condition
         cost_currency: Cost Currency
         cost_price: Cost Price
