@@ -3,16 +3,16 @@
   <%= :disabled if @disabled %>
 >
   <div class="<%= stimulus_id %>--address-form flex flex-wrap gap-4 pb-4">
-    <%= render component("ui/forms/field").text_field(@fieldset_name, :name, object: @addressable) if @include_name_field %>
-    <%= render component("ui/forms/field").text_field(@fieldset_name, :address1, object: @addressable) %>
-    <%= render component("ui/forms/field").text_field(@fieldset_name, :address2, object: @addressable) %>
+    <%= render component("ui/forms/field").text_field(@form_field_name, :name, object: @addressable) if @include_name_field %>
+    <%= render component("ui/forms/field").text_field(@form_field_name, :address1, object: @addressable) %>
+    <%= render component("ui/forms/field").text_field(@form_field_name, :address2, object: @addressable) %>
     <div class="flex gap-4 w-full">
-      <%= render component("ui/forms/field").text_field(@fieldset_name, :city, object: @addressable) %>
-      <%= render component("ui/forms/field").text_field(@fieldset_name, :zipcode, object: @addressable) %>
+      <%= render component("ui/forms/field").text_field(@form_field_name, :city, object: @addressable) %>
+      <%= render component("ui/forms/field").text_field(@form_field_name, :zipcode, object: @addressable) %>
     </div>
 
     <%= render component("ui/forms/field").select(
-      @fieldset_name,
+      @form_field_name,
       :country_id,
       Spree::Country.all.map { |c| [c.name, c.id] },
       object: @addressable,
@@ -26,21 +26,21 @@
       class: (@addressable.country&.states&.empty? ? "flex flex-col gap-2 w-full" : "hidden flex flex-col gap-2 w-full")
         ) do %>
       <%= render component("ui/forms/field").text_field(
-        @fieldset_name,
+        @form_field_name,
         :state_name,
         object: @addressable,
         value: @addressable.try(:state_name),
         "data-#{stimulus_id}-target": "stateName"
       ) %>
     <% end %>
-    <input autocomplete="off" type="hidden" name=<%= "#{@fieldset_name}[state_id]" %>>
+    <input autocomplete="off" type="hidden" name=<%= "#{@form_field_name}[state_id]" %>>
 
     <%= content_tag(:div,
       data: { "#{stimulus_id}-target": "stateWrapper" },
       class: (@addressable.country&.states&.empty? ? "hidden flex flex-col gap-2 w-full" : "flex flex-col gap-2 w-full")
         ) do %>
       <%= render component("ui/forms/field").select(
-        @fieldset_name,
+        @form_field_name,
         :state_id,
         state_options,
         object: @addressable,
@@ -49,6 +49,6 @@
       ) %>
     <% end %>
 
-    <%= render component("ui/forms/field").text_field(@fieldset_name, :phone,  object: @addressable) %>
+    <%= render component("ui/forms/field").text_field(@form_field_name, :phone,  object: @addressable) %>
   </div>
 </fieldset>

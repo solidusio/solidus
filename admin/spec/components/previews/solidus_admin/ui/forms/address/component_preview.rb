@@ -11,7 +11,7 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
   # @param disabled toggle
   def playground(disabled: false)
     render component("ui/forms/address").new(
-      fieldset_name: "",
+      form_field_name: "",
       addressable: fake_address,
       disabled:
     )

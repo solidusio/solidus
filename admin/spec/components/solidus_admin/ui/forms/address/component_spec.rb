@@ -10,7 +10,7 @@ RSpec.describe SolidusAdmin::UI::Forms::Address::Component, type: :component do
   context "with include_name_field: false" do
     it "does not render name field" do
       component = described_class.new(
-        fieldset_name: "",
+        form_field_name: "",
         addressable: Spree::Address.new(country: Spree::Country.find_or_initialize_by(iso: "US")),
         include_name_field: false
       )
