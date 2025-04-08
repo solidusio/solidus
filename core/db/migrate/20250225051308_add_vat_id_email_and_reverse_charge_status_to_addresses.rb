@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddVatIdEmailAndReverseChargeStatusToAddresses < ActiveRecord::Migration[7.2]
+class AddVatIdEmailAndReverseChargeStatusToAddresses < ActiveRecord::Migration[7.0]
   def change
     add_column :spree_addresses, :vat_id, :string
     add_column :spree_addresses, :email, :string
