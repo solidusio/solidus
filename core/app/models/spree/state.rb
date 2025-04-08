@@ -15,6 +15,7 @@ module Spree
       )
     end
 
+    self.allowed_ransackable_associations = %w[country]
     self.allowed_ransackable_attributes = %w[name]
 
     # table of { country.id => [ state.id , state.name ] }, arrays sorted by name
@@ -36,7 +37,9 @@ module Spree
     end
 
     def state_with_country
-      "#{name} (#{country})"
+      Rails.cache.fetch("#{cache_key_with_version}/state_with_country") do
+        "#{name} (#{country})"
+      end
     end
   end
 end
