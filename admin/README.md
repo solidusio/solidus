@@ -1,6 +1,6 @@
 # Solidus Admin
 
-A Rails engine that provides an administrative interface to the Solidus ecommerce platform.
+A Rails engine that provides an administrative interface to the Solidus e-commerce platform.
 
 ## Overview
 

@@ -1,6 +1,6 @@
 Summary
 ------
-Solidus Core provides the essential ecommerce data models upon which the
+Solidus Core provides the essential e-commerce data models upon which the
 Solidus system depends.
 
 Core models
