@@ -84,4 +84,8 @@ Spree.ready(function () {
   $('#product_primary_taxon_id').taxonAutocomplete({
     multiple: false,
   });
+
+  $('#product_brand_taxon_id').taxonAutocomplete({
+    multiple: false,
+  });
 });

@@ -43,6 +43,13 @@
           <% end %>
         </div>
 
+        <div data-hook="admin_product_form_brand_taxons">
+        <%= f.field_container :brand_taxon do %>
+          <%= f.label :brand_taxon_id %><br>
+          <%= f.hidden_field :brand_taxon_id, value: @product.brand_taxon_id %>
+        <% end %>
+      </div>
+
         <div data-hook="admin_product_form_option_types">
           <%= f.field_container :option_types do %>
             <%= f.label :option_type_ids, plural_resource_name(Spree::OptionType) %>
