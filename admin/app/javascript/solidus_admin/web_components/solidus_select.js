@@ -105,9 +105,18 @@ class SolidusSelect extends HTMLSelectElement {
     this.tomselect.settings.load = null;
   }
 
+  // Fetch options from remote source. If options data is nested in json response, specify path to it with "data-json-path"
+  // E.g. https://whatcms.org/API/List data is deep nested in json response: `{ result: { list: [...] } }`, so
+  //  in order to access it, specify attributes as follows:
+  //  "data-src"="https://whatcms.org/API/List"
+  //  "data-json-path"="result.list"
   async fetchOptions() {
+    const dataPath = this.getAttribute("data-json-path");
     const response = await fetch(this.getAttribute("data-src"));
-    return await response.json();
+    const json = await response.json();
+    if (!dataPath) return json;
+
+    return dataPath.split('.').reduce((acc, key) => acc && acc[key], json);
   }
 }
 
