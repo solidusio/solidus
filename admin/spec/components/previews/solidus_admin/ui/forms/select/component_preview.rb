@@ -8,6 +8,22 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
     render_with_template
   end
 
+  # @param multiple toggle
+  # @param latency toggle "Simulate request latency (2000ms)"
+  def remote(multiple: false, latency: false)
+    args = { label: "Label", name: "select", multiple: }
+    delay_url = "app.requestly.io/delay/2000/" if latency
+    src = "https://#{delay_url}whatcms.org/API/List"
+    args.merge!(
+      src:,
+      "data-option-value-field": "id",
+      "data-option-label-field": "label",
+      "data-json-path": "result.list",
+    )
+
+    render component("ui/forms/select").new(**args)
+  end
+
   # @param size select { choices: [s, m, l] }
   # @param options number
   # @param multiple toggle
