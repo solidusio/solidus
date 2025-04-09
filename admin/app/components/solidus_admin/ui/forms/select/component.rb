@@ -108,7 +108,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
         [&_.item_.remove-button]:has-[:disabled]:cursor-not-allowed"
     end
 
-    input_classes = ["[&_input]:has-[.item]:placeholder:invisible [&_input:disabled]:cursor-not-allowed [&_input:disabled]:bg-gray-50
+    input_classes = ["[&_input]:has-[.item]:placeholder:opacity-0 [&_input:disabled]:cursor-not-allowed [&_input:disabled]:bg-gray-50
       [&_input]:peer-invalid:placeholder:text-red-400"]
 
     unless @attributes[:multiple]
