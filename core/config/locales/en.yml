@@ -1534,6 +1534,7 @@ en:
     enable_mail_delivery: Enable Mail Delivery
     end: End
     ending_in: Ending in
+    enforce_group_upon_signup: Add all new users to Group
     error: error
     error_user_destroy_with_orders: Cannot delete a user with orders
     errors:

@@ -25,6 +25,7 @@ module Spree
         if @user.save
           set_roles
           set_stock_locations
+          set_user_group if current_store&.enforce_group_upon_signup
 
           flash[:success] = t('spree.created_successfully')
           redirect_to edit_admin_user_url(@user)
@@ -155,6 +156,18 @@ module Spree
         if user_params[:stock_location_ids]
           @user.stock_locations =
             Spree::StockLocation.accessible_by(current_ability).where(id: user_params[:stock_location_ids])
+        end
+      end
+
+      # Sets the user group for a user if they don't have one assigned
+      # This method checks if there's a user (@user) and if they don't have a user group on sign up
+      # If these conditions are met, it assigns the default cart user group from the current store
+      # If enforce_group_upon_signup is enabled on the store settings
+      # @return [void]
+      def set_user_group
+        if @user && @user.user_group.nil?
+          user_group = current_store.default_cart_user_group
+          @user.update(user_group: user_group) if user_group
         end
       end
     end

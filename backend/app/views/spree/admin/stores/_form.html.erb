@@ -48,6 +48,13 @@
       <%= f.error_message_on :default_cart_user_group_id %>
     <% end %>
 
+    <%= f.field_container :enforce_group_upon_signup, class: %w(checkbox) do %>
+      <label>
+        <%= f.check_box(:enforce_group_upon_signup) %>
+        <%= t('spree.enforce_group_upon_signup') %>
+      </label>
+      <%= f.error_message_on :enforce_group_upon_signup %>
+    <% end %>
   </div>
   <div class="col-12 col-md-6">
     <%= f.field_container :url do %>
