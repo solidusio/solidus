@@ -9,7 +9,6 @@
             :country_ids,
             Spree::Country.order(:name).map { |c| [c.name, c.id] },
             object: @zone,
-            value: @zone.country_ids,
             multiple: true,
             class: "required",
             **stimulus_target("countriesSelect")
@@ -21,7 +20,6 @@
             :state_ids,
             Spree::State.where(id: @zone.state_ids).map { |s| [s.state_with_country, s.id] },
             object: @zone,
-            value: @zone.state_ids,
             multiple: true,
             class: "required",
             src: solidus_admin.states_url(view: :state_with_country),
