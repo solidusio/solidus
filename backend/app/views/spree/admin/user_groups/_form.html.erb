@@ -1,0 +1,9 @@
+<div data-hook="admin_user_group_form_fields" class="row">
+  <div data-hook="admin_user_group_form_group_name_field" class="col-5">
+    <%= f.field_container :group_name do %>
+      <%= f.label :group_name, class: 'required' %>
+      <%= f.text_field :group_name, class: 'fullwidth' %>
+      <%= error_message_on :user_group, :group_name %>
+    <% end %>
+  </div>
+</div>

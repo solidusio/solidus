@@ -41,6 +41,13 @@
         <%= f.error_message_on :reverse_charge_status %>
       <% end %>
     <% end %>
+
+    <%= f.field_container :default_cart_user_group_id do %>
+      <%= f.label :default_cart_user_group_id %>
+      <%= f.collection_select :default_cart_user_group_id, Spree::UserGroup.all, :id, :group_name, { include_blank: true }, { class: 'custom-select' } %>
+      <%= f.error_message_on :default_cart_user_group_id %>
+    <% end %>
+
   </div>
   <div class="col-12 col-md-6">
     <%= f.field_container :url do %>

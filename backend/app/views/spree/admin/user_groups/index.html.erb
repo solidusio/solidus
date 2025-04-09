@@ -1,0 +1,47 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(plural_resource_name(Spree::UserGroup)) %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::UserGroup) %>
+    <li>
+      <%= link_to t('spree.new_user_group'), new_object_url, id: 'admin_new_user_group_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @user_groups.any? %>
+  <table class="index" id='listing_user_groups'>
+    <colgroup>
+      <col style="width: 40%">
+      <col style="width: 20%">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_user_groups_index_headers">
+        <th><%= Spree::UserGroup.human_attribute_name(:group_name) %></th>
+        <th data-hook="admin_user_groups_index_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user_groups.each do |user_group| %>
+        <tr id="<%= spree_dom_id user_group %>" data-hook="admin_user_groups_index_rows">
+          <td><%= link_to user_group.try(:group_name), edit_admin_user_group_path(user_group) %></td>
+          <td data-hook="admin_user_groups_index_row_actions" class="actions">
+            <% if can?(:update, user_group) %>
+              <%= link_to_edit user_group, no_text: true %>
+            <% end %>
+
+            <% if can?(:destroy, user_group) %>
+              <%= link_to_delete user_group, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::UserGroup,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

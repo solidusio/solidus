@@ -78,3 +78,16 @@
     <% end %>
   </div>
 </div>
+
+<% if can?(:update, @user) && can?(:manage, :user_group) %>
+  <fieldset data-hook="admin_user_user_group" id="admin_user_edit_user_group">
+    <legend><%= t('spree.admin.user.user_group') %></legend>
+    <div>
+      <%= f.field_container :user_group_id do %>
+        <%= f.label :user_group_id, t('spree.admin.user.user_group') %>
+        <%= f.collection_select :user_group_id, Spree::UserGroup.all, :id, :group_name, { include_blank: true }, { class: 'custom-select' } %>
+        <%= f.error_message_on :user_group_id %>
+      <% end %>
+    </div>
+  </fieldset>
+<% end %>

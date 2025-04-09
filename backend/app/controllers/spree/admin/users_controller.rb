@@ -111,6 +111,10 @@ module Spree
           attributes -= [:password, :password_confirmation]
         end
 
+        if can? :manage, Spree::UserGroup
+          attributes += [:user_group_id]
+        end
+
         params.require(:user).permit(attributes)
       end
 
