@@ -16,6 +16,7 @@ Spree::Core::Engine.routes.draw do
 
     resources :zones
 
+    resources :user_groups
     resources :tax_categories
 
     resources :products do

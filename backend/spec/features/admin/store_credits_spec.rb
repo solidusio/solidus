@@ -17,7 +17,7 @@ describe "Store credits admin" do
   describe "visiting the store credits page" do
     before do
       visit spree.admin_path
-      click_link "Users"
+      click_nav "Users"
     end
 
     it "should be on the store credits page" do
@@ -37,7 +37,7 @@ describe "Store credits admin" do
   describe "creating store credit" do
     before do
       visit spree.admin_path
-      click_link "Users"
+      click_nav "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
       allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(spree_current_user: admin_user)
@@ -59,7 +59,7 @@ describe "Store credits admin" do
   describe "displaying a store credit details page" do
     before do
       visit spree.admin_path
-      click_link "Users"
+      click_nav "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
       page.find(".sc-table td.actions a.fa-edit").click
@@ -111,7 +111,7 @@ describe "Store credits admin" do
 
     before do
       visit spree.admin_path
-      click_link "Users"
+      click_nav "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
       allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(spree_current_user: admin_user)

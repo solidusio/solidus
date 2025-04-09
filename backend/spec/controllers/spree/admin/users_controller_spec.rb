@@ -295,6 +295,21 @@ describe Spree::Admin::UsersController, type: :controller do
         expect(user.stock_locations).to eq([location1])
       end
     end
+
+    context "When the user can manage user group" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::UserGroup
+      end
+
+      it "can create user with user group" do
+        user_group = Spree::UserGroup.create(group_name: "my_user_group")
+
+        post :create, params: { user: { user_group_id: user_group } }
+
+        expect(user.user_group).to eq(user_group)
+      end
+    end
   end
 
   describe "#update" do
@@ -477,6 +492,21 @@ describe Spree::Admin::UsersController, type: :controller do
         location2 = Spree::StockLocation.create(name: "not_accessible_location")
         put :update, params: { id: user.id, user: { stock_location_ids: [location1.id, location2.id] } }
         expect(user.reload.stock_locations).to eq([location1])
+      end
+    end
+
+    context "When the user can manage user group" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::UserGroup
+      end
+
+      it "can update user with user group" do
+        user_group = Spree::UserGroup.create(group_name: "my_user_group")
+
+        post :update, params: { id: user.id, user: { user_group_id: user_group } }
+
+        expect(user.reload.user_group).to eq(user_group)
       end
     end
   end

@@ -234,8 +234,24 @@ module Spree
           label: :users,
           icon: admin_updated_navbar ? 'ri-user-line' : 'user',
           match_path: %r{/(users|store_credits)},
+          data_hook: :admin_users_sub_tabs,
+          partial: 'spree/admin/shared/users_sub_menu',
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
           url: :admin_users_path,
+          children: [
+            MenuItem.new(
+              label: :users,
+              condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
+              url: :admin_users_path
+            ),
+            MenuItem.new(
+              label: :user_groups,
+              condition: -> {
+                can?(:admin, Spree::UserGroup)
+              },
+              url: :admin_user_groups_path
+            ),
+          ]
         ),
         MenuItem.new(
           label: :settings,

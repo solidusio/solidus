@@ -99,7 +99,7 @@ describe 'Users', type: :feature do
 
   before do
     visit spree.admin_path
-    click_link 'Users'
+    click_nav 'Users'
   end
 
   context 'users index' do
@@ -357,7 +357,7 @@ describe 'Users', type: :feature do
     context 'if an user has placed orders' do
       before do
         visit spree.admin_path
-        click_link 'Users'
+        click_nav 'Users'
       end
 
       it "can't be deleted" do

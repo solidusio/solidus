@@ -1,0 +1,11 @@
+<% Spree.deprecator.warn "Using the #{@virtual_path.inspect} partial is deprecated, please use MenuItem#children instead." %>
+
+<ul class="admin-subnav" data-hook="admin_users_sub_tabs">
+  <% if can?(:admin, Spree.user_class) %>
+    <%= tab label: :users, url: spree.admin_users_path %>
+  <% end %>
+
+  <% if can?(:admin, Spree::UserGroup) %>
+    <%= tab label: :user_groups, url: spree.admin_user_groups_path %>
+  <% end %>
+</ul>
