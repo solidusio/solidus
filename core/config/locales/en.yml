@@ -359,6 +359,7 @@ en:
         cart_tax_country_iso: Tax Country for Empty Carts
         code: Slug
         default: Default
+        default_cart_user_group_id: Default User Group
         default_currency: Default Currency
         mail_from_address: Mail From Address
         meta_description: Meta Description
@@ -757,6 +758,9 @@ en:
       spree/user:
         one: User
         other: Users
+      spree/user_group:
+        one: User Group
+        other: User Groups
       spree/variant:
         one: Variant
         other: Variants
@@ -959,6 +963,7 @@ en:
         taxes: Taxes
         taxonomies: Taxonomies
         taxons: Taxons
+        user_groups: User Groups
         users: Users
         zones: Zones
       taxons:
@@ -972,6 +977,7 @@ en:
         order_num: 'Order #'
         orders: Orders
         store_credit: Store Credit
+        user_group: User Group
         user_information: User Information
       users:
         edit:
@@ -1808,6 +1814,7 @@ en:
     new_taxonomy: New Taxonomy
     new_tracker: New Analytics Tracker
     new_user: New User
+    new_user_group: New User Group
     new_variant: New Variant
     new_zone: New Zone
     next: Next

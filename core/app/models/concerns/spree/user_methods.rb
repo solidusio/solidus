@@ -26,6 +26,8 @@ module Spree
       has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
       has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
 
+      belongs_to :user_group, class_name: 'Spree::UserGroup', optional: true
+
       after_create :auto_generate_spree_api_key
       before_destroy :check_for_deletion
 

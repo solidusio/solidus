@@ -17,6 +17,8 @@ module Spree
 
     has_many :orders, class_name: "Spree::Order"
 
+    belongs_to :default_cart_user_group, class_name: 'Spree::UserGroup', optional: true
+
     validates :code, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
     validates :name, presence: true
     validates :url, presence: true

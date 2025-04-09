@@ -50,6 +50,27 @@ RSpec.describe Spree::Store, type: :model do
     end
   end
 
+  describe '#default_cart_user_group' do
+    subject { described_class.new(default_cart_user_group_id:) }
+
+    context "when there is no default_cart_user_group set" do
+      let(:default_cart_user_group_id) { nil }
+
+      it "responds with an empty default_cart_user_group" do
+        expect(subject.default_cart_user_group).to be_nil
+      end
+    end
+
+    context "when there is a default_cart_user_group set" do
+      let(:user_group) { create(:user_group) }
+      let(:default_cart_user_group_id) { user_group.id }
+
+      it "responds with a default_cart_user_group with that user group" do
+        expect(subject.default_cart_user_group).to eq(user_group)
+      end
+    end
+  end
+
   describe '#available_locales' do
     let(:store) { described_class.new(available_locales: locales) }
     subject { store.available_locales }

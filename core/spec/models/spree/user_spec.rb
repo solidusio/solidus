@@ -157,5 +157,26 @@ RSpec.describe Spree.user_class, type: :model do
         expect(subject.display_average_order_value).to eq Spree::Money.new(value)
       end
     end
+
+    describe "user_group" do
+      subject { described_class.new(user_group_id:) }
+
+      context "when there is no user_group set" do
+        let(:user_group_id) { nil }
+
+        it "responds with an empty user_group" do
+          expect(subject.user_group).to be_nil
+        end
+      end
+
+      context "when there is a user_group set" do
+        let(:user_group) { create(:user_group) }
+        let(:user_group_id) { user_group.id }
+
+        it "responds with a default_cart_user_group with that user group" do
+          expect(subject.user_group).to eq(user_group)
+        end
+      end
+    end
   end
 end
