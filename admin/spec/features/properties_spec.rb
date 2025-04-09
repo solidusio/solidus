@@ -70,35 +70,6 @@ describe "Properties", type: :feature do
     it "shows validation errors" do
       visit "/admin/properties"
       click_on "Color"
-
-      fill_in "Name", with: ""
-      click_on "Update Property"
-
-      expect(page).to have_content("can't be blank")
-      expect(Spree::Property.count).to eq(1)
-    end
-  end
-
-  context "editing an existing property" do
-    let!(:property) { create(:property, name: "Color", presentation: "Cool Color") }
-
-    it "updates the property" do
-      visit "/admin/properties"
-      click_on "Color"
-
-      fill_in "Name", with: "Size"
-      fill_in "Presentation", with: "Cool Size"
-      click_on "Update Property"
-
-      expect(page).to have_content("Property was successfully updated.")
-      expect(page).to have_content("Size")
-      expect(page).to have_content("Cool Size")
-      expect(Spree::Property.count).to eq(1)
-    end
-
-    it "shows validation errors" do
-      visit "/admin/properties"
-      click_on "Color"
       expect(page).to have_field("Name", with: "Color")
       fill_in "Name", with: ""
       click_on "Update Property"
