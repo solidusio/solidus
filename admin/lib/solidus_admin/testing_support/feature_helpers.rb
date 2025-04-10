@@ -27,7 +27,10 @@ module SolidusAdmin
       end
 
       def select_row(text)
-        find_row_checkbox(text).check
+        find_row_checkbox(text).tap do |checkbox|
+          checkbox.check
+          checkbox.synchronize { checkbox.checked? }
+        end
       end
     end
   end
