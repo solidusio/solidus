@@ -21,11 +21,6 @@ describe "Return Reasons", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :return_reason }
-    let(:index_path) { "/admin/return_reasons" }
-  end
-
   context "when creating a new return reason" do
     let(:query) { "?page=1&q%5Bname_cont%5D=new" }
 

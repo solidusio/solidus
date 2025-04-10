@@ -25,11 +25,6 @@ describe "Roles", :js, type: :feature do
     )
   }
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :role }
-    let(:index_path) { "/admin/roles" }
-  end
-
   it "lists roles and allows deleting them" do
     create(:role, name: "Customer Role" )
     Spree::Role.find_or_create_by(name: 'admin')

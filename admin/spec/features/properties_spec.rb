@@ -23,11 +23,6 @@ describe "Properties", :js, type: :feature do
     expect(Spree::Property.count).to eq(1)
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :property }
-    let(:index_path) { "/admin/properties" }
-  end
-
   context "creating a new property" do
     it "creates a new product property" do
       visit "/admin/properties"

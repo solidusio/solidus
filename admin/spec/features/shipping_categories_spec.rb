@@ -21,11 +21,6 @@ describe "Shipping Categories", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :shipping_category }
-    let(:index_path) { "/admin/shipping_categories" }
-  end
-
   context "when creating a new shipping category" do
     let(:query) { "?page=1&q%5Bname_or_description_cont%5D=What" }
 

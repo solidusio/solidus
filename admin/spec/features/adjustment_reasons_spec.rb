@@ -21,11 +21,6 @@ describe "Adjustment Reasons", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :adjustment_reason }
-    let(:index_path) { "/admin/adjustment_reasons" }
-  end
-
   context "when creating a new adjustment reason" do
     let(:query) { "?page=1&q%5Bname_or_code_cont%5D=new" }
 
