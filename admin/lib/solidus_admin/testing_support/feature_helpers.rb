@@ -38,8 +38,16 @@ module SolidusAdmin
       # @param value [String] which option to select
       # @param from [String] label of the select box
       def solidus_select(value, from:)
-        fill_in(from, with: value).send_keys(:return)
-        expect(find_field(from).ancestor(".control")).to have_text(value)
+        input = find_field(from, visible: :all)
+        control = input.ancestor(".control")
+        dropdown = control.sibling(".dropdown", visible: :all)
+
+        # Make sure options are loaded
+        control.click
+        within(dropdown) { expect(first(".option", visible: :all)).to be }
+
+        input.fill_in(with: value).send_keys(:return)
+        expect(control).to have_text(value)
       end
     end
   end
