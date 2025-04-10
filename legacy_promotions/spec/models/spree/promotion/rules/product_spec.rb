@@ -134,8 +134,8 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
     let(:other_line_item) { Spree::LineItem.new(product: other_product) }
 
     let(:rule_options) { super().merge(products: [rule_product]) }
-    let(:rule_product) { mock_model(Spree::Product) }
-    let(:other_product) { mock_model(Spree::Product) }
+    let(:rule_product) { mock_model(Spree::Product, tax_category: nil) }
+    let(:other_product) { mock_model(Spree::Product, tax_category: nil) }
 
     context "with 'any' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: 'any') }
