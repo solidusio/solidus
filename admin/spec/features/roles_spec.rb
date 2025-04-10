@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
-describe "Roles", :js, type: :feature do
+describe "Roles", type: :feature do
   before do
     sign_in create(:admin_user, email: 'admin@example.com')
   end
@@ -25,12 +25,7 @@ describe "Roles", :js, type: :feature do
     )
   }
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :role }
-    let(:index_path) { "/admin/roles" }
-  end
-
-  it "lists roles and allows deleting them" do
+  it "lists roles and allows deleting them", :js do
     create(:role, name: "Customer Role" )
     Spree::Role.find_or_create_by(name: 'admin')
 
@@ -62,10 +57,13 @@ describe "Roles", :js, type: :feature do
       click_on "Add new"
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("New Role")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)
@@ -129,12 +127,15 @@ describe "Roles", :js, type: :feature do
       click_on "Reviewer"
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("Edit Role")
-      expect(page).to be_axe_clean
       expect(Spree::Role.find_by(name: "Reviewer").permission_set_ids)
-        .to contain_exactly(settings_edit_permission.id)
+      .to contain_exactly(settings_edit_permission.id)
     end
 
-    it "closing the modal keeps query params" do
+    it "is accessible", :js do
+      expect(page).to be_axe_clean
+    end
+
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)

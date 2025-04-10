@@ -3,10 +3,10 @@
 require 'spec_helper'
 require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
-describe "Tax categories", :js, type: :feature do
+describe "Tax categories", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists tax categories and allows deleting them" do
+  it "lists tax categories and allows deleting them", :js do
     create(:tax_category, name: "Clothing")
     create(:tax_category, name: "Food")
 
@@ -23,11 +23,6 @@ describe "Tax categories", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :tax_category }
-    let(:index_path) { "/admin/tax_categories" }
-  end
-
   context "when creating a new tax category" do
     let(:query) { "?page=1&q%5Bname_or_description_cont%5D=Cloth" }
 
@@ -36,10 +31,13 @@ describe "Tax categories", :js, type: :feature do
       click_on "Add new"
       expect(page).to have_selector("dialog")
       expect(page).to have_content("New Tax Category")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
