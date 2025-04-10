@@ -9,7 +9,7 @@ In-Memory Order Updater TODO
 - [x] Ensure order-level tax adjustments (like Colorado delivery) are scoped out of tax total and adjustment total calculations
 - [x] Handle persistence in `update_taxes`
 - [x] ~Write the `InMemoryOrderAdjuster` (also, should we rename this to `InMemoryOrderPromotionAdjuster`)~
-- [ ] Fix CI failures from previous session (if any)
+- [x] Fix CI failures from previous session (if any)
 - [ ] Add high level test for manipulative queries around new Promotion system
 - [WIP] Add high level test for manipulative queries around Legacy Promotion system
 - [ ] Adding shared examples that could be used in both promotion system gems to
