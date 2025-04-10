@@ -118,7 +118,7 @@ module Spree
       :id, :month, :year, :cc_type, :last_digits, :name
     ]
 
-    preference :user_attributes, :array, default: [:id, :email, :created_at, :updated_at, :customer_metadata]
+    preference :user_attributes, :array, default: [:id, :email, :user_group_id, :created_at, :updated_at, :customer_metadata]
 
     preference :property_attributes, :array, default: [:id, :name, :presentation]
 
