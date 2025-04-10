@@ -41,6 +41,20 @@ module SolidusAdmin
         fill_in(from, with: value).send_keys(:return)
         expect(find_field(from).ancestor(".control")).to have_text(value)
       end
+
+      def checkbox(locator)
+        find(:checkbox, locator)
+      end
+
+      def selected_option(select_locator)
+        find(:select, select_locator).find(:option, selected: true)
+      end
+
+      def clear_search
+        within('div[role="search"]') do
+          find('button[aria-label="Clear"]').click
+        end
+      end
     end
   end
 end
