@@ -202,7 +202,7 @@ module SolidusAdmin
       @store_credit_reason = Spree::StoreCreditReason.find_by(id: permitted_resource_params[:store_credit_reason_id])
 
       if @store_credit_reason.blank?
-        @store_credit.errors.add(:store_credit_reason_id, "Store Credit reason must be provided")
+        @store_credit.errors.add(:store_credit_reason_id, "Store credit reason must be provided")
         yield if block_given? # Block is for error template rendering on a per-action basis so this can be re-used.
         return false
       end
@@ -213,7 +213,7 @@ module SolidusAdmin
       @store_credit_category = Spree::StoreCreditCategory.find_by(id: permitted_resource_params[:category_id])
 
       if @store_credit_category.blank?
-        @store_credit.errors.add(:category_id, "Store Credit category must be provided")
+        @store_credit.errors.add(:category_id, "Store credit category must be provided")
         yield if block_given? # Block is for error template rendering on a per-action basis so this can be re-used.
         return false
       end
