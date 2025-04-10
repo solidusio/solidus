@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe "Tax categories", :js, type: :feature do
+describe "Tax categories", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists tax categories and allows deleting them" do
+  it "lists tax categories and allows deleting them", :js do
     create(:tax_category, name: "Clothing")
     create(:tax_category, name: "Food")
 
@@ -30,10 +30,13 @@ describe "Tax categories", :js, type: :feature do
       click_on "Add new"
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("New Tax Category")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)

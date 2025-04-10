@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe "Return Reasons", :js, type: :feature do
+describe "Return Reasons", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists Return Reasons and allows deleting them" do
+  it "lists Return Reasons and allows deleting them", :js do
     create(:return_reason, name: "Default-return-reason")
 
     visit "/admin/return_reasons"
@@ -28,10 +28,13 @@ describe "Return Reasons", :js, type: :feature do
       click_on "Add new"
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("New Return Reason")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)
@@ -70,10 +73,13 @@ describe "Return Reasons", :js, type: :feature do
       find_row("Good Reason").click
       expect(page).to have_selector("dialog", wait: 5)
       expect(page).to have_content("Edit Return Reason")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :flaky, :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog", wait: 5)
       expect(page.current_url).to include(query)

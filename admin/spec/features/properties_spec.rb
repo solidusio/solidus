@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe "Properties", :js, type: :feature do
+describe "Properties", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists properties and allows deleting them" do
+  it "lists properties and allows deleting them", :js do
     create(:property, name: "Type prop", presentation: "Type prop")
     create(:property, name: "Size", presentation: "Size")
 
