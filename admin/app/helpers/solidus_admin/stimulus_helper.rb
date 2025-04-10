@@ -10,7 +10,7 @@ module SolidusAdmin
       { "data-controller": stimulus_id }
     end
 
-    def stimulus_action(action, on: nil)
+    def stimulus_action(action, on: nil) # rubocop:disable Naming/MethodParameterName
       action_construct = []
       action_construct << "#{on}->" if on.present?
       action_construct << "#{stimulus_id}##{action}"
