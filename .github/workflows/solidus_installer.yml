@@ -1,0 +1,47 @@
+name: "Solidus Installer"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: solidus-installer-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+jobs:
+  solidus_installer:
+    name: Test Installer
+    runs-on: ubuntu-24.04
+    env:
+      DB: sqlite
+      RUBY_VERSION: "3.2"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -yq libvips-dev
+      - name: Install Solidus
+        uses: ./.github/actions/install_solidus
+        with:
+          flags: "--sample=false --frontend=starter --authentication=devise"
+      - name: "Check homepage"
+        uses: ./.github/actions/check_page_content
+        with:
+          expected_text: "<title>Sample Store</title>"
+      - name: Ensure the correct PayPal is installed for SSF
+        run: |
+          cd $RUNNER_TEMP/my_app
+          bundle list | grep 'solidus_paypal_commerce_platform (1.'
+      - name: Install Solidus
+        uses: ./.github/actions/install_solidus
+        with:
+          flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe"
+      - name: "Check homepage"
+        uses: ./.github/actions/check_page_content
+        with:
+          expected_text: "<title>Sample Store</title>"

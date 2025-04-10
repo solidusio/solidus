@@ -148,128 +148,7 @@ commands:
           command: |
             sudo apt-get install -y libvips-dev
 
-  install_solidus:
-    parameters:
-      flags:
-        type: string
-        default: "# no options"
-        description: "flags to be passed to `bin/rails g solidus:install"
-    steps:
-      - run:
-          name: "Cleanup & check rails version"
-          command: |
-            sudo gem update --system
-            gem install bundler -v"~> 2.4"
-            gem environment path
-            rm -rf /tmp/my_app /tmp/.ruby-versions # cleanup previous runs
-            rm -rf /tmp/my_app /tmp/.gems-versions # cleanup previous runs
-
-            ruby -v >> /tmp/.ruby-versions
-            gem --version >> /tmp/.gems-versions
-            bundle --version >> /tmp/.gems-versions
-            gem search -eq rails -v "~> 7" -v "< 8.0" >> /tmp/.gems-versions # get the latest rails from rubygems
-            gem search -eq solidus >> /tmp/.gems-versions # get the latest solidus from rubygems
-
-            cat /tmp/.ruby-versions
-            cat /tmp/.gems-versions
-      - restore_cache:
-          keys:
-            - solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
-            - solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-
-      - run:
-          name: "Prepare the rails application"
-          command: |
-            cd /tmp
-            test -d my_app || (gem install rails -v "< 8.0" && gem install solidus)
-            test -d my_app || rails new my_app --skip-git
-      - save_cache:
-          key: solidus-installer-v11-{{ checksum "/tmp/.ruby-versions" }}-{{ checksum "/tmp/.gems-versions" }}
-          paths:
-            - /tmp/my_app
-            - /home/circleci/.rubygems
-      - run:
-          name: "Run `solidus:install` with `<<parameters.flags>>`"
-          command: |
-            cd /tmp/my_app
-            bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
-            unset RAILS_ENV # avoid doing everything on the test environment
-            bin/rails generate solidus:install --auto-accept <<parameters.flags>>
-
-  test_page:
-    parameters:
-      app_root:
-        type: string
-        default: "/tmp/my_app"
-      path:
-        type: string
-        default: "/"
-      expected_text:
-        type: string
-
-    steps:
-      - run:
-          name: "Check the contents of the <<parameters.path>> page"
-          command: |
-            cd <<parameters.app_root>>
-            unset RAILS_ENV # avoid doing everything on the test environment
-            bin/rails server -p 3000 &
-            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000<<parameters.path>>" | grep "<<parameters.expected_text>>"
-            echo "Exited with $?"
-            kill $(cat "tmp/pids/server.pid")
-
-  install_dummy_app:
-    parameters:
-      extra_gems:
-        type: string
-        default: ""
-        description: "Gems to be added to the extension's Gemfile before running the installer"
-    steps:
-      - run:
-          name: "Test `rake task: extensions:test_app` <<#parameters.extra_gems>>(with <<parameters.extra_gems>>)<</parameters.extra_gems>>"
-          command: |
-            rm -rf /tmp/dummy_extension # cleanup previous runs
-            mkdir -p /tmp/dummy_extension
-            cd /tmp/dummy_extension
-            bundle init
-            bundle add rails -v "< 8.1" --skip-install
-            bundle add sqlite3 -v "~> 2.0" --skip-install
-            test -n "<<parameters.extra_gems>>" && bundle add <<parameters.extra_gems>> --skip-install
-            bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
-            export LIB_NAME=set # dummy requireable file
-            bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
-
 jobs:
-  solidus_installer:
-    executor:
-      name: sqlite
-      ruby: "3.1"
-    steps:
-      - checkout
-      - run:
-          name: "Skip for Solidus older than 4.2"
-          command: |
-            ruby -I. -rcore/lib/spree/core/version.rb -e "exit Spree.solidus_gem_version >= Gem::Version.new('4.2')" ||
-              circleci-agent step halt
-      - libvips
-      - install_solidus:
-          flags: "--sample=false --frontend=starter --authentication=devise"
-      - test_page:
-          expected_text: "<title>Sample Store</title>"
-      - run:
-          name: Ensure the correct PayPal is installed for SSF
-          command: |
-            cd /tmp/my_app
-            bundle list | grep 'solidus_paypal_commerce_platform (1.'
-      - install_solidus:
-          flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe"
-      - test_page:
-          expected_text: "<title>Sample Store</title>"
-      - install_dummy_app
-      - run:
-          name: "Ensure extension test app is created"
-          command: |
-            test -d /tmp/dummy_extension/spec/dummy
-
   test_solidus:
     parameters:
       database:
@@ -348,7 +227,6 @@ jobs:
 workflows:
   build:
     jobs:
-      - solidus_installer
       - test_solidus_with_coverage # Only test with coverage support with the default versions
 
       # Based on supported versions for the current Solidus release and recommended versions from

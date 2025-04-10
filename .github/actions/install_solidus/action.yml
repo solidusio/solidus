@@ -1,0 +1,59 @@
+name: "Install Solidus"
+
+inputs:
+  flags:
+    type: string
+    default: "# no options"
+    description: "flags to be passed to `bin/rails g solidus:install"
+  rails_version:
+    type: string
+    default: "7.2"
+  ruby_version:
+    type: string
+    default: "3.2"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ inputs.ruby_version }}
+        bundler-cache: true
+        rubygems: "latest"
+    - name: "Cleanup & check rails version"
+      shell: bash
+      run: |
+        gem environment path
+        rm -rf $RUNNER_TEMP/my_app $RUNNER_TEMP/.ruby-versions # cleanup previous runs
+        rm -rf $RUNNER_TEMP/my_app $RUNNER_TEMP/.gems-versions # cleanup previous runs
+
+        ruby -v >> $RUNNER_TEMP/.ruby-versions
+        gem --version >> $RUNNER_TEMP/.gems-versions
+        bundle --version >> $RUNNER_TEMP/.gems-versions
+        gem search -eq rails -v "${{ inputs.rails_version }}" >> $RUNNER_TEMP/.gems-versions # get the latest rails from rubygems
+        gem search -eq solidus >> $RUNNER_TEMP/.gems-versions # get the latest solidus from rubygems
+
+        cat $RUNNER_TEMP/.ruby-versions
+        cat $RUNNER_TEMP/.gems-versions
+    - uses: actions/cache@v4
+      with:
+        path: |
+          /home/runner/.rubygems
+        key: |
+          solidus-installer-v1-${{ hashFiles('${{ runner.temp }}/.ruby-versions') }}-${{ hashFiles('${{ runner.temp }}/.gems-versions') }}
+        restore-keys: |
+          solidus-installer-v1-${{ hashFiles('${{ runner.temp }}/.ruby-versions') }}-
+    - name: "Prepare the rails application"
+      shell: bash
+      run: |
+        cd $RUNNER_TEMP
+        test -d my_app || (gem install solidus rails:'${{ inputs.rails_version }}' -N)
+        test -d my_app || rails new my_app --skip-git
+    - name: "Run `solidus:install` with `${{ inputs.flags }}`"
+      shell: bash
+      run: |
+        cd $RUNNER_TEMP/my_app
+        bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['GITHUB_WORKSPACE']")"
+        unset RAILS_ENV # avoid doing everything on the test environment
+        bin/rails generate solidus:install --auto-accept ${{ inputs.flags }}
