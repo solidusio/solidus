@@ -83,7 +83,7 @@ module Spree
     ]
 
     preference :address_attributes, :array, default: [
-      :id, :name, :address1, :address2, :city, :zipcode, :phone, :company,
+      :id, :name, :firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :company,
       :alternative_phone, :country_id, :country_iso, :state_id, :state_name,
       :state_text
     ]

@@ -9,6 +9,8 @@ FactoryBot.define do
     end
 
     name { 'John Von Doe' }
+    firstname { 'John' }
+    lastname { 'Von Doe' }
     company { 'Company' }
     address1 { '10 Lovely Street' }
     address2 { 'Northwest' }

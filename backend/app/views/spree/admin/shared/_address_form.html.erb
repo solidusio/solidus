@@ -6,6 +6,16 @@
     <%= f.text_field :name, class: 'fullwidth' %>
   </div>
 
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :firstname %>
+    <%= f.text_field :firstname, class: 'fullwidth' %>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :lastname %>
+    <%= f.text_field :lastname, class: 'fullwidth' %>
+  </div>
+
   <% if Spree::Config[:company] %>
     <div class="field <%= "#{type}-row" %>">
       <%= f.label :company %>

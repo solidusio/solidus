@@ -76,7 +76,7 @@ module Spree
         {
           partial: "spree/admin/shared/search_fields/text_field",
           locals: {
-            ransack: :bill_address_name_cont,
+            ransack: :bill_address_firstname_or_bill_address_lastname_cont,
             label: -> { I18n.t(:name_contains, scope: :spree) }
           }
         },
