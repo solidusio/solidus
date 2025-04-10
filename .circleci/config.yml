@@ -59,7 +59,9 @@ commands:
   setup:
     steps:
       - checkout
-      - browser-tools/install-chrome
+      - browser-tools/install-chrome:
+          chrome-version: "133.0.6943.53"
+          replace-existing: true
       - run:
           name: Check chrome version
           command: |
