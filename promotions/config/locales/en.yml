@@ -311,6 +311,7 @@ en:
         preferred_currency: Currency
       solidus_promotions/calculators/percent:
         description: Provides a discount calculated by percent of the discountable amount of the item being discounted
+        preferred_percent: Percent
       solidus_promotions/calculators/distributed_amount:
         description: Distributes the configured amount among all eligible line items of the order.
         explanation: |
@@ -350,6 +351,7 @@ en:
             </tbody>
           </table>
         preferred_amount: Amount
+        preferred_currency: Currency
 
     errors:
       models:
