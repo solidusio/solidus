@@ -63,4 +63,24 @@
     <%= f.label :phone %>
     <%= f.phone_field :phone, class: 'fullwidth' %>
   </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'fullwidth' %>
+  </div>
+  
+  <% if Spree::Backend::Config.show_reverse_charge_fields %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :vat_id %>
+      <%= f.text_field :vat_id, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :reverse_charge_status %>
+      <%= f.select :reverse_charge_status,
+          Spree::Address.reverse_charge_statuses.keys.map { |key| [I18n.t("spree.reverse_charge_statuses.#{key}"), key] },
+          { include_blank: false },
+          { class: 'custom-select fullwidth' } %>
+    </div>
+  <% end %>
 </div>

@@ -24,8 +24,10 @@ en:
         address2: Street Address (cont'd)
         city: City
         company: Company
+        email: Email
         name: Name
         phone: Phone
+        vat_id: VAT-ID
         zipcode: Zip Code
       spree/adjustment:
         adjustable: Adjustable
@@ -2359,6 +2361,7 @@ en:
     variant_to_add: Variant to add
     variant_to_be_received: Variant to be received
     variants: Variants
+    vat_id: VAT-ID
     version: Version
     view_product: View Product On Store
     void: Void
