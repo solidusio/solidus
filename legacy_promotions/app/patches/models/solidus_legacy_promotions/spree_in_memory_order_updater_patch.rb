@@ -1,23 +1,22 @@
-# frozen_string_literal: true
-
 module SolidusLegacyPromotions
-  module SpreeOrderUpdaterPatch
-    def update_adjustment_total
-      recalculate_adjustments
+  module SpreeInMemoryOrderUpdaterPatch
+    def update_adjustment_total(persist:)
+      update_adjustments(persist:)
 
       all_items = line_items + shipments
-      order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)
+      valid_adjustments = adjustments.select(&:eligible?).reject(&:marked_for_destruction?)
+      order_tax_adjustments = valid_adjustments.select(&:tax?)
 
-      order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.select(&:eligible?).sum(&:amount)
+      order.adjustment_total = all_items.sum(&:adjustment_total) + valid_adjustments.sum(&:amount)
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
-      update_order_total
+      recalculate_order_total
     end
 
-    def update_item_totals
+    def update_item_totals(persist:)
       [*line_items, *shipments].each do |item|
-        Spree::ItemTotal.new(item).recalculate!
+        Spree::Config.item_total_class.new(item).recalculate!
 
         # The cancellation_total isn't persisted anywhere but is included in
         # the adjustment_total.
@@ -28,9 +27,10 @@ module SolidusLegacyPromotions
         item.adjustment_total = item.adjustments.
           select(&:eligible?).
           reject(&:included?).
+          reject(&:marked_for_destruction?).
           sum(&:amount)
 
-        next unless item.changed?
+        next unless persist && item.changed?
 
         item.update_columns(
           promo_total: item.promo_total,
@@ -42,6 +42,6 @@ module SolidusLegacyPromotions
       end
     end
 
-    Spree::OrderUpdater.prepend self
+    Spree::InMemoryOrderUpdater.prepend self
   end
 end
