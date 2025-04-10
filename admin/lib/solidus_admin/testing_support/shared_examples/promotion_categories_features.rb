@@ -5,7 +5,7 @@ require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 RSpec.shared_examples_for 'promotion categories features' do
   before { sign_in create(:admin_user, email: "admin@example.com") }
 
-  it "lists promotion categories" do
+  it "lists promotion categories", :js do
     create(factory_name, name: "test1", code: "code1")
     create(factory_name, name: "test2", code: "code2")
 
@@ -53,7 +53,7 @@ RSpec.shared_examples_for 'promotion categories features' do
     expect(page).to have_content("exp.2")
   end
 
-  it 'allows to delete promo category' do
+  it 'allows to bulk delete promo category', :js do
     create(factory_name, name: "Soon to expire", code: "ste.1")
     create(factory_name, name: "Expired", code: "exp.2")
 

@@ -3,10 +3,10 @@
 require 'spec_helper'
 require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
-describe "Refund Reasons", :js, type: :feature do
+describe "Refund Reasons", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists refund reasons and allows deleting them" do
+  it "lists refund reasons and allows deleting them", :js do
     create(:refund_reason, name: "Default-refund-reason")
 
     visit "/admin/refund_reasons"
@@ -29,10 +29,13 @@ describe "Refund Reasons", :js, type: :feature do
       click_on "Add new"
       expect(page).to have_css("dialog")
       expect(page).to have_content("New Refund Reason")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
@@ -69,10 +72,13 @@ describe "Refund Reasons", :js, type: :feature do
       click_on "Return process"
       expect(page).to have_css("dialog")
       expect(page).to have_content("Edit Refund Reason")
+    end
+
+    it "is accessible", :js do
       expect(page).to be_axe_clean
     end
 
-    it "closing the modal keeps query params" do
+    it "closing the modal keeps query params", :js do
       within("dialog") { click_on "Cancel" }
       expect(page).not_to have_selector("dialog")
       expect(page.current_url).to include(query)
