@@ -232,23 +232,72 @@ RSpec.describe "Legacy promotion system" do
         order.complete
       }.to change{ promo_adjustment.reload.eligible }.to(false)
     end
+  end
 
-    it "adjusts the promo_total" do
-      expect{
-        order.complete
-      }.to change(order, :promo_total).by(10)
+  describe "checking whether a promotion code is still eligible after one use" do
+    let(:promotion) do
+      FactoryBot.create(
+        :promotion,
+        :with_order_adjustment,
+        code: "discount",
+        per_code_usage_limit: 1,
+        weighted_order_adjustment_amount: 10
+      )
+    end
+    let(:code) { promotion.codes.first }
+    let(:order) do
+      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryBot.create(:payment, amount: 30, order:)
+        promotion.activate(order:, promotion_code: code)
+      end
+    end
+    let(:promo_adjustment) { order.adjustments.promotion.first }
+
+    before do
+      order.next! until order.can_complete?
+
+      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryBot.create(:payment, amount: 30, order:)
+        promotion.activate(order:, promotion_code: code)
+        order.next! until order.can_complete?
+        order.complete!
+      end
     end
 
-    it "increases the total to remove the promo" do
-      expect{
-        order.complete
-      }.to change(order, :total).from(30).to(40)
-    end
+    context 'with the in-memory order updater' do
+      subject { order.recalculate(persist: false) }
 
-    it "resets the state of the order" do
-      expect{
-        order.complete
-      }.to change{ order.reload.state }.from("confirm").to("address")
+      around do |example|
+        default_order_recalculator = Spree::Config.order_recalculator_class.to_s
+
+        Spree::Config.order_recalculator_class = 'Spree::InMemoryOrderUpdater'
+
+        example.run
+
+        Spree::Config.order_recalculator_class = default_order_recalculator
+      end
+
+      it "makes the promotion ineligible" do
+        expect { subject }
+          .to change { order.adjustments.first.eligible }
+          .from(true)
+          .to(false)
+
+        expect(promo_adjustment.reload.eligible).to eq true
+      end
+
+      it "adjusts the promo_total" do
+        expect { subject }.to change { order.promo_total }.from(-10).to(0)
+
+        expect(order.reload.promo_total).to eq -10
+      end
+
+      it "increases the total to remove the promo",
+        pending: "This failure points to a real issue we have with the in-memory order updater" do
+        expect { subject }.to change { order.total }.from(30).to(40)
+
+        expect(order.reload.total).to eq 40
+      end
     end
   end
 

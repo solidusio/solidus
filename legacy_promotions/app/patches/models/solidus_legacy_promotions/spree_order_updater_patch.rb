@@ -41,6 +41,8 @@ module SolidusLegacyPromotions
         )
       end
     end
-    Spree::OrderUpdater.prepend self
+
+    # FIXME: We need to verify that this is the right thing to do?
+    Spree::Config.order_recalculator_class.prepend self
   end
 end
