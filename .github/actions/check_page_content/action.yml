@@ -1,0 +1,24 @@
+name: "Install Solidus"
+
+inputs:
+  app_root:
+    type: string
+    default: "/tmp/my_app"
+  path:
+    type: string
+    default: "/"
+  expected_text:
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Check the contents of the `${{ inputs.path }}` page"
+      shell: bash
+      run: |
+        cd $RUNNER_TEMP/my_app
+        unset RAILS_ENV # avoid doing everything on the test environment
+        bin/rails server -p 3000 &
+        wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000/" | grep "<title>Sample Store</title>"
+        echo "Exited with $?"
+        kill $(cat "tmp/pids/server.pid")
