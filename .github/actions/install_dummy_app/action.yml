@@ -1,0 +1,31 @@
+name: "Install Dummy App"
+inputs:
+  extra_gems:
+    type: string
+    default: ""
+    description: "Gems to be added to the extension's Gemfile before running the installer"
+  ruby_version:
+    type: string
+    default: "3.2"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ inputs.ruby_version }}
+        bundler-cache: true
+        rubygems: "latest"
+    - name: "Test `rake extension:test_app`"
+      run: |
+        rm -rf $RUNNER_TEMP/dummy_extension # cleanup previous runs
+        mkdir -p $RUNNER_TEMP/dummy_extension
+        cd $RUNNER_TEMP/dummy_extension
+        bundle init
+        bundle add rails -v "< 8.1" --skip-install
+        bundle add sqlite3 -v "~> 2.0" --skip-install
+        test -n "${{ inputs.extra_gems }}" && bundle add ${{ inputs.extra_gems }} --skip-install
+        bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['GITHUB_WORKSPACE']")"
+        export LIB_NAME=set # dummy requireable file
+        bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
