@@ -6,7 +6,9 @@ module Spree::Api
   describe 'Users', type: :request do
     let(:user) { create(:user, spree_api_key: SecureRandom.hex) }
     let(:stranger) { create(:user, email: 'stranger@example.com') }
-    let(:attributes) { [:id, :email, :created_at, :updated_at, :customer_metadata] }
+    let(:attributes) { [:id, :email, :user_group_id, :created_at, :updated_at, :customer_metadata] }
+    let(:default_user_group) { create(:user_group) }
+    let(:store) { create(:store) }
 
     context "as a normal user" do
       it "can get own details" do
@@ -154,6 +156,29 @@ module Spree::Api
         expect(Spree.user_class.count).to eq 3
         expect(json_response['count']).to eq 1
         expect(json_response['users'].size).to eq 1
+      end
+
+      it "assigns default user group upon creation if store enforces it" do
+        store.update(enforce_group_upon_signup: true, default_cart_user_group: default_user_group)
+        user_params = {
+          email: 'new@example.com', password: 'spree123', password_confirmation: 'spree123'
+        }
+
+        post spree.api_users_path, params: { user: user_params, token: user.spree_api_key }
+        expect(json_response['email']).to eq 'new@example.com'
+        expect(json_response['user_group_id']).to eq default_user_group.id
+      end
+
+      it "does not assign user group if store does not enforce it" do
+        store.update(enforce_group_upon_signup: false)
+
+        user_params = {
+          email: 'new@example.com', password: 'spree123', password_confirmation: 'spree123'
+        }
+
+        post spree.api_users_path, params: { user: user_params, token: user.spree_api_key }
+        expect(json_response['email']).to eq 'new@example.com'
+        expect(json_response['user_group_id']).to be_nil
       end
     end
 
