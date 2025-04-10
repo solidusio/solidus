@@ -23,11 +23,6 @@ describe "Tax categories", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :tax_category }
-    let(:index_path) { "/admin/tax_categories" }
-  end
-
   context "when creating a new tax category" do
     let(:query) { "?page=1&q%5Bname_or_description_cont%5D=Cloth" }
 

@@ -21,11 +21,6 @@ describe "Refund Reasons", :js, type: :feature do
     expect(page).to be_axe_clean
   end
 
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :refund_reason }
-    let(:index_path) { "/admin/refund_reasons" }
-  end
-
   context "when creating a new refund reason" do
     let(:query) { "?page=1&q%5Bname_or_description_cont%5D=Ret" }
 

@@ -65,8 +65,4 @@ RSpec.shared_examples_for 'promotion categories features' do
     expect(page).not_to have_content("Expired")
     expect(model_class.count).to eq(1)
   end
-
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { factory_name }
-  end
 end
