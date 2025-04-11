@@ -6,7 +6,7 @@
     <%= render component('ui/toggletip').new(text: @tip) if @tip.present? %>
   </div>
 
-  <%= tag.select(options_for_select(@choices, @selected), **@attributes) %>
+  <%= tag.select(@options_collection, **@attributes) %>
 
   <% if @hint.present? || @error.present? %>
     <div class="

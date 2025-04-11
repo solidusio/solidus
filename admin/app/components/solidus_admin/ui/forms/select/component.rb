@@ -25,22 +25,53 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     },
   }.freeze
 
-  def initialize(label:, name:, choices:, size: :m, hint: nil, tip: nil, error: nil, **attributes)
+  # Render custom select component, which uses "solidus_select" custom element
+  # @see "admin/app/javascript/solidus_admin/web_components/solidus_select.js"
+  # @param choices [nil, Array<String>, Array<Array<String>>] container with options to be rendered
+  #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
+  #   When +nil+, a +:src+ parameter must be provided.
+  # @param src [nil, String] URL of a JSON resource with options data to be loaded instead of rendering options in place.
+  #   When +nil+, a +:choices+ parameter must be provided.
+  # @option attributes [String] :"data-option-value-field"
+  # @option attributes [String] :"data-option-label-field" when +:src+ param is passed, value and label of loaded options
+  #   will be mapped to JSON response +"id"+ and +"name"+ by default. Use these parameters to map to different keys.
+  # @option attributes [String] :"data-json-path" when +:src+ param is passed and options data is nested in JSON response,
+  #   specify path to it with this parameter.
+  # @raise [ArgumentError] if both +:choices+ and +:src+ are nil
+  def initialize(label:, name:, choices: nil, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
-    @name = name
     @hint = hint
     @tip = tip
     @error = Array.wrap(error)
-
-    @choices = choices
-    @selected = attributes.delete(:value)
-
     @attributes = attributes
-    @attributes[:name] = @name
-    @attributes[:is] = "solidus-select"
-    @attributes[:id] ||= "#{stimulus_id}_#{@name}"
-    @attributes[:"data-error-message"] = @error.presence
 
+    prepare_options(choices:, src:)
+    prepare_classes(size:)
+
+    @attributes[:name] = name
+    @attributes[:is] = "solidus-select"
+    @attributes[:id] ||= "#{stimulus_id}_#{name}"
+    @attributes[:"data-error-message"] = @error.presence
+  end
+
+  private
+
+  def prepare_options(choices:, src:)
+    if choices.nil? && src.nil?
+      raise ArgumentError, 'You must provide either a `choices` or a `src` argument'
+    end
+
+    selected = @attributes.delete(:value)
+
+    if src.present?
+      @attributes[:"data-src"] = src
+      @attributes[:"data-selected"] = Array.wrap(selected).join(",") if selected.present?
+    else
+      @options_collection = options_for_select(choices, selected)
+    end
+  end
+
+  def prepare_classes(size:)
     general_classes = ["w-full relative text-black font-normal #{FONT_SIZES[size]}"]
     control_classes = ["[&>.control]:peer-invalid:border-red-600 [&>.control]:peer-invalid:hover:border-red-600
       [&>.control]:peer-invalid:text-red-600 [&>.control]:flex [&>.control]:flex-wrap [&>.control]:items-center
@@ -77,7 +108,8 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
       [&_.dropdown]:shadow-lg [&_.dropdown]:bg-white"]
 
     dropdown_content_classes = ["[&_.dropdown-content]:flex [&_.dropdown-content]:flex-col [&_.dropdown-content]:max-h-[200px]
-      [&_.dropdown-content]:overflow-x-hidden [&_.dropdown-content]:overflow-y-auto [&_.dropdown-content]:scroll-smooth [&_.no-results]:text-gray-500"]
+      [&_.dropdown-content]:overflow-x-hidden [&_.dropdown-content]:overflow-y-auto [&_.dropdown-content]:scroll-smooth
+      [&_.no-results]:text-gray-500 [&_.loading]:animate-pulse"]
 
     option_classes = ["[&_.option]:p-2 [&_.option]:rounded-sm [&_.option]:min-w-fit [&_.option.active]:bg-gray-50
       [&_.option.active]:text-gray-700 [&_.option_.highlight]:bg-yellow [&_.option_.highlight]:rounded-[1px]
