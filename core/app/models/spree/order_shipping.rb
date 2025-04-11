@@ -56,6 +56,7 @@ class Spree::OrderShipping
         inventory_units:,
         shipped_at:,
         external_number:,
+        suppress_email: suppress_mailer,
         tracking: tracking_number
       )
     end
@@ -68,19 +69,10 @@ class Spree::OrderShipping
       end
     end
 
-    send_shipment_emails(carton) if stock_location.fulfillable? && !suppress_mailer # e.g. digital gift cards that aren't actually shipped
     @order.shipments.reload
     @order.recalculate
 
     Spree::Bus.publish(:carton_shipped, carton:)
     carton
-  end
-
-  private
-
-  def send_shipment_emails(carton)
-    carton.orders.each do |order|
-      Spree::Config.carton_shipped_email_class.shipped_email(order:, carton:).deliver_later
-    end
   end
 end
