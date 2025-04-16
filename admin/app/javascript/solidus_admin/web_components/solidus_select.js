@@ -1,5 +1,5 @@
 import TomSelect from "tom-select";
-import { setValidity } from "solidus_admin/utils";
+import { setValidity, parseLinkHeader } from "solidus_admin/utils";
 
 class SolidusSelect extends HTMLSelectElement {
   static observedAttributes = ["synced"];
@@ -21,7 +21,7 @@ class SolidusSelect extends HTMLSelectElement {
 
     this.setAttribute("hidden", "true");
     this.setAttribute("aria-hidden", "true");
-
+    this.fixDropdownScroll();
     setValidity(this, this.dataset.errorMessage);
   }
 
@@ -46,7 +46,7 @@ class SolidusSelect extends HTMLSelectElement {
       dropdownContentClass: "dropdown-content",
       optionClass: "option",
       wrapperClass: "wrapper",
-      maxOptions: 500,
+      maxOptions: null,
       refreshThrottle: 0,
       plugins: {
         no_active_items: true,
@@ -54,18 +54,6 @@ class SolidusSelect extends HTMLSelectElement {
           append: originalSelect.multiple,
           className: "remove-button"
         },
-      },
-      onItemAdd: function() {
-        if (!originalSelect.multiple || !this.isOpen) return;
-
-        this.setTextboxValue("");
-        this.refreshOptions();
-      },
-      onLoad: function() {
-        originalSelect.tomselect.setValue(
-          originalSelect.getAttribute("data-selected")?.split(",") || [],
-          true
-        );
       },
       onType: function() {
         if (!originalSelect.multiple && !this.currentResults.items.length) {
@@ -76,7 +64,10 @@ class SolidusSelect extends HTMLSelectElement {
     };
 
     if (originalSelect.getAttribute("data-src")) {
-      settings.load = originalSelect.loadOnce.bind(originalSelect);
+      settings.plugins.virtual_scroll = true
+      settings.firstUrl = () => originalSelect.getAttribute("data-src");
+      settings.load = originalSelect.loadOptions.bind(originalSelect);
+      settings.shouldLoad = (query) => query.length > 1
       settings.preload = true;
       settings.valueField = originalSelect.getAttribute("data-option-value-field") || "id";
       settings.labelField = originalSelect.getAttribute("data-option-label-field") || "name";
@@ -84,25 +75,32 @@ class SolidusSelect extends HTMLSelectElement {
       settings.render = {
         loading: function() {
           return "<div class='loading'>Loading</div>";
+        },
+        loading_more: function() {
+          return "<div class='loading-more disabled'>Loading...</div>";
         }
-      }
+      };
     }
 
     return settings;
   }
 
-  // Fetch all options from remote source and remove #load callback
-  // https://tom-select.js.org/examples/remote/
-  async loadOnce(query, callback) {
-    // Avoid queueing more load requests (e.g. searching while options are still loading) if there's one already running
-    if (this.tomselect.loading > 1) {
-      callback();
-      return;
+  buildUrl(query) {
+    const url = new URL(this.tomselect.getUrl(query));
+    if (!query) return url;
+
+    url.searchParams.set(this.getAttribute("data-query-param"), query);
+    return url.toString();
+  }
+
+  // Fetch all options from remote source and setup pagination if needed
+  async loadOptions(query, callback) {
+    const { options, next } = await this.fetchOptions(query);
+    if (next) {
+      this.tomselect.setNextUrl(query, next);
     }
 
-    const options = await this.fetchOptions();
     callback(options);
-    this.tomselect.settings.load = null;
   }
 
   // Fetch options from remote source. If options data is nested in json response, specify path to it with "data-json-path"
@@ -110,13 +108,38 @@ class SolidusSelect extends HTMLSelectElement {
   //  in order to access it, specify attributes as follows:
   //  "data-src"="https://whatcms.org/API/List"
   //  "data-json-path"="result.list"
-  async fetchOptions() {
+  async fetchOptions(query) {
     const dataPath = this.getAttribute("data-json-path");
-    const response = await fetch(this.getAttribute("data-src"));
+    const response = await fetch(this.buildUrl(query), { headers: { "Accept": "application/json" } });
+    const next = parseLinkHeader(response.headers.get("Link")).next;
     const json = await response.json();
-    if (!dataPath) return json;
 
-    return dataPath.split('.').reduce((acc, key) => acc && acc[key], json);
+    let options;
+    if (!dataPath) {
+      options = json;
+    } else {
+      options = dataPath.split('.').reduce((acc, key) => acc && acc[key], json);
+    }
+
+    return { options, next };
+  }
+
+  fixDropdownScroll() {
+    // https://github.com/orchidjs/tom-select/issues/556
+    // https://github.com/orchidjs/tom-select/issues/867
+    this.patch("onOptionSelect");
+    this.patch("loadCallback");
+  }
+
+  patch(fnName) {
+    const originalFn = this.tomselect[fnName];
+    this.tomselect.hook("instead", fnName, function() {
+      const originalScrollToOption = this.scrollToOption;
+
+      this.scrollToOption = () => {};
+      originalFn.apply(this, arguments);
+      this.scrollToOption = originalScrollToOption;
+    });
   }
 }
 
