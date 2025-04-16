@@ -30,3 +30,19 @@ export const setValidity = (element, error) => {
 
   element.addEventListener(clearOn, clearValidity, { once: true });
 };
+
+export function parseLinkHeader(header) {
+  if (!header) return {};
+
+  const links = {};
+  header.split(",").forEach((link) => {
+    // match against something like this '<https://example.com>; rel="next"'
+    const match = link.match(/<([^>]+)>\s*;\s*rel="([^"]+)"/);
+    if (match) {
+      const [, url, rel] = match;
+      links[rel] = url;
+    }
+  });
+
+  return links;
+}

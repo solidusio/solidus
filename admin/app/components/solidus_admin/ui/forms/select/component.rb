@@ -109,10 +109,12 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
 
     dropdown_content_classes = ["[&_.dropdown-content]:flex [&_.dropdown-content]:flex-col [&_.dropdown-content]:max-h-[200px]
       [&_.dropdown-content]:overflow-x-hidden [&_.dropdown-content]:overflow-y-auto [&_.dropdown-content]:scroll-smooth
-      [&_.no-results]:text-gray-500 [&_.loading]:animate-pulse"]
+      [&_.no-results]:text-gray-500 [&_.no-results]:px-2 [&_.no-results]:py-1
+      [&_.loading]:animate-pulse [&_.loading]:italic [&_.loading]:text-gray-500 [&_.loading]:px-2 [&_.loading]:py-1"]
 
     option_classes = ["[&_.option]:p-2 [&_.option]:rounded-sm [&_.option]:min-w-fit [&_.option.active]:bg-gray-50
       [&_.option.active]:text-gray-700 [&_.option_.highlight]:bg-yellow [&_.option_.highlight]:rounded-[1px]
+      [&_.option.loading-more]:animate-pulse [&_.option.loading-more]:italic [&_.option.loading-more]:text-gray-500 [&_.option.loading-more]:text-center [&_.option.loading-more]:text-xs [&_.option.loading-more]:py-0.5 [&_.option.loading-more]:pointer-events-none
       #{HEIGHTS[:option][size]}"]
 
     @attributes[:class] = [
