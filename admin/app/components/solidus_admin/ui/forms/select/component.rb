@@ -27,18 +27,17 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
 
   # Render custom select component, which uses "solidus_select" custom element
   # @see "admin/app/javascript/solidus_admin/web_components/solidus_select.js"
-  # @param choices [nil, Array<String>, Array<Array<String>>] container with options to be rendered
+  # @param choices [Array<String>, Array<Array<String>>] container with options to be rendered
   #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
-  #   When +nil+, a +:src+ parameter must be provided.
+  #   When +:src+ parameter is provided, use +:choices+ to provide the list of selected options only.
   # @param src [nil, String] URL of a JSON resource with options data to be loaded instead of rendering options in place.
-  #   When +nil+, a +:choices+ parameter must be provided.
   # @option attributes [String] :"data-option-value-field"
   # @option attributes [String] :"data-option-label-field" when +:src+ param is passed, value and label of loaded options
   #   will be mapped to JSON response +"id"+ and +"name"+ by default. Use these parameters to map to different keys.
   # @option attributes [String] :"data-json-path" when +:src+ param is passed and options data is nested in JSON response,
   #   specify path to it with this parameter.
   # @raise [ArgumentError] if both +:choices+ and +:src+ are nil
-  def initialize(label:, name:, choices: nil, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
+  def initialize(label:, name:, choices:, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
     @hint = hint
     @tip = tip
@@ -57,18 +56,11 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   private
 
   def prepare_options(choices:, src:)
-    if choices.nil? && src.nil?
-      raise ArgumentError, 'You must provide either a `choices` or a `src` argument'
-    end
-
-    selected = @attributes.delete(:value)
-
     if src.present?
       @attributes[:"data-src"] = src
-      @attributes[:"data-selected"] = Array.wrap(selected).join(",") if selected.present?
-    else
-      @options_collection = options_for_select(choices, selected)
     end
+
+    @options_collection = options_for_select(choices, @attributes.delete(:value))
   end
 
   def prepare_classes(size:)
