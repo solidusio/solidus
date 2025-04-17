@@ -12,6 +12,8 @@ In-Memory Order Updater TODO
 - [x] Fix CI failures from previous session (if any)
 - [ ] Add high level test for manipulative queries around new Promotion system
 - [WIP] Add high level test for manipulative queries around Legacy Promotion system
+  - The order updater patch doesn't seem to be loaded no matter which order updater we're using.
+  - Let's put a breakpoint in the dummy app to make sure all the of autoloaded paths that we expect are there. We put a breakpoint inside of Flickwerk and it showed that it was adding autoload paths to an empty array so we want to be sure that those are not being overwritten somewhere.
 - [ ] Adding shared examples that could be used in both promotion system gems to
   ensure the above?
 - [In Progress] Handle persistence in all implementations of `promotions.order_adjuster_class`
