@@ -4,6 +4,11 @@
 >
   <div class="<%= stimulus_id %>--address-form flex flex-wrap gap-4 pb-4">
     <%= render component("ui/forms/field").text_field(@name, :name, object: @address) %>
+    <%= render component("ui/forms/field").text_field(@name, :firstname, object: @address) %>
+    <%= render component("ui/forms/field").text_field(@name, :lastname, object: @address) %>
+    <% if Spree::Config[:company] %>
+      <%= render component("ui/forms/field").text_field(@name, :company, object: @address) %>
+    <% end %>
     <%= render component("ui/forms/field").text_field(@name, :address1, object: @address) %>
     <%= render component("ui/forms/field").text_field(@name, :address2, object: @address) %>
     <div class="flex gap-4 w-full">

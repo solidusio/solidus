@@ -8,6 +8,8 @@ module Spree::Api
     let!(:harry_address_attributes) do
       {
         'name' => 'Harry Potter',
+        'firstname' => 'Harry',
+        'lastname' => 'Potter',
         'address1' => '4 Privet Drive',
         'address2' => 'cupboard under the stairs',
         'city' => 'Surrey',
@@ -21,6 +23,8 @@ module Spree::Api
     let!(:ron_address_attributes) do
       {
         'name' => 'Ron Weasly',
+        'firstname' => 'Ron',
+        'lastname' => 'Weasly',
         'address1' => 'Ottery St. Catchpole',
         'address2' => '4th floor',
         'city' => 'Devon, West Country',
@@ -54,6 +58,8 @@ module Spree::Api
           user = create(:user, spree_api_key: 'galleon')
           address = user.save_in_address_book(harry_address_attributes, true)
           harry_address_attributes['name'] = 'Ron Weasly'
+          harry_address_attributes['firstname'] = 'Ron'
+          harry_address_attributes['lastname'] = 'Weasly'
 
           expect {
             put "/api/users/#{user.id}/address_book",
@@ -73,7 +79,7 @@ module Spree::Api
 
         context "when updating a default address" do
           let(:user) { create(:user, spree_api_key: 'galleon') }
-          let(:changes) { { name: "Hermione Granger", id: user.ship_address.id} }
+          let(:changes) { { name: "Hermione Granger", firstname: "Hermione", lastname: "Granger", id: user.ship_address.id} }
           before do
             # Create "Harry Potter" default shipping address
             user.save_in_address_book(harry_address_attributes, true)
@@ -168,7 +174,9 @@ module Spree::Api
         it "updates another user's address" do
           other_user = create(:user)
           address = other_user.save_in_address_book(harry_address_attributes, true)
-          updated_harry_address = harry_address_attributes.merge('name' => 'Ron Weasly')
+          harry_address_attributes.merge('firstname' => 'Ron')
+          harry_address_attributes.merge('name' => 'Ron Weasly')
+          updated_harry_address = harry_address_attributes.merge('lastname' => 'Weasly')
 
           expect {
             put "/api/users/#{other_user.id}/address_book",

@@ -77,6 +77,8 @@ module Spree::Api
           email: "mine@example.com",
           bill_address_attributes: {
             name: 'First Last',
+            firstname: 'First',
+            lastname: 'Last',
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
@@ -86,6 +88,8 @@ module Spree::Api
           },
           ship_address_attributes: {
             name: 'First Last',
+            firstname: 'First',
+            lastname: 'Last',
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
@@ -110,6 +114,8 @@ module Spree::Api
             email: "mine@example.com",
             bill_address_attributes: {
               name: 'First Last',
+              firstname: 'First',
+              lastname: 'Last',
               address1: '1 Test Rd',
               city: 'City',
               country_id: country.id,
@@ -119,6 +125,8 @@ module Spree::Api
             },
             ship_address_attributes: {
               name: 'First Last',
+              firstname: 'First',
+              lastname: 'Last',
               address1: '1 Test Rd',
               city: 'City',
               country_id: country.id,

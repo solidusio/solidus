@@ -54,6 +54,8 @@ describe "Order", :js, type: :feature do
 
     within("dialog") do
       fill_in "Name", with: "John Doe"
+      fill_in "First Name", with: "John"
+      fill_in "Last Name", with: "Doe"
       fill_in "Street Address", with: "1 John Doe Street"
       fill_in "Street Address (cont'd)", with: "Apartment 2"
       fill_in "City", with: "John Doe City"
@@ -80,6 +82,8 @@ describe "Order", :js, type: :feature do
 
     within("dialog") do
       fill_in "Name", with: "Jane Doe"
+      fill_in "First Name", with: "Jane"
+      fill_in "Last Name", with:  "Doe"
       fill_in "Street Address", with: "1 Jane Doe Street"
       fill_in "Street Address (cont'd)", with: "Apartment 3"
       fill_in "City", with: "Jane Doe City"

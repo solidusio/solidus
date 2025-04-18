@@ -14,19 +14,22 @@ module Spree
     belongs_to :country, class_name: "Spree::Country", optional: true
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    validates :address1, :city, :country_id, :name, presence: true
+    validates :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
+
+    validate :validate_name
 
     validate do
       self.class.state_validator_class.new(self).perform
     end
 
-    self.ignored_columns = %w(firstname lastname)
+    before_save :set_full_name
+
     DB_ONLY_ATTRS = %w(id updated_at created_at).freeze
     TAXATION_ATTRS = %w(state_id country_id zipcode).freeze
 
-    self.allowed_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name firstname lastname]
 
     unless ActiveRecord::Relation.method_defined? :with_values # Rails 7.1+
       scope :with_values, ->(attributes) do
@@ -80,6 +83,10 @@ module Spree
     # @return [String] a string representation of this state
     def state_text
       state.try(:abbr) || state.try(:name) || state_name
+    end
+
+    def set_full_name
+      self.name = "#{firstname} #{lastname}".strip if name.blank?
     end
 
     def to_s
@@ -137,6 +144,11 @@ module Spree
 
     def country_iso
       country && country.iso
+    end
+
+    def validate_name
+      errors.add(:firstname, :blank) if firstname.blank? && (name.blank? || lastname.present?)
+      errors.add(:name, :blank) if name.blank? && firstname.blank?
     end
   end
 end

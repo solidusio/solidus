@@ -1987,8 +1987,8 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#name" do
-    let(:bill_address) { create(:address, name: "John Doe") }
-    let(:ship_address) { create(:address, name: "Jane Doe") }
+    let(:bill_address) { create(:address, firstname: "John", lastname: "Doe", name: "") }
+    let(:ship_address) { create(:address, firstname: "Jane", lastname: "Doe", name: "") }
 
     let(:order) { create(:order, bill_address:, ship_address:) }
 
@@ -2090,12 +2090,15 @@ RSpec.describe Spree::Order, type: :model do
 
   describe "#bill_address_attributes=" do
     let(:order) { create(:order) }
-    let(:address_attributes) { { name: "Mickey Mouse" } }
+    let(:address_attributes) { { firstname: "Mickey", lastname: "Mouse", name: "Mickey Mouse" } }
 
     subject { order.bill_address_attributes = address_attributes }
 
     it "creates a new bill address" do
-      expect { subject }.to change { order.bill_address.name }.to("Mickey Mouse")
+      subject
+      expect(order.bill_address.firstname).to eq("Mickey")
+      expect(order.bill_address.lastname).to eq("Mouse")
+      expect(order.bill_address.name).to eq("Mickey Mouse")
     end
   end
 

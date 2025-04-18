@@ -64,6 +64,49 @@ RSpec.describe Spree::Address, type: :model do
         expect(address.errors[:zipcode]).to be_blank
       end
     end
+
+    context 'name validation' do
+      it 'adds an error when both firstname and name are blank' do
+        address.firstname = ''
+        address.name = ''
+        address.validate_name
+        expect(address.errors[:name]).to include("can't be blank")
+      end
+
+      it 'adds an error when firstname is blank and name is blank but lastname is present' do
+        address.firstname = ''
+        address.name = ''
+        address.lastname = 'Doe'
+        address.validate_name
+        expect(address.errors[:firstname]).to include("can't be blank")
+      end
+
+      it 'does not add an error when firstname is present and name is blank' do
+        address.firstname = 'John'
+        address.name = ''
+        address.validate_name
+        expect(address.errors[:firstname]).to be_empty
+        expect(address).to be_valid
+      end
+
+      it 'does not add an error when name is present and firstname is blank' do
+        address.firstname = ''
+        address.lastname = ''
+        address.name = 'John Doe'
+        address.validate_name
+        expect(address.errors[:name]).to be_empty
+        expect(address).to be_valid
+      end
+
+      it 'does not add an error when both firstname and name are present' do
+        address.firstname = 'John'
+        address.name = 'Doe'
+        address.validate_name
+        expect(address.errors[:firstname]).to be_empty
+        expect(address.errors[:name]).to be_empty
+        expect(address).to be_valid
+      end
+    end
   end
 
   context ".build_default" do
@@ -80,19 +123,22 @@ RSpec.describe Spree::Address, type: :model do
         end
 
         it 'accepts other attributes' do
-          address = Spree::Address.build_default(name: 'Ryan')
+          address = Spree::Address.build_default(firstname: 'Ryan', name: 'Ryan')
 
           expect(address.country).to eq default_country
           expect(address.name).to eq 'Ryan'
+          expect(address.firstname).to eq 'Ryan'
         end
 
         it 'accepts a block' do
           address = Spree::Address.build_default do |record|
             record.name = 'Ryan'
+            record.firstname = 'Ryan'
           end
 
           expect(address.country).to eq default_country
           expect(address.name).to eq 'Ryan'
+          expect(address.firstname).to eq 'Ryan'
         end
 
         it 'can override the country' do
@@ -126,7 +172,7 @@ RSpec.describe Spree::Address, type: :model do
 
   context ".immutable_merge" do
     RSpec::Matchers.define :be_address_equivalent_attributes do |expected|
-      fields_of_interest = [:name, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
+      fields_of_interest = [:name, :firstname, :lastname, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
       match do |actual|
         expected_attrs = expected.symbolize_keys.slice(*fields_of_interest)
         actual_attrs = actual.symbolize_keys.slice(*fields_of_interest)
@@ -148,7 +194,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'and there is a matching address in the database' do
         let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, name: 'Jordan') }
+        let!(:matching_address) { create(:address, name: 'Jordan', firstname: 'Jordan') }
 
         it "returns the matching address" do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -177,7 +223,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'and changed address matches an existing address' do
         let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, name: 'Jordan') }
+        let!(:matching_address) { create(:address, name: 'Jordan', firstname: 'Jordan') }
 
         it 'returns the matching address' do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -225,10 +271,10 @@ RSpec.describe Spree::Address, type: :model do
 
   describe '.taxation_attributes' do
     context 'both taxation and non-taxation attributes are present ' do
-      let(:address) { Spree::Address.new name: 'Michael Jackson', state_id: 1, country_id: 2, zipcode: '12345' }
+      let(:address) { Spree::Address.new name: 'Michael Jackson', firstname: 'Michael', lastname: 'Jackson', state_id: 1, country_id: 2, zipcode: '12345' }
 
       it 'removes the non-taxation attributes' do
-        expect(address.taxation_attributes).not_to eq('name' => 'Michael Jackson')
+        expect(address.taxation_attributes).not_to eq('name' => 'Michael Jackson', 'firstname' => 'Michael', 'lastname' => 'Jackson')
       end
 
       it 'returns only the taxation attributes' do
@@ -237,7 +283,7 @@ RSpec.describe Spree::Address, type: :model do
     end
 
     context 'taxation attributes are blank' do
-      let(:address) { Spree::Address.new name: 'Michael Jackson' }
+      let(:address) { Spree::Address.new name: 'Michael Jackson', firstname: 'Michael', lastname: 'Jackson' }
 
       it 'returns a subset of the attributes with the correct keys and nil values' do
         expect(address.taxation_attributes).to eq('state_id' => nil, 'country_id' => nil, 'zipcode' => nil)
@@ -263,10 +309,39 @@ RSpec.describe Spree::Address, type: :model do
 
   context '#name' do
     it 'is included in json representation' do
-      address = Spree::Address.new(name: 'Jane Von Doe')
+      address = Spree::Address.new(firstname: 'Jane', lastname: 'Von Doe', name: 'Jane Von Doe')
 
+      expect(address.as_json).to include('firstname' => 'Jane')
+      expect(address.as_json).to include('lastname' => 'Von Doe')
       expect(address.as_json).to include('name' => 'Jane Von Doe')
-      expect(address.as_json.keys).not_to include('firstname', 'lastname')
+      expect(address.as_json.keys).to include('firstname', 'lastname', 'name')
+    end
+
+    let(:address) { build(:address, firstname: 'Jane', lastname: 'Von Doe', name: '') }
+
+    it 'returns the concatenated full name' do
+      address.save
+      expect(address.name).to eq('Jane Von Doe')
+    end
+  end
+
+  describe '#set_full_name' do
+    let(:address) { build(:address, firstname: 'John', lastname: 'Doe') }
+
+    context 'when name is blank' do
+      it 'sets the name as concatenation of firstname and lastname' do
+        address.name = ''
+        address.save
+        expect(address.name).to eq('John Doe')
+      end
+    end
+
+    context 'when name is set by the user' do
+      it 'does not modify the name if it was set manually' do
+        address.name = 'Custom Name'
+        address.save
+        expect(address.name).to eq('Custom Name')
+      end
     end
   end
 

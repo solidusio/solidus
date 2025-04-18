@@ -593,12 +593,12 @@ module Spree::Api
 
       let(:address_params) { { country_id: country.id } }
       let(:billing_address) {
-        { name: "Tiago Motta", address1: "Av Paulista",
+        { name: "Tiago Motta", firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
                                 city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
                                 country_id: country.id, state_id: state.id }
       }
       let(:shipping_address) {
-        { name: "Tiago Motta", address1: "Av Paulista",
+        { name: "Tiago Motta", firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
                                  city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
                                  country_id: country.id, state_id: state.id }
       }
