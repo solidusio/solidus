@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe Spree::Tax::TaxHelpers do
   before do
-    stub_const('DummyClass', (Class.new do
+    stub_const('DummyClass', Class.new do
       include Spree::Tax::TaxHelpers
 
       def valid_rates(item)
         rates_for_item(item)
       end
-    end))
+    end)
   end
 
   let(:tax_category) { create(:tax_category) }
