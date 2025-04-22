@@ -36,7 +36,14 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   will be mapped to JSON response +"id"+ and +"name"+ by default. Use these parameters to map to different keys.
   # @option attributes [String] :"data-json-path" when +:src+ param is passed and options data is nested in JSON response,
   #   specify path to it with this parameter.
-  # @raise [ArgumentError] if both +:choices+ and +:src+ are nil
+  # @option attributes [String] :"data-query-param" when +:src+ param is passed, use this parameter to specify the name of
+  #   a query parameter to be used with search, e.g.:
+  #   ```
+  #   src: solidus_admin.countries_url,
+  #   "data-query-param": "q[name_cont]",
+  #   ```
+  # @option attributes [String] :"data-no-preload" when +:src+ param is passed, options are preloaded when the component
+  #   is initialized. Use this option to disable preload.
   def initialize(label:, name:, choices:, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
     @hint = hint
