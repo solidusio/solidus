@@ -66,4 +66,4 @@ export default function(config) {
   };
 
   this.require("virtual_scroll");
-};
+}

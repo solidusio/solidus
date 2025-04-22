@@ -16,4 +16,4 @@ export default function() {
     patch.call(this, "onOptionSelect");
     patch.call(this, "loadCallback");
   })
-};
+}
