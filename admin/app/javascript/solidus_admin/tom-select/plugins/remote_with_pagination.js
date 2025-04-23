@@ -50,8 +50,6 @@ export default function(config) {
   this.settings.firstUrl = () => config.src;
   this.settings.load = loadOptions.bind(this);
   this.settings.preload = config.preload;
-  this.settings.valueField = config.valueField || "id";
-  this.settings.labelField = config.labelField || "name";
   this.settings.searchField = [this.settings.labelField];
   this.settings.jsonPath = config.jsonPath;
   this.settings.queryParam = config.queryParam;

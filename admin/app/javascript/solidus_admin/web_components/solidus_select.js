@@ -58,11 +58,12 @@ class SolidusSelect extends HTMLSelectElement {
     };
 
     if (this.getAttribute("data-src")) {
+      settings.valueField = this.getAttribute("data-option-value-field") || "id";
+      settings.labelField = this.getAttribute("data-option-label-field") || "name";
+
       settings.plugins.remote_with_pagination = {
         src: this.getAttribute("data-src"),
         preload: this.getAttribute("data-no-preload") !== "true",
-        valueField: this.getAttribute("data-option-value-field"),
-        labelField: this.getAttribute("data-option-label-field"),
         jsonPath: this.getAttribute("data-json-path"),
         queryParam: this.getAttribute("data-query-param"),
       };
