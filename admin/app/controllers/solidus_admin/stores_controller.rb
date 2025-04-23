@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  class StoresController < SolidusAdmin::BaseController
+  class StoresController < SolidusAdmin::ResourcesController
     include SolidusAdmin::ControllerHelpers::Search
 
     def index
@@ -28,8 +28,23 @@ module SolidusAdmin
 
     private
 
-    def store_params
-      params.require(:store).permit(:store_id, permitted_store_attributes)
+    def resource_class = Spree::Store
+
+    def resources_collection = Spree::Store
+
+    def permitted_resource_params
+      params.require(:store).permit(
+        :name,
+        :url,
+        :code,
+        :meta_description,
+        :meta_keywords,
+        :seo_title,
+        :mail_from_address,
+        :default_currency,
+        :cart_tax_country_iso,
+        available_locales: [],
+      )
     end
   end
 end
