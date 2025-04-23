@@ -13,7 +13,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
     solidus_admin.stores_path
   end
 
-  def row_url(store)
+  def edit_path(store)
     spree.edit_admin_store_path(store)
   end
 
@@ -33,26 +33,55 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
         action: solidus_admin.stores_path,
         method: :delete,
         icon: 'delete-bin-7-line',
+        require_confirmation: true,
       },
     ]
   end
 
   def columns
     [
-      :name,
-      :url,
-      {
-        header: :slug,
-        data: ->(store) do
-          content_tag :div, store.code
-        end
-      },
-      {
-        header: :default,
-        data: ->(store) do
-          store.default? ? component('ui/badge').yes : component('ui/badge').no
-        end
-      },
+      name_column,
+      url_column,
+      slug_column,
+      default_column,
     ]
+  end
+
+  private
+
+  def name_column
+    {
+      header: :name,
+      data: ->(store) do
+        link_to store.name, edit_path(store), class: 'body-link'
+      end
+    }
+  end
+
+  def url_column
+    {
+      header: :url,
+      data: ->(store) do
+        link_to store.url, edit_path(store), class: 'body-link'
+      end
+    }
+  end
+
+  def slug_column
+    {
+      header: :slug,
+      data: ->(store) do
+        link_to store.code, edit_path(store), class: 'body-link'
+      end
+    }
+  end
+
+  def default_column
+    {
+      header: :default,
+      data: ->(store) do
+        store.default? ? component('ui/badge').yes : component('ui/badge').no
+      end
+    }
   end
 end
