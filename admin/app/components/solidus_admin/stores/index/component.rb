@@ -14,14 +14,14 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
   end
 
   def edit_path(store)
-    spree.edit_admin_store_path(store)
+    solidus_admin.edit_store_path(store)
   end
 
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_store_path,
+      href: solidus_admin.new_store_path,
       icon: "add-line",
     )
   end
