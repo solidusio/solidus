@@ -74,6 +74,15 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.delete(**options)
+    new(
+      tag: :button,
+      text: t(".delete"),
+      scheme: :danger,
+      **options
+    )
+  end
+
   def self.discard(path:, **options)
     new(
       tag: :a,
