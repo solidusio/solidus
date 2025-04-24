@@ -1,0 +1,16 @@
+en:
+  localization: Localization
+  plugins:
+    install: Install
+    plugin: Plugin
+    solidus_i18n:
+      href: https://github.com/solidusio/solidus_i18n
+      desc: Translate Solidus Admin in every language
+      title: Solidus i18n
+    solidus_globalize:
+      href: https://github.com/solidusio-contrib/solidus_globalize
+      desc: Translate your store content in every language
+      title: Solidus Globalize
+  seo: SEO
+  tax_country:
+    no_taxes_without_address: No taxes on carts without address
