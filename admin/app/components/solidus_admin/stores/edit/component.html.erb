@@ -11,6 +11,12 @@
   <%= render component("stores/form").new(store: @store, url: form_url, id: form_id) %>
 
   <%= page_footer do %>
-    <%= render component("ui/button").save(form: form_id) %>
+    <div class="flex justify-between w-full">
+      <%= form_for @store, url: solidus_admin.store_path(@store), method: :delete do %>
+        <%= render component("ui/button").delete %>
+      <% end %>
+
+      <%= render component("ui/button").save(form: form_id) %>
+    </div>
   <% end %>
 <% end %>
