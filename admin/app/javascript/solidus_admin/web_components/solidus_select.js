@@ -44,6 +44,7 @@ class SolidusSelect extends HTMLSelectElement {
       dropdownContentClass: "dropdown-content",
       optionClass: "option",
       wrapperClass: "wrapper",
+      allowEmptyOption: true,
       maxOptions: null,
       refreshThrottle: 0,
       plugins: {
