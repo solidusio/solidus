@@ -49,6 +49,15 @@ RSpec.describe SolidusAdmin::UI::Button::Component, type: :component do
     end
   end
 
+  describe ".delete" do
+    let(:component) { described_class.delete }
+
+    it "renders Delete button" do
+      render_inline(component)
+      expect(page).to have_button("Delete")
+    end
+  end
+
   describe ".discard" do
     let(:component) { described_class.discard(path: "/index") }
 
