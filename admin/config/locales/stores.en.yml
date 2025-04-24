@@ -1,4 +1,19 @@
 en:
+  activerecord:
+    attributes:
+      spree/store:
+        available_locales: Storefront Languages
+        bcc_email: BCC Email
+        cart_tax_country_iso: Tax Country
+        code: Slug
+        default: Default
+        default_currency: Default Currency
+        mail_from_address: Store Email
+        meta_description: Meta Description
+        meta_keywords: Meta Keywords
+        name: Store Name
+        seo_title: Page Title
+        url: URL
   solidus_admin:
     stores:
       title: "Stores"
