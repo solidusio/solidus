@@ -50,6 +50,8 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   loading next page of results. Default: "Loading more results".
   # @option attributes [String] :"data-no-results-message" which text to show when there are no search results returned.
   #   Default: "No results found".
+  # @option attributes [true, String] :include_blank if passed, an empty option will be prepended to the list of options.
+  #   Pass +true+ for empty option with no text, or +String+ for the text to be shown as empty option.
   def initialize(label:, name:, choices:, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
     @hint = hint
@@ -78,6 +80,11 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   def prepare_options(choices:, src:)
     if src.present?
       @attributes[:"data-src"] = src
+    end
+
+    if (blank_option = @attributes.delete(:include_blank))
+      blank_option = "" if blank_option == true
+      choices.unshift([blank_option, ""])
     end
 
     @options_collection = options_for_select(choices, @attributes.delete(:value))
