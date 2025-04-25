@@ -5,14 +5,14 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
   include SolidusAdmin::Preview
 
   def overview
-    render_with_template(locals: { address: fake_address })
+    render_with_template(locals: { addressable: fake_address })
   end
 
   # @param disabled toggle
   def playground(disabled: false)
     render component("ui/forms/address").new(
-      name: "",
-      address: fake_address,
+      form_field_name: "",
+      addressable: fake_address,
       disabled:
     )
   end
