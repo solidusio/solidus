@@ -845,7 +845,6 @@ module Spree
       cancel_shipments!
       cancel_payments!
 
-      send_cancel_email
       update_column(:canceled_at, Time.current)
       recalculate
 
@@ -863,10 +862,6 @@ module Spree
 
         payment.cancel!
       end
-    end
-
-    def send_cancel_email
-      Spree::Config.order_mailer_class.cancel_email(self).deliver_later
     end
 
     def after_resume
