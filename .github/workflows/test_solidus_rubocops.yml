@@ -1,0 +1,21 @@
+name: Test Solidus Rubocops
+
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Run Solidus Rubocop tests
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rspec tasks/linting/

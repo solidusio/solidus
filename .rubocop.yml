@@ -5,6 +5,7 @@ inherit_from: .rubocop_todo.yml
 require:
   - rubocop-performance
   - rubocop-rails
+  - ./tasks/linting/wrong_migration_version.rb
 
 AllCops:
   Exclude:
