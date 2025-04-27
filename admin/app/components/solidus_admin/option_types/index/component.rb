@@ -5,10 +5,6 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
     Spree::OptionType
   end
 
-  def row_url(option_type)
-    spree.edit_admin_option_type_path(option_type)
-  end
-
   def sortable_options
     {
       url: ->(option_type) { solidus_admin.move_option_type_path(option_type) },
@@ -55,7 +51,8 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
     {
       header: :name,
       data: ->(option_type) do
-        content_tag :div, option_type.name
+        link_to option_type.name, edit_path(option_type),
+        class: 'body-link'
       end
     }
   end
@@ -63,9 +60,11 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
   def presentation_column
     {
       header: :presentation,
-      data: ->(option_type) do
-        content_tag :div, option_type.presentation
-      end
+      data: ->(option_type) { option_type.presentation }
     }
+  end
+
+  def edit_path(option_type)
+    spree.edit_admin_option_type_path(option_type)
   end
 end
