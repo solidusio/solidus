@@ -44,6 +44,12 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   ```
   # @option attributes [String] :"data-no-preload" when +:src+ param is passed, options are preloaded when the component
   #   is initialized. Use this option to disable preload.
+  # @option attributes [String] :"data-loading-message" when +:src+ param is passed, which text to show while loading options.
+  #   Default: "Loading".
+  # @option attributes [String] :"data-loading-more-message" when +:src+ param is passed, which text to show while
+  #   loading next page of results. Default: "Loading more results".
+  # @option attributes [String] :"data-no-results-message" which text to show when there are no search results returned.
+  #   Default: "No results found".
   def initialize(label:, name:, choices:, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
     @hint = hint
@@ -61,6 +67,13 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   end
 
   private
+
+  # translations are not available at initialization so need to define them here
+  def before_render
+    @attributes[:"data-loading-message"] ||= t("solidus_admin.solidus_select.loading")
+    @attributes[:"data-loading-more-message"] ||= t("solidus_admin.solidus_select.loading_more")
+    @attributes[:"data-no-results-message"] ||= t("solidus_admin.solidus_select.no_results")
+  end
 
   def prepare_options(choices:, src:)
     if src.present?

@@ -53,15 +53,15 @@ export default function(config) {
   this.settings.searchField = [this.settings.labelField];
   this.settings.jsonPath = config.jsonPath;
   this.settings.queryParam = config.queryParam;
-  this.settings.render = {
+  this.settings.render = Object.assign(this.settings.render, {
     loading: function() {
-      return "<div class='loading'>Loading</div>";
+      return `<div class='loading'>${config.loadingMessage}</div>`;
     },
     loading_more: function() {
-      return "<div class='loading-more'>Loading more results</div>";
+      return `<div class='loading-more'>${config.loadingMoreMessage}</div>`;
     },
     no_more_results: function() {},
-  };
+  });
 
   this.require("virtual_scroll");
 }
