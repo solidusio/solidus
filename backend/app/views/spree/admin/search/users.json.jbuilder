@@ -14,7 +14,10 @@ json.array!(@users) do |user|
     :state_name,
     :state_id,
     :country_id,
-    :company
+    :company,
+    :email,
+    :vat_id,
+    :reverse_charge_status
   ]
   json.ship_address do
     if user.ship_address
