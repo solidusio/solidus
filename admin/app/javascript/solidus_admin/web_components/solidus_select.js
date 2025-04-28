@@ -55,6 +55,12 @@ class SolidusSelect extends HTMLSelectElement {
         patch_scroll: true,
         stash_on_search: true,
       },
+      render: {
+        no_results: function() {
+          const message = this.input.getAttribute("data-no-results-message");
+          return `<div class='no-results'>${message}</div>`;
+        },
+      },
     };
 
     if (this.getAttribute("data-src")) {
@@ -66,6 +72,8 @@ class SolidusSelect extends HTMLSelectElement {
         preload: this.getAttribute("data-no-preload") !== "true",
         jsonPath: this.getAttribute("data-json-path"),
         queryParam: this.getAttribute("data-query-param"),
+        loadingMessage: this.getAttribute("data-loading-message"),
+        loadingMoreMessage: this.getAttribute("data-loading-more-message"),
       };
     }
 
