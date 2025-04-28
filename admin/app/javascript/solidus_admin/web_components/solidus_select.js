@@ -5,7 +5,7 @@ class SolidusSelect extends HTMLSelectElement {
   static observedAttributes = ["synced"];
 
   connectedCallback() {
-    const tomselect = new TomSelect(this, this.getTomSelectSettings());
+    const tomselect = new TomSelect(this, this.tomSelectSettings);
 
     this.setAttribute("synced", "true");
 
@@ -37,7 +37,7 @@ class SolidusSelect extends HTMLSelectElement {
     }
   }
 
-  getTomSelectSettings() {
+  get tomSelectSettings() {
     const settings = {
       controlClass: "control",
       dropdownClass: "dropdown",

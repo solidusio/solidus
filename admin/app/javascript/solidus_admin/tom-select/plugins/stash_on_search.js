@@ -2,27 +2,25 @@
 //  an option selected shows both selected option and the search term.
 // Instead, hide the selected option when typing and bring it back when leaving the field.
 class Stash {
-  constructor() {
-    this.content = {};
-  }
+  #content = {};
 
   put(value, data) {
-    this.content["value"] = value;
-    this.content["data"] = data;
+    this.#content["value"] = value;
+    this.#content["data"] = data;
   }
 
   pop() {
-    const { value, data } = this.content;
+    const { value, data } = this.#content;
     this.clear();
     return { value, data };
   }
 
   clear() {
-    this.content = {};
+    this.#content = {};
   }
 
-  isEmpty() {
-    return Object.keys(this.content).length === 0;
+  get isEmpty() {
+    return Object.keys(this.#content).length === 0;
   }
 }
 
@@ -32,7 +30,7 @@ export default function() {
   this.stash = new Stash();
 
   this.stashSelected = function() {
-    if (!this.stash.isEmpty()) return;
+    if (!this.stash.isEmpty) return;
     if (!this.items.length) return;
 
     const currentValue = this.items[0];
@@ -41,7 +39,7 @@ export default function() {
   };
 
   this.unstashSelected = function() {
-    if (this.stash.isEmpty()) return;
+    if (this.stash.isEmpty) return;
 
     const { value, data } = this.stash.pop();
     // In case this is a select with remote source, options are refreshed on each search, so we need to put the option
