@@ -1,0 +1,41 @@
+<div class="flex flex-col gap-4">
+  <div class="flex items-center">
+    <h6 class="text-gray-500 mb-3 mt-0 w-1/6">
+      Success
+    </h6>
+
+    <div class="w-5/6">
+      <%= render current_component.new(scheme: :success, title: "Added Solidus T-Shirt", description: "<a href='#' class='underline'>Add another product</a> or <a href='#' class='underline'>view product in a new window</a>".html_safe) %>
+    </div>
+  </div>
+
+  <div class="flex items-center">
+    <h6 class="text-gray-500 mb-3 mt-0 w-1/6">
+      Warning
+    </h6>
+
+    <div class="w-5/6">
+      <%= render current_component.new(scheme: :warning, title: "No active stock locations left", description: "You can assign new active stock location <a href='#' class='underline'>here</a>".html_safe) %>
+    </div>
+  </div>
+
+  <div class="flex items-center">
+    <h6 class="text-gray-500 mb-3 mt-0 w-1/6">
+      Danger
+    </h6>
+
+    <div class="w-5/6">
+      <%= render current_component.new(scheme: :danger, title: "Request was not completed", description: "Cannot destroy default store") %>
+    </div>
+  </div>
+
+  <div class="flex items-center">
+    <h6 class="text-gray-500 mb-3 mt-0 w-1/6">
+      Info
+    </h6>
+
+    <div class="w-5/6">
+      <%= render current_component.new(scheme: :info, title: "Locales available", description: "Did you know you can update storefront locales <a href='#' class='underline'>here</a>?".html_safe) %>
+    </div>
+  </div>
+</div>
