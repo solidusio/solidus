@@ -1,64 +1,25 @@
 <fieldset class="<%= stimulus_id %>"
-  data-controller="<%= stimulus_id %>"
   <%= :disabled if @disabled %>
 >
   <div class="<%= stimulus_id %>--address-form flex flex-wrap gap-4 pb-4">
-    <%= render component("ui/forms/field").text_field(@form_field_name, :name, object: @addressable) if @include_name_field %>
-    <%= render component("ui/forms/field").text_field(@form_field_name, :address1, object: @addressable) %>
-    <%= render component("ui/forms/field").text_field(@form_field_name, :address2, object: @addressable) %>
-    <div class="flex gap-4 w-full">
-      <%= render component("ui/forms/field").text_field(@form_field_name, :city, object: @addressable) %>
-      <%= render component("ui/forms/field").text_field(@form_field_name, :zipcode, object: @addressable) %>
-    </div>
+    <%= name %>
+    <%= street %>
+    <%= street_contd %>
 
-    <%= render component("ui/forms/field").select(
-      @form_field_name,
-      :country_id,
-      Spree::Country.all.map { |c| [c.name, c.id] },
-      object: @addressable,
-      value: @addressable.try(:country_id),
-      "data-#{stimulus_id}-target": "country",
-      "data-action": "change->#{stimulus_id}#loadStates"
-    ) %>
-
-    <%= content_tag(:div,
-      data: { "#{stimulus_id}-target": "stateNameWrapper" },
-      class: (@addressable.country&.states&.empty? ? "flex flex-col gap-2 w-full" : "hidden flex flex-col gap-2 w-full")
-        ) do %>
-      <%= render component("ui/forms/field").text_field(
-        @form_field_name,
-        :state_name,
-        object: @addressable,
-        value: @addressable.try(:state_name),
-        "data-#{stimulus_id}-target": "stateName"
-      ) %>
-    <% end %>
-    <input autocomplete="off" type="hidden" name=<%= "#{@form_field_name}[state_id]" %>>
-
-    <%= content_tag(:div,
-      data: { "#{stimulus_id}-target": "stateWrapper" },
-      class: (@addressable.country&.states&.empty? ? "hidden flex flex-col gap-2 w-full" : "flex flex-col gap-2 w-full")
-        ) do %>
-      <%= render component("ui/forms/field").select(
-        @form_field_name,
-        :state_id,
-        state_options,
-        object: @addressable,
-        value: @addressable.try(:state_id),
-        "data-#{stimulus_id}-target": "state"
-      ) %>
+    <% if city? || zipcode? %>
+      <div class="flex gap-4 w-full">
+        <%= city %>
+        <%= zipcode %>
+      </div>
     <% end %>
 
-    <%= render component("ui/forms/field").text_field(@form_field_name, :phone,  object: @addressable) %>
-    <%= render component("ui/forms/field").text_field(@form_field_name, :email,  object: @addressable) %>
+    <%= country_and_state %>
+
+    <%= phone %>
+    <%= email %>
     <% if Spree::Backend::Config.show_reverse_charge_fields %>
-      <%= render component("ui/forms/field").text_field(@form_field_name, :vat_id,  object: @addressable) %>
-      <%= render component("ui/forms/field").select(
-        @form_field_name,
-        :reverse_charge_status,
-        Spree::Address.reverse_charge_statuses.keys.map { |key| [I18n.t("spree.reverse_charge_statuses.#{key}"), key] },
-        object: @addressable
-      ) %>
+      <%= vat_id %>
+      <%= reverse_charge_status %>
     <% end %>
   </div>
 </fieldset>

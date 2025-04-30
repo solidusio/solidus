@@ -9,11 +9,17 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
   end
 
   # @param disabled toggle
-  def playground(disabled: false)
+  # @param fields_preset select { choices: [contact, location] }
+  # @param include_fields text "E.g. zipcode,street"
+  # @param exclude_fields text "E.g. name,street_contd"
+  def playground(disabled: false, fields_preset: :contact, include_fields: "", exclude_fields: "")
     render component("ui/forms/address").new(
       form_field_name: "",
       addressable: fake_address,
-      disabled:
+      disabled:,
+      fields_preset:,
+      include_fields: include_fields.present? ? include_fields.gsub(/\s+/, "").split(",") : [],
+      exclude_fields: exclude_fields.present? ? exclude_fields.gsub(/\s+/, "").split(",") : [],
     )
   end
 
