@@ -1,40 +1,13 @@
-import TomSelect from "tom-select";
+import TomSelect from "solidus_admin/tom-select";
 import { setValidity } from "solidus_admin/utils";
 
 class SolidusSelect extends HTMLSelectElement {
   static observedAttributes = ["synced"];
 
   connectedCallback() {
-    const originalSelect = this;
+    const tomselect = new TomSelect(this, this.tomSelectSettings);
 
-    const tomselect = new TomSelect(originalSelect, {
-      controlClass: "control",
-      dropdownClass: "dropdown",
-      dropdownContentClass: "dropdown-content",
-      optionClass: "option",
-      wrapperClass: "wrapper",
-      maxOptions: null,
-      refreshThrottle: 0,
-      plugins: {
-        no_active_items: true,
-        remove_button: {
-          append: originalSelect.multiple,
-          className: "remove-button"
-        },
-      },
-      onItemAdd: function() {
-        this.setTextboxValue("");
-        if (originalSelect.multiple) this.refreshOptions();
-      },
-      onType: function() {
-        if (!originalSelect.multiple && !this.currentResults.items.length) {
-          this.setTextboxValue("");
-          this.refreshOptions();
-        }
-      },
-    });
-
-    originalSelect.setAttribute("synced", "true");
+    this.setAttribute("synced", "true");
 
     // set default style for inner input field
     tomselect.control_input.style =
@@ -46,10 +19,9 @@ class SolidusSelect extends HTMLSelectElement {
       "min-width: 7rem;\n" +
       "outline: none !important;"
 
-    originalSelect.setAttribute("hidden", "true");
-    originalSelect.setAttribute("aria-hidden", "true");
-
-    setValidity(originalSelect, originalSelect.dataset.errorMessage);
+    this.setAttribute("hidden", "true");
+    this.setAttribute("aria-hidden", "true");
+    setValidity(this, this.dataset.errorMessage);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -63,6 +35,49 @@ class SolidusSelect extends HTMLSelectElement {
         }
         break;
     }
+  }
+
+  get tomSelectSettings() {
+    const settings = {
+      controlClass: "control",
+      dropdownClass: "dropdown",
+      dropdownContentClass: "dropdown-content",
+      optionClass: "option",
+      wrapperClass: "wrapper",
+      maxOptions: null,
+      refreshThrottle: 0,
+      plugins: {
+        no_active_items: true,
+        remove_button: {
+          append: this.multiple,
+          className: "remove-button"
+        },
+        patch_scroll: true,
+        stash_on_search: true,
+      },
+      render: {
+        no_results: function() {
+          const message = this.input.getAttribute("data-no-results-message");
+          return `<div class='no-results'>${message}</div>`;
+        },
+      },
+    };
+
+    if (this.getAttribute("data-src")) {
+      settings.valueField = this.getAttribute("data-option-value-field") || "id";
+      settings.labelField = this.getAttribute("data-option-label-field") || "name";
+
+      settings.plugins.remote_with_pagination = {
+        src: this.getAttribute("data-src"),
+        preload: this.getAttribute("data-no-preload") !== "true",
+        jsonPath: this.getAttribute("data-json-path"),
+        queryParam: this.getAttribute("data-query-param"),
+        loadingMessage: this.getAttribute("data-loading-message"),
+        loadingMoreMessage: this.getAttribute("data-loading-more-message"),
+      };
+    }
+
+    return settings;
   }
 }
 

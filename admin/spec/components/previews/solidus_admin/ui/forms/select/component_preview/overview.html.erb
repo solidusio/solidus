@@ -29,6 +29,23 @@
         <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
         <%= render current_component.new(id: "single-disabled-filled", value: "Sweden", disabled: true, **default_params) %>
       </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Remote options</h6>
+        <%= render current_component.new(id: "single-src-empty", choices: [], src: solidus_admin.country_states_url(country_id: 1), label: "State", name: "state") %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Remote options (preselected)</h6>
+        <%= render current_component.new(
+          id: "single-src-selected",
+          choices: Spree::State.where(id: 1).map { [_1.name, _1.id] },
+          src: solidus_admin.country_states_url(country_id: 1),
+          label: "State",
+          name: "state",
+          value: "1"
+        ) %>
+      </div>
     </div>
 
     <div class="flex flex-col flex-grow gap-2">
@@ -59,6 +76,24 @@
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Disabled filled</h6>
         <%= render current_component.new(id: "multiple-disabled-filled", value: "Sweden", disabled: true, **default_params) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Remote options</h6>
+        <%= render current_component.new(id: "multiple-src-empty", choices: [], src: solidus_admin.country_states_url(country_id: 1), label: "State", name: "state", multiple: true) %>
+      </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Remote options (preselected)</h6>
+        <%= render current_component.new(
+          id: "multiple-src-selected",
+          choices: Spree::State.where(id: [1,2,3]).map { [_1.name, _1.id] },
+          src: solidus_admin.country_states_url(country_id: 1),
+          label: "State",
+          name: "state",
+          multiple: true,
+          value: [1,2,3]
+        ) %>
       </div>
     </div>
   </div>

@@ -8,6 +8,30 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
     render_with_template
   end
 
+  # @param multiple toggle
+  # @param latency toggle "Simulate request latency (2000ms)"
+  # @param loading_message text
+  # @param loading_more_message text
+  # @param no_results_message text
+  def remote_with_pagination(multiple: false, latency: false, loading_message: nil, loading_more_message: nil, no_results_message: nil)
+    args = { label: "Search", name: "select", multiple:, choices: [], placeholder: "Type to search" }
+    delay_url = "app.requestly.io/delay/2000/" if latency
+    src = "https://#{delay_url}api.github.com/search/repositories"
+    args.merge!(
+      src:,
+      "data-option-value-field": "id",
+      "data-option-label-field": "full_name",
+      "data-json-path": "items",
+      "data-query-param": "q",
+      "data-no-preload": "true",
+      "data-loading-message": loading_message,
+      "data-loading-more-message": loading_more_message,
+      "data-no-results-message": no_results_message,
+    )
+
+    render component("ui/forms/select").new(**args)
+  end
+
   # @param size select { choices: [s, m, l] }
   # @param options number
   # @param multiple toggle

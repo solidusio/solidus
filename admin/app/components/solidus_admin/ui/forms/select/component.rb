@@ -25,22 +25,65 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     },
   }.freeze
 
-  def initialize(label:, name:, choices:, size: :m, hint: nil, tip: nil, error: nil, **attributes)
+  # Render custom select component, which uses "solidus_select" custom element
+  # @see "admin/app/javascript/solidus_admin/web_components/solidus_select.js"
+  # @param choices [Array<String>, Array<Array<String>>] container with options to be rendered
+  #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
+  #   When +:src+ parameter is provided, use +:choices+ to provide the list of selected options only.
+  # @param src [nil, String] URL of a JSON resource with options data to be loaded instead of rendering options in place.
+  # @option attributes [String] :"data-option-value-field"
+  # @option attributes [String] :"data-option-label-field" when +:src+ param is passed, value and label of loaded options
+  #   will be mapped to JSON response +"id"+ and +"name"+ by default. Use these parameters to map to different keys.
+  # @option attributes [String] :"data-json-path" when +:src+ param is passed and options data is nested in JSON response,
+  #   specify path to it with this parameter.
+  # @option attributes [String] :"data-query-param" when +:src+ param is passed, use this parameter to specify the name of
+  #   a query parameter to be used with search, e.g.:
+  #   ```
+  #   src: solidus_admin.countries_url,
+  #   "data-query-param": "q[name_cont]",
+  #   ```
+  # @option attributes [String] :"data-no-preload" when +:src+ param is passed, options are preloaded when the component
+  #   is initialized. Use this option to disable preload.
+  # @option attributes [String] :"data-loading-message" when +:src+ param is passed, which text to show while loading options.
+  #   Default: "Loading".
+  # @option attributes [String] :"data-loading-more-message" when +:src+ param is passed, which text to show while
+  #   loading next page of results. Default: "Loading more results".
+  # @option attributes [String] :"data-no-results-message" which text to show when there are no search results returned.
+  #   Default: "No results found".
+  def initialize(label:, name:, choices:, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
-    @name = name
     @hint = hint
     @tip = tip
     @error = Array.wrap(error)
-
-    @choices = choices
-    @selected = attributes.delete(:value)
-
     @attributes = attributes
-    @attributes[:name] = @name
-    @attributes[:is] = "solidus-select"
-    @attributes[:id] ||= "#{stimulus_id}_#{@name}"
-    @attributes[:"data-error-message"] = @error.presence
 
+    prepare_options(choices:, src:)
+    prepare_classes(size:)
+
+    @attributes[:name] = name
+    @attributes[:is] = "solidus-select"
+    @attributes[:id] ||= "#{stimulus_id}_#{name}"
+    @attributes[:"data-error-message"] = @error.presence
+  end
+
+  private
+
+  # translations are not available at initialization so need to define them here
+  def before_render
+    @attributes[:"data-loading-message"] ||= t("solidus_admin.solidus_select.loading")
+    @attributes[:"data-loading-more-message"] ||= t("solidus_admin.solidus_select.loading_more")
+    @attributes[:"data-no-results-message"] ||= t("solidus_admin.solidus_select.no_results")
+  end
+
+  def prepare_options(choices:, src:)
+    if src.present?
+      @attributes[:"data-src"] = src
+    end
+
+    @options_collection = options_for_select(choices, @attributes.delete(:value))
+  end
+
+  def prepare_classes(size:)
     general_classes = ["w-full relative text-black font-normal #{FONT_SIZES[size]}"]
     control_classes = ["[&>.control]:peer-invalid:border-red-600 [&>.control]:peer-invalid:hover:border-red-600
       [&>.control]:peer-invalid:text-red-600 [&>.control]:flex [&>.control]:flex-wrap [&>.control]:items-center
@@ -77,10 +120,13 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
       [&_.dropdown]:shadow-lg [&_.dropdown]:bg-white"]
 
     dropdown_content_classes = ["[&_.dropdown-content]:flex [&_.dropdown-content]:flex-col [&_.dropdown-content]:max-h-[200px]
-      [&_.dropdown-content]:overflow-x-hidden [&_.dropdown-content]:overflow-y-auto [&_.dropdown-content]:scroll-smooth [&_.no-results]:text-gray-500"]
+      [&_.dropdown-content]:overflow-x-hidden [&_.dropdown-content]:overflow-y-auto [&_.dropdown-content]:scroll-smooth
+      [&_.no-results]:text-gray-500 [&_.no-results]:px-2 [&_.no-results]:py-1
+      [&_.loading]:animate-pulse [&_.loading]:italic [&_.loading]:text-gray-500 [&_.loading]:px-2 [&_.loading]:py-1"]
 
     option_classes = ["[&_.option]:p-2 [&_.option]:rounded-sm [&_.option]:min-w-fit [&_.option.active]:bg-gray-50
       [&_.option.active]:text-gray-700 [&_.option_.highlight]:bg-yellow [&_.option_.highlight]:rounded-[1px]
+      [&_.option.loading-more]:animate-pulse [&_.option.loading-more]:italic [&_.option.loading-more]:text-gray-500 [&_.option.loading-more]:text-center [&_.option.loading-more]:text-xs [&_.option.loading-more]:py-0.5 [&_.option.loading-more]:pointer-events-none
       #{HEIGHTS[:option][size]}"]
 
     @attributes[:class] = [

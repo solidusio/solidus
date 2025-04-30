@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    solidus_select:
+      loading: Loading
+      loading_more: Loading more results
+      no_results: No results found
