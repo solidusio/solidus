@@ -54,6 +54,7 @@ module Spree
     def test_dummy_config
       @lib_name = options[:lib_name]
       @database = options[:database]
+      @has_javascripts = Dir.exist?("#{dummy_path}/app/assets/javascripts")
 
       template "rails/database.yml", "#{dummy_path}/config/database.yml", force: true
       template "rails/storage.yml", "#{dummy_path}/config/storage/test.yml", force: true
