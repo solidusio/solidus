@@ -1,3 +1,5 @@
 //= link_tree ../images
+<% if @has_javascripts %>
 //= link_directory ../javascripts .js
+<% end %>
 //= link_directory ../stylesheets .css
