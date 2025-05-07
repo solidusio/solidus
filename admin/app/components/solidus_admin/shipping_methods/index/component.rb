@@ -5,8 +5,8 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     Spree::ShippingMethod
   end
 
-  def row_url(shipping_method)
-    spree.edit_admin_shipping_method_path(shipping_method)
+  def edit_path(shipping_method)
+    solidus_admin.edit_shipping_method_path(shipping_method)
   end
 
   def search_url
@@ -21,7 +21,7 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_shipping_method_path,
+      href: solidus_admin.new_shipping_method_path,
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -40,22 +40,49 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
 
   def columns
     [
-      {
-        header: :name,
-        data: -> { [_1.admin_name.presence, _1.name].compact.join(' / ') },
-      },
-      {
-        header: :zone,
-        data: -> { _1.zones.pluck(:name).to_sentence },
-      },
-      {
-        header: :calculator,
-        data: -> { _1.calculator&.description },
-      },
-      {
-        header: :available_to_users,
-        data: -> { _1.available_to_users? ? component('ui/badge').yes : component('ui/badge').no },
-      },
+      name_column,
+      zone_column,
+      calculator_column,
+      available_to_users_column,
     ]
+  end
+
+  private
+
+  def name_column
+    {
+      header: :name,
+      data: ->(shipping_method) do
+        name = [shipping_method.admin_name.presence, shipping_method.name].compact.join(' / ')
+        link_to name, edit_path(shipping_method), class: 'body-link'
+      end
+    }
+  end
+
+  def zone_column
+    {
+      header: :zone,
+      data: ->(shipping_method) do
+        shipping_method.zones.pluck(:name).to_sentence
+      end
+    }
+  end
+
+  def calculator_column
+    {
+      header: :calculator,
+      data: ->(shipping_method) do
+        shipping_method.calculator&.description
+      end
+    }
+  end
+
+  def available_to_users_column
+    {
+      header: :available_to_users,
+      data: ->(shipping_method) do
+        shipping_method.available_to_users? ? component('ui/badge').yes : component('ui/badge').no
+      end
+    }
   end
 end
