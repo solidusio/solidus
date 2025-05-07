@@ -2,24 +2,6 @@
   <%= :disabled if @disabled %>
 >
   <div class="<%= stimulus_id %>--address-form flex flex-wrap gap-4 pb-4">
-    <%= name %>
-    <%= street %>
-    <%= street_contd %>
-
-    <% if city? || zipcode? %>
-      <div class="flex gap-4 w-full">
-        <%= city %>
-        <%= zipcode %>
-      </div>
-    <% end %>
-
-    <%= country_and_state %>
-
-    <%= phone %>
-    <%= email %>
-    <% if Spree::Backend::Config.show_reverse_charge_fields %>
-      <%= vat_id %>
-      <%= reverse_charge_status %>
-    <% end %>
+    <%= fieldset %>
   </div>
 </fieldset>

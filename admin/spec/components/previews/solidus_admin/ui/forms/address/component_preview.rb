@@ -4,22 +4,36 @@
 class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 
-  def overview
-    render_with_template(locals: { addressable: fake_address })
+  # @param fieldset [Symbol] select { choices: [contact, location] }
+  def overview(fieldset: :contact)
+    render_with_template(locals: { addressable: fake_address, fieldset: })
+  end
+
+  # @param fieldset [Symbol] select { choices: [contact, location] }
+  def with_extended_fields(fieldset: :contact)
+    render_with_template(locals: { addressable: fake_address, fieldset: })
+  end
+
+  def with_custom_fieldset
+    addressable = Struct.new(:firstname, :lastname, :company, :vat_id) do
+      def self.human_attribute_name(attribute)
+        attribute.to_s.humanize
+      end
+    end.new
+
+    render_with_template(locals: { addressable: })
   end
 
   # @param disabled toggle
-  # @param fields_preset select { choices: [contact, location] }
-  # @param include_fields text "E.g. zipcode,street"
-  # @param exclude_fields text "E.g. name,street_contd"
-  def playground(disabled: false, fields_preset: :contact, include_fields: "", exclude_fields: "")
+  # @param fieldset [Symbol] select { choices: [contact, location] }
+  # @param excludes select { choices: [name, street, street_contd, city_and_zipcode, country_and_state, phone, email, reverse_charge], multiple: true }
+  def playground(disabled: false, fieldset: :contact, excludes: "")
     render component("ui/forms/address").new(
       form_field_name: "",
       addressable: fake_address,
       disabled:,
-      fields_preset:,
-      include_fields: include_fields.present? ? include_fields.gsub(/\s+/, "").split(",") : [],
-      exclude_fields: exclude_fields.present? ? exclude_fields.gsub(/\s+/, "").split(",") : [],
+      fieldset:,
+      excludes: excludes.present? ? excludes.split(",") : [],
     )
   end
 

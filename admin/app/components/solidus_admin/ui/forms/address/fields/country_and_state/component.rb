@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::UI::Forms::Address::CountryAndState::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::UI::Forms::Address::Fields::CountryAndState::Component < SolidusAdmin::BaseComponent
   def initialize(addressable:, form_field_name:)
     @addressable = addressable
     @form_field_name = form_field_name
