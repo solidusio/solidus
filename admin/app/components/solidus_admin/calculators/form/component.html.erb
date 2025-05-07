@@ -1,0 +1,44 @@
+<div
+  id="calculator_fields"
+  class="js-calculator-fields no-border-bottom"
+  data-controller="calculators--form"
+>
+  <div>
+    <div class="mb-3">
+      <%= render component("ui/forms/field").select(
+        @form.object_name,
+        :calculator_type,
+        @calculators.map { |c| [c.description, c.name] },
+        object: @form.object,
+        value: @form.object.calculator_type,
+        label: 'Calculator',
+        class: "fullwidth",
+        data: {
+          "calculators--form-target": "select",
+          action: "change->calculators--form#toggle"
+        }
+      ) %>
+    </div>
+
+    <% @calculators.each do |calculator_class| %>
+      <% calculator = @form.object.calculator.class == calculator_class ? @form.object.calculator : calculator_class.new %>
+      <div
+        class="js-calculator-preferences"
+        data-calculators--form-target="preferences"
+        data-calculator-type="<%= calculator_class %>"
+      >
+        <%= @form.fields_for :calculator, calculator do |calculator_form| %>
+          <% calculator.admin_form_preference_names.each do |name| %>
+            <div class="mb-3">
+              <%= render component("calculators/preference_fields/#{calculator.preference_type(name)}").new(
+                form: calculator_form,
+                attribute: "preferred_#{name}",
+                label: t(name, scope: 'spree', default: name.to_s.humanize)
+              ) %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
