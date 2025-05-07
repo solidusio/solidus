@@ -51,4 +51,18 @@ describe "Shipping Methods", type: :feature do
       expect(Spree::ShippingMethod.find_by(name: "Super Saver")).to be_present
     end
   end
+
+  context "when editing an existing shipping method" do
+    let!(:shipping_method) { create(:shipping_method, name: "Old Name") }
+
+    before { visit spree.edit_admin_shipping_method_path(shipping_method) }
+
+    it "updates the shipping method", :js do
+      fill_in "Name", with: "New Name"
+      click_on "Save"
+
+      expect(page).to have_content("Shipping method was successfully updated.")
+      expect(page).to have_content("New Name")
+    end
+  end
 end
