@@ -18,7 +18,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_adjustment_reason_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -26,7 +26,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
 
   def turbo_frames
     %w[
-      resource_modal
+      resource_form
     ]
   end
 
@@ -52,7 +52,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
         data: ->(adjustment_reason) do
           link_to adjustment_reason.name, edit_path(adjustment_reason),
             class: 'body-link',
-            data: { turbo_frame: :resource_modal }
+            data: { turbo_frame: :resource_form }
         end
       },
       {
@@ -60,7 +60,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
         data: ->(adjustment_reason) do
           link_to adjustment_reason.code, edit_path(adjustment_reason),
             class: 'body-link',
-            data: { turbo_frame: :resource_modal }
+            data: { turbo_frame: :resource_form }
         end
       },
       {
