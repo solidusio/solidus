@@ -31,7 +31,7 @@
                 tag: :a,
                 scheme: :danger,
                 data: {
-                  turbo_frame: :resource_modal
+                  turbo_frame: :resource_form
                 },
                 href: edit_validity_url,
                 text: t(".invalidate"),
@@ -41,7 +41,7 @@
             <%= render component("ui/button").new(
               tag: :a,
               data: {
-                turbo_frame: :resource_modal
+                turbo_frame: :resource_form
               },
               href: edit_memo_url,
               text: t(".edit_memo"),
@@ -51,7 +51,7 @@
               <%= render component("ui/button").new(
                 tag: :a,
                 data: {
-                  turbo_frame: :resource_modal
+                  turbo_frame: :resource_form
                 },
                 href: edit_amount_url,
                 text: t(".edit_amount"),
@@ -79,5 +79,5 @@
     <% end %>
   <% end %>
 
-  <%= turbo_frame_tag :resource_modal, target: "_top" %>
+  <%= turbo_frame_tag :resource_form, target: "_top" %>
 <% end %>
