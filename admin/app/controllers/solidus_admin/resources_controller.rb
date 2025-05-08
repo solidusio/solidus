@@ -126,7 +126,7 @@ module SolidusAdmin
           render page_component, status: :unprocessable_entity
         end
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(:resource_modal, page_component),
+          render turbo_stream: turbo_stream.replace(resource_form_frame, page_component),
             status: :unprocessable_entity
         end
       end
@@ -147,6 +147,10 @@ module SolidusAdmin
 
     def after_destroy_path
       solidus_admin.send("#{plural_resource_name}_path", **search_filter_params)
+    end
+
+    def resource_form_frame
+      :resource_form
     end
   end
 end
