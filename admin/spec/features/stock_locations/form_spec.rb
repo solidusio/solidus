@@ -65,6 +65,7 @@ describe "Stock Location Form", :js, type: :feature do
           solidus_select "Canada", from: "Country"
           solidus_select "Fictitious State in CA", from: "State"
           fill_in "Phone", with: "123123123"
+          fill_in "Email", with: "example@example.com"
           check "Set as default for all products"
           check "Backorderable default"
 
@@ -86,6 +87,7 @@ describe "Stock Location Form", :js, type: :feature do
           expect(solidus_select_control("Country")).to have_content("Canada")
           expect(solidus_select_control("State")).to have_content("Fictitious State in CA")
           expect(find_field("Phone").value).to eq "123123123"
+          expect(find_field("Email").value).to eq "example@example.com"
           expect(checkbox("Active")).to be_checked
           expect(checkbox("Propagate all variants")).to be_checked
           expect(checkbox("Restock inventory")).to be_checked

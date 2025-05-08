@@ -18,6 +18,7 @@ module SolidusAdmin
         :state_name,
         :state_id,
         :phone,
+        :email,
         :active,
         :default,
         :backorderable_default,

@@ -4,6 +4,7 @@ en:
   availability: "Availability"
   backorderable_default: "Backorderable default"
   check_stock_on_transfer: "Check stock on transfer"
+  contact_info: "Contact information"
   default: "Set as default for all products"
   fulfillable: "Fulfillable"
   hints:
