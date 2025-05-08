@@ -11,15 +11,9 @@ In-Memory Order Updater TODO
 - [x] ~Write the `InMemoryOrderAdjuster` (also, should we rename this to `InMemoryOrderPromotionAdjuster`)~
 - [x] Fix CI failures from previous session (if any)
 - [ ] Add high level test for manipulative queries around new Promotion system
-- [WIP] Add high level test for manipulative queries around Legacy Promotion system
-  - The order updater patch doesn't seem to be loaded no matter which order updater we're using.
-  - Let's put a breakpoint in the dummy app to make sure all the of autoloaded paths that we expect are there. We put a breakpoint inside of Flickwerk and it showed that it was adding autoload paths to an empty array so we want to be sure that those are not being overwritten somewhere.
+- [x] Add high level test for manipulative queries around Legacy Promotion system
 - [ ] Adding shared examples that could be used in both promotion system gems to
   ensure the above?
-- [ ] Failing tests in new promotion system integrations spec due to
-  legacy_promotions order updater patch in `SolidusLegacyPromotions::SpreeOrderUpdaterPatch`
-  - [ ] Consider moving the `adjustment_total` re-calculation into the
-    `Spree::Config.item_total_class` and thus removing the need for the override?
 - [In Progress] Handle persistence in all implementations of `promotions.order_adjuster_class`
   - [x] Follow up on any failing test relating to change in promotion chooser
   - [x] Ensure adjustments are marked for destructions instead of destroyed
