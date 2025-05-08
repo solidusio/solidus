@@ -8,7 +8,7 @@
         tag: :a,
         href: new_store_credit_path,
         data: {
-          turbo_frame: :resource_modal
+          turbo_frame: :resource_form
         },
         text: t(".add_store_credit"),
         icon: "add-line"
@@ -47,7 +47,7 @@
           <%= render component("ui/button").new(
             tag: :a,
             data: {
-              turbo_frame: :resource_modal
+              turbo_frame: :resource_form
             },
             href: new_store_credit_path,
             text: t(".create_one"),
@@ -61,5 +61,5 @@
     <% end %>
   <% end %>
 
-  <%= turbo_frame_tag :resource_modal, target: "_top" %>
+  <%= turbo_frame_tag :resource_form, target: "_top" %>
 <% end %>
