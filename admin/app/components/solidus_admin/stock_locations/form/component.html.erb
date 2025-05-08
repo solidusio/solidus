@@ -12,7 +12,11 @@
       <% end %>
 
       <%= render component('ui/panel').new(title: t('.address')) do %>
-        <%= render component('ui/forms/address').new(addressable: @stock_location, form_field_name: 'stock_location', fieldset: :location, excludes: :email) %>
+        <%= render component('ui/forms/address').new(addressable: @stock_location, form_field_name: 'stock_location', fieldset: :location, excludes: %i[phone email]) %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.contact_info')) do %>
+        <%= render component('ui/forms/address').new(addressable: @stock_location, form_field_name: 'stock_location', fieldset: :contact_info) %>
       <% end %>
     <% end %>
 
