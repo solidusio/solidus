@@ -10,7 +10,7 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_shipping_category_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -18,7 +18,7 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
 
   def turbo_frames
     %w[
-      resource_modal
+      resource_form
     ]
   end
 
@@ -51,7 +51,7 @@ class SolidusAdmin::ShippingCategories::Index::Component < SolidusAdmin::Shippin
         header: :name,
         data: ->(shipping_category) do
           link_to shipping_category.name, edit_url(shipping_category),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: "body-link"
         end
       },
