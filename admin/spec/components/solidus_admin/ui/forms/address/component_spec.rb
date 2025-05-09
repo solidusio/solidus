@@ -7,16 +7,11 @@ RSpec.describe SolidusAdmin::UI::Forms::Address::Component, type: :component do
     render_preview(:overview)
   end
 
-  context "with include_name_field: false" do
-    it "does not render name field" do
-      component = described_class.new(
-        form_field_name: "",
-        addressable: Spree::Address.new(country: Spree::Country.find_or_initialize_by(iso: "US")),
-        include_name_field: false
-      )
+  it "renders with_extended_fields preview" do
+    render_preview(:with_extended_fields)
+  end
 
-      render_inline(component)
-      expect(page).not_to have_content("Name")
-    end
+  it "renders with_custom_fieldset preview" do
+    render_preview(:with_custom_fieldset)
   end
 end

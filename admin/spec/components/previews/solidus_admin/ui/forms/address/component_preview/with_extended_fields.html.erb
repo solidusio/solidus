@@ -1,0 +1,11 @@
+<%= render current_component.new(
+  form_field_name: "",
+  addressable:,
+  fieldset:,
+  extends: [
+    { street_contd: -> { component("ui/forms/field").text_area("", :address2, object: addressable) } },
+    { company: -> { component("ui/forms/field").select("", :company, ["Rockstar Games", "CD Projekt Red", "Bethesda Softworks"], object: addressable) } },
+    :alternative_phone,
+  ],
+  excludes: %i[phone email reverse_charge]
+) %>
