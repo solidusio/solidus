@@ -1,0 +1,4 @@
+<div class="flex gap-4 w-full">
+  <%= render component("ui/forms/field").text_field(@form_field_name, :city, object: @addressable) %>
+  <%= render component("ui/forms/field").text_field(@form_field_name, :zipcode, object: @addressable) %>
+</div>
