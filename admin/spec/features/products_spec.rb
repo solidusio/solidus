@@ -17,7 +17,7 @@ describe "Products", type: :feature do
     expect(page).to have_content("$19.99")
     expect(page).to be_axe_clean
 
-    find('table tbody tr', text: 'Just a product').click
+    find_row('Just a product').click
 
     expect(page).to have_current_path("/admin/products/just-a-prod")
     expect(page).to have_content("Manage images")
