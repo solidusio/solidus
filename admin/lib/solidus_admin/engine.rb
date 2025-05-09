@@ -3,6 +3,7 @@
 require "stimulus-rails"
 require "turbo-rails"
 require "view_component"
+require "blueprinter"
 
 module SolidusAdmin
   class Engine < ::Rails::Engine
