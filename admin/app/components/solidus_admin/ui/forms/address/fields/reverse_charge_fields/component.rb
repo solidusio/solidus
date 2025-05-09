@@ -5,4 +5,8 @@ class SolidusAdmin::UI::Forms::Address::Fields::ReverseChargeFields::Component <
     @addressable = addressable
     @form_field_name = form_field_name
   end
+
+  def render?
+    Spree::Backend::Config.show_reverse_charge_fields
+  end
 end
