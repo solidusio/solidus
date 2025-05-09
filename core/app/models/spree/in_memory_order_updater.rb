@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Spree
-  class OrderUpdater
+  class InMemoryOrderUpdater
     attr_reader :order
+
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :quantity, to: :order
 
     def initialize(order)
@@ -16,24 +17,26 @@ module Spree
     # This method should never do anything to the Order that results in a save call on the
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
-    def recalculate
+    def recalculate(persist: true)
       order.transaction do
-        update_item_count
-        update_shipment_amounts
-        update_totals
+        recalculate_item_count
+        update_shipment_amounts(persist:)
+        update_totals(persist:)
         if order.completed?
           recalculate_payment_state
           update_shipments
           recalculate_shipment_state
         end
+
         Spree::Bus.publish(:order_recalculated, order:)
-        persist_totals
+
+        persist_totals if persist
       end
     end
     alias_method :update, :recalculate
     deprecate update: :recalculate, deprecator: Spree.deprecator
 
-    # Updates the +shipment_state+ attribute according to the following logic:
+    # Recalculates the +shipment_state+ attribute according to the following logic:
     #
     # shipped   when all Shipments are in the "shipped" state
     # partial   when at least one Shipment has a state of "shipped" and there is another Shipment with a state other than "shipped"
@@ -110,15 +113,15 @@ module Spree
     # fields (promo_total, included_tax_total, additional_tax_total, and
     # adjustment_total) on the item.
     # @return [void]
-    def recalculate_adjustments
+    def update_adjustments(persist:)
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
       # It also fits the criteria for sales tax as outlined here:
       # http://www.boe.ca.gov/formspubs/pub113/
-      update_promotions
+      update_promotions(persist:)
       update_tax_adjustments
-      update_item_totals
+      update_item_totals(persist:)
     end
 
     # Updates the following Order total values:
@@ -128,37 +131,19 @@ module Spree
     # +adjustment_total+   The total value of all adjustments (promotions, credits, etc.)
     # +promo_total+        The total value of all promotion adjustments
     # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +adjustment_total+.
-    def update_totals
-      update_payment_total
-      update_item_total
-      update_shipment_total
-      update_adjustment_total
+    def update_totals(persist:)
+      recalculate_payment_total
+      recalculate_item_total
+      recalculate_shipment_total
+      update_adjustment_total(persist:)
     end
 
-    def update_shipment_amounts
-      shipments.each(&:update_amounts)
+    def update_shipment_amounts(persist:)
+      shipments.each { _1.update_amounts(persist:) }
     end
 
-    # give each of the shipments a chance to update themselves
-    def update_shipments
-      shipments.each(&:update_state)
-    end
-
-    def update_payment_total
-      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
-    end
-
-    def update_shipment_total
-      order.shipment_total = shipments.to_a.sum(&:cost)
-      update_order_total
-    end
-
-    def update_order_total
-      order.total = order.item_total + order.shipment_total + order.adjustment_total
-    end
-
-    def update_adjustment_total
-      recalculate_adjustments
+    def update_adjustment_total(persist:)
+      update_adjustments(persist:)
 
       all_items = line_items + shipments
       # Ignore any adjustments that have been marked for destruction in our
@@ -170,16 +155,62 @@ module Spree
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
-      update_order_total
+      recalculate_order_total
     end
 
-    def update_item_count
+    def update_promotions(persist:)
+      Spree::Config.promotions.order_adjuster_class.new(order).call(persist:)
+    end
+
+    def update_tax_adjustments
+      Spree::Config.tax_adjuster_class.new(order).adjust!
+    end
+
+    def update_cancellations
+    end
+    deprecate :update_cancellations, deprecator: Spree.deprecator
+
+    def update_item_totals(persist:)
+      [*line_items, *shipments].each do |item|
+        Spree::Config.item_total_class.new(item).recalculate!
+
+        next unless persist && item.changed?
+
+        item.update_columns(
+          promo_total:          item.promo_total,
+          included_tax_total:   item.included_tax_total,
+          additional_tax_total: item.additional_tax_total,
+          adjustment_total:     item.adjustment_total,
+          updated_at:           Time.current,
+        )
+      end
+    end
+
+    # give each of the shipments a chance to update themselves
+    def update_shipments
+      shipments.each(&:update_state)
+    end
+
+    def recalculate_payment_total
+      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
+    end
+
+    def recalculate_shipment_total
+      order.shipment_total = shipments.to_a.sum(&:cost)
+      recalculate_order_total
+    end
+
+    def recalculate_order_total
+      order.total = order.item_total + order.shipment_total + order.adjustment_total
+    end
+
+    def recalculate_item_count
       order.item_count = line_items.to_a.sum(&:quantity)
     end
 
-    def update_item_total
+    def recalculate_item_total
       order.item_total = line_items.to_a.sum(&:amount)
-      update_order_total
+      recalculate_order_total
     end
 
     def persist_totals
@@ -195,36 +226,8 @@ module Spree
         order.state_changes.new(
           previous_state: old_state,
           next_state:     new_state,
-          name:,
-          user_id:        order.user_id
-        )
-      end
-    end
-
-    def update_promotions
-      Spree::Config.promotions.order_adjuster_class.new(order).call
-    end
-
-    def update_tax_adjustments
-      Spree::Config.tax_adjuster_class.new(order).adjust!
-    end
-
-    def update_cancellations
-    end
-    deprecate :update_cancellations, deprecator: Spree.deprecator
-
-    def update_item_totals
-      [*line_items, *shipments].each do |item|
-        Spree::Config.item_total_class.new(item).recalculate!
-
-        next unless item.changed?
-
-        item.update_columns(
-          promo_total:          item.promo_total,
-          included_tax_total:   item.included_tax_total,
-          additional_tax_total: item.additional_tax_total,
-          adjustment_total:     item.adjustment_total,
-          updated_at:           Time.current,
+          user_id:        order.user_id,
+          name:
         )
       end
     end
