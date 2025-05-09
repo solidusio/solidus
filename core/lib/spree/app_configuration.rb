@@ -724,6 +724,14 @@ module Spree
           Spree::Stock::Splitter::ShippingCategory
           Spree::Stock::Splitter::Backordered
         ]
+
+        env.subscribers = %w[
+          Spree::CartonShippedMailerSubscriber
+          Spree::OrderCancelMailerSubscriber
+          Spree::OrderConfirmationMailerSubscriber
+          Spree::OrderInventoryCancellationMailerSubscriber
+          Spree::ReimbursementMailerSubscriber
+        ]
       end
     end
 
