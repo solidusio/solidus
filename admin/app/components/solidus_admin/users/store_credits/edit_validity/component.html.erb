@@ -5,8 +5,8 @@
         <%= render component("ui/forms/field").select(
           f,
           :store_credit_reason_id,
-          store_credit_reasons_select_options.html_safe,
-          include_blank: t('spree.choose_reason'),
+          @store_credit_reasons.map { [_1.name, _1.id] },
+          include_blank: t('.choose_reason'),
           html: { required: true }
         ) %>
       </div>
