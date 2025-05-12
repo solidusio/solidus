@@ -10,13 +10,4 @@ class SolidusAdmin::Users::StoreCredits::New::Component < SolidusAdmin::Resource
   def form_url
     solidus_admin.user_store_credits_path(@user, **search_filter_params)
   end
-
-  def currency_select_options
-    options_from_collection_for_select(Spree::Config.available_currencies, :iso_code, :iso_code, Spree::Config.currency)
-  end
-
-  def store_credit_categories_select_options
-    # Placeholder + Store Credit Categories
-    "<option value>#{t('.choose_category')}</option>" + options_from_collection_for_select(@store_credit_categories, :id, :name)
-  end
 end
