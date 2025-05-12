@@ -3,7 +3,7 @@
 class SolidusAdmin::UI::Forms::Address::Component < SolidusAdmin::BaseComponent
   DefaultNamedFieldsetNotFound = Class.new(NameError)
 
-  include ViewComponent::SlotableDefault
+  include SolidusAdmin::SlotableDefault
 
   renders_one :fieldset
 
