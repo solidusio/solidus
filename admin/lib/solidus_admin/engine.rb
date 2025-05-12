@@ -69,11 +69,5 @@ module SolidusAdmin
         SolidusAdmin::BaseComponent.include app.routes.mounted_helpers
       end
     end
-
-    initializer "solidus_admin.load_ext" do
-      Dir[root.join("lib/solidus_admin/ext/**/*.rb")].sort.each do |file|
-        require file
-      end
-    end
   end
 end
