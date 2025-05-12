@@ -45,7 +45,12 @@ $.fn.optionValueAutocomplete = function (options) {
 
 class OptionValuePicker extends HTMLInputElement {
   connectedCallback() {
-    $(this).optionValueAutocomplete();
+    const container = this.closest(".promo-condition-option-value");
+    const productPicker = container.querySelector('input[is="product-picker"]');
+
+    $(this).optionValueAutocomplete({
+      productSelect: productPicker,
+    });
   }
 }
 
