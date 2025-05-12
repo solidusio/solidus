@@ -1,6 +1,7 @@
 class ProductPicker extends HTMLInputElement {
   connectedCallback() {
-    $(this).productAutocomplete();
+    const multiple = this.dataset.multiple !== "false";
+    $(this).productAutocomplete({ multiple });
   }
 }
 
