@@ -1,0 +1,35 @@
+<div
+  class="
+    flex w-full justify-between min-h-[85px]
+    rounded-lg p-4 border pointer-events-auto
+    transform -translate-y-[150%] opacity-0 duration-500
+    <%= SCHEMES.fetch(@scheme.to_sym).join(' ') %>
+  "
+  data-controller="alert-animation"
+  data-alert-animation-animation-class="-translate-y-[150%] opacity-0"
+  data-alert-animation-transition-value="<%= Rails.env.test? ? 1000 : 500 %>"
+  role="dialog"
+  aria-label="<%= @title %>"
+  aria-live="polite"
+>
+  <div class="flex">
+    <div class="px-2">
+      <%= icon %>
+    </div>
+    <div class="flex flex-col px-2 pt-1 gap-3">
+      <p class="font-semibold text-base text-black leading-none"><%= @title %></p>
+      <p class="font-normal text-sm text-black leading-none"><%= @description.html_safe %></p>
+    </div>
+  </div>
+  <div>
+    <button
+      type="button"
+      title="<%= t(".close") %>"
+      aria-label="<%= t(".close") %>"
+      data-action="alert-animation#close"
+      data-alert-animation-target="closeButton"
+    >
+      <%= icon_tag('close-fill', class: "w-6 h-6 #{ICONS.dig(@scheme.to_sym, :class)}") %>
+    </button>
+  </div>
+</div>
