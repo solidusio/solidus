@@ -18,12 +18,24 @@ module SolidusAdmin
     end
 
     def destroy
-      @stores = Spree::Store.where(id: params[:id])
+      @resource = resource_class.where(id: params[:id])
 
-      Spree::Store.transaction { @stores.destroy_all }
+      failed = @resource.destroy_all.reject(&:destroyed?)
+      if failed.none?
+        flash[:notice] = t(".success")
+      else
+        failure_summary = failed.map { |record|
+          t ".error.description",
+            name: record.name,
+            reason: record.errors.full_messages.join(", ")
+        }.join("<br/>")
 
-      flash[:notice] = t(".success")
-      redirect_back_or_to stores_path, status: :see_other
+        flash[:alert] = {
+          danger: {title: t(".error.title"), message: failure_summary}
+        }
+      end
+
+      redirect_to after_destroy_path, status: :see_other
     end
 
     private
