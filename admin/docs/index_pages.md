@@ -94,7 +94,7 @@ end
 def delete
   @users = Spree.user_class.where(id: params[:id])
   @users.destroy_all
-  flash[:success] = "Admin users deleted"
+  flash[:notice] = "Admin users deleted"
   redirect_to solidus_admin.users_path, status: :see_other
 end
 ```
