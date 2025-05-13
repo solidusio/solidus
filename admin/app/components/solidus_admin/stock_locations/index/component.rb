@@ -5,18 +5,14 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     Spree::StockLocation
   end
 
-  def actions
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_stock_location_path,
+      href: solidus_admin.new_stock_location_path,
       icon: "add-line",
       class: "align-self-end w-full",
     )
-  end
-
-  def row_url(stock_location)
-    spree.edit_admin_stock_location_path(stock_location)
   end
 
   def search_url
@@ -25,6 +21,10 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
 
   def search_key
     :name_or_description_cont
+  end
+
+  def edit_path(stock_location)
+    solidus_admin.edit_stock_location_path(stock_location)
   end
 
   def batch_actions
@@ -48,42 +48,89 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
 
   def columns
     [
-      :name,
-      :code,
-      :admin_name,
-      {
-        header: :state,
-        data: -> {
-          color = _1.active? ? :green : :graphite_light
-          text = _1.active? ? t('.active') : t('.inactive')
-
-          component('ui/badge').new(name: text, color:)
-        },
-      },
-      {
-        header: :backorderable,
-        data: -> {
-          _1.backorderable_default ? component('ui/badge').yes : component('ui/badge').no
-        }
-      },
-      {
-        header: :default,
-        data: -> {
-          _1.default ? component('ui/badge').yes : component('ui/badge').no
-        }
-      },
-      {
-        header: :stock_movements,
-        data: -> {
-          count = _1.stock_movements.count
-
-          link_to(
-            "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
-            spree.admin_stock_location_stock_movements_path(_1),
-            class: 'body-link'
-          )
-        }
-      }
+      name_column,
+      code_column,
+      admin_name_column,
+      state_column,
+      backorderable_column,
+      default_column,
+      stock_movements_column,
     ]
+  end
+
+  private
+
+  def name_column
+    {
+      header: :name,
+      data: ->(stock_location) do
+        link_to stock_location.name, edit_path(stock_location), class: 'body-link'
+      end
+    }
+  end
+
+  def code_column
+    {
+      header: :code,
+      data: ->(stock_location) do
+        return if stock_location.code.blank?
+        link_to stock_location.code, edit_path(stock_location), class: 'body-link'
+      end
+    }
+  end
+
+  def admin_name_column
+    {
+      header: :admin_name,
+      data: ->(stock_location) do
+        return if stock_location.admin_name.blank?
+        link_to stock_location.admin_name, edit_path(stock_location), class: 'body-link'
+      end
+    }
+  end
+
+  def state_column
+    {
+      header: :state,
+      data: ->(stock_location) do
+        color = stock_location.active? ? :green : :graphite_light
+        text = stock_location.active? ? t('.active') : t('.inactive')
+
+        component('ui/badge').new(name: text, color:)
+      end
+    }
+  end
+
+  def backorderable_column
+    {
+      header: :backorderable,
+      data: -> do
+        _1.backorderable_default ? component('ui/badge').yes : component('ui/badge').no
+      end
+    }
+  end
+
+  def default_column
+    {
+      header: :default,
+      data: -> do
+        _1.default ? component('ui/badge').yes : component('ui/badge').no
+      end
+    }
+  end
+
+  def stock_movements_column
+    {
+      header: :stock_movements,
+      data: ->(stock_location) do
+        count = stock_location.stock_movements.count
+
+        link_to(
+          "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
+          spree.admin_stock_location_stock_movements_path(stock_location),
+          class: 'body-link'
+        )
+      end
+    }
   end
 end
