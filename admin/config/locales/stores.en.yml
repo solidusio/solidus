@@ -17,5 +17,12 @@ en:
   solidus_admin:
     stores:
       title: "Stores"
+      create:
+        success: "Store was successfully created."
       destroy:
+        error:
+          title: "Some Stores could not be removed"
+          description: "%{name}: %{reason}"
         success: "Stores were successfully removed."
+      update:
+        success: "Store was successfully updated."
