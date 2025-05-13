@@ -91,6 +91,16 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     ]
   end
 
+  def self.submit(resource:, **attrs)
+    resource_name = resource.model_name.human
+    text = resource.new_record? ? t('.submit.create', resource_name:) : t('.submit.update', resource_name:)
+    new(text:, type: :submit, **attrs)
+  end
+
+  def self.cancel
+    new(scheme: :secondary, text: t('.cancel'))
+  end
+
   def call
     content = []
     content << render(component('ui/icon').new(name: @icon, class: @icon_classes)) if @icon
