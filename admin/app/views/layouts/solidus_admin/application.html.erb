@@ -31,6 +31,14 @@
       </main>
     </div>
 
+    <div class="flex items-center justify-center">
+      <div class="fixed w-2/3 top-3 flex flex-col gap-3 pointer-events-none" role="alert">
+        <% alerts.each do |key, text| %>
+          <%= render component("ui/alert").new(title: text[:title], description: text[:description], scheme: key.to_sym) %>
+        <% end %>
+      </div>
+    </div>
+
     <div class="fixed inset-x-0 bottom-3 flex items-center justify-center flex-col gap-3 pointer-events-none" role="alert">
       <% toasts.each do |key, message| %>
         <%= render component("ui/toast").new(text: message, scheme: key.to_sym == :error ? :error : :default) %>
