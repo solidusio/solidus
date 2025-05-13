@@ -47,4 +47,34 @@ RSpec.describe Spree::TaxCategory, type: :model do
       end
     end
   end
+
+  describe 'enum tax_reverse_charge_mode' do
+    it 'defines the expected enum values' do
+      expect(Spree::TaxCategory.tax_reverse_charge_modes).to eq({
+        'disabled' => 0,
+        'loose' => 1,
+        'strict' => 2
+      })
+    end
+
+    it 'allows valid values' do
+      tax_category = build(:tax_category)
+      # Updates the tax_reverse_charge_mode to "strict"
+      expect(tax_category).to be_valid
+      tax_category.tax_reverse_charge_mode_strict!
+
+      # Updates the tax_reverse_charge_mode to "loose"
+      expect(tax_category).to be_valid
+      tax_category.tax_reverse_charge_mode_loose!
+      expect(tax_category).to be_valid
+
+      # Updates the tax_reverse_charge_mode to "disabled"
+      tax_category.tax_reverse_charge_mode_disabled!
+      expect(tax_category).to be_valid
+    end
+
+    it 'raises an error for invalid values' do
+      expect { Spree::TaxCategory.new(tax_reverse_charge_mode: :invalid_status) }.to raise_error(ArgumentError)
+    end
+  end
 end
