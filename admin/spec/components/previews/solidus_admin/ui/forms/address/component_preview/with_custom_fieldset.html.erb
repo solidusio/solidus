@@ -1,0 +1,10 @@
+<%= render current_component.new(form_field_name: "", addressable:) do |component| %>
+  <% component.with_fieldset do %>
+    <div class="flex gap-4 w-full">
+      <%= render component("ui/forms/field").text_field("", :firstname, object: addressable) %>
+      <%= render component("ui/forms/field").text_field("", :lastname, object: addressable) %>
+    </div>
+    <%= render component("ui/forms/field").select("", :company, ["Rockstar Games", "CD Projekt Red", "Bethesda Softworks"], object: addressable) %>
+    <%= render component("ui/forms/field").text_field("", :vat_id, object: addressable) %>
+  <% end %>
+<% end %>

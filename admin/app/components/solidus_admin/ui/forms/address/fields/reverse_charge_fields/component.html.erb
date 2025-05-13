@@ -1,0 +1,7 @@
+<%= render component("ui/forms/field").text_field(@form_field_name, :vat_id, object: @addressable) %>
+<%= render component("ui/forms/field").select(
+  @form_field_name,
+  :reverse_charge_status,
+  Spree::Address.reverse_charge_statuses.keys.map { |key| [I18n.t("spree.reverse_charge_statuses.#{key}"), key] },
+  object: @addressable
+) %>
