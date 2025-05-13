@@ -37,7 +37,7 @@ module SolidusAdmin
       set_address_from_params
 
       if @address.valid? && @user.update(user_params)
-        flash[:success] = t(".#{@type}.success")
+        flash[:notice] = t(".#{@type}.success")
 
         respond_to do |format|
           format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
