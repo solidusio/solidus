@@ -42,6 +42,7 @@ module.exports = {
 
         // Extra colors (not part of the original palette)
         "papaya-whip": "#f9e3d9",
+        sazerac: "#fcf0dd",
 
         // UI Red
         red: {
