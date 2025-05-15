@@ -232,23 +232,107 @@ RSpec.describe "Legacy promotion system" do
         order.complete
       }.to change{ promo_adjustment.reload.eligible }.to(false)
     end
+  end
 
-    it "adjusts the promo_total" do
-      expect{
-        order.complete
-      }.to change(order, :promo_total).by(10)
+  describe "checking whether a promotion code is still eligible after one use" do
+    let(:promotion) do
+      FactoryBot.create(
+        :promotion,
+        :with_order_adjustment,
+        code: "discount",
+        per_code_usage_limit: 1,
+        weighted_order_adjustment_amount: 10
+      )
+    end
+    let(:code) { promotion.codes.first }
+    let(:order) do
+      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryBot.create(:payment, amount: 30, order:)
+        promotion.activate(order:, promotion_code: code)
+      end
+    end
+    let(:promo_adjustment) { order.adjustments.promotion.first }
+
+    before do
+      order.next! until order.can_complete?
+
+      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryBot.create(:payment, amount: 30, order:)
+        promotion.activate(order:, promotion_code: code)
+        order.next! until order.can_complete?
+        order.complete!
+      end
     end
 
-    it "increases the total to remove the promo" do
-      expect{
-        order.complete
-      }.to change(order, :total).from(30).to(40)
-    end
+    context 'with the in-memory order updater' do
+      subject { order.recalculate(persist:) }
 
-    it "resets the state of the order" do
-      expect{
-        order.complete
-      }.to change{ order.reload.state }.from("confirm").to("address")
+      around do |example|
+        default_order_recalculator = Spree::Config.order_recalculator_class.to_s
+
+        Spree::Config.order_recalculator_class = Spree::InMemoryOrderUpdater
+
+        example.run
+
+        Spree::Config.order_recalculator_class = default_order_recalculator
+      end
+
+      context "when not persisting updates" do
+        let(:persist) { false }
+
+        it "doesn't manipulate the database" do
+          expect { subject }.not_to make_database_queries(manipulative: true)
+        end
+
+        it "changes but does not persist the promotion as ineligible" do
+          expect { subject }
+            .to change { order.adjustments.first.eligible }
+            .from(true)
+            .to(false)
+        end
+
+        it "changes but does not persist the promo_total" do
+          expect { subject }.to change { order.promo_total }.from(-10).to(0)
+        end
+
+        it "changes the total but does not persist the promo amount" do
+          expect { subject }.to change { order.total }.from(30).to(40)
+        end
+      end
+
+      context "when persisting updates" do
+        let(:persist) { true }
+
+        it "makes the promotion ineligible" do
+          expect { subject }
+            .to change { promo_adjustment.reload.eligible }
+            .from(true)
+            .to(false)
+        end
+
+        it "adjusts the promo_total" do
+          expect { subject }.to change { order.reload.promo_total }.from(-10).to(0)
+        end
+
+        it "increases the total to remove the promo" do
+          expect { subject }.to change { order.reload.total }.from(30).to(40)
+        end
+
+        context "with an item adjustment" do
+          let(:promotion) do
+            FactoryBot.create(
+              :promotion_with_item_adjustment,
+              code: "discount",
+              per_code_usage_limit: 1,
+              adjustment_rate: 10
+            )
+          end
+
+          it "adjusts the adjustment total" do
+            expect { subject }.to change { order.line_items.first.reload.adjustment_total }.from(-10).to(0)
+          end
+        end
+      end
     end
   end
 
