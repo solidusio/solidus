@@ -16,7 +16,7 @@ describe "Option Types", :js, type: :feature do
     expect(page).to be_axe_clean
 
     select_row("color")
-    click_on "Delete"
+    accept_confirm("Are you sure you want to delete 1 option type?") { click_on "Delete" }
     expect(page).to have_content("Option types were successfully removed.")
     expect(page).not_to have_content("color")
     expect(Spree::OptionType.count).to eq(1)
