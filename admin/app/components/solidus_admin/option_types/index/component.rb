@@ -74,6 +74,6 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
   end
 
   def edit_path(option_type)
-    spree.edit_admin_option_type_path(option_type)
+    solidus_admin.edit_option_type_path(option_type)
   end
 end
