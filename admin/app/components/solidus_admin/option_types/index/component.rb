@@ -41,6 +41,7 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
         action: solidus_admin.option_types_path,
         method: :delete,
         icon: 'delete-bin-7-line',
+        require_confirmation: true,
       },
     ]
   end
