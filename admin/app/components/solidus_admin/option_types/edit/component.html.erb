@@ -1,0 +1,26 @@
+<%= turbo_frame_tag :resource_form, target: "_top" do %>
+  <%= page do %>
+    <%= page_header do %>
+      <%= page_header_back(back_url) %>
+      <%= page_header_title(t('.title')) %>
+      <%= page_header_actions do %>
+        <%= render component("ui/button").new(text: t(".save"),form: form_id) %>
+      <% end %>
+    <% end %>
+
+    <%= form_for @option_type, url: form_url, html: { id: form_id } do |f| %>
+      <%= render component('ui/panel').new(title: t(".panels.option_type.title")) do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <div class="flex gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
+            <%= render component("ui/forms/field").text_field(f, :presentation, class: "required") %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= page_footer do %>
+      <%= render component("ui/button").new(text: t(".save"), form: form_id) %>
+    <% end %>
+  <% end %>
+<% end %>
