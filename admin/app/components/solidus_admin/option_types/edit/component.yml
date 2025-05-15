@@ -1,0 +1,10 @@
+en:
+  back: "Back"
+  panels:
+    option_type:
+      title: "Option Type"
+    option_values:
+      title: "Option Values"
+      add: "Add new"
+  save: "Save"
+  title: "Edit Option Type"
