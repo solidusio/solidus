@@ -22,6 +22,10 @@ module SolidusAdmin
 
     def resources_collection = Spree::OptionType.unscoped
 
+    def resources_sorting_options
+      { position: :asc }
+    end
+
     def load_option_type
       @option_type = Spree::OptionType.find(params[:id])
       authorize! action_name, @option_type
