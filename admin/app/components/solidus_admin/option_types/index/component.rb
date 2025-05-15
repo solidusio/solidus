@@ -12,11 +12,16 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
     }
   end
 
+  def turbo_frames
+    %w[resource_form]
+  end
+
   def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_option_type_path,
+      href: solidus_admin.new_option_type_path,
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
     )
   end
@@ -60,7 +65,10 @@ class SolidusAdmin::OptionTypes::Index::Component < SolidusAdmin::UI::Pages::Ind
   def presentation_column
     {
       header: :presentation,
-      data: ->(option_type) { option_type.presentation }
+      data: ->(option_type) do
+        link_to option_type.presentation, edit_path(option_type),
+          class: 'body-link'
+      end
     }
   end
 

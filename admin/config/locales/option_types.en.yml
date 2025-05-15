@@ -2,5 +2,7 @@ en:
   solidus_admin:
     option_types:
       title: "Option Types"
+      create:
+        success: "Option type was successfully created."
       destroy:
-        success: "Option Types were successfully removed."
+        success: "Option types were successfully removed."
