@@ -144,8 +144,8 @@
           <% if row_url %>
             data-action="click-><%= stimulus_id %>#rowClicked"
             data-<%= stimulus_id %>-url-param="<%= row_url %>"
-            <%= "data-sortable-url=#{@sortable.url.call(row)}" if @sortable&.url %>
           <% end %>
+          <%= "data-sortable-url=#{@sortable.url.call(row)}" if @sortable&.url %>
         >
           <% @data.columns.each do |column| %>
             <%= render_data_cell(column, row) %>
