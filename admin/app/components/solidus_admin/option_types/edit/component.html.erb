@@ -8,14 +8,21 @@
       <% end %>
     <% end %>
 
-    <%= form_for @option_type, url: form_url, html: { id: form_id } do |f| %>
-      <%= render component('ui/panel').new(title: t(".panels.option_type.title")) do |panel| %>
+    <%= form_for @option_type, url: form_url, html: { id: form_id, class: "flex flex-col gap-4" } do |f| %>
+      <%= render component("ui/panel").new(title: t(".panels.option_type.title")) do |panel| %>
         <% panel.with_section(class: "flex flex-col gap-4") do %>
           <div class="flex gap-4 w-full">
             <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
             <%= render component("ui/forms/field").text_field(f, :presentation, class: "required") %>
           </div>
         <% end %>
+      <% end %>
+
+      <%= render component("ui/panel").new(title: t(".panels.option_values.title")) do |panel| %>
+        <% panel.with_section(wide: true, high: true, class: "flex flex-col gap-4") do %>
+        <% end %>
+
+        <% panel.with_action(name: t(".panels.option_values.add"), href: "#") %>
       <% end %>
     <% end %>
 
