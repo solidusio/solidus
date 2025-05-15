@@ -6,3 +6,5 @@ en:
         success: "Option type was successfully created."
       destroy:
         success: "Option types were successfully removed."
+      update:
+        success: "Option type was successfully updated."
