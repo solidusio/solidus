@@ -43,7 +43,9 @@ module SolidusAdmin
     end
 
     def edit
-      render edit_component.new(@resource)
+      respond_to do |format|
+        format.html { render edit_component.new(@resource) }
+      end
     end
 
     def update
