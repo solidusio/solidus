@@ -9,6 +9,7 @@ module Spree
 
       add_class_set :payment_methods
       add_class_set :stock_splitters
+      add_class_set :subscribers
 
       attr_accessor :calculators, :preferences, :promotions
 

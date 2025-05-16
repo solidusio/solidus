@@ -126,7 +126,7 @@ RSpec.describe Spree::OrderCancellations do
       subject
     end
 
-    context "when send_cancellation_mailer is false" do
+    context "when send_cancellation_mailer is false", :silence_deprecations do
       subject { described_class.new(order).short_ship([inventory_unit]) }
 
       before do
