@@ -1,8 +1,6 @@
 <div
   class="
-    rounded-lg
-    border
-    border-gray-100
+    <%= 'rounded-lg border border-gray-100' unless @options[:embedded] %>
     <%= 'overflow-hidden' unless @search %>
   "
   data-controller="<%= stimulus_id %>"
