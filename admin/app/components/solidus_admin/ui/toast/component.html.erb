@@ -6,9 +6,9 @@
     pointer-events-auto
     <%= SCHEMES.fetch(@scheme.to_sym).join(' ') %>
   "
-  data-controller="<%= stimulus_id %>"
-  data-<%= stimulus_id %>-animation-class="translate-y-full opacity-0"
-  data-<%= stimulus_id %>-transition-value="<%= Rails.env.test? ? 1000 : 500 %>"
+  data-controller="alert-animation"
+  data-alert-animation-animation-class="translate-y-full opacity-0"
+  data-alert-animation-transition-value="<%= Rails.env.test? ? 1000 : 500 %>"
   role="dialog"
   aria-label="<%= t(".#{@scheme}_label") %>"
   aria-live="polite"
@@ -21,9 +21,9 @@
     type="button"
     class="ml-2 align-text-bottom"
     title="<%= t('.close_text') %>"
-    data-action="<%= stimulus_id %>#close"
+    data-action="alert-animation#close"
     aria-label="<%= t('.close_text') %>"
-    data-<%= stimulus_id %>-target="closeButton"
+    data-alert-animation-target="closeButton"
   >
     <%= icon_tag('close-line', class: "w-[1.125rem] h-[1.125rem] fill-current") %>
   </button>
