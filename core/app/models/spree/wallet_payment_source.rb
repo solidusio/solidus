@@ -5,8 +5,8 @@ module Spree
     belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', inverse_of: :wallet_payment_sources, optional: true
     belongs_to :payment_source, polymorphic: true, inverse_of: :wallet_payment_sources, optional: true
 
-    validates_presence_of :user
-    validates_presence_of :payment_source
+    validates :user, presence: true
+    validates :payment_source, presence: true
     validates :user_id, uniqueness: {
       scope: [:payment_source_type, :payment_source_id],
       message: :payment_source_already_exists
