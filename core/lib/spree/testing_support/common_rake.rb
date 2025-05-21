@@ -45,19 +45,19 @@ class CommonRakeTasks
           sh "bin/rails g solidus_frontend:install --auto-accept"
         end
 
-        puts "Setting up dummy database..."
+        Rails.logger.info "Setting up dummy database..."
 
         sh "bin/rails db:environment:set RAILS_ENV=test"
         sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
 
         if extension_installation_generator_exists?
-          puts 'Running extension installation generator...'
+          Rails.logger.info 'Running extension installation generator...'
           sh "bin/rails generate #{rake_generator_namespace}:install --auto-run-migrations"
         end
       end
 
       task :seed do |_t, _args|
-        puts "Seeding ..."
+        Rails.logger.info "Seeding ..."
 
         sh "bundle exec rake db:seed RAILS_ENV=test"
       end
