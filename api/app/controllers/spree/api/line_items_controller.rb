@@ -66,7 +66,7 @@ module Spree
       def extract_metadata
         metadata = { customer_metadata: line_item_params[:customer_metadata] }
 
-        if @current_user_roles&.include?("admin")
+        if current_user_roles&.include?("admin")
           metadata[:admin_metadata] = line_item_params[:admin_metadata]
         end
 

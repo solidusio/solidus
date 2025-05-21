@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 @product_attributes ||= product_attributes
-json.cache! [I18n.locale, @current_user_roles.include?('admin'), current_pricing_options, @product_attributes, @exclude_data, product] do
+json.cache! [I18n.locale, current_user_roles.include?('admin'), current_pricing_options, @product_attributes, @exclude_data, product] do
   json.(product, *(@product_attributes - [:total_on_hand]))
   json.total_on_hand(total_on_hand_for(product))
   json.price(product.price_for_options(current_pricing_options)&.amount)
