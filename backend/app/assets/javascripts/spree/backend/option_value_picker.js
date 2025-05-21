@@ -23,6 +23,7 @@ $.fn.optionValueAutocomplete = function (options) {
     },
     ajax: {
       url: Spree.pathFor('api/option_values'),
+      quietMillis: 500,
       datatype: 'json',
       data: function (term, page) {
         var productId = typeof(productSelect) !== 'undefined' ? $(productSelect).select2('val') : null;
