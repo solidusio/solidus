@@ -6,8 +6,8 @@ module Spree
       def check_missing_translations(page, example)
         missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
         if missing_translations.any?
-          puts "Found missing translations: #{missing_translations.inspect}"
-          puts "In spec: #{example.location}"
+          Rails.logger.info "Found missing translations: #{missing_translations.inspect}"
+          Rails.logger.info "In spec: #{example.location}"
         end
       end
     end

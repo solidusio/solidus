@@ -6,7 +6,7 @@ module DummyApp
 
     def auto_migrate
       if needs_migration?
-        puts "Configuration changed. Re-running migrations"
+        Rails.logger.info "Configuration changed. Re-running migrations"
 
         # Disconnect to avoid "database is being accessed by other users" on postgres
         ActiveRecord::Base.remove_connection
@@ -29,7 +29,7 @@ module DummyApp
     end
 
     def sh(cmd)
-      puts cmd
+      Rails.logger.info cmd
       system cmd
     end
   end
