@@ -25,7 +25,7 @@ RSpec.describe Spree::OrderInventoryCancellationMailerSubscriber do
       end
     end
 
-    context "when order cancellation emails are disabled" do
+    context "when order cancellation emails are disabled", :silence_deprecations do
       around do |example|
         original_value = Spree::OrderCancellations.send_cancellation_mailer
         Spree::OrderCancellations.send_cancellation_mailer = false

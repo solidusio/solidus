@@ -9,9 +9,22 @@ class Spree::OrderCancellations
   #     #call(unit_cancels)
   class_attribute :short_ship_tax_notifier
 
-  # allows sending an email when inventory is cancelled
-  class_attribute :send_cancellation_mailer
-  self.send_cancellation_mailer = true
+  class << self
+    def send_cancellation_mailer=(value)
+      @send_cancellation_mailer = value
+
+      unless value
+        Spree.deprecator.warn "Using the `:send_cancellation_mailer` class " \
+          "attribute is deprecated in favor of including or omitting the " \
+          "`Spree::OrderInventoryCancellationMailerSubscriber` from " \
+          "`Spree::Config.environment.subscribers` in an initializer."
+      end
+    end
+
+    def send_cancellation_mailer
+      @send_cancellation_mailer || @send_cancellation_mailer.nil?
+    end
+  end
 
   def initialize(order)
     @order = order
