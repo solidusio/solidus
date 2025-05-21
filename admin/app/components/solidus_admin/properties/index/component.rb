@@ -22,7 +22,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def turbo_frames
-    %w[resource_modal]
+    %w[resource_form]
   end
 
   def page_actions
@@ -30,7 +30,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_property_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
     )
   end
@@ -58,7 +58,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
       header: :name,
       data: ->(property) do
         link_to property.name, edit_path(property),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }
@@ -69,7 +69,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
       header: :presentation,
       data: ->(property) do
         link_to property.presentation, edit_path(property),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }

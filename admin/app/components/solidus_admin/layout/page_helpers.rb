@@ -13,13 +13,7 @@ module SolidusAdmin::Layout::PageHelpers
   end
 
   def page_header_back(back_path)
-    render component("ui/button").new(
-      tag: :a,
-      title: t(".back"),
-      icon: "arrow-left-line",
-      scheme: :secondary,
-      href: back_path
-    )
+    render component("ui/button").back(path: back_path)
   end
 
   def page_header_title(title, &block)
