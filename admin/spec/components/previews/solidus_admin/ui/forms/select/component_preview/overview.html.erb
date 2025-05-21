@@ -3,7 +3,7 @@
     <div class="flex flex-col flex-grow gap-2">
       <h3>Single</h3>
 
-      <% default_params = { label: "Country", name: "country", choices: ["", "Denmark", "Sweden"] } %>
+      <% default_params = { label: "Country", name: "country", choices: %w[Denmark Sweden] } %>
 
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
@@ -51,7 +51,7 @@
     <div class="flex flex-col flex-grow gap-2">
       <h3>Multiple</h3>
 
-      <% default_params = { label: "Countries", name: "countries", choices: ["", "Denmark", "Sweden", "United Kingdom"], multiple: true } %>
+      <% default_params = { label: "Countries", name: "countries", choices: ["Denmark", "Sweden", "United Kingdom"], multiple: true } %>
 
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Default</h6>
