@@ -1,0 +1,5 @@
+en:
+  solidus_admin:
+    option_values:
+      destroy:
+        success: "Option values were successfully removed."
