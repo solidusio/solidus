@@ -30,7 +30,7 @@ module Spree
         # This method can be overridden (with a let block) inside a context
         # For instance, if you wanted to have an admin user instead.
         def current_api_user
-          @current_api_user ||= stub_model(Spree::LegacyUser, email: "solidus@example.com", spree_roles: [])
+          @_current_api_user ||= stub_model(Spree::LegacyUser, email: "solidus@example.com", spree_roles: [])
         end
 
         def image(filename)
