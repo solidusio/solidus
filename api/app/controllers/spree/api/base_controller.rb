@@ -21,9 +21,7 @@ module Spree
       class_attribute :admin_metadata_attributes
       self.admin_metadata_attributes = [{ admin_metadata: {} }]
 
-      attr_accessor :current_api_user
-
-      before_action :load_user
+      before_action :deprecated_load_user
       before_action :authorize_for_order, if: proc { order_token.present? }
       before_action :authenticate_user
       # This is deprecated and will be removed in Spree 5.0
@@ -36,7 +34,7 @@ module Spree
       rescue_from StateMachines::InvalidTransition, with: :invalid_transition
 
       helper Spree::Api::ApiHelpers
-      helper_method :current_user_roles
+      helper_method :current_user_roles, :current_api_user
 
       private
 
@@ -63,12 +61,12 @@ module Spree
         can?(:admin, Spree.user_class) ? super + admin_metadata_attributes : super
       end
 
-      def load_user
-        @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
+      def current_api_user
+        @_current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
       end
 
       def authenticate_user
-        unless @current_api_user
+        unless current_api_user
           if requires_authentication? && api_key.blank? && order_token.blank?
             render "spree/api/errors/must_specify_api_key", status: :unauthorized
           elsif order_token.blank? && (requires_authentication? || api_key.present?)
@@ -85,9 +83,17 @@ module Spree
         end
       end
 
+      def deprecated_load_user
+        @current_api_user = if Rails.version < Gem::Version.new("7.2.0")
+          ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new(self, :current_api_user, :@current_api_user, Spree.deprecator)
+        else
+          ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new(self, :current_api_user, :@current_api_user, deprecator: Spree.deprecator)
+        end
+      end
+
       def current_user_roles
-        @_current_user_roles ||= if @current_api_user
-          @current_api_user.spree_roles.pluck(:name)
+        @_current_user_roles ||= if current_api_user
+          current_api_user.spree_roles.pluck(:name)
         else
           []
         end
