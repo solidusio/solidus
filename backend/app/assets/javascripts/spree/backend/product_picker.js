@@ -35,6 +35,7 @@ $.fn.productAutocomplete = function (options) {
   this.select2({
     minimumInputLength: 3,
     multiple: multiple,
+    quietMillis: 500,
     initSelection: function (element, callback) {
       $.get(Spree.pathFor('admin/search/products'), {
         ids: element.val().split(','),

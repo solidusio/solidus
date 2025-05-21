@@ -47,6 +47,7 @@ $.fn.taxonAutocomplete = function (options) {
       },
       ajax: {
         url: Spree.pathFor('api/taxons'),
+        quietMillis: 500,
         datatype: 'json',
         data: function (term, page) {
           return {
