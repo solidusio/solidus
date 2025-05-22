@@ -219,13 +219,25 @@ module Spree
 
         next unless item.changed?
 
-        item.update_columns(
-          promo_total:          item.promo_total,
-          included_tax_total:   item.included_tax_total,
-          additional_tax_total: item.additional_tax_total,
-          adjustment_total:     item.adjustment_total,
-          updated_at:           Time.current,
-        )
+        if item.persisted?
+          item.update_columns(
+            promo_total:          item.promo_total,
+            included_tax_total:   item.included_tax_total,
+            additional_tax_total: item.additional_tax_total,
+            adjustment_total:     item.adjustment_total,
+            updated_at:           Time.current,
+          )
+        else
+          # FIXME: This code path is not tested, but we've made this change to
+          # be consistent with the patch in legacy_promotions.
+          item.assign_attributes(
+            promo_total:          item.promo_total,
+            included_tax_total:   item.included_tax_total,
+            additional_tax_total: item.additional_tax_total,
+            adjustment_total:     item.adjustment_total
+          )
+          item.save(validate: false)
+        end
       end
     end
   end
