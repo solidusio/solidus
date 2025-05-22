@@ -33,15 +33,17 @@ class SolidusAdmin::OptionTypes::Edit::Component < SolidusAdmin::Resources::Edit
       {
         header: :name,
         data: ->(option_value) do
-          link_to option_value.name, "#",
-            class: 'body-link'
+          link_to option_value.name, solidus_admin.edit_option_value_path(option_value),
+            class: 'body-link',
+            data: { turbo_frame: :option_value_modal }
         end
       },
       {
         header: :presentation,
         data: ->(option_value) do
-          link_to option_value.presentation, "#",
-            class: 'body-link'
+          link_to option_value.presentation, solidus_admin.edit_option_value_path(option_value),
+            class: 'body-link',
+            data: { turbo_frame: :option_value_modal }
         end
       },
     ]

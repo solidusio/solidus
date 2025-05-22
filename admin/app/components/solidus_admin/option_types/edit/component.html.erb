@@ -25,12 +25,18 @@
           <%= render_option_values %>
         <% end %>
 
-        <% panel.with_action(name: t(".panels.option_values.add"), href: "#") %>
+        <% panel.with_action(
+          name: t(".panels.option_values.add"),
+          href: solidus_admin.new_option_type_option_value_path(@option_type),
+          data: { turbo_frame: :option_value_modal }
+        ) %>
       <% end %>
 
       <%= page_footer do %>
         <%= render component("ui/button").new(text: t(".save"), form: form_id) %>
       <% end %>
     </div>
+
+    <%= turbo_frame_tag :option_value_modal, target: "_top" %>
   <% end %>
 <% end %>
