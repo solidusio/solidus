@@ -4,10 +4,15 @@ module Spree
   class InMemoryOrderUpdater
     attr_reader :order
 
+    # logs a warning when a manipulative query is made when the persist flag is set to false
+    class_attribute :log_manipulative_queries
+    self.log_manipulative_queries = true
+
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :quantity, to: :order
 
     def initialize(order)
       @order = order
+      @monitor = self.log_manipulative_queries ? Spree::ManipulativeQueryMonitor : Proc.new
     end
 
     # This is a multi-purpose method for processing logic related to changes in the Order.
