@@ -232,12 +232,11 @@ module Spree
 
         next unless item.changed?
 
-        item.update_columns(
+        item.assign_attributes(
           promo_total:          item.promo_total,
           included_tax_total:   item.included_tax_total,
           additional_tax_total: item.additional_tax_total,
-          adjustment_total:     item.adjustment_total,
-          updated_at:           Time.current,
+          adjustment_total:     item.adjustment_total
         )
       end
     end
