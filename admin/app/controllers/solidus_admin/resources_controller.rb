@@ -26,12 +26,12 @@ module SolidusAdmin
     end
 
     def new
-      @resource = resource_class.new
+      @resource ||= resource_class.new
       render new_component.new(@resource)
     end
 
     def create
-      @resource = resource_class.new(permitted_resource_params)
+      @resource ||= resource_class.new(permitted_resource_params)
 
       if @resource.save
         flash[:notice] = t('.success')
