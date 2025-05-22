@@ -17,7 +17,7 @@ module SolidusLegacyPromotions
 
     def update_item_totals
       [*line_items, *shipments].each do |item|
-        Spree::ItemTotal.new(item).recalculate!
+        Spree::Config.item_total_class.new(item).recalculate!
 
         # The cancellation_total isn't persisted anywhere but is included in
         # the adjustment_total.
