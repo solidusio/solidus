@@ -21,7 +21,6 @@ gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 gem 'sqlite3', '>= 2.1', require: false if dbs.match?(/all|sqlite/)
 
-gem 'db-query-matchers'
 gem 'database_cleaner', '~> 2.0', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
 gem 'rspec-rails', '~> 6.0.3', require: false
@@ -35,7 +34,6 @@ gem 'puma', '< 7', require: false
 gem 'i18n-tasks', '~> 0.9', require: false
 gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
-gem 'db-query-matchers', require: false
 
 # Ensure the requirement is also updated in core/lib/spree/testing_support/factory_bot.rb
 gem 'factory_bot_rails', '>= 4.8', require: false
