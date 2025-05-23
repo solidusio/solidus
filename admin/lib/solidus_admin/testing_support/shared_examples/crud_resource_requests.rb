@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples_for 'CRUD resource requests' do |resource_name|
+RSpec.shared_examples_for 'CRUD resource requests' do |resource_name, except: []|
   let(:admin_user) { create(:admin_user) }
   let(:resource) { create(factory) }
 
   # Overridables
   let(:factory) { resource_name.to_sym }
   let(:url_helpers) { solidus_admin }
+  let(:expected_after_create_path) { url_helpers.public_send("#{resource_name.pluralize}_path") }
+  let(:expected_after_update_path) { url_helpers.public_send("#{resource_name.pluralize}_path") }
+  let(:expected_after_destroy_path) { url_helpers.public_send("#{resource_name.pluralize}_path") }
 
   before do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
   end
 
-  describe "GET /index" do
+  describe "GET /index", skip: :index.in?(except) && "not applicable" do
     it "renders the index template with a 200 OK status" do
       get url_helpers.public_send("#{resource_name.pluralize}_path")
       expect(response).to have_http_status(:ok)
@@ -36,7 +39,7 @@ RSpec.shared_examples_for 'CRUD resource requests' do |resource_name|
 
       it "redirects to the index page with a 303 See Other status" do
         post url_helpers.public_send("#{resource_name.pluralize}_path"), params: { resource_name => valid_attributes }
-        expect(response).to redirect_to(url_helpers.public_send("#{resource_name.pluralize}_path"))
+        expect(response).to redirect_to(expected_after_create_path)
         expect(response).to have_http_status(:see_other)
       end
 
@@ -82,7 +85,7 @@ RSpec.shared_examples_for 'CRUD resource requests' do |resource_name|
 
       it "redirects to the index page with a 303 See Other status" do
         patch url_helpers.public_send("#{resource_name}_path", resource), params: { resource_name => valid_attributes }
-        expect(response).to redirect_to(url_helpers.public_send("#{resource_name.pluralize}_path"))
+        expect(response).to redirect_to(expected_after_update_path)
         expect(response).to have_http_status(:see_other)
       end
 
@@ -115,7 +118,7 @@ RSpec.shared_examples_for 'CRUD resource requests' do |resource_name|
         delete url_helpers.public_send("#{resource_name}_path", resource)
       }.to change(resource_class, :count).by(-1)
 
-      expect(response).to redirect_to(url_helpers.public_send("#{resource_name.pluralize}_path"))
+      expect(response).to redirect_to(expected_after_destroy_path)
       expect(response).to have_http_status(:see_other)
     end
 
@@ -131,7 +134,7 @@ RSpec.shared_examples_for 'CRUD resource requests' do |resource_name|
         delete url_helpers.public_send("#{resource_name.pluralize}_path", id: ids)
       }.to change { resource_class.count }.by(-ids.size)
 
-      expect(response).to redirect_to(url_helpers.public_send("#{resource_name.pluralize}_path"))
+      expect(response).to redirect_to(expected_after_destroy_path)
       expect(response).to have_http_status(:see_other)
     end
   end
