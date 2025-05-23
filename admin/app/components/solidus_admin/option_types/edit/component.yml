@@ -6,7 +6,5 @@ en:
     option_values:
       title: "Option Values"
       add: "Add new"
-      batch_actions:
-        delete: "Delete"
   save: "Save"
   title: "Edit Option Type"
