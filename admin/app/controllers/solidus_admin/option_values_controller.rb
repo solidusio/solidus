@@ -13,7 +13,15 @@ module SolidusAdmin
 
     def create
       @resource = @option_type.option_values.build(permitted_resource_params)
-      super
+      if @resource.save
+        flash[:notice] = t('.success')
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to after_create_path, status: :see_other }
+        end
+      else
+        render_resource_form_with_errors(new_component.new(@resource))
+      end
     end
 
     private
