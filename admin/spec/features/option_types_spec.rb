@@ -86,4 +86,69 @@ describe "Option Types", :js, type: :feature do
     expect(page).to have_content("Option values were successfully removed.")
     expect(page).not_to have_content("green")
   end
+
+  it "preserves user input" do
+    create(:option_type, name: "color", presentation: "Color")
+
+    visit "/admin/option_types"
+    click_on "Color"
+
+    fill_in "Name", with: "clothing-colour"
+    fill_in "Presentation", with: "Colour"
+
+    click_on "Add new"
+    within("dialog") do
+      fill_in "Name", with: "blue"
+      fill_in "Presentation", with: "Blue"
+      click_on "Add Option Value"
+    end
+
+    expect(find_field("Name").value).to eq("clothing-colour")
+    expect(find_field("Presentation").value).to eq("Colour")
+  end
+
+  context "with invalid attributes" do
+    context "on option type create" do
+      it "shows errors" do
+        visit "/admin/option_types"
+        click_on "Add new"
+        click_on "Add Option Type"
+        expect(page).to have_content("can't be blank")
+      end
+    end
+
+    context "on option type update" do
+      it "shows errors" do
+        option_type = create(:option_type, name: "color", presentation: "Color")
+        visit "/admin/option_types/#{option_type.id}/edit"
+        fill_in "Name", with: ""
+        within("header") { click_on "Save" }
+        expect(page).to have_content("can't be blank")
+      end
+    end
+
+    context "on option value create" do
+      it "shows errors" do
+        option_type = create(:option_type, name: "color", presentation: "Color")
+        visit "/admin/option_types/#{option_type.id}/edit"
+        click_on "Add new"
+        click_on "Add Option Value"
+        expect(page).to have_content("can't be blank")
+      end
+    end
+
+    context "on option value update" do
+      it "shows errors" do
+        option_type = create(:option_type, name: "color", presentation: "Color").tap do |option_type|
+          option_type.option_values = [create(:option_value, name: "blue")]
+        end
+
+        visit "/admin/option_types/#{option_type.id}/edit"
+        click_on "blue"
+        within("dialog") { fill_in "Name", with: "" }
+        click_on "Update Option Value"
+        expect(page).to have_content("can't be blank")
+      end
+    end
+  end
 end
