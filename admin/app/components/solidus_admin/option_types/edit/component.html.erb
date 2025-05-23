@@ -22,7 +22,9 @@
 
       <%= render component("ui/panel").new(title: t(".panels.option_values.title")) do |panel| %>
         <% panel.with_section(wide: true, high: true, class: "flex flex-col gap-4") do %>
-          <%= render_option_values %>
+          <div id="option_values_table">
+            <%= render component("option_values/table").new(@option_type) %>
+          </div>
         <% end %>
 
         <% panel.with_action(
