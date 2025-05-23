@@ -24,6 +24,19 @@ module SolidusAdmin
       end
     end
 
+    def update
+      if @resource.update(permitted_resource_params)
+        flash[:notice] = t('.success')
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to after_update_path, status: :see_other }
+        end
+      else
+        page_component = edit_component.new(@resource)
+        render_resource_form_with_errors(page_component)
+      end
+    end
+
     private
 
     def resource_class = Spree::OptionValue
