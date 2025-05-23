@@ -60,12 +60,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     end
   end
 
-  def initialize(id:, data:, search: nil, sortable: nil)
+  # @option options [Boolean] :embedded if true, does not add border around table
+  def initialize(id:, data:, search: nil, sortable: nil, **options)
     @id = id
     @data = Data.new(**data)
     @data.columns.unshift selectable_column if @data.batch_actions.present? && @data.rows.present?
     @search = Search.new(**search) if search
     @sortable = Sortable.new(**sortable) if sortable
+    @options = options
   end
 
   def selectable_column

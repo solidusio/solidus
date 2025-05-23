@@ -3,8 +3,7 @@
 module SolidusAdmin
   class PaymentMethodsController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
-
-    before_action :load_payment_method, only: [:move]
+    include SolidusAdmin::Moveable
 
     search_scope(:all)
     search_scope(:active, default: true, &:active)
@@ -25,14 +24,6 @@ module SolidusAdmin
       end
     end
 
-    def move
-      @payment_method.insert_at(params[:position].to_i)
-
-      respond_to do |format|
-        format.js { head :no_content }
-      end
-    end
-
     def destroy
       @payment_methods = Spree::PaymentMethod.where(id: params[:id])
 
@@ -40,13 +31,6 @@ module SolidusAdmin
 
       flash[:notice] = t('.success')
       redirect_back_or_to payment_methods_path, status: :see_other
-    end
-
-    private
-
-    def load_payment_method
-      @payment_method = Spree::PaymentMethod.find_by!(id: params[:id])
-      authorize! action_name, @payment_method
     end
   end
 end

@@ -3,8 +3,7 @@
 module SolidusAdmin
   class TaxonomiesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
-
-    before_action :load_taxonomy, only: [:move]
+    include SolidusAdmin::Moveable
 
     def index
       taxonomies = apply_search_to(
@@ -19,14 +18,6 @@ module SolidusAdmin
       end
     end
 
-    def move
-      @taxonomy.insert_at(params[:position].to_i)
-
-      respond_to do |format|
-        format.js { head :no_content }
-      end
-    end
-
     def destroy
       @taxonomies = Spree::Taxonomy.where(id: params[:id])
 
@@ -34,13 +25,6 @@ module SolidusAdmin
 
       flash[:notice] = t('.success')
       redirect_back_or_to taxonomies_path, status: :see_other
-    end
-
-    private
-
-    def load_taxonomy
-      @taxonomy = Spree::Taxonomy.find(params[:id])
-      authorize! action_name, @taxonomy
     end
   end
 end

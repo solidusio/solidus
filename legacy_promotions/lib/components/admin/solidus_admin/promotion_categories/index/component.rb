@@ -14,7 +14,7 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
   end
 
   def turbo_frames
-    %w[resource_modal]
+    %w[resource_form]
   end
 
   def page_actions
@@ -22,7 +22,7 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_promotion_category_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
     )
   end
@@ -50,7 +50,7 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
       header: :name,
       data: ->(record) do
         link_to record.name, edit_path(record),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }
@@ -61,7 +61,7 @@ class SolidusAdmin::PromotionCategories::Index::Component < SolidusAdmin::UI::Pa
       header: :code,
       data: ->(record) do
         link_to record.code, edit_path(record),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }
