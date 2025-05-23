@@ -13,43 +13,17 @@ module SolidusAdmin
 
     def create
       @resource = @option_type.option_values.build(permitted_resource_params)
-      if @resource.save
-        flash[:notice] = t('.success')
-        respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to after_create_path, status: :see_other }
-        end
-      else
-        render_resource_form_with_errors(new_component.new(@resource))
-      end
-    end
-
-    def update
-      if @resource.update(permitted_resource_params)
-        flash[:notice] = t('.success')
-        respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to after_update_path, status: :see_other }
-        end
-      else
-        page_component = edit_component.new(@resource)
-        render_resource_form_with_errors(page_component)
-      end
-    end
-
-    def destroy
-      @resource = resource_class.where(id: params[:id])
-
-      resource_class.transaction { @resource.destroy_all }
-
-      flash[:notice] = t('.success')
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_back_or_to after_destroy_path, status: :see_other }
-      end
+      super
     end
 
     private
+
+    def prefer_turbo_stream?
+      case params[:action]
+      when "create", "update", "destroy" then true
+      else false
+      end
+    end
 
     def resource_class = Spree::OptionValue
 
