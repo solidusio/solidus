@@ -86,4 +86,24 @@ describe "Option Types", :js, type: :feature do
     expect(page).to have_content("Option values were successfully removed.")
     expect(page).not_to have_content("green")
   end
+
+  it "preserves user input" do
+    create(:option_type, name: "color", presentation: "Color")
+
+    visit "/admin/option_types"
+    click_on "Color"
+
+    fill_in "Name", with: "clothing-colour"
+    fill_in "Presentation", with: "Colour"
+
+    click_on "Add new"
+    within("dialog") do
+      fill_in "Name", with: "blue"
+      fill_in "Presentation", with: "Blue"
+      click_on "Add Option Value"
+    end
+
+    expect(find_field("Name").value).to eq("clothing-colour")
+    expect(find_field("Presentation").value).to eq("Colour")
+  end
 end
