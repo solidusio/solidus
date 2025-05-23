@@ -15,7 +15,7 @@ class SolidusAdmin::OptionValues::Table::Component < SolidusAdmin::BaseComponent
         batch_actions: [
           {
             label: t('.batch_actions.delete'),
-            action: solidus_admin.option_values_path,
+            action: solidus_admin.option_type_option_values_path(@option_type),
             method: :delete,
             icon: 'delete-bin-7-line',
             require_confirmation: true,
