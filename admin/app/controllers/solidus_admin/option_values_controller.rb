@@ -4,7 +4,7 @@ module SolidusAdmin
   class OptionValuesController < SolidusAdmin::ResourcesController
     include SolidusAdmin::Moveable
 
-    before_action :set_option_type, only: [:new, :create]
+    before_action :set_option_type, only: [:new, :create, :destroy]
 
     def new
       @resource = @option_type.option_values.build
@@ -37,6 +37,18 @@ module SolidusAdmin
       end
     end
 
+    def destroy
+      @resource = resource_class.where(id: params[:id])
+
+      resource_class.transaction { @resource.destroy_all }
+
+      flash[:notice] = t('.success')
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_back_or_to after_destroy_path, status: :see_other }
+      end
+    end
+
     private
 
     def resource_class = Spree::OptionValue
@@ -55,6 +67,10 @@ module SolidusAdmin
 
     def after_update_path
       solidus_admin.edit_option_type_path(@option_value.option_type)
+    end
+
+    def after_destroy_path
+      solidus_admin.edit_option_type_path(@option_type)
     end
 
     def set_option_type

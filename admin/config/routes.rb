@@ -70,9 +70,9 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :promotions, only: [:index, :destroy]
   admin_resources :properties, except: [:show]
   admin_resources :option_types, except: [:show], sortable: true do
-    resources :option_values, only: [:new, :create], controller: "option_values"
+    admin_resources :option_values, only: [:new, :create, :destroy], controller: "option_values", sortable: false
   end
-  admin_resources :option_values, only: [:edit, :update, :destroy], sortable: true
+  admin_resources :option_values, only: [:edit, :update], sortable: true
   admin_resources :taxonomies, only: [:index, :destroy], sortable: true
   admin_resources :promotion_categories, only: [:index, :destroy]
   admin_resources :tax_categories, except: [:show]
