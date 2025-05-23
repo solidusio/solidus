@@ -4,7 +4,7 @@ module SolidusAdmin
   class ResourcesController < SolidusAdmin::BaseController
     include SolidusAdmin::ControllerHelpers::Search
 
-    helper_method :search_filter_params
+    helper_method :search_filter_params, :resource_form_frame
 
     before_action :set_paginated_resources, only: %i[index]
     before_action :set_resource, only: %i[edit update]
