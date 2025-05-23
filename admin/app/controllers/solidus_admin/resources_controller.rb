@@ -35,7 +35,10 @@ module SolidusAdmin
 
       if @resource.save
         flash[:notice] = t('.success')
-        redirect_to after_create_path, status: :see_other
+        respond_to do |format|
+          format.html { redirect_to after_create_path, status: :see_other }
+          format.turbo_stream if prefer_turbo_stream?
+        end
       else
         page_component = new_component.new(@resource)
         render_resource_form_with_errors(page_component)
@@ -51,7 +54,10 @@ module SolidusAdmin
     def update
       if @resource.update(permitted_resource_params)
         flash[:notice] = t('.success')
-        redirect_to after_update_path, status: :see_other
+        respond_to do |format|
+          format.html { redirect_to after_update_path, status: :see_other }
+          format.turbo_stream if prefer_turbo_stream?
+        end
       else
         page_component = edit_component.new(@resource)
         render_resource_form_with_errors(page_component)
@@ -64,7 +70,10 @@ module SolidusAdmin
       resource_class.transaction { @resource.destroy_all }
 
       flash[:notice] = t('.success')
-      redirect_back_or_to after_destroy_path, status: :see_other
+      respond_to do |format|
+        format.html { redirect_back_or_to after_destroy_path, status: :see_other }
+        format.turbo_stream if prefer_turbo_stream?
+      end
     end
 
     private
@@ -157,5 +166,7 @@ module SolidusAdmin
     def resource_form_frame
       :resource_form
     end
+
+    def prefer_turbo_stream? = false
   end
 end
