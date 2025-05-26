@@ -160,4 +160,14 @@ describe "Option Types", :js, type: :feature do
       let(:path) { solidus_admin.option_types_path }
     end
   end
+
+  describe "sorting option values" do
+    include_examples "features: sortable" do
+      let!(:option_type) { create(:option_type) }
+      let(:factory) { :option_value }
+      let(:factory_attrs) { { option_type: } }
+      let(:displayed_attribute) { :name }
+      let(:path) { solidus_admin.edit_option_type_path(option_type) }
+    end
+  end
 end
