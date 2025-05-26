@@ -136,4 +136,24 @@ RSpec.describe Spree::Store, type: :model do
       expect { Spree::Store.new(reverse_charge_status: :invalid_status) }.to raise_error(ArgumentError)
     end
   end
+
+  describe "#validate_not_default" do
+    context "when deleting a default store" do
+      it "prevents deletion" do
+        store = create(:store, default: true)
+        expect(store.destroy).to eq false
+        expect(store.errors.full_messages.join).to match /Cannot destroy/
+        expect { store.reload }.not_to raise_error
+      end
+    end
+
+    context "when deleting a non-default store" do
+      it "allows deletion" do
+        create(:store, default: true)
+        store = create(:store, default: false)
+        expect(store.destroy).to be_truthy
+        expect { store.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
