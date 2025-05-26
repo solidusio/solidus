@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
 describe "Roles", type: :feature do
   before do
