@@ -5,7 +5,7 @@ require "solidus_admin/testing_support/shared_examples/crud_resource_requests"
 require "solidus_admin/testing_support/shared_examples/moveable"
 
 RSpec.describe "SolidusAdmin::OptionValuesController", type: :request do
-  include_examples "CRUD resource requests", "option_value", except: %i[index destroy_single] do
+  it_behaves_like "CRUD resource requests", "option_value", except: %i[index destroy_single] do
     let(:resource_class) { Spree::OptionValue }
     let(:valid_attributes) { { name: "yellow", presentation: "Yellow" } }
     let(:invalid_attributes) { { name: "" } }
@@ -51,7 +51,7 @@ RSpec.describe "SolidusAdmin::OptionValuesController", type: :request do
     end
   end
 
-  include_examples "requests: moveable" do
+  it_behaves_like "requests: moveable" do
     let(:factory) { :option_value }
   end
 end
