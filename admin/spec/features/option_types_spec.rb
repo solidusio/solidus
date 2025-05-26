@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Option Types", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
@@ -149,6 +150,14 @@ describe "Option Types", :js, type: :feature do
         click_on "Update Option Value"
         expect(page).to have_content("can't be blank")
       end
+    end
+  end
+
+  describe "sorting option types" do
+    include_examples "features: sortable" do
+      let(:factory) { :option_type }
+      let(:displayed_attribute) { :name }
+      let(:path) { solidus_admin.option_types_path }
     end
   end
 end
