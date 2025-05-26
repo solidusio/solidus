@@ -2,6 +2,7 @@
 
 require "spec_helper"
 require "solidus_admin/testing_support/shared_examples/crud_resource_requests"
+require "solidus_admin/testing_support/shared_examples/moveable"
 
 RSpec.describe "SolidusAdmin::OptionValuesController", type: :request do
   include_examples "CRUD resource requests", "option_value", except: %i[index destroy_single] do
@@ -48,5 +49,9 @@ RSpec.describe "SolidusAdmin::OptionValuesController", type: :request do
         end
       end
     end
+  end
+
+  include_examples "requests: moveable" do
+    let(:factory) { :option_value }
   end
 end
