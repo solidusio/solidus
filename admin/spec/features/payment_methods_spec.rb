@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Payment Methods", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
@@ -44,5 +45,11 @@ describe "Payment Methods", :js, type: :feature do
     expect(page).to have_content("Payment Methods were successfully removed.")
     expect(page).not_to have_content("Check")
     expect(Spree::PaymentMethod.count).to eq(3)
+  end
+
+  it_behaves_like "features: sortable" do
+    let(:factory) { :payment_method }
+    let(:displayed_attribute) { :name }
+    let(:path) { solidus_admin.payment_methods_path }
   end
 end
