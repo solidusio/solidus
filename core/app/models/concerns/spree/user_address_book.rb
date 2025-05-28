@@ -5,7 +5,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress" do
+      has_many :user_addresses, foreign_key: "user_id", class_name: "Spree::UserAddress", inverse_of: :user, dependent: :destroy do
         def find_first_by_address_values(address_attrs)
           detect { |ua| ua.address == Spree::Address.new(address_attrs) }
         end
@@ -32,11 +32,29 @@ module Spree
 
       has_many :addresses, through: :user_addresses
 
-      has_one :default_user_bill_address, ->{ default_billing }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
-      has_one :bill_address, through: :default_user_bill_address, source: :address
+      has_one :default_user_bill_address,
+        ->{ default_billing },
+        class_name: 'Spree::UserAddress',
+        foreign_key: 'user_id',
+        inverse_of: false,
+        dependent: false
+      has_one :bill_address,
+        through: :default_user_bill_address,
+        source: :address,
+        inverse_of: false,
+        dependent: false
 
-      has_one :default_user_ship_address, ->{ default_shipping }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
-      has_one :ship_address, through: :default_user_ship_address, source: :address
+      has_one :default_user_ship_address,
+        ->{ default_shipping },
+        class_name: 'Spree::UserAddress',
+        foreign_key: 'user_id',
+        inverse_of: false,
+        dependent: false
+      has_one :ship_address,
+        through: :default_user_ship_address,
+        source: :address,
+        inverse_of: false,
+        dependent: false
 
       accepts_nested_attributes_for :ship_address
       accepts_nested_attributes_for :bill_address
