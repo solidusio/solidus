@@ -9,9 +9,9 @@ module Spree
 
     acts_as_list
 
-    has_many :shipments
+    has_many :shipments, dependent: :restrict_with_error
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
-    has_many :cartons, inverse_of: :stock_location
+    has_many :cartons, inverse_of: :stock_location, dependent: :restrict_with_error
     has_many :stock_movements, through: :stock_items
     has_many :user_stock_locations, dependent: :delete_all
     has_many :users, through: :user_stock_locations
