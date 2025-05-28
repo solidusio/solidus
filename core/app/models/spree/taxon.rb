@@ -13,9 +13,6 @@ module Spree
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications
 
-    has_many :promotion_rule_taxons
-    has_many :promotion_rules, through: :promotion_rule_taxons
-
     before_save :set_permalink
     after_update :update_child_permalinks, if: :saved_change_to_permalink?
 
