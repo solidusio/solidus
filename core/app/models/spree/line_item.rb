@@ -19,7 +19,7 @@ module Spree
     has_one :product, through: :variant
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
-    has_many :inventory_units, inverse_of: :line_item
+    has_many :inventory_units, inverse_of: :line_item, dependent: false
 
     before_validation :normalize_quantity
     before_validation :set_required_attributes
