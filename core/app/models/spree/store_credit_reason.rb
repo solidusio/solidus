@@ -6,7 +6,7 @@ class Spree::StoreCreditReason < Spree::Base
 
   validates :name, presence: true, uniqueness: { case_sensitive: false, allow_blank: true }
 
-  has_many :store_credit_events, inverse_of: :store_credit_reason
+  has_many :store_credit_events, inverse_of: :store_credit_reason, dependent: :restrict_with_error
 
   self.allowed_ransackable_attributes = %w[name]
 end
