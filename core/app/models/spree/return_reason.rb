@@ -7,7 +7,7 @@ module Spree
 
     validates :name, presence: true, uniqueness: { case_sensitive: false, allow_blank: true }
 
-    has_many :return_authorizations
+    has_many :return_authorizations, dependent: :restrict_with_error
 
     self.allowed_ransackable_attributes = %w[name]
 
