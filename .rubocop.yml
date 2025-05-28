@@ -352,6 +352,11 @@ Rails/LexicallyScopedActionFilter:
   Exclude:
     - "backend/app/controllers/**/*"
 
+Rails/HelperInstanceVariable:
+  Exclude:
+    - "backend/app/helpers/**/*"
+    - "core/app/helpers/**/*"
+
 # Since we're writing library code we can't assume that
 # tasks should load the rails environment loaded.
 Rails/RakeEnvironment:
