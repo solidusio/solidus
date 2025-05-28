@@ -348,6 +348,10 @@ Rails/FindEach:
   Exclude:
     - "db/migrate/**/*"
 
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - "backend/app/controllers/**/*"
+
 # Since we're writing library code we can't assume that
 # tasks should load the rails environment loaded.
 Rails/RakeEnvironment:
