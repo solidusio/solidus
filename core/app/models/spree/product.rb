@@ -23,7 +23,7 @@ module Spree
 
     has_many :product_properties, dependent: :destroy, inverse_of: :product
     has_many :properties, through: :product_properties
-    has_many :variant_property_rules
+    has_many :variant_property_rules, dependent: :destroy
     has_many :variant_property_rule_values, through: :variant_property_rules, source: :values
     has_many :variant_property_rule_conditions, through: :variant_property_rules, source: :conditions
 
@@ -38,12 +38,14 @@ module Spree
       -> { where(is_master: true).with_discarded },
       inverse_of: :product,
       class_name: 'Spree::Variant',
-      autosave: true
+      autosave: true,
+      dependent: false
 
     has_many :variants,
       -> { where(is_master: false).order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant'
+      class_name: 'Spree::Variant',
+      dependent: false
 
     has_many :variants_including_master,
       -> { order(:position) },
