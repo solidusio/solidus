@@ -9,7 +9,7 @@ module Spree
 
     RETURN_PROCESSING_REASON = 'Return processing'
 
-    has_many :refunds
+    has_many :refunds, dependent: :restrict_with_error
 
     self.allowed_ransackable_attributes = %w[name code]
 
