@@ -4,9 +4,11 @@ module Spree
   class Promotion < Spree::Base
     module Rules
       class User < PromotionRule
-        has_many :promotion_rule_users, class_name: 'Spree::PromotionRuleUser',
-                                        foreign_key: :promotion_rule_id,
-                                        dependent: :destroy
+        has_many :promotion_rule_users,
+          class_name: 'Spree::PromotionRuleUser',
+          foreign_key: :promotion_rule_id,
+          dependent: :destroy,
+          inverse_of: :promotion_rule
         has_many :users, through: :promotion_rule_users, class_name: Spree::UserClassHandle.new
 
         def preload_relations

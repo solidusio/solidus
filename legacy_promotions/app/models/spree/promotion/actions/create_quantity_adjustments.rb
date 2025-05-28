@@ -6,7 +6,7 @@ module Spree
       class CreateQuantityAdjustments < CreateItemAdjustments
         preference :group_size, :integer, default: 1
 
-        has_many :line_item_actions, foreign_key: :action_id, dependent: :destroy
+        has_many :line_item_actions, foreign_key: :action_id, dependent: :destroy, inverse_of: :action
         has_many :line_items, through: :line_item_actions
 
         ##
