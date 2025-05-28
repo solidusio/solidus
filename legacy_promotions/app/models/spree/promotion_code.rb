@@ -3,7 +3,7 @@
 class Spree::PromotionCode < Spree::Base
   belongs_to :promotion, inverse_of: :codes, optional: true
   belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
-  has_many :adjustments
+  has_many :adjustments, dependent: :restrict_with_error
 
   before_validation :normalize_code
 
