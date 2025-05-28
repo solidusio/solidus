@@ -4,13 +4,13 @@ module Spree
   class StockItem < Spree::Base
     include Spree::SoftDeletable
 
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items, optional: true
-    belongs_to :variant, -> { with_discarded }, class_name: 'Spree::Variant', inverse_of: :stock_items, optional: true
+    belongs_to :stock_location, class_name: "Spree::StockLocation", inverse_of: :stock_items, optional: true
+    belongs_to :variant, -> { with_discarded }, class_name: "Spree::Variant", inverse_of: :stock_items, optional: true
     has_many :stock_movements, inverse_of: :stock_item
 
     validates :stock_location, :variant, presence: true
-    validates :variant_id, uniqueness: { scope: [:stock_location_id, :deleted_at] }, allow_blank: true, unless: :deleted_at
-    validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, unless: :backorderable?
+    validates :variant_id, uniqueness: {scope: [:stock_location_id, :deleted_at]}, allow_blank: true, unless: :deleted_at
+    validates :count_on_hand, numericality: {greater_than_or_equal_to: 0}, unless: :backorderable?
 
     delegate :weight, :should_track_inventory?, to: :variant
 
@@ -20,7 +20,7 @@ module Spree
     after_save :conditional_variant_touch, if: :saved_changes?
     after_touch { variant.touch }
 
-    self.allowed_ransackable_attributes = ['count_on_hand', 'stock_location_id']
+    self.allowed_ransackable_attributes = ["count_on_hand", "stock_location_id"]
     self.allowed_ransackable_associations = %w[variant]
 
     # @return [Array<Spree::InventoryUnit>] the backordered inventory units

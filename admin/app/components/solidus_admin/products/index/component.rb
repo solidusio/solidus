@@ -20,46 +20,46 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_product_path,
-      icon: "add-line",
+      icon: "add-line"
     )
   end
 
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.products_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-        require_confirmation: true,
+        icon: "delete-bin-7-line",
+        require_confirmation: true
       },
       {
-        label: t('.batch_actions.discontinue'),
+        label: t(".batch_actions.discontinue"),
         action: solidus_admin.discontinue_products_path,
         method: :put,
-        icon: 'pause-circle-line',
-        require_confirmation: true,
+        icon: "pause-circle-line",
+        require_confirmation: true
       },
       {
-        label: t('.batch_actions.activate'),
+        label: t(".batch_actions.activate"),
         action: solidus_admin.activate_products_path,
         method: :put,
-        icon: 'play-circle-line',
-        require_confirmation: true,
-      },
+        icon: "play-circle-line",
+        require_confirmation: true
+      }
     ]
   end
 
   def scopes
     [
-      { name: :all, label: t('.scopes.all'), default: true },
-      { name: :in_stock, label: t('.scopes.in_stock') },
-      { name: :out_of_stock, label: t('.scopes.out_of_stock') },
-      { name: :available, label: t('.scopes.available') },
-      { name: :discontinued, label: t('.scopes.discontinued') },
-      { name: :deleted, label: t('.scopes.deleted') },
+      {name: :all, label: t(".scopes.all"), default: true},
+      {name: :in_stock, label: t(".scopes.in_stock")},
+      {name: :out_of_stock, label: t(".scopes.out_of_stock")},
+      {name: :available, label: t(".scopes.available")},
+      {name: :discontinued, label: t(".scopes.discontinued")},
+      {name: :deleted, label: t(".scopes.deleted")}
     ]
   end
 
@@ -67,10 +67,10 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
     Spree::OptionType.all.map do |option_type|
       {
         label: option_type.presentation,
-        combinator: 'or',
+        combinator: "or",
         attribute: "option_values_id",
         predicate: "in",
-        options: option_type.option_values.pluck(:name, :id),
+        options: option_type.option_values.pluck(:name, :id)
       }
     end
   end
@@ -81,19 +81,19 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
       name_column,
       status_column,
       price_column,
-      stock_column,
+      stock_column
     ]
   end
 
   def image_column
     {
-      col: { class: "w-[72px]" },
-      header: tag.span('aria-label': t('.image'), role: 'text'),
+      col: {class: "w-[72px]"},
+      header: tag.span("aria-label": t(".image"), role: "text"),
       data: ->(product) do
         image = product.gallery.images.first or return
 
         render(
-          component('ui/thumbnail').new(
+          component("ui/thumbnail").new(
             src: image.url(:small),
             alt: product.name
           )
@@ -114,14 +114,14 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   def status_column
     {
       header: :status,
-      data: ->(product) { component('products/status').from_product(product) }
+      data: ->(product) { component("products/status").from_product(product) }
     }
   end
 
   def stock_column
     {
       header: :stock,
-      data: ->(product) { component('products/stock').from_product(product) }
+      data: ->(product) { component("products/stock").from_product(product) }
     }
   end
 

@@ -8,10 +8,10 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   def actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_stock_location_path,
       icon: "add-line",
-      class: "align-self-end w-full",
+      class: "align-self-end w-full"
     )
   end
 
@@ -30,11 +30,11 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.stock_locations_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
@@ -55,21 +55,21 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
         header: :state,
         data: -> {
           color = _1.active? ? :green : :graphite_light
-          text = _1.active? ? t('.active') : t('.inactive')
+          text = _1.active? ? t(".active") : t(".inactive")
 
-          component('ui/badge').new(name: text, color:)
-        },
+          component("ui/badge").new(name: text, color:)
+        }
       },
       {
         header: :backorderable,
         data: -> {
-          _1.backorderable_default ? component('ui/badge').yes : component('ui/badge').no
+          _1.backorderable_default ? component("ui/badge").yes : component("ui/badge").no
         }
       },
       {
         header: :default,
         data: -> {
-          _1.default ? component('ui/badge').yes : component('ui/badge').no
+          _1.default ? component("ui/badge").yes : component("ui/badge").no
         }
       },
       {
@@ -80,7 +80,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
           link_to(
             "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
             spree.admin_stock_location_stock_movements_path(_1),
-            class: 'body-link'
+            class: "body-link"
           )
         }
       }

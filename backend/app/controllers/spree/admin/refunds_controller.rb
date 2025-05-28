@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class RefundsController < ResourceController
-      belongs_to 'spree/payment'
+      belongs_to "spree/payment"
       before_action :load_order
 
       helper_method :refund_reasons
@@ -21,7 +21,7 @@ module Spree
         else
           flash.now[:error] = @refund.errors.full_messages.join(", ")
           respond_with(@refund) do |format|
-            format.html { render action: 'new' }
+            format.html { render action: "new" }
           end
         end
       end

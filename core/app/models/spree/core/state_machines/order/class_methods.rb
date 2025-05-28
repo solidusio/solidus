@@ -47,9 +47,9 @@ module Spree
 
                 order.state_changes.create(
                   previous_state: transition.from,
-                  next_state:     transition.to,
-                  name:           'order',
-                  user_id:        order.user_id
+                  next_state: transition.to,
+                  name: "order",
+                  user_id: order.user_id
                 )
                 order.save
               end
@@ -117,7 +117,7 @@ module Spree
               end
 
               after_transition to: :complete, do: :finalize
-              after_transition to: :resumed,  do: :after_resume
+              after_transition to: :resumed, do: :after_resume
               after_transition to: :canceled, do: :after_cancel
 
               after_transition from: any - :cart, to: any - [:confirm, :complete] do |order|
@@ -137,7 +137,7 @@ module Spree
           def go_to_state(name, options = {})
             checkout_steps[name] = options
             previous_states.each do |state|
-              add_transition({ from: state, to: name }.merge(options))
+              add_transition({from: state, to: name}.merge(options))
             end
             if options[:if]
               previous_states << name
@@ -204,7 +204,7 @@ module Spree
           end
 
           def add_transition(options)
-            next_event_transitions << { options.delete(:from) => options.delete(:to) }.merge(options)
+            next_event_transitions << {options.delete(:from) => options.delete(:to)}.merge(options)
           end
 
           def removed_transitions

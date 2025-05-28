@@ -14,10 +14,10 @@ class RemoveOrderIdFromInventoryUnits < ActiveRecord::Migration[5.0]
   end
 
   def up
-    if InventoryUnit.
-        joins(:shipment).
-        where.not(
-          'spree_inventory_units.order_id = spree_shipments.order_id'
+    if InventoryUnit
+        .joins(:shipment)
+        .where.not(
+          "spree_inventory_units.order_id = spree_shipments.order_id"
         ).exists?
       raise InconsistentInventoryUnitError, "You have inventory units with inconsistent order references. Please fix those before running this migration"
     end

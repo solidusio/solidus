@@ -17,7 +17,7 @@ RSpec.describe SolidusAdmin::Products::Status::Component, type: :component do
 
       render_inline described_class.from_product(product)
 
-      within('tbody') { expect(rendered_content).to have_text("Discontinued") }
+      within("tbody") { expect(rendered_content).to have_text("Discontinued") }
     end
   end
 end

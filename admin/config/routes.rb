@@ -6,7 +6,7 @@ SolidusAdmin::Engine.routes.draw do
 
   resource :account, only: :show
   resources :countries, only: [] do
-    get 'states', to: 'countries#states'
+    get "states", to: "countries#states"
   end
 
   admin_resources :products, only: [:index, :update, :destroy] do
@@ -19,13 +19,13 @@ SolidusAdmin::Engine.routes.draw do
   # Needs a constraint to avoid interpreting "new" as a product's slug
   admin_resources :products, only: [
     :show, :edit
-  ], constraints: ->{ SolidusAdmin::Config.enable_alpha_features? && _1.path != "/admin/products/new" }
+  ], constraints: -> { SolidusAdmin::Config.enable_alpha_features? && _1.path != "/admin/products/new" }
 
   admin_resources :orders, only: [:index]
 
   admin_resources :orders, except: [
     :destroy, :index
-  ], constraints: ->{ SolidusAdmin::Config.enable_alpha_features? } do
+  ], constraints: -> { SolidusAdmin::Config.enable_alpha_features? } do
     resources :adjustments, only: [:index] do
       collection do
         delete :destroy

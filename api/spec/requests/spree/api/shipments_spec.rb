@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Shipments', type: :request do
+  describe "Shipments", type: :request do
     include ActiveSupport::Testing::TimeHelpers
 
     let!(:shipment) { create(:shipment, inventory_units: [build(:inventory_unit, shipment: nil)]) }
@@ -13,7 +13,7 @@ module Spree::Api
       stub_authentication!
     end
 
-    let!(:resource_scoping) { { id: shipment.to_param, shipment: { order_id: shipment.order.to_param } } }
+    let!(:resource_scoping) { {id: shipment.to_param, shipment: {order_id: shipment.order.to_param}} }
 
     context "as a non-admin" do
       it "cannot make a shipment ready" do
@@ -49,10 +49,10 @@ module Spree::Api
 
       sign_in_as_admin!
 
-      describe 'POST #create' do
+      describe "POST #create" do
         let(:params) do
           {
-            shipment: { order_id: order.number },
+            shipment: {order_id: order.number},
             stock_location_id: stock_location.to_param
           }
         end
@@ -61,7 +61,7 @@ module Spree::Api
           post spree.api_shipments_path, params:
         end
 
-        it 'creates a new shipment' do
+        it "creates a new shipment" do
           subject
           expect(response).to be_ok
           expect(json_response).to have_attributes(attributes)
@@ -72,15 +72,15 @@ module Spree::Api
             params.delete(:stock_location_id)
           end
 
-          it 'returns proper error' do
+          it "returns proper error" do
             subject
             expect(response.status).to eq(422)
-            expect(json_response['exception']).to match(/param is missing or the value is empty( or invalid)?: stock_location_id/)
+            expect(json_response["exception"]).to match(/param is missing or the value is empty( or invalid)?: stock_location_id/)
           end
         end
       end
 
-      it 'can update a shipment' do
+      it "can update a shipment" do
         params = {
           shipment: {
             stock_location_id: stock_location.to_param
@@ -89,24 +89,24 @@ module Spree::Api
 
         put(spree.api_shipment_path(shipment), params:)
         expect(response.status).to eq(200)
-        expect(json_response['stock_location_name']).to eq(stock_location.name)
+        expect(json_response["stock_location_name"]).to eq(stock_location.name)
       end
 
       it "can update a shipment and it's metadata" do
         params = {
           shipment: {
             stock_location_id: stock_location.to_param,
-            admin_metadata: { 'delivery_type' => 'express' },
-            customer_metadata: { 'timing' => 'standard' }
+            admin_metadata: {"delivery_type" => "express"},
+            customer_metadata: {"timing" => "standard"}
           }
         }
 
         put(spree.api_shipment_path(shipment), params:)
 
         expect(response.status).to eq(200)
-        expect(json_response['stock_location_name']).to eq(stock_location.name)
-        expect(json_response["admin_metadata"]).to eq({ 'delivery_type' => 'express' })
-        expect(json_response["customer_metadata"]).to eq({ 'timing' => 'standard' })
+        expect(json_response["stock_location_name"]).to eq(stock_location.name)
+        expect(json_response["admin_metadata"]).to eq({"delivery_type" => "express"})
+        expect(json_response["customer_metadata"]).to eq({"timing" => "standard"})
       end
 
       it "can make a shipment ready" do
@@ -124,48 +124,48 @@ module Spree::Api
         expect(response.status).to eq(422)
       end
 
-      context 'for completed orders' do
+      context "for completed orders" do
         let(:order) { create :completed_order_with_totals }
         let(:shipment) { order.shipments.first }
 
-        it 'adds a variant to a shipment' do
-          put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
+        it "adds a variant to a shipment" do
+          put spree.add_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 2}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }["quantity"]).to eq(2)
         end
 
-        it 'removes a variant from a shipment' do
+        it "removes a variant from a shipment" do
           order.contents.add(variant, 2)
 
-          put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+          put spree.remove_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 1}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(1)
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }["quantity"]).to eq(1)
         end
 
-        it 'removes a destroyed variant from a shipment' do
+        it "removes a destroyed variant from a shipment" do
           order.contents.add(variant, 2)
           variant.discard
 
-          put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+          put spree.remove_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 1}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(1)
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }["quantity"]).to eq(1)
         end
       end
 
-      context 'for ready shipments' do
-        let(:order) { create :order_ready_to_ship, line_items_attributes: [{ variant:, quantity: 1 }] }
+      context "for ready shipments" do
+        let(:order) { create :order_ready_to_ship, line_items_attributes: [{variant:, quantity: 1}] }
         let(:shipment) { order.shipments.first }
 
-        it 'adds a variant to a shipment' do
-          put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+        it "adds a variant to a shipment" do
+          put spree.add_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 1}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }['quantity']).to eq(2)
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }["quantity"]).to eq(2)
         end
 
-        it 'removes a variant from a shipment' do
-          put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+        it "removes a variant from a shipment" do
+          put spree.remove_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 1}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }).to be nil
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }).to be nil
         end
       end
 
@@ -173,31 +173,31 @@ module Spree::Api
         let(:order) { create :shipped_order }
         let(:shipment) { order.shipments.first }
 
-        it 'adds a variant to a shipment' do
-          put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
+        it "adds a variant to a shipment" do
+          put spree.add_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 2}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }["quantity"]).to eq(2)
         end
 
-        it 'cannot remove a variant from a shipment' do
-          put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+        it "cannot remove a variant from a shipment" do
+          put spree.remove_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 1}
           expect(response.status).to eq(422)
-          expect(json_response['errors']['base'].join).to match /Cannot remove items/
+          expect(json_response["errors"]["base"].join).to match(/Cannot remove items/)
         end
       end
 
-      context 'for empty shipments' do
+      context "for empty shipments" do
         let(:order) { create :completed_order_with_totals }
         let(:shipment) { order.shipments.create(stock_location:) }
 
-        it 'adds a variant to a shipment' do
-          put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
+        it "adds a variant to a shipment" do
+          put spree.add_api_shipment_path(shipment), params: {variant_id: variant.to_param, quantity: 2}
           expect(response.status).to eq(200)
-          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
+          expect(json_response["manifest"].detect { |h| h["variant"]["id"] == variant.id }["quantity"]).to eq(2)
         end
       end
 
-      describe '#mine' do
+      describe "#mine" do
         subject do
           get spree.mine_api_shipments_path, params:
         end
@@ -208,15 +208,15 @@ module Spree::Api
           let(:current_api_user) { shipped_order.user }
           let!(:shipped_order) { create(:shipped_order) }
 
-          it 'succeeds' do
+          it "succeeds" do
             subject
             expect(response.status).to eq 200
           end
 
-          describe 'json output' do
-            let(:rendered_shipment_ids) { json_response['shipments'].map { |s| s['id'] } }
+          describe "json output" do
+            let(:rendered_shipment_ids) { json_response["shipments"].map { |s| s["id"] } }
 
-            it 'contains the shipments' do
+            it "contains the shipments" do
               subject
               expect(rendered_shipment_ids).to match_array current_api_user.orders.flat_map(&:shipments).map(&:id)
             end
@@ -224,40 +224,40 @@ module Spree::Api
             context "credit card payment" do
               before { subject }
 
-              it 'contains the id and cc_type of the credit card' do
-                expect(json_response['shipments'][0]['order']['payments'][0]['source'].keys).to match_array ["id", "cc_type"]
+              it "contains the id and cc_type of the credit card" do
+                expect(json_response["shipments"][0]["order"]["payments"][0]["source"].keys).to match_array ["id", "cc_type"]
               end
             end
 
             context "store credit payment" do
               let(:current_api_user) { shipped_order.user }
-              let(:shipped_order)    { create(:shipped_order, payment_type: :store_credit_payment) }
+              let(:shipped_order) { create(:shipped_order, payment_type: :store_credit_payment) }
 
               before { subject }
 
-              it 'only contains the id of the payment source' do
-                expect(json_response['shipments'][0]['order']['payments'][0]['source'].keys).to match_array ["id"]
+              it "only contains the id of the payment source" do
+                expect(json_response["shipments"][0]["order"]["payments"][0]["source"].keys).to match_array ["id"]
               end
             end
 
             context "check payment" do
               let(:current_api_user) { shipped_order.user }
-              let(:shipped_order)    { create(:shipped_order, payment_type: :check_payment) }
+              let(:shipped_order) { create(:shipped_order, payment_type: :check_payment) }
 
               before { subject }
 
-              it 'does not try to render a nil source' do
-                expect(json_response['shipments'][0]['order']['payments'][0]['source']).to eq(nil)
+              it "does not try to render a nil source" do
+                expect(json_response["shipments"][0]["order"]["payments"][0]["source"]).to eq(nil)
               end
             end
           end
 
-          context 'with filtering' do
-            let(:params) { { q: { order_completed_at_not_null: 1 } } }
+          context "with filtering" do
+            let(:params) { {q: {order_completed_at_not_null: 1}} }
 
             let!(:incomplete_order) { create(:order_with_line_items, user: current_api_user) }
 
-            it 'filters' do
+            it "filters" do
               subject
               expect(assigns(:shipments).map(&:id)).to match_array current_api_user.orders.complete.flat_map(&:shipments).map(&:id)
             end
@@ -292,7 +292,7 @@ module Spree::Api
 
       it "returns rates available to user" do
         subject
-        expect(json_response['shipping_rates']).to include(
+        expect(json_response["shipping_rates"]).to include(
           {
             "name" => user_shipping_method.name,
             "cost" => "100.0",
@@ -305,7 +305,7 @@ module Spree::Api
 
       it "returns rates available to admin" do
         subject
-        expect(json_response['shipping_rates']).to include(
+        expect(json_response["shipping_rates"]).to include(
           {
             "name" => admin_shipping_method.name,
             "cost" => "10.0",
@@ -323,7 +323,7 @@ module Spree::Api
       let(:send_mailer) { nil }
 
       subject do
-        put spree.ship_api_shipment_path(shipment), params: { send_mailer: }
+        put spree.ship_api_shipment_path(shipment), params: {send_mailer:}
       end
 
       context "the user is allowed to ship the shipment" do
@@ -333,33 +333,33 @@ module Spree::Api
           travel_to(now) do
             subject
             shipment.reload
-            expect(shipment.state).to eq 'shipped'
+            expect(shipment.state).to eq "shipped"
             expect(shipment.shipped_at.to_i).to eq now.to_i
           end
         end
 
-        describe 'sent emails' do
+        describe "sent emails" do
           subject { perform_enqueued_jobs { super() } }
 
           context "send_mailer not present" do
             it "sends the shipped shipments mailer" do
               expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
-              expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+              expect(ActionMailer::Base.deliveries.last.subject).to match(/Shipment Notification/)
             end
           end
 
           context "send_mailer set to false" do
-            let(:send_mailer) { 'false' }
+            let(:send_mailer) { "false" }
             it "does not send the shipped shipments mailer" do
               expect { subject }.to_not change { ActionMailer::Base.deliveries.size }
             end
           end
 
           context "send_mailer set to true" do
-            let(:send_mailer) { 'true' }
+            let(:send_mailer) { "true" }
             it "sends the shipped shipments mailer" do
               expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
-              expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+              expect(ActionMailer::Base.deliveries.last.subject).to match(/Shipment Notification/)
             end
           end
         end
@@ -405,7 +405,7 @@ module Spree::Api
     end
 
     describe "transfers" do
-      let(:user) { create(:admin_user, spree_api_key: 'abc123') }
+      let(:user) { create(:admin_user, spree_api_key: "abc123") }
       let(:current_api_user) { user }
       let(:stock_item) { create(:stock_item, backorderable: false) }
       let(:variant) { stock_item.variant }
@@ -480,7 +480,7 @@ module Spree::Api
         end
 
         context "if the user can not update shipments" do
-          let(:user) { create(:user, spree_api_key: 'abc123') }
+          let(:user) { create(:user, spree_api_key: "abc123") }
 
           custom_authorization! do |_|
             can :show, Spree::Shipment
@@ -496,7 +496,7 @@ module Spree::Api
         end
 
         context "if the user can not destroy shipments" do
-          let(:user) { create(:user, spree_api_key: 'abc123') }
+          let(:user) { create(:user, spree_api_key: "abc123") }
 
           custom_authorization! do |_|
             can :show, Spree::Shipment

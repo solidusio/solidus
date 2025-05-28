@@ -28,7 +28,6 @@ describe "Store credit reasons", type: :feature do
       cannot :create, Spree::StoreCreditReason
     end
 
-
     it "doesnt show the `New Store credit reason` button" do
       expect(page).not_to have_content "New Store Credit Reason"
     end

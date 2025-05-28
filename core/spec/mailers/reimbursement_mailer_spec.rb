@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReimbursementMailer, type: :mailer do
   let(:reimbursement) { create(:reimbursement) }
@@ -16,9 +16,9 @@ RSpec.describe Spree::ReimbursementMailer, type: :mailer do
       context "pt-BR locale" do
         before do
           I18n.enforce_available_locales = false
-          pt_br_shipped_email = { spree: { reimbursement_mailer: { reimbursement_email: { dear_customer: 'Caro Cliente,' } } } }
-          I18n.backend.store_translations :'pt-BR', pt_br_shipped_email
-          I18n.locale = :'pt-BR'
+          pt_br_shipped_email = {spree: {reimbursement_mailer: {reimbursement_email: {dear_customer: "Caro Cliente,"}}}}
+          I18n.backend.store_translations :"pt-BR", pt_br_shipped_email
+          I18n.locale = :"pt-BR"
         end
 
         after do

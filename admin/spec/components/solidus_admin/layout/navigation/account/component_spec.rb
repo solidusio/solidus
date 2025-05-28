@@ -8,7 +8,7 @@ RSpec.describe SolidusAdmin::Layout::Navigation::Account::Component, type: :comp
       user_label: "Alice",
       account_path: "/admin/account",
       logout_path: "/admin/logout",
-      logout_method: :delete,
+      logout_method: :delete
     )
 
     render_inline(component)

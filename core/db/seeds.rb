@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'thor'
+require "thor"
 shell = Thor::Base.shell.new
 
-%w(
+%w[
   stores
   store_credit
   countries
@@ -15,7 +15,7 @@ shell = Thor::Base.shell.new
   roles
   permission_sets
   shipping_categories
-).each do |seed|
+].each do |seed|
   shell.say_status :seed, seed
   require_relative "default/spree/#{seed}"
 end

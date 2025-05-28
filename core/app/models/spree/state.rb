@@ -2,7 +2,7 @@
 
 module Spree
   class State < Spree::Base
-    belongs_to :country, class_name: 'Spree::Country', optional: true
+    belongs_to :country, class_name: "Spree::Country", optional: true
     has_many :addresses, dependent: :nullify
 
     validates :country, :name, presence: true

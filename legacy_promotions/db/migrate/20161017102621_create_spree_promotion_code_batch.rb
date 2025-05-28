@@ -26,7 +26,7 @@ class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
       add_column(
         :spree_promotion_codes,
         :promotion_code_batch_id,
-        :integer,
+        :integer
       )
     end
 
@@ -34,14 +34,14 @@ class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
       add_foreign_key(
         :spree_promotion_codes,
         :spree_promotion_code_batches,
-        column: :promotion_code_batch_id,
+        column: :promotion_code_batch_id
       )
     end
 
     unless index_exists?(:spree_promotion_codes, :promotion_code_batch_id)
       add_index(
         :spree_promotion_codes,
-        :promotion_code_batch_id,
+        :promotion_code_batch_id
       )
     end
   end

@@ -14,12 +14,12 @@ module Spree
     validates_uniqueness_of :name, case_sensitive: true, unless: :deleted_at
 
     has_many :tax_rate_tax_categories,
-      class_name: 'Spree::TaxRateTaxCategory',
+      class_name: "Spree::TaxRateTaxCategory",
       dependent: :destroy,
       inverse_of: :tax_category
     has_many :tax_rates,
       through: :tax_rate_tax_categories,
-      class_name: 'Spree::TaxRate',
+      class_name: "Spree::TaxRate",
       inverse_of: :tax_categories
 
     after_save :ensure_one_default

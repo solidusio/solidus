@@ -5,7 +5,7 @@ module Spree
     module BlacklistUrls
       def setup_url_blacklist(browser)
         if browser.respond_to?(:url_blacklist)
-          browser.url_blacklist = ['https://fonts.googleapis.com']
+          browser.url_blacklist = ["https://fonts.googleapis.com"]
         end
       end
     end

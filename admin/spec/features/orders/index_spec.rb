@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Orders", type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists orders", :js do
     create(:order, number: "R123456789", total: 19.99)
@@ -17,15 +17,15 @@ describe "Orders", type: :feature do
     expect(page).to be_axe_clean
   end
 
-  context 'with different currency' do
+  context "with different currency" do
     around do |example|
       currency_was = Spree::Config.currency
-      Spree::Config.currency = 'EUR'
+      Spree::Config.currency = "EUR"
       example.run
       Spree::Config.currency = currency_was
     end
 
-    it 'displays correct currency' do
+    it "displays correct currency" do
       create(:order, total: 19.99)
       visit "/admin/orders"
       click_on "In Progress"
@@ -50,10 +50,10 @@ describe "Orders", type: :feature do
       click_on "Filter"
 
       within("div[role='search']") do
-        find('details', text: "Store").click
+        find("details", text: "Store").click
         expect(page).to have_content("Another Store")
 
-        find('label', text: "Another Store").click
+        find("label", text: "Another Store").click
       end
 
       expect(page).to have_content(order_in_another_store.number)

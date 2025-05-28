@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '_helpers'
+require_relative "_helpers"
 
 path = "#{ROOT}/core/lib/generators/solidus/install/app_templates/frontend/starter.rb"
 from = File.read(path)[%r{solidusio/solidus_starter_frontend/raw/(.+)/template.rb}, 1]

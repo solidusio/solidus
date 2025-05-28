@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -15,7 +15,7 @@ module Spree
         let(:stock_locations) { Spree::StockLocation.all }
         let(:sorted_stock_locations) { [second, third, first, fourth] }
 
-        it 'returns the default stock location first and the remaining locations by position' do
+        it "returns the default stock location first and the remaining locations by position" do
           expect(subject.sort).to eq(sorted_stock_locations)
         end
       end

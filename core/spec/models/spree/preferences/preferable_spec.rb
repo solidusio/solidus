@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Preferences::Preferable, type: :model do
   let(:config_class_a) do
@@ -21,7 +21,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         @preferences = default_preferences
       end
 
-      preference :color, :string, default: 'green'
+      preference :color, :string, default: "green"
     end
   end
 
@@ -46,8 +46,8 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
     end
 
     it "instances have defaults" do
-      expect(a.preferred_color).to eq 'green'
-      expect(b.preferred_color).to eq 'green'
+      expect(a.preferred_color).to eq "green"
+      expect(b.preferred_color).to eq "green"
       expect(b.preferred_flavor).to be_nil
     end
 
@@ -68,8 +68,8 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
     end
 
     it "has a default" do
-      expect(a.preferred_color_default).to eq 'green'
-      expect(a.preference_default(:color)).to eq 'green'
+      expect(a.preferred_color_default).to eq "green"
+      expect(a.preference_default(:color)).to eq "green"
     end
 
     it "raises if not defined" do
@@ -81,16 +81,16 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
 
   describe "preference access" do
     it "handles ghost methods for preferences" do
-      a.preferred_color = 'blue'
-      expect(a.preferred_color).to eq 'blue'
+      a.preferred_color = "blue"
+      expect(a.preferred_color).to eq "blue"
     end
 
     it "parent and child instances have their own prefs" do
-      a.preferred_color = 'red'
-      b.preferred_color = 'blue'
+      a.preferred_color = "red"
+      b.preferred_color = "blue"
 
-      expect(a.preferred_color).to eq 'red'
-      expect(b.preferred_color).to eq 'blue'
+      expect(a.preferred_color).to eq "red"
+      expect(b.preferred_color).to eq "blue"
     end
 
     it "raises when preference not defined" do
@@ -101,18 +101,18 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
 
     it "builds a hash of preferences" do
       b.preferred_flavor = :strawberry
-      expect(b.preferences[:flavor]).to eq 'strawberry'
-      expect(b.preferences[:color]).to eq 'green' # default from A
+      expect(b.preferences[:flavor]).to eq "strawberry"
+      expect(b.preferences[:color]).to eq "green" # default from A
     end
 
     it "builds a hash of preference defaults" do
       expect(b.default_preferences).to eq({
         flavor: nil,
-        color: 'green'
+        color: "green"
       })
     end
 
-    describe '#admin_form_preference_names' do
+    describe "#admin_form_preference_names" do
       subject do
         ComplexPreferableClass.new.admin_form_preference_names
       end
@@ -131,7 +131,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         is_expected.to contain_exactly(:name, :password)
       end
 
-      context 'with overwritten allowed_admin_form_preference_types class method' do
+      context "with overwritten allowed_admin_form_preference_types class method" do
         subject do
           ComplexOverwrittenPreferableClass.new.admin_form_preference_names
         end
@@ -145,12 +145,12 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
             preference :recipients, :array
 
             def self.allowed_admin_form_preference_types
-              %i(string password hash array)
+              %i[string password hash array]
             end
           end
         end
 
-        it 'returns these types instead' do
+        it "returns these types instead" do
           is_expected.to contain_exactly(:name, :password, :mapping, :recipients)
         end
       end
@@ -172,14 +172,14 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with strings" do
-        a.set_preference(:is_integer, '3')
+        a.set_preference(:is_integer, "3")
         expect(a.preferences[:is_integer]).to eq(3)
 
-        a.set_preference(:is_integer, '')
+        a.set_preference(:is_integer, "")
         expect(a.preferences[:is_integer]).to eq(0)
       end
 
-      it 'does not convert if value is nil' do
+      it "does not convert if value is nil" do
         a.set_preference(:is_integer, nil)
         expect(a.preferences[:is_integer]).to be_nil
       end
@@ -196,10 +196,10 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with strings" do
-        a.set_preference(:if_decimal, '3.3')
+        a.set_preference(:if_decimal, "3.3")
         expect(a.preferences[:if_decimal]).to eq(3.3)
 
-        a.set_preference(:if_decimal, '')
+        a.set_preference(:if_decimal, "")
         expect(a.preferences[:if_decimal]).to eq(0.0)
       end
     end
@@ -210,11 +210,11 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with strings" do
-        a.set_preference(:is_boolean, '0')
+        a.set_preference(:is_boolean, "0")
         expect(a.preferences[:is_boolean]).to be false
-        a.set_preference(:is_boolean, 'f')
+        a.set_preference(:is_boolean, "f")
         expect(a.preferences[:is_boolean]).to be false
-        a.set_preference(:is_boolean, 't')
+        a.set_preference(:is_boolean, "t")
         expect(a.preferences[:is_boolean]).to be true
       end
 
@@ -226,7 +226,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with an empty string" do
-        a.set_preference(:is_boolean, '')
+        a.set_preference(:is_boolean, "")
         expect(a.preferences[:is_boolean]).to be false
       end
 
@@ -258,8 +258,8 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with hash and keys are integers" do
-        a.set_preference(:is_hash, { 1 => 2, 3 => 4 })
-        expect(a.preferences[:is_hash]).to eql({ 1 => 2, 3 => 4 })
+        a.set_preference(:is_hash, {1 => 2, 3 => 4})
+        expect(a.preferences[:is_hash]).to eql({1 => 2, 3 => 4})
       end
     end
 
@@ -278,19 +278,19 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         config_class_a.preference :product_attributes, :any, default: {}
 
         expect(a.preferences[:product_attributes]).to eq({})
-        a.set_preference(:product_attributes, { id: 1, name: 2 })
-        expect(a.preferences[:product_attributes]).to eq({ id: 1, name: 2 })
+        a.set_preference(:product_attributes, {id: 1, name: 2})
+        expect(a.preferences[:product_attributes]).to eq({id: 1, name: 2})
       end
     end
 
     context "converts encrypted_string preferences to encrypted values" do
       it "with string, encryption key provided as option" do
         config_class_a.preference :secret, :encrypted_string,
-                     encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+          encryption_key: "VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!"
 
-        a.set_preference(:secret, 'secret_client_id')
-        expect(a.get_preference(:secret)).to eq('secret_client_id')
-        expect(a.preferences[:secret]).not_to eq('secret_client_id')
+        a.set_preference(:secret, "secret_client_id")
+        expect(a.get_preference(:secret)).to eq("secret_client_id")
+        expect(a.preferences[:secret]).not_to eq("secret_client_id")
       end
 
       it "with string, encryption key provided as env variable" do
@@ -300,28 +300,28 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
 
         config_class_a.preference :secret, :encrypted_string
 
-        a.set_preference(:secret, 'secret_client_id')
-        expect(a.get_preference(:secret)).to eq('secret_client_id')
-        expect(a.preferences[:secret]).not_to eq('secret_client_id')
+        a.set_preference(:secret, "secret_client_id")
+        expect(a.get_preference(:secret)).to eq("secret_client_id")
+        expect(a.preferences[:secret]).not_to eq("secret_client_id")
       end
 
       it "with string, encryption key provided as option, set using syntactic sugar method" do
         config_class_a.preference :secret, :encrypted_string,
-                     encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+          encryption_key: "VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!"
 
-        a.preferred_secret = 'secret_client_id'
-        expect(a.preferred_secret).to eq('secret_client_id')
-        expect(a.preferences[:secret]).not_to eq('secret_client_id')
+        a.preferred_secret = "secret_client_id"
+        expect(a.preferred_secret).to eq("secret_client_id")
+        expect(a.preferences[:secret]).not_to eq("secret_client_id")
       end
 
       it "with string, default value" do
         config_class_a.preference :secret, :encrypted_string,
-                     default: 'my_default_secret',
-                     encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+          default: "my_default_secret",
+          encryption_key: "VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!"
 
         a = config_class_a.new
-        expect(a.get_preference(:secret)).to eq('my_default_secret')
-        expect(a.preferences[:secret]).not_to eq('my_default_secret')
+        expect(a.get_preference(:secret)).to eq("my_default_secret")
+        expect(a.preferences[:secret]).not_to eq("my_default_secret")
       end
     end
   end
@@ -348,9 +348,9 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       class PrefTest < Spree::Base
         include Spree::Preferences::Persistable
 
-        preference :pref_test_pref, :string, default: 'abc'
+        preference :pref_test_pref, :string, default: "abc"
         preference :pref_test_any, :any, default: []
-        preference :pref_test_encrypted_string, :encrypted_string, encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+        preference :pref_test_encrypted_string, :encrypted_string, encryption_key: "VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!"
       end
     end
 
@@ -366,10 +366,10 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
     describe "pending preferences for new activerecord objects" do
       it "saves preferences after record is saved" do
         pr = PrefTest.new
-        pr.set_preference(:pref_test_pref, 'XXX')
-        expect(pr.get_preference(:pref_test_pref)).to eq('XXX')
+        pr.set_preference(:pref_test_pref, "XXX")
+        expect(pr.get_preference(:pref_test_pref)).to eq("XXX")
         pr.save!
-        expect(pr.get_preference(:pref_test_pref)).to eq('XXX')
+        expect(pr.get_preference(:pref_test_pref)).to eq("XXX")
       end
 
       it "saves preferences for serialized object" do
@@ -382,25 +382,25 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
 
       it "saves encrypted preferences for serialized object" do
         pr = PrefTest.new
-        pr.set_preference(:pref_test_encrypted_string, 'secret_client_id')
-        expect(pr.get_preference(:pref_test_encrypted_string)).to eq('secret_client_id')
+        pr.set_preference(:pref_test_encrypted_string, "secret_client_id")
+        expect(pr.get_preference(:pref_test_encrypted_string)).to eq("secret_client_id")
         pr.save!
         preferences_value_on_db = ActiveRecord::Base.connection.execute(
           "SELECT preferences FROM pref_tests WHERE id=#{pr.id}"
         ).first
-        expect(preferences_value_on_db).not_to include('secret_client_id')
+        expect(preferences_value_on_db).not_to include("secret_client_id")
       end
     end
 
     it "clear preferences when record is deleted" do
       @pt.save!
-      @pt.preferred_pref_test_pref = 'lmn'
+      @pt.preferred_pref_test_pref = "lmn"
       @pt.save!
       @pt.destroy
-      @pt1 = PrefTest.new(col: 'aaaa')
+      @pt1 = PrefTest.new(col: "aaaa")
       @pt1.id = @pt.id
       @pt1.save!
-      expect(@pt1.get_preference(:pref_test_pref)).to eq('abc')
+      expect(@pt1.get_preference(:pref_test_pref)).to eq("abc")
     end
   end
 end

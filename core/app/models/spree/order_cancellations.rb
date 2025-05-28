@@ -57,9 +57,7 @@ class Spree::OrderCancellations
 
       @order.recalculate
 
-      if short_ship_tax_notifier
-        short_ship_tax_notifier.call(unit_cancels)
-      end
+      short_ship_tax_notifier&.call(unit_cancels)
     end
 
     Spree::Bus.publish(:order_short_shipped, order: @order, inventory_units:)
@@ -125,14 +123,14 @@ class Spree::OrderCancellations
 
   # if any shipments are now fully shipped then mark them as such
   def update_shipped_shipments(inventory_units)
-    shipments = Spree::Shipment.
-      includes(:inventory_units).
-      where(id: inventory_units.map(&:shipment_id)).
-      to_a
+    shipments = Spree::Shipment
+      .includes(:inventory_units)
+      .where(id: inventory_units.map(&:shipment_id))
+      .to_a
 
     shipments.each do |shipment|
       if shipment.inventory_units.all? { |iu| iu.shipped? || iu.canceled? }
-        shipment.update!(state: 'shipped', shipped_at: Time.current)
+        shipment.update!(state: "shipped", shipped_at: Time.current)
       end
     end
   end

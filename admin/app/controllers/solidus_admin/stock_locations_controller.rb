@@ -7,13 +7,13 @@ module SolidusAdmin
     def index
       stock_locations = apply_search_to(
         Spree::StockLocation.order(id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(stock_locations)
 
       respond_to do |format|
-        format.html { render component('stock_locations/index').new(page: @page) }
+        format.html { render component("stock_locations/index").new(page: @page) }
       end
     end
 
@@ -22,7 +22,7 @@ module SolidusAdmin
 
       Spree::StockLocation.transaction { @stock_locations.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to stock_locations_path, status: :see_other
     end
 

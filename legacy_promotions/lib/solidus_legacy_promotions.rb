@@ -9,7 +9,7 @@ require "solidus_support"
 # if either of them are not present. If they are present,
 # however, they need to load before us.
 begin
-  require 'solidus_admin'
+  require "solidus_admin"
 rescue LoadError
   # Solidus Admin is not available
 end

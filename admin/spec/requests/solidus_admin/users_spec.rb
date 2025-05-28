@@ -130,7 +130,7 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
     end
 
     it "filters users based on search parameters" do
-      get solidus_admin.users_path, params: { q: { email_cont: "test" } }
+      get solidus_admin.users_path, params: {q: {email_cont: "test"}}
       expect(response.body).to include("test@example.com")
       expect(response.body).not_to include("another@example.com")
     end

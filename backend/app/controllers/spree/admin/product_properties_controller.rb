@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class ProductPropertiesController < ResourceController
-      belongs_to 'spree/product', find_by: :slug, includes: { product_properties: :property }
+      belongs_to "spree/product", find_by: :slug, includes: {product_properties: :property}
       before_action :find_properties
       before_action :setup_property, only: :index, if: -> { can?(:create, model_class) }
       before_action :setup_variant_property_rules, only: :index

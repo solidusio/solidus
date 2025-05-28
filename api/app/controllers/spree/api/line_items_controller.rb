@@ -55,16 +55,16 @@ module Spree
       end
 
       def line_items_attributes
-        { line_items_attributes: {
-            id: params[:id],
-            quantity: params[:line_item][:quantity],
-            options: line_item_params[:options] || {},
-            **extract_metadata
-        } }
+        {line_items_attributes: {
+          id: params[:id],
+          quantity: params[:line_item][:quantity],
+          options: line_item_params[:options] || {},
+          **extract_metadata
+        }}
       end
 
       def extract_metadata
-        metadata = { customer_metadata: line_item_params[:customer_metadata] }
+        metadata = {customer_metadata: line_item_params[:customer_metadata]}
 
         if @current_user_roles&.include?("admin")
           metadata[:admin_metadata] = line_item_params[:admin_metadata]

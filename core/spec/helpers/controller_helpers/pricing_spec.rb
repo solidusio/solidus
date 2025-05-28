@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
   controller(ApplicationController) {
@@ -12,7 +12,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
     allow(controller).to receive(:current_store).and_return(store)
   end
 
-  describe '#current_pricing_options' do
+  describe "#current_pricing_options" do
     subject { controller.current_pricing_options }
 
     let(:store) { FactoryBot.create(:store, default_currency: nil) }
@@ -24,19 +24,19 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
 
       context "when store default_currency is nil" do
         let(:store) { nil }
-        it { is_expected.to eq('USD') }
+        it { is_expected.to eq("USD") }
       end
 
       context "when the current store default_currency empty" do
-        let(:store) { FactoryBot.create :store, default_currency: '' }
+        let(:store) { FactoryBot.create :store, default_currency: "" }
 
-        it { is_expected.to eq('USD') }
+        it { is_expected.to eq("USD") }
       end
 
       context "when the current store default_currency is a currency" do
-        let(:store) { FactoryBot.create :store, default_currency: 'EUR' }
+        let(:store) { FactoryBot.create :store, default_currency: "EUR" }
 
-        it { is_expected.to eq('EUR') }
+        it { is_expected.to eq("EUR") }
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
     context "from context" do
       subject { controller.current_pricing_options }
 
-      let(:store) { FactoryBot.create :store, default_currency: 'USD' }
+      let(:store) { FactoryBot.create :store, default_currency: "USD" }
 
       context "when the whole context is passed" do
         it "receives the right object " do

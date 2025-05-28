@@ -10,10 +10,10 @@ class SolidusAdmin::UI::Table::Pagination::ComponentPreview < ViewComponent::Pre
 
   # @param prev_link
   # @param next_link
-  def playground(prev_link: '#1', next_link: '#2')
+  def playground(prev_link: "#1", next_link: "#2")
     render current_component.new(
       prev_link: prev_link.presence,
-      next_link: next_link.presence,
+      next_link: next_link.presence
     )
   end
 end

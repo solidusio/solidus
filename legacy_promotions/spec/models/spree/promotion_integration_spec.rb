@@ -15,7 +15,7 @@ RSpec.describe "Legacy promotion system" do
 
     let(:line_items_attributes) do
       [
-        { price: 10, quantity: }
+        {price: 10, quantity:}
       ]
     end
 
@@ -87,12 +87,12 @@ RSpec.describe "Legacy promotion system" do
     let(:calculator) { Spree::Calculator::DistributedAmount.new }
     let(:promotion) {
       create :promotion,
-        name: '15 spread'
+        name: "15 spread"
     }
     let(:order) {
       create :completed_order_with_promotion,
         promotion:,
-        line_items_attributes: [{ price: 20 }, { price: 30 }, { price: 100 }]
+        line_items_attributes: [{price: 20}, {price: 30}, {price: 100}]
     }
 
     before do
@@ -101,27 +101,27 @@ RSpec.describe "Legacy promotion system" do
       order.recalculate
     end
 
-    it 'correctly distributes the entire discount' do
+    it "correctly distributes the entire discount" do
       expect(order.promo_total).to eq(-15)
       expect(order.line_items.map(&:adjustment_total)).to eq([-2, -3, -10])
     end
 
-    context 'with product promotion rule' do
+    context "with product promotion rule" do
       let(:first_product) { order.line_items.first.product }
 
       before do
         rule = Spree::Promotion::Rules::Product.create!(
           promotion:,
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: first_product),
-          ],
+            Spree::ProductPromotionRule.new(product: first_product)
+          ]
         )
         promotion.rules << rule
         promotion.save!
         order.recalculate
       end
 
-      it 'still distributes the entire discount' do
+      it "still distributes the entire discount" do
         expect(order.promo_total).to eq(-15)
         expect(order.line_items.map(&:adjustment_total)).to eq([-15, 0, 0])
       end
@@ -158,34 +158,34 @@ RSpec.describe "Legacy promotion system" do
     end
 
     it "makes the promotion ineligible" do
-      expect{
+      expect {
         order.complete
-      }.to change{ promo_adjustment.reload.eligible }.to(false)
+      }.to change { promo_adjustment.reload.eligible }.to(false)
     end
 
     it "adjusts the promo_total" do
-      expect{
+      expect {
         order.complete
       }.to change(order, :promo_total).by(10)
     end
 
     it "increases the total to remove the promo" do
-      expect{
+      expect {
         order.complete
       }.to change(order, :total).from(30).to(40)
     end
 
     it "resets the state of the order" do
-      expect{
+      expect {
         order.complete
-      }.to change{ order.reload.state }.from("confirm").to("address")
+      }.to change { order.reload.state }.from("confirm").to("address")
     end
   end
 
   describe "adding items to the cart" do
     let(:order) { create :order }
     let(:line_item) { create :line_item, order: }
-    let(:promo) { create :promotion_with_item_adjustment, adjustment_rate: 5, code: 'promo' }
+    let(:promo) { create :promotion_with_item_adjustment, adjustment_rate: 5, code: "promo" }
     let(:promotion_code) { promo.codes.first }
     let(:variant) { create :variant }
 

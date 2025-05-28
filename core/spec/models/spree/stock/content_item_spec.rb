@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -9,59 +9,59 @@ module Spree
       let(:inventory_unit) { build(:inventory_unit) }
       let(:state) { :on_hand }
 
-      describe '#variant' do
+      describe "#variant" do
         subject { instance.variant }
         it { is_expected.to eq(inventory_unit.variant) }
       end
 
-      describe '#weight' do
+      describe "#weight" do
         subject { instance.weight }
-        it { is_expected.to eq(0.to_d) }
+        it { is_expected.to eq(BigDecimal(0)) }
       end
 
-      describe '#line_item' do
+      describe "#line_item" do
         subject { instance.line_item }
         it { is_expected.to eq(inventory_unit.line_item) }
       end
 
-      describe '#on_hand?' do
+      describe "#on_hand?" do
         subject { instance.on_hand? }
 
-        context 'the state is on hand' do
+        context "the state is on hand" do
           it { is_expected.to eq(true) }
         end
 
-        context 'the state is not on hand' do
-          let(:state) { 'foo' }
+        context "the state is not on hand" do
+          let(:state) { "foo" }
           it { is_expected.to eq(false) }
         end
       end
 
-      describe '#backordered?' do
+      describe "#backordered?" do
         subject { instance.backordered? }
 
-        context 'the state is not backordered' do
-          let(:state) { 'foo' }
+        context "the state is not backordered" do
+          let(:state) { "foo" }
           it { is_expected.to eq(false) }
         end
 
-        context 'the state is backordered' do
+        context "the state is backordered" do
           let(:state) { :backordered }
           it { is_expected.to eq(true) }
         end
       end
 
-      describe '#price' do
+      describe "#price" do
         subject { instance.price }
-        it { is_expected.to eq(10.to_d) }
+        it { is_expected.to eq(BigDecimal(10)) }
       end
 
-      describe '#amount' do
+      describe "#amount" do
         subject { instance.amount }
-        it { is_expected.to eq(10.to_d) }
+        it { is_expected.to eq(BigDecimal(10)) }
       end
 
-      describe '#quantity' do
+      describe "#quantity" do
         subject { instance.quantity }
         it { is_expected.to eq(1) }
       end

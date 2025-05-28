@@ -1,4 +1,4 @@
-user_class = options[:user_class] || 'Spree::User'
+user_class = options[:user_class] || "Spree::User"
 
 begin
   user_class.classify.constantize

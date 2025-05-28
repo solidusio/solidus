@@ -9,10 +9,10 @@ module Spree
     include UserMethods
     include Metadata
 
-    self.table_name = 'spree_users'
+    self.table_name = "spree_users"
 
     def self.model_name
-      ActiveModel::Name.new Spree::LegacyUser, Spree, 'user'
+      ActiveModel::Name.new Spree::LegacyUser, Spree, "user"
     end
 
     attr_accessor :password

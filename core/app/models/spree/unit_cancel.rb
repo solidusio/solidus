@@ -4,8 +4,8 @@
 # The reason specifies why it was canceled.
 # This class should encapsulate logic related to canceling inventory after order complete
 class Spree::UnitCancel < Spree::Base
-  SHORT_SHIP = 'Short Ship'
-  DEFAULT_REASON = 'Cancel'
+  SHORT_SHIP = "Short Ship"
+  DEFAULT_REASON = "Cancel"
 
   belongs_to :inventory_unit, optional: true
   has_one :adjustment, as: :source, dependent: :destroy
@@ -22,7 +22,7 @@ class Spree::UnitCancel < Spree::Base
       source: self,
       amount:,
       order: inventory_unit.order,
-      label: "#{I18n.t('spree.cancellation')} - #{reason}",
+      label: "#{I18n.t("spree.cancellation")} - #{reason}",
       finalized: true
     )
 
@@ -47,6 +47,6 @@ class Spree::UnitCancel < Spree::Base
   end
 
   def quantity_of_line_item(line_item)
-    BigDecimal(line_item.inventory_units.not_canceled.reject(&:original_return_item).size)
+    BigDecimal(line_item.inventory_units.not_canceled.count { |li| !li.original_return_item })
   end
 end

@@ -34,7 +34,7 @@ module Spree
             order:,
             source: self,
             promotion_code: options[:promotion_code],
-            label: I18n.t('spree.adjustment_labels.order', promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
+            label: I18n.t("spree.adjustment_labels.order", promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
           )
           true
         end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'spree/core/class_constantizer'
+require "spec_helper"
+require "spree/core/class_constantizer"
 
 module ClassConstantizerTest
   ClassA = Class.new
@@ -20,23 +20,23 @@ RSpec.describe Spree::Core::ClassConstantizer::Set do
 
   describe "#concat" do
     it "can add one item" do
-      set.concat(['ClassConstantizerTest::ClassA'])
+      set.concat(["ClassConstantizerTest::ClassA"])
       expect(set).to include(ClassConstantizerTest::ClassA)
     end
 
     it "can add two items" do
-      set.concat(['ClassConstantizerTest::ClassA', ClassConstantizerTest::ClassB])
+      set.concat(["ClassConstantizerTest::ClassA", ClassConstantizerTest::ClassB])
       expect(set).to include(ClassConstantizerTest::ClassA)
       expect(set).to include(ClassConstantizerTest::ClassB)
     end
 
     it "returns itself" do
-      expect(set.concat(['String'])).to eql(set)
+      expect(set.concat(["String"])).to eql(set)
     end
   end
 
   describe "initializing with a default" do
-    let(:set) { described_class.new(default: ['ClassConstantizerTest::ClassA']) }
+    let(:set) { described_class.new(default: ["ClassConstantizerTest::ClassA"]) }
 
     it "contains the default" do
       expect(set).to include(ClassConstantizerTest::ClassA)

@@ -13,7 +13,7 @@ RSpec.describe "Adjustments", type: :feature do
     let!(:order) do
       create(
         :completed_order_with_totals,
-        line_items_attributes: [{ price: 10, variant: }] * 5,
+        line_items_attributes: [{price: 10, variant:}] * 5,
         ship_address:
       )
     end

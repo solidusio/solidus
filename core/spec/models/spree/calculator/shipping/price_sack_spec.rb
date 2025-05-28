@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
   let(:calculator) do
@@ -12,11 +12,11 @@ RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
     calculator
   end
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
-  describe '#compute' do
+  describe "#compute" do
     subject { calculator.compute(package) }
-    let(:package) { build(:stock_package, variants_contents: { build(:variant) => 1 }) }
+    let(:package) { build(:stock_package, variants_contents: {build(:variant) => 1}) }
 
     before do
       # This hack is due to our factories not being so smart to understand
@@ -25,7 +25,7 @@ RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
       allow_any_instance_of(Spree::Stock::ContentItem).to receive(:price) { amount }
     end
 
-    context 'when price < minimal amount' do
+    context "when price < minimal amount" do
       let(:amount) { 2 }
 
       it "returns the discounted amount" do
@@ -33,7 +33,7 @@ RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
       end
     end
 
-    context 'when price > minimal amount' do
+    context "when price > minimal amount" do
       let(:amount) { 6 }
 
       it "returns the discounted amount" do

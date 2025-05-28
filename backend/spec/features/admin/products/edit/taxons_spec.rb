@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Product Display Order", type: :feature do
   stub_authorization!
@@ -20,7 +20,7 @@ describe "Product Display Order", type: :feature do
 
     it "should allow an admin to manage display order (taxons)", :flaky do
       taxon_1 = create(:taxon)
-      taxon_2 = create(:taxon, name: 'Clothing')
+      taxon_2 = create(:taxon, name: "Clothing")
       product.taxons << taxon_1
 
       visit spree.edit_admin_product_path(product)
@@ -35,11 +35,11 @@ describe "Product Display Order", type: :feature do
       # Without this line we have a flaky spec probably due to select2 not
       # closing its fixed overlay correctly. Clicking anywhere in the page
       # before submit apparently solves the issue.
-      find('.edit_product', visible: true, obscured: false).click
+      find(".edit_product", visible: true, obscured: false).click
 
       click_button "Update"
 
-      within('.flash') do
+      within(".flash") do
         expect(page).to have_content(%(Product "#{product.name}" has been successfully updated!))
       end
       assert_selected_taxons([taxon_1, taxon_2])

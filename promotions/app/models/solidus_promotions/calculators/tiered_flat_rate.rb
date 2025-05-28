@@ -8,7 +8,7 @@ module SolidusPromotions
       include PromotionCalculator
 
       preference :base_amount, :decimal, default: 0
-      preference :tiers, :hash, default: { 10 => 10 }
+      preference :tiers, :hash, default: {10 => 10}
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
       before_validation do
@@ -41,7 +41,7 @@ module SolidusPromotions
       def cast_to_d(value)
         value.to_s.to_d
       rescue ArgumentError
-        BigDecimal("0")
+        BigDecimal(0)
       end
 
       def preferred_tiers_content

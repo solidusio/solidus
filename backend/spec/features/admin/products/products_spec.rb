@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Products", type: :feature do
   context "as admin user" do
@@ -21,33 +21,33 @@ describe "Products", type: :feature do
     context "listing products" do
       context "sorting" do
         before do
-          create(:product, name: 'apache baseball cap', price: 10)
-          create(:product, name: 'zomg shirt', price: 5)
+          create(:product, name: "apache baseball cap", price: 10)
+          create(:product, name: "zomg shirt", price: 5)
         end
 
         it "should list existing products with correct sorting by name" do
           click_nav "Products"
           # Name ASC
-          within_row(1) { expect(page).to have_content('apache baseball cap') }
+          within_row(1) { expect(page).to have_content("apache baseball cap") }
           within_row(2) { expect(page).to have_content("zomg shirt") }
 
           # Name DESC
           click_link "admin_products_listing_name_title"
           within_row(1) { expect(page).to have_content("zomg shirt") }
-          within_row(2) { expect(page).to have_content('apache baseball cap') }
+          within_row(2) { expect(page).to have_content("apache baseball cap") }
         end
 
         it "should list existing products with correct sorting by price" do
           click_nav "Products"
 
           # Name ASC (default)
-          within_row(1) { expect(page).to have_content('apache baseball cap') }
+          within_row(1) { expect(page).to have_content("apache baseball cap") }
           within_row(2) { expect(page).to have_content("zomg shirt") }
 
           # Price DESC
           click_link "admin_products_listing_price_title"
           within_row(1) { expect(page).to have_content("zomg shirt") }
-          within_row(2) { expect(page).to have_content('apache baseball cap') }
+          within_row(2) { expect(page).to have_content("apache baseball cap") }
         end
       end
 
@@ -79,7 +79,7 @@ describe "Products", type: :feature do
           create(:product, name: "Just a product", price: 19.99)
         end
 
-        it 'defaults it to Spree::Config.currency and sets the price as blank' do
+        it "defaults it to Spree::Config.currency and sets the price as blank" do
           stub_spree_preferences(currency: "USD")
           visit spree.admin_product_path(product)
           within("#product_price_field") do
@@ -91,31 +91,31 @@ describe "Products", type: :feature do
 
     context "searching products", js: true do
       it "should be able to search deleted products" do
-        create(:product, name: 'apache baseball cap', deleted_at: "2011-01-06 18:21:13")
-        create(:product, name: 'zomg shirt')
+        create(:product, name: "apache baseball cap", deleted_at: "2011-01-06 18:21:13")
+        create(:product, name: "zomg shirt")
 
         click_nav "Products"
         expect(page).to have_content("zomg shirt")
         expect(page).not_to have_content("apache baseball cap")
         check "Show Deleted"
-        click_button 'Search'
+        click_button "Search"
         expect(find('input[name="q[with_discarded]"]')).to be_checked
         expect(page).to have_content("zomg shirt")
         expect(page).to have_content("apache baseball cap")
         uncheck "Show Deleted"
-        click_button 'Search'
+        click_button "Search"
         expect(page).to have_content("zomg shirt")
         expect(page).not_to have_content("apache baseball cap")
       end
 
       it "should be able to search products by their properties" do
-        create(:product, name: 'apache baseball cap', sku: "A100")
-        create(:product, name: 'apache baseball cap2', sku: "B100")
-        create(:product, name: 'zomg shirt')
+        create(:product, name: "apache baseball cap", sku: "A100")
+        create(:product, name: "apache baseball cap2", sku: "B100")
+        create(:product, name: "zomg shirt")
 
         click_nav "Products"
         fill_in "Name", with: "ap"
-        click_button 'Search'
+        click_button "Search"
         expect(page).to have_content("apache baseball cap")
         expect(page).to have_content("apache baseball cap2")
         expect(page).not_to have_content("zomg shirt")
@@ -155,34 +155,34 @@ describe "Products", type: :feature do
 
       # Regression test for https://github.com/solidusio/solidus/issues/2016
       it "should be able to search and sort by price" do
-        product = create(:product, name: 'apache baseball cap', sku: "A001")
+        product = create(:product, name: "apache baseball cap", sku: "A001")
         create(:variant, product:, sku: "A002")
-        create(:product, name: 'zomg shirt', sku: "Z001")
+        create(:product, name: "zomg shirt", sku: "Z001")
 
         click_nav "Products"
         expect(page).to have_content("apache baseball cap")
         expect(page).to have_content("zomg shirt")
-        expect(page).to have_css('#listing_products > tbody > tr', count: 2)
+        expect(page).to have_css("#listing_products > tbody > tr", count: 2)
 
         fill_in "SKU", with: "A"
-        click_button 'Search'
+        click_button "Search"
         expect(page).to have_content("apache baseball cap")
         expect(page).not_to have_content("zomg shirt")
-        expect(page).to have_css('#listing_products > tbody > tr', count: 1)
+        expect(page).to have_css("#listing_products > tbody > tr", count: 1)
 
         # Sort by master price
-        click_on 'Master Price'
-        expect(page).to have_css('.sort_link.asc', text: 'Master Price')
+        click_on "Master Price"
+        expect(page).to have_css(".sort_link.asc", text: "Master Price")
         expect(page).to have_content("apache baseball cap")
         expect(page).not_to have_content("zomg shirt")
-        expect(page).to have_css('#listing_products > tbody > tr', count: 1)
+        expect(page).to have_css("#listing_products > tbody > tr", count: 1)
       end
     end
 
     context "creating a new product" do
       before(:each) do
         @shipping_category = create(:shipping_category)
-        @tax_category = create(:tax_category, name: 'Alcohol taxes', is_default: true)
+        @tax_category = create(:tax_category, name: "Alcohol taxes", is_default: true)
         click_nav "Products"
         click_on "New Product"
       end
@@ -252,7 +252,7 @@ describe "Products", type: :feature do
           fill_in "product_price", with: "19,99"
           click_button "Create"
           expect(page).to have_content("Name can't be blank")
-          expect(page).to have_field('product_price', with: '19,99')
+          expect(page).to have_field("product_price", with: "19,99")
         end
       end
 
@@ -268,7 +268,7 @@ describe "Products", type: :feature do
       end
 
       it "should show default tax category" do
-        expect(page).to have_select('product_tax_category_id', selected: 'Alcohol taxes')
+        expect(page).to have_select("product_tax_category_id", selected: "Alcohol taxes")
       end
 
       it "can disable track_inventory" do
@@ -310,43 +310,43 @@ describe "Products", type: :feature do
       end
     end
 
-    context 'updating a product' do
+    context "updating a product" do
       let(:product) { create(:product) }
 
-      it 'should parse correctly available_on', :js do
+      it "should parse correctly available_on", :js do
         visit spree.admin_product_path(product)
         fill_in "product_available_on", with: "2012/12/25"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
-        expect(Spree::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
+        expect(Spree::Product.last.available_on).to eq("Tue, 25 Dec 2012 00:00:00 UTC +00:00")
       end
 
-      it 'should correctly update discontinue_on', :js do
+      it "should correctly update discontinue_on", :js do
         visit spree.admin_product_path(product)
         fill_in "product_discontinue_on", with: "2020/12/4"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
-        expect(product.reload.discontinue_on.to_s).to eq('2020-12-04 00:00:00 UTC')
+        expect(product.reload.discontinue_on.to_s).to eq("2020-12-04 00:00:00 UTC")
       end
 
       context "when there is a default tax category" do
-        let!(:default_category) { create(:tax_category, name: 'Alcohol taxes', is_default: true) }
+        let!(:default_category) { create(:tax_category, name: "Alcohol taxes", is_default: true) }
 
         context "when the product does not have a tax category" do
           it "pre-selects the default tax category" do
             visit spree.admin_product_path(product)
-            expect(page).to have_select('product_tax_category_id', selected: default_category.name)
+            expect(page).to have_select("product_tax_category_id", selected: default_category.name)
           end
         end
 
         context "when the product already has a tax category" do
-          let(:clothing) { create(:tax_category, name: 'Clothing', is_default: false) }
+          let(:clothing) { create(:tax_category, name: "Clothing", is_default: false) }
 
           before { product.update!(tax_category: clothing) }
 
           it "pre-selects the product tax category" do
             visit spree.admin_product_path(product)
-            expect(page).to have_select('product_tax_category_id', selected: clothing.name)
+            expect(page).to have_select("product_tax_category_id", selected: clothing.name)
           end
         end
       end
@@ -369,7 +369,7 @@ describe "Products", type: :feature do
       end
     end
 
-    context 'deleting a product', js: true do
+    context "deleting a product", js: true do
       let!(:product) { create(:product) }
 
       it "product details are still viewable" do
@@ -386,15 +386,15 @@ describe "Products", type: :feature do
         check "Show Deleted"
         click_button "Search"
         click_link product.name
-        expect(page).to_not have_field('Master Price')
-        expect(page).to_not have_content('Images')
-        expect(page).to_not have_content('Prices')
-        expect(page).to_not have_content('Product Properties')
+        expect(page).to_not have_field("Master Price")
+        expect(page).to_not have_content("Images")
+        expect(page).to_not have_content("Prices")
+        expect(page).to_not have_content("Product Properties")
       end
     end
   end
 
-  context 'with only product permissions' do
+  context "with only product permissions" do
     before do
       allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
@@ -406,28 +406,28 @@ describe "Products", type: :feature do
 
     it "should only display accessible links on index" do
       visit spree.admin_products_path
-      expect(page).to have_link('Products')
-      expect(page).not_to have_link('Option Types')
-      expect(page).not_to have_link('Properties')
+      expect(page).to have_link("Products")
+      expect(page).not_to have_link("Option Types")
+      expect(page).not_to have_link("Properties")
 
-      expect(page).not_to have_link('New Product')
-      expect(page).not_to have_css('a.clone')
-      expect(page).to have_css('a.edit')
-      expect(page).not_to have_css('a.delete-resource')
+      expect(page).not_to have_link("New Product")
+      expect(page).not_to have_css("a.clone")
+      expect(page).to have_css("a.edit")
+      expect(page).not_to have_css("a.delete-resource")
     end
 
     it "should only display accessible links on edit" do
       visit spree.admin_product_path(product)
 
       # product tabs should be hidden
-      expect(page).to have_link('Product Details')
-      expect(page).not_to have_link('Images')
-      expect(page).not_to have_link('Variants')
-      expect(page).not_to have_link('Product Properties')
-      expect(page).not_to have_link('Stock Management')
+      expect(page).to have_link("Product Details")
+      expect(page).not_to have_link("Images")
+      expect(page).not_to have_link("Variants")
+      expect(page).not_to have_link("Product Properties")
+      expect(page).not_to have_link("Stock Management")
 
       # no create permission
-      expect(page).not_to have_link('New Product')
+      expect(page).not_to have_link("New Product")
     end
   end
 end

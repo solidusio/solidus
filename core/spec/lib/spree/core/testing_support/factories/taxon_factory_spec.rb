@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'taxon factory' do
+RSpec.describe "taxon factory" do
   let(:factory_class) { Spree::Taxon }
 
-  describe 'taxon' do
+  describe "taxon" do
     let(:factory) { :taxon }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
 
     context "when no taxonomy is given" do
       subject { create(:taxon) }
