@@ -24,7 +24,7 @@ module Spree
       raise "The order association has been removed from InventoryUnit. The order is now determined from the shipment."
     end
 
-    validates_presence_of :shipment, :line_item, :variant
+    validates :shipment, :line_item, :variant, presence: true
 
     before_destroy :ensure_can_destroy
 
