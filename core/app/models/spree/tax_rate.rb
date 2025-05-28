@@ -27,8 +27,8 @@ module Spree
       class_name: 'Spree::TaxCategory',
       inverse_of: :tax_rates
 
-    has_many :adjustments, as: :source
-    has_many :shipping_rate_taxes, class_name: "Spree::ShippingRateTax"
+    has_many :adjustments, as: :source, dependent: :restrict_with_error
+    has_many :shipping_rate_taxes, class_name: "Spree::ShippingRateTax", dependent: :restrict_with_error
 
     validates :amount, presence: true, numericality: true
 
