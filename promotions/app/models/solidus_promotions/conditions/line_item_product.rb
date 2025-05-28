@@ -11,7 +11,8 @@ module SolidusPromotions
       has_many :condition_products,
         dependent: :destroy,
         foreign_key: :condition_id,
-        class_name: "SolidusPromotions::ConditionProduct"
+        class_name: "SolidusPromotions::ConditionProduct",
+        inverse_of: :condition
       has_many :products,
         class_name: "Spree::Product",
         through: :condition_products

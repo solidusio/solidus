@@ -6,8 +6,11 @@ module SolidusPromotions
 
     include Spree::SoftDeletable
 
-    belongs_to :category, class_name: "SolidusPromotions::PromotionCategory",
-      foreign_key: :promotion_category_id, optional: true
+    belongs_to :category,
+      class_name: "SolidusPromotions::PromotionCategory",
+      foreign_key: :promotion_category_id,
+      optional: true,
+      inverse_of: :promotions
     belongs_to :original_promotion, class_name: "Spree::Promotion", optional: true
     has_many :benefits, class_name: "SolidusPromotions::Benefit", dependent: :destroy
     has_many :conditions, through: :benefits
