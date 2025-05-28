@@ -1,10 +1,10 @@
 inherit_from: .rubocop_todo.yml
 
 # Relaxed.Ruby.Style
-
-require:
+plugins:
   - rubocop-performance
   - rubocop-rails
+require:
   - ./tasks/linting/wrong_migration_version.rb
 
 AllCops:
