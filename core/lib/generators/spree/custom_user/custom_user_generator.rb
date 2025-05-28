@@ -15,7 +15,7 @@ module Spree
       klass
     rescue NameError
       @shell.say "Couldn't find #{class_name}. Are you sure that this class exists within your application and is loaded?", :red
-      exit(1)
+      exit(1) # rubocop: disable Rails/Exit
     end
 
     def generate
