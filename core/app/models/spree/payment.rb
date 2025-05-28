@@ -17,10 +17,10 @@ module Spree
     belongs_to :source, polymorphic: true, optional: true
     belongs_to :payment_method, -> { with_discarded }, class_name: 'Spree::PaymentMethod', inverse_of: :payments, optional: true
 
-    has_many :log_entries, as: :source
-    has_many :state_changes, as: :stateful
-    has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent'
-    has_many :refunds, inverse_of: :payment
+    has_many :log_entries, as: :source, dependent: :destroy
+    has_many :state_changes, as: :stateful, dependent: :destroy
+    has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent', dependent: :destroy
+    has_many :refunds, inverse_of: :payment, dependent: :destroy
 
     before_validation :validate_source, unless: :invalid?
     before_create :set_unique_identifier
