@@ -7,8 +7,8 @@ module Spree
     validates :name, presence: true
     validates :name, uniqueness: true
 
-    has_many :taxons, inverse_of: :taxonomy
-    has_one :root, -> { where parent_id: nil }, class_name: "Spree::Taxon", dependent: :destroy
+    has_many :taxons, inverse_of: :taxonomy, dependent: false
+    has_one :root, -> { where parent_id: nil }, class_name: "Spree::Taxon", dependent: :destroy, inverse_of: false
 
     after_save :set_name
 
