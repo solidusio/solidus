@@ -5,8 +5,11 @@ module SolidusPromotions
     class Taxon < Condition
       include LineItemApplicableOrderLevelCondition
 
-      has_many :condition_taxons, class_name: "SolidusPromotions::ConditionTaxon", foreign_key: :condition_id,
-        dependent: :destroy
+      has_many :condition_taxons,
+        class_name: "SolidusPromotions::ConditionTaxon",
+        foreign_key: :condition_id,
+        dependent: :destroy,
+        inverse_of: :condition
       has_many :taxons, through: :condition_taxons, class_name: "Spree::Taxon"
 
       def preload_relations

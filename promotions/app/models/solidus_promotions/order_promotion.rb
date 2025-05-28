@@ -7,7 +7,7 @@ module SolidusPromotions
   # 2. The specific code that they used
   class OrderPromotion < Spree::Base
     belongs_to :order, class_name: "Spree::Order"
-    belongs_to :promotion, -> { with_discarded }, class_name: "SolidusPromotions::Promotion"
+    belongs_to :promotion, -> { with_discarded }, class_name: "SolidusPromotions::Promotion", inverse_of: :order_promotions
     belongs_to :promotion_code, class_name: "SolidusPromotions::PromotionCode", optional: true
 
     validates :promotion_code, presence: true, if: :require_promotion_code?
