@@ -32,7 +32,9 @@ export default class extends Controller {
   }
 
   // Determine if sortable should be enabled
-  modeValueChanged() {
+  modeValueChanged(_current, previous) {
+    this.previousMode = previous;
+
     const shouldSetSortable = this.sortableValue && this.modeValue !== "batch" && this.modeValue !== "search"
 
     if (shouldSetSortable) {
@@ -69,8 +71,7 @@ export default class extends Controller {
 
   selectRow(event) {
     if (this.checkboxTargets.some((checkbox) => checkbox.checked)) {
-      this.previousMode = this.modeValue;
-      this.modeValue = "batch"
+      this.modeValue = "batch";
     } else {
       this.modeValue = this.previousMode;
     }
@@ -80,8 +81,7 @@ export default class extends Controller {
 
   selectAllRows(event) {
     if (event.target.checked) {
-      this.previousMode = this.modeValue;
-      this.modeValue = "batch"
+      this.modeValue = "batch";
     } else {
       this.modeValue = this.previousMode;
     }
