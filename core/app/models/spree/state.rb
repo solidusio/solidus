@@ -2,10 +2,10 @@
 
 module Spree
   class State < Spree::Base
-    belongs_to :country, class_name: 'Spree::Country', optional: true
+    belongs_to :country, class_name: 'Spree::Country'
     has_many :addresses, dependent: :nullify
 
-    validates :country, :name, presence: true
+    validates :name, presence: true
 
     scope :with_name_or_abbr, ->(name_or_abbr) do
       where(

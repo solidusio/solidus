@@ -11,10 +11,10 @@ module Spree
     mattr_accessor :state_validator_class
     self.state_validator_class = Spree::Address::StateValidator
 
-    belongs_to :country, class_name: "Spree::Country", optional: true
+    belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    validates :address1, :city, :country_id, :name, presence: true
+    validates :address1, :city, :name, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
