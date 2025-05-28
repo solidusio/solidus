@@ -13,7 +13,7 @@ module Spree
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_rates, -> { order(:cost) }, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_methods, through: :shipping_rates
-    has_many :state_changes, as: :stateful
+    has_many :state_changes, as: :stateful, dependent: :destroy
     has_many :cartons, -> { distinct }, through: :inventory_units
     has_many :line_items, -> { distinct }, through: :inventory_units
 
