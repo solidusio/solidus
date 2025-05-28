@@ -6,9 +6,14 @@ module Spree
 
     belongs_to :stock_location, optional: true
 
-    has_many :return_items, inverse_of: :customer_return
-    has_many :return_authorizations, through: :return_items
-    has_many :reimbursements, inverse_of: :customer_return
+    has_many :return_items,
+      inverse_of: :customer_return,
+      dependent: :destroy
+    has_many :return_authorizations,
+      through: :return_items
+    has_many :reimbursements,
+      inverse_of: :customer_return,
+      dependent: :nullify
 
     after_create :process_return!
     before_create :generate_number
