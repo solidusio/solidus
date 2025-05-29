@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/config'
+require 'spree/core'
 
 module Spree
   module Core
