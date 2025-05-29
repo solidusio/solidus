@@ -185,6 +185,8 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   end
 
   def should_enable_sortable?
-    @sortable && @search&.on_default_scope?
+    return false if @sortable.nil?
+    return true if @search.nil?
+    @search.on_default_scope?
   end
 end

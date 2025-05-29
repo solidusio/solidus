@@ -4,7 +4,7 @@ import { patch } from '@rails/request.js'
 
 export default class extends Controller {
   static values = {
-    param: { type: String, default: 'postion' },
+    param: { type: String, default: 'position' },
     handle: { type: String, default: null },
     animation: { type: Number, default: 150 },
   }
