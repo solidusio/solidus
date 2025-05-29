@@ -56,4 +56,14 @@ runs:
         cd $RUNNER_TEMP/my_app
         bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['GITHUB_WORKSPACE']")"
         unset RAILS_ENV # avoid doing everything on the test environment
+
+        # Due to [a bug in `sprockets-rails`](https://github.com/rails/sprockets-rails/pull/546) we need to manually add
+        # the sprockets manifest into the generated rails app **before** running any rails commands inside the rails app folder.
+        mkdir -p app/assets/config
+        cat <<MANIFEST > app/assets/config/manifest.js
+        //= link_tree ../images
+        //= link_directory ../javascripts .js
+        //= link_directory ../stylesheets .css
+        MANIFEST
+
         bin/rails generate solidus:install --auto-accept ${{ inputs.flags }}
