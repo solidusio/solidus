@@ -1,7 +1,6 @@
 en:
   title: "Users / %{email} / Store Credit"
   store_credit: Store Credit
-  last_active: Last Active
   add_store_credit: Add Store Credit
   no_credits_found: No Store Credits found.
   create_one: Create One

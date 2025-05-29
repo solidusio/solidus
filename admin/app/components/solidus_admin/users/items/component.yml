@@ -1,6 +1,5 @@
 en:
   title: "Users / %{email} / Items Purchased"
-  last_active: Last Active
   create_order_for_user: Create order for this user
   items_purchased: Items Purchased
   no_orders_found: No Orders found.
