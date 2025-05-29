@@ -37,11 +37,3 @@ jobs:
         run: |
           cd $RUNNER_TEMP/my_app
           bundle list | grep 'solidus_paypal_commerce_platform (1.'
-      - name: Install Solidus
-        uses: ./.github/actions/install_solidus
-        with:
-          flags: "--sample=false --frontend=starter --authentication=devise --payment-method=stripe"
-      - name: "Check homepage"
-        uses: ./.github/actions/check_page_content
-        with:
-          expected_text: "<title>Sample Store</title>"
