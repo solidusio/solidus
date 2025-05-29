@@ -136,10 +136,15 @@ commands:
   libvips:
     steps:
       - run:
+          name: Fix APT mirrors
+          command: |
+            sudo sed -i 's|http://archive.ubuntu.com|http://ubuntu.cs.utah.edu|g' /etc/apt/sources.list
+            sudo sed -i 's|http://security.ubuntu.com|http://ubuntu.cs.utah.edu|g' /etc/apt/sources.list
+            sudo apt-get update
+      - run:
           name: Install libvips
           command: |
-            sudo apt-get update
-            sudo apt-get install -yq libvips-dev
+            sudo apt-get install -y libvips-dev
 
   install_solidus:
     parameters:
