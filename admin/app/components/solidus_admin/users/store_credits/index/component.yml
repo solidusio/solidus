@@ -1,9 +1,5 @@
 en:
   title: "Users / %{email} / Store Credit"
-  account: Account
-  addresses: Addresses
-  order_history: Order History
-  items: Items
   store_credit: Store Credit
   last_active: Last Active
   add_store_credit: Add Store Credit
