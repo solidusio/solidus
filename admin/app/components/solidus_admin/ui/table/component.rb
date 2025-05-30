@@ -8,7 +8,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   BatchAction = Struct.new(:label, :icon, :action, :require_confirmation, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
   private_constant :BatchAction, :Column, :Filter, :Scope, :Sortable
 
-  class Data < Struct.new(:rows, :class, :url, :prev, :next, :columns, :fade, :batch_actions, keyword_init: true) # rubocop:disable Lint/StructNewOverride,Style/StructInheritance
+  class Data < Struct.new(:rows, :class, :url, :prev, :next, :columns, :fade, :batch_actions, :page, :per_page, keyword_init: true) # rubocop:disable Lint/StructNewOverride,Style/StructInheritance
     def initialize(**args)
       super
 

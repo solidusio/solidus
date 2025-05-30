@@ -92,6 +92,8 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
         columns:,
         batch_actions:,
         url: -> { row_url(_1) },
+        page: @page.number,
+        per_page: @page.recordset.ratios.fixed,
       },
       search: search_options,
       sortable: sortable_options,

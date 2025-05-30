@@ -2,6 +2,8 @@
 
 module SolidusAdmin
   class ResourcesController < SolidusAdmin::BaseController
+    DEFAULT_PER_PAGE = 20
+
     include SolidusAdmin::ControllerHelpers::Search
 
     helper_method :search_filter_params
@@ -77,12 +79,16 @@ module SolidusAdmin
         ).tap do |resources|
           instance_variable_set("@#{plural_resource_name}", resources)
           # sets @page instance variable in geared_pagination gem
-          set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options)
+          set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options, per_page:)
         end
     end
 
     def resources_sorting_options
       { id: :desc }
+    end
+
+    def per_page
+      DEFAULT_PER_PAGE
     end
 
     def resources_collection

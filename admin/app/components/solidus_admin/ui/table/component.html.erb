@@ -136,6 +136,8 @@
       <%= "data-sortable-param-value=#{@sortable.param}" if @sortable&.param %>
       <%= "data-sortable-handle-value=#{@sortable.handle}" if @sortable&.handle %>
       <%= "data-sortable-animation-value=#{@sortable.animation}" if @sortable&.animation %>
+      <%= "data-sortable-page-value=#{@data.page}" if @data&.page %>
+      <%= "data-sortable-per-page-value=#{@data.per_page}" if @data&.per_page %>
     >
       <% @data.rows.each do |row| %>
         <% row_url = @data.url&.call(row) %>
