@@ -10,6 +10,7 @@ require 'action_mailer/railtie'
 require 'active_storage/engine'
 
 Rails.env = 'test'
+Rails.logger ||= Logger.new($stdout)
 
 require 'solidus_core'
 
