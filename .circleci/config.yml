@@ -59,18 +59,6 @@ commands:
   setup:
     steps:
       - checkout
-      - browser-tools/install-chrome:
-          chrome-version: "133.0.6943.53"
-          replace-existing: true
-      - run:
-          name: Check chrome version
-          command: |
-            google-chrome --version
-      - browser-tools/install-chromedriver
-      - run:
-          name: Check chromedriver version
-          command: |
-            chromedriver --version
       - run:
           name: "Lock dependencies"
           command: |
