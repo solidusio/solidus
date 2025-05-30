@@ -7,6 +7,8 @@ export default class extends Controller {
     param: { type: String, default: 'position' },
     handle: { type: String, default: null },
     animation: { type: Number, default: 150 },
+    page: { type: Number },
+    perPage: { type: Number },
   }
 
   connect() {
