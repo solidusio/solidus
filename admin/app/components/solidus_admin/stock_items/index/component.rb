@@ -91,7 +91,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
       header: :name,
       data: ->(stock_item) do
         link_to stock_item.variant.name, edit_path(stock_item),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }
@@ -102,7 +102,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
       header: :sku,
       data: ->(stock_item) do
         link_to stock_item.variant.sku, edit_path(stock_item),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }
@@ -172,6 +172,6 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def turbo_frames
-    %w[resource_modal]
+    %w[resource_form]
   end
 end

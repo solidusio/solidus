@@ -33,13 +33,27 @@ module SolidusAdmin
         end
       end
 
-      # Select an option from a "solidus-select" field
+      # Select options from a "solidus-select" field
       #
-      # @param value [String] which option to select
+      # @param value [String, Array<String>] which option(s) to select
       # @param from [String] label of the select box
       def solidus_select(value, from:)
-        fill_in(from, with: value).send_keys(:return)
-        expect(find_field(from).ancestor(".control")).to have_text(value)
+        input = find_field(from, visible: :all)
+        control = input.ancestor(".control")
+        dropdown = control.sibling(".dropdown", visible: :all)
+
+        # Make sure options are loaded
+        control.click
+        within(dropdown) { expect(first(".option", visible: :all)).to be }
+
+        Array.wrap(value).each do |val|
+          input.fill_in(with: val).send_keys(:return)
+          expect(control).to have_text(val)
+        end
+      end
+
+      def solidus_select_control(field)
+        find_field(field, visible: :all).ancestor(".control")
       end
     end
   end
