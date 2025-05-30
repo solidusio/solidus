@@ -512,7 +512,7 @@ module Spree::Api
 
     it "assigns email when creating a new order" do
       post spree.api_orders_path, params: { order: { email: "guest@solidus.io" } }
-      expect(json_response['email']).not_to eq controller.current_api_user
+      expect(json_response['email']).not_to eq current_api_user.email
       expect(json_response['email']).to eq "guest@solidus.io"
     end
 
