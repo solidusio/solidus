@@ -26,7 +26,8 @@ module Spree
       before_action :load_user
       before_action :authorize_for_order, if: proc { order_token.present? }
       before_action :authenticate_user
-      before_action :load_user_roles
+      # This is deprecated and will be removed in Spree 5.0
+      before_action :load_deprecated_user_roles
 
       rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
@@ -35,6 +36,7 @@ module Spree
       rescue_from StateMachines::InvalidTransition, with: :invalid_transition
 
       helper Spree::Api::ApiHelpers
+      helper_method :current_user_roles
 
       private
 
@@ -75,8 +77,16 @@ module Spree
         end
       end
 
-      def load_user_roles
-        @current_user_roles = if @current_api_user
+      def load_deprecated_user_roles
+        @current_user_roles = if Rails.version < Gem::Version.new("7.2.0")
+          ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new(self, :current_user_roles, :@current_user_roles, Spree.deprecator)
+        else
+          ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new(self, :current_user_roles, :@current_user_roles, deprecator: Spree.deprecator)
+        end
+      end
+
+      def current_user_roles
+        @_current_user_roles ||= if @current_api_user
           @current_api_user.spree_roles.pluck(:name)
         else
           []

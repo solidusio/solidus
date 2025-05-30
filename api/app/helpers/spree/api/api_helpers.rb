@@ -67,7 +67,7 @@ module Spree
 
       def variant_attributes
         preference_attributes = Spree::Api::Config.variant_attributes
-        if @current_user_roles&.include?("admin")
+        if current_user_roles&.include?("admin")
           preference_attributes + [:cost_price]
         else
           preference_attributes
