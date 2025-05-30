@@ -352,3 +352,6 @@ Rails/FindEach:
 # tasks should load the rails environment loaded.
 Rails/RakeEnvironment:
   Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
