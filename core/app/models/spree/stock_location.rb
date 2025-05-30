@@ -9,9 +9,9 @@ module Spree
 
     acts_as_list
 
-    has_many :shipments
+    has_many :shipments, dependent: :restrict_with_error
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
-    has_many :cartons, inverse_of: :stock_location
+    has_many :cartons, inverse_of: :stock_location, dependent: :restrict_with_error
     has_many :stock_movements, through: :stock_items
     has_many :user_stock_locations, dependent: :delete_all
     has_many :users, through: :user_stock_locations
@@ -22,8 +22,8 @@ module Spree
     has_many :shipping_method_stock_locations, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_stock_locations
 
-    validates_presence_of :name
-    validates_uniqueness_of :code, allow_blank: true, case_sensitive: false
+    validates :name, presence: true
+    validates :code, uniqueness: { allow_blank: true, case_sensitive: false }
 
     scope :active, -> { where(active: true) }
     scope :order_default, -> { order(default: :desc, position: :asc) }

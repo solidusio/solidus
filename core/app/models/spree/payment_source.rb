@@ -6,7 +6,7 @@ module Spree
 
     belongs_to :payment_method, optional: true
 
-    has_many :payments, as: :source
+    has_many :payments, as: :source, dependent: :restrict_with_error
     has_many :wallet_payment_sources,
       class_name: 'Spree::WalletPaymentSource',
       as: :payment_source,

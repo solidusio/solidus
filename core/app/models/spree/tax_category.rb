@@ -11,7 +11,7 @@ module Spree
     end
 
     validates :name, presence: true
-    validates_uniqueness_of :name, case_sensitive: true, unless: :deleted_at
+    validates :name, uniqueness: { case_sensitive: true, unless: :deleted_at }
 
     has_many :tax_rate_tax_categories,
       class_name: 'Spree::TaxRateTaxCategory',

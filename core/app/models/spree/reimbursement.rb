@@ -7,10 +7,17 @@ module Spree
     belongs_to :order, inverse_of: :reimbursements, optional: true
     belongs_to :customer_return, inverse_of: :reimbursements, touch: true, optional: true
 
-    has_many :refunds, inverse_of: :reimbursement
-    has_many :credits, inverse_of: :reimbursement, class_name: 'Spree::Reimbursement::Credit'
+    has_many :refunds,
+      inverse_of: :reimbursement,
+      dependent: :restrict_with_error
+    has_many :credits,
+      inverse_of: :reimbursement,
+      class_name: 'Spree::Reimbursement::Credit',
+      dependent: :restrict_with_error
 
-    has_many :return_items, inverse_of: :reimbursement
+    has_many :return_items,
+      inverse_of: :reimbursement,
+      dependent: :restrict_with_error
 
     validates :order, presence: true
     validate :validate_return_items_belong_to_same_order

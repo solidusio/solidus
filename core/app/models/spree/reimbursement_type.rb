@@ -9,7 +9,7 @@ module Spree
 
     ORIGINAL = 'original'
 
-    has_many :return_items
+    has_many :return_items, dependent: :restrict_with_error
 
     self.allowed_ransackable_attributes = %w[name]
 

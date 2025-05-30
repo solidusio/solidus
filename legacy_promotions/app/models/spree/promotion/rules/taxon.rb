@@ -4,8 +4,11 @@ module Spree
   class Promotion < Spree::Base
     module Rules
       class Taxon < PromotionRule
-        has_many :promotion_rule_taxons, class_name: 'Spree::PromotionRuleTaxon', foreign_key: :promotion_rule_id,
-          dependent: :destroy
+        has_many :promotion_rule_taxons,
+          class_name: 'Spree::PromotionRuleTaxon',
+          foreign_key: :promotion_rule_id,
+          dependent: :destroy,
+          inverse_of: :promotion_rule
         has_many :taxons, through: :promotion_rule_taxons, class_name: 'Spree::Taxon'
 
         def preload_relations
@@ -14,7 +17,7 @@ module Spree
 
         MATCH_POLICIES = %w(any all none)
 
-        validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
+        validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
 
         preference :match_policy, :string, default: MATCH_POLICIES.first
         def applicable?(promotable)
