@@ -1,0 +1,109 @@
+name: "Test Solidus"
+
+on:
+  workflow_call:
+    inputs:
+      lib_name:
+        description: "The name of the Solidus library to test (e.g., core, backend, frontend)"
+        type: string
+        required: true
+      coverage:
+        type: boolean
+        default: true
+    secrets:
+      CODECOV_TOKEN:
+
+jobs:
+  RSpec:
+    name: Rails ${{ matrix.rails }}, Ruby ${{ matrix.ruby }}, ${{ matrix.database }}, ${{ matrix.storage }}
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - rails: "7.0"
+            ruby: "3.1"
+            database: postgres
+            storage: paperclip
+          - rails: "7.1"
+            ruby: "3.2"
+            database: mysql
+            storage: activestorage
+          - rails: "7.2"
+            ruby: "3.3"
+            database: postgres
+            storage: activestorage
+          - rails: "8.0"
+            ruby: "3.4"
+            database: sqlite
+            storage: activestorage
+    env:
+      BUNDLE_WITHOUT: "lint release"
+      COVERAGE_DIR: ${{ github.workspace }}/${{ inputs.lib_name }}/coverage
+      DB: ${{ matrix.database }}
+      DB_HOST: "127.0.0.1"
+      DB_USERNAME: solidus
+      DB_PASSWORD: password
+      DEFAULT_MAX_WAIT_TIME: 10
+      DISABLE_ACTIVE_STORAGE: ${{ matrix.storage == 'paperclip' }}
+      LIB_NAME: ${{ inputs.lib_name }}
+      RAILS_ENV: test
+      RAILS_VERSION: '~> ${{ matrix.rails }}'
+      SOLIDUS_RAISE_DEPRECATIONS: true
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: ${{ env.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_DB: solidus_${{ inputs.lib_name }}_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_USER: ${{ env.DB_USERNAME }}
+          MYSQL_DATABASE: solidus_${{ inputs.lib_name }}_test
+        ports: [3306:3306]
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - uses: awalsh128/cache-apt-pkgs-action@v1
+        if: ${{ matrix.storage == 'activestorage' }}
+        name: Install libvips
+        with:
+          packages: libvips-dev
+      - name: Setup coverage
+        id: setup-coverage
+        if: ${{ inputs.coverage }}
+        run: |
+          echo "COVERAGE=true" >> $GITHUB_ENV
+          echo "coverage=true" >> $GITHUB_OUTPUT
+      - name: Run tests
+        run: |
+          cd ${{ inputs.lib_name }}
+          bundle exec rake test_app
+          bundle exec rspec --profile 10 --format progress
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v5
+        if: ${{ inputs.coverage }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: solidusio/solidus
+          disable_search: true
+          files: ${{ env.COVERAGE_DIR }}/coverage.xml

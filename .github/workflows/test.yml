@@ -1,0 +1,65 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: test-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+jobs:
+  solidus_admin:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: admin
+      coverage: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  solidus_api:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: api
+      coverage: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  solidus_backend:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: backend
+      coverage: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  solidus_core:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: core
+      coverage: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  solidus_sample:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: sample
+      coverage: false
+
+  solidus_legacy_promotions:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: legacy_promotions
+      coverage: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  solidus_promotions:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: promotions
+      coverage: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
