@@ -23,7 +23,12 @@ export default class extends Controller {
     if (!item.dataset.sortableUrl) return
 
     const data = new FormData()
-    data.append(this.paramValue, newIndex + 1)
+    let newPosition = newIndex + 1;
+    if (this.pageValue && this.perPageValue) {
+      const offset = (this.pageValue - 1) * this.perPageValue;
+      newPosition += offset;
+    }
+    data.append(this.paramValue, newPosition)
 
     return await patch(item.dataset.sortableUrl, { body: data, responseKind: "js" })
   }
