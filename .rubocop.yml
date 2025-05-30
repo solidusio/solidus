@@ -326,7 +326,7 @@ Naming/MethodParameterName:
     - id
     - to
     - _
-    - on
+    - "on"
 
 # Rubocop doesn't understand side-effects
 Style/IdenticalConditionalBranches:
