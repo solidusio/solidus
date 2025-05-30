@@ -1,0 +1,90 @@
+name: "Test Solidus"
+
+on:
+  workflow_call:
+    inputs:
+      lib_name:
+        description: "The name of the Solidus library to test (e.g., core, backend, frontend)"
+        type: string
+        required: true
+      coverage:
+        description: "Enable code coverage reporting"
+        type: boolean
+        default: false
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - rails: "7.2"
+            ruby: "3.4"
+            database: postgres
+            storage: paperclip
+    env:
+      BUNDLE_WITHOUT: "lint release"
+      COVERAGE: ${{ inputs.coverage }}
+      COVERAGE_DIR: tmp/coverage
+      DB: ${{ matrix.database }}
+      DB_HOST: ${{ matrix.database == 'mysql' && '127.0.0.1' || 'localhost' }}
+      DB_USERNAME: solidus
+      DB_PASSWORD: password
+      DEFAULT_MAX_WAIT_TIME: 10
+      DISABLE_ACTIVE_STORAGE: ${{ matrix.storage == 'paperclip' }}
+      LIB_NAME: ${{ inputs.lib_name }}
+      RAILS_ENV: test
+      RAILS_VERSION: ${{ matrix.rails }}
+      SOLIDUS_RAISE_DEPRECATIONS: true
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: ${{ env.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_DB: solidus_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_DATABASE: solidus_test
+        ports: [3306:3306]
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Install libvips
+        if: ${{ matrix.storage == 'activestorage' }}
+        run: |
+          sudo apt-get update -yq
+          sudo apt-get autoremove -yq
+          sudo apt-get install -yq libvips-dev --fix-missing
+      - name: Run tests
+        run: |
+          cd ${{ inputs.lib_name }}
+          bundle exec rake test_app
+          bundle exec rspec --profile 10 --format progress
+      - name: Report Coverage
+        if: ${{ inputs.coverage == 'true' }}
+        run: |
+          bundle exec rake solidus:coverage[cobertura]
+      - name: Upload Coverage Report
+        if: ${{ inputs.coverage == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: tmp/coverage/coverage.xml

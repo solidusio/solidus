@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: test-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+jobs:
+  solidus_admin:
+    uses: solidusio/solidus/.github/workflows/test_solidus.yml@github-actions
+    with:
+      lib_name: admin
+      coverage: false
+
+  solidus_api:
+    uses: solidusio/solidus/.github/workflows/test_solidus.yml@github-actions
+    with:
+      lib_name: api
+      coverage: false
+
+  solidus_backend:
+    uses: solidusio/solidus/.github/workflows/test_solidus.yml@github-actions
+    with:
+      lib_name: backend
+      coverage: false
+
+  solidus_core:
+    uses: solidusio/solidus/.github/workflows/test_solidus.yml@github-actions
+    with:
+      lib_name: core
+      coverage: false
+
+  solidus_promotions:
+    uses: solidusio/solidus/.github/workflows/test_solidus.yml@github-actions
+    with:
+      lib_name: promotions
+      coverage: false
