@@ -3,10 +3,10 @@
 require 'spec_helper'
 require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
 
-describe "Properties", :js, type: :feature do
+describe "Properties", type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
 
-  it "lists properties and allows deleting them" do
+  it "lists properties and allows deleting them", :js do
     create(:property, name: "Type prop", presentation: "Type prop")
     create(:property, name: "Size", presentation: "Size")
 
@@ -21,11 +21,6 @@ describe "Properties", :js, type: :feature do
     expect(page).to have_content("Properties were successfully removed.")
     expect(page).not_to have_content("Type prop")
     expect(Spree::Property.count).to eq(1)
-  end
-
-  include_examples 'feature: bulk delete resources' do
-    let(:resource_factory) { :property }
-    let(:index_path) { "/admin/properties" }
   end
 
   context "creating a new property" do

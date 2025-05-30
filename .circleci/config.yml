@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.6
+  browser-tools: circleci/browser-tools@1.5.3
   codecov: codecov/codecov@3.3.0
 
 executors:
@@ -59,7 +59,9 @@ commands:
   setup:
     steps:
       - checkout
-      - browser-tools/install-chrome
+      - browser-tools/install-chrome:
+          chrome-version: "133.0.6943.53"
+          replace-existing: true
       - run:
           name: Check chrome version
           command: |
