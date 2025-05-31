@@ -9,9 +9,7 @@
   <% end %>
 
   <%= page_header do %>
-    <% tabs.each do |tab| %>
-      <%= render(component("ui/button").new(tag: :a, scheme: :ghost, text: tab[:text], 'aria-current': tab[:current], href: tab[:href])) %>
-    <% end %>
+    <%= render component("users/edit/tabs").new(user: @user, current: :addresses) %>
   <% end %>
 
   <%= page_with_sidebar do %>

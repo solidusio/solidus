@@ -8,36 +8,6 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
     @items = items
   end
 
-  def tabs
-    [
-      {
-        text: t('.account'),
-        href: solidus_admin.user_path(@user),
-        current: false,
-      },
-      {
-        text: t('.addresses'),
-        href: solidus_admin.addresses_user_path(@user),
-        current: false,
-      },
-      {
-        text: t('.order_history'),
-        href: solidus_admin.orders_user_path(@user),
-        current: false,
-      },
-      {
-        text: t('.items'),
-        href: solidus_admin.items_user_path(@user),
-        current: true,
-      },
-      {
-        text: t('.store_credit'),
-        href: spree.admin_user_store_credits_path(@user),
-        current: false,
-      },
-    ]
-  end
-
   def model_class
     Spree::LineItem
   end
