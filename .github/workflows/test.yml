@@ -34,6 +34,23 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+  solidus_backend_js:
+    name: solidus_backend JS
+    runs-on: ubuntu-latest
+    env:
+      LIB_NAME: backend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4
+          bundler-cache: true
+      - name: Run teaspoon tests
+        run: |
+          cd backend
+          bundle exec teaspoon --require=spec/teaspoon_env.rb
+
   solidus_core:
     uses: ./.github/workflows/test_solidus.yml
     with:
