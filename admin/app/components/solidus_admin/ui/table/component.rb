@@ -71,7 +71,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   def selectable_column
     @selectable_column ||= Column.new(
       header: -> {
-        component("ui/forms/checkbox").new(
+        component("ui/checkbox").new(
           form: batch_actions_form_id,
           "data-action": "#{stimulus_id}#selectAllRows",
           "data-#{stimulus_id}-target": "headerCheckbox",
@@ -79,7 +79,7 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
         )
       },
       data: ->(data) {
-        component("ui/forms/checkbox").new(
+        component("ui/checkbox").new(
           name: "id[]",
           form: batch_actions_form_id,
           value: data.id,
