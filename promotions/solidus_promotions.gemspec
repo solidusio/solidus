@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.files = files.grep_v(%r{^(spec|bin)/})
 
   spec.add_dependency "csv", "~> 3.0"
-  spec.add_dependency "importmap-rails", "~> 1.2"
+  spec.add_dependency "importmap-rails", [">= 2.0", "< 3"]
   spec.add_dependency "ransack-enum", "~> 1.0"
   spec.add_dependency "solidus_core", [">= 4.0.0", "< 5"]
   spec.add_dependency "solidus_support", ">= 0.12.0"
