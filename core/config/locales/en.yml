@@ -392,6 +392,7 @@ en:
         is_default: Default
         name: Name
         tax_code: Tax Code
+        tax_reverse_charge_mode: Tax Reverse Charge Mode
       spree/tax_rate:
         amount: Rate
         expires_at: Expiration Date
@@ -2273,6 +2274,10 @@ en:
     tax_rate_amount_explanation: When using the "Default Tax" calculator, the amount is treated as a decimal amount to aid in calculations. (i.e. If the tax rate is 5% then enter 0.05) If using the "Flat Fee" calculator, the amount is used for the static fee.
     tax_rate_level: Tax Rate Level
     tax_rates: Tax Rates
+    tax_reverse_charge_modes:
+      disabled: Disabled
+      loose: Loose
+      strict: Strict
     taxon: Taxon
     taxon_attachment_removal_error: There was an error removing the attachment
     taxon_edit: Edit Taxon
