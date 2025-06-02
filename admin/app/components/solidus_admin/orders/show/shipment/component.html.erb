@@ -1,0 +1,112 @@
+<div class="<%= stimulus_id %>" data-controller="<%= stimulus_id %>">
+  <div class="rounded p-2">
+    <%= render component('ui/panel').new do |panel| %>
+      <% panel.with_menu t(".edit"), solidus_admin.edit_order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".split"), solidus_admin.split_edit_order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".merge"), solidus_admin.merge_edit_order_shipment_path(@order, @shipment) %>
+      <% panel.with_menu t(".change_location"), solidus_admin.order_shipment_path(@order, @shipment) %>
+
+      <% panel.with_section(wide: true, high: true) do %>
+        <section class="border-gray-100 border-t w-full first-of-type:border-t-0 p-6">
+          <h2>
+            <span class="text-xl">
+              <%= t('.title', index: @index, number: @shipment.number, location: @shipment.stock_location.name) %>
+              <%= render component('ui/badge').new(name: @shipment.state.titleize) %>
+            </span>
+          </h2>
+        </section>
+      <% end %>
+
+      <% panel.with_section(wide: true, high: true) do %>
+        <div class="rounded-b-lg overflow-hidden">
+          <table class="table-auto w-full">
+            <thead>
+              <tr>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none">
+                  <%= t(".product") %>
+                </th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">
+                  <%= t(".quantity") %>
+                </th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16 whitespace-nowrap">
+                  <%= t(".total") %>
+                </th>
+                <th class="text-left body-small-bold text-gray-800 bg-gray-15 px-6 py-3 leading-none w-16">
+                  <span class="sr-only">
+                    <%= t(".actions") %>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% manifest.each do |item| %>
+                <tr class="border-gray-100 border-t">
+                  <td class="px-6 py-4">
+                    <div class="flex gap-2 grow">
+                      <% variant = item.variant %>
+                      <%= render component("ui/thumbnail").new(
+                        src: (variant.images.first || variant.product.gallery.images.first)&.url(:small),
+                        alt: variant.name
+                      ) %>
+                      <div class="flex-col">
+                        <div class="leading-5 text-black body-small-bold"><%= variant.name %></div>
+                        <div class="leading-5 text-gray-500 body-small">
+                          SKU: <%= variant.sku %>
+                          <%= variant.options_text.presence&.prepend("- ") %>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-gray-500 body-small whitespace-nowrap">
+                      <% item.states.each do |state, count| %>
+                        <%= count %> x <%= t(state, scope: '.inventory_states') %>
+                      <% end %>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-gray-500 body-small"><%= item.line_item.display_amount %></span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <%= form_for(item.line_item, url: solidus_admin.order_line_item_path(@order, item.line_item), method: :delete) do |f| %>
+                      <%= render component('ui/button').new(
+                        scheme: :ghost,
+                        size: :s,
+                        title: t("spree.delete"),
+                        icon: 'close-line',
+                        "data-controller": "confirm",
+                        "data-confirm-text-value": t("spree.are_you_sure"),
+                      ) %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              <tr class="border-gray-100 border-t">
+                <td colspan="4" class="px-6 py-4">
+                  <ul class="text-sm">
+                    <li class="flex justify-between py-1.5">
+                      <label class="flex flex-col w-full">
+                        <span class="text-gray-700 body-tiny-bold body-text-xs-semibold">
+                          <%= @shipment.class.human_attribute_name(:shipping_method) %>
+                        </span>
+                        <%= @shipment.shipping_method.name %> - <%= @shipment.display_cost %>
+                      </label>
+                    </li>
+                    <li class="flex justify-between py-1.5">
+                      <label class="flex flex-col w-full py-1.5">
+                        <span class="text-gray-700 body-tiny-bold body-text-xs-semibold">
+                          <%= @shipment.class.human_attribute_name(:tracking) %>
+                        </span>
+                        <%= @shipment.tracking || t(".none") %>
+                      </label>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
