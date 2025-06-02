@@ -17,5 +17,9 @@ FactoryBot.define do
     trait :with_country do
       countries { [create(:country)] }
     end
+
+    trait :with_state do
+      states { [create(:state)] }
+    end
   end
 end

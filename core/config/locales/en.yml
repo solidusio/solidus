@@ -435,8 +435,10 @@ en:
         weight: Weight
         width: Width
       spree/zone:
+        country_ids: Countries
         description: Description
         name: Name
+        state_ids: States
     errors:
       models:
         spree/address:

@@ -1,0 +1,5 @@
+en:
+  cancel: "Cancel"
+  submit:
+    create: "Add %{resource_name}"
+    update: "Update %{resource_name}"

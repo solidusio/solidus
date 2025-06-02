@@ -2,7 +2,7 @@
 
 module Spree
   class PromotionCategory < Spree::Base
-    validates_presence_of :name
+    validates :name, presence: true
     has_many :promotions
   end
 end

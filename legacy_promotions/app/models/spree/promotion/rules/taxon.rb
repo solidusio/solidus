@@ -14,7 +14,7 @@ module Spree
 
         MATCH_POLICIES = %w(any all none)
 
-        validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
+        validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
 
         preference :match_policy, :string, default: MATCH_POLICIES.first
         def applicable?(promotable)

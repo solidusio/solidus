@@ -9,6 +9,8 @@ SolidusAdmin::Engine.routes.draw do
     get 'states', to: 'countries#states'
   end
 
+  resources :states, only: [:index], defaults: { format: :json }
+
   admin_resources :products, only: [:index, :update, :destroy] do
     collection do
       put :discontinue
@@ -78,7 +80,7 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :shipping_categories, except: [:show]
   admin_resources :stock_locations, only: [:index, :destroy]
   admin_resources :stores, only: [:index, :destroy]
-  admin_resources :zones, only: [:index, :destroy]
+  admin_resources :zones, except: [:show]
   admin_resources :refund_reasons, except: [:show]
   admin_resources :reimbursement_types, only: [:index]
   admin_resources :return_reasons, except: [:show]
