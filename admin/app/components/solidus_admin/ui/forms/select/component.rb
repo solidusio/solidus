@@ -31,6 +31,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
   #   When +:src+ parameter is provided, use +:choices+ to provide the list of selected options only.
   # @param src [nil, String] URL of a JSON resource with options data to be loaded instead of rendering options in place.
+  # @option attributes [nil, String, Integer, Array<String, Integer>] :value which option should be selected
   # @option attributes [String] :"data-option-value-field"
   # @option attributes [String] :"data-option-label-field" when +:src+ param is passed, value and label of loaded options
   #   will be mapped to JSON response +"id"+ and +"name"+ by default. Use these parameters to map to different keys.
@@ -50,6 +51,9 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   loading next page of results. Default: "Loading more results".
   # @option attributes [String] :"data-no-results-message" which text to show when there are no search results returned.
   #   Default: "No results found".
+  # @option attributes [true, String] :include_blank if passed, an empty option will be prepended to the list of options.
+  #   Pass +true+ for empty option with no text, or +String+ for the text to be shown as empty option.
+  # @raise [ArgumentError] if +choices+ is not an array
   def initialize(label:, name:, choices:, src: nil, size: :m, hint: nil, tip: nil, error: nil, **attributes)
     @label = label
     @hint = hint
@@ -76,8 +80,15 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   end
 
   def prepare_options(choices:, src:)
+    raise ArgumentError, "`choices` must be an array" unless choices.is_a?(Array)
+
     if src.present?
       @attributes[:"data-src"] = src
+    end
+
+    if (blank_option = @attributes.delete(:include_blank))
+      blank_option = "" if blank_option == true
+      choices.unshift([blank_option, ""])
     end
 
     @options_collection = options_for_select(choices, @attributes.delete(:value))

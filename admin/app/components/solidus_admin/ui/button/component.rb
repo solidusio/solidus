@@ -63,6 +63,40 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     },
   }
 
+  def self.back(path:, **options)
+    new(
+      tag: :a,
+      title: t(".back"),
+      icon: "arrow-left-line",
+      scheme: :secondary,
+      href: path,
+      **options
+    )
+  end
+
+  def self.delete(**options)
+    new(
+      tag: :button,
+      text: t(".delete"),
+      scheme: :danger,
+      **options
+    )
+  end
+
+  def self.discard(path:, **options)
+    new(
+      tag: :a,
+      text: t(".discard"),
+      scheme: :secondary,
+      href: path,
+      **options
+    )
+  end
+
+  def self.save(**options)
+    new(text: t(".save"), **options)
+  end
+
   def initialize(
     tag: :button,
     text: nil,
