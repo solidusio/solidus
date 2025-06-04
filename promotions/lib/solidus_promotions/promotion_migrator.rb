@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+require "logger"
+
 module SolidusPromotions
   class PromotionMigrator
     PROMOTION_IGNORED_ATTRIBUTES = ["id", "type", "promotion_category_id", "promotion_id"]
 
-    attr_reader :promotion_map
+    attr_reader :promotion_map, :logger
 
-    def initialize(promotion_map)
+    def initialize(promotion_map, logger: nil)
+      @logger = logger || Logger.new($stdout)
       @promotion_map = promotion_map
     end
 
@@ -78,7 +81,7 @@ module SolidusPromotions
     def generate_new_benefits(old_promotion_action)
       promo_action_config = promotion_map[:actions][old_promotion_action.class]
       if promo_action_config.nil?
-        Rails.logger.info("#{old_promotion_action.class} is not supported")
+        logger.info("#{old_promotion_action.class} is not supported")
         return nil
       end
       promo_action_config.call(old_promotion_action)
@@ -87,7 +90,7 @@ module SolidusPromotions
     def generate_new_promotion_conditions(old_promotion_rule)
       new_promo_condition_class = promotion_map[:conditions][old_promotion_rule.class]
       if new_promo_condition_class.nil?
-        Rails.logger.info("#{old_promotion_rule.class} is not supported")
+        logger.info("#{old_promotion_rule.class} is not supported")
         []
       elsif new_promo_condition_class.respond_to?(:call)
         new_promo_condition_class.call(old_promotion_rule)
