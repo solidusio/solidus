@@ -7,6 +7,6 @@ namespace :solidus_promotions do
   task migrate_existing_promotions: :environment do
     require "solidus_promotions/promotion_map"
 
-    SolidusPromotions::PromotionMigrator.new(SolidusPromotions::PROMOTION_MAP).call
+    SolidusPromotions::PromotionMigrator.new(SolidusPromotions::PROMOTION_MAP, logger: Rails.logger).call
   end
 end
