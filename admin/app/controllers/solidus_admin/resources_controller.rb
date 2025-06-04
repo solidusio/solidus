@@ -155,5 +155,15 @@ module SolidusAdmin
     def after_destroy_path
       solidus_admin.send("#{plural_resource_name}_path", **search_filter_params)
     end
+
+    def blueprint
+      raise NotImplementedError,
+        "You must implement the blueprint method in #{self.class}"
+    end
+
+    def blueprint_view
+      raise NotImplementedError,
+        "You must implement the blueprint_view method in #{self.class}"
+    end
   end
 end
