@@ -96,8 +96,6 @@ module SolidusAdmin
       resource_class.all
     end
 
-    def per_page; end
-
     def set_resource
       @resource ||= resource_class.find(params[:id]).tap do |resource|
           instance_variable_set("@#{resource_name}", resource)
