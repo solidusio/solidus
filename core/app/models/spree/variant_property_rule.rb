@@ -13,7 +13,7 @@
 # targeted by the rule, the properties will automatically apply to the variant.
 module Spree
   class VariantPropertyRule < Spree::Base
-    belongs_to :product, touch: true, optional: true
+    belongs_to :product, touch: true
 
     has_many :values, class_name: 'Spree::VariantPropertyRuleValue', dependent: :destroy
     has_many :properties, through: :values
