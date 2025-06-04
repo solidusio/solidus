@@ -4,14 +4,23 @@ en:
   duplicate: "Duplicate"
   view: "View online"
   delete: "Delete"
-  none: "None"
+  delete_confirmation: "Are you sure you want to delete this product?"
   manage_images: "Manage images"
   manage_properties: "Manage product specifications"
   manage_stock: "Manage stock"
-  delete_confirmation: "Are you sure you want to delete this product?"
-  available_on_html: 'Product availability starts from the set date.<br> Empty date indicates no availability.'
-  discontinue_on_html: 'Product availability ends from the set date.<br> Empty date indicates continuous availability.'
+  media: "Media"
+  none: "None"
+  options: "Options"
+  pricing: "Pricing"
+  product_organization: "Product organization"
+  publishing: "Publishing"
+  seo: "SEO"
+  stock: "Stock"
+  shipping: "Shipping"
+  specifications: "Specifications"
   hints:
-    promotionable_html: Promotions can apply to this product
-    shipping_category_html: Manage Shipping in Settings
-    tax_category_html: Manage Taxes in Settings
+    available_on_html: "Product availability starts from the set date.<br> Empty date indicates no availability."
+    discontinue_on_html: "Product availability ends from the set date.<br> Empty date indicates continuous availability."
+    promotionable_html: "Promotions can apply to this product"
+    shipping_category_html: "Manage Shipping in Settings"
+    tax_category_html: "Manage Taxes in Settings"

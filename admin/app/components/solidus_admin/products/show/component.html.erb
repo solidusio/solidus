@@ -26,13 +26,13 @@
   <%= form_for @product, url: solidus_admin.product_path(@product), html: { id: form_id } do |f| %>
     <%= page_with_sidebar do %>
       <%= page_with_sidebar_main do %>
-        <%= render component('ui/panel').new do %>
+        <%= render component("ui/panel").new do %>
           <%= render component("ui/forms/field").text_field(f, :name) %>
           <%= render component("ui/forms/field").text_field(f, :slug) %>
           <%= render component("ui/forms/field").text_area(f, :description) %>
         <% end %>
 
-        <%= render component('ui/panel').new(title: 'SEO') do %>
+        <%= render component("ui/panel").new(title: t(".seo")) do %>
           <%= render component("ui/forms/field").text_field(f, :meta_title) %>
           <%= render component("ui/forms/field").text_field(f, :meta_description) %>
           <%= render component("ui/forms/field").text_area(f, :meta_keywords) %>
@@ -41,17 +41,17 @@
             f,
             :condition,
             condition_options,
-            include_blank: t('spree.unset'),
+            include_blank: t("spree.unset"),
           ) %>
         <% end %>
-        <%= render component('ui/panel').new(title: "Media") do |panel| %>
+        <%= render component("ui/panel").new(title: t(".media")) do |panel| %>
           <% panel.with_action(
             name: t(".manage_images"),
             href: spree.admin_product_images_path(@product)
           ) %>
         <% end %>
 
-        <%= render component('ui/panel').new(title: 'Pricing') do %>
+        <%= render component("ui/panel").new(title: t(".pricing")) do %>
           <%= render component("ui/forms/field").text_field(f, :price) %>
           <div class="flex gap-4 justify-items-stretch">
             <%= render component("ui/forms/field").text_field(f, :cost_price) %>
@@ -59,7 +59,7 @@
           </div>
         <% end %>
 
-        <%= render component('ui/panel').new(title: 'Stock') do |panel| %>
+        <%= render component("ui/panel").new(title: t(".stock")) do |panel| %>
           <%= render component("ui/forms/field").text_field(f, :sku) %>
 
           <% panel.with_action(
@@ -68,25 +68,22 @@
           ) %>
         <% end %>
 
-        <%= render component('ui/panel').new(title: 'Shipping') do %>
+        <%= render component("ui/panel").new(title: t(".shipping")) do %>
           <%= render component("ui/forms/field").select(
             f,
             :shipping_category_id,
             [[t(".none"), nil]] + Spree::ShippingCategory.order(:name).pluck(:name, :id),
-            tip: t(".hints.shipping_category_html"),
+            tip: t(".hints.shipping_category_html")
           ) %>
           <%= render component("ui/forms/field").select(
             f,
             :tax_category_id,
             [[t(".none"), nil]] + Spree::TaxCategory.order(:name).pluck(:name, :id),
-            tip: t(
-              ".hints.tax_category_html",
-              default_tax_category: Spree::TaxCategory.default&.name
-            ),
+            tip: t(".hints.tax_category_html")
           ) %>
         <% end %>
 
-        <%= render component('ui/panel').new(title: "Options") do %>
+        <%= render component("ui/panel").new(title: t(".options")) do %>
           <%= render component("ui/forms/field").select(
             f,
             :option_type_ids,
@@ -96,7 +93,7 @@
           ) %>
         <% end %>
 
-        <%= render component('ui/panel').new(title: "Specifications") do |panel| %>
+        <%= render component("ui/panel").new(title: t(".specifications")) do |panel| %>
           <% panel.with_action(
             name: t(".manage_properties"),
             href: spree.admin_product_product_properties_path(@product)
@@ -105,18 +102,18 @@
       <% end %>
 
       <%= page_with_sidebar_aside do %>
-        <%= render component('ui/panel').new(title: "Publishing") do %>
+        <%= render component("ui/panel").new(title: t(".publishing")) do %>
           <%= render component("ui/forms/field").text_field(
             f,
             :available_on,
-            hint: t(".available_on_html"),
+            hint: t(".hints.available_on_html"),
             type: :date,
             value: f.object.available_on&.to_date
           ) %>
           <%= render component("ui/forms/field").text_field(
             f,
             :discontinue_on,
-            hint: t(".discontinue_on_html"),
+            hint: t(".hints.discontinue_on_html"),
             type: :date,
             value: f.object.discontinue_on&.to_date
           ) %>
@@ -130,7 +127,7 @@
           </label>
         <% end %>
 
-        <%= render component('ui/panel').new(title: "Product organization") do %>
+        <%= render component("ui/panel").new(title: t(".product_organization")) do %>
           <%= render component("ui/forms/field").select(
             f,
             :taxon_ids,

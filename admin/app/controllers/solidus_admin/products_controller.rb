@@ -11,8 +11,6 @@ module SolidusAdmin
     search_scope(:in_stock) { _1.where(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
     search_scope(:out_of_stock) { _1.where.not(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
 
-    before_action :split_params, only: [:update]
-
     def index
       products = apply_search_to(
         Spree::Product.includes(:master, :variants),
@@ -44,7 +42,7 @@ module SolidusAdmin
     def update
       @product = Spree::Product.friendly.find(params[:id])
 
-      if @product.update(params.require(:product).permit!)
+      if @product.update(product_params)
         flash[:success] = t('spree.successfully_updated', resource: [
           Spree::Product.model_name.human,
           @product.name.inspect,
@@ -101,13 +99,12 @@ module SolidusAdmin
       redirect_to products_path, status: :see_other
     end
 
-    def split_params
-      if params[:product][:taxon_ids].present?
-        params[:product][:taxon_ids] = params[:product][:taxon_ids].split(',')
-      end
-      if params[:product][:option_type_ids].present?
-        params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
-      end
+    private
+
+    def product_params
+      params.require(:product).permit(:name, :slug, :description, :meta_title, :meta_description, :meta_keywords, :gtin,
+        :condition, :price, :cost_price, :cost_currency, :sku, :shipping_category_id, :tax_category_id,
+        :available_on, :discontinue_on, :promotionable, option_type_ids: [], taxon_ids: [])
     end
   end
 end
