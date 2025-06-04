@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'generators/spree/dummy/dummy_generator'
+require 'logger'
 
 class CommonRakeTasks
   include Rake::DSL
+  attr_reader :logger
 
   def initialize
-    Rails.logger ||= Logger.new($stdout)
+    @logger = Logger.new($stdout)
     namespace :common do
       task :test_app, :user_class do |_t, args|
         args.with_defaults(user_class: "Spree::LegacyUser")
@@ -46,19 +48,19 @@ class CommonRakeTasks
           sh "bin/rails g solidus_frontend:install --auto-accept"
         end
 
-        Rails.logger.info "Setting up dummy database..."
+        logger.info "Setting up dummy database..."
 
         sh "bin/rails db:environment:set RAILS_ENV=test"
         sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
 
         if extension_installation_generator_exists?
-          Rails.logger.info 'Running extension installation generator...'
+          logger.info 'Running extension installation generator...'
           sh "bin/rails generate #{rake_generator_namespace}:install --auto-run-migrations"
         end
       end
 
       task :seed do |_t, _args|
-        Rails.logger.info "Seeding ..."
+        logger.info "Seeding ..."
 
         sh "bundle exec rake db:seed RAILS_ENV=test"
       end
