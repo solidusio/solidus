@@ -41,7 +41,7 @@ module SolidusPromotions
         if run_migrations
           run "bin/rails db:migrate"
         else
-          Rails.logger.info "Skipping bin/rails db:migrate, don't forget to run it!"
+          say "Skipping bin/rails db:migrate, don't forget to run it!"
         end
       end
 
