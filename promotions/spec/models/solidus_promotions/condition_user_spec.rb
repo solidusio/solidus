@@ -3,6 +3,6 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::ConditionUser do
-  it { is_expected.to belong_to(:user).optional }
-  it { is_expected.to belong_to(:condition).optional }
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:condition) }
 end

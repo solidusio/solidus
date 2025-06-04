@@ -6,7 +6,7 @@ module SolidusPromotions
   class Condition < Spree::Base
     include Spree::Preferences::Persistable
 
-    belongs_to :benefit, class_name: "SolidusPromotions::Benefit", inverse_of: :conditions, optional: true
+    belongs_to :benefit, class_name: "SolidusPromotions::Benefit", inverse_of: :conditions
     has_one :promotion, through: :benefit
 
     scope :of_type, ->(type) { where(type: type) }
