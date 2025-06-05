@@ -39,12 +39,15 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
   # @param disabled toggle
   # @param error toggle
   # @param include_blank toggle
+  # @param blank_option text
   # @param placeholder text
   # @param hint text
   # @param tip text
-  def playground(size: "m", options: 3, multiple: false, selected: false, disabled: false, error: false, include_blank: true, placeholder: nil, hint: nil, tip: nil)
+  def playground(size: "m", options: 3, multiple: false, selected: false, disabled: false, error: false, include_blank: false, blank_option: nil, placeholder: nil, hint: nil, tip: nil)
     options = (1..options).map { |i| ["Option #{i}", i] }
-    options.unshift(["None", ""]) if include_blank
+    if include_blank && blank_option.present?
+      include_blank = blank_option
+    end
 
     render component("ui/forms/select").new(
       label: "Label",
@@ -57,7 +60,8 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
       value: (multiple && [1, 2] || 1 if selected),
       multiple:,
       disabled:,
-      placeholder:
+      placeholder:,
+      include_blank:
     )
   end
 end
