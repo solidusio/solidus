@@ -9,13 +9,13 @@ module Spree
     # This method calls a compute_<computable> method. must be overriden in concrete calculator.
     #
     # It should return amount computed based on #calculable and the computable parameter
-    def compute(computable)
+    def compute(computable, ...)
       # Spree::LineItem -> :compute_line_item
       computable_name = computable.class.name.demodulize.underscore
-      method_name = "compute_#{computable_name}".to_sym
+      method_name = :"compute_#{computable_name}"
       calculator_class = self.class
       if respond_to?(method_name)
-        send(method_name, computable)
+        send(method_name, computable, ...)
       else
         raise NotImplementedError, "Please implement '#{method_name}(#{computable_name})' in your calculator: #{calculator_class.name}"
       end

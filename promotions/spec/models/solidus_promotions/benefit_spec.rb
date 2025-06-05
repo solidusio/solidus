@@ -104,6 +104,24 @@ RSpec.describe SolidusPromotions::Benefit do
         expect(subject).to be nil
       end
     end
+
+    context "if passing in extra options" do
+      let(:calculator_class) do
+        Class.new(Spree::Calculator) do
+          def compute_price(price, options)
+          end
+        end
+      end
+      let(:calculator) { calculator_class.new }
+      let(:order) { double(Spree::Order) }
+      let(:discountable) { build(:price) }
+
+      subject { benefit.discount(discountable, order:) }
+      it "passes the option on to the calculator" do
+        expect(calculator).to receive(:compute_price).with(discountable, order:).and_return(1)
+        subject
+      end
+    end
   end
 
   describe ".original_promotion_action" do
