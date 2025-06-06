@@ -3,6 +3,6 @@
 module Spree
   class PromotionCategory < Spree::Base
     validates :name, presence: true
-    has_many :promotions
+    has_many :promotions, dependent: :nullify
   end
 end

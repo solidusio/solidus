@@ -4,8 +4,11 @@ module Spree
   class Promotion < Spree::Base
     module Rules
       class Taxon < PromotionRule
-        has_many :promotion_rule_taxons, class_name: 'Spree::PromotionRuleTaxon', foreign_key: :promotion_rule_id,
-          dependent: :destroy
+        has_many :promotion_rule_taxons,
+          class_name: 'Spree::PromotionRuleTaxon',
+          foreign_key: :promotion_rule_id,
+          dependent: :destroy,
+          inverse_of: :promotion_rule
         has_many :taxons, through: :promotion_rule_taxons, class_name: 'Spree::Taxon'
 
         def preload_relations

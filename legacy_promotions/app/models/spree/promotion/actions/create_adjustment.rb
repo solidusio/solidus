@@ -7,7 +7,7 @@ module Spree
         include Spree::CalculatedAdjustments
         include Spree::AdjustmentSource
 
-        has_many :adjustments, as: :source
+        has_many :adjustments, as: :source, dependent: :restrict_with_error
 
         delegate :eligible?, to: :promotion
 
