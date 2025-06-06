@@ -200,7 +200,7 @@ module Spree::Api
         required_attributes = json_response["required_attributes"]
         expect(required_attributes).to include("name")
         expect(required_attributes).to include("price")
-        expect(required_attributes).to include("shipping_category_id")
+        expect(required_attributes).to include("shipping_category")
       end
 
       it_behaves_like "modifying product actions are restricted"
@@ -348,7 +348,7 @@ module Spree::Api
           expect(response.status).to eq(422)
           expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
           errors = json_response["errors"]
-          expect(errors.keys).to include("name", "price", "shipping_category_id")
+          expect(errors.keys).to include("name", "price", "shipping_category")
         end
       end
 
