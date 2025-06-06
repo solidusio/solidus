@@ -22,9 +22,9 @@ module SolidusPromotions
         [:taxons]
       end
 
-      def eligible?(line_item, _options = {})
+      def eligible?(line_item_or_price, _options = {})
         found = Spree::Classification.where(
-          product_id: line_item.variant.product_id,
+          product_id: line_item_or_price.variant.product_id,
           taxon_id: condition_taxon_ids_with_children
         ).exists?
 
