@@ -49,7 +49,9 @@ module SolidusPromotions
       "SolidusPromotions::Conditions::ShippingMethod"
     ]
 
-    add_class_set :price_conditions, default: []
+    add_class_set :price_conditions, default: [
+      "SolidusPromotions::Conditions::LineItemProduct"
+    ]
 
     add_class_set :benefits, default: [
       "SolidusPromotions::Benefits::AdjustLineItem",
