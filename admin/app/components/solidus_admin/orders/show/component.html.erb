@@ -3,8 +3,8 @@
     <%= page_header_back(solidus_admin.orders_path) %>
     <%= page_header_title(t('.title', number: @order.number)) %>
     <%= page_header_actions do %>
-      <%= render component("ui/button").new(tag: :button, scheme: :secondary, text: t(".discard"), form: form_id) %>
-      <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
+      <%= render component("ui/button").discard(path: solidus_admin.orders_path) %>
+      <%= render component("ui/button").save(form: form_id) %>
     <% end %>
   <% end %>
 
