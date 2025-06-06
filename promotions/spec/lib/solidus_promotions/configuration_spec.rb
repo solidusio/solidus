@@ -49,6 +49,12 @@ RSpec.describe SolidusPromotions::Configuration do
     it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
   end
 
+  describe ".price_conditions" do
+    subject { config.price_conditions }
+
+    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+  end
+
   describe ".sync_order_promotions" do
     subject { config.sync_order_promotions }
 
