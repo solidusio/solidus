@@ -17,7 +17,7 @@ module SolidusLegacyPromotions
 
     def update_item_totals
       [*line_items, *shipments].each do |item|
-        Spree::ItemTotal.new(item).recalculate!
+        Spree::Config.item_total_class.new(item).recalculate!
 
         # The cancellation_total isn't persisted anywhere but is included in
         # the adjustment_total.
@@ -30,7 +30,9 @@ module SolidusLegacyPromotions
           reject(&:included?).
           sum(&:amount)
 
-        if item.changed?
+        next unless item.changed?
+
+        if item.persisted?
           item.update_columns(
             promo_total:          item.promo_total,
             included_tax_total:   item.included_tax_total,
@@ -38,6 +40,14 @@ module SolidusLegacyPromotions
             adjustment_total:     item.adjustment_total,
             updated_at:           Time.current,
           )
+        else
+          item.assign_attributes(
+            promo_total:          item.promo_total,
+            included_tax_total:   item.included_tax_total,
+            additional_tax_total: item.additional_tax_total,
+            adjustment_total:     item.adjustment_total
+          )
+          item.save(validate: false)
         end
       end
     end
