@@ -19,7 +19,7 @@ Style/ClassVars:
   Enabled: false
 
 # We need these names for backwards compatability
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Enabled: false
 
 # We want to name rescued errors as error not simply e.
