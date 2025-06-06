@@ -50,7 +50,8 @@ module SolidusPromotions
     ]
 
     add_class_set :price_conditions, default: [
-      "SolidusPromotions::Conditions::LineItemProduct"
+      "SolidusPromotions::Conditions::LineItemProduct",
+      "SolidusPromotions::Conditions::LineItemTaxon"
     ]
 
     add_class_set :benefits, default: [
