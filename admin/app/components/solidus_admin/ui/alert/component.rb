@@ -41,6 +41,10 @@ class SolidusAdmin::UI::Alert::Component < SolidusAdmin::BaseComponent
     @scheme = scheme
   end
 
+  def before_render
+    @title = @title.presence || t(".defaults.titles")[@scheme.to_sym]
+  end
+
   def icon
     icon_tag(ICONS.dig(@scheme.to_sym, :name), class: "w-5 h-5 #{ICONS.dig(@scheme.to_sym, :class)}")
   end
