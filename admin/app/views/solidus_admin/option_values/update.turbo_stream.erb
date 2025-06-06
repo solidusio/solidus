@@ -1,0 +1,3 @@
+<%= turbo_stream.update("option_values_table", component("option_values/table").new(@option_value.option_type)) %>
+<%= turbo_stream.update(resource_form_frame, nil) %>
+<%= turbo_stream.replace("flash_toasts", component("layout/flashes").new) %>

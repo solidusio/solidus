@@ -13,7 +13,7 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
 
       render_inline(component)
 
-      svg = page.find("svg use")["xlink:href"]
+      svg = page.find("svg use")["href"]
       expect(svg).to match(/#ri-user-line/)
     end
   end

@@ -26,6 +26,6 @@ class SolidusAdmin::UI::Icon::Component < SolidusAdmin::BaseComponent
     # bypass the asset_host configuration to avoid CORS issues with CDNs:
     # https://github.com/solidusio/solidus/issues/5657
     href = asset_path("solidus_admin/remixicon.symbol.svg#ri-#{@name}", host: "")
-    tag.svg(tag.use("xlink:href": href), **@attrs)
+    tag.svg(tag.use("xlink:href": href, href:), **@attrs)
   end
 end

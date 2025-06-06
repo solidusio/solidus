@@ -6,7 +6,7 @@ module SolidusAdmin
 
     include SolidusAdmin::ControllerHelpers::Search
 
-    helper_method :search_filter_params
+    helper_method :search_filter_params, :resource_form_frame
 
     before_action :set_paginated_resources, only: %i[index]
     before_action :set_resource, only: %i[edit update]
@@ -28,16 +28,19 @@ module SolidusAdmin
     end
 
     def new
-      @resource = resource_class.new
+      @resource ||= resource_class.new
       render new_component.new(@resource)
     end
 
     def create
-      @resource = resource_class.new(permitted_resource_params)
+      @resource ||= resource_class.new(permitted_resource_params)
 
       if @resource.save
         flash[:notice] = t('.success')
-        redirect_to after_create_path, status: :see_other
+        respond_to do |format|
+          format.html { redirect_to after_create_path, status: :see_other }
+          format.turbo_stream if prefer_turbo_stream?
+        end
       else
         page_component = new_component.new(@resource)
         render_resource_form_with_errors(page_component)
@@ -45,13 +48,18 @@ module SolidusAdmin
     end
 
     def edit
-      render edit_component.new(@resource)
+      respond_to do |format|
+        format.html { render edit_component.new(@resource) }
+      end
     end
 
     def update
       if @resource.update(permitted_resource_params)
         flash[:notice] = t('.success')
-        redirect_to after_update_path, status: :see_other
+        respond_to do |format|
+          format.html { redirect_to after_update_path, status: :see_other }
+          format.turbo_stream if prefer_turbo_stream?
+        end
       else
         page_component = edit_component.new(@resource)
         render_resource_form_with_errors(page_component)
@@ -64,7 +72,10 @@ module SolidusAdmin
       resource_class.transaction { @resource.destroy_all }
 
       flash[:notice] = t('.success')
-      redirect_back_or_to after_destroy_path, status: :see_other
+      respond_to do |format|
+        format.html { redirect_back_or_to after_destroy_path, status: :see_other }
+        format.turbo_stream if prefer_turbo_stream?
+      end
     end
 
     private
@@ -135,7 +146,7 @@ module SolidusAdmin
           render page_component, status: :unprocessable_entity
         end
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(:resource_modal, page_component),
+          render turbo_stream: turbo_stream.replace(resource_form_frame, page_component),
             status: :unprocessable_entity
         end
       end
@@ -157,5 +168,11 @@ module SolidusAdmin
     def after_destroy_path
       solidus_admin.send("#{plural_resource_name}_path", **search_filter_params)
     end
+
+    def resource_form_frame
+      :resource_form
+    end
+
+    def prefer_turbo_stream? = false
   end
 end
