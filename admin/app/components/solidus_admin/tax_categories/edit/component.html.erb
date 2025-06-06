@@ -5,6 +5,13 @@
         <%= render component("ui/forms/field").text_field(f, :name) %>
         <%= render component("ui/forms/field").text_field(f, :tax_code) %>
         <%= render component("ui/forms/field").text_field(f, :description) %>
+        <% if Spree::Backend::Config.show_reverse_charge_fields %>
+          <%= render component("ui/forms/field").select(
+              f,
+              :tax_reverse_charge_mode,
+              Spree::TaxCategory.tax_reverse_charge_modes.keys.map { |key| [I18n.t("spree.tax_reverse_charge_modes.#{key}"), key] }
+            ) %>
+        <% end %>
         <label class="flex gap-2 items-center">
           <%= render component("ui/forms/checkbox").new(
               name: "#{f.object_name}[is_default]",
