@@ -27,6 +27,7 @@ en:
       line_item: "%{promotion} (%{promotion_customer_label})"
       shipment: "%{promotion} (%{promotion_customer_label})"
       shipping_rate: "%{promotion} (%{promotion_customer_label})"
+      price: "%{promotion} (%{promotion_customer_label})"
     adjustment_type: Adjustment type
     add_benefit: Add Benefit
     add_condition: Add Condition
