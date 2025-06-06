@@ -90,7 +90,8 @@ module SolidusPromotions
       "SolidusPromotions::Benefits::AdjustLineItem",
       "SolidusPromotions::Benefits::AdjustLineItemQuantityGroups",
       "SolidusPromotions::Benefits::AdjustShipment",
-      "SolidusPromotions::Benefits::CreateDiscountedItem"
+      "SolidusPromotions::Benefits::CreateDiscountedItem",
+      "SolidusPromotions::Benefits::AdvertisePrice"
     ]
 
     add_nested_class_set :promotion_calculators, default: {
@@ -120,6 +121,9 @@ module SolidusPromotions
         "SolidusPromotions::Calculators::FlatRate",
         "SolidusPromotions::Calculators::Percent",
         "SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
+      ],
+      "SolidusPromotions::Benefits::AdvertisePrice" => [
+        "SolidusPromotions::Calculators::Percent"
       ]
     }
 
