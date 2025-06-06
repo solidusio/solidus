@@ -30,7 +30,7 @@ RSpec.describe SolidusPromotions::Benefits::AdjustPrice do
   describe "#possible_conditions" do
     subject { benefit.possible_conditions }
 
-    it { pending; is_expected.to include(*SolidusPromotions.config.price_conditions) }
+    it { is_expected.to include(*SolidusPromotions.config.price_conditions) }
     it { is_expected.to include(*SolidusPromotions.config.order_conditions) }
   end
 
