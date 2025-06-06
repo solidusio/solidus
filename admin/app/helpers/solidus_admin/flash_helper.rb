@@ -7,10 +7,8 @@ module SolidusAdmin
       flash.to_hash.with_indifferent_access.except(:alert)
     end
 
-    # Construct alert flashes like +flash[:alert] = { <alert_type>: { title: "", description: "" } }+.
-    # See +SolidusAdmin::UI::Alert::Component::SCHEMES+ for available alert types.
     def alerts
-      flash.to_hash.with_indifferent_access.fetch(:alert, {}).slice(*SolidusAdmin::UI::Alert::Component::SCHEMES.keys)
+      flash.to_hash.with_indifferent_access.fetch(:alert, {})
     end
   end
 end
