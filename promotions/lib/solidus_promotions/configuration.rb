@@ -127,7 +127,8 @@ module SolidusPromotions
       ],
       "SolidusPromotions::Benefits::AdvertisePrice" => [
         "SolidusPromotions::Calculators::Percent",
-        "SolidusPromotions::Calculators::FlatRate"
+        "SolidusPromotions::Calculators::FlatRate",
+        "SolidusPromotions::Calculators::FlexiRate"
       ]
     }
 
