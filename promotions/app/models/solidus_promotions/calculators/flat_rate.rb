@@ -20,6 +20,14 @@ module SolidusPromotions
       end
       alias_method :compute_line_item, :compute_item
       alias_method :compute_shipment, :compute_item
+
+      def compute_price(price, options = {})
+        order = options[:order]
+        return preferred_amount unless order
+        return BigDecimal(0) if order.currency != preferred_currency
+        line_item_with_variant = order.line_items.detect { _1.variant == price.variant }
+        [BigDecimal(0), preferred_amount - line_item_with_variant.amount].max
+      end
     end
   end
 end
