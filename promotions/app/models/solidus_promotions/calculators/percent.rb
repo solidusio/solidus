@@ -22,8 +22,7 @@ module SolidusPromotions
       private
 
       def compute_with_currency(item, currency)
-        currency_exponent = ::Money::Currency.find(currency).exponent
-        (item.discountable_amount * preferred_percent / 100).round(currency_exponent)
+        round_to_currency(item.discountable_amount * preferred_percent / 100, currency)
       end
     end
   end

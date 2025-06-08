@@ -24,9 +24,9 @@ module SolidusPromotions
       def compute_price(price, options = {})
         order = options[:order]
         return preferred_amount unless order
-        return BigDecimal(0) if order.currency != preferred_currency
+        return Spree::ZERO if order.currency != preferred_currency
         line_item_with_variant = order.line_items.detect { _1.variant == price.variant }
-        [BigDecimal(0), preferred_amount - line_item_with_variant.amount].max
+        [Spree::ZERO, preferred_amount - line_item_with_variant.amount].max
       end
     end
   end
