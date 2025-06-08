@@ -80,6 +80,9 @@ module SolidusPromotions
         "SolidusPromotions::Calculators::TieredPercent",
         "SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
       ],
+      "SolidusPromotions::Benefits::AdjustPrice" => [
+        "SolidusPromotions::Calculators::FlatRate"
+      ],
       "SolidusPromotions::Benefits::AdjustLineItemQuantityGroups" => [
         "SolidusPromotions::Calculators::FlatRate",
         "SolidusPromotions::Calculators::Percent",
