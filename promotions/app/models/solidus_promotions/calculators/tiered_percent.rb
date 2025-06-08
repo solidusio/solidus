@@ -34,8 +34,7 @@ module SolidusPromotions
         end
 
         if preferred_currency.casecmp(order.currency).zero?
-          currency_exponent = ::Money::Currency.find(preferred_currency).exponent
-          (object.amount * (percent || preferred_base_percent) / 100).round(currency_exponent)
+          round_to_currency(object.amount * (percent || preferred_base_percent) / 100, preferred_currency)
         else
           0
         end
