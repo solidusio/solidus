@@ -82,7 +82,8 @@ module SolidusPromotions
       ],
       "SolidusPromotions::Benefits::AdjustPrice" => [
         "SolidusPromotions::Calculators::FlatRate",
-        "SolidusPromotions::Calculators::Percent"
+        "SolidusPromotions::Calculators::Percent",
+        "SolidusPromotions::Calculators::FlexiRate"
       ],
       "SolidusPromotions::Benefits::AdjustLineItemQuantityGroups" => [
         "SolidusPromotions::Calculators::FlatRate",
