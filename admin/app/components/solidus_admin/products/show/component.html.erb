@@ -89,7 +89,9 @@
                         <%= render component("ui/icon").new(name: "draggable", class: "w-6 h-6 cursor-grab handle fill-gray-500") %>
                       </div>
                       <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-sm"><%= product_option.option_type.name %>:<%= product_option.option_type.presentation %></span>
+                        <span class="font-semibold text-sm">
+                          <%= product_option.option_type.name %>:<%= product_option.option_type.presentation %>
+                        </span>
                         <div class="flex gap-2 flex-wrap">
                           <% product_option.option_type.option_values.each do |value| %>
                             <%= render component("ui/badge").new(name: "#{value.name}:#{value.presentation}") %>
@@ -108,7 +110,13 @@
 
           <div class="flex gap-4 justify-between items-end">
             <%= hidden_field_tag "#{f.object_name}[option_type_ids][]", nil %>
-            <%= f.select(:option_type_ids, option_type_options, multiple: true) %>
+            <%= render component("ui/forms/field").select(
+              f,
+              :option_type_ids,
+              option_type_options,
+              multiple: true,
+              "size" => option_type_options.size,
+            ) %>
             <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
           </div>
 
