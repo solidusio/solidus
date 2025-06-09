@@ -33,6 +33,10 @@ module SolidusAdmin
         end
       end
 
+      def panel(title:)
+        find("section", text: title).find(:xpath, "..")
+      end
+
       # Select options from a "solidus-select" field
       #
       # @param value [String, Array<String>] which option(s) to select
@@ -49,6 +53,14 @@ module SolidusAdmin
         Array.wrap(value).each do |val|
           input.fill_in(with: val).send_keys(:return)
           expect(control).to have_text(val)
+        end
+      end
+
+      def solidus_unselect(value, from:)
+        input = find_field(from, visible: :all)
+        Array.wrap(value).each do |val|
+          item = input.sibling("div", text: val)
+          item.find("a").click
         end
       end
 
