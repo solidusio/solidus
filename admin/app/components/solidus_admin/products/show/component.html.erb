@@ -104,7 +104,11 @@
             <% end %>
           <% end %>
 
-          <%= f.select(:option_type_ids, option_type_options, multiple: true) %>
+          <div class="flex gap-4 justify-between items-end">
+            <%= hidden_field_tag "#{f.object_name}[option_type_ids][]", nil %>
+            <%= f.select(:option_type_ids, option_type_options, multiple: true) %>
+            <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
+          </div>
         <% end %>
 
         <%= render component("ui/panel").new(title: t(".specifications")) do |panel| %>
