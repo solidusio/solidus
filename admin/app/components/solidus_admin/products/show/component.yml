@@ -11,6 +11,7 @@ en:
     shipping_category_html: "Manage Shipping in Settings"
     tax_category_html: "Manage Taxes in Settings"
   manage_images: "Manage images"
+  manage_options: "Manage option types"
   manage_properties: "Manage product specifications"
   manage_stock: "Manage stock"
   media: "Media"

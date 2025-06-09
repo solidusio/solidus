@@ -122,6 +122,11 @@
             ) %>
             <%= render component("ui/button").new(type: :submit, form: form_id, text: t(".save")) %>
           </div>
+
+          <% panel.with_action(
+            name: t(".manage_options"),
+            href: solidus_admin.option_types_path
+          ) %>
         <% end %>
 
         <%= render component("ui/panel").new(title: t(".specifications")) do |panel| %>
