@@ -182,6 +182,7 @@ en:
         meta_title: Meta Title
         name: Name
         on_hand: On Hand
+        option_type_ids: Option Types
         price: Master Price
         primary_taxon: Primary Taxon
         primary_taxon_id: Primary Taxon
