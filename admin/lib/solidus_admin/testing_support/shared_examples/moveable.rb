@@ -21,6 +21,7 @@ end
 
 RSpec.shared_examples_for "features: sortable" do
   let(:factory_attrs) { {} }
+  let(:scope) { "body" }
 
   before do
     create(factory, displayed_attribute => "First", position: 1, **factory_attrs)
@@ -29,12 +30,15 @@ RSpec.shared_examples_for "features: sortable" do
   end
 
   it "allows sorting via drag and drop" do
-    row_1 = find_row("First")
-    row_2 = find_row("Second")
+    within(scope) do
+      expect(find("[data-controller='sortable']").all(:xpath, "./*").first).to have_text("First")
+      expect(find("[data-controller='sortable']").all(:xpath, "./*").last).to have_text("Second")
 
-    row_2.drag_to row_1
+      rows = find("[data-controller='sortable']").all(:xpath, "./*")
+      rows[1].drag_to rows[0]
 
-    expect(find("table tbody tr:first-child")).to have_text("Second")
-    expect(find("table tbody tr:last-child")).to have_text("First")
+      expect(find("[data-controller='sortable']").all(:xpath, "./*").first).to have_text("Second")
+      expect(find("[data-controller='sortable']").all(:xpath, "./*").last).to have_text("First")
+    end
   end
 end
