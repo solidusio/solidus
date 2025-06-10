@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Product", type: :feature do
   before do
@@ -115,6 +116,15 @@ describe "Product", type: :feature do
         within(panel(title: "Options")) { click_on "Manage option types" }
         expect(page).to have_current_path("/admin/option_types")
       end
+    end
+
+    it_behaves_like "features: sortable" do
+      let(:product) { create(:product) }
+      let(:factory) { :option_type }
+      let(:factory_attrs) { { products: [product] } }
+      let(:displayed_attribute) { :name }
+      let(:handle) { ".handle" }
+      let(:path) { solidus_admin.product_path(product) }
     end
   end
 end
