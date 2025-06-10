@@ -77,7 +77,9 @@ describe "Product", type: :feature do
       visit "/admin/products/just-a-prod"
       solidus_select(%w[clothing-size:Size clothing-color:Color], from: "Option Types")
       options_panel = panel(title: "Options")
-      within(options_panel) { click_on "Save" }
+      # for some reason capybara on circle ci does not register a form submit when clicking "Save" within options panel,
+      # so we have to resort to Save button in the header
+      within("header") { click_on "Save" }
 
       expect(options_panel).to have_content("clothing-size:Size")
       expect(options_panel).to have_content("S:Small")

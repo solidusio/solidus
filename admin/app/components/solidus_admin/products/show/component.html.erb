@@ -120,7 +120,7 @@
               multiple: true,
               "size" => option_type_options.size,
             ) %>
-            <%= render component("ui/button").new(type: :submit, form: form_id, text: t(".save")) %>
+            <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
           </div>
 
           <% panel.with_action(
