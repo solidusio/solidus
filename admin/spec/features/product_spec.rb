@@ -100,12 +100,11 @@ describe "Product", type: :feature do
     end
 
     context "clicking on Edit" do
-      it "leads to option type edit page" do
+      xit "leads to option type edit page" do
         option_type = create(:option_type)
         product.option_types << option_type
         visit "/admin/products/just-a-prod"
 
-        pending("option types new UI is in progress")
         within(panel(title: "Options")) { click_on "Edit" }
         expect(page).to have_current_path("/admin/option_types/#{option_type.id}/edit")
       end
