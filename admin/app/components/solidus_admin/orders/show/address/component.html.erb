@@ -32,19 +32,13 @@
             <% end %>
           </div>
 
-          <label class="flex gap-2 items-center">
-            <%= form.hidden_field use_attribute, value: '0', id: false %>
-
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{form.object_name}[#{use_attribute}]",
-              checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address),
-              value: '1'
-            ) %>
-
-            <span class="font-normal text-xs">
-              <%= t(".use_this_address.#{@type}") %>
-            </span>
-          </label>
+          <%= render component("ui/forms/checkbox").new(
+            object_name: form.object_name,
+            method: use_attribute,
+            checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address)
+          ) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".use_this_address.#{@type}"), size: :xs) %>
+          <% end %>
         </div>
       <% end %>
 

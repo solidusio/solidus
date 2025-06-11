@@ -40,9 +40,12 @@ describe "Product", type: :feature do
     visit "/admin/products/just-a-prod"
 
     fill_in "Name", with: "Just a product (updated)"
+    uncheck 'Promotable'
     within('header') { click_button "Save" }
 
     expect(page).to have_content("Just a product (updated)")
+    expect(checkbox("Promotable")).not_to be_checked
+
     fill_in "Name", with: ""
     within('header') { click_button "Save" }
 

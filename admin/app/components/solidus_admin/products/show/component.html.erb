@@ -117,14 +117,10 @@
             type: :date,
             value: f.object.discontinue_on&.to_date
           ) %>
-          <label class="flex gap-2 items-center">
-            <%= render component("ui/forms/checkbox").new(
-              name: "#{f.object_name}[promotionable]",
-              checked: f.object.promotionable
-            ) %>
-            <span class="font-normal text-xs"><%= Spree::Product.human_attribute_name :promotionable %></span>
-            <%= render component("ui/toggletip").new(text: t(".hints.promotionable_html")) %>
-          </label>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :promotionable, checked: f.object.promotionable) do |checkbox| %>
+            <%= checkbox.with_label(text: Spree::Product.human_attribute_name(:promotionable), size: :xs) %>
+            <%= checkbox.with_hint(text: t(".hints.promotionable_html")) %>
+          <% end %>
         <% end %>
 
         <%= render component("ui/panel").new(title: t(".product_organization")) do %>

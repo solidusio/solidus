@@ -1,32 +1,56 @@
-<table>
-  <tr>
-    <td></td>
-    <% current_component::SIZES.keys.each do |size| %>
-      <td class="px-3 py-1 text-gray-500 text-center text-[16px]" colspan="2"><%= size.to_s.humanize %></td>
-    <% end %>
-  </tr>
-  <tr>
-    <td></td>
-    <% current_component::SIZES.keys.each do |size| %>
-      <% %i[default disabled].each do |state| %>
-        <td class="px-3 py-1 text-gray-500 text-center"><%= state.to_s.humanize %></td>
+<div class="flex gap-6">
+  <div class="flex flex-col">
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0">
+        Regular label
+      </h6>
+      <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
+        <%= checkbox.with_label(text: 'Active') %>
       <% end %>
-    <% end %>
-  </tr>
-  <% %i[off on intermediate].each do |checked| %>
-    <tr>
-      <td class="font-bold px-3 py-1"><%= checked.to_s.humanize %></td>
-      <% current_component::SIZES.keys.each do |size| %>
-        <% %i[default disabled].each do |state| %>
-          <% cell_id = SecureRandom.uuid %>
-          <td class="px-3 py-1 text-center" id="<%= cell_id %>">
-            <%= render current_component.new(size: size, checked: checked == :on, disabled: state == :disabled) %>
-            <script>
-              document.getElementById("<%= cell_id %>").querySelector("input").indeterminate = <%= checked == :intermediate %>
-            </script>
-          </td>
-        <% end %>
+    </div>
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0">
+        Smaller label
+      </h6>
+      <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
+        <%= checkbox.with_label(text: 'Active', size: :xs) %>
       <% end %>
-    </tr>
-  <% end %>
-</table>
+    </div>
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0">
+        Semibold label
+      </h6>
+      <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
+        <%= checkbox.with_label(text: 'Active', weight: :semibold) %>
+      <% end %>
+    </div>
+  </div>
+  <div class="flex flex-col">
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0">
+        Label with custom styles applied
+      </h6>
+      <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
+        <%= checkbox.with_label(text: 'Active', classes: 'text-gray-500') %>
+      <% end %>
+    </div>
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0">
+        With label and hint above
+      </h6>
+      <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
+        <%= checkbox.with_label(text: 'Active') %>
+        <%= checkbox.with_hint(text: 'This means something') %>
+      <% end %>
+    </div>
+    <div class="mb-8">
+      <h6 class="text-gray-500 mb-3 mt-0">
+        With label and hint below
+      </h6>
+      <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
+        <%= checkbox.with_label(text: 'Active') %>
+        <%= checkbox.with_hint(text: 'This means something', position: :below) %>
+      <% end %>
+    </div>
+  </div>
+</div>
