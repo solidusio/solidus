@@ -13,7 +13,7 @@ module SolidusPromotions
       def compute_item(item)
         currency = item.order.currency
         if item && preferred_currency.casecmp(currency).zero?
-          preferred_amount
+          compute_for_amount(item.discountable_amount)
         else
           0
         end
@@ -23,10 +23,23 @@ module SolidusPromotions
 
       def compute_price(price, options = {})
         order = options[:order]
+        quantity = options[:quantity]
         return preferred_amount unless order
         return zero if order.currency != preferred_currency
         line_item_with_variant = order.line_items.detect { _1.variant == price.variant }
-        [zero, preferred_amount - line_item_with_variant.amount].max
+        desired_extra_amount = quantity * price.discountable_amount
+        current_discounted_amount = adjusted_amount_before_current_lane(line_item_with_variant)
+        round_to_currency(
+          (compute_for_amount(current_discounted_amount + desired_extra_amount.to_f) -
+            compute_for_amount(current_discounted_amount)) / quantity,
+          preferred_currency
+        )
+      end
+
+      private
+
+      def compute_for_amount(amount)
+        [amount, preferred_amount].min
       end
     end
   end
