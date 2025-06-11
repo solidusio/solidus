@@ -114,8 +114,7 @@
               f,
               :option_type_ids,
               option_type_options,
-              multiple: true,
-              "size" => option_type_options.size,
+              multiple: true
             ) %>
 
             <%= render component("ui/button").new(type: :submit, form: form_id, text: t(".save")) %>
@@ -155,7 +154,12 @@
         <% end %>
 
         <%= render component("ui/panel").new(title: t(".product_organization")) do %>
-          <%= f.select(:taxon_ids, taxon_options, multiple: true) %>
+          <%= render component("ui/forms/field").select(
+            f,
+            :taxon_ids,
+            taxon_options,
+            multiple: true
+          ) %>
         <% end %>
       <% end %>
     <% end %>
