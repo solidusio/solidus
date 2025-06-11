@@ -117,8 +117,7 @@
               f,
               :option_type_ids,
               option_type_options,
-              multiple: true,
-              "size" => option_type_options.size,
+              multiple: true
             ) %>
             <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
           </div>
@@ -164,8 +163,7 @@
             f,
             :taxon_ids,
             taxon_options,
-            multiple: true,
-            "size" => taxon_options.size, # use a string key to avoid setting the size of the component
+            multiple: true
           ) %>
         <% end %>
       <% end %>
