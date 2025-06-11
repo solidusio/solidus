@@ -119,6 +119,13 @@ module SolidusPromotions
       usage_count(excluded_orders: excluded_orders) >= usage_limit
     end
 
+    def previous_lanes
+      current_lane_index = self.class.ordered_lanes.detect { |name, _index| lane == name }.last
+      self.class.ordered_lanes.filter_map do |name, index|
+        name if index < current_lane_index
+      end
+    end
+
     def not_expired?(time = Time.current)
       !expired?(time)
     end
