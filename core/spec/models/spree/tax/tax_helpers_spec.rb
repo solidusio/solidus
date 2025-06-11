@@ -80,5 +80,106 @@ RSpec.describe Spree::Tax::TaxHelpers do
         end
       end
     end
+
+    context "when tax_reverse_charge_mode is strict and address is enabled" do
+      let(:tax_category) { create(:tax_category, tax_reverse_charge_mode: 'strict') }
+
+      before do
+        allow(tax_address).to receive(:reverse_charge_status_enabled?).and_return(true)
+      end
+
+      it "returns an empty array" do
+        expect(subject).to be_empty
+      end
+    end
+
+    context "when tax_reverse_charge_mode is strict and address is not enabled" do
+      let(:tax_category) { create(:tax_category, tax_reverse_charge_mode: 'strict') }
+
+      before do
+        allow(tax_address).to receive(:reverse_charge_status_enabled?).and_return(false)
+      end
+
+      it "returns the applicable tax rate" do
+        expect(subject).to contain_exactly(tax_rate)
+      end
+    end
+
+    context "when tax_reverse_charge_mode is loose and address is disabled" do
+      let(:tax_category) { create(:tax_category, tax_reverse_charge_mode: 'loose') }
+
+      before do
+        allow(tax_address).to receive(:reverse_charge_status_disabled?).and_return(true)
+      end
+
+      it "returns the applicable tax rate" do
+        expect(subject).to contain_exactly(tax_rate)
+      end
+    end
+
+    context "when tax_reverse_charge_mode is loose and address is not disabled" do
+      let(:tax_category) { create(:tax_category, tax_reverse_charge_mode: 'loose') }
+
+      before do
+        allow(tax_address).to receive(:reverse_charge_status_disabled?).and_return(false)
+      end
+
+      it "returns an empty array" do
+        expect(subject).to be_empty
+      end
+    end
+
+    context "when tax_reverse_charge_mode is disabled" do
+      let(:tax_category) { create(:tax_category, tax_reverse_charge_mode: 'disabled') }
+
+      it "returns the applicable tax rate" do
+        expect(subject).to contain_exactly(tax_rate)
+      end
+    end
+  end
+
+  describe '#tax_applicable?' do
+    let(:tax_category) { create(:tax_category, tax_reverse_charge_mode: tax_reverse_charge_mode) }
+    let(:address) { create(:address) }
+
+    subject { DummyClass.new.send(:tax_applicable?, tax_category, address) }
+
+    context 'when tax_reverse_charge_mode is strict' do
+      let(:tax_reverse_charge_mode) { 'strict' }
+
+      context 'when address is enabled' do
+        before { allow(address).to receive(:reverse_charge_status_enabled?).and_return(true) }
+
+        it { is_expected.to be_falsey }
+      end
+
+      context 'when address is not enabled' do
+        before { allow(address).to receive(:reverse_charge_status_enabled?).and_return(false) }
+
+        it { is_expected.to be_truthy }
+      end
+    end
+
+    context 'when tax_reverse_charge_mode is loose' do
+      let(:tax_reverse_charge_mode) { 'loose' }
+
+      context 'when address is disabled' do
+        before { allow(address).to receive(:reverse_charge_status_disabled?).and_return(true) }
+
+        it { is_expected.to be_truthy }
+      end
+
+      context 'when address is not disabled' do
+        before { allow(address).to receive(:reverse_charge_status_disabled?).and_return(false) }
+
+        it { is_expected.to be_falsey }
+      end
+    end
+
+    context 'when tax_reverse_charge_mode is disabled' do
+      let(:tax_reverse_charge_mode) { 'disabled' }
+
+      it { is_expected.to be_truthy }
+    end
   end
 end

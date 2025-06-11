@@ -46,7 +46,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
   end
 
   def columns
-    [
+    columns = [
       {
         header: :name,
         data: ->(tax_category) do
@@ -82,5 +82,18 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
         },
       },
     ]
+
+    if Spree::Backend::Config.show_reverse_charge_fields
+      columns << {
+        header: :tax_reverse_charge_mode,
+        data: ->(tax_category) do
+          link_to_if tax_category.tax_reverse_charge_mode, I18n.t("spree.tax_reverse_charge_modes.#{tax_category.tax_reverse_charge_mode}"), edit_path(tax_category),
+            data: { turbo_frame: :resource_modal },
+            class: 'body-link'
+        end
+      }
+    end
+
+    columns
   end
 end
