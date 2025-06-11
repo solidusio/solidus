@@ -10,5 +10,6 @@ module SolidusPromotions
     end
 
     Spree::Shipment.prepend self
+    Spree::Shipment.prepend SolidusPromotions::AdjustedAmountByLane
   end
 end

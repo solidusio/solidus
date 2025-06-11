@@ -23,5 +23,6 @@ module SolidusPromotions
 
     Spree::LineItem.prepend self
     Spree::LineItem.prepend SolidusPromotions::DiscountableAmount
+    Spree::LineItem.prepend SolidusPromotions::AdjustedAmountByLane
   end
 end
