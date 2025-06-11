@@ -191,6 +191,7 @@ en:
         sku: Master SKU
         slug: Slug
         tax_category: Tax Category
+        taxon_ids: Categories
         weight: Weight
         width: Width
       spree/product_property:
