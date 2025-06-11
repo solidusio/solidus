@@ -37,7 +37,7 @@
             method: use_attribute,
             checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address)
           ) do |checkbox| %>
-            <%= checkbox.with_caption(text: t(".use_this_address.#{@type}"), size: :xs) %>
+            <%= checkbox.with_label(text: t(".use_this_address.#{@type}"), size: :xs) %>
           <% end %>
         </div>
       <% end %>

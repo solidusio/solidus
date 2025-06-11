@@ -118,7 +118,7 @@
             value: f.object.discontinue_on&.to_date
           ) %>
           <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :promotionable, checked: f.object.promotionable) do |checkbox| %>
-            <%= checkbox.with_caption(text: Spree::Product.human_attribute_name(:promotionable), size: :xs) %>
+            <%= checkbox.with_label(text: Spree::Product.human_attribute_name(:promotionable), size: :xs) %>
             <%= checkbox.with_hint(text: t(".hints.promotionable_html")) %>
           <% end %>
         <% end %>

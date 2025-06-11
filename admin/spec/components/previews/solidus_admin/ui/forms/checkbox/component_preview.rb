@@ -7,7 +7,7 @@ class SolidusAdmin::UI::Forms::Checkbox::ComponentPreview < ViewComponent::Previ
   # Forms checkbox component utilises regular checkbox component and encapsulates some functionality
   # that is shared between admin forms checkboxes:
   # - adds `hidden_field_tag` to function properly
-  # - provides a way to customise label caption (font size/weight, custom styles)
+  # - provides a way to customise label (font size/weight, custom styles)
   # - optionally include a toggletip hint
   #
   # Requires `object_name` and `method` parameters that will form a name of the hidden input and checkbox input fields.
@@ -18,7 +18,7 @@ class SolidusAdmin::UI::Forms::Checkbox::ComponentPreview < ViewComponent::Previ
   #
   # ```erb
   #   <%= render component('ui/forms/checkbox').new(object_name: 'stock_location', method: :default, checked: true) do |checkbox| %>
-  #     <%= checkbox.with_caption(text: "Default") %>
+  #     <%= checkbox.with_label(text: "Default") %>
   #     <%= checkbox.with_hint(text: "Will be used by default") %>
   #   <% end %>
   # ```
@@ -35,7 +35,7 @@ class SolidusAdmin::UI::Forms::Checkbox::ComponentPreview < ViewComponent::Previ
   # @param hint_position select { choices: [above, below] }
   def playground(caption_size: :s, caption_weight: :normal, caption_classes: '', hint: true, hint_text: "This will be helpful", hint_position: :above)
     render current_component.new(object_name: "store", method: :active, checked: true) do |component|
-      component.with_caption(text: "Active", size: caption_size, weight: caption_weight, classes: caption_classes)
+      component.with_label(text: "Active", size: caption_size, weight: caption_weight, classes: caption_classes)
       component.with_hint(text: hint_text, position: hint_position) if hint
     end
   end

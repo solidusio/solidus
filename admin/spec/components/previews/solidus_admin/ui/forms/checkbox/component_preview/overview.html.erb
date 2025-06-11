@@ -2,53 +2,53 @@
   <div class="flex flex-col">
     <div class="mb-8">
       <h6 class="text-gray-500 mb-3 mt-0">
-        Regular caption
+        Regular label
       </h6>
       <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
-        <%= checkbox.with_caption(text: 'Active') %>
+        <%= checkbox.with_label(text: 'Active') %>
       <% end %>
     </div>
     <div class="mb-8">
       <h6 class="text-gray-500 mb-3 mt-0">
-        Smaller caption
+        Smaller label
       </h6>
       <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
-        <%= checkbox.with_caption(text: 'Active', size: :xs) %>
+        <%= checkbox.with_label(text: 'Active', size: :xs) %>
       <% end %>
     </div>
     <div class="mb-8">
       <h6 class="text-gray-500 mb-3 mt-0">
-        Semibold caption
+        Semibold label
       </h6>
       <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
-        <%= checkbox.with_caption(text: 'Active', weight: :semibold) %>
+        <%= checkbox.with_label(text: 'Active', weight: :semibold) %>
       <% end %>
     </div>
   </div>
   <div class="flex flex-col">
     <div class="mb-8">
       <h6 class="text-gray-500 mb-3 mt-0">
-        Caption with custom styles applied
+        Label with custom styles applied
       </h6>
       <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
-        <%= checkbox.with_caption(text: 'Active', classes: 'text-gray-500') %>
+        <%= checkbox.with_label(text: 'Active', classes: 'text-gray-500') %>
       <% end %>
     </div>
     <div class="mb-8">
       <h6 class="text-gray-500 mb-3 mt-0">
-        With caption and hint above
+        With label and hint above
       </h6>
       <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
-        <%= checkbox.with_caption(text: 'Active') %>
+        <%= checkbox.with_label(text: 'Active') %>
         <%= checkbox.with_hint(text: 'This means something') %>
       <% end %>
     </div>
     <div class="mb-8">
       <h6 class="text-gray-500 mb-3 mt-0">
-        With caption and hint below
+        With label and hint below
       </h6>
       <%= render current_component.new(object_name: 'store', method: :active, checked: true) do |checkbox| %>
-        <%= checkbox.with_caption(text: 'Active') %>
+        <%= checkbox.with_label(text: 'Active') %>
         <%= checkbox.with_hint(text: 'This means something', position: :below) %>
       <% end %>
     </div>

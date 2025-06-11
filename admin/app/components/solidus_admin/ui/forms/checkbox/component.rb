@@ -11,7 +11,7 @@ class SolidusAdmin::UI::Forms::Checkbox::Component < SolidusAdmin::BaseComponent
     s: 'text-sm',
   }.freeze
 
-  renders_one :caption, ->(text:, weight: :normal, size: :s, **options) do
+  renders_one :label, ->(text:, weight: :normal, size: :s, **options) do
     tag.span(
       text,
       class: "

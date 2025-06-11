@@ -6,7 +6,7 @@
         <%= render component("ui/forms/field").text_field(f, :tax_code) %>
         <%= render component("ui/forms/field").text_field(f, :description) %>
         <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :is_default, checked: f.object.is_default) do |checkbox| %>
-          <%= checkbox.with_caption(text: Spree::TaxCategory.human_attribute_name(:is_default), weight: :semibold, size: :xs, classes: 'ml-2') %>
+          <%= checkbox.with_label(text: Spree::TaxCategory.human_attribute_name(:is_default), weight: :semibold, size: :xs, classes: 'ml-2') %>
           <%= checkbox.with_hint(text: t(".hints.is_default")) %>
         <% end %>
       </div>

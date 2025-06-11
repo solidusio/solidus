@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-6 pb-4">
         <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
         <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :active, checked: f.object.active) do |checkbox| %>
-          <%= checkbox.with_caption(text: Spree::StoreCreditReason.human_attribute_name(:active), weight: :semibold, size: :xs, classes: 'ml-2') %>
+          <%= checkbox.with_label(text: Spree::StoreCreditReason.human_attribute_name(:active), weight: :semibold, size: :xs, classes: 'ml-2') %>
           <%= checkbox.with_hint(text: t(".hints.active")) %>
         <% end %>
       </div>
