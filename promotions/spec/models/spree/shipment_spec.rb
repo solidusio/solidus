@@ -36,4 +36,39 @@ RSpec.describe Spree::Shipment do
       end
     end
   end
+
+  describe "adjusted_amount_by_lanes" do
+    let(:shipment) { described_class.new(cost: 48, adjustments: adjustments) }
+    let(:pre_adjustment) { Spree::Adjustment.new(amount: -1, source: pre_benefit) }
+    let(:default_adjustment) { Spree::Adjustment.new(amount: -2, source: default_benefit) }
+    let(:post_adjustment) { Spree::Adjustment.new(amount: -3, source: post_benefit) }
+    let(:pre_promotion) { SolidusPromotions::Promotion.new(lane: :pre) }
+    let(:default_promotion) { SolidusPromotions::Promotion.new(lane: :default) }
+    let(:post_promotion) { SolidusPromotions::Promotion.new(lane: :post) }
+    let(:pre_benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(promotion: pre_promotion) }
+    let(:default_benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(promotion: default_promotion) }
+    let(:post_benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(promotion: post_promotion) }
+    let(:adjustments) { [pre_adjustment, default_adjustment, post_adjustment] }
+
+    let(:lanes) { [] }
+
+    subject { shipment.adjusted_amount_by_lanes(lanes) }
+    it { is_expected.to eq(48) }
+
+    context "if given pre lane" do
+      let(:lanes) { ["pre"] }
+
+      it { is_expected.to eq(47) }
+    end
+
+    context "if given default and pre lane" do
+      let(:lanes) { ["pre", "default"] }
+      it { is_expected.to eq(45) }
+    end
+
+    context "if given default, pre and post lane" do
+      let(:lanes) { ["pre", "default", "post"] }
+      it { is_expected.to eq(42) }
+    end
+  end
 end
