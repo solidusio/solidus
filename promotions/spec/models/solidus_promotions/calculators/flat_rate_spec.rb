@@ -7,8 +7,11 @@ RSpec.describe SolidusPromotions::Calculators::FlatRate, type: :model do
   subject { calculator.compute(discountable) }
 
   let(:order) { mock_model(Spree::Order, currency: order_currency) }
+  let(:promotion) { build_stubbed(:solidus_promotion) }
+  let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(promotion: promotion) }
   let(:calculator) do
     described_class.new(
+      calculable: benefit,
       preferred_amount: preferred_amount,
       preferred_currency: preferred_currency
     )
@@ -17,7 +20,7 @@ RSpec.describe SolidusPromotions::Calculators::FlatRate, type: :model do
   it_behaves_like "a calculator with a description"
 
   context "compute_line_item" do
-    let(:discountable) { mock_model(Spree::LineItem, order: order) }
+    let(:discountable) { mock_model(Spree::LineItem, order: order, discountable_amount: 100) }
 
     describe "when preferred currency matches order" do
       let(:preferred_currency) { "GBP" }
@@ -53,7 +56,7 @@ RSpec.describe SolidusPromotions::Calculators::FlatRate, type: :model do
   end
 
   context "compute_shipment" do
-    let(:discountable) { mock_model(Spree::Shipment, order: order) }
+    let(:discountable) { mock_model(Spree::Shipment, order: order, discountable_amount: 100) }
     describe "when preferred currency matches order" do
       let(:preferred_currency) { "GBP" }
       let(:order_currency) { "GBP" }
@@ -68,24 +71,31 @@ RSpec.describe SolidusPromotions::Calculators::FlatRate, type: :model do
     let(:order_currency) { "GBP" }
     let(:preferred_amount) { 25 }
 
-    let(:discountable) { mock_model(Spree::Price, amount: 20, variant: variant) }
+    let(:discountable) { mock_model(Spree::Price, amount: price_amount, variant: variant, discountable_amount: price_amount) }
     let(:variant) { mock_model(Spree::Variant) }
+    let(:price_amount) { 20 }
     let(:line_item) { Spree::LineItem.new(variant:, quantity:, price: 20) }
     let(:other_variant) { mock_model(Spree::Variant) }
     let(:other_line_item) { Spree::LineItem.new(variant: other_variant) }
     let(:quantity) { 0 }
+    let(:desired_quantity) { 1 }
     let(:order) { mock_model(Spree::Order, line_items: [line_item, other_line_item], currency: order_currency) }
 
-    subject { calculator.compute(discountable, {order: order, quantity: 1}) }
+    subject { calculator.compute(discountable, {order: order, quantity: desired_quantity}) }
 
-    it { is_expected.to eq(25) }
+    it { is_expected.to eq(20) }
 
-    context "with line item already discounted but there is room" do
+    context "with discounted line item present" do
       let(:quantity) { 1 }
       it { is_expected.to eq(5) }
     end
 
-    context "with line item fully discounted" do
+    context "when desiring 2" do
+      let(:desired_quantity) { 2 }
+      it { is_expected.to eq(12.5) }
+    end
+
+    context "with discounted line item present that takes up the whole amount" do
       let(:quantity) { 2 }
 
       it { is_expected.to eq(0) }
