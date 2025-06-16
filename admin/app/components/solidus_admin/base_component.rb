@@ -10,8 +10,8 @@ module SolidusAdmin
     include SolidusAdmin::StimulusHelper
     include SolidusAdmin::VoidElementsHelper
     include SolidusAdmin::FlashHelper
-    include Turbo::FramesHelper
-    include Turbo::StreamsHelper
+    include ::Turbo::FramesHelper
+    include ::Turbo::StreamsHelper
 
     def icon_tag(name, **attrs)
       render component("ui/icon").new(name:, **attrs)

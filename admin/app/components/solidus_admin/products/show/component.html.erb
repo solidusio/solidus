@@ -160,15 +160,13 @@
 
         <%= render component("ui/panel").new(title: t(".product_organization")) do |panel| %>
           <%= f.hidden_field :taxon_ids, multiple: true, value: nil %>
-          <%= turbo_frame_tag :product_organization_frame do %>
+          <%= render component("turbo/target_frame").new(:product_organization_frame, source: :new_product_category) do %>
             <%= render component("ui/forms/field").select(
               f,
               :taxon_ids,
               taxon_options,
               multiple: true
             ) %>
-            <%= turbo_stream.update :new_product_category, nil %>
-            <%= turbo_stream.replace :flash_toasts, component("layout/flashes/toasts").new(toasts:) %>
           <% end %>
           <% panel.with_action(
             name: t(".add_new_category"),
