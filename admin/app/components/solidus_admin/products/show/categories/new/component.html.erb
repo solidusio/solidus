@@ -1,0 +1,17 @@
+<%= turbo_frame_tag :new_product_category, target: :product_organization_frame do %>
+  <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
+    <%= form_for @taxon, url: solidus_admin.product_taxons_path(@product), method: :post, html: { id: dom_id(@taxon) } do |f| %>
+      <div class="flex flex-col gap-6 pb-4">
+        <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
+        <%= render component("ui/forms/field").select(f, :parent_id, parent_taxon_options) %>
+        <%= render component("ui/forms/field").text_area(f, :description) %>
+      </div>
+    <% end %>
+    <% modal.with_actions do %>
+      <form method="dialog">
+        <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
+      </form>
+      <%= render component("ui/button").new(type: :submit, text: t('.submit'), form: dom_id(@taxon)) %>
+    <% end %>
+  <% end %>
+<% end %>

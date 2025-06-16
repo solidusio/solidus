@@ -409,6 +409,7 @@ en:
         meta_keywords: Meta Keywords
         meta_title: Meta Title
         name: Name
+        parent_id: Parent Category
         permalink: Permalink
         position: Position
       spree/taxonomy:
