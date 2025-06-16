@@ -16,6 +16,8 @@ SolidusAdmin::Engine.routes.draw do
       put :discontinue
       put :activate
     end
+
+    resources :taxons, only: [:new, :create], controller: :product_taxons
   end
 
   # Needs a constraint to avoid interpreting "new" as a product's slug
