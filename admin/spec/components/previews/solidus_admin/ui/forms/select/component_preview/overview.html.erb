@@ -46,6 +46,16 @@
           value: "1"
         ) %>
       </div>
+
+      <div class="mb-8">
+        <h6 class="text-gray-500 mb-3 mt-0">Alternative item label</h6>
+        <%= render current_component.new(
+          id: "single-alt-label",
+          choices: Spree::State.limit(100).map { [_1.name, _1.id, { data: { item_label: "#{_1.name} (#{_1.country.name})" } }] },
+          label: "State",
+          name: "state"
+        ) %>
+      </div>
     </div>
 
     <div class="flex flex-col flex-grow gap-2">
