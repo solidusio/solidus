@@ -16,7 +16,7 @@ class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
   def taxon_options
     @taxon_options ||= Spree::Taxon.order(:lft).pluck(:name, :id, :lft, :depth).map do
       name, id, _lft, depth = _1
-      ["#{'    ' * depth} → #{name}", id]
+      ["#{'    ' * depth} → #{name}", id, { data: { item_label: name } }]
     end
   end
 
