@@ -9,6 +9,7 @@ module SolidusAdmin
     include SolidusAdmin::ComponentsHelper
     include SolidusAdmin::StimulusHelper
     include SolidusAdmin::VoidElementsHelper
+    include SolidusAdmin::FlashHelper
     include Turbo::FramesHelper
     include Turbo::StreamsHelper
 

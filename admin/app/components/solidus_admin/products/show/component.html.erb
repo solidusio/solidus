@@ -168,6 +168,7 @@
               multiple: true
             ) %>
             <%= turbo_stream.update :new_product_category, nil %>
+            <%= turbo_stream.replace :flash_toasts, component("layout/flashes/toasts").new(toasts:) %>
           <% end %>
           <% panel.with_action(
             name: t(".add_new_category"),
