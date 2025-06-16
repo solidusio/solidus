@@ -1,0 +1,5 @@
+<%= turbo_frame_tag @id do %>
+  <%= content %>
+  <%= turbo_stream.update(@source, nil) if @source %>
+  <%= turbo_stream.replace :flash_toasts, component("layout/flashes/toasts").new(toasts:) %>
+<% end %>
