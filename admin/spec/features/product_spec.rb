@@ -128,4 +128,83 @@ describe "Product", type: :feature do
       let(:path) { solidus_admin.product_path(product) }
     end
   end
+
+  describe "product organization", :js do
+    let(:taxonomy) { create(:taxonomy, name: "Apparel") }
+    let(:root_taxon) { taxonomy.root }
+    let!(:child_taxon) { create(:taxon, name: "Caps", parent: root_taxon) }
+    let!(:product) { create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99) }
+
+    describe "assigning categories" do
+      it "assigns product categories" do
+        visit "/admin/products/just-a-prod"
+        expect(solidus_select_control("Categories").text).to be_empty
+
+        solidus_select %w[Apparel Caps], from: "Categories"
+        within("header") { click_on "Save" }
+        expect(page).to have_content("Product was successfully updated.")
+
+        visit "/admin/products/just-a-prod"
+        expect(solidus_select_control("Categories")).to have_content("Apparel")
+        expect(solidus_select_control("Categories")).to have_content("Caps")
+      end
+
+      it "unassigns product categories" do
+        product.taxons << root_taxon
+
+        visit "/admin/products/just-a-prod"
+        solidus_unselect "Apparel", from: "Categories"
+        within("header") { click_on "Save" }
+        expect(page).to have_content("Product was successfully updated.")
+
+        visit "/admin/products/just-a-prod"
+        expect(solidus_select_control("Categories").text).to be_empty
+      end
+    end
+
+    context "adding new category" do
+      it "creates new category and assigns it to product" do
+        visit "/admin/products/just-a-prod"
+        click_on "Add new category"
+        expect(page).to have_content("New Category")
+
+        within(dialog) do
+          fill_in "Name", with: "Jackets"
+          solidus_select "Apparel", from: "Parent Category"
+          click_on "Add Category"
+        end
+
+        expect(page).to have_content("Product category was successfully added.")
+        expect(page).not_to have_css("dialog")
+        expect(page).not_to have_content("New Category")
+        expect(solidus_select_control("Categories")).to have_content("Jackets")
+      end
+
+      context "with invalid attributes" do
+        context "with blank name" do
+          it "shows error" do
+            visit "/admin/products/just-a-prod"
+            click_on "Add new category"
+            within(dialog) { click_on "Add Category" }
+
+            expect(dialog).to have_content("can't be blank")
+          end
+        end
+
+        context "when taxon with same name already belongs to a parent" do
+          it "shows error" do
+            visit "/admin/products/just-a-prod"
+            click_on "Add new category"
+            within(dialog) do
+              fill_in "Name", with: child_taxon.name
+              solidus_select "Apparel", from: "Parent Category"
+              click_on "Add Category"
+            end
+
+            expect(dialog).to have_content("must be unique under the same parent Taxon")
+          end
+        end
+      end
+    end
+  end
 end
