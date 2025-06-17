@@ -1,0 +1,39 @@
+<div class="grid grid-cols-5 gap-2 text-sm text-gray-700 items-center">
+  <div></div>
+  <div class="col-span-2 text-center font-semibold">Small</div>
+  <div class="col-span-2 text-center font-semibold">Medium</div>
+
+  <div></div>
+  <div class="text-center">Default</div>
+  <div class="text-center">Disabled</div>
+  <div class="text-center">Default</div>
+  <div class="text-center">Disabled</div>
+
+  <div class="font-semibold text-right">Off</div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "small-default", size: :s %>
+  </div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "small-disabled", size: :s, disabled: true %>
+  </div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "medium-default" %>
+  </div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "medium-disabled", disabled: true %>
+  </div>
+
+  <div class="font-semibold text-right">On</div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "small-default", size: :s, checked: true %>
+  </div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "small-disabled", size: :s, checked: true, disabled: true %>
+  </div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "medium-default", checked: true %>
+  </div>
+  <div class="place-self-center">
+    <%= render current_component.new name: "medium-disabled", checked: true, disabled: true %>
+  </div>
+</div>
