@@ -400,6 +400,10 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
       end
 
       it "successfully removes the coupon code from the order" do
+        # FIXME:
+        # If we call `order.recalcualte` the test will pass.
+        # But we think there are better ways to test this assertion, such as
+        # that the adjustments have changed.
         subject.remove
         expect(subject.error).to eq nil
         expect(subject.success).to eq "The coupon code was successfully removed from this order."
