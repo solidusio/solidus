@@ -31,8 +31,8 @@ module SolidusPromotions
         "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
     end
 
-    def discount(adjustable)
-      amount = compute_amount(adjustable)
+    def discount(adjustable, ...)
+      amount = compute_amount(adjustable, ...)
       return if amount.zero?
       ItemDiscount.new(
         item: adjustable,
@@ -43,8 +43,8 @@ module SolidusPromotions
     end
 
     # Ensure a negative amount which does not exceed the object's amount
-    def compute_amount(adjustable)
-      promotion_amount = calculator.compute(adjustable) || BigDecimal("0")
+    def compute_amount(adjustable, ...)
+      promotion_amount = calculator.compute(adjustable, ...) || BigDecimal(0)
       [adjustable.discountable_amount, promotion_amount.abs].min * -1
     end
 
