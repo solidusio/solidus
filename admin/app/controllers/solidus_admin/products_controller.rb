@@ -43,11 +43,7 @@ module SolidusAdmin
       @product = Spree::Product.friendly.find(params[:id])
 
       if @product.update(product_params)
-        flash[:success] = t('spree.successfully_updated', resource: [
-          Spree::Product.model_name.human,
-          @product.name.inspect,
-        ].join(' '))
-
+        flash[:success] = t('.success')
         redirect_to action: :show, status: :see_other
       else
         flash.now[:error] = @product.errors.full_messages.join(", ")

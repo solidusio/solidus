@@ -5,5 +5,7 @@ module Spree
     belongs_to :product, class_name: 'Spree::Product', inverse_of: :product_option_types, touch: true, optional: true
     belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :product_option_types, optional: true
     acts_as_list scope: :product
+
+    delegate :name, :presentation, :option_values, to: :option_type
   end
 end
