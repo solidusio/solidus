@@ -216,7 +216,7 @@ describe "Products", type: :feature do
         fill_in "product_sku", with: "B100"
         fill_in "product_price", with: "100"
         click_button "Create"
-        expect(page).to have_content("Shipping category can't be blank")
+        expect(page).to have_content("Shipping Category must exist")
       end
 
       context "using a locale with a different decimal format " do

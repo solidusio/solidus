@@ -31,7 +31,7 @@ module Spree
     has_many :taxons, through: :classifications, before_remove: :remove_taxon
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products, optional: true
+    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: true
 
     has_one :master,
@@ -122,7 +122,6 @@ module Spree
     validates :meta_title, length: { maximum: 255 }
     validates :name, presence: true
     validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
-    validates :shipping_category_id, presence: true
     validates :slug, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
 
     attr_accessor :option_values_hash

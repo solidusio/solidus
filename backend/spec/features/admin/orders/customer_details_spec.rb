@@ -164,7 +164,7 @@ describe "Customer Details", type: :feature, js: true do
     # Regression test for https://github.com/spree/spree/issues/942
     context "errors when no shipping methods are available" do
       before do
-        Spree::ShippingMethod.delete_all
+        Spree::ShippingMethod.update_all(available_to_all: false, available_to_users: false)
       end
 
       specify do
