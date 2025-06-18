@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Condition do
-  it { is_expected.to belong_to(:benefit).optional }
+  it { is_expected.to belong_to(:benefit) }
   let(:bad_test_condition_class) { Class.new(SolidusPromotions::Condition) }
   let(:test_condition_class) do
     Class.new(SolidusPromotions::Condition) do

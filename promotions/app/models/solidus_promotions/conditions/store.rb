@@ -5,9 +5,11 @@ module SolidusPromotions
     class Store < Condition
       include OrderLevelCondition
 
-      has_many :condition_stores, class_name: "SolidusPromotions::ConditionStore",
+      has_many :condition_stores,
+        class_name: "SolidusPromotions::ConditionStore",
         foreign_key: :condition_id,
-        dependent: :destroy
+        dependent: :destroy,
+        inverse_of: :condition
       has_many :stores, through: :condition_stores, class_name: "Spree::Store"
 
       def preload_relations

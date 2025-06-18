@@ -8,7 +8,8 @@ module SolidusPromotions
       has_many :condition_users,
         class_name: "SolidusPromotions::ConditionUser",
         foreign_key: :condition_id,
-        dependent: :destroy
+        dependent: :destroy,
+        inverse_of: :condition
       has_many :users, through: :condition_users, class_name: Spree::UserClassHandle.new
 
       def preload_relations
