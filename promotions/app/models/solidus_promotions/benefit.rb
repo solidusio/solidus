@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spree/preferences/persistable"
-
 module SolidusPromotions
   # Base class for all types of benefit.
   #

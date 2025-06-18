@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spree/preferences/persistable"
-
 module SolidusPromotions
   class Condition < Spree::Base
     include Spree::Preferences::Persistable

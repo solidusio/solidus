@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
-
 module Spree
   # Base class for all types of promotion action.
   #
