@@ -47,8 +47,6 @@ module SolidusPromotions
 
       def cast_to_d(value)
         value.to_s.to_d
-      rescue ArgumentError
-        Spree::ZERO
       end
 
       def preferred_tiers_content
