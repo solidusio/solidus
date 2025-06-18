@@ -115,7 +115,7 @@ RSpec.describe Spree.user_class, type: :model do
       end
       context "without orders" do
         it "returns 0.00" do
-          expect(subject.lifetime_value).to eq BigDecimal("0.00")
+          expect(subject.lifetime_value).to eq Spree::ZERO
         end
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe Spree.user_class, type: :model do
       end
       context "without orders" do
         it "returns 0.00" do
-          expect(subject.average_order_value).to eq BigDecimal("0.00")
+          expect(subject.average_order_value).to eq Spree::ZERO
         end
       end
     end

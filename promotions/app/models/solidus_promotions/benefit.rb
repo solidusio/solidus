@@ -44,7 +44,7 @@ module SolidusPromotions
 
     # Ensure a negative amount which does not exceed the object's amount
     def compute_amount(adjustable)
-      promotion_amount = calculator.compute(adjustable) || BigDecimal("0")
+      promotion_amount = calculator.compute(adjustable) || Spree::ZERO
       [adjustable.discountable_amount, promotion_amount.abs].min * -1
     end
 

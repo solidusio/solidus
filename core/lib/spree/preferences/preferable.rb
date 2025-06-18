@@ -163,7 +163,7 @@ module Spree
           begin
             value.to_s.to_d
           rescue ArgumentError
-            BigDecimal(0)
+            Spree::ZERO
           end
         when :integer
           value.to_i

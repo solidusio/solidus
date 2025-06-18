@@ -37,7 +37,7 @@ module Spree
           order = adjustable.is_a?(Order) ? adjustable : adjustable.order
           return 0 unless promotion.line_item_actionable?(order, adjustable)
           promotion_amount = calculator.compute(adjustable)
-          promotion_amount ||= BigDecimal(0)
+          promotion_amount ||= Spree::ZERO
           promotion_amount = promotion_amount.abs
           [adjustable.amount, promotion_amount].min * -1
         end

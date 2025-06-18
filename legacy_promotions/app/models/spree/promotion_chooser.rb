@@ -18,7 +18,7 @@ module Spree
         end
         best_promotion_adjustment.amount
       else
-        BigDecimal('0')
+        Spree::ZERO
       end
     end
 
