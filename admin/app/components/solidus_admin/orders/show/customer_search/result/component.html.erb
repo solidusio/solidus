@@ -1,10 +1,10 @@
 <%= render component('ui/forms/search/result').new do %>
   <% if @customer %>
-    <%= form_for(@order, url: solidus_admin.order_path(@order), html: {
+    <%= solidus_form_for(@order, url: solidus_admin.order_path(@order), html: {
       "data-controller": "readonly-when-submitting",
       class: "flex items-center",
     }) do |f| %>
-      <%= hidden_field_tag("#{f.object_name}[user_id]", @customer.id) %>
+      <%= f.hidden_field(:user_id, value: @customer.id) %>
       <button type="submit" class="flex gap-2 grow items-center">
         <%= render component("ui/icon").new(name: "user-line", class: 'w-5 h-5 m-2') %>
         <div  class="flex-col text-left">

@@ -1,8 +1,8 @@
 <div class="<%= stimulus_id %>">
   <%= turbo_frame_tag "edit_order_email_modal" do %>
     <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
-      <%= form_for @order, url: solidus_admin.order_path(@order), html: { id: form_id } do |f| %>
-        <%= render component("ui/forms/field").text_field(f, :email) %>
+      <%= solidus_form_for @order, url: solidus_admin.order_path(@order), html: { id: form_id } do |f| %>
+        <%= f.text_field(:email) %>
         <label class="font-normal text-sm mt-4 block">
           <%= t('.guest_checkout') %>:
           <output class="font-semibold text-sm"><%= @order.user ? t('.no') : t('.yes') %></output>
