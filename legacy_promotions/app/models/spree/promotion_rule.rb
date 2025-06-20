@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
-
 module Spree
   # Base class for all promotion rules
   class PromotionRule < Spree::Base

@@ -103,6 +103,7 @@ require 'spree/migration_helpers'
 require 'spree/bus'
 require 'spree/config'
 require 'spree/core/engine'
+require 'spree/zero'
 
 require 'spree/i18n'
 require 'spree/localized_number'

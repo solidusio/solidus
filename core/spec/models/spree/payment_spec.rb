@@ -1146,7 +1146,7 @@ RSpec.describe Spree::Payment, type: :model do
         # this is a strange default for ActiveRecord
 
         it '#amount' do
-          expect(subject.amount).to eql(BigDecimal('0'))
+          expect(subject.amount).to eql(Spree::ZERO)
         end
       end
 

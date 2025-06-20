@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
-
 module Spree
   class Calculator < Spree::Base
     include Spree::Preferences::Persistable

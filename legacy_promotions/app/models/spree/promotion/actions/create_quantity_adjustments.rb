@@ -57,7 +57,7 @@ module Spree
         #
         def compute_amount(line_item)
           adjustment_amount = calculator.compute(PartialLineItem.new(line_item))
-          adjustment_amount ||= BigDecimal(0)
+          adjustment_amount ||= Spree::ZERO
           adjustment_amount = adjustment_amount.abs
 
           order = line_item.order
