@@ -7,7 +7,10 @@ module SolidusPromotions
     def initialize(order, dry_run_promotion: nil)
       @order = order
       @dry_run = !!dry_run_promotion
-      @promotions = LoadPromotions.new(order: order, dry_run_promotion: dry_run_promotion).call
+      @promotions = SolidusPromotions::LoadPromotions.new(
+        order: order,
+        dry_run_promotion: dry_run_promotion
+      ).call
     end
 
     def call
