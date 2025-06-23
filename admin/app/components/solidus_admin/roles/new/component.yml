@@ -3,7 +3,6 @@
 en:
   title: "New Role"
   cancel: "Cancel"
-  submit: "Add Role"
   edit: "Edit"
   view: "View"
   name_placeholder: "Enter a clear role name"

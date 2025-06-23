@@ -33,7 +33,7 @@
             <%= f.checkbox_row(:spree_role_ids, options: role_options, row_title: "Roles", layout: :subsection) %>
           </div>
           <div class="py-1.5 text-center">
-            <%= f.submit(t(".update")) %>
+            <%= f.submit(text: t(".update")) %>
             <%= render component("ui/button").new(tag: :a, text: t(".cancel"), href: solidus_admin.user_path(@user), scheme: :secondary) %>
           </div>
         <% end %>

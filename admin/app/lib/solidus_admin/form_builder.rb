@@ -44,7 +44,7 @@ class SolidusAdmin::FormBuilder < ActionView::Helpers::FormBuilder
     render component("ui/forms/switch_field").new(label:, name:, error:, checked:, **options)
   end
 
-  def submit(text, **options)
-    render component("ui/button").new(type: :submit, text:, form: id, **options)
+  def submit(**options)
+    render component("ui/button").submit(resource: @object, form: id, **options)
   end
 end

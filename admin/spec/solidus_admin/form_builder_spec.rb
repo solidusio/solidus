@@ -98,11 +98,16 @@ RSpec.describe SolidusAdmin::FormBuilder do
 
   describe "#submit" do
     it "renders submit button" do
-      result = builder.submit("Save")
+      result = builder.submit
       expect(result).to include("<button")
       expect(result).to include("type=\"submit\"")
       expect(result).to include("form=\"_form\"")
-      expect(result).to include("Save")
+    end
+
+    context "when custom text passed" do
+      it "renders custom text" do
+        expect(builder.submit(text: "Submit")).to include("Submit")
+      end
     end
   end
 end

@@ -3,6 +3,5 @@
 en:
   title: "New Tax Category"
   cancel: "Cancel"
-  submit: "Add Tax Category"
   hints:
     is_default: "When checked, this tax category will be selected by default when creating new products or variants."

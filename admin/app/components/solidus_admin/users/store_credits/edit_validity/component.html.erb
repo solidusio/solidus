@@ -13,7 +13,7 @@
         <form method="dialog">
           <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
         </form>
-        <%= f.submit(t('.submit'), scheme: :danger) %>
+        <%= f.submit(text: t('.submit'), scheme: :danger) %>
       <% end %>
     <% end %>
   <% end %>
