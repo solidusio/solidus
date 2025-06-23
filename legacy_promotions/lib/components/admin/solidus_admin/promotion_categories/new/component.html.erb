@@ -1,15 +1,15 @@
 <%= turbo_frame_tag :resource_form, target: "_top" do %>
   <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
-    <%= form_for @promotion_category, url: form_url, html: { id: form_id } do |f| %>
+    <%= solidus_form_for @promotion_category, url: form_url, html: { id: form_id } do |f| %>
       <div class="flex flex-col gap-6 pb-4">
-        <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
-        <%= render component("ui/forms/field").text_field(f, :code, class: "required") %>
+        <%= f.text_field(:name, class: "required") %>
+        <%= f.text_field(:code, class: "required") %>
       </div>
       <% modal.with_actions do %>
         <form method="dialog">
           <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
         </form>
-        <%= render component("ui/button").new(form: form_id, type: :submit, text: t('.submit')) %>
+        <%= f.submit(t('.submit')) %>
       <% end %>
     <% end %>
   <% end %>
