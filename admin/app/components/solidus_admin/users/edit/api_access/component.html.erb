@@ -16,8 +16,9 @@
             text: t('.clear_key'),
             scheme: :secondary,
             type: :submit,
-            "data-action": "click->#{stimulus_id}#confirm",
-            "data-#{stimulus_id}-message-param": t(".confirm_clear_key"),
+            "data-turbo-confirm": t(".confirm.title"),
+            "data-confirm-details": t(".confirm.clear.details"),
+            "data-confirm-button": t(".confirm.clear.button"),
           ) %>
         <% end %>
 
@@ -26,8 +27,9 @@
             text: t('.regenerate_key'),
             scheme: :secondary,
             type: :submit,
-            "data-action": "click->#{stimulus_id}#confirm",
-            "data-#{stimulus_id}-message-param": t(".confirm_regenerate_key"),
+            "data-turbo-confirm": t(".confirm.title"),
+            "data-confirm-details": t(".confirm.regenerate.details"),
+            "data-confirm-button": t(".confirm.regenerate.button")
           ) %>
         <% end %>
       </div>

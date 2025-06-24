@@ -6,5 +6,11 @@ en:
   clear_key: Clear key
   regenerate_key: Regenerate key
   hidden: Hidden
-  confirm_clear_key: Are you sure you want to clear this user's API key? It will invalidate the existing key.
-  confirm_regenerate_key: Are you sure you want to regenerate this user's API key? It will invalidate the existing key.
+  confirm:
+    title: Are you sure?
+    clear:
+      details: Are you sure you want to clear this user's API key? It will invalidate the existing key.
+      button: Clear
+    regenerate:
+      details: Are you sure you want to regenerate this user's API key? It will invalidate the existing key.
+      button: Regenerate
