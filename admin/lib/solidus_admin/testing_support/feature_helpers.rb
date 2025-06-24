@@ -77,6 +77,12 @@ module SolidusAdmin
       def solidus_select_control(field)
         find_field(field, visible: :all).ancestor(".control")
       end
+
+      def accept_turbo_confirm(title)
+        yield
+        dialog = find("dialog", text: title)
+        within(dialog) { find_button(id: "confirm-accept").click }
+      end
     end
   end
 end
