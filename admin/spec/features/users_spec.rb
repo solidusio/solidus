@@ -82,11 +82,11 @@ describe "Users", :js, type: :feature do
       expect(page).to have_content("Key generated")
       expect(page).to have_content("(hidden)")
 
-      click_on "Regenerate key"
+      accept_turbo_confirm("Are you sure?") { click_on "Regenerate key" }
       expect(page).to have_content("Key generated")
       expect(page).to have_content("(hidden)")
 
-      click_on "Clear key"
+      accept_turbo_confirm("Are you sure?") { click_on "Clear key" }
       expect(page).to have_content("Key cleared")
       expect(page).to have_content("No key")
 
