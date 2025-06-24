@@ -1,0 +1,12 @@
+<%= render component("ui/modal").new(
+  title: t(".title"),
+  open: false,
+  id: "confirm"
+) do |modal| %>
+  <% modal.with_actions do %>
+    <form method="dialog">
+      <%= render component("ui/button").new(scheme: :secondary, text: t(".cancel"), class: "confirm-cancel") %>
+    </form>
+    <%= render component("ui/button").new(text: t(".confirm"), id: "confirm-accept", scheme: :danger) %>
+  <% end %>
+<% end %>
