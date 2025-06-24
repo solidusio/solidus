@@ -1,0 +1,18 @@
+<section>
+  <div class="mb-8 text-lg">
+    <form>
+      <%= render component("ui/button").new(
+        type: :submit,
+        scheme: :secondary,
+        text: "Summon confirmation modal",
+        data: {
+          "turbo-confirm": title,
+          "confirm-details": body,
+          "confirm-button": button
+        }
+      ) %>
+    </form>
+  </div>
+
+  <%= render current_component.new %>
+</section>
