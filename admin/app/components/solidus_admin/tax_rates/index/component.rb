@@ -13,7 +13,7 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
     solidus_admin.tax_rates_path
   end
 
-  def actions
+  def page_actions
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
