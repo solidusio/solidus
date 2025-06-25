@@ -1,6 +1,7 @@
 import TC from "@rolemodel/turbo-confirm"
 
 TC.start({
+  animationDuration: 0,
   messageSlotSelector: ".modal-title",
   contentSlots: {
     body: {
