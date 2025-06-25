@@ -4,9 +4,11 @@ module Spree
   class Promotion
     module Rules
       class Store < PromotionRule
-        has_many :promotion_rule_stores, class_name: "Spree::PromotionRuleStore",
-                                         foreign_key: :promotion_rule_id,
-                                         dependent: :destroy
+        has_many :promotion_rule_stores,
+          class_name: "Spree::PromotionRuleStore",
+          foreign_key: :promotion_rule_id,
+          dependent: :destroy,
+          inverse_of: :promotion_rule
         has_many :stores, through: :promotion_rule_stores, class_name: "Spree::Store"
 
         def preload_relations
