@@ -160,11 +160,7 @@ module Spree
         when :password
           value.to_s
         when :decimal
-          begin
-            value.to_s.to_d
-          rescue ArgumentError
-            BigDecimal(0)
-          end
+          value.to_s.to_d
         when :integer
           value.to_i
         when :boolean

@@ -43,7 +43,7 @@ module Spree
         # item_total and ship_total
         def compute_amount(calculable)
           amount = calculator.compute(calculable)
-          amount ||= BigDecimal(0)
+          amount ||= Spree::ZERO
           amount = amount.abs
           [(calculable.item_total + calculable.ship_total), amount].min * -1
         end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/persistable'
 require 'spree/preferences/statically_configurable'
 
 module Spree

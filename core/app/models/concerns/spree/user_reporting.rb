@@ -17,7 +17,7 @@ module Spree
       if order_count.to_i > 0
         lifetime_value / order_count
       else
-        BigDecimal("0.00")
+        Spree::ZERO
       end
     end
   end

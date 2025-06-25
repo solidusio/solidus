@@ -53,7 +53,7 @@ module SolidusPromotions
       #
       def compute_amount(line_item)
         adjustment_amount = calculator.compute(Item.new(line_item))
-        return BigDecimal("0") if adjustment_amount.nil? || adjustment_amount.zero?
+        return Spree::ZERO if adjustment_amount.nil? || adjustment_amount.zero?
 
         adjustment_amount = adjustment_amount.abs
 
