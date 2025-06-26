@@ -6,6 +6,10 @@ module SolidusAdmin
 
     def resource_class = Spree::TaxRate
 
+    def resources_collection
+      resource_class.includes(:zone, :tax_categories, :calculator)
+    end
+
     def resources_sorting_options = { created_at: :desc, id: :desc }
 
     def permitted_resource_params
