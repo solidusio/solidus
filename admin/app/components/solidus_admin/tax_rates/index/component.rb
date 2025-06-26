@@ -59,16 +59,27 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
     [
       {
         header: :zone,
-        data: -> { _1.zone&.name },
+        data: ->(tax_rate) do
+          link_to tax_rate.zone.name, row_url(tax_rate), class: 'body-link' if tax_rate.zone.present?
+        end
       },
-      :name,
+      {
+        header: :name,
+        data: ->(tax_rate) do
+          link_to tax_rate.name, row_url(tax_rate), class: 'body-link'
+        end
+      },
       {
         header: :tax_categories,
-        data: -> { _1.tax_categories.map(&:name).join(', ') },
+        data: ->(tax_rate) do
+          link_to tax_rate.tax_categories.map(&:name).join(', '), row_url(tax_rate), class: 'body-link'
+        end
       },
       {
         header: :amount,
-        data: -> { _1.display_amount },
+        data: ->(tax_rate) do
+          link_to tax_rate.display_amount, row_url(tax_rate), class: 'body-link'
+        end
       },
       {
         header: :included_in_price,
@@ -78,10 +89,17 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
         header: :show_rate_in_label,
         data: -> { _1.show_rate_in_label? ? component('ui/badge').yes : component('ui/badge').no },
       },
-      :expires_at,
+      {
+        header: :expires_at,
+        data: ->(tax_rate) do
+          link_to tax_rate.expires_at.to_date, row_url(tax_rate), class: 'body-link' if tax_rate.expires_at
+        end
+      },
       {
         header: Spree::Calculator.model_name.human,
-        data: -> { _1.calculator&.class&.model_name&.human }
+        data: ->(tax_rate) do
+          link_to tax_rate.calculator&.class&.model_name&.human, row_url(tax_rate), class: 'body-link'
+        end
       },
     ]
   end
