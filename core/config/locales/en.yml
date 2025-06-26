@@ -394,12 +394,15 @@ en:
         tax_code: Tax Code
       spree/tax_rate:
         amount: Rate
+        calculator_type: Calculator
         expires_at: Expiration Date
         included_in_price: Included in Price
+        level: Tax Rate Level
         name: Name
         show_rate_in_label: Show Rate in Label
         starts_at: Start Date
         tax_categories: Tax Categories
+        tax_category_ids: Tax Categories
       spree/taxon:
         description: Description
         icon: Icon
