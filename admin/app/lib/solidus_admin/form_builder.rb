@@ -18,7 +18,7 @@ class SolidusAdmin::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def checkbox(method, checked: nil, **options, &block)
-    checked = checked.nil? ? @object.public_send(method) : checked
+    checked = @object.public_send(method) if checked.nil?
     component_instance = component("ui/forms/checkbox").new(object_name: @object_name, checked:, method:, **options)
     render component_instance, &block
   end
