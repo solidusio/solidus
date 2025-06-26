@@ -37,7 +37,8 @@ class SolidusAdmin::FormBuilder < ActionView::Helpers::FormBuilder
     input(method, type: :hidden, autocomplete: "off", **options)
   end
 
-  def switch_field(method, label:, **options)
+  def switch_field(method, label: nil, **options)
+    label = @object.class.human_attribute_name(method) if label.nil?
     name = "#{@object_name}[#{method}]"
     error = @object.errors[method]
     checked = @object.public_send(method)

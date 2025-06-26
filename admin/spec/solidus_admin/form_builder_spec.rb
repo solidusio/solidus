@@ -89,10 +89,18 @@ RSpec.describe SolidusAdmin::FormBuilder do
       object.promotionable = false
       object.errors.add(:promotionable, :invalid, message: "cannot be on")
       result = builder.switch_field(:promotionable, label: "Promotionable")
+      expect(result).to include("Promotionable")
       expect(result).to include("<input")
       expect(result).to include("type=\"checkbox\"")
       expect(result).not_to include("checked=\"checked\"")
       expect(result).to include("cannot be on")
+    end
+
+    context "with default label" do
+      it "renders label with default name for field" do
+        result = builder.switch_field(:promotionable)
+        expect(result).to include("Promotable")
+      end
     end
   end
 
