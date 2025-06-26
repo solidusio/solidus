@@ -6,3 +6,5 @@ en:
         success: "Tax rate was successfully created."
       destroy:
         success: "Tax rates were successfully removed."
+      update:
+        success: "Tax rate was successfully updated."

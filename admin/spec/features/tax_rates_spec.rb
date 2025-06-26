@@ -70,4 +70,48 @@ describe "Tax rates", :js, type: :feature do
       end
     end
   end
+
+  context "updating tax rate" do
+    before do
+      create(:tax_rate,
+        name: "Clothing",
+        zone: create(:zone, name: "US"),
+        tax_categories: [create(:tax_category, name: "Default")],
+        amount: 0.3)
+      create(:zone, name: "EU")
+      create(:tax_category, name: "Specific")
+    end
+
+    it "updates tax rate" do
+      visit "/admin/tax_rates"
+      click_on "Clothing"
+
+      fill_in "Name", with: "Food"
+      solidus_select "EU", from: "Zone"
+      solidus_select "Specific", from: "Tax Categories"
+      fill_in "Rate", with: "0.18"
+
+      within("header") { click_on "Save" }
+
+      expect(page).to have_content("Tax rate was successfully updated.")
+      expect(page).to have_content("EU")
+      expect(page).to have_content("Food")
+      expect(page).to have_content("Default, Specific")
+      expect(page).to have_content("18.0%")
+    end
+
+    context "with invalid attributes" do
+      it "shows validation errors" do
+        visit "/admin/tax_rates"
+        click_on "Clothing"
+
+        fill_in "Rate", with: ""
+
+        within("header") { click_on "Save" }
+
+        expect(page).to have_content("can't be blank")
+        expect(page).to have_content("is not a number")
+      end
+    end
+  end
 end
