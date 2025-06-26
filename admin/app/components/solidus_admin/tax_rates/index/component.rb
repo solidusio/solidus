@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
-  def row_url(tax_rate)
-    spree.edit_admin_tax_rate_path(tax_rate)
+  def edit_path(tax_rate)
+    solidus_admin.edit_tax_rate_path(tax_rate)
   end
 
   def model_class
@@ -17,7 +17,7 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_tax_rate_path,
+      href: solidus_admin.new_tax_rate_path,
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -60,25 +60,25 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
       {
         header: :zone,
         data: ->(tax_rate) do
-          link_to tax_rate.zone.name, row_url(tax_rate), class: 'body-link' if tax_rate.zone.present?
+          link_to tax_rate.zone.name, edit_path(tax_rate), class: 'body-link' if tax_rate.zone.present?
         end
       },
       {
         header: :name,
         data: ->(tax_rate) do
-          link_to tax_rate.name, row_url(tax_rate), class: 'body-link'
+          link_to tax_rate.name, edit_path(tax_rate), class: 'body-link'
         end
       },
       {
         header: :tax_categories,
         data: ->(tax_rate) do
-          link_to tax_rate.tax_categories.map(&:name).join(', '), row_url(tax_rate), class: 'body-link'
+          link_to tax_rate.tax_categories.map(&:name).join(', '), edit_path(tax_rate), class: 'body-link'
         end
       },
       {
         header: :amount,
         data: ->(tax_rate) do
-          link_to tax_rate.display_amount, row_url(tax_rate), class: 'body-link'
+          link_to tax_rate.display_amount, edit_path(tax_rate), class: 'body-link'
         end
       },
       {
@@ -92,13 +92,13 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
       {
         header: :expires_at,
         data: ->(tax_rate) do
-          link_to tax_rate.expires_at.to_date, row_url(tax_rate), class: 'body-link' if tax_rate.expires_at
+          link_to tax_rate.expires_at.to_date, edit_path(tax_rate), class: 'body-link' if tax_rate.expires_at
         end
       },
       {
         header: Spree::Calculator.model_name.human,
         data: ->(tax_rate) do
-          link_to tax_rate.calculator&.class&.model_name&.human, row_url(tax_rate), class: 'body-link'
+          link_to tax_rate.calculator&.class&.model_name&.human, edit_path(tax_rate), class: 'body-link'
         end
       },
     ]
