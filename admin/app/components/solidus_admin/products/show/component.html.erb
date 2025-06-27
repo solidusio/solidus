@@ -143,8 +143,7 @@
           tag: :button,
           text: t(".delete"),
           scheme: :danger,
-          "data-action": "click->#{stimulus_id}#confirmDelete",
-          "data-#{stimulus_id}-message-param": t(".delete_confirmation"),
+          "data-turbo-confirm": t(".delete_confirmation")
         ) %>
       <% end %>
     <% end %>

@@ -36,5 +36,7 @@
         <%= render component("ui/toast").new(text: message, scheme: key.to_sym == :error ? :error : :default) %>
       <% end %>
     </div>
+
+    <%= render component("layout/confirm").new %>
   </body>
 </html>

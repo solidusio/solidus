@@ -30,7 +30,7 @@ describe "Products", type: :feature do
     visit "/admin/products"
     select_row("Just a product")
 
-    accept_confirm("Are you sure you want to delete 1 product?") do
+    accept_turbo_confirm("Are you sure you want to delete 1 product?") do
       click_button("Delete", wait: 5)
     end
 
@@ -48,7 +48,7 @@ describe "Products", type: :feature do
     visit "/admin/products"
     find('main tbody tr:nth-child(2)').find('input').check
 
-    accept_confirm("Are you sure you want to discontinue 1 product?") do
+    accept_turbo_confirm("Are you sure you want to discontinue 1 product?") do
       click_button "Discontinue"
     end
 
@@ -66,7 +66,7 @@ describe "Products", type: :feature do
 
     find('main tbody tr:nth-child(2)').find('input').check
 
-    accept_confirm("Are you sure you want to activate 1 product?") do
+    accept_turbo_confirm("Are you sure you want to activate 1 product?") do
       click_button "Activate"
     end
 
