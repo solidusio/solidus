@@ -1,5 +1,9 @@
 en:
+  back: "Back"
   cancel: "Cancel"
+  delete: "Delete"
+  discard: "Discard"
+  save: "Save"
   submit:
     create: "Add %{resource_name}"
     update: "Update %{resource_name}"
