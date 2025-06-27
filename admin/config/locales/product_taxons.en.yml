@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    product_taxons:
+      title: "Categories"
+      create:
+        success: "Product category was successfully added."

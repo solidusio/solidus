@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe "SolidusAdmin::PropertiesController", type: :request do
+RSpec.describe "SolidusAdmin::ProductsController", type: :request do
   let(:admin_user) { create(:admin_user) }
 
   before do
