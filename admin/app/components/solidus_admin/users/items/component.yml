@@ -4,7 +4,6 @@ en:
   items_purchased: Items Purchased
   no_orders_found: No Orders found.
   create_one: Create One
-  back: Back
   number_column_header: "Order #"
   description_column_header: "Description"
   total_column_header: "Total"

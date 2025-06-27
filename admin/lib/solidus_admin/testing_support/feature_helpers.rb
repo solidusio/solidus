@@ -61,6 +61,10 @@ module SolidusAdmin
           find('button[aria-label="Clear"]').click
         end
       end
+
+      def solidus_select_control(field)
+        find_field(field, visible: :all).ancestor(".control")
+      end
     end
   end
 end

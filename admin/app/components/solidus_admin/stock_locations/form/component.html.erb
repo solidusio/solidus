@@ -1,0 +1,65 @@
+<%= form_for @stock_location, url: @url, html: { id: @id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <div class="flex gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
+            <%= render component("ui/forms/field").text_field(f, :admin_name) %>
+          </div>
+          <%= render component("ui/forms/field").text_field(f, :code) %>
+        <% end %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.address')) do %>
+        <%= render component('ui/forms/address').new(addressable: @stock_location, form_field_name: 'stock_location', fieldset: :location, excludes: %i[phone email]) %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.contact_info')) do %>
+        <%= render component('ui/forms/address').new(addressable: @stock_location, form_field_name: 'stock_location', fieldset: :contact_info) %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component('ui/panel').new(title: t('.availability')) do %>
+        <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :active, checked: f.object.active) do |checkbox| %>
+          <%= checkbox.with_label(text: t(".active")) %>
+          <%= checkbox.with_hint(text: t(".hints.active")) %>
+        <% end %>
+      <% end %>
+
+      <%= render component('ui/panel').new(title: t('.setup')) do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :default, checked: f.object.default) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".default")) %>
+          <% end %>
+
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :backorderable_default, checked: f.object.backorderable_default) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".backorderable_default")) %>
+            <%= checkbox.with_hint(text: t(".hints.backorderable_default")) %>
+          <% end %>
+
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :propagate_all_variants, checked: f.object.propagate_all_variants) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".propagate_all_variants")) %>
+            <%= checkbox.with_hint(text: t(".hints.propagate_all_variants")) %>
+          <% end %>
+
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :restock_inventory, checked: f.object.restock_inventory) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".restock_inventory")) %>
+            <%= checkbox.with_hint(text: t(".hints.restock_inventory")) %>
+          <% end %>
+
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :fulfillable, checked: f.object.fulfillable) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".fulfillable")) %>
+            <%= checkbox.with_hint(text: t(".hints.fulfillable")) %>
+          <% end %>
+
+          <%= render component("ui/forms/checkbox").new(object_name: f.object_name, method: :check_stock_on_transfer, checked: f.object.check_stock_on_transfer) do |checkbox| %>
+            <%= checkbox.with_label(text: t(".check_stock_on_transfer")) %>
+            <%= checkbox.with_hint(text: t(".hints.check_stock_on_transfer")) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
