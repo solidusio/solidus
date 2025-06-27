@@ -1,25 +1,21 @@
 <%= turbo_frame_tag :resource_modal, target: "_top" do %>
   <%= render component("ui/modal").new(title:) do |modal| %>
-    <%= form_for @zone, url: @form_url, html: { id: @form_id, **stimulus_controller, **stimulus_value(name: :kind, value: @zone.kind) } do |f| %>
+    <%= solidus_form_for @zone, url: @form_url, html: { id: @form_id, **stimulus_controller, **stimulus_value(name: :kind, value: @zone.kind) } do |f| %>
       <div class="flex flex-col gap-6 pb-4">
-        <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
+        <%= f.text_field(:name, class: "required") %>
         <div class="hidden" <%= tag.attributes(stimulus_target("countriesWrapper")) %>>
-          <%= render component("ui/forms/field").select(
-            f,
+          <%= f.select(
             :country_ids,
             Spree::Country.order(:name).map { |c| [c.name, c.id] },
-            object: @zone,
             multiple: true,
             class: "required",
             **stimulus_target("countriesSelect")
           ) %>
         </div>
         <div class="hidden" <%= tag.attributes(stimulus_target("statesWrapper")) %>>
-          <%= render component("ui/forms/field").select(
-            f,
+          <%= f.select(
             :state_ids,
             Spree::State.where(id: @zone.state_ids).map { |s| [s.state_with_country, s.id] },
-            object: @zone,
             multiple: true,
             class: "required",
             src: solidus_admin.states_url(view: :state_with_country),
@@ -27,12 +23,10 @@
             **stimulus_target("statesSelect")
           ) %>
         </div>
-        <%= render component("ui/forms/field").text_field(f, :description, class: "required") %>
-        <%= render component("ui/forms/field").select(
-          f,
+        <%= f.text_field(:description, class: "required") %>
+        <%= f.select(
           :kind,
           [[t(".kinds.country"), :country], [t(".kinds.state"), :state]],
-          object: @zone,
           value: @zone.kind || :state,
           **stimulus_action("toggleKind", on: "change")
         ) %>
