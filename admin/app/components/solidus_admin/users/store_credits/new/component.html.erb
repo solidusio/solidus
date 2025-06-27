@@ -6,15 +6,16 @@
         <%= render component("ui/forms/field").select(
           f,
           :currency,
-          currency_select_options.html_safe,
-          include_blank: t("spree.currency"),
+          Spree::Config.available_currencies.map { [_1.iso_code, _1.iso_code] },
+          placeholder: t("spree.currency"),
+          value: Spree::Config.currency,
           html: { required: true }
         ) %>
         <%= render component("ui/forms/field").select(
           f,
           :category_id,
-          store_credit_categories_select_options.html_safe,
-          include_blank: t("spree.category"),
+          @store_credit_categories.map { [_1.name, _1.id] },
+          include_blank: t(".choose_category"),
           html: { required: true }
         ) %>
         <%= render component("ui/forms/field").text_field(f, :memo) %>
