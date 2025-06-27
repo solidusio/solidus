@@ -19,6 +19,7 @@ module SolidusAdmin
 
     helper 'solidus_admin/components'
     helper 'solidus_admin/layout'
+    helper 'solidus_admin/flash'
 
     private
 
