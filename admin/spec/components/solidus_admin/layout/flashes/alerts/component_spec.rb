@@ -7,7 +7,7 @@ RSpec.describe SolidusAdmin::Layout::Flashes::Alerts::Component, type: :componen
 
   context "when alerts passed as Hash" do
     let(:alerts) do
-      { warning: { title: "Be careful", description: "Something fishy going on" } }
+      { warning: { title: "Be careful", message: "Something fishy going on" } }
     end
 
     it "renders correctly" do
@@ -36,8 +36,8 @@ RSpec.describe SolidusAdmin::Layout::Flashes::Alerts::Component, type: :componen
   describe "multiple alerts" do
     let(:alerts) do
       {
-        warning: { title: "Be careful", description: "Something fishy going on" },
-        success: { title: "It worked", description: "Nothing to worry about!" }
+        warning: { title: "Be careful", message: "Something fishy going on" },
+        success: { title: "It worked", message: "Nothing to worry about!" }
       }
     end
 

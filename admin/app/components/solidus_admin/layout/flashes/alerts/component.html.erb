@@ -1,7 +1,7 @@
 <div id="flash_alerts" class="flex items-center justify-center">
   <div class="fixed w-2/3 top-3 flex flex-col gap-3 pointer-events-none" role="alert">
     <% alerts.each do |key, text| %>
-      <%= render component("ui/alert").new(title: text[:title], description: text[:description], scheme: key.to_sym) %>
+      <%= render component("ui/alert").new(title: text[:title], message: text[:message], scheme: key.to_sym) %>
     <% end %>
   </div>
 </div>

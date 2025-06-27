@@ -8,9 +8,9 @@ RSpec.describe SolidusAdmin::UI::Alert::Component, type: :component do
   end
 
   describe "defaults" do
-    let(:component) { described_class.new(title:, description:, scheme:) }
+    let(:component) { described_class.new(title:, message:, scheme:) }
     let(:title) { "Title" }
-    let(:description) { "Description" }
+    let(:message) { "Message" }
     let(:scheme) { :success }
 
     context "when title is not present" do
