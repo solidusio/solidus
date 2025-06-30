@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  class PaymentMethodsController < SolidusAdmin::BaseController
-    include SolidusAdmin::ControllerHelpers::Search
+  class PaymentMethodsController < SolidusAdmin::ResourcesController
     include SolidusAdmin::Moveable
 
     search_scope(:all)
@@ -11,26 +10,17 @@ module SolidusAdmin
     search_scope(:storefront, &:available_to_users)
     search_scope(:admin, &:available_to_admin)
 
-    def index
-      payment_methods = apply_search_to(
-        Spree::PaymentMethod.ordered_by_position,
-        param: :q,
-      )
+    private
 
-      set_page_and_extract_portion_from(payment_methods)
+    def resource_class = Spree::PaymentMethod
 
-      respond_to do |format|
-        format.html { render component('payment_methods/index').new(page: @page) }
-      end
-    end
+    def resources_collection = resource_class.all
 
-    def destroy
-      @payment_methods = Spree::PaymentMethod.where(id: params[:id])
+    def resources_sorting_options = { position: :asc }
 
-      Spree::PaymentMethod.transaction { @payment_methods.destroy_all }
-
-      flash[:notice] = t('.success')
-      redirect_back_or_to payment_methods_path, status: :see_other
+    def permitted_resource_params
+      params.require(:payment_method).permit(:name, :description, :auto_capture, :type, :preference_source,
+        :preferred_server, :preferred_test_mode, :active, :available_to_admin, :available_to_users, store_ids: [])
     end
   end
 end
