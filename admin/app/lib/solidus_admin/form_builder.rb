@@ -17,10 +17,17 @@ class SolidusAdmin::FormBuilder < ActionView::Helpers::FormBuilder
     render component("ui/forms/field").select(self, method, choices, **options)
   end
 
-  def checkbox(method, checked: nil, **options, &block)
+  def checkbox(method, label: nil, checked: nil, hint: nil, **options)
+    label = @object.class.human_attribute_name(method) if label.nil?
+    label_options = options.delete(:label_options) || {}
     checked = @object.public_send(method) if checked.nil?
+    hint_options = options.delete(:hint_options) || {}
+
     component_instance = component("ui/forms/checkbox").new(object_name: @object_name, checked:, method:, **options)
-    render component_instance, &block
+    render component_instance do |checkbox|
+      checkbox.with_label(text: label, **label_options)
+      checkbox.with_hint(text: hint, **hint_options) if hint
+    end
   end
 
   def checkbox_row(method, options:, row_title:, **attrs)
