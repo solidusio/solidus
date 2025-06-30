@@ -40,6 +40,7 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
         action: solidus_admin.payment_methods_path,
         method: :delete,
         icon: 'delete-bin-7-line',
+        require_confirmation: true
       },
     ]
   end
