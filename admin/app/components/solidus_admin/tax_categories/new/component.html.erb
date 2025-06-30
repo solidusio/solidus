@@ -5,10 +5,7 @@
         <%= f.text_field(:name) %>
         <%= f.text_field(:tax_code) %>
         <%= f.text_field(:description) %>
-        <%= f.checkbox(:is_default) do |checkbox| %>
-          <%= checkbox.with_label(text: Spree::TaxCategory.human_attribute_name(:is_default), weight: :semibold, size: :xs, classes: 'ml-2') %>
-          <%= checkbox.with_hint(text: t(".hints.is_default")) %>
-        <% end %>
+        <%= f.checkbox(:is_default, hint: t(".hints.is_default")) %>
       </div>
       <% modal.with_actions do %>
         <form method="dialog">

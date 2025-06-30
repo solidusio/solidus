@@ -4,10 +4,7 @@
       <div class="flex flex-col gap-6 pb-4">
         <%= f.text_field(:name, class: "required") %>
         <%= f.text_field(:code, class: "required") %>
-        <%= f.checkbox(:active) do |checkbox| %>
-          <%= checkbox.with_label(text: Spree::AdjustmentReason.human_attribute_name(:active), weight: :semibold, size: :xs, classes: 'ml-2') %>
-          <%= checkbox.with_hint(text: t(".hints.active")) %>
-        <% end %>
+        <%= f.checkbox(:active, hint: t(".hints.active")) %>
       </div>
       <% modal.with_actions do %>
         <form method="dialog">

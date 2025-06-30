@@ -33,10 +33,10 @@
           </div>
 
           <%= form.checkbox(use_attribute,
-            checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address)
-          ) do |checkbox| %>
-            <%= checkbox.with_label(text: t(".use_this_address.#{@type}"), size: :xs) %>
-          <% end %>
+            checked: @address == (@type == 'ship' ? @order.bill_address : @order.ship_address),
+            label: t(".use_this_address.#{@type}"),
+            label_options: { size: :xs })
+          %>
         </div>
       <% end %>
 

@@ -44,6 +44,18 @@ RSpec.describe SolidusAdmin::FormBuilder do
         expect(builder.checkbox(:promotionable)).to include("checked=\"checked\"")
       end
     end
+
+    context "with custom label" do
+      it "renders with custom label" do
+        expect(builder.checkbox(:promotionable, label: "Promo-able")).to include("Promo-able")
+      end
+    end
+
+    context "with hint" do
+      it "renders with hint" do
+        expect(builder.checkbox(:promotionable, hint: "Helpful info")).to include("Helpful info")
+      end
+    end
   end
 
   describe "#checkbox_row" do
