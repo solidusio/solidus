@@ -23,9 +23,9 @@ module Spree
 
     validates :name, :type, presence: true
 
-    has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
-    has_many :credit_cards, class_name: "Spree::CreditCard"
-    has_many :store_payment_methods, inverse_of: :payment_method
+    has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method, dependent: :restrict_with_exception
+    has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :restrict_with_exception
+    has_many :store_payment_methods, inverse_of: :payment_method, dependent: :destroy
     has_many :stores, through: :store_payment_methods
 
     scope :ordered_by_position, -> { order(:position) }

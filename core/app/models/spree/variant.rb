@@ -45,18 +45,23 @@ module Spree
     delegate :tax_rates, to: :tax_category
     delegate :price_for_options, to: :price_selector
 
-    has_many :inventory_units, inverse_of: :variant
-    has_many :line_items, inverse_of: :variant
+    has_many :inventory_units, inverse_of: :variant, dependent: :restrict_with_error
+    has_many :line_items, inverse_of: :variant, dependent: :restrict_with_error
     has_many :orders, through: :line_items
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
     has_many :stock_movements, through: :stock_items
 
-    has_many :option_values_variants
+    has_many :option_values_variants, dependent: :destroy
     has_many :option_values, through: :option_values_variants
 
-    has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
+    has_many :images,
+      -> { order(:position) },
+      as: :viewable,
+      dependent: :destroy,
+      class_name: "Spree::Image",
+      inverse_of: :viewable
 
     has_many :prices,
       -> { with_discarded },

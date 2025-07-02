@@ -9,13 +9,13 @@ module Spree
   # hosted by a single Solidus implementation can be built.
   #
   class Store < Spree::Base
-    has_many :store_payment_methods, inverse_of: :store
+    has_many :store_payment_methods, inverse_of: :store, dependent: :destroy
     has_many :payment_methods, through: :store_payment_methods
 
-    has_many :store_shipping_methods, inverse_of: :store
+    has_many :store_shipping_methods, inverse_of: :store, dependent: :destroy
     has_many :shipping_methods, through: :store_shipping_methods
 
-    has_many :orders, class_name: "Spree::Order"
+    has_many :orders, class_name: "Spree::Order", dependent: :restrict_with_error
 
     validates :code, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
     validates :name, presence: true

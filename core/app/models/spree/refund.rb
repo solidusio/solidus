@@ -5,10 +5,14 @@ module Spree
     include Metadata
 
     belongs_to :payment, inverse_of: :refunds, optional: true
-    belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id, optional: true
+    belongs_to :reason,
+      class_name: 'Spree::RefundReason',
+      foreign_key: :refund_reason_id,
+      optional: true,
+      inverse_of: :refunds
     belongs_to :reimbursement, inverse_of: :refunds, optional: true
 
-    has_many :log_entries, as: :source
+    has_many :log_entries, as: :source, dependent: :destroy
 
     validates :payment, presence: true
     validates :reason, presence: true

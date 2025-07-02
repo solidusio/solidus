@@ -75,11 +75,19 @@ module Spree
     # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
 
-    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address', optional: true
+    belongs_to :bill_address,
+      foreign_key: :bill_address_id,
+      class_name: 'Spree::Address',
+      optional: true,
+      inverse_of: false
     alias_method :billing_address, :bill_address
     alias_method :billing_address=, :bill_address=
 
-    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address', optional: true
+    belongs_to :ship_address,
+      foreign_key: :ship_address_id,
+      class_name: 'Spree::Address',
+      optional: true,
+      inverse_of: false
     alias_method :shipping_address, :ship_address
     alias_method :shipping_address=, :ship_address=
 
@@ -113,17 +121,22 @@ module Spree
 
     # Payments
     has_many :payments, dependent: :destroy, inverse_of: :order
-    has_many :valid_store_credit_payments, -> { store_credits.valid }, inverse_of: :order, class_name: 'Spree::Payment', foreign_key: :order_id
+    has_many :valid_store_credit_payments,
+      -> { store_credits.valid },
+      inverse_of: :order,
+      class_name: 'Spree::Payment',
+      foreign_key: :order_id,
+      dependent: :destroy
 
     # Returns
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :return_items, through: :inventory_units
     has_many :customer_returns, -> { distinct }, through: :return_items
-    has_many :reimbursements, inverse_of: :order
+    has_many :reimbursements, inverse_of: :order, dependent: :restrict_with_exception
     has_many :refunds, through: :payments
 
     # Logging
-    has_many :state_changes, as: :stateful
+    has_many :state_changes, as: :stateful, dependent: :destroy
     belongs_to :created_by, class_name: Spree::UserClassHandle.new, optional: true
     belongs_to :approver, class_name: Spree::UserClassHandle.new, optional: true
     belongs_to :canceler, class_name: Spree::UserClassHandle.new, optional: true

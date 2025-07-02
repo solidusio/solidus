@@ -9,18 +9,23 @@ module Spree
 
     has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
-    has_many :shipping_rates, inverse_of: :shipping_method
+    has_many :shipping_rates, inverse_of: :shipping_method, dependent: :restrict_with_error
     has_many :shipments, through: :shipping_rates
-    has_many :cartons, inverse_of: :shipping_method
+    has_many :cartons, inverse_of: :shipping_method, dependent: :restrict_with_error
 
     has_many :shipping_method_zones, dependent: :destroy
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, -> { with_discarded }, class_name: 'Spree::TaxCategory', optional: true
+    belongs_to :tax_category,
+      -> { with_discarded },
+      class_name: 'Spree::TaxCategory',
+      optional: true,
+      inverse_of: false
+
     has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
-    has_many :store_shipping_methods, inverse_of: :shipping_method
+    has_many :store_shipping_methods, inverse_of: :shipping_method, dependent: :destroy
     has_many :stores, through: :store_shipping_methods
 
     validates :name, presence: true
