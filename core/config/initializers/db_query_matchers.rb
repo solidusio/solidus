@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "db-query-matchers"
 
 DBQueryMatchers.configure do |config|
