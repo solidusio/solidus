@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ManipulativeQueryMonitor
     def self.call(&block)
