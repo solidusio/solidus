@@ -92,6 +92,25 @@ module Spree
 
           expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries/)
         end
+
+        context 'and manipulative query logging is disabled' do
+          around do |example|
+            Spree::InMemoryOrderUpdater.log_manipulative_queries = false
+
+            example.run
+
+            Spree::InMemoryOrderUpdater.log_manipulative_queries = true
+          end
+
+          it 'will not log manipulative queries' do
+            allow(Rails.logger).to receive(:warn)
+            order.store = new_store
+
+            subject
+
+            expect(Rails.logger).not_to have_received(:warn)
+          end
+        end
       end
     end
 
