@@ -588,9 +588,8 @@ RSpec.describe Spree::Shipment, type: :model do
   end
 
   describe "#update_amounts" do
-    subject { shipment.update_amounts(persist: persist) }
+    subject { shipment.update_amounts }
 
-    let(:persist) { true }
     let(:shipment) { create(:shipment, cost: 1) }
 
     context 'when the selected shipping rate cost is different than the current shipment cost' do
@@ -607,22 +606,26 @@ RSpec.describe Spree::Shipment, type: :model do
           subject
         }.to change { shipment.reload.updated_at }
       end
+    end
+  end
 
-      context 'when `persist: false` is passed' do
-        let(:persist) { false }
+  describe "#assign_amounts" do
+    subject { shipment.assign_amounts }
 
-        it 'does not perform any database writes' do
-          expect {
-            subject
-          }.not_to make_database_queries(manipulative: true)
-        end
+    let(:shipment) { create(:shipment, cost: 1) }
 
-        it "changes but does not persist the shipments cost" do
-          subject
-          expect(shipment.cost).to eq 999
-          expect(shipment.reload.cost).to eq 1
-        end
-      end
+    before { shipment.selected_shipping_rate.update!(cost: 999) }
+
+    it 'does not perform any database writes' do
+      expect {
+        subject
+      }.not_to make_database_queries(manipulative: true)
+    end
+
+    it "changes but does not persist the shipments cost" do
+      subject
+      expect(shipment.cost).to eq 999
+      expect(shipment.reload.cost).to eq 1
     end
   end
 
