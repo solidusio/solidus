@@ -13,6 +13,10 @@ module Spree
         message += caller.select{ |line| line.include?(Rails.root.to_s) || line.include?('solidus') }.join("\n")
 
         Rails.logger.warn(message)
+
+        Logger.new(Rails.root.join('log', 'manipulative_query_monitor.log')).tap do |logger|
+          logger.warn(message)
+        end
       end
     end
   end
