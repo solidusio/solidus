@@ -48,7 +48,6 @@ module Spree
         monitor.call do
           if order.completed?
             recalculate_payment_state
-            update_shipments
             recalculate_shipment_state
           end
         end
@@ -61,7 +60,8 @@ module Spree
     alias_method :update, :recalculate
     deprecate update: :recalculate, deprecator: Spree.deprecator
 
-    # Recalculates the +shipment_state+ attribute according to the following logic:
+    # Recalculates the state on all of them shipments, then recalculates the
+    # +shipment_state+ attribute according to the following logic:
     #
     # shipped   when all Shipments are in the "shipped" state
     # partial   when at least one Shipment has a state of "shipped" and there is another Shipment with a state other than "shipped"
@@ -72,6 +72,8 @@ module Spree
     #
     # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def recalculate_shipment_state
+      shipments.each(&:recalculate_state)
+
       log_state_change('shipment') do
         order.shipment_state = determine_shipment_state
       end
@@ -213,11 +215,6 @@ module Spree
           updated_at:           Time.current,
         )
       end
-    end
-
-    # give each of the shipments a chance to update themselves
-    def update_shipments
-      shipments.each(&:update_state)
     end
 
     def recalculate_payment_total
