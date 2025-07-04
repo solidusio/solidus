@@ -22,5 +22,9 @@ module SolidusAdmin
       params.require(:payment_method).permit(:name, :description, :auto_capture, :type, :preference_source,
         :preferred_server, :preferred_test_mode, :active, :available_to_admin, :available_to_users, store_ids: [])
     end
+
+    def resource_form_container
+      :payment_method_form
+    end
   end
 end
