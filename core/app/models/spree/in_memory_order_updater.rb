@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+require 'spree/manipulative_query_monitor'
+
 module Spree
   class InMemoryOrderUpdater
     attr_reader :order
+
+    # logs a warning when a manipulative query is made when the persist flag is set to false
+    class_attribute :log_manipulative_queries
+    self.log_manipulative_queries = true
 
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :quantity, to: :order
 
@@ -18,14 +24,33 @@ module Spree
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
     def recalculate(persist: true)
-      order.transaction do
-        recalculate_item_count
-        update_shipment_amounts(persist:)
-        update_totals(persist:)
+      monitor =
+        if log_manipulative_queries
+          Spree::ManipulativeQueryMonitor
+        else
+          proc { |&block| block.call }
+        end
 
-        if order.completed?
-          recalculate_payment_state
-          recalculate_shipment_state
+      order.transaction do
+        monitor.call do
+          recalculate_item_count
+        end
+
+        if persist
+          update_shipment_amounts(persist:)
+          update_totals(persist:)
+        else
+          monitor.call do
+            update_shipment_amounts(persist:)
+            update_totals(persist:)
+          end
+        end
+
+        monitor.call do
+          if order.completed?
+            recalculate_payment_state
+            recalculate_shipment_state
+          end
         end
 
         Spree::Bus.publish(:order_recalculated, order:)
