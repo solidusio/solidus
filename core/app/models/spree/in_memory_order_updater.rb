@@ -34,14 +34,13 @@ module Spree
       order.transaction do
         monitor.call do
           recalculate_item_count
+          assign_shipment_amounts
         end
 
         if persist
-          update_shipment_amounts(persist:)
           update_totals(persist:)
         else
           monitor.call do
-            update_shipment_amounts(persist:)
             update_totals(persist:)
           end
         end
@@ -166,8 +165,8 @@ module Spree
       update_adjustment_total(persist:)
     end
 
-    def update_shipment_amounts(persist:)
-      shipments.each { _1.update_amounts(persist:) }
+    def assign_shipment_amounts
+      shipments.each(&:assign_amounts)
     end
 
     def update_adjustment_total(persist:)
@@ -237,6 +236,7 @@ module Spree
     end
 
     def persist_totals
+      shipments.each(&:persist_amounts)
       order.save!
     end
 
