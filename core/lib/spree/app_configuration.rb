@@ -384,7 +384,7 @@ module Spree
     # @return [Class] an object that conforms to the API of
     #   the standard order recalculator class
     #   Spree::OrderUpdater.
-    class_name_attribute :order_recalculator_class, default: 'Spree::OrderUpdater'
+    class_name_attribute :order_recalculator_class, default: 'Spree::InMemoryOrderUpdater'
 
     # Allows providing your own Mailer for reimbursement mailer.
     #
