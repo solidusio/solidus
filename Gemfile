@@ -12,7 +12,7 @@ else
 end
 # rubocop:enable Bundler/DuplicatedGem
 
-gem 'pry'
+gem "debug"
 gem 'launchy', require: false
 
 dbs = ENV['DB_ALL'] ? 'all' : ENV.fetch('DB', 'sqlite')

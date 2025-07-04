@@ -50,12 +50,6 @@ end
 
 desc "Open a sandboxed console in the test environment"
 task console: :dummy_environment do
-  begin
-    require 'pry'
-    Rails.application.config.console = Pry
-  rescue LoadError
-  end
-
   require 'rails/commands'
   require 'rails/commands/console/console_command'
   Rails::Console.new(Rails.application, sandbox: true, environment: "test").start

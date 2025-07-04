@@ -73,7 +73,7 @@ gem 'solidus_i18n'
 
 group :test, :development do
   platforms :mri do
-    gem 'pry-byebug'
+    gem 'debug'
   end
 
   gem 'better_errors'
