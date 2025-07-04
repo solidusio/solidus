@@ -34,7 +34,6 @@ gem 'puma', '< 7', require: false
 gem 'i18n-tasks', '~> 0.9', require: false
 gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
-gem 'db-query-matchers', require: false
 
 # Ensure the requirement is also updated in core/lib/spree/testing_support/factory_bot.rb
 gem 'factory_bot_rails', '>= 4.8', require: false
