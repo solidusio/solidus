@@ -41,8 +41,8 @@ describe "Payment Methods", :js, type: :feature do
     expect(page).to be_axe_clean
 
     select_row("Check")
-    click_on "Delete"
-    expect(page).to have_content("Payment Methods were successfully removed.")
+    accept_confirm("Are you sure you want to delete 1 payment method?") { click_on "Delete" }
+    expect(page).to have_content("Payment methods were successfully removed.")
     expect(page).not_to have_content("Check")
     expect(Spree::PaymentMethod.count).to eq(3)
   end
