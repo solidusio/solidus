@@ -13,7 +13,6 @@ DummyApp.setup(
 require 'rspec/rails'
 require 'rspec-activemodel-mocks'
 require 'database_cleaner'
-require 'db-query-matchers'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
