@@ -148,7 +148,7 @@ module Spree
       # http://www.boe.ca.gov/formspubs/pub113/
       update_promotions(persist:)
       update_tax_adjustments
-      update_item_totals(persist:)
+      assign_item_totals
     end
 
     # Updates the following Order total values:
@@ -197,11 +197,17 @@ module Spree
     end
     deprecate :update_cancellations, deprecator: Spree.deprecator
 
-    def update_item_totals(persist:)
+    def assign_item_totals
       [*line_items, *shipments].each do |item|
         Spree::Config.item_total_class.new(item).recalculate!
+      end
+    end
 
-        next unless persist && item.changed?
+    def persist_item_totals
+      [*line_items, *shipments].each do |item|
+        next unless item.changed?
+
+        item.save! unless item.persisted?
 
         item.update_columns(
           promo_total:          item.promo_total,
@@ -237,6 +243,7 @@ module Spree
 
     def persist_totals
       shipments.each(&:persist_amounts)
+      persist_item_totals
       order.save!
     end
 
