@@ -50,6 +50,14 @@ RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups do
         context "and an item with a quantity of 3" do
           let(:quantity) { 3 }
           it { is_expected.to eq(-10) }
+
+          it "doesn't save anything to the database" do
+            line_item
+
+            expect {
+              subject
+            }.not_to make_database_queries(manipulative: true)
+          end
         end
 
         context "and an item with a quantity of 4" do

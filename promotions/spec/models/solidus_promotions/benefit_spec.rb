@@ -122,6 +122,25 @@ RSpec.describe SolidusPromotions::Benefit do
     end
   end
 
+  describe "#compute_amount" do
+    subject { benefit.compute_amount(discountable) }
+
+    let(:variant) { create(:variant) }
+    let(:order) { create(:order) }
+    let(:discountable) { Spree::LineItem.new(order: order, variant: variant, price: 10, quantity: 1) }
+    let(:promotion) { SolidusPromotions::Promotion.new(customer_label: "20 Perzent off") }
+    let(:calculator) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 20) }
+    let(:benefit) { described_class.new(promotion: promotion, calculator: calculator) }
+
+    it "doesn't save anything to the database" do
+      discountable
+
+      expect {
+        subject
+      }.not_to make_database_queries(manipulative: true)
+    end
+  end
+
   describe ".original_promotion_action" do
     let(:spree_promotion) { create :promotion, :with_adjustable_action }
     let(:spree_promotion_action) { spree_promotion.actions.first }
