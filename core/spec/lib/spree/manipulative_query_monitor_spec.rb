@@ -36,7 +36,7 @@ RSpec.describe Spree::ManipulativeQueryMonitor do
       described_class.call do
         user.update(email: "snowball@example.com")
       end
-      
+
       expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries.*UPDATE.*/)
       expect(Rails.logger).to have_received(:warn).with(/.*manipulative_query_monitor_spec.rb.*/)
     end
