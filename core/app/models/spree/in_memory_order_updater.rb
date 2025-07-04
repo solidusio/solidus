@@ -14,7 +14,6 @@ module Spree
 
     def initialize(order)
       @order = order
-      @monitor = log_manipulative_queries ? Spree::ManipulativeQueryMonitor : proc {}
     end
 
     # This is a multi-purpose method for processing logic related to changes in the Order.
@@ -25,7 +24,11 @@ module Spree
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
     def recalculate(persist: true)
-      @monitor.call do
+      monitor = log_manipulative_queries && !persist ?
+        Spree::ManipulativeQueryMonitor :
+        proc { |&block| block.call }
+
+      monitor.call do
         order.transaction do
           recalculate_item_count
           update_shipment_amounts(persist:)
