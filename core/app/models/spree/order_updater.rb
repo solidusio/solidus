@@ -160,7 +160,7 @@ module Spree
     def update_adjustment_total
       recalculate_adjustments
 
-      all_items = line_items + shipments
+      all_items = (line_items + shipments).reject(&:marked_for_destruction?)
       # Ignore any adjustments that have been marked for destruction in our
       # calculations. They'll get removed when/if we persist the order.
       valid_adjustments = adjustments.reject(&:marked_for_destruction?)
