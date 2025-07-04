@@ -1,0 +1,11 @@
+en:
+  availability: "Availability"
+  deployment: "Deployment"
+  hints:
+    autocapture: >-
+      <p>Auto-capture setting charges customer's account upon transaction authorization.</p>
+      <p>Enable to reduce manual intervention and streamline the payment process.</p>
+    test_mode: >-
+      <p>Payment methods test mode allows users to simulate transactions using dummy data, ensuring the payment gateway's functionality without real transactions.</p>
+      <p>In test mode, users can check if payment methods, such as credit cards or digital wallets, are functioning correctly before going live with real transactions.</p>
+  preference_source_none: "Custom"
