@@ -5,10 +5,10 @@ require "solidus_promotions/promotion_map"
 require "solidus_promotions/promotion_migrator"
 
 RSpec.describe "Promotion System" do
-  describe "with the default order recalculator config" do
+  describe "with an in-memory order recalculator" do
     around do |example|
       prev_recalculator_class = Spree::Config.order_recalculator_class
-      Spree::Config.order_recalculator_class = Spree::OrderUpdater
+      Spree::Config.order_recalculator_class = Spree::InMemoryOrderUpdater
 
       example.run
 
