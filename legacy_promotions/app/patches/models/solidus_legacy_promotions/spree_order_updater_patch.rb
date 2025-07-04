@@ -27,8 +27,8 @@ module SolidusLegacyPromotions
         # promotions.
         item.adjustment_total = item.adjustments.select { |adjustment|
           adjustment.eligible? &&
-          !adjustment.marked_for_destruction? &&
-          !adjustment.included?
+            !adjustment.marked_for_destruction? &&
+            !adjustment.included?
         }.sum(&:amount)
 
         next unless item.changed?
