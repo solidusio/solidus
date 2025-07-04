@@ -120,6 +120,30 @@ commands:
           path: /tmp/test-results
           destination: raw-test-output
 
+      - store_artifacts:
+          path: core/spec/dummy/log/manipulative_query_monitor.log
+          destination: core_manipulative_query_monitor.log
+
+      - store_artifacts:
+          path: backend/spec/dummy/log/manipulative_query_monitor.log
+          destination: backend_manipulative_query_monitor.log
+
+      - store_artifacts:
+          path: admin/spec/dummy/log/manipulative_query_monitor.log
+          destination: admin_manipulative_query_monitor.log
+
+      - store_artifacts:
+          path: api/spec/dummy/log/manipulative_query_monitor.log
+          destination: api_manipulative_query_monitor.log
+
+      - store_artifacts:
+          path: legacy_promotions/spec/dummy/log/manipulative_query_monitor.log
+          destination: legacy_promotions_manipulative_query_monitor.log
+
+      - store_artifacts:
+          path: promotions/spec/dummy/log/manipulative_query_monitor.log
+          destination: promotions_manipulative_query_monitor.log
+
       - store_test_results:
           path: /tmp/test-results
 

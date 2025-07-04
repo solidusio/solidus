@@ -69,33 +69,98 @@ module Spree
       end
 
       describe 'tax recalculation' do
-        let!(:ship_address) { create(:address) }
-        let!(:tax_zone) { create(:global_zone) } # will include the above address
-        let!(:tax_rate) { create(:tax_rate, zone: tax_zone, tax_categories: [tax_category]) }
+        let(:tax_category) { create(:tax_category) }
+        let(:ship_address) { create(:address, state: new_york) }
+        let(:new_york) { create(:state, state_code: "NY") }
+        let(:tax_zone) { create(:zone, states: [new_york]) }
+
+        let!(:tax_rate) do
+          create(
+            :tax_rate,
+            name: "New York Sales Tax",
+            tax_categories: [tax_category],
+            zone: tax_zone,
+            included_in_price: false,
+            amount: 0.1
+          )
+        end
 
         let(:order) do
           create(
             :order_with_line_items,
-            line_items_attributes: [{ price: 10, variant: }],
-            ship_address:,
+            line_items_attributes: [{ price: 10, variant: variant }],
+            ship_address: ship_address,
           )
         end
         let(:line_item) { order.line_items[0] }
 
         let(:variant) { create(:variant, tax_category:) }
-        let(:tax_category) { create(:tax_category) }
 
         context 'when the item quantity has changed' do
           before do
             line_item.update!(quantity: 2)
           end
 
-          it 'updates the promotion amount' do
+          it 'updates the additional_tax_total' do
             expect {
               order.recalculate
             }.to change {
               line_item.additional_tax_total
             }.from(1).to(2)
+          end
+        end
+
+        context 'when the address has changed to a different state' do
+          let(:new_shipping_address) { create(:address) }
+
+          before do
+            order.ship_address = new_shipping_address
+          end
+
+          it 'removes the old taxes' do
+            expect {
+              order.recalculate
+            }.to change {
+              order.all_adjustments.tax.count
+            }.from(1).to(0)
+
+            expect(order.additional_tax_total).to eq 0
+            expect(order.adjustment_total).to eq 0
+          end
+        end
+
+        context "with an order-level tax adjustment" do
+          let(:colorado) { create(:state, state_code: "CO") }
+          let(:colorado_tax_zone) { create(:zone, states: [colorado]) }
+          let(:ship_address) { create(:address, state: colorado) }
+
+          let!(:colorado_delivery_fee) do
+            create(
+              :tax_rate,
+              amount: 0.27,
+              calculator: Spree::Calculator::FlatFee.new,
+              level: "order",
+              name: "Colorado Delivery Fee",
+              tax_categories: [tax_category],
+              zone: colorado_tax_zone
+            )
+          end
+
+          before { order.recalculate }
+
+          it "updates the order-level tax adjustment" do
+            expect {
+              order.ship_address = create(:address)
+              order.recalculate
+            }.to change { order.additional_tax_total }.from(0.27).to(0).
+                and change { order.adjustment_total }.from(0.27).to(0)
+          end
+
+          it "deletes the order-level tax adjustments when it persists the order" do
+            expect {
+              order.ship_address = create(:address)
+              order.recalculate
+            }.to change { order.all_adjustments.count }.from(1).to(0)
           end
         end
 
@@ -157,20 +222,20 @@ module Spree
 
       it "is backordered" do
         allow(order).to receive_messages backordered?: true
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
 
         expect(order.shipment_state).to eq('backorder')
       end
 
       it "is nil" do
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
         expect(order.shipment_state).to be_nil
       end
 
       ["shipped", "ready", "pending"].each do |state|
         it "is #{state}" do
           create(:shipment, order:, state:)
-          updater.update_shipment_state
+          updater.recalculate_shipment_state
           expect(order.shipment_state).to eq(state)
         end
       end
@@ -178,7 +243,7 @@ module Spree
       it "is partial" do
         create(:shipment, order:, state: 'pending')
         create(:shipment, order:, state: 'ready')
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
         expect(order.shipment_state).to eq('partial')
       end
     end
@@ -194,7 +259,7 @@ module Spree
           order.total = 1
           order.payment_total = 0
 
-          updater.update_payment_state
+          updater.recalculate_payment_state
           expect(order.payment_state).to eq('failed')
         end
       end
@@ -206,7 +271,7 @@ module Spree
           order.payment_total = 0
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'paid'
         end
       end
@@ -217,7 +282,7 @@ module Spree
           order.total = 1
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'credit_owed'
         end
       end
@@ -228,7 +293,7 @@ module Spree
           order.total = 2
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'balance_due'
         end
       end
@@ -239,7 +304,7 @@ module Spree
           order.total = 30
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'paid'
         end
       end
@@ -254,7 +319,7 @@ module Spree
             order.payment_total = 0
             order.total = 30
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'void'
           end
         end
@@ -265,7 +330,7 @@ module Spree
             order.total = 30
             create(:payment, order:, state: 'completed', amount: 30)
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'credit_owed'
           end
         end
@@ -275,7 +340,7 @@ module Spree
             order.payment_total = 0
             order.total = 30
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'void'
           end
         end
@@ -286,12 +351,12 @@ module Spree
       before { allow(order).to receive_messages completed?: true }
 
       it "updates payment state" do
-        expect(updater).to receive(:update_payment_state)
+        expect(updater).to receive(:recalculate_payment_state)
         updater.recalculate
       end
 
       it "updates shipment state" do
-        expect(updater).to receive(:update_shipment_state)
+        expect(updater).to receive(:recalculate_shipment_state)
         updater.recalculate
       end
 
@@ -315,12 +380,12 @@ module Spree
       before { allow(order).to receive_messages completed?: false }
 
       it "doesnt update payment state" do
-        expect(updater).not_to receive(:update_payment_state)
+        expect(updater).not_to receive(:recalculate_payment_state)
         updater.recalculate
       end
 
       it "doesnt update shipment state" do
-        expect(updater).not_to receive(:update_shipment_state)
+        expect(updater).not_to receive(:recalculate_shipment_state)
         updater.recalculate
       end
 
