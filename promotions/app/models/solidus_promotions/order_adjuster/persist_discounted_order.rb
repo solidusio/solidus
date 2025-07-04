@@ -35,8 +35,8 @@ module SolidusPromotions
       attr_reader :order
 
       # Walk through the discounts for an item and update adjustments for it.
-      # Once all of the discounts have been added as adjustments, mark for
-      # destruction any old promotion adjustments that weren't touched.
+      # Once all of the discounts have been added as adjustments, mark any old
+      # promotion adjustments that weren't touched for destruction.
       #
       # @private
       # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
