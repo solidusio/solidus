@@ -967,6 +967,10 @@ RSpec.describe Spree::Shipment, type: :model do
   it_behaves_like "customer and admin metadata fields: storage and validation", :shipment
 
   describe "state change tracking" do
+    # Ensure that we're only testing tracking jobs created by the change in
+    # state.
+    before { shipment }
+
     it "enqueues a StateChangeTrackingJob when state changes" do
       expect {
         shipment.update!(state: 'shipped')
@@ -974,7 +978,7 @@ RSpec.describe Spree::Shipment, type: :model do
         shipment,
         'pending',
         'shipped',
-        kind_of(Time),
+        be_within(1.second).of(Time.current),
         'shipment'
       )
     end
@@ -983,20 +987,6 @@ RSpec.describe Spree::Shipment, type: :model do
       expect {
         shipment.update!(tracking: 'abcd')
       }.not_to have_enqueued_job(Spree::StateChangeTrackingJob)
-    end
-
-    it "captures the transition timestamp accurately" do
-      before_time = Time.current
-
-      shipment.update!(state: 'shipped')
-
-      # Check that a job was enqueued with a timestamp close to when we made the change
-      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.with do |shipment_id, prev_state, next_state, timestamp|
-        expect(shipment_id).to eq(shipment.id)
-        expect(prev_state).to eq('pending')
-        expect(next_state).to eq('shipped')
-        expect(timestamp).to be_within(1.second).of(before_time)
-      end
     end
 
     it "creates multiple state transitions" do
@@ -1012,7 +1002,7 @@ RSpec.describe Spree::Shipment, type: :model do
       perform_enqueued_jobs do
         expect {
           shipment.update!(state: 'shipped')
-        }.to change(Spree::StateChange, :count).by(1)
+        }.to change(shipment.state_changes, :count).by(1)
       end
 
       state_change = Spree::StateChange.last

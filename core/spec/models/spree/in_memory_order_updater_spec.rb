@@ -437,7 +437,7 @@ module Spree
         order.shipments = [shipment]
         allow(order.shipments).to receive_messages(states: [], ready: [], pending: [], shipped: [])
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene
-        expect(updater).not_to receive(:update_shipments)
+        expect(updater).not_to receive(:recalculate_shipment_state)
         updater.recalculate
       end
     end
