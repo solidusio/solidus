@@ -482,7 +482,8 @@ module Spree
         end
 
         it "updates the shipment amount" do
-          expect(shipment).to receive(:update_amounts)
+          expect(shipment).to receive(:assign_amounts)
+          expect(shipment).to receive(:persist_amounts)
           updater.recalculate
         end
       end
