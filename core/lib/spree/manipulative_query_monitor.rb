@@ -10,7 +10,7 @@ module Spree
       if counter.count > 0
         message = "Detected #{counter.count} manipulative queries. #{counter.log.join(', ')}\n"
 
-        message += caller.select{ |line| line.include?(Rails.root.to_s) || line.include?('solidus') }.join("\n") }
+        message += caller.select{ |line| line.include?(Rails.root.to_s) || line.include?('solidus') }.join("\n")
 
         Rails.logger.warn(message)
       end
