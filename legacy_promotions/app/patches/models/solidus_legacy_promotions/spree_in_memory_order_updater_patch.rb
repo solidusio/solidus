@@ -3,7 +3,7 @@ module SolidusLegacyPromotions
     def update_adjustment_total(persist:)
       update_adjustments(persist:)
 
-      all_items = line_items + shipments
+      all_items = (line_items + shipments).reject(&:marked_for_destruction?)
       valid_adjustments = adjustments.select(&:eligible?).reject(&:marked_for_destruction?)
       order_tax_adjustments = valid_adjustments.select(&:tax?)
 
