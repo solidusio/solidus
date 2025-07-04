@@ -74,14 +74,6 @@ require "solidus_admin/testing_support/feature_helpers"
 require 'axe-rspec'
 require 'axe-capybara'
 
-# DB Query Matchers
-require "db-query-matchers"
-DBQueryMatchers.configure do |config|
-  config.ignores = [/SHOW TABLES LIKE/]
-  config.ignore_cached = true
-  config.schemaless = true
-end
-
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
