@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spree/manipulative_query_monitor'
 
 module Spree
