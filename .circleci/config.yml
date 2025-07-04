@@ -134,7 +134,7 @@ commands:
 
       - store_artifacts:
           path: api/spec/dummy/log/manipulative_query_monitor.log
-          destination: api_promotions_manipulative_query_monitor.log
+          destination: api_manipulative_query_monitor.log
 
       - store_artifacts:
           path: legacy_promotions/spec/dummy/log/manipulative_query_monitor.log
