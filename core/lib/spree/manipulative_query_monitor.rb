@@ -14,7 +14,7 @@ module Spree
 
         Rails.logger.warn(message)
 
-        Logger.new(Rails.root.join('log', 'manipulative_query_monitor.log')).tap do |logger|
+        Logger.new(Rails.root.join("log/manipulative_query_monitor.log")).tap do |logger|
           logger.warn(message)
         end
       end
