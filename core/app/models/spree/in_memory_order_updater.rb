@@ -14,7 +14,7 @@ module Spree
 
     def initialize(order)
       @order = order
-      @monitor = self.log_manipulative_queries ? Spree::ManipulativeQueryMonitor : Proc.new { }
+      @monitor = log_manipulative_queries ? Spree::ManipulativeQueryMonitor : proc {}
     end
 
     # This is a multi-purpose method for processing logic related to changes in the Order.
