@@ -1,7 +1,7 @@
 module Spree
   class ManipulativeQueryMonitor
     def self.call(&block)
-      counter = DBQueryMatchers::QueryCounter.new({matches: [/^\ *(INSERT|UPDATE|DELETE\ FROM)/]})
+      counter = ::DBQueryMatchers::QueryCounter.new({matches: [/^\ *(INSERT|UPDATE|DELETE\ FROM)/]})
       ActiveSupport::Notifications.subscribed(counter.to_proc,
                                               "sql.active_record",
                                               &block)
