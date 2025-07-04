@@ -5,7 +5,7 @@ module SolidusLegacyPromotions
     def update_adjustment_total
       recalculate_adjustments
 
-      all_items = line_items + shipments
+      all_items = (line_items + shipments).reject(&:marked_for_destruction?)
       order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)
 
       order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.select(&:eligible?).sum(&:amount)

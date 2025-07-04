@@ -25,10 +25,12 @@ module SolidusPromotions
       order.reset_current_discounts
 
       unless dry_run
-        # Since automations might have added a line item, we need to recalculate item total and item count here.
-        order.item_total = order.line_items.sum(&:amount)
-        order.item_count = order.line_items.sum(&:quantity)
-        order.promo_total = (order.line_items + order.shipments).sum(&:promo_total)
+        # Since automations might have added a line item, we need to recalculate
+        # item total and item count here.
+        line_items = order.line_items.reject(&:marked_for_destruction?)
+        order.item_total = line_items.sum(&:amount)
+        order.item_count = line_items.sum(&:quantity)
+        order.promo_total = (line_items + order.shipments).sum(&:promo_total)
       end
       order
     end
