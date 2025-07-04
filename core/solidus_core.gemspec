@@ -46,6 +46,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'monetize', '~> 1.8'
   s.add_dependency 'kt-paperclip', ['>= 6.3', '< 8']
   s.add_dependency 'psych', ['>= 4.0.1', '< 6.0']
+  s.add_dependency 'db-query-matchers', '~> 0.14'
   s.add_dependency 'ransack', ['~> 4.0', '< 5']
   s.add_dependency 'sprockets-rails', '!= 3.5.0'
   s.add_dependency 'state_machines', ['~> 0.6', '< 0.10.0']
