@@ -81,6 +81,47 @@ RSpec.describe Spree::Shipment, type: :model do
     end
   end
 
+  context '#recalculate_state' do
+    subject(:recalculate_state) { shipment.recalculate_state }
+
+    it "assigns the new state to the shipment" do
+      allow(order).to receive_messages canceled?: true
+      expect {
+        recalculate_state
+      }.to change { shipment.state }.from("pending").to("canceled")
+    end
+
+    it "returns canceled if order is canceled?" do
+      allow(order).to receive_messages canceled?: true
+      expect(recalculate_state).to eq "canceled"
+    end
+
+    it "returns pending unless order.can_ship?" do
+      allow(order).to receive_messages can_ship?: false
+      expect(recalculate_state).to eq "pending"
+    end
+
+    it "returns pending if backordered" do
+      allow(shipment).to receive_messages inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false, shipped?: false)]
+      expect(recalculate_state).to eq "pending"
+    end
+
+    it "returns shipped when already shipped" do
+      allow(shipment).to receive_messages state: "shipped"
+      expect(recalculate_state).to eq "shipped"
+    end
+
+    it "returns pending when unpaid" do
+      allow(order).to receive_messages paid?: false
+      expect(recalculate_state).to eq "pending"
+    end
+
+    it "returns ready when paid" do
+      allow(order).to receive_messages paid?: true
+      expect(recalculate_state).to eq "ready"
+    end
+  end
+
   context "display_amount" do
     it "retuns a Spree::Money" do
       shipment.cost = 21.22

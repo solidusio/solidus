@@ -217,6 +217,21 @@ module Spree
       end
     end
 
+    def recalculate_state
+      self.state =
+        if order.canceled?
+          "canceled"
+        elsif shipped?
+          "shipped"
+        elsif !order.can_ship?
+          "pending"
+        elsif can_transition_from_pending_to_ready?
+          "ready"
+        else
+          "pending"
+        end
+    end
+
     def set_up_inventory(state, variant, _order, line_item)
       inventory_units.create(
         state:,
