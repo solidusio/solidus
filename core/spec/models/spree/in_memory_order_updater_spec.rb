@@ -84,13 +84,13 @@ module Spree
           expect(order.reload.store).to eq new_store
         end
 
-        it "will log manipulative queries" do
+        it "will not log manipulative queries" do
           allow(Rails.logger).to receive(:warn)
           order.store = new_store
 
           subject
 
-          expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries/)
+          expect(Rails.logger).to_not have_received(:warn)
         end
 
         context 'and manipulative query logging is disabled' do
