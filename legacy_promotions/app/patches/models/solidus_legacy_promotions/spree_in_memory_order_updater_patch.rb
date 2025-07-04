@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolidusLegacyPromotions
   module SpreeInMemoryOrderUpdaterPatch
     def update_adjustment_total(persist:)
