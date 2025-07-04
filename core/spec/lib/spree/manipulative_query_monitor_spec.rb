@@ -49,7 +49,7 @@ RSpec.describe Spree::ManipulativeQueryMonitor do
       described_class.call do
         user.delete
       end
-      
+
       expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries.*DELETE FROM.*/)
       expect(Rails.logger).to have_received(:warn).with(/.*manipulative_query_monitor_spec.rb.*/)
     end
