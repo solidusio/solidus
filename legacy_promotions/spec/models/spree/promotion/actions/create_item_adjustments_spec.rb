@@ -92,13 +92,23 @@ module Spree
       end
     end
 
-    context "#compute_amount" do
+    describe "#compute_amount" do
+      subject { action.compute_amount(line_item) }
+
       before { promotion.promotion_actions = [action] }
 
       context "when the adjustable is actionable" do
         it "calls compute on the calculator" do
           expect(action.calculator).to receive(:compute).with(line_item).and_call_original
-          action.compute_amount(line_item)
+          subject
+        end
+
+        it "doesn't persist anything to the database" do
+          allow(action.calculator).to receive(:compute).with(line_item).and_call_original
+
+          expect {
+            subject
+          }.not_to make_database_queries(manipulative: true)
         end
 
         context "calculator returns amount greater than item total" do
@@ -108,7 +118,7 @@ module Spree
           end
 
           it "does not exceed it" do
-            expect(action.compute_amount(line_item)).to eql(-100)
+            expect(subject).to eql(-100)
           end
         end
       end
