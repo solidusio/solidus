@@ -46,6 +46,15 @@ module Spree::Promotion::Actions
           context "and an item with a quantity of 2" do
             let(:quantity) { 2 }
             it { is_expected.to eq(-10) }
+
+            it "doesn't save anything to the database" do
+              action
+              line_item
+
+              expect {
+                subject
+              }.not_to make_database_queries(manipulative: true)
+            end
           end
 
           context "and an item with a quantity of 3" do
@@ -94,7 +103,7 @@ module Spree::Promotion::Actions
               :order_with_line_items,
               line_items_attributes: [
                 { quantity: 3 }
-            ]
+              ]
             )
           end
 
