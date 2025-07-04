@@ -205,7 +205,7 @@ module Spree
 
     def persist_item_totals
       [*line_items, *shipments].each do |item|
-        return unless item.changed?
+        next unless item.changed?
 
         item.update_columns(
           promo_total:          item.promo_total,
