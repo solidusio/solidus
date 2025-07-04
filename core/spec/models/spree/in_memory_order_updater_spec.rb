@@ -27,6 +27,14 @@ module Spree
           expect(order.reload.store).not_to eq new_store
         end
 
+        it "will log zero manipulative queries" do
+          allow(Rails.logger).to receive(:warn)
+
+          subject
+
+          expect(Rails.logger).not_to have_received(:warn)
+        end
+
         it "does not persist changes to the item count" do
           order.line_items << build(:line_item)
 
@@ -74,6 +82,15 @@ module Spree
           }.to make_database_queries(manipulative: true)
 
           expect(order.reload.store).to eq new_store
+        end
+
+        it "will log manipulative queries" do
+          allow(Rails.logger).to receive(:warn)
+          order.store = new_store
+
+          subject
+
+          expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries/)
         end
       end
     end
