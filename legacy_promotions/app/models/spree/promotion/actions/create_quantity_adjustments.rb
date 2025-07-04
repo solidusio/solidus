@@ -83,6 +83,11 @@ module Spree
 
         private
 
+        def create_adjustment(adjustable, order, promotion_code)
+          return unless super
+          save!
+        end
+
         def actionable_line_items(order)
           order.line_items.select do |item|
             promotion.line_item_actionable? order, item
