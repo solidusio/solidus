@@ -24,7 +24,7 @@ RSpec.describe Spree::ManipulativeQueryMonitor do
       described_class.call do
         user.reload
       end
-      
+
       expect(Rails.logger).to_not have_received(:warn)
     end
 
