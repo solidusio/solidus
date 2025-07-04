@@ -11,10 +11,11 @@ RSpec.describe Spree::ManipulativeQueryMonitor do
       described_class.call do
         create :user
       end
-      
+
       expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries.*INSERT.*/)
+      expect(Rails.logger).to have_received(:warn).with(/.*manipulative_query_monitor_spec.rb.*/)
     end
-    
+
     it "does not log when a select query is not detected" do
       allow(Rails.logger).to receive(:warn)
 
@@ -37,6 +38,7 @@ RSpec.describe Spree::ManipulativeQueryMonitor do
       end
       
       expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries.*UPDATE.*/)
+      expect(Rails.logger).to have_received(:warn).with(/.*manipulative_query_monitor_spec.rb.*/)
     end
 
     it "logs when a delete query is detected" do
@@ -49,6 +51,7 @@ RSpec.describe Spree::ManipulativeQueryMonitor do
       end
       
       expect(Rails.logger).to have_received(:warn).with(/Detected 1 manipulative queries.*DELETE FROM.*/)
+      expect(Rails.logger).to have_received(:warn).with(/.*manipulative_query_monitor_spec.rb.*/)
     end
   end
 end

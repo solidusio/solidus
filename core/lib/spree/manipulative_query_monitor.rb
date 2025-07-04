@@ -6,7 +6,11 @@ module Spree
                                               "sql.active_record",
                                               &block)
       if counter.count > 0
-        Rails.logger.warn("Detected #{counter.count} manipulative queries. #{counter.log.join(', ')}")
+        message = "Detected #{counter.count} manipulative queries. #{counter.log.join(', ')}\n"
+
+        message += caller.select{ |line| line.include?(Rails.root.to_s) || line.include?('solidus') }.join("\n") }
+
+        Rails.logger.warn(message)
       end
     end
   end
