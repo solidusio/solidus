@@ -1,0 +1,27 @@
+<%= solidus_form_for @payment_method, as: "payment_method", url: @url, html: { id: @form_id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component("ui/panel").new do %>
+        <%= f.text_field :name %>
+        <%= f.text_field :description %>
+        <%= f.switch_field :auto_capture, hint: t(".hints.autocapture").html_safe %>
+      <% end %>
+
+      <%= render component("ui/panel").new(title: t(".deployment")) do %>
+        <%= f.select :type, Rails.application.config.spree.payment_methods.map { [_1.model_name.human, _1.to_s] } %>
+        <%= f.select :preference_source, Spree::PaymentMethod.available_preference_sources, include_blank: t(".preference_source_none") %>
+        <%= f.text_field :preferred_server %>
+        <%= f.switch_field :preferred_test_mode, hint: t(".hints.test_mode").html_safe %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component("ui/panel").new(title: t(".availability")) do %>
+        <%= f.checkbox :active %>
+        <%= f.select :store_ids, Spree::Store.pluck(:name, :id), multiple: true %>
+        <%= f.checkbox :available_to_admin %>
+        <%= f.checkbox :available_to_users %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
