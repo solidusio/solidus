@@ -37,19 +37,18 @@
                   ) %>
                 </td>
                 <td class="px-6 py-4">
-                  <%= form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), html: {
+                  <%= solidus_form_for(line_item, url: solidus_admin.order_line_item_path(@order, line_item), html: {
                     "data-controller": "readonly-when-submitting"
                   }) do |f| %>
-                    <%= render component("ui/forms/input").new(
-                      name: "#{f.object_name}[quantity]",
+                    <%= f.input(
+                      :quantity,
                       type: :number,
-                      value: line_item.quantity,
                       "aria-label": "Quantity",
                       min: 0,
                       class: "!w-16 inline-block",
                       "data-action": "input->#{stimulus_id}#updateLineItem",
                     ) %>
-                    <% render component("ui/button").new(type: :submit, text: "Update", class: "inline-block") %>
+                    <% f.submit(class: "inline-block") %>
                   <% end %>
                 </td>
                 <td class="px-6 py-4">

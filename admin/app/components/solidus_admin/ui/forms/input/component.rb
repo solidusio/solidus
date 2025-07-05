@@ -34,6 +34,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
     week
     search
     time
+    hidden
   ]).freeze
 
   def initialize(tag: :input, size: :m, error: nil, **attributes)
