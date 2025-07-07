@@ -654,12 +654,14 @@ RSpec.describe Spree::Shipment, type: :model do
     end
 
     it "are logged to the database" do
-      expect(shipment.state_changes).to be_empty
-      expect(shipment.ready!).to be true
-      expect(shipment.state_changes.count).to eq(1)
-      state_change = shipment.state_changes.first
-      expect(state_change.previous_state).to eq('pending')
-      expect(state_change.next_state).to eq('ready')
+      perform_enqueued_jobs do
+        expect(shipment.state_changes).to be_empty
+        expect(shipment.ready!).to be true
+        expect(shipment.state_changes.count).to eq(1)
+        state_change = shipment.state_changes.first
+        expect(state_change.previous_state).to eq('pending')
+        expect(state_change.next_state).to eq('ready')
+      end
     end
   end
 
@@ -874,4 +876,61 @@ RSpec.describe Spree::Shipment, type: :model do
   end
 
   it_behaves_like "customer and admin metadata fields: storage and validation", :shipment
+
+  describe "state change tracking" do
+    it "enqueues a StateChangeTrackingJob when state changes" do
+      expect {
+        shipment.update!(state: 'shipped')
+      }.to have_enqueued_job(Spree::StateChangeTrackingJob).with(
+        shipment,
+        'pending',
+        'shipped',
+        kind_of(Time)
+      )
+    end
+
+    it "does not enqueue job when state doesn't change" do
+      expect {
+        shipment.update!(tracking: 'abcd')
+      }.not_to have_enqueued_job(Spree::StateChangeTrackingJob)
+    end
+
+    it "captures the transition timestamp accurately" do
+      before_time = Time.current
+
+      shipment.update!(state: 'shipped')
+
+      # Check that a job was enqueued with a timestamp close to when we made the change
+      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.with do |shipment_id, prev_state, next_state, timestamp|
+        expect(shipment_id).to eq(shipment.id)
+        expect(prev_state).to eq('pending')
+        expect(next_state).to eq('shipped')
+        expect(timestamp).to be_within(1.second).of(before_time)
+      end
+    end
+
+    it "creates multiple state transitions" do
+      clear_enqueued_jobs
+
+      shipment.update!(state: 'ready')
+      shipment.update!(state: 'shipped')
+
+      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.exactly(2).times
+    end
+
+    it "creates state change records when job is performed" do
+      perform_enqueued_jobs do
+        expect {
+          shipment.update!(state: 'shipped')
+        }.to change(Spree::StateChange, :count).by(1)
+      end
+
+      state_change = Spree::StateChange.last
+      expect(state_change.previous_state).to eq('pending')
+      expect(state_change.next_state).to eq('shipped')
+      expect(state_change.stateful_id).to eq(shipment.id)
+      expect(state_change.stateful_type).to eq('Spree::Shipment')
+      expect(state_change.name).to eq('shipment')
+    end
+  end
 end

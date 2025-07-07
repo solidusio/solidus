@@ -24,6 +24,10 @@ class ApplicationRecord < ActiveRecord::Base
 end
 
 # @private
+class ApplicationJob < ActiveJob::Base
+end
+
+# @private
 class ApplicationMailer < ActionMailer::Base
 end
 
@@ -93,6 +97,9 @@ module DummyApp
 
     # We don't want to send email in the test environment.
     config.action_mailer.delivery_method = :test
+
+    # Do not actually run background jobs
+    config.active_job.queue_adapter = :test
 
     # No need to use credentials file in a test environment.
     config.secret_key_base = 'SECRET_TOKEN'
