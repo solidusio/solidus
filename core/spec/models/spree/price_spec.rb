@@ -169,7 +169,7 @@ RSpec.describe Spree::Price, type: :model do
 
   describe 'scopes' do
     describe '.for_any_country' do
-      let(:country) { create(:country) }
+      let(:country) { create(:country, iso: "BR") }
       let!(:fallback_price) { create(:price, country_iso: nil) }
       let!(:country_price) { create(:price, country:) }
 
