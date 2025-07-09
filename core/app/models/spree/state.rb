@@ -3,7 +3,7 @@
 module Spree
   class State < Spree::Base
     belongs_to :country, class_name: 'Spree::Country'
-    has_many :addresses, dependent: :nullify
+    has_many :addresses, dependent: :nullify, inverse_of: :state
 
     validates :name, presence: true
 
