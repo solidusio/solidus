@@ -4,7 +4,8 @@ require 'spec_helper'
 
 module Spree::Api
   describe 'States', type: :request do
-    let!(:state) { create(:state, name: "Victoria") }
+    let(:australia) { create(:country, iso: "AU") }
+    let!(:state) { create(:state, country: australia, name: "Victoria") }
     let(:attributes) { [:id, :name, :abbr, :country_id] }
 
     before do
@@ -37,7 +38,7 @@ module Spree::Api
     end
 
     context "with two states" do
-      before { create(:state, name: "New South Wales") }
+      before { create(:state, country: australia, name: "New South Wales") }
 
       it "gets all states for a country" do
         country = create(:country, states_required: true)

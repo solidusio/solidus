@@ -11,7 +11,9 @@ RSpec.describe Spree::BaseHelper, type: :helper do
     let(:country) { create(:country) }
 
     before do
-      3.times { create(:country) }
+      create(:country, iso: "BR")
+      create(:country, iso: "DE")
+      create(:country, iso: "FR")
     end
 
     context "with no checkout zone defined" do
@@ -24,7 +26,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       end
 
       it "uses locales for country names" do
-        expect(available_countries).to include(having_attributes(name: "United States of America"))
+        expect(available_countries).to include(having_attributes(name: "Brazil"))
       end
     end
 

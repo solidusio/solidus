@@ -104,16 +104,15 @@ RSpec.describe Spree::Country, type: :model do
   end
 
   describe '#prices' do
-    let(:country) { create(:country) }
+    let(:country) { create(:country, iso: "BR") }
     subject { country.prices }
 
     it { is_expected.to be_a(ActiveRecord::Associations::CollectionProxy) }
 
     context "if the country has associated prices" do
-      let!(:price_one) { create(:price) }
-      let!(:price_two) { create(:price) }
+      let!(:price_one) { create(:price, country:) }
+      let!(:price_two) { create(:price, country:) }
       let!(:price_three) { create(:price) }
-      let(:country) { create(:country, prices: [price_one, price_two]) }
 
       it { is_expected.to contain_exactly(price_one, price_two) }
     end

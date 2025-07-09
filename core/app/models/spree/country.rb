@@ -16,7 +16,8 @@ module Spree
       dependent: :restrict_with_error,
       inverse_of: :country
 
-    validates :name, :iso_name, presence: true
+    validates :name, :iso_name, :iso, presence: true
+    validates :iso, uniqueness: true
 
     self.allowed_ransackable_attributes = %w[name]
 
