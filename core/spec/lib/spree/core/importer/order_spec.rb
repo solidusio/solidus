@@ -226,7 +226,7 @@ module Spree
           }
         end
 
-        let(:other_state) { create(:state, name: "Uhuhuh", country: create(:country)) }
+        let(:other_state) { create(:state, name: "Uhuhuh", country: create(:country, iso: "BR")) }
 
         before do
           ship_address.delete(:state_id)

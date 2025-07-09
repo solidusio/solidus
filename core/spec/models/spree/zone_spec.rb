@@ -4,9 +4,11 @@ require 'rails_helper'
 
 RSpec.describe Spree::Zone, type: :model do
   describe 'for_address' do
-    let(:new_york_address) { create(:address, state_code: "NY") }
+    let(:canada) { create(:country, iso: "CA") }
+    let(:usa) { create(:country, iso: "US") }
+    let(:new_york_address) { create(:address, state_code: "NY", country: usa) }
     let(:alabama_address) { create(:address) }
-    let(:canada_address) { create(:address, country_iso_code: "CA") }
+    let(:canada_address) { create(:address, country: canada) }
 
     let!(:new_york_zone) { create(:zone, states: [new_york_address.state]) }
     let!(:alabama_zone) { create(:zone, states: [alabama_address.state]) }
@@ -101,7 +103,7 @@ RSpec.describe Spree::Zone, type: :model do
       it "should remove existing state members" do
         zone = create(:zone, name: 'foo', zone_members: [])
         state = create(:state)
-        country = create(:country)
+        country = create(:country, iso: "BR")
         zone.members.create(zoneable: state)
         country_member = zone.members.create(zoneable: country)
         zone.save
@@ -159,8 +161,8 @@ RSpec.describe Spree::Zone, type: :model do
 
   context ".with_shared_members" do
     let!(:country)  { create(:country) }
-    let!(:country2) { create(:country, name: 'OtherCountry') }
-    let!(:country3) { create(:country, name: 'TaxCountry') }
+    let!(:country2) { create(:country, iso: "MX", name: 'OtherCountry') }
+    let!(:country3) { create(:country, iso: "CA", name: 'TaxCountry') }
 
     subject(:zones_with_shared_members) { Spree::Zone.with_shared_members(zone) }
 
