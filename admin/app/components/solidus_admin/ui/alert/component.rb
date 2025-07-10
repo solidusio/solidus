@@ -35,10 +35,14 @@ class SolidusAdmin::UI::Alert::Component < SolidusAdmin::BaseComponent
     },
   }
 
-  def initialize(title:, description:, scheme: :success)
+  def initialize(title:, message:, scheme: :success)
     @title = title
-    @description = description
+    @message = message
     @scheme = scheme
+  end
+
+  def before_render
+    @title = @title.presence || t(".defaults.titles")[@scheme.to_sym]
   end
 
   def icon
