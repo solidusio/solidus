@@ -1264,14 +1264,16 @@ RSpec.describe Spree::Payment, type: :model do
   # The need for this was discovered in the research for https://github.com/spree/spree/issues/4072
   context "state changes" do
     it "are logged to the database" do
-      expect(payment.state_changes).to be_empty
-      expect(payment.process!).to be true
-      expect(payment.state_changes.count).to eq(2)
-      changes = payment.state_changes.map { |change| { change.previous_state => change.next_state } }
-      expect(changes).to match_array([
-        { "checkout" => "processing" },
-        { "processing" => "pending" }
-      ])
+      perform_enqueued_jobs do
+        expect(payment.state_changes).to be_empty
+        expect(payment.process!).to be true
+        expect(payment.state_changes.count).to eq(2)
+        changes = payment.state_changes.map { |change| { change.previous_state => change.next_state } }
+        expect(changes).to match_array([
+          { "checkout" => "processing" },
+          { "processing" => "pending" }
+        ])
+      end
     end
   end
 
@@ -1333,4 +1335,62 @@ RSpec.describe Spree::Payment, type: :model do
   end
 
   it_behaves_like "customer and admin metadata fields: storage and validation", :payment
+
+  describe "state change tracking" do
+    it "enqueues a StateChangeTrackingJob when state changes" do
+      expect {
+        payment.update!(state: 'completed')
+      }.to have_enqueued_job(Spree::StateChangeTrackingJob).with(
+        payment,
+        'checkout',
+        'completed',
+        kind_of(Time)
+      )
+    end
+
+    it "does not enqueue job when state doesn't change" do
+      expect {
+        payment.update!(amount: '100.00')
+      }.not_to have_enqueued_job(Spree::StateChangeTrackingJob)
+    end
+
+    it "captures the transition timestamp accurately" do
+      before_time = Time.current
+
+      payment.update!(state: 'completed')
+
+      # Check that a job was enqueued with a timestamp close to when we made the change
+      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.with do |payment_id, prev_state, next_state, timestamp|
+        expect(payment_id).to eq(payment.id)
+        expect(prev_state).to eq('pending')
+        expect(next_state).to eq('completed')
+        expect(timestamp).to be_within(1.second).of(before_time)
+      end
+    end
+
+    it "creates multiple state transitions" do
+      clear_enqueued_jobs
+
+      payment.update!(state: 'pending')
+      payment.update!(state: 'processing')
+      payment.update!(state: 'completed')
+
+      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.exactly(3).times
+    end
+
+    it "creates state change records when job is performed" do
+      perform_enqueued_jobs do
+        expect {
+          payment.update!(state: 'completed')
+        }.to change(Spree::StateChange, :count).by(1)
+      end
+
+      state_change = Spree::StateChange.last
+      expect(state_change.previous_state).to eq('checkout')
+      expect(state_change.next_state).to eq('completed')
+      expect(state_change.stateful_id).to eq(payment.id)
+      expect(state_change.stateful_type).to eq('Spree::Payment')
+      expect(state_change.name).to eq('payment')
+    end
+  end
 end

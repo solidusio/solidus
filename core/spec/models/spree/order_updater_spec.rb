@@ -184,7 +184,7 @@ module Spree
     end
 
     context "updating payment state" do
-      let(:order) { build(:order) }
+      let(:order) { create(:order) }
       let(:updater) { order.recalculator }
       before { allow(order).to receive(:refund_total).and_return(0) }
 

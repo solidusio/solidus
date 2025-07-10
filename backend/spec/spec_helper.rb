@@ -47,7 +47,6 @@ require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
 require 'spree/testing_support/precompiled_assets'
 require 'spree/testing_support/translations'
-require 'spree/testing_support/job_helpers'
 require 'spree/testing_support/blacklist_urls'
 require 'spree/testing_support/silence_deprecations'
 
@@ -99,7 +98,7 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
   config.include Spree::TestingSupport::Translations
-  config.include Spree::TestingSupport::JobHelpers
+  config.include ActiveJob::TestHelper
   config.include Spree::TestingSupport::BlacklistUrls
 
   config.example_status_persistence_file_path = "./spec/examples.txt"

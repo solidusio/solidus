@@ -185,11 +185,11 @@ module Spree
       yield
       new_state = order.public_send(state)
       if old_state != new_state
-        order.state_changes.new(
-          previous_state: old_state,
-          next_state:     new_state,
-          name:,
-          user_id:        order.user_id
+        StateChangeTrackingJob.perform_later(
+          order,
+          old_state,
+          new_state,
+          Time.current
         )
       end
     end

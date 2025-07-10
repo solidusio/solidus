@@ -38,22 +38,6 @@ module Spree
             state_machine :state, initial: :cart, use_transactions: false do
               klass.next_event_transitions.each { |state| transition(state.merge(on: :next)) }
 
-              # Persist the state on the order
-              after_transition do |order, transition|
-                # Hard to say if this is really necessary, it was introduced in this commit:
-                # https://github.com/mamhoff/solidus/commit/fa1d66c42e4c04ee7cd1c20d87e4cdb74a226d3d
-                # But it seems to be harmless, so we'll keep it for now.
-                order.state = order.state # rubocop:disable Lint/SelfAssignment
-
-                order.state_changes.create(
-                  previous_state: transition.from,
-                  next_state:     transition.to,
-                  name:           'order',
-                  user_id:        order.user_id
-                )
-                order.save
-              end
-
               event :cancel do
                 transition to: :canceled, if: :allow_cancel?, from: :complete
               end

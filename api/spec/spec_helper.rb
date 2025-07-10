@@ -38,7 +38,6 @@ require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/job_helpers'
 
 require 'spree/api/testing_support/caching'
 require 'spree/api/testing_support/helpers'
@@ -65,7 +64,7 @@ RSpec.configure do |config|
   config.include Spree::Api::TestingSupport::Helpers, type: :controller
   config.extend Spree::Api::TestingSupport::Setup, type: :controller
   config.include Spree::TestingSupport::Preferences
-  config.include Spree::TestingSupport::JobHelpers
+  config.include ActiveJob::TestHelper
 
   config.before(:each) do
     Rails.cache.clear

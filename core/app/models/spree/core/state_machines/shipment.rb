@@ -15,6 +15,7 @@ module Spree
       #
       module Shipment
         extend ActiveSupport::Concern
+        include StateChangeTracking
 
         included do
           state_machine initial: :pending, use_transactions: false do
@@ -42,14 +43,6 @@ module Spree
               transition from: :canceled, to: :pending
             end
             after_transition from: :canceled, to: [:pending, :ready, :shipped], do: :after_resume
-
-            after_transition do |shipment, transition|
-              shipment.state_changes.create!(
-                previous_state: transition.from,
-                next_state:     transition.to,
-                name:           'shipment'
-              )
-            end
           end
         end
       end

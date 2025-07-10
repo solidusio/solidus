@@ -2163,4 +2163,82 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   it_behaves_like "customer and admin metadata fields: storage and validation", :order
+
+  describe "state change tracking" do
+    let(:user) { create(:user) }
+    let(:order) { create(:order, user: user) }
+
+    it "enqueues a StateChangeTrackingJob when state changes" do
+      expect {
+        order.update!(state: 'address')
+      }.to have_enqueued_job(Spree::StateChangeTrackingJob).with(
+        order,
+        'cart',
+        'address',
+        kind_of(Time)
+      )
+    end
+
+    it "does not enqueue job when state doesn't change" do
+      expect {
+        order.update!(email: 'newemail@example.com')
+      }.not_to have_enqueued_job(Spree::StateChangeTrackingJob)
+    end
+
+    context "with anonymous order" do
+      let(:user) { nil }
+
+      it "creates an anonymous state change" do
+        expect {
+          order.update!(state: 'address')
+        }.to have_enqueued_job(Spree::StateChangeTrackingJob).with(
+          order,
+          'cart',
+          'address',
+          kind_of(Time)
+        )
+      end
+    end
+
+    it "captures the transition timestamp accurately" do
+      before_time = Time.current
+
+      order.update!(state: 'address')
+
+      # Check that a job was enqueued with a timestamp close to when we made the change
+      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.with do |order_id, prev_state, next_state, user_id, timestamp|
+        expect(order_id).to eq(order.id)
+        expect(prev_state).to eq('cart')
+        expect(next_state).to eq('address')
+        expect(user_id).to eq(user.id)
+        expect(timestamp).to be_within(1.second).of(before_time)
+      end
+    end
+
+    it "creates multiple state transitions" do
+      clear_enqueued_jobs
+
+      order.update!(state: 'address')
+      order.update!(state: 'delivery')
+      order.update!(state: 'payment')
+
+      expect(Spree::StateChangeTrackingJob).to have_been_enqueued.exactly(3).times
+    end
+
+    it "creates state change records when job is performed" do
+      perform_enqueued_jobs do
+        expect {
+          order.update!(state: 'address')
+        }.to change(Spree::StateChange, :count).by(1)
+      end
+
+      state_change = Spree::StateChange.last
+      expect(state_change.previous_state).to eq('cart')
+      expect(state_change.next_state).to eq('address')
+      expect(state_change.stateful_id).to eq(order.id)
+      expect(state_change.stateful_type).to eq('Spree::Order')
+      expect(state_change.user_id).to eq(user.id)
+      expect(state_change.name).to eq('order')
+    end
+  end
 end

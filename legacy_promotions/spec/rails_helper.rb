@@ -86,7 +86,7 @@ RSpec.configure do |config|
 
   config.include ViewComponent::TestHelpers, type: :component
 
-  config.include Spree::TestingSupport::JobHelpers
+  config.include ActiveJob::TestHelper
   config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature
   config.include FactoryBot::Syntax::Methods
   config.include Spree::Api::TestingSupport::Helpers, type: :request
