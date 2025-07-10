@@ -9,6 +9,7 @@ module SolidusAdmin
     include SolidusAdmin::ComponentsHelper
     include SolidusAdmin::StimulusHelper
     include SolidusAdmin::VoidElementsHelper
+    include SolidusAdmin::SolidusFormHelper
     include Turbo::FramesHelper
 
     def icon_tag(name, **attrs)

@@ -133,7 +133,7 @@ module SolidusAdmin
           render page_component, status: :unprocessable_entity
         end
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(:resource_modal, page_component),
+          render turbo_stream: turbo_stream.replace(resource_form_container, page_component),
             status: :unprocessable_entity
         end
       end
@@ -164,6 +164,10 @@ module SolidusAdmin
     def blueprint_view
       raise NotImplementedError,
         "You must implement the blueprint_view method in #{self.class}"
+    end
+
+    def resource_form_container
+      :resource_modal
     end
   end
 end
