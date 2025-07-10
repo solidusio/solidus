@@ -90,7 +90,7 @@ jobs:
           packages: libvips-dev
       - name: Setup coverage
         id: setup-coverage
-        if: ${{ inputs.coverage }}
+        if: ${{ inputs.coverage && matrix.rails == '8.0' && matrix.ruby == '3.4' }}
         run: |
           echo "COVERAGE=true" >> $GITHUB_ENV
           echo "coverage=true" >> $GITHUB_OUTPUT
@@ -101,7 +101,7 @@ jobs:
           bundle exec rspec --profile 10 --format progress
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v5
-        if: ${{ inputs.coverage }}
+        if: ${{ steps.setup-coverage.outputs.coverage == 'true' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: solidusio/solidus
