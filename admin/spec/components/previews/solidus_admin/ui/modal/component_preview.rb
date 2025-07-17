@@ -11,8 +11,4 @@ class SolidusAdmin::UI::Modal::ComponentPreview < ViewComponent::Preview
   def with_form
     render_with_template
   end
-
-  def with_actions
-    render_with_template
-  end
 end

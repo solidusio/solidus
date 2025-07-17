@@ -61,6 +61,12 @@ module SolidusAdmin
           find('button[aria-label="Clear"]').click
         end
       end
+
+      def accept_turbo_confirm(title)
+        yield
+        dialog = find("dialog", text: title)
+        within(dialog) { find_button(id: "confirm-accept").click }
+      end
     end
   end
 end
