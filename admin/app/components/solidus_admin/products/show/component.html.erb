@@ -83,13 +83,48 @@
           ) %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".options")) do %>
-          <%= render component("ui/forms/field").select(
-            f,
-            :option_type_ids,
-            option_type_options,
-            multiple: true,
-            "size" => option_type_options.size,
+        <%= render component("ui/panel").new(title: t(".options")) do |panel| %>
+          <% if @product.product_option_types.present? %>
+            <% panel.with_section do %>
+              <div class="flex flex-col gap-4" data-controller="sortable" data-sortable-handle-value=".handle">
+                <% @product.product_option_types.includes(option_type: :option_values).order(:position).each do |product_option| %>
+                  <div class="flex gap-2 justify-between" data-sortable-url=<%= solidus_admin.move_product_option_type_path(product_option) %>>
+                    <div class="flex gap-2">
+                      <div class="flex items-center">
+                        <%= render component("ui/icon").new(name: "draggable", class: "w-6 h-6 cursor-grab handle fill-gray-500") %>
+                      </div>
+                      <div class="flex flex-col gap-2">
+                        <span class="font-semibold text-sm"><%= product_option.name %>:<%= product_option.presentation %></span>
+                        <div class="flex gap-2 flex-wrap">
+                          <% product_option.option_values.each do |value| %>
+                            <%= render component("ui/badge").new(name: "#{value.name}:#{value.presentation}") %>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex items-center">
+                      <%= render component("ui/button").new(tag: :a, href: spree.edit_admin_option_type_path(product_option.option_type), scheme: :secondary, text: t(".edit")) %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <div class="flex gap-4 justify-between items-end">
+            <%= hidden_field_tag "#{f.object_name}[option_type_ids][]", nil %>
+            <%= render component("ui/forms/field").select(
+              f,
+              :option_type_ids,
+              option_type_options,
+              multiple: true
+            ) %>
+            <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
+          </div>
+
+          <% panel.with_action(
+            name: t(".manage_options"),
+            href: solidus_admin.option_types_path
           ) %>
         <% end %>
 
@@ -123,13 +158,20 @@
           <% end %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".product_organization")) do %>
-          <%= render component("ui/forms/field").select(
-            f,
-            :taxon_ids,
-            taxon_options,
-            multiple: true,
-            "size" => taxon_options.size, # use a string key to avoid setting the size of the component
+        <%= render component("ui/panel").new(title: t(".product_organization")) do |panel| %>
+          <%= f.hidden_field :taxon_ids, multiple: true, value: nil %>
+          <%= render component("turbo/target_frame").new(:product_organization_frame, source: :new_product_category) do %>
+            <%= render component("ui/forms/field").select(
+              f,
+              :taxon_ids,
+              taxon_options,
+              multiple: true
+            ) %>
+          <% end %>
+          <% panel.with_action(
+            name: t(".add_new_category"),
+            href: solidus_admin.new_product_taxon_path(@product),
+            data: { turbo_frame: :new_product_category }
           ) %>
         <% end %>
       <% end %>
@@ -151,3 +193,5 @@
     <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
   <% end %>
 <% end %>
+
+<%= turbo_frame_tag :new_product_category, target: :product_organization_frame %>

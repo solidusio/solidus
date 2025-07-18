@@ -30,6 +30,8 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   # @param choices [Array<String>, Array<Array<String>>] container with options to be rendered
   #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
   #   When +:src+ parameter is provided, use +:choices+ to provide the list of selected options only.
+  #   Include a dataset hash `{ data: { item_label: <alternative_label_text> } }` to change the text displayed in select
+  #   box when option is selected.
   # @param src [nil, String] URL of a JSON resource with options data to be loaded instead of rendering options in place.
   # @option attributes [String] :"data-option-value-field"
   # @option attributes [String] :"data-option-label-field" when +:src+ param is passed, value and label of loaded options

@@ -110,16 +110,6 @@ module Spree
         # find the original.
         find('label:not(.select2-offscreen)', text: /#{Regexp.escape(text)}/i, match: :one)
       end
-
-      def dialog(parent: 'body', **options)
-        within(parent) do
-          find('dialog', visible: :all, **options)
-        end
-      end
-
-      def turbo_frame_modal
-        dialog(parent: find('turbo-frame', visible: :all))
-      end
     end
   end
 end

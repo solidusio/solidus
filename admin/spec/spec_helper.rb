@@ -14,6 +14,7 @@ if ENV["COVERAGE"]
   SimpleCov.merge_timeout(3600)
   SimpleCov.start('rails') do
     add_filter '/shared_examples/'
+    add_filter '/testing_support/feature_helpers'
   end
 end
 

@@ -16,6 +16,8 @@ SolidusAdmin::Engine.routes.draw do
       put :discontinue
       put :activate
     end
+
+    resources :taxons, only: [:new, :create], controller: :product_taxons
   end
 
   # Needs a constraint to avoid interpreting "new" as a product's slug
@@ -87,4 +89,5 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :roles, except: [:show]
   admin_resources :adjustment_reasons, except: [:show]
   admin_resources :store_credit_reasons, except: [:show]
+  admin_resources :product_option_types, only: [], sortable: true
 end

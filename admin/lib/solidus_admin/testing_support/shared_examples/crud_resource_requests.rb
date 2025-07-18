@@ -48,8 +48,6 @@ RSpec.shared_examples_for 'CRUD resource requests' do |resource_name|
     end
 
     context "with invalid parameters" do
-      let(:invalid_attributes) { { name: "", code: "", active: true } }
-
       it "does not create a new #{resource_name.humanize}" do
         expect {
           post url_helpers.public_send("#{resource_name.pluralize}_path"), params: { resource_name => invalid_attributes }

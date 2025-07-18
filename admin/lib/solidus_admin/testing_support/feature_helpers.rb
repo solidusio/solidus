@@ -33,6 +33,10 @@ module SolidusAdmin
         end
       end
 
+      def panel(title:)
+        find("section", text: title).find(:xpath, "..")
+      end
+
       # Select options from a "solidus-select" field
       #
       # @param value [String, Array<String>] which option(s) to select
@@ -52,6 +56,14 @@ module SolidusAdmin
         end
       end
 
+      def solidus_unselect(value, from:)
+        input = find_field(from, visible: :all)
+        Array.wrap(value).each do |val|
+          item = input.sibling("div", text: val)
+          item.find("a").click
+        end
+      end
+
       def checkbox(locator)
         find(:checkbox, locator)
       end
@@ -60,6 +72,20 @@ module SolidusAdmin
         within('div[role="search"]') do
           find('button[aria-label="Clear"]').click
         end
+      end
+
+      def solidus_select_control(field)
+        find_field(field, visible: :all).ancestor(".control")
+      end
+
+      def dialog(parent: 'body', **options)
+        within(parent) do
+          find('dialog', visible: :all, **options)
+        end
+      end
+
+      def turbo_frame_modal
+        dialog(parent: find('turbo-frame', visible: :all))
       end
     end
   end
