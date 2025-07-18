@@ -1,0 +1,27 @@
+<%= page id: :resource_form do %>
+  <%= page_header do %>
+    <%= page_header_back(back_url) %>
+    <%= page_header_title(@store.name) %>
+    <%= page_header_actions do %>
+      <%= render component("ui/button").discard(path: back_url) %>
+      <%= render component("ui/button").save(form: form_id) %>
+    <% end %>
+  <% end %>
+
+  <%= render component("stores/form").new(store: @store, url: form_url, id: form_id) %>
+
+  <%= page_footer do %>
+    <div class="flex justify-between w-full">
+      <% unless @store.default %>
+        <%= form_for @store, url: solidus_admin.store_path(@store), method: :delete do %>
+          <%= render component("ui/button").delete(
+            "data-controller": "confirm",
+            "data-confirm-text-value": t("spree.are_you_sure")
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render component("ui/button").save(form: form_id) %>
+    </div>
+  <% end %>
+<% end %>

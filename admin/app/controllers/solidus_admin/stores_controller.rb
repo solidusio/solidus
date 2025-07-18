@@ -1,35 +1,40 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  class StoresController < SolidusAdmin::BaseController
-    include SolidusAdmin::ControllerHelpers::Search
-
-    def index
-      stores = apply_search_to(
-        Spree::Store.order(id: :desc),
-        param: :q
-      )
-
-      set_page_and_extract_portion_from(stores)
-
-      respond_to do |format|
-        format.html { render component('stores/index').new(page: @page) }
-      end
-    end
-
+  class StoresController < SolidusAdmin::ResourcesController
     def destroy
-      @stores = Spree::Store.where(id: params[:id])
+      @resource = resource_class.where(id: params[:id])
 
-      Spree::Store.transaction { @stores.destroy_all }
+      failed = @resource.destroy_all.reject(&:destroyed?)
+      if failed.present?
+        desc = failed.map { t(".error.description", name: _1.name, reason: _1.errors.full_messages.join(" ")) }.join("<br>")
+        flash[:alert] = { danger: { title: t(".error.title"), description: desc } }
+      else
+        flash[:notice] = t('.success')
+      end
 
-      flash[:notice] = t('.success')
-      redirect_back_or_to stores_path, status: :see_other
+      redirect_to after_destroy_path, status: :see_other
     end
 
     private
 
-    def store_params
-      params.require(:store).permit(:store_id, permitted_store_attributes)
+    def resource_class = Spree::Store
+
+    def resources_collection = Spree::Store
+
+    def permitted_resource_params
+      params.require(:store).permit(
+        :name,
+        :url,
+        :code,
+        :meta_description,
+        :meta_keywords,
+        :seo_title,
+        :mail_from_address,
+        :default_currency,
+        :cart_tax_country_iso,
+        available_locales: [],
+      )
     end
   end
 end

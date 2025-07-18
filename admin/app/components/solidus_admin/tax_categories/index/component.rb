@@ -18,7 +18,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_tax_category_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -26,7 +26,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
 
   def turbo_frames
     %w[
-      resource_modal
+      resource_form
     ]
   end
 
@@ -51,7 +51,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
         header: :name,
         data: ->(tax_category) do
           link_to tax_category.name, edit_path(tax_category),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: 'body-link'
         end
       },
@@ -59,7 +59,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
         header: :tax_code,
         data: ->(tax_category) do
           link_to_if tax_category.tax_code, tax_category.tax_code, edit_path(tax_category),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: 'body-link'
         end
       },
@@ -67,7 +67,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
         header: :description,
         data: ->(tax_category) do
           link_to_if tax_category.description, tax_category.description, edit_path(tax_category),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: 'body-link'
         end
       },
