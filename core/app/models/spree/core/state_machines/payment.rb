@@ -15,6 +15,7 @@ module Spree
       #
       module Payment
         extend ActiveSupport::Concern
+        include StateChangeTracking
 
         included do
           state_machine initial: :checkout do
@@ -44,14 +45,6 @@ module Spree
             # when the card brand isnt supported
             event :invalidate do
               transition from: [:checkout], to: :invalid
-            end
-
-            after_transition do |payment, transition|
-              payment.state_changes.create!(
-                previous_state: transition.from,
-                next_state:     transition.to,
-                name:           'payment'
-              )
             end
           end
         end

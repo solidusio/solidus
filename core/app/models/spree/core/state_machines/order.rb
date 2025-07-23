@@ -6,6 +6,7 @@ module Spree
       module Order
         def self.included(klass)
           klass.extend ClassMethods
+          klass.include StateChangeTracking
         end
 
         def checkout_steps
