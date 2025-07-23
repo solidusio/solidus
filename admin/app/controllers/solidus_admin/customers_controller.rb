@@ -13,7 +13,7 @@ class SolidusAdmin::CustomersController < SolidusAdmin::BaseController
 
   def destroy
     if @order.update(user: nil)
-      flash[:success] = t('.success')
+      flash[:notice] = t('.success')
     else
       flash[:error] = t('.error')
     end

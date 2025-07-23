@@ -1,2 +1,8 @@
 en:
-  close: Close
+  close: "Close"
+  defaults:
+    titles:
+      danger: "Caution"
+      info: "Info"
+      success: "Success"
+      warning: "Warning"
