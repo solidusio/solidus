@@ -22,14 +22,14 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_role_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
     )
   end
 
   def turbo_frames
     %w[
-      resource_modal
+      resource_form
     ]
   end
 
@@ -61,7 +61,7 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
         header: :role,
         data: ->(role) do
           link_to role.name, edit_path(role),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: "body-link"
         end,
       },
@@ -69,7 +69,7 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
         header: :description,
         data: ->(role) do
           link_to_if role.description, role.description, edit_path(role),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: "body-link"
         end
       }

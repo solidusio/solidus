@@ -22,7 +22,7 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
   end
 
   def turbo_frames
-    %w[resource_modal]
+    %w[resource_form]
   end
 
   def page_actions
@@ -30,7 +30,7 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_zone_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -69,7 +69,7 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
       header: :name,
       data: ->(zone) do
         link_to zone.name, edit_path(zone),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }
@@ -80,7 +80,7 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
       header: :description,
       data: ->(zone) do
         link_to zone.description, edit_path(zone),
-          data: { turbo_frame: :resource_modal },
+          data: { turbo_frame: :resource_form },
           class: 'body-link'
       end
     }

@@ -19,7 +19,7 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
 
   def turbo_frames
     %w[
-      resource_modal
+      resource_form
     ]
   end
 
@@ -28,7 +28,7 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
       tag: :a,
       text: t('.add'),
       href: solidus_admin.new_return_reason_path(**search_filter_params),
-      data: { turbo_frame: :resource_modal },
+      data: { turbo_frame: :resource_form },
       icon: "add-line",
       class: "align-self-end w-full",
     )
@@ -51,7 +51,7 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
         header: :name,
         data: ->(return_reason) do
           link_to return_reason.name, edit_path(return_reason),
-            data: { turbo_frame: :resource_modal },
+            data: { turbo_frame: :resource_form },
             class: 'body-link'
         end
       },
