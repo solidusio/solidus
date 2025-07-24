@@ -13,8 +13,8 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
     solidus_admin.payment_methods_path
   end
 
-  def row_url(payment_method)
-    spree.edit_admin_payment_method_path(payment_method)
+  def edit_path(payment_method)
+    solidus_admin.edit_payment_method_path(payment_method)
   end
 
   def sortable_options
@@ -28,7 +28,7 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
     render component("ui/button").new(
       tag: :a,
       text: t('.add'),
-      href: spree.new_admin_payment_method_path,
+      href: solidus_admin.new_payment_method_path,
       icon: "add-line",
     )
   end
@@ -40,6 +40,7 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
         action: solidus_admin.payment_methods_path,
         method: :delete,
         icon: 'delete-bin-7-line',
+        require_confirmation: true
       },
     ]
   end
@@ -59,13 +60,13 @@ class SolidusAdmin::PaymentMethods::Index::Component < SolidusAdmin::UI::Pages::
       {
         header: :name,
         data: ->(payment_method) do
-          content_tag :div, payment_method.name
+          link_to payment_method.name, edit_path(payment_method), class: "body-link"
         end
       },
       {
         header: :type,
         data: ->(payment_method) do
-          content_tag :div, payment_method.model_name.human
+          link_to payment_method.model_name.human, edit_path(payment_method), class: "body-link"
         end
       },
       {
