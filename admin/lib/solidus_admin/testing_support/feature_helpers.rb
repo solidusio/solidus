@@ -61,6 +61,11 @@ module SolidusAdmin
           find('button[aria-label="Clear"]').click
         end
       end
+
+      def switch(locator, on: true)
+        checkbox = find(:label, text: locator).find(:checkbox)
+        on ? checkbox.check : checkbox.uncheck
+      end
     end
   end
 end

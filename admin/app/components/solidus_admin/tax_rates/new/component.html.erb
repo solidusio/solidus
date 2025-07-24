@@ -1,0 +1,19 @@
+<!-- TODO: change page id -->
+
+<%= page id: :resource_modal do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.tax_rates_path) %>
+    <%= page_header_title(t(".title")) %>
+    <%= page_header_actions do %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        text: t(".discard"),
+        href: solidus_admin.tax_rates_path,
+        scheme: :secondary
+      ) %>
+      <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
+    <% end %>
+  <% end %>
+
+  <%= render component("tax_rates/form").new(tax_rate: @tax_rate, form_url:, form_id:) %>
+<% end %>

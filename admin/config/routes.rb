@@ -73,7 +73,7 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :taxonomies, only: [:index, :destroy], sortable: true
   admin_resources :promotion_categories, only: [:index, :destroy]
   admin_resources :tax_categories, except: [:show]
-  admin_resources :tax_rates, only: [:index, :destroy]
+  admin_resources :tax_rates, except: [:show]
   admin_resources :payment_methods, only: [:index, :destroy], sortable: true
   admin_resources :stock_items, only: [:index, :edit, :update]
   admin_resources :shipping_methods, only: [:index, :destroy]
