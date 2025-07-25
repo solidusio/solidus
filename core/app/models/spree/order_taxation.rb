@@ -57,7 +57,7 @@ module Spree
 
       # Remove any tax adjustments tied to rates which no longer match.
       unmatched_adjustments = tax_adjustments - active_adjustments
-      item.adjustments.destroy(unmatched_adjustments)
+      unmatched_adjustments.each(&:mark_for_destruction)
     end
 
     # Update or create a new tax adjustment on an item.
@@ -77,7 +77,8 @@ module Spree
         label: tax_item.label,
         included: tax_item.included_in_price
       )
-      tax_adjustment.update!(amount: tax_item.amount)
+
+      tax_adjustment.amount = tax_item.amount
       tax_adjustment
     end
   end
