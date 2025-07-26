@@ -117,8 +117,10 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
   end
 
   def self.submit(resource:, **attrs)
-    resource_name = resource.model_name.human
-    text = resource.new_record? ? t('.submit.create', resource_name:) : t('.submit.update', resource_name:)
+    unless (text = attrs.delete(:text))
+      resource_name = resource.model_name.human
+      text = resource.new_record? ? t('.submit.create', resource_name:) : t('.submit.update', resource_name:)
+    end
     new(text:, type: :submit, **attrs)
   end
 
