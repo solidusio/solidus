@@ -4,7 +4,7 @@ module Spree
   class CustomerReturn < Spree::Base
     include Metadata
 
-    belongs_to :stock_location, optional: true
+    belongs_to :stock_location
 
     has_many :return_items, inverse_of: :customer_return
     has_many :return_authorizations, through: :return_items
@@ -14,7 +14,6 @@ module Spree
     before_create :generate_number
 
     validates :return_items, presence: true
-    validates :stock_location, presence: true
     validate :return_items_belong_to_same_order
 
     accepts_nested_attributes_for :return_items
