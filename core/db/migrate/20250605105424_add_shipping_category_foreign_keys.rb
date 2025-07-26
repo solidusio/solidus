@@ -13,7 +13,7 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
       add_foreign_key :spree_products, :spree_shipping_categories, column: :shipping_category_id, null: false
     rescue ActiveRecord::StatementInvalid => e
       if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-        Rails.logger.warn <<~MSG
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_products => :spree_shipping_categories.
           To fix this:
             1. Uncomment the code that removes orphaned records.
@@ -33,7 +33,7 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
       add_foreign_key :spree_shipping_method_categories, :spree_shipping_methods, column: :shipping_method_id, null: false
     rescue ActiveRecord::StatementInvalid => e
       if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-        Rails.logger.warn <<~MSG
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_shipping_method_categories => :spree_shipping_methods.
           To fix this:
             1. Uncomment the code that removes orphaned records.
@@ -53,7 +53,7 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
       add_foreign_key :spree_shipping_method_categories, :spree_shipping_categories, column: :shipping_category_id, null: false
     rescue ActiveRecord::StatementInvalid => e
       if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-        Rails.logger.warn <<~MSG
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_shipping_method_categories => :spree_shipping_categories.
           To fix this:
             1. Uncomment the code that removes orphaned records.

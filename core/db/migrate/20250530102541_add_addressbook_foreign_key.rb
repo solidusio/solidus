@@ -12,7 +12,7 @@ class AddAddressbookForeignKey < ActiveRecord::Migration[7.0]
     add_foreign_key :spree_user_addresses, :spree_addresses, column: :address_id, null: false
   rescue ActiveRecord::StatementInvalid => e
     if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-      Rails.logger.warn <<~MSG
+      say <<~MSG
         ⚠️ Foreign key constraint failed when adding :spree_user_addresses => :spree_addresses.
         To fix this:
           1. Uncomment the code that removes orphaned records.

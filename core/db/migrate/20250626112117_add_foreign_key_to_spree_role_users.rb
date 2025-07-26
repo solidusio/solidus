@@ -13,7 +13,7 @@ class AddForeignKeyToSpreeRoleUsers < ActiveRecord::Migration[7.0]
     add_foreign_key :spree_roles_users, :spree_roles, column: :role_id, null: false
   rescue ActiveRecord::StatementInvalid => e
     if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-      Rails.logger.warn <<~MSG
+      say <<~MSG
         ⚠️ Foreign key constraint failed when adding :spree_roles_users => :spree_roles.
         To fix this:
           1. Uncomment the code that removes orphaned records.

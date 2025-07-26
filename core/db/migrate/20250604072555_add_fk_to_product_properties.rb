@@ -13,7 +13,7 @@ class AddFkToProductProperties < ActiveRecord::Migration[7.0]
       add_foreign_key :spree_product_properties, :spree_products, column: :product_id, null: false
     rescue ActiveRecord::StatementInvalid => e
       if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-        Rails.logger.warn <<~MSG
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_product_properties => :spree_products.
           To fix this:
             1. Uncomment the code that removes orphaned records.
@@ -33,7 +33,7 @@ class AddFkToProductProperties < ActiveRecord::Migration[7.0]
       add_foreign_key :spree_product_properties, :spree_properties, column: :property_id, null: false
     rescue ActiveRecord::StatementInvalid => e
       if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
-        Rails.logger.warn <<~MSG
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_product_properties => :spree_properties.
           To fix this:
             1. Uncomment the code that removes orphaned records.
