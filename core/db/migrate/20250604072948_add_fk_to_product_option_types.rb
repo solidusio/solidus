@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AddFkToProductOptionTypes < ActiveRecord::Migration[7.0]
+  FOREIGN_KEY_VIOLATION_ERRORS = %w[PG::ForeignKeyViolation Mysql2::Error SQLite3::ConstraintException]
+
   def up
     # Uncomment the following code to remove orphaned records if this migration fails
     #
@@ -10,7 +12,7 @@ class AddFkToProductOptionTypes < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_product_option_types, :spree_products, column: :product_id
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
         Rails.logger.warn <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_product_option_types => :spree_products.
           To fix this:
@@ -30,7 +32,7 @@ class AddFkToProductOptionTypes < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_product_option_types, :spree_option_types, column: :option_type_id
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
         Rails.logger.warn <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_product_option_types => :spree_option_types.
           To fix this:

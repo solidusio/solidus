@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AddForeignKeyToSpreeRoleUsers < ActiveRecord::Migration[7.0]
+  FOREIGN_KEY_VIOLATION_ERRORS = %w[PG::ForeignKeyViolation Mysql2::Error SQLite3::ConstraintException]
+
   def up
     # Uncomment the following code to remove orphaned records if this migration fails
     #
@@ -10,7 +12,7 @@ class AddForeignKeyToSpreeRoleUsers < ActiveRecord::Migration[7.0]
 
     add_foreign_key :spree_roles_users, :spree_roles, column: :role_id, null: false
   rescue ActiveRecord::StatementInvalid => e
-    if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
+    if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
       Rails.logger.warn <<~MSG
         ⚠️ Foreign key constraint failed when adding :spree_roles_users => :spree_roles.
         To fix this:
