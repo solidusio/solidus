@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
+  FOREIGN_KEY_VIOLATION_ERRORS = %w[PG::ForeignKeyViolation Mysql2::Error SQLite3::ConstraintException]
+
   def change
     # Uncomment the following code to remove orphaned records if the following code fails
     #
@@ -10,8 +12,8 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_products, :spree_shipping_categories, column: :shipping_category_id, null: false
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
-        Rails.logger.warn <<~MSG
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_products => :spree_shipping_categories.
           To fix this:
             1. Uncomment the code that removes orphaned records.
@@ -30,8 +32,8 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_shipping_method_categories, :spree_shipping_methods, column: :shipping_method_id, null: false
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
-        Rails.logger.warn <<~MSG
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_shipping_method_categories => :spree_shipping_methods.
           To fix this:
             1. Uncomment the code that removes orphaned records.
@@ -50,8 +52,8 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_shipping_method_categories, :spree_shipping_categories, column: :shipping_category_id, null: false
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
-        Rails.logger.warn <<~MSG
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_shipping_method_categories => :spree_shipping_categories.
           To fix this:
             1. Uncomment the code that removes orphaned records.

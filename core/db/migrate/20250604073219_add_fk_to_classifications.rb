@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AddFkToClassifications < ActiveRecord::Migration[7.0]
+  FOREIGN_KEY_VIOLATION_ERRORS = %w[PG::ForeignKeyViolation Mysql2::Error SQLite3::ConstraintException]
+
   def up
     # Uncomment the following code to remove orphaned records if this migration fails
     #
@@ -10,8 +12,8 @@ class AddFkToClassifications < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_products_taxons, :spree_products, column: :product_id
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
-        Rails.logger.warn <<~MSG
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_products_taxons => :spree_products.
           To fix this:
             1. Uncomment the code that removes orphaned records.
@@ -30,8 +32,8 @@ class AddFkToClassifications < ActiveRecord::Migration[7.0]
     begin
       add_foreign_key :spree_products_taxons, :spree_taxons, column: :taxon_id
     rescue ActiveRecord::StatementInvalid => e
-      if e.cause.is_a?(PG::ForeignKeyViolation) || e.cause.is_a?(Mysql2::Error) || e.cause.is_a?(SQLite3::ConstraintException)
-        Rails.logger.warn <<~MSG
+      if e.cause.class.name.in?(FOREIGN_KEY_VIOLATION_ERRORS)
+        say <<~MSG
           ⚠️ Foreign key constraint failed when adding :spree_products_taxons => :spree_taxons.
           To fix this:
             1. Uncomment the code that removes orphaned records.
