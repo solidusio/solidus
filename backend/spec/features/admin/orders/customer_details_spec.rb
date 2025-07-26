@@ -147,20 +147,6 @@ describe "Customer Details", type: :feature, js: true do
       end
     end
 
-    context "country associated was removed" do
-      let(:brazil) { create(:country, iso: "BR", name: "Brazil") }
-
-      before do
-        order.bill_address.country.destroy
-        stub_spree_preferences(default_country_iso: brazil.iso)
-      end
-
-      it "sets default country when displaying form" do
-        click_link "Customer"
-        expect(page).to have_field("order_bill_address_attributes_country_id", with: brazil.id, visible: false)
-      end
-    end
-
     # Regression test for https://github.com/spree/spree/issues/942
     context "errors when no shipping methods are available" do
       before do

@@ -16,7 +16,7 @@ module Spree::Api
     end
 
     context "with two countries" do
-      before { @zambia = create(:country, name: "Zambia") }
+      before { @zambia = create(:country, iso: "ZA", name: "Zambia") }
 
       it "can view all countries" do
         get spree.api_countries_path
