@@ -12,6 +12,10 @@ module SolidusAdmin
     class_option :spec, type: :boolean, default: true
     class_option :preview, type: :boolean, default: true
 
+    def setup_namespace
+      Rails::Generators.namespace = SolidusAdmin
+    end
+
     def setup_inflections
       # This is needed because the generator won't run the initialization process,
       # in order to ensure that UI is not rendered as Ui we need to setup inflections
