@@ -130,12 +130,11 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
       rule.actionable?(line_item)
     end
 
-    let(:rule_line_item) { Spree::LineItem.new(product: rule_product) }
-    let(:other_line_item) { Spree::LineItem.new(product: other_product) }
+    let(:rule_line_item) { build :line_item, product: rule_product }
+    let(:other_line_item) { build :line_item }
 
     let(:rule_options) { super().merge(products: [rule_product]) }
-    let(:rule_product) { mock_model(Spree::Product) }
-    let(:other_product) { mock_model(Spree::Product) }
+    let(:rule_product) { build :product }
 
     context "with 'any' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: 'any') }
