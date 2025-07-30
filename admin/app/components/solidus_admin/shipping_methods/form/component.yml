@@ -1,0 +1,16 @@
+# Add your component translations here.
+# Use the translation in the example in your template with `t(".hello")`.
+en:
+  details: "Details"
+  zones: "Zones"
+  shipping_categories: "Shipping Categories"
+  tax_category: "Tax Category"
+  availability: "Availability"
+  stock_locations: "Stock Locations"
+  stores: "Stores"
+  Calculator: "Calculator"
+  stock_locations_placeholder: "Choose stock locations"
+  organization: "Organization"
+  taxation: "Taxation"
+  pricing: "Pricing"
+
