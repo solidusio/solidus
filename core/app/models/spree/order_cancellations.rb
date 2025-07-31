@@ -51,8 +51,6 @@ class Spree::OrderCancellations
         inventory_units.each do |iu|
           unit_cancels << short_ship_unit(iu, created_by:)
         end
-
-        update_shipped_shipments(inventory_units)
       end
 
       @order.recalculate
@@ -121,19 +119,5 @@ class Spree::OrderCancellations
     inventory_unit.cancel!
 
     unit_cancel
-  end
-
-  # if any shipments are now fully shipped then mark them as such
-  def update_shipped_shipments(inventory_units)
-    shipments = Spree::Shipment.
-      includes(:inventory_units).
-      where(id: inventory_units.map(&:shipment_id)).
-      to_a
-
-    shipments.each do |shipment|
-      if shipment.inventory_units.all? { |iu| iu.shipped? || iu.canceled? }
-        shipment.update!(state: 'shipped', shipped_at: Time.current)
-      end
-    end
   end
 end
