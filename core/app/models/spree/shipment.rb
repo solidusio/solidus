@@ -207,8 +207,8 @@ module Spree
     # shipped    if already shipped (ie. does not change the state)
     # ready      all other cases
     def determine_state(order)
-      return 'canceled' if order.canceled?
       return 'shipped' if shipped?
+      return 'canceled' if order.canceled? || inventory_units.all?(&:canceled?)
       return 'pending' unless order.can_ship?
       if can_transition_from_pending_to_ready?
         'ready'
