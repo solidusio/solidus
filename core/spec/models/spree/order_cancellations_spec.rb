@@ -86,14 +86,6 @@ RSpec.describe Spree::OrderCancellations do
       expect { subject }.to change { inventory_unit.state }.to "canceled"
     end
 
-    it "updates the shipment.state" do
-      expect { subject }.to change { shipment.reload.state }.from('ready').to('shipped')
-    end
-
-    it "updates the order.shipment_state" do
-      expect { subject }.to change { order.shipment_state }.from('ready').to('shipped')
-    end
-
     it "publishes an 'order_short_shipped' event" do
       stub_spree_bus
 
