@@ -217,6 +217,9 @@ en:
       solidus_promotions/conditions/user: User
       solidus_promotions/conditions/user_logged_in: User Logged In
       solidus_promotions/conditions/user_role: User Role(s)
+      solidus_promotions/promotion_category:
+        one: Promotion Category
+        other: Promotion Categories
       solidus_promotions/promotion_code_batch:
         one: Code batch
         other: Code batches

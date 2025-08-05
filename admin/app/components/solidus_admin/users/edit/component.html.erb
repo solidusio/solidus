@@ -19,21 +19,21 @@
     <%= page_with_sidebar_main do %>
 
       <%= render component('ui/panel').new(title: Spree.user_class.model_name.human) do %>
-        <%= form_for @user, url: solidus_admin.user_path(@user), html: { id: form_id, autocomplete: "off" } do |f| %>
+        <%= solidus_form_for @user, url: solidus_admin.user_path(@user), html: { id: form_id, autocomplete: "off" } do |f| %>
           <div class="py-1.5">
-            <%= render component("ui/forms/field").text_field(f, :email) %>
+            <%= f.text_field(:email) %>
           </div>
           <div class="py-1.5">
-            <%= render component("ui/forms/field").text_field(f, :password) %>
+            <%= f.text_field(:password) %>
           </div>
           <div class="py-1.5">
-            <%= render component("ui/forms/field").text_field(f, :password_confirmation) %>
+            <%= f.text_field(:password_confirmation) %>
           </div>
           <div class="py-1.5">
-            <%= render component("ui/checkbox_row").new(options: role_options, row_title: "Roles", form: f, method: "spree_role_ids", layout: :subsection) %>
+            <%= f.checkbox_row(:spree_role_ids, options: role_options, row_title: "Roles", layout: :subsection) %>
           </div>
           <div class="py-1.5 text-center">
-            <%= render component("ui/button").new(tag: :button, text: t(".update"), form: form_id) %>
+            <%= f.submit(text: t(".update")) %>
             <%= render component("ui/button").new(tag: :a, text: t(".cancel"), href: solidus_admin.user_path(@user), scheme: :secondary) %>
           </div>
         <% end %>
