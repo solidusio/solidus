@@ -37,7 +37,4 @@ SolidusAdmin::Config.configure do |config|
   #     }
   #   ]
   # }
-
-  # Define namespace for component generator
-  ::Rails::Generators.namespace = SolidusAdmin
 end
