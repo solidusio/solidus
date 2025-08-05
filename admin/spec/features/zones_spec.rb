@@ -4,17 +4,20 @@ require 'spec_helper'
 
 describe "Zones", :js, type: :feature do
   before { sign_in create(:admin_user, email: 'admin@example.com') }
+  let(:canada) { create(:country, iso: "CA") }
+  let(:france) { create(:country, iso: "FR") }
+  let(:usa) { create(:country) }
 
   let(:states) do
     [
-      create(:state, name: "Alberta", country: create(:country, iso: "CA")),
-      create(:state, name: "Manitoba", country: create(:country, iso: "CA"))
+      create(:state, name: "Alberta", country: canada),
+      create(:state, name: "Manitoba", country: canada)
     ]
   end
 
   it "lists zones and allows deleting them" do
-    create(:zone, name: "Europe")
-    create(:zone, name: "North America")
+    create(:zone, name: "Europe", countries: [france])
+    create(:zone, name: "North America", countries: [usa, canada])
 
     visit "/admin/zones"
     expect(page).to have_content("Europe")
