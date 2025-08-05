@@ -78,6 +78,73 @@ RSpec.describe SolidusPromotions::Conditions::LineItemProduct, type: :model do
     end
   end
 
+  describe "#eligible?(price)" do
+    subject { condition.eligible?(price, {}) }
+
+    let(:condition_price) { Spree::Price.new(variant: Spree::Variant.new(product: condition_product)) }
+    let(:other_price) { Spree::Price.new(variant: Spree::Variant.new(product: other_product)) }
+
+    let(:condition_options) { super().merge(products: [condition_product]) }
+    let(:condition_product) { mock_model(Spree::Product) }
+    let(:other_product) { mock_model(Spree::Product) }
+
+    it "is eligible if there are no products" do
+      expect(condition).to be_eligible(condition_price)
+    end
+
+    context "for product in condition" do
+      let(:price) { condition_price }
+
+      it { is_expected.to be_truthy }
+
+      it "has no error message" do
+        subject
+        expect(condition.eligibility_errors.full_messages).to be_empty
+      end
+    end
+
+    context "for product not in condition" do
+      let(:price) { other_price }
+
+      it { is_expected.to be_falsey }
+
+      it "has the right error message" do
+        subject
+        expect(condition.eligibility_errors.full_messages.first).to eq(
+          "You need to add an applicable product before applying this coupon code."
+        )
+      end
+    end
+
+    context "if match policy is inverse" do
+      let(:condition_options) { super().merge(preferred_match_policy: "exclude") }
+
+      context "for product in condition" do
+        let(:price) { condition_price }
+
+        it { is_expected.to be_falsey }
+
+        it "has the right error message" do
+          subject
+          expect(condition.eligibility_errors.full_messages.first).to eq(
+            "Your cart contains a product that prevents this coupon code from being applied."
+          )
+        end
+      end
+
+      context "for product not in condition" do
+        let(:price) { other_price }
+
+        it { is_expected.to be_truthy }
+
+        it "has no error message" do
+          subject
+          expect(condition.eligibility_errors.full_messages).to be_empty
+        end
+      end
+    end
+  end
+
   describe "#preload_relations" do
     subject { condition.preload_relations }
     it { is_expected.to eq([:products]) }
