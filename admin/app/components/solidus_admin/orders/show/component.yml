@@ -4,6 +4,7 @@ en:
   no_name: No name available
   order_email: Order contact email
   same_as_shipping: Same as shipping address
+  shipments: Shipments
 
   edit_email: "Edit order email"
   add_email: "Add order email"
