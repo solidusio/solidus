@@ -44,7 +44,18 @@ RSpec.describe Spree::Shipment, type: :model do
     expect(shipment).to be_backordered
   end
 
-  context '#determine_state' do
+  context "#determine_state" do
+    subject { shipment.determine_state(order) }
+
+    before do
+      allow(Spree.deprecator).to receive(:warn)
+    end
+
+    it "emits a deprecation warning" do
+      subject
+      expect(Spree.deprecator).to have_received(:warn).once
+    end
+
     it 'returns canceled if order is canceled?' do
       allow(order).to receive_messages canceled?: true
       expect(shipment.determine_state(order)).to eq 'canceled'
@@ -94,6 +105,13 @@ RSpec.describe Spree::Shipment, type: :model do
     it "returns canceled if order is canceled?" do
       allow(order).to receive_messages canceled?: true
       expect(recalculate_state).to eq "canceled"
+    end
+
+    it "returns canceled if order's inventory units are all canceled" do
+      expect {
+        shipment.inventory_units.each(&:cancel!)
+        recalculate_state
+      }.to change { shipment.state }.from("pending").to("canceled")
     end
 
     it "returns pending unless order.can_ship?" do
@@ -375,11 +393,21 @@ RSpec.describe Spree::Shipment, type: :model do
 
     context "when shipment state changes to shipped" do
       it "should call after_ship" do
+        allow(shipment).to receive(:shipped?).and_return(true)
+        allow(shipment).to receive :after_ship
+        allow(shipment).to receive :update_columns
+
         shipment.state = 'pending'
-        expect(shipment).to receive :after_ship
-        allow(shipment).to receive_messages determine_state: 'shipped'
-        expect(shipment).to receive(:update_columns).with(state: 'shipped', updated_at: kind_of(Time))
-        shipment.update_state
+
+        expect { shipment.update_state }
+          .to change { shipment.state }
+          .from("pending")
+          .to("shipped")
+
+        expect(shipment).to have_received(:after_ship).once
+        expect(shipment)
+          .to have_received(:update_columns)
+          .with(state: 'shipped', updated_at: kind_of(Time))
       end
 
       # Regression test for https://github.com/spree/spree/issues/4347
