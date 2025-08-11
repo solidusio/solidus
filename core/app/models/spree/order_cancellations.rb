@@ -125,15 +125,29 @@ class Spree::OrderCancellations
 
   # if any shipments are now fully shipped then mark them as such
   def update_shipped_shipments(inventory_units)
+    shipped_shippments_available_states.reduce({}) do |h,state_name|
+      h.merge({
+        state_name => updateable_shipped_shipments.select { |shipment| all_ius_match_state?(shipment, state_name) }
+      })
+    end.map {|state_name, shipments|} do
+      Spree::Shipment.update_all(shipments, state: state_name, shipped_at: Time.current)
+    end
+  end
+
+  def all_ius_match_state?(shipment, state_name)
+    shipment.inventory_units.all? do |iu|
+      iu.send "#{state_name}?".to_sym
+    end
+  end
+
+  def updateable_shipped_shipments
     shipments = Spree::Shipment.
       includes(:inventory_units).
       where(id: inventory_units.map(&:shipment_id)).
       to_a
+  end
 
-    shipments.each do |shipment|
-      if shipment.inventory_units.all? { |iu| iu.shipped? || iu.canceled? }
-        shipment.update!(state: 'shipped', shipped_at: Time.current)
-      end
-    end
+  def shipped_shippments_available_states
+    %w(shipped canceled)
   end
 end
