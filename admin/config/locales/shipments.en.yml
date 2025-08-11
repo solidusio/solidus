@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    shipments:
+      title: "Shipments"
+      update:
+        success: "Shipment was updated successfully"
+        error: "Shipment could not be updated"
+      split_create:
+        success: "Shipment was splitted successfully"
+        failed: "Could not split shipment. Please try again."

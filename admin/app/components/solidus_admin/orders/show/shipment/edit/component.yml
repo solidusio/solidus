@@ -1,0 +1,4 @@
+en:
+  title: "Edit shipment %{number}"
+  submit: "Save"
+  cancel: "Cancel"
