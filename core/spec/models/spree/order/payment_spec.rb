@@ -28,7 +28,7 @@ module Spree
 
         it 'processes only new payments' do
           order.process_payments!
-          updater.update_payment_state
+          updater.recalculate_payment_state
 
           expect(order.payment_state).to eq('balance_due')
           expect(order.payment_total).to eq(50)
@@ -43,7 +43,7 @@ module Spree
 
         it 'processes all checkout payments' do
           order.process_payments!
-          updater.update_payment_state
+          updater.recalculate_payment_state
 
           expect(order.payment_state).to eq('paid')
           expect(order.payment_total).to eq(100)
@@ -57,7 +57,7 @@ module Spree
 
           it 'does not go over total for order' do
             order.process_payments!
-            updater.update_payment_state
+            updater.recalculate_payment_state
 
             expect(order.payment_state).to eq('paid')
             expect(order.payment_total).to eq(100)

@@ -217,6 +217,21 @@ module Spree
       end
     end
 
+    def recalculate_state
+      self.state =
+        if order.canceled?
+          "canceled"
+        elsif shipped?
+          "shipped"
+        elsif !order.can_ship?
+          "pending"
+        elsif can_transition_from_pending_to_ready?
+          "ready"
+        else
+          "pending"
+        end
+    end
+
     def set_up_inventory(state, variant, _order, line_item)
       inventory_units.create(
         state:,
@@ -261,14 +276,21 @@ module Spree
     end
 
     def update_amounts
-      if selected_shipping_rate
-        self.cost = selected_shipping_rate.cost
-        if changed?
-          update_columns(
-            cost:,
-            updated_at: Time.current
-          )
-        end
+      assign_amounts
+      persist_amounts
+    end
+
+    def assign_amounts
+      return unless selected_shipping_rate
+      self.cost = selected_shipping_rate.cost
+    end
+
+    def persist_amounts
+      if changed?
+        update_columns(
+          cost:,
+          updated_at: Time.current
+        )
       end
     end
 
