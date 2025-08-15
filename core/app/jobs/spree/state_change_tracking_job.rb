@@ -9,9 +9,17 @@ module Spree
     # @param previous_state [String] The previous state of the order
     # @param current_state [String] The current state of the order
     # @param transition_timestamp [Time] When the state transition occurred
-    def perform(stateful, previous_state, current_state, transition_timestamp)
+    # @param name [String] The element name of the state transition being
+    #   tracked. It defaults to the `stateful` model element name.
+    def perform(
+      stateful,
+      previous_state,
+      current_state,
+      transition_timestamp,
+      name = stateful.class.model_name.element
+    )
       Spree::StateChange.create!(
-        name: stateful.class.model_name.element,
+        name: name,
         stateful: stateful,
         previous_state: previous_state,
         next_state: current_state,

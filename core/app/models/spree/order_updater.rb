@@ -189,7 +189,8 @@ module Spree
           order,
           old_state,
           new_state,
-          Time.current
+          Time.current,
+          name
         )
       end
     end
