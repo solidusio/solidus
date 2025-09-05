@@ -155,6 +155,19 @@ module Spree
         allow(order).to receive_messages backordered?: false
       end
 
+      it "logs a state change for the shipment" do
+        create :shipment, order:, state: "pending"
+
+        expect { updater.update_shipment_state }
+          .to enqueue_job(Spree::StateChangeTrackingJob)
+          .with(order, nil, "pending", a_kind_of(Time), "shipment")
+          .once
+
+        expect {
+          perform_enqueued_jobs
+        }.to change { Spree::StateChange.where(name: "shipment").count }.by(1)
+      end
+
       it "is backordered" do
         allow(order).to receive_messages backordered?: true
         updater.update_shipment_state
@@ -187,6 +200,19 @@ module Spree
       let(:order) { create(:order) }
       let(:updater) { order.recalculator }
       before { allow(order).to receive(:refund_total).and_return(0) }
+
+      it "logs a state change for the payment" do
+        create :payment, order:, state: "processing"
+
+        expect { updater.update_payment_state }
+          .to enqueue_job(Spree::StateChangeTrackingJob)
+          .with(order, nil, "paid", a_kind_of(Time), "payment")
+          .once
+
+        expect {
+          perform_enqueued_jobs
+        }.to change { Spree::StateChange.where(name: "payment").count }.by(1)
+      end
 
       context 'no valid payments with non-zero order total' do
         it "is failed" do
