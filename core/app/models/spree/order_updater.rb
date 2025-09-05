@@ -157,9 +157,12 @@ module Spree
       recalculate_adjustments
 
       all_items = line_items + shipments
-      order_tax_adjustments = adjustments.select(&:tax?)
+      # Ignore any adjustments that have been marked for destruction in our
+      # calculations. They'll get removed when/if we persist the order.
+      valid_adjustments = adjustments.reject(&:marked_for_destruction?)
+      order_tax_adjustments = valid_adjustments.select(&:tax?)
 
-      order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.sum(&:amount)
+      order.adjustment_total = all_items.sum(&:adjustment_total) + valid_adjustments.sum(&:amount)
       order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
       order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
