@@ -50,6 +50,11 @@ RSpec.describe Spree::Shipment, type: :model do
       expect(shipment.determine_state(order)).to eq 'canceled'
     end
 
+    it 'returns canceled if all of the inventory units are canceled' do
+      shipment.inventory_units.each(&:cancel!)
+      expect(shipment.determine_state(order)).to eql 'canceled'
+    end
+
     it 'returns pending unless order.can_ship?' do
       allow(order).to receive_messages can_ship?: false
       expect(shipment.determine_state(order)).to eq 'pending'
