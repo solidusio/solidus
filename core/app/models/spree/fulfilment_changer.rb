@@ -89,12 +89,18 @@ module Spree
       available_quantity = get_available_quantity
       new_on_hand_quantity = [available_quantity, quantity].min
       backordered_quantity = get_backordered_quantity(available_quantity, new_on_hand_quantity)
-      unstock_quantity = desired_shipment.stock_location.backorderable?(variant) ? quantity : new_on_hand_quantity
+
+      # Determine how many backordered and on_hand items we'll need to move. We
+      # don't want to move more than what's being asked. And we can't move a
+      # negative amount, which is why we need to perform our min/max logic here.
+      backordered_quantity_to_move = [backordered_quantity, quantity].min
+      on_hand_quantity_to_move = [quantity - backordered_quantity_to_move, 0].max
 
       ActiveRecord::Base.transaction do
         if handle_stock_counts?
           # We only run this query if we need it.
           current_on_hand_quantity = [current_shipment.inventory_units.pre_shipment.size, quantity].min
+          unstock_quantity = desired_shipment.stock_location.backorderable?(variant) ? quantity : new_on_hand_quantity
 
           # Restock things we will not fulfil from the current shipment anymore
           current_stock_location.restock(variant, current_on_hand_quantity, current_shipment)
@@ -111,14 +117,14 @@ module Spree
           inventory_units.
           where(variant:).
           order(state: :asc).
-          limit(backordered_quantity).
+          limit(backordered_quantity_to_move).
           update_all(shipment_id: desired_shipment.id, state: :backordered)
 
         current_shipment.
           inventory_units.
           where(variant:).
           order(state: :asc).
-          limit(quantity - backordered_quantity).
+          limit(on_hand_quantity_to_move).
           update_all(shipment_id: desired_shipment.id, state: :on_hand)
       end
     end
