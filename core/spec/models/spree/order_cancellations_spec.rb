@@ -109,6 +109,32 @@ RSpec.describe Spree::OrderCancellations do
       it "adjusts the order" do
         expect { subject }.to change { order.reload.total }.by(-40.0)
       end
+
+      context "when cancelling all items in a completed order" do
+        let!(:order) { create(:completed_order_with_totals, line_items_attributes: [{ quantity: }]) }
+
+        subject { described_class.new(order).short_ship(order.inventory_units) }
+
+        it "updates all of the inventory units" do
+          expect { subject }.to change { order.inventory_units.canceled.count }.to(quantity)
+        end
+
+        it "updates the shipment state" do
+          expect { subject }.to change { order.shipments.first.reload.state }.to("canceled")
+        end
+
+        context "when the shipment is already shipped" do
+          let!(:order) { create(:shipped_order, line_items_attributes: [{ quantity: }]) }
+
+          it "updates all of the inventory units" do
+            expect { subject }.to change { order.inventory_units.canceled.count }.to(quantity)
+          end
+
+          it "does not update the shipment state" do
+            expect { subject }.not_to change { order.shipments.first.reload.state }.from("shipped")
+          end
+        end
+      end
     end
 
     it "sends a cancellation email" do

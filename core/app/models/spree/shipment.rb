@@ -221,10 +221,10 @@ module Spree
     # ready      all other cases
     def recalculate_state
       self.state =
-        if order.canceled? || inventory_units.all?(&:canceled?)
-          "canceled"
-        elsif shipped?
+        if shipped?
           "shipped"
+        elsif order.canceled? || inventory_units.all?(&:canceled?)
+          "canceled"
         elsif !order.can_ship?
           "pending"
         elsif can_transition_from_pending_to_ready?
