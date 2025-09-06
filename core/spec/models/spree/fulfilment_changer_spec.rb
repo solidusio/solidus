@@ -153,6 +153,29 @@ RSpec.describe Spree::FulfilmentChanger do
 
     it_behaves_like "moves inventory units between shipments"
     it_behaves_like "properly manages inventory units"
+
+    context "and we're only moving some backordered units" do
+      let(:stock_item) { variant.stock_items.find_by!(stock_location: current_shipment.stock_location) }
+      let(:current_shipment_inventory_unit_count) { 10 }
+      let(:quantity) { 4 }
+
+      before do
+        current_shipment.inventory_units.limit(6).update!(state: :backordered)
+        stock_item.update_column(:count_on_hand, -6)
+      end
+
+      it_behaves_like "moves inventory units between shipments"
+
+      it "only removes the desired quantity of backordered items" do
+        subject
+
+        expect(current_shipment.inventory_units.on_hand.count).to eq(4)
+        expect(current_shipment.inventory_units.backordered.count).to eq(2)
+
+        expect(desired_shipment.inventory_units.on_hand.count).to eq(0)
+        expect(desired_shipment.inventory_units.backordered.count).to eq(4)
+      end
+    end
   end
 
   context "when tracking inventory is not set (same as false)" do
