@@ -29,8 +29,8 @@ module SolidusPromotions
         "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
     end
 
-    def discount(adjustable)
-      amount = compute_amount(adjustable)
+    def discount(adjustable, ...)
+      amount = compute_amount(adjustable, ...)
       return if amount.zero?
       ItemDiscount.new(
         item: adjustable,

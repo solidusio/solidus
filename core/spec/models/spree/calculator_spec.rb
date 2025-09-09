@@ -9,7 +9,7 @@ RSpec.describe Spree::Calculator, type: :model do
         "SimpleCalculator"
       end
 
-      def compute_simple_computable(_)
+      def compute_simple_computable(_, _options = {})
         "computed"
       end
     end
@@ -51,6 +51,16 @@ RSpec.describe Spree::Calculator, type: :model do
 
       it "raises an error" do
         expect { subject }.to raise_error NotImplementedError, /Please implement \'compute_line_item\(line_item\)\' in your calculator/
+      end
+    end
+
+    context "with options" do
+      let(:order) { double(Spree::Order) }
+      subject { calculator.compute(computable, order: order) }
+
+      it "passes the options to compute_simple_computable" do
+        expect(calculator).to receive(:compute_simple_computable).with(computable, order: order)
+        subject
       end
     end
   end
