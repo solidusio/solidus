@@ -1,3 +1,92 @@
+## Solidus v4.6.0 (2025-09-09)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* Fix typos by @jackhac in https://github.com/solidusio/solidus/pull/6207
+
+## Solidus Core
+
+* Fix typos by @jackhac in https://github.com/solidusio/solidus/pull/6207
+* Display the store's currency in the Admin Order Index Component by @magpieuk in https://github.com/solidusio/solidus/pull/5929
+* Respect Spree.user_class' table name in metadata migration by @tvdeyen in https://github.com/solidusio/solidus/pull/6157
+* Better Spree::UserAddress scope deprecation warnings by @tvdeyen in https://github.com/solidusio/solidus/pull/6163
+* Add new order events by @benjaminwil in https://github.com/solidusio/solidus/pull/6170
+* [Docs] Fix Meta Data Restriction Comment to reflect default setting by @fthobe in https://github.com/solidusio/solidus/pull/6171
+* Separate order mailer subscriber from reimbursement mailer subscriber by @benjaminwil in https://github.com/solidusio/solidus/pull/6156
+* Fixed migrations so you can rollback them all by @aiperon in https://github.com/solidusio/solidus/pull/6188
+* Inherit from ActiveRecord::Migration version for all supported Rails by @harmonymjb in https://github.com/solidusio/solidus/pull/6192
+* Move OrderMailerSubscriber#send_confirmation_email by @benjaminwil in https://github.com/solidusio/solidus/pull/6199
+* Add reverse charge status to stores by @fthobe in https://github.com/solidusio/solidus/pull/6136
+* Fix flaky test errors using chrome 134 by @tvdeyen in https://github.com/solidusio/solidus/pull/6203
+* Move carton shipped emails to subscriber by @benjaminwil in https://github.com/solidusio/solidus/pull/6219
+* Change migration version to 7.0 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6220
+* Add subscribers for inventory cancellation and order cancellation emails by @benjaminwil in https://github.com/solidusio/solidus/pull/6205
+* Make linters happy by @tvdeyen in https://github.com/solidusio/solidus/pull/6223
+* Disallow migrations with the wrong versions by @benjaminwil in https://github.com/solidusio/solidus/pull/6221
+* Add reverse charge fields to address by @fthobe in https://github.com/solidusio/solidus/pull/6168
+* Dummy app generator: Only configure app/assets/javascripts if present by @mamhoff in https://github.com/solidusio/solidus/pull/6227
+* Use Firefox for system specs by @mamhoff in https://github.com/solidusio/solidus/pull/6230
+* Configurable Solidus event subscribers by @benjaminwil in https://github.com/solidusio/solidus/pull/6234
+* Move Taxon -> Promotion Rule association to legacy promotions by @mamhoff in https://github.com/solidusio/solidus/pull/6243
+* Require spree/config in spree/core by @mamhoff in https://github.com/solidusio/solidus/pull/6248
+* Addressbook: Add foreign key, dependent/inverse_of options by @mamhoff in https://github.com/solidusio/solidus/pull/6265
+* Replace `puts` in tasks and generators with Rails.logger or Logger.new by @mamhoff in https://github.com/solidusio/solidus/pull/6244
+
+## Solidus Admin
+
+* Fix typos by @jackhac in https://github.com/solidusio/solidus/pull/6207
+* Display the store's currency in the Admin Order Index Component by @magpieuk in https://github.com/solidusio/solidus/pull/5929
+* Fix flaky test errors using chrome 134 by @tvdeyen in https://github.com/solidusio/solidus/pull/6203
+* Make linters happy by @tvdeyen in https://github.com/solidusio/solidus/pull/6223
+* Add reverse charge fields to address by @fthobe in https://github.com/solidusio/solidus/pull/6168
+* Use Firefox for system specs by @mamhoff in https://github.com/solidusio/solidus/pull/6230
+* Fix install_lookbook step by @chaimann in https://github.com/solidusio/solidus/pull/6154
+* Fix ui/forms/input component for tag: :textarea by @chaimann in https://github.com/solidusio/solidus/pull/6174
+* [Admin] Fix Unclosed form_tag in table component by @swamp09 in https://github.com/solidusio/solidus/pull/6172
+* Fix flaky specs by @mamhoff in https://github.com/solidusio/solidus/pull/6197
+* [Backend] Fix issue refunding uncompleted payments by @jtapia in https://github.com/solidusio/solidus/pull/6094
+* [Admin][UI] New select component by @chaimann in https://github.com/solidusio/solidus/pull/6190
+* Refactor `ui/forms/address` component by @chaimann in https://github.com/solidusio/solidus/pull/6191
+* Use semantic links to edit option types by @forkata in https://github.com/solidusio/solidus/pull/6201
+* Admin select component performance by @chaimann in https://github.com/solidusio/solidus/pull/6213
+* Refactor address form component (properly this time) by @chaimann in https://github.com/solidusio/solidus/pull/6225
+* [Admin][UI] Alert component by @chaimann in https://github.com/solidusio/solidus/pull/6226
+* [Admin] fix table sorting by @chaimann in https://github.com/solidusio/solidus/pull/6238
+* Update importmap-rails to v2 by @tvdeyen in https://github.com/solidusio/solidus/pull/6202
+
+## Solidus Backend
+
+* Add reverse charge status to stores by @fthobe in https://github.com/solidusio/solidus/pull/6136
+* Fix flaky test errors using chrome 134 by @tvdeyen in https://github.com/solidusio/solidus/pull/6203
+* Add reverse charge fields to address by @fthobe in https://github.com/solidusio/solidus/pull/6168
+* Fix flaky specs by @mamhoff in https://github.com/solidusio/solidus/pull/6197
+* [Backend] Fix issue refunding uncompleted payments by @jtapia in https://github.com/solidusio/solidus/pull/6094
+* Add 500ms delay before AJAX in Select2 by @mamhoff in https://github.com/solidusio/solidus/pull/6235
+
+## Solidus API
+
+* Add reverse charge status to stores by @fthobe in https://github.com/solidusio/solidus/pull/6136
+* Add reverse charge fields to address by @fthobe in https://github.com/solidusio/solidus/pull/6168
+* Refactor load_user_roles into current_user_roles helper by @mamhoff in https://github.com/solidusio/solidus/pull/6245
+* Refactor "current_api_user" into instacached helper by @mamhoff in https://github.com/solidusio/solidus/pull/6246
+
+## Solidus Promotions
+
+* Fix typos by @jackhac in https://github.com/solidusio/solidus/pull/6207
+* Fix flaky test errors using chrome 134 by @tvdeyen in https://github.com/solidusio/solidus/pull/6203
+* Replace `puts` in tasks and generators with Rails.logger or Logger.new by @mamhoff in https://github.com/solidusio/solidus/pull/6244
+* Fix flaky specs by @mamhoff in https://github.com/solidusio/solidus/pull/6197
+* Update importmap-rails to v2 by @tvdeyen in https://github.com/solidusio/solidus/pull/6202
+* [Promotions] Set Flickwerk patches in initializer by @tvdeyen in https://github.com/solidusio/solidus/pull/6161
+* Fix Rubocop offense by @mamhoff in https://github.com/solidusio/solidus/pull/6196
+* Use `human_attribute_name` for promo calculator labels by @mamhoff in https://github.com/solidusio/solidus/pull/6195
+* Promotions: Add a PercentWithCap calculator by @mamhoff in https://github.com/solidusio/solidus/pull/6200
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.5.0...v4.6.0
+
+
 ## Solidus v4.5.0 (2025-02-19)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
