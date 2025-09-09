@@ -23,8 +23,7 @@ module Spree
     validates :meta_title, length: { maximum: 255 }
     validates :taxonomy_id, uniqueness: { scope: :parent_id, message: :can_have_only_one_root }, if: -> { root? }
 
-    after_save :touch_ancestors_and_taxonomy
-    after_touch :touch_ancestors_and_taxonomy
+    after_commit :touch_ancestors_and_taxonomy
 
     include ::Spree::Config.taxon_attachment_module
 
@@ -140,11 +139,11 @@ module Spree
 
     private
 
+    # Touches all ancestors at once to avoid recursive taxonomy touch, and reduce queries.
     def touch_ancestors_and_taxonomy
-      # Touches all ancestors at once to avoid recursive taxonomy touch, and reduce queries.
-      self.class.default_scoped.where(id: ancestors.pluck(:id)).update_all(updated_at: Time.current)
+      ancestors.touch_all
       # Have taxonomy touch happen in #touch_ancestors_and_taxonomy rather than association option in order for imports to override.
-      taxonomy.try!(:touch)
+      taxonomy&.touch
     end
   end
 end
