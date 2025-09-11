@@ -8,10 +8,10 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: solidus_admin.new_stock_location_path,
       icon: "add-line",
-      class: "align-self-end w-full",
+      class: "align-self-end w-full"
     )
   end
 
@@ -30,11 +30,11 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.stock_locations_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
@@ -54,7 +54,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
       state_column,
       backorderable_column,
       default_column,
-      stock_movements_column,
+      stock_movements_column
     ]
   end
 
@@ -64,7 +64,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     {
       header: :name,
       data: ->(stock_location) do
-        link_to stock_location.name, edit_path(stock_location), class: 'body-link'
+        link_to stock_location.name, edit_path(stock_location), class: "body-link"
       end
     }
   end
@@ -74,7 +74,8 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
       header: :code,
       data: ->(stock_location) do
         return if stock_location.code.blank?
-        link_to stock_location.code, edit_path(stock_location), class: 'body-link'
+
+        link_to stock_location.code, edit_path(stock_location), class: "body-link"
       end
     }
   end
@@ -84,7 +85,8 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
       header: :admin_name,
       data: ->(stock_location) do
         return if stock_location.admin_name.blank?
-        link_to stock_location.admin_name, edit_path(stock_location), class: 'body-link'
+
+        link_to stock_location.admin_name, edit_path(stock_location), class: "body-link"
       end
     }
   end
@@ -94,9 +96,9 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
       header: :state,
       data: ->(stock_location) do
         color = stock_location.active? ? :green : :graphite_light
-        text = stock_location.active? ? t('.active') : t('.inactive')
+        text = stock_location.active? ? t(".active") : t(".inactive")
 
-        component('ui/badge').new(name: text, color:)
+        component("ui/badge").new(name: text, color:)
       end
     }
   end
@@ -105,7 +107,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     {
       header: :backorderable,
       data: -> do
-        _1.backorderable_default ? component('ui/badge').yes : component('ui/badge').no
+        _1.backorderable_default ? component("ui/badge").yes : component("ui/badge").no
       end
     }
   end
@@ -114,7 +116,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
     {
       header: :default,
       data: -> do
-        _1.default ? component('ui/badge').yes : component('ui/badge').no
+        _1.default ? component("ui/badge").yes : component("ui/badge").no
       end
     }
   end
@@ -128,7 +130,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
         link_to(
           "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
           spree.admin_stock_location_stock_movements_path(stock_location),
-          class: 'body-link'
+          class: "body-link"
         )
       end
     }

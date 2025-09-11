@@ -9,8 +9,8 @@ module Spree
   class Adjustment < Spree::Base
     belongs_to :adjustable, polymorphic: true, touch: true, optional: true
     belongs_to :source, polymorphic: true, optional: true
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :all_adjustments, optional: true
-    belongs_to :adjustment_reason, class_name: 'Spree::AdjustmentReason', inverse_of: :adjustments, optional: true
+    belongs_to :order, class_name: "Spree::Order", inverse_of: :all_adjustments, optional: true
+    belongs_to :adjustment_reason, class_name: "Spree::AdjustmentReason", inverse_of: :adjustments, optional: true
 
     validates :adjustable, presence: true
     validates :order, presence: true
@@ -19,14 +19,14 @@ module Spree
 
     scope :not_finalized, -> { where(finalized: false) }
     scope :finalized, -> { where(finalized: true) }
-    scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
-    scope :tax, -> { where(source_type: 'Spree::TaxRate') }
+    scope :cancellation, -> { where(source_type: "Spree::UnitCancel") }
+    scope :tax, -> { where(source_type: "Spree::TaxRate") }
     scope :non_tax, -> do
       source_type = arel_table[:source_type]
-      where(source_type.not_eq('Spree::TaxRate').or(source_type.eq(nil)))
+      where(source_type.not_eq("Spree::TaxRate").or(source_type.eq(nil)))
     end
-    scope :price, -> { where(adjustable_type: 'Spree::LineItem') }
-    scope :shipping, -> { where(adjustable_type: 'Spree::Shipment') }
+    scope :price, -> { where(adjustable_type: "Spree::LineItem") }
+    scope :shipping, -> { where(adjustable_type: "Spree::Shipment") }
     scope :eligible, -> { all }
     class << self
       deprecate :eligible, deprecator: Spree.deprecator
@@ -42,9 +42,10 @@ module Spree
 
     singleton_class.deprecate :return_authorization, deprecator: Spree.deprecator
 
-    allowed_ransackable_attributes << 'label'
+    allowed_ransackable_attributes << "label"
 
     extend DisplayMoney
+
     money_methods :amount
 
     def finalize!
@@ -74,12 +75,12 @@ module Spree
 
     # @return [Boolean] true when this is a tax adjustment (Tax adjustments have a {TaxRate} source)
     def tax?
-      source_type == 'Spree::TaxRate'
+      source_type == "Spree::TaxRate"
     end
 
     # @return [Boolean] true when this is a cancellation adjustment (Cancellation adjustments have a {UnitCancel} source)
     def cancellation?
-      source_type == 'Spree::UnitCancel'
+      source_type == "Spree::UnitCancel"
     end
 
     def eligible?

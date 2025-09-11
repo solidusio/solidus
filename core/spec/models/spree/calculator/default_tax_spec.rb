@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::DefaultTax, type: :model do
   let(:address) { create(:address) }
@@ -12,13 +12,13 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
   let(:expires_at) { nil }
   let!(:rate) do
     create(:tax_rate, tax_categories: [tax_category], amount: 0.05,
-                      included_in_price:, zone:,
-                      starts_at:, expires_at:)
+      included_in_price:, zone:,
+      starts_at:, expires_at:)
   end
   let(:included_in_price) { false }
-  subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
+  subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate) }
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   context "#compute" do
     context "when given an order" do
@@ -26,8 +26,8 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
         create(
           :order_with_line_items,
           line_items_attributes: [
-            { price: 10, quantity: 3, tax_category: }.merge(line_item_one_options),
-            { price: 10, quantity: 3, tax_category: }.merge(line_item_two_options)
+            {price: 10, quantity: 3, tax_category:}.merge(line_item_one_options),
+            {price: 10, quantity: 3, tax_category:}.merge(line_item_two_options)
           ],
           ship_address: address
         )
@@ -52,8 +52,8 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
 
       context "when no line items match the tax category" do
         let(:other_tax_category) { create(:tax_category) }
-        let(:line_item_one_options) { { tax_category: other_tax_category } }
-        let(:line_item_two_options) { { tax_category: other_tax_category } }
+        let(:line_item_one_options) { {tax_category: other_tax_category} }
+        let(:line_item_two_options) { {tax_category: other_tax_category} }
 
         it "should be 0" do
           expect(calculator.compute(order)).to eq(0)
@@ -62,7 +62,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
 
       context "when one item matches the tax category" do
         let(:other_tax_category) { create(:tax_category) }
-        let(:line_item_two_options) { { tax_category: other_tax_category } }
+        let(:line_item_two_options) { {tax_category: other_tax_category} }
 
         it "should be equal to the item total * rate" do
           expect(calculator.compute(order)).to eq(1.5)
@@ -78,7 +78,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
         end
 
         context "correctly rounds to within two decimal places" do
-          let(:line_item_one_options) { { price: 10.333, quantity: 1 } }
+          let(:line_item_one_options) { {price: 10.333, quantity: 1} }
 
           specify do
             # Amount is 0.51665, which will be rounded to...
@@ -110,13 +110,13 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
     end
   end
 
-  shared_examples_for 'computing any item' do
+  shared_examples_for "computing any item" do
     let(:adjustment_total) { 0 }
     let(:adjustments) do
       if adjustment_total.zero?
         []
       else
-       [Spree::Adjustment.new(included: false, source: nil, amount: adjustment_total)]
+        [Spree::Adjustment.new(included: false, source: nil, amount: adjustment_total)]
       end
     end
     let(:order) { build_stubbed(:order, ship_address: address) }
@@ -183,7 +183,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
     end
   end
 
-  describe 'when given a line item' do
+  describe "when given a line item" do
     let(:item) do
       build_stubbed(
         :line_item,
@@ -195,10 +195,10 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       )
     end
 
-    it_behaves_like 'computing any item'
+    it_behaves_like "computing any item"
   end
 
-  describe 'when given a shipment' do
+  describe "when given a shipment" do
     let(:shipping_method) do
       build_stubbed(
         :shipping_method,
@@ -224,10 +224,10 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       )
     end
 
-    it_behaves_like 'computing any item'
+    it_behaves_like "computing any item"
   end
 
-  describe 'when given a shipping rate' do
+  describe "when given a shipping rate" do
     let(:shipping_method) do
       build_stubbed(
         :shipping_method,
@@ -255,6 +255,6 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       )
     end
 
-    it_behaves_like 'computing any item'
+    it_behaves_like "computing any item"
   end
 end

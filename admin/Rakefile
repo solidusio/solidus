@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rubygems'
-require 'rake'
-require 'rake/testtask'
-require 'rspec/core/rake_task'
-require 'spree/testing_support/dummy_app/rake_tasks'
-require 'solidus_admin/testing_support/dummy_app/rake_tasks'
-require 'bundler/gem_tasks'
+require "rubygems"
+require "rake"
+require "rake/testtask"
+require "rspec/core/rake_task"
+require "spree/testing_support/dummy_app/rake_tasks"
+require "solidus_admin/testing_support/dummy_app/rake_tasks"
+require "bundler/gem_tasks"
 
 namespace :tailwindcss do
   tailwindcss_command = [
@@ -18,31 +18,31 @@ namespace :tailwindcss do
     "--input",
     "#{__dir__}/app/assets/stylesheets/solidus_admin/application.tailwind.css",
     "--output",
-    "#{__dir__}/app/assets/builds/solidus_admin/tailwind.css",
+    "#{__dir__}/app/assets/builds/solidus_admin/tailwind.css"
   ]
 
-  desc 'Build Tailwind CSS'
+  desc "Build Tailwind CSS"
   task :build do
     sh tailwindcss_command.shelljoin
   end
 
-  desc 'Watch Tailwind CSS'
+  desc "Watch Tailwind CSS"
   task :watch do
-    sh (tailwindcss_command + ['--watch']).shelljoin
+    sh (tailwindcss_command + ["--watch"]).shelljoin
   end
 end
 
-task build: 'tailwindcss:build'
+task build: "tailwindcss:build"
 
 RSpec::Core::RakeTask.new
 task default: :spec
 
 DummyApp::RakeTasks.new(
   gem_root: File.expand_path(__dir__),
-  lib_name: 'solidus_admin'
+  lib_name: "solidus_admin"
 )
 
-task test_app: 'db:reset'
+task test_app: "db:reset"
 
 # Namespace release tags, e.g. 'solidus_admin/v1.2.3'
-Bundler::GemHelper.tag_prefix = 'solidus_admin/'
+Bundler::GemHelper.tag_prefix = "solidus_admin/"

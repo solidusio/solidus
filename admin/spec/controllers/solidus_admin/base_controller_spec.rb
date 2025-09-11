@@ -6,7 +6,7 @@ describe SolidusAdmin::BaseController, type: :controller do
   controller(SolidusAdmin::BaseController) do
     def index
       authorize! :update, Spree::Order
-      render plain: 'test'
+      render plain: "test"
     end
   end
 
@@ -17,12 +17,12 @@ describe SolidusAdmin::BaseController, type: :controller do
 
     it "redirects to unauthorized for no user" do
       get :index
-      expect(response).to redirect_to '/unauthorized'
+      expect(response).to redirect_to "/unauthorized"
     end
 
     context "with a user without update permission" do
       before do
-        user = create(:user, email: 'user@example.com')
+        user = create(:user, email: "user@example.com")
         allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(user)
       end
 
@@ -35,7 +35,7 @@ describe SolidusAdmin::BaseController, type: :controller do
 
   context "successful request" do
     before do
-      user = create(:admin_user, email: 'admin@example.com')
+      user = create(:admin_user, email: "admin@example.com")
       allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(user)
     end
 

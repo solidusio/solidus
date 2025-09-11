@@ -14,7 +14,7 @@ module Spree
       PATHS = SEQUENCES + FACTORIES
 
       def self.definition_file_paths
-        @paths ||= PATHS.map { |path| path.sub(/.rb\z/, '') }
+        @paths ||= PATHS.map { |path| path.sub(/.rb\z/, "") }
       end
 
       def self.check_version

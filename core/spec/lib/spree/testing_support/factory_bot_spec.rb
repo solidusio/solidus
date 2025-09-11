@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 require "spree/testing_support/factory_bot"
 
 RSpec.describe Spree::TestingSupport::FactoryBot do

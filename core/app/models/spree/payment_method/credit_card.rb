@@ -10,12 +10,13 @@ module Spree
     end
 
     def partial_name
-      'gateway'
+      "gateway"
     end
 
     def supports?(source)
       return true unless gateway_class.respond_to? :supports?
       return true if source.brand && gateway_class.supports?(source.brand)
+
       source.has_payment_profile?
     end
 

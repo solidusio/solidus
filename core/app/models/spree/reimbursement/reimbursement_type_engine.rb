@@ -50,6 +50,7 @@ module Spree
 
     def add_reimbursement_type(return_item, reimbursement_type)
       return unless reimbursement_type
+
       @reimbursement_type_hash[reimbursement_type] << return_item
     end
   end

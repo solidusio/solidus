@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 require "rails/generators/rails/app/app_generator"
-require 'active_support/core_ext/hash'
-require 'spree/core/version'
+require "active_support/core_ext/hash"
+require "spree/core/version"
 
 module Spree
   # @private
   class DummyGenerator < Rails::Generators::Base
     desc "Creates blank Rails application, installs Solidus and all sample data"
 
-    class_option :lib_name, default: ''
-    class_option :database, default: ''
+    class_option :lib_name, default: ""
+    class_option :database, default: ""
 
     def self.source_paths
       paths = superclass.source_paths
-      paths << File.expand_path('templates', __dir__)
+      paths << File.expand_path("templates", __dir__)
       paths.flatten
     end
 
@@ -30,7 +30,7 @@ module Spree
       # calling slice on a Thor::CoreExtensions::HashWithIndifferentAccess
       # object has been known to return nil
       opts = {}.merge(options).slice(*PASSTHROUGH_OPTIONS)
-      opts[:database] = 'sqlite3' if opts[:database].blank?
+      opts[:database] = "sqlite3" if opts[:database].blank?
       opts[:force] = true
       opts[:skip_bundle] = true
       opts[:skip_gemfile] = true
@@ -68,9 +68,9 @@ module Spree
     def test_dummy_inject_extension_requirements
       if DummyGeneratorHelper.inject_extension_requirements
         inside dummy_path do
-          inject_require_for('spree_frontend')
-          inject_require_for('spree_backend')
-          inject_require_for('spree_api')
+          inject_require_for("spree_frontend")
+          inject_require_for("spree_backend")
+          inject_require_for("spree_api")
         end
       end
     end
@@ -98,23 +98,22 @@ module Spree
     protected
 
     def inject_require_for(requirement)
-      inject_into_file 'config/application.rb', (
-        <<~RUBY
+      inject_into_file "config/application.rb", 
+        <<~RUBY,
           begin
             require '#{requirement}'
           rescue LoadError
             # #{requirement} is not available.
           end
-        RUBY
-      ), before: /require '#{@lib_name}'/, verbose: true
+        RUBY before: /require '#{@lib_name}'/, verbose: true
     end
 
     def dummy_path
-      ENV['DUMMY_PATH'] || 'spec/dummy'
+      ENV["DUMMY_PATH"] || "spec/dummy"
     end
 
     def module_name
-      'Dummy'
+      "Dummy"
     end
 
     def application_definition
@@ -126,10 +125,10 @@ module Spree
         end
       end
     end
-    alias :store_application_definition! :application_definition
+    alias_method :store_application_definition!, :application_definition
 
     def camelized
-      @camelized ||= name.gsub(/\W/, '_').squeeze('_').camelize
+      @camelized ||= name.gsub(/\W/, "_").squeeze("_").camelize
     end
 
     def remove_directory_if_exists(path)
@@ -140,9 +139,9 @@ module Spree
       core_gems = ["spree/core", "spree/api", "spree/backend", "spree/frontend"]
 
       if core_gems.include?(lib_name)
-        '../../../../../Gemfile'
+        "../../../../../Gemfile"
       else
-        '../../../../Gemfile'
+        "../../../../Gemfile"
       end
     end
   end

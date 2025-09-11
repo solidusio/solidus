@@ -16,6 +16,7 @@ module Spree
     #   tax data for the order's shipments
     class OrderTax
       include ActiveModel::Model
+
       attr_accessor :order_id, :order_taxes, :line_item_taxes, :shipment_taxes
     end
   end

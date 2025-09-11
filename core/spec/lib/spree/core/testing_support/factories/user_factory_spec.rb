@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'user factory' do
+RSpec.describe "user factory" do
   let(:factory_class) { Spree.user_class }
 
-  describe 'user' do
+  describe "user" do
     let(:factory) { :user }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
-  describe 'admin user' do
+  describe "admin user" do
     let(:factory) { :admin_user }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
-  describe 'user with addresses' do
+  describe "user with addresses" do
     let(:factory) { :user_with_addresses }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

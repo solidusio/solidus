@@ -22,7 +22,7 @@ module SolidusPromotions
 
       MATCH_POLICIES = %w[any all none only].freeze
 
-      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
+      validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
@@ -65,6 +65,7 @@ module SolidusPromotions
         # The order level eligibility check happens first, and if none of the products
         # are in the order, then no line items should be available to check.
         raise "This should not happen" if preferred_match_policy == "none"
+
         product_ids.include?(line_item.variant.product_id)
       end
 

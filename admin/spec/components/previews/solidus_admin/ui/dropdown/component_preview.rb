@@ -17,10 +17,10 @@ class SolidusAdmin::UI::Dropdown::ComponentPreview < ViewComponent::Preview
       text:,
       size: size.to_sym,
       direction: direction.to_sym,
-      style: "float: #{direction == :left ? 'right' : 'left'}",
-      open:,
+      style: "float: #{(direction == :left) ? "right" : "left"}",
+      open:
     ).with_content(
-      tag.span("Lorem ipsum dolor sit amet"),
+      tag.span("Lorem ipsum dolor sit amet")
     )
   end
 end

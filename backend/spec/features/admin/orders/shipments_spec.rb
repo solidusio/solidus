@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Shipments", type: :feature do
   include OrderFeatureHelper
@@ -44,17 +44,17 @@ describe "Shipments", type: :feature do
         perform_enqueued_jobs {
           ship_shipment
         }
-      }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
     it "doesn't send a shipping confirmation email when ask to suppress the mailer" do
-      uncheck 'Send Shipment Email'
+      uncheck "Send Shipment Email"
 
       expect {
         perform_enqueued_jobs {
           ship_shipment
         }
-      }.not_to change{ ActionMailer::Base.deliveries.count }
+      }.not_to change { ActionMailer::Base.deliveries.count }
     end
   end
 
@@ -69,19 +69,19 @@ describe "Shipments", type: :feature do
 
     context "when the line item cannot be found" do
       it "shows the proper error message" do
-        expect(page).to have_selector '.delete-item'
+        expect(page).to have_selector ".delete-item"
         order.shipments.first.line_items.each(&:destroy)
-        accept_alert { first('.delete-item').click }
-        expect(page).to have_content 'The resource you were looking for could not be found.'
+        accept_alert { first(".delete-item").click }
+        expect(page).to have_content "The resource you were looking for could not be found."
       end
     end
 
     context "when the shipment has already been shipped" do
       it "shows the proper error message" do
-        expect(page).to have_selector '.delete-item'
+        expect(page).to have_selector ".delete-item"
         order.shipments.first.ship!
-        accept_alert { first('.delete-item').click }
-        expect(page).to have_content 'Cannot remove items from a shipped shipment'
+        accept_alert { first(".delete-item").click }
+        expect(page).to have_content "Cannot remove items from a shipped shipment"
       end
     end
   end
@@ -101,8 +101,8 @@ describe "Shipments", type: :feature do
       expect(order.shipments.count).to eq(1)
       shipment1 = order.shipments[0]
 
-      within('tr', text: order.line_items[0].sku) { click_icon 'arrows-h' }
-      complete_split_to('LA')
+      within("tr", text: order.line_items[0].sku) { click_icon "arrows-h" }
+      complete_split_to("LA")
 
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 4)
       shipment2 = (order.reload.shipments.to_a - [shipment1]).first
@@ -111,7 +111,7 @@ describe "Shipments", type: :feature do
         expect(page).to have_content("UPS Ground")
       end
 
-      within('tr', text: order.line_items[1].sku) { click_icon 'arrows-h' }
+      within("tr", text: order.line_items[1].sku) { click_icon "arrows-h" }
       complete_split_to("LA(#{shipment2.number})")
       expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 2)
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 3)
@@ -127,15 +127,15 @@ describe "Shipments", type: :feature do
         create(
           :order_ready_to_ship,
           number: "R100",
-          line_items_attributes: [{ variant:, quantity: 5 }]
+          line_items_attributes: [{variant:, quantity: 5}]
         )
       end
 
       it "can transfer all items to a new location" do
         expect(order.shipments.count).to eq(1)
 
-        within('tr', text: order.line_items[0].sku) { click_icon 'arrows-h' }
-        complete_split_to('LA', quantity: 5)
+        within("tr", text: order.line_items[0].sku) { click_icon "arrows-h" }
+        complete_split_to("LA", quantity: 5)
 
         expect(page).to_not have_content("package from 'NY Warehouse'")
         expect(page).to have_content("package from 'LA'")
@@ -145,25 +145,25 @@ describe "Shipments", type: :feature do
 
   context "when split shipment", js: true do
     let(:location_name) { "WA Warehouse" }
-    let!(:location) { create(:stock_location, name: location_name)}
+    let!(:location) { create(:stock_location, name: location_name) }
 
     it "can split item" do
       visit spree.edit_admin_order_path(order)
-      find_all('.split-item').first.click
-      within '.stock-item-split' do
-        find('.save-split').click
+      find_all(".split-item").first.click
+      within ".stock-item-split" do
+        find(".save-split").click
         alert_text = page.driver.browser.switch_to.alert.text
-        expect(alert_text).to include 'Please select the split destination'
+        expect(alert_text).to include "Please select the split destination"
         page.driver.browser.switch_to.alert.accept
-        find('#item_quantity').fill_in(with: 'text')
-        find('.select2-container').click
-        find(:xpath, '//body').all('.select2-drop li.select2-result', text: "#{location_name} (0 on hand)")[1].click
-        find('.save-split').click
-        accept_alert 'Quantity must be greater than 0' # Test Ajax error handling
-        find('#item_quantity').fill_in(with: '1')
-        find('.save-split').click
+        find("#item_quantity").fill_in(with: "text")
+        find(".select2-container").click
+        find(:xpath, "//body").all(".select2-drop li.select2-result", text: "#{location_name} (0 on hand)")[1].click
+        find(".save-split").click
+        accept_alert "Quantity must be greater than 0" # Test Ajax error handling
+        find("#item_quantity").fill_in(with: "1")
+        find(".save-split").click
       end
-      expect(page).to have_content /Pending package from '#{location_name}'/i
+      expect(page).to have_content(/Pending package from '#{location_name}'/i)
     end
   end
 end

@@ -3,6 +3,7 @@
 module SolidusPromotions
   class EligibilityResults
     include Enumerable
+
     attr_reader :results, :promotion
 
     def initialize(promotion)
@@ -22,6 +23,7 @@ module SolidusPromotions
 
     def success?
       return true if results.empty?
+
       promotion.benefits.any? do |benefit|
         benefit.conditions.all? do |condition|
           results_for_condition = results.select { |result| result.condition == condition }
@@ -32,8 +34,10 @@ module SolidusPromotions
 
     def error_messages
       return [] if results.empty?
+
       results.group_by(&:condition).map do |_condition, results|
         next if results.any?(&:success)
+
         results.detect { |r| !r.success }&.message
       end.compact
     end

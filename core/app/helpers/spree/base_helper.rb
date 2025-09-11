@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require 'carmen'
+require "carmen"
 
 module Spree
   module BaseHelper
     def link_to_cart(text = nil)
-      text = text ? h(text) : t('spree.cart')
+      text = text ? h(text) : t("spree.cart")
       css_class = nil
 
       if current_order.nil? || current_order.item_count.zero?
-        text = "#{text}: (#{t('spree.empty')})"
-        css_class = 'empty'
+        text = "#{text}: (#{t("spree.empty")})"
+        css_class = "empty"
       else
         text = "#{text}: (#{current_order.item_count})  <span class='amount'>#{current_order.display_total.to_html}</span>"
-        css_class = 'full'
+        css_class = "full"
       end
 
       link_to text.html_safe, spree.cart_path, class: "cart-info #{css_class}"
@@ -25,7 +25,7 @@ module Spree
     end
 
     def meta_data
-      object = instance_variable_get('@' + controller_name.singularize)
+      object = instance_variable_get("@" + controller_name.singularize)
       meta = {}
 
       if object.is_a? ActiveRecord::Base
@@ -34,7 +34,7 @@ module Spree
       end
 
       if meta[:description].blank? && object.is_a?(Spree::Product)
-        meta[:description] = truncate(strip_tags(object.description), length: 160, separator: ' ')
+        meta[:description] = truncate(strip_tags(object.description), length: 160, separator: " ")
       end
 
       if meta[:keywords].blank? || meta[:description].blank?
@@ -48,12 +48,12 @@ module Spree
 
     def meta_data_tags
       meta_data.map do |name, content|
-        tag('meta', name:, content:)
+        tag("meta", name:, content:)
       end.join("\n")
     end
 
     def body_class
-      @body_class ||= content_for?(:sidebar) ? 'two-col' : 'one-col'
+      @body_class ||= content_for?(:sidebar) ? "two-col" : "one-col"
       @body_class
     end
 
@@ -72,12 +72,12 @@ module Spree
       nil
     end
 
-    def taxon_breadcrumbs(taxon, separator = '&nbsp;&raquo;&nbsp;', breadcrumb_class = 'inline')
-      return '' if current_page?('/') || taxon.nil?
+    def taxon_breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
+      return "" if current_page?("/") || taxon.nil?
 
-      crumbs = [[t('spree.home'), spree.root_path]]
+      crumbs = [[t("spree.home"), spree.root_path]]
 
-      crumbs << [t('spree.products'), products_path]
+      crumbs << [t("spree.products"), products_path]
       if taxon
         crumbs += taxon.ancestors.collect { |ancestor| [ancestor.name, spree.nested_taxons_path(ancestor.permalink)] } unless taxon.ancestors.empty?
         crumbs << [taxon.name, spree.nested_taxons_path(taxon.permalink)]
@@ -86,24 +86,25 @@ module Spree
       separator = raw(separator)
 
       items = crumbs.each_with_index.collect do |crumb, index|
-        content_tag(:li, itemprop: 'itemListElement', itemscope: '', itemtype: 'https://schema.org/ListItem') do
-          link_to(crumb.last, itemprop: 'item') do
-            content_tag(:span, crumb.first, itemprop: 'name') + tag('meta', { itemprop: 'position', content: (index + 1).to_s }, false, false)
-          end + (crumb == crumbs.last ? '' : separator)
+        content_tag(:li, itemprop: "itemListElement", itemscope: "", itemtype: "https://schema.org/ListItem") do
+          link_to(crumb.last, itemprop: "item") do
+            content_tag(:span, crumb.first, itemprop: "name") + tag("meta", {itemprop: "position", content: (index + 1).to_s}, false, false)
+          end + ((crumb == crumbs.last) ? "" : separator)
         end
       end
 
-      content_tag(:nav, content_tag(:ol, raw(items.map(&:mb_chars).join), class: breadcrumb_class, itemscope: '', itemtype: 'https://schema.org/BreadcrumbList'), id: 'breadcrumbs', class: 'sixteen columns')
+      content_tag(:nav, content_tag(:ol, raw(items.map(&:mb_chars).join), class: breadcrumb_class, itemscope: "", itemtype: "https://schema.org/BreadcrumbList"), id: "breadcrumbs", class: "sixteen columns")
     end
 
     def taxons_tree(root_taxon, current_taxon, max_level = 1)
-      return '' if max_level < 1 || root_taxon.children.empty?
-      content_tag :ul, class: 'taxons-list' do
+      return "" if max_level < 1 || root_taxon.children.empty?
+
+      content_tag :ul, class: "taxons-list" do
         taxons = root_taxon.children.map do |taxon|
-          css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'current' : nil
+          css_class = current_taxon&.self_and_ancestors&.include?(taxon) ? "current" : nil
           content_tag :li, class: css_class do
-           link_to(taxon.name, seo_url(taxon)) +
-             taxons_tree(taxon, current_taxon, max_level - 1)
+            link_to(taxon.name, seo_url(taxon)) +
+              taxons_tree(taxon, current_taxon, max_level - 1)
           end
         end
         safe_join(taxons, "\n")
@@ -117,7 +118,7 @@ module Spree
         [country.code, country.name]
       end.to_h
 
-      country_names.update I18n.t('spree.country_names', default: {}).stringify_keys
+      country_names.update I18n.t("spree.country_names", default: {}).stringify_keys
 
       countries.collect do |country|
         country.name = country_names.fetch(country.iso, country.name)

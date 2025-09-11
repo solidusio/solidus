@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Rules::MinimumQuantity do
   subject(:quantity_rule) { described_class.new(preferred_minimum_quantity: 2) }
@@ -51,19 +51,19 @@ RSpec.describe Spree::Promotion::Rules::MinimumQuantity do
 
     context "when only the quantity rule is applied" do
       context "when the quantity is less than the minimum" do
-        let(:line_items) { [{ quantity: 1 }] }
+        let(:line_items) { [{quantity: 1}] }
 
         it { is_expected.to be false }
       end
 
       context "when the quantity is equal to the minimum" do
-        let(:line_items) { [{ quantity: 2 }] }
+        let(:line_items) { [{quantity: 2}] }
 
         it { is_expected.to be true }
       end
 
       context "when the quantity is greater than the minimum" do
-        let(:line_items) { [{ quantity: 4 }] }
+        let(:line_items) { [{quantity: 4}] }
 
         it { is_expected.to be true }
       end
@@ -86,8 +86,8 @@ RSpec.describe Spree::Promotion::Rules::MinimumQuantity do
       context "when the applicable quantity is less than the minimum" do
         let(:line_items) do
           [
-            { variant: variant_1, quantity: 1 },
-            { variant: variant_3, quantity: 1 }
+            {variant: variant_1, quantity: 1},
+            {variant: variant_3, quantity: 1}
           ]
         end
 
@@ -97,9 +97,9 @@ RSpec.describe Spree::Promotion::Rules::MinimumQuantity do
       context "when the applicable quantity is greater than the minimum" do
         let(:line_items) do
           [
-            { variant: variant_1, quantity: 1 },
-            { variant: variant_2, quantity: 1 },
-            { variant: variant_3, quantity: 1 }
+            {variant: variant_1, quantity: 1},
+            {variant: variant_2, quantity: 1},
+            {variant: variant_3, quantity: 1}
           ]
         end
 

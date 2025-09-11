@@ -4,6 +4,7 @@ module Spree
   module Stock
     class Estimator
       class ShipmentRequired < StandardError; end
+
       class OrderRequired < StandardError; end
 
       # Estimate the shipping rates for a package.

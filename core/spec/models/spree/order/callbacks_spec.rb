@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Order, type: :model do
   let(:order) { stub_model(Spree::Order) }
@@ -12,7 +12,7 @@ RSpec.describe Spree::Order, type: :model do
     context "email validation" do
       # Regression test for https://github.com/spree/spree/issues/1238
       it "o'brien@gmail.com is a valid email address" do
-        order.state = 'address'
+        order.state = "address"
         order.email = "o'brien@gmail.com"
         expect(order.errors[:email].size).to eq(0)
       end

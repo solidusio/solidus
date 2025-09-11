@@ -11,7 +11,7 @@ class SolidusAdmin::Layout::Flashes::Alerts::Component < SolidusAdmin::BaseCompo
   # and default title (see +SolidusAdmin::UI::Alert::Component+).
   def initialize(alerts:)
     if alerts.is_a?(String)
-      alerts = { danger: { message: alerts } }
+      alerts = {danger: {message: alerts}}
     end
 
     @alerts = alerts.slice(*SolidusAdmin::UI::Alert::Component::SCHEMES.keys)

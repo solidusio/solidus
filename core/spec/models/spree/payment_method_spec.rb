@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::PaymentMethod, type: :model do
   let!(:payment_method_nil_display) do
@@ -61,7 +61,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
           ])
         end
 
-        subject { Spree::PaymentMethod.available_to_store( store_1 ).available_to_users.available_to_admin }
+        subject { Spree::PaymentMethod.available_to_store(store_1).available_to_users.available_to_admin }
 
         it { is_expected.to contain_exactly(payment_method_both_display, payment_method_nil_display) }
 
@@ -115,7 +115,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     end
   end
 
-  describe '#auto_capture?' do
+  describe "#auto_capture?" do
     let(:gateway) do
       gateway_class = Class.new(Spree::PaymentMethod::CreditCard) do
         def gateway_class
@@ -128,54 +128,54 @@ RSpec.describe Spree::PaymentMethod, type: :model do
 
     subject { gateway.auto_capture? }
 
-    context 'when auto_capture is nil' do
+    context "when auto_capture is nil" do
       before(:each) do
-        expect(Spree::Config).to receive('[]').with(:auto_capture).and_return(auto_capture)
+        expect(Spree::Config).to receive("[]").with(:auto_capture).and_return(auto_capture)
       end
 
-      context 'and when Spree::Config[:auto_capture] is false' do
+      context "and when Spree::Config[:auto_capture] is false" do
         let(:auto_capture) { false }
 
-        it 'should be false' do
+        it "should be false" do
           expect(gateway.auto_capture).to be_nil
           expect(subject).to be false
         end
       end
 
-      context 'and when Spree::Config[:auto_capture] is true' do
+      context "and when Spree::Config[:auto_capture] is true" do
         let(:auto_capture) { true }
 
-        it 'should be true' do
+        it "should be true" do
           expect(gateway.auto_capture).to be_nil
           expect(subject).to be true
         end
       end
     end
 
-    context 'when auto_capture is not nil' do
+    context "when auto_capture is not nil" do
       before(:each) do
         gateway.auto_capture = auto_capture
       end
 
-      context 'and is true' do
+      context "and is true" do
         let(:auto_capture) { true }
 
-        it 'should be true' do
+        it "should be true" do
           expect(subject).to be true
         end
       end
 
-      context 'and is false' do
+      context "and is false" do
         let(:auto_capture) { false }
 
-        it 'should be true' do
+        it "should be true" do
           expect(subject).to be false
         end
       end
     end
   end
 
-  describe 'ActiveMerchant methods' do
+  describe "ActiveMerchant methods" do
     let(:payment_method) do
       payment_method_class = Class.new(Spree::PaymentMethod) do
         def gateway_class
@@ -183,15 +183,25 @@ RSpec.describe Spree::PaymentMethod, type: :model do
             def initialize(options)
             end
 
-            def authorize; 'authorize'; end
+            def authorize
+              "authorize"
+            end
 
-            def purchase; 'purchase'; end
+            def purchase
+              "purchase"
+            end
 
-            def capture; 'capture'; end
+            def capture
+              "capture"
+            end
 
-            def void; 'void'; end
+            def void
+              "void"
+            end
 
-            def credit; 'credit'; end
+            def credit
+              "credit"
+            end
           end
         end
       end
@@ -200,23 +210,23 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     end
 
     it "passes through authorize" do
-      expect(payment_method.authorize).to eq 'authorize'
+      expect(payment_method.authorize).to eq "authorize"
     end
 
     it "passes through purchase" do
-      expect(payment_method.purchase).to eq 'purchase'
+      expect(payment_method.purchase).to eq "purchase"
     end
 
     it "passes through capture" do
-      expect(payment_method.capture).to eq 'capture'
+      expect(payment_method.capture).to eq "capture"
     end
 
     it "passes through void" do
-      expect(payment_method.void).to eq 'void'
+      expect(payment_method.void).to eq "void"
     end
 
     it "passes through credit" do
-      expect(payment_method.credit).to eq 'credit'
+      expect(payment_method.credit).to eq "credit"
     end
   end
 
@@ -258,18 +268,18 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     end
   end
 
-  describe 'model_name.human' do
-    context 'PaymentMethod itself' do
+  describe "model_name.human" do
+    context "PaymentMethod itself" do
       it "returns i18n value" do
-        expect(Spree::PaymentMethod.model_name.human).to eq('Payment Method')
+        expect(Spree::PaymentMethod.model_name.human).to eq("Payment Method")
       end
     end
 
-    context 'A subclass with no i18n key' do
+    context "A subclass with no i18n key" do
       let!(:klass) { stub_const("MyGem::SomeClass", Class.new(described_class)) }
 
       it "returns default humanized value" do
-        expect(klass.model_name.human).to eq('Some class')
+        expect(klass.model_name.human).to eq("Some class")
       end
     end
   end
@@ -277,7 +287,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   describe "#find_sti_class" do
     context "with an unexisting type" do
       context "while retrieving records" do
-        let!(:unsupported_payment_method) { create(:payment_method, type: 'UnsupportedPaymentMethod') }
+        let!(:unsupported_payment_method) { create(:payment_method, type: "UnsupportedPaymentMethod") }
 
         it "raises an UnsupportedPaymentMethod error" do
           expect { Spree::PaymentMethod.all.to_json }

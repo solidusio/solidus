@@ -8,7 +8,7 @@ module Spree
       attr_reader :first_name, :last_name, :value
 
       def initialize(*components)
-        @value = components.join(' ').strip
+        @value = components.join(" ").strip
         initialize_name_components(components)
       end
 

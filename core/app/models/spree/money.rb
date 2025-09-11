@@ -5,6 +5,7 @@ module Spree
   # formatting via Spree::Config.
   class Money
     include Comparable
+
     DifferentCurrencyError = Class.new(StandardError)
 
     class << self
@@ -69,7 +70,7 @@ module Spree
     # @param options [Hash] additional formatting options
     # @return [String] the value of this money object formatted according to
     #   its options and any additional options, by default with html_wrap.
-    def to_html(options = { html_wrap: true })
+    def to_html(options = {html_wrap: true})
       output = format(options)
       # Maintain compatibility by checking html option renamed to html_wrap.
       if options[:html_wrap]
@@ -87,6 +88,7 @@ module Spree
       if !other.respond_to?(:money)
         raise TypeError, "Can't compare #{other.class} to Spree::Money"
       end
+
       if currency != other.currency
         # By default, ::Money will try to run a conversion on `other.money` and
         # try a comparison on that. We do not want any currency conversion to
@@ -104,16 +106,19 @@ module Spree
     # @see http://www.rubydoc.info/gems/money/Money/Arithmetic#%3D%3D-instance_method
     def ==(other)
       raise TypeError, "Can't compare #{other.class} to Spree::Money" if !other.respond_to?(:money)
+
       @money == other.money
     end
 
     def -(other)
       raise TypeError, "Can't subtract #{other.class} to Spree::Money" if !other.respond_to?(:money)
+
       self.class.new(@money - other.money)
     end
 
     def +(other)
       raise TypeError, "Can't add #{other.class} to Spree::Money" if !other.respond_to?(:money)
+
       self.class.new(@money + other.money)
     end
   end

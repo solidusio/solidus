@@ -19,9 +19,9 @@ class SolidusAdmin::ReimbursementTypes::Index::Component < SolidusAdmin::Refunds
       {
         header: :active,
         data: ->(reimbursement_type) do
-          reimbursement_type.active? ? component('ui/badge').yes : component('ui/badge').no
+          reimbursement_type.active? ? component("ui/badge").yes : component("ui/badge").no
         end
-      },
+      }
     ]
   end
 end

@@ -13,6 +13,7 @@ class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
 
   def format_address(address)
     return unless address
+
     safe_join([
       address.name,
       tag.br,
@@ -25,7 +26,7 @@ class SolidusAdmin::Orders::Show::Component < SolidusAdmin::BaseComponent
       tag.br,
       address.country.name,
       tag.br,
-      address.phone,
+      address.phone
     ], " ")
   end
 

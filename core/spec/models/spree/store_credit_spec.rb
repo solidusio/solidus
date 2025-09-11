@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::StoreCredit do
   include ActiveSupport::Testing::TimeHelpers
@@ -18,7 +18,7 @@ RSpec.describe Spree::StoreCredit do
       describe "#discard" do
         subject { store_credit.discard }
 
-        it 'can not delete the store credit' do
+        it "can not delete the store credit" do
           subject
           expect(store_credit.reload).to eq store_credit
           expect(store_credit.errors[:amount_used]).to include("is greater than zero. Can not delete store credit")
@@ -61,7 +61,7 @@ RSpec.describe Spree::StoreCredit do
       end
 
       it "doesn't overwrite the type" do
-        expect{ subject }.to_not change{ store_credit.credit_type }
+        expect { subject }.to_not change { store_credit.credit_type }
       end
     end
   end
@@ -168,7 +168,7 @@ RSpec.describe Spree::StoreCredit do
       let(:amount) { "1,000.50" }
 
       before do
-        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+        expect(I18n).to receive(:t).with(:"number.currency.format.separator") do
           "."
         end
       end
@@ -182,7 +182,7 @@ RSpec.describe Spree::StoreCredit do
       let(:amount) { "1.000,50" }
 
       before do
-        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+        expect(I18n).to receive(:t).with(:"number.currency.format.separator") do
           ","
         end
       end
@@ -241,7 +241,7 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#authorize" do
     context "amount is valid" do
-      let(:authorization_amount)       { 1.0 }
+      let(:authorization_amount) { 1.0 }
       let(:added_authorization_amount) { 3.0 }
       let(:originator) { nil }
 
@@ -322,7 +322,7 @@ RSpec.describe Spree::StoreCredit do
       end
     end
 
-    context 'troublesome floats' do
+    context "troublesome floats" do
       if Gem::Requirement.new("~> 3.0.0") === Gem::Version.new(BigDecimal::VERSION)
         # BigDecimal 2.0.0> 8.21.to_d # => 0.821e1 (all good!)
         # BigDecimal 3.0.0> 8.21.to_d # => 0.8210000000000001e1 (`8.21.to_d < 8.21` is `true`!!!)
@@ -330,7 +330,7 @@ RSpec.describe Spree::StoreCredit do
         before { pending "https://github.com/rails/rails/issues/42098; https://github.com/ruby/bigdecimal/issues/192" }
       end
 
-      let(:store_credit_attrs) { { amount: 8.21 } }
+      let(:store_credit_attrs) { {amount: 8.21} }
 
       subject { store_credit.validate_authorization(store_credit_attrs[:amount], store_credit.currency) }
 
@@ -340,7 +340,7 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#capture" do
     let(:authorized_amount) { 10.00 }
-    let(:auth_code)         { "23-SC-20140602164814476128" }
+    let(:auth_code) { "23-SC-20140602164814476128" }
 
     before do
       @original_authed_amount = store_credit.amount_authorized
@@ -413,7 +413,7 @@ RSpec.describe Spree::StoreCredit do
   end
 
   describe "#void" do
-    let(:auth_code)    { "1-SC-20141111111111" }
+    let(:auth_code) { "1-SC-20141111111111" }
     let(:store_credit) { create(:store_credit, amount_used: 150.0) }
     let(:originator) { nil }
 
@@ -436,10 +436,10 @@ RSpec.describe Spree::StoreCredit do
       let(:captured_amount) { 10.0 }
       let!(:capture_event) {
         create(:store_credit_auth_event,
-                                    action: Spree::StoreCredit::CAPTURE_ACTION,
-                                    authorization_code: auth_code,
-                                    amount: captured_amount,
-                                    store_credit:)
+          action: Spree::StoreCredit::CAPTURE_ACTION,
+          authorization_code: auth_code,
+          amount: captured_amount,
+          store_credit:)
       }
 
       it "returns false" do
@@ -447,7 +447,7 @@ RSpec.describe Spree::StoreCredit do
       end
 
       it "does not change the amount used on the store credit" do
-        expect { subject }.to_not change{ store_credit.amount_used.to_f }
+        expect { subject }.to_not change { store_credit.amount_used.to_f }
       end
     end
 
@@ -457,9 +457,9 @@ RSpec.describe Spree::StoreCredit do
       let(:authorized_amount) { 10.0 }
       let!(:auth_event) {
         create(:store_credit_auth_event,
-                                 authorization_code: auth_code,
-                                 amount: authorized_amount,
-                                 store_credit:)
+          authorization_code: auth_code,
+          amount: authorized_amount,
+          store_credit:)
       }
 
       it "returns true" do
@@ -467,7 +467,7 @@ RSpec.describe Spree::StoreCredit do
       end
 
       it "returns the authorized amount to the store credit" do
-        expect { subject }.to change{ store_credit.amount_authorized.to_f }.by(-authorized_amount)
+        expect { subject }.to change { store_credit.amount_authorized.to_f }.by(-authorized_amount)
       end
 
       context "originator is present" do
@@ -483,24 +483,24 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#credit" do
     let(:event_auth_code) { "1-SC-20141111111111" }
-    let(:amount_used)     { 10.0 }
-    let(:store_credit)    { create(:store_credit, amount_used:) }
-    let!(:capture_event)  {
+    let(:amount_used) { 10.0 }
+    let(:store_credit) { create(:store_credit, amount_used:) }
+    let!(:capture_event) {
       create(:store_credit_auth_event,
-                                   action: Spree::StoreCredit::CAPTURE_ACTION,
-                                   authorization_code: event_auth_code,
-                                   amount: captured_amount,
-                                   store_credit:)
+        action: Spree::StoreCredit::CAPTURE_ACTION,
+        authorization_code: event_auth_code,
+        amount: captured_amount,
+        store_credit:)
     }
     let(:originator) { nil }
 
     subject { store_credit.credit(credit_amount, auth_code, currency, action_originator: originator) }
 
     context "currency does not match" do
-      let(:currency)        { "AUD" }
-      let(:credit_amount)   { 5.0 }
+      let(:currency) { "AUD" }
+      let(:credit_amount) { 5.0 }
       let(:captured_amount) { 100.0 }
-      let(:auth_code)       { event_auth_code }
+      let(:auth_code) { event_auth_code }
 
       it "returns false" do
         expect(subject).to be false
@@ -513,10 +513,10 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "unable to find capture event" do
-      let(:currency)        { "USD" }
-      let(:credit_amount)   { 5.0 }
+      let(:currency) { "USD" }
+      let(:credit_amount) { 5.0 }
       let(:captured_amount) { 100.0 }
-      let(:auth_code)       { "UNKNOWN_CODE" }
+      let(:auth_code) { "UNKNOWN_CODE" }
 
       it "returns false" do
         expect(subject).to be false
@@ -529,10 +529,10 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "amount is more than what is captured" do
-      let(:currency)        { "USD" }
-      let(:credit_amount)   { 100.0 }
+      let(:currency) { "USD" }
+      let(:credit_amount) { 100.0 }
       let(:captured_amount) { 5.0 }
-      let(:auth_code)       { event_auth_code }
+      let(:auth_code) { event_auth_code }
 
       it "returns false" do
         expect(subject).to be false
@@ -545,10 +545,10 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "amount is successfully credited" do
-      let(:currency)        { "USD" }
-      let(:credit_amount)   { 5.0 }
+      let(:currency) { "USD" }
+      let(:credit_amount) { 5.0 }
       let(:captured_amount) { 100.0 }
-      let(:auth_code)       { event_auth_code }
+      let(:auth_code) { event_auth_code }
 
       context "credit_to_new_allocation is set" do
         before { stub_spree_preferences(credit_to_new_allocation: true) }
@@ -659,12 +659,12 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#can_capture?" do
     let(:store_credit) { create(:store_credit) }
-    let(:payment)      { create(:payment, state: payment_state) }
+    let(:payment) { create(:payment, state: payment_state) }
 
     subject { store_credit.can_capture?(payment) }
 
     context "pending payment" do
-      let(:payment_state) { 'pending' }
+      let(:payment_state) { "pending" }
 
       it "returns true" do
         expect(subject).to be true
@@ -672,7 +672,7 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "checkout payment" do
-      let(:payment_state) { 'checkout' }
+      let(:payment_state) { "checkout" }
 
       it "returns true" do
         expect(subject).to be true
@@ -688,7 +688,7 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "invalid payment" do
-      let(:payment_state) { 'invalid' }
+      let(:payment_state) { "invalid" }
 
       it "returns false" do
         expect(subject).to be false
@@ -696,7 +696,7 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "complete payment" do
-      let(:payment_state) { 'completed' }
+      let(:payment_state) { "completed" }
 
       it "returns false" do
         expect(subject).to be false
@@ -706,12 +706,12 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#can_void?" do
     let(:store_credit) { create(:store_credit) }
-    let(:payment)      { create(:payment, state: payment_state) }
+    let(:payment) { create(:payment, state: payment_state) }
 
     subject { store_credit.can_void?(payment) }
 
     context "pending payment" do
-      let(:payment_state) { 'pending' }
+      let(:payment_state) { "pending" }
 
       it "returns true" do
         expect(subject).to be true
@@ -719,7 +719,7 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "checkout payment" do
-      let(:payment_state) { 'checkout' }
+      let(:payment_state) { "checkout" }
 
       it "returns false" do
         expect(subject).to be false
@@ -735,7 +735,7 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "invalid payment" do
-      let(:payment_state) { 'invalid' }
+      let(:payment_state) { "invalid" }
 
       it "returns false" do
         expect(subject).to be false
@@ -743,7 +743,7 @@ RSpec.describe Spree::StoreCredit do
     end
 
     context "complete payment" do
-      let(:payment_state) { 'completed' }
+      let(:payment_state) { "completed" }
 
       it "returns false" do
         expect(subject).to be false
@@ -753,7 +753,7 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#can_credit?" do
     let(:store_credit) { create(:store_credit) }
-    let(:payment)      { create(:payment, state: payment_state) }
+    let(:payment) { create(:payment, state: payment_state) }
 
     subject { store_credit.can_credit?(payment) }
 
@@ -769,7 +769,7 @@ RSpec.describe Spree::StoreCredit do
       let(:payment_state) { "completed" }
 
       context "credit is owed on the order" do
-        before { allow(payment.order).to receive_messages(payment_state: 'credit_owed') }
+        before { allow(payment.order).to receive_messages(payment_state: "credit_owed") }
 
         context "payment doesn't have allowed credit" do
           before { allow(payment).to receive_messages(credit_allowed: 0.0) }
@@ -814,9 +814,9 @@ RSpec.describe Spree::StoreCredit do
         end
 
         context "user has multiple store credits" do
-          let(:store_credit_amount)            { 100.0 }
+          let(:store_credit_amount) { 100.0 }
           let(:additional_store_credit_amount) { 200.0 }
-          let(:user)                           { create(:user) }
+          let(:user) { create(:user) }
 
           let!(:store_credits) do
             [
@@ -916,7 +916,7 @@ RSpec.describe Spree::StoreCredit do
       before { store_credit.authorize(5.0, "USD") }
       it "prevents invalidation" do
         expect { subject }.to_not change { store_credit.reload.invalidated_at }
-        expect(store_credit.errors[:invalidated_at].join).to match /uncaptured authorization/
+        expect(store_credit.errors[:invalidated_at].join).to match(/uncaptured authorization/)
       end
     end
 

@@ -12,7 +12,7 @@ module Spree
 
     # Enqueue background job to track state changes asynchronously
     def enqueue_state_change_tracking
-      previous_state, current_state = saved_changes['state']
+      previous_state, current_state = saved_changes["state"]
 
       # Enqueue the job to track this state change
       StateChangeTrackingJob.perform_later(

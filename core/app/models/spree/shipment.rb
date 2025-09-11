@@ -6,8 +6,8 @@ module Spree
   class Shipment < Spree::Base
     include Metadata
 
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments, optional: true
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
+    belongs_to :order, class_name: "Spree::Order", touch: true, inverse_of: :shipments, optional: true
+    belongs_to :stock_location, class_name: "Spree::StockLocation", optional: true
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
@@ -27,11 +27,11 @@ module Spree
 
     accepts_nested_attributes_for :inventory_units
 
-    make_permalink field: :number, length: 11, prefix: 'H'
+    make_permalink field: :number, length: 11, prefix: "H"
 
-    scope :pending, -> { with_state('pending') }
-    scope :ready,   -> { with_state('ready') }
-    scope :shipped, -> { with_state('shipped') }
+    scope :pending, -> { with_state("pending") }
+    scope :ready, -> { with_state("ready") }
+    scope :shipped, -> { with_state("shipped") }
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
     scope :with_state, ->(*state) { where(state:) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
@@ -43,8 +43,8 @@ module Spree
 
     include ::Spree::Config.state_machines.shipment
 
-    self.allowed_ransackable_associations = ['order']
-    self.allowed_ransackable_attributes = ['number']
+    self.allowed_ransackable_associations = ["order"]
+    self.allowed_ransackable_attributes = ["number"]
 
     delegate :tax_category, :tax_category_id, to: :selected_shipping_rate, allow_nil: true
 
@@ -63,9 +63,10 @@ module Spree
     end
 
     extend DisplayMoney
+
     money_methods(
       :cost, :amount, :item_cost,
-      :total, :total_before_tax,
+      :total, :total_before_tax
     )
     alias_attribute :amount, :cost
 
@@ -151,7 +152,7 @@ module Spree
       # If one of the new rates matches the previously selected shipping
       # method, select that instead of the default provided by the estimator.
       # Otherwise, keep the default.
-      selected_rate = new_rates.detect{ |rate| rate.shipping_method_id == original_shipping_method_id }
+      selected_rate = new_rates.detect { |rate| rate.shipping_method_id == original_shipping_method_id }
       if selected_rate
         new_rates.each do |rate|
           rate.selected = (rate == selected_rate)
@@ -186,6 +187,7 @@ module Spree
 
     def selected_shipping_rate_id=(id)
       return if selected_shipping_rate_id == id
+
       new_rate = shipping_rates.detect { |rate| rate.id == id.to_i }
       unless new_rate
         fail(
@@ -195,7 +197,7 @@ module Spree
       end
 
       transaction do
-        selected_shipping_rate.update!(selected: false) if selected_shipping_rate
+        selected_shipping_rate&.update!(selected: false)
         new_rate.update!(selected: true)
       end
     end
@@ -203,13 +205,14 @@ module Spree
     def determine_state(order)
       Spree.deprecator.warn "Use Spree::Shipment#recalculate_state instead"
 
-      return 'shipped' if shipped?
-      return 'canceled' if order.canceled? || inventory_units.all?(&:canceled?)
-      return 'pending' unless order.can_ship?
+      return "shipped" if shipped?
+      return "canceled" if order.canceled? || inventory_units.all?(&:canceled?)
+      return "pending" unless order.can_ship?
+
       if can_transition_from_pending_to_ready?
-        'ready'
+        "ready"
       else
-        'pending'
+        "pending"
       end
     end
 
@@ -243,7 +246,8 @@ module Spree
     end
 
     def shipped=(value)
-      return unless value == '1' && shipped_at.nil?
+      return unless value == "1" && shipped_at.nil?
+
       self.shipped_at = Time.current
     end
 
@@ -312,7 +316,7 @@ module Spree
       new_state = recalculate_state
       if new_state != old_state
         update_columns state: new_state, updated_at: Time.current
-        after_ship if new_state == 'shipped'
+        after_ship if new_state == "shipped"
       end
     end
 
@@ -332,12 +336,12 @@ module Spree
     end
 
     def can_get_rates?
-      order.ship_address && order.ship_address.valid?
+      order.ship_address&.valid?
     end
 
     def manifest_restock(item)
       if item.states["on_hand"].to_i > 0
-       stock_location.restock item.variant, item.states["on_hand"], self
+        stock_location.restock item.variant, item.states["on_hand"], self
       end
 
       if item.states["backordered"].to_i > 0

@@ -55,8 +55,10 @@ module Spree
     def build_from_wallet_payment_source
       wallet_payment_source_id = source_attributes.fetch(:wallet_payment_source_id)
       raise(ActiveRecord::RecordNotFound) if order.user.nil?
+
       wallet_payment_source = order.user.wallet.find(wallet_payment_source_id)
       raise(ActiveRecord::RecordNotFound) if wallet_payment_source.nil?
+
       build_from_payment_source(wallet_payment_source.payment_source)
     end
 

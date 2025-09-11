@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class ProductsController < ResourceController
-      helper 'spree/products'
+      helper "spree/products"
 
       before_action :load_data, except: [:index]
       update.before :update_before
@@ -25,7 +25,7 @@ module Spree
         @product = Spree::Product.friendly.find(params[:id])
         @product.discard
 
-        flash[:success] = t('spree.notice_messages.product_deleted')
+        flash[:success] = t("spree.notice_messages.product_deleted")
 
         respond_with(@product) do |format|
           format.html { redirect_to collection_url }
@@ -37,9 +37,9 @@ module Spree
         @new = @product.duplicate
 
         if @new.save
-          flash[:success] = t('spree.notice_messages.product_cloned')
+          flash[:success] = t("spree.notice_messages.product_cloned")
         else
-          flash[:error] = t('spree.notice_messages.product_not_cloned')
+          flash[:error] = t("spree.notice_messages.product_not_cloned")
         end
 
         redirect_to edit_admin_product_url(@new)
@@ -53,10 +53,10 @@ module Spree
 
       def split_params
         if params[:product][:taxon_ids].present?
-          params[:product][:taxon_ids] = params[:product][:taxon_ids].split(',')
+          params[:product][:taxon_ids] = params[:product][:taxon_ids].split(",")
         end
         if params[:product][:option_type_ids].present?
-          params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
+          params[:product][:option_type_ids] = params[:product][:option_type_ids].split(",")
         end
       end
 
@@ -85,26 +85,28 @@ module Spree
 
       def collection
         return @collection if @collection
+
         params[:q] ||= {}
         params[:q][:s] ||= "name asc"
         # @search needs to be defined as this is passed to search_form_for
         @search = super.ransack(params[:q])
-        @collection = @search.result.
-              order(id: :asc).
-              includes(product_includes).
-              page(params[:page]).
-              per(Spree::Config[:admin_products_per_page])
+        @collection = @search.result
+          .order(id: :asc)
+          .includes(product_includes)
+          .page(params[:page])
+          .per(Spree::Config[:admin_products_per_page])
       end
 
       def update_before
         # note: we only reset the product properties if we're receiving a post
         #       from the form on that tab
         return unless params[:clear_product_properties]
+
         params[:product] ||= {}
       end
 
       def product_includes
-        [:variant_images, { variants: [:images], master: [:images, :prices] }]
+        [:variant_images, {variants: [:images], master: [:images, :prices]}]
       end
 
       def clone_object_url(resource)
@@ -127,14 +129,14 @@ module Spree
         # Stops people submitting blank slugs, causing errors when they try to
         # update the product again
         @product.slug = @product.slug_was if @product.slug.blank?
-        render action: 'edit'
+        render action: "edit"
       end
 
       def normalize_variant_property_rules
         return unless updating_variant_property_rules?
 
         params[:product][:variant_property_rules_attributes].each_value do |param_attrs|
-          param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
+          param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(",")
         end
       end
     end

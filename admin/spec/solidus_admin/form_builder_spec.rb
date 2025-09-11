@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe SolidusAdmin::FormBuilder do
   let(:object) { Spree::Product.new }
   let(:builder) do
-    described_class.new(:product, object, ActionView::Base.empty, { html: { id: "_form" } })
+    described_class.new(:product, object, ActionView::Base.empty, {html: {id: "_form"}})
   end
 
   describe "#text_field" do
@@ -62,7 +62,7 @@ RSpec.describe SolidusAdmin::FormBuilder do
     it "renders checkboxes" do
       result = builder.checkbox_row(
         :taxon_ids,
-        options: [{ id: 1, label: "One" }, { id: 2, label: "Two" }],
+        options: [{id: 1, label: "One"}, {id: 2, label: "Two"}],
         row_title: "Taxons"
       )
       expect(result).to include("<input").twice

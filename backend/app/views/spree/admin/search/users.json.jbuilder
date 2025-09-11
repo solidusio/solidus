@@ -21,7 +21,7 @@ json.array!(@users) do |user|
   ]
   json.ship_address do
     if user.ship_address
-      json.(user.ship_address, *address_fields)
+      json.call(user.ship_address, *address_fields)
       if user.ship_address.state
         json.state do
           json.name user.ship_address.state.name
@@ -37,7 +37,7 @@ json.array!(@users) do |user|
 
   json.bill_address do
     if user.bill_address
-      json.(user.bill_address, *address_fields)
+      json.call(user.bill_address, *address_fields)
       if user.bill_address.state
         json.state do
           json.name user.bill_address.state.name

@@ -16,7 +16,7 @@ module Spree
           if order_promotion.promotion.eligible?(order)
             order_promotion.promotion.activate(
               order:,
-              promotion_code: order_promotion.promotion_code,
+              promotion_code: order_promotion.promotion_code
             )
           end
         end
@@ -35,26 +35,26 @@ module Spree
       end
 
       def automatic_promotions
-        @automatic_promotions ||= active_shipping_promotions.
-          where(apply_automatically: true).
-          to_a.
-          uniq
+        @automatic_promotions ||= active_shipping_promotions
+          .where(apply_automatically: true)
+          .to_a
+          .uniq
       end
 
       def connected_promotions
-        @connected_promotions ||= order.order_promotions.
-          joins(:promotion).
-          includes(:promotion).
-          merge(active_shipping_promotions).
-          to_a.
-          uniq
+        @connected_promotions ||= order.order_promotions
+          .joins(:promotion)
+          .includes(:promotion)
+          .merge(active_shipping_promotions)
+          .to_a
+          .uniq
       end
 
       def active_shipping_promotions
-        Spree::Promotion.all.
-          active.
-          joins(:promotion_actions).
-          merge(Spree::PromotionAction.shipping)
+        Spree::Promotion.all
+          .active
+          .joins(:promotion_actions)
+          .merge(Spree::PromotionAction.shipping)
       end
     end
   end

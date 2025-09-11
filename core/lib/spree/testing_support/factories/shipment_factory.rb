@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :shipment, class: 'Spree::Shipment' do
-    tracking { 'U10000' }
+  factory :shipment, class: "Spree::Shipment" do
+    tracking { "U10000" }
     cost { 100.00 }
-    state { 'pending' }
+    state { "pending" }
     order
     stock_location
 

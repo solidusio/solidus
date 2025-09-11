@@ -22,9 +22,10 @@ module Spree
     # @return [String] formatted string with label and amount
     def variant_price_diff(variant)
       return if variant.price_same_as_master?(current_pricing_options)
+
       difference = variant.price_difference_from_master(current_pricing_options)
       absolute_amount = Spree::Money.new(difference.to_d.abs, currency: difference.currency.iso_code)
-      i18n_key = difference.to_d > 0 ? :price_diff_add_html : :price_diff_subtract_html
+      i18n_key = (difference.to_d > 0) ? :price_diff_add_html : :price_diff_subtract_html
       t(i18n_key, scope: [:spree, :helpers, :products], amount_html: absolute_amount.to_html)
     end
 
@@ -35,8 +36,8 @@ module Spree
     # @return [Spree::Money] the full price
     def variant_full_price(variant)
       return if variant.product.variants
-                  .with_prices(current_pricing_options)
-                  .all? { |variant_with_prices| variant_with_prices.price_same_as_master?(current_pricing_options) }
+        .with_prices(current_pricing_options)
+        .all? { |variant_with_prices| variant_with_prices.price_same_as_master?(current_pricing_options) }
 
       variant.price_for_options(current_pricing_options)&.money&.to_html
     end
@@ -59,9 +60,9 @@ module Spree
     # @return [String] the filtered text
     def line_item_description_text(description_text)
       if description_text.present?
-        truncate(strip_tags(description_text.gsub('&nbsp;', ' ')), length: 100)
+        truncate(strip_tags(description_text.gsub("&nbsp;", " ")), length: 100)
       else
-        t('spree.product_has_no_description')
+        t("spree.product_has_no_description")
       end
     end
 

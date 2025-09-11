@@ -6,14 +6,14 @@ module Spree
       class ApiKeyController < Spree::Admin::BaseController
         def create
           if user.generate_spree_api_key!
-            flash[:success] = t('spree.admin.api.key_generated')
+            flash[:success] = t("spree.admin.api.key_generated")
           end
           redirect_to edit_admin_user_path(user)
         end
 
         def destroy
           if user.clear_spree_api_key!
-            flash[:success] = t('spree.admin.api.key_cleared')
+            flash[:success] = t("spree.admin.api.key_cleared")
           end
           redirect_to edit_admin_user_path(user)
         end

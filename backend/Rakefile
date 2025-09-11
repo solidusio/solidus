@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
-require 'rubygems'
-require 'rake'
-require 'rake/testtask'
-require 'rspec/core/rake_task'
-require 'bundler/gem_tasks'
+require "rubygems"
+require "rake"
+require "rake/testtask"
+require "rspec/core/rake_task"
+require "bundler/gem_tasks"
 
-require 'solidus_backend'
-require 'spree/testing_support/dummy_app/rake_tasks'
+require "solidus_backend"
+require "spree/testing_support/dummy_app/rake_tasks"
 
 RSpec::Core::RakeTask.new
-task default: [:spec, 'spec:js']
+task default: [:spec, "spec:js"]
 
 DummyApp::RakeTasks.new(
   gem_root: File.expand_path(__dir__),
-  lib_name: 'solidus_backend'
+  lib_name: "solidus_backend"
 )
 
 task :teaspoon do
-  require 'teaspoon'
-  Rake::Task['dummy_environment'].invoke
+  require "teaspoon"
+  Rake::Task["dummy_environment"].invoke
   require "teaspoon/console"
 
   options = {
     files: ENV["files"].nil? ? [] : ENV["files"].split(","),
     suite: ENV["suite"],
     coverage: ENV["coverage"],
-    driver_options: ENV["driver_options"],
+    driver_options: ENV["driver_options"]
   }
 
   options.delete_if { |_k, v| v.nil? }
@@ -35,13 +35,13 @@ task :teaspoon do
 end
 
 desc "Run javascript specs"
-task 'spec:js' => :teaspoon
+task "spec:js" => :teaspoon
 
 namespace :teaspoon do
   task :server do
-    require 'teaspoon'
-    Rake::Task['dummy_environment'].invoke
-    require 'teaspoon/server'
+    require "teaspoon"
+    Rake::Task["dummy_environment"].invoke
+    require "teaspoon/server"
 
     server = Teaspoon::Server.new
     server.start
@@ -50,4 +50,4 @@ namespace :teaspoon do
   end
 end
 
-task test_app: 'db:reset'
+task test_app: "db:reset"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -12,7 +12,7 @@ module Spree
 
         subject { Backordered.new(stock_location) }
 
-        it 'splits packages by status' do
+        it "splits packages by status" do
           package = Package.new(stock_location)
           4.times { package.add build(:inventory_unit, variant:) }
           5.times { package.add build(:inventory_unit, variant:), :backordered }

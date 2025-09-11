@@ -6,6 +6,7 @@ module SolidusPromotions
     belongs_to :benefit, inverse_of: :shipping_rate_discounts
 
     extend Spree::DisplayMoney
+
     money_methods :amount
   end
 end

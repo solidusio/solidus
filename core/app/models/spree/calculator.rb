@@ -12,7 +12,7 @@ module Spree
     def compute(computable)
       # Spree::LineItem -> :compute_line_item
       computable_name = computable.class.name.demodulize.underscore
-      method_name = "compute_#{computable_name}".to_sym
+      method_name = :"compute_#{computable_name}"
       calculator_class = self.class
       if respond_to?(method_name)
         send(method_name, computable)
@@ -30,7 +30,7 @@ module Spree
     ###################################################################
 
     def to_s
-      self.class.name.titleize.gsub("Calculator\/", "")
+      self.class.name.titleize.gsub("Calculator/", "")
     end
 
     def description

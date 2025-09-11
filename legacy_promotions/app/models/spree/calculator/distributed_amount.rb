@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/calculator'
+require_dependency "spree/calculator"
 
 # This is a calculator for line item adjustment actions. It accepts a line item
 # and calculates its weighted adjustment amount based on the value of the
@@ -16,6 +16,7 @@ module Spree
       return 0 unless line_item
       return 0 unless preferred_currency.casecmp(line_item.currency).zero?
       return 0 unless calculable.promotion.line_item_actionable?(line_item.order, line_item)
+
       Spree::DistributedAmountsHandler.new(
         actionable_line_items(line_item.order),
         preferred_amount

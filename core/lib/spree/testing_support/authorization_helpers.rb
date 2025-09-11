@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-require 'cancan'
+require "cancan"
 
 module Spree
   module TestingSupport
     module AuthorizationHelpers
       module CustomAbility
         def build_ability(&block)
-          block ||= proc{ |_u| can :manage, :all }
+          block ||= proc { |_u| can :manage, :all }
           Class.new do
             include CanCan::Ability
+
             define_method(:initialize, block)
           end
         end
@@ -41,9 +42,9 @@ module Spree
           end
 
           before do
-            allow(Spree.user_class).to receive(:find_by).
-                                         with(hash_including(:spree_api_key)).
-                                         and_return(Spree.user_class.new)
+            allow(Spree.user_class).to receive(:find_by)
+              .with(hash_including(:spree_api_key))
+              .and_return(Spree.user_class.new)
           end
         end
 

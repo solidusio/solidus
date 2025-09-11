@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -8,7 +8,7 @@ module Spree
       RSpec.describe Base, type: :model do
         let(:stock_location) { mock_model(Spree::StockLocation) }
 
-        it 'continues to splitter chain' do
+        it "continues to splitter chain" do
           splitter_one = Base.new(stock_location)
           splitter_two = Base.new(stock_location, splitter_one)
           packages = []

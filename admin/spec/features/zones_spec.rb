@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Zones", :js, type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before { sign_in create(:admin_user, email: "admin@example.com") }
   let(:canada) { create(:country, iso: "CA") }
   let(:france) { create(:country, iso: "FR") }
   let(:usa) { create(:country) }

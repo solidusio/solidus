@@ -7,11 +7,11 @@ module Spree
 
       def initialize(order, path)
         @order = order
-        @path = path.delete_prefix('/')
+        @path = path.delete_prefix("/")
       end
 
       def activate
-        if promotion && promotion.eligible?(order)
+        if promotion&.eligible?(order)
           promotion.activate(order:)
         end
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core'
+require "spree/core"
 
 module Spree
   module Core
@@ -9,7 +9,7 @@ module Spree
       CREDIT_CARD_VERIFICATION_VALUE_PARAM = /payment.*source.*\.verification_value$/
 
       isolate_namespace Spree
-      engine_name 'spree'
+      engine_name "spree"
 
       config.generators do |generator|
         generator.test_framework :rspec
@@ -31,15 +31,15 @@ module Spree
       end
 
       # leave empty initializers for backwards-compatability. Other apps might still rely on these events
-      initializer "spree.default_permissions", before: :load_config_initializers do; end
-      initializer "spree.register.calculators", before: :load_config_initializers do; end
-      initializer "spree.register.stock_splitters", before: :load_config_initializers do; end
-      initializer "spree.register.payment_methods", before: :load_config_initializers do; end
-      initializer 'spree.promo.environment', before: :load_config_initializers do; end
-      initializer 'spree.promo.register.promotion.calculators', before: :load_config_initializers do; end
-      initializer 'spree.promo.register.promotion.rules', before: :load_config_initializers do; end
-      initializer 'spree.promo.register.promotions.actions', before: :load_config_initializers do; end
-      initializer 'spree.promo.register.promotions.shipping_actions', before: :load_config_initializers do; end
+      initializer("spree.default_permissions", before: :load_config_initializers) {}
+      initializer("spree.register.calculators", before: :load_config_initializers) {}
+      initializer("spree.register.stock_splitters", before: :load_config_initializers) {}
+      initializer("spree.register.payment_methods", before: :load_config_initializers) {}
+      initializer("spree.promo.environment", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotion.calculators", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotion.rules", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotions.actions", before: :load_config_initializers) {}
+      initializer("spree.promo.register.promotions.shipping_actions", before: :load_config_initializers) {}
 
       # Filter sensitive information during logging
       initializer "spree.params.filter", before: :load_config_initializers do |app|
@@ -47,7 +47,7 @@ module Spree
           %r{^password$},
           %r{^password_confirmation$},
           CREDIT_CARD_NUMBER_PARAM,
-          CREDIT_CARD_VERIFICATION_VALUE_PARAM,
+          CREDIT_CARD_VERIFICATION_VALUE_PARAM
         ]
       end
 
@@ -56,7 +56,7 @@ module Spree
       end
 
       # Setup pub/sub
-      initializer 'spree.core.pub_sub' do |app|
+      initializer "spree.core.pub_sub" do |app|
         app.reloader.to_prepare do
           Spree::Bus.clear
 
@@ -95,13 +95,13 @@ module Spree
       end
 
       config.after_initialize do
-        Spree::Config.check_load_defaults_called('Spree::Config')
+        Spree::Config.check_load_defaults_called("Spree::Config")
         Spree::Config.static_model_preferences.validate!
       end
 
       config.after_initialize do
         if defined?(Spree::Auth::Engine) &&
-            Gem::Version.new(Spree::Auth::VERSION) < Gem::Version.new('2.5.4') &&
+            Gem::Version.new(Spree::Auth::VERSION) < Gem::Version.new("2.5.4") &&
             defined?(Spree::UsersController)
           Spree::UsersController.protect_from_forgery with: :exception
         end

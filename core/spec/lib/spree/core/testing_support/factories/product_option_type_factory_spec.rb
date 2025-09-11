@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'product option type factory' do
+RSpec.describe "product option type factory" do
   let(:factory_class) { Spree::ProductOptionType }
 
-  describe 'plain product option type' do
+  describe "plain product option type" do
     let(:factory) { :product_option_type }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

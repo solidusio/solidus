@@ -4,7 +4,7 @@ module Spree
   class Promotion < Spree::Base
     module Rules
       class OptionValue < PromotionRule
-        MATCH_POLICIES = %w(any)
+        MATCH_POLICIES = %w[any]
         preference :match_policy, :string, default: MATCH_POLICIES.first
         preference :eligible_values, :hash
 
@@ -14,7 +14,7 @@ module Spree
 
         def eligible?(promotable, _options = {})
           case preferred_match_policy
-          when 'any'
+          when "any"
             promotable.line_items.any? { |item| actionable?(item) }
           end
         end
@@ -28,11 +28,11 @@ module Spree
 
         def preferred_eligible_values
           values = preferences[:eligible_values] || {}
-          Hash[values.keys.map(&:to_i).zip(
+          values.keys.map(&:to_i).zip(
             values.values.map do |value|
               (value.is_a?(Array) ? value : value.split(",")).map(&:to_i)
             end
-          )]
+          ).to_h
         end
 
         private

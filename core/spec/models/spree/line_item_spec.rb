@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::LineItem, type: :model do
   let(:order) { create :order_with_line_items, line_items_count: 1 }
   let(:line_item) { order.line_items.first }
   let(:target_shipment) { Spree::Shipment.new }
 
-  context '#destroy' do
+  context "#destroy" do
     it "fetches soft-deleted products" do
       line_item.product.discard
       expect(line_item.reload.product).to be_a Spree::Product
@@ -39,16 +39,16 @@ RSpec.describe Spree::LineItem, type: :model do
     end
   end
 
-  describe '.new' do
+  describe ".new" do
     let(:variant) { create :variant }
 
     subject(:line_item) { Spree::LineItem.new(variant:, order:) }
 
-    it 'copies the variants price' do
+    it "copies the variants price" do
       expect(line_item.price).to eq(variant.price)
     end
 
-    it 'copies the variants cost_price' do
+    it "copies the variants cost_price" do
       expect(line_item.cost_price).to eq(variant.cost_price)
     end
 
@@ -56,19 +56,19 @@ RSpec.describe Spree::LineItem, type: :model do
       expect(line_item.currency).to eq(order.currency)
     end
 
-    it 'copies the variants tax category' do
+    it "copies the variants tax category" do
       expect(line_item.tax_category).to eq(line_item.variant.tax_category)
     end
   end
 
-  describe '#total_before_tax' do
+  describe "#total_before_tax" do
     before do
       line_item.update!(price: 10, quantity: 2)
     end
     let!(:admin_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -1, source: nil) }
     let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -2, source: nil) }
 
-    it 'returns the amount minus any adjustments' do
+    it "returns the amount minus any adjustments" do
       expect(line_item.total_before_tax).to eq(20 - 1 - 2)
     end
   end
@@ -84,14 +84,14 @@ RSpec.describe Spree::LineItem, type: :model do
     end
   end
 
-  describe '.single_money' do
+  describe ".single_money" do
     before { line_item.price = 3.50 }
     it "returns a Spree::Money representing the price for one variant" do
       expect(line_item.single_money.to_s).to eq("$3.50")
     end
   end
 
-  context 'setting a line item price' do
+  context "setting a line item price" do
     let(:store) { create(:store, default: true) }
     let(:order) { Spree::Order.new(currency: "RUB", store:) }
     let(:variant) { Spree::Variant.new(product: Spree::Product.new) }
@@ -119,7 +119,7 @@ RSpec.describe Spree::LineItem, type: :model do
   end
 
   describe "#options=" do
-    let(:options) { { price: 123, quantity: 5 } }
+    let(:options) { {price: 123, quantity: 5} }
 
     it "updates the data provided in the options" do
       line_item.options = options
@@ -129,7 +129,7 @@ RSpec.describe Spree::LineItem, type: :model do
     end
 
     context "when price is not provided" do
-      let(:options) { { quantity: 5 } }
+      let(:options) { {quantity: 5} }
 
       it "sets price anyway, retrieving it from line item options" do
         expect(line_item.variant)
@@ -144,32 +144,32 @@ RSpec.describe Spree::LineItem, type: :model do
     end
   end
 
-  describe 'money_price=' do
+  describe "money_price=" do
     let(:currency) { "USD" }
     let(:new_price) { Spree::Money.new(99.00, currency:) }
 
-    it 'assigns a new price' do
+    it "assigns a new price" do
       line_item.money_price = new_price
       expect(line_item.price).to eq(new_price.cents / 100.0)
     end
 
-    context 'when the new price is nil' do
+    context "when the new price is nil" do
       let(:new_price) { nil }
 
-      it 'makes the line item price empty' do
+      it "makes the line item price empty" do
         line_item.money_price = new_price
         expect(line_item.price).to be_nil
       end
     end
 
-    context 'when the price has a currency different from the order currency' do
+    context "when the price has a currency different from the order currency" do
       let(:currency) { "RUB" }
 
-      it 'is not valid' do
+      it "is not valid" do
         line_item.money_price = new_price
         expect(line_item).not_to be_valid
         expect(line_item.errors[:price])
-          .to include 'Line item price currency must match order currency!'
+          .to include "Line item price currency must match order currency!"
       end
     end
   end

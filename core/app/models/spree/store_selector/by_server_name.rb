@@ -17,7 +17,7 @@ module Spree
       # Chooses the current store based on a request.
       # @return [Spree::Store]
       def store
-        server_name = @request.env['SERVER_NAME']
+        server_name = @request.env["SERVER_NAME"]
 
         # We select a store which either matches our server name, or is default.
         # We sort by `default ASC` so that a store matching SERVER_NAME will come

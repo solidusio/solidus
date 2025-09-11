@@ -46,8 +46,7 @@ module Spree
       return params if params[:payment_source].blank?
 
       payment_params = params[:order] &&
-                       params[:order][:payments_attributes] &&
-                       params[:order][:payments_attributes].first
+        params[:order][:payments_attributes]&.first
       return params if payment_params.blank?
 
       payment_method_id = payment_params[:payment_method_id]

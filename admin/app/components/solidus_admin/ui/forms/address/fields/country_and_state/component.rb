@@ -10,6 +10,7 @@ class SolidusAdmin::UI::Forms::Address::Fields::CountryAndState::Component < Sol
 
   def state_options
     return [] unless @addressable.country
+
     @addressable.country.states.map { |s| [s.name, s.id] }
   end
 end

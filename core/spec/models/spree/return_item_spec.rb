@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReturnItem, type: :model do
   all_reception_statuses = Spree::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
@@ -18,87 +18,87 @@ RSpec.describe Spree::ReturnItem, type: :model do
     allow_any_instance_of(Spree::Order).to receive(:return!).and_return(true)
   end
 
-  describe '#receive!' do
-    let(:now)            { Time.current }
-    let(:order)          { create(:shipped_order) }
-    let(:inventory_unit) { create(:inventory_unit, state: 'shipped') }
+  describe "#receive!" do
+    let(:now) { Time.current }
+    let(:order) { create(:shipped_order) }
+    let(:inventory_unit) { create(:inventory_unit, state: "shipped") }
     let!(:customer_return) { create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id) }
     let(:return_item) { create(:return_item, inventory_unit:) }
 
     before do
-      inventory_unit.update!(state: 'shipped')
-      return_item.update!(reception_status: 'awaiting')
+      inventory_unit.update!(state: "shipped")
+      return_item.update!(reception_status: "awaiting")
       allow(return_item).to receive(:eligible_for_return?).and_return(true)
     end
 
     subject { return_item.receive! }
 
-    it 'returns the inventory unit' do
+    it "returns the inventory unit" do
       subject
-      expect(inventory_unit.reload.state).to eq 'returned'
+      expect(inventory_unit.reload.state).to eq "returned"
     end
 
-    it 'attempts to accept the return item' do
+    it "attempts to accept the return item" do
       expect(return_item).to receive(:attempt_accept)
       subject
     end
 
-    context 'when there is a received return item with the same inventory unit' do
-      let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit:, reception_status: 'received') }
+    context "when there is a received return item with the same inventory unit" do
+      let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit:, reception_status: "received") }
 
       before do
         expect { subject }.to raise_error { StateMachines::InvalidTransition }
       end
 
-      it 'does not receive the return item' do
-        expect(return_item.reception_status).to eq 'awaiting'
+      it "does not receive the return item" do
+        expect(return_item.reception_status).to eq "awaiting"
       end
 
-      it 'adds an error to the return item' do
+      it "adds an error to the return item" do
         expect(return_item.errors[:inventory_unit]).to include "#{return_item.inventory_unit_id} has already been taken by return item #{return_item_with_dupe_inventory_unit.id}"
       end
     end
 
-    context 'when the received item is actually the exchange (aka customer changed mind about exchange)' do
-      let(:exchange_inventory_unit) { create(:inventory_unit, state: 'shipped') }
+    context "when the received item is actually the exchange (aka customer changed mind about exchange)" do
+      let(:exchange_inventory_unit) { create(:inventory_unit, state: "shipped") }
       let!(:return_item_with_exchange) { create(:return_item, inventory_unit:, exchange_inventory_unit:) }
       let!(:return_item_in_lieu) { create(:return_item, inventory_unit: exchange_inventory_unit) }
 
-      it 'unexchanges original return item' do
+      it "unexchanges original return item" do
         return_item_in_lieu.receive!
 
         return_item_with_exchange.reload
         return_item_in_lieu.reload
-        expect(return_item_with_exchange.reception_status).to eq 'unexchanged'
-        expect(return_item_in_lieu.reception_status).to eq 'received'
+        expect(return_item_with_exchange.reception_status).to eq "unexchanged"
+        expect(return_item_in_lieu.reception_status).to eq "received"
         expect(return_item_in_lieu.amount).to eq 0
-        expect(inventory_unit.reload.state).to eq 'shipped'
-        expect(exchange_inventory_unit.reload.state).to eq 'returned'
+        expect(inventory_unit.reload.state).to eq "shipped"
+        expect(exchange_inventory_unit.reload.state).to eq "returned"
       end
     end
 
-    context 'with a stock location' do
+    context "with a stock location" do
       let(:stock_location) { customer_return.stock_location }
       let(:stock_item) { stock_location.stock_item(inventory_unit.variant) }
 
       before do
-        inventory_unit.update!(state: 'shipped')
-        return_item.update!(reception_status: 'awaiting')
+        inventory_unit.update!(state: "shipped")
+        return_item.update!(reception_status: "awaiting")
         stock_location.update!(restock_inventory: true)
       end
 
-      it 'increases the count on hand' do
+      it "increases the count on hand" do
         expect { subject }.to change { stock_item.reload.count_on_hand }.by(1)
       end
 
-      context 'when variant does not track inventory' do
+      context "when variant does not track inventory" do
         before do
-          inventory_unit.update!(state: 'shipped')
+          inventory_unit.update!(state: "shipped")
           inventory_unit.variant.update!(track_inventory: false)
-          return_item.update!(reception_status: 'awaiting')
+          return_item.update!(reception_status: "awaiting")
         end
 
-        it 'does not increase the count on hand' do
+        it "does not increase the count on hand" do
           expect { subject }.to_not change { stock_item.reload.count_on_hand }
         end
       end
@@ -108,7 +108,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
           stock_location.update!(restock_inventory: false)
         end
 
-        it 'does not increase the count on hand' do
+        it "does not increase the count on hand" do
           expect { subject }.to_not change { stock_item.reload.count_on_hand }
         end
       end
@@ -128,14 +128,14 @@ RSpec.describe Spree::ReturnItem, type: :model do
         context "when the item was #{status}" do
           before { return_item.update!(reception_status: status) }
 
-          it 'processes the inventory unit' do
+          it "processes the inventory unit" do
             subject
-            expect(return_item.inventory_unit.reload.state).to eq('returned')
+            expect(return_item.inventory_unit.reload.state).to eq("returned")
           end
 
-          it 'return remains accepted' do
+          it "return remains accepted" do
             subject
-            expect(return_item.acceptance_status).to eq('accepted')
+            expect(return_item.acceptance_status).to eq("accepted")
           end
         end
       end
@@ -188,13 +188,13 @@ RSpec.describe Spree::ReturnItem, type: :model do
     subject { Spree::ReturnItem.from_inventory_unit(inventory_unit) }
 
     context "with a cancelled return item" do
-      let!(:return_item) { create(:return_item, inventory_unit:, reception_status: 'cancelled') }
+      let!(:return_item) { create(:return_item, inventory_unit:, reception_status: "cancelled") }
 
       it { is_expected.not_to be_persisted }
     end
 
-    context 'with a expired item' do
-      let!(:return_item) { create(:return_item, inventory_unit:, reception_status: 'expired') }
+    context "with a expired item" do
+      let!(:return_item) { create(:return_item, inventory_unit:, reception_status: "expired") }
 
       it { is_expected.not_to be_persisted }
     end
@@ -213,7 +213,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
       expect(return_item).to be_awaiting
     end
 
-    context 'when transitioning to :received' do
+    context "when transitioning to :received" do
       let(:return_item) { create(:return_item) }
       subject { return_item.receive! }
 
@@ -221,7 +221,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
       # send to the callback methods that interferes with rspec-mocks.
       around { |e| without_partial_double_verification { e.call } }
 
-      it 'calls #attempt_accept, #check_unexchange, and #process_inventory_unit!' do
+      it "calls #attempt_accept, #check_unexchange, and #process_inventory_unit!" do
         expect(return_item).to receive(:attempt_accept)
         expect(return_item).to receive(:check_unexchange)
         expect(return_item).to receive(:process_inventory_unit!)
@@ -229,10 +229,10 @@ RSpec.describe Spree::ReturnItem, type: :model do
         subject
       end
 
-      context 'when the :acceptance_status is in a state that does not support the :attempt_accept event' do
+      context "when the :acceptance_status is in a state that does not support the :attempt_accept event" do
         before { return_item.require_manual_intervention! }
 
-        it 'only skips the call to :attempt_accept' do
+        it "only skips the call to :attempt_accept" do
           expect(return_item).not_to receive(:attempt_accept)
           expect(return_item).to receive(:check_unexchange)
           expect(return_item).to receive(:process_inventory_unit!)
@@ -254,12 +254,12 @@ RSpec.describe Spree::ReturnItem, type: :model do
   describe "#receive" do
     let(:order) { create(:shipped_order) }
     let(:inventory_unit) { create(:inventory_unit, shipment: order.shipments.first) }
-    let(:return_item)    { create(:return_item, reception_status: status, inventory_unit:) }
+    let(:return_item) { create(:return_item, reception_status: status, inventory_unit:) }
 
     subject { return_item.receive! }
 
     context "awaiting status" do
-      let(:status) { 'awaiting' }
+      let(:status) { "awaiting" }
 
       before do
         expect(return_item.inventory_unit).to receive(:return!)
@@ -273,7 +273,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
 
     context "return_item has a reception status of cancelled" do
-      it_behaves_like "an invalid state transition", 'cancelled', 'received'
+      it_behaves_like "an invalid state transition", "cancelled", "received"
     end
   end
 
@@ -283,7 +283,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     subject { return_item.cancel! }
 
     context "awaiting status" do
-      let(:status) { 'awaiting' }
+      let(:status) { "awaiting" }
 
       before { subject }
 
@@ -292,36 +292,36 @@ RSpec.describe Spree::ReturnItem, type: :model do
       end
     end
 
-    (all_reception_statuses - ['awaiting']).each do |invalid_transition_status|
+    (all_reception_statuses - ["awaiting"]).each do |invalid_transition_status|
       context "return_item has a reception status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'cancelled'
+        it_behaves_like "an invalid state transition", invalid_transition_status, "cancelled"
       end
     end
   end
 
   {
-    give: 'given_to_customer',
-    lost: 'lost_in_transit',
-    wrong_item_shipped: 'shipped_wrong_item',
-    in_transit: 'in_transit',
-    short_shipped: 'short_shipped'
+    give: "given_to_customer",
+    lost: "lost_in_transit",
+    wrong_item_shipped: "shipped_wrong_item",
+    in_transit: "in_transit",
+    short_shipped: "short_shipped"
   }.each do |transition, status|
     describe "##{transition}" do
       let(:return_item) { create(:return_item, reception_status: status, inventory_unit:) }
-      let(:inventory_unit) { create(:inventory_unit, state: 'shipped') }
+      let(:inventory_unit) { create(:inventory_unit, state: "shipped") }
       subject { return_item.public_send("#{transition}!") }
       context "awaiting status" do
         before do
-          return_item.update!(reception_status: 'awaiting')
+          return_item.update!(reception_status: "awaiting")
           allow(return_item).to receive(:eligible_for_return?).and_return(true)
         end
 
-        it 'accepts the return' do
+        it "accepts the return" do
           subject
-          expect(return_item.acceptance_status).to eq('accepted')
+          expect(return_item.acceptance_status).to eq("accepted")
         end
 
-        it 'does not decrease inventory' do
+        it "does not decrease inventory" do
           expect(return_item).to_not receive(:process_inventory_unit!)
           subject
         end
@@ -332,7 +332,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
         end
       end
 
-      it_behaves_like "an invalid state transition", 'cancelled', status
+      it_behaves_like "an invalid state transition", "cancelled", status
     end
   end
 
@@ -348,7 +348,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
 
     context "pending status" do
-      let(:status) { 'pending' }
+      let(:status) { "pending" }
 
       before do
         allow(return_item).to receive(:eligible_for_return?).and_return(true)
@@ -364,15 +364,15 @@ RSpec.describe Spree::ReturnItem, type: :model do
       end
     end
 
-    (all_acceptance_statuses - ['accepted', 'pending']).each do |invalid_transition_status|
+    (all_acceptance_statuses - ["accepted", "pending"]).each do |invalid_transition_status|
       context "return_item has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'accepted'
+        it_behaves_like "an invalid state transition", invalid_transition_status, "accepted"
       end
     end
 
     context "not eligible for return" do
-      let(:status) { 'pending' }
-      let(:validator_errors) { { number_of_days: "Return Item is outside the eligible time period" } }
+      let(:status) { "pending" }
+      let(:validator_errors) { {number_of_days: "Return Item is outside the eligible time period"} }
 
       before do
         allow(return_item).to receive(:eligible_for_return?).and_return(false)
@@ -416,7 +416,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     subject { return_item.reject! }
 
     context "pending status" do
-      let(:status) { 'pending' }
+      let(:status) { "pending" }
 
       before { subject }
 
@@ -429,9 +429,9 @@ RSpec.describe Spree::ReturnItem, type: :model do
       end
     end
 
-    (all_acceptance_statuses - ['accepted', 'pending', 'manual_intervention_required']).each do |invalid_transition_status|
+    (all_acceptance_statuses - ["accepted", "pending", "manual_intervention_required"]).each do |invalid_transition_status|
       context "return_item has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'rejected'
+        it_behaves_like "an invalid state transition", invalid_transition_status, "rejected"
       end
     end
   end
@@ -442,7 +442,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     subject { return_item.accept! }
 
     context "pending status" do
-      let(:status) { 'pending' }
+      let(:status) { "pending" }
 
       before { subject }
 
@@ -455,9 +455,9 @@ RSpec.describe Spree::ReturnItem, type: :model do
       end
     end
 
-    (all_acceptance_statuses - ['accepted', 'pending', 'manual_intervention_required']).each do |invalid_transition_status|
+    (all_acceptance_statuses - ["accepted", "pending", "manual_intervention_required"]).each do |invalid_transition_status|
       context "return_item has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'accepted'
+        it_behaves_like "an invalid state transition", invalid_transition_status, "accepted"
       end
     end
   end
@@ -468,7 +468,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     subject { return_item.require_manual_intervention! }
 
     context "pending status" do
-      let(:status) { 'pending' }
+      let(:status) { "pending" }
 
       before { subject }
 
@@ -481,35 +481,35 @@ RSpec.describe Spree::ReturnItem, type: :model do
       end
     end
 
-    (all_acceptance_statuses - ['accepted', 'pending', 'manual_intervention_required']).each do |invalid_transition_status|
+    (all_acceptance_statuses - ["accepted", "pending", "manual_intervention_required"]).each do |invalid_transition_status|
       context "return_item has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'manual_intervention_required'
+        it_behaves_like "an invalid state transition", invalid_transition_status, "manual_intervention_required"
       end
     end
   end
 
-  describe 'validity for reimbursements' do
+  describe "validity for reimbursements" do
     let(:return_item) { create(:return_item, acceptance_status:) }
-    let(:acceptance_status) { 'pending' }
+    let(:acceptance_status) { "pending" }
 
     before { return_item.reimbursement = build(:reimbursement) }
 
     subject { return_item }
 
-    context 'when acceptance_status is accepted' do
-      let(:acceptance_status) { 'accepted' }
+    context "when acceptance_status is accepted" do
+      let(:acceptance_status) { "accepted" }
 
-      it 'is valid' do
+      it "is valid" do
         expect(subject).to be_valid
       end
     end
 
-    context 'when acceptance_status is accepted' do
-      let(:acceptance_status) { 'pending' }
+    context "when acceptance_status is accepted" do
+      let(:acceptance_status) { "pending" }
 
-      it 'is valid' do
+      it "is valid" do
         expect(subject).to_not be_valid
-        expect(subject.errors.messages).to eq({ reimbursement: [I18n.t(:cannot_be_associated_unless_accepted, scope: 'activerecord.errors.models.spree/return_item.attributes.reimbursement')] })
+        expect(subject.errors.messages).to eq({reimbursement: [I18n.t(:cannot_be_associated_unless_accepted, scope: "activerecord.errors.models.spree/return_item.attributes.reimbursement")]})
       end
     end
   end
@@ -520,11 +520,11 @@ RSpec.describe Spree::ReturnItem, type: :model do
       it { expect(subject.part_of_exchange?).to eq true }
     end
     context "exchange variant does not exist, but unexchagned sibling does" do
-      before { expect(subject).to receive(:sibling_intended_for_exchange).with('unexchanged').and_return(true) }
+      before { expect(subject).to receive(:sibling_intended_for_exchange).with("unexchanged").and_return(true) }
       it { expect(subject.part_of_exchange?).to eq true }
     end
     context "neither exchange variant nor unexchanged sibling exist" do
-      before { expect(subject).to receive(:sibling_intended_for_exchange).with('unexchanged').and_return(false) }
+      before { expect(subject).to receive(:sibling_intended_for_exchange).with("unexchanged").and_return(false) }
       it { expect(subject.part_of_exchange?).to eq false }
     end
   end
@@ -658,9 +658,9 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
   end
 
-  describe 'inventory_unit uniqueness' do
+  describe "inventory_unit uniqueness" do
     let!(:old_return_item) { create(:return_item, reception_status: old_reception_status) }
-    let(:old_reception_status) { 'awaiting' }
+    let(:old_reception_status) { "awaiting" }
 
     subject do
       build(:return_item, {
@@ -669,42 +669,42 @@ RSpec.describe Spree::ReturnItem, type: :model do
       })
     end
 
-    context 'with other awaiting return items exist for the same inventory unit' do
-      let(:old_reception_status) { 'awaiting' }
+    context "with other awaiting return items exist for the same inventory unit" do
+      let(:old_reception_status) { "awaiting" }
 
-      it 'cancels the others' do
+      it "cancels the others" do
         expect {
           subject.save!
-        }.to change { old_return_item.reload.reception_status }.from('awaiting').to('cancelled')
+        }.to change { old_return_item.reload.reception_status }.from("awaiting").to("cancelled")
       end
 
-      it 'does not cancel itself' do
+      it "does not cancel itself" do
         subject.save!
         expect(subject).to be_awaiting
       end
     end
 
-    context 'with other cancelled return items exist for the same inventory unit' do
-      let(:old_reception_status) { 'cancelled' }
+    context "with other cancelled return items exist for the same inventory unit" do
+      let(:old_reception_status) { "cancelled" }
 
-      it 'succeeds' do
+      it "succeeds" do
         subject.save!
       end
     end
 
-    context 'with other received return items exist for the same inventory unit' do
-      let(:old_reception_status) { 'received' }
+    context "with other received return items exist for the same inventory unit" do
+      let(:old_reception_status) { "received" }
 
-      it 'is invalid' do
+      it "is invalid" do
         expect(subject).to_not be_valid
         expect(subject.errors.to_a).to eq ["Inventory unit #{subject.inventory_unit_id} has already been taken by return item #{old_return_item.id}"]
       end
     end
 
-    context 'with other given_to_customer return items exist for the same inventory unit' do
-      let(:old_reception_status) { 'given_to_customer' }
+    context "with other given_to_customer return items exist for the same inventory unit" do
+      let(:old_reception_status) { "given_to_customer" }
 
-      it 'is invalid' do
+      it "is invalid" do
         expect(subject).to_not be_valid
         expect(subject.errors.to_a).to eq ["Inventory unit #{subject.inventory_unit_id} has already been taken by return item #{old_return_item.id}"]
       end
@@ -712,7 +712,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
   end
 
   describe "included tax in total" do
-    let(:inventory_unit) { create(:inventory_unit, state: 'shipped') }
+    let(:inventory_unit) { create(:inventory_unit, state: "shipped") }
     let(:return_item) do
       create(
         :return_item,
@@ -721,7 +721,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
       )
     end
 
-    it 'includes included tax total' do
+    it "includes included tax total" do
       expect(return_item.amount).to eq 10
       expect(return_item.included_tax_total).to eq 5
       expect(return_item.total).to eq 10
@@ -740,7 +740,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
 
     context "return item has an exchange variant" do
-      let(:return_item)      { create(:exchange_return_item) }
+      let(:return_item) { create(:exchange_return_item) }
       let(:exchange_variant) { create(:on_demand_variant, product: return_item.inventory_unit.variant.product) }
 
       context "the exchange variant is eligible" do
@@ -753,7 +753,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
       context "the exchange variant is not eligible" do
         context "new return item" do
-          let(:return_item)      { create(:return_item) }
+          let(:return_item) { create(:return_item) }
           let(:exchange_variant) { create(:variant, product: return_item.inventory_unit.variant.product) }
 
           before { return_item.exchange_variant = exchange_variant }

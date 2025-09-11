@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::RefundsController do
   stub_authorization!
@@ -29,7 +29,7 @@ describe Spree::Admin::RefundsController do
 
     context "and no Spree::Core::GatewayError is raised" do
       it "creates a refund record" do
-        expect{ subject }.to change(Spree::Refund, :count).by(1)
+        expect { subject }.to change(Spree::Refund, :count).by(1)
       end
 
       it "calls #perform!" do
@@ -41,18 +41,18 @@ describe Spree::Admin::RefundsController do
 
     context "a Spree::Core::GatewayError is raised" do
       before do
-        expect_any_instance_of(Spree::Refund).
-          to receive(:process!).
-          and_raise(Spree::Core::GatewayError.new('An error has occurred'))
+        expect_any_instance_of(Spree::Refund)
+          .to receive(:process!)
+          .and_raise(Spree::Core::GatewayError.new("An error has occurred"))
       end
 
       it "does not create a refund record" do
-        expect{ subject }.to_not change { Spree::Refund.count }
+        expect { subject }.to_not change { Spree::Refund.count }
       end
 
       it "sets an error message with the correct text" do
         subject
-        expect(flash[:error]).to eq 'An error has occurred'
+        expect(flash[:error]).to eq "An error has occurred"
       end
 
       it { is_expected.to render_template(:new) }

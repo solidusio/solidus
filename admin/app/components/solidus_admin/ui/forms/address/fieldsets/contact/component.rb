@@ -10,7 +10,7 @@ class SolidusAdmin::UI::Forms::Address::Fieldsets::Contact::Component < SolidusA
       country_and_state: -> { component("ui/forms/address/fields/country_and_state").new(form_field_name: @form_field_name, addressable: @addressable) },
       phone: -> { component("ui/forms/field").text_field(@form_field_name, :phone, object: @addressable) },
       email: -> { component("ui/forms/field").text_field(@form_field_name, :email, object: @addressable) },
-      reverse_charge: -> { component("ui/forms/address/fields/reverse_charge_fields").new(form_field_name: @form_field_name, addressable: @addressable) },
+      reverse_charge: -> { component("ui/forms/address/fields/reverse_charge_fields").new(form_field_name: @form_field_name, addressable: @addressable) }
     }
   end
 end

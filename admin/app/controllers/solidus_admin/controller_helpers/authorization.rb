@@ -7,7 +7,7 @@ module SolidusAdmin::ControllerHelpers::Authorization
     before_action :authorize_solidus_admin_user!
 
     rescue_from CanCan::AccessDenied do
-      render 'unauthorized', status: :forbidden
+      render "unauthorized", status: :forbidden
     end
   end
 

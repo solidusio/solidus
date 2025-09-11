@@ -4,6 +4,7 @@ module SolidusPromotions
   module Benefits
     class CreateDiscountedItem < Benefit
       include OrderBenefit
+
       preference :variant_id, :integer
       preference :quantity, :integer, default: 1
       preference :necessary_quantity, :integer, default: 1

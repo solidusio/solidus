@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Order", :js, type: :feature, solidus_admin: true do
   let(:admin) { create(:admin_user) }

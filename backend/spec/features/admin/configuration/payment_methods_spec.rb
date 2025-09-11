@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
+
+class ComplexPayments < Spree::PaymentMethod
+  preference :name, :string
+  preference :mapping, :hash
+  preference :recipients, :array
+end
 
 describe "Payment Methods", type: :feature do
   stub_authorization!
@@ -17,7 +23,7 @@ describe "Payment Methods", type: :feature do
 
     it "should display existing payment methods" do
       click_link "Payments"
-      expect(page).to have_link 'Payment Methods'
+      expect(page).to have_link "Payment Methods"
       within("table#listing_payment_methods") do
         expect(all("th")[1].text).to eq("Name")
         expect(all("th")[2].text).to eq("Type")
@@ -26,7 +32,7 @@ describe "Payment Methods", type: :feature do
         expect(all("th")[5].text).to eq("State")
       end
 
-      within('table#listing_payment_methods') do
+      within("table#listing_payment_methods") do
         expect(page).to have_content(Spree::PaymentMethod::Check.model_name.human)
       end
     end
@@ -35,7 +41,7 @@ describe "Payment Methods", type: :feature do
   context "admin creating a new payment method", :js do
     it "creates a new payment method and disables the form" do
       click_link "Payments"
-      expect(page).to have_link 'Payment Methods'
+      expect(page).to have_link "Payment Methods"
       click_link "admin_new_payment_methods_link"
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
@@ -60,7 +66,7 @@ describe "Payment Methods", type: :feature do
 
     before do
       click_link "Payments"
-      expect(page).to have_link 'Payment Methods'
+      expect(page).to have_link "Payment Methods"
       within("table#listing_payment_methods") do
         click_icon(:edit)
       end
@@ -93,14 +99,8 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_content("Name can't be blank")
     end
 
-    context 'with payment method having hash and array as preference' do
-      class ComplexPayments < Spree::PaymentMethod
-        preference :name, :string
-        preference :mapping, :hash
-        preference :recipients, :array
-      end
-
-      let!(:payment_method) { ComplexPayments.create!(name: 'Complex Payments') }
+    context "with payment method having hash and array as preference" do
+      let!(:payment_method) { ComplexPayments.create!(name: "Complex Payments") }
 
       it "does not display preference fields that are hash or array" do
         expect(page).to have_field("Name")
@@ -117,55 +117,55 @@ describe "Payment Methods", type: :feature do
 
     it "displays message when changing type" do
       click_link "Payments"
-      expect(page).to have_link 'Payment Methods'
+      expect(page).to have_link "Payment Methods"
       click_icon :edit
-      expect(page).to have_content('Test Mode')
+      expect(page).to have_content("Test Mode")
 
-      select Spree::PaymentMethod::Check.model_name.human, from: 'Type'
-      expect(page).to have_content('you must save first')
-      expect(page).to have_no_content('Test Mode')
+      select Spree::PaymentMethod::Check.model_name.human, from: "Type"
+      expect(page).to have_content("you must save first")
+      expect(page).to have_no_content("Test Mode")
 
       # change back
-      select Spree::PaymentMethod::BogusCreditCard.model_name.human, from: 'Type'
-      expect(page).to have_no_content('you must save first')
-      expect(page).to have_content('Test Mode')
+      select Spree::PaymentMethod::BogusCreditCard.model_name.human, from: "Type"
+      expect(page).to have_no_content("you must save first")
+      expect(page).to have_content("Test Mode")
     end
 
     it "displays message when changing preference source" do
-      Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, 'my_prefs', {})
+      Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, "my_prefs", {})
 
       click_link "Payments"
-      expect(page).to have_link 'Payment Methods'
+      expect(page).to have_link "Payment Methods"
       click_icon :edit
-      expect(page).to have_content('Test Mode')
+      expect(page).to have_content("Test Mode")
 
-      select 'my_prefs', from: 'Preference Source'
-      expect(page).to have_content('you must save first')
-      expect(page).to have_no_content('Test Mode')
+      select "my_prefs", from: "Preference Source"
+      expect(page).to have_content("you must save first")
+      expect(page).to have_no_content("Test Mode")
 
       # change back
-      select '(custom)', from: 'Preference Source'
-      expect(page).to have_no_content('you must save first')
-      expect(page).to have_content('Test Mode')
+      select "(custom)", from: "Preference Source"
+      expect(page).to have_no_content("you must save first")
+      expect(page).to have_content("Test Mode")
     end
 
     it "updates successfully and keeps secrets" do
-      Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, 'my_prefs', { server: 'secret' })
+      Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, "my_prefs", {server: "secret"})
 
       click_link "Payments"
-      expect(page).to have_link 'Payment Methods'
+      expect(page).to have_link "Payment Methods"
       click_icon :edit
 
-      select 'my_prefs', from: 'Preference Source'
-      click_on 'Update'
-      expect(page).to have_content('Using static preferences')
-      expect(page).to have_no_content('secret')
+      select "my_prefs", from: "Preference Source"
+      click_on "Update"
+      expect(page).to have_content("Using static preferences")
+      expect(page).to have_no_content("secret")
 
       # change back
-      select '(custom)', from: 'Preference Source'
-      click_on 'Update'
-      expect(page).to have_content('Test Mode')
-      expect(page).to have_no_content('secret')
+      select "(custom)", from: "Preference Source"
+      click_on "Update"
+      expect(page).to have_content("Test Mode")
+      expect(page).to have_no_content("secret")
     end
 
     after do

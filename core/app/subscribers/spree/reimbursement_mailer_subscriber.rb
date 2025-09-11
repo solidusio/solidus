@@ -6,8 +6,8 @@ module Spree
     include Omnes::Subscriber
 
     handle :reimbursement_reimbursed,
-           with: :send_reimbursement_email,
-           id: :spree_order_mailer_send_reimbursement_email
+      with: :send_reimbursement_email,
+      id: :spree_order_mailer_send_reimbursement_email
 
     # Sends reimbursement email to the user
     #
