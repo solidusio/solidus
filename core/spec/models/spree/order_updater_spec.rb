@@ -235,20 +235,20 @@ module Spree
 
       it "is backordered" do
         allow(order).to receive_messages backordered?: true
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
 
         expect(order.shipment_state).to eq('backorder')
       end
 
       it "is nil" do
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
         expect(order.shipment_state).to be_nil
       end
 
       ["shipped", "ready", "pending"].each do |state|
         it "is #{state}" do
           create(:shipment, order:, state:)
-          updater.update_shipment_state
+          updater.recalculate_shipment_state
           expect(order.shipment_state).to eq(state)
         end
       end
@@ -256,7 +256,7 @@ module Spree
       it "is partial" do
         create(:shipment, order:, state: 'pending')
         create(:shipment, order:, state: 'ready')
-        updater.update_shipment_state
+        updater.recalculate_shipment_state
         expect(order.shipment_state).to eq('partial')
       end
     end
@@ -285,7 +285,7 @@ module Spree
           order.total = 1
           order.payment_total = 0
 
-          updater.update_payment_state
+          updater.recalculate_payment_state
           expect(order.payment_state).to eq('failed')
         end
       end
@@ -297,7 +297,7 @@ module Spree
           order.payment_total = 0
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'paid'
         end
       end
@@ -308,7 +308,7 @@ module Spree
           order.total = 1
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'credit_owed'
         end
       end
@@ -319,7 +319,7 @@ module Spree
           order.total = 2
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'balance_due'
         end
       end
@@ -330,7 +330,7 @@ module Spree
           order.total = 30
 
           expect {
-            updater.update_payment_state
+            updater.recalculate_payment_state
           }.to change { order.payment_state }.to 'paid'
         end
       end
@@ -345,7 +345,7 @@ module Spree
             order.payment_total = 0
             order.total = 30
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'void'
           end
         end
@@ -356,7 +356,7 @@ module Spree
             order.total = 30
             create(:payment, order:, state: 'completed', amount: 30)
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'credit_owed'
           end
         end
@@ -366,7 +366,7 @@ module Spree
             order.payment_total = 0
             order.total = 30
             expect {
-              updater.update_payment_state
+              updater.recalculate_payment_state
             }.to change { order.payment_state }.to 'void'
           end
         end
@@ -377,12 +377,12 @@ module Spree
       before { allow(order).to receive_messages completed?: true }
 
       it "updates payment state" do
-        expect(updater).to receive(:update_payment_state)
+        expect(updater).to receive(:recalculate_payment_state)
         updater.recalculate
       end
 
       it "updates shipment state" do
-        expect(updater).to receive(:update_shipment_state)
+        expect(updater).to receive(:recalculate_shipment_state)
         updater.recalculate
       end
 
@@ -406,12 +406,12 @@ module Spree
       before { allow(order).to receive_messages completed?: false }
 
       it "doesnt update payment state" do
-        expect(updater).not_to receive(:update_payment_state)
+        expect(updater).not_to receive(:recalculate_payment_state)
         updater.recalculate
       end
 
       it "doesnt update shipment state" do
-        expect(updater).not_to receive(:update_shipment_state)
+        expect(updater).not_to receive(:recalculate_shipment_state)
         updater.recalculate
       end
 
