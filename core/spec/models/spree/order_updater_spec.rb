@@ -261,9 +261,7 @@ module Spree
     end
 
     context "updating shipment state" do
-      before do
-        allow(order).to receive_messages backordered?: false
-      end
+      let(:order) { create :order_with_line_items }
 
       it "logs a state change for the shipment" do
         create :shipment, order:, state: "pending"
@@ -278,31 +276,70 @@ module Spree
         }.to change { Spree::StateChange.where(name: "shipment").count }.by(1)
       end
 
-      it "is backordered" do
-        allow(order).to receive_messages backordered?: true
-        updater.recalculate_shipment_state
+      context "when an inventory unit is backordered" do
+        before do
+          create :inventory_unit, order: order, state: "backordered"
+        end
 
-        expect(order.shipment_state).to eq('backorder')
-      end
-
-      it "is nil" do
-        updater.recalculate_shipment_state
-        expect(order.shipment_state).to be_nil
-      end
-
-      ["shipped", "ready", "pending"].each do |state|
-        it "is #{state}" do
-          create(:shipment, order:, state:)
+        it "has a 'backorder' shipment state" do
           updater.recalculate_shipment_state
-          expect(order.shipment_state).to eq(state)
+          expect(order.shipment_state).to eq('backorder')
         end
       end
 
-      it "is partial" do
-        create(:shipment, order:, state: 'pending')
-        create(:shipment, order:, state: 'ready')
-        updater.recalculate_shipment_state
-        expect(order.shipment_state).to eq('partial')
+      context "when there are no shipments" do
+        before do
+          order.shipments.destroy_all
+        end
+
+        it "has no shipment state" do
+          updater.recalculate_shipment_state
+          expect(order.shipment_state).to be_nil
+        end
+      end
+
+      context "when the order's shipments are 'shipped'" do
+        before do
+          inventory_unit = order.inventory_units.first
+          inventory_unit.update!(state: "shipped")
+          order.shipments.first.update!(state: "shipped")
+        end
+
+        it "is shipped" do
+          updater.recalculate_shipment_state
+          expect(order.shipment_state).to eq("shipped")
+        end
+      end
+
+      context "when the order's shipments are 'ready'" do
+        let(:order) { create :order_ready_to_ship, shipment_state: "pending" }
+
+        it "is ready" do
+          updater.recalculate_shipment_state
+          expect(order.shipment_state).to eq("ready")
+        end
+      end
+
+      context "when the order's shipments are 'pending'" do
+        it "is pending" do
+          create(:shipment, order: order, state: "pending")
+          updater.recalculate_shipment_state
+          expect(order.shipment_state).to eq("pending")
+        end
+      end
+
+      context "when some of the order's shipments are shipped" do
+        before do
+          inventory_unit = create :inventory_unit, order: order, state: "shipped"
+          inventory_unit.shipment.update!(state: "shipped")
+
+          create :inventory_unit, order: order, state: "on_hand"
+        end
+
+        it "has a shipment state of 'partial'" do
+          updater.recalculate_shipment_state
+          expect(order.shipment_state).to eq('partial')
+        end
       end
     end
 
