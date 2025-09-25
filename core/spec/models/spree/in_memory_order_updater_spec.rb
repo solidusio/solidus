@@ -111,6 +111,28 @@ module Spree
             expect(Rails.logger).not_to have_received(:warn)
           end
         end
+
+        context "when the payment state changes" do
+          let(:order) { create(:completed_order_with_pending_payment) }
+
+          it "logs a state change for the payment" do
+            expect { order.payments.first.update(state: "completed") }
+              .to enqueue_job(Spree::StateChangeTrackingJob)
+              .with(order, "balance_due", "paid", a_kind_of(Time), "payment")
+              .once
+          end
+        end
+
+        context "when the shipment state changes" do
+          let(:order) { create(:order_ready_to_ship) }
+
+          it "logs a state change for the shipment" do
+            expect { order.shipments.first.ship! }
+              .to enqueue_job(Spree::StateChangeTrackingJob)
+              .with(order, "ready", "shipped", a_kind_of(Time), "shipment")
+              .once
+          end
+        end
       end
     end
 
