@@ -74,10 +74,7 @@ module Spree
     def recalculate_shipment_state
       shipments.each(&:recalculate_state)
 
-      log_state_change('shipment') do
-        order.shipment_state = determine_shipment_state
-      end
-
+      order.shipment_state = determine_shipment_state
       order.shipment_state
     end
     alias_method :update_shipment_state, :recalculate_shipment_state
@@ -93,10 +90,7 @@ module Spree
     #
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def recalculate_payment_state
-      log_state_change('payment') do
-        order.payment_state = determine_payment_state
-      end
-
+      order.payment_state = determine_payment_state
       order.payment_state
     end
     alias_method :update_payment_state, :recalculate_payment_state
@@ -237,20 +231,23 @@ module Spree
     def persist_totals
       shipments.each(&:persist_amounts)
       assign_item_totals
+      log_state_change("payment")
+      log_state_change("shipment")
       order.save!
     end
 
     def log_state_change(name)
       state = "#{name}_state"
-      old_state = order.public_send(state)
-      yield
-      new_state = order.public_send(state)
-      if old_state != new_state
-        order.state_changes.new(
-          previous_state: old_state,
-          next_state:     new_state,
-          user_id:        order.user_id,
-          name:
+      previous_state, current_state = order.changes[state]
+
+      if previous_state != current_state
+        # Enqueue the job to track this state change
+        StateChangeTrackingJob.perform_later(
+          order,
+          previous_state,
+          current_state,
+          Time.current,
+          name
         )
       end
     end
