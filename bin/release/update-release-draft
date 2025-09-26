@@ -1,18 +1,21 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '_helpers'
-require 'optparse'
-require 'yaml'
+require_relative "_helpers"
+require "optparse"
+require "yaml"
 
-branch = 'main'
+branch = "main"
 update = false
 
 opts = OptionParser.new
 opts.banner = "Usage: #{$0} [options] <previous_tag_name> <candidate_tag_name>"
 opts.on("-b", "--branch BRANCH", "GitHub branch") { branch = _1 }
 opts.on("-u", "--update", "Update the release draft instead of creating a new one") { update = true }
-opts.on("-h", "--help", "Prints this help") { puts opts; exit }
+opts.on("-h", "--help", "Prints this help") {
+  puts opts
+  exit
+}
 opts.parse!
 
 previous_tag_name = ARGV.shift or abort(opts.to_s)
@@ -24,12 +27,12 @@ candidate_tag_name = ARGV.shift or abort(opts.to_s)
 pull_numbers = OCTOKIT.post("/repos/solidusio/solidus/releases/generate-notes", {
   tag_name: candidate_tag_name,
   target_commitish: branch,
-  previous_tag_name:,
+  previous_tag_name:
 }).body.scan(%r{(?:#|pull/)(\d+)$}).flatten.uniq
 
 # Group PRs by label
 pulls_by_label = Hash.new { |h, k| h[k] = [] }
-pull_numbers.map { |n| Thread.new{ OCTOKIT.pull_request('solidusio/solidus', n) } }.map(&:value).each do |pull|
+pull_numbers.map { |n| Thread.new { OCTOKIT.pull_request("solidusio/solidus", n) } }.map(&:value).each do |pull|
   pull.labels.each { pulls_by_label[_1.name] << pull }
 end
 
@@ -50,15 +53,15 @@ notes += "\n\n**Full Changelog**: https://github.com/solidusio/solidus/compare/#
 
 if update
   release =
-    OCTOKIT.releases('solidusio/solidus').find {
+    OCTOKIT.releases("solidusio/solidus").find {
       _1.name == candidate_tag_name
     } || OCTOKIT.create_release(
-      'solidusio/solidus',
+      "solidusio/solidus",
       candidate_tag_name,
       name: candidate_tag_name,
       body: notes,
       target_commitish: branch,
-      draft: true,
+      draft: true
     )
 
   OCTOKIT.update_release(release.url, body: notes)

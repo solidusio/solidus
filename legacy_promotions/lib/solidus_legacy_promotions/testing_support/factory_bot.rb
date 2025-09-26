@@ -12,7 +12,7 @@ module SolidusLegacyPromotions
       FACTORIES = Dir["#{::SolidusLegacyPromotions::Engine.root}/lib/solidus_legacy_promotions/testing_support/factories/**/*_factory.rb"].sort
 
       def self.definition_file_paths
-        @paths ||= FACTORIES.map { |path| path.sub(/.rb\z/, '') }
+        @paths ||= FACTORIES.map { |path| path.sub(/.rb\z/, "") }
       end
 
       def self.add_definitions!

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'spree_core'
-require 'spree_api'
+require "spree_core"
+require "spree_api"
 
-require 'jquery-rails'
-require 'sassc-rails'
-require 'handlebars_assets'
-require 'font-awesome-rails'
-require 'jbuilder'
-require 'kaminari'
-require 'responders'
+require "jquery-rails"
+require "sassc-rails"
+require "handlebars_assets"
+require "font-awesome-rails"
+require "jbuilder"
+require "kaminari"
+require "responders"
 
-require 'spree/backend/action_callbacks'
-require 'spree/backend/callbacks'
-require 'spree/backend/engine'
+require "spree/backend/action_callbacks"
+require "spree/backend/callbacks"
+require "spree/backend/engine"

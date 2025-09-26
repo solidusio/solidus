@@ -6,7 +6,7 @@ RSpec.describe SolidusAdmin::Layout::Flashes::Toasts::Component, type: :componen
   let(:component) { described_class.new(toasts:) }
 
   describe "error toast" do
-    let(:toasts) { { error: "Some error" } }
+    let(:toasts) { {error: "Some error"} }
 
     it "renders correctly" do
       render_inline(component)
@@ -19,7 +19,7 @@ RSpec.describe SolidusAdmin::Layout::Flashes::Toasts::Component, type: :componen
   end
 
   describe "default toast" do
-    let(:toasts) { { notice: "All good" } }
+    let(:toasts) { {notice: "All good"} }
 
     it "renders correctly" do
       render_inline(component)

@@ -6,8 +6,8 @@ module Spree
     include Omnes::Subscriber
 
     handle :carton_shipped,
-           with: :send_carton_shipped_emails,
-           id: :spree_carton_mailer_send_carton_shipped_email
+      with: :send_carton_shipped_emails,
+      id: :spree_carton_mailer_send_carton_shipped_email
 
     # Sends carton shipped emails to users.
     #

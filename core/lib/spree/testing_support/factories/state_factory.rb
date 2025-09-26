@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :state, class: 'Spree::State' do
+  factory :state, class: "Spree::State" do
     transient do
-      country_iso { 'US' }
-      state_code { 'AL' }
+      country_iso { "US" }
+      state_code { "AL" }
 
       carmen_subregion do
         carmen_country = Carmen::Country.coded(country.iso)
@@ -17,7 +17,7 @@ FactoryBot.define do
         carmen_regions = carmen_regions.flat_map(&:subregions) if carmen_regions.first.subregions?
         region_collection = Carmen::RegionCollection.new(carmen_regions)
 
-        region_collection.coded(state_code) || region_collection.sort_by(&:name).first
+        region_collection.coded(state_code) || region_collection.min_by(&:name)
       end
     end
 

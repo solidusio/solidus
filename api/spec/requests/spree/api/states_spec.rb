@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'States', type: :request do
+  describe "States", type: :request do
     let(:australia) { create(:country, iso: "AU") }
     let!(:state) { create(:state, country: australia, name: "Victoria") }
     let(:attributes) { [:id, :name, :abbr, :country_id] }
@@ -15,19 +15,19 @@ module Spree::Api
     it "gets all states" do
       get spree.api_states_path
       expect(json_response["states"].first).to have_attributes(attributes)
-      expect(json_response['states'].first['name']).to eq(state.name)
+      expect(json_response["states"].first["name"]).to eq(state.name)
     end
 
     it "gets all the states for a particular country" do
       get spree.api_country_states_path(state.country)
       expect(json_response["states"].first).to have_attributes(attributes)
-      expect(json_response['states'].first['name']).to eq(state.name)
+      expect(json_response["states"].first["name"]).to eq(state.name)
     end
 
     context "pagination" do
       it "can select the next page and control page size" do
         create(:state)
-        get spree.api_states_path, params: { page: 2, per_page: 1 }
+        get spree.api_states_path, params: {page: 2, per_page: 1}
 
         expect(json_response).to be_paginated
         expect(json_response["states"].size).to eq(1)
@@ -56,9 +56,9 @@ module Spree::Api
         expect(json_response["states"].first).to have_attributes(attributes)
       end
 
-      it 'can query the results through a paramter' do
-        get spree.api_states_path, params: { q: { name_cont: 'Vic' } }
-        expect(json_response['states'].first['name']).to eq("Victoria")
+      it "can query the results through a paramter" do
+        get spree.api_states_path, params: {q: {name_cont: "Vic"}}
+        expect(json_response["states"].first["name"]).to eq("Victoria")
       end
     end
 

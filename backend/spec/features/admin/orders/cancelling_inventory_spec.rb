@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Cancel items" do
   stub_authorization!
@@ -26,10 +26,10 @@ describe "Cancel items" do
     it "can cancel the item" do
       visit_order
 
-      click_link 'Cancel Items'
+      click_link "Cancel Items"
 
       within_row(1) do
-        check 'inventory_unit_ids[]'
+        check "inventory_unit_ids[]"
       end
 
       click_button "Cancel Items"
@@ -44,7 +44,7 @@ describe "Cancel items" do
     it "does not display the link to cancel items" do
       visit_order
 
-      expect(page).to have_no_content('Cancel Items')
+      expect(page).to have_no_content("Cancel Items")
     end
   end
 end

@@ -14,7 +14,7 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
   # @param loading_more_message text
   # @param no_results_message text
   def remote_with_pagination(multiple: false, latency: false, loading_message: nil, loading_more_message: nil, no_results_message: nil)
-    args = { label: "Search", name: "select", multiple:, choices: [], placeholder: "Type to search" }
+    args = {label: "Search", name: "select", multiple:, choices: [], placeholder: "Type to search"}
     delay_url = "app.requestly.io/delay/2000/" if latency
     src = "https://#{delay_url}api.github.com/search/repositories"
     args.merge!(
@@ -26,7 +26,7 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
       "data-no-preload": "true",
       "data-loading-message": loading_message,
       "data-loading-more-message": loading_more_message,
-      "data-no-results-message": no_results_message,
+      "data-no-results-message": no_results_message
     )
 
     render component("ui/forms/select").new(**args)

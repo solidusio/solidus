@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.feature "Tiered Calculator Promotions" do
   stub_authorization!
@@ -13,16 +13,16 @@ RSpec.feature "Tiered Calculator Promotions" do
 
   scenario "adding a tiered percent calculator", js: true do
     select "Create whole-order adjustment", from: "Adjustment type"
-    within('#action_fields') { click_button "Add" }
+    within("#action_fields") { click_button "Add" }
 
-    select "Tiered Percent", from: I18n.t('spree.admin.promotions.actions.calculator_label')
-    within('#actions_container') { click_button "Update" }
+    select "Tiered Percent", from: I18n.t("spree.admin.promotions.actions.calculator_label")
+    within("#actions_container") { click_button "Update" }
 
     within("#actions_container .settings") do
       expect(page).to have_content("Base Percent")
       expect(page).to have_content("Tiers")
 
-      page.find('a.button').click
+      page.find("a.button").click
     end
 
     fill_in "Base Percent", with: 5
@@ -32,7 +32,7 @@ RSpec.feature "Tiered Calculator Promotions" do
       find("input:first-child").set(10)
     end
 
-    within('#actions_container') { click_button "Update" }
+    within("#actions_container") { click_button "Update" }
 
     expect(page).to have_content("Promotion \"#{promotion.name}\" has been successfully updated!")
 
@@ -53,7 +53,7 @@ RSpec.feature "Tiered Calculator Promotions" do
 
       action.calculator = Spree::Calculator::TieredFlatRate.new
       action.calculator.preferred_base_amount = 5
-      action.calculator.preferred_tiers = { 100 => 10, 200 => 15, 300 => 20 }
+      action.calculator.preferred_tiers = {100 => 10, 200 => 15, 300 => 20}
       action.calculator.save!
 
       visit spree.edit_admin_promotion_path(promotion)
@@ -64,9 +64,9 @@ RSpec.feature "Tiered Calculator Promotions" do
         find(".remove").click
       end
 
-      within('#actions_container') { click_button "Update" }
+      within("#actions_container") { click_button "Update" }
 
-      expect(page).to have_text('has been successfully updated!')
+      expect(page).to have_text("has been successfully updated!")
 
       calculator = promotion.actions.first.calculator
       expect(calculator.preferred_tiers).to eq({

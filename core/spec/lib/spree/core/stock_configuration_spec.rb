@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Core::StockConfiguration do
   let(:stock_configuration) { described_class.new }
 
-  describe '#coordinator_class' do
+  describe "#coordinator_class" do
     subject { stock_configuration.coordinator_class }
 
     it "returns Spree::Stock::Coordinator by default" do
@@ -22,7 +22,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#estimator_class' do
+  describe "#estimator_class" do
     subject { stock_configuration.estimator_class }
 
     it "returns Spree::Stock::Estimator" do
@@ -39,7 +39,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#location_filter_class' do
+  describe "#location_filter_class" do
     subject { stock_configuration.location_filter_class }
 
     it "returns Spree::Stock::LocationFilter::Active by default" do
@@ -56,7 +56,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#location_sorter_class' do
+  describe "#location_sorter_class" do
     subject { stock_configuration.location_sorter_class }
 
     it "returns Spree::Stock::LocationSorter::Unsorted by default" do
@@ -73,7 +73,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#allocator_class' do
+  describe "#allocator_class" do
     subject { stock_configuration.allocator_class }
 
     it "returns Spree::Stock::Allocator::OnHandFirst by default" do
@@ -90,7 +90,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#inventory_unit_builder_class' do
+  describe "#inventory_unit_builder_class" do
     subject { stock_configuration.inventory_unit_builder_class }
 
     it "returns Spree::Stock::InventoryUnitBuilder by default" do
@@ -107,7 +107,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#availability_validator_class' do
+  describe "#availability_validator_class" do
     subject { stock_configuration.availability_validator_class }
 
     let(:stock_configuration) { described_class.new }
@@ -126,7 +126,7 @@ RSpec.describe Spree::Core::StockConfiguration do
     end
   end
 
-  describe '#inventory_validator_class' do
+  describe "#inventory_validator_class" do
     subject { stock_configuration.inventory_validator_class }
 
     let(:stock_configuration) { described_class.new }

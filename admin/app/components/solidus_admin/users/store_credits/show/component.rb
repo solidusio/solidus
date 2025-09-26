@@ -38,53 +38,53 @@ class SolidusAdmin::Users::StoreCredits::Show::Component < SolidusAdmin::BaseCom
     [
       {
         header: :date,
-        col: { class: "w-[15%]" },
+        col: {class: "w-[15%]"},
         data: ->(event) do
           content_tag :span, I18n.l(event.created_at, format: :short), class: "text-sm"
         end
       },
       {
         header: :action,
-        col: { class: "w-[10%]" },
+        col: {class: "w-[10%]"},
         data: ->(event) do
           content_tag :span, store_credit_event_admin_action_name(event), class: "text-sm"
         end
       },
       {
         header: :credited,
-        col: { class: "w-[10%]" },
+        col: {class: "w-[10%]"},
         data: ->(event) do
           content_tag :span, event.display_amount, class: "text-sm"
         end
       },
       {
         header: :created_by,
-        col: { class: "w-[20%]" },
+        col: {class: "w-[20%]"},
         data: ->(event) do
           content_tag :span, store_credit_event_originator_link(event), class: "body-link text-sm"
         end
       },
       {
         header: :total_amount,
-        col: { class: "w-[10%]" },
+        col: {class: "w-[10%]"},
         data: ->(event) do
           content_tag :span, event.display_user_total_amount, class: "text-sm"
         end
       },
       {
         header: :total_unused,
-        col: { class: "w-[10%]" },
+        col: {class: "w-[10%]"},
         data: ->(event) do
           content_tag :span, event.display_remaining_amount, class: "text-sm"
         end
       },
       {
         header: :reason_for_updating,
-        col: { class: "w-[25%]" },
+        col: {class: "w-[25%]"},
         data: ->(event) do
           content_tag :span, event.store_credit_reason&.name, class: "text-sm"
         end
-      },
+      }
     ]
   end
 end

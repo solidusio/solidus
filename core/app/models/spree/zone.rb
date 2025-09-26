@@ -13,7 +13,7 @@ module Spree
     has_many :shipping_method_zones, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_zones
 
-    validates :name, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
+    validates :name, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     after_save :remove_defunct_members
 
     scope :with_member_ids, ->(state_ids, country_ids) do
@@ -22,11 +22,11 @@ module Spree
       else
         spree_zone_members_table = Spree::ZoneMember.arel_table
         matching_state =
-          spree_zone_members_table[:zoneable_type].eq("Spree::State").
-          and(spree_zone_members_table[:zoneable_id].in(state_ids))
+          spree_zone_members_table[:zoneable_type].eq("Spree::State")
+            .and(spree_zone_members_table[:zoneable_id].in(state_ids))
         matching_country =
-          spree_zone_members_table[:zoneable_type].eq("Spree::Country").
-          and(spree_zone_members_table[:zoneable_id].in(country_ids))
+          spree_zone_members_table[:zoneable_type].eq("Spree::Country")
+            .and(spree_zone_members_table[:zoneable_id].in(country_ids))
         joins(:zone_members).where(matching_state.or(matching_country)).distinct
       end
     end
@@ -39,8 +39,8 @@ module Spree
       end
     end
 
-    alias :members :zone_members
-    accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |member| member['zoneable_id'].blank? }
+    alias_method :members, :zone_members
+    accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |member| member["zoneable_id"].blank? }
 
     self.allowed_ransackable_attributes = %w[name description]
 
@@ -74,9 +74,9 @@ module Spree
 
       members.any? do |zone_member|
         case zone_member.zoneable_type
-        when 'Spree::Country'
+        when "Spree::Country"
           zone_member.zoneable_id == address.country_id
-        when 'Spree::State'
+        when "Spree::State"
           zone_member.zoneable_id == address.state_id
         else
           false
@@ -87,10 +87,10 @@ module Spree
     # convenience method for returning the countries contained within a zone
     def country_list
       @countries ||= case kind
-                     when 'country' then zoneables
-                     when 'state' then zoneables.collect(&:country)
-                     else []
-                     end.flatten.compact.uniq
+      when "country" then zoneables
+      when "state" then zoneables.collect(&:country)
+      else []
+      end.flatten.compact.uniq
     end
 
     def <=>(other)
@@ -104,7 +104,7 @@ module Spree
     end
 
     def country_ids
-      if kind == 'country'
+      if kind == "country"
         members.pluck(:zoneable_id)
       else
         []
@@ -112,7 +112,7 @@ module Spree
     end
 
     def state_ids
-      if kind == 'state'
+      if kind == "state"
         members.pluck(:zoneable_id)
       else
         []
@@ -120,18 +120,18 @@ module Spree
     end
 
     def country_ids=(ids)
-      set_zone_members(ids, 'Spree::Country')
+      set_zone_members(ids, "Spree::Country")
     end
 
     def state_ids=(ids)
-      set_zone_members(ids, 'Spree::State')
+      set_zone_members(ids, "Spree::State")
     end
 
     private
 
     def remove_defunct_members
       if zone_members.any?
-        zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Spree::#{kind.classify}").destroy_all
+        zone_members.where("zoneable_id IS NULL OR zoneable_type != ?", "Spree::#{kind.classify}").destroy_all
       end
     end
 

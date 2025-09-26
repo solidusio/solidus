@@ -31,12 +31,12 @@ RSpec.describe "SolidusAdmin::PropertiesController", type: :request do
         discontinue_on: "2026-01-06".to_date,
         promotionable: true,
         option_type_ids: [create(:option_type).id, create(:option_type).id],
-        taxon_ids: [create(:taxon).id, create(:taxon).id],
+        taxon_ids: [create(:taxon).id, create(:taxon).id]
       }
     end
 
     it "updates product" do
-      patch solidus_admin.product_path(product), params: { product: params }
+      patch solidus_admin.product_path(product), params: {product: params}
       expect(response).to have_http_status(:see_other)
       expect(product.reload).to have_attributes(params.except(Spree::Product::MASTER_ATTRIBUTES))
       %i[gtin condition price cost_price cost_currency sku].each do |attr|

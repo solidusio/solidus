@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Exchange, type: :model do
@@ -20,8 +20,8 @@ module Spree
       end
 
       it "describes the return items' change in options" do
-        expect(exchange.description).to match /foo => bar/
-        expect(exchange.description).to match /baz => qux/
+        expect(exchange.description).to match(/foo => bar/)
+        expect(exchange.description).to match(/baz => qux/)
       end
     end
 
@@ -57,7 +57,7 @@ module Spree
           StockItem.where(variant_id: return_item.exchange_variant_id).find_each(&:destroy)
         end
 
-        it 'raises an UnableToCreateShipments error' do
+        it "raises an UnableToCreateShipments error" do
           expect {
             subject
           }.to raise_error(Spree::Exchange::UnableToCreateShipments)

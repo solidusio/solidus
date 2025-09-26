@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 module Spree
   RSpec.describe Calculator::PercentOnLineItem, type: :model do
@@ -15,6 +15,6 @@ module Spree
       end
     end
 
-    it_behaves_like 'a calculator with a description'
+    it_behaves_like "a calculator with a description"
   end
 end

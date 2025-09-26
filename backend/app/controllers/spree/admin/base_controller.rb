@@ -3,8 +3,8 @@
 module Spree
   module Admin
     class BaseController < Spree::BaseController
-      helper 'spree/admin/navigation'
-      layout 'spree/layouts/admin'
+      helper "spree/admin/navigation"
+      layout "spree/layouts/admin"
 
       before_action :authorize_admin
 
@@ -21,10 +21,10 @@ module Spree
       end
 
       def authorize_admin
-        if respond_to?(:model_class, true) && model_class
-          record = model_class
+        record = if respond_to?(:model_class, true) && model_class
+          model_class
         else
-          record = controller_name.to_sym
+          controller_name.to_sym
         end
         authorize! :admin, record
         authorize! action, record
@@ -39,13 +39,13 @@ module Spree
       end
 
       def flash_message_for(object, event_sym)
-        resource_desc  = object.class.model_name.human
+        resource_desc = object.class.model_name.human
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
-        t(event_sym, resource: resource_desc, scope: 'spree')
+        t(event_sym, resource: resource_desc, scope: "spree")
       end
 
       def render_js_for_destroy
-        render partial: '/spree/admin/shared/destroy'
+        render partial: "/spree/admin/shared/destroy"
       end
 
       def config_locale
@@ -55,7 +55,7 @@ module Spree
       def lock_order
         Spree::OrderMutex.with_lock!(@order) { yield }
       rescue Spree::OrderMutex::LockFailed
-        flash[:error] = t('spree.order_mutex_admin_error')
+        flash[:error] = t("spree.order_mutex_admin_error")
         redirect_to order_mutex_redirect_path
       end
 

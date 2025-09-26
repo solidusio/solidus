@@ -6,11 +6,11 @@ module Spree
       skip_before_action :authenticate_user
 
       def index
-        @countries = Spree::Country.
-          accessible_by(current_ability).
-          ransack(params[:q]).
-          result.
-          order('name ASC')
+        @countries = Spree::Country
+          .accessible_by(current_ability)
+          .ransack(params[:q])
+          .result
+          .order("name ASC")
 
         country = Spree::Country.order("updated_at ASC").last
 

@@ -17,14 +17,14 @@ module Spree
     has_many :users, through: :user_stock_locations
     has_many :customer_returns, inverse_of: :stock_location, dependent: :restrict_with_error
 
-    belongs_to :state, class_name: 'Spree::State', optional: true
-    belongs_to :country, class_name: 'Spree::Country', optional: true
+    belongs_to :state, class_name: "Spree::State", optional: true
+    belongs_to :country, class_name: "Spree::Country", optional: true
 
     has_many :shipping_method_stock_locations, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_stock_locations
 
     validates :name, presence: true
-    validates :code, uniqueness: { allow_blank: true, case_sensitive: false }
+    validates :code, uniqueness: {allow_blank: true, case_sensitive: false}
 
     scope :active, -> { where(active: true) }
     scope :order_default, -> { order(default: :desc, position: :asc) }
@@ -100,10 +100,11 @@ module Spree
 
     def move(variant, quantity, originator = nil)
       if quantity < 1 && !stock_item(variant)
-        raise InvalidMovementError.new(I18n.t('spree.negative_movement_absent_item'))
+        raise InvalidMovementError.new(I18n.t("spree.negative_movement_absent_item"))
       end
+
       stock_item_or_create(variant).stock_movements.create!(quantity:,
-                                                            originator:)
+        originator:)
     end
 
     def fill_status(variant, quantity)

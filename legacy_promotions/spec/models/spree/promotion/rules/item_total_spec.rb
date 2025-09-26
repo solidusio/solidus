@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
   let(:rule) do
@@ -11,10 +11,10 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
   end
   let(:order) { double(:order, item_total:, currency: order_currency) }
   let(:preferred_amount) { 50 }
-  let(:order_currency) { 'USD' }
+  let(:order_currency) { "USD" }
 
   context "preferred operator set to gt" do
-    let(:preferred_operator) { 'gt' }
+    let(:preferred_operator) { "gt" }
 
     context "item total is greater than preferred amount" do
       let(:item_total) { 51 }
@@ -41,13 +41,13 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
 
       it "set an error message" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.full_messages.first).
-          to eq "This coupon code can't be applied to orders less than or equal to $50.00."
+        expect(rule.eligibility_errors.full_messages.first)
+          .to eq "This coupon code can't be applied to orders less than or equal to $50.00."
       end
       it "sets an error code" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.details[:base].first[:error_code]).
-          to eq :item_total_less_than_or_equal
+        expect(rule.eligibility_errors.details[:base].first[:error_code])
+          .to eq :item_total_less_than_or_equal
       end
     end
 
@@ -60,19 +60,19 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
 
       it "set an error message" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.full_messages.first).
-          to eq "This coupon code can't be applied to orders less than or equal to $50.00."
+        expect(rule.eligibility_errors.full_messages.first)
+          .to eq "This coupon code can't be applied to orders less than or equal to $50.00."
       end
       it "sets an error code" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.details[:base].first[:error_code]).
-          to eq :item_total_less_than_or_equal
+        expect(rule.eligibility_errors.details[:base].first[:error_code])
+          .to eq :item_total_less_than_or_equal
       end
     end
   end
 
   context "preferred operator set to gte" do
-    let(:preferred_operator) { 'gte' }
+    let(:preferred_operator) { "gte" }
 
     context "total is greater than preferred amount" do
       let(:item_total) { 51 }
@@ -115,13 +115,13 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
 
       it "set an error message" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.full_messages.first).
-          to eq "This coupon code can't be applied to orders less than $50.00."
+        expect(rule.eligibility_errors.full_messages.first)
+          .to eq "This coupon code can't be applied to orders less than $50.00."
       end
       it "sets an error code" do
         rule.eligible?(order)
-        expect(rule.eligibility_errors.details[:base].first[:error_code]).
-          to eq :item_total_less_than
+        expect(rule.eligibility_errors.details[:base].first[:error_code])
+          .to eq :item_total_less_than
       end
     end
   end

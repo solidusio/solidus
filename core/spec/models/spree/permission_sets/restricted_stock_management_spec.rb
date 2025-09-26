@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::PermissionSets::RestrictedStockManagement do
   let(:ability) { Spree::Ability.new(user) }

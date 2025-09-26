@@ -21,8 +21,8 @@ RSpec.describe SolidusAdmin::LastLoginHelper, type: :helper do
 
         expect(helper)
           .to receive(:time_ago_in_words)
-            .with(last_sign_in_time)
-            .and_return("2 days")
+          .with(last_sign_in_time)
+          .and_return("2 days")
 
         expect(helper.last_login(user)).to eq("2 days ago")
       end

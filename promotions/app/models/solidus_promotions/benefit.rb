@@ -9,6 +9,7 @@ module SolidusPromotions
     include Spree::Preferences::Persistable
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
+
     before_destroy :remove_adjustments_from_incomplete_orders
     before_destroy :raise_for_adjustments_for_completed_orders
 
@@ -32,6 +33,7 @@ module SolidusPromotions
     def discount(adjustable)
       amount = compute_amount(adjustable)
       return if amount.zero?
+
       ItemDiscount.new(
         item: adjustable,
         label: adjustment_label(adjustable),

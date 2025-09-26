@@ -51,7 +51,7 @@ RSpec.describe Spree::NullPromotionHandler do
   describe "#coupon_code" do
     subject { handler.coupon_code }
 
-    it { is_expected.to eq 'null' }
+    it { is_expected.to eq "null" }
   end
 
   describe "#success" do

@@ -2,7 +2,7 @@
 
 json.partial!("spree/api/orders/order", order:)
 json.payment_methods(order.available_payment_methods) do |payment_method|
-  json.(payment_method, :id, :name, :partial_name)
+  json.call(payment_method, :id, :name, :partial_name)
   json.method_type payment_method.partial_name
 end
 json.bill_address do
@@ -23,8 +23,8 @@ json.line_items(order.line_items) do |line_item|
   json.partial!("spree/api/line_items/line_item", line_item:)
 end
 json.payments(order.payments) do |payment|
-  json.(payment, *payment_attributes)
-  json.payment_method { json.(payment.payment_method, :id, :name) }
+  json.call(payment, *payment_attributes)
+  json.payment_method { json.call(payment.payment_method, :id, :name) }
   json.source do
     ##
     # payment.source could be a Spree::Payment. If it is then we need to call

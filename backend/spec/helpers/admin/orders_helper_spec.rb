@@ -9,7 +9,7 @@ describe Spree::Admin::OrdersHelper, type: :helper do
     before do
       helper.class.include Spree::Admin::NavigationHelper
       helper.class.include Spree::Core::Engine.routes.url_helpers
-      @order_events = %w{approve cancel resume}
+      @order_events = %w[approve cancel resume]
     end
 
     context "with an uncompleted order" do

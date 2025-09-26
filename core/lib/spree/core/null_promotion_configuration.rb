@@ -6,7 +6,7 @@ module Spree
       include Spree::Core::EnvironmentExtension
 
       # order_adjuster_class allows extensions to provide their own Order Adjuster
-      class_name_attribute :order_adjuster_class, default: 'Spree::NullPromotionAdjuster'
+      class_name_attribute :order_adjuster_class, default: "Spree::NullPromotionAdjuster"
 
       # Allows providing a different coupon code handler.
       # @!attribute [rw] coupon_code_handler_class
@@ -14,7 +14,7 @@ module Spree
       # @return [Class] an object that conforms to the API of
       #   the standard coupon code handler class
       #   Spree::NullPromotionHandler.
-      class_name_attribute :coupon_code_handler_class, default: 'Spree::NullPromotionHandler'
+      class_name_attribute :coupon_code_handler_class, default: "Spree::NullPromotionHandler"
 
       # Allows providing a different promotion finder.
       # @!attribute [rw] promotion_finder_class
@@ -22,16 +22,16 @@ module Spree
       # @return [Class] an object that conforms to the API of
       #   the standard promotion finder class
       #   Spree::NullPromotionFinder.
-      class_name_attribute :promotion_finder_class, default: 'Spree::NullPromotionFinder'
+      class_name_attribute :promotion_finder_class, default: "Spree::NullPromotionFinder"
 
       # Allows getting and setting `Spree::Config.promotion_code_batch_mailer_class`.
       # Both will issue a deprecation warning.
-      class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::DeprecatedConfigurableClass'
+      class_name_attribute :promotion_code_batch_mailer_class, default: "Spree::DeprecatedConfigurableClass"
       deprecate :promotion_code_batch_mailer_class, :promotion_code_batch_mailer_class=, deprecator: Spree.deprecator
 
       # Allows getting and setting `Spree::Config.promotion_chooser_class`.
       # Both will issue a deprecation warning.
-      class_name_attribute :promotion_chooser_class, default: 'Spree::DeprecatedConfigurableClass'
+      class_name_attribute :promotion_chooser_class, default: "Spree::DeprecatedConfigurableClass"
       deprecate :promotion_chooser_class, :promotion_chooser_class=, deprecator: Spree.deprecator
 
       # Allows getting and setting rules. Deprecated.
@@ -64,7 +64,7 @@ module Spree
       # @return [Class] an object that conforms to the API of
       #   the standard promotion finder class
       #   Spree::NullPromotionHandler.
-      class_name_attribute :shipping_promotion_handler_class, default: 'Spree::NullPromotionHandler'
+      class_name_attribute :shipping_promotion_handler_class, default: "Spree::NullPromotionHandler"
       deprecate :shipping_promotion_handler_class, deprecator: Spree.deprecator
       deprecate :shipping_promotion_handler_class=, deprecator: Spree.deprecator
 
@@ -74,7 +74,7 @@ module Spree
       # @return [Class] an object that conforms to the API of
       #   the standard promotion advertiser class
       #   Spree::NullPromotionAdvertiser.
-      class_name_attribute :advertiser_class, default: 'Spree::NullPromotionAdvertiser'
+      class_name_attribute :advertiser_class, default: "Spree::NullPromotionAdvertiser"
 
       # !@attribute [rw] promotion_api_attributes
       #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion

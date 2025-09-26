@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
   let(:email) { "test@email.com" }
   let(:promotion_code_batch) do
@@ -22,25 +22,25 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
       Spree::PromotionCode.pluck(:value)
     end
 
-    context 'with the default join character' do
-      it 'uses the default join characters', :aggregate_failures do
+    context "with the default join character" do
+      it "uses the default join characters", :aggregate_failures do
         subject.perform(promotion_code_batch)
         codes.each do |code|
           expect(code).to match(/^test_/)
         end
       end
     end
-    context 'with a custom join character' do
+    context "with a custom join character" do
       let(:promotion_code_batch) do
         Spree::PromotionCodeBatch.create!(
           promotion_id: create(:promotion).id,
           base_code: "test",
           number_of_codes: 10,
           email:,
-          join_characters: '-'
+          join_characters: "-"
         )
       end
-      it 'uses the custom join characters', :aggregate_failures do
+      it "uses the custom join characters", :aggregate_failures do
         subject.perform(promotion_code_batch)
         codes.each do |code|
           expect(code).to match(/^test-/)

@@ -31,7 +31,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "processing") }
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
+        expect { subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "completed") }
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
+        expect { subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "failed") }
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
+        expect { subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
   end

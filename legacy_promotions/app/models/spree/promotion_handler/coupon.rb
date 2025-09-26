@@ -8,7 +8,7 @@ module Spree
 
       def initialize(order)
         @order = order
-        @coupon_code = order.coupon_code && order.coupon_code.downcase
+        @coupon_code = order.coupon_code&.downcase
       end
 
       def can_apply?
@@ -45,16 +45,16 @@ module Spree
 
       def set_success_code(status_code)
         @status_code = status_code
-        @success = I18n.t(status_code, scope: 'spree')
+        @success = I18n.t(status_code, scope: "spree")
       end
 
       def set_error_code(status_code, options = {})
         @status_code = status_code
-        @error = options[:error] || I18n.t(status_code, scope: 'spree')
+        @error = options[:error] || I18n.t(status_code, scope: "spree")
       end
 
       def promotion
-        @promotion ||= if promotion_code && promotion_code.promotion.active?
+        @promotion ||= if promotion_code&.promotion&.active?
           promotion_code.promotion
         end
       end

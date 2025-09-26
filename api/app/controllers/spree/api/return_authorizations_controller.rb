@@ -27,11 +27,11 @@ module Spree
       def index
         authorize! :admin, ReturnAuthorization
 
-        @return_authorizations = @order.
-          return_authorizations.
-          accessible_by(current_ability).
-          ransack(params[:q]).
-          result
+        @return_authorizations = @order
+          .return_authorizations
+          .accessible_by(current_ability)
+          .ransack(params[:q])
+          .result
 
         @return_authorizations = paginate(@return_authorizations)
 

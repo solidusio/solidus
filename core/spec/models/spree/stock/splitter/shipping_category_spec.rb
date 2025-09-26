@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -9,8 +9,8 @@ module Spree
       let(:line_item) { order.line_items.first }
       let(:variant1) { build(:variant) }
       let(:variant2) { build(:variant) }
-      let(:shipping_category_1) { create(:shipping_category, name: 'A') }
-      let(:shipping_category_2) { create(:shipping_category, name: 'B') }
+      let(:shipping_category_1) { create(:shipping_category, name: "A") }
+      let(:shipping_category_2) { create(:shipping_category, name: "B") }
 
       def inventory_unit1
         build(:inventory_unit, variant: variant1, order:, line_item:).tap do |inventory_unit|
@@ -28,7 +28,7 @@ module Spree
 
       subject { described_class.new(stock_location) }
 
-      it 'splits each package by shipping category' do
+      it "splits each package by shipping category" do
         package_one = Package.new(stock_location)
         4.times { package_one.add inventory_unit1 }
         8.times { package_one.add inventory_unit2 }

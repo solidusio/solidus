@@ -13,7 +13,7 @@ module SolidusAdmin
       set_page_and_extract_portion_from(stores)
 
       respond_to do |format|
-        format.html { render component('stores/index').new(page: @page) }
+        format.html { render component("stores/index").new(page: @page) }
       end
     end
 
@@ -22,7 +22,7 @@ module SolidusAdmin
 
       Spree::Store.transaction { @stores.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to stores_path, status: :see_other
     end
 

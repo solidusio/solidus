@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_dependency 'spree/calculator'
-require_dependency 'spree/shipping_calculator'
+require_dependency "spree/calculator"
+require_dependency "spree/shipping_calculator"
 
 module Spree
   module Calculator::Shipping
@@ -9,7 +9,7 @@ module Spree
       preference :minimal_amount, :decimal, default: 0
       preference :normal_amount, :decimal, default: 0
       preference :discount_amount, :decimal, default: 0
-      preference :currency, :string, default: ->{ Spree::Config[:currency] }
+      preference :currency, :string, default: -> { Spree::Config[:currency] }
 
       def compute_package(package)
         compute_from_price(total(package.contents))

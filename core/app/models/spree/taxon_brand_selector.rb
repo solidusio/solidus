@@ -10,9 +10,9 @@ module Spree
 
     def call
       product.taxons
-             .joins(:taxonomy)
-             .where(spree_taxonomies: { name: BRANDS_TAXONOMY_NAME })
-             .first
+        .joins(:taxonomy)
+        .where(spree_taxonomies: {name: BRANDS_TAXONOMY_NAME})
+        .first
     end
 
     private

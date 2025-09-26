@@ -6,7 +6,7 @@ module OrderFeatureHelper
 
     targetted_select2_search product_name, from: ".select-variant"
     fill_in "quantity", with: quantity
-    click_icon 'ok'
+    click_icon "ok"
   end
 
   def complete_split_to(destination, quantity: nil)
@@ -16,10 +16,10 @@ module OrderFeatureHelper
       destination = destination.name
     end
 
-    select2_no_label(destination, from: 'Choose Location')
+    select2_no_label(destination, from: "Choose Location")
 
     if quantity
-      fill_in 'item_quantity', with: quantity
+      fill_in "item_quantity", with: quantity
     end
 
     click_icon :ok

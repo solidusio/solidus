@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderedPropertyValueList do
   #
@@ -8,7 +8,7 @@ RSpec.describe Spree::OrderedPropertyValueList do
   # since it includes OrderedPropertyValueList
   #
 
-  context 'positioning' do
+  context "positioning" do
     let(:product_1) { create(:product) }
     let!(:property_1) { create(:product_property, product: product_1) }
     let!(:property_2) { create(:product_property, product: product_1) }
@@ -24,7 +24,7 @@ RSpec.describe Spree::OrderedPropertyValueList do
       property_4.update_attribute(:position, 1)
     end
 
-    it 'scopes position to the product' do
+    it "scopes position to the product" do
       expect(property_1.reload.position).to eq(0)
       expect(property_2.reload.position).to eq(1)
       expect(property_3.reload.position).to eq(0)
@@ -41,9 +41,9 @@ RSpec.describe Spree::OrderedPropertyValueList do
     # > characters on string columns.
     # http://guides.rubyonrails.org/4_2_release_notes.html#active-record-notable-changes
     # https://github.com/rails/rails/pull/14579
-    if Spree::ProductProperty.columns_hash['value'].limit
+    if Spree::ProductProperty.columns_hash["value"].limit
       it "should validate length of value" do
-        overflow_length = Spree::ProductProperty.columns_hash['value'].limit + 1
+        overflow_length = Spree::ProductProperty.columns_hash["value"].limit + 1
         product_property.value = "x" * overflow_length
         expect(product_property).not_to be_valid
       end

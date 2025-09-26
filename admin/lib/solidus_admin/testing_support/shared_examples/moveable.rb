@@ -13,7 +13,7 @@ RSpec.shared_examples_for "requests: moveable" do
 
   describe "PATCH /move" do
     it "updates record's position" do
-      expect { patch request_path, params: { position: 2 } }.to change { record.reload.position }.from(1).to(2)
+      expect { patch request_path, params: {position: 2} }.to change { record.reload.position }.from(1).to(2)
       expect(response).to have_http_status(:no_content)
     end
   end
@@ -24,8 +24,8 @@ RSpec.shared_examples_for "features: sortable" do
   let(:scope) { "body" }
 
   before do
-    create(factory, displayed_attribute => "First", position: 1, **factory_attrs)
-    create(factory, displayed_attribute => "Second", position: 2, **factory_attrs)
+    create(factory, displayed_attribute => "First", :position => 1, **factory_attrs)
+    create(factory, displayed_attribute => "Second", :position => 2, **factory_attrs)
     visit path
   end
 

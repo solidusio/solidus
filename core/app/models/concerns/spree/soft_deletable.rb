@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'discard'
+require "discard"
 
 module Spree
   module SoftDeletable
@@ -8,6 +8,7 @@ module Spree
 
     included do
       include Discard::Model
+
       self.discard_column = :deleted_at
 
       default_scope { kept }

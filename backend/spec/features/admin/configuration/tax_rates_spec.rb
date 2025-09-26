@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Tax Rates", type: :feature do
   stub_authorization!
@@ -17,7 +17,7 @@ describe "Tax Rates", type: :feature do
     tax_rate.tax_categories.first.update_column(:deleted_at, Time.current)
     click_link "Tax Rates"
 
-    expect(find("table tbody td:nth-child(3)")).to have_content('N/A')
+    expect(find("table tbody td:nth-child(3)")).to have_content("N/A")
   end
 
   # Regression test for https://github.com/spree/spree/issues/1422

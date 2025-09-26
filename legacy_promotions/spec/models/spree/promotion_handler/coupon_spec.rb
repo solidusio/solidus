@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module PromotionHandler
@@ -53,52 +53,52 @@ module Spree
         end
       end
 
-      context 'status messages' do
+      context "status messages" do
         let(:coupon) { Coupon.new(order) }
 
         describe "#set_success_code" do
           let(:status) { :coupon_code_applied }
           subject { coupon.set_success_code status }
 
-          it 'should have status_code' do
+          it "should have status_code" do
             subject
             expect(coupon.status_code).to eq(status)
           end
 
-          it 'should have success message' do
+          it "should have success message" do
             subject
-            expect(coupon.success).to eq(I18n.t(status, scope: 'spree'))
+            expect(coupon.success).to eq(I18n.t(status, scope: "spree"))
           end
         end
 
         describe "#set_error_code" do
           subject { coupon.set_error_code status }
 
-          context 'not found' do
+          context "not found" do
             let(:status) { :coupon_code_not_found }
 
-            it 'has status_code' do
+            it "has status_code" do
               subject
               expect(coupon.status_code).to eq(status)
             end
 
-            it 'has error message' do
+            it "has error message" do
               subject
-              expect(coupon.error).to eq(I18n.t(status, scope: 'spree'))
+              expect(coupon.error).to eq(I18n.t(status, scope: "spree"))
             end
           end
 
-          context 'not present' do
+          context "not present" do
             let(:status) { :coupon_code_not_present }
 
-            it 'has status_code' do
+            it "has status_code" do
               subject
               expect(coupon.status_code).to eq(status)
             end
 
-            it 'has error message' do
+            it "has error message" do
               subject
-              expect(coupon.error).to eq(I18n.t(status, scope: 'spree'))
+              expect(coupon.error).to eq(I18n.t(status, scope: "spree"))
             end
           end
         end
@@ -116,14 +116,14 @@ module Spree
 
           it "populates error message" do
             subject.apply
-            expect(subject.error).to eq I18n.t('spree.coupon_code_not_found')
+            expect(subject.error).to eq I18n.t("spree.coupon_code_not_found")
           end
         end
       end
 
       context "existing coupon code promotion" do
         let!(:promotion) { promotion_code.promotion }
-        let(:promotion_code) { create(:promotion_code, value: '10off') }
+        let(:promotion_code) { create(:promotion_code, value: "10off") }
         let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion:, calculator:) }
         let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
 
@@ -154,7 +154,7 @@ module Spree
                 subject.apply
                 expect(subject.success).to be_present
                 subject.apply
-                expect(subject.error).to eq I18n.t('spree.coupon_code_already_applied')
+                expect(subject.error).to eq I18n.t("spree.coupon_code_already_applied")
               end
             end
 
@@ -246,7 +246,7 @@ module Spree
               subject.apply
               expect(subject.success).to be_present
               subject.apply
-              expect(subject.error).to eq I18n.t('spree.coupon_code_already_applied')
+              expect(subject.error).to eq I18n.t("spree.coupon_code_already_applied")
             end
           end
         end
@@ -284,7 +284,7 @@ module Spree
 
               it "returns a coupon has already been applied error" do
                 subject.apply
-                expect(subject.error).to eq I18n.t('spree.coupon_code_already_applied')
+                expect(subject.error).to eq I18n.t("spree.coupon_code_already_applied")
               end
             end
 
@@ -298,7 +298,7 @@ module Spree
 
               it "returns a coupon failed to activate error" do
                 subject.apply
-                expect(subject.error).to eq I18n.t('spree.coupon_code_unknown_error')
+                expect(subject.error).to eq I18n.t("spree.coupon_code_unknown_error")
               end
             end
 
@@ -317,7 +317,7 @@ module Spree
 
               it "returns a coupon is at max usage error" do
                 subject.apply
-                expect(subject.error).to eq I18n.t('spree.coupon_code_max_usage')
+                expect(subject.error).to eq I18n.t("spree.coupon_code_max_usage")
               end
             end
           end
@@ -328,7 +328,7 @@ module Spree
           let(:order) { create(:order, store:) }
           let(:tax_category) { create(:tax_category, name: "Taxable Foo") }
           let(:zone) { create(:zone, :with_country) }
-          let!(:tax_rate) { create(:tax_rate, amount: 0.1, tax_categories: [tax_category], zone: ) }
+          let!(:tax_rate) { create(:tax_rate, amount: 0.1, tax_categories: [tax_category], zone:) }
 
           before(:each) do
             expect(order).to receive(:tax_address).at_least(:once).and_return(Spree::Tax::TaxLocation.new(country: zone.countries.first))
@@ -383,7 +383,7 @@ module Spree
               twnty_off = create(:promotion, name: "promo", code: "20off")
               twnty_off_calc = Calculator::FlatRate.new(preferred_amount: 20)
               Promotion::Actions::CreateItemAdjustments.create(promotion: twnty_off,
-                                                               calculator: twnty_off_calc)
+                calculator: twnty_off_calc)
 
               order.coupon_code = "20off"
 
@@ -407,39 +407,39 @@ module Spree
         end
       end
 
-      context 'removing a coupon code from an order' do
+      context "removing a coupon code from an order" do
         let!(:promotion) { promotion_code.promotion }
-        let(:promotion_code) { create(:promotion_code, value: '10off') }
+        let(:promotion_code) { create(:promotion_code, value: "10off") }
         let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion:, calculator:) }
         let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
         let(:order) { create(:order_with_line_items, line_items_count: 3) }
 
-        context 'with an already applied coupon' do
+        context "with an already applied coupon" do
           before do
-            order.coupon_code = '10off'
+            order.coupon_code = "10off"
             subject.apply
             order.reload
             expect(order.total).to eq(100)
           end
 
-          it 'successfully removes the coupon code from the order' do
+          it "successfully removes the coupon code from the order" do
             subject.remove
             expect(subject.error).to eq nil
-            expect(subject.success).to eq I18n.t('spree.coupon_code_removed')
+            expect(subject.success).to eq I18n.t("spree.coupon_code_removed")
             expect(order.reload.total).to eq(130)
           end
         end
 
-        context 'with a coupon code not applied to an order' do
+        context "with a coupon code not applied to an order" do
           before do
-            order.coupon_code = '10off'
+            order.coupon_code = "10off"
             expect(order.total).to eq(130)
           end
 
-          it 'returns an error' do
+          it "returns an error" do
             subject.remove
             expect(subject.success).to eq nil
-            expect(subject.error).to eq I18n.t('spree.coupon_code_not_present')
+            expect(subject.error).to eq I18n.t("spree.coupon_code_not_present")
             expect(order.reload.total).to eq(130)
           end
         end

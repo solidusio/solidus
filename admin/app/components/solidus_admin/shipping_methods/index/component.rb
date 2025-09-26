@@ -20,21 +20,21 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_shipping_method_path,
       icon: "add-line",
-      class: "align-self-end w-full",
+      class: "align-self-end w-full"
     )
   end
 
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.shipping_methods_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
@@ -42,20 +42,20 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     [
       {
         header: :name,
-        data: -> { [_1.admin_name.presence, _1.name].compact.join(' / ') },
+        data: -> { [_1.admin_name.presence, _1.name].compact.join(" / ") }
       },
       {
         header: :zone,
-        data: -> { _1.zones.pluck(:name).to_sentence },
+        data: -> { _1.zones.pluck(:name).to_sentence }
       },
       {
         header: :calculator,
-        data: -> { _1.calculator&.description },
+        data: -> { _1.calculator&.description }
       },
       {
         header: :available_to_users,
-        data: -> { _1.available_to_users? ? component('ui/badge').yes : component('ui/badge').no },
-      },
+        data: -> { _1.available_to_users? ? component("ui/badge").yes : component("ui/badge").no }
+      }
     ]
   end
 end

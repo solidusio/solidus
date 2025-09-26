@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Order", :js, type: :feature do
   let(:order) { create(:order, number: "R123456789") }
 
   before do
     allow(SolidusAdmin::Config).to receive(:enable_alpha_features?) { true }
-    sign_in create(:admin_user, email: 'admin@example.com')
+    sign_in create(:admin_user, email: "admin@example.com")
   end
 
   it "allows locking and unlocking adjustments" do

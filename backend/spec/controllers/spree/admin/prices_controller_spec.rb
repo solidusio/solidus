@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::PricesController do
   stub_authorization!
 
   let!(:product) { create(:product) }
 
-  describe '#index' do
+  describe "#index" do
     context "when only given a product" do
       let(:product) { create(:product) }
 
       let!(:deleted_master_price) { create(:price, variant: product.master).tap(&:discard!) }
 
-      subject { get :index, params: { product_id: product.slug } }
+      subject { get :index, params: {product_id: product.slug} }
 
       it { is_expected.to be_successful }
 
-      it 'assigns usable instance variables' do
+      it "assigns usable instance variables" do
         subject
         expect(assigns(:search)).to be_a(Ransack::Search)
         expect(assigns(:variant_prices)).to be_empty
@@ -33,11 +33,11 @@ describe Spree::Admin::PricesController do
 
       let!(:deleted_variant_price) { create(:price, variant:).tap(&:discard!) }
 
-      subject { get :index, params: { product_id: product.slug, variant_id: variant.id } }
+      subject { get :index, params: {product_id: product.slug, variant_id: variant.id} }
 
       it { is_expected.to be_successful }
 
-      it 'assigns usable instance variables' do
+      it "assigns usable instance variables" do
         subject
         expect(assigns(:search)).to be_a(Ransack::Search)
         expect(assigns(:variant_prices)).to eq(product.prices.kept.for_variant)
@@ -48,7 +48,7 @@ describe Spree::Admin::PricesController do
       end
     end
     context "existent product id not given" do
-      subject { get :index, params: { product_id: 'non-existent-product' } }
+      subject { get :index, params: {product_id: "non-existent-product"} }
 
       it "cannot find non-existent product" do
         subject

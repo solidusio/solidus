@@ -11,7 +11,7 @@ module Spree
 
       def render_after_update_error
         redirect_back(fallback_location: location_after_save,
-                    flash: { error: @object.errors.full_messages.join(', ') })
+          flash: {error: @object.errors.full_messages.join(", ")})
       end
     end
   end

@@ -32,7 +32,7 @@ class SolidusAdmin::UI::Forms::SwitchField::ComponentPreview < ViewComponent::Pr
       tip:,
       size: size.to_sym,
       checked:,
-      disabled:,
+      disabled:
     )
   end
 end

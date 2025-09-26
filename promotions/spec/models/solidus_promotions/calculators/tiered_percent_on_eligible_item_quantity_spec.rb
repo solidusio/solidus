@@ -7,9 +7,9 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
     create(:order_with_line_items, line_items_attributes: [first_item_attrs, second_item_attrs, third_item_attrs])
   end
 
-  let(:first_item_attrs) { { variant: shirt, quantity: 2, price: 50 } }
-  let(:second_item_attrs) { { variant: pants, quantity: 3 } }
-  let(:third_item_attrs) { { variant: mug, quantity: 1 } }
+  let(:first_item_attrs) { {variant: shirt, quantity: 2, price: 50} }
+  let(:second_item_attrs) { {variant: pants, quantity: 3} }
+  let(:third_item_attrs) { {variant: mug, quantity: 1} }
 
   let(:shirt) { create(:variant) }
   let(:pants) { create(:variant) }
@@ -20,7 +20,7 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
   let(:promotion) { create(:solidus_promotion, name: "10 Percent on 5 apparel, 15 percent on 10", benefits: [benefit]) }
   let(:clothes_only) { SolidusPromotions::Conditions::Taxon.new(taxons: [clothes]) }
   let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator: calculator, conditions: [clothes_only]) }
-  let(:calculator) { described_class.new(preferred_base_percent: 10, preferred_tiers: { 10 => 15.0 }) }
+  let(:calculator) { described_class.new(preferred_base_percent: 10, preferred_tiers: {10 => 15.0}) }
 
   let(:line_item) { order.line_items.detect { _1.variant == shirt } }
 
@@ -30,8 +30,8 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
   it { is_expected.to eq(10) }
 
   context "if we have 12" do
-    let(:first_item_attrs) { { variant: shirt, quantity: 7, price: 50 } }
-    let(:second_item_attrs) { { variant: pants, quantity: 5 } }
+    let(:first_item_attrs) { {variant: shirt, quantity: 7, price: 50} }
+    let(:second_item_attrs) { {variant: pants, quantity: 5} }
 
     # 7 Shirts at 50, 350 USD, 15 % == 52.5
     it { is_expected.to eq(52.5) }

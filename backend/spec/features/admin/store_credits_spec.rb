@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Store credits admin" do
   stub_authorization!
-  let!(:admin_user)   { create(:admin_user) }
+  let!(:admin_user) { create(:admin_user) }
   let!(:store_credit) { create(:store_credit) }
-  let(:user)          { store_credit.user }
+  let(:user) { store_credit.user }
 
   before do
-    allow(Spree.user_class).to receive(:find_by).
-      with(hash_including(:id)).
-      and_return(store_credit.user)
+    allow(Spree.user_class).to receive(:find_by)
+      .with(hash_including(:id))
+      .and_return(store_credit.user)
   end
 
   describe "visiting the store credits page" do
@@ -26,7 +26,7 @@ describe "Store credits admin" do
       expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)
 
       store_credit_table = page.find(".sc-table")
-      expect(store_credit_table).to have_css('tr', count: 1)
+      expect(store_credit_table).to have_css("tr", count: 1)
       expect(store_credit_table).to have_content(Spree::Money.new(store_credit.amount).to_s)
       expect(store_credit_table).to have_content(Spree::Money.new(store_credit.amount_used).to_s)
       expect(store_credit_table).to have_content(store_credit.category_name)
@@ -51,7 +51,7 @@ describe "Store credits admin" do
 
       expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)
       store_credit_table = page.find(".sc-table")
-      expect(store_credit_table).to have_css('tr', count: 2)
+      expect(store_credit_table).to have_css("tr", count: 2)
       expect(Spree::StoreCredit.count).to eq 2
     end
   end
@@ -70,7 +70,7 @@ describe "Store credits admin" do
         expect(page).to have_content "Credited #{store_credit.display_amount}"
         expect(page).to have_content "Created By #{store_credit.created_by.email}"
         expect(page).to have_content "Type #{store_credit.category_name}"
-        expect(page).to have_content 'Store credit history'
+        expect(page).to have_content "Store credit history"
       end
     end
 
@@ -80,10 +80,10 @@ describe "Store credits admin" do
         .and_return(admin_user)
 
       # When there are no errors
-      within '.store-credit-memo-row' do
-        click_button 'Edit'
-        fill_in 'store_credit_memo', with: 'Lottery Won'
-        click_button 'Save'
+      within ".store-credit-memo-row" do
+        click_button "Edit"
+        fill_in "store_credit_memo", with: "Lottery Won"
+        click_button "Save"
         expect(page).to have_content "Memo Lottery Won", normalize_ws: true
       end
       expect(page).to have_content "Store Credit has been successfully updated!"
@@ -94,9 +94,9 @@ describe "Store credits admin" do
         .to receive_message_chain(:errors, :full_messages)
         .and_return(["Memo is not valid"])
 
-      within '.store-credit-memo-row' do
+      within ".store-credit-memo-row" do
         find(:css, ".edit-memo").click
-        fill_in 'store_credit_memo', with: 'Lottery Won Twice'
+        fill_in "store_credit_memo", with: "Lottery Won Twice"
         find(:css, ".save-memo").click
         expect(page).to have_content "Memo Lottery Won", normalize_ws: true
         expect(page).not_to have_content "Lottery Won Twice"
@@ -119,13 +119,13 @@ describe "Store credits admin" do
 
     it "updates the store credit's amount" do
       page.find(".sc-table td.actions a.fa-edit").click
-      expect(page).to have_content 'Store credit history'
+      expect(page).to have_content "Store credit history"
       click_link "Change amount"
-      expect(page).to have_content 'Editing store credit amount'
-      page.fill_in 'store_credit_amount', with: updated_amount
-      page.select store_credit_reason.name, from: 'store_credit_reason_id'
+      expect(page).to have_content "Editing store credit amount"
+      page.fill_in "store_credit_amount", with: updated_amount
+      page.select store_credit_reason.name, from: "store_credit_reason_id"
       click_button "Update"
-      expect(page.find('#sc-detail-table')).to have_content "$99.00"
+      expect(page.find("#sc-detail-table")).to have_content "$99.00"
       expect(store_credit.reload.amount.to_f).to eq updated_amount.to_f
     end
   end

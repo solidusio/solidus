@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type: :model do
   include ActiveSupport::Testing::TimeHelpers
@@ -14,9 +14,9 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type:
     let(:interval) { Spree::Config[:return_eligibility_number_of_days] }
 
     before do
-      allow(return_item).
-        to receive_message_chain('inventory_unit.order.completed_at').
-        and_return(completed_at)
+      allow(return_item)
+        .to receive_message_chain("inventory_unit.order.completed_at")
+        .and_return(completed_at)
     end
 
     around(:each) do |e|
@@ -35,7 +35,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type:
 
       it "sets an error" do
         subject
-        expect(validator.errors[:number_of_days]).to eq I18n.t('spree.return_item_time_period_ineligible')
+        expect(validator.errors[:number_of_days]).to eq I18n.t("spree.return_item_time_period_ineligible")
       end
     end
   end

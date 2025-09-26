@@ -6,8 +6,8 @@ module Spree
     include Omnes::Subscriber
 
     handle :order_canceled,
-           with: :send_cancel_email,
-           id: :spree_order_mailer_send_cancel_email
+      with: :send_cancel_email,
+      id: :spree_order_mailer_send_cancel_email
 
     # Sends cancellation email to the user.
     #

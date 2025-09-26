@@ -58,7 +58,7 @@ module Spree
       def index
         authorize! :admin, Order
         orders_includes = [
-          { user: :store_credits },
+          {user: :store_credits},
           :line_items,
           :valid_store_credit_payments
         ]
@@ -91,8 +91,9 @@ module Spree
       end
 
       def current
-        if current_api_user && @order = current_api_user.last_incomplete_spree_order(store: current_store)
-          respond_with(@order, default_template: :show, locals: { root_object: @order })
+        @order = current_api_user.last_incomplete_spree_order(store: current_store)
+        if current_api_user && @order
+          respond_with(@order, default_template: :show, locals: {root_object: @order})
         else
           head :no_content
         end
@@ -122,7 +123,7 @@ module Spree
       def prevent_customer_metadata_update
         return unless @order&.completed? && cannot?(:admin, Spree::Order)
 
-        params[:order].delete(:customer_metadata) if params[:order]
+        params[:order]&.delete(:customer_metadata)
       end
 
       def normalize_params
@@ -169,13 +170,13 @@ module Spree
       end
 
       def find_order(_lock = false)
-        @order = Spree::Order.
-          includes(line_items: [:adjustments, { variant: :images }],
-                   payments: :payment_method,
-                   shipments: {
-                     shipping_rates: { shipping_method: :zones, taxes: :tax_rate }
-                   }).
-          find_by!(number: params[:id])
+        @order = Spree::Order
+          .includes(line_items: [:adjustments, {variant: :images}],
+            payments: :payment_method,
+            shipments: {
+              shipping_rates: {shipping_method: :zones, taxes: :tax_rate}
+            })
+          .find_by!(number: params[:id])
       end
 
       def order_id

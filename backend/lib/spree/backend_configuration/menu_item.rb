@@ -94,7 +94,7 @@ module Spree
       def url
         url = @url.call if @url.respond_to?(:call)
         url ||= spree.public_send(@url) if @url.is_a?(Symbol) && spree.respond_to?(@url)
-        url ||= spree.send("admin_#{@label}_path") if @url.nil? && @label && spree.respond_to?("admin_#{@label}_path")
+        url ||= spree.send(:"admin_#{@label}_path") if @url.nil? && @label && spree.respond_to?(:"admin_#{@label}_path")
         url ||= @url.to_s
         url
       end

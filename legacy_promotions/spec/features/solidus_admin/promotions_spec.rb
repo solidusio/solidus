@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Promotions", :js, type: :feature, solidus_admin: true do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists promotions and allows deleting them" do
     create(:promotion, :with_action, name: "My active Promotion")

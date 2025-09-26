@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'i18n'
+require "i18n"
 
 module Spree
   def self.i18n_available_locales
     I18n.available_locales.select do |locale|
-      I18n.t('spree.i18n.this_file_language', locale:, fallback: false, default: nil)
+      I18n.t("spree.i18n.this_file_language", locale:, fallback: false, default: nil)
     end
   end
 

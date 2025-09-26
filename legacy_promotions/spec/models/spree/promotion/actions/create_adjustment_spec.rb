@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
   let(:order) { create(:order_with_line_items, line_items_count: 1) }
   let(:promotion) { create(:promotion) }
   let(:action) { Spree::Promotion::Actions::CreateAdjustment.new }
-  let(:payload) { { order: } }
+  let(:payload) { {order:} }
 
   # From promotion spec:
   context "#perform" do
@@ -49,7 +49,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     context "when a promotion code is used" do
       let(:promotion_code) { create(:promotion_code) }
       let(:promotion) { promotion_code.promotion }
-      let(:payload) { { order:, promotion_code: } }
+      let(:payload) { {order:, promotion_code:} }
 
       it "should connect the adjustment to the promotion_code" do
         expect {
@@ -60,7 +60,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     end
   end
 
-  describe '#remove_from' do
+  describe "#remove_from" do
     let(:action) { promotion.actions.first! }
     let(:promotion) { create(:promotion, :with_order_adjustment) }
 
@@ -71,7 +71,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
       @action_adjustment = order.adjustments.where(source: action).first!
     end
 
-    it 'removes the action adjustment' do
+    it "removes the action adjustment" do
       expect(order.adjustments).to match_array([unrelated_adjustment, @action_adjustment])
 
       action.remove_from(order)

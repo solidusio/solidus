@@ -18,7 +18,7 @@ class SolidusAdmin::UI::Forms::Input::ComponentPreview < ViewComponent::Preview
       type: type.to_sym,
       error: error ? "There is an error" : nil,
       size: size.to_sym,
-      value:,
+      value:
     )
   end
 
@@ -29,7 +29,7 @@ class SolidusAdmin::UI::Forms::Input::ComponentPreview < ViewComponent::Preview
     render component("ui/forms/input").new(
       tag: :textarea,
       size: size.to_sym,
-      error: error ? "There is an error" : nil,
+      error: error ? "There is an error" : nil
     ).with_content(content)
   end
 

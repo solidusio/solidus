@@ -62,7 +62,7 @@ module Spree
       end
 
       def scope
-        includes = { variant: [{ option_values: :option_type }, :product] }
+        includes = {variant: [{option_values: :option_type}, :product]}
         @stock_location.stock_items.accessible_by(current_ability).includes(includes)
       end
 
@@ -77,14 +77,15 @@ module Spree
 
       def adjust_stock_item_count_on_hand(count_on_hand_adjustment)
         if @stock_item.count_on_hand + count_on_hand_adjustment < 0
-          raise StockLocation::InvalidMovementError.new(t('spree.api.stock_not_below_zero'))
+          raise StockLocation::InvalidMovementError.new(t("spree.api.stock_not_below_zero"))
         end
+
         @stock_movement = @stock_location.move(@stock_item.variant, count_on_hand_adjustment, current_api_user)
         @stock_item = @stock_movement.stock_item
       end
 
       def render_stock_items_error
-        render json: { error: t('spree.api.stock_not_below_zero') }, status: 422
+        render json: {error: t("spree.api.stock_not_below_zero")}, status: 422
       end
     end
   end

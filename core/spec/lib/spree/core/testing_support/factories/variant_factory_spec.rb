@@ -1,27 +1,27 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'variant factory' do
+RSpec.describe "variant factory" do
   let(:factory_class) { Spree::Variant }
 
-  describe 'base variant' do
+  describe "base variant" do
     let(:factory) { :base_variant }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'variant' do
+  describe "variant" do
     let(:factory) { :variant }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'master variant' do
+  describe "master variant" do
     let(:factory) { :master_variant }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
 
     it "builds a master variant properly" do
       variant = create(factory)
@@ -42,15 +42,15 @@ RSpec.describe 'variant factory' do
     end
   end
 
-  describe 'on demand variant' do
+  describe "on demand variant" do
     let(:factory) { :on_demand_variant }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'on demand master variant' do
+  describe "on demand master variant" do
     let(:factory) { :on_demand_master_variant }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

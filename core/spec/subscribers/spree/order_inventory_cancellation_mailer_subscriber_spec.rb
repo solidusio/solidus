@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'action_mailer'
+require "rails_helper"
+require "action_mailer"
 
 RSpec.describe Spree::OrderInventoryCancellationMailerSubscriber do
   let(:bus) { Omnes::Bus.new }
@@ -12,9 +12,9 @@ RSpec.describe Spree::OrderInventoryCancellationMailerSubscriber do
     described_class.new.subscribe_to(bus)
   end
 
-  describe 'on :order_short_shipped' do
+  describe "on :order_short_shipped" do
     context "when order cancellation emails are enabled" do
-      it 'sends cancellation email' do
+      it "sends cancellation email" do
         order = create :order
 
         expect(Spree::OrderMailer)
@@ -34,7 +34,7 @@ RSpec.describe Spree::OrderInventoryCancellationMailerSubscriber do
         Spree::OrderCancellations.send_cancellation_mailer = original_value
       end
 
-      it 'does not send cancellation email' do
+      it "does not send cancellation email" do
         order = create :order
 
         expect(Spree::OrderMailer).not_to receive(:inventory_cancellation_email)

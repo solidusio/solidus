@@ -6,8 +6,8 @@ module Spree
     include Omnes::Subscriber
 
     handle :order_short_shipped,
-           with: :send_inventory_cancellation_email,
-           id: :spree_order_mailer_send_inventory_cancellation_email
+      with: :send_inventory_cancellation_email,
+      id: :spree_order_mailer_send_inventory_cancellation_email
 
     # Sends inventory cancellation email to the user.
     #

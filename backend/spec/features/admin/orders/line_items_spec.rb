@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 # Tests for https://github.com/spree/spree/issues/3958's features
 describe "Order Line Items", type: :feature, js: true do
@@ -25,10 +25,10 @@ describe "Order Line Items", type: :feature, js: true do
       fill_in "quantity", with: 10
       find(".save-line-item").click
     end
-    within '.line-item-qty-show' do
+    within ".line-item-qty-show" do
       expect(page).to have_content("10")
     end
-    within '.line-item-total' do
+    within ".line-item-total" do
       expect(page).to have_content("$100.00")
     end
   end
@@ -46,7 +46,7 @@ describe "Order Line Items", type: :feature, js: true do
       end
     end
 
-    expect(find('#order_total')).to have_content("$0.00")
+    expect(find("#order_total")).to have_content("$0.00")
     expect(page).not_to have_content(product_name)
   end
 end

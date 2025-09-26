@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Adjustment, type: :model do
   let!(:store) { create :store }
   let(:order) { create :order }
   let(:line_item) { create :line_item, order: }
 
-  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order:, amount: 5) }
+  let(:adjustment) { Spree::Adjustment.create!(label: "Adjustment", adjustable: order, order:, amount: 5) }
 
-  context '#save' do
+  context "#save" do
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order:, adjustable: line_item) }
 
-    it 'touches the adjustable' do
+    it "touches the adjustable" do
       line_item.update_columns(updated_at: 1.day.ago)
       expect { adjustment.save! }.to change { line_item.updated_at }
     end
@@ -24,7 +24,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     it { is_expected.to eq(Spree::Adjustment.all.to_sql) }
   end
 
-  describe 'non_tax scope' do
+  describe "non_tax scope" do
     subject do
       Spree::Adjustment.non_tax.to_a
     end
@@ -34,33 +34,33 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     let!(:non_tax_adjustment_with_source) do
-      create(:adjustment, adjustable: order, order:, source_type: 'Spree::Order', source_id: nil)
+      create(:adjustment, adjustable: order, order:, source_type: "Spree::Order", source_id: nil)
     end
 
     let!(:non_tax_adjustment_without_source) do
       create(:adjustment, adjustable: order, order:, source: nil)
     end
 
-    it 'select non-tax adjustments' do
+    it "select non-tax adjustments" do
       expect(subject).to_not include tax_adjustment
-      expect(subject).to     include non_tax_adjustment_with_source
-      expect(subject).to     include non_tax_adjustment_without_source
+      expect(subject).to include non_tax_adjustment_with_source
+      expect(subject).to include non_tax_adjustment_without_source
     end
   end
 
-  context '#currency' do
-    let(:order) { create :order, currency: 'JPY' }
+  context "#currency" do
+    let(:order) { create :order, currency: "JPY" }
 
-    it 'returns the adjustables currency' do
-      expect(adjustment.currency).to eq 'JPY'
+    it "returns the adjustables currency" do
+      expect(adjustment.currency).to eq "JPY"
     end
 
-    context 'adjustable is nil' do
+    context "adjustable is nil" do
       before do
         adjustment.adjustable = nil
       end
-      it 'uses the global currency of USD' do
-        expect(adjustment.currency).to eq 'USD'
+      it "uses the global currency of USD" do
+        expect(adjustment.currency).to eq "USD"
       end
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     context "with currency set to JPY" do
-      let(:order) { create :order, currency: 'JPY' }
+      let(:order) { create :order, currency: "JPY" }
 
       context "when adjustable is set to an order" do
         it "displays in JPY" do

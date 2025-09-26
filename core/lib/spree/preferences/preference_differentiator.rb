@@ -19,7 +19,7 @@ module Spree
             changes
           else
             changes.merge(
-              pref_key => { from: value_from, to: value_to }
+              pref_key => {from: value_from, to: value_to}
             )
           end
         end

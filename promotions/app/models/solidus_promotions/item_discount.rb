@@ -12,6 +12,7 @@ module SolidusPromotions
   # @attr_reader [BigDecimal] amount the amount of discount applied to the item
   class ItemDiscount
     include ActiveModel::Model
+
     attr_accessor :item, :label, :source, :amount
 
     def ==(other)

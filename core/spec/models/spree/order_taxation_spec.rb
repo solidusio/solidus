@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OrderTaxation do
   let(:shipping_address) { FactoryBot.create(:address, state: new_york) }
@@ -26,7 +26,7 @@ RSpec.describe Spree::OrderTaxation do
       :product,
       price: 20,
       name: "Book",
-      tax_category: create(:tax_category),
+      tax_category: create(:tax_category)
     )
   end
 

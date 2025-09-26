@@ -13,7 +13,7 @@ module Spree
 
     # virtual attributes for use with AJAX autocompletion
     def property_name
-      property.name if property
+      property&.name
     end
 
     def property_name=(name)

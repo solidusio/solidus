@@ -4,7 +4,7 @@
 # Rake task spec setup.
 #
 RSpec.shared_context "rake" do |task_path:, task_name:|
-  require 'rake'
+  require "rake"
 
   let(:task) do
     Rake::Task[task_name]

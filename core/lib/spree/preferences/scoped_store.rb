@@ -26,11 +26,11 @@ module Spree::Preferences
     private
 
     def key_for(key)
-      [rails_cache_id, @prefix, key, @suffix].compact.join('/')
+      [rails_cache_id, @prefix, key, @suffix].compact.join("/")
     end
 
     def rails_cache_id
-      ENV['RAILS_CACHE_ID']
+      ENV["RAILS_CACHE_ID"]
     end
   end
 end

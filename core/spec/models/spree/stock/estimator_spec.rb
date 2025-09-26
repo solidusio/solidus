@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -24,18 +24,18 @@ module Spree
 
         let(:currency) { "USD" }
 
-        context 'without a shipment' do
+        context "without a shipment" do
           before { package.shipment = nil }
-          it 'raises an error' do
+          it "raises an error" do
             expect {
               subject.shipping_rates(package)
             }.to raise_error(Spree::Stock::Estimator::ShipmentRequired)
           end
         end
 
-        context 'without an order' do
+        context "without an order" do
           before { package.shipment.order = nil }
-          it 'raises an error' do
+          it "raises an error" do
             expect {
               subject.shipping_rates(package)
             }.to raise_error(Spree::Stock::Estimator::OrderRequired)
@@ -61,7 +61,7 @@ module Spree
         end
 
         context "when the order's ship address is in a different zone" do
-          before { shipping_method.zones.each{ |zone| zone.members.delete_all } }
+          before { shipping_method.zones.each { |zone| zone.members.delete_all } }
           it_should_behave_like "shipping rate doesn't match"
         end
 
@@ -96,7 +96,7 @@ module Spree
         context "general shipping methods" do
           before { Spree::ShippingMethod.all.find_each(&:destroy) }
 
-          context 'with a custom shipping calculator with no preference' do
+          context "with a custom shipping calculator with no preference" do
             class Spree::Calculator::Shipping::NoPreferences < Spree::ShippingCalculator
               def compute_package(_package)
                 # no op
@@ -109,12 +109,12 @@ module Spree
               ]
             end
 
-            it 'does not raise an error' do
+            it "does not raise an error" do
               expect { subject.shipping_rates(package) }.not_to raise_error
             end
           end
 
-          context 'with a custom shipping calculator with preference' do
+          context "with a custom shipping calculator with preference" do
             class Spree::Calculator::Shipping::WithUnknownPreferences < Spree::ShippingCalculator
               def compute_package(_package)
                 # no op
@@ -126,18 +126,18 @@ module Spree
                 create(
                   :shipping_method,
                   calculator: Spree::Calculator::Shipping::WithUnknownPreferences.new(
-                    preferences: { a: "b" }
+                    preferences: {a: "b"}
                   )
                 )
               ]
             end
 
-            it 'does not raise an error' do
+            it "does not raise an error" do
               expect { subject.shipping_rates(package) }.not_to raise_error
             end
           end
 
-          context 'with two shipping methods of different cost' do
+          context "with two shipping methods of different cost" do
             let!(:shipping_methods) do
               [
                 create(:shipping_method, cost: 5),
@@ -150,7 +150,7 @@ module Spree
             end
           end
 
-          context 'with one of the shipping methods having nil cost' do
+          context "with one of the shipping methods having nil cost" do
             let!(:shipping_methods) do
               [
                 create(:shipping_method, cost: 1),
@@ -168,7 +168,7 @@ module Spree
         end
 
         context "involves backend only shipping methods" do
-          before{ Spree::ShippingMethod.all.find_each(&:destroy) }
+          before { Spree::ShippingMethod.all.find_each(&:destroy) }
           let!(:backend_method) { create(:shipping_method, available_to_users: false, cost: 0.00) }
           let!(:generic_method) { create(:shipping_method, cost: 5.00) }
 
@@ -183,7 +183,7 @@ module Spree
         end
 
         context "excludes shipping methods from other stores" do
-          before{ Spree::ShippingMethod.all.find_each(&:destroy) }
+          before { Spree::ShippingMethod.all.find_each(&:destroy) }
 
           let!(:other_method) do
             create(
@@ -225,12 +225,13 @@ module Spree
           end
         end
 
-        it 'uses the configured shipping rate selector' do
+        it "uses the configured shipping rate selector" do
           shipping_rate = build(:shipping_rate)
           allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
 
           selector_class = Class.new do
-            def initialize(_); end;
+            def initialize(_)
+            end
 
             def find_default
               Spree::ShippingRate.new
@@ -243,7 +244,7 @@ module Spree
           expect(shipping_rate.selected).to eq(true)
         end
 
-        it 'uses the configured shipping rate sorter' do
+        it "uses the configured shipping rate sorter" do
           class Spree::Stock::TestSorter
             def initialize(_rates)
             end
@@ -259,7 +260,7 @@ module Spree
           expect(sorter).to have_received(:sort)
         end
 
-        it 'uses the configured shipping rate taxer' do
+        it "uses the configured shipping rate taxer" do
           class Spree::Tax::TestTaxCalculator
             def initialize(_order)
             end

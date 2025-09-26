@@ -16,10 +16,10 @@ module Spree
 
       def index
         params[:q] ||= {}
-        params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
-        @show_only_completed = params[:q][:completed_at_not_null] == '1'
-        params[:q][:s] ||= @show_only_completed ? 'completed_at desc' : 'created_at desc'
-        params[:q][:completed_at_not_null] = '' unless @show_only_completed
+        params[:q][:completed_at_not_null] ||= "1" if Spree::Config[:show_only_complete_orders_by_default]
+        @show_only_completed = params[:q][:completed_at_not_null] == "1"
+        params[:q][:s] ||= @show_only_completed ? "completed_at desc" : "created_at desc"
+        params[:q][:completed_at_not_null] = "" unless @show_only_completed
 
         # As date params are deleted if @show_only_completed, store
         # the original date so we can restore them into the params
@@ -31,18 +31,18 @@ module Spree
 
         if params[:q][:created_at_gt].present?
           params[:q][:created_at_gt] = begin
-                                         Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day
-                                       rescue StandardError
-                                         ""
-                                       end
+            Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day
+          rescue
+            ""
+          end
         end
 
         if params[:q][:created_at_lt].present?
           params[:q][:created_at_lt] = begin
-                                         Time.zone.parse(params[:q][:created_at_lt]).end_of_day
-                                       rescue StandardError
-                                         ""
-                                       end
+            Time.zone.parse(params[:q][:created_at_lt]).end_of_day
+          rescue
+            ""
+          end
         end
 
         if @show_only_completed
@@ -51,9 +51,9 @@ module Spree
         end
 
         @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
-        @orders = @search.result.includes([:user]).
-          page(params[:page]).
-          per(params[:per_page] || Spree::Config[:orders_per_page])
+        @orders = @search.result.includes([:user])
+          .page(params[:page])
+          .per(params[:per_page] || Spree::Config[:orders_per_page])
 
         # Restore dates
         params[:q][:created_at_gt] = created_at_gt
@@ -82,15 +82,15 @@ module Spree
 
       def advance
         if @order.completed?
-          flash[:notice] = t('spree.order_already_completed')
+          flash[:notice] = t("spree.order_already_completed")
           redirect_to edit_admin_order_url(@order)
         else
           @order.contents.advance
 
           if @order.can_complete?
-            flash[:success] = t('spree.order_ready_for_confirm')
+            flash[:success] = t("spree.order_ready_for_confirm")
           else
-            flash[:error] = @order.errors.full_messages.join(', ')
+            flash[:error] = @order.errors.full_messages.join(", ")
           end
           redirect_to confirm_admin_order_url(@order)
         end
@@ -101,14 +101,14 @@ module Spree
         if @order.completed?
           redirect_to edit_admin_order_url(@order)
         elsif !@order.can_complete?
-          render template: 'spree/admin/orders/confirm_advance'
+          render template: "spree/admin/orders/confirm_advance"
         end
       end
 
       # PUT
       def complete
         @order.complete!
-        flash[:success] = t('spree.order_completed')
+        flash[:success] = t("spree.order_completed")
         redirect_to edit_admin_order_url(@order)
       rescue StateMachines::InvalidTransition => error
         flash[:error] = error.message
@@ -117,25 +117,25 @@ module Spree
 
       def cancel
         @order.canceled_by(spree_current_user)
-        flash[:success] = t('spree.order_canceled')
+        flash[:success] = t("spree.order_canceled")
         redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def resume
         @order.resume!
-        flash[:success] = t('spree.order_resumed')
+        flash[:success] = t("spree.order_resumed")
         redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def approve
         @order.contents.approve(user: spree_current_user)
-        flash[:success] = t('spree.order_approved')
+        flash[:success] = t("spree.order_approved")
         redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def resend
         Spree::Config.order_mailer_class.confirm_email(@order, true).deliver_later
-        flash[:success] = t('spree.order_email_resent')
+        flash[:success] = t("spree.order_email_resent")
 
         redirect_to(spree.edit_admin_order_path(@order))
       end
@@ -143,7 +143,7 @@ module Spree
       def unfinalize_adjustments
         adjustments = @order.all_adjustments.finalized
         adjustments.each(&:unfinalize!)
-        flash[:success] = t('spree.all_adjustments_unfinalized')
+        flash[:success] = t("spree.all_adjustments_unfinalized")
 
         respond_with(@order) { |format| format.html { redirect_to(spree.admin_order_adjustments_path(@order)) } }
       end
@@ -151,7 +151,7 @@ module Spree
       def finalize_adjustments
         adjustments = @order.all_adjustments.not_finalized
         adjustments.each(&:finalize!)
-        flash[:success] = t('spree.all_adjustments_finalized')
+        flash[:success] = t("spree.all_adjustments_finalized")
 
         respond_with(@order) { |format| format.html { redirect_to(spree.admin_order_adjustments_path(@order)) } }
       end
@@ -175,7 +175,7 @@ module Spree
 
       # Used for extensions which need to provide their own custom event links on the order details view.
       def initialize_order_events
-        @order_events = %w{approve cancel resume}
+        @order_events = %w[approve cancel resume]
       end
 
       def model_class
@@ -183,13 +183,13 @@ module Spree
       end
 
       def insufficient_stock_error
-        flash[:error] = t('spree.insufficient_stock_for_order')
+        flash[:error] = t("spree.insufficient_stock_for_order")
         redirect_to cart_admin_order_url(@order)
       end
 
       def require_ship_address
         if @order.ship_address.nil?
-          flash[:notice] = t('spree.fill_in_customer_info')
+          flash[:notice] = t("spree.fill_in_customer_info")
           redirect_to edit_admin_order_customer_url(@order)
         end
       end

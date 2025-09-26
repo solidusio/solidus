@@ -36,6 +36,7 @@ module Spree
         def compute_amount(adjustable)
           order = adjustable.is_a?(Order) ? adjustable : adjustable.order
           return 0 unless promotion.line_item_actionable?(order, adjustable)
+
           promotion_amount = calculator.compute(adjustable)
           promotion_amount ||= Spree::ZERO
           promotion_amount = promotion_amount.abs
@@ -61,12 +62,13 @@ module Spree
         def create_adjustment(adjustable, order, promotion_code)
           amount = compute_amount(adjustable)
           return if amount == 0
+
           adjustable.adjustments.create!(
             source: self,
             amount:,
             order:,
             promotion_code:,
-            label: I18n.t('spree.adjustment_labels.line_item', promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
+            label: I18n.t("spree.adjustment_labels.line_item", promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
           )
           true
         end
@@ -83,6 +85,7 @@ module Spree
 
         def ensure_action_has_calculator
           return if calculator
+
           self.calculator = Calculator::PercentOnLineItem.new
         end
 

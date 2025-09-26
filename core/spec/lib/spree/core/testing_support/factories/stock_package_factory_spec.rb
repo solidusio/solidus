@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'stock package factory' do
+RSpec.describe "stock package factory" do
   let(:factory_class) { Spree::Stock::Package }
 
-  describe 'plain stock package' do
+  describe "plain stock package" do
     let(:factory) { :stock_package }
 
     it "builds successfully" do
@@ -16,7 +16,7 @@ RSpec.describe 'stock package factory' do
     # No test for .create, as it's a PORO
   end
 
-  describe 'fulfilled stock package' do
+  describe "fulfilled stock package" do
     let(:factory) { :stock_package_fulfilled }
 
     it "builds successfully" do

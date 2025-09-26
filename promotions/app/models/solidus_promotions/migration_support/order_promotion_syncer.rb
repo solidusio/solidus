@@ -22,6 +22,7 @@ module SolidusPromotions
             original_promotion_id: spree_order_promotion.promotion.id
           )
           next unless solidus_promotion
+
           if spree_order_promotion.promotion_code
             solidus_promotion_code = solidus_promotion.codes.find_by(
               value: spree_order_promotion.promotion_code.value
@@ -38,6 +39,7 @@ module SolidusPromotions
         order.solidus_order_promotions.each do |solidus_order_promotion|
           spree_promotion = solidus_order_promotion.promotion.original_promotion
           next unless spree_promotion
+
           if solidus_order_promotion.promotion_code
             spree_promotion_code = spree_promotion.promotion_codes.find_by(
               value: solidus_order_promotion.promotion_code.value

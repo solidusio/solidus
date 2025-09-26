@@ -43,7 +43,7 @@ module Spree
           response = payment_method.authorize(
             money.money.cents,
             source,
-            gateway_options,
+            gateway_options
           )
           pend! if handle_response(response)
         end
@@ -59,7 +59,7 @@ module Spree
           response = payment_method.purchase(
             money.money.cents,
             source,
-            gateway_options,
+            gateway_options
           )
           complete! if handle_response(response)
         end
@@ -95,13 +95,13 @@ module Spree
         return false unless amount.positive?
 
         protect_from_connection_error do
-          if payment_method.payment_profiles_supported?
+          response = if payment_method.payment_profiles_supported?
             # Gateways supporting payment profiles will need access to credit card object because this stores the payment profile information
             # so supply the authorization itself as well as the credit card, rather than just the authorization code
-            response = payment_method.void(response_code, source, gateway_options)
+            payment_method.void(response_code, source, gateway_options)
           else
             # Standard ActiveMerchant void usage
-            response = payment_method.void(response_code, gateway_options)
+            payment_method.void(response_code, gateway_options)
           end
 
           handle_void_response(response)
@@ -170,12 +170,12 @@ module Spree
         return unless payment_method.source_required?
 
         unless source
-          gateway_error(I18n.t('spree.payment_processing_failed'))
+          gateway_error(I18n.t("spree.payment_processing_failed"))
         end
 
         unless payment_method.supports?(source)
           invalidate!
-          gateway_error(I18n.t('spree.payment_method_not_supported'))
+          gateway_error(I18n.t("spree.payment_method_not_supported"))
         end
 
         true
@@ -194,11 +194,11 @@ module Spree
 
         unless response.authorization.nil?
           self.response_code = response.authorization
-          self.avs_response = response.avs_result['code']
+          self.avs_response = response.avs_result["code"]
 
           if response.cvv_result
-            self.cvv_response_code = response.cvv_result['code']
-            self.cvv_response_message = response.cvv_result['message']
+            self.cvv_response_code = response.cvv_result["code"]
+            self.cvv_response_message = response.cvv_result["message"]
           end
         end
 
@@ -217,18 +217,18 @@ module Spree
 
       def gateway_error(error)
         message, log = case error
-                       when ActiveMerchant::Billing::Response
-                          [
-                            error.params['message'] || error.params['response_reason_text'] || error.message,
-                            basic_response_info(error)
-                          ]
-                        when ActiveMerchant::ConnectionError
-                          [I18n.t('spree.unable_to_connect_to_gateway')] * 2
-                        else
-                          [error.to_s, error]
-                        end
+        when ActiveMerchant::Billing::Response
+          [
+            error.params["message"] || error.params["response_reason_text"] || error.message,
+            basic_response_info(error)
+          ]
+        when ActiveMerchant::ConnectionError
+          [I18n.t("spree.unable_to_connect_to_gateway")] * 2
+        else
+          [error.to_s, error]
+        end
 
-        logger.error("#{I18n.t('spree.gateway_error')}: #{log}")
+        logger.error("#{I18n.t("spree.gateway_error")}: #{log}")
         raise Core::GatewayError.new(message)
       end
 

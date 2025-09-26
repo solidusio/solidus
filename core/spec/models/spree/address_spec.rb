@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Address, type: :model do
   subject { Spree::Address }
 
   context "validation" do
     let(:country) { create :country, states_required: true }
-    let(:state) { create :state, name: 'maryland', abbr: 'md', country: }
+    let(:state) { create :state, name: "maryland", abbr: "md", country: }
     let(:address) { build(:address, country:) }
 
-    context 'state validation' do
+    context "state validation" do
       let(:state_validator) { instance_spy(Spree::Address.state_validator_class) }
 
       it "calls the state validator" do
-        allow(Spree::Address.state_validator_class).
-          to receive(:new).with(address).
-          and_return(state_validator)
+        allow(Spree::Address.state_validator_class)
+          .to receive(:new).with(address)
+          .and_return(state_validator)
         expect(state_validator).to receive(:perform)
         address.valid?
       end
@@ -29,7 +29,7 @@ RSpec.describe Spree::Address, type: :model do
         address.state = nil
         address.state_name = nil
         expect(address.valid?).to eq(false)
-        expect(address.errors['state']).to eq(["can't be blank"])
+        expect(address.errors["state"]).to eq(["can't be blank"])
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe Spree::Address, type: :model do
     it "requires zipcode" do
       address.zipcode = ""
       address.valid?
-      expect(address.errors['zipcode']).to include("can't be blank")
+      expect(address.errors["zipcode"]).to include("can't be blank")
     end
 
     context "phone not required" do
@@ -70,7 +70,7 @@ RSpec.describe Spree::Address, type: :model do
     context "no user given" do
       let!(:default_country) { create(:country) }
 
-      context 'has a default country' do
+      context "has a default country" do
         before do
           stub_spree_preferences(default_country_iso: default_country.iso)
         end
@@ -79,23 +79,23 @@ RSpec.describe Spree::Address, type: :model do
           expect(Spree::Address.build_default.country).to eq default_country
         end
 
-        it 'accepts other attributes' do
-          address = Spree::Address.build_default(name: 'Ryan')
+        it "accepts other attributes" do
+          address = Spree::Address.build_default(name: "Ryan")
 
           expect(address.country).to eq default_country
-          expect(address.name).to eq 'Ryan'
+          expect(address.name).to eq "Ryan"
         end
 
-        it 'accepts a block' do
+        it "accepts a block" do
           address = Spree::Address.build_default do |record|
-            record.name = 'Ryan'
+            record.name = "Ryan"
           end
 
           expect(address.country).to eq default_country
-          expect(address.name).to eq 'Ryan'
+          expect(address.name).to eq "Ryan"
         end
 
-        it 'can override the country' do
+        it "can override the country" do
           another_country = build :country
           address = Spree::Address.build_default(country: another_country)
 
@@ -113,12 +113,12 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
-  context '.factory' do
-    context 'with attributes that use setters defined in Address' do
+  context ".factory" do
+    context "with attributes that use setters defined in Address" do
       let(:address_attributes) { attributes_for(:address, country_id: nil, country_iso: country.iso) }
-      let(:country) { create(:country, iso: 'ZW') }
+      let(:country) { create(:country, iso: "ZW") }
 
-      it 'uses the setters' do
+      it "uses the setters" do
         expect(subject.factory(address_attributes).country_id).to eq(country.id)
       end
     end
@@ -140,15 +140,15 @@ RSpec.describe Spree::Address, type: :model do
     context "no existing address supplied" do
       let(:existing_address) { nil }
 
-      context 'and there is not a matching address in the database' do
+      context "and there is not a matching address in the database" do
         it "returns new Address matching attributes given" do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
         end
       end
 
-      context 'and there is a matching address in the database' do
+      context "and there is a matching address in the database" do
         let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, name: 'Jordan') }
+        let!(:matching_address) { create(:address, name: "Jordan") }
 
         it "returns the matching address" do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -175,11 +175,11 @@ RSpec.describe Spree::Address, type: :model do
         end
       end
 
-      context 'and changed address matches an existing address' do
+      context "and changed address matches an existing address" do
         let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, name: 'Jordan') }
+        let!(:matching_address) { create(:address, name: "Jordan") }
 
-        it 'returns the matching address' do
+        it "returns the matching address" do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
           expect(subject.id).to eq(matching_address.id)
         end
@@ -187,125 +187,125 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
-  describe '.value_attributes' do
+  describe ".value_attributes" do
     subject do
       Spree::Address.value_attributes(base_attributes, merge_attributes)
     end
 
-    context 'with symbols and strings' do
-      let(:base_attributes) { { 'address1' => '1234 way', 'address2' => 'apt 2' } }
-      let(:merge_attributes) { { address1: '5678 way' } }
+    context "with symbols and strings" do
+      let(:base_attributes) { {"address1" => "1234 way", "address2" => "apt 2"} }
+      let(:merge_attributes) { {address1: "5678 way"} }
 
-      it 'stringifies and merges the keys' do
-        expect(subject).to eq('address1' => '5678 way', 'address2' => 'apt 2')
+      it "stringifies and merges the keys" do
+        expect(subject).to eq("address1" => "5678 way", "address2" => "apt 2")
       end
     end
 
-    context 'with database-only attributes' do
+    context "with database-only attributes" do
       let(:base_attributes) do
         {
-          'id' => 1,
-          'created_at' => Time.current,
-          'updated_at' => Time.current,
-          'address1' => '1234 way'
+          "id" => 1,
+          "created_at" => Time.current,
+          "updated_at" => Time.current,
+          "address1" => "1234 way"
         }
       end
       let(:merge_attributes) do
         {
-          'updated_at' => Time.current,
-          'address2' => 'apt 2'
+          "updated_at" => Time.current,
+          "address2" => "apt 2"
         }
       end
 
-      it 'removes the database-only addresses' do
-        expect(subject).to eq('address1' => '1234 way', 'address2' => 'apt 2')
+      it "removes the database-only addresses" do
+        expect(subject).to eq("address1" => "1234 way", "address2" => "apt 2")
       end
     end
   end
 
-  describe '.taxation_attributes' do
-    context 'both taxation and non-taxation attributes are present ' do
-      let(:address) { Spree::Address.new name: 'Michael Jackson', state_id: 1, country_id: 2, zipcode: '12345' }
+  describe ".taxation_attributes" do
+    context "both taxation and non-taxation attributes are present " do
+      let(:address) { Spree::Address.new name: "Michael Jackson", state_id: 1, country_id: 2, zipcode: "12345" }
 
-      it 'removes the non-taxation attributes' do
-        expect(address.taxation_attributes).not_to eq('name' => 'Michael Jackson')
+      it "removes the non-taxation attributes" do
+        expect(address.taxation_attributes).not_to eq("name" => "Michael Jackson")
       end
 
-      it 'returns only the taxation attributes' do
-        expect(address.taxation_attributes).to eq('state_id' => 1, 'country_id' => 2, 'zipcode' => '12345')
+      it "returns only the taxation attributes" do
+        expect(address.taxation_attributes).to eq("state_id" => 1, "country_id" => 2, "zipcode" => "12345")
       end
     end
 
-    context 'taxation attributes are blank' do
-      let(:address) { Spree::Address.new name: 'Michael Jackson' }
+    context "taxation attributes are blank" do
+      let(:address) { Spree::Address.new name: "Michael Jackson" }
 
-      it 'returns a subset of the attributes with the correct keys and nil values' do
-        expect(address.taxation_attributes).to eq('state_id' => nil, 'country_id' => nil, 'zipcode' => nil)
+      it "returns a subset of the attributes with the correct keys and nil values" do
+        expect(address.taxation_attributes).to eq("state_id" => nil, "country_id" => nil, "zipcode" => nil)
       end
     end
   end
 
-  context '#country_iso=' do
+  context "#country_iso=" do
     let(:address) { build(:address, country_id: nil) }
-    let(:country) { create(:country, iso: 'ZW') }
+    let(:country) { create(:country, iso: "ZW") }
 
-    it 'sets the country to the country with the matching iso code' do
+    it "sets the country to the country with the matching iso code" do
       address.country_iso = country.iso
       expect(address.country_id).to eq(country.id)
     end
 
-    it 'raises an exception if the iso is not found' do
+    it "raises an exception if the iso is not found" do
       expect {
         address.country_iso = "NOCOUNTRY"
       }.to raise_error(::ActiveRecord::RecordNotFound, /Couldn't find Spree::Country/)
     end
   end
 
-  context '#name' do
-    it 'is included in json representation' do
-      address = Spree::Address.new(name: 'Jane Von Doe')
+  context "#name" do
+    it "is included in json representation" do
+      address = Spree::Address.new(name: "Jane Von Doe")
 
-      expect(address.as_json).to include('name' => 'Jane Von Doe')
-      expect(address.as_json.keys).not_to include('firstname', 'lastname')
+      expect(address.as_json).to include("name" => "Jane Von Doe")
+      expect(address.as_json.keys).not_to include("firstname", "lastname")
     end
   end
 
-  context '#state_text' do
-    context 'state is blank' do
-      let(:address) { Spree::Address.new state: nil, state_name: 'virginia' }
-      specify { expect(address.state_text).to eq('virginia') }
+  context "#state_text" do
+    context "state is blank" do
+      let(:address) { Spree::Address.new state: nil, state_name: "virginia" }
+      specify { expect(address.state_text).to eq("virginia") }
     end
 
-    context 'both name and abbr is present' do
-      let(:state) { Spree::State.new name: 'virginia', abbr: 'va' }
+    context "both name and abbr is present" do
+      let(:state) { Spree::State.new name: "virginia", abbr: "va" }
       let(:address) { Spree::Address.new state: }
-      specify { expect(address.state_text).to eq('va') }
+      specify { expect(address.state_text).to eq("va") }
     end
 
-    context 'only name is present' do
-      let(:state) { Spree::State.new name: 'virginia', abbr: nil }
+    context "only name is present" do
+      let(:state) { Spree::State.new name: "virginia", abbr: nil }
       let(:address) { Spree::Address.new state: }
-      specify { expect(address.state_text).to eq('virginia') }
+      specify { expect(address.state_text).to eq("virginia") }
     end
   end
 
-  context '#requires_phone' do
+  context "#requires_phone" do
     subject { described_class.new }
 
     it { is_expected.to be_require_phone }
   end
 
-  describe 'enum reverse_charge_status' do
-    it 'defines the expected enum values' do
+  describe "enum reverse_charge_status" do
+    it "defines the expected enum values" do
       expect(Spree::Address.reverse_charge_statuses).to eq({
-        'disabled' => 0,
-        'enabled' => 1,
-        'not_validated' => 2
+        "disabled" => 0,
+        "enabled" => 1,
+        "not_validated" => 2
       })
     end
 
-    context 'allows valid values' do
-      it 'has not_validated value' do
+    context "allows valid values" do
+      it "has not_validated value" do
         address = build(:address)
         # Updates the reverse_charge_status to "not_validated"
         address.reverse_charge_status_not_validated!
@@ -313,7 +313,7 @@ RSpec.describe Spree::Address, type: :model do
         expect(address).to be_valid
       end
 
-      it 'has disabled value' do
+      it "has disabled value" do
         address = build(:address)
         # Updates the reverse_charge_status to "disabled"
         address.reverse_charge_status_disabled!
@@ -321,7 +321,7 @@ RSpec.describe Spree::Address, type: :model do
         expect(address).to be_valid
       end
 
-      it 'has enabled value' do
+      it "has enabled value" do
         address = build(:address)
         # Updates the reverse_charge_status to "enabled"
         address.reverse_charge_status_enabled!
@@ -330,21 +330,21 @@ RSpec.describe Spree::Address, type: :model do
       end
     end
 
-    it 'raises an error for invalid values' do
+    it "raises an error for invalid values" do
       expect { Spree::Address.new(reverse_charge_status: :invalid_status) }.to raise_error(ArgumentError)
     end
   end
 
-  context 'ensure fields are stored' do
+  context "ensure fields are stored" do
     let(:address) { build(:address) }
 
-    it 'saves email correctly' do
-      address.email = 'test@example.com'
+    it "saves email correctly" do
+      address.email = "test@example.com"
       expect(address.save).to be true
     end
 
-    it 'saves vat_id correctly' do
-      address.vat_id = 'AB123'
+    it "saves vat_id correctly" do
+      address.vat_id = "AB123"
       expect(address.save).to be true
     end
   end

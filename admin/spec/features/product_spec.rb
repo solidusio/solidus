@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Product", type: :feature do
   before do
     allow(SolidusAdmin::Config).to receive(:enable_alpha_features?) { true }
-    sign_in create(:admin_user, email: 'admin@example.com')
+    sign_in create(:admin_user, email: "admin@example.com")
   end
 
   it "lists products", :js do
-    create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
+    create(:product, name: "Just a product", slug: "just-a-prod", price: 19.99)
 
     visit "/admin/products/just-a-prod"
 
@@ -27,7 +27,7 @@ describe "Product", type: :feature do
   end
 
   it "redirects the edit route to the show path" do
-    create(:product, slug: 'just-a-prod')
+    create(:product, slug: "just-a-prod")
 
     visit "/admin/products/just-a-prod/edit"
 
@@ -35,19 +35,19 @@ describe "Product", type: :feature do
   end
 
   it "can update a product", :js do
-    create(:product, name: "Just a product", slug: 'just-a-prod', price: 19.99)
+    create(:product, name: "Just a product", slug: "just-a-prod", price: 19.99)
 
     visit "/admin/products/just-a-prod"
 
     fill_in "Name", with: "Just a product (updated)"
-    uncheck 'Promotable'
-    within('header') { click_button "Save" }
+    uncheck "Promotable"
+    within("header") { click_button "Save" }
 
     expect(page).to have_content("Just a product (updated)")
     expect(checkbox("Promotable")).not_to be_checked
 
     fill_in "Name", with: ""
-    within('header') { click_button "Save" }
+    within("header") { click_button "Save" }
 
     expect(page).to have_content("Name can't be blank")
     expect(page).to be_axe_clean

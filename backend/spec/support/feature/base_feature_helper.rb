@@ -10,10 +10,10 @@ module BaseFeatureHelper
   end
 
   def click_nav(nav_text, subnav_text = nil)
-    if Spree::Backend::Config.admin_updated_navbar
-      primary_nav = find("ul.solidus-admin--nav--menu>li>a", text: /#{nav_text}/i)
+    primary_nav = if Spree::Backend::Config.admin_updated_navbar
+      find("ul.solidus-admin--nav--menu>li>a", text: /#{nav_text}/i)
     else
-      primary_nav = find(".admin-nav-menu>ul>li>a", text: /#{nav_text}/i)
+      find(".admin-nav-menu>ul>li>a", text: /#{nav_text}/i)
     end
 
     if subnav_text

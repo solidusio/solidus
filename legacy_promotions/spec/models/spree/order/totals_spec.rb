@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Order, type: :model do
@@ -8,7 +8,7 @@ module Spree
     let(:shirt) { create(:variant) }
 
     context "adds item to cart and activates promo" do
-      let(:promotion) { Promotion.create name: 'Huhu', apply_automatically: true }
+      let(:promotion) { Promotion.create name: "Huhu", apply_automatically: true }
       let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
       let!(:action) { Promotion::Actions::CreateAdjustment.create(promotion:, calculator:) }
 

@@ -7,10 +7,10 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
   let(:user) { create(:user) }
   let!(:store_credit) { create(:store_credit, user:) }
   let!(:store_credit_event) { create(:store_credit_adjustment_event, store_credit:, amount_remaining: 50) }
-  let(:valid_params) { { amount: 100, store_credit_reason_id: create(:store_credit_reason).id } }
-  let(:invalid_params) { { amount: nil } }
-  let(:valid_memo_params) { { memo: "Updated memo text" } }
-  let(:invalid_reason_params) { { store_credit_reason_id: nil } }
+  let(:valid_params) { {amount: 100, store_credit_reason_id: create(:store_credit_reason).id} }
+  let(:invalid_params) { {amount: nil} }
+  let(:valid_memo_params) { {memo: "Updated memo text"} }
+  let(:invalid_reason_params) { {store_credit_reason_id: nil} }
   let(:valid_create_params) do
     {
       store_credit: {
@@ -139,18 +139,18 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     context "with valid parameters" do
       it "updates the store credit amount" do
         expect {
-          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
         }.to change { store_credit.reload.amount }.to(100)
       end
 
       it "redirects to the store credit show page with a 303 See Other status" do
-        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
         expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
         follow_redirect!
         expect(response.body).to include("Store credit was successfully updated.")
       end
@@ -161,7 +161,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
         end
 
         it "renders the edit_amount template with errors" do
-          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
 
           expect(response).to have_http_status(:unprocessable_entity)
         end
@@ -171,17 +171,17 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     context "with invalid parameters" do
       it "does not update the store credit amount" do
         expect {
-          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: invalid_params }
+          put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: invalid_params}
         }.not_to change { store_credit.reload.amount }
       end
 
       it "renders the edit_amount template with unprocessable_entity status" do
-        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: invalid_params }
+        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: invalid_params}
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "displays error messages in the response" do
-        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: invalid_params }
+        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: invalid_params}
         expect(response.body).to include("must be greater than 0")
       end
     end
@@ -201,18 +201,18 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
 
       it "invalidates the store credit" do
         expect {
-          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: { store_credit_reason_id: store_credit_reason.id } }
+          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: {store_credit_reason_id: store_credit_reason.id}}
         }.to change { store_credit.reload.invalidated? }.from(false).to(true)
       end
 
       it "redirects to the store credit show page with a 303 See Other status" do
-        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: { store_credit_reason_id: store_credit_reason.id } }
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: {store_credit_reason_id: store_credit_reason.id}}
         expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: { store_credit_reason_id: store_credit_reason.id } }
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: {store_credit_reason_id: store_credit_reason.id}}
         follow_redirect!
         expect(response.body).to include("Store credit was successfully invalidated.")
       end
@@ -221,17 +221,17 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     context "with invalid parameters" do
       it "does not invalidate the store credit" do
         expect {
-          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
+          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: invalid_reason_params}
         }.not_to change { store_credit.reload.invalidated? }
       end
 
       it "renders the edit_validity template with unprocessable_entity status" do
-        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: invalid_reason_params}
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "displays error messages in the response" do
-        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: invalid_reason_params }
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: invalid_reason_params}
         expect(response.body).to include("Store credit reason must be provided")
       end
     end
@@ -243,18 +243,18 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
 
       it "does not invalidate the store credit" do
         expect {
-          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+          put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
         }.not_to change { store_credit.reload.invalidated? }
       end
 
       it "redirects to the store credit show page with a 303 See Other status" do
-        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
         expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a failure flash message" do
-        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: { store_credit: valid_params }
+        put solidus_admin.invalidate_user_store_credit_path(user, store_credit), params: {store_credit: valid_params}
         follow_redirect!
         expect(response.body).to include("Something went wrong. Store credit could not be invalidated.")
       end
@@ -273,18 +273,18 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     context "with valid parameters" do
       it "updates the store credit memo" do
         expect {
-          put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: { store_credit: valid_memo_params }
+          put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: {store_credit: valid_memo_params}
         }.to change { store_credit.reload.memo }.to("Updated memo text")
       end
 
       it "redirects to the store credit show page with a 303 See Other status" do
-        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: { store_credit: valid_memo_params }
+        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: {store_credit: valid_memo_params}
         expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a success flash message" do
-        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: { store_credit: valid_memo_params }
+        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: {store_credit: valid_memo_params}
         follow_redirect!
         expect(response.body).to include("Store credit was successfully updated.")
       end
@@ -298,18 +298,18 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
 
       it "does not update the store credit memo" do
         expect {
-          put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: { store_credit: valid_memo_params }
+          put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: {store_credit: valid_memo_params}
         }.not_to change { store_credit.reload.memo }
       end
 
       it "redirects to the store credit show page with a 303 See Other status" do
-        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: { store_credit: valid_memo_params }
+        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: {store_credit: valid_memo_params}
         expect(response).to redirect_to(solidus_admin.user_store_credit_path(user, store_credit))
         expect(response).to have_http_status(:see_other)
       end
 
       it "displays a failure flash message" do
-        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: { store_credit: valid_memo_params }
+        put solidus_admin.update_memo_user_store_credit_path(user, store_credit), params: {store_credit: valid_memo_params}
         follow_redirect!
         expect(response.body).to include("Something went wrong. Store credit could not be updated.")
       end
@@ -319,14 +319,14 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
   describe "private methods" do
     describe "#ensure_amount" do
       it "adds an error when the amount is blank" do
-        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: invalid_params }
+        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: invalid_params}
         expect(response.body).to include("must be greater than 0")
       end
     end
 
     describe "#ensure_store_credit_reason" do
       it "adds an error when the store credit reason is blank" do
-        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: { store_credit: { amount: 100, store_credit_reason_id: nil } }
+        put solidus_admin.update_amount_user_store_credit_path(user, store_credit), params: {store_credit: {amount: 100, store_credit_reason_id: nil}}
         expect(response.body).to include("Store credit reason must be provided")
       end
     end
@@ -334,7 +334,7 @@ RSpec.describe SolidusAdmin::StoreCreditsController, type: :request do
     describe "private methods" do
       describe "#ensure_store_credit_category" do
         it "adds an error when category_id is blank" do
-          post solidus_admin.user_store_credits_path(user), params: { store_credit: { amount: 100, category_id: nil } }
+          post solidus_admin.user_store_credits_path(user), params: {store_credit: {amount: 100, category_id: nil}}
           expect(response.body).to include("Store credit category must be provided")
         end
       end

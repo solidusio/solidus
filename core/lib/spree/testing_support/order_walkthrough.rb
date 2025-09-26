@@ -31,11 +31,11 @@ module Spree
         order.next!
 
         states_to_process = if state == :complete
-                              states
-                            else
-                              end_state_position = states.index(state.to_sym)
-                              states[..end_state_position]
-                            end
+          states
+        else
+          end_state_position = states.index(state.to_sym)
+          states[..end_state_position]
+        end
 
         states_to_process.each do |state_to_process|
           send(state_to_process, order)
@@ -65,7 +65,7 @@ module Spree
         credit_card = ::FactoryBot.create(:credit_card, user: order.user)
         order.payments.create!(payment_method: credit_card.payment_method, amount: order.total, source: credit_card)
         # TODO: maybe look at some way of making this payment_state change automatic
-        order.payment_state = 'paid'
+        order.payment_state = "paid"
         order.next!
       end
 

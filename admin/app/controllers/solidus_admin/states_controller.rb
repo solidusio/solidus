@@ -11,7 +11,7 @@ module SolidusAdmin
     end
 
     def resources_sorting_options
-      { name: :asc }
+      {name: :asc}
     end
 
     def blueprint

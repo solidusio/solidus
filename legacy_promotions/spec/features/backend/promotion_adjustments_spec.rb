@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Promotion Adjustments", type: :feature, js: true do
   stub_authorization!
@@ -19,19 +19,19 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
       select "Item Total", from: "Discount Rules"
-      within('#rule_fields') { click_button "Add" }
+      within("#rule_fields") { click_button "Add" }
 
-      find('[id$=_preferred_amount]').set(30)
-      within('#rule_fields') { click_button "Update" }
+      find("[id$=_preferred_amount]").set(30)
+      within("#rule_fields") { click_button "Update" }
 
       select "Create whole-order adjustment", from: "Adjustment type"
-      within('#action_fields') do
+      within("#action_fields") do
         click_button "Add"
-        select "Flat Rate", from: I18n.t('spree.admin.promotions.actions.calculator_label')
+        select "Flat Rate", from: I18n.t("spree.admin.promotions.actions.calculator_label")
         fill_in "Amount", with: 5
       end
-      within('#actions_container') { click_button "Update" }
-      expect(page).to have_text 'successfully updated'
+      within("#actions_container") { click_button "Update" }
+      expect(page).to have_text "successfully updated"
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes.first.value).to eq("order")
@@ -56,13 +56,13 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
       select "Create whole-order adjustment", from: "Adjustment type"
-      within('#action_fields') do
+      within("#action_fields") do
         click_button "Add"
-        select "Flat Rate", from: I18n.t('spree.admin.promotions.actions.calculator_label')
+        select "Flat Rate", from: I18n.t("spree.admin.promotions.actions.calculator_label")
         fill_in "Amount", with: "5"
       end
-      within('#actions_container') { click_button "Update" }
-      expect(page).to have_text 'successfully updated'
+      within("#actions_container") { click_button "Update" }
+      expect(page).to have_text "successfully updated"
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.usage_limit).to eq(1)
@@ -82,19 +82,19 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
       select "Item Total", from: "Discount Rules"
-      within('#rule_fields') { click_button "Add" }
+      within("#rule_fields") { click_button "Add" }
 
-      find('[id$=_preferred_amount]').set(30)
-      within('#rule_fields') { click_button "Update" }
+      find("[id$=_preferred_amount]").set(30)
+      within("#rule_fields") { click_button "Update" }
 
       select "Create whole-order adjustment", from: "Adjustment type"
-      within('#action_fields') do
+      within("#action_fields") do
         click_button "Add"
-        select "Flat Percent", from: I18n.t('spree.admin.promotions.actions.calculator_label')
+        select "Flat Percent", from: I18n.t("spree.admin.promotions.actions.calculator_label")
         fill_in "Flat Percent", with: "10"
       end
-      within('#actions_container') { click_button "Update" }
-      expect(page).to have_text 'successfully updated'
+      within("#actions_container") { click_button "Update" }
+      expect(page).to have_text "successfully updated"
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes.first).to be_nil
@@ -121,16 +121,16 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       select "Product(s)", from: "Discount Rules"
       within("#rule_fields") { click_button "Add" }
       select2_search "RoR Mug", from: "Choose products"
-      within('#rule_fields') { click_button "Update" }
+      within("#rule_fields") { click_button "Update" }
 
       select "Create per-line-item adjustment", from: "Adjustment type"
-      within('#action_fields') do
+      within("#action_fields") do
         click_button "Add"
-        select "Percent Per Item", from: I18n.t('spree.admin.promotions.actions.calculator_label')
+        select "Percent Per Item", from: I18n.t("spree.admin.promotions.actions.calculator_label")
         fill_in "Percent", with: "10"
       end
-      within('#actions_container') { click_button "Update" }
-      expect(page).to have_text 'successfully updated'
+      within("#actions_container") { click_button "Update" }
+      expect(page).to have_text "successfully updated"
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes.first).to be_nil
@@ -153,13 +153,13 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
       select "Item Total", from: "Discount Rules"
-      within('#rule_fields') { click_button "Add" }
-      find('[id$=_preferred_amount]').set(30)
-      within('#rule_fields') { click_button "Update" }
+      within("#rule_fields") { click_button "Add" }
+      find("[id$=_preferred_amount]").set(30)
+      within("#rule_fields") { click_button "Update" }
 
       select "Free Shipping", from: "Adjustment type"
-      within('#action_fields') { click_button "Add" }
-      expect(page).to have_content('Makes all shipments for the order free')
+      within("#action_fields") { click_button "Add" }
+      expect(page).to have_content("Makes all shipments for the order free")
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes).to be_empty
@@ -212,18 +212,18 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
       select "Item Total", from: "Discount Rules"
-      within('#rule_fields') { click_button "Add" }
-      find('[id$=_preferred_amount]').set(50)
-      within('#rule_fields') { click_button "Update" }
+      within("#rule_fields") { click_button "Add" }
+      find("[id$=_preferred_amount]").set(50)
+      within("#rule_fields") { click_button "Update" }
 
       select "Create whole-order adjustment", from: "Adjustment type"
-      within('#action_fields') do
+      within("#action_fields") do
         click_button "Add"
-        select "Flat Rate", from: I18n.t('spree.admin.promotions.actions.calculator_label')
+        select "Flat Rate", from: I18n.t("spree.admin.promotions.actions.calculator_label")
         fill_in "Amount", with: "5"
       end
-      within('#actions_container') { click_button "Update" }
-      expect(page).to have_text 'successfully updated'
+      within("#actions_container") { click_button "Update" }
+      expect(page).to have_text "successfully updated"
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
 
@@ -237,7 +237,7 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       expect(first_action.calculator.preferred_amount).to eq(5)
     end
 
-    context 'creating a promotion with discount rules and adjustments' do
+    context "creating a promotion with discount rules and adjustments" do
       before do
         fill_in "Name", with: "SAVE SAVE SAVE"
         choose "Apply to all orders"
@@ -246,19 +246,19 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
       end
 
       it "should not allow an Discount Rule to be added without selecting an option" do
-        within('#rule_fields') { click_button "Add" }
+        within("#rule_fields") { click_button "Add" }
         message = page.find("#promotion_rule_type").native.attribute("validationMessage")
         expect(message).to eq "Please select an item in the list."
       end
 
       it "should not allow an Adjusment type to be added without selecting an option" do
-        within('#action_fields') { click_button "Add" }
+        within("#action_fields") { click_button "Add" }
         message = page.find("#action_type").native.attribute("validationMessage")
         expect(message).to eq "Please select an item in the list."
       end
     end
 
-    context 'creating a promotion with promotion action that has a calculator with complex preferences' do
+    context "creating a promotion with promotion action that has a calculator with complex preferences" do
       before do
         class ComplexCalculator < Spree::Calculator
           preference :amount, :decimal
@@ -270,12 +270,12 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
             "Complex Calculator"
           end
         end
-        @calculators = Spree::Config.promotions.calculators['Spree::Promotion::Actions::CreateItemAdjustments']
-        Spree::Config.promotions.calculators['Spree::Promotion::Actions::CreateItemAdjustments'] = [ComplexCalculator]
+        @calculators = Spree::Config.promotions.calculators["Spree::Promotion::Actions::CreateItemAdjustments"]
+        Spree::Config.promotions.calculators["Spree::Promotion::Actions::CreateItemAdjustments"] = [ComplexCalculator]
       end
 
       after do
-        Spree::Config.promotions.calculators['Spree::Promotion::Actions::CreateItemAdjustments'] = @calculators
+        Spree::Config.promotions.calculators["Spree::Promotion::Actions::CreateItemAdjustments"] = @calculators
       end
 
       it "does not show array and hash form fields" do
@@ -285,18 +285,18 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
         expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
         select "Create per-line-item adjustment", from: "Adjustment type"
-        within('#action_fields') do
+        within("#action_fields") do
           click_button "Add"
-          select "Complex Calculator", from: I18n.t('spree.admin.promotions.actions.calculator_label')
+          select "Complex Calculator", from: I18n.t("spree.admin.promotions.actions.calculator_label")
         end
-        within('#actions_container') { click_button "Update" }
-        expect(page).to have_text 'successfully updated'
+        within("#actions_container") { click_button "Update" }
+        expect(page).to have_text "successfully updated"
 
-        within('#action_fields') do
-          expect(page).to have_field('Amount')
-          expect(page).to have_field('Currency')
-          expect(page).to_not have_field('Mapping')
-          expect(page).to_not have_field('List')
+        within("#action_fields") do
+          expect(page).to have_field("Amount")
+          expect(page).to have_field("Currency")
+          expect(page).to_not have_field("Mapping")
+          expect(page).to_not have_field("List")
         end
       end
     end

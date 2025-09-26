@@ -6,16 +6,16 @@ class SolidusAdmin::CustomersController < SolidusAdmin::BaseController
   def show
     respond_to do |format|
       format.html do
-        render component('orders/show/email').new(order: @order)
+        render component("orders/show/email").new(order: @order)
       end
     end
   end
 
   def destroy
     if @order.update(user: nil)
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
     else
-      flash[:error] = t('.error')
+      flash[:error] = t(".error")
     end
 
     redirect_to order_path(@order), status: :see_other

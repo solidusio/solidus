@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'dummy_task' do
+RSpec.describe "dummy_task" do
   include_context(
-    'rake',
-    task_name: 'dummy_task',
-    task_path: Spree::Core::Engine.root.join('spec/lib/tasks/dummy_task.rake'),
+    "rake",
+    task_name: "dummy_task",
+    task_path: Spree::Core::Engine.root.join("spec/lib/tasks/dummy_task.rake")
   )
 
-  it 'calls the dummy task exactly once' do
+  it "calls the dummy task exactly once" do
     expect(DummyTaskRunner).to receive(:run).once
     task.invoke
   end

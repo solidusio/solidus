@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::AppConfiguration do
   let(:prefs) { Spree::Config }
@@ -85,21 +85,21 @@ RSpec.describe Spree::AppConfiguration do
       end
     end
 
-    context '.calculators' do
+    context ".calculators" do
       subject(:calculators) { environment.calculators }
       it { is_expected.to be_a Spree::Core::Environment::Calculators }
 
-      context '.calculators.promotion_actions_create_adjustments' do
+      context ".calculators.promotion_actions_create_adjustments" do
         subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
         it_should_behave_like "working preferences set"
       end
 
-      context '.calculators.promotion_actions_create_item_adjustments' do
+      context ".calculators.promotion_actions_create_item_adjustments" do
         subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
         it_should_behave_like "working preferences set"
       end
 
-      context '.calculators.promotion_actions_create_quantity_adjustments' do
+      context ".calculators.promotion_actions_create_quantity_adjustments" do
         subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
         it_should_behave_like "working preferences set"
       end
@@ -110,60 +110,60 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
 
-  describe '#stock' do
+  describe "#stock" do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }
   end
 
-  describe '#promotions' do
+  describe "#promotions" do
     subject { prefs.promotions }
     it { is_expected.to be_a Spree::Core::NullPromotionConfiguration }
   end
 
-  describe '@default_country_iso_code' do
-    it 'is the USA by default' do
+  describe "@default_country_iso_code" do
+    it "is the USA by default" do
       expect(prefs[:default_country_iso]).to eq("US")
     end
   end
 
-  describe '@admin_vat_country_iso' do
-    it 'is `nil` by default' do
+  describe "@admin_vat_country_iso" do
+    it "is `nil` by default" do
       expect(prefs[:admin_vat_country_iso]).to eq(nil)
     end
   end
 
-  describe '#environment' do
-    class DummyClass; end;
+  describe "#environment" do
+    class DummyClass; end
 
     subject(:environment) { prefs.environment }
     it { is_expected.to be_a Spree::Core::Environment }
 
-    context '.payment_methods' do
+    context ".payment_methods" do
       subject(:preferences_set) { environment.payment_methods }
       it_should_behave_like "working preferences set"
     end
 
-    context '.stock_splitters' do
+    context ".stock_splitters" do
       subject(:preferences_set) { environment.stock_splitters }
       it_should_behave_like "working preferences set"
     end
 
-    context '.calculators' do
+    context ".calculators" do
       subject(:calculators) { environment.calculators }
       it { is_expected.to be_a Spree::Core::Environment::Calculators }
 
-      context '.calculators.shipping_methods' do
+      context ".calculators.shipping_methods" do
         subject(:preferences_set) { calculators.shipping_methods }
         it_should_behave_like "working preferences set"
       end
 
-      context '.calculators.tax_rates' do
+      context ".calculators.tax_rates" do
         subject(:preferences_set) { calculators.tax_rates }
         it_should_behave_like "working preferences set"
       end
     end
 
-    context '.promotions' do
+    context ".promotions" do
       around do |example|
         Spree.deprecator.silence do
           example.run
@@ -174,17 +174,17 @@ RSpec.describe Spree::AppConfiguration do
 
       it { is_expected.to be_a Spree::Core::Environment::Promotions }
 
-      context '.promotions.rules' do
+      context ".promotions.rules" do
         subject(:preferences_set) { promotions.rules }
         it_should_behave_like "working preferences set"
       end
 
-      context '.promotions.actions' do
+      context ".promotions.actions" do
         subject(:preferences_set) { promotions.actions }
         it_should_behave_like "working preferences set"
       end
 
-      context '.promotions.shipping_actions' do
+      context ".promotions.shipping_actions" do
         subject(:preferences_set) { promotions.shipping_actions }
         it_should_behave_like "working preferences set"
       end
@@ -217,26 +217,26 @@ RSpec.describe Spree::AppConfiguration do
     it { is_expected.to be_empty }
   end
 
-  it 'has a default admin VAT location with nil values by default' do
+  it "has a default admin VAT location with nil values by default" do
     expect(prefs.admin_vat_location).to eq(Spree::Tax::TaxLocation.new)
     expect(prefs.admin_vat_location.state_id).to eq(nil)
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
 
-  describe '@meta_data_max_keys' do
-    it 'is 6 by default' do
+  describe "@meta_data_max_keys" do
+    it "is 6 by default" do
       expect(prefs[:meta_data_max_keys]).to eq(6)
     end
   end
 
-  describe '@meta_data_max_key_length' do
-    it 'is 16 by default' do
+  describe "@meta_data_max_key_length" do
+    it "is 16 by default" do
       expect(prefs[:meta_data_max_key_length]).to eq(16)
     end
   end
 
-  describe '@meta_data_max_value_length' do
-    it 'is 256 by default' do
+  describe "@meta_data_max_value_length" do
+    it "is 256 by default" do
       expect(prefs[:meta_data_max_value_length]).to eq(256)
     end
   end

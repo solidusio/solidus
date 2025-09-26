@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::TaxonsHelper, type: :helper do
-  let(:currency) { 'USD' }
+  let(:currency) { "USD" }
   let(:pricing_options) do
     Spree::Config.pricing_options_class.new(currency:)
   end
@@ -33,7 +33,7 @@ RSpec.describe Spree::TaxonsHelper, type: :helper do
     end
 
     context "with different currency" do
-      let(:currency) { 'CAD' }
+      let(:currency) { "CAD" }
 
       it "returns no products" do
         expect(helper.taxon_preview(taxon)).to be_empty

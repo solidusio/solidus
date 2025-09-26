@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe OrderUpdater, type: :model do
@@ -15,7 +15,7 @@ module Spree
         end
       end
 
-      context 'with order promotion followed by line item addition' do
+      context "with order promotion followed by line item addition" do
         let(:promotion) { Spree::Promotion.create!(name: "10% off") }
         let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
@@ -50,14 +50,14 @@ module Spree
       end
     end
 
-    describe 'updating in-memory items' do
+    describe "updating in-memory items" do
       let(:order) do
         create(:order_with_line_items, line_items_count: 1, line_items_price: 10)
       end
       let(:line_item) { order.line_items.first }
       let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 1) }
 
-      it 'updates in-memory items' do
+      it "updates in-memory items" do
         promotion.activate(order:)
 
         expect(line_item.promo_total).to eq(0)

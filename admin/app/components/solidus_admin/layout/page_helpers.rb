@@ -8,7 +8,7 @@ module SolidusAdmin::Layout::PageHelpers
 
   def page_header_actions(&block)
     tag.div(safe_join([
-      capture(&block),
+      capture(&block)
     ]), class: "flex gap-2 items-center")
   end
 
@@ -19,7 +19,7 @@ module SolidusAdmin::Layout::PageHelpers
   def page_header_title(title, &block)
     tag.h1(safe_join([
       tag.span(title, class: "font-semibold text-xl"),
-      (capture(&block) if block_given?) || "",
+      (capture(&block) if block) || ""
     ]), class: "flex-1 text-2xl font-bold")
   end
 

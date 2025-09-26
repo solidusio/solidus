@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Promotion::Rules::User, type: :model do
   let(:rule) { Spree::Promotion::Rules::User.new }

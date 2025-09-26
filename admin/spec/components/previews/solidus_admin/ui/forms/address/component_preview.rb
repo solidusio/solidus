@@ -6,12 +6,12 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
 
   # @param fieldset [Symbol] select { choices: [contact, location] }
   def overview(fieldset: :contact)
-    render_with_template(locals: { addressable: fake_address, fieldset: })
+    render_with_template(locals: {addressable: fake_address, fieldset:})
   end
 
   # @param fieldset [Symbol] select { choices: [contact, location] }
   def with_extended_fields(fieldset: :contact)
-    render_with_template(locals: { addressable: fake_address, fieldset: })
+    render_with_template(locals: {addressable: fake_address, fieldset:})
   end
 
   def with_custom_fieldset
@@ -21,7 +21,7 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
       end
     end.new
 
-    render_with_template(locals: { addressable: })
+    render_with_template(locals: {addressable:})
   end
 
   # @param disabled toggle
@@ -33,7 +33,7 @@ class SolidusAdmin::UI::Forms::Address::ComponentPreview < ViewComponent::Previe
       addressable: fake_address,
       disabled:,
       fieldset:,
-      excludes: excludes.present? ? excludes.split(",") : [],
+      excludes: excludes.present? ? excludes.split(",") : []
     )
   end
 

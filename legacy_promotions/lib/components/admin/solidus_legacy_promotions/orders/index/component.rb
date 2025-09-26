@@ -4,11 +4,11 @@ class SolidusLegacyPromotions::Orders::Index::Component < SolidusAdmin::Orders::
   def filters
     super + [
       {
-        label: t('.filters.promotions'),
-        combinator: 'or',
+        label: t(".filters.promotions"),
+        combinator: "or",
         attribute: "promotions_id",
         predicate: "in",
-        options: Spree::Promotion.all.pluck(:name, :id),
+        options: Spree::Promotion.all.pluck(:name, :id)
       }
     ]
   end

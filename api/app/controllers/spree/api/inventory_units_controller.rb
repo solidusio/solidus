@@ -16,7 +16,7 @@ module Spree
         inventory_unit.transaction do
           if inventory_unit.update(inventory_unit_params)
             fire
-            render :show, status: 200
+            render :show, status: :ok
           else
             invalid_resource!(inventory_unit)
           end
@@ -30,20 +30,19 @@ module Spree
       end
 
       def prepare_event
-        return unless @event = params[:fire]
+        @event = params[:fire]
+        return unless @event
 
         can_event = "can_#{@event}?"
 
-        unless inventory_unit.respond_to?(can_event) &&
-               inventory_unit.send(can_event)
-          render json: { exception: "cannot transition to #{@event}" },
-                 status: 200
+        unless inventory_unit.respond_to?(can_event) && inventory_unit.send(can_event)
+          render json: {exception: "cannot transition to #{@event}"}, status: :ok
           false
         end
       end
 
       def fire
-        inventory_unit.send("#{@event}!") if @event
+        inventory_unit.send(:"#{@event}!") if @event
       end
 
       def inventory_unit_params

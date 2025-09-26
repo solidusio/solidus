@@ -18,7 +18,7 @@ module SolidusPromotions
 
       MATCH_POLICIES = %w[any all none].freeze
 
-      validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
+      validates :preferred_match_policy, inclusion: {in: MATCH_POLICIES}
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
@@ -87,8 +87,8 @@ module SolidusPromotions
       # All taxons in an order
       def taxons_in_order(order)
         Spree::Taxon
-          .joins(products: { variants_including_master: :line_items })
-          .where(spree_line_items: { order_id: order.id })
+          .joins(products: {variants_including_master: :line_items})
+          .where(spree_line_items: {order_id: order.id})
           .distinct
       end
 

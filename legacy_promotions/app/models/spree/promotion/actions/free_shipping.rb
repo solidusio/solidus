@@ -27,7 +27,7 @@ module Spree
         end
 
         def label
-          "#{I18n.t('spree.promotion')} (#{promotion.name})"
+          "#{I18n.t("spree.promotion")} (#{promotion.name})"
         end
 
         def compute_amount(shipment)

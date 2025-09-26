@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::TaxCategory, type: :model do
-  context 'default tax category' do
+  context "default tax category" do
     let(:tax_category) { create(:tax_category) }
     let(:new_tax_category) { create(:tax_category) }
 
@@ -12,7 +12,7 @@ RSpec.describe Spree::TaxCategory, type: :model do
     end
 
     it "should undefault the previous default tax category" do
-      new_tax_category.update({ is_default: true })
+      new_tax_category.update({is_default: true})
       expect(new_tax_category.is_default).to be true
 
       tax_category.reload
@@ -39,7 +39,7 @@ RSpec.describe Spree::TaxCategory, type: :model do
       let(:tax_rate) { create(:tax_rate) }
       let(:tax_category) { tax_rate.tax_categories.first }
 
-      it 'correctly discard association records' do
+      it "correctly discard association records" do
         expect { tax_category.discard }
           .to change { tax_category.tax_rates.size }
           .from(1)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -25,7 +25,7 @@ module Spree
 
         let(:desired) { Spree::StockQuantities.new(desired_quantities) }
 
-        describe '#allocate_inventory' do
+        describe "#allocate_inventory" do
           let(:default_on_hand_availability) do
             quantities = {}
             quantities[first_variant] = first_variant_default_availability
@@ -68,7 +68,7 @@ module Spree
               .and_return(backorderable_by_stock_location_id)
           end
 
-          context 'when default stock location has enough items' do
+          context "when default stock location has enough items" do
             let(:first_variant_default_availability) { 100 }
             let(:second_variant_default_availability) { 100 }
             let(:first_variant_dropship_availability) { 0 }
@@ -76,7 +76,7 @@ module Spree
             let(:first_variant_desired) { 30 }
             let(:second_variant_desired) { 5 }
 
-            it 'allocates all the desired units on the default stock location' do
+            it "allocates all the desired units on the default stock location" do
               on_hand_packages, backordered_packages, leftover = subject.allocate_inventory(desired)
 
               expect(on_hand_packages[default_stock_location.id][first_variant]).to eq(30)
@@ -92,18 +92,18 @@ module Spree
             end
           end
 
-          context 'when default stock location hasn\'t enough items' do
+          context "when default stock location hasn't enough items" do
             let(:first_variant_default_availability) { 10 }
             let(:second_variant_default_availability) { 10 }
 
             let(:first_variant_desired) { 15 }
             let(:second_variant_desired) { 5 }
 
-            context 'when dropship stock location has enough items' do
+            context "when dropship stock location has enough items" do
               let(:first_variant_dropship_availability) { 20 }
               let(:second_variant_dropship_availability) { 0 }
 
-              it 'allocates all the desired units on the stock locations while stocks last' do
+              it "allocates all the desired units on the stock locations while stocks last" do
                 on_hand_packages, backordered_packages, leftover = subject.allocate_inventory(desired)
 
                 expect(on_hand_packages[default_stock_location.id][first_variant]).to eq(10)
@@ -119,11 +119,11 @@ module Spree
               end
             end
 
-            context 'when dropship stock location hasn\'t enough items' do
+            context "when dropship stock location hasn't enough items" do
               let(:first_variant_dropship_availability) { 2 }
               let(:second_variant_dropship_availability) { 0 }
 
-              it 'allocates all the desired units on the stock locations while stocks last' do
+              it "allocates all the desired units on the stock locations while stocks last" do
                 on_hand_packages, backordered_packages, leftover = subject.allocate_inventory(desired)
 
                 expect(on_hand_packages[default_stock_location.id][first_variant]).to eq(10)

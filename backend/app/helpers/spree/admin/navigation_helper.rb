@@ -19,9 +19,9 @@ module Spree
           admin_breadcrumb(content_for(:page_title))
         end
 
-        content_tag :ol, class: 'breadcrumb' do
+        content_tag :ol, class: "breadcrumb" do
           segments = admin_breadcrumbs.map do |level|
-            content_tag(:li, level, class: "breadcrumb-item #{level == admin_breadcrumbs.last ? 'active' : ''}")
+            content_tag(:li, level, class: "breadcrumb-item #{"active" if level == admin_breadcrumbs.last}")
           end
           safe_join(segments)
         end
@@ -33,9 +33,9 @@ module Spree
         elsif content_for?(:page_title)
           content_for(:page_title)
         elsif admin_breadcrumbs.any?
-          admin_breadcrumbs.map { |breadcrumb| strip_tags(breadcrumb) }.reverse.join(' - ')
+          admin_breadcrumbs.map { |breadcrumb| strip_tags(breadcrumb) }.reverse.join(" - ")
         else
-          t(controller.controller_name, default: controller.controller_name.titleize, scope: 'spree')
+          t(controller.controller_name, default: controller.controller_name.titleize, scope: "spree")
         end
       end
 
@@ -75,76 +75,76 @@ module Spree
             request.fullpath.starts_with?(options[:url])
           end
 
-        css_classes << 'selected' if options[:selected]
+        css_classes << "selected" if options[:selected]
 
         if options[:icon]
           link = link_to_with_icon(options[:icon], label, options[:url])
-          css_classes << 'tab-with-icon'
+          css_classes << "tab-with-icon"
         else
           link = link_to(label, options[:url])
         end
         block_content = capture(&block) if block_given?
-        content_tag('li', link + block_content.to_s, class: css_classes.join(' ') )
+        content_tag("li", link + block_content.to_s, class: css_classes.join(" "))
       end
 
       def link_to_clone(resource, options = {})
-        options[:data] = { action: 'clone' }
+        options[:data] = {action: "clone"}
         options[:method] = :post
-        link_to_with_icon('copy', t('spree.clone'), clone_object_url(resource), options)
+        link_to_with_icon("copy", t("spree.clone"), clone_object_url(resource), options)
       end
 
       def link_to_new(resource)
-        options[:data] = { action: 'new' }
-        link_to_with_icon('plus', t('spree.new'), edit_object_url(resource))
+        options[:data] = {action: "new"}
+        link_to_with_icon("plus", t("spree.new"), edit_object_url(resource))
       end
 
       def link_to_edit(resource, options = {})
         url = options[:url] || edit_object_url(resource)
-        options[:data] = { action: 'edit' }
-        link_to_with_icon('edit', t('spree.actions.edit'), url, options)
+        options[:data] = {action: "edit"}
+        link_to_with_icon("edit", t("spree.actions.edit"), url, options)
       end
 
       def link_to_edit_url(url, options = {})
-        options[:data] = { action: 'edit' }
-        link_to_with_icon('edit', t('spree.actions.edit'), url, options)
+        options[:data] = {action: "edit"}
+        link_to_with_icon("edit", t("spree.actions.edit"), url, options)
       end
 
       def link_to_delete(resource, options = {})
         url = options[:url] || object_url(resource)
-        name = options[:name] || t('spree.actions.delete')
-        confirm = options[:confirm] || t('spree.are_you_sure')
+        name = options[:name] || t("spree.actions.delete")
+        confirm = options[:confirm] || t("spree.are_you_sure")
         options[:class] = "#{options[:class]} delete-resource".strip
-        options[:data] = { confirm:, action: 'remove' }
-        link_to_with_icon 'trash', name, url, options
+        options[:data] = {confirm:, action: "remove"}
+        link_to_with_icon "trash", name, url, options
       end
 
       def link_to_with_icon(icon_name, text, url, options = {})
         options[:class] = "#{options[:class]} icon_link with-tip".strip
 
-        if icon_name.starts_with?('ri-')
-          svg_map = image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg')
+        if icon_name.starts_with?("ri-")
+          svg_map = image_path("spree/backend/themes/solidus_admin/remixicon.symbol.svg")
           icon_tag = tag.svg(
-            tag.use('xlink:href': "#{svg_map}##{icon_name}"),
-            'aria-hidden': true,
-            style: "fill: currentColor;",
+            tag.use("xlink:href": "#{svg_map}##{icon_name}"),
+            "aria-hidden": true,
+            style: "fill: currentColor;"
           )
         else
           options[:class] << " fa fa-#{icon_name}"
-          icon_tag = ''.html_safe
+          icon_tag = "".html_safe
         end
 
-        options[:class] += ' no-text' if options[:no_text]
+        options[:class] += " no-text" if options[:no_text]
         options[:title] = text if options[:no_text]
-        text = options[:no_text] ? '' : content_tag(:span, text, class: 'text')
+        text = options[:no_text] ? "" : content_tag(:span, text, class: "text")
         options.delete(:no_text)
         link_to(icon_tag + text, url, options)
       end
 
       def solidus_icon(icon_name)
-        icon_name ? content_tag(:i, '', class: icon_name) : ''
+        icon_name ? content_tag(:i, "", class: icon_name) : ""
       end
 
-      def configurations_menu_item(link_text, url, description = '')
+      def configurations_menu_item(link_text, url, description = "")
         %(<tr>
           <td>#{link_to(link_text, url)}</td>
           <td>#{description}</td>
@@ -154,9 +154,9 @@ module Spree
 
       def configurations_sidebar_menu_item(link_text, url, options = {})
         is_active = url.ends_with?(controller.controller_name) ||
-                    url.ends_with?("#{controller.controller_name}/edit") ||
-                    url.ends_with?("#{controller.controller_name.singularize}/edit")
-        options[:class] = is_active ? 'active' : nil
+          url.ends_with?("#{controller.controller_name}/edit") ||
+          url.ends_with?("#{controller.controller_name.singularize}/edit")
+        options[:class] = is_active ? "active" : nil
         content_tag(:li, options) do
           link_to(link_text, url)
         end
@@ -164,12 +164,12 @@ module Spree
 
       def settings_tab_item(link_text, url, options = {})
         is_active = url.ends_with?(controller.controller_name) ||
-                    url.ends_with?("#{controller.controller_name}/edit") ||
-                    url.ends_with?("#{controller.controller_name.singularize}/edit")
-        options[:class] = 'fa'
-        options[:class] += ' active' if is_active
+          url.ends_with?("#{controller.controller_name}/edit") ||
+          url.ends_with?("#{controller.controller_name.singularize}/edit")
+        options[:class] = "fa"
+        options[:class] += " active" if is_active
         options[:data] ||= {}
-        options[:data][:hook] = "admin_settings_#{link_text.downcase.tr(' ', '_')}"
+        options[:data][:hook] = "admin_settings_#{link_text.downcase.tr(" ", "_")}"
         content_tag(:li, options) do
           link_to(link_text, url)
         end

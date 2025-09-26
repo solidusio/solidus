@@ -4,25 +4,25 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   FONT_SIZES = {
     s: "[&>.control]:text-xs [&_.dropdown]:text-xs",
     m: "[&>.control]:text-sm [&_.dropdown]:text-sm",
-    l: "[&>.control]:text-base [&_.dropdown]:text-base",
+    l: "[&>.control]:text-base [&_.dropdown]:text-base"
   }.freeze
 
   HEIGHTS = {
     control: {
       s: "[&>.control]:min-h-7",
       m: "[&>.control]:min-h-9",
-      l: "[&>.control]:min-h-12",
+      l: "[&>.control]:min-h-12"
     },
     option: {
       s: "[&_.option]:h-7",
       m: "[&_.option]:h-9",
-      l: "[&_.option]:h-12",
+      l: "[&_.option]:h-12"
     },
     item: {
       s: "[&_.item]:h-5",
       m: "[&_.item]:h-5.5",
-      l: "[&_.item]:h-8",
-    },
+      l: "[&_.item]:h-8"
+    }
   }.freeze
 
   # Render custom select component, which uses "solidus_select" custom element

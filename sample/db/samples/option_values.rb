@@ -53,5 +53,5 @@ Spree::OptionValue.create!([
     presentation: "Red",
     position: 4,
     option_type: color
-  },
+  }
 ])

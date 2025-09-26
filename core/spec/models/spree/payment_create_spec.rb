@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe PaymentCreate do
@@ -11,8 +11,8 @@ module Spree
     let(:payment_method) { create(:payment_method) }
     let(:new_payment) { payment_create.build }
 
-    context 'empty attributes' do
-      let(:attributes){ {} }
+    context "empty attributes" do
+      let(:attributes) { {} }
       it "builds a new empty payment" do
         expect(new_payment).to be_a Spree::Payment
         expect(new_payment.order).to eq order
@@ -24,16 +24,16 @@ module Spree
       end
     end
 
-    context 'with a new source' do
+    context "with a new source" do
       let(:attributes) do
         {
           amount: 100,
           payment_method:,
           source_attributes: {
             expiry: "01 / 99",
-            number: '1234567890123',
-            verification_value: '123',
-            name: 'Foo Bar'
+            number: "1234567890123",
+            verification_value: "123",
+            name: "Foo Bar"
           }
         }
       end
@@ -56,7 +56,7 @@ module Spree
           {
             amount: 100,
             payment_method:,
-            source_attributes: { expiry: "1 / 12" }
+            source_attributes: {expiry: "1 / 12"}
           }
         end
         it "errors when payment source not valid" do
@@ -77,9 +77,9 @@ module Spree
           payment_method:,
           source_attributes: {
             expiry: "01 / 99",
-            number: '1234567890123',
-            verification_value: '123',
-            name: 'Foo Bar'
+            number: "1234567890123",
+            verification_value: "123",
+            name: "Foo Bar"
           }
         }
       end

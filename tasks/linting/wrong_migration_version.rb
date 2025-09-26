@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../core/lib/spree/core/version'
+require_relative "../../core/lib/spree/core/version"
 
 module Solidus
   class WrongMigrationVersion < RuboCop::Cop::Base

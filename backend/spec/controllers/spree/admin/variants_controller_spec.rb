@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree
   module Admin
@@ -9,7 +9,7 @@ module Spree
 
       describe "#index" do
         let(:product) { create(:product) }
-        let(:params) { { product_id: product.slug } }
+        let(:params) { {product_id: product.slug} }
 
         subject { get :index, params: }
 
@@ -45,7 +45,7 @@ module Spree
             end
 
             context "when deleted is requested" do
-              let(:params) { { product_id: product.slug, deleted: "on" } }
+              let(:params) { {product_id: product.slug, deleted: "on"} }
 
               it "includes deleted variants" do
                 subject
@@ -54,7 +54,7 @@ module Spree
               end
             end
             context "existent product id not given" do
-              let(:params) { { product_id: 'non-existent-product' } }
+              let(:params) { {product_id: "non-existent-product"} }
 
               it "cannot find non-existent product" do
                 subject
@@ -71,7 +71,7 @@ module Spree
         let(:product) { variant.product }
 
         it "can be deleted" do
-          delete :destroy, params: { product_id: product.to_param, id: variant.to_param }
+          delete :destroy, params: {product_id: product.to_param, id: variant.to_param}
           expect(variant.reload).to be_discarded
         end
       end

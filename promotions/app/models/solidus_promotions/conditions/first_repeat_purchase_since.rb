@@ -6,7 +6,7 @@ module SolidusPromotions
       include OrderLevelCondition
 
       preference :days_ago, :integer, default: 365
-      validates :preferred_days_ago, numericality: { only_integer: true, greater_than: 0 }
+      validates :preferred_days_ago, numericality: {only_integer: true, greater_than: 0}
 
       # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
       #
