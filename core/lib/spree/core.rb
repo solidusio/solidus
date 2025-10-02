@@ -30,6 +30,7 @@ module Spree
   autoload :Deprecation, 'spree/deprecation'
 
   mattr_accessor :user_class, default: 'Spree::LegacyUser'
+  mattr_accessor :admin_user_class, default: nil
 
   def self.user_class
     if @@user_class.is_a?(Class)
@@ -41,6 +42,22 @@ module Spree
 
   def self.user_class_name
     @@user_class
+  end
+
+  # The class used for admin/backoffice users.
+  # Falls back to `Spree.user_class` for backwards compatibility.
+  def self.admin_user_class
+    return user_class if @@admin_user_class.nil?
+
+    if @@admin_user_class.is_a?(Class)
+      raise "Spree.admin_user_class MUST be a String or Symbol object, not a Class object."
+    elsif @@admin_user_class.is_a?(String) || @@admin_user_class.is_a?(Symbol)
+      @@admin_user_class.to_s.constantize
+    end
+  end
+
+  def self.admin_user_class_name
+    @@admin_user_class || @@user_class
   end
 
   # Load the same version defaults for all available Solidus components
