@@ -136,7 +136,7 @@ module SolidusAdmin
     end
 
     def set_user
-      @user = Spree.user_class.find(params[:user_id])
+      @user = Spree.admin_user_class.find(params[:user_id])
     end
 
     def set_store_credit_reasons

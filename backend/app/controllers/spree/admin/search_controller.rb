@@ -11,9 +11,9 @@ module Spree
       def users
         @users = if params[:ids]
           # split here may be String#split or Array#split, so we must flatten the results
-          Spree.user_class.where(id: params[:ids].split(",").flatten)
+          Spree.admin_user_class.where(id: params[:ids].split(",").flatten)
         else
-          Spree.user_class.ransack({
+          Spree.admin_user_class.ransack({
             m: "or",
             email_start: params[:q],
             name_start: params[:q]
