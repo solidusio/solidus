@@ -3,6 +3,14 @@
 ENV['RAILS_ENV'] = 'test'
 ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = '1'
 
+# Ensure sqlite3 v2 is supported when running with the default sqlite adapter.
+# The `fast_sqlite` gem relaxes ActiveRecord's sqlite3 version constraints.
+begin
+  require 'fast_sqlite'
+rescue LoadError
+  # Gem not available, skip.
+end
+
 require 'rails'
 require 'active_record/railtie'
 require 'action_controller/railtie'
@@ -106,7 +114,10 @@ module DummyApp
 
     # Set the preview path within the dummy app:
     if ActionMailer::Base.respond_to? :preview_paths # Rails 7.1+
-      config.action_mailer.preview_paths << File.expand_path('dummy_app/mailer_previews', __dir__)
+      # Some Rails versions return a frozen array here; assign a new array
+      # to avoid FrozenError when augmenting the paths.
+      existing = Array(config.action_mailer.preview_paths)
+      config.action_mailer.preview_paths = existing + [File.expand_path('dummy_app/mailer_previews', __dir__)]
     else
       config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
     end
