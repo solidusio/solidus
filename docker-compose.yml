@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   mysql:
@@ -18,12 +18,12 @@ services:
       - postgres:/var/lib/postgresql/data:cached
 
   app:
-    shm_size: '512mb'
+    shm_size: "512mb"
     build:
       context: .dockerdev
       dockerfile: Dockerfile
       args:
-        RUBY_VERSION: "3.1"
+        RUBY_VERSION: "3.4.6"
         PG_VERSION: 13
         NODE_VERSION: 20
         MYSQL_VERSION: "8.0"
