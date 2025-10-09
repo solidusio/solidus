@@ -345,7 +345,7 @@ module Spree
 
     context "updating payment state" do
       let(:order) { create(:order) }
-      let(:updater) { order.recalculator }
+      let(:updater) { described_class.new(order) }
       before { allow(order).to receive(:refund_total).and_return(0) }
 
       it "logs a state change for the payment" do
