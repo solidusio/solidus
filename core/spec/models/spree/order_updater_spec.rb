@@ -223,7 +223,7 @@ module Spree
       it "logs a state change for the shipment" do
         create :shipment, order:, state: "pending"
 
-        expect { updater.update_shipment_state }
+        expect { updater.recalculate_shipment_state }
           .to enqueue_job(Spree::StateChangeTrackingJob)
           .with(order, nil, "pending", a_kind_of(Time), "shipment")
           .once
@@ -263,13 +263,13 @@ module Spree
 
     context "updating payment state" do
       let(:order) { create(:order) }
-      let(:updater) { order.recalculator }
+      let(:updater) { described_class.new(order) }
       before { allow(order).to receive(:refund_total).and_return(0) }
 
       it "logs a state change for the payment" do
         create :payment, order:, state: "processing"
 
-        expect { updater.update_payment_state }
+        expect { updater.recalculate_payment_state }
           .to enqueue_job(Spree::StateChangeTrackingJob)
           .with(order, nil, "paid", a_kind_of(Time), "payment")
           .once
