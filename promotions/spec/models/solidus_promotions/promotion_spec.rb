@@ -147,6 +147,49 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
   end
 
+  describe ".with_coupon_code" do
+    context "when coupon code is case-insensitive (default)" do
+      let!(:promotion) { create(:solidus_promotion, code: "10Off") }
+
+      it "finds promotion with case-insensitive match" do
+        expect(described_class.with_coupon_code("10off")).to eq(promotion)
+        expect(described_class.with_coupon_code("10OFF")).to eq(promotion)
+        expect(described_class.with_coupon_code("10OfF")).to eq(promotion)
+      end
+
+      it "normalizes the promotion code to lowercase on creation" do
+        expect(promotion.codes.first.value).to eq("10off")
+      end
+    end
+
+    context "when coupon code is case-sensitive" do
+      before do
+        stub_const("CaseSensitiveNormalizer", Class.new do
+          def self.call(value)
+            value&.strip
+          end
+        end)
+
+        stub_spree_preferences(
+          SolidusPromotions.configuration,
+          coupon_code_normalizer_class: CaseSensitiveNormalizer
+        )
+      end
+
+      let!(:promotion) { create(:solidus_promotion, code: "10Off") }
+
+      it "requires exact case match" do
+        expect(described_class.with_coupon_code("10Off")).to eq(promotion)
+        expect(described_class.with_coupon_code("10OFF")).to be_nil
+        expect(described_class.with_coupon_code("10off")).to be_nil
+      end
+
+      it "preserves the original case on creation" do
+        expect(promotion.codes.first.value).to eq("10Off")
+      end
+    end
+  end
+
   describe ".active" do
     subject { described_class.active }
 

@@ -36,6 +36,14 @@ module SolidusPromotions
       !line_item.managed_by_order_benefit
     end
 
+    def coupon_code=(code)
+      @coupon_code = begin
+                       SolidusPromotions.config.coupon_code_normalizer_class.call(code)
+      rescue StandardError
+                       nil
+      end
+    end
+
     Spree::Order.singleton_class.prepend self::ClassMethods
     Spree::Order.prepend self
   end

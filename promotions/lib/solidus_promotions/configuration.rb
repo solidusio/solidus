@@ -10,6 +10,12 @@ module SolidusPromotions
 
     class_name_attribute :coupon_code_handler_class, default: "SolidusPromotions::PromotionHandler::Coupon"
 
+    # The class used to normalize coupon codes before saving or lookup.
+    # @!attribute [rw] coupon_code_normalizer_class
+    #   @return [String] The class used to normalize coupon codes.
+    #   Defaults to "SolidusPromotions::CouponCodeNormalizer".
+    class_name_attribute :coupon_code_normalizer_class, default: "SolidusPromotions::CouponCodeNormalizer"
+
     class_name_attribute :promotion_finder_class, default: "SolidusPromotions::PromotionFinder"
 
     # Allows providing a different promotion advertiser.
@@ -105,7 +111,6 @@ module SolidusPromotions
     preference :sync_order_promotions, :boolean, default: false
 
     preference :use_new_admin, :boolean, default: false
-
     def use_new_admin?
       SolidusSupport.admin_available? && preferred_use_new_admin
     end
