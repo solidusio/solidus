@@ -46,7 +46,9 @@ module SolidusPromotions
 
     def self.with_coupon_code(val)
       joins(:codes).where(
-        SolidusPromotions::PromotionCode.arel_table[:value].eq(val.downcase)
+        SolidusPromotions::PromotionCode.arel_table[:value].eq(
+          SolidusPromotions.config.coupon_code_normalizer_class.call(val)
+        )
       ).first
     end
 

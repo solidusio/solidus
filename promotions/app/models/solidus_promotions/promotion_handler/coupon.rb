@@ -9,7 +9,7 @@ module SolidusPromotions
       def initialize(order)
         @order = order
         @errors = []
-        @coupon_code = order&.coupon_code&.downcase
+        @coupon_code = SolidusPromotions.config.coupon_code_normalizer_class.call(order&.coupon_code)
       end
 
       def apply
