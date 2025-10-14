@@ -90,6 +90,7 @@ module SolidusPromotions
         end
 
         def discountable_amount
+          return Spree::ZERO if @line_item.quantity.zero?
           @line_item.discountable_amount / @line_item.quantity.to_d
         end
         alias_method :amount, :discountable_amount
