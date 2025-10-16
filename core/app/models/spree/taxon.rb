@@ -169,7 +169,7 @@ module Spree
       taxon_ids = touched_taxon_ids.to_a
       return if taxon_ids.blank?
 
-      # Enqueue async job to touch this taxon + ancestors + taxonomy
+      # Enqueue async job to touch this this taxon's taxonomy + ancestors
       # This prevents deadlocks from concurrent taxon touches
       TouchTaxonsJob.perform_later(taxon_ids)
 
