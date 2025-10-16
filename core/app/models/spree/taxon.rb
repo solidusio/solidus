@@ -141,10 +141,9 @@ module Spree
     private
 
     def touch_ancestors_and_taxonomy
-      # Touches all ancestors at once to avoid recursive taxonomy touch, and reduce queries.
-      self.class.default_scoped.where(id: ancestors.pluck(:id)).update_all(updated_at: Time.current)
-      # Have taxonomy touch happen in #touch_ancestors_and_taxonomy rather than association option in order for imports to override.
-      taxonomy.try!(:touch)
+      # Enqueue async job to touch this taxon + ancestors + taxonomy
+      # This prevents deadlocks from concurrent taxon touches
+      TouchTaxonsJob.perform_later([id])
     end
   end
 end

@@ -293,4 +293,43 @@ RSpec.describe Spree::Taxon, type: :model do
       expect(taxon.slugs.pluck(:slug)).to include(expected_updated_slug)
     end
   end
+
+  context 'async touch behavior' do
+    let!(:taxonomy) { create(:taxonomy) }
+    let!(:root_taxon) { create(:taxon, taxonomy: taxonomy) }
+    let!(:child_taxon) { create(:taxon, parent: root_taxon, taxonomy: taxonomy) }
+
+    describe 'after save/touch callbacks' do
+      before { clear_enqueued_jobs }
+
+      it 'enqueues TouchTaxonsJob when taxon is saved' do
+        taxon = build(:taxon, taxonomy: taxonomy, name: 'New Taxon')
+
+        expect {
+          taxon.save!
+        }.to have_enqueued_job(Spree::TouchTaxonsJob).exactly(1).times
+      end
+
+      it 'enqueues TouchTaxonsJob when taxon is touched' do
+        expect {
+          root_taxon.touch
+        }.to have_enqueued_job(Spree::TouchTaxonsJob).with([root_taxon.id])
+      end
+
+      it 'enqueues separate jobs for each touch' do
+        expect {
+          root_taxon.touch
+          child_taxon.touch
+        }.to have_enqueued_job(Spree::TouchTaxonsJob).exactly(2).times
+      end
+    end
+
+    describe '#touch_ancestors_and_taxonomy' do
+      it 'enqueues job with taxon ID' do
+        expect {
+          root_taxon.send(:touch_ancestors_and_taxonomy)
+        }.to have_enqueued_job(Spree::TouchTaxonsJob).with([root_taxon.id])
+      end
+    end
+  end
 end
