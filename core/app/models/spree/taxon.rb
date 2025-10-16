@@ -28,7 +28,7 @@ module Spree
     # 2. After transaction commits, enqueue single job with all batched IDs
     # 3. Job updates taxon + ancestors + taxonomy in 3 constant-time queries
     # 4. Thread-local storage is cleared after the transaction commits
-    after_save :touch_ancestors_and_taxonomy, if: :saved_changes?
+    after_save :touch_ancestors_and_taxonomy
     after_touch :touch_ancestors_and_taxonomy
     after_commit :enqueue_batched_touch, if: :should_enqueue_touch?
 
