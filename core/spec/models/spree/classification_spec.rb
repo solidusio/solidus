@@ -118,9 +118,11 @@ module Spree
       taxon = taxon_with_5_products
       classification = taxon.classifications.first
       taxon.update_columns(updated_at: 1.day.ago)
-      expect {
-        classification.touch
-      }.to change { taxon.reload.updated_at }
+
+      classification.touch
+      perform_enqueued_jobs
+
+      expect(taxon.reload.updated_at).to be > 1.day.ago
     end
   end
 end

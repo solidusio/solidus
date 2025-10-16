@@ -316,7 +316,18 @@ RSpec.describe Spree::Taxon, type: :model do
         }.to have_enqueued_job(Spree::TouchTaxonsJob).with([root_taxon.id])
       end
 
-      it 'enqueues separate jobs for each touch' do
+      it 'batches multiple taxon touches in single transaction' do
+        expect {
+          Spree::Taxon.transaction do
+            root_taxon.touch
+            child_taxon.touch
+          end
+        }.to have_enqueued_job(Spree::TouchTaxonsJob).with(
+          array_including(root_taxon.id, child_taxon.id)
+        ).exactly(1).times
+      end
+
+      it 'enqueues separate jobs for separate transactions' do
         expect {
           root_taxon.touch
           child_taxon.touch
@@ -325,10 +336,50 @@ RSpec.describe Spree::Taxon, type: :model do
     end
 
     describe '#touch_ancestors_and_taxonomy' do
-      it 'enqueues job with taxon ID' do
-        expect {
+      it 'tracks taxon ID in thread-local storage' do
+        Thread.current[:solidus_touched_taxon_ids] = Set.new
+
+        root_taxon.send(:touch_ancestors_and_taxonomy)
+
+        expect(Thread.current[:solidus_touched_taxon_ids]).to include(root_taxon.id)
+      end
+
+      it 'does not immediately update database timestamps' do
+        Thread.current[:solidus_touched_taxon_ids] = Set.new
+
+        original_updated_at = child_taxon.updated_at
+
+        child_taxon.send(:touch_ancestors_and_taxonomy)
+
+        expect(child_taxon.reload.updated_at).to eq(original_updated_at)
+        expect(Thread.current[:solidus_touched_taxon_ids]).to include(child_taxon.id)
+      end
+    end
+
+    describe 'thread safety' do
+      it 'isolates touched taxons per thread' do
+        thread1_ids = Set.new
+        thread2_ids = Set.new
+
+        thread1 = Thread.new do
+          Thread.current[:solidus_touched_taxon_ids] = Set.new
           root_taxon.send(:touch_ancestors_and_taxonomy)
-        }.to have_enqueued_job(Spree::TouchTaxonsJob).with([root_taxon.id])
+          thread1_ids.merge(Thread.current[:solidus_touched_taxon_ids])
+        end
+
+        thread2 = Thread.new do
+          Thread.current[:solidus_touched_taxon_ids] = Set.new
+          child_taxon.send(:touch_ancestors_and_taxonomy)
+          thread2_ids.merge(Thread.current[:solidus_touched_taxon_ids])
+        end
+
+        thread1.join
+        thread2.join
+
+        expect(thread1_ids).to include(root_taxon.id)
+        expect(thread1_ids).not_to include(child_taxon.id)
+        expect(thread2_ids).to include(child_taxon.id)
+        expect(thread2_ids).not_to include(root_taxon.id)
       end
     end
   end

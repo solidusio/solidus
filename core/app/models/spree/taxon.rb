@@ -23,8 +23,14 @@ module Spree
     validates :meta_title, length: { maximum: 255 }
     validates :taxonomy_id, uniqueness: { scope: :parent_id, message: :can_have_only_one_root }, if: -> { root? }
 
-    after_save :touch_ancestors_and_taxonomy
+    # Async touch strategy to prevent deadlocks and optimize bulk operations:
+    # 1. Track touched taxon IDs in thread-local storage during transaction
+    # 2. After transaction commits, enqueue single job with all batched IDs
+    # 3. Job updates taxon + ancestors + taxonomy in 3 constant-time queries
+    # 4. Thread-local storage is cleared after the transaction commits
+    after_save :touch_ancestors_and_taxonomy, if: :saved_changes?
     after_touch :touch_ancestors_and_taxonomy
+    after_commit :enqueue_batched_touch, if: :should_enqueue_touch?
 
     include ::Spree::Config.taxon_attachment_module
 
@@ -141,9 +147,34 @@ module Spree
     private
 
     def touch_ancestors_and_taxonomy
+      # Track this taxon for batched async processing
+      # All taxons touched in the same transaction will be batched into one job
+      touched_taxon_ids << id
+    end
+
+    # Thread-local storage for batching touched taxons within a transaction
+    # Fills up via touch_ancestors_and_taxonomy during the transaction,
+    # empties when the transaction commits via the enqueue_batched_touch callback
+    def touched_taxon_ids
+      # Thread-local storage for batching touched taxons within a transaction
+      Thread.current[:solidus_touched_taxon_ids] ||= Set.new
+    end
+
+    def should_enqueue_touch?
+      touched_taxon_ids.any?
+    end
+
+    def enqueue_batched_touch
+      # Get all taxon IDs touched in this transaction
+      taxon_ids = touched_taxon_ids.to_a
+      return if taxon_ids.blank?
+
       # Enqueue async job to touch this taxon + ancestors + taxonomy
       # This prevents deadlocks from concurrent taxon touches
-      TouchTaxonsJob.perform_later([id])
+      TouchTaxonsJob.perform_later(taxon_ids)
+
+      # Clear storage for next transaction
+      Thread.current[:solidus_touched_taxon_ids] = Set.new
     end
   end
 end
