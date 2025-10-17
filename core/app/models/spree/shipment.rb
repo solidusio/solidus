@@ -9,7 +9,7 @@ module Spree
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments, optional: true
     belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
 
-    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
+    has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all, autosave: true
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_rates, -> { order(:cost) }, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_methods, through: :shipping_rates
