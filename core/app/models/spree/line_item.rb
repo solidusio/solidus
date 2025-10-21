@@ -99,7 +99,7 @@ module Spree
     # @return [Boolean] true when it is possible to supply the required
     #   quantity of stock of this line item's variant
     def sufficient_stock?
-      Stock::Quantifier.new(variant).can_supply? quantity
+      Spree::Config.stock.quantifier_class.new(variant).can_supply? quantity
     end
 
     # @return [Boolean] true when it is not possible to supply the required
