@@ -72,14 +72,14 @@ module Spree
         let(:tax_category) { create(:tax_category) }
         let(:ship_address) { create(:address, state: new_york) }
         let(:new_york) { create(:state, state_code: "NY") }
-        let(:tax_zone) { create(:zone, states: [new_york]) }
+        let(:new_york_tax_zone) { create(:zone, states: [new_york]) }
 
-        let!(:tax_rate) do
+        let!(:new_york_tax_rate) do
           create(
             :tax_rate,
             name: "New York Sales Tax",
             tax_categories: [tax_category],
-            zone: tax_zone,
+            zone: new_york_tax_zone,
             included_in_price: false,
             amount: 0.1
           )
@@ -111,21 +111,66 @@ module Spree
         end
 
         context 'when the address has changed to a different state' do
-          let(:new_shipping_address) { create(:address) }
+          let(:oregon) { create(:state, state_code: "OR") }
+          let(:oregon_tax_zone) { create(:zone, states: [oregon]) }
+          let!(:oregon_tax_rate) do
+            create(
+              :tax_rate,
+              name: "Oregon Sales Tax",
+              tax_categories: [tax_category],
+              zone: oregon_tax_zone,
+              included_in_price: false,
+              amount: 0.2
+            )
+          end
+          let(:new_address) { create(:address, state: oregon) }
+          let(:shipping_method) { create(:shipping_method, tax_category:, zones: [oregon_tax_zone, new_york_tax_zone], cost: 10) }
+          let(:shipping_rate) do
+            create(:shipping_rate, cost: 10, shipping_method: shipping_method)
+          end
+          let(:shipment) { order.shipments[0] }
 
-          before do
-            order.ship_address = new_shipping_address
+          subject do
+            order.ship_address = new_address
+            order.bill_address = new_address
+
+            order.recalculate
           end
 
-          it 'removes the old taxes' do
-            expect {
-              order.recalculate
-            }.to change {
-              order.all_adjustments.tax.count
-            }.from(1).to(0)
+          before do
+            shipment.shipping_rates = [shipping_rate]
+            shipment.selected_shipping_rate_id = shipping_rate.id
+            order.recalculate
+          end
 
-            expect(order.additional_tax_total).to eq 0
-            expect(order.adjustment_total).to eq 0
+          it 'updates the taxes to reflect the new state' do
+            expect {
+              subject
+            }.to change {
+              order.additional_tax_total
+            }.from(2).to(4)
+          end
+
+          it 'updates the shipment taxes to reflect the new state' do
+            expect {
+              subject
+            }.to change {
+              order.shipments.first.additional_tax_total
+            }.from(1).to(2)
+            .and change {
+              order.shipments.first.adjustments.first.amount
+            }.from(1).to(2)
+          end
+
+          it 'updates the line item taxes to reflect the new state' do
+            expect {
+              subject
+            }.to change {
+              order.line_items.first.additional_tax_total
+            }.from(1).to(2)
+            .and change {
+              order.line_items.first.adjustments.first.amount
+            }.from(1).to(2)
           end
         end
 
@@ -179,7 +224,7 @@ module Spree
                 order_taxes: [
                   Spree::Tax::ItemTax.new(
                     label: "Delivery Fee",
-                    tax_rate:,
+                    tax_rate: new_york_tax_rate,
                     amount: 2.60,
                     included_in_price: false
                   )
@@ -188,7 +233,7 @@ module Spree
                   Spree::Tax::ItemTax.new(
                     item_id: line_item.id,
                     label: "Item Tax",
-                    tax_rate:,
+                    tax_rate: new_york_tax_rate,
                     amount: 1.40,
                     included_in_price: false
                   )
