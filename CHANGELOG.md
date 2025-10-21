@@ -1,3 +1,14 @@
+## Solidus v4.6.1 (2025-10-21)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.6] Fix shipment adjustments not persisting on order recalculate by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6336
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.6.0...v4.6.1
+
+
 ## Solidus v4.6.0 (2025-09-09)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
