@@ -270,10 +270,8 @@ module Spree
     #
     # @return [Fixnum, Infinity]
     def total_on_hand
-      if any_variants_not_track_inventory?
-        Float::INFINITY
-      else
-        stock_items.sum(:count_on_hand)
+      variants_including_master.sum do |variant|
+        Spree::Config.stock.quantifier_class.new(variant).total_on_hand
       end
     end
 
@@ -300,14 +298,6 @@ module Spree
     end
 
     private
-
-    def any_variants_not_track_inventory?
-      if variants_including_master.loaded?
-        variants_including_master.any? { |variant| !variant.should_track_inventory? }
-      else
-        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
-      end
-    end
 
     # Builds variants from a hash of option types & values
     def build_variants_from_option_values_hash
