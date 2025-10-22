@@ -7,7 +7,7 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
     # Uncomment the following code to remove orphaned records if the following code fails
     #
     # say_with_time "Removing orphaned products (no corresponding shipping category)" do
-    #   Spree::Product.left_joins(:shipping_category).where(spree_shipping_category: { id: nil }).delete_all
+    #   Spree::Product.left_joins(:shipping_category).where(spree_shipping_categories: { id: nil }).delete_all
     # end
     begin
       add_foreign_key :spree_products, :spree_shipping_categories, column: :shipping_category_id, null: false
@@ -27,7 +27,7 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
     # Uncomment the following code to remove orphaned records if the following code fails
     #
     # say_with_time "Removing orphaned shipping method categories (no corresponding shipping category)" do
-    #   Spree::ShippingMethodCategory.left_joins(:shipping_category).where(spree_shipping_category: { id: nil }).delete_all
+    #   Spree::ShippingMethodCategory.left_joins(:shipping_category).where(spree_shipping_categories: { id: nil }).delete_all
     # end
     begin
       add_foreign_key :spree_shipping_method_categories, :spree_shipping_methods, column: :shipping_method_id, null: false
@@ -47,7 +47,7 @@ class AddShippingCategoryForeignKeys < ActiveRecord::Migration[7.0]
     # Uncomment the following code to remove orphaned records if the following code fails
     #
     # say_with_time "Removing orphaned shipping method categories (no corresponding shipping method)" do
-    #   Spree::ShippingMethodCategory.left_joins(:shipping_method).where(spree_shipping_method: { id: nil }).delete_all
+    #   Spree::ShippingMethodCategory.left_joins(:shipping_method).where(spree_shipping_methods: { id: nil }).delete_all
     # end
     begin
       add_foreign_key :spree_shipping_method_categories, :spree_shipping_categories, column: :shipping_category_id, null: false
