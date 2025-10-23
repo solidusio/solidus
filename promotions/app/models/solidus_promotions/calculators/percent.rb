@@ -10,9 +10,7 @@ module SolidusPromotions
       preference :percent, :decimal, default: 0
 
       def compute(object)
-        preferred_currency = object.order.currency
-        currency_exponent = ::Money::Currency.find(preferred_currency).exponent
-        (object.discountable_amount * preferred_percent / 100).round(currency_exponent)
+        round_to_currency(object.discountable_amount * preferred_percent / 100, object.order.currency)
       end
     end
   end
