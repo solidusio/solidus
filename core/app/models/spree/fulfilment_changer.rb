@@ -181,11 +181,11 @@ module Spree
     end
 
     def desired_location_quantifier
-      @desired_location_quantifier ||= Spree::Stock::Quantifier.new(variant, desired_stock_location)
+      @desired_location_quantifier ||= Spree::Config.stock.quantifier_class.new(variant, desired_stock_location)
     end
 
     def current_location_quantifier
-      @current_location_quantifier ||= Spree::Stock::Quantifier.new(variant, current_stock_location)
+      @current_location_quantifier ||= Spree::Config.stock.quantifier_class.new(variant, current_stock_location)
     end
 
     def desired_shipment_different_from_current

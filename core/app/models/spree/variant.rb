@@ -205,7 +205,7 @@ module Spree
 
     # @return [Boolean] true if this variant can be backordered
     def is_backorderable?
-      Spree::Stock::Quantifier.new(self).backorderable?
+      Spree::Config.stock.quantifier_class.new(self).backorderable?
     end
 
     # Creates a sentence out of the variant's (sorted) option values.
@@ -345,7 +345,7 @@ module Spree
     #   check inventory in all available StockLocations.
     # @return [Boolean] true if the desired quantity can be supplied
     def can_supply?(quantity = 1, stock_location = nil)
-      Spree::Stock::Quantifier.new(self, stock_location).can_supply?(quantity)
+      Spree::Config.stock.quantifier_class.new(self, stock_location).can_supply?(quantity)
     end
 
     # Fetches the on-hand quantity of the variant.
@@ -355,7 +355,7 @@ module Spree
     #   check inventory in all available StockLocations.
     # @return [Fixnum] the number currently on-hand
     def total_on_hand(stock_location = nil)
-      Spree::Stock::Quantifier.new(self, stock_location).total_on_hand
+      Spree::Config.stock.quantifier_class.new(self, stock_location).total_on_hand
     end
 
     # Shortcut method to determine if inventory tracking is enabled for this
