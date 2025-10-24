@@ -70,6 +70,65 @@ SolidusPromotions.configure do |config|
 end
 ```
 
+### Coupon code case normalization
+
+By default, Solidus Promotions treats coupon codes as case-insensitive. This means that entering "SAVE20", "save20", or "Save20" will all successfully apply the same promotion. Under this mode, coupon codes are normalized to lowercase when saved and during lookups.
+
+Default behavior:
+
+```rb
+module SolidusPromotions
+  class CouponCodeNormalizer
+    def self.call(value)
+      value&.strip&.downcase
+    end
+  end
+end
+```
+
+If you need to change default behavior (e.g. case-sensitive), you can override the default normalizer or provide custom normalizer class.
+
+Overriding the default normalizer:
+
+```rb
+module SolidusPromotions
+  class CouponCodeNormalizer
+    def self.call(value)
+      value&.strip
+    end
+  end
+end
+```
+
+Providing a custom normalizer class:
+
+```rb
+module SolidusPromotions
+  class CaseSensitiveNormalizer
+    def self.call(value)
+      value&.strip
+    end
+  end
+end
+
+SolidusPromotions.configure do |config|
+  config.coupon_code_normalizer_class = SolidusPromotions::CaseSensitiveNormalizer
+end
+```
+
+When coupon code normalization is set to be case-sensitive:
+- Coupon codes are stored exactly as entered, preserving the original case
+- Applying a promotion requires an exact match (e.g., SAVE20 ≠ save20).
+- "SAVE20" and "save20" are treated as distinct codes.
+
+This setting affects:
+- Code normalization during creation (`PromotionCode#normalize_code`)
+- Code lookups in promotions (`Promotion.with_coupon_code`)
+- Code matching in order processing (`PromotionHandler::Coupon`)
+- Code assignment on orders (`Order#coupon_code=`)
+
+**Note:** Changing this setting after codes have been created may affect existing promotions. It's recommended to set this configuration before creating your first promotion codes.
+
 ## Installation
 
 Add solidus_promotions to your Gemfile:
