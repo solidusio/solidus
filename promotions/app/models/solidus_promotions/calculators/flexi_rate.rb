@@ -12,9 +12,34 @@ module SolidusPromotions
       preference :max_items, :integer, default: 0
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
-      def compute(object)
-        items_count = object.quantity
-        items_count = [items_count, preferred_max_items].min unless preferred_max_items.zero?
+      def compute_line_item(line_item)
+        compute_for_quantity(line_item.quantity)
+      end
+
+      def compute_price(price, options = {})
+        order = options[:order]
+        desired_quantity = options[:quantity] || 0
+        return Spree::ZERO if desired_quantity.zero?
+
+        already_ordered_quantity = if order
+          order.line_items.detect do |line_item|
+            line_item.variant == price.variant
+          end&.quantity || 0
+        else
+          0
+        end
+        possible_discount = compute_for_quantity(already_ordered_quantity + desired_quantity)
+        existing_discount = compute_for_quantity(already_ordered_quantity)
+        round_to_currency(
+          (possible_discount - existing_discount) / desired_quantity,
+          price.currency
+        )
+      end
+
+      private
+
+      def compute_for_quantity(quantity)
+        items_count = preferred_max_items.zero? ? quantity : [quantity, preferred_max_items].min
 
         return Spree::ZERO if items_count == 0
 

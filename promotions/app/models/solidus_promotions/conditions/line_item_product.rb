@@ -23,9 +23,9 @@ module SolidusPromotions
         [:products]
       end
 
-      def eligible?(line_item, _options = {})
-        order_includes_product = product_ids.include?(line_item.variant.product_id)
-        success = inverse? ? !order_includes_product : order_includes_product
+      def eligible?(line_item_or_price, _options = {})
+        item_matches_product = product_ids.include?(line_item_or_price.variant.product_id)
+        success = inverse? ? !item_matches_product : item_matches_product
 
         unless success
           message_code = inverse? ? :has_excluded_product : :no_applicable_products

@@ -19,6 +19,25 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
   end
 
+  describe "#previous_lanes" do
+    let(:promotion) { described_class.new(lane:) }
+    let(:lane) { :pre }
+
+    subject { promotion.previous_lanes }
+
+    it { is_expected.to eq([]) }
+
+    context "if lane is default" do
+      let(:lane) { :default }
+      it { is_expected.to eq(["pre"]) }
+    end
+
+    context "if lane is post" do
+      let(:lane) { :post }
+      it { is_expected.to eq(["pre", "default"]) }
+    end
+  end
+
   describe "#destroy" do
     let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, apply_automatically: true) }
 
