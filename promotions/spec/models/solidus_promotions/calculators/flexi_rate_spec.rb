@@ -188,6 +188,21 @@ RSpec.describe SolidusPromotions::Calculators::FlexiRate, type: :model do
 
     subject { calculator.compute(price, { order: order, quantity: quantity }) }
 
+    context "with no order given" do
+      let(:order) { nil }
+
+      context "when first_item and additional_item have values" do
+        let(:first_item) { 1.13 }
+        let(:additional_item) { 2.11 }
+
+        context "with quantity 2" do
+          let(:quantity) { 2 }
+
+          it { is_expected.to eq(1.62) }
+        end
+      end
+    end
+
     context "if nothing is in the cart" do
       let(:line_item_quantity) { 0 }
 
