@@ -22,9 +22,9 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
   let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator: calculator, conditions: [clothes_only]) }
   let(:calculator) { described_class.new(preferred_base_percent: 10, preferred_tiers: { 10 => 15.0 }) }
 
-  let(:line_item) { order.line_items.detect { _1.variant == shirt } }
+  let(:item) { order.line_items.detect { _1.variant == shirt } }
 
-  subject { promotion.benefits.first.calculator.compute(line_item) }
+  subject { promotion.benefits.first.calculator.compute(item) }
 
   # 2 Shirts at 50, 100 USD. 10 % == 10
   it { is_expected.to eq(10) }
@@ -44,5 +44,18 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
     end
 
     it { is_expected.to eq(0) }
+  end
+
+  context "discounting a shipment" do
+    let(:item) { build(:shipment, order:, cost: 29) }
+
+    it { is_expected.to eq(2.9) }
+  end
+
+  context "discounting a shipping rate" do
+    let(:shipment) { build(:shipment, order:) }
+    let(:item) { build(:shipping_rate, shipment:, cost: 38) }
+
+    it { is_expected.to eq(3.8) }
   end
 end
