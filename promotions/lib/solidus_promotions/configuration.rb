@@ -59,7 +59,6 @@ module SolidusPromotions
     add_nested_class_set :promotion_calculators, default: {
       "SolidusPromotions::Benefits::AdjustShipment" => [
         "SolidusPromotions::Calculators::FlatRate",
-        "SolidusPromotions::Calculators::FlexiRate",
         "SolidusPromotions::Calculators::Percent",
         "SolidusPromotions::Calculators::TieredFlatRate",
         "SolidusPromotions::Calculators::TieredPercent",
