@@ -49,6 +49,12 @@ module SolidusPromotions
       "SolidusPromotions::Conditions::ShippingMethod"
     ]
 
+    add_class_set :price_conditions, default: [
+      "SolidusPromotions::Conditions::LineItemProduct",
+      "SolidusPromotions::Conditions::LineItemTaxon",
+      "SolidusPromotions::Conditions::LineItemOptionValue"
+    ]
+
     add_class_set :benefits, default: [
       "SolidusPromotions::Benefits::AdjustLineItem",
       "SolidusPromotions::Benefits::AdjustLineItemQuantityGroups",
@@ -73,6 +79,11 @@ module SolidusPromotions
         "SolidusPromotions::Calculators::TieredFlatRate",
         "SolidusPromotions::Calculators::TieredPercent",
         "SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
+      ],
+      "SolidusPromotions::Benefits::AdjustPrice" => [
+        "SolidusPromotions::Calculators::FlatRate",
+        "SolidusPromotions::Calculators::Percent",
+        "SolidusPromotions::Calculators::FlexiRate"
       ],
       "SolidusPromotions::Benefits::AdjustLineItemQuantityGroups" => [
         "SolidusPromotions::Calculators::FlatRate",

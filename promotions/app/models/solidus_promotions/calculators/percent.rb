@@ -9,8 +9,21 @@ module SolidusPromotions
 
       preference :percent, :decimal, default: 0
 
-      def compute(object)
-        round_to_currency(object.discountable_amount * preferred_percent / 100, object.order.currency)
+      def compute_item(item)
+        compute_with_currency(item, item.order.currency)
+      end
+      alias_method :compute_line_item, :compute_item
+      alias_method :compute_shipment, :compute_item
+      alias_method :compute_shipping_rate, :compute_item
+
+      def compute_price(price, _options = {})
+        compute_with_currency(price, price.currency)
+      end
+
+      private
+
+      def compute_with_currency(item, currency)
+        round_to_currency(item.discountable_amount * preferred_percent / 100, currency)
       end
     end
   end

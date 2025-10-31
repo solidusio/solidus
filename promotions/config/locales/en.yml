@@ -27,6 +27,7 @@ en:
       line_item: "%{promotion} (%{promotion_customer_label})"
       shipment: "%{promotion} (%{promotion_customer_label})"
       shipping_rate: "%{promotion} (%{promotion_customer_label})"
+      price: "%{promotion} (%{promotion_customer_label})"
     adjustment_type: Adjustment type
     add_benefit: Add Benefit
     add_condition: Add Condition
@@ -191,6 +192,7 @@ en:
     models:
       solidus_promotions/benefits/adjust_shipment: Discount matching shipments
       solidus_promotions/benefits/adjust_line_item: Discount matching line items
+      solidus_promotions/benefits/adjust_price: Discount prices and matching line items
       solidus_promotions/benefits/create_discounted_item: Create discounted line item
       solidus_promotions/benefits/adjust_line_item_quantity_groups: Discount matching line items based on quantity groups
       solidus_promotions/calculators/distributed_amount: Distributed Amount
