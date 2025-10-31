@@ -42,14 +42,7 @@ module SolidusPromotions
       preference :tiers, :hash, default: { 10 => 10 }
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
-      before_validation do
-        # Convert tier values to decimals. Strings don't do us much good.
-        if preferred_tiers.is_a?(Hash)
-          self.preferred_tiers = preferred_tiers.map do |key, value|
-            [cast_to_d(key.to_s), cast_to_d(value.to_s)]
-          end.to_h
-        end
-      end
+      before_validation :transform_preferred_tiers
 
       validate :preferred_tiers_content
 
@@ -103,12 +96,15 @@ module SolidusPromotions
 
       private
 
-      # Converts a value to a BigDecimal.
+      # Transforms preferred_tiers keys and values to BigDecimal for consistent calculations.
       #
-      # @param value [String, Numeric] The value to convert
-      # @return [BigDecimal] The converted decimal value
-      def cast_to_d(value)
-        value.to_s.to_d
+      # Converts all tier threshold keys and percentage values from strings or other numeric
+      # types to BigDecimal to ensure precision in monetary calculations.
+      def transform_preferred_tiers
+        return unless preferred_tiers.is_a?(Hash)
+
+        preferred_tiers.transform_keys! { |key| key.to_s.to_d }
+        preferred_tiers.transform_values! { |value| value.to_s.to_d }
       end
 
       # Validates that preferred_tiers is a hash with positive numeric keys.
