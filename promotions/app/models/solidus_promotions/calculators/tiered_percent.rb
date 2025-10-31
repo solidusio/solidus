@@ -7,14 +7,14 @@ module SolidusPromotions
     class TieredPercent < Spree::Calculator
       include PromotionCalculator
 
-      preference :base_percent, :decimal, default: 0
+      preference :base_percent, :decimal, default: Spree::ZERO
       preference :tiers, :hash, default: { 50 => 5 }
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
       before_validation :transform_preferred_tiers
 
       validates :preferred_base_percent, numericality: {
-        greater_than_or_equal_to: 0,
+        greater_than_or_equal_to: Spree::ZERO,
         less_than_or_equal_to: 100
       }
       validate :preferred_tiers_content
@@ -29,7 +29,7 @@ module SolidusPromotions
         if preferred_currency.casecmp(order.currency).zero?
           round_to_currency(object.amount * (percent || preferred_base_percent) / 100, preferred_currency)
         else
-          0
+          Spree::ZERO
         end
       end
       alias_method :compute_shipment, :compute_item

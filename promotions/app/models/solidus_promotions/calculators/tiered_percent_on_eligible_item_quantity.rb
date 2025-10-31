@@ -18,7 +18,7 @@ module SolidusPromotions
         if preferred_currency.casecmp(order.currency).zero?
           round_to_currency(line_item.discountable_amount * (percent || preferred_base_percent) / 100, preferred_currency)
         else
-          0
+          Spree::ZERO
         end
       end
 
