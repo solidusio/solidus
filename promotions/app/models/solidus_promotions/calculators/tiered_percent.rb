@@ -11,14 +11,7 @@ module SolidusPromotions
       preference :tiers, :hash, default: { 50 => 5 }
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
-      before_validation do
-        # Convert tier values to decimals. Strings don't do us much good.
-        if preferred_tiers.is_a?(Hash)
-          self.preferred_tiers = preferred_tiers.map do |key, value|
-            [cast_to_d(key.to_s), cast_to_d(value.to_s)]
-          end.to_h
-        end
-      end
+      before_validation :transform_preferred_tiers
 
       validates :preferred_base_percent, numericality: {
         greater_than_or_equal_to: 0,
@@ -44,8 +37,11 @@ module SolidusPromotions
 
       private
 
-      def cast_to_d(value)
-        value.to_s.to_d
+      def transform_preferred_tiers
+        return unless preferred_tiers.is_a?(Hash)
+
+        preferred_tiers.transform_keys! { |key| key.to_s.to_d }
+        preferred_tiers.transform_values! { |value| value.to_s.to_d }
       end
 
       def preferred_tiers_content

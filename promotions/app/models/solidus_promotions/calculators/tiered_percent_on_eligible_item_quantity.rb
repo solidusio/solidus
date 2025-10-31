@@ -7,14 +7,7 @@ module SolidusPromotions
     class TieredPercentOnEligibleItemQuantity < SolidusPromotions::Calculators::TieredPercent
       preference :tiers, :hash, default: { 10 => 5 }
 
-      before_validation do
-        # Convert tier values to decimals. Strings don't do us much good.
-        if preferred_tiers.is_a?(Hash)
-          self.preferred_tiers = preferred_tiers.map do |key, value|
-            [key.to_i, cast_to_d(value.to_s)]
-          end.to_h
-        end
-      end
+      before_validation :transform_preferred_tiers
 
       def compute_line_item(line_item)
         order = line_item.order
@@ -30,6 +23,13 @@ module SolidusPromotions
       end
 
       private
+
+      def transform_preferred_tiers
+        return unless preferred_tiers.is_a?(Hash)
+
+        preferred_tiers.transform_keys!(&:to_i)
+        preferred_tiers.transform_values! { |value| value.to_s.to_d }
+      end
 
       def eligible_line_items_quantity_total(order)
         calculable.applicable_line_items(order).sum(&:quantity)
