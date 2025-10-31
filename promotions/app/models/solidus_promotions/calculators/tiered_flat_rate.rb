@@ -38,7 +38,7 @@ module SolidusPromotions
     class TieredFlatRate < Spree::Calculator
       include PromotionCalculator
 
-      preference :base_amount, :decimal, default: 0
+      preference :base_amount, :decimal, default: Spree::ZERO
       preference :tiers, :hash, default: { 10 => 10 }
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
@@ -88,7 +88,7 @@ module SolidusPromotions
         if preferred_currency.casecmp(object.currency).zero?
           amount || preferred_base_amount
         else
-          0
+          Spree::ZERO
         end
       end
       alias_method :compute_shipment, :compute_item
