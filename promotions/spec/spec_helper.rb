@@ -29,6 +29,11 @@ require "solidus_promotions"
 Spree::Config.promotions = SolidusPromotions.configuration
 
 RSpec.configure do |config|
+  if ENV["GITHUB_ACTIONS"]
+    require "rspec/github"
+    config.add_formatter RSpec::Github::Formatter
+  end
+
   config.disable_monkey_patching!
   config.color = true
   config.expect_with :rspec do |c|
