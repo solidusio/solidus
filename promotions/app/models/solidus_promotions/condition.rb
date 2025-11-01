@@ -89,7 +89,7 @@ module SolidusPromotions
     # @see LineItemLevelCondition
     # @see LineItemApplicableOrderLevelCondition
     def applicable?(_promotable)
-      raise NotImplementedError, "applicable? should be implemented in a sub-class of SolidusPromotions::Rule"
+      raise NotImplementedError, "applicable? should be implemented in a sub-class of SolidusPromotions::Condition"
     end
 
     # Determines if the promotable object meets this condition's eligibility requirements.
@@ -122,11 +122,11 @@ module SolidusPromotions
     #
     # @see #eligibility_errors
     def eligible?(_promotable, _options = {})
-      raise NotImplementedError, "eligible? should be implemented in a sub-class of SolidusPromotions::Rule"
+      raise NotImplementedError, "eligible? should be implemented in a sub-class of SolidusPromotions::Condition"
     end
 
     def level
-      raise NotImplementedError, "level should be implemented in a sub-class of SolidusPromotions::Rule"
+      raise NotImplementedError, "level should be implemented in a sub-class of SolidusPromotions::Condition"
     end
 
     # Returns an errors object for tracking eligibility failures.
