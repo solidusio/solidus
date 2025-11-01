@@ -27,6 +27,7 @@ module SolidusPromotions
     def level
       raise NotImplementedError, "level should be implemented in a sub-class of SolidusPromotions::Rule"
     end
+    deprecate :level, deprecator: Spree.deprecator
 
     def eligibility_errors
       @eligibility_errors ||= ActiveModel::Errors.new(self)

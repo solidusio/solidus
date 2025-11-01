@@ -10,6 +10,7 @@ module SolidusPromotions
       def level
         :shipment
       end
+      deprecate :level, deprecator: Spree.deprecator
     end
   end
 end
