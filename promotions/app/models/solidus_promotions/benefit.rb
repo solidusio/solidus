@@ -79,6 +79,7 @@ module SolidusPromotions
       raise NotImplementedError, "Please implement the correct interface, or include one of the `SolidusPromotions::Benefits::OrderBenefit`, " \
         "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
     end
+    deprecate :level, deprecator: Spree.deprecator
 
     def available_conditions
       possible_conditions - conditions.select(&:persisted?)
