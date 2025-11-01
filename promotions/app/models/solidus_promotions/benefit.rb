@@ -29,8 +29,25 @@ module SolidusPromotions
         "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
     end
 
-    def discount(adjustable)
-      amount = compute_amount(adjustable)
+    # Calculates and returns a discount for the given adjustable object.
+    #
+    # This method computes the discount amount using the benefit's calculator and returns
+    # an ItemDiscount object representing the discount to be applied. If the computed
+    # amount is zero, no discount is returned.
+    #
+    # @param adjustable [Object] The object to calculate the discount for (e.g., LineItem, Order, Shipment)
+    # @param ... [args, kwargs] Additional arguments passed to the calculator's compute method
+    #
+    # @return [SolidusPromotions::ItemDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
+    #
+    # @example Calculating a discount for a line item
+    #   benefit.discount(line_item)
+    #   # => #<SolidusPromotions::ItemDiscount item: #<Spree::LineItem>, amount: -10.00, ...>
+    #
+    # @see #compute_amount
+    # @see #adjustment_label
+    def discount(adjustable, ...)
+      amount = compute_amount(adjustable, ...)
       return if amount.zero?
       ItemDiscount.new(
         item: adjustable,
@@ -41,8 +58,8 @@ module SolidusPromotions
     end
 
     # Ensure a negative amount which does not exceed the object's amount
-    def compute_amount(adjustable)
-      promotion_amount = calculator.compute(adjustable) || Spree::ZERO
+    def compute_amount(adjustable, ...)
+      promotion_amount = calculator.compute(adjustable, ...) || Spree::ZERO
       [adjustable.discountable_amount, promotion_amount.abs].min * -1
     end
 
