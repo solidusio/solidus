@@ -114,8 +114,6 @@ module SolidusPromotions
       # Converts all tier threshold keys and percentage values from strings or other numeric
       # types to BigDecimal to ensure precision in monetary calculations.
       def transform_preferred_tiers
-        return unless preferred_tiers.is_a?(Hash)
-
         preferred_tiers.transform_keys! { |key| key.to_s.to_d }
         preferred_tiers.transform_values! { |value| value.to_s.to_d }
       end
@@ -127,15 +125,11 @@ module SolidusPromotions
       # - All keys (thresholds) are positive numbers
       # - All values (percentages) are between 0 and 100
       def preferred_tiers_content
-        if preferred_tiers.is_a? Hash
-          unless preferred_tiers.keys.all? { |key| key.is_a?(Numeric) && key > 0 }
-            errors.add(:base, :keys_should_be_positive_number)
-          end
-          unless preferred_tiers.values.all? { |key| key.is_a?(Numeric) && key >= 0 && key <= 100 }
-            errors.add(:base, :values_should_be_percent)
-          end
-        else
-          errors.add(:preferred_tiers, :should_be_hash)
+        unless preferred_tiers.keys.all? { |key| key.is_a?(Numeric) && key > 0 }
+          errors.add(:base, :keys_should_be_positive_number)
+        end
+        unless preferred_tiers.values.all? { |key| key.is_a?(Numeric) && key >= 0 && key <= 100 }
+          errors.add(:base, :values_should_be_percent)
         end
       end
     end
