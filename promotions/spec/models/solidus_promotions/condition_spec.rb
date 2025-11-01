@@ -14,6 +14,14 @@ RSpec.describe SolidusPromotions::Condition do
       def eligible?(_promotable, _options = {})
         true
       end
+
+      def applicable?(_promotable)
+        true
+      end
+
+      def level
+        :line_item
+      end
     end
   end
 
@@ -35,6 +43,16 @@ RSpec.describe SolidusPromotions::Condition do
   it "forces developer to implement eligible? method" do
     expect { bad_test_condition_class.new.eligible?("promotable") }.to raise_error NotImplementedError
     expect { test_condition_class.new.eligible?("promotable") }.not_to raise_error
+  end
+
+  it "forces developer to implement #applicable?" do
+    expect { bad_test_condition_class.new.applicable?("promotable") }.to raise_error NotImplementedError
+    expect { test_condition_class.new.applicable?("promotable") }.not_to raise_error
+  end
+
+  it "forces developer to implement #level", :silence_deprecations do
+    expect { bad_test_condition_class.new.level }.to raise_error NotImplementedError
+    expect { test_condition_class.new.level }.not_to raise_error
   end
 
   it "validates unique conditions for a promotion benefit" do
