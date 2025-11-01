@@ -8,7 +8,7 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
 
   it { is_expected.to have_many(:products) }
 
-  describe "#level" do
+  describe "#level", :silence_deprecations do
     it "is order" do
       expect(condition.level).to eq(:order)
     end
