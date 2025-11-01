@@ -63,6 +63,14 @@ RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
         end
       end
     end
+
+    context "setting tiers to anything but a Hash" do
+      it "raises TypeError" do
+        expect {
+          calculator.preferred_tiers = :no_hash
+        }.to raise_exception(TypeError)
+      end
+    end
   end
 
   describe "#compute" do
