@@ -14,7 +14,7 @@ module SolidusPromotions
       def call
         return order if order.shipped?
 
-        SolidusPromotions::Promotion.ordered_lanes.each_key do |lane|
+        SolidusPromotions::Promotion.ordered_lanes.each do |lane|
           lane_promotions = promotions.select { |promotion| promotion.lane == lane }
           lane_benefits = eligible_benefits_for_promotable(lane_promotions.flat_map(&:benefits), order)
           perform_order_benefits(lane_benefits, lane) unless dry_run
