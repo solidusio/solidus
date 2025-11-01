@@ -109,8 +109,6 @@ module SolidusPromotions
       # Converts tier threshold keys (item quantities) to integers and percentage values
       # to BigDecimal for consistent calculations.
       def transform_preferred_tiers
-        return unless preferred_tiers.is_a?(Hash)
-
         preferred_tiers.transform_keys!(&:to_i)
         preferred_tiers.transform_values! { |value| value.to_s.to_d }
       end
