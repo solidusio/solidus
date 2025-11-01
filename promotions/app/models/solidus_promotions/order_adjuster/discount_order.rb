@@ -32,7 +32,7 @@ module SolidusPromotions
       private
 
       def perform_order_benefits(lane_benefits, lane)
-        lane_benefits.select { |benefit| benefit.level == :order }.each do |benefit|
+        lane_benefits.select { |benefit| benefit.respond_to?(:perform) }.each do |benefit|
           benefit.perform(order)
         end
 
