@@ -71,58 +71,34 @@ module SolidusPromotions
 
     # Determines if this condition can be applied to a given promotable object.
     #
-    # This method is typically implemented by including one of the level modules
-    # (OrderLevelCondition, LineItemLevelCondition, or LineItemApplicableOrderLevelCondition)
-    # rather than being overridden directly.
-    #
     # @param _promotable [Object] The object to check (e.g., Spree::Order, Spree::LineItem)
     #
     # @return [Boolean] true if this condition applies to the promotable type
     #
-    # @raise [NotImplementedError] if not implemented in subclass
-    #
-    # @example Order-level condition applicability
+    # @example Condition applicability
     #   condition.applicable?(order)      # => true
     #   condition.applicable?(line_item)  # => false
-    #
-    # @see OrderLevelCondition
-    # @see LineItemLevelCondition
-    # @see LineItemApplicableOrderLevelCondition
-    def applicable?(_promotable)
-      raise NotImplementedError, "applicable? should be implemented in a sub-class of SolidusPromotions::Condition"
+    def applicable?(promotable)
+      respond_to?(eligible_method_for(promotable))
     end
 
     # Determines if the promotable object meets this condition's eligibility requirements.
     #
-    # This is the core method that implements the condition's logic. When the promotable
-    # is not eligible, this method should add errors to {#eligibility_errors} explaining why.
+    # This typically dispatches to a specific eligibility method defined on a subclass, such as
+    # `#order_eligible?` or `line_item_eligible?`.
     #
     # @param _promotable [Object] The object to evaluate (e.g., Spree::Order, Spree::LineItem)
     # @param _options [Hash] Additional options for eligibility checking
     #
     # @return [Boolean] true if the promotable meets the condition, false otherwise
     #
-    # @raise [NotImplementedError] if not implemented in subclass
-    #
-    # @example Order total condition
-    #   def eligible?(order, _options = {})
-    #     if order.item_total < preferred_minimum
-    #       eligibility_errors.add(:base, "Order total too low")
-    #     end
-    #     eligibility_errors.empty?
-    #   end
-    #
-    # @example First order condition
-    #   def eligible?(order, _options = {})
-    #     if order.user.orders.complete.count > 1
-    #       eligibility_errors.add(:base, "Not first order")
-    #     end
-    #     eligibility_errors.empty?
-    #   end
-    #
     # @see #eligibility_errors
-    def eligible?(_promotable, _options = {})
-      raise NotImplementedError, "eligible? should be implemented in a sub-class of SolidusPromotions::Condition"
+    def eligible?(promotable, ...)
+      if applicable?(promotable)
+        send(eligible_method_for(promotable), promotable, ...)
+      else
+        raise NotImplementedError, "Please implement #{eligible_method_for(promotable)} in your condition"
+      end
     end
 
     def level
@@ -169,6 +145,13 @@ module SolidusPromotions
     end
 
     private
+
+    # Generates the eligibility method name for a promotable
+    #
+    # @return [Symbol] the method name
+    def eligible_method_for(promotable)
+      :"#{promotable.class.name.demodulize.underscore}_eligible?"
+    end
 
     # Validates that only one instance of this condition type exists per benefit.
     #

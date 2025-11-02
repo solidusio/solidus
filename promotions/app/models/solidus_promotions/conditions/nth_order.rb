@@ -14,7 +14,7 @@ module SolidusPromotions
       #
       # Use the first order condition if you want a promotion to be applied to the first order for a user.
       # @param order [Spree::Order]
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         return false unless order.user
 
         nth_order?(order)

@@ -31,7 +31,7 @@ module SolidusPromotions
         products
       end
 
-      def order_eligible?(order)
+      def order_eligible?(order, _options = {})
         return true if eligible_products.empty?
 
         case preferred_match_policy

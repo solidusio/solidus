@@ -7,11 +7,11 @@ module SolidusPromotions
 
       preference :eligible_values, :hash
 
-      def order_eligible?(order)
+      def order_eligible?(order, _options = {})
         order.line_items.any? { |item| line_item_eligible?(item) }
       end
 
-      def line_item_eligible?(line_item)
+      def line_item_eligible?(line_item, _options = {})
         LineItemOptionValue.new(preferred_eligible_values: preferred_eligible_values).eligible?(line_item)
       end
 

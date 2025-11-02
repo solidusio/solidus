@@ -16,7 +16,7 @@ module SolidusPromotions
         [:stores]
       end
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         stores.none? || stores.include?(order.store)
       end
 

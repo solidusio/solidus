@@ -3,14 +3,12 @@
 module SolidusPromotions
   module Conditions
     class UserRole < Condition
-      include OrderLevelCondition
-
       preference :role_ids, :array, default: []
 
       MATCH_POLICIES = %w[any all].freeze
       preference :match_policy, default: MATCH_POLICIES.first
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         return false unless order.user
 
         if all_match_policy?

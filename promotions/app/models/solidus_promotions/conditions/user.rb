@@ -16,7 +16,7 @@ module SolidusPromotions
         [:users]
       end
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         users.include?(order.user)
       end
 

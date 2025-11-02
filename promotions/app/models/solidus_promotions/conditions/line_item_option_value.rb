@@ -7,7 +7,7 @@ module SolidusPromotions
 
       preference :eligible_values, :hash
 
-      def eligible?(line_item, _options = {})
+      def line_item_eligible?(line_item, _options = {})
         pid = line_item.product.id
         ovids = line_item.variant.option_values.pluck(:id)
 

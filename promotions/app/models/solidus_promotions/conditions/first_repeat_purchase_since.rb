@@ -12,7 +12,7 @@ module SolidusPromotions
       #
       # This is eligible if the user's most recently completed order is more than the preferred days ago
       # @param order [Spree::Order]
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         return false unless order.user
 
         last_order = last_completed_order(order.user)

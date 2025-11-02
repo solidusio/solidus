@@ -28,7 +28,7 @@ module SolidusPromotions
         end
       end
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         return false unless order.currency == preferred_currency
 
         unless total_for_order(order).send(operator, threshold)
