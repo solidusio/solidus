@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class User < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       has_many :condition_users,

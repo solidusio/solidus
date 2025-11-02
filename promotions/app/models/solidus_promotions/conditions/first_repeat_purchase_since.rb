@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class FirstRepeatPurchaseSince < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       preference :days_ago, :integer, default: 365

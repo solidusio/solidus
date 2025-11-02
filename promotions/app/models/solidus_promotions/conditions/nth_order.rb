@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class NthOrder < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       preference :nth_order, :integer, default: 2

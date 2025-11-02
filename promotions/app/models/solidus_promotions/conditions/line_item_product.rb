@@ -4,6 +4,7 @@ module SolidusPromotions
   module Conditions
     # A condition to apply a promotion only to line items with or without a chosen product
     class LineItemProduct < Condition
+      # TODO: Remove in Solidus 5
       include LineItemLevelCondition
 
       MATCH_POLICIES = %w[include exclude].freeze

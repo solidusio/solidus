@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class LineItemTaxon < Condition
+      # TODO: Remove in Solidus 5
       include LineItemLevelCondition
 
       has_many :condition_taxons,

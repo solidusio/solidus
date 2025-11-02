@@ -8,6 +8,7 @@ module SolidusPromotions
     # To add extra operators please override `self.operators_map` or any other helper method.
     # To customize the error message you can also override `ineligible_message`.
     class ItemTotal < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       preference :amount, :decimal, default: 100.00

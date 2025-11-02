@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class OneUsePerUser < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       def order_eligible?(order, _options = {})

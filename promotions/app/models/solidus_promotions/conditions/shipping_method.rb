@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class ShippingMethod < Condition
+      # TODO: Remove in Solidus 5
       include ShipmentLevelCondition
 
       preference :shipping_method_ids, type: :array, default: []
