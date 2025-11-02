@@ -101,6 +101,37 @@ module SolidusPromotions
       end
     end
 
+    def self.inherited(klass)
+      def klass.method_added(method_added)
+        if method_added == :eligible?
+          Spree.deprecator.warn <<~MSG
+            Please refactor `#{name}`. You're defining `eligible?`. Instead, define method for each type of promotable
+            that your condition can be applied to. For example:
+            ```
+            class MyCondition < SolidusPromotions::Condition
+              def applicable?(promotable)
+                promotable.is_a?(Spree::Order)
+              end
+
+              def eligible?(order)
+                order.total > 20
+              end
+            ```
+            can now become
+            ```
+            class MyCondition < SolidusPromotions::Condition
+              def order_eligible?(order)
+                order.total > 20
+              end
+            end
+            ```
+          MSG
+        end
+        super
+      end
+      super
+    end
+
     def level
       raise NotImplementedError, "level should be implemented in a sub-class of SolidusPromotions::Condition"
     end

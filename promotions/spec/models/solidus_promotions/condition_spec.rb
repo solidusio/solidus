@@ -116,16 +116,62 @@ RSpec.describe SolidusPromotions::Condition do
     end
   end
 
-  it "forces developer to implement #applicable?" do
-    expect { bad_test_condition_class.new.applicable?("promotable") }.to raise_error NotImplementedError
-    expect { test_condition_class.new.applicable?("promotable") }.not_to raise_error
-  end
+  describe "inherited hook" do
+    context "for a well-formed condition" do
+      subject(:condition) do
+        Class.new(described_class) do
+          def line_item_eligible?(_line_item, _options = {})
+            true
+          end
+        end
+      end
 
-  it "forces developer to implement #level", :silence_deprecations do
-    expect { bad_test_condition_class.new.level }.to raise_error NotImplementedError
-    expect { test_condition_class.new.level }.not_to raise_error
-  end
+      it "does not emit a deprecation warning" do
+        expect(Spree.deprecator).not_to receive(:warn)
+        condition
+      end
+    end
 
+    context "for a legacy condition" do
+      subject(:condition) do
+        Class.new(described_class) do
+          def self.name
+            "LegacyCondition"
+          end
+
+          def eligible?(_line_item, _options = {})
+            true
+          end
+        end
+      end
+
+      it "emits a deprecation warning" do
+        expect(Spree.deprecator).to receive(:warn).with(<<~MSG)
+          Please refactor `LegacyCondition`. You're defining `eligible?`. Instead, define method for each type of promotable
+          that your condition can be applied to. For example:
+          ```
+          class MyCondition < SolidusPromotions::Condition
+            def applicable?(promotable)
+              promotable.is_a?(Spree::Order)
+            end
+
+            def eligible?(order)
+              order.total > 20
+            end
+          ```
+          can now become
+          ```
+          class MyCondition < SolidusPromotions::Condition
+            def order_eligible?(order)
+              order.total > 20
+            end
+          end
+          ```
+        MSG
+        condition
+      end
+    end
+  end
   it "validates unique conditions for a promotion benefit" do
     # Because of Rails' STI, we can't use the anonymous class here
     promotion = create(:solidus_promotion, :with_adjustable_benefit)
