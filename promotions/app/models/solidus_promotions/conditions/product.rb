@@ -9,16 +9,7 @@ module SolidusPromotions
     class Product < Condition
       include LineItemApplicableOrderLevelCondition
 
-      has_many :condition_products,
-        dependent: :destroy,
-        foreign_key: :condition_id,
-        class_name: "SolidusPromotions::ConditionProduct",
-        inverse_of: :condition
-      has_many :products, class_name: "Spree::Product", through: :condition_products
-
-      def preload_relations
-        [:products]
-      end
+      include ProductCondition
 
       MATCH_POLICIES = %w[any all none only].freeze
 
@@ -66,14 +57,6 @@ module SolidusPromotions
         # are in the order, then no line items should be available to check.
         raise "This should not happen" if preferred_match_policy == "none"
         product_ids.include?(line_item.variant.product_id)
-      end
-
-      def product_ids_string
-        product_ids.join(",")
-      end
-
-      def product_ids_string=(product_ids)
-        self.product_ids = product_ids.to_s.split(",").map(&:strip)
       end
 
       private
