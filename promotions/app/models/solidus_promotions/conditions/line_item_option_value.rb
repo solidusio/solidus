@@ -6,22 +6,13 @@ module SolidusPromotions
       # TODO: Remove in Solidus 5
       include LineItemLevelCondition
 
-      preference :eligible_values, :hash
+      include OptionValueCondition
 
       def line_item_eligible?(line_item, _options = {})
         pid = line_item.product.id
         ovids = line_item.variant.option_values.pluck(:id)
 
         product_ids.include?(pid) && (value_ids(pid) & ovids).present?
-      end
-
-      def preferred_eligible_values
-        values = preferences[:eligible_values] || {}
-        values.keys.map(&:to_i).zip(
-          values.values.map do |value|
-            (value.is_a?(Array) ? value : value.split(",")).map(&:to_i)
-          end
-        ).to_h
       end
 
       private

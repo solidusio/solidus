@@ -5,15 +5,6 @@ require "rails_helper"
 RSpec.describe SolidusPromotions::Conditions::OptionValue do
   let(:condition) { described_class.new }
 
-  describe "#preferred_eligible_values" do
-    subject { condition.preferred_eligible_values }
-
-    it "assigns a nicely formatted hash" do
-      condition.preferred_eligible_values = { "5" => "1,2", "6" => "1" }
-      expect(subject).to eq({ 5 => [1, 2], 6 => [1] })
-    end
-  end
-
   describe "#eligible?(order)" do
     subject { condition.eligible?(promotable) }
 
