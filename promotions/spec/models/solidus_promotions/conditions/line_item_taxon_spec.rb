@@ -16,11 +16,6 @@ RSpec.describe SolidusPromotions::Conditions::LineItemTaxon, type: :model do
 
   it { is_expected.to be_updateable }
 
-  describe "#preload_relations" do
-    subject { condition.preload_relations }
-    it { is_expected.to eq([:taxons]) }
-  end
-
   describe "#eligible?" do
     let(:line_item) { order.line_items.first! }
     let(:order) { create :order_with_line_items }

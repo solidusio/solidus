@@ -5,16 +5,7 @@ module SolidusPromotions
     class Taxon < Condition
       include LineItemApplicableOrderLevelCondition
 
-      has_many :condition_taxons,
-        class_name: "SolidusPromotions::ConditionTaxon",
-        foreign_key: :condition_id,
-        dependent: :destroy,
-        inverse_of: :condition
-      has_many :taxons, through: :condition_taxons, class_name: "Spree::Taxon"
-
-      def preload_relations
-        [:taxons]
-      end
+      include TaxonCondition
 
       MATCH_POLICIES = %w[any all none].freeze
 
@@ -70,18 +61,6 @@ module SolidusPromotions
         ).exists?
       end
 
-      def taxon_ids_string
-        taxon_ids.join(",")
-      end
-
-      def taxon_ids_string=(taxon_ids)
-        self.taxon_ids = taxon_ids.to_s.split(",").map(&:strip)
-      end
-
-      def updateable?
-        true
-      end
-
       private
 
       # All taxons in an order
@@ -90,11 +69,6 @@ module SolidusPromotions
           .joins(products: { variants_including_master: :line_items })
           .where(spree_line_items: { order_id: order.id })
           .distinct
-      end
-
-      # ids of taxons conditions and taxons conditions children
-      def condition_taxon_ids_with_children
-        taxons.flat_map { |taxon| taxon.self_and_descendants.ids }.uniq
       end
     end
   end

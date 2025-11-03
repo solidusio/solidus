@@ -13,27 +13,7 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
   let(:taxon_one) { create :taxon, name: "first" }
   let(:taxon_two) { create :taxon, name: "second" }
 
-  it { is_expected.to have_many(:taxons) }
-
   it { is_expected.to be_updateable }
-
-  describe "taxon_ids_string=" do
-    subject { condition.assign_attributes("taxon_ids_string" => taxon_two.id.to_s) }
-
-    let(:condition) { promotion_benefit.conditions.build(type: described_class.to_s) }
-
-    it "creates a valid condition with a taxon" do
-      subject
-      expect(condition).to be_valid
-      condition.save!
-      expect(condition.reload.taxons).to include(taxon_two)
-    end
-  end
-
-  describe "#preload_relations" do
-    subject { condition.preload_relations }
-    it { is_expected.to eq([:taxons]) }
-  end
 
   describe "#eligible?(order)" do
     context "with any match policy" do
