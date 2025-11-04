@@ -24,7 +24,7 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
 
       it { is_expected.to be true }
 
-      context "with line item applicable set to false" do
+      context "with line item applicable set to false", :silence_deprecations do
         let(:condition_options) { { preferred_line_item_applicable: false } }
 
         it { is_expected.to be false }
