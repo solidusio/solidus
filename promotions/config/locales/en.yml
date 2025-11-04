@@ -104,7 +104,7 @@ en:
         limit_once_per_user: This coupon code can only be used once per user.
       solidus_promotions/conditions/option_value:
       solidus_promotions/conditions/line_item_option_value:
-      solidus_promotions/conditions/product:
+      solidus_promotions/conditions/order_product:
         has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
         missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
         no_applicable_products: You need to add an applicable product before applying this coupon code.
@@ -210,8 +210,9 @@ en:
       solidus_promotions/conditions/one_use_per_user: One Use Per User
       solidus_promotions/conditions/option_value: Option Value(s)
       solidus_promotions/conditions/line_item_option_value: Line Item Option Value(s)
-      solidus_promotions/conditions/product: Order Product(s)
-      solidus_promotions/conditions/line_item_product: Line Item Product(s)
+      solidus_promotions/conditions/order_product: Order contains selected products
+      solidus_promotions/conditions/product: Order contains selected products, restricts line items
+      solidus_promotions/conditions/line_item_product: Line item has selected product
       solidus_promotions/conditions/taxon: Order Taxon(s)
       solidus_promotions/conditions/line_item_taxon: Line Item Taxon(s)
       solidus_promotions/conditions/user: User
