@@ -8,7 +8,7 @@ RSpec.describe SolidusPromotions::Conditions::FirstOrder, type: :model do
   let(:user) { nil }
   let(:email) { nil }
 
-  describe "#level" do
+  describe "#level", :silence_deprecations do
     it "is order" do
       expect(condition.level).to eq(:order)
     end

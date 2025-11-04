@@ -140,7 +140,7 @@ RSpec.describe SolidusPromotions::Benefit do
     end
   end
 
-  describe "#level" do
+  describe "#level", :silence_deprecations do
     subject { described_class.new.level }
 
     it "raises an error" do

@@ -135,6 +135,7 @@ module SolidusPromotions
     def level
       raise NotImplementedError, "level should be implemented in a sub-class of SolidusPromotions::Condition"
     end
+    deprecate :level, deprecator: Spree.deprecator
 
     # Returns an errors object for tracking eligibility failures.
     #

@@ -22,6 +22,7 @@ module SolidusPromotions
       def level
         :order
       end
+      deprecate :level, deprecator: Spree.deprecator
     end
   end
 end
