@@ -8,7 +8,7 @@ module SolidusPromotions
       include OptionValueCondition
 
       def order_eligible?(order, _options = {})
-        order.line_items.any? { |item| line_item_eligible?(item) }
+        OrderOptionValue.new(preferred_eligible_values: preferred_eligible_values).eligible?(order)
       end
 
       def line_item_eligible?(line_item, _options = {})

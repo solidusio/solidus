@@ -32,6 +32,7 @@ module SolidusPromotions
       "SolidusPromotions::Conditions::NthOrder",
       "SolidusPromotions::Conditions::OneUsePerUser",
       "SolidusPromotions::Conditions::OptionValue",
+      "SolidusPromotions::Conditions::OrderOptionValue",
       "SolidusPromotions::Conditions::OrderProduct",
       "SolidusPromotions::Conditions::Product",
       "SolidusPromotions::Conditions::Store",
