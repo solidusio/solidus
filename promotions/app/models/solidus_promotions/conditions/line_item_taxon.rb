@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class LineItemTaxon < Condition
+      # TODO: Remove in Solidus 5
       include LineItemLevelCondition
 
       has_many :condition_taxons,
@@ -22,7 +23,7 @@ module SolidusPromotions
         [:taxons]
       end
 
-      def eligible?(line_item, _options = {})
+      def line_item_eligible?(line_item, _options = {})
         found = Spree::Classification.where(
           product_id: line_item.variant.product_id,
           taxon_id: condition_taxon_ids_with_children

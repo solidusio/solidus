@@ -22,7 +22,7 @@ module SolidusPromotions
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
-      def order_eligible?(order)
+      def order_eligible?(order, _options = {})
         order_taxons = taxons_in_order(order)
 
         case preferred_match_policy
@@ -57,7 +57,7 @@ module SolidusPromotions
         eligibility_errors.empty?
       end
 
-      def line_item_eligible?(line_item)
+      def line_item_eligible?(line_item, _options = {})
         # The order level eligibility check happens first, and if none of the taxons
         # are in the order, then no line items should be available to check.
         raise "This should not happen" if preferred_match_policy == "none"

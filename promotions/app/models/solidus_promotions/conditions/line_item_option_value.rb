@@ -3,11 +3,12 @@
 module SolidusPromotions
   module Conditions
     class LineItemOptionValue < Condition
+      # TODO: Remove in Solidus 5
       include LineItemLevelCondition
 
       preference :eligible_values, :hash
 
-      def eligible?(line_item, _options = {})
+      def line_item_eligible?(line_item, _options = {})
         pid = line_item.product.id
         ovids = line_item.variant.option_values.pluck(:id)
 

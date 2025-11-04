@@ -10,6 +10,7 @@ module SolidusPromotions
     # it to a simple quantity check across the entire order which would be
     # better served by an item total condition.
     class MinimumQuantity < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       validates :preferred_minimum_quantity, numericality: { only_integer: true, greater_than: 0 }
@@ -26,7 +27,7 @@ module SolidusPromotions
       #
       # @param order [Spree::Order] the order we want to check eligibility on
       # @return [Boolean] true if promotion is eligible, false otherwise
-      def eligible?(order)
+      def order_eligible?(order, _options = {})
         if benefit.applicable_line_items(order).sum(&:quantity) < preferred_minimum_quantity
           eligibility_errors.add(
             :base,

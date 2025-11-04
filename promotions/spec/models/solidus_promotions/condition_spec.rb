@@ -11,7 +11,7 @@ RSpec.describe SolidusPromotions::Condition do
         ActiveModel::Name.new(self, nil, "test_condition")
       end
 
-      def eligible?(_promotable, _options = {})
+      def order_eligible?(_order, _options = {})
         true
       end
 
@@ -40,21 +40,138 @@ RSpec.describe SolidusPromotions::Condition do
     it { is_expected.to be_empty }
   end
 
-  it "forces developer to implement eligible? method" do
-    expect { bad_test_condition_class.new.eligible?("promotable") }.to raise_error NotImplementedError
-    expect { test_condition_class.new.eligible?("promotable") }.not_to raise_error
+  describe "#eligible?" do
+    let(:order_condition) do
+      Class.new(described_class) do
+        def order_eligible?(_order) = true
+      end
+    end
+    let(:line_item_condition) do
+      Class.new(described_class) do
+        def line_item_eligible?(_order) = true
+      end
+    end
+
+    subject { condition.new.eligible?(promotable) }
+
+    context "promotable is order" do
+      let(:promotable) { Spree::Order.new }
+
+      context "if condition implements order_eligible?" do
+        let(:condition) { order_condition }
+
+        it { is_expected.to be true }
+      end
+
+      context "if condition does not implement order_eligible?" do
+        context "if condition implements order_eligible?" do
+          let(:condition) { line_item_condition }
+
+          it "raises NotImplementedError" do
+            expect { subject }.to raise_error(NotImplementedError)
+          end
+        end
+      end
+    end
+
+    describe "passing on options to a condition" do
+      let(:price_condition) do
+        Class.new(described_class) do
+          def price_eligible?(_price, options = {})
+            options[:order].present? && options[:quantity] > 1
+          end
+        end
+      end
+
+      let(:order) { Spree::Order.new }
+      let(:price) { Spree::Price.new }
+
+      subject { price_condition.new.eligible?(price, order:, quantity:) }
+
+      context "with quantity 1" do
+        let(:quantity) { 1 }
+
+        it { is_expected.to be false }
+      end
+
+      context "with quantity 2" do
+        let(:quantity) { 2 }
+
+        it { is_expected.to be true }
+      end
+
+      context "if condition does not care about order" do
+        let(:price_condition) do
+          Class.new(described_class) do
+            def price_eligible?(_price, options = {})
+              options[:quantity] > 1
+            end
+          end
+        end
+
+        let(:quantity) { 2 }
+
+        it { is_expected.to be true }
+      end
+    end
   end
 
-  it "forces developer to implement #applicable?" do
-    expect { bad_test_condition_class.new.applicable?("promotable") }.to raise_error NotImplementedError
-    expect { test_condition_class.new.applicable?("promotable") }.not_to raise_error
-  end
+  describe "inherited hook" do
+    context "for a well-formed condition" do
+      subject(:condition) do
+        Class.new(described_class) do
+          def line_item_eligible?(_line_item, _options = {})
+            true
+          end
+        end
+      end
 
-  it "forces developer to implement #level", :silence_deprecations do
-    expect { bad_test_condition_class.new.level }.to raise_error NotImplementedError
-    expect { test_condition_class.new.level }.not_to raise_error
-  end
+      it "does not emit a deprecation warning" do
+        expect(Spree.deprecator).not_to receive(:warn)
+        condition
+      end
+    end
 
+    context "for a legacy condition" do
+      subject(:condition) do
+        Class.new(described_class) do
+          def self.name
+            "LegacyCondition"
+          end
+
+          def eligible?(_line_item, _options = {})
+            true
+          end
+        end
+      end
+
+      it "emits a deprecation warning" do
+        expect(Spree.deprecator).to receive(:warn).with(<<~MSG)
+          Please refactor `LegacyCondition`. You're defining `eligible?`. Instead, define method for each type of promotable
+          that your condition can be applied to. For example:
+          ```
+          class MyCondition < SolidusPromotions::Condition
+            def applicable?(promotable)
+              promotable.is_a?(Spree::Order)
+            end
+
+            def eligible?(order)
+              order.total > 20
+            end
+          ```
+          can now become
+          ```
+          class MyCondition < SolidusPromotions::Condition
+            def order_eligible?(order)
+              order.total > 20
+            end
+          end
+          ```
+        MSG
+        condition
+      end
+    end
+  end
   it "validates unique conditions for a promotion benefit" do
     # Because of Rails' STI, we can't use the anonymous class here
     promotion = create(:solidus_promotion, :with_adjustable_benefit)

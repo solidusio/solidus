@@ -8,11 +8,7 @@ module SolidusPromotions
       end
 
       def applicable?(promotable)
-        promotable.is_a?(Spree::Order) || preferred_line_item_applicable && promotable.is_a?(Spree::LineItem)
-      end
-
-      def eligible?(promotable)
-        send(:"#{promotable.class.name.demodulize.underscore}_eligible?", promotable)
+        promotable.is_a?(Spree::LineItem) ? preferred_line_item_applicable && super : super
       end
 
       def level
