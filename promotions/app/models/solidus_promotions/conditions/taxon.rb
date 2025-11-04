@@ -14,61 +14,18 @@ module SolidusPromotions
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
       def order_eligible?(order, _options = {})
-        order_taxons = taxons_in_order(order)
-
-        case preferred_match_policy
-        when "all"
-          matches_all = taxons.all? do |condition_taxon|
-            order_taxons.where(id: condition_taxon.self_and_descendants.ids).exists?
-          end
-
-          unless matches_all
-            eligibility_errors.add(:base, eligibility_error_message(:missing_taxon), error_code: :missing_taxon)
-          end
-        when "any"
-          unless order_taxons.where(id: condition_taxon_ids_with_children).exists?
-            eligibility_errors.add(
-              :base,
-              eligibility_error_message(:no_matching_taxons),
-              error_code: :no_matching_taxons
-            )
-          end
-        when "none"
-          if order_taxons.where(id: condition_taxon_ids_with_children).exists?
-            eligibility_errors.add(
-              :base,
-              eligibility_error_message(:has_excluded_taxon),
-              error_code: :has_excluded_taxon
-            )
-          end
-        else
-          raise "unexpected match policy: #{preferred_match_policy.inspect}"
-        end
-
+        order_condition = OrderTaxon.new(taxons:, preferred_match_policy:)
+        order_condition.order_eligible?(order)
+        @eligibility_errors = order_condition.eligibility_errors
         eligibility_errors.empty?
       end
 
       def line_item_eligible?(line_item, _options = {})
-        # The order level eligibility check happens first, and if none of the taxons
-        # are in the order, then no line items should be available to check.
-        raise "This should not happen" if preferred_match_policy == "none"
-
-        raise "unexpected match policy: #{preferred_match_policy.inspect}" unless preferred_match_policy.in?(MATCH_POLICIES)
-
-        Spree::Classification.where(
-          product_id: line_item.variant.product_id,
-          taxon_id: condition_taxon_ids_with_children
-        ).exists?
-      end
-
-      private
-
-      # All taxons in an order
-      def taxons_in_order(order)
-        Spree::Taxon
-          .joins(products: { variants_including_master: :line_items })
-          .where(spree_line_items: { order_id: order.id })
-          .distinct
+        line_item_match_policy = preferred_match_policy.in?(%w[any all]) ? "include" : "exclude"
+        line_item_condition = LineItemTaxon.new(taxons:, preferred_match_policy: line_item_match_policy)
+        result = line_item_condition.line_item_eligible?(line_item)
+        @eligibility_errors = line_item_condition.eligibility_errors
+        result
       end
     end
   end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
+RSpec.describe SolidusPromotions::Conditions::OrderTaxon, type: :model do
   let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
   let(:promotion_benefit) { promotion.benefits.first }
   let(:condition) do
@@ -143,46 +143,9 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
     end
   end
 
-  describe "#eligible?(line_item)" do
-    let(:line_item) { order.line_items.first! }
-    let(:order) { create :order_with_line_items }
-    let(:taxon) { create :taxon, name: "first" }
+  describe "#to_partial_path" do
+    subject { condition.to_partial_path }
 
-    context "when a product has a taxon of a taxon condition" do
-      before do
-        product.taxons << taxon
-        condition.taxons << taxon
-        condition.save!
-      end
-
-      it "is eligible" do
-        expect(condition).to be_eligible(line_item)
-      end
-    end
-
-    context "when a product has a taxon child of a taxon condition" do
-      before do
-        taxon.children << taxon_two
-        product.taxons << taxon_two
-        condition.taxons << taxon
-        condition.save!
-      end
-
-      it "is eligible" do
-        expect(condition).to be_eligible(line_item)
-      end
-    end
-
-    context "when a product does not have taxon or child taxon of a taxon condition" do
-      before do
-        product.taxons << taxon_two
-        condition.taxons << taxon
-        condition.save!
-      end
-
-      it "is not eligible" do
-        expect(condition).not_to be_eligible(line_item)
-      end
-    end
+    it { is_expected.to eq("solidus_promotions/admin/condition_fields/taxon") }
   end
 end
