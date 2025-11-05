@@ -14,6 +14,8 @@ RSpec.describe SolidusPromotions::Conditions::LineItemTaxon, type: :model do
     described_class.create!(benefit: benefit)
   end
 
+  it_behaves_like "a taxon condition"
+
   it { is_expected.to be_updateable }
 
   describe "#eligible?" do

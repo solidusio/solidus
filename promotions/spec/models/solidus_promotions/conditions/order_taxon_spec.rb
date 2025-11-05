@@ -13,6 +13,8 @@ RSpec.describe SolidusPromotions::Conditions::OrderTaxon, type: :model do
   let(:taxon_one) { create :taxon, name: "first" }
   let(:taxon_two) { create :taxon, name: "second" }
 
+  it_behaves_like "a taxon condition"
+
   it { is_expected.to be_updateable }
 
   describe "#eligible?(order)" do
