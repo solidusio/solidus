@@ -6,6 +6,8 @@ RSpec.describe SolidusPromotions::Conditions::LineItemProduct, type: :model do
   let(:condition) { described_class.new(condition_options) }
   let(:condition_options) { {} }
 
+  it_behaves_like "a product condition"
+
   describe "#level", :silence_deprecations do
     it "is line_item" do
       expect(condition.level).to eq(:line_item)
@@ -75,27 +77,6 @@ RSpec.describe SolidusPromotions::Conditions::LineItemProduct, type: :model do
           expect(condition.eligibility_errors.full_messages).to be_empty
         end
       end
-    end
-  end
-
-  describe "#preload_relations" do
-    subject { condition.preload_relations }
-    it { is_expected.to eq([:products]) }
-  end
-
-  describe "#product_ids_string" do
-    it "returns a string of product ids" do
-      condition.products = [create(:product), create(:product)]
-      expect(condition.product_ids_string).to eq("#{condition.products[0].id},#{condition.products[1].id}")
-    end
-  end
-
-  describe "#product_ids_string=" do
-    it "sets products based on a string of product ids" do
-      product_one = create(:product)
-      product_two = create(:product)
-      condition.product_ids_string = "#{product_one.id},#{product_two.id}"
-      expect(condition.products).to eq([product_one, product_two])
     end
   end
 end

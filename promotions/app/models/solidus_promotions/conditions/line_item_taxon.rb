@@ -6,22 +6,13 @@ module SolidusPromotions
       # TODO: Remove in Solidus 5
       include LineItemLevelCondition
 
-      has_many :condition_taxons,
-        class_name: "SolidusPromotions::ConditionTaxon",
-        foreign_key: :condition_id,
-        dependent: :destroy,
-        inverse_of: :condition
-      has_many :taxons, through: :condition_taxons, class_name: "Spree::Taxon"
+      include TaxonCondition
 
       MATCH_POLICIES = %w[include exclude].freeze
 
       validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
 
       preference :match_policy, :string, default: MATCH_POLICIES.first
-
-      def preload_relations
-        [:taxons]
-      end
 
       def line_item_eligible?(line_item, _options = {})
         found = Spree::Classification.where(
@@ -37,26 +28,6 @@ module SolidusPromotions
         else
           raise "unexpected match policy: #{preferred_match_policy.inspect}"
         end
-      end
-
-      def taxon_ids_string
-        taxons.pluck(:id).join(",")
-      end
-
-      def taxon_ids_string=(taxon_ids)
-        taxon_ids = taxon_ids.to_s.split(",").map(&:strip)
-        self.taxons = Spree::Taxon.find(taxon_ids)
-      end
-
-      def updateable?
-        true
-      end
-
-      private
-
-      # ids of taxons conditions and taxons conditions children
-      def condition_taxon_ids_with_children
-        taxons.flat_map { |taxon| taxon.self_and_descendants.ids }.uniq
       end
     end
   end

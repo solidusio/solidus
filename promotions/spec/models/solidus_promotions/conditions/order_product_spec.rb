@@ -2,17 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
+RSpec.describe SolidusPromotions::Conditions::OrderProduct, type: :model do
   let(:condition_options) { {} }
   let(:condition) { described_class.new(condition_options) }
 
   it_behaves_like "a product condition"
 
-  describe "#level", :silence_deprecations do
-    it "is order" do
-      expect(condition.level).to eq(:order)
-    end
-  end
+  it { is_expected.to have_many(:products) }
 
   describe "#applicable?" do
     let(:promotable) { Spree::Order.new }
@@ -24,13 +20,7 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
     context "with a line item" do
       let(:promotable) { Spree::LineItem.new }
 
-      it { is_expected.to be true }
-
-      context "with line item applicable set to false", :silence_deprecations do
-        let(:condition_options) { { preferred_line_item_applicable: false } }
-
-        it { is_expected.to be false }
-      end
+      it { is_expected.to be false }
     end
 
     context "with a shipment" do
@@ -185,29 +175,9 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
     end
   end
 
-  describe "#eligible?(line_item)" do
-    subject { condition.eligible?(line_item) }
+  describe "#to_partial_path" do
+    subject { condition.to_partial_path }
 
-    let(:condition_line_item) { build(:line_item, product: condition_product) }
-    let(:other_line_item) { build(:line_item) }
-
-    let(:condition_options) { super().merge(products: [condition_product]) }
-    let(:condition_product) { build(:product) }
-
-    it "is eligible if there are no products" do
-      expect(condition).to be_eligible(condition_line_item)
-    end
-
-    context "for product in condition" do
-      let(:line_item) { condition_line_item }
-
-      it { is_expected.to be_truthy }
-    end
-
-    context "for product not in condition" do
-      let(:line_item) { other_line_item }
-
-      it { is_expected.to be_falsey }
-    end
+    it { is_expected.to eq("solidus_promotions/admin/condition_fields/product") }
   end
 end

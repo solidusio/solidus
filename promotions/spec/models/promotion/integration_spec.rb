@@ -18,7 +18,7 @@ RSpec.describe "Promotion System" do
     end
 
     context "with an order-level condition" do
-      let(:condition) { SolidusPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
+      let(:condition) { SolidusPromotions::Conditions::OrderProduct.new(products: [shirt]) }
 
       context "with an line item level benefit" do
         let(:calculator) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 20) }
@@ -37,7 +37,7 @@ RSpec.describe "Promotion System" do
         let(:goodie) { create(:variant, price: 4) }
         let(:benefit) { SolidusPromotions::Benefits::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent) }
         let(:hundred_percent) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 100) }
-        let(:condition) { SolidusPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: true) }
+        let(:condition) { SolidusPromotions::Conditions::Product.new(products: [shirt]) }
 
         it "creates a new discounted line item" do
           expect(order.adjustments).to be_empty
