@@ -15,12 +15,5 @@ RSpec.describe SolidusPromotions::Conditions::OptionValueCondition do
 
   subject(:condition) { condition_class.new }
 
-  describe "#preferred_eligible_values" do
-    subject { condition.preferred_eligible_values }
-
-    it "assigns a nicely formatted hash" do
-      condition.preferred_eligible_values = { "5" => "1,2", "6" => "1" }
-      expect(subject).to eq({ 5 => [1, 2], 6 => [1] })
-    end
-  end
+  it_behaves_like "an option value condition"
 end

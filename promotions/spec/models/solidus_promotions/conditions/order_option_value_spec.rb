@@ -5,6 +5,8 @@ require "rails_helper"
 RSpec.describe SolidusPromotions::Conditions::OrderOptionValue do
   let(:condition) { described_class.new }
 
+  it_behaves_like "an option value condition"
+
   describe "#eligible?(order)" do
     subject { condition.eligible?(promotable) }
 
