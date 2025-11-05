@@ -6,6 +6,8 @@ RSpec.describe SolidusPromotions::Conditions::OrderProduct, type: :model do
   let(:condition_options) { {} }
   let(:condition) { described_class.new(condition_options) }
 
+  it_behaves_like "a product condition"
+
   it { is_expected.to have_many(:products) }
 
   describe "#applicable?" do

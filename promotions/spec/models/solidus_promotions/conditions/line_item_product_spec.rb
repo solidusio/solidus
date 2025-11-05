@@ -6,6 +6,8 @@ RSpec.describe SolidusPromotions::Conditions::LineItemProduct, type: :model do
   let(:condition) { described_class.new(condition_options) }
   let(:condition_options) { {} }
 
+  it_behaves_like "a product condition"
+
   describe "#level", :silence_deprecations do
     it "is line_item" do
       expect(condition.level).to eq(:line_item)
