@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model do
   let(:calculator) { described_class.new(preferred_amount: 15, preferred_currency: currency) }
@@ -12,6 +11,8 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
   let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.create(calculator: calculator, conditions: conditions) }
   let(:order) { create(:order_with_line_items, line_items_attributes: line_items_attributes) }
   let(:currency) { "USD" }
+
+  it_behaves_like "a promotion calculator"
 
   context "applied to an order" do
     let(:line_items_attributes) { [{ price: 20 }, { price: 30 }, { price: 100 }] }
