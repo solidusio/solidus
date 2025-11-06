@@ -3,7 +3,7 @@
 module SolidusLegacyPromotions
   module SpreeOrderUpdaterPatch
     def update_adjustment_total
-      recalculate_adjustments
+      update_adjustments
 
       all_items = line_items + shipments
       order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)

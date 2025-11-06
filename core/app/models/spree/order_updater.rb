@@ -110,7 +110,7 @@ module Spree
     # fields (promo_total, included_tax_total, additional_tax_total, and
     # adjustment_total) on the item.
     # @return [void]
-    def recalculate_adjustments
+    def update_adjustments
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
@@ -120,6 +120,8 @@ module Spree
       update_tax_adjustments
       recalculate_item_totals
     end
+    alias_method :recalculate_adjustments, :update_adjustments
+    deprecate recalculate_adjustments: :update_adjustments, deprecator: Spree.deprecator
 
     # Updates the following Order total values:
     #
@@ -164,7 +166,7 @@ module Spree
     deprecate update_order_total: :recalculate_order_total, deprecator: Spree.deprecator
 
     def update_adjustment_total
-      recalculate_adjustments
+      update_adjustments
 
       all_items = line_items + shipments
       # Ignore any adjustments that have been marked for destruction in our
