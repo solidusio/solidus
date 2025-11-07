@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
   context "compute" do
@@ -29,5 +28,5 @@ RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
     end
   end
 
-  it_behaves_like "a calculator with a description"
+  it_behaves_like "a promotion calculator"
 end

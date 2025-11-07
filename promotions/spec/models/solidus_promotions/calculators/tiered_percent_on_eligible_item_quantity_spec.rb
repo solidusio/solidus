@@ -27,6 +27,8 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
 
     subject { promotion.benefits.first.calculator.compute(item) }
 
+    it_behaves_like "a promotion calculator"
+
     # 2 Shirts at 50, 100 USD. 10 % == 10
     it { is_expected.to eq(10) }
 

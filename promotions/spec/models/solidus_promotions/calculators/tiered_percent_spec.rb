@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusPromotions::Calculators::TieredPercent, type: :model do
   let(:calculator) { described_class.new }
 
-  it_behaves_like "a calculator with a description"
+  it_behaves_like "a promotion calculator"
 
   describe "#valid?" do
     subject { calculator.valid? }

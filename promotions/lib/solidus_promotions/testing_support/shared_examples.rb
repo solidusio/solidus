@@ -3,3 +3,4 @@
 require "solidus_promotions/testing_support/shared_examples/product_condition"
 require "solidus_promotions/testing_support/shared_examples/taxon_condition"
 require "solidus_promotions/testing_support/shared_examples/option_value_condition"
+require "solidus_promotions/testing_support/shared_examples/promotion_calculator"

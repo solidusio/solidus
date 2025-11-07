@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Calculators::PercentWithCap, type: :model do
+  it_behaves_like "a promotion calculator"
+
   context "applied to an order" do
     let(:calculator) { described_class.new(preferred_percent: 15, preferred_max_amount: 50) }
     let(:promotion) do
