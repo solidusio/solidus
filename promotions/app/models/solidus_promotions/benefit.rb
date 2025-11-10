@@ -181,30 +181,28 @@ module SolidusPromotions
     # @param dry_run [Boolean] whether to collect detailed eligibility information
     # @return [Boolean] true when all applicable conditions are eligible
     def eligible_by_applicable_conditions?(promotable, dry_run: false)
-      applicable_conditions = conditions.select do |condition|
-        condition.applicable?(promotable)
-      end
+      conditions.filter_map do |condition|
+        condition.applicable?(promotable) && begin
+          eligible = condition.eligible?(promotable)
 
-      applicable_conditions.map do |applicable_condition|
-        eligible = applicable_condition.eligible?(promotable)
+          break [false] if !eligible && !dry_run
 
-        break [false] if !eligible && !dry_run
-
-        if dry_run
-          if applicable_condition.eligibility_errors.details[:base].first
-            code = applicable_condition.eligibility_errors.details[:base].first[:error_code]
-            message = applicable_condition.eligibility_errors.full_messages.first
+          if dry_run
+            if condition.eligibility_errors.details[:base].first
+              code = condition.eligibility_errors.details[:base].first[:error_code]
+              message = condition.eligibility_errors.full_messages.first
+            end
+            promotion.eligibility_results.add(
+              item: promotable,
+              condition: condition,
+              success: eligible,
+              code: eligible ? nil : (code || :coupon_code_unknown_error),
+              message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_promotions, :eligibility_errors]))
+            )
           end
-          promotion.eligibility_results.add(
-            item: promotable,
-            condition: applicable_condition,
-            success: eligible,
-            code: eligible ? nil : (code || :coupon_code_unknown_error),
-            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_promotions, :eligibility_errors]))
-          )
-        end
 
-        eligible
+          eligible
+        end
       end.all?
     end
 
