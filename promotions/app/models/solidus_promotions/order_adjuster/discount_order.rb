@@ -32,26 +32,22 @@ module SolidusPromotions
       private
 
       def perform_order_benefits(lane_benefits, lane)
-        lane_benefits.select { |benefit| benefit.respond_to?(:perform) }.each do |benefit|
-          benefit.perform(order)
+        lane_benefits.filter_map do |benefit|
+          benefit.respond_to?(:perform) && benefit.perform(order)
         end
 
-        automated_line_items = order.line_items.select(&:managed_by_order_benefit)
-        return if automated_line_items.empty?
-
-        ineligible_line_items = automated_line_items.select do |line_item|
-          line_item.managed_by_order_benefit.promotion.lane == lane && !line_item.managed_by_order_benefit.in?(lane_benefits)
-        end
-
-        ineligible_line_items.each do |line_item|
-          line_item.managed_by_order_benefit.remove_from(order)
+        order.line_items.filter_map do |line_item|
+          line_item.managed_by_order_benefit &&
+            line_item.managed_by_order_benefit.promotion.lane == lane &&
+            !line_item.managed_by_order_benefit.in?(lane_benefits) &&
+            line_item.managed_by_order_benefit.remove_from(order)
         end
       end
 
       def adjust_line_items(benefits)
-        order.discountable_line_items.select do |line_item|
-          line_item.variant.product.promotionable?
-        end.map do |line_item|
+        order.discountable_line_items.filter_map do |line_item|
+          next unless line_item.variant.product.promotionable?
+
           discounts = generate_discounts(benefits, line_item)
           chosen_item_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
           [line_item, chosen_item_discounts]
@@ -67,7 +63,9 @@ module SolidusPromotions
       end
 
       def adjust_shipping_rates(benefits)
-        order.shipments.flat_map(&:shipping_rates).select(&:cost).map do |rate|
+        order.shipments.flat_map(&:shipping_rates).filter_map do |rate|
+          next unless rate.cost
+
           discounts = generate_discounts(benefits, rate)
           chosen_item_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
           [rate, chosen_item_discounts]
