@@ -82,11 +82,9 @@ module SolidusPromotions
 
       def generate_discounts(possible_benefits, item)
         eligible_benefits = eligible_benefits_for_promotable(possible_benefits, item)
-        eligible_benefits.select do |benefit|
-          benefit.can_discount?(item)
-        end.map do |benefit|
-          benefit.discount(item)
-        end.compact
+        eligible_benefits.filter_map do |benefit|
+          benefit.can_discount?(item) && benefit.discount(item)
+        end
       end
     end
   end
