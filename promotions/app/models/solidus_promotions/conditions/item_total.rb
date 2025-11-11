@@ -8,6 +8,7 @@ module SolidusPromotions
     # To add extra operators please override `self.operators_map` or any other helper method.
     # To customize the error message you can also override `ineligible_message`.
     class ItemTotal < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       preference :amount, :decimal, default: 100.00
@@ -28,7 +29,7 @@ module SolidusPromotions
         end
       end
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         return false unless order.currency == preferred_currency
 
         unless total_for_order(order).send(operator, threshold)

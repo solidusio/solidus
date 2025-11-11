@@ -33,7 +33,7 @@ RSpec.describe SolidusPromotions::Benefits::AdjustShipment do
     end
   end
 
-  describe "#level" do
+  describe "#level", :silence_deprecations do
     subject { described_class.new.level }
 
     it { is_expected.to eq(:shipment) }

@@ -96,10 +96,14 @@ If you have custom promotion rules or actions, you need to create new conditions
 
 In our experience, using the three actions can do almost all the things necessary, since they are customizable using calculators.
 
-Rules share a lot of the previous API. If you make use of `#actionable?`, you might want to migrate your rule to be a line-item level rule:
+Rules share a lot of the previous API. If you make use of `#actionable?`, you might want to migrate your rule to be a combined order and line-item level rule:
 
 ```rb
 class MyRule < Spree::PromotionRule
+  def eligible?(order)
+    order.total > 100
+  end
+
   def actionable?(promotable)
     promotable.quantity > 3
   end
@@ -110,10 +114,12 @@ would become:
 
 ```rb
 class MyCondition < SolidusPromotions::Condition
-  include LineItemLevelCondition
+  def order_eligible?(order, _options = {})
+    order.total > 100
+  end
 
-  def eligible?(promotable)
-    promotable.quantity > 3
+  def line_item_eligible?(line_item, _options = {})
+    line_item.quantity > 3
   end
 end
 ```

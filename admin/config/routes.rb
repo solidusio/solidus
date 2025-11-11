@@ -87,4 +87,5 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :roles, except: [:show]
   admin_resources :adjustment_reasons, except: [:show]
   admin_resources :store_credit_reasons, except: [:show]
+  admin_resources :product_option_types, only: [], sortable: true
 end

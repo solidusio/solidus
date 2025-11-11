@@ -4,26 +4,16 @@ module SolidusPromotions
   module Conditions
     # A condition to apply a promotion only to line items with or without a chosen product
     class LineItemProduct < Condition
+      # TODO: Remove in Solidus 5
       include LineItemLevelCondition
+
+      include ProductCondition
 
       MATCH_POLICIES = %w[include exclude].freeze
 
-      has_many :condition_products,
-        dependent: :destroy,
-        foreign_key: :condition_id,
-        class_name: "SolidusPromotions::ConditionProduct",
-        inverse_of: :condition
-      has_many :products,
-        class_name: "Spree::Product",
-        through: :condition_products
-
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
-      def preload_relations
-        [:products]
-      end
-
-      def eligible?(line_item, _options = {})
+      def line_item_eligible?(line_item, _options = {})
         order_includes_product = product_ids.include?(line_item.variant.product_id)
         success = inverse? ? !order_includes_product : order_includes_product
 
@@ -37,14 +27,6 @@ module SolidusPromotions
         end
 
         success
-      end
-
-      def product_ids_string
-        product_ids.join(",")
-      end
-
-      def product_ids_string=(product_ids)
-        self.product_ids = product_ids.to_s.split(",").map(&:strip)
       end
 
       private

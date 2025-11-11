@@ -3,6 +3,7 @@
 module SolidusPromotions
   module Conditions
     class Store < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
       has_many :condition_stores,
@@ -16,7 +17,7 @@ module SolidusPromotions
         [:stores]
       end
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         stores.none? || stores.include?(order.store)
       end
 

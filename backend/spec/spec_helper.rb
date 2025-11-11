@@ -65,6 +65,11 @@ ActiveJob::Base.queue_adapter = :test
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
+  if ENV["GITHUB_ACTIONS"]
+    require "rspec/github"
+    config.add_formatter RSpec::Github::Formatter
+  end
+
   config.color = true
   config.infer_spec_type_from_file_location!
   config.expect_with :rspec do |c|

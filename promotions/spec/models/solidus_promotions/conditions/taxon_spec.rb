@@ -13,27 +13,9 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
   let(:taxon_one) { create :taxon, name: "first" }
   let(:taxon_two) { create :taxon, name: "second" }
 
-  it { is_expected.to have_many(:taxons) }
+  it_behaves_like "a taxon condition"
 
   it { is_expected.to be_updateable }
-
-  describe "taxon_ids_string=" do
-    subject { condition.assign_attributes("taxon_ids_string" => taxon_two.id.to_s) }
-
-    let(:condition) { promotion_benefit.conditions.build(type: described_class.to_s) }
-
-    it "creates a valid condition with a taxon" do
-      subject
-      expect(condition).to be_valid
-      condition.save!
-      expect(condition.reload.taxons).to include(taxon_two)
-    end
-  end
-
-  describe "#preload_relations" do
-    subject { condition.preload_relations }
-    it { is_expected.to eq([:taxons]) }
-  end
 
   describe "#eligible?(order)" do
     context "with any match policy" do
@@ -161,42 +143,12 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
         end
       end
     end
-
-    context "with an invalid match policy" do
-      before do
-        order.products.first.taxons << taxon_one
-        condition.taxons << taxon_one
-        condition.preferred_match_policy = "invalid"
-        condition.save!(validate: false)
-      end
-
-      it "raises" do
-        expect {
-          condition.eligible?(order)
-        }.to raise_error('unexpected match policy: "invalid"')
-      end
-    end
   end
 
   describe "#eligible?(line_item)" do
     let(:line_item) { order.line_items.first! }
     let(:order) { create :order_with_line_items }
     let(:taxon) { create :taxon, name: "first" }
-
-    context "with an invalid match policy" do
-      before do
-        condition.preferred_match_policy = "invalid"
-        condition.save!(validate: false)
-        line_item.product.taxons << taxon
-        condition.taxons << taxon
-      end
-
-      it "raises" do
-        expect {
-          condition.eligible?(line_item)
-        }.to raise_error('unexpected match policy: "invalid"')
-      end
-    end
 
     context "when a product has a taxon of a taxon condition" do
       before do

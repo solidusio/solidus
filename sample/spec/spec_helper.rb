@@ -15,6 +15,11 @@ require 'rspec/rails'
 require 'database_cleaner'
 
 RSpec.configure do |config|
+  if ENV["GITHUB_ACTIONS"]
+    require "rspec/github"
+    config.add_formatter RSpec::Github::Formatter
+  end
+
   config.color = true
   config.infer_spec_type_from_file_location!
   config.expect_with :rspec do |c|

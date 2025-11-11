@@ -9,10 +9,14 @@ RSpec.describe SolidusPromotions::Conditions::DiscountedItemTotal, type: :model 
       preferred_operator: preferred_operator
     )
   end
-  let(:order) { instance_double("Spree::Order", discountable_item_total: item_total, currency: order_currency) }
+  let(:order) { Spree::Order.new(currency: order_currency) }
   let(:preferred_amount) { 50 }
   let(:order_currency) { "USD" }
   let(:preferred_operator) { "gt" }
+  let(:item_total) { 0 }
+  before do
+    allow(order).to receive(:discountable_item_total).and_return(item_total)
+  end
 
   context "preferred operator set to gt" do
     context "item total is greater than preferred amount" do

@@ -24,11 +24,11 @@ module Spree
         private
 
         def completed_orders
-          user ? user.orders.complete : orders_by_email
+          user ? user.orders.complete.not_canceled : orders_by_email
         end
 
         def orders_by_email
-          Spree::Order.where(email:).complete
+          Spree::Order.where(email:).complete.not_canceled
         end
       end
     end

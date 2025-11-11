@@ -108,6 +108,16 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
           controller.set_current_order
         end
       end
+
+      context 'an order from the same store but not frontend viewable' do
+        let(:incomplete_order_store) { store }
+        let(:incomplete_order) { create(:order, store: incomplete_order_store, user:, frontend_viewable: false) }
+
+        it 'does not call Spree::Order#merge! method' do
+          expect(order).not_to receive(:merge!)
+          controller.set_current_order
+        end
+      end
     end
   end
 

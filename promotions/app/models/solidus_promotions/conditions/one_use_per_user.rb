@@ -3,9 +3,10 @@
 module SolidusPromotions
   module Conditions
     class OneUsePerUser < Condition
+      # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
-      def eligible?(order, _options = {})
+      def order_eligible?(order, _options = {})
         if order.user.present?
           if promotion.used_by?(order.user, [order])
             eligibility_errors.add(

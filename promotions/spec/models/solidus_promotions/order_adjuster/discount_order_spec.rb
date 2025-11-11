@@ -38,7 +38,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster::DiscountOrder do
     let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }]) }
     let(:conditions) { [product_condition] }
     let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, conditions: conditions, name: "20% off Shirts", apply_automatically: true) }
-    let(:product_condition) { SolidusPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
+    let(:product_condition) { SolidusPromotions::Conditions::OrderProduct.new(products: [shirt]) }
     let(:promotions) { [promotion] }
     let(:discounter) { described_class.new(order, promotions, dry_run: true) }
 
@@ -135,7 +135,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster::DiscountOrder do
     end
 
     context "when the order must not contain a shirt" do
-      let(:no_shirt_condition) { SolidusPromotions::Conditions::Product.new(products: [shirt], preferred_match_policy: "none", preferred_line_item_applicable: false) }
+      let(:no_shirt_condition) { SolidusPromotions::Conditions::OrderProduct.new(products: [shirt], preferred_match_policy: "none") }
       let(:conditions) { [no_shirt_condition] }
 
       it "can tell us about success" do
@@ -149,7 +149,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster::DiscountOrder do
       let(:usps) { create(:shipping_method) }
       let(:ups_ground) { create(:shipping_method) }
       let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt.master, quantity: 1 }], shipping_method: ups_ground) }
-      let(:product_condition) { SolidusPromotions::Conditions::Product.new(products: [shirt], preferred_line_item_applicable: false) }
+      let(:product_condition) { SolidusPromotions::Conditions::OrderProduct.new(products: [shirt]) }
       let(:shipping_method_condition) { SolidusPromotions::Conditions::ShippingMethod.new(preferred_shipping_method_ids: [usps.id]) }
       let(:ten_off_items) { SolidusPromotions::Calculators::Percent.create!(preferred_percent: 10) }
       let(:ten_off_shipping) { SolidusPromotions::Calculators::Percent.create!(preferred_percent: 10) }

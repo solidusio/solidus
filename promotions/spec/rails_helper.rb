@@ -75,6 +75,7 @@ Spree::Config.promotions = SolidusPromotions.configuration
 ActiveJob::Base.queue_adapter = :test
 
 require "spree/testing_support/capybara_driver"
+require "solidus_promotions/testing_support/shared_examples"
 
 # Allow Capybara to find elements by aria-label attributes
 Capybara.enable_aria_label = true

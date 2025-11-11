@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusPromotions::Calculators::FlexiRate, type: :model do
   let(:calculator) do
@@ -26,7 +25,7 @@ RSpec.describe SolidusPromotions::Calculators::FlexiRate, type: :model do
     )
   end
 
-  it_behaves_like "a calculator with a description"
+  it_behaves_like "a promotion calculator"
 
   context "compute" do
     subject { calculator.compute(line_item) }

@@ -36,6 +36,10 @@ gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
 gem 'db-query-matchers', require: false
 
+if ENV['GITHUB_ACTIONS']
+  gem "rspec-github", "~> 3.0", require: false
+end
+
 # Ensure the requirement is also updated in core/lib/spree/testing_support/factory_bot.rb
 gem 'factory_bot_rails', '>= 4.8', require: false
 

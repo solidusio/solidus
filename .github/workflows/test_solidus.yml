@@ -98,7 +98,7 @@ jobs:
         run: |
           cd ${{ inputs.lib_name }}
           bundle exec rake test_app
-          bundle exec rspec --profile 10 --format progress
+          bundle exec rspec --profile 10 --format progress --format RSpec::Github::Formatter
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v5
         if: ${{ steps.setup-coverage.outputs.coverage == 'true' }}

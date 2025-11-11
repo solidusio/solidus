@@ -9,7 +9,7 @@ RSpec.describe SolidusPromotions::Conditions::ItemTotal, type: :model do
       preferred_operator: preferred_operator
     )
   end
-  let(:order) { instance_double("Spree::Order", item_total: item_total, currency: order_currency) }
+  let(:order) { Spree::Order.new(item_total: item_total, currency: order_currency) }
   let(:preferred_amount) { 50 }
   let(:order_currency) { "USD" }
 

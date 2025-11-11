@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "shared_examples/calculator_shared_examples"
 
 RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
   let(:calculator) { described_class.new }
 
-  it_behaves_like "a calculator with a description"
+  it_behaves_like "a promotion calculator"
 
   describe "#valid?" do
     subject { calculator.valid? }
@@ -61,6 +60,14 @@ RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
           expect(subject).to be true
           expect(calculator.preferred_tiers).to eq({ BigDecimal("20.5") => BigDecimal("20.5") })
         end
+      end
+    end
+
+    context "setting tiers to anything but a Hash" do
+      it "raises TypeError" do
+        expect {
+          calculator.preferred_tiers = :no_hash
+        }.to raise_exception(TypeError)
       end
     end
   end
