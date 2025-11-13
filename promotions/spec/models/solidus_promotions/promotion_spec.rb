@@ -11,6 +11,8 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
   it { is_expected.to have_many(:order_promotions).dependent(:destroy) }
   it { is_expected.to have_many(:code_batches).dependent(:destroy) }
 
+  it { is_expected.to respond_to(:amount_limit) }
+
   describe "lane" do
     it { is_expected.to respond_to(:lane) }
 
