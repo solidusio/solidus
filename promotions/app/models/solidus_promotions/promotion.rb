@@ -66,6 +66,14 @@ module SolidusPromotions
       lanes.keys.sort_by { |lane| lanes[lane] }
     end
 
+    def self.lanes_before(lane)
+      ordered_lanes.split(lane.to_s).first
+    end
+
+    def self.lanes_before_current_lane
+      lanes_before(current_lane)
+    end
+
     def self.order_activatable?(order)
       return false if UNACTIVATABLE_ORDER_STATES.include?(order.state)
       return false if order.shipped?
