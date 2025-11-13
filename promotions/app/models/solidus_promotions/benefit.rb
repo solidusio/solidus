@@ -128,7 +128,7 @@ module SolidusPromotions
     # @return [BigDecimal] a negative amount suitable for creating an adjustment
     def compute_amount(adjustable, ...)
       promotion_amount = calculator.compute(adjustable, ...) || Spree::ZERO
-      [adjustable.discountable_amount, promotion_amount.abs].min * -1
+      [remaining_discountable_amount_for_item(adjustable), promotion_amount.abs].min * -1
     end
 
     # Builds the localized label for adjustments created by this benefit.
@@ -230,6 +230,23 @@ module SolidusPromotions
     end
 
     private
+
+    def remaining_discountable_amount_for_item(item)
+      return item.discountable_amount unless promotion.amount_limit
+      remaining_amount_limit = promotion.amount_limit + promotion_total_for_order(item.order)
+      return Spree::ZERO if remaining_amount_limit <= Spree::ZERO
+      [item.discountable_amount, remaining_amount_limit].min
+    end
+
+    def promotion_total_for_order(order)
+      current_lane_discounts_for_order(order).sum(&:amount)
+    end
+
+    def current_lane_discounts_for_order(order)
+      (order.line_items + order.shipments).flat_map(&:current_lane_discounts).select do |item_discount|
+        item_discount.source.in?(promotion.benefits)
+      end
+    end
 
     # Prevents destroying a benefit when it has adjustments on completed orders.
     #

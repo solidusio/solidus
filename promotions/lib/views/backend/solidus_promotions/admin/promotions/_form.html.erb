@@ -49,6 +49,11 @@
         <% end %>
       <% end %>
 
+      <%= f.field_container :overall_amount_limit do %>
+        <%= f.label :amount_limit %>
+        <%= f.number_field :amount_limit, class: 'fullwidth' %>
+      <% end %>
+
       <div id="starts_at_field" class="form-group">
         <%= f.label :starts_at %>
         <%= f.field_hint :starts_at %>
