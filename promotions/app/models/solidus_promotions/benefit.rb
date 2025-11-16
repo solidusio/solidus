@@ -11,9 +11,9 @@ module SolidusPromotions
   # Subclasses specialize the discounting target (orders, line items, or
   # shipments) and usually include one of the following mixins to integrate with
   # Solidus' adjustment system:
-  # - SolidusPromotions::Benefits::OrderBenefit
-  # - SolidusPromotions::Benefits::LineItemBenefit
-  # - SolidusPromotions::Benefits::ShipmentBenefit
+  # - SolidusPromotions::Benefits::AdjustLineItem
+  # - SolidusPromotions::Benefits::AdjustShipment
+  # - SolidusPromotions::Benefits::CreateDiscountedItem
   #
   # A benefit can discount any object for which {#can_discount?} returns true.
   # Implementors must provide a calculator via Spree::CalculatedAdjustments and
@@ -67,7 +67,7 @@ module SolidusPromotions
     # Returns relations that should be preloaded for this condition.
     #
     # Override this method in subclasses to specify associations that should be eager loaded
-    # to avoid N+1 queries when evaluating conditions.
+    # to avoid N+1 queries when computing discounts or performing automations.
     #
     # @return [Array<Symbol>] An array of association names to preload
     def preload_relations
@@ -81,13 +81,11 @@ module SolidusPromotions
     #
     # @param object [Object] a potential adjustable (order, line item, or shipment)
     # @return [Boolean]
-    # @raise [NotImplementedError] when not implemented by the subclass/mixin
-    # @see SolidusPromotions::Benefits::OrderBenefit,
-    #      SolidusPromotions::Benefits::LineItemBenefit,
-    #      SolidusPromotions::Benefits::ShipmentBenefit
+    # @see SolidusPromotions::Benefits::AdjustLineItem,
+    #      SolidusPromotions::Benefits::AdjustShipment,
+    #      SolidusPromotions::Benefits::CreateDiscountedItem
     def can_discount?(object)
-      raise NotImplementedError, "Please implement the correct interface, or include one of the `SolidusPromotions::Benefits::OrderBenefit`, " \
-        "`SolidusPromotions::Benefits::LineItemBenefit` or `SolidusPromotions::Benefits::ShipmentBenefit` modules"
+      respond_to?(discount_method_for(object))
     end
 
     # Calculates and returns a discount for the given adjustable object.
@@ -96,7 +94,7 @@ module SolidusPromotions
     # an ItemDiscount object representing the discount to be applied. If the computed
     # amount is zero, no discount is returned.
     #
-    # @param adjustable [Object] The object to calculate the discount for (e.g., LineItem, Order, Shipment)
+    # @param adjustable [Object] The object to calculate the discount for (e.g., LineItem, Shipment, ShippingRate)
     # @param ... [args, kwargs] Additional arguments passed to the calculator's compute method
     #
     # @return [SolidusPromotions::ItemDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
@@ -108,14 +106,11 @@ module SolidusPromotions
     # @see #compute_amount
     # @see #adjustment_label
     def discount(adjustable, ...)
-      amount = compute_amount(adjustable, ...)
-      return if amount.zero?
-      ItemDiscount.new(
-        item: adjustable,
-        label: adjustment_label(adjustable),
-        amount: amount,
-        source: self
-      )
+      if can_discount?(adjustable)
+        send(discount_method_for(adjustable), adjustable, ...)
+      else
+        raise NotImplementedError, "Please implement #{discount_method_for(adjustable)} in your condition"
+      end
     end
 
     # Computes the discount amount for the given adjustable.
@@ -230,6 +225,10 @@ module SolidusPromotions
     end
 
     private
+
+    def discount_method_for(adjustable)
+      :"discount_#{adjustable.class.name.demodulize.underscore}"
+    end
 
     # Prevents destroying a benefit when it has adjustments on completed orders.
     #
