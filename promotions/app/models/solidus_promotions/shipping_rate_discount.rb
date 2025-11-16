@@ -5,6 +5,8 @@ module SolidusPromotions
     belongs_to :shipping_rate, inverse_of: :discounts, class_name: "Spree::ShippingRate"
     belongs_to :benefit, inverse_of: :shipping_rate_discounts
 
+    alias_method :source, :benefit
+
     extend Spree::DisplayMoney
     money_methods :amount
   end

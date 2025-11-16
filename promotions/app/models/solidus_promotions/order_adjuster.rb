@@ -14,15 +14,13 @@ module SolidusPromotions
     end
 
     def call
-      order.reset_current_discounts
-
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
 
-      discounted_order = DiscountOrder.new(order, promotions, dry_run: dry_run).call
+      SetDiscountsToZero.call(order)
 
-      PersistDiscountedOrder.new(discounted_order).call
+      DiscountOrder.new(order, promotions, dry_run: dry_run).call
 
-      RecalculatePromoTotals.call(discounted_order)
+      RecalculatePromoTotals.call(order)
     end
   end
 end

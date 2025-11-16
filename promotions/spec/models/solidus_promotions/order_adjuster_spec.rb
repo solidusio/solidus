@@ -72,12 +72,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it "creates the adjustment" do
           expect {
             subject
-          }.to change { adjustable.adjustments.length }.by(1)
-        end
-
-        it "does not keep the current discounts" do
-          subject
-          expect(adjustable.current_discounts).to be_empty
+          }.to change { order.line_items.first.adjustments.length }.by(1)
         end
 
         it "updates adjustment labels" do
@@ -93,11 +88,10 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
           let(:line_item) { order.line_items.first }
           let(:order) { create(:order_ready_to_ship) }
 
-          it "creates the adjustment" do
+          it "builds the adjustment" do
             expect {
               subject
-              order.save
-            }.to change { adjustable.reload.adjustments.length }.by(1)
+            }.to change { order.line_items.first.adjustments.length }.by(1)
           end
 
           context "but the preference to recalculate complete orders is set to false" do
@@ -110,8 +104,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
             it "will not create the adjustment" do
               expect {
                 subject
-                order.save
-              }.not_to change { adjustable.reload.adjustments.length }
+              }.not_to change { order.line_items.first.adjustments.length }
             end
           end
         end
@@ -122,7 +115,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it " will not create the adjustment" do
           expect {
             subject
-          }.not_to change { adjustable.adjustments.length }
+          }.not_to change { order.line_items.first.adjustments.reject(&:marked_for_destruction?).length }
         end
       end
 
@@ -138,7 +131,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it "doesn't create an adjustment" do
           expect {
             subject
-          }.to change { adjustable.adjustments.length }.by(0)
+          }.to change { order.line_items.first.adjustments.length }.by(0)
         end
 
         context "for an line item that has an adjustment from the old promotion system" do
@@ -149,7 +142,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
             adjustable.reload
             expect {
               subject
-            }.to change { adjustable.adjustments.first.marked_for_destruction? }
+            }.to change { order.line_items.first.adjustments.first.marked_for_destruction? }
               .from(false).to(true)
           end
         end
@@ -165,7 +158,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it "creates the adjustment" do
           expect {
             subject
-          }.to change { adjustable.adjustments.length }.by(1)
+          }.to change { order.line_items.first.adjustments.length }.by(1)
         end
       end
     end
@@ -186,7 +179,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it "creates the adjustment" do
           expect {
             subject
-          }.to change { adjustable.adjustments.length }.by(1)
+          }.to change { order.line_items.first.adjustments.length }.by(1)
         end
       end
     end
@@ -204,7 +197,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
     end
 
     it "creates shipping rate discounts" do
-      expect { subject }.to change { SolidusPromotions::ShippingRateDiscount.count }
+      expect { subject }.to change { order.shipments.first.shipping_rates.first.discounts.length }.by(1)
     end
 
     context "if the promo is eligible but the calculcator returns 0" do
@@ -214,7 +207,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       it "will not create an adjustment on the shipping rate" do
         expect do
           subject
-        end.not_to change { order.shipments.first.shipping_rates.first.discounts.length }
+        end.not_to change { order.shipments.first.shipping_rates.first.discounts.reject(&:marked_for_destruction?).length }
       end
     end
   end
@@ -229,7 +222,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       expect do
         promotion
         subject.call
-      end.to change { order.shipments.first.adjustments.length }
+      end.to change { order.shipments.first.adjustments.length }.from(0).to(1)
     end
 
     context "if the promo is eligible but the calculcator returns 0" do
@@ -240,7 +233,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         expect do
           promotion
           subject.call
-        end.not_to change { order.shipments.first.adjustments.length }
+        end.not_to change { order.shipments.first.adjustments.reject(&:marked_for_destruction?).length }
       end
     end
   end

@@ -97,11 +97,11 @@ module SolidusPromotions
     # @param adjustable [Object] The object to calculate the discount for (e.g., LineItem, Shipment, ShippingRate)
     # @param ... [args, kwargs] Additional arguments passed to the calculator's compute method
     #
-    # @return [SolidusPromotions::ItemDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
+    # @return [Spree::Adjustment, SolidusPromotions::ShippingRateDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
     #
     # @example Calculating a discount for a line item
     #   benefit.discount(line_item)
-    #   # => #<SolidusPromotions::ItemDiscount item: #<Spree::LineItem>, amount: -10.00, ...>
+    #   # => #<Spree::Adjustment, adjustable: line_item, amount: -10.00, ...>
     #
     # @see #compute_amount
     # @see #adjustment_label
