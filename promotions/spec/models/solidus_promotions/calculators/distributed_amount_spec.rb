@@ -17,6 +17,12 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
   context "applied to an order" do
     let(:line_items_attributes) { [{ price: 20 }, { price: 30 }, { price: 100 }] }
 
+    around do |example|
+      SolidusPromotions::Promotion.within_lane("default") do
+        example.run
+      end
+    end
+
     before do
       order.recalculate
     end
@@ -47,6 +53,12 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
 
   describe "#compute_line_item" do
     subject { calculator.compute_line_item(order.line_items.first) }
+
+    around do |example|
+      SolidusPromotions::Promotion.within_lane("default") do
+        example.run
+      end
+    end
 
     let(:line_items_attributes) { [{ price: 50 }, { price: 50 }, { price: 50 }] }
 

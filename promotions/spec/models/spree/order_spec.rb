@@ -11,7 +11,7 @@ RSpec.describe Spree::Order do
     let(:shipment) { Spree::Shipment.new }
     let(:order) { Spree::Order.new(shipments: [shipment], line_items: [line_item]) }
 
-    subject { order.reset_discounts }
+    subject { order.reset_current_discounts }
 
     it "resets the current discounts on all line items and shipments" do
       expect(line_item).to receive(:reset_current_discounts)

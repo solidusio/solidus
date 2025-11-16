@@ -45,17 +45,25 @@ RSpec.describe Spree::ShippingRate do
   end
 
   describe "#discountable_amount" do
+    let(:promotion) { build(:solidus_promotion, lane: :pre) }
+    let(:benefit) { SolidusPromotions::Benefit.new(promotion:) }
     let(:discounts) { [] }
-    let(:shipping_rate) { Spree::ShippingRate.new(amount: 20, current_discounts: discounts) }
+    let(:line_item) { Spree::ShippingRate.new(cost: 20, discounts:) }
 
-    subject(:discountable_amount) { shipping_rate.discountable_amount }
+    subject(:discountable_amount) { line_item.discountable_amount }
+
+    around do |example|
+      SolidusPromotions::Promotion.within_lane("default") do
+        example.run
+      end
+    end
 
     it { is_expected.to eq(20) }
 
     context "with a proposed discount" do
       let(:discounts) do
         [
-          SolidusPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
+          SolidusPromotions::ShippingRateDiscount.new(amount: -2, label: "Foo", benefit:)
         ]
       end
 
@@ -63,7 +71,7 @@ RSpec.describe Spree::ShippingRate do
     end
   end
 
-  describe "#reset_current_discounts" do
+  describe "#reset_current_discounts", :silence_deprecations do
     let(:shipping_rate) { Spree::ShippingRate.new }
 
     subject { shipping_rate.reset_current_discounts }

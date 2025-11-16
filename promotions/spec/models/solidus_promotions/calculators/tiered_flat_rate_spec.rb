@@ -85,6 +85,12 @@ RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
     let(:line_item) { order.line_items.first }
     let(:preferred_currency) { "USD" }
 
+    around do |example|
+      SolidusPromotions::Promotion.within_lane("default") do
+        example.run
+      end
+    end
+
     before do
       calculator.preferred_base_amount = 10
       calculator.preferred_tiers = {

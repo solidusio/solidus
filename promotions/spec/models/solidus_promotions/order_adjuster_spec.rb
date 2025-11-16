@@ -29,9 +29,9 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
           }.to change { adjustable.adjustments.length }.by(1)
         end
 
-        it "does not keep the current discounts" do
+        it "raises when trying to access the discounts of the current lane outside of promo calculation" do
           subject
-          expect(adjustable.current_discounts).to be_empty
+          expect { adjustable.current_lane_discounts }.to raise_exception(SolidusPromotions::NotCalculatingPromotions)
         end
 
         context "if order is complete but not shipped" do
