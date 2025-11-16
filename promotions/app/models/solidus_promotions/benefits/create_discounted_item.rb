@@ -3,7 +3,6 @@
 module SolidusPromotions
   module Benefits
     class CreateDiscountedItem < Benefit
-      include OrderBenefit
       preference :variant_id, :integer
       preference :quantity, :integer, default: 1
       preference :necessary_quantity, :integer, default: 1
@@ -11,7 +10,7 @@ module SolidusPromotions
       def perform(order)
         line_item = find_item(order) || create_item(order)
         set_quantity(line_item, determine_item_quantity(order))
-        line_item.current_discounts << discount(line_item)
+        line_item.current_discounts << discount_line_item(line_item)
       end
 
       def remove_from(order)
@@ -19,7 +18,24 @@ module SolidusPromotions
         order.line_items.destroy(line_item)
       end
 
+      def level
+        :order
+      end
+      deprecate :level, deprecator: Spree.deprecator
+
       private
+
+      def discount_line_item(line_item, ...)
+        amount = compute_amount(line_item, ...)
+        return if amount.zero?
+
+        ItemDiscount.new(
+          item: line_item,
+          label: adjustment_label(line_item),
+          amount: amount,
+          source: self
+        )
+      end
 
       def find_item(order)
         order.line_items.detect { |line_item| line_item.managed_by_order_benefit == self }
