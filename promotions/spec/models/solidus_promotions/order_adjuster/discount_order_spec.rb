@@ -10,8 +10,8 @@ RSpec.describe SolidusPromotions::OrderAdjuster::DiscountOrder do
     subject { described_class.new(order, promotions).call }
 
     it "returns the order unmodified" do
-      expect(order).not_to receive(:reset_current_discounts)
       expect(subject).to eq(order)
+      expect(order.changes).to be_empty
     end
   end
 

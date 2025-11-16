@@ -21,6 +21,12 @@ RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups do
   let(:quantity) { 1 }
   let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
 
+  around do |example|
+    SolidusPromotions::PromotionLane.set(current_lane: promotion.lane) do
+      example.run
+    end
+  end
+
   describe "#compute_amount" do
     subject { action.compute_amount(line_item) }
 

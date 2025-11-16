@@ -4,36 +4,38 @@ require "rails_helper"
 
 RSpec.describe Spree::Shipment do
   describe "#discountable_amount" do
+    let(:promotion) { build(:solidus_promotion, lane: :pre) }
+    let(:benefit) { SolidusPromotions::Benefit.new(promotion:) }
     let(:discounts) { [] }
-    let(:shipment) { Spree::Shipment.new(amount: 20, current_discounts: discounts) }
+    let(:line_item) { Spree::Shipment.new(cost: 20, adjustments: discounts) }
 
-    subject(:discountable_amount) { shipment.discountable_amount }
+    subject(:discountable_amount) { line_item.discountable_amount }
 
     it { is_expected.to eq(20) }
 
     context "with a proposed discount" do
       let(:discounts) do
         [
-          SolidusPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
+          Spree::Adjustment.new(amount: -2, label: "Foo", source: benefit)
         ]
       end
 
       it { is_expected.to eq(18) }
     end
+  end
 
-    describe "#reset_current_discounts" do
-      let(:shipping_rate) { Spree::ShippingRate.new }
-      let(:shipment) { Spree::Shipment.new(shipping_rates: [shipping_rate]) }
+  describe "#reset_current_discounts", :silence_deprecations do
+    let(:shipping_rate) { Spree::ShippingRate.new }
+    let(:shipment) { Spree::Shipment.new(shipping_rates: [shipping_rate]) }
 
-      subject { shipment.reset_current_discounts }
-      before do
-        shipment.current_discounts << SolidusPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
-      end
+    subject { shipment.reset_current_discounts }
+    before do
+      shipment.current_discounts << SolidusPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
+    end
 
-      it "resets the current discounts to an empty array and resets current discounts on all shipping rates" do
-        expect(shipping_rate).to receive(:reset_current_discounts)
-        expect { subject }.to change { shipment.current_discounts.length }.from(1).to(0)
-      end
+    it "resets the current discounts to an empty array and resets current discounts on all shipping rates" do
+      expect(shipping_rate).to receive(:reset_current_discounts)
+      expect { subject }.to change { shipment.current_discounts.length }.from(1).to(0)
     end
   end
 

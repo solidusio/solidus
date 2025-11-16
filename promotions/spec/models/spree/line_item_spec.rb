@@ -6,8 +6,10 @@ RSpec.describe Spree::LineItem do
   it { is_expected.to belong_to(:managed_by_order_benefit).optional }
 
   describe "#discountable_amount" do
+    let(:promotion) { build(:solidus_promotion, lane: :pre) }
+    let(:benefit) { SolidusPromotions::Benefit.new(promotion:) }
     let(:discounts) { [] }
-    let(:line_item) { Spree::LineItem.new(price: 10, quantity: 2, current_discounts: discounts) }
+    let(:line_item) { Spree::LineItem.new(price: 10, quantity: 2, adjustments: discounts) }
 
     subject(:discountable_amount) { line_item.discountable_amount }
 
@@ -16,7 +18,7 @@ RSpec.describe Spree::LineItem do
     context "with a proposed discount" do
       let(:discounts) do
         [
-          SolidusPromotions::ItemDiscount.new(item: double, amount: -2, label: "Foo", source: double)
+          Spree::Adjustment.new(amount: -2, label: "Foo", source: benefit)
         ]
       end
 
@@ -24,7 +26,7 @@ RSpec.describe Spree::LineItem do
     end
   end
 
-  describe "#reset_current_discounts" do
+  describe "#reset_current_discounts", :silence_deprecations do
     let(:line_item) { Spree::LineItem.new }
 
     subject { line_item.reset_current_discounts }
