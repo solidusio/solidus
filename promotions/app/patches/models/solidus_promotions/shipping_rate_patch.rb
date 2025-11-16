@@ -29,6 +29,10 @@ module SolidusPromotions
       end
     end
 
+    def reset_discounts
+      discounts.each { |discount| discount.amount = 0 }
+    end
+
     Spree::ShippingRate.prepend SolidusPromotions::Discountable
     Spree::ShippingRate.prepend SolidusPromotions::DiscountableAmount
     Spree::ShippingRate.prepend self

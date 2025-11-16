@@ -9,6 +9,10 @@ module SolidusPromotions
       base.after_save :reset_quantity_setter
     end
 
+    def reset_discounts
+      adjustments.select(&:promotion?).each { |adjustment| adjustment.amount = 0 }
+    end
+
     private
 
     def validate_managed_quantity_same

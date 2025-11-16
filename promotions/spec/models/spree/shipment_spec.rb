@@ -37,6 +37,23 @@ RSpec.describe Spree::Shipment do
     end
   end
 
+  describe "#reset_discounts" do
+    let(:shipping_promo) { create(:solidus_promotion, :with_free_shipping) }
+    let(:shipping_rate) { build(:shipping_rate) }
+    let(:shipment) { build(:shipment, shipping_rates: [shipping_rate], cost: 10, adjustments: [Spree::Adjustment.new(source: shipping_promo.benefits.first, amount: -10)]) }
+
+    it "resets all in-memory adjustments to 0" do
+      expect(shipment.total_before_tax).to be_zero
+      shipment.reset_discounts
+      expect(shipment.total_before_tax).to eq(10)
+    end
+
+    it "resets discounts on shipping rates" do
+      expect(shipping_rate).to receive(:reset_discounts)
+      shipment.reset_discounts
+    end
+  end
+
   describe "#discounts_by_lanes" do
     let(:tax_rate) { create(:tax_rate) }
     let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }

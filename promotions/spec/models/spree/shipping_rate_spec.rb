@@ -157,4 +157,15 @@ RSpec.describe Spree::ShippingRate do
       end
     end
   end
+
+  describe "#reset_discounts" do
+    let(:shipping_rate) { build(:shipping_rate, amount: 10, discounts: [discount]) }
+    let(:discount) { build(:solidus_shipping_rate_discount, amount: -2) }
+
+    subject { shipping_rate.reset_discounts }
+
+    it "resets all discounts to zero" do
+      expect { subject }.to change(shipping_rate, :total_before_tax).from(8).to(10)
+    end
+  end
 end
