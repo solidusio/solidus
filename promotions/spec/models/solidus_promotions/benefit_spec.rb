@@ -12,10 +12,22 @@ RSpec.describe SolidusPromotions::Benefit do
   it { is_expected.to respond_to :can_discount? }
 
   describe "#can_adjust?" do
-    subject { described_class.new.can_discount?(double) }
+    let(:adjustable) { Spree::LineItem.new }
+    let(:benefit_class) do
+      Class.new(described_class) do
+        def discount_line_item(line_item, options = {})
+        end
+      end
+    end
 
-    it "raises a NotImplementedError" do
-      expect { subject }.to raise_exception(NotImplementedError)
+    subject { benefit_class.new.can_discount?(adjustable) }
+
+    it { is_expected.to be true }
+
+    context "if passing in an incompatible object" do
+      let(:adjustable) { Spree::Shipment.new }
+
+      it { is_expected.to be false }
     end
   end
 
@@ -69,22 +81,23 @@ RSpec.describe SolidusPromotions::Benefit do
   describe "#discount" do
     subject { benefit.discount(discountable) }
 
+    let(:benefit_class) do
+      Class.new(described_class) do
+        def discount_line_item(line_item, options = {})
+        end
+      end
+    end
+
     let(:variant) { create(:variant) }
     let(:order) { create(:order) }
     let(:discountable) { Spree::LineItem.new(order: order, variant: variant, price: 10, quantity: 1) }
     let(:promotion) { SolidusPromotions::Promotion.new(customer_label: "20 Perzent off") }
     let(:calculator) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 20) }
-    let(:benefit) { described_class.new(promotion: promotion, calculator: calculator) }
+    let(:benefit) { benefit_class.new(promotion: promotion, calculator: calculator) }
 
-    it "returns an discount to the discountable" do
-      expect(subject).to eq(
-        SolidusPromotions::ItemDiscount.new(
-          item: discountable,
-          label: "Promotion (20 Perzent off)",
-          source: benefit,
-          amount: -2
-        )
-      )
+    it "passes adjustable to discount_line_item" do
+      expect(benefit).to receive(:discount_line_item).with(discountable)
+      subject
     end
 
     context "if the calculator returns nil" do
@@ -105,16 +118,29 @@ RSpec.describe SolidusPromotions::Benefit do
       end
     end
 
+    context "if discount method for the discountable is not implemented" do
+      let(:benefit) { described_class.new }
+
+      it "raises NotImplementError" do
+        expect { subject }.to raise_exception(NotImplementedError, "Please implement discount_line_item in your condition")
+      end
+    end
+
     context "if passing in extra options" do
+      let(:benefit_class) { SolidusPromotions::Benefits::AdjustLineItem }
       let(:calculator_class) do
         Class.new(Spree::Calculator) do
           def compute_line_item(_line_item, _options) = 1
         end
       end
       let(:calculator) { calculator_class.new }
-      let(:discountable) { build(:line_item) }
+      let(:promotion) { build(:solidus_promotion) }
+      let(:benefit) { benefit_class.new(promotion:, calculator:) }
+      let(:order) { Spree::Order.new }
+      let(:discountable) { build(:line_item, order:) }
 
       subject { benefit.discount(discountable, extra_data: "foo") }
+
       it "passes the option on to the calculator" do
         expect(calculator).to receive(:compute_line_item).with(discountable, extra_data: "foo").and_return(1)
         subject
