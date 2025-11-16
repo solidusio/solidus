@@ -33,12 +33,18 @@ RSpec.describe SolidusPromotions::Benefits::CreateDiscountedItem do
     let(:hundred_percent) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 100) }
     let(:goodie) { create(:variant) }
 
+    around do |example|
+      SolidusPromotions::Promotion.within_lane("default") do
+        example.run
+      end
+    end
+
     subject { benefit.perform(order) }
 
     it "creates a line item with a hundred percent discount" do
       expect { subject }.to change { order.line_items.count }.by(1)
       created_item = order.line_items.detect { |line_item| line_item.managed_by_order_benefit == benefit }
-      expect(created_item.discountable_amount).to be_zero
+      expect(created_item.total_before_tax).to be_zero
     end
 
     it "never calls the order recalculator" do

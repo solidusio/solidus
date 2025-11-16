@@ -10,7 +10,7 @@ module SolidusPromotions
       def perform(order)
         line_item = find_item(order) || create_item(order)
         set_quantity(line_item, determine_item_quantity(order))
-        line_item.current_discounts << discount_line_item(line_item)
+        discount_line_item(line_item)
       end
 
       def remove_from(order)
@@ -26,15 +26,15 @@ module SolidusPromotions
       private
 
       def discount_line_item(line_item, ...)
-        amount = compute_amount(line_item, ...)
-        return if amount.zero?
-
-        ItemDiscount.new(
-          item: line_item,
-          label: adjustment_label(line_item),
-          amount: amount,
+        adjustment = line_item.adjustments.detect do |adjustment|
+          adjustment.source == self
+        end || line_item.adjustments.build(
+          order: line_item.order,
           source: self
         )
+        adjustment.amount = compute_amount(line_item, ...)
+        adjustment.label = adjustment_label(line_item)
+        adjustment
       end
 
       def find_item(order)

@@ -141,6 +141,12 @@ RSpec.describe SolidusPromotions::Benefit do
 
       subject { benefit.discount(discountable, extra_data: "foo") }
 
+      around do |example|
+        SolidusPromotions::Promotion.within_lane("default") do
+          example.run
+        end
+      end
+
       it "passes the option on to the calculator" do
         expect(calculator).to receive(:compute_line_item).with(discountable, extra_data: "foo").and_return(1)
         subject
