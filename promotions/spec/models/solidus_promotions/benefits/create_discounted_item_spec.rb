@@ -39,7 +39,7 @@ RSpec.describe SolidusPromotions::Benefits::CreateDiscountedItem do
     it "creates a line item with a hundred percent discount" do
       expect { subject }.to change { order.line_items.size }.by(1)
       created_item = order.line_items.detect { |line_item| line_item.managed_by_order_benefit == benefit }
-      expect(created_item.discountable_amount).to be_zero
+      expect(created_item.total_before_tax).to be_zero
     end
 
     it "never calls the order recalculator" do

@@ -4,15 +4,10 @@ module SolidusPromotions
   module Benefits
     class AdjustLineItem < Benefit
       def discount_line_item(line_item, ...)
-        amount = compute_amount(line_item, ...)
-        return if amount.zero?
-
-        ItemDiscount.new(
-          item: line_item,
-          label: adjustment_label(line_item),
-          amount: amount,
-          source: self
-        )
+        adjustment = find_adjustment(line_item) || build_adjustment(line_item)
+        adjustment.amount = compute_amount(line_item, ...)
+        adjustment.label = adjustment_label(line_item)
+        adjustment
       end
 
       def possible_conditions
@@ -23,6 +18,21 @@ module SolidusPromotions
         :line_item
       end
       deprecate :level, deprecator: Spree.deprecator
+
+      private
+
+      def find_adjustment(line_item)
+        line_item.adjustments.detect do |adjustment|
+          adjustment.source == self
+        end
+      end
+
+      def build_adjustment(line_item)
+        line_item.adjustments.build(
+          order: line_item.order,
+          source: self
+        )
+      end
     end
   end
 end
