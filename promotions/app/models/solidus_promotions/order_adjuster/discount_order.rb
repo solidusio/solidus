@@ -25,27 +25,6 @@ module SolidusPromotions
           end
         end
 
-        order.line_items.each do |line_item|
-          line_item.adjustments.select { _1.amount.zero? }.each(&:mark_for_destruction)
-          line_item.promo_total = line_item.adjustments.reject(&:marked_for_destruction?).sum(&:amount)
-          line_item.adjustment_total = line_item.promo_total
-        end
-
-        order.shipments.each do |shipment|
-          shipment.adjustments.select { _1.amount.zero? }.each(&:mark_for_destruction)
-          shipment.promo_total = shipment.adjustments.reject(&:marked_for_destruction?).sum(&:amount)
-          shipment.shipping_rates.each do |shipping_rate|
-            shipping_rate.discounts.select { _1.amount.zero? }.each(&:mark_for_destruction)
-          end
-          shipment.adjustment_total = shipment.promo_total
-        end
-
-        line_items = order.line_items.reject(&:marked_for_destruction?)
-        order.item_total = line_items.sum(&:amount)
-        order.item_count = line_items.sum(&:quantity)
-        order.promo_total = (line_items + order.shipments.reject(&:marked_for_destruction?)).sum(&:promo_total)
-        order.adjustment_total = order.promo_total
-
         order
       end
 
@@ -85,7 +64,6 @@ module SolidusPromotions
       def adjust_shipping_rates(benefits)
         order.shipments.flat_map(&:shipping_rates).filter_map do |rate|
           next unless rate.cost
-
           discounts = generate_discounts(benefits, rate)
           chosen_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
           (rate.current_lane_discounts - chosen_discounts).each(&:mark_for_destruction)

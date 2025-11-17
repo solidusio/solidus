@@ -20,10 +20,9 @@ module SolidusPromotions
 
       DiscountOrder.new(order, promotions, dry_run: dry_run).call
 
-      unless dry_run
-        order.save!
-      end
-      order
+      CleanDiscountedOrder.new(order).call
+
+      RecalculatePromoTotals.new(order).call
     end
   end
 end
