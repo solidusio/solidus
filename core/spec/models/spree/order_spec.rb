@@ -2241,4 +2241,26 @@ RSpec.describe Spree::Order, type: :model do
       expect(state_change.name).to eq('order')
     end
   end
+
+  describe "Adjustment resurrection bug" do
+    let(:order) { create(:order_ready_to_ship) }
+    let(:shipment) { order.shipments.first }
+
+    it "destroys a shipment adjustment properly when order is saved" do
+      adj = shipment.adjustments.build(
+        amount: -5,
+        order: order,
+        label: "Nefarious adjustment",
+        source: nil
+      )
+
+      expect(Spree::Adjustment.exists?(adj.id)).to eq(false)
+
+      shipment.adjustments.first.mark_for_destruction
+
+      order.save!
+
+      expect(Spree::Adjustment.exists?(adj.id)).to eq(false)
+    end
+  end
 end

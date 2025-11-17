@@ -9,7 +9,7 @@ module Spree
   class Adjustment < Spree::Base
     belongs_to :adjustable, polymorphic: true, touch: true, optional: true
     belongs_to :source, polymorphic: true, optional: true
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :all_adjustments, optional: true
+    belongs_to :order, class_name: 'Spree::Order', inverse_of: false, optional: true
     belongs_to :adjustment_reason, class_name: 'Spree::AdjustmentReason', inverse_of: :adjustments, optional: true
 
     validates :adjustable, presence: true
