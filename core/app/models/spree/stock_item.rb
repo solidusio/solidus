@@ -106,7 +106,7 @@ module Spree
     def should_touch_variant?
       # the variant_id changes from nil when a new stock location is added
       inventory_cache_threshold &&
-        (saved_change_to_count_on_hand&.any? { |cache| cache < inventory_cache_threshold }) ||
+        saved_change_to_count_on_hand&.any? { |cache| cache < inventory_cache_threshold } ||
         saved_change_to_variant_id?
     end
 
