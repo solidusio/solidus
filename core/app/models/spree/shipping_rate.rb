@@ -5,7 +5,7 @@ module Spree
   # method has been selected to deliver the shipment.
   #
   class ShippingRate < Spree::Base
-    belongs_to :shipment, class_name: 'Spree::Shipment', touch: true, optional: true
+    belongs_to :shipment, class_name: 'Spree::Shipment', touch: true, optional: true, inverse_of: :shipping_rates
     belongs_to :shipping_method, -> { with_discarded }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates, optional: true
 
     has_many :taxes,
