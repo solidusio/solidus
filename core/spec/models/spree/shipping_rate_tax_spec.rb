@@ -75,5 +75,19 @@ module Spree
         end
       end
     end
+
+    describe "autosaving when order is saved" do
+      let(:tax_rate) { create(:tax_rate) }
+      let(:shipping_rate) { create(:shipping_rate) }
+      let(:shipment) { shipping_rate.shipment }
+
+      it "works" do
+        shipping_rate.taxes.new(
+          amount: -2,
+          tax_rate: tax_rate
+        )
+        expect { shipment.save! }.to change { Spree::ShippingRateTax.count }
+      end
+    end
   end
 end

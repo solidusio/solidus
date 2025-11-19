@@ -12,7 +12,8 @@ module Spree
              class_name: "Spree::ShippingRateTax",
              foreign_key: "shipping_rate_id",
              inverse_of: :shipping_rate,
-             dependent: :destroy
+             dependent: :destroy,
+             autosave: true
 
     delegate :order, :currency, to: :shipment
     delegate :name, :tax_category, :tax_category_id, to: :shipping_method
