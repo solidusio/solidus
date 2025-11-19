@@ -210,7 +210,7 @@ en:
       solidus_promotions/conditions/one_use_per_user: One Use Per User
       solidus_promotions/conditions/order_option_value: Order matches selected option values
       solidus_promotions/conditions/option_value: Order matches selected option values, restricts line items
-      solidus_promotions/conditions/line_item_option_value: Line Item variant matches options values
+      solidus_promotions/conditions/line_item_option_value: Line Item variant matches option values
       solidus_promotions/conditions/order_product: Order contains selected products
       solidus_promotions/conditions/product: Order contains selected products, restricts line items
       solidus_promotions/conditions/line_item_product: Line item has selected product
