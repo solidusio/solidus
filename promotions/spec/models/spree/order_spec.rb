@@ -39,4 +39,39 @@ RSpec.describe Spree::Order do
 
     it { is_expected.to include("solidus_promotions", "solidus_order_promotions") }
   end
+
+  describe "#coupon_code=" do
+    let(:order) { create(:order) }
+    let(:promotion) { create(:promotion, code: "10off") }
+    let(:coupon_code) { "10OFF" }
+
+    subject { order.coupon_code = coupon_code }
+
+    context "when coupon code is case-insensitive (default)" do
+      it "converts coupon codes to lowercase" do
+        subject
+        expect(order.coupon_code).to eq("10off")
+      end
+    end
+
+    context "when coupon code is case-sensitive" do
+      before do
+        stub_const("CaseSensitiveNormalizer", Class.new do
+          def self.call(value)
+            value&.strip
+          end
+        end)
+
+        stub_spree_preferences(
+          SolidusPromotions.configuration,
+          coupon_code_normalizer_class: CaseSensitiveNormalizer
+        )
+      end
+
+      it "preserves case in coupon codes" do
+        subject
+        expect(order.coupon_code).to eq("10OFF")
+      end
+    end
+  end
 end
