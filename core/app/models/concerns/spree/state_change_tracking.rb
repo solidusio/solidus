@@ -15,11 +15,11 @@ module Spree
       previous_state, current_state = saved_changes['state']
 
       # Enqueue the job to track this state change
-      StateChangeTrackingJob.perform_later(
-        self,
-        previous_state,
-        current_state,
-        Time.current
+      Spree::Config.state_change_tracking_class.call(
+        stateful: self,
+        previous_state:,
+        current_state:,
+        transition_timestamp: Time.current
       )
     end
   end
