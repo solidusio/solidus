@@ -29,6 +29,15 @@ module Spree
         }.to change { order.item_total }.to 20
       end
 
+      it "respects changes to item totals" do
+        updater.recalculate
+        order.line_items.first.update(quantity: 2)
+
+        expect {
+          updater.recalculate
+        }.to change { order.item_total }.by 10
+      end
+
       it "update shipment total" do
         create(:shipment, order:, cost: 10)
         expect {
