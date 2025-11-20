@@ -59,6 +59,7 @@ RSpec.describe Spree::Zone, type: :model do
       before { country_zone.members.create(zoneable: country) }
 
       it 'should return a list of countries' do
+        expect(country_zone.country_list).to be_a(ActiveRecord::Relation)
         expect(country_zone.country_list).to eq([country])
       end
     end
@@ -69,7 +70,17 @@ RSpec.describe Spree::Zone, type: :model do
       before { state_zone.members.create(zoneable: state) }
 
       it 'should return a list of countries' do
+        expect(state_zone.country_list).to be_a(ActiveRecord::Relation)
         expect(state_zone.country_list).to eq([state.country])
+      end
+    end
+
+    context "when zone doesn't consist of either countries nor states" do
+      let(:zone) { create(:zone, name: 'Zone') }
+
+      it 'should return an empty list' do
+        expect(zone.country_list).to be_a(ActiveRecord::Relation)
+        expect(zone.country_list).to be_empty
       end
     end
   end
