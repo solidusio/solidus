@@ -974,7 +974,8 @@ RSpec.describe Spree::Shipment, type: :model do
         shipment,
         'pending',
         'shipped',
-        kind_of(Time)
+        kind_of(Time),
+        'shipment'
       )
     end
 
