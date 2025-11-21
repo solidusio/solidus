@@ -15,16 +15,13 @@ module SolidusPromotions
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
       def line_item_eligible?(line_item, _options = {})
-        found = Spree::Classification.where(
-          product_id: line_item.variant.product_id,
-          taxon_id: condition_taxon_ids_with_children
-        ).exists?
+        line_item_taxon_ids = line_item.variant.product.classifications.map(&:taxon_id)
 
         case preferred_match_policy
         when "include"
-          found
+          taxon_ids_with_children.any? { |taxon_and_descendant_ids| (line_item_taxon_ids & taxon_and_descendant_ids).any? }
         when "exclude"
-          !found
+          taxon_ids_with_children.none? { |taxon_and_descendant_ids| (line_item_taxon_ids & taxon_and_descendant_ids).any? }
         else
           raise "unexpected match policy: #{preferred_match_policy.inspect}"
         end

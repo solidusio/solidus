@@ -28,8 +28,8 @@ module SolidusPromotions
       private
 
       # ids of taxons conditions and taxons conditions children
-      def condition_taxon_ids_with_children
-        taxons.flat_map { |taxon| taxon.self_and_descendants.ids }.uniq
+      def taxon_ids_with_children
+        @taxon_ids_with_children ||= taxons.map { |taxon| taxon.self_and_descendants.ids }.uniq
       end
     end
   end

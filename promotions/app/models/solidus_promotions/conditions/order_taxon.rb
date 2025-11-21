@@ -12,19 +12,17 @@ module SolidusPromotions
       preference :match_policy, :string, default: MATCH_POLICIES.first
 
       def order_eligible?(order, _options = {})
-        order_taxons = taxons_in_order(order)
+        line_item_taxon_ids = taxon_ids_in_order(order)
 
         case preferred_match_policy
         when "all"
-          matches_all = taxons.all? do |condition_taxon|
-            order_taxons.where(id: condition_taxon.self_and_descendants.ids).exists?
-          end
+          unless taxon_ids_with_children.all? { |taxon_and_descendant_ids| (line_item_taxon_ids & taxon_and_descendant_ids).any? }
 
-          unless matches_all
             eligibility_errors.add(:base, eligibility_error_message(:missing_taxon), error_code: :missing_taxon)
           end
         when "any"
-          unless order_taxons.where(id: condition_taxon_ids_with_children).exists?
+          if taxon_ids_with_children.none? { |taxon_and_descendant_ids| (line_item_taxon_ids & taxon_and_descendant_ids).any? }
+
             eligibility_errors.add(
               :base,
               eligibility_error_message(:no_matching_taxons),
@@ -32,7 +30,8 @@ module SolidusPromotions
             )
           end
         when "none"
-          if order_taxons.where(id: condition_taxon_ids_with_children).exists?
+          if taxon_ids_with_children.any? { |taxon_and_descendant_ids| (line_item_taxon_ids & taxon_and_descendant_ids).any? }
+
             eligibility_errors.add(
               :base,
               eligibility_error_message(:has_excluded_taxon),
@@ -50,12 +49,11 @@ module SolidusPromotions
 
       private
 
-      # All taxons in an order
-      def taxons_in_order(order)
-        Spree::Taxon
-          .joins(products: { variants_including_master: :line_items })
-          .where(spree_line_items: { order_id: order.id })
-          .distinct
+      # All taxon IDs in an order
+      def taxon_ids_in_order(order)
+        order.line_items.flat_map do |line_item|
+          line_item.variant.product.classifications.map(&:taxon_id)
+        end
       end
     end
   end
