@@ -3,6 +3,10 @@
 module SolidusPromotions
   module Benefits
     module LineItemBenefit
+      def self.included(_base)
+        Spree.deprecator.warn("Including #{name} is deprecated.")
+      end
+
       def can_discount?(object)
         object.is_a? Spree::LineItem
       end
