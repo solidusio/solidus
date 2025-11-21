@@ -113,6 +113,53 @@ module SolidusPromotions
       end
     end
 
+    def self.inherited(klass)
+      def klass.method_added(method_added)
+        if method_added == :discount
+          Spree.deprecator.warn <<~MSG
+            Please refactor `#{name}`. You're defining `#discount`. Instead, define a method for each type of discountable
+            that your benefit can discount. For example:
+            ```
+            class MyBenefit < SolidusPromotions::Benefit
+              def can_discount?(discountable)
+                discountable.is_a?(Spree::LineItem)
+              end
+
+              def discount(order, _options = {})
+                amount = compute_amount(line_item, ...)
+                return if amount.zero?
+
+                ItemDiscount.new(
+                  item: line_item,
+                  label: adjustment_label(line_item),
+                  amount: amount,
+                  source: self
+                )
+              end
+            ```
+            can now become
+            ```
+            class MyBenefit < SolidusPromotions::Benefit
+              def discount_line_item(order, ...)
+                amount = compute_amount(line_item, ...)
+                return if amount.zero?
+
+                ItemDiscount.new(
+                  item: line_item,
+                  label: adjustment_label(line_item),
+                  amount: amount,
+                  source: self
+                )
+              end
+            end
+            ```
+          MSG
+        end
+        super
+      end
+      super
+    end
+
     # Computes the discount amount for the given adjustable.
     #
     # Ensures the returned amount is negative and does not exceed the

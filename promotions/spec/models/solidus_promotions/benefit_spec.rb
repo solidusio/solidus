@@ -167,6 +167,79 @@ RSpec.describe SolidusPromotions::Benefit do
     end
   end
 
+  describe "inherited hook" do
+    context "for a well-formed benefit" do
+      subject(:benefit) do
+        Class.new(described_class) do
+          def discount_line_item(_line_item, _options = {})
+            true
+          end
+        end
+      end
+
+      it "does not emit a deprecation warning" do
+        expect(Spree.deprecator).not_to receive(:warn)
+        benefit
+      end
+    end
+
+    context "for a legacy benefit" do
+      subject(:benefit) do
+        Class.new(described_class) do
+          def self.name
+            "LegacyBenefit"
+          end
+
+          def discount(_line_item, _options = {})
+            true
+          end
+        end
+      end
+
+      it "emits a deprecation warning" do
+        expect(Spree.deprecator).to receive(:warn).with(<<~MSG)
+          Please refactor `LegacyBenefit`. You're defining `#discount`. Instead, define a method for each type of discountable
+          that your benefit can discount. For example:
+          ```
+          class MyBenefit < SolidusPromotions::Benefit
+            def can_discount?(discountable)
+              discountable.is_a?(Spree::LineItem)
+            end
+
+            def discount(order, _options = {})
+              amount = compute_amount(line_item, ...)
+              return if amount.zero?
+
+              ItemDiscount.new(
+                item: line_item,
+                label: adjustment_label(line_item),
+                amount: amount,
+                source: self
+              )
+            end
+          ```
+          can now become
+          ```
+          class MyBenefit < SolidusPromotions::Benefit
+            def discount_line_item(order, ...)
+              amount = compute_amount(line_item, ...)
+              return if amount.zero?
+
+              ItemDiscount.new(
+                item: line_item,
+                label: adjustment_label(line_item),
+                amount: amount,
+                source: self
+              )
+            end
+          end
+          ```
+        MSG
+        benefit
+      end
+    end
+  end
+
   describe ".original_promotion_action" do
     let(:spree_promotion) { create :promotion, :with_adjustable_action }
     let(:spree_promotion_action) { spree_promotion.actions.first }
