@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/testing_support/shared_examples/state_change_tracking'
 
 RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user, email: "solidus@example.com") }
   let(:order) { create(:order, user:, store:) }
+
+  it_behaves_like "tracking state changes" do
+    let(:stateful) { order }
+    let(:state) { "complete" }
+  end
 
   describe ".ransackable_associations" do
     subject { described_class.ransackable_associations }
