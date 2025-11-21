@@ -161,4 +161,15 @@ RSpec.feature "Promotions admin" do
       expect(page).to have_content("Benefit has been successfully removed!")
     end
   end
+
+  describe "Rendering the promotion edit page with the PercentWithCap calculator" do
+    let(:promotion) { create(:solidus_promotion, name: "My capped promotion", benefits: [benefit]) }
+    let(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.new(calculator:) }
+    let(:calculator) { SolidusPromotions::Calculators::PercentWithCap.new(preferred_percent: 10, preferred_max_amount: 100) }
+
+    it "renders without errors" do
+      visit solidus_promotions.edit_admin_promotion_path(promotion)
+      expect(page).to have_content("My capped promotion")
+    end
+  end
 end
