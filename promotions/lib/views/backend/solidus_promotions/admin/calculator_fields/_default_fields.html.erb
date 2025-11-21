@@ -2,5 +2,5 @@
   <%= render "solidus_promotions/admin/shared/preference_fields/#{calculator.preference_type(name)}",
     name: "#{prefix}[calculator_attributes][preferred_#{name}]",
     value: calculator.get_preference(name),
-    label: calculator.class.human_attribute_name("preferred_#{name}", default: I18n.t(name, scope: :spree, default: name.humanize)) %>
+    label: calculator.class.human_attribute_name("preferred_#{name}", default: I18n.t(name, scope: :spree, default: name.to_s.humanize)) %>
 <% end %>
