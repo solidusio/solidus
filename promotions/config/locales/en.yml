@@ -195,6 +195,7 @@ en:
       solidus_promotions/benefits/adjust_line_item_quantity_groups: Discount matching line items based on quantity groups
       solidus_promotions/calculators/distributed_amount: Distributed Amount
       solidus_promotions/calculators/percent: Percent
+      solidus_promotions/calculators/percent_with_cap: Distributed Percent with cap
       solidus_promotions/calculators/flat_rate: Flat Rate
       solidus_promotions/calculators/flexi_rate: Flexible Rate
       solidus_promotions/calculators/tiered_flat_rate: Tiered Flat Rate
