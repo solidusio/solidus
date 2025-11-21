@@ -74,6 +74,17 @@ module SolidusPromotions
       true
     end
 
+    def self.within_lane(lane, &)
+      previous_lane = Thread.current[:current_promotion_lane]
+      Thread.current[:current_promotion_lane] = lane.to_sym
+      yield
+      Thread.current[:current_promotion_lane] = previous_lane
+    end
+
+    def self.current_lane
+      Thread.current[:current_promotion_lane]
+    end
+
     self.allowed_ransackable_associations = ["codes"]
     self.allowed_ransackable_attributes = %w[name customer_label path promotion_category_id lane updated_at]
     self.allowed_ransackable_scopes = %i[active with_discarded]

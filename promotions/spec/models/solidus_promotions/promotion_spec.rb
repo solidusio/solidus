@@ -134,6 +134,30 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
   end
 
+  describe ".within_lane" do
+    let(:lane) { :pre }
+
+    it "runs blocks with current_lane set to lane" do
+      expect(described_class.current_lane).to be nil
+      described_class.within_lane(lane) do
+        expect(described_class.current_lane).to eq(:pre)
+      end
+      expect(described_class.current_lane).to be nil
+    end
+
+    it "can be nested" do
+      expect(described_class.current_lane).to be nil
+      described_class.within_lane(lane) do
+        expect(described_class.current_lane).to eq(:pre)
+        described_class.within_lane("default") do
+          expect(described_class.current_lane).to eq(:default)
+        end
+        expect(described_class.current_lane).to eq(:pre)
+      end
+      expect(described_class.current_lane).to be nil
+    end
+  end
+
   describe ".coupons" do
     subject { described_class.coupons }
 
