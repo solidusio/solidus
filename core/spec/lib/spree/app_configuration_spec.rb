@@ -44,6 +44,10 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.variant_price_selector_class).to eq Spree::Variant::PriceSelector
   end
 
+  it "uses state change tracker class by default" do
+    expect(prefs.state_change_tracking_class).to eq Spree::StateChangeTracker
+  end
+
   it "uses core's promotion configuration class by default" do
     expect(prefs.promotions).to be_a Spree::Core::NullPromotionConfiguration
   end
