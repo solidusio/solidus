@@ -26,18 +26,12 @@ RSpec.describe SolidusPromotions::Benefits::CreateDiscountedItem do
     it { is_expected.to be :order }
   end
 
-  describe "#perform" do
+  describe "#perform", :within_default_promotion_lane do
     let(:order) { create(:order_with_line_items) }
     let(:promotion) { create(:solidus_promotion) }
     let(:benefit) { SolidusPromotions::Benefits::CreateDiscountedItem.new(preferred_variant_id: goodie.id, calculator: hundred_percent, promotion: promotion) }
     let(:hundred_percent) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 100) }
     let(:goodie) { create(:variant) }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     subject { benefit.perform(order) }
 

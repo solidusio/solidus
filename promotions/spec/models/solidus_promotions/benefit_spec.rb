@@ -126,7 +126,7 @@ RSpec.describe SolidusPromotions::Benefit do
       end
     end
 
-    context "if passing in extra options" do
+    context "if passing in extra options", :within_default_promotion_lane do
       let(:benefit_class) { SolidusPromotions::Benefits::AdjustLineItem }
       let(:calculator_class) do
         Class.new(Spree::Calculator) do
@@ -140,12 +140,6 @@ RSpec.describe SolidusPromotions::Benefit do
       let(:discountable) { build(:line_item, order:) }
 
       subject { benefit.discount(discountable, extra_data: "foo") }
-
-      around do |example|
-        SolidusPromotions::Promotion.within_lane("default") do
-          example.run
-        end
-      end
 
       it "passes the option on to the calculator" do
         expect(calculator).to receive(:compute_line_item).with(discountable, extra_data: "foo").and_return(1)

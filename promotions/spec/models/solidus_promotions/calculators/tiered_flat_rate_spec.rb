@@ -72,7 +72,7 @@ RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
     end
   end
 
-  describe "#compute" do
+  describe "#compute", :within_default_promotion_lane do
     subject { calculator.compute(line_item) }
 
     let(:order) do
@@ -84,12 +84,6 @@ RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
     end
     let(:line_item) { order.line_items.first }
     let(:preferred_currency) { "USD" }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     before do
       calculator.preferred_base_amount = 10

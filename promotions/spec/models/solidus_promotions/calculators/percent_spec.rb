@@ -3,19 +3,13 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
-  context "compute" do
+  context "compute", :within_default_promotion_lane do
     let(:currency) { "USD" }
     let(:order) { Spree::Order.new(currency:) }
     let(:item) { Spree::LineItem.new(price: 9.99, quantity: 10, order: order) }
     let(:calculator) { described_class.new(preferred_percent: 15) }
 
     subject { calculator.compute(item) }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     it "computes based on item price and quantity" do
       expect(subject).to eq 14.99

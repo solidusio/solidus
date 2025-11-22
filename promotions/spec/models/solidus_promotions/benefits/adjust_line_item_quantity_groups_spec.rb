@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups do
+RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups, :within_default_promotion_lane do
   let(:action) { described_class.create!(calculator: calculator, promotion: promotion) }
 
   let(:order) do
@@ -20,12 +20,6 @@ RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups do
 
   let(:quantity) { 1 }
   let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
-
-  around do |example|
-    SolidusPromotions::Promotion.within_lane("default") do
-      example.run
-    end
-  end
 
   describe "#compute_amount" do
     subject { action.compute_amount(line_item) }

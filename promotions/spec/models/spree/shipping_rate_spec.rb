@@ -44,19 +44,13 @@ RSpec.describe Spree::ShippingRate do
     it { is_expected.to eq(Spree::Money.new("0")) }
   end
 
-  describe "#discountable_amount" do
+  describe "#discountable_amount", :within_default_promotion_lane do
     let(:promotion) { build(:solidus_promotion, lane: :pre) }
     let(:benefit) { SolidusPromotions::Benefit.new(promotion:) }
     let(:discounts) { [] }
     let(:line_item) { Spree::ShippingRate.new(cost: 20, discounts:) }
 
     subject(:discountable_amount) { line_item.discountable_amount }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     it { is_expected.to eq(20) }
 

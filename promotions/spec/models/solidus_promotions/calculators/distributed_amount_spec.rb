@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model do
+RSpec.describe SolidusPromotions::Calculators::DistributedAmount do
   let(:calculator) { described_class.new(preferred_amount: 15, preferred_currency: currency) }
   let!(:promotion) do
     create :solidus_promotion, apply_automatically: true, name: "15 spread", benefits: [benefit]
@@ -16,12 +16,6 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
 
   context "applied to an order" do
     let(:line_items_attributes) { [{ price: 20 }, { price: 30 }, { price: 100 }] }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     before do
       order.recalculate
@@ -51,14 +45,8 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
     end
   end
 
-  describe "#compute_line_item" do
+  describe "#compute_line_item", :within_default_promotion_lane do
     subject { calculator.compute_line_item(order.line_items.first) }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     let(:line_items_attributes) { [{ price: 50 }, { price: 50 }, { price: 50 }] }
 

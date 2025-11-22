@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuantity do
-  describe "#compute" do
+  describe "#compute", :within_default_promotion_lane do
     let(:order) do
       create(:order_with_line_items, line_items_attributes: [first_item_attrs, second_item_attrs, third_item_attrs])
     end
@@ -28,12 +28,6 @@ RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuanti
     subject { promotion.benefits.first.calculator.compute(item) }
 
     it_behaves_like "a promotion calculator"
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     # 2 Shirts at 50, 100 USD. 10 % == 10
     it { is_expected.to eq(10) }

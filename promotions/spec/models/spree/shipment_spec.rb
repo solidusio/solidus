@@ -3,19 +3,13 @@
 require "rails_helper"
 
 RSpec.describe Spree::Shipment do
-  describe "#discountable_amount" do
+  describe "#discountable_amount", :within_default_promotion_lane do
     let(:promotion) { build(:solidus_promotion, lane: :pre) }
     let(:benefit) { SolidusPromotions::Benefit.new(promotion:) }
     let(:discounts) { [] }
     let(:line_item) { Spree::Shipment.new(cost: 20, adjustments: discounts) }
 
     subject(:discountable_amount) { line_item.discountable_amount }
-
-    around do |example|
-      SolidusPromotions::Promotion.within_lane("default") do
-        example.run
-      end
-    end
 
     it { is_expected.to eq(20) }
 
