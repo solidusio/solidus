@@ -157,4 +157,20 @@ RSpec.describe Spree::ShippingRate do
       end
     end
   end
+
+  describe "#discounted_amount" do
+    let(:order) { Spree::Order.new }
+    let(:shipment) { Spree::Shipment.new(order:) }
+    let(:tax_rate) { create(:tax_rate) }
+    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
+    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
+    let(:shipping_rate) { Spree::ShippingRate.new(discounts:, shipment:, amount: 28) }
+    let(:discounts) { [pre_lane_discount, post_lane_discount] }
+    let(:pre_lane_discount) { SolidusPromotions::ShippingRateDiscount.new(benefit: pre_lane_promotion.benefits.first, amount: -2) }
+    let(:post_lane_discount) { SolidusPromotions::ShippingRateDiscount.new(benefit: post_lane_promotion.benefits.first, amount: -3) }
+
+    subject { shipping_rate.discounted_amount }
+
+    it { is_expected.to eq(23) }
+  end
 end

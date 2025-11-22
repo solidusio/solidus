@@ -2,6 +2,10 @@
 
 module SolidusPromotions
   module DiscountedAmount
+    def discounted_amount
+      amount + previous_lane_discounts.sum(&:amount)
+    end
+
     def current_lane_discounts
       raise NotCalculatingPromotions unless Promotion.current_lane
 
