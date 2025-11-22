@@ -93,6 +93,14 @@ RSpec.describe Spree::ShippingRate do
       expect(subject).to contain_exactly(pre_lane_discount, post_lane_discount)
     end
 
+    context "if discount is marked for destruction" do
+      before do
+        pre_lane_discount.mark_for_destruction
+      end
+
+      it { is_expected.to contain_exactly(post_lane_discount) }
+    end
+
     context "while calculating promotions" do
       around do |example|
         SolidusPromotions::Promotion.within_lane(lane) do
