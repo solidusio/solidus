@@ -10,7 +10,7 @@ module SolidusPromotions
 
       def line_item_eligible?(line_item, _options = {})
         pid = line_item.product.id
-        ovids = line_item.variant.option_values.pluck(:id)
+        ovids = line_item.variant.option_value_ids
 
         product_ids.include?(pid) && (value_ids(pid) & ovids).present?
       end
