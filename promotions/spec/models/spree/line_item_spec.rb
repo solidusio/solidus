@@ -90,6 +90,14 @@ RSpec.describe Spree::LineItem do
       expect(subject).to contain_exactly(pre_lane_adjustment, post_lane_adjustment)
     end
 
+    context "if adjustment is marked for destruction" do
+      before do
+        pre_lane_adjustment.mark_for_destruction
+      end
+
+      it { is_expected.to contain_exactly(post_lane_adjustment) }
+    end
+
     context "while calculating promotions" do
       around do |example|
         SolidusPromotions::Promotion.within_lane(lane) do

@@ -25,7 +25,8 @@ module SolidusPromotions
 
     def discounts_by_lanes(lanes)
       discounts.select do |discount|
-        discount.benefit.promotion.lane.to_sym.in?(lanes.map(&:to_sym))
+        !discount.marked_for_destruction? &&
+          discount.benefit.promotion.lane.to_sym.in?(lanes.map(&:to_sym))
       end
     end
 
