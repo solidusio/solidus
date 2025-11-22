@@ -1007,4 +1007,15 @@ RSpec.describe Spree::Shipment, type: :model do
       expect(state_change.name).to eq('shipment')
     end
   end
+
+  describe "autosave behavior" do
+    let(:shipment) { create(:shipment) }
+
+    it "allows marking shipping rates for destruction" do
+      shipment.shipping_rates.load
+      shipment.shipping_rates.first.mark_for_destruction
+
+      expect { shipment.save! }.to change(Spree::ShippingRate, :count)
+    end
+  end
 end
