@@ -115,6 +115,30 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     it { is_expected.to eq(%w[pre default post]) }
   end
 
+  describe ".lanes_before_current_lane" do
+    let(:lane) { :pre }
+
+    subject { SolidusPromotions::Promotion.lanes_before_current_lane }
+
+    around do |example|
+      described_class.within_lane(lane) do
+        example.run
+      end
+    end
+
+    it { is_expected.to eq([]) }
+
+    context "if lane is default" do
+      let(:lane) { :default }
+      it { is_expected.to eq(["pre"]) }
+    end
+
+    context "if lane is post" do
+      let(:lane) { :post }
+      it { is_expected.to eq(["pre", "default"]) }
+    end
+  end
+
   describe "validations" do
     subject(:promotion) { build(:solidus_promotion) }
 
@@ -131,6 +155,18 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
       advertised = described_class.advertised
       expect(advertised).to include(advertised_promotion)
       expect(advertised).not_to include(promotion)
+    end
+  end
+
+  describe ".within_lane" do
+    let(:lane) { :pre }
+
+    it "runs blocks with current_lane set to lane" do
+      expect(described_class.current_lane).to be nil
+      described_class.within_lane(lane) do
+        expect(described_class.current_lane).to eq(:pre)
+      end
+      expect(described_class.current_lane).to be nil
     end
   end
 

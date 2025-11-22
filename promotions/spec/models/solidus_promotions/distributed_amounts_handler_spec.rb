@@ -14,7 +14,7 @@ RSpec.describe SolidusPromotions::DistributedAmountsHandler, type: :model do
     described_class.new(order.line_items, total_amount)
   }
 
-  describe "#amount" do
+  describe "#amount", :within_default_promotion_lane do
     let(:total_amount) { 15 }
 
     context "when there is only one line item" do
