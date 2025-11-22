@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/testing_support/shared_examples/state_change_tracking'
 
 RSpec.describe Spree::Payment, type: :model do
   let(:store) { create :store }
@@ -44,6 +45,11 @@ RSpec.describe Spree::Payment, type: :model do
       { transaction: {} },
       {}
     )
+  end
+
+  it_behaves_like "tracking state changes" do
+    let(:stateful) { payment }
+    let(:state) { "pending" }
   end
 
   context 'risk analysis' do
