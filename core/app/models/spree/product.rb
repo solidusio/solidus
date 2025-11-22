@@ -115,7 +115,7 @@ module Spree
     after_initialize :ensure_master
 
     after_save :run_touch_callbacks, if: :saved_changes?
-    after_touch :touch_taxons
+    after_commit :touch_taxons
 
     before_validation :normalize_slug, on: :update
     before_validation :validate_master
@@ -349,15 +349,11 @@ module Spree
       run_callbacks(:touch)
     end
 
-    # Iterate through this product's taxons and taxonomies and touch their timestamps in a batch
+    # Iterate through this product's taxons and touch their timestamps in a batch
+    # The `after_touch` callback of `Spree::Taxon` will make sure the ancestors and
+    # the taxonomy will be touched as well.
     def touch_taxons
-      taxons_to_touch = taxons.flat_map(&:self_and_ancestors).uniq
-      unless taxons_to_touch.empty?
-        Spree::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
-
-        taxonomy_ids_to_touch = taxons_to_touch.flat_map(&:taxonomy_id).uniq
-        Spree::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
-      end
+      taxons.each(&:touch)
     end
 
     def remove_taxon(taxon)
