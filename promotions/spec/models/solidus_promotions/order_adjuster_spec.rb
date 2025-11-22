@@ -10,6 +10,32 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
   let(:promotion) { create(:solidus_promotion, apply_automatically: true) }
   let(:calculator) { SolidusPromotions::Calculators::Percent.new(preferred_percent: 10) }
 
+  context "adding discounted line items" do
+    let(:variant) { create(:variant, price: 100) }
+    let(:benefit) do
+      SolidusPromotions::Benefits::CreateDiscountedItem.create(
+        promotion: promotion,
+        calculator: calculator,
+        preferences: { variant_id: variant.id }
+      )
+    end
+    let(:adjustable) { order }
+
+    subject do
+      benefit
+      discounter.call
+    end
+
+    it "creates a line item of the given variant with a discount adjustment corresponding to the calculator" do
+      expect {
+        subject
+      }.to change { order.line_items.count }.by(1)
+
+      expect(order.line_items.last.variant).to eq(variant)
+      expect(order.line_items.last.adjustments.promotion.first&.amount).to eq(-10)
+    end
+  end
+
   context "adjusting line items" do
     let(:benefit) do
       SolidusPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator)
