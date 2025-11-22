@@ -155,6 +155,22 @@ RSpec.describe Spree::LineItem do
     end
   end
 
+  describe "#discounted_amount" do
+    let(:order) { Spree::Order.new }
+    let(:tax_rate) { create(:tax_rate) }
+    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
+    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
+    let(:line_item) { Spree::LineItem.new(adjustments:, order:, price: 14, quantity: 2) }
+    let(:adjustments) { [tax_adjustment, pre_lane_adjustment, post_lane_adjustment] }
+    let(:tax_adjustment) { Spree::Adjustment.new(source: tax_rate, amount: 2) }
+    let(:pre_lane_adjustment) { Spree::Adjustment.new(source: pre_lane_promotion.benefits.first, amount: -3) }
+    let(:post_lane_adjustment) { Spree::Adjustment.new(source: post_lane_promotion.benefits.first, amount: -2) }
+
+    subject { line_item.discounted_amount }
+
+    it { is_expected.to eq(23) }
+  end
+
   describe "changing quantities" do
     context "when line item is managed by an automation" do
       let(:order) { create(:order) }
