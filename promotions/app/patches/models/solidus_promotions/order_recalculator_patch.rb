@@ -10,6 +10,7 @@ module SolidusPromotions
       end
       super
     end
-    Spree::Config.order_recalculator_class.prepend self
+
+    Spree::OrderUpdater.prepend self
   end
 end
