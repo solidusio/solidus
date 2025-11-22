@@ -66,12 +66,32 @@ module SolidusPromotions
       lanes.keys.sort_by { |lane| lanes[lane] }
     end
 
+    def self.lanes_before(lane)
+      ordered_lanes.split(lane.to_s).first
+    end
+
+    def self.lanes_before_current_lane
+      return ordered_lanes unless current_lane
+      lanes_before(current_lane)
+    end
+
     def self.order_activatable?(order)
       return false if UNACTIVATABLE_ORDER_STATES.include?(order.state)
       return false if order.shipped?
       return false if order.complete? && !SolidusPromotions.config.recalculate_complete_orders
 
       true
+    end
+
+    def self.within_lane(lane, &)
+      previous_lane = Thread.current[:current_promotion_lane]
+      Thread.current[:current_promotion_lane] = lane.to_sym
+      yield
+      Thread.current[:current_promotion_lane] = previous_lane
+    end
+
+    def self.current_lane
+      Thread.current[:current_promotion_lane]
     end
 
     self.allowed_ransackable_associations = ["codes"]
