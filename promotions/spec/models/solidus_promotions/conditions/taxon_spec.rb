@@ -187,4 +187,21 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
       end
     end
   end
+
+  describe "performance" do
+    let(:product_one) { create(:product, taxons: [taxon_one]) }
+    let(:product_two) { create(:product, taxons: [taxon_two]) }
+    let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, apply_automatically: true) }
+    let(:benefit) { promotion.benefits.first }
+    let!(:condition) { described_class.create!(taxons: [taxon_one, taxon_two], benefit:) }
+    let!(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: product_one.master }, { variant: product_two.master }]) }
+
+    subject { order.recalculate }
+
+    it "only loads the taxon IDs with children once" do
+      expect_any_instance_of(SolidusPromotions::Conditions::TaxonCondition).to receive(:load_taxon_ids_with_children).once { [[taxon_one.id], [taxon_two.id]] }
+
+      subject
+    end
+  end
 end
