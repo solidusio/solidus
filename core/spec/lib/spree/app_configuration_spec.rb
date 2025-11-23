@@ -48,6 +48,10 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.promotions).to be_a Spree::Core::NullPromotionConfiguration
   end
 
+  it 'uses mergeable orders finder class by default' do
+    expect(prefs.mergeable_orders_finder_class).to eq Spree::MergeableOrdersFinder
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do
