@@ -103,7 +103,7 @@ RSpec.describe Spree::ShippingRate do
 
     context "while calculating promotions" do
       around do |example|
-        SolidusPromotions::Promotion.within_lane(lane) do
+        SolidusPromotions::PromotionLane.set(current: lane) do
           example.run
         end
       end
@@ -144,7 +144,7 @@ RSpec.describe Spree::ShippingRate do
 
     context "while calculating promotions" do
       around do |example|
-        SolidusPromotions::Promotion.within_lane(lane) do
+        SolidusPromotions::PromotionLane.set(current: lane) do
           example.run
         end
       end

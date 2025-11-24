@@ -7,13 +7,13 @@ module SolidusPromotions
     end
 
     def current_lane_discounts
-      raise NotCalculatingPromotions unless Promotion.current_lane
+      raise NotCalculatingPromotions unless PromotionLane.current
 
-      discounts_by_lanes([Promotion.current_lane])
+      discounts_by_lanes([PromotionLane.current])
     end
 
     def previous_lane_discounts
-      discounts_by_lanes(Promotion.lanes_before_current_lane)
+      discounts_by_lanes(PromotionLane.before_current)
     end
   end
 end

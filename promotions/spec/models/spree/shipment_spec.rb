@@ -55,7 +55,7 @@ RSpec.describe Spree::Shipment do
     end
 
     context "if lanes is all lanes" do
-      let(:lanes) { SolidusPromotions::Promotion.ordered_lanes }
+      let(:lanes) { SolidusPromotions::PromotionLane.ordered }
 
       it { is_expected.to contain_exactly(pre_lane_adjustment, post_lane_adjustment) }
     end
@@ -100,7 +100,7 @@ RSpec.describe Spree::Shipment do
 
     context "while calculating promotions" do
       around do |example|
-        SolidusPromotions::Promotion.within_lane(lane) do
+        SolidusPromotions::PromotionLane.set(current: lane) do
           example.run
         end
       end
@@ -157,7 +157,7 @@ RSpec.describe Spree::Shipment do
 
     context "while calculating promotions" do
       around do |example|
-        SolidusPromotions::Promotion.within_lane(lane) do
+        SolidusPromotions::PromotionLane.set(current: lane) do
           example.run
         end
       end
