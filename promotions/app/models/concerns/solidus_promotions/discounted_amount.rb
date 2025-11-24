@@ -12,6 +12,8 @@ module SolidusPromotions
       discounts_by_lanes([PromotionLane.current])
     end
 
+    private
+
     def previous_lane_discounts
       discounts_by_lanes(PromotionLane.before_current)
     end

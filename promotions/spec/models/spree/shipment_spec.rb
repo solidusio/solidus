@@ -37,55 +37,6 @@ RSpec.describe Spree::Shipment do
     end
   end
 
-  describe "#previous_lane_discounts" do
-    let(:order) { Spree::Order.new }
-    let(:tax_rate) { create(:tax_rate) }
-    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
-    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
-    let(:shipment) { Spree::Shipment.new(adjustments:, order:) }
-    let(:adjustments) { [tax_adjustment, pre_lane_adjustment, post_lane_adjustment] }
-    let(:tax_adjustment) { Spree::Adjustment.new(source: tax_rate, amount: 2) }
-    let(:pre_lane_adjustment) { Spree::Adjustment.new(source: pre_lane_promotion.benefits.first) }
-    let(:post_lane_adjustment) { Spree::Adjustment.new(source: post_lane_promotion.benefits.first) }
-
-    subject { shipment.previous_lane_discounts }
-
-    it "returns all adjustment when not calculating promotions" do
-      expect(subject).to contain_exactly(pre_lane_adjustment, post_lane_adjustment)
-    end
-
-    context "if adjustment is marked for destruction" do
-      before do
-        pre_lane_adjustment.mark_for_destruction
-      end
-
-      it { is_expected.to contain_exactly(post_lane_adjustment) }
-    end
-
-    context "while calculating promotions" do
-      around do |example|
-        SolidusPromotions::PromotionLane.set(current: lane) do
-          example.run
-        end
-      end
-
-      let(:lane) { "pre" }
-      it { is_expected.to be_empty }
-
-      context "if lane is default" do
-        let(:lane) { "default" }
-
-        it { is_expected.to contain_exactly(pre_lane_adjustment) }
-      end
-
-      context "if lane is post" do
-        let(:lane) { "post" }
-
-        it { is_expected.to contain_exactly(pre_lane_adjustment) }
-      end
-    end
-  end
-
   describe "#discounted_amount" do
     let(:order) { Spree::Order.new }
     let(:tax_rate) { create(:tax_rate) }
