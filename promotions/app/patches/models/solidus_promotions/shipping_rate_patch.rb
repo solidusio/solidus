@@ -23,6 +23,8 @@ module SolidusPromotions
       discounts.sum(&:amount)
     end
 
+    private
+
     def discounts_by_lanes(lanes)
       discounts.select do |discount|
         !discount.marked_for_destruction? &&

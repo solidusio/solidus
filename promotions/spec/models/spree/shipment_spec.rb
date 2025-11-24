@@ -37,42 +37,6 @@ RSpec.describe Spree::Shipment do
     end
   end
 
-  describe "#discounts_by_lanes" do
-    let(:tax_rate) { create(:tax_rate) }
-    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
-    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
-    let(:shipment) { Spree::Shipment.new(adjustments:) }
-    let(:adjustments) { [tax_adjustment, pre_lane_adjustment, post_lane_adjustment] }
-    let(:tax_adjustment) { Spree::Adjustment.new(source: tax_rate, amount: 2) }
-    let(:pre_lane_adjustment) { Spree::Adjustment.new(source: pre_lane_promotion.benefits.first) }
-    let(:post_lane_adjustment) { Spree::Adjustment.new(source: post_lane_promotion.benefits.first) }
-
-    subject { shipment.discounts_by_lanes(lanes) }
-
-    context "if lanes is empty" do
-      let(:lanes) { [] }
-      it { is_expected.to be_empty }
-    end
-
-    context "if lanes is all lanes" do
-      let(:lanes) { SolidusPromotions::PromotionLane.ordered }
-
-      it { is_expected.to contain_exactly(pre_lane_adjustment, post_lane_adjustment) }
-    end
-
-    context "if lanes is only pre lane" do
-      let(:lanes) { [:pre] }
-
-      it { is_expected.to contain_exactly(pre_lane_adjustment) }
-    end
-
-    context "if lanes is only default lane" do
-      let(:lanes) { [:default] }
-
-      it { is_expected.to be_empty }
-    end
-  end
-
   describe "#previous_lane_discounts" do
     let(:order) { Spree::Order.new }
     let(:tax_rate) { create(:tax_rate) }

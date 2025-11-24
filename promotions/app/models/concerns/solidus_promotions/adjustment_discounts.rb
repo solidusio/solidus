@@ -2,6 +2,8 @@
 
 module SolidusPromotions
   module AdjustmentDiscounts
+    private
+
     def discounts_by_lanes(lanes)
       adjustments.select do |adjustment|
         !adjustment.marked_for_destruction? &&
