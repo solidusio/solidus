@@ -15,10 +15,13 @@ Gem::Specification.new do |s|
   s.license     = 'BSD-3-Clause'
 
   s.metadata['rubygems_mfa_required'] = 'true'
+  s.metadata["homepage_uri"]          = s.homepage
+  s.metadata["source_code_uri"]       = "https://github.com/solidusio/solidus"
+  s.metadata["changelog_uri"]         = "https://github.com/solidusio/solidus/blob/main/CHANGELOG.md"
 
   s.files = Dir['README.md', 'lib/**/*']
 
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version     = '>= 3.1.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'solidus_api', s.version
