@@ -66,6 +66,7 @@ require "spree/testing_support/capybara_ext"
 require "spree/testing_support/factory_bot"
 require "solidus_legacy_promotions/testing_support/factory_bot"
 require "solidus_promotions/testing_support/factory_bot"
+require "solidus_promotions/testing_support/within_promotion_lane"
 Spree::TestingSupport::FactoryBot.add_definitions!
 SolidusLegacyPromotions::TestingSupport::FactoryBot.add_definitions!
 SolidusPromotions::TestingSupport::FactoryBot.add_paths_and_load!

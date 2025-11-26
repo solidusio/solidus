@@ -20,6 +20,20 @@ RSpec.describe Spree::Order do
     end
   end
 
+  describe "#reset_discounts" do
+    let(:line_item) { Spree::LineItem.new }
+    let(:shipment) { Spree::Shipment.new }
+    let(:order) { Spree::Order.new(shipments: [shipment], line_items: [line_item]) }
+
+    subject { order.reset_discounts }
+
+    it "resets the current discounts on all line items and shipments" do
+      expect(line_item).to receive(:reset_discounts)
+      expect(shipment).to receive(:reset_discounts)
+      subject
+    end
+  end
+
   describe "order deletion" do
     let(:order) { create(:order) }
     let(:promotion) { create(:solidus_promotion) }

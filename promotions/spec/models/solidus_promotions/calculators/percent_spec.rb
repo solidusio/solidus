@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
-  context "compute" do
+  context "compute", :within_default_promotion_lane do
     let(:currency) { "USD" }
     let(:order) { Spree::Order.new(currency:) }
     let(:item) { Spree::LineItem.new(price: 9.99, quantity: 10, order: order) }
@@ -16,13 +16,14 @@ RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
     end
 
     context "with a shipment" do
-      let(:item) { build(:shipment, cost: 29) }
+      let(:item) { build(:shipment, order:, cost: 29) }
 
       it { is_expected.to eq(4.35) }
     end
 
     context "with a shipping rate" do
-      let(:item) { build(:shipping_rate, cost: 38) }
+      let(:shipment) { build(:shipment, order:, cost: 29) }
+      let(:item) { build(:shipping_rate, shipment:, cost: 38) }
 
       it { is_expected.to eq(5.70) }
     end

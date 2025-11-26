@@ -55,9 +55,9 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
           }.to change { adjustable.adjustments.length }.by(1)
         end
 
-        it "does not keep the current discounts" do
+        it "raises when trying to access the discounts of the current lane outside of promo calculation" do
           subject
-          expect(adjustable.current_discounts).to be_empty
+          expect { adjustable.current_lane_discounts }.to raise_exception(SolidusPromotions::NotCalculatingPromotions)
         end
 
         context "if order is complete but not shipped" do
@@ -93,6 +93,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it " will not create the adjustment" do
           expect {
             subject
+            order.save!
           }.not_to change { adjustable.adjustments.length }
         end
       end
@@ -109,6 +110,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         it "doesn't create an adjustment" do
           expect {
             subject
+            order.save!
           }.to change { adjustable.adjustments.length }.by(0)
         end
 
@@ -120,6 +122,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
             adjustable.reload
             expect {
               subject
+              order.save!
             }.to change { adjustable.reload.adjustments.length }.by(-1)
           end
         end
@@ -184,6 +187,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       it "will not create an adjustment on the shipping rate" do
         expect do
           subject
+          order.save!
         end.not_to change { order.shipments.first.shipping_rates.first.discounts.count }
       end
     end
@@ -199,6 +203,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       expect do
         promotion
         subject.call
+        order.save!
       end.to change { order.shipments.first.adjustments.count }
     end
 
@@ -210,6 +215,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
         expect do
           promotion
           subject.call
+          order.save!
         end.not_to change { order.shipments.first.adjustments.count }
       end
     end

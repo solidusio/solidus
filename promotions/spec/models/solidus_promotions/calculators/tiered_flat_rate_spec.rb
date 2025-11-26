@@ -72,7 +72,7 @@ RSpec.describe SolidusPromotions::Calculators::TieredFlatRate, type: :model do
     end
   end
 
-  describe "#compute" do
+  describe "#compute", :within_default_promotion_lane do
     subject { calculator.compute(line_item) }
 
     let(:order) do

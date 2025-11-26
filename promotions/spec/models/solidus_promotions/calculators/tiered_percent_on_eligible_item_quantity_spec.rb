@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuantity do
-  describe "#compute" do
+  describe "#compute", :within_default_promotion_lane do
     let(:order) do
       create(:order_with_line_items, line_items_attributes: [first_item_attrs, second_item_attrs, third_item_attrs])
     end

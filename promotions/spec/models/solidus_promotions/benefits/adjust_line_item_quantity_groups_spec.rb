@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups do
+RSpec.describe SolidusPromotions::Benefits::AdjustLineItemQuantityGroups, :within_default_promotion_lane do
   let(:action) { described_class.create!(calculator: calculator, promotion: promotion) }
 
   let(:order) do

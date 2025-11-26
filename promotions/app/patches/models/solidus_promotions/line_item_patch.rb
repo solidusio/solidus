@@ -9,6 +9,10 @@ module SolidusPromotions
       base.after_save :reset_quantity_setter
     end
 
+    def reset_discounts
+      adjustments.select(&:promotion?).each { |adjustment| adjustment.amount = 0 }
+    end
+
     private
 
     def validate_managed_quantity_same
@@ -22,6 +26,8 @@ module SolidusPromotions
     end
 
     Spree::LineItem.prepend self
+    Spree::LineItem.prepend SolidusPromotions::AdjustmentDiscounts
+    Spree::LineItem.prepend SolidusPromotions::Discountable
     Spree::LineItem.prepend SolidusPromotions::DiscountableAmount
   end
 end
