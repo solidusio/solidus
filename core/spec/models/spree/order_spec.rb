@@ -2181,7 +2181,8 @@ RSpec.describe Spree::Order, type: :model do
         order,
         'cart',
         'address',
-        kind_of(Time)
+        kind_of(Time),
+        'order'
       )
     end
 
@@ -2201,7 +2202,8 @@ RSpec.describe Spree::Order, type: :model do
           order,
           'cart',
           'address',
-          kind_of(Time)
+          kind_of(Time),
+        'order'
         )
       end
     end
