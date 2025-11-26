@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'benchmark'
+require 'spree/testing_support/shared_examples/state_change_tracking'
 
 RSpec.describe Spree::Shipment, type: :model do
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
@@ -42,6 +43,11 @@ RSpec.describe Spree::Shipment, type: :model do
       build(:inventory_unit, state: 'shipped', shipment: nil)
     ]
     expect(shipment).to be_backordered
+  end
+
+  it_behaves_like "tracking state changes" do
+    let(:stateful) { shipment }
+    let(:state) { "shipped" }
   end
 
   context "#determine_state" do
