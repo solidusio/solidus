@@ -549,6 +549,13 @@ module Spree
                                                           product: '680x680>',
                                                           large: '1200x1200>' }
 
+    # Allows to provide your own class for tracking state changes of stateful models
+    #
+    # @!attribute [rw] state_change_tracking_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::StateChangeTracker.
+    class_name_attribute :state_change_tracking_class, default: "Spree::StateChangeTracker"
+
     # Allows providing your own class for prioritizing store credit application
     # to an order.
     #

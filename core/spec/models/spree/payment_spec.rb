@@ -1350,7 +1350,8 @@ RSpec.describe Spree::Payment, type: :model do
         payment,
         'checkout',
         'completed',
-        kind_of(Time)
+        kind_of(Time),
+        'payment'
       )
     end
 
