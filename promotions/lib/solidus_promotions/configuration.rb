@@ -81,6 +81,7 @@ module SolidusPromotions
         "SolidusPromotions::Calculators::FlatRate",
         "SolidusPromotions::Calculators::FlexiRate",
         "SolidusPromotions::Calculators::Percent",
+        "SolidusPromotions::Calculators::PercentWithCap",
         "SolidusPromotions::Calculators::TieredFlatRate",
         "SolidusPromotions::Calculators::TieredPercent",
         "SolidusPromotions::Calculators::TieredPercentOnEligibleItemQuantity"
