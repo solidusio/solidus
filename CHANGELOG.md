@@ -1,3 +1,29 @@
+## Solidus v4.6.2 (2025-11-27)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* [v4.6] Add changelog and source code URI to gemspec by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6389
+
+## Solidus Core
+
+* [v4.6] Fix misnamed shipping_categories table in 4.6.0 migration comment by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6342
+* [v4.6] Fix Rubocop offenses for November 2025 by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6387
+* [v4.6] feat: Allow to overwrite track_state_change? by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6386
+* [v4.6] feat: Make state change tracker a configurable class by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6388
+
+## Solidus Admin
+
+* [v4.6] Fix Rubocop offenses for November 2025 by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6387
+
+## Solidus Promotions
+
+* [v4.6] Promotions: First Order condition must not fail on canceled orders by @github-actions[bot] in https://github.com/solidusio/solidus/pull/6344
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.6.1...v4.6.2
+
+
 ## Solidus v4.6.1 (2025-10-21)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
