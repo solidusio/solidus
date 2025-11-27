@@ -428,6 +428,41 @@ RSpec.describe Spree::Order, type: :model do
         expect(order1.merge!(order2, user)).to eq([order1, order2, user])
       end
     end
+
+    describe 'mergeable_orders_finder_class customization' do
+      let(:user) { create(:user) }
+      let(:store) { create(:store) }
+      let(:current_order) { create(:order, user: user, store: store) }
+      let(:context) { double('context', spree_current_user: user, current_store: store, current_order: current_order) }
+      let(:test_mergeable_orders_finder_class) do
+        Class.new do
+          def initialize(context:)
+            @user = context.spree_current_user
+            @store = context.current_store
+            @current_order = context.current_order
+          end
+
+          def call
+            @user.orders.by_store(@store).where.not(id: @current_order.id).where('created_at > ?', 7.days.ago)
+          end
+        end
+      end
+
+      before do
+        stub_spree_preferences(mergeable_orders_finder_class: test_mergeable_orders_finder_class)
+      end
+
+      subject(:finder) { Spree::Config.mergeable_orders_finder_class.new(context: context) }
+
+      it 'uses the configured mergeable orders finder' do
+        old_order = create(:order, user: user, store: store, created_at: 8.days.ago)
+        recent_order = create(:order, user: user, store: store, created_at: 3.days.ago)
+
+        orders = finder.call
+        expect(orders).to include(recent_order)
+        expect(orders).not_to include(old_order, current_order)
+      end
+    end
   end
 
   describe "#ensure_updated_shipments" do

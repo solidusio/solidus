@@ -409,6 +409,13 @@ module Spree
     #   as Spree::OrderMerger.
     class_name_attribute :order_merger_class, default: 'Spree::OrderMerger'
 
+    # Allows providing your own class for selecting which orders to merge.
+    #
+    # @!attribute [rw] mergeable_orders_finder_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::MergeableOrdersFinder.
+    class_name_attribute :mergeable_orders_finder_class, default: 'Spree::MergeableOrdersFinder'
+
     # Allows providing your own class for adding default payments to a user's
     # order from their "wallet".
     #
