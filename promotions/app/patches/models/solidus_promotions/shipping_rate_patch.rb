@@ -23,6 +23,16 @@ module SolidusPromotions
       discounts.sum(&:amount)
     end
 
+    private
+
+    def discounts_by_lanes(lanes)
+      discounts.select do |discount|
+        !discount.marked_for_destruction? &&
+          discount.benefit.promotion.lane.to_sym.in?(lanes.map(&:to_sym))
+      end
+    end
+
+    Spree::ShippingRate.prepend SolidusPromotions::DiscountedAmount
     Spree::ShippingRate.prepend SolidusPromotions::DiscountableAmount
     Spree::ShippingRate.prepend self
   end

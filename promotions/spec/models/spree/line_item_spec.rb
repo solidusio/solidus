@@ -37,6 +37,63 @@ RSpec.describe Spree::LineItem do
     end
   end
 
+  describe "#current_lane_discounts" do
+    let(:order) { Spree::Order.new }
+    let(:tax_rate) { create(:tax_rate) }
+    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
+    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
+    let(:line_item) { Spree::LineItem.new(adjustments:, order:) }
+    let(:adjustments) { [tax_adjustment, pre_lane_adjustment, post_lane_adjustment] }
+    let(:tax_adjustment) { Spree::Adjustment.new(source: tax_rate, amount: 2) }
+    let(:pre_lane_adjustment) { Spree::Adjustment.new(source: pre_lane_promotion.benefits.first) }
+    let(:post_lane_adjustment) { Spree::Adjustment.new(source: post_lane_promotion.benefits.first) }
+
+    subject { line_item.current_lane_discounts }
+
+    it "raises unless we're doing a promotion calculation" do
+      expect { subject }.to raise_exception(SolidusPromotions::NotCalculatingPromotions)
+    end
+
+    context "while calculating promotions" do
+      around do |example|
+        SolidusPromotions::PromotionLane.set(current: lane) do
+          example.run
+        end
+      end
+
+      let(:lane) { "pre" }
+      it { is_expected.to contain_exactly(pre_lane_adjustment) }
+
+      context "if lane is default" do
+        let(:lane) { "default" }
+
+        it { is_expected.to be_empty }
+      end
+
+      context "if lane is post" do
+        let(:lane) { "post" }
+
+        it { is_expected.to contain_exactly(post_lane_adjustment) }
+      end
+    end
+  end
+
+  describe "#discounted_amount" do
+    let(:order) { Spree::Order.new }
+    let(:tax_rate) { create(:tax_rate) }
+    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
+    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
+    let(:line_item) { Spree::LineItem.new(adjustments:, order:, price: 14, quantity: 2) }
+    let(:adjustments) { [tax_adjustment, pre_lane_adjustment, post_lane_adjustment] }
+    let(:tax_adjustment) { Spree::Adjustment.new(source: tax_rate, amount: 2) }
+    let(:pre_lane_adjustment) { Spree::Adjustment.new(source: pre_lane_promotion.benefits.first, amount: -3) }
+    let(:post_lane_adjustment) { Spree::Adjustment.new(source: post_lane_promotion.benefits.first, amount: -2) }
+
+    subject { line_item.discounted_amount }
+
+    it { is_expected.to eq(23) }
+  end
+
   describe "changing quantities" do
     context "when line item is managed by an automation" do
       let(:order) { create(:order) }

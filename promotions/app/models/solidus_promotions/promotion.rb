@@ -57,13 +57,9 @@ module SolidusPromotions
     end
 
     def self.lane_options
-      ordered_lanes.map do |lane|
+      PromotionLane.ordered.map do |lane|
         [human_enum_name(:lane, lane), lane]
       end
-    end
-
-    def self.ordered_lanes
-      lanes.keys.sort_by { |lane| lanes[lane] }
     end
 
     def self.order_activatable?(order)
