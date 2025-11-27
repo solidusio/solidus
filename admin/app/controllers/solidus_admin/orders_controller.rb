@@ -95,7 +95,7 @@ module SolidusAdmin
     def customers_for
       load_order
 
-      @users = Spree.user_class
+      @users = Spree.admin_user_class
         .where.not(id: @order.user_id)
         .order(created_at: :desc, id: :desc)
         .ransack(params[:q])
