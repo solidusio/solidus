@@ -126,4 +126,42 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
       is_expected.to eq(Spree::Config.promotions.calculators[described_class.to_s])
     }
   end
+
+  describe "#compute_amount" do
+    subject { action.compute_amount(order) }
+
+    before do
+      promotion.promotion_actions = [action]
+      action.calculator = Spree::Calculator::FlatRate.new(preferred_amount:)
+    end
+
+    let(:preferred_amount) { 50 }
+
+    context "when the adjustable is actionable" do
+      it "calls compute on the calculator" do
+        expect(action.calculator).to receive(:compute).with(order).and_call_original
+        subject
+      end
+
+      it "doesn't persist anything to the database" do
+        allow(action.calculator).to receive(:compute).with(order).and_call_original
+
+        expect {
+          subject
+        }.not_to make_database_queries(manipulative: true)
+      end
+
+      context "calculator returns amount greater than order total" do
+        let(:preferred_amount) { 300 }
+
+        before do
+          allow(order).to receive_messages(item_total: 50, ship_total: 50)
+        end
+
+        it "does not exceed it" do
+          expect(subject).to eql(-100)
+        end
+      end
+    end
+  end
 end

@@ -168,7 +168,7 @@ module Spree
     def update_adjustment_total
       update_adjustments
 
-      all_items = line_items + shipments
+      all_items = (line_items + shipments).reject(&:marked_for_destruction?)
       # Ignore any adjustments that have been marked for destruction in our
       # calculations. They'll get removed when/if we persist the order.
       valid_adjustments = adjustments.reject(&:marked_for_destruction?)
@@ -232,12 +232,11 @@ module Spree
 
         next unless item.changed?
 
-        item.update_columns(
+        item.assign_attributes(
           promo_total:          item.promo_total,
           included_tax_total:   item.included_tax_total,
           additional_tax_total: item.additional_tax_total,
-          adjustment_total:     item.adjustment_total,
-          updated_at:           Time.current,
+          adjustment_total:     item.adjustment_total
         )
       end
     end

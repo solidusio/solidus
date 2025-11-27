@@ -5,7 +5,7 @@ module SolidusLegacyPromotions
     def update_adjustment_total
       update_adjustments
 
-      all_items = line_items + shipments
+      all_items = (line_items + shipments).reject(&:marked_for_destruction?)
       order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)
 
       order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.select(&:eligible?).sum(&:amount)
@@ -25,20 +25,20 @@ module SolidusLegacyPromotions
         # Core doesn't have "eligible" adjustments anymore, so we need to
         # override the adjustment_total calculation to exclude them for legacy
         # promotions.
-        item.adjustment_total = item.adjustments.
-          select(&:eligible?).
-          reject(&:included?).
-          sum(&:amount)
+        item.adjustment_total = item.adjustments.select { |adjustment|
+          adjustment.eligible? &&
+            !adjustment.marked_for_destruction? &&
+            !adjustment.included?
+        }.sum(&:amount)
 
-        if item.changed?
-          item.update_columns(
-            promo_total:          item.promo_total,
-            included_tax_total:   item.included_tax_total,
-            additional_tax_total: item.additional_tax_total,
-            adjustment_total:     item.adjustment_total,
-            updated_at:           Time.current,
-          )
-        end
+        next unless item.changed?
+
+        item.assign_attributes(
+          promo_total:          item.promo_total,
+          included_tax_total:   item.included_tax_total,
+          additional_tax_total: item.additional_tax_total,
+          adjustment_total:     item.adjustment_total
+        )
       end
     end
     Spree::OrderUpdater.prepend self

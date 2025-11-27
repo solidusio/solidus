@@ -9,14 +9,13 @@ module SolidusPromotions
       preference :necessary_quantity, :integer, default: 1
 
       def perform(order)
-        line_item = find_item(order) || create_item(order)
+        line_item = find_item(order) || build_item(order)
         set_quantity(line_item, determine_item_quantity(order))
         line_item.current_discounts << discount(line_item)
       end
 
       def remove_from(order)
-        line_item = find_item(order)
-        order.line_items.destroy(line_item)
+        find_item(order)&.mark_for_destruction
       end
 
       private
@@ -25,8 +24,8 @@ module SolidusPromotions
         order.line_items.detect { |line_item| line_item.managed_by_order_benefit == self }
       end
 
-      def create_item(order)
-        order.line_items.create!(quantity: determine_item_quantity(order), variant: variant, managed_by_order_benefit: self)
+      def build_item(order)
+        order.line_items.build(quantity: determine_item_quantity(order), variant: variant, managed_by_order_benefit: self)
       end
 
       def determine_item_quantity(order)
