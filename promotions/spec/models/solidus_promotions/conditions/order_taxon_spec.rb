@@ -8,12 +8,16 @@ RSpec.describe SolidusPromotions::Conditions::OrderTaxon, type: :model do
   let(:condition) do
     described_class.create!(benefit: promotion_benefit)
   end
-  let(:product) { order.products.first }
-  let(:order) { create :order_with_line_items }
+  let(:product) { create(:product) }
+  let(:order) { create :order }
   let(:taxon_one) { create :taxon, name: "first" }
   let(:taxon_two) { create :taxon, name: "second" }
 
   it_behaves_like "a taxon condition"
+
+  before do
+    order.line_items.new(quantity: 1, variant: product.master)
+  end
 
   it { is_expected.to be_updateable }
 
@@ -66,7 +70,7 @@ RSpec.describe SolidusPromotions::Conditions::OrderTaxon, type: :model do
 
       it "is eligible order has all prefered taxons" do
         product.taxons << taxon_two
-        order.products.last.taxons << taxon_one
+        product.taxons << taxon_one
 
         condition.taxons = [taxon_one, taxon_two]
 
@@ -121,7 +125,7 @@ RSpec.describe SolidusPromotions::Conditions::OrderTaxon, type: :model do
 
       context "one of the order's products is in a listed taxon" do
         before do
-          order.products.first.taxons << taxon_one
+          product.taxons << taxon_one
           condition.taxons << taxon_one
         end
 
