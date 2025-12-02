@@ -23,15 +23,7 @@ module SolidusPromotions
       discounts.sum(&:amount)
     end
 
-    def discounted_amount
-      amount + previous_lanes_discounts.sum(&:amount)
-    end
-
     private
-
-    def previous_lanes_discounts
-      discounts_by_lanes(PromotionLane.previous_lanes)
-    end
 
     # Returns discounts from specified promotion lanes.
     #
@@ -46,6 +38,7 @@ module SolidusPromotions
     end
 
     Spree::ShippingRate.prepend SolidusPromotions::DiscountableAmount
+    Spree::ShippingRate.prepend SolidusPromotions::DiscountedAmount
     Spree::ShippingRate.prepend self
   end
 end

@@ -9,15 +9,7 @@ module SolidusPromotions
       base.after_save :reset_quantity_setter
     end
 
-    def discounted_amount
-      amount + previous_lanes_discounts.sum(&:amount)
-    end
-
     private
-
-    def previous_lanes_discounts
-      discounts_by_lanes(PromotionLane.previous_lanes)
-    end
 
     def discounts_by_lanes(lanes)
       adjustments.select do |adjustment|
@@ -38,6 +30,7 @@ module SolidusPromotions
     end
 
     Spree::LineItem.prepend self
+    Spree::LineItem.prepend SolidusPromotions::DiscountedAmount
     Spree::LineItem.prepend SolidusPromotions::DiscountableAmount
   end
 end

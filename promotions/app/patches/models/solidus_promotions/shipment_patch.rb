@@ -9,15 +9,7 @@ module SolidusPromotions
       shipping_rates.each(&:reset_current_discounts)
     end
 
-    def discounted_amount
-      amount + previous_lanes_discounts.sum(&:amount)
-    end
-
     private
-
-    def previous_lanes_discounts
-      discounts_by_lanes(PromotionLane.previous_lanes)
-    end
 
     def discounts_by_lanes(lanes)
       adjustments.select do |adjustment|
@@ -28,5 +20,6 @@ module SolidusPromotions
     end
 
     Spree::Shipment.prepend self
+    Spree::Shipment.prepend SolidusPromotions::DiscountedAmount
   end
 end
