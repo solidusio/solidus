@@ -57,4 +57,40 @@ RSpec.describe Spree::LineItem do
       end
     end
   end
+
+  describe "#discounted_amount" do
+    let(:order) { Spree::Order.new }
+    let(:tax_rate) { create(:tax_rate) }
+    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
+    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
+    let(:line_item) { Spree::LineItem.new(adjustments:, order:, price: 14, quantity: 2) }
+    let(:adjustments) { [tax_adjustment, pre_lane_adjustment, post_lane_adjustment] }
+    let(:tax_adjustment) { Spree::Adjustment.new(source: tax_rate, amount: 2) }
+    let(:pre_lane_adjustment) { Spree::Adjustment.new(source: pre_lane_promotion.benefits.first, amount: -3) }
+    let(:post_lane_adjustment) { Spree::Adjustment.new(source: post_lane_promotion.benefits.first, amount: -2) }
+
+    subject { line_item.discounted_amount }
+
+    it "counts adjustments from all lanes by default" do
+      is_expected.to eq(23)
+    end
+
+    context "if current lane is default lane" do
+      around do |example|
+        SolidusPromotions::PromotionLane.set(current_lane: :default) do
+          example.run
+        end
+      end
+
+      it { is_expected.to eq(25) }
+    end
+
+    context "if an adjustment is marked for deletion" do
+      before do
+        pre_lane_adjustment.mark_for_destruction
+      end
+
+      it { is_expected.to eq(26) }
+    end
+  end
 end
