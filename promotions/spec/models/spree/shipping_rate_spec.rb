@@ -75,4 +75,39 @@ RSpec.describe Spree::ShippingRate do
       expect { subject }.to change { shipping_rate.current_discounts.length }.from(1).to(0)
     end
   end
+
+  describe "#discounted_amount" do
+    let(:order) { Spree::Order.new }
+    let(:pre_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :pre) }
+    let(:post_lane_promotion) { create(:solidus_promotion, :with_adjustable_benefit, lane: :post) }
+    let(:shipment) { Spree::Shipment.new(order:) }
+    let(:shipping_rate) { Spree::ShippingRate.new(discounts:, shipment:, amount: 14) }
+    let(:discounts) { [pre_lane_discount, post_lane_discount] }
+    let(:pre_lane_discount) { SolidusPromotions::ShippingRateDiscount.new(benefit: pre_lane_promotion.benefits.first, amount: -3) }
+    let(:post_lane_discount) { SolidusPromotions::ShippingRateDiscount.new(benefit: post_lane_promotion.benefits.first, amount: -2) }
+
+    subject { shipping_rate.discounted_amount }
+
+    it "counts discounts from all lanes by default" do
+      is_expected.to eq(9)
+    end
+
+    context "if current lane is default lane" do
+      around do |example|
+        SolidusPromotions::PromotionLane.set(current_lane: :default) do
+          example.run
+        end
+      end
+
+      it { is_expected.to eq(11) }
+    end
+
+    context "if an discount is marked for deletion" do
+      before do
+        pre_lane_discount.mark_for_destruction
+      end
+
+      it { is_expected.to eq(12) }
+    end
+  end
 end
