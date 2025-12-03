@@ -53,6 +53,7 @@ Capybara.exact = true
 Capybara.disable_animation = true
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 Capybara.enable_aria_label = true
+Capybara.server = :puma, { Silent: true } # A workaround for https://github.com/rspec/rspec-rails/issues/1897
 
 # DATABASE CLEANER
 require 'database_cleaner'
