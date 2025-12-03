@@ -10,5 +10,7 @@ module SolidusPromotions
     end
 
     Spree::Shipment.prepend self
+    Spree::Shipment.prepend SolidusPromotions::AdjustmentDiscounts
+    Spree::Shipment.prepend SolidusPromotions::DiscountedAmount
   end
 end
