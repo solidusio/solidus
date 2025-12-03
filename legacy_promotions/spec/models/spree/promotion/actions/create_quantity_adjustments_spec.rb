@@ -22,6 +22,48 @@ module Spree::Promotion::Actions
     let(:quantity) { 1 }
     let(:promotion) { FactoryBot.create :promotion }
 
+    describe "#perform" do
+      subject { action.perform({ order:, promotion: }) }
+
+      let(:calculator) { FactoryBot.create :flat_rate_calculator, preferred_amount: }
+
+      context "when calculator computes 0" do
+        let(:preferred_amount) { 0 }
+
+        it "does not create an adjustment" do
+          expect { subject }
+            .not_to change { action.adjustments.count }
+        end
+      end
+
+      context "when calculator returns a non-zero value" do
+        let(:preferred_amount) { 10 }
+        let(:line_item) { order.line_items.first }
+
+        it "creates an adjustment" do
+          expect { subject }
+            .to change { action.adjustments.count }
+            .from(0).to(1)
+            .and change { line_item.adjustments.count }
+            .from(0).to(1)
+
+          expect(line_item.adjustments).to eq(action.adjustments)
+        end
+
+        it "associates the line item with the action", :aggregate_failures do
+          expect { subject }
+            .to change { line_item.line_item_actions.count }
+            .from(0).to(1)
+
+          expect(action.line_item_actions.first).to have_attributes(
+            line_item_id: line_item.id,
+            action_id: action.id,
+            quantity: 1
+          )
+        end
+      end
+    end
+
     describe "#compute_amount" do
       subject { action.compute_amount(line_item) }
 
@@ -46,6 +88,15 @@ module Spree::Promotion::Actions
           context "and an item with a quantity of 2" do
             let(:quantity) { 2 }
             it { is_expected.to eq(-10) }
+
+            it "doesn't save anything to the database" do
+              action
+              line_item
+
+              expect {
+                subject
+              }.not_to make_database_queries(manipulative: true)
+            end
           end
 
           context "and an item with a quantity of 3" do
@@ -94,7 +145,7 @@ module Spree::Promotion::Actions
               :order_with_line_items,
               line_items_attributes: [
                 { quantity: 3 }
-            ]
+              ]
             )
           end
 
