@@ -12,7 +12,7 @@ module SolidusPromotions
     # @param line_item [LineItem] one of the line_items distributed over
     # @return [BigDecimal] the weighted adjustment for this line_item
     def amount(line_item)
-      distributed_amounts[line_item.id].to_d
+      distributed_amounts[line_item].to_d
     end
 
     private
@@ -21,11 +21,7 @@ module SolidusPromotions
     # @return [Hash<Integer, BigDecimal>] a hash of line item IDs and their
     #   corresponding weighted adjustments
     def distributed_amounts
-      line_item_ids.zip(allocated_amounts).to_h
-    end
-
-    def line_item_ids
-      line_items.map(&:id)
+      line_items.zip(allocated_amounts).to_h
     end
 
     def elligible_amounts
