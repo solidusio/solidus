@@ -25,11 +25,19 @@ module SolidusPromotions
         self.taxons = Spree::Taxon.find(taxon_ids)
       end
 
+      def taxons_ids_with_children=(args)
+        @taxon_ids_with_children = args
+      end
+
       private
 
       # ids of taxons conditions and taxons conditions children
       def taxon_ids_with_children
-        @taxon_ids_with_children ||= taxons.map { |taxon| taxon.self_and_descendants.ids }.uniq
+        @taxon_ids_with_children ||= load_taxon_ids_with_children
+      end
+
+      def load_taxon_ids_with_children
+        taxons.map { |taxon| taxon.self_and_descendants.ids }.uniq
       end
     end
   end

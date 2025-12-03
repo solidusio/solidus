@@ -15,6 +15,10 @@ module SolidusPromotions
 
       def order_eligible?(order, _options = {})
         order_condition = OrderTaxon.new(taxons:, preferred_match_policy:)
+
+        # Hydrate the instance cache with our @taxon_ids_with_children cache
+        order_condition.taxons_ids_with_children = taxon_ids_with_children
+
         order_condition.order_eligible?(order)
         @eligibility_errors = order_condition.eligibility_errors
         eligibility_errors.empty?
@@ -23,6 +27,10 @@ module SolidusPromotions
       def line_item_eligible?(line_item, _options = {})
         line_item_match_policy = preferred_match_policy.in?(%w[any all]) ? "include" : "exclude"
         line_item_condition = LineItemTaxon.new(taxons:, preferred_match_policy: line_item_match_policy)
+
+        # Hydrate the instance cache with our @taxon_ids_with_children cache\
+        line_item_condition.taxons_ids_with_children = taxon_ids_with_children
+
         result = line_item_condition.line_item_eligible?(line_item)
         @eligibility_errors = line_item_condition.eligibility_errors
         result
