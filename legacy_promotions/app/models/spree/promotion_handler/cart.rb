@@ -61,7 +61,7 @@ module Spree
 
       def promotion_code(promotion)
         order_promotion = order.order_promotions.detect { |op| op.promotion_id == promotion.id }
-        order_promotion.present? ? order_promotion.promotion_code : nil
+        order_promotion.presence&.promotion_code
       end
 
       def promotion_includes
