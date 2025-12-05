@@ -5,19 +5,20 @@
 <div class="field promo-condition-option-values">
   <div class="param-prefix hidden" data-param-prefix="<%= param_prefix %>"></div>
   <div class="row">
-    <div class="col-6"><%= label_tag nil, Spree::Product.model_name.human %></div>
+    <div class="col-5"><%= label_tag nil, Spree::Product.model_name.human %></div>
     <div class="col-6"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
+    <div class="col-1">&nbsp;</div>
   </div>
 
   <div class="form-group">
     <div data-controller="product-option-values">
       <template data-product-option-values-target="template">
-        <%= render "solidus_promotions/admin/condition_fields/line_item_option_value/option_value_fields", product_option_values: [nil, []], form: form %>
+        <%= render "solidus_promotions/admin/condition_fields/line_item_option_value/option_value_fields", product_option_values: [nil, []], form: form, index: 0 %>
       </template>
-      <% form.object.preferred_eligible_values.each do |product_option_values| %>
-        <%= render "solidus_promotions/admin/condition_fields/line_item_option_value/option_value_fields", product_option_values: product_option_values, form: form %>
+      <% form.object.preferred_eligible_values.each.with_index do |product_option_values, index| %>
+        <%= render "solidus_promotions/admin/condition_fields/line_item_option_value/option_value_fields", product_option_values:, form:, index: %>
       <% end %>
-      <div class="mb-3" data-product-option-values-target="links">
+      <div class="mt-3" data-product-option-values-target="links">
         <%= link_to t(:add_product, scope: [:solidus_promotions, :line_item_option_value_condition]), "#", class: "btn btn-outline-primary", data: { action: "click->product-option-values#add_row" } %>
       </div>
     </div>
