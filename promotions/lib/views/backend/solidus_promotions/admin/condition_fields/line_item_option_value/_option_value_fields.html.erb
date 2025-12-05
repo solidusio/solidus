@@ -1,21 +1,27 @@
-<div class="fullwidth promo-condition-option-value d-flex align-content-stretch mb-3">
-  <div class="mr-2" style="flex-grow: 1;">
+<div class="promo-condition-option-value row">
+  <div class="col-5">
     <input
       is="product-picker"
+      id="ov-product-picker-<%= index %>"
       class="w-100"
       data-action="select2Change->product-option-values#propagate_product_id_to_value_input"
+      data-multiple="false"
       type="hidden"
       value="<%= product_option_values[0] %>"
     >
   </div>
-  <div class="mr-2 ml-2" style="flex-grow: 1;">
+  <div class="col-6">
     <input
       is="option-value-picker"
+      id="option-value-picker-<%= index %>"
       class="fullwidth"
       name="<%= form.object_name %>[preferred_eligible_values][<%= product_option_values[0] %>]"
       type="hidden"
+      data-product-id="<%= product_option_values[0] %>"
       value="<%= product_option_values[1].join(",") %>"
     >
   </div>
-  <a class="fa fa-trash remove p-2" data-action="click->product-option-values#remove_row"></a>
+  <div class="col-1">
+    <a class="fa fa-trash remove p-2 float-right" data-action="click->product-option-values#remove_row"></a>
+  </div>
 </div>
