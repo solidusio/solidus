@@ -22,6 +22,8 @@ module SolidusPromotions
     end
 
     Spree::LineItem.prepend self
+    Spree::LineItem.prepend SolidusPromotions::AdjustmentDiscounts
+    Spree::LineItem.prepend SolidusPromotions::DiscountedAmount
     Spree::LineItem.prepend SolidusPromotions::DiscountableAmount
   end
 end
