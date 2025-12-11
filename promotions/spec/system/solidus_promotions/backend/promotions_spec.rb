@@ -161,4 +161,28 @@ RSpec.feature "Promotions admin" do
       expect(page).to have_content("Benefit has been successfully removed!")
     end
   end
+
+  describe "Adding a benefit condition" do
+    let!(:promotion_with_benefit) { create(:solidus_promotion, :with_adjustable_benefit) }
+    let!(:product) { create(:product) }
+    let!(:option_value) { create(:option_value) }
+    let!(:variant) { create(:variant, product: product, option_values: [option_value]) }
+
+    it "allows adding an option value condition", :js do
+      visit solidus_promotions.edit_admin_promotion_path(promotion_with_benefit)
+      click_link "Add Condition"
+      select("Line Item Option Value(s)", from: "Condition Type")
+      click_button "Add"
+      expect(page).to have_content("Line Item Option Value(s)")
+      click_link "Add product"
+      within(".promo-condition-option-value") do
+        targetted_select2_search(product.name, from: "#s2id_ov-product-picker-0")
+        targetted_select2_search(option_value.name, from: "#s2id_option-value-picker-0")
+      end
+      within("#benefits_adjust_line_item_#{promotion_with_benefit.benefits.first.id}_conditions") do
+        click_button("Update")
+      end
+      expect(page).to have_content("Condition has been successfully updated!")
+    end
+  end
 end
