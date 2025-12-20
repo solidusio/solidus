@@ -80,6 +80,15 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
           expect(adjustable.current_discounts).to be_empty
         end
 
+        it "updates adjustment labels" do
+          subject
+          expect_any_instance_of(SolidusPromotions::Benefit).to receive(:adjustment_label).and_return("Changed Adjustment Label")
+          expect { order_adjuster.call }
+            .to change { order.line_items.first.adjustments.first.label }
+            .from("Promotion (Because we like you)")
+            .to("Changed Adjustment Label")
+        end
+
         context "if order is complete but not shipped" do
           let(:line_item) { order.line_items.first }
           let(:order) { create(:order_ready_to_ship) }

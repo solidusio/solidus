@@ -70,9 +70,9 @@ module SolidusPromotions
         adjustment ||= item.adjustments.new(
           source: discount_item.source,
           order_id: item.is_a?(Spree::Order) ? item.id : item.order_id,
-          label: discount_item.label
         )
         adjustment.amount = discount_item.amount
+        adjustment.label = discount_item.label
         adjustment
       end
     end
