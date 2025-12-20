@@ -265,4 +265,42 @@ RSpec.describe SolidusPromotions::Benefit do
       expect { subject }.to raise_exception(NotImplementedError)
     end
   end
+
+  describe "#adjustment_label" do
+    let(:benefit_class) do
+      Class.new(described_class) do
+      end
+    end
+
+    let(:calculator_class) do
+      Class.new(Spree::Calculator) do
+        include SolidusPromotions::Calculators::PromotionCalculator
+      end
+    end
+
+    let(:calculator) { calculator_class.new }
+
+    let(:promotion) { build_stubbed(:solidus_promotion, customer_label: "Winter Sale") }
+
+    let(:benefit) { benefit_class.new(calculator:, promotion:) }
+    let(:adjustable) { Spree::LineItem.new }
+
+    subject { benefit.adjustment_label(adjustable) }
+
+    it { is_expected.to eq("Promotion (Winter Sale)") }
+
+    context "if the calculator implements #line_item_adjustment_label" do
+      let(:calculator_class) do
+        Class.new(Spree::Calculator) do
+          include SolidusPromotions::Calculators::PromotionCalculator
+
+          def line_item_adjustment_label(_line_item, _options = {})
+            "Something entirely different"
+          end
+        end
+      end
+
+      it { is_expected.to eq("Something entirely different") }
+    end
+  end
 end
