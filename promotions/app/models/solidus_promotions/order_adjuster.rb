@@ -20,19 +20,9 @@ module SolidusPromotions
 
       discounted_order = DiscountOrder.new(order, promotions, dry_run: dry_run).call
 
-      PersistDiscountedOrder.new(discounted_order).call unless dry_run
+      PersistDiscountedOrder.new(discounted_order).call
 
-      order.reset_current_discounts
-
-      unless dry_run
-        # Since automations might have added a line item, we need to recalculate
-        # item total and item count here.
-        line_items = order.line_items.reject(&:marked_for_destruction?)
-        order.item_total = line_items.sum(&:amount)
-        order.item_count = line_items.sum(&:quantity)
-        order.promo_total = (line_items + order.shipments).sum(&:promo_total)
-      end
-      order
+      RecalculatePromoTotals.call(discounted_order)
     end
   end
 end

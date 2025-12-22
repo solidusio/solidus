@@ -49,7 +49,6 @@ module SolidusPromotions
         active_adjustments = item_discounts.map do |item_discount|
           update_adjustment(item, item_discount)
         end
-        item.promo_total = active_adjustments.sum(&:amount)
         # Remove any promotion adjustments tied to promotion benefits which no longer match.
         unmatched_adjustments = promotion_adjustments - active_adjustments
 
