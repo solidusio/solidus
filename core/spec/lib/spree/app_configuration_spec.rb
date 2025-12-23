@@ -248,4 +248,18 @@ RSpec.describe Spree::AppConfiguration do
       expect(prefs[:meta_data_max_value_length]).to eq(256)
     end
   end
+
+  describe "#recalculate_cart_prices" do
+    subject { prefs[:recalculate_cart_prices] }
+
+    it { is_expected.to be false }
+
+    context "if solidus version is 5.0" do
+      before do
+        prefs.load_defaults "5.0"
+      end
+
+      it { is_expected.to be true }
+    end
+  end
 end

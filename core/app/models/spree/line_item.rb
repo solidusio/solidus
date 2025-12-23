@@ -127,6 +127,15 @@ module Spree
       end
     end
 
+    # Recalculate the price using the pricing options for this line item.
+    # Useful for making sure carts are up-to-date when prices change.
+    # Will not make changes to completed orders.
+    #
+    def recalculate_price
+      return if order.completed?
+      self.money_price = variant.price_for_options(pricing_options)&.money
+    end
+
     def pricing_options
       Spree::Config.pricing_options_class.from_line_item(self)
     end

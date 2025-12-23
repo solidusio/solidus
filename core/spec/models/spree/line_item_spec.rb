@@ -184,5 +184,25 @@ RSpec.describe Spree::LineItem, type: :model do
     end
   end
 
+  describe "#recalculate_price" do
+    let(:order) { create(:order) }
+    let(:variant) { create(:variant, price: 14.99) }
+    let(:line_item) { build(:line_item, order:, variant:, price: 13.39) }
+
+    subject { line_item.recalculate_price }
+
+    it "updates the price of the line item" do
+      expect { subject }.to change { line_item.price }.from(13.39).to(14.99)
+    end
+
+    context "if order is completed" do
+      let(:order) { create(:order, completed_at: 1.hour.ago) }
+
+      it "does not update line item prices" do
+        expect { subject }.not_to change { line_item.price }.from(13.39)
+      end
+    end
+  end
+
   it_behaves_like "customer and admin metadata fields: storage and validation", :line_item
 end

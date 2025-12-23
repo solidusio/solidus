@@ -267,6 +267,39 @@ module Spree
       end
     end
 
+    describe "price recalculation" do
+      let(:variant) { create(:variant, price: 98) }
+      let!(:order) { create(:order_with_line_items, line_items_attributes: [{ variant:, price: 98 }]) }
+
+      subject { updater.recalculate }
+
+      before do
+        variant.price = 100
+        variant.save!
+        order.reload
+      end
+
+      context "when recalculate_cart_prices is true" do
+        before do
+          stub_spree_preferences(recalculate_cart_prices: true)
+        end
+
+        it "sets prices to the currently active price" do
+          expect { subject }.to change { order.line_items.first.price }.from(98).to(100)
+        end
+      end
+
+      context "when recalculate_cart_prices is false" do
+        before do
+          stub_spree_preferences(recalculate_cart_prices: false)
+        end
+
+        it "does not recalculate prices" do
+          expect { subject }.not_to change { order.line_items.first.price }.from(98)
+        end
+      end
+    end
+
     context "updating shipment state" do
       let(:order) { create :order_with_line_items }
 
