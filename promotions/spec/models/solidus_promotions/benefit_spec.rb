@@ -141,8 +141,14 @@ RSpec.describe SolidusPromotions::Benefit do
 
       subject { benefit.discount(discountable, extra_data: "foo") }
 
+      around do |example|
+        SolidusPromotions::PromotionLane.set(current_lane: promotion.lane) do
+          example.run
+        end
+      end
+
       it "passes the option on to the calculator" do
-        expect(calculator).to receive(:compute_line_item).with(discountable, extra_data: "foo").and_return(1)
+        expect(calculator).to receive(:compute_line_item).with(discountable, extra_data: "foo").and_call_original
         subject
       end
     end
@@ -263,6 +269,44 @@ RSpec.describe SolidusPromotions::Benefit do
 
     it "raises an error" do
       expect { subject }.to raise_exception(NotImplementedError)
+    end
+  end
+
+  describe "#adjustment_label" do
+    let(:benefit_class) do
+      Class.new(described_class) do
+      end
+    end
+
+    let(:calculator_class) do
+      Class.new(Spree::Calculator) do
+        include SolidusPromotions::Calculators::PromotionCalculator
+      end
+    end
+
+    let(:calculator) { calculator_class.new }
+
+    let(:promotion) { build_stubbed(:solidus_promotion, customer_label: "Winter Sale") }
+
+    let(:benefit) { benefit_class.new(calculator:, promotion:) }
+    let(:adjustable) { Spree::LineItem.new }
+
+    subject { benefit.adjustment_label(adjustable) }
+
+    it { is_expected.to eq("Promotion (Winter Sale)") }
+
+    context "if the calculator implements #line_item_adjustment_label" do
+      let(:calculator_class) do
+        Class.new(Spree::Calculator) do
+          include SolidusPromotions::Calculators::PromotionCalculator
+
+          def line_item_adjustment_label(_line_item, _options = {})
+            "Something entirely different"
+          end
+        end
+      end
+
+      it { is_expected.to eq("Something entirely different") }
     end
   end
 end

@@ -10,6 +10,12 @@ RSpec.describe SolidusPromotions::Benefits::CreateDiscountedItem do
   let(:promotion) { create(:solidus_promotion) }
   let(:goodie) { create(:variant) }
 
+  around do |example|
+    SolidusPromotions::PromotionLane.set(current_lane: promotion.lane) do
+      example.run
+    end
+  end
+
   describe "#can_discount?" do
     let(:benefit) { described_class.new }
     let(:discountable) { Spree::Order.new }
@@ -39,7 +45,9 @@ RSpec.describe SolidusPromotions::Benefits::CreateDiscountedItem do
     it "creates a line item with a hundred percent discount" do
       expect { subject }.to change { order.line_items.size }.by(1)
       created_item = order.line_items.detect { |line_item| line_item.managed_by_order_benefit == benefit }
-      expect(created_item.discountable_amount).to be_zero
+      # We need to check the item's total_before_tax, because `discountable_amount` would
+      # ignore adjustments from the current promotion lane.
+      expect(created_item.total_before_tax).to be_zero
     end
 
     it "never calls the order recalculator" do
