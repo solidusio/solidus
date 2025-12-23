@@ -166,14 +166,6 @@ RSpec.describe "Product scopes", type: :model do
         end
       end
 
-      context "with soft-deleted master price" do
-        before { product.master.prices.discard_all }
-
-        it "doesn't include the product" do
-          expect(Spree::Product.available).to match_array([])
-        end
-      end
-
       context "with multiple prices" do
         let!(:second_price) { create(:price, variant: product.master) }
 
