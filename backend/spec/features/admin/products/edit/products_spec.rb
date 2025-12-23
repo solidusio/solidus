@@ -61,9 +61,12 @@ describe 'Product Details', type: :feature do
 
       click_link 'Prices'
 
-      within "#spree_price_#{product.master.default_price.id}" do
-        accept_alert do
-          click_icon :trash
+      # The deprecation warning will disappear in Solidus 5
+      Spree.deprecator.silence do
+        within "#spree_price_#{product.master.default_price.id}" do
+          accept_alert do
+            click_icon :trash
+          end
         end
       end
       expect(page).to have_content("Price has been successfully removed")
