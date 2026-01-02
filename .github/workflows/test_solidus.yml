@@ -37,6 +37,10 @@ jobs:
             ruby: "3.4"
             database: sqlite
             storage: activestorage
+          - rails: "8.0"
+            ruby: "4.0"
+            database: postgres
+            storage: activestorage
     env:
       BUNDLE_WITHOUT: "lint release"
       COVERAGE_DIR: ${{ github.workspace }}/${{ inputs.lib_name }}/coverage
