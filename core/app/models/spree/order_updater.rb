@@ -18,6 +18,7 @@ module Spree
     # associations try to save and then in turn try to call +update!+ again.)
     def recalculate
       order.transaction do
+        recalculate_line_item_prices
         recalculate_item_count
         update_shipment_amounts
         update_totals
@@ -238,6 +239,12 @@ module Spree
           additional_tax_total: item.additional_tax_total,
           adjustment_total:     item.adjustment_total
         )
+      end
+    end
+
+    def recalculate_line_item_prices
+      if Spree::Config.recalculate_cart_prices
+        line_items.each(&:recalculate_price)
       end
     end
   end

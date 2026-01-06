@@ -21,6 +21,9 @@ Spree.config do |config|
   config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
   config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
 
+  # Uncomment to recalculate cart prices when the cart changes
+  # config.recalculate_cart_prices = true
+
   # Defaults
   # Permission Sets:
 

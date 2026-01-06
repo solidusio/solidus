@@ -245,6 +245,10 @@ module Spree
     #   @return [Integer] Products to show per-page in the frontend (default: +12+)
     preference :products_per_page, :integer, default: 12
 
+    # @!attribute [rw] recalculate_cart_prices
+    #   @return [Boolean] Whether to recalculate cart prices when recalculating (default: +false+)
+    versioned_preference :recalculate_cart_prices, :boolean, initial_value: false, boundaries: { "5.0.0.alpha" => true }
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true
