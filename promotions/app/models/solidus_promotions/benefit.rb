@@ -97,11 +97,11 @@ module SolidusPromotions
     # @param adjustable [Object] The object to calculate the discount for (e.g., LineItem, Shipment, ShippingRate)
     # @param ... [args, kwargs] Additional arguments passed to the calculator's compute method
     #
-    # @return [SolidusPromotions::ItemDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
+    # @return [Spree::Adjustment, SolidusPromotions::ShippingRateDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
     #
     # @example Calculating a discount for a line item
     #   benefit.discount(line_item)
-    #   # => #<SolidusPromotions::ItemDiscount item: #<Spree::LineItem>, amount: -10.00, ...>
+    #   # => #<Spree::Adjustment, adjustable: line_item, amount: -10.00, ...>
     #
     # @see #compute_amount
     # @see #adjustment_label
@@ -175,14 +175,48 @@ module SolidusPromotions
 
     # Builds the localized label for adjustments created by this benefit.
     #
-    # @param adjustable [Object]
-    # @return [String]
-    def adjustment_label(adjustable)
-      I18n.t(
-        "solidus_promotions.adjustment_labels.#{adjustable.class.name.demodulize.underscore}",
-        promotion: SolidusPromotions::Promotion.model_name.human,
-        promotion_customer_label: promotion.customer_label
-      )
+    # This method attempts to use a calculator-specific label method if available,
+    # falling back to a localized string key based on the adjustable's class name.
+    #
+    # ## Calculator Override
+    #
+    # Calculators can provide custom labels by implementing a method named after the
+    # adjustable type. For example, a calculator that discounts line items could
+    # implement `line_item_adjustment_label`:
+    #
+    # @example Custom calculator with adjustment label
+    #   class MyCalculator < Spree::Calculator
+    #     def compute(adjustable, *args)
+    #       # calculation logic
+    #     end
+    #
+    #     def line_item_adjustment_label(line_item, *args)
+    #       "Custom discount for #{line_item.product.name}"
+    #     end
+    #   end
+    #
+    # The method name follows the pattern: `{adjustable_type}_adjustment_label`
+    # where `{adjustable_type}` is the underscored class name of the adjustable
+    # (e.g., `line_item`, `shipment`, `shipping_rate`).
+    #
+    # If the calculator does not respond to the expected method, the benefit will
+    # fall back to using an i18n translation key based on the adjustable's class.
+    #
+    # @param adjustable [Object] the object being discounted (e.g., Spree::LineItem, Spree::Shipment)
+    # @param ... [args, kwargs] additional arguments forwarded to the calculator's label method
+    # @return [String] a localized label suitable for display in adjustments
+    #
+    # @see #adjustment_label_method_for
+    def adjustment_label(adjustable, ...)
+      if calculator.respond_to?(adjustment_label_method_for(adjustable))
+        calculator.send(adjustment_label_method_for(adjustable), adjustable, ...)
+      else
+        I18n.t(
+          "solidus_promotions.adjustment_labels.#{adjustable.class.name.demodulize.underscore}",
+          promotion: SolidusPromotions::Promotion.model_name.human,
+          promotion_customer_label: promotion.customer_label
+        )
+      end
     end
 
     # Partial path used for admin forms for this benefit type.
@@ -275,6 +309,10 @@ module SolidusPromotions
 
     def discount_method_for(adjustable)
       :"discount_#{adjustable.class.name.demodulize.underscore}"
+    end
+
+    def adjustment_label_method_for(adjustable)
+      :"#{adjustable.class.name.demodulize.underscore}_adjustment_label"
     end
 
     # Prevents destroying a benefit when it has adjustments on completed orders.

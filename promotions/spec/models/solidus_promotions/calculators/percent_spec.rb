@@ -16,13 +16,14 @@ RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
     end
 
     context "with a shipment" do
-      let(:item) { build(:shipment, cost: 29) }
+      let(:item) { build(:shipment, order:, cost: 29) }
 
       it { is_expected.to eq(4.35) }
     end
 
     context "with a shipping rate" do
-      let(:item) { build(:shipping_rate, cost: 38) }
+      let(:shipment) { build(:shipment, order:, cost: 29) }
+      let(:item) { build(:shipping_rate, shipment:, cost: 38) }
 
       it { is_expected.to eq(5.70) }
     end

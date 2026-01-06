@@ -24,6 +24,8 @@ module SolidusPromotions
     def discounted_amount
       amount + previous_lanes_discounts.sum(&:amount)
     end
+    # The discountable amount is always equal to the discounted amount.
+    alias_method :discountable_amount, :discounted_amount
 
     # Returns discount objects from the current promotion lane.
     #

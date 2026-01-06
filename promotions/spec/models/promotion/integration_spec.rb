@@ -42,7 +42,9 @@ RSpec.describe "Promotion System" do
         it "creates a new discounted line item" do
           expect(order.adjustments).to be_empty
           expect(order.line_items.count).to eq(3)
+          # 19.99 * 2
           expect(order.total).to eq(39.98)
+          # 19.99 * 2 + 4 * 1
           expect(order.item_total).to eq(43.98)
           expect(order.item_total_before_tax).to eq(39.98)
           expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
@@ -56,6 +58,7 @@ RSpec.describe "Promotion System" do
           it "creates a new discounted line item" do
             expect(order.adjustments).to be_empty
             expect(order.line_items.count).to eq(3)
+            # 19.99 * 3
             expect(order.total).to eq(59.97)
             expect(order.item_total).to eq(67.97)
             expect(order.item_total_before_tax).to eq(59.97)

@@ -4,27 +4,17 @@ module SolidusPromotions
   module Benefits
     class AdjustShipment < Benefit
       def discount_shipment(shipment, ...)
-        amount = compute_amount(shipment, ...)
-        return if amount.zero?
-
-        ItemDiscount.new(
-          item: shipment,
-          label: adjustment_label(shipment),
-          amount: amount,
-          source: self
-        )
+        adjustment = find_adjustment(shipment) || build_adjustment(shipment)
+        adjustment.amount = compute_amount(shipment, ...)
+        adjustment.label = adjustment_label(shipment)
+        adjustment
       end
 
       def discount_shipping_rate(shipping_rate, ...)
-        amount = compute_amount(shipping_rate, ...)
-        return if amount.zero?
-
-        ItemDiscount.new(
-          item: shipping_rate,
-          label: adjustment_label(shipping_rate),
-          amount: amount,
-          source: self
-        )
+        discount = find_discount(shipping_rate) || build_discount(shipping_rate)
+        discount.amount = compute_amount(shipping_rate, ...)
+        discount.label = adjustment_label(shipping_rate)
+        discount
       end
 
       def possible_conditions
@@ -35,6 +25,31 @@ module SolidusPromotions
         :shipment
       end
       deprecate :level, deprecator: Spree.deprecator
+
+      private
+
+      def find_adjustment(shipment)
+        shipment.adjustments.detect do |adjustment|
+          adjustment.source == self
+        end
+      end
+
+      def build_adjustment(shipment)
+        shipment.adjustments.build(
+          order: shipment.order,
+          source: self
+        )
+      end
+
+      def find_discount(shipping_rate)
+        shipping_rate.discounts.detect do |discount|
+          discount.benefit == self
+        end
+      end
+
+      def build_discount(shipping_rate)
+         shipping_rate.discounts.build(benefit: self)
+      end
     end
   end
 end
