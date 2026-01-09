@@ -31,7 +31,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'kaminari', '~> 1.1'
   s.add_dependency 'responders'
-  s.add_dependency 'sassc-rails'
 
+  s.add_dependency 'sprockets-rails', '!= 3.5.0'
+  s.add_dependency 'sassc-rails'
   s.add_dependency 'handlebars_assets', '~> 0.23'
 end
