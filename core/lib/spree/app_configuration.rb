@@ -529,6 +529,18 @@ module Spree
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
     class_name_attribute :image_attachment_module, default: "Spree::Image::ActiveStorageAttachment"
+    def image_attachment_module=(value)
+      if value == 'Spree::Image::PaperclipAttachment'
+        Spree::Deprecation.warn <<~MSG
+          Solidus will remove built-in support for Paperclip as image adapter in the next major version.
+          Please, use the provided generator to incorporate the current Paperclip adapter in your application with:
+
+          bin/rails g solidus:paperclip_adapter:install
+        MSG
+      end
+
+      preferences[:image_attachment_module] = value
+    end
 
     # @!attribute [rw] allowed_image_mime_types
     #
@@ -610,6 +622,19 @@ module Spree
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
+    def taxon_attachment_module=(value)
+      if value == 'Spree::Taxon::PaperclipAttachment'
+        Spree::Deprecation.warn <<~MSG
+          Solidus will remove built-in support for Paperclip as taxons' image adapter in the next major version.
+          Please, use the provided generator to incorporate the current Paperclip adapter in your application with:
+
+          bin/rails g solidus:paperclip_adapter:install
+        MSG
+      end
+
+      preferences[:taxon_attachment_module] = value
+    end
+
 
     # Allows changing the default behavior for redirects when a user is not authorized
     #
