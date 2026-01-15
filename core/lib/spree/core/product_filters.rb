@@ -54,11 +54,9 @@ module Spree
       # to below scope would be something like ["$10 - $15", "$15 - $18", "$18 -
       # $20"].
       Spree::Product.add_search_scope :price_range_any do |*opts|
-        conds = opts.map { |element| Spree::Core::ProductFilters.price_filter[:conds][element] }.reject(&:nil?)
-        scope = conds.shift
-        conds.each do |new_scope|
-          scope = scope.or(new_scope)
-        end
+        scope = opts.filter_map { |element|
+          Spree::Core::ProductFilters.price_filter[:conds][element]
+        }.inject { |scope1, scope2| scope1.or(scope2) }
 
         Spree::Product.joins(master: :prices).where(scope)
       end
@@ -98,11 +96,10 @@ module Spree
       # test for brand info being blank. Note that this relies on
       # `with_property` doing a left outer join rather than an inner join.
       Spree::Product.add_search_scope :brand_any do |*opts|
-        conds = opts.map { |value| ProductFilters.brand_filter[:conds][value] }.reject(&:nil?)
-        scope = conds.shift
-        conds.each do |new_scope|
-          scope = scope.or(new_scope)
-        end
+        scope = opts.filter_map { |value|
+          Spree::Core::ProductFilters.brand_filter[:conds][value]
+        }.inject { |scope1, scope2| scope1.or(scope2) }
+
         Spree::Product.with_property('brand').where(scope)
       end
 
