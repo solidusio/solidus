@@ -2,17 +2,12 @@
 
 module Spree
   module Core
-    # THIS FILE SHOULD BE OVER-RIDDEN IN YOUR SITE EXTENSION!
-    #   the exact code probably won't be useful, though you're welcome to modify and reuse
-    #   the current contents are mainly for testing and documentation
-
-    # To override this file...
-    #   1) Make a copy of it in your sites local /lib/spree folder
-    #   2) Add it to the config load path, or require it in an initializer, e.g...
+    # THIS FILE SHOULD BE OVER-RIDDEN IN YOUR APP!
     #
-    #      # config/initializers/spree.rb
-    #      require 'spree/product_filters'
+    # Use this code as a reference or a starting point for your own product
+    # filters.
     #
+    # To override this file make a copy of it in lib/spree/core and modify it.
 
     # set up some basic filters for use with products
     #
