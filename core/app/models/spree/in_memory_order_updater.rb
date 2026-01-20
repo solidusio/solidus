@@ -33,6 +33,7 @@ module Spree
 
       order.transaction do
         monitor.call do
+          recalculate_line_item_prices
           recalculate_item_count
           assign_shipment_amounts
         end
@@ -226,6 +227,12 @@ module Spree
     def recalculate_item_total
       order.item_total = line_items.to_a.sum(&:amount)
       recalculate_order_total
+    end
+
+    def recalculate_line_item_prices
+      if Spree::Config.recalculate_cart_prices
+        line_items.each(&:recalculate_price)
+      end
     end
 
     def persist_totals
