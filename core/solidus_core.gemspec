@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   ].each do |rails_dep|
     s.add_dependency rails_dep, [
       ">= #{Spree.minimum_required_rails_version}",
-      "< 8.1.0.beta1"
+      "< 8.2"
     ]
   end
 
