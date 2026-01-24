@@ -31,7 +31,7 @@ gem 'rack', '< 3', require: false
 gem 'rake', require: false, groups: [:lint, :release]
 gem 'rails-controller-testing', require: false
 gem 'puma', '< 7', require: false
-gem 'i18n-tasks', '~> 0.9', require: false
+gem 'i18n-tasks', '~> 1.1.0', require: false
 gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
 gem 'db-query-matchers', require: false
