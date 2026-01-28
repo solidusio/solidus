@@ -142,10 +142,23 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
   end
 
+  describe "#display_amount" do
+    let(:amount) { 21.22 }
+    let(:order) { build(:order, currency: 'EUR') }
+    let(:return_authorization) { build(:return_authorization, order:) }
+    let(:return_item) { build(:return_item, return_authorization:, amount:) }
+
+    context 'with an amount in the non-default currency' do
+      it "returns a Spree::Money" do
+        expect(return_item.display_amount).to eq Spree::Money.new(amount, currency: 'EUR')
+      end
+    end
+  end
+
   describe "#display_total_excluding_vat" do
     let(:amount) { 21.22 }
     let(:included_tax_total) { 1.22 }
-    let(:return_item) { build(:return_item, amount:, included_tax_total:) }
+    let(:return_item) { create(:return_item, amount:, included_tax_total:) }
 
     it "returns a Spree::Money" do
       expect(return_item.display_total_excluding_vat).to eq Spree::Money.new(amount - included_tax_total)
