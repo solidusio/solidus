@@ -8,7 +8,7 @@ gemspec require: false
 if /(stable|main)/.match? ENV['RAILS_VERSION']
   gem 'rails', github: 'rails', require: false, branch: ENV['RAILS_VERSION']
 else
-  gem 'rails', ENV['RAILS_VERSION'] || ['> 7.0', '< 8.1.0.beta1'], require: false
+  gem 'rails', ENV['RAILS_VERSION'] || ['> 7.0', '< 8.2'], require: false
 end
 # rubocop:enable Bundler/DuplicatedGem
 
