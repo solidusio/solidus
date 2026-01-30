@@ -18,7 +18,7 @@ RSpec.describe Solidus::WrongMigrationVersion do
 
     expect_offense(<<~RUBY)
       class TestMigration < ActiveRecord::Migration[#{greater_than_minimum_version}]
-      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Solidus/WrongMigrationVersion: Subclasses of ActiveRecord::Migration must use a migration version of <= 7.0
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Solidus/WrongMigrationVersion: Subclasses of ActiveRecord::Migration must use a migration version of <= 7.2
       end
     RUBY
   end
