@@ -5,7 +5,7 @@ module Spree
 
   def self.solidus_version = VERSION
 
-  def self.minimum_required_rails_version = "7.0"
+  def self.minimum_required_rails_version = "7.2"
 
   def self.previous_solidus_minor_version = "4.6"
 
