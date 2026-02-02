@@ -102,6 +102,19 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
           expect(assigns(:form_return_items).size).to eq 3
           expect(assigns(:form_return_items).select(&:new_record?).size).to eq 3
         end
+
+        context 'with an order with currency other than the store default' do
+          let!(:order) { create(:shipped_order, line_items_count: 3, currency: 'EUR') }
+
+          it 'sets the currency on the return items from the order' do
+            subject
+            expect(
+              assigns(:form_return_items).all? { |ri|
+                ri.display_amount.currency.iso_code == 'EUR'
+              }
+            ).to be true
+          end
+        end
       end
     end
 
