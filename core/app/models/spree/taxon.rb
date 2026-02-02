@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/core/product_filters'
-
 module Spree
   class Taxon < Spree::Base
     extend FriendlyId
