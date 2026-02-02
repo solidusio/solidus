@@ -21,6 +21,7 @@ gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 gem 'sqlite3', '>= 2.1', require: false if dbs.match?(/all|sqlite/)
 
+gem 'benchmark', '~> 0.5', require: false
 gem 'database_cleaner', '~> 2.0', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
 gem 'rspec-rails', '~> 6.0.3', require: false
