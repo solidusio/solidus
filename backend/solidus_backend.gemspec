@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     f.match(%r{^(spec|bin)/})
   end
 
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version = '>= 3.2.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'solidus_api', s.version
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari', '~> 1.1'
   s.add_dependency 'responders'
 
-  s.add_dependency 'sprockets-rails', '!= 3.5.0'
-  s.add_dependency 'sassc-rails'
   s.add_dependency 'handlebars_assets', '~> 0.23'
+  s.add_dependency 'sassc-rails'
+  s.add_dependency 'sprockets-rails', '!= 3.5.0'
 end

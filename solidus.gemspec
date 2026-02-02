@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['README.md', 'lib/**/*']
 
-  s.required_ruby_version     = '>= 3.1.0'
+  s.required_ruby_version     = '>= 3.2.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'solidus_api', s.version

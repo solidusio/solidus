@@ -22,7 +22,7 @@ jobs:
       matrix:
         include:
           - rails: "7.0"
-            ruby: "3.1"
+            ruby: "3.2"
             database: postgres
             storage: paperclip
           - rails: "7.1"

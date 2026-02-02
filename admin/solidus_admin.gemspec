@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
     f.match(%r{^(spec|bin)/})
   end + ["app/assets/builds/solidus_admin/tailwind.css"]
 
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version = '>= 3.2.0'
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'blueprinter'
