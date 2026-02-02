@@ -18,7 +18,7 @@ if $0 == __FILE__
 end
 
 gem 'solidus'
-gem 'solidus_auth_devise'
+gem 'solidus_auth_devise', github: 'solidusio/solidus_auth_devise', branch: 'main'
 gem 'rails_12factor'
 
 gem_group :heroku do

@@ -21,6 +21,7 @@ gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 gem 'sqlite3', '>= 2.1', require: false if dbs.match?(/all|sqlite/)
 
+gem 'benchmark', '~> 0.5', require: false
 gem 'database_cleaner', '~> 2.0', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
 gem 'rspec-rails', '~> 6.0.3', require: false
@@ -31,7 +32,7 @@ gem 'rack', '< 3', require: false
 gem 'rake', require: false, groups: [:lint, :release]
 gem 'rails-controller-testing', require: false
 gem 'puma', '< 7', require: false
-gem 'i18n-tasks', '~> 0.9', require: false
+gem 'i18n-tasks', '~> 1.1.0', require: false
 gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
 gem 'db-query-matchers', require: false

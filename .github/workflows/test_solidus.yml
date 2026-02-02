@@ -38,8 +38,8 @@ jobs:
             database: sqlite
             storage: activestorage
           - rails: "8.1"
-            ruby: "3.4"
-            database: sqlite
+            ruby: "4.0"
+            database: postgres
             storage: activestorage
     env:
       BUNDLE_WITHOUT: "lint release"
