@@ -177,14 +177,14 @@ module Spree
       exchange_requested? || sibling_intended_for_exchange('unexchanged')
     end
 
+    def currency
+      return_authorization.try(:currency) || Spree::Config[:currency]
+    end
+
     private
 
     def persist_acceptance_status_errors
       update(acceptance_status_errors: validator.errors)
-    end
-
-    def currency
-      return_authorization.try(:currency) || Spree::Config[:currency]
     end
 
     def process_inventory_unit!
