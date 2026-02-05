@@ -94,7 +94,7 @@ with_log['installing gems'] do
     gem 'rubocop', '~> 1.0'
     gem 'rubocop-performance', '~> 1.5'
     gem 'rubocop-rails', '~> 2.3'
-    gem 'rubocop-rspec', '~> 2.0'
+    gem 'rubocop-rspec', '~> 3.0'
   end
 
   run_bundle
