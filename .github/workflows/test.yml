@@ -1,0 +1,49 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 4" # every Thursday
+concurrency:
+  group: test-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'master' }}
+permissions:
+  contents: read
+jobs:
+  rspec:
+    name: Solidus ${{ matrix.solidus-branch }}, Rails ${{ matrix.rails-version }} and Ruby ${{ matrix.ruby-version }} on ${{ matrix.database }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: true
+      matrix:
+        rails-version:
+          - "7.2"
+          - "8.0"
+        ruby-version:
+          - "3.3"
+          - "3.4"
+        solidus-branch:
+          - "v4.4"
+          - "v4.5"
+          - "v4.6"
+        database:
+          - "postgresql"
+          - "mysql"
+          - "sqlite"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run extension tests
+        uses: solidusio/test-solidus-extension@main
+        with:
+          database: ${{ matrix.database }}
+          rails-version: ${{ matrix.rails-version }}
+          ruby-version: ${{ matrix.ruby-version }}
+          solidus-branch: ${{ matrix.solidus-branch }}
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        continue-on-error: true
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage.xml
