@@ -56,6 +56,13 @@ unbundled bundle add solidus \
   --branch "${SOLIDUS_BRANCH:-main}" \
   --version '> 0.a'
 
+mkdir -p app/assets/config
+cat <<MANIFEST > app/assets/config/manifest.js
+//= link_tree ../images
+//= link_directory ../javascripts .js
+//= link_directory ../stylesheets .css
+MANIFEST
+
 unbundled bundle exec rake db:drop db:create
 
 export FRONTEND="$PWD/../template.rb"
