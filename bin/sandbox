@@ -28,7 +28,7 @@ export BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES=true
 
 rm -rf ./sandbox
 rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
-rails _${rails_version}_ new sandbox \
+bundle exec rails _${rails_version}_ new sandbox \
   --skip-git \
   --database=${DB:-sqlite3} \
   --skip-rc
