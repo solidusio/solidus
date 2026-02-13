@@ -40,7 +40,7 @@ module SolidusAdmin
 
         require 'bundler'
         Bundler.with_unbundled_env do
-          execute_command :bundle, :install
+          run "bundle install"
         end
 
         route "mount Lookbook::Engine, at: '#{solidus_mount_point}lookbook' if Rails.env.development?"
