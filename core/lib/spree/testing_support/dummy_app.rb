@@ -8,6 +8,7 @@ require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'active_storage/engine'
+require 'generators/solidus/paperclip_adapter/install/install_generator'
 
 Rails.env = 'test'
 
@@ -54,6 +55,14 @@ module DummyApp
 
     if auto_migrate
       DummyApp::Migrations.auto_migrate
+    end
+
+    if ENV['DISABLE_ACTIVE_STORAGE'] == 'true'
+      Rails::Generators.invoke('solidus:paperclip_adapter:install', [
+        "--set_preferences=false",
+        "--app_directory=#{DummyApp::Application.config.root}",
+        "--app_name=DummyApp",
+      ])
     end
   end
 
@@ -161,7 +170,7 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.load_defaults(Spree.solidus_version)
 Spree.config do |config|
   if (ENV['DISABLE_ACTIVE_STORAGE'] == 'true')
-    config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
-    config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
+    config.image_attachment_module = 'DummyApp::Image::PaperclipAttachment'
+    config.taxon_attachment_module = 'DummyApp::Taxon::PaperclipAttachment'
   end
 end
