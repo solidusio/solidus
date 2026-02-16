@@ -2,64 +2,61 @@
 
 module Spree
   module Core
-    # THIS FILE SHOULD BE OVER-RIDDEN IN YOUR SITE EXTENSION!
-    #   the exact code probably won't be useful, though you're welcome to modify and reuse
-    #   the current contents are mainly for testing and documentation
+    # THIS FILE SHOULD BE OVER-RIDDEN IN YOUR APP!
+    #
+    # Use this code as a reference or a starting point for your own product
+    # filters.
+    #
+    # To override this file make a copy of it in lib/spree/core and modify it.
 
-    # To override this file...
-    #   1) Make a copy of it in your sites local /lib/spree folder
-    #   2) Add it to the config load path, or require it in an initializer, e.g...
+    # Each filter has two parts:
     #
-    #      # config/initializers/spree.rb
-    #      require 'spree/product_filters'
+    #   * a parametrized named scope which expects a list of labels
+    #   * an object which describes/defines the filter
     #
-
-    # set up some basic filters for use with products
+    # The filter description has the following components:
     #
-    # Each filter has two parts
-    #  * a parametrized named scope which expects a list of labels
-    #  * an object which describes/defines the filter
+    #   * a name for displaying on pages
+    #   * a named scope which filters the products
+    #   * a mapping of presentation labels to the relevant condition (in the
+    #     context of the named scope)
+    #   * an optional list of labels and values (for use with object selection -
+    #     see taxons examples below)
     #
-    # The filter description has three components
-    #  * a name, for displaying on pages
-    #  * a named scope which will 'execute' the filter
-    #  * a mapping of presentation labels to the relevant condition (in the context of the named scope)
-    #  * an optional list of labels and values (for use with object selection - see taxons examples below)
+    # The named scopes here have a suffix '_any', following Ransack's convention
+    # for a scope which returns results which match any of the inputs. This is
+    # purely a convention, but might be a useful reminder.
     #
-    # The named scopes here have a suffix '_any', following Ransack's convention for a
-    # scope which returns results which match any of the inputs. This is purely a convention,
-    # but might be a useful reminder.
-    #
-    # When creating a form, the name of the checkbox group for a filter F should be
-    # the name of F's scope with [] appended, eg "price_range_any[]", and for
-    # each label you should have a checkbox with the label as its value. On submission,
-    # Rails will send the action a hash containing (among other things) an array named
+    # When creating a form, the name of the checkbox group for a filter F should
+    # be the name of F's scope with [] appended, e.g. "price_range_any[]", and
+    # for each label you should have a checkbox with the label as its value. On
+    # submission, Rails will send the action a hash containing an array named
     # after the scope whose values are the active labels.
     #
-    # Ransack will then convert this array to a call to the named scope with the array
-    # contents, and the named scope will build a query with the disjunction of the conditions
-    # relating to the labels, all relative to the scope's context.
+    # Ransack will then convert this array to a call to the named scope with the
+    # array contents, and the named scope will build a query with the
+    # disjunction of the conditions relating to the labels, all relative to the
+    # scope's context.
     #
-    # The details of how/when filters are used is a detail for specific models (eg products
-    # or taxons), eg see the taxon model/controller.
-
-    # See specific filters below for concrete examples.
+    # The details of how/when filters are used is a detail for specific models.
+    # For example, see the Taxon model/controller. See specific filters below
+    # for concrete examples.
     module ProductFilters
-      # Example: filtering by price
-      #   The named scope just maps incoming labels onto their conditions, and builds the conjunction
-      #   'price' is in the base scope's context (ie, "select foo from products where ...") so
-      #     we can access the field right away
-      #   The filter identifies which scope to use, then sets the conditions for each price range
+      # Example: Filtering by price
       #
-      # If user checks off three different price ranges then the argument passed to
-      # below scope would be something like ["$10 - $15", "$15 - $18", "$18 - $20"]
+      # The named scope just maps incoming labels onto their conditions, and
+      # builds the conjunction 'price' is in the base scope's context (e.g.
+      # "select foo from products where ...") so we can access the field right
+      # away. The filter identifies which scope to use, then sets the
+      # conditions for each price range.
       #
+      # If user checks off three different price ranges then the argument passed
+      # to below scope would be something like ["$10 - $15", "$15 - $18", "$18 -
+      # $20"].
       Spree::Product.add_search_scope :price_range_any do |*opts|
-        conds = opts.map { |element| Spree::Core::ProductFilters.price_filter[:conds][element] }.reject(&:nil?)
-        scope = conds.shift
-        conds.each do |new_scope|
-          scope = scope.or(new_scope)
-        end
+        scope = opts.filter_map { |element|
+          Spree::Core::ProductFilters.price_filter[:conds][element]
+        }.inject { |scope1, scope2| scope1.or(scope2) }
 
         Spree::Product.joins(master: :prices).where(scope)
       end
@@ -83,24 +80,26 @@ module Spree
         }
       end
 
-      # Example: filtering by possible brands
+      # Example: Filtering by possible brands
       #
-      # First, we define the scope. Two interesting points here: (a) we run our conditions
-      #   in the scope where the info for the 'brand' property has been loaded; and (b)
-      #   because we may want to filter by other properties too, we give this part of the
-      #   query a unique name (which must be used in the associated conditions too).
+      # First, we define the scope. Two interesting points here:
       #
-      # Secondly, the filter. Instead of a static list of values, we pull out all existing
-      #   brands from the db, and then build conditions which test for string equality on
-      #   the (uniquely named) field "p_brand.value". There's also a test for brand info
-      #   being blank: note that this relies on with_property doing a left outer join
-      #   rather than an inner join.
+      #   * we run our conditions in the scope where the info for the 'brand'
+      #     property has been loaded; and
+      #   * because we may want to filter by other properties too, we give this
+      #     part of the query a unique name (which must be used in the
+      #     associated conditions too).
+      #
+      # Second, instead of a static list of values, we pull out all existing
+      # brands from the database. Then we build conditions which test for string
+      # equality on the (uniquely named) field "p_brand.value". There's also a
+      # test for brand info being blank. Note that this relies on
+      # `with_property` doing a left outer join rather than an inner join.
       Spree::Product.add_search_scope :brand_any do |*opts|
-        conds = opts.map { |value| ProductFilters.brand_filter[:conds][value] }.reject(&:nil?)
-        scope = conds.shift
-        conds.each do |new_scope|
-          scope = scope.or(new_scope)
-        end
+        scope = opts.filter_map { |value|
+          Spree::Core::ProductFilters.brand_filter[:conds][value]
+        }.inject { |scope1, scope2| scope1.or(scope2) }
+
         Spree::Product.with_property('brand').where(scope)
       end
 
@@ -117,25 +116,27 @@ module Spree
         }
       end
 
-      # Example: a parameterized filter
-      #   The filter above may show brands which aren't applicable to the current taxon,
-      #   so this one only shows the brands that are relevant to a particular taxon and
-      #   its descendants.
+      # Example: A parameterized filter
       #
-      #   We don't have to give a new scope since the conditions here are a subset of the
-      #   more general filter, so decoding will still work - as long as the filters on a
-      #   page all have unique names (ie, you can't use the two brand filters together
-      #   if they use the same scope). To be safe, the code uses a copy of the scope.
+      # The filter above may show brands which aren't applicable to the current
+      # taxon, so this one only shows the brands that are relevant to a
+      # particular taxon and its descendants.
       #
-      #   HOWEVER: what happens if we want a more precise scope?  we can't pass
-      #   parametrized scope names to Ransack, only atomic names, so couldn't ask
-      #   for taxon T's customized filter to be used. BUT: we can arrange for the form
-      #   to pass back a hash instead of an array, where the key acts as the (taxon)
-      #   parameter and value is its label array, and then get a modified named scope
-      #   to get its conditions from a particular filter.
+      # We don't need to give a new scope since the conditions here are a subset
+      # of the more general filter, so decoding will still work as long as the
+      # filters on a page all have unique names (i.e. you can't use the two
+      # brand filters together if they use the same scope). To be safe, the code
+      # uses a copy of the scope.
       #
-      #   The brand-finding code can be simplified if a few more named scopes were added to
-      #   the product properties model.
+      # However, if we want a more precise scope, we can't pass parametrized
+      # scope names to Ransack, only atomic names. We can't ask for taxon T's
+      # customized filter to be used, but we can arrange for the form to pass
+      # back a hash instead of an array where the key acts as the taxon
+      # parameter and value is its label array, and then get a modified named
+      # scope to get its conditions from a particular filter.
+      #
+      # The brand-finding code could be simplified if a few more named scopes
+      # were added to the product properties model.
       Spree::Product.add_search_scope :selective_brand_any do |*opts|
         Spree::Product.brand_any(*opts)
       end
