@@ -20,17 +20,17 @@
       </tr>
     </thead>
     <% master_prices.each do |price| %>
-      <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.discarded? %>">
+      <tr id="<%= spree_dom_id price %>" data-hook="prices_row">
         <td><%= price.display_country %></td>
         <td><%= price.currency %></td>
         <td><%= price.money.to_html %></td>
         <td class="actions">
           <% if can?(:edit, price) %>
-            <%= link_to_edit(price, no_text: true) unless price.discarded? %>
+            <%= link_to_edit(price, no_text: true) %>
           <% end %>
           <% if can?(:destroy, price) %>
             &nbsp;
-            <%= link_to_delete(price, no_text: true) unless price.discarded? %>
+            <%= link_to_delete(price, no_text: true) %>
           <% end %>
         </td>
       </tr>

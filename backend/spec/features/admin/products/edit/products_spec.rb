@@ -61,6 +61,8 @@ describe 'Product Details', type: :feature do
 
       click_link 'Prices'
 
+      # The deprecation warning will disappear in Solidus 5
+      expect(Spree.deprecator).to receive(:warn)
       within "#spree_price_#{product.master.default_price.id}" do
         accept_alert do
           click_icon :trash

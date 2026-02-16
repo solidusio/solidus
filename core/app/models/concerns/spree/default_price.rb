@@ -41,7 +41,7 @@ module Spree
     end
 
     def has_default_price?
-      default_price.present? && !default_price.discarded?
+      default_price.present?
     end
   end
 end

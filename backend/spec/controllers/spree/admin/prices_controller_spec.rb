@@ -11,7 +11,7 @@ describe Spree::Admin::PricesController do
     context "when only given a product" do
       let(:product) { create(:product) }
 
-      let!(:deleted_master_price) { create(:price, variant: product.master).tap(&:discard!) }
+      let!(:deleted_master_price) { create(:price, variant: product.master).tap(&:destroy!) }
 
       subject { get :index, params: { product_id: product.slug } }
 
@@ -21,7 +21,7 @@ describe Spree::Admin::PricesController do
         subject
         expect(assigns(:search)).to be_a(Ransack::Search)
         expect(assigns(:variant_prices)).to be_empty
-        expect(assigns(:master_prices)).to eq(product.prices.kept.for_master)
+        expect(assigns(:master_prices)).to eq(product.prices.for_master)
         expect(assigns(:master_prices)).to_not include(deleted_master_price)
         expect(assigns(:product)).to eq(product)
       end
@@ -31,7 +31,7 @@ describe Spree::Admin::PricesController do
       let(:variant) { create(:variant) }
       let(:product) { variant.product }
 
-      let!(:deleted_variant_price) { create(:price, variant:).tap(&:discard!) }
+      let!(:deleted_variant_price) { create(:price, variant:).tap(&:destroy!) }
 
       subject { get :index, params: { product_id: product.slug, variant_id: variant.id } }
 
@@ -40,7 +40,7 @@ describe Spree::Admin::PricesController do
       it 'assigns usable instance variables' do
         subject
         expect(assigns(:search)).to be_a(Ransack::Search)
-        expect(assigns(:variant_prices)).to eq(product.prices.kept.for_variant)
+        expect(assigns(:variant_prices)).to eq(product.prices.for_variant)
         expect(assigns(:master_prices)).to eq(product.prices.for_master)
         expect(assigns(:variant_prices)).to include(variant.default_price)
         expect(assigns(:variant_prices)).to_not include(deleted_variant_price)
