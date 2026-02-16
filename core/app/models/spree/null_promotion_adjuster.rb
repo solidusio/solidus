@@ -6,7 +6,7 @@ module Spree
       @order = order
     end
 
-    def call
+    def call(persist: true) # rubocop:disable Lint/UnusedMethodArgument
       @order
     end
   end

@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
-  subject { described_class.new(order).call }
+  subject { described_class.new(order).call(persist:) }
+
+  let(:persist) { true }
 
   describe '#call ' do
     describe 'promotion recalculation' do
@@ -43,6 +45,27 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
           }.to change {
             order.promo_total
           }.from(-1).to(-2)
+        end
+
+        context "when persist is false" do
+          let(:persist) { false }
+
+          it "does not persist changes to order" do
+            order.promotions << create(:promotion, :with_line_item_adjustment, adjustment_rate: 2)
+            Spree::PromotionHandler::Cart.new(order).activate
+
+            expect(order.promo_total).to eq(-1)
+
+            expect {
+              subject
+            }.not_to make_database_queries(manipulative: true)
+
+            expect(order.promo_total).to eq(-2)
+
+            expect { order.reload }
+              .to change { order.promo_total }
+              .from(-2).to(-1)
+          end
         end
       end
 

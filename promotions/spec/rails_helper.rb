@@ -5,7 +5,6 @@ ENV["RAILS_ENV"] = "test"
 
 require "spec_helper"
 require "solidus_legacy_promotions"
-require 'db-query-matchers'
 
 # SOLIDUS DUMMY APP
 require "spree/testing_support/dummy_app"
