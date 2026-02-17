@@ -2141,6 +2141,7 @@ en:
     shipment_adjustments: Shipment adjustments
     shipment_date: Shipment date
     shipment_details: From %{stock_location} via %{shipping_method}
+    shipment_from: shipment from
     shipment_mailer:
       shipped_email:
         dear_customer: Dear Customer,
