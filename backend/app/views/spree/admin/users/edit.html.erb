@@ -6,7 +6,7 @@
 <%= render partial: 'spree/admin/users/user_page_actions' %>
 
 <fieldset data-hook="admin_user_edit_general_settings">
-  <legend><%= Spree.user_class.model_name.human %></legend>
+  <legend><%= Spree.admin_user_class.model_name.human %></legend>
 
   <div data-hook="admin_user_edit_form_header">
     <%= render partial: 'spree/shared/error_messages', locals: { target: @user } %>

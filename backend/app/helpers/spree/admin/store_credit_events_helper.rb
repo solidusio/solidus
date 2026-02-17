@@ -73,11 +73,11 @@ module Spree::Admin::StoreCreditEventsHelper
   private
 
   # Cannot set the value for a user originator
-  # because Spree.user_class is not defined at that time.
+  # because Spree.admin_user_class is not defined at that time.
   # Spree::UserClassHandle does not work here either as
   # the assignment is evaluated before user_class is set
   def add_user_originator_link
-    originator_links[Spree.user_class.to_s] = {
+    originator_links[Spree.admin_user_class.to_s] = {
       new_tab: true,
       href_type: :user,
       translation_key: 'admin.store_credits.user_originator'

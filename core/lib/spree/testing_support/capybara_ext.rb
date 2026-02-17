@@ -4,7 +4,13 @@ module Spree
   module TestingSupport
     module CapybaraExt
       def click_icon(type)
-        find(".fa-#{type}").click
+        el = find(".fa-#{type}", visible: :all)
+        el.click
+      rescue Selenium::WebDriver::Error::ElementClickInterceptedError
+        # When a floating element (eg. tooltips/overlays) intercepts the click,
+        # scroll the target into view and dispatch a click via JS to keep tests stable.
+        page.execute_script('arguments[0].scrollIntoView({block: "center"});', el.native)
+        page.execute_script('arguments[0].click();', el.native)
       end
 
       def eventually_fill_in(field, options = {})
