@@ -6,6 +6,10 @@ module Spree
       class ShipmentRequired < StandardError; end
       class OrderRequired < StandardError; end
 
+      def initialize(coordinator_options: {})
+        @coordinator_options = coordinator_options
+      end
+
       # Estimate the shipping rates for a package.
       #
       # @param package [Spree::Stock::Package] the package to be shipped
@@ -24,6 +28,8 @@ module Spree
       end
 
       private
+
+      attr_reader :coordinator_options
 
       def choose_default_shipping_rate(shipping_rates)
         unless shipping_rates.empty?

@@ -12,7 +12,7 @@ module Spree
         # @!attribute [r] stock_locations
         #   @return [Enumerable<Spree::StockLocation>]
         #     a collection of locations to sort
-        attr_reader :stock_locations
+        attr_reader :stock_locations, :coordinator_options
 
         # @!attribute [r] order
         #   @return <Spree::Order>
@@ -25,9 +25,12 @@ module Spree
         #   a collection of locations to sort
         # @param order <Spree::Order>
         #   the order we are creating the shipment for
-        def initialize(stock_locations, order)
+        # @param coordinator_options [Hash]
+        #  a set of options passed from the stock_coordinator
+        def initialize(stock_locations, order, coordinator_options: {})
           @stock_locations = stock_locations
           @order = order
+          @coordinator_options = coordinator_options
         end
 
         # Filter the stock locations.

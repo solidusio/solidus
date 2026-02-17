@@ -3,8 +3,9 @@
 module Spree
   module Stock
     class InventoryUnitBuilder
-      def initialize(order)
+      def initialize(order, coordinator_options: {})
         @order = order
+        @coordinator_options = coordinator_options
       end
 
       def units
@@ -19,6 +20,8 @@ module Spree
       end
 
       private
+
+      attr_reader :coordinator_options
 
       def build_units(line_item, quantity)
         Array.new(quantity) do
