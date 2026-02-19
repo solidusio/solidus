@@ -35,7 +35,7 @@ jobs:
             storage: activestorage
           - rails: "8.1"
             ruby: "3.4"
-            database: sqlite
+            database: mysql
             storage: activestorage
     env:
       BUNDLE_WITHOUT: "lint release"
