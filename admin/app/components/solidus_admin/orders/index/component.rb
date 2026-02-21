@@ -124,7 +124,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
           'canceled' => :blue,
           'cart' => :graphite_light,
         }[order.state] || :yellow
-        component('ui/badge').new(name: order.state.humanize, color:)
+        component('ui/badge').new(name: I18n.t("spree.order_state.#{order.state}").humanize, color:)
       end
     }
   end
@@ -171,7 +171,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :payment,
       data: ->(order) do
-        component('ui/badge').new(name: order.payment_state.humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
+        component('ui/badge').new(name: I18n.t("spree.payment_states.#{order.payment_state}").humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
       end
     }
   end
@@ -180,7 +180,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :shipment,
       data: ->(order) do
-        component('ui/badge').new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
+        component('ui/badge').new(name: I18n.t("spree.shipment_states.#{order.shipment_state}").humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
       end
     }
   end

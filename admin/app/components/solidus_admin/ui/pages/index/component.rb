@@ -35,7 +35,7 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
   end
 
   def title
-    model_class.model_name.human.pluralize
+    I18n.t("activerecord.models.#{model_class.model_name.i18n_key}", count: 2)
   end
 
   def search_params
