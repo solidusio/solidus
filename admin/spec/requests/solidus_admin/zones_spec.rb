@@ -9,17 +9,17 @@ RSpec.describe "SolidusAdmin::ZonesController", type: :request do
     let(:canada) { create(:country, iso: "CA") }
     let(:countries) { [usa, canada] }
     let(:resource_class) { Spree::Zone }
-    let(:valid_attributes) { { name: "Zone with countries", country_ids: countries.map(&:id) } }
-    let(:invalid_attributes) { { name: "" } }
+    let(:valid_attributes) { {name: "Zone with countries", country_ids: countries.map(&:id)} }
+    let(:invalid_attributes) { {name: ""} }
 
     it "creates new zone members" do
-      expect { post solidus_admin.zones_path, params: { zone: valid_attributes } }.to change(Spree::ZoneMember, :count).by(countries.size)
+      expect { post solidus_admin.zones_path, params: {zone: valid_attributes} }.to change(Spree::ZoneMember, :count).by(countries.size)
     end
 
     it "updates zone members" do
       brazil = create(:country, iso: "BR")
       zone = create(:zone, countries: [brazil])
-      expect { patch solidus_admin.zone_path(zone), params: { zone: valid_attributes } }.to change(Spree::ZoneMember, :count).by(1)
+      expect { patch solidus_admin.zone_path(zone), params: {zone: valid_attributes} }.to change(Spree::ZoneMember, :count).by(1)
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe "SolidusAdmin::ZonesController", type: :request do
         1, # preload zone_members
         1, # preload countries
         1, # preload states
-        1, # select stores
+        1 # select stores
       ].sum
     end
 

@@ -8,6 +8,7 @@ module SolidusPromotions
     alias_method :source, :benefit
 
     extend Spree::DisplayMoney
+
     money_methods :amount
   end
 end

@@ -38,9 +38,9 @@ module SolidusPromotions
 
     def coupon_code=(code)
       @coupon_code = begin
-                       SolidusPromotions.config.coupon_code_normalizer_class.call(code)
-      rescue StandardError
-                       nil
+        SolidusPromotions.config.coupon_code_normalizer_class.call(code)
+      rescue
+        nil
       end
     end
 

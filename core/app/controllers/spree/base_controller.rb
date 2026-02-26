@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'cancan'
-require_dependency 'spree/core/controller_helpers/strong_parameters'
+require "cancan"
+require_dependency "spree/core/controller_helpers/strong_parameters"
 
 class Spree::BaseController < ApplicationController
   include ActiveStorage::SetCurrent

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/deprecation'
+require "active_support/deprecation"
 
 module Spree
   # This DeprecatedInstanceVariableProxy transforms instance variable to

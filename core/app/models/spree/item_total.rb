@@ -14,7 +14,7 @@ class Spree::ItemTotal
     # These ones should not affect the eventual total price.
     #
     # Additional tax adjustments are the opposite, affecting the final total.
-    item.included_tax_total   = tax_adjustments.select(&:included?).sum(&:amount)
+    item.included_tax_total = tax_adjustments.select(&:included?).sum(&:amount)
     item.additional_tax_total = tax_adjustments.reject(&:included?).sum(&:amount)
 
     item.adjustment_total = item.adjustments.reject { |adjustment|

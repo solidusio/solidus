@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
     RSpec.describe InventoryUnitsFinalizer, type: :model do
       context "when finalizing an order with one line_item" do
-        let(:order)          { build(:order_with_line_items) }
+        let(:order) { build(:order_with_line_items) }
         let(:inventory_unit) { build(:inventory_unit, order:, variant:, line_item:, shipment: order.shipments.first) }
-        let(:stock_item)     { inventory_unit.variant.stock_items.first }
-        let(:line_item)      { order.line_items.first }
-        let(:variant)        { create(:variant) }
+        let(:stock_item) { inventory_unit.variant.stock_items.first }
+        let(:line_item) { order.line_items.first }
+        let(:variant) { create(:variant) }
 
         before do
           stock_item.set_count_on_hand(10)
@@ -39,7 +39,7 @@ module Spree
       end
 
       context "when finalizing an order with multiple line_items" do
-        let(:order)          { build(:order_with_line_items, line_items_count: 2) }
+        let(:order) { build(:order_with_line_items, line_items_count: 2) }
         let(:inventory_unit) { build(:inventory_unit, order:, variant: order.line_items.first.variant, shipment: order.shipments.first) }
         let(:inventory_unit_2) { build(:inventory_unit, order:, variant: order.line_items.second.variant, shipment: order.shipments.first) }
         let(:stock_item) { inventory_unit.variant.stock_items.first }
@@ -56,7 +56,7 @@ module Spree
 
         it "unstocks the variant with the correct quantity" do
           expect { subject }.to change { stock_item.reload.count_on_hand }.from(10).to(9)
-          .and change { stock_item_2.reload.count_on_hand }.from(10).to(9)
+            .and change { stock_item_2.reload.count_on_hand }.from(10).to(9)
         end
       end
     end

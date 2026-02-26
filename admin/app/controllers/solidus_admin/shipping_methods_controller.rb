@@ -7,13 +7,13 @@ module SolidusAdmin
     def index
       shipping_methods = apply_search_to(
         Spree::ShippingMethod.order(id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(shipping_methods)
 
       respond_to do |format|
-        format.html { render component('shipping_methods/index').new(page: @page) }
+        format.html { render component("shipping_methods/index").new(page: @page) }
       end
     end
 
@@ -22,7 +22,7 @@ module SolidusAdmin
 
       Spree::ShippingMethod.transaction { @shipping_methods.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to shipping_methods_path, status: :see_other
     end
 

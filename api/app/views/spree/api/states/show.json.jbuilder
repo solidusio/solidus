@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.(@state, *state_attributes)
+json.call(@state, *state_attributes)

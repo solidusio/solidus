@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :carton, class: 'Spree::Carton' do
+  factory :carton, class: "Spree::Carton" do
     address
     stock_location
     shipping_method

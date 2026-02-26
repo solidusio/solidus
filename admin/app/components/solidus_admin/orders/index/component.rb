@@ -24,27 +24,27 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_order_path,
-      icon: "add-line",
+      icon: "add-line"
     )
   end
 
   def scopes
     [
-      { label: t('.scopes.complete'), name: 'completed', default: true },
-      { label: t('.scopes.in_progress'), name: 'in_progress' },
-      { label: t('.scopes.returned'), name: 'returned' },
-      { label: t('.scopes.canceled'), name: 'canceled' },
-      { label: t('.scopes.all_orders'), name: 'all' },
+      {label: t(".scopes.complete"), name: "completed", default: true},
+      {label: t(".scopes.in_progress"), name: "in_progress"},
+      {label: t(".scopes.returned"), name: "returned"},
+      {label: t(".scopes.canceled"), name: "canceled"},
+      {label: t(".scopes.all_orders"), name: "all"}
     ]
   end
 
   def filters
     [
       {
-        label: t('.filters.status'),
-        combinator: 'or',
+        label: t(".filters.status"),
+        combinator: "or",
         attribute: "state",
         predicate: "eq",
         options: Spree::Order.state_machines[:state].states.map do |state|
@@ -55,8 +55,8 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
         end
       },
       {
-        label: t('.filters.shipment_state'),
-        combinator: 'or',
+        label: t(".filters.shipment_state"),
+        combinator: "or",
         attribute: "shipment_state",
         predicate: "eq",
         options: %i[backorder canceled partial pending ready shipped].map do |option|
@@ -67,8 +67,8 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
         end
       },
       {
-        label: t('.filters.payment_state'),
-        combinator: 'or',
+        label: t(".filters.payment_state"),
+        combinator: "or",
         attribute: "payment_state",
         predicate: "eq",
         options: %i[balance_due checkout completed credit_owed invalid paid pending processing void].map do |option|
@@ -79,8 +79,8 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
         end
       },
       {
-        label: t('.filters.store'),
-        combinator: 'or',
+        label: t(".filters.store"),
+        combinator: "or",
         attribute: "store_id",
         predicate: "eq",
         options: Spree::Store.all.pluck(:name, :id)
@@ -97,7 +97,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
       total_column,
       items_column,
       payment_column,
-      shipment_column,
+      shipment_column
     ]
   end
 
@@ -106,7 +106,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
       header: :order,
       data: ->(order) do
         if !row_fade(order)
-          content_tag :div, order.number, class: 'font-semibold'
+          content_tag :div, order.number, class: "font-semibold"
         else
           content_tag :div, order.number
         end
@@ -119,12 +119,12 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
       header: :state,
       data: ->(order) do
         color = {
-          'complete' => :green,
-          'returned' => :red,
-          'canceled' => :blue,
-          'cart' => :graphite_light,
+          "complete" => :green,
+          "returned" => :red,
+          "canceled" => :blue,
+          "cart" => :graphite_light
         }[order.state] || :yellow
-        component('ui/badge').new(name: order.state.humanize, color:)
+        component("ui/badge").new(name: order.state.humanize, color:)
       end
     }
   end
@@ -140,7 +140,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
 
   def customer_column
     {
-      col: { class: "w-[400px]" },
+      col: {class: "w-[400px]"},
       header: :customer,
       data: ->(order) do
         customer_email = order.email
@@ -162,7 +162,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :items,
       data: ->(order) do
-        content_tag :div, t('.columns.items', count: order.line_items.sum(:quantity))
+        content_tag :div, t(".columns.items", count: order.line_items.sum(:quantity))
       end
     }
   end
@@ -171,7 +171,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :payment,
       data: ->(order) do
-        component('ui/badge').new(name: order.payment_state.humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
+        component("ui/badge").new(name: order.payment_state.humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
       end
     }
   end
@@ -180,7 +180,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :shipment,
       data: ->(order) do
-        component('ui/badge').new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
+        component("ui/badge").new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
       end
     }
   end

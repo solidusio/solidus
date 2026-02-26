@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::OptionValue, type: :model do
   include ActiveSupport::Testing::TimeHelpers
@@ -50,7 +50,7 @@ RSpec.describe Spree::OptionValue, type: :model do
     end
   end
 
-  it 'raises when creating an option_value with no associated option_type' do
+  it "raises when creating an option_value with no associated option_type" do
     expect {
       create(:option_value, option_type: nil)
     }.to raise_error(ActiveRecord::RecordInvalid)

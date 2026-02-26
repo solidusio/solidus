@@ -8,7 +8,7 @@ module Spree
 
     after_create :auto_generate_spree_api_key
 
-    validates :role_id, uniqueness: { scope: :user_id }
+    validates :role_id, uniqueness: {scope: :user_id}
 
     private
 

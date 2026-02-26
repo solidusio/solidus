@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 begin
-north_america = Spree::Zone.find_by!(name: "North America")
+  north_america = Spree::Zone.find_by!(name: "North America")
 rescue ActiveRecord::RecordNotFound
   puts "Couldn't find 'North America' zone. Did you run `rake db:seed` first?"
   puts "That task will set up the countries, states and zones required for Spree."
@@ -10,7 +10,7 @@ end
 
 tax_category = Spree::TaxCategory.find_by!(name: "Default")
 europe_vat = Spree::Zone.find_by!(name: "EU_VAT")
-shipping_category = Spree::ShippingCategory.find_or_create_by!(name: 'Default')
+shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Default")
 
 Spree::ShippingMethod.create!([
   {

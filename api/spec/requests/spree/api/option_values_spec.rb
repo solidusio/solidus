@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 module Spree::Api
-  describe 'Option values', type: :request do
+  describe "Option values", type: :request do
     let(:attributes) { [:id, :name, :presentation, :option_type_name, :option_type_name] }
     let!(:option_value) { create(:option_value) }
     let!(:option_type) { option_value.option_type }
@@ -31,14 +31,14 @@ module Spree::Api
       let!(:variant) { create(:variant, product:, option_values: [product_option_value]) }
 
       it "can filter by product" do
-        get spree.api_option_values_path(q: { variants_product_id_eq: product.id } )
+        get spree.api_option_values_path(q: {variants_product_id_eq: product.id})
         expect(json_response.count).to eq(1)
         expect(json_response.first["presentation"]).to eq("BLACK")
       end
     end
 
     context "for a particular option type" do
-      let(:resource_scoping) { { option_type_id: option_type.id } }
+      let(:resource_scoping) { {option_type_id: option_type.id} }
 
       it "can list all option values" do
         get spree.api_option_values_path
@@ -48,7 +48,7 @@ module Spree::Api
 
       it "can search for an option type" do
         create(:option_value, name: "buzz")
-        get spree.api_option_values_path, params: { q: { name_cont: option_value.name } }
+        get spree.api_option_values_path, params: {q: {name_cont: option_value.name}}
         expect(json_response.count).to eq(1)
         expect(json_response.first).to have_attributes(attributes)
       end
@@ -56,7 +56,7 @@ module Spree::Api
       it "can retrieve a list of option types" do
         option_value_one = create(:option_value, option_type:)
         create(:option_value, option_type:)
-        get spree.api_option_values_path, params: { ids: [option_value.id, option_value_one.id] }
+        get spree.api_option_values_path, params: {ids: [option_value.id, option_value_one.id]}
         expect(json_response.count).to eq(2)
       end
 
@@ -67,10 +67,10 @@ module Spree::Api
 
       it "cannot create a new option value" do
         post spree.api_option_type_option_values_path(option_type), params: {
-                          option_value: {
-                                            name: "Option Value",
-                                            presentation: "Option Value"
-                                          }
+          option_value: {
+            name: "Option Value",
+            presentation: "Option Value"
+          }
         }
         assert_unauthorized!
       end
@@ -78,11 +78,11 @@ module Spree::Api
       it "cannot alter an option value" do
         original_name = option_type.name
         put spree.api_option_value_path(option_value.id), params: {
-                            id: option_type.id,
-                            option_value: {
-                              name: "Option Value"
-                            }
-                          }
+          id: option_type.id,
+          option_value: {
+            name: "Option Value"
+          }
+        }
         assert_not_found!
         expect(option_type.reload.name).to eq(original_name)
       end
@@ -98,24 +98,24 @@ module Spree::Api
 
         it "can create an option value" do
           post spree.api_option_type_option_values_path(option_type), params: {
-                            option_value: {
-                                              name: "Option Value",
-                                              presentation: "Option Value",
-                                            }
+            option_value: {
+              name: "Option Value",
+              presentation: "Option Value"
+            }
           }
           expect(json_response).to have_attributes(attributes)
           expect(response.status).to eq(201)
         end
 
         it "cannot create an option type with invalid attributes" do
-          post spree.api_option_type_option_values_path(option_type), params: { option_value: { name: "" } }
+          post spree.api_option_type_option_values_path(option_type), params: {option_value: {name: ""}}
           expect(response.status).to eq(422)
         end
 
         it "can update an option value" do
-          put spree.api_option_value_path(option_value.id), params: { option_value: {
-                                name: "Option Value"
-                              } }
+          put spree.api_option_value_path(option_value.id), params: {option_value: {
+            name: "Option Value"
+          }}
           expect(response.status).to eq(200)
 
           option_value.reload
@@ -124,13 +124,13 @@ module Spree::Api
 
         it "permits the correct attributes" do
           expect_any_instance_of(Spree::Api::OptionValuesController).to receive(:permitted_option_value_attributes)
-          put spree.api_option_value_path(option_value), params: { option_value: { name: "" } }
+          put spree.api_option_value_path(option_value), params: {option_value: {name: ""}}
         end
 
         it "cannot update an option value with invalid attributes" do
-          put spree.api_option_value_path(option_value), params: { option_value: {
-                            name: ""
-                           } }
+          put spree.api_option_value_path(option_value), params: {option_value: {
+            name: ""
+          }}
           expect(response.status).to eq(422)
         end
 

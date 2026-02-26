@@ -65,7 +65,7 @@ module SolidusPromotions
           FROM spree_taxons AS parent
           JOIN spree_taxons AS child
             ON child.lft BETWEEN parent.lft AND parent.rgt
-          WHERE parent.id IN (#{taxon_ids.join(',')})
+          WHERE parent.id IN (#{taxon_ids.join(",")})
           GROUP BY parent.id
           ORDER BY parent.id
         SQL

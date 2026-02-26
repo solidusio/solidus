@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Taxonomy, type: :model do
   context "validations" do
-    subject { build(:taxonomy, name: 'Brand') }
+    subject { build(:taxonomy, name: "Brand") }
 
-    let!(:taxonomy) { create(:taxonomy, name: 'Brand') }
+    let!(:taxonomy) { create(:taxonomy, name: "Brand") }
 
     context "name validations" do
       it "ensures Taxonomies must have unique names" do

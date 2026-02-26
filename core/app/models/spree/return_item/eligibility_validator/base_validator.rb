@@ -12,11 +12,11 @@ module Spree
         end
 
         def eligible_for_return?
-          raise NotImplementedError, I18n.t('spree.implement_eligible_for_return')
+          raise NotImplementedError, I18n.t("spree.implement_eligible_for_return")
         end
 
         def requires_manual_intervention?
-          raise NotImplementedError, I18n.t('spree.implement_requires_manual_intervention')
+          raise NotImplementedError, I18n.t("spree.implement_requires_manual_intervention")
         end
 
         private

@@ -6,8 +6,8 @@ module Spree
     include Omnes::Subscriber
 
     handle :order_emptied,
-           with: :clear_order_promotions,
-           id: :spree_order_promotion_clear_order_promotions
+      with: :clear_order_promotions,
+      id: :spree_order_promotion_clear_order_promotions
 
     # Clears all promotions from the order
     #

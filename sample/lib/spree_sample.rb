@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'spree_core'
-require 'spree/sample'
+require "spree_core"
+require "spree/sample"
 
 module SpreeSample
   class Engine < Rails::Engine
-    engine_name 'spree_sample'
+    engine_name "spree_sample"
 
     # Needs to be here so we can access it inside the tests
     def self.load_samples

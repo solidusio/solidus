@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::FlexiRate, type: :model do
   let(:calculator) do
@@ -15,7 +15,7 @@ RSpec.describe Spree::Calculator::FlexiRate, type: :model do
   let(:additional_item) { 0 }
   let(:max_items) { 0 }
 
-  it_behaves_like 'a calculator with a description'
+  it_behaves_like "a calculator with a description"
 
   let(:order) do
     mock_model(
@@ -151,7 +151,7 @@ RSpec.describe Spree::Calculator::FlexiRate, type: :model do
   end
 
   it "should allow creation of new object with all the attributes" do
-    attributes = { preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1 }
+    attributes = {preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1}
     calculator = Spree::Calculator::FlexiRate.new(attributes)
     expect(calculator).to have_attributes(attributes)
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ItemTotal do
   describe "#recalculate!" do
@@ -36,9 +36,9 @@ RSpec.describe Spree::ItemTotal do
       it "updates item totals" do
         expect {
           subject
-        }.to change(item, :adjustment_total).from(0).to(4).
-          and change { item.included_tax_total }.from(0).to(2).
-          and change { item.additional_tax_total }.from(0).to(3)
+        }.to change(item, :adjustment_total).from(0).to(4)
+          .and change { item.included_tax_total }.from(0).to(2)
+          .and change { item.additional_tax_total }.from(0).to(3)
       end
     end
 
@@ -58,9 +58,9 @@ RSpec.describe Spree::ItemTotal do
       it "updates the adjustment total" do
         expect {
           subject
-        }.to change { item.adjustment_total }.from(0).to(3).
-          and change { item.included_tax_total }.from(0).to(2).
-          and change { item.additional_tax_total }.from(0).to(3)
+        }.to change { item.adjustment_total }.from(0).to(3)
+          .and change { item.included_tax_total }.from(0).to(2)
+          .and change { item.additional_tax_total }.from(0).to(3)
       end
     end
   end

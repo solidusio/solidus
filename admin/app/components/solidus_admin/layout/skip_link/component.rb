@@ -7,8 +7,8 @@ class SolidusAdmin::Layout::SkipLink::Component < SolidusAdmin::BaseComponent
 
   def call
     link_to t(".skip_link"),
-            @href,
-            class: %{
+      @href,
+      class: %(
               sr-only
               focus:not-sr-only
               inline-block
@@ -17,6 +17,6 @@ class SolidusAdmin::Layout::SkipLink::Component < SolidusAdmin::BaseComponent
               font-normal text-sm
               text-white
               bg-black
-            }
+            )
   end
 end

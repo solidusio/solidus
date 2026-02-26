@@ -13,7 +13,7 @@ module SolidusPromotions
       # TODO: Remove in Solidus 5
       include OrderLevelCondition
 
-      validates :preferred_minimum_quantity, numericality: { only_integer: true, greater_than: 0 }
+      validates :preferred_minimum_quantity, numericality: {only_integer: true, greater_than: 0}
 
       preference :minimum_quantity, :integer, default: 1
 

@@ -8,7 +8,7 @@ module Spree
       included do
         include Spree::Preferences::Preferable
 
-        if Rails.gem_version >= Gem::Version.new('7.1')
+        if Rails.gem_version >= Gem::Version.new("7.1")
           serialize :preferences, type: Hash, coder: YAML
         else
           serialize :preferences, Hash, coder: YAML

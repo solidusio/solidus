@@ -20,30 +20,30 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_promotion_path,
-      icon: "add-line",
+      icon: "add-line"
     )
   end
 
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.promotions_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
   def scopes
     [
-      { name: :active, label: t('.scopes.active'), default: true },
-      { name: :draft, label: t('.scopes.draft') },
-      { name: :future, label: t('.scopes.future') },
-      { name: :expired, label: t('.scopes.expired') },
-      { name: :all, label: t('.scopes.all') },
+      {name: :active, label: t(".scopes.active"), default: true},
+      {name: :draft, label: t(".scopes.draft")},
+      {name: :future, label: t(".scopes.future")},
+      {name: :expired, label: t(".scopes.expired")},
+      {name: :all, label: t(".scopes.all")}
     ]
   end
 
@@ -70,22 +70,22 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
         header: :code,
         data: ->(promotion) do
           count = promotion.codes.count
-          (count == 1) ? promotion.codes.pick(:value) : t('spree.number_of_codes', count:)
+          (count == 1) ? promotion.codes.pick(:value) : t("spree.number_of_codes", count:)
         end
       },
       {
         header: :status,
         data: ->(promotion) do
           if promotion.active?
-            render component('ui/badge').new(name: t('.status.active'), color: :green)
+            render component("ui/badge").new(name: t(".status.active"), color: :green)
           else
-            render component('ui/badge').new(name: t('.status.inactive'), color: :graphite_light)
+            render component("ui/badge").new(name: t(".status.inactive"), color: :graphite_light)
           end
         end
       },
       {
         header: :usage_limit,
-        data: ->(promotion) { promotion.usage_limit || icon_tag('infinity-line') }
+        data: ->(promotion) { promotion.usage_limit || icon_tag("infinity-line") }
       },
       {
         header: :uses,
@@ -93,12 +93,12 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
       },
       {
         header: :starts_at,
-        data: ->(promotion) { promotion.starts_at ? l(promotion.starts_at, format: :long) : icon_tag('infinity-line') }
+        data: ->(promotion) { promotion.starts_at ? l(promotion.starts_at, format: :long) : icon_tag("infinity-line") }
       },
       {
         header: :expires_at,
-        data: ->(promotion) { promotion.expires_at ? l(promotion.expires_at, format: :long) : icon_tag('infinity-line') }
-      },
+        data: ->(promotion) { promotion.expires_at ? l(promotion.expires_at, format: :long) : icon_tag("infinity-line") }
+      }
     ]
   end
 end

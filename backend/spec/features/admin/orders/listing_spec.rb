@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Orders Listing", type: :feature, js: true do
   stub_authorization!
@@ -12,19 +12,19 @@ describe "Orders Listing", type: :feature, js: true do
     visit spree.admin_orders_path
   end
 
-  it 'displays the new order button' do
-    expect(page).to have_link('New Order')
+  it "displays the new order button" do
+    expect(page).to have_link("New Order")
   end
 
-  context 'without create permission' do
+  context "without create permission" do
     custom_authorization! do |_user|
       cannot :manage, Spree::Order
       can :admin, Spree::Order
       can :read, Spree::Order
     end
 
-    it 'does not display the new order button' do
-      expect(page).to_not have_link('New Order')
+    it "does not display the new order button" do
+      expect(page).to_not have_link("New Order")
     end
   end
 
@@ -51,7 +51,7 @@ describe "Orders Listing", type: :feature, js: true do
       within_row(1) { expect(page).to have_content("R200") }
       within_row(2) { expect(page).to have_content("R100") }
 
-      within('table#listing_orders thead') { click_link "Number" }
+      within("table#listing_orders thead") { click_link "Number" }
 
       # number asc
       within_row(1) { expect(page).to have_content("R100") }
@@ -73,7 +73,7 @@ describe "Orders Listing", type: :feature, js: true do
         main_store, other_store = stores
 
         click_on "Filter Results"
-        select main_store.name, from: I18n.t('spree.store')
+        select main_store.name, from: I18n.t("spree.store")
         click_on "Filter Results"
 
         within_row(1) do
@@ -89,7 +89,7 @@ describe "Orders Listing", type: :feature, js: true do
       it "should be able to search orders" do
         click_on "Filter Results"
         fill_in "q_number_start", with: "R200"
-        click_on 'Filter Results'
+        click_on "Filter Results"
         within_row(1) do
           expect(page).to have_content("R200")
         end
@@ -100,8 +100,8 @@ describe "Orders Listing", type: :feature, js: true do
 
       it "should be able to filter on variant_id" do
         click_on "Filter Results"
-        select2_search @order1.products.first.sku, from: I18n.t('spree.variant')
-        click_on 'Filter Results'
+        select2_search @order1.products.first.sku, from: I18n.t("spree.variant")
+        click_on "Filter Results"
 
         within_row(1) do
           expect(page).to have_content(@order1.number)
@@ -120,7 +120,7 @@ describe "Orders Listing", type: :feature, js: true do
           10.times { Spree::Order.create email: "incomplete@example.com" }
           click_on "Filter Results"
           uncheck "q_completed_at_not_null"
-          click_on 'Filter Results'
+          click_on "Filter Results"
           within(".pagination", match: :first) do
             click_link "2"
           end
@@ -134,7 +134,7 @@ describe "Orders Listing", type: :feature, js: true do
         click_on "Filter Results"
         fill_in "q_created_at_gt", with: Date.current
 
-        click_on 'Filter Results'
+        click_on "Filter Results"
         within_row(1) { expect(page).to have_content("R100") }
 
         # Ensure that the other order doesn't show up
@@ -143,7 +143,7 @@ describe "Orders Listing", type: :feature, js: true do
 
       context "when toggling the completed orders checkbox" do
         before do
-          create(:order, number: 'R300', completed_at: nil, state: 'cart')
+          create(:order, number: "R300", completed_at: nil, state: "cart")
         end
 
         it "shows both complete and incomplete orders" do
@@ -154,7 +154,7 @@ describe "Orders Listing", type: :feature, js: true do
           expect(page).to_not have_content("R300")
 
           uncheck "q_completed_at_not_null"
-          click_on 'Filter Results'
+          click_on "Filter Results"
 
           expect(page).to have_content("R200")
           expect(page).to have_content("R300")

@@ -6,9 +6,9 @@ module DummyApp
 
     def initialize(gem_root:, lib_name:)
       task :dummy_environment do
-        ENV['RAILS_ENV'] = 'test'
+        ENV["RAILS_ENV"] = "test"
         require lib_name
-        require 'spree/testing_support/dummy_app'
+        require "spree/testing_support/dummy_app"
         DummyApp.setup(
           gem_root:,
           lib_name:,
@@ -45,12 +45,12 @@ namespace :db do
   end
 
   desc "Recreates the test database and re-runs all migrations"
-  task reset: ['db:drop', 'db:create', 'db:migrate']
+  task reset: ["db:drop", "db:create", "db:migrate"]
 end
 
 desc "Open a sandboxed console in the test environment"
 task console: :dummy_environment do
-  require 'rails/commands'
-  require 'rails/commands/console/console_command'
+  require "rails/commands"
+  require "rails/commands/console/console_command"
   Rails::Console.new(Rails.application, sandbox: true, environment: "test").start
 end

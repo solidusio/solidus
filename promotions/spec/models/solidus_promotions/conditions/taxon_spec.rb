@@ -194,7 +194,7 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
     let!(:promotion) { create(:solidus_promotion, :with_adjustable_benefit, apply_automatically: true) }
     let(:benefit) { promotion.benefits.first }
     let!(:condition) { described_class.create!(taxons: [taxon_one, taxon_two], benefit:) }
-    let!(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: product_one.master }, { variant: product_two.master }]) }
+    let!(:order) { create(:order_with_line_items, line_items_attributes: [{variant: product_one.master}, {variant: product_two.master}]) }
 
     subject { order.recalculate }
 

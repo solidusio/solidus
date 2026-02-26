@@ -35,7 +35,7 @@ module Spree
 
             if completed_at
               order.completed_at = completed_at
-              order.state = 'complete'
+              order.state = "complete"
               order.save!
             end
 
@@ -55,7 +55,7 @@ module Spree
 
           shipments_hash.each do |target|
             shipment = Shipment.new
-            shipment.tracking       = target[:tracking]
+            shipment.tracking = target[:tracking]
             shipment.stock_location = Spree::StockLocation.find_by(id: target[:stock_location_id]) ||
               Spree::StockLocation.find_by(admin_name: target[:stock_location]) ||
               Spree::StockLocation.find_by!(name: target[:stock_location])
@@ -81,9 +81,9 @@ module Spree
             # Mark shipped if it should be.
             if target[:shipped_at].present?
               shipment.shipped_at = target[:shipped_at]
-              shipment.state      = 'shipped'
+              shipment.state = "shipped"
               shipment.inventory_units.each do |unit|
-                unit.state = 'shipped'
+                unit.state = "shipped"
               end
             end
 
@@ -92,7 +92,7 @@ module Spree
 
             shipping_method = Spree::ShippingMethod.find_by(name: target[:shipping_method]) || Spree::ShippingMethod.find_by!(admin_name: target[:shipping_method])
             rate = shipment.shipping_rates.create!(shipping_method:,
-                                                   cost: target[:cost])
+              cost: target[:cost])
             shipment.selected_shipping_rate_id = rate.id
             shipment.update_amounts
           end
@@ -131,7 +131,7 @@ module Spree
             adjustment = order.adjustments.build(
               order:,
               amount: target[:amount].to_d,
-              label:  target[:label]
+              label: target[:label]
             )
             adjustment.save!
             adjustment.finalize!
@@ -145,7 +145,7 @@ module Spree
             payment.amount = target[:amount].to_f
             # Order API should be using state as that's the normal payment field.
             # spree_wombat serializes payment state as status so imported orders should fall back to status field.
-            payment.state = target[:state] || target[:status] || 'completed'
+            payment.state = target[:state] || target[:status] || "completed"
             payment.payment_method = Spree::PaymentMethod.find_by!(name: target[:payment_method])
             source_attributes = target[:source] || target[:source_attributes]
             payment.source = create_source_payment_from_params(source_attributes, payment) if source_attributes
@@ -179,13 +179,13 @@ module Spree
           return if address.nil? || address[:country_id].present? || address[:country].nil?
 
           search = {}
-          if name = address[:country]['name']
+          if name = address[:country]["name"]
             search[:name] = name
-          elsif iso_name = address[:country]['iso_name']
+          elsif iso_name = address[:country]["iso_name"]
             search[:iso_name] = iso_name.upcase
-          elsif iso = address[:country]['iso']
+          elsif iso = address[:country]["iso"]
             search[:iso] = iso.upcase
-          elsif iso_three = address[:country]['iso3']
+          elsif iso_three = address[:country]["iso3"]
             search[:iso3] = iso_three.upcase
           end
 
@@ -197,9 +197,9 @@ module Spree
           return if address.nil? || address[:state_id].present? || address[:state].nil?
 
           search = {}
-          if name = address[:state]['name']
+          if name = address[:state]["name"]
             search[:name] = name
-          elsif abbr = address[:state]['abbr']
+          elsif abbr = address[:state]["abbr"]
             search[:abbr] = abbr.upcase
           end
 

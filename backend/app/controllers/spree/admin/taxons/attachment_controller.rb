@@ -8,9 +8,9 @@ module Spree
           taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
           taxon = taxonomy.taxons.find(params[:taxon_id])
           if taxon.destroy_attachment(params[:attachment_definition])
-            flash[:success] = t('spree.successfully_removed', resource: params[:attachment_definition].titleize)
+            flash[:success] = t("spree.successfully_removed", resource: params[:attachment_definition].titleize)
           else
-            flash[:error] = t('spree.taxon_attachment_removal_error')
+            flash[:error] = t("spree.taxon_attachment_removal_error")
           end
           redirect_to edit_admin_taxonomy_taxon_path(taxonomy, taxon.id)
         end

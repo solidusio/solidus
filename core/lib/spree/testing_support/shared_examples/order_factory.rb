@@ -37,8 +37,8 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
         factory,
         stock_location:,
         line_items_attributes: [
-          { variant: first_variant, quantity: 1, price: 1 },
-          { variant: second_variant, quantity: 2, price: 2 }
+          {variant: first_variant, quantity: 1, price: 1},
+          {variant: second_variant, quantity: 2, price: 2}
         ],
         shipment_cost: 3,
         shipping_method:
@@ -104,7 +104,7 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
     end
   end
 
-  context 'when shipments should be taxed' do
+  context "when shipments should be taxed" do
     let!(:ship_address) { create(:address) }
     let!(:tax_zone) { create(:global_zone) } # will include the above address
     let!(:tax_rate) { create(:tax_rate, amount: 0.10, zone: tax_zone, tax_categories: [tax_category]) }
@@ -112,7 +112,7 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
     let(:tax_category) { create(:tax_category) }
     let(:shipping_method) { create(:shipping_method, tax_category:, zones: [tax_zone]) }
 
-    it 'shipments get a tax adjustment' do
+    it "shipments get a tax adjustment" do
       order = create(factory, ship_address:, shipping_method:)
       shipment = order.shipments[0]
 
@@ -121,20 +121,20 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
   end
 end
 
-RSpec.shared_examples 'supplied completed_at is respected' do
-  context 'when passed a completed_at timestamp' do
+RSpec.shared_examples "supplied completed_at is respected" do
+  context "when passed a completed_at timestamp" do
     let(:completed_at) { 2.days.ago }
     let(:order) { create(factory, completed_at:) }
 
-    it 'respects the timestamp' do
+    it "respects the timestamp" do
       expect(order.completed_at).to be_within(5.seconds).of(completed_at)
     end
   end
 
-  context 'when no completed_at timestamp is passed' do
+  context "when no completed_at timestamp is passed" do
     let(:order) { create(factory) }
 
-    it 'defaults to the current time' do
+    it "defaults to the current time" do
       expect(order.completed_at).to be_within(2.seconds).of(Time.current)
     end
   end

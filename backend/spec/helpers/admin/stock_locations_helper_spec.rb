@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Spree::Admin::StockLocationsHelper, type: :helper do
   describe "#admin_stock_location_display_name" do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'responders'
-require 'spree/api/responders/jbuilder_template'
+require "responders"
+require "spree/api/responders/jbuilder_template"
 
 module Spree
   module Api

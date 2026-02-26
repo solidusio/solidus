@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Order, type: :model do
   let(:order) { Spree::Order.new }
 
-  context 'validation' do
+  context "validation" do
     address_scenarios = {
-      'use_billing' => { source: :bill_address, target: :ship_address },
-      'use_shipping' => { source: :ship_address, target: :bill_address }
+      "use_billing" => {source: :bill_address, target: :ship_address},
+      "use_shipping" => {source: :ship_address, target: :bill_address}
     }
 
     address_scenarios.each do |use_attribute, addresses|
@@ -18,7 +18,7 @@ RSpec.describe Spree::Order, type: :model do
           order.send("#{addresses[:target]}=", nil)
         end
 
-        ['true', true, '1'].each do |truthy_value|
+        ["true", true, "1"].each do |truthy_value|
           context "with #{truthy_value.inspect}" do
             before { order.send("#{use_attribute}=", truthy_value) }
 
@@ -30,7 +30,7 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         context "with something other than a 'truthful' value" do
-          before { order.send("#{use_attribute}=", '0') }
+          before { order.send("#{use_attribute}=", "0") }
 
           it "does not clone the #{addresses[:source]} to the #{addresses[:target]}" do
             order.valid?

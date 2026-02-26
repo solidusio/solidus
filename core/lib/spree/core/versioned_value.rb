@@ -42,10 +42,10 @@ module Spree
       # @param boundary [Hash<String, Any>] Map from version number to new value
       def initialize(initial_value, boundaries = {})
         @boundaries = Hash[
-                        { '0' => initial_value }
-                        .merge(boundaries)
-                        .transform_keys { |version| to_gem_version(version) }
-                        .sort
+                        {"0" => initial_value}
+                          .merge(boundaries)
+                          .transform_keys { |version| to_gem_version(version) }
+                          .sort
                       ]
       end
 

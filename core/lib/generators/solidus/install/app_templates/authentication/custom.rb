@@ -1,4 +1,4 @@
-initializer 'spree_authentication.rb', <<~RUBY
+initializer "spree_authentication.rb", <<~RUBY
   # Please replace this module with your own implementation of
   # ApplicationController#spree_current_user.
   #
@@ -11,6 +11,6 @@ initializer 'spree_authentication.rb', <<~RUBY
   end
 RUBY
 
-create_file 'app/views/spree/admin/shared/_navigation_footer.html.erb', <<~ERB
+create_file "app/views/spree/admin/shared/_navigation_footer.html.erb", <<~ERB
   <!-- Add here your login/logout links in 'app/views/spree/admin/shared/_navigation_footer.html.erb'. -->
 ERB

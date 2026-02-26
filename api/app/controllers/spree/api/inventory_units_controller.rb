@@ -35,9 +35,9 @@ module Spree
         can_event = "can_#{@event}?"
 
         unless inventory_unit.respond_to?(can_event) &&
-               inventory_unit.send(can_event)
-          render json: { exception: "cannot transition to #{@event}" },
-                 status: 200
+            inventory_unit.send(can_event)
+          render json: {exception: "cannot transition to #{@event}"},
+            status: 200
           false
         end
       end

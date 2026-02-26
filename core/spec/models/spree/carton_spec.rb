@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Carton do
   let(:carton) { create(:carton) }
 
-  describe 'shipping method' do
-    it 'returns soft deleted shipping method' do
+  describe "shipping method" do
+    it "returns soft deleted shipping method" do
       carton = create(:carton)
       carton.shipping_method.discard
       expect(carton.reload.shipping_method).to be_present
@@ -78,7 +78,7 @@ RSpec.describe Spree::Carton do
     let(:carton) { create(:carton, inventory_units: [first_order.inventory_units, second_order.inventory_units].flatten) }
     let(:first_order) { create(:order_ready_to_ship, line_items_count: 1) }
     let(:second_order) { create(:order_ready_to_ship, line_items_count: 1) }
-    let(:email) { 'something@something.com' }
+    let(:email) { "something@something.com" }
 
     before do
       first_order.update!(email:)

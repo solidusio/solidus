@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/api/responders'
+require "spree/api/responders"
 
 module Spree
   module Api
@@ -19,7 +19,7 @@ module Spree
       self.admin_line_item_attributes = [:price, :variant_id, :sku]
 
       class_attribute :admin_metadata_attributes
-      self.admin_metadata_attributes = [{ admin_metadata: {} }]
+      self.admin_metadata_attributes = [{admin_metadata: {}}]
 
       before_action :deprecated_load_user
       before_action :authorize_for_order, if: proc { order_token.present? }
@@ -147,7 +147,7 @@ module Spree
       def bearer_token
         pattern = /^Bearer /
         header = request.headers["Authorization"]
-        header.gsub(pattern, '') if header.present? && header.match(pattern)
+        header.gsub(pattern, "") if header.present? && header.match(pattern)
       end
 
       def order_token
@@ -175,7 +175,7 @@ module Spree
       end
 
       def variants_associations
-        [{ option_values: :option_type }, :prices, :images]
+        [{option_values: :option_type}, :prices, :images]
       end
 
       def product_includes
@@ -202,16 +202,16 @@ module Spree
         render(
           json: {
             errors: [I18n.t(:quantity_is_not_available, scope: "spree.api.order")],
-            type: 'insufficient_stock'
+            type: "insufficient_stock"
           },
           status: :unprocessable_entity
         )
       end
 
       def paginate(resource)
-        resource.
-          page(params[:page]).
-          per(params[:per_page] || default_per_page)
+        resource
+          .page(params[:page])
+          .per(params[:per_page] || default_per_page)
       end
 
       def default_per_page
@@ -221,7 +221,7 @@ module Spree
       def invalid_transition(error)
         logger.error("invalid_transition #{error.event} from #{error.from} for #{error.object.class.name}. Error: #{error.inspect}")
 
-        render "spree/api/errors/could_not_transition", locals: { resource: error.object }, status: :unprocessable_entity
+        render "spree/api/errors/could_not_transition", locals: {resource: error.object}, status: :unprocessable_entity
       end
     end
   end

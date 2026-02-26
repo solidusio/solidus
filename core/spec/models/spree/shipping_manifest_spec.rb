@@ -1,67 +1,67 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe ShippingManifest, type: :model do
     let!(:store) { create :store }
     let(:order) { Order.create! }
     let(:variant) { create :variant }
-    let!(:shipment) { create(:shipment, state: 'pending', order:) }
+    let!(:shipment) { create(:shipment, state: "pending", order:) }
     subject(:manifest) { described_class.new(inventory_units:) }
 
     def build_unit(variant, attrs = {})
-      attrs = { variant:, shipment: }.merge(attrs)
+      attrs = {variant:, shipment:}.merge(attrs)
       attrs[:line_item] = order.contents.add(variant)
       InventoryUnit.new(attrs)
     end
 
     describe "#items" do
-      context 'empty' do
+      context "empty" do
         let(:inventory_units) { [] }
         it "has correct item" do
           expect(manifest.items.count).to eq 0
         end
       end
 
-      context 'single unit' do
+      context "single unit" do
         let(:inventory_units) { [build_unit(variant)] }
         it "has correct item" do
           expect(manifest.items.count).to eq 1
           expect(manifest.items[0]).to have_attributes(
             variant:,
             quantity: 1,
-            states: { "on_hand" => 1 }
+            states: {"on_hand" => 1}
           )
         end
       end
 
-      context 'two units of same variant' do
+      context "two units of same variant" do
         let(:inventory_units) { [build_unit(variant), build_unit(variant)] }
         it "has correct item" do
           expect(manifest.items.count).to eq 1
           expect(manifest.items[0]).to have_attributes(
             variant:,
             quantity: 2,
-            states: { "on_hand" => 2 }
+            states: {"on_hand" => 2}
           )
         end
       end
 
-      context 'two units of different variants' do
-        let(:variant2){ create :variant }
+      context "two units of different variants" do
+        let(:variant2) { create :variant }
         let(:inventory_units) { [build_unit(variant), build_unit(variant2)] }
         it "has correct item" do
           expect(manifest.items.count).to eq 2
           expect(manifest.items[0]).to have_attributes(
             variant:,
             quantity: 1,
-            states: { "on_hand" => 1 }
+            states: {"on_hand" => 1}
           )
           expect(manifest.items[1]).to have_attributes(
             variant: variant2,
             quantity: 1,
-            states: { "on_hand" => 1 }
+            states: {"on_hand" => 1}
           )
         end
       end
@@ -69,7 +69,7 @@ module Spree
 
     describe "#for_order" do
       let!(:order2) { create(:order_with_line_items) }
-      context 'single unit' do
+      context "single unit" do
         let(:inventory_units) { [inventory_unit] }
         let(:inventory_unit) { build_unit(variant) }
 
@@ -86,7 +86,7 @@ module Spree
         end
       end
 
-      context 'one units in each order' do
+      context "one units in each order" do
         let(:order_2) { build_stubbed(:order) }
         let(:inventory_units) { [inventory_unit_one, inventory_unit_two] }
         let(:inventory_unit_one) { build_unit(variant) }

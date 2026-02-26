@@ -44,7 +44,7 @@ module Spree
       end
 
       def generate_permalink
-        "#{self.class.permalink_prefix}#{Array.new(self.class.permalink_length){ rand(9) }.join}"
+        "#{self.class.permalink_prefix}#{Array.new(self.class.permalink_length) { rand(9) }.join}"
       end
 
       def save_permalink(permalink_value = to_param)

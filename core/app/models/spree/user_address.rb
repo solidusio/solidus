@@ -5,8 +5,8 @@ module Spree
     belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id", inverse_of: :user_addresses
     belongs_to :address, class_name: "Spree::Address"
 
-    validates :address_id, uniqueness: { scope: :user_id }
-    validates :user_id, uniqueness: { conditions: -> { default_shipping }, message: :default_address_exists, if: :default? }
+    validates :address_id, uniqueness: {scope: :user_id}
+    validates :user_id, uniqueness: {conditions: -> { default_shipping }, message: :default_address_exists, if: :default?}
 
     scope :with_address_values, ->(address_attributes) do
       joins(:address).merge(

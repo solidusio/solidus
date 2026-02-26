@@ -19,12 +19,12 @@ module SolidusAdmin
     def missing_translation(key, options)
       keys = I18n.normalize_keys(options[:locale] || I18n.locale, key, options[:scope])
 
-      logger.debug "  [#{self.class}] Missing translation: #{keys.join('.')}"
+      logger.debug "  [#{self.class}] Missing translation: #{keys.join(".")}"
 
       if (options[:locale] || I18n.default_locale) != :en
         t(key, **options, locale: :en)
       else
-        "translation missing: #{keys.join('.')}"
+        "translation missing: #{keys.join(".")}"
       end
     end
 

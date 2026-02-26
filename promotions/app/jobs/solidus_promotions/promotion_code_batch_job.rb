@@ -14,7 +14,7 @@ module SolidusPromotions
           .promotion_code_batch_finished(promotion_code_batch)
           .deliver_now
       end
-    rescue StandardError => e
+    rescue => e
       if promotion_code_batch.email?
         SolidusPromotions.config.promotion_code_batch_mailer_class
           .promotion_code_batch_errored(promotion_code_batch)

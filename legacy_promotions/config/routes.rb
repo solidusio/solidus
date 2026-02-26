@@ -8,7 +8,7 @@ if SolidusSupport.backend_available?
         resources :promotion_actions
         resources :promotion_codes, only: [:index, :new, :create]
         resources :promotion_code_batches, only: [:index, :new, :create] do
-          get '/download', to: "promotion_code_batches#download", defaults: { format: "csv" }
+          get "/download", to: "promotion_code_batches#download", defaults: {format: "csv"}
         end
       end
 

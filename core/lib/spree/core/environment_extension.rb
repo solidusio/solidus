@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/core/class_constantizer'
-require 'spree/core/nested_class_set'
+require "spree/core/class_constantizer"
+require "spree/core/nested_class_set"
 
 module Spree
   module Core

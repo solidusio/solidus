@@ -55,7 +55,7 @@ module Spree
     ###################################################################
 
     def to_s
-      self.class.name.titleize.gsub("Calculator\/", "")
+      self.class.name.titleize.gsub("Calculator/", "")
     end
 
     def description

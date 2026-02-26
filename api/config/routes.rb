@@ -3,11 +3,11 @@
 Spree::Core::Engine.routes.draw do
   namespace :admin do
     resources :users do
-      resource :api_key, controller: 'users/api_key', only: [:create, :destroy]
+      resource :api_key, controller: "users/api_key", only: [:create, :destroy]
     end
   end
 
-  namespace :api, defaults: { format: 'json' } do
+  namespace :api, defaults: {format: "json"} do
     resources :promotions, only: [:show]
 
     resources :products do
@@ -58,7 +58,7 @@ Spree::Core::Engine.routes.draw do
     end
     resources :option_values, only: :index
 
-    get '/orders/mine', to: 'orders#mine', as: 'my_orders'
+    get "/orders/mine", to: "orders#mine", as: "my_orders"
     get "/orders/current", to: "orders#current", as: "current_order"
 
     resources :orders, concerns: :order_routes do
@@ -77,8 +77,8 @@ Spree::Core::Engine.routes.draw do
 
     resources :shipments, only: [:create, :update] do
       collection do
-        post 'transfer_to_location'
-        post 'transfer_to_shipment'
+        post "transfer_to_location"
+        post "transfer_to_shipment"
         get :mine
       end
 
@@ -125,9 +125,9 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    get '/config/money', to: 'config#money'
-    get '/config', to: 'config#show'
-    put '/classifications', to: 'classifications#update', as: :classifications
-    get '/taxons/products', to: 'taxons#products', as: :taxon_products
+    get "/config/money", to: "config#money"
+    get "/config", to: "config#show"
+    put "/classifications", to: "classifications#update", as: :classifications
+    get "/taxons/products", to: "taxons#products", as: :taxon_products
   end
 end

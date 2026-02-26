@@ -31,7 +31,7 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
       date_column,
       payment_column,
       shipment_column,
-      total_column,
+      total_column
     ]
   end
 
@@ -40,7 +40,7 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
       header: :order,
       data: ->(order) do
         if !row_fade(order)
-          content_tag :div, order.number, class: 'font-semibold'
+          content_tag :div, order.number, class: "font-semibold"
         else
           content_tag :div, order.number
         end
@@ -53,12 +53,12 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
       header: :state,
       data: ->(order) do
         color = {
-          'complete' => :green,
-          'returned' => :red,
-          'canceled' => :blue,
-          'cart' => :graphite_light,
+          "complete" => :green,
+          "returned" => :red,
+          "canceled" => :blue,
+          "cart" => :graphite_light
         }[order.state] || :yellow
-        component('ui/badge').new(name: order.state.humanize, color: color)
+        component("ui/badge").new(name: order.state.humanize, color: color)
       end
     }
   end
@@ -85,7 +85,7 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
     {
       header: :payment,
       data: ->(order) do
-        component('ui/badge').new(name: order.payment_state.humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
+        component("ui/badge").new(name: order.payment_state.humanize, color: order.paid? ? :green : :yellow) if order.payment_state?
       end
     }
   end
@@ -94,7 +94,7 @@ class SolidusAdmin::Users::Orders::Component < SolidusAdmin::BaseComponent
     {
       header: :shipment,
       data: ->(order) do
-        component('ui/badge').new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
+        component("ui/badge").new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
       end
     }
   end

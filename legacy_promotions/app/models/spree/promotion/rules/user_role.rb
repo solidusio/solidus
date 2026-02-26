@@ -6,7 +6,7 @@ module Spree
       class UserRole < PromotionRule
         preference :role_ids, :array, default: []
 
-        MATCH_POLICIES = %w(any all)
+        MATCH_POLICIES = %w[any all]
         preference :match_policy, default: MATCH_POLICIES.first
 
         def applicable?(promotable)
@@ -25,7 +25,7 @@ module Spree
         private
 
         def all_match_policy?
-          preferred_match_policy == 'all' && preferred_role_ids.present?
+          preferred_match_policy == "all" && preferred_role_ids.present?
         end
 
         def user_roles(order)

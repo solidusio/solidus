@@ -13,26 +13,26 @@ class SolidusAdmin::UI::Alert::Component < SolidusAdmin::BaseComponent
     ],
     info: %w[
       border-gray-500 bg-gray-50
-    ],
+    ]
   }
 
   ICONS = {
     success: {
       name: "checkbox-circle-fill",
-      class: "fill-forest",
+      class: "fill-forest"
     },
     warning: {
       name: "error-warning-fill",
-      class: "fill-orange",
+      class: "fill-orange"
     },
     danger: {
       name: "error-warning-fill",
-      class: "fill-red-500",
+      class: "fill-red-500"
     },
     info: {
       name: "information-fill",
-      class: "fill-gray-500",
-    },
+      class: "fill-gray-500"
+    }
   }
 
   def initialize(title:, message:, scheme: :success)

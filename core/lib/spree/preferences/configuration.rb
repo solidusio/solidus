@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/core/versioned_value'
-require 'spree/preferences/preferable'
+require "spree/core/versioned_value"
+require "spree/preferences/preferable"
 
 module Spree::Preferences
   # This takes the preferrable methods and adds some
@@ -107,10 +107,10 @@ module Spree::Preferences
       set(default_preferences)
     end
 
-    alias :[] :get_preference
-    alias :[]= :set_preference
+    alias_method :[], :get_preference
+    alias_method :[]=, :set_preference
 
-    alias :get :get_preference
+    alias_method :get, :get_preference
 
     # @param preferences [Hash] a hash of preferences to set
     def set(preferences)
