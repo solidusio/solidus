@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class StockMovementsController < ResourceController
-      belongs_to 'spree/stock_location'
+      belongs_to "spree/stock_location"
       before_action :parent
 
       def index
@@ -20,10 +20,10 @@ module Spree
       end
 
       def collection
-        super.
-          recent.
-          includes(stock_item: { variant: :product }).
-          page(params[:page])
+        super
+          .recent
+          .includes(stock_item: {variant: :product})
+          .page(params[:page])
       end
     end
   end

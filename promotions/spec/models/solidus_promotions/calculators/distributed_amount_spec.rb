@@ -15,7 +15,7 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
   it_behaves_like "a promotion calculator"
 
   context "applied to an order" do
-    let(:line_items_attributes) { [{ price: 20 }, { price: 30 }, { price: 100 }] }
+    let(:line_items_attributes) { [{price: 20}, {price: 30}, {price: 100}] }
 
     before do
       order.recalculate
@@ -48,7 +48,7 @@ RSpec.describe SolidusPromotions::Calculators::DistributedAmount, type: :model d
   describe "#compute_line_item" do
     subject { calculator.compute_line_item(order.line_items.first) }
 
-    let(:line_items_attributes) { [{ price: 50 }, { price: 50 }, { price: 50 }] }
+    let(:line_items_attributes) { [{price: 50}, {price: 50}, {price: 50}] }
 
     context "when the order currency matches the store's currency" do
       let(:currency) { "USD" }

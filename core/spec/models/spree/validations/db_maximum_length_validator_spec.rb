@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
   # RESOURCE FIXTURE
@@ -34,16 +34,16 @@ RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
   let(:record) { LimitedProduct.new(slug:) }
 
   context "when slug is below limit" do
-    let(:slug) { 'a' * 255 }
-    it 'should be valid' do
+    let(:slug) { "a" * 255 }
+    it "should be valid" do
       expect(record).to be_valid
       expect(record.errors).to be_empty
     end
   end
 
   context "when slug is too long" do
-    let(:slug) { 'a' * 256 }
-    it 'should be invalid and set error' do
+    let(:slug) { "a" * 256 }
+    it "should be invalid and set error" do
       expect(record).not_to be_valid
       expect(record.errors[:slug]).to include(I18n.t("errors.messages.too_long", count: 255))
     end

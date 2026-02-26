@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'solidus_admin/testing_support/shared_examples/bulk_delete_resources'
+require "spec_helper"
+require "solidus_admin/testing_support/shared_examples/bulk_delete_resources"
 
 describe "Store Credit Reasons", type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists store credit reasons and allows deleting them", :js do
     create(:store_credit_reason, name: "Default-store-credit-reason")

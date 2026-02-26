@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'rspec/retry'
+
+require "rspec/retry"
 
 # Usage:
 #
@@ -13,7 +14,7 @@ RSpec.configure do |config|
   config.display_try_failure_messages = true
 
   config.around(:each, :flaky) do |example|
-    if ENV['CI']
+    if ENV["CI"]
       example.run_with_retry retry: 2
     else
       example.run

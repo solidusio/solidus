@@ -3,6 +3,7 @@
 module SolidusPromotions
   class EligibilityResults
     include Enumerable
+
     attr_reader :results, :promotion
 
     def initialize(promotion)

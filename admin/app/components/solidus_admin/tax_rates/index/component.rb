@@ -16,10 +16,10 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
   def actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: spree.new_admin_tax_rate_path,
       icon: "add-line",
-      class: "align-self-end w-full",
+      class: "align-self-end w-full"
     )
   end
 
@@ -30,11 +30,11 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.tax_rates_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
@@ -44,13 +44,13 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
         label: Spree::Zone.model_name.human,
         attribute: :zone_id,
         predicate: :eq,
-        options: Spree::Zone.pluck(:name, :id),
+        options: Spree::Zone.pluck(:name, :id)
       },
       {
         label: Spree::TaxCategory.model_name.human,
         attribute: :tax_categories_id,
         predicate: :in,
-        options: Spree::TaxCategory.pluck(:name, :id),
+        options: Spree::TaxCategory.pluck(:name, :id)
       }
     ]
   end
@@ -59,30 +59,30 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
     [
       {
         header: :zone,
-        data: -> { _1.zone&.name },
+        data: -> { _1.zone&.name }
       },
       :name,
       {
         header: :tax_categories,
-        data: -> { _1.tax_categories.map(&:name).join(', ') },
+        data: -> { _1.tax_categories.map(&:name).join(", ") }
       },
       {
         header: :amount,
-        data: -> { _1.display_amount },
+        data: -> { _1.display_amount }
       },
       {
         header: :included_in_price,
-        data: -> { _1.included_in_price? ? component('ui/badge').yes : component('ui/badge').no },
+        data: -> { _1.included_in_price? ? component("ui/badge").yes : component("ui/badge").no }
       },
       {
         header: :show_rate_in_label,
-        data: -> { _1.show_rate_in_label? ? component('ui/badge').yes : component('ui/badge').no },
+        data: -> { _1.show_rate_in_label? ? component("ui/badge").yes : component("ui/badge").no }
       },
       :expires_at,
       {
         header: Spree::Calculator.model_name.human,
         data: -> { _1.calculator&.class&.model_name&.human }
-      },
+      }
     ]
   end
 end

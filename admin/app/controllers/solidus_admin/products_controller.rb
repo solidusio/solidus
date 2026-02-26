@@ -14,16 +14,16 @@ module SolidusAdmin
     def index
       products = apply_search_to(
         Spree::Product.includes(:master, :variants),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(
         products,
-        ordered_by: { updated_at: :desc, id: :desc },
+        ordered_by: {updated_at: :desc, id: :desc}
       )
 
       respond_to do |format|
-        format.html { render component('products/index').new(page: @page) }
+        format.html { render component("products/index").new(page: @page) }
       end
     end
 
@@ -35,7 +35,7 @@ module SolidusAdmin
       @product = Spree::Product.with_discarded.friendly.find(params[:id])
 
       respond_to do |format|
-        format.html { render component('products/show').new(product: @product) }
+        format.html { render component("products/show").new(product: @product) }
       end
     end
 
@@ -43,13 +43,13 @@ module SolidusAdmin
       @product = Spree::Product.friendly.find(params[:id])
 
       if @product.update(product_params)
-        flash[:success] = t('.success')
+        flash[:success] = t(".success")
         redirect_to action: :show, status: :see_other
       else
         flash.now[:error] = @product.errors.full_messages.join(", ")
 
         respond_to do |format|
-          format.html { render component('products/show').new(product: @product), status: :unprocessable_entity }
+          format.html { render component("products/show").new(product: @product), status: :unprocessable_entity }
         end
       end
     end
@@ -61,7 +61,7 @@ module SolidusAdmin
         @products.discard_all
       end
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_to products_path, status: :see_other
     end
 
@@ -73,7 +73,7 @@ module SolidusAdmin
           .update_all(discontinue_on: Time.current)
       end
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_to products_path, status: :see_other
     end
 
@@ -91,7 +91,7 @@ module SolidusAdmin
           .update_all(discontinue_on: nil)
       end
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_to products_path, status: :see_other
     end
 

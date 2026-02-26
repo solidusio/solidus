@@ -53,7 +53,7 @@ module Spree
 
     def approve(user: nil, name: nil)
       if user.blank? && name.blank?
-        raise ArgumentError, 'user or name must be specified'
+        raise ArgumentError, "user or name must be specified"
       end
 
       order.update!(
@@ -86,7 +86,7 @@ module Spree
       )
 
       permitted_attributes = Spree::PermittedAttributes.line_item_attributes.dup
-      permitted_attributes << { admin_metadata: {} } if options[:admin_metadata].present?
+      permitted_attributes << {admin_metadata: {}} if options[:admin_metadata].present?
 
       line_item.quantity += quantity.to_i
       line_item.options = ActionController::Parameters.new(options).permit(permitted_attributes).to_h

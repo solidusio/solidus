@@ -48,7 +48,7 @@ module SolidusPromotions
       end
 
       def build_discount(shipping_rate)
-         shipping_rate.discounts.build(benefit: self)
+        shipping_rate.discounts.build(benefit: self)
       end
     end
   end

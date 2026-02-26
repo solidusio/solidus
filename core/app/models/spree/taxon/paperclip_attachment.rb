@@ -7,12 +7,12 @@ module Spree::Taxon::PaperclipAttachment
     has_attached_file :icon,
       styles: Spree::Config.taxon_image_styles,
       default_style: Spree::Config.taxon_image_style_default,
-      url: '/spree/taxons/:id/:style/:basename.:extension',
-      path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
-      default_url: '/assets/default_taxon.png'
+      url: "/spree/taxons/:id/:style/:basename.:extension",
+      path: ":rails_root/public/spree/taxons/:id/:style/:basename.:extension",
+      default_url: "/assets/default_taxon.png"
 
     validates_attachment :icon,
-      content_type: { content_type: Spree::Config.allowed_image_mime_types }
+      content_type: {content_type: Spree::Config.allowed_image_mime_types}
   end
 
   def icon_present?

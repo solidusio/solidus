@@ -19,11 +19,11 @@ module SolidusAdmin
       end
 
       def find_row(text)
-        find('table tbody tr td', text:)
+        find("table tbody tr td", text:)
       end
 
       def find_row_checkbox(text)
-        find('table tbody tr', text:).find('td:first-child input[type="checkbox"]')
+        find("table tbody tr", text:).find('td:first-child input[type="checkbox"]')
       end
 
       def select_row(text)

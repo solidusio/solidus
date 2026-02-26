@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::CustomerReturn, type: :model do
   before do
@@ -17,11 +17,11 @@ RSpec.describe Spree::CustomerReturn, type: :model do
       let(:first_shipment) { first_order.shipments.first }
       let(:second_shipment) { second_order.shipments.first }
 
-      let(:first_inventory_unit)  { build(:inventory_unit, shipment: first_shipment) }
-      let(:first_return_item)     { build(:return_item, inventory_unit: first_inventory_unit) }
+      let(:first_inventory_unit) { build(:inventory_unit, shipment: first_shipment) }
+      let(:first_return_item) { build(:return_item, inventory_unit: first_inventory_unit) }
 
       let(:second_inventory_unit) { build(:inventory_unit, shipment: second_shipment) }
-      let(:second_return_item)    { build(:return_item, inventory_unit: second_inventory_unit) }
+      let(:second_return_item) { build(:return_item, inventory_unit: second_inventory_unit) }
 
       subject { customer_return.valid? }
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
         it "adds an error message" do
           subject
-          expect(customer_return.errors.full_messages).to include(I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
+          expect(customer_return.errors.full_messages).to include(I18n.t("spree.return_items_cannot_be_associated_with_multiple_orders"))
         end
       end
 
@@ -68,11 +68,11 @@ RSpec.describe Spree::CustomerReturn, type: :model do
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do
-        let(:customer_return) { Spree::CustomerReturn.new(number: '123') }
+        let(:customer_return) { Spree::CustomerReturn.new(number: "123") }
 
         it "should return the assigned number" do
           customer_return.save
-          expect(customer_return.number).to eq('123')
+          expect(customer_return.number).to eq("123")
         end
       end
 
@@ -120,7 +120,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
     let(:order) { stub_model(Spree::Order, currency: "GBP") }
     let(:customer_return) { stub_model(Spree::CustomerReturn, order:) }
 
-    it 'returns the order currency' do
+    it "returns the order currency" do
       expect(Spree::Config.currency).to eq("USD")
       expect(customer_return.currency).to eq("GBP")
     end
@@ -182,14 +182,14 @@ RSpec.describe Spree::CustomerReturn, type: :model do
   end
 
   context ".after_save" do
-    let(:inventory_unit)  { create(:inventory_unit, state: 'shipped', order: create(:shipped_order)) }
-    let(:return_item)     { build(:return_item, inventory_unit:) }
+    let(:inventory_unit) { create(:inventory_unit, state: "shipped", order: create(:shipped_order)) }
+    let(:return_item) { build(:return_item, inventory_unit:) }
 
     context "to the initial stock location" do
       it "should mark the received inventory units are returned" do
         create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id)
         return_item.receive!
-        expect(inventory_unit.reload.state).to eq 'returned'
+        expect(inventory_unit.reload.state).to eq "returned"
       end
 
       it "should update the stock item counts in the stock location" do
@@ -199,7 +199,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
         end.to change { inventory_unit.find_stock_item.count_on_hand }.by(1)
       end
 
-      context 'with Config.track_inventory_levels == false' do
+      context "with Config.track_inventory_levels == false" do
         before do
           stub_spree_preferences(track_inventory_levels: false)
           expect(Spree::StockItem).not_to receive(:find_by)
@@ -248,9 +248,9 @@ RSpec.describe Spree::CustomerReturn, type: :model do
         return_item.update!(reception_status: "lost_in_transit")
       end
 
-      it 'should not updated inventory unit to returned' do
+      it "should not updated inventory unit to returned" do
         create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id)
-        expect(inventory_unit.reload.state).to eq 'shipped'
+        expect(inventory_unit.reload.state).to eq "shipped"
       end
 
       it "should not update the stock item counts in the stock location" do
@@ -261,40 +261,40 @@ RSpec.describe Spree::CustomerReturn, type: :model do
     end
   end
 
-  describe '#fully_reimbursed?' do
+  describe "#fully_reimbursed?" do
     let(:customer_return) { create(:customer_return) }
 
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
     subject { customer_return.fully_reimbursed? }
 
-    context 'when some return items are undecided' do
+    context "when some return items are undecided" do
       it { is_expected.to be false }
     end
 
-    context 'when all return items are decided' do
-      context 'when all return items are rejected' do
+    context "when all return items are decided" do
+      context "when all return items are rejected" do
         before { customer_return.return_items.each(&:reject!) }
 
         it { is_expected.to be true }
       end
 
-      context 'when all return items are accepted' do
+      context "when all return items are accepted" do
         before { customer_return.return_items.each(&:accept!) }
 
-        context 'when some return items have no reimbursement' do
+        context "when some return items have no reimbursement" do
           it { is_expected.to be false }
         end
 
-        context 'when all return items have a reimbursement' do
+        context "when all return items have a reimbursement" do
           let!(:reimbursement) { create(:reimbursement, customer_return:) }
 
-          context 'when some reimbursements are not reimbursed' do
+          context "when some reimbursements are not reimbursed" do
             it { is_expected.to be false }
           end
 
-          context 'when all reimbursements are reimbursed' do
-            let(:created_by_user) { create(:user, email: 'user@email.com') }
+          context "when all reimbursements are reimbursed" do
+            let(:created_by_user) { create(:user, email: "user@email.com") }
             before { reimbursement.perform!(created_by: created_by_user) }
 
             it { is_expected.to be true }

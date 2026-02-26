@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReturnItem::EligibilityValidator::RMARequired, type: :model do
   let(:return_item) { create(:return_item) }
@@ -24,7 +24,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::RMARequired, type: :mode
 
       it "sets an error" do
         subject
-        expect(validator.errors[:rma_required]).to eq I18n.t('spree.return_item_rma_ineligible')
+        expect(validator.errors[:rma_required]).to eq I18n.t("spree.return_item_rma_ineligible")
       end
     end
   end

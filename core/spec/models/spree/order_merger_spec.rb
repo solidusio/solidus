@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 # Regression tests for https://github.com/spree/spree/issues/2179
 module Spree
@@ -45,17 +45,17 @@ module Spree
       end
     end
 
-    context 'merging together two orders with multiple currencies line items' do
-      let(:order_2) { Spree::Order.create(currency: 'JPY') }
+    context "merging together two orders with multiple currencies line items" do
+      let(:order_2) { Spree::Order.create(currency: "JPY") }
       let(:variant_2) { create(:variant) }
 
       before do
-        Spree::Price.create(variant: variant_2, amount: 10, currency: 'JPY')
+        Spree::Price.create(variant: variant_2, amount: 10, currency: "JPY")
         order_1.contents.add(variant, 1)
         order_2.contents.add(variant_2.reload, 1)
       end
 
-      it 'rejects other order line items' do
+      it "rejects other order line items" do
         subject.merge!(order_2, user)
         expect(order_1.line_items.count).to eq(1)
 
@@ -96,7 +96,7 @@ module Spree
           end
 
           order_1.contents.add(variant, 1, foos: {})
-          order_2.contents.add(variant, 1, foos: { bar: :zoo })
+          order_2.contents.add(variant, 1, foos: {bar: :zoo})
         end
 
         specify do

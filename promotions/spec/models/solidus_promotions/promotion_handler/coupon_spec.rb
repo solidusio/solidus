@@ -508,7 +508,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
   context "with multiple errors" do
     let(:shirt) { create(:product) }
     let(:hat) { create(:product) }
-    let(:order) { create(:order_with_line_items, coupon_code: "XMAS", line_items_attributes: [{ variant: shirt.master, quantity: 1 }]) }
+    let(:order) { create(:order_with_line_items, coupon_code: "XMAS", line_items_attributes: [{variant: shirt.master, quantity: 1}]) }
     let(:product_condition) { SolidusPromotions::Conditions::OrderProduct.new(products: [hat]) }
     let(:nth_order_condition) { SolidusPromotions::Conditions::NthOrder.new(preferred_nth_order: 2) }
     let(:ten_off_items) { SolidusPromotions::Calculators::Percent.create!(preferred_percent: 10) }

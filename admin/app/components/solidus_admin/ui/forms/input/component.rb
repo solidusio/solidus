@@ -16,7 +16,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
   MULTILINE_HEIGHTS = {
     s: %w[min-h-[84px]],
     m: %w[min-h-[108px]],
-    l: %w[min-h-[144px]],
+    l: %w[min-h-[144px]]
   }.freeze
 
   TYPES = Set.new(%i[
@@ -71,7 +71,7 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
       ],
       SIZES[size],
       specialized_classes,
-      attributes[:class],
+      attributes[:class]
     ].compact.join(" ")
 
     @tag = tag

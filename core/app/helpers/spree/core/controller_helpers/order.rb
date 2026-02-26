@@ -58,7 +58,7 @@ module Spree
         end
 
         def current_order_params
-          { currency: current_pricing_options.currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: spree_current_user.try(:id) }
+          {currency: current_pricing_options.currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: spree_current_user.try(:id)}
         end
 
         def new_order_params

@@ -3,4 +3,4 @@
 json.users(@users) do |user|
   json.partial!("spree/api/users/user", user:)
 end
-json.partial! 'spree/api/shared/pagination', pagination: @users
+json.partial! "spree/api/shared/pagination", pagination: @users

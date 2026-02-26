@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'customer return factory' do
+RSpec.describe "customer return factory" do
   let(:factory_class) { Spree::CustomerReturn }
 
-  describe 'customer return' do
+  describe "customer return" do
     let(:factory) { :customer_return }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
 
     # Regression test for https://github.com/solidusio/solidus/pull/697
     it "creates only one of dependent records" do
@@ -21,13 +21,13 @@ RSpec.describe 'customer return factory' do
     end
   end
 
-  describe 'customer return with accepted items' do
+  describe "customer return with accepted items" do
     let(:factory) { :customer_return_with_accepted_items }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'customer return without return items' do
+  describe "customer return without return items" do
     let(:factory) { :customer_return_without_return_items }
 
     it "builds successfully" do

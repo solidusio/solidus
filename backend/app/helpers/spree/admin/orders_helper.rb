@@ -16,7 +16,7 @@ module Spree
             translated_event,
             [event.to_sym, :admin, @order],
             method: :put,
-            data: { confirm: t(:order_sure_want_to, event: translated_event, scope: :spree) }
+            data: {confirm: t(:order_sure_want_to, event: translated_event, scope: :spree)}
           )
         end
         safe_join(links, "&nbsp;".html_safe)
@@ -72,7 +72,7 @@ module Spree
           "P" => "Not Processed",
           "S" => "Issuer indicates that CVV2 data should be present on the card, but the merchant has indicated data is not present on the card",
           "U" => "Issuer has not certified for CVV2 or Issuer has not provided Visa with the CVV2 encryption keys",
-          ""  => "Transaction failed because wrong CVV2 number was entered or no CVV2 number was entered"
+          "" => "Transaction failed because wrong CVV2 number was entered or no CVV2 number was entered"
         }
       end
     end

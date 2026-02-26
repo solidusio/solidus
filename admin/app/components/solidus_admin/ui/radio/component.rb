@@ -3,7 +3,7 @@
 class SolidusAdmin::UI::Radio::Component < SolidusAdmin::BaseComponent
   SIZES = {
     s: "size-4 checked:border-[5px]",
-    m: "size-5 checked:border-[6px]",
+    m: "size-5 checked:border-[6px]"
   }.freeze
 
   def initialize(size: :m, **attributes)

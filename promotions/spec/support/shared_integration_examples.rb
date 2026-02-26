@@ -184,7 +184,7 @@ RSpec.shared_examples "a successfully integrated promotion system" do
   context "with a migrated spree_promotion that is attached to the current order" do
     let(:shirt) { create(:variant) }
     let(:spree_promotion) { create(:promotion, :with_adjustable_action, code: true) }
-    let(:order) { create(:order_with_line_items, line_items_attributes: [{ variant: shirt }]) }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt}]) }
 
     before do
       Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new

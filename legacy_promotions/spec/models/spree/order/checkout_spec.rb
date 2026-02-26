@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Order, type: :model do
   let!(:store) { create(:store) }
@@ -8,7 +8,7 @@ RSpec.describe Spree::Order, type: :model do
 
   context "from delivery", partial_double_verification: false do
     before do
-      order.state = 'delivery'
+      order.state = "delivery"
       allow(order).to receive(:apply_shipping_promotions)
       allow(order).to receive(:ensure_available_shipping_rates) { true }
     end

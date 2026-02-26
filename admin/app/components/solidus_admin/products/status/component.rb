@@ -28,7 +28,7 @@ class SolidusAdmin::Products::Status::Component < SolidusAdmin::BaseComponent
   end
 
   def call
-    render component('ui/badge').new(
+    render component("ui/badge").new(
       name: t(".#{@status}"),
       color: STATUSES.fetch(@status)
     )

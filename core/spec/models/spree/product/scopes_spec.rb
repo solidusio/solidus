@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Product scopes", type: :model do
   let!(:product) { create(:product) }
@@ -10,8 +10,8 @@ RSpec.describe "Product scopes", type: :model do
       @taxonomy = create(:taxonomy)
       @root_taxon = @taxonomy.root
 
-      @parent_taxon = create(:taxon, name: 'Parent', taxonomy_id: @taxonomy.id, parent: @root_taxon)
-      @child_taxon = create(:taxon, name: 'Child 1', taxonomy_id: @taxonomy.id, parent: @parent_taxon)
+      @parent_taxon = create(:taxon, name: "Parent", taxonomy_id: @taxonomy.id, parent: @root_taxon)
+      @child_taxon = create(:taxon, name: "Child 1", taxonomy_id: @taxonomy.id, parent: @parent_taxon)
       @parent_taxon.reload # Need to reload for descendents to show up
 
       product.taxons << @parent_taxon
@@ -29,16 +29,16 @@ RSpec.describe "Product scopes", type: :model do
       expect(Spree::Product.in_taxon(@parent_taxon).to_a.size).to eq(1)
     end
 
-    context 'orders products based on their ordering within the classifications' do
+    context "orders products based on their ordering within the classifications" do
       let(:other_taxon) { create(:taxon, products: [product]) }
       let!(:product_2) { create(:product, taxons: [@child_taxon, other_taxon]) }
 
-      it 'by initial ordering' do
+      it "by initial ordering" do
         expect(Spree::Product.in_taxon(@child_taxon)).to eq([product, product_2])
         expect(Spree::Product.in_taxon(other_taxon)).to eq([product, product_2])
       end
 
-      it 'after ordering changed' do
+      it "after ordering changed" do
         [@child_taxon, other_taxon].each do |taxon|
           Spree::Classification.find_by(taxon:, product:).insert_at(2)
           expect(Spree::Product.in_taxon(taxon)).to eq([product_2, product])
@@ -128,7 +128,7 @@ RSpec.describe "Product scopes", type: :model do
     end
   end
 
-  describe '.available' do
+  describe ".available" do
     context "a product with past available_on" do
       let!(:product) { create(:product, available_on: 1.day.ago) }
 

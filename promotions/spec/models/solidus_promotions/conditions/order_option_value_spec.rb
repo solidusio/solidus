@@ -16,9 +16,9 @@ RSpec.describe SolidusPromotions::Conditions::OrderOptionValue do
 
     context "when there are any applicable line items" do
       before do
-        condition.preferred_eligible_values = { line_item.product.id => [
+        condition.preferred_eligible_values = {line_item.product.id => [
           line_item.variant.option_values.pick(:id)
-        ] }
+        ]}
       end
 
       it { is_expected.to be true }
@@ -26,7 +26,7 @@ RSpec.describe SolidusPromotions::Conditions::OrderOptionValue do
 
     context "when there are no applicable line items" do
       before do
-        condition.preferred_eligible_values = { 99 => [99] }
+        condition.preferred_eligible_values = {99 => [99]}
       end
 
       it { is_expected.to be false }

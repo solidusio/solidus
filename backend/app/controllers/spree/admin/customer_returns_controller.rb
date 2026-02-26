@@ -3,13 +3,13 @@
 module Spree
   module Admin
     class CustomerReturnsController < ResourceController
-      helper 'spree/admin/reimbursement_type'
-      belongs_to 'spree/order', find_by: :number
+      helper "spree/admin/reimbursement_type"
+      belongs_to "spree/order", find_by: :number
 
       before_action :parent # ensure order gets loaded to support our pseudo parent-child relationship
       before_action :load_form_data, only: [:new, :edit]
       before_action :build_return_items_from_params, only: [:create]
-      create.fails  :load_form_data
+      create.fails :load_form_data
       create.after :order_process_return
 
       def edit
@@ -62,18 +62,18 @@ module Spree
       end
 
       def permitted_resource_params
-        @permitted_resource_params ||= params.require('customer_return').permit(permitted_customer_return_attributes)
+        @permitted_resource_params ||= params.require("customer_return").permit(permitted_customer_return_attributes)
       end
 
       def build_return_items_from_params
         return_items_params = permitted_resource_params.delete(:return_items_attributes).values
         @customer_return.return_items = return_items_params.map do |item_params|
-          next unless item_params.delete('returned') == '1'
+          next unless item_params.delete("returned") == "1"
           return_item = item_params[:id] ? Spree::ReturnItem.find(item_params[:id]) : Spree::ReturnItem.new
           return_item.assign_attributes(item_params)
 
           if item_params[:reception_status_event].blank?
-            return redirect_to(new_object_url, flash: { error: 'Reception status choice required' })
+            return redirect_to(new_object_url, flash: {error: "Reception status choice required"})
           end
           return_item
         end.compact

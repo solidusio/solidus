@@ -11,7 +11,7 @@ module SolidusPromotions
     belongs_to :promotion_code, class_name: "SolidusPromotions::PromotionCode", optional: true
 
     validates :promotion_code, presence: true, if: :require_promotion_code?
-    validates :promotion_id, uniqueness: { scope: :order_id }
+    validates :promotion_id, uniqueness: {scope: :order_id}
 
     self.allowed_ransackable_associations = %w[promotion_code]
 

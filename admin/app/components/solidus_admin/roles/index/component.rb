@@ -20,10 +20,10 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   def page_actions
     render component("ui/button").new(
       tag: :a,
-      text: t('.add'),
+      text: t(".add"),
       href: solidus_admin.new_role_path(**search_filter_params),
-      data: { turbo_frame: :resource_form },
-      icon: "add-line",
+      data: {turbo_frame: :resource_form},
+      icon: "add-line"
     )
   end
 
@@ -36,18 +36,18 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   def batch_actions
     [
       {
-        label: t('.batch_actions.delete'),
+        label: t(".batch_actions.delete"),
         action: solidus_admin.roles_path(**search_filter_params),
         method: :delete,
-        icon: 'delete-bin-7-line',
-      },
+        icon: "delete-bin-7-line"
+      }
     ]
   end
 
   def scopes
     [
-      { name: :all, label: t('.scopes.all'), default: true },
-      { name: :admin, label: t('.scopes.admin') },
+      {name: :all, label: t(".scopes.all"), default: true},
+      {name: :admin, label: t(".scopes.admin")}
     ]
   end
 
@@ -61,15 +61,15 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
         header: :role,
         data: ->(role) do
           link_to role.name, edit_path(role),
-            data: { turbo_frame: :resource_form },
+            data: {turbo_frame: :resource_form},
             class: "body-link"
-        end,
+        end
       },
       {
         header: :description,
         data: ->(role) do
           link_to_if role.description, role.description, edit_path(role),
-            data: { turbo_frame: :resource_form },
+            data: {turbo_frame: :resource_form},
             class: "body-link"
         end
       }

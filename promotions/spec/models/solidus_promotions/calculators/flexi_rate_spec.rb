@@ -185,7 +185,7 @@ RSpec.describe SolidusPromotions::Calculators::FlexiRate, type: :model do
       )
     end
 
-    subject { calculator.compute(price, { order: order, quantity: quantity }) }
+    subject { calculator.compute(price, {order: order, quantity: quantity}) }
 
     context "with no order given" do
       let(:order) { nil }
@@ -350,7 +350,7 @@ RSpec.describe SolidusPromotions::Calculators::FlexiRate, type: :model do
   end
 
   it "allows creation of new object with all the attributes" do
-    attributes = { preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1 }
+    attributes = {preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1}
     calculator = described_class.new(attributes)
     expect(calculator).to have_attributes(attributes)
   end

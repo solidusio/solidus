@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 class DummyShippingCalculator < Spree::ShippingCalculator
 end
@@ -48,7 +48,7 @@ RSpec.describe Spree::ShippingMethod, type: :model do
       let(:tracking_url) { "https://track-o-matic.com/:tracking" }
       before { allow(subject).to receive(:tracking_url) { tracking_url } }
 
-      context 'tracking number has spaces' do
+      context "tracking number has spaces" do
         let(:tracking_numbers) { ["1234 5678 9012 3456", "a bcdef"] }
         let(:expectations) { %w[https://track-o-matic.com/1234%205678%209012%203456 https://track-o-matic.com/a%20bcdef] }
 
@@ -99,9 +99,9 @@ RSpec.describe Spree::ShippingMethod, type: :model do
         end
         it "should not match both categories" do
           result =
-            described_class.
-            joins(:zones).
-            with_all_shipping_category_ids([category1.id, category2.id])
+            described_class
+              .joins(:zones)
+              .with_all_shipping_category_ids([category1.id, category2.id])
           expect(result).to be_empty
         end
       end
@@ -206,43 +206,43 @@ RSpec.describe Spree::ShippingMethod, type: :model do
     subject { matches }
 
     context "address included in zone" do
-      let!(:address) { create(:address, country_iso_code: 'US') }
+      let!(:address) { create(:address, country_iso_code: "US") }
 
       it { is_expected.to include(shipping_method) }
     end
 
     context "address included other zone" do
-      let!(:address) { create(:address, country_iso_code: 'CA') }
+      let!(:address) { create(:address, country_iso_code: "CA") }
       it { is_expected.to_not include(shipping_method) }
     end
   end
 
-  describe '.available_to_store' do
+  describe ".available_to_store" do
     let(:store) { create(:store) }
     let!(:first_shipping_method) { create(:shipping_method, stores: [store]) }
     let!(:second_shipping_method) { create(:shipping_method, stores: [store]) }
 
     subject { described_class.available_to_store(store) }
 
-    it 'raises an exception if no store is passed as argument' do
+    it "raises an exception if no store is passed as argument" do
       expect {
         described_class.available_to_store(nil)
-      }.to raise_exception(ArgumentError, 'You must provide a store')
+      }.to raise_exception(ArgumentError, "You must provide a store")
     end
 
-    context 'when the store has no shipping methods associated' do
+    context "when the store has no shipping methods associated" do
       before { store.shipping_methods = [] }
 
-      it 'returns all shipping methods' do
+      it "returns all shipping methods" do
         expect(store.shipping_methods).to eq([])
         expect(subject).to match_array([first_shipping_method, second_shipping_method])
       end
     end
 
-    context 'when the store has shipping methods associated' do
+    context "when the store has shipping methods associated" do
       before { create(:shipping_method) }
 
-      it 'returns the associated records' do
+      it "returns the associated records" do
         expect(store.shipping_methods).to match_array([first_shipping_method, second_shipping_method])
         expect(subject).to match_array([first_shipping_method, second_shipping_method])
       end

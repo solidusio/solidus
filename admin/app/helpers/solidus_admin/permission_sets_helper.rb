@@ -18,13 +18,13 @@ module SolidusAdmin
         case permission.privilege
         when "display"
           grouped_permissions[group_key] ||= []
-          grouped_permissions[group_key] << { label: view_label, id: permission.id }
+          grouped_permissions[group_key] << {label: view_label, id: permission.id}
         when "management"
           grouped_permissions[group_key] ||= []
-          grouped_permissions[group_key] << { label: edit_label, id: permission.id }
+          grouped_permissions[group_key] << {label: edit_label, id: permission.id}
         else
           grouped_permissions[:other] ||= []
-          grouped_permissions[:other] << { label: permission.name, id: permission.id }
+          grouped_permissions[:other] << {label: permission.name, id: permission.id}
         end
       end
     end

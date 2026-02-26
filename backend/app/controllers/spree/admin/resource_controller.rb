@@ -17,7 +17,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     respond_with(@object) do |format|
       format.html { render layout: !request.xhr? }
       if request.xhr?
-        format.js   { render layout: false }
+        format.js { render layout: false }
       end
     end
   end
@@ -26,7 +26,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     respond_with(@object) do |format|
       format.html { render layout: !request.xhr? }
       if request.xhr?
-        format.js   { render layout: false }
+        format.js { render layout: false }
       end
     end
   end
@@ -62,7 +62,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       flash[:success] = flash_message_for(@object, :successfully_created)
       respond_with(@object) do |format|
         format.html { redirect_to location_after_save }
-        format.js   { render layout: false }
+        format.js { render layout: false }
       end
     else
       invoke_callbacks(:create, :fails)
@@ -112,7 +112,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       flash[:success] = flash_message_for(@object, :successfully_removed)
       respond_with(@object) do |format|
         format.html { redirect_to location_after_destroy }
-        format.js   { render partial: "spree/admin/shared/destroy" }
+        format.js { render partial: "spree/admin/shared/destroy" }
       end
     else
       invoke_callbacks(:destroy, :fails)
@@ -152,7 +152,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent_model_name
-    self.class.parent_data[:model_name].gsub('spree/', '')
+    self.class.parent_data[:model_name].gsub("spree/", "")
   end
 
   def object_name
@@ -189,8 +189,8 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def parent
     @parent ||= self.class.parent_data[:model_class]
-                  .includes(self.class.parent_data[:includes])
-                  .find_by!(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
+      .includes(self.class.parent_data[:includes])
+      .find_by!(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
     instance_variable_set("@#{parent_model_name}", @parent)
   rescue ActiveRecord::RecordNotFound => e
     resource_not_found(flash_class: e.model.constantize, redirect_url: routes_proxy.polymorphic_url([:admin, parent_model_name.pluralize.to_sym]))
@@ -253,7 +253,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def object_url(object = nil, options = {})
-    target = object ? object : @object
+    target = object || @object
 
     if parent?
       routes_proxy.polymorphic_url([:admin, parent, target], options)
@@ -294,11 +294,11 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def render_after_create_error
-    render action: 'new'
+    render action: "new"
   end
 
   def render_after_update_error
-    render action: 'edit'
+    render action: "edit"
   end
 
   def resource_invalid(exception)

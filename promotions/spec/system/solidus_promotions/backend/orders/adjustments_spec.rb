@@ -27,13 +27,13 @@ RSpec.describe "Adjustments", type: :feature do
     click_link "Adjustments"
   end
 
-  let!(:order) { create(:order, line_items_attributes: [{ price: 10, variant: }]) }
+  let!(:order) { create(:order, line_items_attributes: [{price: 10, variant:}]) }
 
   context "when the order is completed" do
     let!(:order) do
       create(
         :completed_order_with_totals,
-        line_items_attributes: [{ price: 10, variant: }],
+        line_items_attributes: [{price: 10, variant:}],
         ship_address:
       )
     end
@@ -52,7 +52,7 @@ RSpec.describe "Adjustments", type: :feature do
     end
 
     context "when the promotion system is configured to not allow applying promotions to completed orders" do
-      let(:preferences) { { recalculate_complete_orders: false } }
+      let(:preferences) { {recalculate_complete_orders: false} }
 
       it "does not show input field for promotion code" do
         expect(page).to have_content("Adjustments")

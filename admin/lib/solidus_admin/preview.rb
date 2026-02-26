@@ -28,6 +28,7 @@ module SolidusAdmin::Preview
 
     included do
       include SolidusAdmin::ControllerHelpers::Authentication
+
       helper ActionView::Helpers
       helper SolidusAdmin::ComponentsHelper
       helper_method :current_component

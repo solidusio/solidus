@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/manipulative_query_monitor'
+require "spree/manipulative_query_monitor"
 
 module Spree
   class InMemoryOrderUpdater
@@ -101,28 +101,28 @@ module Spree
 
     def determine_payment_state
       if payments.present? && payments.valid.empty? && order.outstanding_balance != 0
-        'failed'
-      elsif order.state == 'canceled' && order.payment_total.zero?
-        'void'
+        "failed"
+      elsif order.state == "canceled" && order.payment_total.zero?
+        "void"
       elsif order.outstanding_balance > 0
-        'balance_due'
+        "balance_due"
       elsif order.outstanding_balance < 0
-        'credit_owed'
+        "credit_owed"
       else
         # outstanding_balance == 0
-        'paid'
+        "paid"
       end
     end
 
     def determine_shipment_state
       if order.backordered?
-        'backorder'
+        "backorder"
       else
         # get all the shipment states for this order
         shipment_states = shipments.states
         if shipment_states.size > 1
           # multiple shiment states means it's most likely partially shipped
-          'partial'
+          "partial"
         else
           # will return nil if no shipments are found
           shipment_states.first
@@ -199,10 +199,10 @@ module Spree
         next unless item.changed?
 
         item.assign_attributes(
-          promo_total:          item.promo_total,
-          included_tax_total:   item.included_tax_total,
+          promo_total: item.promo_total,
+          included_tax_total: item.included_tax_total,
           additional_tax_total: item.additional_tax_total,
-          adjustment_total:     item.adjustment_total
+          adjustment_total: item.adjustment_total
         )
       end
     end

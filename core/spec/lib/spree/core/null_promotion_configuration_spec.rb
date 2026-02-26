@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Core::NullPromotionConfiguration do
   subject(:config) { described_class.new }

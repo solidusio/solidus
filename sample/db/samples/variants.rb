@@ -318,7 +318,7 @@ masters = {
   },
   solidus_cap => {
     sku: "SOL-CAP99",
-    cost_price: 24,
+    cost_price: 24
   }
 }
 

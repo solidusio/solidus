@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Adjustment reasons", type: :feature do
   stub_authorization!
@@ -36,7 +36,7 @@ describe "Adjustment reasons", type: :feature do
       end
 
       it "lists reasons but doesn't show their edit buttons" do
-        within '#listing_adjustment_reasons' do
+        within "#listing_adjustment_reasons" do
           expect(page).to have_content adjustment_reason.name
           expect(page).not_to have_selector('a[data-action="edit"]')
         end
@@ -49,7 +49,7 @@ describe "Adjustment reasons", type: :feature do
       end
 
       it "lists reasons and their edit buttons" do
-        within '#listing_adjustment_reasons' do
+        within "#listing_adjustment_reasons" do
           expect(page).to have_content adjustment_reason.name
           expect(page).to have_selector('a[data-action="edit"]')
         end

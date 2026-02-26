@@ -1,50 +1,50 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Product Details', type: :feature do
+describe "Product Details", type: :feature do
   stub_authorization!
 
-  context 'editing a product' do
-    it 'should list the product details' do
-      create(:product, name: 'Bún thịt nướng', sku: 'A100',
-              description: 'lorem ipsum', available_on: '2013-08-14 01:02:03')
+  context "editing a product" do
+    it "should list the product details" do
+      create(:product, name: "Bún thịt nướng", sku: "A100",
+        description: "lorem ipsum", available_on: "2013-08-14 01:02:03")
 
       visit spree.admin_path
       click_nav "Products"
       within_row(1) { click_icon :edit }
 
-      click_link 'Product Details'
+      click_link "Product Details"
 
-      expect(page).to have_content('ProductsBún thịt nướng')
-      expect(page).to have_field('product_name', with: 'Bún thịt nướng')
-      expect(page).to have_field('product_slug', with: 'bun-th-t-n-ng')
-      expect(page).to have_field('product_description', with: 'lorem ipsum')
-      expect(page).to have_field('product_price', with: '19.99')
-      expect(page).to have_field('product_cost_price', with: '17.00')
-      expect(page).to have_field('product_available_on', with: "2013/08/14")
-      expect(page).to have_field('product_sku', with: 'A100')
+      expect(page).to have_content("ProductsBún thịt nướng")
+      expect(page).to have_field("product_name", with: "Bún thịt nướng")
+      expect(page).to have_field("product_slug", with: "bun-th-t-n-ng")
+      expect(page).to have_field("product_description", with: "lorem ipsum")
+      expect(page).to have_field("product_price", with: "19.99")
+      expect(page).to have_field("product_cost_price", with: "17.00")
+      expect(page).to have_field("product_available_on", with: "2013/08/14")
+      expect(page).to have_field("product_sku", with: "A100")
     end
 
     it "should handle slug changes" do
-      create(:product, name: 'Bún thịt nướng', sku: 'A100',
-              description: 'lorem ipsum', available_on: '2011-01-01 01:01:01')
+      create(:product, name: "Bún thịt nướng", sku: "A100",
+        description: "lorem ipsum", available_on: "2011-01-01 01:01:01")
 
       visit spree.admin_path
       click_nav "Products"
-      within('table.index tbody tr:nth-child(1)') do
+      within("table.index tbody tr:nth-child(1)") do
         click_icon(:edit)
       end
 
-      fill_in "product_slug", with: 'random-slug-value'
+      fill_in "product_slug", with: "random-slug-value"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
 
-      fill_in "product_slug", with: ''
+      fill_in "product_slug", with: ""
       click_button "Update"
-      within('#product_slug_field') { expect(page).to have_content("can't be blank") }
+      within("#product_slug_field") { expect(page).to have_content("can't be blank") }
 
-      fill_in "product_slug", with: 'x'
+      fill_in "product_slug", with: "x"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
     end
@@ -52,14 +52,14 @@ describe 'Product Details', type: :feature do
 
   context "when default price is deleted" do
     it "does not show the master price", js: true do
-      product = create(:product, name: 'Bún thịt nướng', sku: 'A100',
-              description: 'lorem ipsum', available_on: '2013-08-14 01:02:03')
+      product = create(:product, name: "Bún thịt nướng", sku: "A100",
+        description: "lorem ipsum", available_on: "2013-08-14 01:02:03")
 
       visit spree.admin_path
       click_nav "Products"
       within_row(1) { click_icon :edit }
 
-      click_link 'Prices'
+      click_link "Prices"
 
       within "#spree_price_#{product.master.default_price.id}" do
         accept_alert do
@@ -68,10 +68,10 @@ describe 'Product Details', type: :feature do
       end
       expect(page).to have_content("Price has been successfully removed")
 
-      click_link 'Product Details'
+      click_link "Product Details"
 
-      expect(page).not_to have_field('product_price')
-      expect(page).to have_content('This Product has no price in the default currency (USD).')
+      expect(page).not_to have_field("product_price")
+      expect(page).to have_content("This Product has no price in the default currency (USD).")
     end
   end
 
@@ -86,7 +86,7 @@ describe 'Product Details', type: :feature do
           click_icon :trash
         end
       end
-      expect(page).to have_content('Product has been deleted')
+      expect(page).to have_content("Product has been deleted")
     end
   end
 end

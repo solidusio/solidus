@@ -2,13 +2,13 @@
 
 class SolidusAdmin::UI::Forms::Checkbox::Component < SolidusAdmin::BaseComponent
   FONT_WEIGHTS = {
-    normal: 'font-normal',
-    semibold: 'font-semibold',
+    normal: "font-normal",
+    semibold: "font-semibold"
   }.freeze
 
   FONT_SIZES = {
-    xs: 'text-xs',
-    s: 'text-sm',
+    xs: "text-xs",
+    s: "text-sm"
   }.freeze
 
   renders_one :label, ->(text:, weight: :normal, size: :s, **options) do

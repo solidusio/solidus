@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Wallet::AddPaymentSourcesToWallet, type: :model do
   let(:order) { create(:order_ready_to_complete) }
   let(:user) { order.user }
 
-  describe '#add_to_wallet' do
+  describe "#add_to_wallet" do
     subject { described_class.new(order) }
 
     before do
@@ -14,7 +14,7 @@ RSpec.describe Spree::Wallet::AddPaymentSourcesToWallet, type: :model do
       allow_any_instance_of(Spree::CreditCard).to receive(:reusable?).and_return(true)
     end
 
-    it 'saves the payment source' do
+    it "saves the payment source" do
       expect { subject.add_to_wallet }.to change {
         order.user.wallet.wallet_payment_sources.count
       }.by(1)
@@ -28,13 +28,13 @@ RSpec.describe Spree::Wallet::AddPaymentSourcesToWallet, type: :model do
         order.payments.first.update!(source: credit_card_one.payment_source)
       end
 
-      it 'does not make a new wallet payment source' do
+      it "does not make a new wallet payment source" do
         expect { subject.add_to_wallet }.to_not change {
           order.user.wallet.wallet_payment_sources.count
         }
       end
 
-      it 'does not change the default wallet payment source' do
+      it "does not change the default wallet payment source" do
         expect { subject.add_to_wallet }.to_not change {
           user.wallet.default_wallet_payment_source
         }

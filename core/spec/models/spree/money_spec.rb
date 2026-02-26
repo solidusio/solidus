@@ -1,54 +1,54 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Money do
   before do
     stub_spree_preferences(currency: "USD")
   end
 
-  describe '#initialize' do
+  describe "#initialize" do
     subject do
       described_class.new(amount, currency:, with_currency: true).to_s
     end
 
-    context 'with no currency' do
+    context "with no currency" do
       let(:currency) { nil }
-      let(:amount){ 10 }
+      let(:amount) { 10 }
       it { should == "$10.00 USD" }
     end
 
-    context 'with currency' do
-      let(:currency){ 'USD' }
+    context "with currency" do
+      let(:currency) { "USD" }
 
       context "CAD" do
-        let(:amount){ '10.00' }
-        let(:currency){ 'CAD' }
+        let(:amount) { "10.00" }
+        let(:currency) { "CAD" }
         it { should == "$10.00 CAD" }
       end
 
       context "with string amount" do
-        let(:amount){ '10.00' }
+        let(:amount) { "10.00" }
         it { should == "$10.00 USD" }
       end
 
       context "with no decimal point" do
-        let(:amount){ '10' }
+        let(:amount) { "10" }
         it { should == "$10.00 USD" }
       end
 
-      context 'with fixnum' do
-        let(:amount){ 10 }
+      context "with fixnum" do
+        let(:amount) { 10 }
         it { should == "$10.00 USD" }
       end
 
-      context 'with float' do
-        let(:amount){ 10.00 }
+      context "with float" do
+        let(:amount) { 10.00 }
         it { should == "$10.00 USD" }
       end
 
-      context 'with BigDecimal' do
-        let(:amount){ BigDecimal('10.00') }
+      context "with BigDecimal" do
+        let(:amount) { BigDecimal("10.00") }
         it { should == "$10.00 USD" }
       end
     end
@@ -86,14 +86,14 @@ RSpec.describe Spree::Money do
   context "currency parameter" do
     context "when currency is specified in Canadian Dollars" do
       it "uses the currency param over the global configuration" do
-        money = Spree::Money.new(10, currency: 'CAD', with_currency: true, html_wrap: false)
+        money = Spree::Money.new(10, currency: "CAD", with_currency: true, html_wrap: false)
         expect(money.to_s).to eq("$10.00 CAD")
       end
     end
 
     context "when currency is specified in Japanese Yen" do
       it "uses the currency param over the global configuration" do
-        money = Spree::Money.new(100, currency: 'JPY', html_wrap: false)
+        money = Spree::Money.new(100, currency: "JPY", html_wrap: false)
         expect(money.to_s).to eq("¥100")
       end
     end
@@ -101,12 +101,12 @@ RSpec.describe Spree::Money do
 
   context "symbol positioning" do
     it "passed in option" do
-      money = Spree::Money.new(10, format: '%n %u', html_wrap: false)
+      money = Spree::Money.new(10, format: "%n %u", html_wrap: false)
       expect(money.to_s).to eq("10.00 $")
     end
 
     it "config option" do
-      money = Spree::Money.new(10, format: '%n %u', html_wrap: false)
+      money = Spree::Money.new(10, format: "%n %u", html_wrap: false)
       expect(money.to_s).to eq("10.00 $")
     end
   end
@@ -141,25 +141,25 @@ RSpec.describe Spree::Money do
 
     # Regression test for https://github.com/spree/spree/issues/2634
     it "formats as plain by default" do
-      money = Spree::Money.new(10, format: '%n %u')
+      money = Spree::Money.new(10, format: "%n %u")
       expect(money.to_s).to eq("10.00 €")
     end
 
     it "formats as HTML if asked (nicely) to" do
-      money = Spree::Money.new(10, format: '%n %u')
+      money = Spree::Money.new(10, format: "%n %u")
       # The HTML'ified version of "10.00 €"
       expect(money.to_html).to eq("<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">€</span>")
     end
 
     it "formats as HTML with currency" do
-      money = Spree::Money.new(10, format: '%n %u', with_currency: true)
+      money = Spree::Money.new(10, format: "%n %u", with_currency: true)
       # The HTML'ified version of "10.00 €"
       expect(money.to_html).to eq("<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">€</span> <span class=\"money-currency\">EUR</span>")
     end
   end
 
   describe "#as_json" do
-    let(:options) { double('options') }
+    let(:options) { double("options") }
 
     it "returns the expected string" do
       money = Spree::Money.new(10)
@@ -167,7 +167,7 @@ RSpec.describe Spree::Money do
     end
   end
 
-  describe 'subtraction' do
+  describe "subtraction" do
     context "for money objects with same currency" do
       let(:money_1) { Spree::Money.new(32.00, currency: "USD") }
       let(:money_2) { Spree::Money.new(15.00, currency: "USD") }
@@ -190,13 +190,13 @@ RSpec.describe Spree::Money do
       let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
       let(:money_2) { ::Money.new(1500) }
 
-      it 'raises a TypeError' do
+      it "raises a TypeError" do
         expect { money_1 - money_2 }.to raise_error(TypeError)
       end
     end
   end
 
-  describe 'addition' do
+  describe "addition" do
     context "for money objects with same currency" do
       let(:money_1) { Spree::Money.new(37.00, currency: "USD") }
       let(:money_2) { Spree::Money.new(15.00, currency: "USD") }
@@ -219,18 +219,18 @@ RSpec.describe Spree::Money do
       let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
       let(:money_2) { ::Money.new(1500) }
 
-      it 'raises a TypeError' do
+      it "raises a TypeError" do
         expect { money_1 + money_2 }.to raise_error(TypeError)
       end
     end
   end
 
-  describe 'equality checks' do
+  describe "equality checks" do
     context "if other does not respond to .money" do
       let(:money_1) { Spree::Money.new(32.00, currency: "EUR") }
       let(:money_2) { ::Money.new(1500) }
 
-      it 'raises a TypeError' do
+      it "raises a TypeError" do
         expect { money_1 == money_2 }.to raise_error(TypeError)
       end
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Preferences::Store, type: :model do
   before :each do
@@ -19,22 +19,22 @@ RSpec.describe Spree::Preferences::Store, type: :model do
   end
 
   it "will return db value when cache is emtpy and cache the db value" do
-    preference = Spree::Preference.where(key: 'test').first_or_initialize
-    preference.value = '123'
+    preference = Spree::Preference.where(key: "test").first_or_initialize
+    preference.value = "123"
     preference.save
 
     Rails.cache.clear
-    expect(@store.get(:test)).to eq '123'
-    expect(Rails.cache.read(:test)).to eq '123'
+    expect(@store.get(:test)).to eq "123"
+    expect(Rails.cache.read(:test)).to eq "123"
   end
 
   it "should return and cache fallback value when supplied" do
     Rails.cache.clear
-    expect(@store.get(:test){ false }).to be false
+    expect(@store.get(:test) { false }).to be false
     expect(Rails.cache.read(:test)).to be false
   end
 
   it "should return nil when key can't be found and fallback value is not supplied" do
-    expect(@store.get(:random_key){ nil }).to be_nil
+    expect(@store.get(:random_key) { nil }).to be_nil
   end
 end

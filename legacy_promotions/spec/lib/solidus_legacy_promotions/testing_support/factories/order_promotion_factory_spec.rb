@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'order promotion factory' do
+RSpec.describe "order promotion factory" do
   let(:factory_class) { Spree::OrderPromotion }
 
-  describe 'plain order promotion' do
+  describe "plain order promotion" do
     let(:factory) { :order_promotion }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 end

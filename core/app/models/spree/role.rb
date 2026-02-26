@@ -7,7 +7,7 @@ module Spree
     has_many :role_permissions, dependent: :destroy
     has_many :permission_sets, through: :role_permissions
 
-    validates :name, presence: true, uniqueness: { case_sensitive: true, allow_blank: true }
+    validates :name, presence: true, uniqueness: {case_sensitive: true, allow_blank: true}
 
     def admin?
       name == "admin"
