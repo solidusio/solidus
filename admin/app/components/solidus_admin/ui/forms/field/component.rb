@@ -27,7 +27,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         tag: :input,
         size:,
         value: object.public_send(method),
-        error: (errors.to_sentence.capitalize if errors),
+        error: errors&.to_sentence&.capitalize,
         **attributes
       }
     )
@@ -44,7 +44,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
       name: "#{object_name}[#{method}]#{"[]" if attributes[:multiple].present?}",
       choices:,
       value: object.try(method),
-      error: (errors.to_sentence.capitalize if errors),
+      error: errors&.to_sentence&.capitalize,
       **attributes
     )
   end
@@ -62,7 +62,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
         size:,
         tag: :textarea,
         value: object.public_send(method),
-        error: (errors.to_sentence.capitalize if errors),
+        error: errors&.to_sentence&.capitalize,
         **attributes
       }
     )

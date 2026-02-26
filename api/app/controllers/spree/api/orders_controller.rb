@@ -122,7 +122,7 @@ module Spree
       def prevent_customer_metadata_update
         return unless @order&.completed? && cannot?(:admin, Spree::Order)
 
-        params[:order].delete(:customer_metadata) if params[:order]
+        params[:order]&.delete(:customer_metadata)
       end
 
       def normalize_params
