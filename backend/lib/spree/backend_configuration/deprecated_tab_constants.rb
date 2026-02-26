@@ -4,6 +4,7 @@ Spree.deprecator.warn(
   "Spree::BackendConfiguration::*_TABS is deprecated. Please use Spree::BackendConfiguration::MenuItem(match_path:) instead."
 )
 
+# rubocop:disable Lint/OrAssignmentToConstant
 Spree::BackendConfiguration::ORDER_TABS ||= [
   :orders, :payments, :creditcard_payments,
   :shipments, :credit_cards, :return_authorizations,
@@ -32,3 +33,4 @@ Spree::BackendConfiguration::CONFIGURATION_TABS ||= [
   :return_reasons, :adjustment_reasons,
   :store_credit_reasons
 ]
+# rubocop:enable Lint/OrAssignmentToConstant
