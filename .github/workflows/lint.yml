@@ -58,5 +58,7 @@ jobs:
         with:
           ruby-version: "3.4"
           bundler-cache: true
+      - name: Install ESLint globally
+        run: npm install --save-dev eslint@latest @eslint/js@latest @eslint/eslintrc@latest
       - name: Lint JS files
         run: bin/rake lint:js
