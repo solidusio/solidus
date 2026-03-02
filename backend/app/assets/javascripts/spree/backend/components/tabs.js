@@ -30,7 +30,6 @@ Tabs = (function() {
 
   Tabs.prototype.overflowTabs = function() {
     var containerWidth = this.el.offsetWidth;
-    var dropdownWidth = this.dropdown.offsetWidth;
 
     for (var i = 0; i < this.tabs.length; i++) {
       var tab = this.tabs[i];
@@ -41,7 +40,6 @@ Tabs = (function() {
       this.el.classList.remove("tabs-overflowed");
     } else {
       this.el.classList.add("tabs-overflowed");
-      remainingWidth -= dropdownWidth;
     }
 
     var remainingWidth = containerWidth;
