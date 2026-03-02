@@ -30,13 +30,6 @@ class AddAmountRemainingToStoreCreditEvents < ActiveRecord::Migration[5.0]
 
       credit.store_credit_events.chronological.each do |event|
         case event.action
-        when StoreCredit::ALLOCATION_ACTION,
-             StoreCredit::ELIGIBLE_ACTION,
-             StoreCredit::CAPTURE_ACTION
-          # These actions do not change the amount_remaining so the previous
-          # amount available is used (either the credit's amount or the
-          # amount_remaining coming from the event right before this one).
-          credit_amount
         when StoreCredit::AUTHORIZE_ACTION,
              StoreCredit::INVALIDATE_ACTION
           # These actions remove the amount from the available credit amount.
