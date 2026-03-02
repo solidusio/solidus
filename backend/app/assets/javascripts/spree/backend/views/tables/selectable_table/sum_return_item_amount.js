@@ -16,7 +16,7 @@ Spree.Views.Tables.SelectableTable.SumReturnItemAmount = Backbone.View.extend({
 
   totalSelectedReturnItemAmount: function () {
     var totalAmount = 0;
-    var selectedItems = [];
+    var selectedItems;
     var decimals = 0;
     var separator = Spree.t('currency_separator');
     var amount, decimalAmount;
