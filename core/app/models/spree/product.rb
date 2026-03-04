@@ -147,6 +147,11 @@ module Spree
       super || Spree::TaxCategory.find_by(is_default: true)
     end
 
+    # @return [Integer] tax category id for this product, or the default tax category id
+    def tax_category_id
+      super || tax_category&.id
+    end
+
     # Ensures option_types and product_option_types exist for keys in
     # option_values_hash.
     #
