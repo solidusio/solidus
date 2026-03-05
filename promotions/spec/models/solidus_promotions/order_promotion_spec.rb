@@ -10,6 +10,8 @@ RSpec.describe SolidusPromotions::OrderPromotion do
   let(:promotion) { build(:solidus_promotion) }
   let(:order_promotion) { build(:solidus_order_promotion, promotion: promotion) }
 
+  it { is_expected.to validate_uniqueness_of(:promotion_id).scoped_to(:order_id) }
+
   describe "promotion code presence error" do
     subject do
       order_promotion.valid?
