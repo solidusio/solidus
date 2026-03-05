@@ -15,7 +15,7 @@ module SolidusAdmin
 
     def index
       users = apply_search_to(
-        Spree.user_class.order(created_at: :desc, id: :desc),
+        Spree.admin_user_class.order(created_at: :desc, id: :desc),
         param: :q,
       )
 
@@ -73,9 +73,9 @@ module SolidusAdmin
     end
 
     def destroy
-      @users = Spree.user_class.where(id: params[:id])
+      @users = Spree.admin_user_class.where(id: params[:id])
 
-      Spree.user_class.transaction { @users.destroy_all }
+      Spree.admin_user_class.transaction { @users.destroy_all }
 
       flash[:notice] = t('.success')
       redirect_back_or_to users_path, status: :see_other
@@ -84,7 +84,7 @@ module SolidusAdmin
     private
 
     def set_user
-      @user = Spree.user_class.find(params[:id])
+      @user = Spree.admin_user_class.find(params[:id])
     end
 
     def user_params
@@ -123,7 +123,7 @@ module SolidusAdmin
     end
 
     def authorization_subject
-      Spree.user_class
+      Spree.admin_user_class
     end
   end
 end
