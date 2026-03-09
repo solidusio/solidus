@@ -32,7 +32,37 @@ module SolidusPromotions
     # In case solidus_legacy_promotions is loaded, we need to define this.
     class_name_attribute :shipping_promotion_handler_class, default: "Spree::NullPromotionHandler"
 
-    add_class_set :order_conditions, default: [
+    def order_conditions
+      SolidusPromotions::Condition.applicable_to([Spree::Order])
+    end
+    deprecate order_conditions: :conditions, deprecator: Spree.deprecator
+
+    def order_conditions=(conditions)
+      conditions.each { self.conditions << _1 }
+    end
+    deprecate :order_conditions= => :conditions=, :deprecator => Spree.deprecator
+
+    def line_item_conditions
+      SolidusPromotions::Condition.applicable_to([Spree::LineItem])
+    end
+    deprecate line_item_conditions: :conditions, deprecator: Spree.deprecator
+
+    def line_item_conditions=(conditions)
+      conditions.each { self.conditions << _1 }
+    end
+    deprecate :line_item_conditions= => :conditions=, :deprecator => Spree.deprecator
+
+    def shipment_conditions
+      SolidusPromotions::Condition.applicable_to([Spree::Shipment])
+    end
+    deprecate shipment_conditions: :conditions, deprecator: Spree.deprecator
+
+    def shipment_conditions=(conditions)
+      conditions.each { self.conditions << _1 }
+    end
+    deprecate :shipment_conditions= => :conditions=, :deprecator => Spree.deprecator
+
+    add_class_set :conditions, default: [
       "SolidusPromotions::Conditions::FirstOrder",
       "SolidusPromotions::Conditions::FirstRepeatPurchaseSince",
       "SolidusPromotions::Conditions::ItemTotal",
@@ -49,15 +79,10 @@ module SolidusPromotions
       "SolidusPromotions::Conditions::OrderTaxon",
       "SolidusPromotions::Conditions::UserLoggedIn",
       "SolidusPromotions::Conditions::UserRole",
-      "SolidusPromotions::Conditions::User"
-    ]
-
-    add_class_set :line_item_conditions, default: [
+      "SolidusPromotions::Conditions::User",
       "SolidusPromotions::Conditions::LineItemOptionValue",
       "SolidusPromotions::Conditions::LineItemProduct",
-      "SolidusPromotions::Conditions::LineItemTaxon"
-    ]
-    add_class_set :shipment_conditions, default: [
+      "SolidusPromotions::Conditions::LineItemTaxon",
       "SolidusPromotions::Conditions::ShippingMethod"
     ]
 

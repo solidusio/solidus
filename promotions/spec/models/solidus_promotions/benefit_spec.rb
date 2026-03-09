@@ -309,4 +309,16 @@ RSpec.describe SolidusPromotions::Benefit do
       it { is_expected.to eq("Something entirely different") }
     end
   end
+
+  describe ".applicable_conditions" do
+    subject { described_class.applicable_conditions }
+
+    it { is_expected.to include(SolidusPromotions::Conditions::User) }
+  end
+
+  describe "#possible_conditions", :silence_deprecations do
+    subject { described_class.new.possible_conditions }
+
+    it { is_expected.to include(SolidusPromotions::Conditions::User) }
+  end
 end

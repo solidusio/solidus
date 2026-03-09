@@ -64,6 +64,19 @@ module SolidusPromotions
     #   @return [ActiveRecord::Relation<SolidusPromotions::Benefit>]
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
 
+    # Base set of order-level condition classes available to all benefits.
+    #
+    # These generic order conditions apply regardless of the concrete benefit
+    # type, as every benefit ultimately operates within the context of an order.
+    # Concrete benefit subclasses may extend or override this to include
+    # additional applicable conditions that are specific to their discount
+    # target (e.g., line-item or shipment conditions).
+    #
+    # @return [Enumerable<Class<SolidusPromotions::Condition>>]
+    def self.applicable_conditions
+      SolidusPromotions::Condition.applicable_to([Spree::Order])
+    end
+
     # Returns relations that should be preloaded for this condition.
     #
     # Override this method in subclasses to specify associations that should be eager loaded
@@ -237,7 +250,7 @@ module SolidusPromotions
     #
     # @return [Set<Class<SolidusPromotions::Condition>>]
     def available_conditions
-      possible_conditions - conditions.select(&:persisted?)
+      self.class.applicable_conditions - conditions.select(&:persisted?)
     end
 
     # Returns the calculators allowed for this benefit type.
@@ -302,7 +315,8 @@ module SolidusPromotions
     #
     # @return [Set<Class<SolidusPromotions::Condition>>]
     def possible_conditions
-      Set.new(SolidusPromotions.config.order_conditions)
+      Spree.deprecator.warn("Use #{self.class.name}.applicable_conditions instead.")
+      self.class.applicable_conditions
     end
 
     private

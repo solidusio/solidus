@@ -54,6 +54,27 @@ module SolidusPromotions
     validate :unique_per_benefit, on: :create
     validate :possible_condition_for_benefit, if: -> { benefit.present? }
 
+    class << self
+      # Returns the subset of conditions that can compute eligibility instances of the provided array of classes.
+      #
+      # @example SolidusPromotions::Condition.applicable_to([Spree::Order, Spree::LineItem])
+      #
+      # @param [Array<Class>] An array of classes to compute eligibility for
+      # @return [Array<SolidusPromotions::Condition>] Conditions that can compute eligibility for the provided classes.
+      def applicable_to(classes)
+        SolidusPromotions.config.conditions.select do |condition_class|
+          (condition_class.instance_methods & classes.map { |k| eligible_method_for(k) }).any?
+        end
+      end
+
+      # Generates the eligibility method name for a promotable
+      #
+      # @return [Symbol] the method name
+      def eligible_method_for(promotable_class)
+        :"#{promotable_class.name.demodulize.underscore}_eligible?"
+      end
+    end
+
     # Returns relations that should be preloaded for this condition.
     #
     # Override this method in subclasses to specify associations that should be eager loaded
@@ -178,11 +199,8 @@ module SolidusPromotions
 
     private
 
-    # Generates the eligibility method name for a promotable
-    #
-    # @return [Symbol] the method name
     def eligible_method_for(promotable)
-      :"#{promotable.class.name.demodulize.underscore}_eligible?"
+      self.class.eligible_method_for(promotable.class)
     end
 
     # Validates that only one instance of this condition type exists per benefit.
@@ -196,10 +214,10 @@ module SolidusPromotions
 
     # Validates that this condition type is allowed for the associated benefit.
     #
-    # Checks the benefit's {Benefit#possible_conditions} to ensure this condition
+    # Checks the benefit's {Benefit#applicable_conditions} to ensure this condition
     # type is compatible.
     def possible_condition_for_benefit
-      benefit.possible_conditions.include?(self.class) || errors.add(:type, :invalid_condition_type)
+      benefit.class.applicable_conditions.include?(self.class) || errors.add(:type, :invalid_condition_type)
     end
 
     # Generates a translated eligibility error message.
