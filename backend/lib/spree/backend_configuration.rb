@@ -234,7 +234,7 @@ module Spree
           label: :users,
           icon: admin_updated_navbar ? 'ri-user-line' : 'user',
           match_path: %r{/(users|store_credits)},
-          condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
+          condition: -> { Spree.admin_user_class && can?(:admin, Spree.admin_user_class) },
           url: :admin_users_path,
         ),
         MenuItem.new(
