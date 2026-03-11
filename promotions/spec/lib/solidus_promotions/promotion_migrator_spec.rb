@@ -52,6 +52,55 @@ RSpec.describe SolidusPromotions::PromotionMigrator do
     end
   end
 
+  context "when multiple promotions have batches with the same base_code" do
+    let(:shared_base_code) { "SUVIE" }
+    let(:shared_time) { Time.current.change(usec: 0) }
+    let!(:spree_promotion) { create(:promotion) }
+    let!(:another_spree_promotion) { create(:promotion) }
+    let!(:first_batch) do
+      Spree::PromotionCodeBatch.create!(
+        promotion: spree_promotion,
+        base_code: shared_base_code,
+        number_of_codes: 1,
+        created_at: shared_time,
+        updated_at: shared_time
+      )
+    end
+    let!(:second_batch) do
+      Spree::PromotionCodeBatch.create!(
+        promotion: another_spree_promotion,
+        base_code: shared_base_code,
+        number_of_codes: 1,
+        created_at: shared_time,
+        updated_at: shared_time
+      )
+    end
+    let!(:first_code) do
+      create(
+        :promotion_code,
+        promotion: spree_promotion,
+        promotion_code_batch: first_batch,
+        value: "suvie-lgm4gw"
+      )
+    end
+    let!(:second_code) do
+      create(
+        :promotion_code,
+        promotion: another_spree_promotion,
+        promotion_code_batch: second_batch,
+        value: "suvie-abc123"
+      )
+    end
+
+    it "copies each code exactly once without raising a duplicate value error" do
+      expect { subject }.not_to raise_error
+      expect(SolidusPromotions::PromotionCode.where(value: [first_code.value, second_code.value]).count).to eq(2)
+      expect(
+        SolidusPromotions::PromotionCode.where(value: [first_code.value, second_code.value]).group(:value).count.values
+      ).to all(eq(1))
+    end
+  end
+
   context "if our rules and actions are missing from the promotion map" do
     let(:promotion_map) do
       {
