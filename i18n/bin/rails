@@ -1,15 +1,7 @@
 #!/usr/bin/env ruby
 
-# frozen_string_literal: true
-
-app_root = 'spec/dummy'
-
-unless File.exist? "#{app_root}/bin/rails"
-  system "bin/rake", app_root or begin # rubocop:disable Style/AndOr
-    warn "Automatic creation of the dummy app failed"
-    exit 1
-  end
+if %w[g generate].include? ARGV.first
+  exec "#{__dir__}/rails-engine", *ARGV
+else
+  exec "#{__dir__}/rails-sandbox", *ARGV
 end
-
-Dir.chdir app_root
-exec 'bin/rails', *ARGV

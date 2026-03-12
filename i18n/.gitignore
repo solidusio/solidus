@@ -8,9 +8,14 @@
 .sass-cache
 coverage
 Gemfile.lock
+Gemfile-local
 tmp
 nbproject
 pkg
 *.swp
 spec/dummy
 spec/examples.txt
+/sandbox
+.rvmrc
+.ruby-version
+.ruby-gemset

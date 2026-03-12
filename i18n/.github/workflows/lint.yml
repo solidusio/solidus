@@ -1,0 +1,25 @@
+name: Lint
+
+on: [pull_request]
+
+concurrency:
+  group: lint-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  ruby:
+    name: Check Ruby
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Lint Ruby files
+        run: bundle exec rubocop -ESP

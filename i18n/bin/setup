@@ -5,4 +5,4 @@ set -vx
 
 gem install bundler --conservative
 bundle update
-bundle exec rake clobber
+bin/rake clobber
