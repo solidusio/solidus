@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/core'
+require "solidus_core"
+require "solidus_support"
 
 module SolidusI18n
   class Engine < Rails::Engine
@@ -8,7 +9,7 @@ module SolidusI18n
 
     isolate_namespace ::Spree
 
-    engine_name 'solidus_i18n'
+    engine_name "solidus_i18n"
 
     # use rspec for tests
     config.generators do |g|
