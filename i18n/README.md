@@ -1,6 +1,5 @@
 # Solidus Internationalization
 
-[![CircleCI](https://circleci.com/gh/solidusio/solidus_i18n.svg?style=svg)](https://circleci.com/gh/solidusio/solidus_i18n)
 [![Gem Version](https://badge.fury.io/rb/solidus_i18n.svg)](https://badge.fury.io/rb/solidus_i18n)
 
 This is the Internationalization project for [Solidus](https://solidus.io)
