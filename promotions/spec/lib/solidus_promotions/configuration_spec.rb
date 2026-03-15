@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusPromotions::Configuration do
-  subject(:config) { SolidusPromotions.config }
+  subject(:config) { described_class.new }
 
   it "has a nice accessor" do
     expect(subject).to be_a(described_class)
@@ -31,20 +31,53 @@ RSpec.describe SolidusPromotions::Configuration do
     it { is_expected.to be_a(Spree::Core::NestedClassSet) }
   end
 
-  describe ".order_conditions" do
+  describe ".order_conditions", :silence_deprecations do
     subject { config.order_conditions }
 
-    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+    it { is_expected.to include(SolidusPromotions::Conditions::User) }
   end
 
-  describe ".line_item_conditions" do
+  describe ".line_item_conditions", :silence_deprecations do
     subject { config.line_item_conditions }
 
-    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+    it { is_expected.to include(SolidusPromotions::Conditions::LineItemProduct) }
   end
 
-  describe ".shipment_conditions" do
-    subject { config.line_item_conditions }
+  describe ".shipment_conditions", :silence_deprecations do
+    subject { config.shipment_conditions }
+
+    it { is_expected.to include(SolidusPromotions::Conditions::ShippingMethod) }
+  end
+
+  describe "deprecated condition setters", :silence_deprecations do
+    before do
+      stub_const("TestCondition", Class.new(SolidusPromotions::Condition))
+    end
+
+    describe "order_conditions=" do
+      it "adds conditions to the #conditions set" do
+        expect { config.order_conditions = [TestCondition] }.to change { config.conditions.count }.by(1)
+        expect(config.conditions).to include(TestCondition)
+      end
+    end
+
+    describe "line_item_conditions=" do
+      it "adds conditions to the #conditions set" do
+        expect { config.line_item_conditions = [TestCondition] }.to change { config.conditions.count }.by(1)
+        expect(config.conditions).to include(TestCondition)
+      end
+    end
+
+    describe "shipment_conditions=" do
+      it "adds conditions to the #conditions set" do
+        expect { config.shipment_conditions = [TestCondition] }.to change { config.conditions.count }.by(1)
+        expect(config.conditions).to include(TestCondition)
+      end
+    end
+  end
+
+  describe ".conditions" do
+    subject { config.conditions }
 
     it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
   end

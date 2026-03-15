@@ -3,6 +3,10 @@
 module SolidusPromotions
   module Benefits
     class AdjustShipment < Benefit
+      def self.applicable_conditions
+        SolidusPromotions::Condition.applicable_to([Spree::Order, Spree::Shipment])
+      end
+
       def discount_shipment(shipment, ...)
         adjustment = find_adjustment(shipment) || build_adjustment(shipment)
         adjustment.amount = compute_amount(shipment, ...)
@@ -15,10 +19,6 @@ module SolidusPromotions
         discount.amount = compute_amount(shipping_rate, ...)
         discount.label = adjustment_label(shipping_rate)
         discount
-      end
-
-      def possible_conditions
-        super + SolidusPromotions.config.shipment_conditions
       end
 
       def level
