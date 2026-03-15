@@ -37,12 +37,19 @@ module SolidusPromotions
       #   calculator = Percent.new(preferred_percent: 15)
       #   shipment.discountable_amount # => 25.00
       #   calculator.compute_item(shipment) # => 3.75
-      def compute_item(object)
-        round_to_currency(object.discountable_amount * preferred_percent / 100, object.order.currency)
+      #
+      # @example Computing a 15% discount on a price
+      #   calculator = Percent.new(preferred_percent: 15)
+      #   price.discountable_amount # => 100.00
+      #   calculator.compute_item(shipment) # => 15
+      def compute_item(object, _options = {})
+        currency = object.respond_to?(:currency) ? object.currency : object.order.currency
+        round_to_currency(object.discountable_amount * preferred_percent / 100, currency)
       end
       alias_method :compute_line_item, :compute_item
       alias_method :compute_shipment, :compute_item
       alias_method :compute_shipping_rate, :compute_item
+      alias_method :compute_price, :compute_item
     end
   end
 end

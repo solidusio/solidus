@@ -27,6 +27,12 @@ RSpec.describe SolidusPromotions::Calculators::Percent, type: :model do
 
       it { is_expected.to eq(5.70) }
     end
+
+    describe "compute_price" do
+      let(:item) { mock_model(Spree::Price, amount: 110, discountable_amount: 100, currency: "USD") }
+
+      it { is_expected.to eq(15) }
+    end
   end
 
   it_behaves_like "a promotion calculator"
