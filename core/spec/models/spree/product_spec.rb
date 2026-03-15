@@ -256,6 +256,64 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
 
+    describe "#tax_category" do
+      context "when the product has a tax category" do
+        let(:tax_category) { create(:tax_category) }
+        let(:product) { create(:product, tax_category:) }
+
+        it "returns the product's tax category" do
+          expect(product.tax_category).to eq(tax_category)
+        end
+      end
+
+      context "when the product has no tax category" do
+        let(:product) { create(:product, tax_category: nil) }
+
+        context "and a default tax category exists" do
+          let!(:default_tax_category) { create(:tax_category, is_default: true) }
+
+          it "returns the default tax category" do
+            expect(product.tax_category).to eq(default_tax_category)
+          end
+        end
+
+        context "and no default tax category exists" do
+          it "returns nil" do
+            expect(product.tax_category).to be_nil
+          end
+        end
+      end
+    end
+
+    describe "#tax_category_id" do
+      context "when the product has a tax category" do
+        let(:tax_category) { create(:tax_category) }
+        let(:product) { create(:product, tax_category:) }
+
+        it "returns the product's tax category id" do
+          expect(product.tax_category_id).to eq(tax_category.id)
+        end
+      end
+
+      context "when the product has no tax category" do
+        let(:product) { create(:product, tax_category: nil) }
+
+        context "and a default tax category exists" do
+          let!(:default_tax_category) { create(:tax_category, is_default: true) }
+
+          it "returns the default tax category's id" do
+            expect(product.tax_category_id).to eq(default_tax_category.id)
+          end
+        end
+
+        context "and no default tax category exists" do
+          it "returns nil" do
+            expect(product.tax_category_id).to be_nil
+          end
+        end
+      end
+    end
+
     context "variants_and_option_values_for" do
       let!(:high) { create(:variant, product:) }
       let!(:low) { create(:variant, product:) }
