@@ -68,6 +68,10 @@ en:
         match_policies:
           include: Product has one of the chosen taxons
           exclude: Product does not have one of the chosen taxons
+      price_option_value:
+        match_policies:
+          include: Variant has one of the chosen option value(s)
+          exclude: Variant does not have one of the chosen option value(s)
       line_item_taxon:
         match_policies:
           include: Line item's product has one of the chosen taxons
@@ -126,6 +130,9 @@ en:
         no_applicable_products: Promotion is not applicable to this product.
       solidus_promotions/conditions/price_taxon:
         has_excluded_product: Price's product is excluded.
+        no_applicable_products: Promotion is not applicable to this product.
+      solidus_promotions/conditions/price_option_value:
+        has_excluded_product: Price matches option value(s).
         no_applicable_products: Promotion is not applicable to this product.
       solidus_promotions/conditions/order_taxon:
         has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
@@ -239,6 +246,7 @@ en:
       solidus_promotions/conditions/user_role: User Role(s)
       solidus_promotions/conditions/price_product: Price matches specified product(s)
       solidus_promotions/conditions/price_taxon: Price matches specified taxon(s)
+      solidus_promotions/conditions/price_option_value: Price matches specified option value(s)
       solidus_promotions/promotion_category:
         one: Promotion Category
         other: Promotion Categories
@@ -299,6 +307,9 @@ en:
         preferred_match_policy: Match Policy
       solidus_promotions/conditions/price_taxon:
         description: Price matches specified taxon(s)
+        preferred_match_policy: Match Policy
+      solidus_promotions/conditions/price_option_value:
+        description: Price matches specified option value(s)
         preferred_match_policy: Match Policy
       solidus_promotions/conditions/store:
         description: Available only to the specified stores
