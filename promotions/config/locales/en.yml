@@ -60,6 +60,10 @@ en:
         match_policies:
           include: Line item's product is one of the chosen products
           exclude: Line item's product is not one of the chosen products
+      price_product:
+        match_policies:
+          include: Product is one of the chosen products
+          exclude: Product is not one of the chosen products
       line_item_taxon:
         match_policies:
           include: Line item's product has one of the chosen taxons
@@ -113,6 +117,9 @@ en:
         has_excluded_product: Your cart contains a product that prevents this coupon code from being applied.
         missing_product: This coupon code can't be applied because you don't have all of the necessary products in your cart.
         no_applicable_products: You need to add an applicable product before applying this coupon code.
+      solidus_promotions/conditions/price_product:
+        has_excluded_product: Price belongs to an excluded product.
+        no_applicable_products: Promotion is not applicable to this product.
       solidus_promotions/conditions/order_taxon:
         has_excluded_taxon: Your cart contains a product from an excluded category that prevents this coupon code from being applied.
         missing_taxon: You need to add a product from all applicable categories before applying this coupon code.
@@ -223,6 +230,7 @@ en:
       solidus_promotions/conditions/user: User
       solidus_promotions/conditions/user_logged_in: User Logged In
       solidus_promotions/conditions/user_role: User Role(s)
+      solidus_promotions/conditions/price_product: Price matches specified product(s)
       solidus_promotions/promotion_category:
         one: Promotion Category
         other: Promotion Categories
@@ -277,6 +285,9 @@ en:
         line_item_level_description: 'Line item matches the specified products:'
       solidus_promotions/conditions/line_item_product:
         description: Line item matches specified product(s)
+        preferred_match_policy: Match Policy
+      solidus_promotions/conditions/price_product:
+        description: Price matches specified product(s)
         preferred_match_policy: Match Policy
       solidus_promotions/conditions/store:
         description: Available only to the specified stores
