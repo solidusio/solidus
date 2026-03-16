@@ -35,6 +35,18 @@ module SolidusPromotions
         @eligibility_errors = line_item_condition.eligibility_errors
         result
       end
+
+      def price_eligible?(price, _options = {})
+        price_match_policy = preferred_match_policy.in?(%w[any all]) ? "include" : "exclude"
+        price_condition = PriceTaxon.new(taxons:, preferred_match_policy: price_match_policy)
+
+        # Hydrate the instance cache with our @taxon_ids_with_children cache
+        price_condition.taxons_ids_with_children = taxon_ids_with_children
+
+        result = price_condition.price_eligible?(price)
+        @eligibility_errors = price_condition.eligibility_errors
+        result
+      end
     end
   end
 end

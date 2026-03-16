@@ -188,6 +188,52 @@ RSpec.describe SolidusPromotions::Conditions::Taxon, type: :model do
     end
   end
 
+  describe "#eligible?(price)" do
+    let(:price) { create(:price, variant:) }
+    let(:variant) { create(:variant, product:) }
+    let(:product) { create(:product, taxons: [product_taxon]) }
+    let(:taxon) { create :taxon, name: "first" }
+
+    context "when a product has a taxon of a taxon condition" do
+      let(:product_taxon) { taxon }
+
+      before do
+        condition.taxons << taxon
+        condition.save!
+      end
+
+      it "is eligible" do
+        expect(condition).to be_eligible(price)
+      end
+    end
+
+    context "when a product has a taxon child of a taxon condition" do
+      let(:product_taxon) { taxon_two }
+
+      before do
+        taxon.children << taxon_two
+        condition.taxons << taxon
+        condition.save!
+      end
+
+      it "is eligible" do
+        expect(condition).to be_eligible(price)
+      end
+    end
+
+    context "when a product does not have taxon or child taxon of a taxon condition" do
+      let(:product_taxon) { taxon_two }
+      before do
+        condition.taxons << taxon
+        condition.save!
+      end
+
+      it "is not eligible" do
+        expect(condition).not_to be_eligible(price)
+      end
+    end
+  end
+
   describe "performance" do
     let(:product_one) { create(:product, taxons: [taxon_one]) }
     let(:product_two) { create(:product, taxons: [taxon_two]) }
