@@ -41,7 +41,11 @@ module Spree
     end
 
     def has_default_price?
-      default_price.present? && !default_price.discarded?
+      if Spree::Config.soft_deleted_prices
+        default_price.present? && !default_price.discarded?
+      else
+        default_price.present?
+      end
     end
   end
 end

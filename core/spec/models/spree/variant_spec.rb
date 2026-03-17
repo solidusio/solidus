@@ -350,7 +350,9 @@ RSpec.describe Spree::Variant, type: :model do
       expect(variant.default_price.attributes).to eq(price.attributes)
     end
 
-    context "when the variant and the price are both soft-deleted" do
+    context "when the variant and the price are both soft-deleted", :silence_deprecations do
+      before { stub_spree_preferences(soft_deleted_prices: true) }
+
       it "will use a deleted price as the default price" do
         variant = create(:variant, deleted_at: 1.day.ago)
         variant.prices.each { |price| price.discard }
@@ -358,7 +360,9 @@ RSpec.describe Spree::Variant, type: :model do
       end
     end
 
-    context "when the variant is not soft-deleted, but its price is" do
+    context "when the variant is not soft-deleted, but its price is", :silence_deprecations do
+      before { stub_spree_preferences(soft_deleted_prices: true) }
+
       it "will not use a deleted price as the default price" do
         variant = create(:variant)
         variant.prices.each { |price| price.discard }
@@ -397,7 +401,9 @@ RSpec.describe Spree::Variant, type: :model do
       end
     end
 
-    context 'when default price is discarded' do
+    context 'when default price is discarded', :silence_deprecations do
+      before { stub_spree_preferences(soft_deleted_prices: true) }
+
       it 'returns false' do
         variant = create(:variant, price: 20)
 
@@ -870,7 +876,7 @@ RSpec.describe Spree::Variant, type: :model do
     describe 'default_price' do
       let!(:previous_variant_price) { variant.default_price }
 
-      it "should not discard default_price" do
+      it "should not discard default_price", :silence_deprecations do
         variant.discard
         variant.reload
         expect(previous_variant_price.reload).not_to be_discarded
