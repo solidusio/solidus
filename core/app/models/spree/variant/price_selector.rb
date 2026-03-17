@@ -39,13 +39,18 @@ module Spree
       #
       # @return [Array<Spree::Price>]
       def sorted_prices_for(variant)
-        variant.prices.select do |price|
-          variant.discarded? || price.kept?
-        end.sort_by do |price|
+        prices = variant.prices
+
+        # Filter out discarded prices for undiscarded variants only if we allow soft-deleted prices
+        if Spree::Config.soft_deleted_prices
+          prices = prices.select { |price| variant.discarded? || price.kept? }
+        end
+
+        prices.sort_by do |price|
           [
             price.country_iso.nil? ? 0 : 1,
             price.updated_at || Time.zone.now,
-            price.id || Float::INFINITY,
+            price.id || Float::INFINITY
           ]
         end.reverse
       end
