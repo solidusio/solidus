@@ -131,18 +131,20 @@ module Spree
     # @param pricing_options A Pricing Options object as defined on the price selector class
     # @return [ActiveRecord::Relation]
     def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
-      where(
-        Spree::Price.
-          where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).
-          # This next clause should just be `where(pricing_options.search_arguments)`, but ActiveRecord
-          # generates invalid SQL, so the SQL here is written manually.
-          where(
-            "spree_prices.currency = ? AND (spree_prices.country_iso IS NULL OR spree_prices.country_iso = ?)",
-            pricing_options.search_arguments[:currency],
-            pricing_options.search_arguments[:country_iso].compact
-          ).
-          arel.exists
-      )
+      price_scope = Spree::Price.
+        where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).
+        # This next clause should just be `where(pricing_options.search_arguments)`, but ActiveRecord
+        # generates invalid SQL, so the SQL here is written manually.
+        where(
+          "spree_prices.currency = ? AND (spree_prices.country_iso IS NULL OR spree_prices.country_iso = ?)",
+          pricing_options.search_arguments[:currency],
+          pricing_options.search_arguments[:country_iso].compact
+        )
+
+      unless Spree::Config.soft_deleted_prices
+        price_scope = price_scope.unscope(where: :deleted_at)
+      end
+      where(price_scope.arel.exists)
     end
 
     # @return [Spree::TaxCategory] the variant's tax category
