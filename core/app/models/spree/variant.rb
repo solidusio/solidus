@@ -59,7 +59,7 @@ module Spree
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
     has_many :prices,
-      -> { with_discarded },
+      -> { unscope(where: :deleted_at) },
       class_name: 'Spree::Price',
       dependent: :destroy,
       inverse_of: :variant,
