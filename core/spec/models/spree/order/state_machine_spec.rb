@@ -88,6 +88,7 @@ RSpec.describe Spree::Order, type: :model do
       let!(:payment) { create(:payment, state: "checkout", order:) }
 
       before :all do
+        # rubocop:disable Lint/ConstantDefinitionInBlock
         class Spree::Order
           checkout_flow do
             go_to_state :address
@@ -96,10 +97,12 @@ RSpec.describe Spree::Order, type: :model do
             # confirm step has been removed. Payment is the last step now
           end
         end
+        # rubocop:enable Lint/ConstantDefinitionInBlock
       end
 
       after :all do
         # restore the standard checkout flow to avoid leaking into other tests
+        # rubocop:disable Lint/ConstantDefinitionInBlock
         class Spree::Order
           checkout_flow do
             go_to_state :address
@@ -108,6 +111,7 @@ RSpec.describe Spree::Order, type: :model do
             go_to_state :confirm
           end
         end
+        # rubocop:enable Lint/ConstantDefinitionInBlock
       end
 
       before do

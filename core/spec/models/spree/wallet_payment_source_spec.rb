@@ -2,6 +2,17 @@
 
 require "rails_helper"
 
+class NonPaymentSource < ActiveRecord::Base
+  # We have to set this up or else `inverse_of` prevents us from testing our code
+  has_many :wallet_payment_sources, class_name: "Spree::WalletPaymentSource", as: :payment_source, inverse_of: :payment_source
+end
+
+class CreateNonPaymentSources < ActiveRecord::Migration[5.1]
+  def change
+    create_table(:non_payment_sources)
+  end
+end
+
 RSpec.describe Spree::WalletPaymentSource, type: :model do
   subject { Spree::WalletPaymentSource }
 
@@ -11,19 +22,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
     context "with a non-PaymentSource model" do
       # RESOURCE FIXTURE
       before(:all) do
-        # Database
-        class CreateNonPaymentSources < ActiveRecord::Migration[5.1]
-          def change
-            create_table(:non_payment_sources)
-          end
-        end
         CreateNonPaymentSources.migrate(:up)
-
-        # Model
-        class NonPaymentSource < ActiveRecord::Base
-          # We have to set this up or else `inverse_of` prevents us from testing our code
-          has_many :wallet_payment_sources, class_name: "Spree::WalletPaymentSource", as: :payment_source, inverse_of: :payment_source
-        end
       end
 
       # TEAR DOWN RESOURCE FIXTURE

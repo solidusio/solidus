@@ -2,6 +2,17 @@
 
 require "rails_helper"
 
+class ComplexCalculator < Spree::Calculator
+  preference :amount, :decimal
+  preference :currency, :string
+  preference :mapping, :hash
+  preference :list, :array
+
+  def self.description
+    "Complex Calculator"
+  end
+end
+
 RSpec.describe "Promotion Adjustments", type: :feature, js: true do
   stub_authorization!
 
@@ -260,16 +271,6 @@ RSpec.describe "Promotion Adjustments", type: :feature, js: true do
 
     context "creating a promotion with promotion action that has a calculator with complex preferences" do
       before do
-        class ComplexCalculator < Spree::Calculator
-          preference :amount, :decimal
-          preference :currency, :string
-          preference :mapping, :hash
-          preference :list, :array
-
-          def self.description
-            "Complex Calculator"
-          end
-        end
         @calculators = Spree::Config.promotions.calculators["Spree::Promotion::Actions::CreateItemAdjustments"]
         Spree::Config.promotions.calculators["Spree::Promotion::Actions::CreateItemAdjustments"] = [ComplexCalculator]
       end

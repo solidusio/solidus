@@ -8,7 +8,7 @@ RSpec.describe Spree::CalculatedAdjustments do
   # RESOURCE FIXTURE
   before(:all) do
     # Database
-    class CreateCalculables < ActiveRecord::Migration[5.1]
+    class CreateCalculables < ActiveRecord::Migration[5.1] # standard:disable Lint/ConstantDefinitionInBlock
       def change
         create_table(:calculables)
       end
@@ -16,7 +16,7 @@ RSpec.describe Spree::CalculatedAdjustments do
     CreateCalculables.migrate(:up)
 
     # Model
-    class Calculable < ActiveRecord::Base
+    class Calculable < ActiveRecord::Base # standard:disable Lint/ConstantDefinitionInBlock
       include Spree::CalculatedAdjustments
     end
   end

@@ -4,11 +4,13 @@ require "rails_helper"
 require "spree/core/validators/email"
 
 RSpec.describe Spree::EmailValidator do
-  class Tester
-    include ActiveModel::Validations
+  before do
+    stub_const("Tester", Class.new do
+      include ActiveModel::Validations
 
-    attr_accessor :email_address
-    validates :email_address, "spree/email" => true
+      attr_accessor :email_address
+      validates :email_address, "spree/email" => true
+    end)
   end
 
   let(:valid_emails) {

@@ -2,6 +2,18 @@
 
 require "rails_helper"
 
+class MyPromotionAction < Spree::PromotionAction
+  def perform(options = {})
+    order = options[:order]
+    order.adjustments.create!(amount: 1, order:, source: self, label: "foo")
+    true
+  end
+
+  def remove_from(_order)
+    "Implement your remove logic"
+  end
+end
+
 RSpec.describe Spree::PromotionAction, type: :model do
   describe "preferences" do
     subject { described_class.new.preferences }

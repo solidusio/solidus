@@ -3,15 +3,15 @@
 require "rails_helper"
 
 module Spree
-  RSpec.describe Spree::PromotionRule, type: :model do
-    class BadTestRule < Spree::PromotionRule; end
+  class BadTestRule < Spree::PromotionRule; end
 
-    class TestRule < Spree::PromotionRule
-      def eligible?(_promotable, _options = {})
-        true
-      end
+  class TestRule < Spree::PromotionRule
+    def eligible?(_promotable, _options = {})
+      true
     end
+  end
 
+  RSpec.describe Spree::PromotionRule, type: :model do
     describe "preferences" do
       subject { described_class.new.preferences }
 

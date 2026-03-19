@@ -3,11 +3,13 @@
 require "rails_helper"
 
 RSpec.describe "Spree.deprecator" do
-  Dummy = Class.new do
-    def deprecated_method
-      "foo"
-    end
-    deprecate :deprecated_method, deprecator: Spree.deprecator
+  before do
+    stub_const("Dummy", Class.new do
+      def deprecated_method
+        "foo"
+      end
+      deprecate :deprecated_method, deprecator: Spree.deprecator
+    end)
   end
 
   context "by default" do

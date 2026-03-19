@@ -3,17 +3,17 @@
 require "rails_helper"
 
 module Spree
+  class DummyClass
+    include Spree::Reimbursement::ReimbursementTypeValidator
+
+    class_attribute :expired_reimbursement_type
+    self.expired_reimbursement_type = Spree::ReimbursementType::Credit
+
+    class_attribute :refund_time_constraint
+    self.refund_time_constraint = 90.days
+  end
+
   RSpec.describe Reimbursement::ReimbursementTypeValidator, type: :model do
-    class DummyClass
-      include Spree::Reimbursement::ReimbursementTypeValidator
-
-      class_attribute :expired_reimbursement_type
-      self.expired_reimbursement_type = Spree::ReimbursementType::Credit
-
-      class_attribute :refund_time_constraint
-      self.refund_time_constraint = 90.days
-    end
-
     let(:return_item) do
       create(
         :return_item,

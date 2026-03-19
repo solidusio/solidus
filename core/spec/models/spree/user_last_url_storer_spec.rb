@@ -2,6 +2,12 @@
 
 require "rails_helper"
 
+module CustomRule
+  def self.match?(_controller)
+    true
+  end
+end
+
 RSpec.describe Spree::UserLastUrlStorer do
   subject { described_class.new(controller) }
 
@@ -15,12 +21,6 @@ RSpec.describe Spree::UserLastUrlStorer do
       session:,
       controller_name: "app_controller_double"
     )
-  end
-
-  module CustomRule
-    def self.match?(_controller)
-      true
-    end
   end
 
   after :each do

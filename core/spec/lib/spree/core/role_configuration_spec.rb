@@ -4,13 +4,14 @@ require "rails_helper"
 require "spree/testing_support/dummy_ability"
 
 RSpec.describe Spree::RoleConfiguration do
-  class DummyPermissionSet < Spree::PermissionSets::Base
-    def activate!
-      can :manage, :things
-    end
+  before do
+    stub_const("DummyPermissionSet", Class.new(Spree::PermissionSets::Base) do
+      def activate!
+        can :manage, :things
+      end
+    end)
+    stub_const("OtherDummyPermissionSet", Class.new(Spree::PermissionSets::Base))
   end
-
-  class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
 
   let(:instance) { Spree::RoleConfiguration.new }
 

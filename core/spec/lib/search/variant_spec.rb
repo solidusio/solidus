@@ -104,16 +104,18 @@ module Spree
 
     describe "#search_terms" do
       # Only search by SKU if the search word is a number
-      class NumericSkuSearcher < Core::Search::Variant
-        protected
+      before do
+        stub_const("NumericSkuSearcher", Class.new(Core::Search::Variant) do
+          protected
 
-        def search_terms(word)
-          if /\A\d+\z/.match?(word)
-            super
-          else
-            super - [:sku_cont]
+          def search_terms(word)
+            if /\A\d+\z/.match?(word)
+              super
+            else
+              super - [:sku_cont]
+            end
           end
-        end
+        end)
       end
 
       let!(:numeric_sku_variant) { FactoryBot.create(:variant, product:, sku: "123") }

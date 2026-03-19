@@ -20,7 +20,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
   # RESOURCE FIXTURE
   before(:all) do
     # Database
-    class CreateWidgets < ActiveRecord::Migration[5.1]
+    class CreateWidgets < ActiveRecord::Migration[5.1] # standard:disable Lint/ConstantDefinitionInBlock
       def change
         unless table_exists?(:widgets)
           create_table(:widgets) do |t|
@@ -34,7 +34,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
     CreateWidgets.migrate(:up)
 
     # Model
-    class Widget < ActiveRecord::Base
+    class Widget < ActiveRecord::Base # standard:disable Lint/ConstantDefinitionInBlock
       acts_as_list
       validates :name, presence: true
       before_destroy :check_destroy_constraints

@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Spree::AppConfiguration do
+  before do
+    stub_const("DummyClass", Class.new)
+  end
+
   let(:prefs) { Spree::Config }
 
   around do |example|
@@ -141,8 +145,6 @@ RSpec.describe Spree::AppConfiguration do
   end
 
   describe "#environment" do
-    class DummyClass; end
-
     subject(:environment) { prefs.environment }
     it { is_expected.to be_a Spree::Core::Environment }
 

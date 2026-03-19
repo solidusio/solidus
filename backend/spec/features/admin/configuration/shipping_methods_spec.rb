@@ -53,7 +53,7 @@ describe "Shipping Methods", type: :feature do
 
     context "with shipping method having a calculator with array or hash preference type" do
       before do
-        class ComplexShipments < Spree::ShippingCalculator
+        class ComplexShipments < Spree::ShippingCalculator # standard:disable Lint/ConstantDefinitionInBlock
           preference :amount, :decimal
           preference :currency, :string
           preference :mapping, :hash

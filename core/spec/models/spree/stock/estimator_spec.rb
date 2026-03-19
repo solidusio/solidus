@@ -2,6 +2,43 @@
 
 require "rails_helper"
 
+class Spree::Calculator::Shipping::WithUnknownPreferences < Spree::ShippingCalculator
+  def compute_package(_package)
+    # no op
+  end
+end
+
+class Spree::Calculator::Shipping::NoPreferences < Spree::ShippingCalculator
+  def compute_package(_package)
+    # no op
+  end
+end
+
+class Spree::Stock::TestSorter
+  def initialize(_rates)
+  end
+end
+
+class Spree::Tax::TestTaxCalculator
+  def initialize(_order)
+  end
+
+  def calculate(_shipping_rate)
+    [
+      Spree::Tax::ItemTax.new(label: "TAX", amount: 5)
+    ]
+  end
+end
+
+class Spree::TestShippingRateSelector
+  def initialize(_)
+  end
+
+  def find_default
+    Spree::ShippingRate.new
+  end
+end
+
 module Spree
   module Stock
     RSpec.describe Estimator, type: :model do
@@ -97,12 +134,6 @@ module Spree
           before { Spree::ShippingMethod.all.find_each(&:destroy) }
 
           context "with a custom shipping calculator with no preference" do
-            class Spree::Calculator::Shipping::NoPreferences < Spree::ShippingCalculator
-              def compute_package(_package)
-                # no op
-              end
-            end
-
             let!(:shipping_methods) do
               [
                 create(:shipping_method, calculator: Spree::Calculator::Shipping::NoPreferences.new)
@@ -115,12 +146,6 @@ module Spree
           end
 
           context "with a custom shipping calculator with preference" do
-            class Spree::Calculator::Shipping::WithUnknownPreferences < Spree::ShippingCalculator
-              def compute_package(_package)
-                # no op
-              end
-            end
-
             let!(:shipping_methods) do
               [
                 create(
@@ -228,16 +253,7 @@ module Spree
         it "uses the configured shipping rate selector" do
           shipping_rate = build(:shipping_rate)
           allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
-
-          selector_class = Class.new do
-            def initialize(_)
-            end
-
-            def find_default
-              Spree::ShippingRate.new
-            end
-          end
-          stub_spree_preferences(shipping_rate_selector_class: selector_class)
+          stub_spree_preferences(shipping_rate_selector_class: Spree::TestShippingRateSelector)
 
           subject.shipping_rates(package)
 
@@ -245,11 +261,6 @@ module Spree
         end
 
         it "uses the configured shipping rate sorter" do
-          class Spree::Stock::TestSorter
-            def initialize(_rates)
-            end
-          end
-
           stub_spree_preferences(shipping_rate_sorter_class: Spree::Stock::TestSorter)
 
           sorter = double(:sorter, sort: nil)
@@ -261,17 +272,6 @@ module Spree
         end
 
         it "uses the configured shipping rate taxer" do
-          class Spree::Tax::TestTaxCalculator
-            def initialize(_order)
-            end
-
-            def calculate(_shipping_rate)
-              [
-                Spree::Tax::ItemTax.new(label: "TAX", amount: 5)
-              ]
-            end
-          end
-
           stub_spree_preferences(shipping_rate_tax_calculator_class: Spree::Tax::TestTaxCalculator)
 
           expect(Spree::Tax::TestTaxCalculator).to receive(:new).and_call_original

@@ -3,6 +3,44 @@
 require "rails_helper"
 require "spree/testing_support/shared_examples/state_change_tracking"
 
+class AvailabilityTestValidator
+  def validate(line_item)
+    if line_item.variant.sku == "UNAVAILABLE"
+      line_item.errors.add(:quantity, ":(")
+      false
+    else
+      true
+    end
+  end
+end
+
+class EnsureUnitsTestValidator
+  def validate(line_item)
+    if line_item.quantity != 1
+      line_item.errors.add(:quantity, ":(")
+    end
+  end
+end
+
+class TruthNumberGenerator
+  def initialize(options = {})
+  end
+
+  def generate
+    "42"
+  end
+end
+
+class TestOrderMerger
+  def initialize(order)
+    @order = order
+  end
+
+  def merge!(other_order, user = nil)
+    [@order, other_order, user]
+  end
+end
+
 RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user, email: "solidus@example.com") }
@@ -410,15 +448,6 @@ RSpec.describe Spree::Order, type: :model do
 
     describe "order_merger_class customization" do
       before do
-        class TestOrderMerger
-          def initialize(order)
-            @order = order
-          end
-
-          def merge!(other_order, user = nil)
-            [@order, other_order, user]
-          end
-        end
         Spree::Config.order_merger_class = TestOrderMerger
       end
 
@@ -867,15 +896,6 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     context "with order number generator configured" do
-      class TruthNumberGenerator
-        def initialize(options = {})
-        end
-
-        def generate
-          "42"
-        end
-      end
-
       before do
         expect(Spree::Config).to receive(:order_number_generator) do
           TruthNumberGenerator.new
@@ -1783,6 +1803,8 @@ RSpec.describe Spree::Order, type: :model do
         # Class.new and define_method to avoid creating scope gates that would
         # take this local variable out of scope.
         inventory_unit = arbitrary_inventory_unit
+
+        # rubocop:disable Lint/ConstantDefinitionInBlock
         TestInventoryUnitBuilder = Class.new do
           def initialize(order)
           end
@@ -1791,6 +1813,7 @@ RSpec.describe Spree::Order, type: :model do
             [inventory_unit]
           }
         end
+        # rubocop:enable Lint/ConstantDefinitionInBlock
 
         test_stock_config = Spree::Core::StockConfiguration.new
         test_stock_config.inventory_unit_builder_class = TestInventoryUnitBuilder.to_s
@@ -1831,23 +1854,15 @@ RSpec.describe Spree::Order, type: :model do
     subject { order.send(:ensure_inventory_units) }
 
     before do
-      class TestValidator
-        def validate(line_item)
-          if line_item.quantity != 1
-            line_item.errors.add(:quantity, ":(")
-          end
-        end
-      end
-
       test_stock_config = Spree::Core::StockConfiguration.new
-      test_stock_config.inventory_validator_class = TestValidator.to_s
+      test_stock_config.inventory_validator_class = EnsureUnitsTestValidator.to_s
       stub_spree_preferences(stock: test_stock_config)
     end
 
     let(:order) { create :order_with_line_items, line_items_count: 2 }
 
     it "uses the configured validator" do
-      expect_any_instance_of(TestValidator).to receive(:validate).twice.and_call_original
+      expect_any_instance_of(EnsureUnitsTestValidator).to receive(:validate).twice.and_call_original
 
       subject
     end
@@ -1873,19 +1888,8 @@ RSpec.describe Spree::Order, type: :model do
     subject { order.send(:validate_line_item_availability) }
 
     before do
-      class TestValidator
-        def validate(line_item)
-          if line_item.variant.sku == "UNAVAILABLE"
-            line_item.errors.add(:quantity, ":(")
-            false
-          else
-            true
-          end
-        end
-      end
-
       test_stock_config = Spree::Core::StockConfiguration.new
-      test_stock_config.availability_validator_class = TestValidator.to_s
+      test_stock_config.availability_validator_class = AvailabilityTestValidator.to_s
       stub_spree_preferences(stock: test_stock_config)
     end
 

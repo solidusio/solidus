@@ -94,13 +94,14 @@ describe "Payment Methods", type: :feature do
     end
 
     context "with payment method having hash and array as preference" do
-      class ComplexPayments < Spree::PaymentMethod
-        preference :name, :string
-        preference :mapping, :hash
-        preference :recipients, :array
+      before do
+        stub_const("ComplexPayments", Class.new(Spree::PaymentMethod) do
+          preference :name, :string
+          preference :mapping, :hash
+          preference :recipients, :array
+        end)
+        ComplexPayments.create!(name: "Complex Payments")
       end
-
-      let!(:payment_method) { ComplexPayments.create!(name: "Complex Payments") }
 
       it "does not display preference fields that are hash or array" do
         expect(page).to have_field("Name")

@@ -2,23 +2,22 @@
 
 require "rails_helper"
 
+class CreateLimitedProducts < ActiveRecord::Migration[5.1]
+  def change
+    create_table(:limited_products) do |t|
+      t.string :slug, limit: 255
+    end
+  end
+end
+
+class LimitedProduct < ActiveRecord::Base
+  validates_with Spree::Validations::DbMaximumLengthValidator, field: :slug
+end
+
 RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
   # RESOURCE FIXTURE
   before(:all) do
-    # Database
-    class CreateLimitedProducts < ActiveRecord::Migration[5.1]
-      def change
-        create_table(:limited_products) do |t|
-          t.string :slug, limit: 255
-        end
-      end
-    end
     CreateLimitedProducts.migrate(:up)
-
-    # Model
-    class LimitedProduct < ActiveRecord::Base
-      validates_with Spree::Validations::DbMaximumLengthValidator, field: :slug
-    end
   end
 
   # TEAR DOWN RESOURCE FIXTURE

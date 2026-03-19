@@ -2,6 +2,12 @@
 
 require "rails_helper"
 
+class Spree::TestPromotionChooser
+  def initialize(_adjustments)
+    raise "Custom promotion chooser"
+  end
+end
+
 RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
   subject { described_class.new(order).call(persist:) }
 
@@ -71,12 +77,6 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
 
       context "promotion chooser customization" do
         before do
-          class Spree::TestPromotionChooser
-            def initialize(_adjustments)
-              raise "Custom promotion chooser"
-            end
-          end
-
           stub_spree_preferences(Spree::Config.promotions, promotion_chooser_class: Spree::TestPromotionChooser)
         end
 
