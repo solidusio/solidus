@@ -35,7 +35,7 @@ module Spree::Preferences
         # has been cleared from the cache
 
         # does it exist in the database?
-        val = if preference = Spree::Preference.find_by(key:)
+        val = if (preference = Spree::Preference.find_by(key:))
           # it does exist
           preference.value
         else

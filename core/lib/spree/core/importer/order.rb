@@ -64,7 +64,7 @@ module Spree
             inventory_units.each do |inventory_unit|
               ensure_variant_id_from_params(inventory_unit)
 
-              unless line_item = order.line_items.find_by(variant_id: inventory_unit[:variant_id])
+              unless (line_item = order.line_items.find_by(variant_id: inventory_unit[:variant_id]))
                 line_item = order.contents.add(Spree::Variant.find(inventory_unit[:variant_id]), 1)
               end
 
@@ -179,13 +179,13 @@ module Spree
           return if address.nil? || address[:country_id].present? || address[:country].nil?
 
           search = {}
-          if name = address[:country]["name"]
+          if (name = address[:country]["name"])
             search[:name] = name
-          elsif iso_name = address[:country]["iso_name"]
+          elsif (iso_name = address[:country]["iso_name"])
             search[:iso_name] = iso_name.upcase
-          elsif iso = address[:country]["iso"]
+          elsif (iso = address[:country]["iso"])
             search[:iso] = iso.upcase
-          elsif iso_three = address[:country]["iso3"]
+          elsif (iso_three = address[:country]["iso3"])
             search[:iso3] = iso_three.upcase
           end
 
@@ -197,16 +197,16 @@ module Spree
           return if address.nil? || address[:state_id].present? || address[:state].nil?
 
           search = {}
-          if name = address[:state]["name"]
+          if (name = address[:state]["name"])
             search[:name] = name
-          elsif abbr = address[:state]["abbr"]
+          elsif (abbr = address[:state]["abbr"])
             search[:abbr] = abbr.upcase
           end
 
           address.delete(:state)
           search[:country_id] = address[:country_id]
 
-          if state = Spree::State.where(search).first
+          if (state = Spree::State.where(search).first)
             address[:state_id] = state.id
           else
             address[:state_name] = search[:name] || search[:abbr]

@@ -248,7 +248,7 @@ module Spree
     # @param property_name [String] the name of the property to find
     # @return [String] the value of the given property. nil if property is undefined on this product
     def property(property_name)
-      return nil unless prop = properties.find_by(name: property_name)
+      return nil unless (prop = properties.find_by(name: property_name))
       product_properties.find_by(property: prop).try(:value)
     end
 

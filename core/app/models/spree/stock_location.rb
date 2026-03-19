@@ -107,7 +107,7 @@ module Spree
     end
 
     def fill_status(variant, quantity)
-      if item = stock_item(variant)
+      if (item = stock_item(variant))
         item.fill_status(quantity)
       else
         [0, 0]

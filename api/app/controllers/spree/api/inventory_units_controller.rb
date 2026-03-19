@@ -30,7 +30,7 @@ module Spree
       end
 
       def prepare_event
-        return unless @event = params[:fire]
+        return unless (@event = params[:fire])
 
         can_event = "can_#{@event}?"
 

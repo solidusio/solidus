@@ -52,7 +52,7 @@ module Spree
       self[:month], self[:year] =
         if /\d{2}\s?\/\s?\d{2,4}/.match?(expiry) # will match mm/yy and mm / yyyy
           expiry.delete(" ").split("/")
-        elsif match = expiry.match(/(\d{2})(\d{2,4})/) # will match mmyy and mmyyyy
+        elsif (match = expiry.match(/(\d{2})(\d{2,4})/)) # will match mmyy and mmyyyy
           [match[1], match[2]]
         end
       if self[:year]

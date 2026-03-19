@@ -698,7 +698,7 @@ module Spree
     def add_default_payment_from_wallet
       builder = Spree::Config.default_payment_builder_class.new(self)
 
-      if payment = builder.build
+      if (payment = builder.build)
         payments << payment
 
         if bill_address.nil?

@@ -26,7 +26,7 @@ module Spree
       # @param payment [Spree::Payment] - the payment that should be canceled
       #
       def cancel(payment)
-        if response = payment.payment_method.try_void(payment)
+        if (response = payment.payment_method.try_void(payment))
           payment.handle_void_response(response)
         else
           payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason).perform!

@@ -118,7 +118,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   end
 
   def void(authorization_code, options = {})
-    if auth_event = store_credit_events.find_by(action: AUTHORIZE_ACTION, authorization_code:)
+    if (auth_event = store_credit_events.find_by(action: AUTHORIZE_ACTION, authorization_code:))
       update!({
         action: VOID_ACTION,
         action_amount: auth_event.amount,
