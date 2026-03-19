@@ -75,7 +75,7 @@ module Spree
     end
 
     def self.running_solidus_test_suite_with_dummy_app?(dummy_app_name)
-      Rails.env.test? && Rails.application.class.name == dummy_app_name
+      Rails.env.test? && Rails.application.class.name == dummy_app_name # standard:disable Style/ClassEqualityComparison
     end
     private_class_method :running_solidus_test_suite_with_dummy_app?
 
