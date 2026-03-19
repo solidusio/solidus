@@ -29,7 +29,7 @@ jobs:
       - name: Store test results
         uses: actions/upload-artifact@v4
         with:
-          name: rubocop-results
+          name: standardrb-results
           path: test-results
 
   erb:
