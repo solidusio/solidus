@@ -63,7 +63,7 @@ module SolidusPromotions
         LEFT OUTER JOIN spree_promotion_code_batches ON spree_promotion_code_batches.id = spree_promotion_codes.promotion_code_batch_id
         LEFT OUTER JOIN solidus_promotions_promotion_code_batches
           ON solidus_promotions_promotion_code_batches.base_code = spree_promotion_code_batches.base_code
-          AND solidus_promotions_promotion_code_batches.promotion_id = #{Integer(new_promotion.id)}
+          AND solidus_promotions_promotion_code_batches.promotion_id = #{new_promotion.id}
           AND solidus_promotions_promotion_code_batches.created_at = spree_promotion_code_batches.created_at
         INNER JOIN spree_promotions ON spree_promotion_codes.promotion_id = spree_promotions.id
         INNER JOIN solidus_promotions_promotions ON spree_promotions.id = solidus_promotions_promotions.original_promotion_id
