@@ -164,4 +164,6 @@ Spree.config do |config|
     config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
     config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
   end
+
+  config.soft_deleted_prices = false
 end

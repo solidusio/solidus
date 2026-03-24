@@ -257,6 +257,10 @@ module Spree
     #   @return [Boolean] Allows shipments to be ready to ship regardless of the order being paid if false (default: +true+)
     preference :require_payment_to_ship, :boolean, default: true # Allows shipments to be ready to ship regardless of the order being paid if false
 
+    # @!attribute [rw] soft_deleted_prices
+    #   @return [Boolean] Whether there are soft-deleted prices in the system
+    preference :soft_deleted_prices, :boolean, default: true
+
     # @!attribute [rw] return_eligibility_number_of_days
     #   @return [Integer] default: 365
     preference :return_eligibility_number_of_days, :integer, default: 365

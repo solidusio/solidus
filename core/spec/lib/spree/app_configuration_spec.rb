@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::AppConfiguration do
-  let(:prefs) { Spree::Config }
+  let(:prefs) { described_class.new }
 
   around do |example|
     with_unfrozen_spree_preference_store do
@@ -54,6 +54,10 @@ RSpec.describe Spree::AppConfiguration do
 
   it 'uses mergeable orders finder class by default' do
     expect(prefs.mergeable_orders_finder_class).to eq Spree::MergeableOrdersFinder
+  end
+
+  it "allows soft-deleted prices by default" do
+    expect(prefs.soft_deleted_prices).to be true
   end
 
   context "deprecated preferences" do

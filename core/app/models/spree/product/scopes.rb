@@ -179,8 +179,13 @@ module Spree
           end
 
           scope :with_master_price, -> do
-            joins(:master).where(Spree::Price.where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).arel.exists)
+            price_scope = Spree::Price.where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id]))
+            unless Spree::Config.soft_deleted_prices
+              price_scope = price_scope.unscope(where: :deleted_at)
+            end
+            joins(:master).where(price_scope.arel.exists)
           end
+
           # Can't use add_search_scope for this as it needs a default argument
           def self.available(available_on = nil)
             with_master_price

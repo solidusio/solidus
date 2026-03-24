@@ -166,11 +166,25 @@ RSpec.describe "Product scopes", type: :model do
         end
       end
 
-      context "with soft-deleted master price" do
-        before { product.master.prices.discard_all }
+      context "with soft-deleted master price", :silence_deprecations do
+        before do
+          stub_spree_preferences(soft_deleted_prices: true)
+          product.master.prices.discard_all
+        end
 
         it "doesn't include the product" do
           expect(Spree::Product.available).to match_array([])
+        end
+
+        context "if soft_deleted_prices preference is false" do
+          before do
+            stub_spree_preferences(soft_deleted_prices: false)
+            product.master.prices.discard_all
+          end
+
+          it "includes the product" do
+            expect(Spree::Product.available).to match_array([product])
+          end
         end
       end
 

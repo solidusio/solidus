@@ -3,6 +3,7 @@
 module Spree
   class Price < Spree::Base
     include Spree::SoftDeletable
+    include DeprecatedSoftDeletable
 
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 

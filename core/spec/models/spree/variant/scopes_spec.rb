@@ -8,6 +8,10 @@ RSpec.describe "Variant scopes", type: :model do
   let!(:variant_2) { create(:variant, product:) }
 
   describe ".with_prices" do
+    let(:pricing_options) { Spree::Config.pricing_options_class.new }
+
+    subject { Spree::Variant.with_prices(pricing_options) }
+
     context "when searching for the default pricing options" do
       it "finds all variants" do
         expect(Spree::Variant.with_prices).to contain_exactly(product.master, variant_1, variant_2)
@@ -16,6 +20,7 @@ RSpec.describe "Variant scopes", type: :model do
 
     context "when searching for different pricing options" do
       let(:pricing_options) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+
       context "when only one variant has price in Euro" do
         before do
           variant_1.prices.create(amount: 99.00, currency: "EUR")
@@ -23,7 +28,7 @@ RSpec.describe "Variant scopes", type: :model do
 
         context "and we search for variants with only prices in Euro" do
           it "finds the one variant with a price in Euro" do
-            expect(Spree::Variant.with_prices(pricing_options)).to contain_exactly(variant_1)
+            expect(subject).to contain_exactly(variant_1)
           end
         end
       end
@@ -33,14 +38,29 @@ RSpec.describe "Variant scopes", type: :model do
       let(:france) { create(:country, iso: "FR") }
       let(:pricing_options) { Spree::Variant::PricingOptions.new(country_iso: "FR", currency: "EUR") }
 
-      subject { Spree::Variant.with_prices(pricing_options) }
-
       before do
         variant_1.prices.create!(currency: "EUR", country: france, amount: 10)
         variant_1.prices.create!(currency: "EUR", country: nil, amount: 10)
       end
 
       it { is_expected.to eq([variant_1]) }
+    end
+
+    context "if variant's prices are discarded", :silence_deprecations do
+      before do
+        variant_1.prices.discard_all
+      end
+
+      it { is_expected.to include(variant_1) }
+    end
+
+    context "if variant's prices are discarded and soft deleted prices is false", :silence_deprecations do
+      before do
+        stub_spree_preferences(soft_deleted_prices: true)
+        variant_1.prices.discard_all
+      end
+
+      it { is_expected.not_to include(variant_1) }
     end
   end
 

@@ -24,6 +24,9 @@ Spree.config do |config|
   # Uncomment to recalculate cart prices when the cart changes
   # config.recalculate_cart_prices = true
 
+  # Whether there are soft-deleted prices are in the system. Should be off for new apps.
+  config.soft_deleted_prices = false
+
   # Defaults
   # Permission Sets:
 
