@@ -31,6 +31,14 @@ module SolidusPromotions
         @eligibility_errors = line_item_condition.eligibility_errors
         eligibility_errors.empty?
       end
+
+      def price_eligible?(price, _options = {})
+        price_match_policy = preferred_match_policy.in?(%w[any all only]) ? "include" : "exclude"
+        price_condition = PriceProduct.new(products:, preferred_match_policy: price_match_policy)
+        price_condition.price_eligible?(price)
+        @eligibility_errors = price_condition.eligibility_errors
+        eligibility_errors.empty?
+      end
     end
   end
 end

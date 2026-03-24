@@ -210,4 +210,31 @@ RSpec.describe SolidusPromotions::Conditions::Product, type: :model do
       it { is_expected.to be_falsey }
     end
   end
+
+  describe "#eligible?(price)" do
+    subject { condition.eligible?(price) }
+
+    let(:condition_price) { build(:price, variant:) }
+    let(:variant) { build(:variant, product: condition_product) }
+    let(:other_price) { build(:price) }
+
+    let(:condition_options) { super().merge(products: [condition_product]) }
+    let(:condition_product) { build(:product) }
+
+    it "is eligible if there are no products" do
+      expect(condition).to be_eligible(condition_price)
+    end
+
+    context "for product in condition" do
+      let(:price) { condition_price }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "for product not in condition" do
+      let(:price) { other_price }
+
+      it { is_expected.to be_falsey }
+    end
+  end
 end
