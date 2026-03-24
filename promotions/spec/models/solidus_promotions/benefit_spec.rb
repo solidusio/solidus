@@ -321,4 +321,129 @@ RSpec.describe SolidusPromotions::Benefit do
 
     it { is_expected.to include(SolidusPromotions::Conditions::User) }
   end
+
+  describe "#eligible_by_applicable_conditions" do
+    let(:promotion) { build(:solidus_promotion) }
+    let(:benefit) { described_class.new(conditions: conditions, promotion:) }
+    let(:conditions) { [] }
+    let(:order) { create(:order_with_line_items) }
+    let(:condition) { SolidusPromotions::Conditions::LineItemProduct.new(products: [order.products.first]) }
+    let(:dry_run) { false }
+    let(:promotable) { order }
+
+    subject { benefit.eligible_by_applicable_conditions?(promotable, dry_run:) }
+
+    # No conditions, eligible
+    it { is_expected.to be true }
+
+    context "for a non-applicable promotable" do
+      let(:conditions) { [condition] }
+      let(:condition) do
+        Class.new(SolidusPromotions::Condition) do
+          def line_item_eligible?(_)
+            false
+          end
+        end.new
+      end
+
+      it { is_expected.to be true }
+
+      context "if condition returns false" do
+        let(:condition) { SolidusPromotions::Conditions::LineItemProduct.new(products: []) }
+
+        it { is_expected.to be true }
+
+        context "with dry_run true" do
+          let(:dry_run) { true }
+
+          it { is_expected.to be true }
+        end
+      end
+    end
+
+    context "with an applicable promotable" do
+      let(:conditions) { [condition] }
+      let(:condition) do
+        Class.new(SolidusPromotions::Condition) do
+          def line_item_eligible?(_)
+            true
+          end
+        end.new
+      end
+      let(:promotable) { order.line_items.first }
+      it { is_expected.to be true }
+
+      context "with dry_run true" do
+        let(:dry_run) { true }
+
+        it { is_expected.to be true }
+      end
+
+      context "when condition returns false" do
+        let(:condition) do
+          Class.new(SolidusPromotions::Condition) do
+            def line_item_eligible?(_)
+              eligibility_errors.add(:base, "You need to add an applicable product before applying this coupon code.")
+              false
+            end
+          end.new
+        end
+
+        it { is_expected.to be false }
+
+        context "with dry_run true" do
+          let(:dry_run) { true }
+
+          it { is_expected.to be false }
+
+          it "adds an error message to the condition" do
+            subject
+            expect(promotion.eligibility_results.error_messages).to eq(["You need to add an applicable product before applying this coupon code."])
+          end
+        end
+      end
+
+      context "with multiple conditions, both of which make the benefit unelegibible" do
+        let(:promotable) { order }
+        let(:taxon_condition) do
+          Class.new(SolidusPromotions::Condition) do
+            def order_eligible?(_)
+              eligibility_errors.add(:base, "Wrong taxon")
+              false
+            end
+          end.new
+        end
+        let(:product_condition) do
+          Class.new(SolidusPromotions::Condition) do
+            def order_eligible?(_)
+              eligibility_errors.add(:base, "Wrong product.")
+              false
+            end
+          end.new
+        end
+        let(:conditions) { [taxon_condition, product_condition] }
+
+        it { is_expected.to be false }
+
+        it "only asks the first condition and does not collect eligibility errors" do
+          expect(taxon_condition).to receive(:order_eligible?).and_call_original
+          expect(product_condition).not_to receive(:order_eligible?)
+          subject
+          expect(promotion.eligibility_results.error_messages).to be_empty
+        end
+
+        context "if dry_run is true" do
+          let(:dry_run) { true }
+          it { is_expected.to be false }
+
+          it "asks both conditions and collects eligibility results" do
+            expect(taxon_condition).to receive(:order_eligible?).and_call_original
+            expect(product_condition).to receive(:order_eligible?).and_call_original
+            subject
+            expect(promotion.eligibility_results.error_messages.length).to eq(2)
+          end
+        end
+      end
+    end
+  end
 end

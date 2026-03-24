@@ -270,29 +270,28 @@ module SolidusPromotions
     # @param dry_run [Boolean] whether to collect detailed eligibility information
     # @return [Boolean] true when all applicable conditions are eligible
     def eligible_by_applicable_conditions?(promotable, dry_run: false)
-      conditions.filter_map do |condition|
-        condition.applicable?(promotable) && begin
-          eligible = condition.eligible?(promotable)
+      conditions.map do |condition|
+        next unless condition.applicable?(promotable)
+        eligible = condition.eligible?(promotable)
 
-          break [false] if !eligible && !dry_run
+        break [false] if !eligible && !dry_run
 
-          if dry_run
-            if condition.eligibility_errors.details[:base].first
-              code = condition.eligibility_errors.details[:base].first[:error_code]
-              message = condition.eligibility_errors.full_messages.first
-            end
-            promotion.eligibility_results.add(
-              item: promotable,
-              condition: condition,
-              success: eligible,
-              code: eligible ? nil : (code || :coupon_code_unknown_error),
-              message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_promotions, :eligibility_errors]))
-            )
+        if dry_run
+          if condition.eligibility_errors.details[:base].first
+            code = condition.eligibility_errors.details[:base].first[:error_code]
+            message = condition.eligibility_errors.full_messages.first
           end
-
-          eligible
+          promotion.eligibility_results.add(
+            item: promotable,
+            condition: condition,
+            success: eligible,
+            code: eligible ? nil : (code || :coupon_code_unknown_error),
+            message: eligible ? nil : (message || I18n.t(:coupon_code_unknown_error, scope: [:solidus_promotions, :eligibility_errors]))
+          )
         end
-      end.all?
+
+        eligible
+      end.compact.all?
     end
 
     # All line items of the order that are eligible for this benefit.
