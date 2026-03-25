@@ -168,6 +168,9 @@ describe 'Pricing' do
 
       it "will delete the non-default price" do
         subject
+
+        # The deprecation warning will disappear in Solidus 5
+        expect(Spree.deprecator).to receive(:warn)
         within "#spree_price_#{other_price.id}" do
           accept_alert do
             click_icon :trash
@@ -178,12 +181,16 @@ describe 'Pricing' do
 
       it "does not break when default price is deleted" do
         subject
+
+        # The deprecation warning will disappear in Solidus 5
+        expect(Spree.deprecator).to receive(:warn)
         within "#spree_price_#{variant.default_price.id}" do
           accept_alert do
             click_icon :trash
           end
         end
         expect(page).to have_content("Price has been successfully removed")
+
         visit spree.admin_products_path
         expect(page).to have_selector("#spree_product_#{product.id}")
       end
