@@ -13,12 +13,12 @@ module Spree
 
     # virtual attributes for use with AJAX autocompletion
     def property_name
-      property.name if property
+      property&.name
     end
 
     def property_name=(name)
       unless name.blank?
-        unless property = Spree::Property.find_by(name:)
+        unless (property = Spree::Property.find_by(name:))
           property = Spree::Property.create(name:, presentation: name)
         end
         self.property = property

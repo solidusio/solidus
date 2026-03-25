@@ -2,7 +2,7 @@
 
 module SolidusAdmin
   class ComponentGenerator < Rails::Generators::NamedBase
-    source_root File.expand_path('templates', __dir__)
+    source_root File.expand_path("templates", __dir__)
 
     argument :attributes, type: :array, default: [], banner: "attribute"
 
@@ -38,7 +38,7 @@ module SolidusAdmin
       if options["preview"]
         preview_destination_path = destination("_preview.rb", root: "spec/components/previews")
         template "component_preview.rb", preview_destination_path
-        template "component_preview_overview.html.erb", preview_destination_path.sub(/\.rb/, '/overview.html.erb')
+        template "component_preview_overview.html.erb", preview_destination_path.sub(".rb", "/overview.html.erb")
       end
     end
 
@@ -110,8 +110,8 @@ module SolidusAdmin
     end
 
     def stimulus_html
-      %{\n  <label>Your name: <input data-action="input->#{stimulus_controller_name}#typed"/></label>} +
-        %{\n  <p>Hello <span data-#{stimulus_controller_name}-target="output"></span></p>}
+      %(\n  <label>Your name: <input data-action="input->#{stimulus_controller_name}#typed"/></label>) +
+        %(\n  <p>Hello <span data-#{stimulus_controller_name}-target="output"></span></p>)
     end
 
     def i18n_html
@@ -123,11 +123,11 @@ module SolidusAdmin
         "<p>Add #{class_name} HTML here</p>",
         (attributes_html if attributes.present?),
         (stimulus_html if options["js"]),
-        (i18n_html if options["i18n"]),
+        (i18n_html if options["i18n"])
       ].compact.join("\n  ")
     end
 
-    def inline_html(indent: '')
+    def inline_html(indent: "")
       @inline_html.gsub!(/^/, indent).strip
     end
   end

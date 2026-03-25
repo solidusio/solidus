@@ -44,6 +44,6 @@ orders.each do |order|
   order.payments.create!(payment_method:)
   order.update(store:)
 
-  order.next! while !order.can_complete?
+  order.next! until order.can_complete?
   order.complete!
 end

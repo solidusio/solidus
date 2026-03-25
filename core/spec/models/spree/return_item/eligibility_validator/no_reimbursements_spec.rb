@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
   let(:validator) { Spree::ReturnItem::EligibilityValidator::NoReimbursements.new(return_item) }
@@ -10,7 +10,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
 
     context "inventory unit has already been reimbursed" do
       let(:reimbursement) { create(:reimbursement) }
-      let(:return_item)   { reimbursement.return_items.last }
+      let(:return_item) { reimbursement.return_items.last }
 
       it "returns false" do
         expect(subject).to eq false
@@ -18,7 +18,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
 
       it "sets an error" do
         subject
-        expect(validator.errors[:inventory_unit_reimbursed]).to eq I18n.t('spree.return_item_inventory_unit_reimbursed')
+        expect(validator.errors[:inventory_unit_reimbursed]).to eq I18n.t("spree.return_item_inventory_unit_reimbursed")
       end
 
       context "but the return item has been expired" do
@@ -60,13 +60,13 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
 
     context "not eligible for return" do
       let(:reimbursement) { create(:reimbursement) }
-      let(:return_item)   { reimbursement.return_items.last }
+      let(:return_item) { reimbursement.return_items.last }
 
       before do
         validator.eligible_for_return?
       end
 
-      it 'returns true if errors were added' do
+      it "returns true if errors were added" do
         expect(subject).to eq true
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
         validator.eligible_for_return?
       end
 
-      it 'returns false if no errors were added' do
+      it "returns false if no errors were added" do
         expect(subject).to eq false
       end
     end

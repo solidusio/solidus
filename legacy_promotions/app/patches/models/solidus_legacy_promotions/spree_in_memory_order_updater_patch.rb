@@ -26,11 +26,11 @@ module SolidusLegacyPromotions
         # Core doesn't have "eligible" adjustments anymore, so we need to
         # override the adjustment_total calculation to exclude them for legacy
         # promotions.
-        item.adjustment_total = item.adjustments.
-          select(&:eligible?).
-          reject(&:included?).
-          reject(&:marked_for_destruction?).
-          sum(&:amount)
+        item.adjustment_total = item.adjustments
+          .select(&:eligible?)
+          .reject(&:included?)
+          .reject(&:marked_for_destruction?)
+          .sum(&:amount)
       end
     end
 

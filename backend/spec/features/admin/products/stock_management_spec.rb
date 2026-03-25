@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Product Stock", type: :feature do
   stub_authorization!
@@ -10,8 +10,8 @@ describe "Product Stock", type: :feature do
   end
 
   context "given a product with a variant and a stock location" do
-    let!(:stock_location) { create(:stock_location, name: 'Default') }
-    let!(:product) { create(:product, name: 'apache baseball cap', price: 10) }
+    let!(:stock_location) { create(:stock_location, name: "Default") }
+    let!(:product) { create(:product, name: "apache baseball cap", price: 10) }
     let!(:variant) { create(:variant, product:) }
     let!(:variant2) { create(:variant, product:, track_inventory: false) }
     let(:stock_item) { variant.stock_items.find_by(stock_location:) }
@@ -31,7 +31,7 @@ describe "Product Stock", type: :feature do
     context "with no stock location" do
       before do
         Spree::StockLocation.destroy_all
-        find_by_id('content-header').click_link('Products')
+        find_by_id("content-header").click_link("Products")
         within_row(1) do
           click_icon :edit
         end
@@ -39,7 +39,7 @@ describe "Product Stock", type: :feature do
       end
 
       it "renders" do
-        expect(page).to have_content('Productsapache baseball cap')
+        expect(page).to have_content("Productsapache baseball cap")
         expect(page.current_url).to match("admin/products/apache-baseball-cap/stock")
       end
     end
@@ -49,7 +49,7 @@ describe "Product Stock", type: :feature do
     end
 
     it "can create a positive stock adjustment", js: true do
-      adjust_count_on_hand(variant.id, '14')
+      adjust_count_on_hand(variant.id, "14")
       stock_item.reload
       expect(stock_item.count_on_hand).to eq 24
       expect(stock_item.stock_movements.count).to eq 1
@@ -57,7 +57,7 @@ describe "Product Stock", type: :feature do
     end
 
     it "can create a negative stock adjustment", js: true do
-      adjust_count_on_hand(variant.id, '-4')
+      adjust_count_on_hand(variant.id, "-4")
       stock_item.reload
       expect(stock_item.count_on_hand).to eq 6
       expect(stock_item.stock_movements.count).to eq 1
@@ -78,7 +78,7 @@ describe "Product Stock", type: :feature do
         find(:css, "input[type='number']").set(count_on_hand)
         click_icon :check
       end
-      expect(page).to have_content('Updated Successfully')
+      expect(page).to have_content("Updated Successfully")
     end
 
     def toggle_backorderable(variant_id, value: true)
@@ -86,7 +86,7 @@ describe "Product Stock", type: :feature do
         find(:css, "input[type='checkbox']").set(value)
         click_icon :check
       end
-      expect(page).to have_content('Updated Successfully')
+      expect(page).to have_content("Updated Successfully")
     end
 
     context "with two variants, one of which tracks inventory while the other doesn't" do
@@ -109,17 +109,17 @@ describe "Product Stock", type: :feature do
 
     context "with stock locations that don't have stock items for variant yet" do
       before do
-        create(:stock_location, name: 'Other location', propagate_all_variants: false)
+        create(:stock_location, name: "Other location", propagate_all_variants: false)
       end
 
       it "can add stock items to other stock locations", js: true do
         visit current_url
-        within('.variant-stock-items', text: variant.sku) do
-          fill_in "variant-count-on-hand-#{variant.id}", with: '3'
+        within(".variant-stock-items", text: variant.sku) do
+          fill_in "variant-count-on-hand-#{variant.id}", with: "3"
           select "Other location", from: "stock_location_id"
           click_icon(:plus)
         end
-        expect(page).to have_content('Created successfully')
+        expect(page).to have_content("Created successfully")
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Variant::PriceSelector do
   let(:variant) { build_stubbed(:variant) }

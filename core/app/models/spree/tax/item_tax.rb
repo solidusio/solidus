@@ -17,6 +17,7 @@ module Spree
     #   in the items price, or additional tax.
     class ItemTax
       include ActiveModel::Model
+
       attr_accessor :item_id, :label, :tax_rate, :amount, :included_in_price
     end
   end

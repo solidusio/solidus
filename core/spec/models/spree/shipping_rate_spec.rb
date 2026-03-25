@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::ShippingRate, type: :model do
   let(:address) { create(:address) }
@@ -26,13 +26,13 @@ RSpec.describe Spree::ShippingRate, type: :model do
       allow(order).to receive(:tax_address).and_return(order_address)
     end
 
-    context 'with one included tax rate' do
+    context "with one included tax rate" do
       let!(:tax_rate) do
         create :tax_rate,
-        included_in_price: true,
-        name: "VAT",
-        zone: default_zone,
-        tax_categories: [tax_category]
+          included_in_price: true,
+          name: "VAT",
+          zone: default_zone,
+          tax_categories: [tax_category]
       end
 
       let(:order_address) { address }
@@ -40,7 +40,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       before do
         shipping_rate.taxes.build(
           amount: 0.91,
-          tax_rate:,
+          tax_rate:
         )
       end
 
@@ -59,13 +59,13 @@ RSpec.describe Spree::ShippingRate, type: :model do
       end
     end
 
-    context 'with one additional tax rate' do
+    context "with one additional tax rate" do
       let!(:tax_rate) do
         create :tax_rate,
-        included_in_price: false,
-        name: "Sales Tax",
-        zone: default_zone,
-        tax_categories: [tax_category]
+          included_in_price: false,
+          name: "Sales Tax",
+          zone: default_zone,
+          tax_categories: [tax_category]
       end
 
       let(:order_address) { address }
@@ -73,7 +73,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       before do
         shipping_rate.taxes.build(
           amount: 1.0,
-          tax_rate:,
+          tax_rate:
         )
       end
 
@@ -92,22 +92,22 @@ RSpec.describe Spree::ShippingRate, type: :model do
       end
     end
 
-    context 'with two additional tax rates' do
+    context "with two additional tax rates" do
       let!(:tax_rate) do
         create :tax_rate,
-        included_in_price: false,
-        name: "Sales Tax",
-        zone: default_zone,
-        tax_categories: [tax_category]
+          included_in_price: false,
+          name: "Sales Tax",
+          zone: default_zone,
+          tax_categories: [tax_category]
       end
 
       let!(:other_tax_rate) do
         create :tax_rate,
-        included_in_price: false,
-        name: "Other Sales Tax",
-        zone: default_zone,
-        tax_categories: [tax_category],
-        amount: 0.05
+          included_in_price: false,
+          name: "Other Sales Tax",
+          zone: default_zone,
+          tax_categories: [tax_category],
+          amount: 0.05
       end
 
       let(:order_address) { address }
@@ -115,12 +115,12 @@ RSpec.describe Spree::ShippingRate, type: :model do
       before do
         shipping_rate.taxes.build(
           amount: 1.0,
-          tax_rate:,
+          tax_rate:
         )
 
         shipping_rate.taxes.build(
           amount: 0.5,
-          tax_rate: other_tax_rate,
+          tax_rate: other_tax_rate
         )
       end
 
@@ -161,7 +161,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       shipping_method.code = "THE_CODE"
     end
 
-    it 'should be shipping_method.code' do
+    it "should be shipping_method.code" do
       expect(shipping_rate.shipping_method_code).to eq("THE_CODE")
     end
   end

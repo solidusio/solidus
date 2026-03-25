@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spree/preferences/preferable_class_methods'
-require 'active_support/concern'
-require 'active_support/core_ext/hash/keys'
+require "spree/preferences/preferable_class_methods"
+require "active_support/concern"
+require "active_support/core_ext/hash/keys"
 
 module Spree
   module Preferences
@@ -117,11 +117,9 @@ module Spree
       # This may raise an infinite loop error if any of the defaults are
       # dependent on other preferences defaults.
       def default_preferences
-        Hash[
-          defined_preferences.map do |preference|
-            [preference, preference_default(preference)]
-          end
-        ]
+        defined_preferences.map do |preference|
+          [preference, preference_default(preference)]
+        end.to_h
       end
 
       # Preference names representable as form fields in Solidus backend
@@ -165,8 +163,8 @@ module Spree
           value.to_i
         when :boolean
           if !value ||
-             value.to_s =~ /\A(f|false|0|^)\Z/i ||
-             (value.respond_to?(:empty?) && value.empty?)
+              value.to_s =~ /\A(f|false|0|^)\Z/i ||
+              (value.respond_to?(:empty?) && value.empty?)
             false
           else
             true

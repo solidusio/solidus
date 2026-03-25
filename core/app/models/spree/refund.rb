@@ -5,14 +5,14 @@ module Spree
     include Metadata
 
     belongs_to :payment, inverse_of: :refunds, optional: true
-    belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id, optional: true
+    belongs_to :reason, class_name: "Spree::RefundReason", foreign_key: :refund_reason_id, optional: true
     belongs_to :reimbursement, inverse_of: :refunds, optional: true
 
     has_many :log_entries, as: :source
 
     validates :payment, presence: true
     validates :reason, presence: true
-    validates :amount, presence: true, numericality: { greater_than: 0 }
+    validates :amount, presence: true, numericality: {greater_than: 0}
 
     validate :amount_is_less_than_or_equal_to_allowed_amount, on: :create
 
@@ -23,9 +23,9 @@ module Spree
     delegate :currency, to: :payment
 
     def money
-      Spree::Money.new(amount, { currency: })
+      Spree::Money.new(amount, {currency:})
     end
-    alias display_amount money
+    alias_method :display_amount, :money
 
     class << self
       def total_amount_reimbursed_for(reimbursement)
@@ -68,21 +68,21 @@ module Spree
     # return an activemerchant response object if successful or else raise an error
     def process!(credit_cents)
       response = if payment.payment_method.payment_profiles_supported?
-        payment.payment_method.credit(credit_cents, payment.source, payment.transaction_id, { originator: self })
+        payment.payment_method.credit(credit_cents, payment.source, payment.transaction_id, {originator: self})
       else
-        payment.payment_method.credit(credit_cents, payment.transaction_id, { originator: self })
+        payment.payment_method.credit(credit_cents, payment.transaction_id, {originator: self})
       end
 
       if !response.success?
-        logger.error(I18n.t('spree.gateway_error') + "  #{response.to_yaml}")
-        text = response.params['message'] || response.params['response_reason_text'] || response.message
+        logger.error(I18n.t("spree.gateway_error") + "  #{response.to_yaml}")
+        text = response.params["message"] || response.params["response_reason_text"] || response.message
         raise Core::GatewayError.new(text)
       end
 
       response
     rescue ActiveMerchant::ConnectionError => error
-      logger.error(I18n.t('spree.gateway_error') + "  #{error.inspect}")
-      raise Core::GatewayError.new(I18n.t('spree.unable_to_connect_to_gateway'))
+      logger.error(I18n.t("spree.gateway_error") + "  #{error.inspect}")
+      raise Core::GatewayError.new(I18n.t("spree.unable_to_connect_to_gateway"))
     end
 
     def amount_is_less_than_or_equal_to_allowed_amount

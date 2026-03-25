@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   RSpec.describe Core::Search::Variant do
@@ -52,8 +52,8 @@ module Spree
     context "by product + options" do
       before do
         variant.option_values << create(:option_value, presentation: "Robin's egg", name: "blue")
-        variant.option_values << create(:option_value, presentation: 'Slim')
-        variant.option_values << create(:option_value, presentation: '30')
+        variant.option_values << create(:option_value, presentation: "Slim")
+        variant.option_values << create(:option_value, presentation: "30")
       end
       it { assert_found("My Spec blue", variant) }
       it { assert_found("My Spec robin egg Slim", variant) }
@@ -102,25 +102,27 @@ module Spree
       end
     end
 
-    describe '#search_terms' do
+    describe "#search_terms" do
       # Only search by SKU if the search word is a number
-      class NumericSkuSearcher < Core::Search::Variant
-        protected
+      before do
+        stub_const("NumericSkuSearcher", Class.new(Core::Search::Variant) do
+          protected
 
-        def search_terms(word)
-          if word =~ /\A\d+\z/
-            super
-          else
-            super - [:sku_cont]
+          def search_terms(word)
+            if /\A\d+\z/.match?(word)
+              super
+            else
+              super - [:sku_cont]
+            end
           end
-        end
+        end)
       end
 
       let!(:numeric_sku_variant) { FactoryBot.create(:variant, product:, sku: "123") }
       let!(:non_numeric_sku_variant) { FactoryBot.create(:variant, product:, sku: "abc") }
 
-      it { expect(NumericSkuSearcher.new('123').results).to include numeric_sku_variant }
-      it { expect(NumericSkuSearcher.new('abc').results).not_to include non_numeric_sku_variant }
+      it { expect(NumericSkuSearcher.new("123").results).to include numeric_sku_variant }
+      it { expect(NumericSkuSearcher.new("abc").results).not_to include non_numeric_sku_variant }
     end
   end
 end

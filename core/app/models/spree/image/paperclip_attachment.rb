@@ -7,15 +7,15 @@ module Spree::Image::PaperclipAttachment
     validate :no_attachment_errors
 
     has_attached_file :attachment,
-                      styles: Spree::Config.product_image_styles,
-                      default_style: Spree::Config.product_image_style_default,
-                      default_url: 'noimage/:style.png',
-                      url: '/spree/products/:id/:style/:basename.:extension',
-                      path: ':rails_root/public/spree/products/:id/:style/:basename.:extension',
-                      convert_options: { all: '-strip -auto-orient -colorspace sRGB' }
+      styles: Spree::Config.product_image_styles,
+      default_style: Spree::Config.product_image_style_default,
+      default_url: "noimage/:style.png",
+      url: "/spree/products/:id/:style/:basename.:extension",
+      path: ":rails_root/public/spree/products/:id/:style/:basename.:extension",
+      convert_options: {all: "-strip -auto-orient -colorspace sRGB"}
     validates_attachment :attachment,
       presence: true,
-      content_type: { content_type: Spree::Config.allowed_image_mime_types }
+      content_type: {content_type: Spree::Config.allowed_image_mime_types}
 
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
@@ -39,7 +39,7 @@ module Spree::Image::PaperclipAttachment
     filename = temporary.path unless temporary.nil?
     filename = attachment.path if filename.blank?
     geometry = Paperclip::Geometry.from_file(filename)
-    self.attachment_width  = geometry.width
+    self.attachment_width = geometry.width
     self.attachment_height = geometry.height
   end
 

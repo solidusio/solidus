@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Pricing' do
+describe "Pricing" do
   stub_authorization!
 
   let(:product) { create(:product) }
@@ -11,7 +11,7 @@ describe 'Pricing' do
     visit spree.edit_admin_product_path(product)
   end
 
-  it 'has a Prices tab' do
+  it "has a Prices tab" do
     within(".tabs") do
       expect(page).to have_link("Prices")
     end
@@ -26,14 +26,14 @@ describe 'Pricing' do
       visit spree.admin_product_prices_path(product)
     end
 
-    it 'displays a table with the prices' do
+    it "displays a table with the prices" do
       subject
       expect(page).to have_content(product.name)
       within(".tabs .active") do
         expect(page).to have_content("Prices")
       end
 
-      within('table.master_prices') do
+      within("table.master_prices") do
         expect(page).to have_content("$19.99")
         expect(page).to have_content("USD")
         expect(page).to have_content("34.56 ₽")
@@ -75,7 +75,7 @@ describe 'Pricing' do
         product.master.update(price: 49.99)
       end
 
-      it 'has a working table filter' do
+      it "has a working table filter" do
         subject
         expect(page).to have_selector("#table-filter")
         within "#table-filter" do
@@ -130,7 +130,7 @@ describe 'Pricing' do
       let!(:variant) { product.master }
       let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "EUR") }
 
-      it 'has a working edit page' do
+      it "has a working edit page" do
         subject
         within "#spree_price_#{product.master.prices.first.id}" do
           click_icon :edit
@@ -138,7 +138,7 @@ describe 'Pricing' do
         expect(page).to have_content("Edit Price")
 
         within("#price_price_field") do
-          expect(page).to have_field('price_price', with: '123.99')
+          expect(page).to have_field("price_price", with: "123.99")
         end
 
         fill_in "price_price", with: 999.99
@@ -154,9 +154,9 @@ describe 'Pricing' do
           click_icon :edit
         end
         expect(page).to have_content("Edit Price")
-        expect(page).to_not have_field('price_currency', with: 'USD')
+        expect(page).to_not have_field("price_currency", with: "USD")
         within("#price_price_field") do
-          expect(page).to have_css('.number-with-currency-addon', text: 'EUR')
+          expect(page).to have_css(".number-with-currency-addon", text: "EUR")
         end
       end
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 describe "Adjustments", type: :feature do
   stub_authorization!
@@ -13,8 +13,8 @@ describe "Adjustments", type: :feature do
     let!(:order) do
       create(
         :completed_order_with_totals,
-        line_items_attributes: [{ price: 10, variant: }] * 5,
-        ship_address:,
+        line_items_attributes: [{price: 10, variant:}] * 5,
+        ship_address:
       )
     end
     let!(:line_item) { order.line_items[0] }
@@ -22,7 +22,7 @@ describe "Adjustments", type: :feature do
     let(:tax_category) { create(:tax_category) }
     let(:variant) { create(:variant, tax_category:) }
 
-    let!(:adjustment) { order.adjustments.create!(order:, label: 'Rebate', amount: 10) }
+    let!(:adjustment) { order.adjustments.create!(order:, label: "Rebate", amount: 10) }
 
     before(:each) do
       order.recalculate
@@ -35,7 +35,7 @@ describe "Adjustments", type: :feature do
 
     context "admin managing adjustments" do
       it "should display the correct values for existing order adjustments" do
-        within first('table tr', text: 'Tax') do
+        within first("table tr", text: "Tax") do
           expect(column_text(2)).to match(/TaxCategory - \d+ 20\.0%/)
           expect(column_text(3)).to eq("$2.00")
         end
@@ -72,7 +72,7 @@ describe "Adjustments", type: :feature do
 
     context "admin editing an adjustment" do
       before(:each) do
-        within('table tr', text: 'Rebate') do
+        within("table tr", text: "Rebate") do
           click_icon :edit
         end
       end
@@ -142,24 +142,24 @@ describe "Adjustments", type: :feature do
     end
 
     context "deleting an adjustment" do
-      context 'when the adjustment is finalized' do
+      context "when the adjustment is finalized" do
         let!(:adjustment) { super().tap(&:finalize!) }
 
-        it 'should not be possible' do
-          within('table tr', text: 'Rebate') do
-            expect(page).not_to have_css('.fa-trash')
+        it "should not be possible" do
+          within("table tr", text: "Rebate") do
+            expect(page).not_to have_css(".fa-trash")
           end
         end
       end
 
       it "should update the total", js: true do
         accept_alert do
-          within('table tr', text: 'Rebate') do
+          within("table tr", text: "Rebate") do
             click_icon(:trash)
           end
         end
 
-        expect(page).to have_content('Total: $170.00', normalize_ws: true)
+        expect(page).to have_content("Total: $170.00", normalize_ws: true)
       end
     end
   end
@@ -180,8 +180,8 @@ describe "Adjustments", type: :feature do
         end
 
         it "allows to enter a coupon code", :js do
-          expect(page).to have_content('Add Coupon Code')
-          expect(page).to have_selector('input#coupon_code')
+          expect(page).to have_content("Add Coupon Code")
+          expect(page).to have_selector("input#coupon_code")
         end
       end
 
@@ -192,8 +192,8 @@ describe "Adjustments", type: :feature do
         end
 
         it "doesn't allow to enter a coupon code" do
-          expect(page).not_to have_content('Add Coupon Code')
-          expect(page).not_to have_selector('input#coupon_code')
+          expect(page).not_to have_content("Add Coupon Code")
+          expect(page).not_to have_selector("input#coupon_code")
         end
       end
     end

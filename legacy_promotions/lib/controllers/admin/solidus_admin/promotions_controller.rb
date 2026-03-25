@@ -13,13 +13,13 @@ module SolidusAdmin
     def index
       promotions = apply_search_to(
         Spree::Promotion.order(id: :desc),
-        param: :q,
+        param: :q
       )
 
       set_page_and_extract_portion_from(promotions)
 
       respond_to do |format|
-        format.html { render component('promotions/index').new(page: @page) }
+        format.html { render component("promotions/index").new(page: @page) }
       end
     end
 
@@ -28,7 +28,7 @@ module SolidusAdmin
 
       Spree::Promotion.transaction { @promotions.destroy_all }
 
-      flash[:notice] = t('.success')
+      flash[:notice] = t(".success")
       redirect_back_or_to promotions_path, status: :see_other
     end
 

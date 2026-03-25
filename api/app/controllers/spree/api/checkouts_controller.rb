@@ -16,26 +16,26 @@ module Spree
       def next
         authorize! :update, @order, order_token
         if !expected_total_ok?(params[:expected_total])
-          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+          respond_with(@order, default_template: "spree/api/orders/expected_total_mismatch", status: 400)
           return
         end
         @order.next!
-        respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+        respond_with(@order, default_template: "spree/api/orders/show", status: 200)
       end
 
       def advance
         authorize! :update, @order, order_token
         @order.contents.advance
-        respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+        respond_with(@order, default_template: "spree/api/orders/show", status: 200)
       end
 
       def complete
         authorize! :update, @order, order_token
         if !expected_total_ok?(params[:expected_total])
-          respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+          respond_with(@order, default_template: "spree/api/orders/expected_total_mismatch", status: 400)
         else
           @order.complete!
-          respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
+          respond_with(@order, default_template: "spree/api/orders/show", status: 200)
         end
       end
 
@@ -51,7 +51,7 @@ module Spree
 
           if @order.completed? || @order.next!
             state_callback(:after)
-            respond_with(@order, default_template: 'spree/api/orders/show')
+            respond_with(@order, default_template: "spree/api/orders/show")
           end
         else
           invalid_resource!(@order)

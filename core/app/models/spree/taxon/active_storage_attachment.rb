@@ -6,8 +6,8 @@ module Spree::Taxon::ActiveStorageAttachment
 
   included do
     has_attachment :icon,
-                   styles: Spree::Config.taxon_image_styles,
-                   default_style: Spree::Config.taxon_image_style_default
+      styles: Spree::Config.taxon_image_styles,
+      default_style: Spree::Config.taxon_image_style_default
     validate :icon_is_an_image
   end
 end

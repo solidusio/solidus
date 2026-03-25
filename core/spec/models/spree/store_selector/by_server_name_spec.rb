@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::StoreSelector::ByServerName do
   describe "#store" do
     subject { described_class.new(request).store }
-    let(:request) { double(headers: {}, env: { "SERVER_NAME" => "www.example.com" } ) }
+    let(:request) { double(headers: {}, env: {"SERVER_NAME" => "www.example.com"}) }
 
     context "with no match" do
       it "returns a new store with current domain as the url" do
@@ -22,7 +22,7 @@ RSpec.describe Spree::StoreSelector::ByServerName do
       end
 
       context "with a domain match" do
-        let(:request) { double(headers: {}, env: { "SERVER_NAME" => url } ) }
+        let(:request) { double(headers: {}, env: {"SERVER_NAME" => url}) }
         let(:url) { "server-name.org" }
         let!(:store_2) { create :store, default: false, url: }
 

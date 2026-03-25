@@ -8,7 +8,7 @@ class ::Spree::PromotionCode::BatchBuilder
   DEFAULT_OPTIONS = {
     random_code_length: 6,
     batch_size: 1000,
-    sample_characters: ('a'..'z').to_a + (2..9).to_a.map(&:to_s)
+    sample_characters: ("a".."z").to_a + (2..9).to_a.map(&:to_s)
   }
 
   def initialize(promotion_code_batch, options = {})
@@ -20,7 +20,7 @@ class ::Spree::PromotionCode::BatchBuilder
   def build_promotion_codes
     generate_random_codes
     promotion_code_batch.update!(state: "completed")
-  rescue StandardError => error
+  rescue => error
     promotion_code_batch.update!(
       error: error.inspect,
       state: "failed"

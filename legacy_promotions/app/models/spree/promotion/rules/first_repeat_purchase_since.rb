@@ -5,7 +5,7 @@ module Spree
     module Rules
       class FirstRepeatPurchaseSince < PromotionRule
         preference :days_ago, :integer, default: 365
-        validates :preferred_days_ago, numericality: { only_integer: true, greater_than: 0 }
+        validates :preferred_days_ago, numericality: {only_integer: true, greater_than: 0}
 
         # This promotion is applicable to orders only.
         def applicable?(promotable)

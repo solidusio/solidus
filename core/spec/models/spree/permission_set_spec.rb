@@ -47,17 +47,17 @@ RSpec.describe Spree::PermissionSet, type: :model do
     let!(:management_permission) { described_class.create(name: "OrderManagement", set: "Spree::PermissionSet::OrderManagement", category: "order", privilege: "management") }
     let!(:other_permission) { described_class.create(name: "Shipping", set: "Spree::PermissionSet::Shipping", category: "shipping", privilege: "other") }
 
-    it 'returns permission sets with privilege: display for display_permissions scope' do
+    it "returns permission sets with privilege: display for display_permissions scope" do
       expect(Spree::PermissionSet.display_permissions).to include(display_permission)
       expect(Spree::PermissionSet.display_permissions).not_to include(management_permission, other_permission)
     end
 
-    it 'returns permission sets with privilege: management for management_permissions scope' do
+    it "returns permission sets with privilege: management for management_permissions scope" do
       expect(Spree::PermissionSet.management_permissions).to include(management_permission)
       expect(Spree::PermissionSet.management_permissions).not_to include(display_permission, other_permission)
     end
 
-    it 'returns permission sets with privilege: other for other_permissions scope' do
+    it "returns permission sets with privilege: other for other_permissions scope" do
       expect(Spree::PermissionSet.management_permissions).to include(management_permission)
       expect(Spree::PermissionSet.management_permissions).not_to include(display_permission, other_permission)
     end

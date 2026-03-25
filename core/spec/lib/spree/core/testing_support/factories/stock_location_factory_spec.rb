@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/working_factory'
+require "rails_helper"
+require "spree/testing_support/shared_examples/working_factory"
 
-RSpec.describe 'stock location factory' do
+RSpec.describe "stock location factory" do
   let(:factory_class) { Spree::StockLocation }
 
-  describe 'plain stock location' do
+  describe "plain stock location" do
     let(:factory) { :stock_location }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'stock location without variant propagation' do
+  describe "stock location without variant propagation" do
     let(:factory) { :stock_location_without_variant_propagation }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'stock location with items' do
+  describe "stock location with items" do
     let(:factory) { :stock_location_with_items }
 
-    it_behaves_like 'a working factory'
+    it_behaves_like "a working factory"
   end
 
-  describe 'stock location for a country without subregions' do
-    let(:country) { create(:country, iso: 'HK') }
-    it 'succeeds' do
+  describe "stock location for a country without subregions" do
+    let(:country) { create(:country, iso: "HK") }
+    it "succeeds" do
       expect(
         create(:stock_location, country:)
       ).to be_a(Spree::StockLocation)

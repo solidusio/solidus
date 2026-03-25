@@ -15,7 +15,7 @@ RSpec.describe "Legacy promotion system" do
 
     let(:line_items_attributes) do
       [
-        { price: 10, quantity: }
+        {price: 10, quantity:}
       ]
     end
 
@@ -91,7 +91,7 @@ RSpec.describe "Legacy promotion system" do
         around do |example|
           default_order_recalculator = Spree::Config.order_recalculator_class.to_s
 
-          Spree::Config.order_recalculator_class = 'Spree::InMemoryOrderUpdater'
+          Spree::Config.order_recalculator_class = "Spree::InMemoryOrderUpdater"
 
           example.run
 
@@ -101,8 +101,8 @@ RSpec.describe "Legacy promotion system" do
         it "updates the adjustment total but does not persist it" do
           expect(order.adjustment_total).to eq(-10.0)
 
-          expect { subject }.
-            to_not make_database_queries(manipulative: true)
+          expect { subject }
+            .to_not make_database_queries(manipulative: true)
 
           expect(order).to have_attributes(
             total: 105,
@@ -123,7 +123,7 @@ RSpec.describe "Legacy promotion system" do
     let(:calculator) { Spree::Calculator::DistributedAmount.new(preferred_amount: 15) }
     let(:promotion) {
       create :promotion,
-        name: '15 spread'
+        name: "15 spread"
     }
 
     before {
@@ -133,30 +133,30 @@ RSpec.describe "Legacy promotion system" do
     let!(:order) {
       create :completed_order_with_promotion,
         promotion:,
-        line_items_attributes: [{ price: 20 }, { price: 30 }, { price: 100 }]
+        line_items_attributes: [{price: 20}, {price: 30}, {price: 100}]
     }
 
-    it 'correctly distributes the entire discount', :aggregate_failures do
+    it "correctly distributes the entire discount", :aggregate_failures do
       subject
 
       expect(order.promo_total).to eq(-15)
       expect(order.line_items.map(&:adjustment_total)).to eq([-2, -3, -10])
     end
 
-    context 'with the in memory order updater' do
+    context "with the in memory order updater" do
       subject { order.recalculate(persist: false) }
 
       around do |example|
         default_order_recalculator = Spree::Config.order_recalculator_class.to_s
 
-        Spree::Config.order_recalculator_class = 'Spree::InMemoryOrderUpdater'
+        Spree::Config.order_recalculator_class = "Spree::InMemoryOrderUpdater"
 
         example.run
 
         Spree::Config.order_recalculator_class = default_order_recalculator
       end
 
-      it 'initializes the adjustments but does not persist them' do
+      it "initializes the adjustments but does not persist them" do
         expect {
           subject
         }.not_to make_database_queries(manipulative: true)
@@ -171,7 +171,7 @@ RSpec.describe "Legacy promotion system" do
       end
     end
 
-    context 'with product promotion rule' do
+    context "with product promotion rule" do
       subject { order.recalculate }
 
       let(:first_product) { order.line_items.first.product }
@@ -182,14 +182,14 @@ RSpec.describe "Legacy promotion system" do
         rule = Spree::Promotion::Rules::Product.create!(
           promotion:,
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: first_product),
-          ],
+            Spree::ProductPromotionRule.new(product: first_product)
+          ]
         )
         promotion.rules << rule
         promotion.save!
       end
 
-      it 'still distributes the entire discount' do
+      it "still distributes the entire discount" do
         subject
 
         expect(order.promo_total).to eq(-15)
@@ -228,9 +228,9 @@ RSpec.describe "Legacy promotion system" do
     end
 
     it "makes the promotion ineligible" do
-      expect{
+      expect {
         order.complete
-      }.to change{ promo_adjustment.reload.eligible }.to(false)
+      }.to change { promo_adjustment.reload.eligible }.to(false)
     end
   end
 
@@ -264,7 +264,7 @@ RSpec.describe "Legacy promotion system" do
       end
     end
 
-    context 'with the in-memory order updater' do
+    context "with the in-memory order updater" do
       subject { order.recalculate(persist:) }
 
       around do |example|
@@ -339,7 +339,7 @@ RSpec.describe "Legacy promotion system" do
   describe "adding items to the cart" do
     let(:order) { create :order }
     let(:line_item) { create :line_item, order: }
-    let(:promo) { create :promotion_with_item_adjustment, adjustment_rate: 5, code: 'promo' }
+    let(:promo) { create :promotion_with_item_adjustment, adjustment_rate: 5, code: "promo" }
     let(:promotion_code) { promo.codes.first }
     let(:variant) { create :variant }
 

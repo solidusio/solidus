@@ -91,7 +91,7 @@ RSpec.describe SolidusPromotions::Calculators::FlatRate, type: :model do
     let(:desired_quantity) { 1 }
     let(:order) { mock_model(Spree::Order, line_items: [line_item, other_line_item], currency: order_currency) }
 
-    subject { calculator.compute(discountable, { order: order, quantity: desired_quantity }) }
+    subject { calculator.compute(discountable, {order: order, quantity: desired_quantity}) }
 
     it { is_expected.to eq(20) }
 

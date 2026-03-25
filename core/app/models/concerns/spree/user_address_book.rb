@@ -11,7 +11,7 @@ module Spree
         end
 
         def mark_default(user_address, address_type: :shipping)
-          column_for_default = address_type == :shipping ? :default : :default_billing
+          column_for_default = (address_type == :shipping) ? :default : :default_billing
           ActiveRecord::Base.transaction do
             (self - [user_address]).each do |address| # update_all would be nice, but it bypasses ActiveRecord callbacks
               if address.persisted?
@@ -33,9 +33,9 @@ module Spree
       has_many :addresses, through: :user_addresses
 
       has_one :default_user_bill_address,
-        ->{ default_billing },
-        class_name: 'Spree::UserAddress',
-        foreign_key: 'user_id',
+        -> { default_billing },
+        class_name: "Spree::UserAddress",
+        foreign_key: "user_id",
         inverse_of: false,
         dependent: false
       has_one :bill_address,
@@ -45,9 +45,9 @@ module Spree
         dependent: false
 
       has_one :default_user_ship_address,
-        ->{ default_shipping },
-        class_name: 'Spree::UserAddress',
-        foreign_key: 'user_id',
+        -> { default_shipping },
+        class_name: "Spree::UserAddress",
+        foreign_key: "user_id",
         inverse_of: false,
         dependent: false
       has_one :ship_address,
@@ -66,7 +66,7 @@ module Spree
     def ship_address=(address)
       if address
         save_in_address_book(address.attributes,
-                             Spree::Config.automatic_default_address)
+          Spree::Config.automatic_default_address)
       end
     end
 
@@ -77,8 +77,8 @@ module Spree
     def bill_address=(address)
       if address
         save_in_address_book(address.attributes,
-                             Spree::Config.automatic_default_address,
-                             :billing)
+          Spree::Config.automatic_default_address,
+          :billing)
       end
     end
 
@@ -185,8 +185,8 @@ module Spree
     end
 
     def remove_user_address_reference(address_id)
-      self.bill_address_id = bill_address_id == address_id.to_i ? nil : bill_address_id
-      self.ship_address_id = ship_address_id == address_id.to_i ? nil : ship_address_id
+      self.bill_address_id = (bill_address_id == address_id.to_i) ? nil : bill_address_id
+      self.ship_address_id = (ship_address_id == address_id.to_i) ? nil : ship_address_id
       save if changed?
     end
   end

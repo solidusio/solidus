@@ -3,6 +3,7 @@
 module Spree
   module UserReporting
     extend DisplayMoney
+
     money_methods :lifetime_value, :average_order_value
 
     def lifetime_value

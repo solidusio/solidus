@@ -11,7 +11,7 @@ module DummyApp
         # Disconnect to avoid "database is being accessed by other users" on postgres
         ActiveRecord::Base.remove_connection
 
-        sh 'rake db:reset VERBOSE=false'
+        sh "rake db:reset VERBOSE=false"
 
         # We have a brand new database, so we must re-establish our connection
         ActiveRecord::Base.establish_connection

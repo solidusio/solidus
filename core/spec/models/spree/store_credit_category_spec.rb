@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::StoreCreditCategory, type: :model do
   describe "#non_expiring?" do

@@ -71,7 +71,7 @@ module Spree
     end
 
     def available_cards
-      if user_id = order.user_id
+      if (user_id = order.user_id)
         Spree::CreditCard.where(user_id:)
       else
         Spree::CreditCard.none

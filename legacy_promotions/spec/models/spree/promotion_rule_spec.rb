@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
-  RSpec.describe Spree::PromotionRule, type: :model do
-    class BadTestRule < Spree::PromotionRule; end
+  class BadTestRule < Spree::PromotionRule; end
 
-    class TestRule < Spree::PromotionRule
-      def eligible?(_promotable, _options = {})
-        true
-      end
+  class TestRule < Spree::PromotionRule
+    def eligible?(_promotable, _options = {})
+      true
     end
+  end
 
+  RSpec.describe Spree::PromotionRule, type: :model do
     describe "preferences" do
       subject { described_class.new.preferences }
 
@@ -34,7 +34,7 @@ module Spree
 
     it "generates its own partial path" do
       rule = TestRule.new
-      expect(rule.to_partial_path).to eq 'spree/admin/promotions/rules/test_rule'
+      expect(rule.to_partial_path).to eq "spree/admin/promotions/rules/test_rule"
     end
   end
 end

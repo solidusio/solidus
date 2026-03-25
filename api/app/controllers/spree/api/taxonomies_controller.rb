@@ -43,18 +43,18 @@ module Spree
       private
 
       def taxonomies
-        @taxonomies = Taxonomy.
-          accessible_by(current_ability).
-          order('name').
-          includes(root: :children).
-          ransack(params[:q]).
-          result
+        @taxonomies = Taxonomy
+          .accessible_by(current_ability)
+          .order("name")
+          .includes(root: :children)
+          .ransack(params[:q])
+          .result
       end
 
       def taxonomy
-        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :show).
-          includes(root: :children).
-          find(params[:id])
+        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :show)
+          .includes(root: :children)
+          .find(params[:id])
       end
 
       def taxonomy_params

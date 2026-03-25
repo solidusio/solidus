@@ -7,11 +7,11 @@ module Spree
       before_action :product_property, only: [:show, :update, :destroy]
 
       def index
-        @product_properties = @product.
-          product_properties.
-          accessible_by(current_ability).
-          ransack(params[:q]).
-          result
+        @product_properties = @product
+          .product_properties
+          .accessible_by(current_ability)
+          .ransack(params[:q])
+          .result
 
         @product_properties = paginate(@product_properties)
 
@@ -60,7 +60,7 @@ module Spree
       def product_property
         if @product
           @product_property ||= @product.product_properties.find_by(id: params[:id])
-          @product_property ||= @product.product_properties.includes(:property).where(spree_properties: { name: params[:id] }).first!
+          @product_property ||= @product.product_properties.includes(:property).where(spree_properties: {name: params[:id]}).first!
           authorize! :show, @product_property
         end
       end

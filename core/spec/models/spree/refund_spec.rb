@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Refund, type: :model do
   let(:amount) { 100.0 }
@@ -24,11 +24,11 @@ RSpec.describe Spree::Refund, type: :model do
     )
   end
 
-  describe 'create' do
+  describe "create" do
     subject { refund }
 
     it "creates a refund record" do
-      expect{ subject }.to change { Spree::Refund.count }.by(1)
+      expect { subject }.to change { Spree::Refund.count }.by(1)
     end
 
     it "saves the amount" do
@@ -45,7 +45,7 @@ RSpec.describe Spree::Refund, type: :model do
       let(:payment_amount) { 200.0 }
 
       before do
-        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+        expect(I18n).to receive(:t).with(:"number.currency.format.separator") do
           ","
         end
       end
@@ -91,20 +91,20 @@ RSpec.describe Spree::Refund, type: :model do
       let(:transaction_id) { nil }
 
       context "processing is successful" do
-        it 'creates a refund' do
-          expect{ subject }.to change(Spree::Refund, :count).by(1)
+        it "creates a refund" do
+          expect { subject }.to change(Spree::Refund, :count).by(1)
         end
 
-        it 'saves the returned authorization value' do
+        it "saves the returned authorization value" do
           expect { subject }.to change { refund.reload.transaction_id }.from(nil).to(Spree::PaymentMethod::BogusCreditCard::AUTHORIZATION_CODE)
         end
 
-        it 'saves the passed amount as the refund amount' do
+        it "saves the passed amount as the refund amount" do
           subject
           expect(refund.reload.amount).to eq amount
         end
 
-        it 'creates a log entry' do
+        it "creates a log entry" do
           subject
           expect(refund.reload.log_entries).to be_present
         end
@@ -114,7 +114,7 @@ RSpec.describe Spree::Refund, type: :model do
           subject
         end
 
-        it 'should update the payment total' do
+        it "should update the payment total" do
           expect(payment.order).to receive(:recalculate)
           subject
         end
@@ -135,103 +135,102 @@ RSpec.describe Spree::Refund, type: :model do
         before do
           allow(payment.payment_method)
             .to receive(:credit)
-            .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
+            .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
             .and_return(gateway_response)
         end
 
-
-        context 'without performing after create' do
-          it 'raises a GatewayError' do
+        context "without performing after create" do
+          it "raises a GatewayError" do
             expect { subject }.to raise_error(Spree::Core::GatewayError, failure_message)
           end
         end
       end
 
-      context 'without payment profiles supported' do
+      context "without payment profiles supported" do
         before do
           allow(payment.payment_method).to receive(:payment_profiles_supported?) { false }
         end
 
-        it 'should not supply the payment source' do
+        it "should not supply the payment source" do
           expect(payment.payment_method)
             .to receive(:credit)
-            .with(amount * 100, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
+            .with(amount * 100, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
             .and_call_original
 
           subject
         end
       end
 
-      context 'with payment profiles supported' do
+      context "with payment profiles supported" do
         before do
           allow(payment.payment_method).to receive(:payment_profiles_supported?) { true }
         end
 
-        it 'should supply the payment source' do
+        it "should supply the payment source" do
           expect(payment.payment_method)
             .to receive(:credit)
-            .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
+            .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
             .and_call_original
 
           subject
         end
       end
 
-      context 'with an activemerchant gateway connection error' do
+      context "with an activemerchant gateway connection error" do
         before do
           expect(payment.payment_method)
             .to receive(:credit)
-            .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
+            .with(amount_in_cents, payment.source, payment.transaction_id, {originator: an_instance_of(Spree::Refund)})
             .and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
         end
 
-        it 'raises Spree::Core::GatewayError' do
-          expect { subject }.to raise_error(Spree::Core::GatewayError, I18n.t('spree.unable_to_connect_to_gateway'))
+        it "raises Spree::Core::GatewayError" do
+          expect { subject }.to raise_error(Spree::Core::GatewayError, I18n.t("spree.unable_to_connect_to_gateway"))
         end
       end
 
-      context 'with amount too large' do
+      context "with amount too large" do
         let(:payment_amount) { 10 }
         let(:amount) { payment_amount * 2 }
 
-        it 'is invalid' do
+        it "is invalid" do
           expect { subject }.to raise_error { |error|
             expect(error).to be_a(ActiveRecord::RecordInvalid)
-            expect(error.record.errors.full_messages).to eq ["Amount #{I18n.t('activerecord.errors.models.spree/refund.attributes.amount.greater_than_allowed')}"]
+            expect(error.record.errors.full_messages).to eq ["Amount #{I18n.t("activerecord.errors.models.spree/refund.attributes.amount.greater_than_allowed")}"]
           }
         end
       end
     end
 
-    context 'when payment is not present' do
+    context "when payment is not present" do
       let(:refund) { build(:refund, payment: nil) }
 
-      it 'returns a validation error' do
-        expect { refund.save! }.to raise_error 'Validation failed: Payment can\'t be blank'
+      it "returns a validation error" do
+        expect { refund.save! }.to raise_error "Validation failed: Payment can't be blank"
       end
     end
   end
 
-  describe 'total_amount_reimbursed_for' do
+  describe "total_amount_reimbursed_for" do
     let(:customer_return) { reimbursement.customer_return }
     let(:reimbursement) { create(:reimbursement) }
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
-    let(:created_by_user) { create(:user, email: 'user@email.com') }
+    let(:created_by_user) { create(:user, email: "user@email.com") }
 
     subject { Spree::Refund.total_amount_reimbursed_for(reimbursement) }
 
-    context 'with reimbursements performed' do
+    context "with reimbursements performed" do
       before { reimbursement.perform!(created_by: created_by_user) }
 
-      it 'returns the total amount' do
+      it "returns the total amount" do
         amount = Spree::Refund.total_amount_reimbursed_for(reimbursement)
         expect(amount).to be > 0
         expect(amount).to eq reimbursement.total
       end
     end
 
-    context 'without reimbursements performed' do
-      it 'returns zero' do
+    context "without reimbursements performed" do
+      it "returns zero" do
         amount = Spree::Refund.total_amount_reimbursed_for(reimbursement)
         expect(amount).to eq 0
       end

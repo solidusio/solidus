@@ -3,9 +3,9 @@
 module Spree
   module Admin
     class VariantsController < ResourceController
-      helper 'spree/admin/products'
+      helper "spree/admin/products"
 
-      belongs_to 'spree/product', find_by: :slug
+      belongs_to "spree/product", find_by: :slug
       new_action.before :new_before
       before_action :redirect_on_empty_option_values, only: [:new]
       before_action :load_data, only: [:new, :create, :edit, :update]
@@ -13,17 +13,17 @@ module Spree
       private
 
       def new_before
-        @object.attributes = @object.product.master.attributes.except('id', 'created_at', 'deleted_at',
-                                                                      'sku', 'is_master')
+        @object.attributes = @object.product.master.attributes.except("id", "created_at", "deleted_at",
+          "sku", "is_master")
         # Shallow Clone of the default price to populate the price field.
         @object.prices.build(@object.product.master.default_price.attributes.except("id", "created_at", "updated_at", "deleted_at"))
       end
 
       def collection
-        if params[:deleted] == "on"
-          base_variant_scope ||= super.with_discarded
+        base_variant_scope ||= if params[:deleted] == "on"
+          super.with_discarded
         else
-          base_variant_scope ||= super
+          super
         end
 
         search = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: base_variant_scope)
@@ -36,7 +36,7 @@ module Spree
       end
 
       def variant_includes
-        [{ option_values: :option_type }, :prices]
+        [{option_values: :option_type}, :prices]
       end
 
       def redirect_on_empty_option_values

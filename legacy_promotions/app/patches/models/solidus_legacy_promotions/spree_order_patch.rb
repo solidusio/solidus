@@ -9,7 +9,7 @@ module SolidusLegacyPromotions
     end
 
     def self.prepended(base)
-      base.has_many :order_promotions, class_name: 'Spree::OrderPromotion', dependent: :destroy
+      base.has_many :order_promotions, class_name: "Spree::OrderPromotion", dependent: :destroy
       base.has_many :promotions, through: :order_promotions
     end
 

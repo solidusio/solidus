@@ -44,7 +44,7 @@ module SolidusPromotions
       include PromotionCalculator
 
       preference :base_percent, :decimal, default: Spree::ZERO
-      preference :tiers, :hash, default: { 50 => 5 }
+      preference :tiers, :hash, default: {50 => 5}
       preference :currency, :string, default: -> { Spree::Config[:currency] }
 
       before_validation :transform_preferred_tiers

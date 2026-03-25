@@ -37,10 +37,10 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
       },
       {
         label: t(".actions.delete"),
-        action: spree.admin_order_adjustment_path(@order, '[]'),
+        action: spree.admin_order_adjustment_path(@order, "[]"),
         method: :delete,
         icon: "delete-bin-7-line"
-      },
+      }
     ]
   end
 
@@ -57,13 +57,13 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
       {
         header: :state,
         wrap: true,
-        col: { class: 'w-[calc(5rem+2rem+2.5rem+1px)]' },
+        col: {class: "w-[calc(5rem+2rem+2.5rem+1px)]"},
         data: ->(adjustment) {
           if adjustment.finalized?
-            icon = 'lock-fill'
+            icon = "lock-fill"
             title = t(".state.locked")
           else
-            icon = 'lock-unlock-line'
+            icon = "lock-unlock-line"
             title = t(".state.unlocked")
           end
           icon_tag(icon, class: "w-5 h-5 align-middle") + tag.span(title)
@@ -71,26 +71,26 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
       },
       {
         header: :adjustable,
-        col: { class: 'w-56' },
+        col: {class: "w-56"},
         data: ->(adjustment) {
           render_thumbnail_with_caption(adjustment, :adjustable)
         }
       },
       {
         header: :source,
-        col: { class: "w-56" },
+        col: {class: "w-56"},
         data: ->(adjustment) {
           render_thumbnail_with_caption(adjustment, :source)
         }
       },
       {
         header: :amount,
-        col: { class: 'w-24' },
+        col: {class: "w-24"},
         data: ->(adjustment) { tag.span adjustment.display_amount.to_html, class: "grow text-right whitespace-nowrap" }
       },
       {
-        header: tag.span(t(".actions.title"), class: 'sr-only'),
-        col: { class: 'w-24' },
+        header: tag.span(t(".actions.title"), class: "sr-only"),
+        col: {class: "w-24"},
         wrap: false,
         data: ->(adjustment) do
           actions = []
@@ -99,7 +99,7 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
             actions << link_to(
               t(".actions.edit"),
               spree.edit_admin_order_adjustment_path(@order, adjustment),
-              class: 'body-link',
+              class: "body-link"
             )
           end
 
@@ -108,32 +108,32 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
               t(".actions.unlock"),
               solidus_admin.unlock_order_adjustments_path(@order, id: adjustment),
               "data-turbo-method": :put,
-              "data-turbo-confirm": t('.confirm'),
-              class: 'body-link',
+              "data-turbo-confirm": t(".confirm"),
+              class: "body-link"
             )
           else
             actions << link_to(
               t(".actions.lock"),
               solidus_admin.lock_order_adjustments_path(@order, id: adjustment),
               "data-turbo-method": :put,
-              "data-turbo-confirm": t('.confirm'),
-              class: 'body-link',
+              "data-turbo-confirm": t(".confirm"),
+              class: "body-link"
             )
             actions << link_to(
               t(".actions.delete"),
               spree.admin_order_adjustment_path(@order, adjustment),
               "data-turbo-method": :delete,
-              "data-turbo-confirm": t('.confirm'),
-              class: 'body-link !text-red-500',
+              "data-turbo-confirm": t(".confirm"),
+              class: "body-link !text-red-500"
             )
           end
 
-          render component('ui/dropdown').new(
+          render component("ui/dropdown").new(
             direction: :right,
-            class: 'relative w-fit m-auto',
+            class: "relative w-fit m-auto"
           ).with_content(safe_join(actions))
         end
-      },
+      }
     ]
   end
 

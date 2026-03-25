@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Spree
   module Stock
@@ -10,27 +10,27 @@ module Spree
       subject { SimpleCoordinator.new(order) }
 
       describe "#shipments" do
-        it 'uses the pluggable estimator class' do
+        it "uses the pluggable estimator class" do
           expect(Spree::Config.stock).to receive(:estimator_class).and_call_original
           subject.shipments
         end
 
-        it 'uses the configured stock location filter' do
+        it "uses the configured stock location filter" do
           expect(Spree::Config.stock).to receive(:location_filter_class).and_call_original
           subject.shipments
         end
 
-        it 'uses the configured stock location sorter' do
+        it "uses the configured stock location sorter" do
           expect(Spree::Config.stock).to receive(:location_sorter_class).and_call_original
           subject.shipments
         end
 
-        it 'uses the pluggable allocator class' do
+        it "uses the pluggable allocator class" do
           expect(Spree::Config.stock).to receive(:allocator_class).and_call_original
           subject.shipments
         end
 
-        it 'builds shipments' do
+        it "builds shipments" do
           expect(subject.shipments.size).to eq(1)
         end
 
@@ -38,7 +38,7 @@ module Spree
           subject.shipments.count == StockLocation.count
         end
 
-        it 'uses the pluggable inventory unit builder class' do
+        it "uses the pluggable inventory unit builder class" do
           expect(Spree::Config.stock)
             .to receive(:inventory_unit_builder_class)
             .and_call_original
@@ -128,25 +128,23 @@ module Spree
 
         shared_examples "an unfulfillable package" do
           it "raises exception" do
-            expect{ shipments }.to raise_error(Spree::Order::InsufficientStock)
+            expect { shipments }.to raise_error(Spree::Order::InsufficientStock)
           end
 
-          it 'raises exception and includes unfulfillable items' do
-            begin
-              expect(shipments).not_to be_empty
-            rescue Spree::Order::InsufficientStock => e
-              expect(e.items.keys.map(&:id)).to contain_exactly(variant.id)
-            end
+          it "raises exception and includes unfulfillable items" do
+            expect(shipments).not_to be_empty
+          rescue Spree::Order::InsufficientStock => e
+            expect(e.items.keys.map(&:id)).to contain_exactly(variant.id)
           end
         end
 
-        context 'with no stock locations' do
+        context "with no stock locations" do
           let(:location_1_inventory) { 0 }
           before { variant.stock_items.destroy_all }
           it_behaves_like "an unfulfillable package"
         end
 
-        context 'with a single stock location' do
+        context "with a single stock location" do
           context "with no inventory" do
             let(:location_1_inventory) { 0 }
             it_behaves_like "an unfulfillable package"
@@ -163,7 +161,7 @@ module Spree
           end
         end
 
-        context 'with two stock locations' do
+        context "with two stock locations" do
           let!(:stock_location_2) { create(:stock_location, propagate_all_variants: false, active: true) }
           before do
             stock_item_two = variant.stock_items.create!(stock_location: stock_location_2, backorderable: false)
@@ -219,7 +217,7 @@ module Spree
           end
         end
 
-        context 'with three stock locations' do
+        context "with three stock locations" do
           let!(:stock_location_2) { create(:stock_location, propagate_all_variants: false, active: true) }
           let!(:stock_location_3) { create(:stock_location, propagate_all_variants: false, active: true) }
           before do

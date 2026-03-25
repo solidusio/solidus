@@ -17,7 +17,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       SolidusPromotions::Benefits::CreateDiscountedItem.create(
         promotion: promotion,
         calculator: calculator,
-        preferences: { variant_id: variant.id }
+        preferences: {variant_id: variant.id}
       )
     end
     let(:adjustable) { order }
@@ -39,7 +39,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       end
     end
 
-    context 'when on a dry run' do
+    context "when on a dry run" do
       let(:dry_run_promotion) { promotion }
 
       subject do

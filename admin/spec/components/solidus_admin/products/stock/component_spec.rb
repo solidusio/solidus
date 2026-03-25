@@ -15,7 +15,7 @@ RSpec.describe SolidusAdmin::Products::Stock::Component, type: :component do
 
       expect(described_class).to have_received(:new).with(
         on_hand: 123,
-        variants_count: nil,
+        variants_count: nil
       )
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe SolidusAdmin::Products::Stock::Component, type: :component do
 
       expect(described_class).to have_received(:new).with(
         on_hand: 123,
-        variants_count: 0,
+        variants_count: 0
       )
     end
   end

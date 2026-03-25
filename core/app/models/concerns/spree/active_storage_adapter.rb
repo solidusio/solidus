@@ -25,7 +25,7 @@ module Spree
       end
 
       def attachment_definitions
-        { attachment_name => attachment_definition }
+        {attachment_name => attachment_definition}
       end
 
       private
@@ -65,7 +65,7 @@ module Spree
           return unless attachment.attached?
           return if attachment.image?
 
-          errors.add(self.class.attachment_name, 'is not an image')
+          errors.add(self.class.attachment_name, "is not an image")
         end
       end
 

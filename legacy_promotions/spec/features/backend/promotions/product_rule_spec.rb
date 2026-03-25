@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature 'Promotion with product rule', js: true do
+RSpec.feature "Promotion with product rule", js: true do
   stub_authorization!
 
   given!(:product) { create :product, name: "BlamCo Mac & Cheese", sku: "PRODUCT_SKU" }

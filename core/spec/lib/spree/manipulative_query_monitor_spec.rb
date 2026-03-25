@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/manipulative_query_monitor'
+require "rails_helper"
+require "spree/manipulative_query_monitor"
 
 RSpec.describe Spree::ManipulativeQueryMonitor do
   describe ".call" do

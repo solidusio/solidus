@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.(@property, *property_attributes)
+json.call(@property, *property_attributes)

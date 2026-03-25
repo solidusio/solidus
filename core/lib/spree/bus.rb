@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'omnes'
+require "omnes"
 
 module Spree
   # Global [Omnes](https://github.com/nebulab/omnes) bus.

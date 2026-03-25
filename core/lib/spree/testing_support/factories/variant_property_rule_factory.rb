@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :variant_property_rule, class: 'Spree::VariantPropertyRule' do
+  factory :variant_property_rule, class: "Spree::VariantPropertyRule" do
     product
 
     transient do

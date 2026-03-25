@@ -13,7 +13,7 @@ class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
 
   def role_options
     Spree::Role.all.map do |role|
-      { label: role.name, id: role.id }
+      {label: role.name, id: role.id}
     end
   end
 end

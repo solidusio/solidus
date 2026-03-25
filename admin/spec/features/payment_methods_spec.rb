@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Payment Methods", :js, type: :feature do
-  before { sign_in create(:admin_user, email: 'admin@example.com') }
+  before { sign_in create(:admin_user, email: "admin@example.com") }
 
   it "lists users and allows deleting them" do
     create(:check_payment_method, name: "Check", active: true)

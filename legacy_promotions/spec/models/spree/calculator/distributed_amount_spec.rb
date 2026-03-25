@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'spree/testing_support/shared_examples/calculator'
+require "rails_helper"
+require "spree/testing_support/shared_examples/calculator"
 
 RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
   describe "#compute_line_item" do
@@ -13,7 +13,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     let(:order) do
       FactoryBot.create(
         :order_with_line_items,
-        line_items_attributes: [{ price: 50 }, { price: 50 }, { price: 50 }]
+        line_items_attributes: [{price: 50}, {price: 50}, {price: 50}]
       )
     end
 

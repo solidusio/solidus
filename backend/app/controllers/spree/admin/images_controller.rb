@@ -22,13 +22,13 @@ module Spree
         @variants = @product.variants.collect do |variant|
           [variant.sku_and_options_text, variant.id]
         end
-        @variants.insert(0, [t('spree.all'), @product.master.id])
+        @variants.insert(0, [t("spree.all"), @product.master.id])
       rescue ActiveRecord::RecordNotFound
         resource_not_found(flash_class: Spree::Product, redirect_url: admin_products_path)
       end
 
       def set_viewable
-        @image.viewable_type = 'Spree::Variant'
+        @image.viewable_type = "Spree::Variant"
         @image.viewable_id = params[:image][:viewable_id]
       end
     end

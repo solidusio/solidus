@@ -1,34 +1,34 @@
 # frozen_string_literal: true
 
-require 'rubygems'
-require 'rake'
-require 'rake/testtask'
-require 'rspec/core/rake_task'
-require 'spree/testing_support/dummy_app/rake_tasks'
-require 'bundler/gem_tasks'
+require "rubygems"
+require "rake"
+require "rake/testtask"
+require "rspec/core/rake_task"
+require "spree/testing_support/dummy_app/rake_tasks"
+require "bundler/gem_tasks"
 
 RSpec::Core::RakeTask.new
 task default: :spec
 
 DummyApp::RakeTasks.new(
   gem_root: File.dirname(__FILE__),
-  lib_name: 'solidus_core'
+  lib_name: "solidus_core"
 )
 
-require 'yard/rake/yardoc_task'
+require "yard/rake/yardoc_task"
 YARD::Rake::YardocTask.new(:yard)
 # The following workaround can be removed
 # once https://github.com/lsegal/yard/pull/1457 is merged.
-task('yard:require') { require 'yard' }
-task yard: 'yard:require'
+task("yard:require") { require "yard" }
+task yard: "yard:require"
 
 namespace :spec do
   task :isolated do
-    spec_files = Dir['spec/**/*_spec.rb']
+    spec_files = Dir["spec/**/*_spec.rb"]
     failed_specs =
       spec_files.reject do |file|
         puts "rspec #{file}"
-        system('rspec', file)
+        system("rspec", file)
       end
 
     if !failed_specs.empty?
@@ -39,4 +39,4 @@ namespace :spec do
   end
 end
 
-task test_app: 'db:reset'
+task test_app: "db:reset"

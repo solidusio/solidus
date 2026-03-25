@@ -3,12 +3,12 @@
 class SolidusAdmin::UI::Dropdown::Component < SolidusAdmin::BaseComponent
   DIRECTIONS = {
     left: "right-0",
-    right: "left-0",
+    right: "left-0"
   }
 
   SIZES = {
     s: "w-5 h-5",
-    m: "w-[22px] h-[22px]",
+    m: "w-[22px] h-[22px]"
   }
 
   def initialize(text: nil, size: :m, direction: :left, **attributes)
@@ -21,7 +21,7 @@ class SolidusAdmin::UI::Dropdown::Component < SolidusAdmin::BaseComponent
     @attributes[:"data-action"] = "turbo:before-cache@window->#{stimulus_id}#close #{attributes[:"data-action"]}"
     @attributes[:class] = "
       font-normal
-      #{@size == :m ? 'text-base' : 'text-sm'}
+      #{(@size == :m) ? "text-base" : "text-sm"}
       #{@attributes[:class]}
     "
   end

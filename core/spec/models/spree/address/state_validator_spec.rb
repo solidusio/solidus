@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Address::StateValidator do
   let(:country) { create :country, states_required: true }
-  let(:state) { create :state, name: 'maryland', abbr: 'md', country: }
+  let(:state) { create :state, name: "maryland", abbr: "md", country: }
   let(:address) { build(:address, country:) }
 
   subject { described_class.new(address).perform }
 
-  describe 'state attributes normalization' do
+  describe "state attributes normalization" do
     context "having a country with no states" do
       before do
         address.country = country
@@ -60,10 +60,10 @@ RSpec.describe Spree::Address::StateValidator do
         end
 
         it "sets the state having the specified state name" do
-          expect { subject }.
-            to change{ [address.state, address.state_name] }.
-            from([nil, state.name]).
-            to([state, nil])
+          expect { subject }
+            .to change { [address.state, address.state_name] }
+            .from([nil, state.name])
+            .to([state, nil])
         end
       end
     end
@@ -97,14 +97,14 @@ RSpec.describe Spree::Address::StateValidator do
     end
   end
 
-  context 'address requires state' do
+  context "address requires state" do
     before do
       stub_spree_preferences(address_requires_state: true)
     end
 
     it "state_name is not nil and country does not have any states" do
       address.state = nil
-      address.state_name = 'alabama'
+      address.state_name = "alabama"
 
       subject
 
@@ -117,22 +117,22 @@ RSpec.describe Spree::Address::StateValidator do
 
       subject
 
-      expect(address.errors.messages).to eq({ state: ["can't be blank"] })
+      expect(address.errors.messages).to eq({state: ["can't be blank"]})
     end
 
     context "state country doesn't match the address' country" do
       context "with address country having states" do
-        let(:italy) { create(:country, iso: 'IT', states_required: true) }
+        let(:italy) { create(:country, iso: "IT", states_required: true) }
         let!(:it_state) { create(:state, country: italy) }
-        let(:us_state) { create(:state, country_iso: 'US') }
+        let(:us_state) { create(:state, country_iso: "US") }
 
-        it 'is invalid' do
+        it "is invalid" do
           address.country = italy
           address.state = us_state
 
           subject
 
-          expect(address.errors["state"]).to eq(['does not match the country'])
+          expect(address.errors["state"]).to eq(["does not match the country"])
         end
       end
     end

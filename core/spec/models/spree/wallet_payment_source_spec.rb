@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
+
+class NonPaymentSource < ActiveRecord::Base
+  # We have to set this up or else `inverse_of` prevents us from testing our code
+  has_many :wallet_payment_sources, class_name: "Spree::WalletPaymentSource", as: :payment_source, inverse_of: :payment_source
+end
+
+class CreateNonPaymentSources < ActiveRecord::Migration[5.1]
+  def change
+    create_table(:non_payment_sources)
+  end
+end
 
 RSpec.describe Spree::WalletPaymentSource, type: :model do
   subject { Spree::WalletPaymentSource }
@@ -8,22 +19,10 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
   describe "validation" do
     let(:user) { create(:user) }
 
-    context 'with a non-PaymentSource model' do
+    context "with a non-PaymentSource model" do
       # RESOURCE FIXTURE
       before(:all) do
-        # Database
-        class CreateNonPaymentSources < ActiveRecord::Migration[5.1]
-          def change
-            create_table(:non_payment_sources)
-          end
-        end
         CreateNonPaymentSources.migrate(:up)
-
-        # Model
-        class NonPaymentSource < ActiveRecord::Base
-          # We have to set this up or else `inverse_of` prevents us from testing our code
-          has_many :wallet_payment_sources, class_name: 'Spree::WalletPaymentSource', as: :payment_source, inverse_of: :payment_source
-        end
       end
 
       # TEAR DOWN RESOURCE FIXTURE
@@ -46,7 +45,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
 
         expect(wallet_payment_source).not_to be_valid
         expect(wallet_payment_source.errors.messages).to eq(
-          { payment_source: ["is not a valid payment source"] }
+          {payment_source: ["is not a valid payment source"]}
         )
       end
     end
@@ -63,7 +62,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       )
       expect(wallet_payment_source).not_to be_valid
       expect(wallet_payment_source.errors.messages).to eq(
-        { user_id: ["already has this payment source in their wallet"] }
+        {user_id: ["already has this payment source in their wallet"]}
       )
     end
 
@@ -74,7 +73,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       )
       expect(wallet_payment_source).not_to be_valid
       expect(wallet_payment_source.errors.messages).to eq(
-        { payment_source: ["does not belong to the user associated with the order"] }
+        {payment_source: ["does not belong to the user associated with the order"]}
       )
     end
 
