@@ -78,9 +78,9 @@ module SolidusPromotions
         return promotion_applied if promotion_exists_on_order?(order, promotion)
 
         # Check promotion eligibility
-        Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call
+        checker = Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion)
 
-        if promotion.eligibility_results.success?
+        if checker.call
           order.solidus_order_promotions.create!(
             promotion: promotion,
             promotion_code: promotion_code
@@ -88,13 +88,13 @@ module SolidusPromotions
           order.recalculate
           set_success_code :coupon_code_applied
         else
-          set_promotion_eligibility_error(promotion)
+          set_promotion_eligibility_error(checker.results)
         end
       end
 
-      def set_promotion_eligibility_error(promotion)
-        eligibility_error = promotion.eligibility_results.detect { |result| !result.success }
-        set_error_code(eligibility_error.code, error: eligibility_error.message, errors: promotion.eligibility_results.error_messages)
+      def set_promotion_eligibility_error(results)
+        eligibility_error = results.detect { |result| !result.success }
+        set_error_code(eligibility_error.code, error: eligibility_error.message, errors: results.error_messages)
       end
 
       def promotion_usage_limit_exceeded

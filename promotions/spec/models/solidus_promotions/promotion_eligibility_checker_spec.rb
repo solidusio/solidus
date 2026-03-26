@@ -13,48 +13,52 @@ RSpec.describe SolidusPromotions::PromotionEligibilityChecker do
 
     subject { checker.call }
 
+    it { is_expected.to be true }
+
     it "will collect eligibility results" do
       subject
 
-      expect(promotion.eligibility_results.first.success).to be true
-      expect(promotion.eligibility_results.first.code).to be nil
-      expect(promotion.eligibility_results.first.condition).to eq(product_condition)
-      expect(promotion.eligibility_results.first.message).to be nil
-      expect(promotion.eligibility_results.first.item).to eq(order)
+      expect(checker.results.first.success).to be true
+      expect(checker.results.first.code).to be nil
+      expect(checker.results.first.condition).to eq(product_condition)
+      expect(checker.results.first.message).to be nil
+      expect(checker.results.first.item).to eq(order)
     end
 
     it "can tell us about success" do
       subject
-      expect(promotion.eligibility_results.success?).to be true
+      expect(checker.results.success?).to be true
     end
 
     context "with two conditions" do
       let(:conditions) { [product_condition, item_total_condition] }
       let(:item_total_condition) { SolidusPromotions::Conditions::ItemTotal.new(preferred_amount: 2000) }
 
+      it { is_expected.to be false }
+
       it "will collect eligibility results" do
         subject
 
-        expect(promotion.eligibility_results.first.success).to be true
-        expect(promotion.eligibility_results.first.code).to be nil
-        expect(promotion.eligibility_results.first.condition).to eq(product_condition)
-        expect(promotion.eligibility_results.first.message).to be nil
-        expect(promotion.eligibility_results.first.item).to eq(order)
-        expect(promotion.eligibility_results.last.success).to be false
-        expect(promotion.eligibility_results.last.condition).to eq(item_total_condition)
-        expect(promotion.eligibility_results.last.code).to eq :item_total_less_than_or_equal
-        expect(promotion.eligibility_results.last.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
-        expect(promotion.eligibility_results.last.item).to eq(order)
+        expect(checker.results.first.success).to be true
+        expect(checker.results.first.code).to be nil
+        expect(checker.results.first.condition).to eq(product_condition)
+        expect(checker.results.first.message).to be nil
+        expect(checker.results.first.item).to eq(order)
+        expect(checker.results.last.success).to be false
+        expect(checker.results.last.condition).to eq(item_total_condition)
+        expect(checker.results.last.code).to eq :item_total_less_than_or_equal
+        expect(checker.results.last.message).to eq "This coupon code can't be applied to orders less than or equal to $2,000.00."
+        expect(checker.results.last.item).to eq(order)
       end
 
       it "can tell us about success" do
         subject
-        expect(promotion.eligibility_results.success?).to be false
+        expect(checker.results.success?).to be false
       end
 
       it "has errors for this promo" do
         subject
-        expect(promotion.eligibility_results.error_messages).to eq([
+        expect(checker.results.error_messages).to eq([
           "This coupon code can't be applied to orders less than or equal to $2,000.00."
         ])
       end
@@ -72,15 +76,17 @@ RSpec.describe SolidusPromotions::PromotionEligibilityChecker do
       let(:shirt_product_condition) { SolidusPromotions::Conditions::LineItemProduct.new(products: [shirt]) }
       let(:conditions) { [shirt_product_condition] }
 
+      # This is successful, because one of the line item conditions matches
+      it { is_expected.to be true }
+
       it "can tell us about success" do
         subject
-        # This is successful, because one of the line item conditions matches
-        expect(promotion.eligibility_results.success?).to be true
+        expect(checker.results.success?).to be true
       end
 
       it "has no errors for this promo" do
         subject
-        expect(promotion.eligibility_results.error_messages).to be_empty
+        expect(checker.results.error_messages).to be_empty
       end
 
       context "with a second line item level condition" do
@@ -89,14 +95,16 @@ RSpec.describe SolidusPromotions::PromotionEligibilityChecker do
         let(:hat_product_condition) { SolidusPromotions::Conditions::LineItemTaxon.new(taxons: [hats]) }
         let(:conditions) { [shirt_product_condition, hat_product_condition] }
 
+        it { is_expected.to be false }
+
         it "can tell us about success" do
           subject
-          expect(promotion.eligibility_results.success?).to be false
+          expect(checker.results.success?).to be false
         end
 
         it "has errors for this promo" do
           subject
-          expect(promotion.eligibility_results.error_messages).to eq([
+          expect(checker.results.error_messages).to eq([
             "This coupon code could not be applied to the cart at this time."
           ])
         end
@@ -107,10 +115,12 @@ RSpec.describe SolidusPromotions::PromotionEligibilityChecker do
       let(:no_shirt_condition) { SolidusPromotions::Conditions::OrderProduct.new(products: [shirt], preferred_match_policy: "none") }
       let(:conditions) { [no_shirt_condition] }
 
+      # This is unsuccessful, because the order has a shirt
+      it { is_expected.to be false }
+
       it "can tell us about success" do
         subject
-        # This is successful, because the order has a shirt
-        expect(promotion.eligibility_results.success?).to be false
+        expect(checker.results.success?).to be false
       end
     end
 
@@ -133,23 +143,27 @@ RSpec.describe SolidusPromotions::PromotionEligibilityChecker do
         line_item_benefit.conditions << product_condition
       end
 
+      it { is_expected.to be true }
+
       it "can tell us about success" do
         subject
-        expect(promotion.eligibility_results.success?).to be true
+        expect(checker.results.success?).to be true
       end
 
       it "can tell us about errors" do
         subject
-        expect(promotion.eligibility_results.error_messages).to eq(["This coupon code could not be applied to the cart at this time."])
+        expect(checker.results.error_messages).to eq(["This coupon code could not be applied to the cart at this time."])
       end
     end
 
     context "with no conditions" do
       let(:conditions) { [] }
 
+      it { is_expected.to be true }
+
       it "has no errors for this promo" do
         subject
-        expect(promotion.eligibility_results.error_messages).to be_empty
+        expect(checker.results.error_messages).to be_empty
       end
     end
 
@@ -159,14 +173,16 @@ RSpec.describe SolidusPromotions::PromotionEligibilityChecker do
       let(:line_item_condition) { SolidusPromotions::Conditions::LineItemProduct.new(products: [mug]) }
       let(:conditions) { [order_condition, line_item_condition] }
 
+      it { is_expected.to be false }
+
       it "can tell us about success" do
         subject
-        expect(promotion.eligibility_results.success?).to be false
+        expect(checker.results.success?).to be false
       end
 
       it "can tell us about all the errors" do
         subject
-        expect(promotion.eligibility_results.error_messages).to eq(
+        expect(checker.results.error_messages).to eq(
           [
             "This coupon code could not be applied to the cart at this time.",
             "You need to add an applicable product before applying this coupon code."

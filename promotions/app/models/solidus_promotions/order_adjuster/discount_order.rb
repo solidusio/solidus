@@ -6,6 +6,12 @@ module SolidusPromotions
       attr_reader :order, :promotions, :dry_run
 
       def initialize(order, promotions, dry_run: false)
+        if dry_run
+          Spree.deprecator.warn <<~MSG
+            Passing `dry_run` to `SolidusPromotions::OrderAdjuster::DiscountOrder` is deprecated.
+            Use `Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call` instead.
+          MSG
+        end
         @order = order
         @promotions = promotions
         @dry_run = dry_run

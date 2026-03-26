@@ -39,7 +39,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       end
     end
 
-    context "when on a dry run" do
+    context "when on a dry run", :silence_deprecations do
       let(:dry_run_promotion) { promotion }
 
       subject do
