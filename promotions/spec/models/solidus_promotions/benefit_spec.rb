@@ -425,7 +425,7 @@ RSpec.describe SolidusPromotions::Benefit do
 
         it { is_expected.to be false }
 
-        it "only asks the first condition and does not collect eligibility errors" do
+        it "only asks the first condition and does not collect eligibility errors", :silence_deprecations do
           expect(taxon_condition).to receive(:order_eligible?).and_call_original
           expect(product_condition).not_to receive(:order_eligible?)
           subject
