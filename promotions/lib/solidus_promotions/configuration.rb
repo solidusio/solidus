@@ -8,6 +8,11 @@ module SolidusPromotions
 
     class_name_attribute :order_adjuster_class, default: "SolidusPromotions::OrderAdjuster"
 
+    # Service object that checks whether a promotion is eligible for an order.
+    # @!attribute [rw] eligibility_checker_class
+    #   @return [String] Defaults to "SolidusPromotions::PromotionEligibilityChecker".
+    class_name_attribute :eligibility_checker_class, default: "SolidusPromotions::PromotionEligibilityChecker"
+
     class_name_attribute :coupon_code_handler_class, default: "SolidusPromotions::PromotionHandler::Coupon"
 
     # The class used to normalize coupon codes before saving or lookup.
