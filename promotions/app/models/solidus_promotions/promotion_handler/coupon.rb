@@ -77,8 +77,8 @@ module SolidusPromotions
         return promotion_usage_limit_exceeded if promotion.usage_limit_exceeded? || promotion_code.usage_limit_exceeded?
         return promotion_applied if promotion_exists_on_order?(order, promotion)
 
-        # Try applying this promotion, with no effects
-        Spree::Config.promotions.order_adjuster_class.new(order, dry_run_promotion: promotion).call
+        # Check promotion eligibility
+        Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call
 
         if promotion.eligibility_results.success?
           order.solidus_order_promotions.create!(

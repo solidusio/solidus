@@ -12,7 +12,7 @@ module SolidusPromotions
 
       def activate
         if promotion
-          Spree::Config.promotions.order_adjuster_class.new(order, dry_run_promotion: promotion).call
+          Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call
           if promotion.eligibility_results.success?
             order.solidus_promotions << promotion
             order.recalculate
