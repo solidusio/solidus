@@ -44,6 +44,17 @@ fi
 
 echo "~~~> Adding solidus (with i18n) to the Gemfile"
 cd ./sandbox
+
+if [ -n "$DB_HOST" ]; then
+  echo "~~~> Configuring database.yml for DB_HOST=$DB_HOST"
+  ruby -i -pe '
+    if $_ =~ /^  pool:/
+      $_ += "  host: <%= ENV.fetch(\"DB_HOST\", \"localhost\") %>\n"
+      $_ += "  username: <%= ENV[\"DB_USERNAME\"] %>\n"
+    end
+  ' config/database.yml
+fi
+
 cat <<RUBY >> Gemfile
 gem 'solidus', github: 'solidusio/solidus', branch: '$SOLIDUS_BRANCH'
 gem 'rails-i18n'
