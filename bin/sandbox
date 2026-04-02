@@ -29,13 +29,23 @@ rm -rf ./sandbox
 
 echo "~~~> Creating a pristine Rails app"
 rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
+
+# --skip-solid was added in Rails 8.0 to skip Solid Cache, Queue, and Cable
+# setup which is unnecessary for the sandbox and fails during generation.
+rails_major=$(echo "$rails_version" | cut -d. -f1)
+skip_solid_flag=""
+if [ "$rails_major" -ge 8 ] 2>/dev/null; then
+  skip_solid_flag="--skip-solid"
+fi
+
 bundle exec rails _${rails_version}_ new sandbox \
   --database="${DB:-sqlite3}" \
   --skip-git \
   --skip-keeps \
   --skip-rc \
   --skip-bootsnap \
-  --skip-test
+  --skip-test \
+  $skip_solid_flag
 
 if [ ! -d "sandbox" ]; then
   echo 'sandbox rails application failed'
