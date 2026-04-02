@@ -71,6 +71,9 @@ gem 'rails-i18n'
 gem 'solidus_i18n'
 gem 'solidus_auth_devise', github: "solidusio/solidus_auth_devise"
 
+# Ruby 4.0 removed benchmark from default gems, but ActiveSupport requires it.
+gem 'benchmark' if RUBY_VERSION >= '4.0'
+
 group :test, :development do
   platforms :mri do
     gem 'pry-byebug'
