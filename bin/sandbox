@@ -48,7 +48,7 @@ cat <<RUBY >> Gemfile
 gem 'solidus', github: 'solidusio/solidus', branch: '$SOLIDUS_BRANCH'
 gem 'rails-i18n'
 gem 'solidus_i18n'
-gem 'solidus_auth_devise'
+gem 'solidus_auth_devise', github: "solidusio/solidus_auth_devise"
 
 group :test, :development do
   platforms :mri do
