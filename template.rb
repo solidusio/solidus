@@ -104,6 +104,7 @@ with_log["installing files"] do
   directory "app", "app", verbose: auto_accept, force: auto_accept
   directory "public", "public"
 
+  copy_file "config/importmap.rb"
   copy_file "config/initializers/solidus_auth_devise_unauthorized_redirect.rb"
   copy_file "config/routes/storefront.rb"
   copy_file "config/tailwind.config.js"
