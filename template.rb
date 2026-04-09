@@ -80,7 +80,6 @@ with_log["installing gems"] do
     gem "selenium-webdriver" unless Bundler.locked_gems.dependencies["selenium-webdriver"]
 
     gem "capybara-screenshot", "~> 1.0"
-    gem "database_cleaner", "~> 2.0"
   end
 
   gem_group :development, :test do
