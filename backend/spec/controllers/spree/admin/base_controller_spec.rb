@@ -38,4 +38,19 @@ describe Spree::Admin::BaseController, type: :controller do
       end
     end
   end
+
+  context "authorized request" do
+    stub_authorization!
+
+    it "allows access" do
+      get :index
+      expect(response.body).to eq("test")
+    end
+
+    it "sets timezone by param" do
+      get :index, params: {solidus_timezone: "Hawaii"}
+      expect(session).to have_key(:solidus_timezone)
+      expect(session[:solidus_timezone]).to eq("Hawaii")
+    end
+  end
 end
