@@ -14,6 +14,7 @@ module SolidusAdmin
     include SolidusAdmin::ControllerHelpers::Theme
     include SolidusAdmin::ComponentsHelper
     include SolidusAdmin::AuthenticationAdapters::Backend if defined?(Spree::Backend)
+    include Spree::Core::ControllerHelpers::Timezone
 
     layout :set_layout
 
