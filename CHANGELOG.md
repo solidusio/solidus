@@ -1,3 +1,118 @@
+## Solidus v4.7.0 (2026-04-15)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus
+
+* Add changelog and source code URI to gemspec by @zirni in https://github.com/solidusio/solidus/pull/6364
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+
+## Solidus Core
+
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+* Fix shipment adjustments not persisting on order recalculate by @Noah-Silvera in https://github.com/solidusio/solidus/pull/6334
+* Fix misnamed shipping_categories table in 4.6.0 migration comment by @Noah-Silvera in https://github.com/solidusio/solidus/pull/6341
+* Configurable stock quantifier by @mamhoff in https://github.com/solidusio/solidus/pull/6335
+* Allow optional passing of options to calculators by @mamhoff in https://github.com/solidusio/solidus/pull/6346
+* Prevent merging of non-frontend-viewable orders by @Noah-Silvera in https://github.com/solidusio/solidus/pull/6362
+* [Admin][Products] Product option types list by @chaimann in https://github.com/solidusio/solidus/pull/6283
+* Fix Rubocop offenses for November 2025 by @mamhoff in https://github.com/solidusio/solidus/pull/6372
+* Rename order updater methods to better reflect behaviour by @Noah-Silvera in https://github.com/solidusio/solidus/pull/6368
+* Remove `inverse_of` from Spree::Adjustment#order by @mamhoff in https://github.com/solidusio/solidus/pull/6373
+* Autosave changed shipping rates by @mamhoff in https://github.com/solidusio/solidus/pull/6374
+* Improve order updater test coverage by @AlistairNorman in https://github.com/solidusio/solidus/pull/6377
+* feat: Allow to overwrite track_state_change? by @tvdeyen in https://github.com/solidusio/solidus/pull/6380
+* feat: Make state change tracker a configurable class by @tvdeyen in https://github.com/solidusio/solidus/pull/6375
+* Build discounted linte items in memory by @forkata in https://github.com/solidusio/solidus/pull/6385
+* Mark non-applicable promotion adjustments for destruction by @forkata in https://github.com/solidusio/solidus/pull/6382
+* Configurable Order Mergeable Scope by @ThuktenSingye in https://github.com/solidusio/solidus/pull/6384
+* Allow to recalculate cart prices by @mamhoff in https://github.com/solidusio/solidus/pull/6399
+* Fix Sprockets Dependency by @jarednorman in https://github.com/solidusio/solidus/pull/6404
+* Allow Rails 8.1 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6409
+* Fix return item initialization in backend by @forkata in https://github.com/solidusio/solidus/pull/6411
+* Remove product filters require by @forkata in https://github.com/solidusio/solidus/pull/6408
+* Fix linting by @AlistairNorman in https://github.com/solidusio/solidus/pull/6420
+* Require Rails 7.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6414
+* Add tax_category_id method to Spree::Product by @sascha-karnatz in https://github.com/solidusio/solidus/pull/6423
+* In-memory order updater by @benjaminwil in https://github.com/solidusio/solidus/pull/5872
+* Fix order walkthrough for iso uniqueness by @AlistairNorman in https://github.com/solidusio/solidus/pull/6432
+
+## Solidus Admin
+
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+* [Admin][Products] Product option types list by @chaimann in https://github.com/solidusio/solidus/pull/6283
+* Fix Rubocop offenses for November 2025 by @mamhoff in https://github.com/solidusio/solidus/pull/6372
+* Fix linting by @AlistairNorman in https://github.com/solidusio/solidus/pull/6420
+* In-memory order updater by @benjaminwil in https://github.com/solidusio/solidus/pull/5872
+* Fix sandbox lookbook installation by @AlistairNorman in https://github.com/solidusio/solidus/pull/6417
+
+## Solidus Backend
+
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+* Fix Sprockets Dependency by @jarednorman in https://github.com/solidusio/solidus/pull/6404
+* Fix return item initialization in backend by @forkata in https://github.com/solidusio/solidus/pull/6411
+* Fix linting by @AlistairNorman in https://github.com/solidusio/solidus/pull/6420
+
+## Solidus API
+
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+* Fix linting by @AlistairNorman in https://github.com/solidusio/solidus/pull/6420
+
+## Solidus Sample
+
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+
+## Solidus Promotions
+
+* Require Ruby 3.2 by @AlistairNorman in https://github.com/solidusio/solidus/pull/6413
+* Switch to standardrb by @AlistairNorman in https://github.com/solidusio/solidus/pull/6421
+* Allow optional passing of options to calculators by @mamhoff in https://github.com/solidusio/solidus/pull/6346
+* Autosave changed shipping rates by @mamhoff in https://github.com/solidusio/solidus/pull/6374
+* Improve order updater test coverage by @AlistairNorman in https://github.com/solidusio/solidus/pull/6377
+* Build discounted linte items in memory by @forkata in https://github.com/solidusio/solidus/pull/6385
+* Mark non-applicable promotion adjustments for destruction by @forkata in https://github.com/solidusio/solidus/pull/6382
+* Fix linting by @AlistairNorman in https://github.com/solidusio/solidus/pull/6420
+* In-memory order updater by @benjaminwil in https://github.com/solidusio/solidus/pull/5872
+* Refactor: Move rounding to promotion calculator module by @mamhoff in https://github.com/solidusio/solidus/pull/6332
+* Promotions Percent Calculator: Allow fractional percent by @mamhoff in https://github.com/solidusio/solidus/pull/6330
+* Promotions: First Order condition must not fail on canceled orders by @mamhoff in https://github.com/solidusio/solidus/pull/6343
+* feat(Promotion): Make ordered lanes an array by @tvdeyen in https://github.com/solidusio/solidus/pull/6345
+* Flat Rate calculator: Do not override #compute by @mamhoff in https://github.com/solidusio/solidus/pull/6349
+* DistributedAmount Calculator: Add YARD docs by @mamhoff in https://github.com/solidusio/solidus/pull/6350
+* FlexiRate calculator: Add YARD docs by @mamhoff in https://github.com/solidusio/solidus/pull/6351
+* Fix percent calculator dispatch by @mamhoff in https://github.com/solidusio/solidus/pull/6352
+* Add YARD docs to TieredFlatRate promo calculator by @mamhoff in https://github.com/solidusio/solidus/pull/6353
+* Add yard docs to solidus promotions condition by @mamhoff in https://github.com/solidusio/solidus/pull/6358
+* Add YARD docs to SolidusPromotions::Benefit by @mamhoff in https://github.com/solidusio/solidus/pull/6359
+* Improve promotion condition API by @mamhoff in https://github.com/solidusio/solidus/pull/6360
+* Refactor tiered calculators by @mamhoff in https://github.com/solidusio/solidus/pull/6354
+* Deprecate promotion "level" by @mamhoff in https://github.com/solidusio/solidus/pull/6357
+* Create single-responsibility conditions for products, taxons, and option values by @mamhoff in https://github.com/solidusio/solidus/pull/6363
+* Move shared examples for promo calculators to lib/ by @mamhoff in https://github.com/solidusio/solidus/pull/6367
+* `DiscountOrder`: Use `#filter_map` everywhere by @mamhoff in https://github.com/solidusio/solidus/pull/6369
+* Fix line item option condition params by @manleyac in https://github.com/solidusio/solidus/pull/6233
+* Coupon Code Case Sensitive by @ThuktenSingye in https://github.com/solidusio/solidus/pull/6331
+* Make OrderRecalculatorPatch prepend explicit by @AlistairNorman in https://github.com/solidusio/solidus/pull/6376
+* Promotions: Fix default calculator fields partial bug and make PercentWithCap calculator available in the UI by @mamhoff in https://github.com/solidusio/solidus/pull/6381
+* Remove benefit "level" mixins by @mamhoff in https://github.com/solidusio/solidus/pull/6378
+* Allow promotion conditions to work with in-memory line items, improve performance by @mamhoff in https://github.com/solidusio/solidus/pull/6383
+* Add `#discounted_amount` by adjustments by @mamhoff in https://github.com/solidusio/solidus/pull/6379
+* Discountable amounts by adjustments by @mamhoff in https://github.com/solidusio/solidus/pull/6371
+* Allow promotion calculators to set dynamic adjustment labels by @mamhoff in https://github.com/solidusio/solidus/pull/6398
+* OrderPromotions: Validate promotion uniqueness per order by @mamhoff in https://github.com/solidusio/solidus/pull/6424
+* Change promotion condition configuration to be flat by @mamhoff in https://github.com/solidusio/solidus/pull/6425
+* Allow strikethrough prices to be calculated for variants by @mamhoff in https://github.com/solidusio/solidus/pull/6287
+* Promotions: Fix eligibility calculation in dry runs by @mamhoff in https://github.com/solidusio/solidus/pull/6429
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.6.0...v4.7.0
+
+
 ## Solidus v4.6.0 (2025-09-09)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
