@@ -1130,6 +1130,7 @@ en:
     choose_currency: Choose Currency
     choose_dashboard_locale: Choose Dashboard Locale
     choose_dashboard_theme: Choose Dashboard Theme
+    choose_dashboard_timezone: Choose Dashboard Timezone
     choose_location: Choose Location
     choose_reason: Choose Reason
     city: City
