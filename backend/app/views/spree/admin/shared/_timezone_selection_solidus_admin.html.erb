@@ -1,0 +1,13 @@
+<% available_timezones_for_select = ActiveSupport::TimeZone.all.map(&:name) %>
+
+<li>
+  <%= form_tag(url_for, method: :get, style: "width: 100%;") do %>
+    <label>
+      <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-time-zone-line"></use></svg>
+      <select name="solidus_timezone" onchange="this.form.requestSubmit()">
+        <%= options_for_select(available_timezones_for_select, selected: Time.zone.name) %>
+      </select>
+      <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-expand-up-down-line"></use></svg>
+    </label>
+  <% end %>
+</li>
