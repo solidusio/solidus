@@ -5,15 +5,15 @@ module SolidusAdmin
     include Spree::Core::ControllerHelpers::StrongParameters
     include SolidusAdmin::ControllerHelpers::Search
 
-    search_scope(:completed, default: true) { _1.complete }
-    search_scope(:canceled) { _1.canceled }
-    search_scope(:returned) { _1.with_state(:returned) }
-    search_scope(:in_progress) { _1.with_state([:cart] + _1.checkout_step_names) }
-    search_scope(:all) { _1 }
+    search_scope(:completed, default: true) { _1.complete.order(completed_at: :desc) }
+    search_scope(:canceled) { _1.canceled.order(completed_at: :desc) }
+    search_scope(:returned) { _1.with_state(:returned).order(completed_at: :desc) }
+    search_scope(:in_progress) { _1.with_state([:cart] + _1.checkout_step_names).order(id: :desc) }
+    search_scope(:all) { _1.order(id: :desc) }
 
     def index
       orders = apply_search_to(
-        Spree::Order.order(created_at: :desc, id: :desc),
+        Spree::Order,
         param: :q,
         distinct: false
       )
