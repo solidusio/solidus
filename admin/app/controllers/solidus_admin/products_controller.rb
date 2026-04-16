@@ -13,7 +13,11 @@ module SolidusAdmin
 
     def index
       products = apply_search_to(
-        Spree::Product.includes(:master, :variants),
+        Spree::Product.includes(
+          :variant_images,
+          master: :prices,
+          variants: :prices
+        ),
         param: :q
       )
 
