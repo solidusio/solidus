@@ -162,7 +162,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :items,
       data: ->(order) do
-        content_tag :div, t(".columns.items", count: order.line_items.sum(:quantity))
+        content_tag :div, t(".columns.items", count: order.line_items.sum(&:quantity))
       end
     }
   end
