@@ -18,12 +18,13 @@ module SolidusAdmin
           master: :prices,
           variants: :prices
         ),
-        param: :q
+        param: :q,
+        distinct: false
       )
 
       set_page_and_extract_portion_from(
         products,
-        ordered_by: {updated_at: :desc, id: :desc}
+        ordered_by: {name: :asc}
       )
 
       respond_to do |format|
