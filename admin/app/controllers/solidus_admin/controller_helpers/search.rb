@@ -19,15 +19,15 @@ module SolidusAdmin::ControllerHelpers::Search
 
   private
 
-  def apply_search_to(relation, param:)
+  def apply_search_to(relation, param:, distinct: true)
     relation = apply_scopes_to(relation, param:)
-    apply_ransack_search_to(relation, param:)
+    apply_ransack_search_to(relation, param:, distinct:)
   end
 
-  def apply_ransack_search_to(relation, param:)
+  def apply_ransack_search_to(relation, param:, distinct: true)
     relation
       .ransack(params[param]&.except(:scope))
-      .result(distinct: true)
+      .result(distinct:)
   end
 
   def apply_scopes_to(relation, param:)

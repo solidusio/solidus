@@ -14,7 +14,8 @@ module SolidusAdmin
     def index
       orders = apply_search_to(
         Spree::Order.order(created_at: :desc, id: :desc),
-        param: :q
+        param: :q,
+        distinct: false
       )
 
       set_page_and_extract_portion_from(orders)
