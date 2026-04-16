@@ -13,7 +13,6 @@ module SolidusLegacyPromotions
         promotions_menu_item = Spree::BackendConfiguration::MenuItem.new(
           label: :legacy_promotions,
           icon: Spree::Backend::Config.admin_updated_navbar ? "ri-megaphone-line" : "bullhorn",
-          partial: "spree/admin/shared/promotion_sub_menu",
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path,
           data_hook: :admin_promotion_sub_tabs,
