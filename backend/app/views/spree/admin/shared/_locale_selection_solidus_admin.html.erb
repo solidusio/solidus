@@ -6,7 +6,7 @@
   <li>
     <%= form_tag(spree.admin_set_locale_path(format: :html), method: :put, style: "width: 100%;") do %>
       <label>
-        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-global-line"></use></svg>
+        <svg aria-hidden="true"><use xlink:href="<%= image_path('spree/backend/themes/solidus_admin/remixicon.symbol.svg') %>#ri-translate-2"></use></svg>
         <select name="switch_to_locale" onchange="this.form.requestSubmit()">
           <%= options_for_select(available_locale_options_for_select, selected: I18n.locale) %>
         </select>
