@@ -55,11 +55,19 @@ module SolidusStarterFrontend
           %w[firstname lastname]
         end
 
-        fields.each do |field|
-          fill_in "order_bill_address_attributes_#{field}", with: address.send(field).to_s
+        wait_time = 3
+        while wait_time > 0
+          fields.each do |field|
+            fill_in "order_bill_address_attributes_#{field}", with: address.send(field).to_s
+          end
+          select "United States of America", from: "order_bill_address_attributes_country_id"
+          select address.state.name.to_s, from: "order_bill_address_attributes_state_id"
+
+          break if find("#order_bill_address_attributes_#{fields.first}").value == address.send(fields.first).to_s
+
+          sleep 0.1
+          wait_time -= 0.1
         end
-        select "United States of America", from: "order_bill_address_attributes_country_id"
-        select address.state.name.to_s, from: "order_bill_address_attributes_state_id"
 
         check 'order_use_billing'
       end
