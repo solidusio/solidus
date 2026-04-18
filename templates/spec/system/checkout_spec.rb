@@ -681,6 +681,10 @@ RSpec.describe 'Checkout', :js, type: :system do
       before do
         canada.states.destroy_all
         zone.members.create!(zoneable: canada)
+
+        shipping_method.calculator.update!(preferred_amount: 10)
+        mug.shipping_category = shipping_method.shipping_categories.first
+        mug.save!
       end
 
       it "displays the entered state name without evaluating" do
