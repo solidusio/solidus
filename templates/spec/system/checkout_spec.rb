@@ -780,5 +780,6 @@ RSpec.describe 'Checkout', :js, type: :system do
     visit products_path
     click_link mug.name
     click_button "add-to-cart-button"
+    expect(page).to have_content "CHECKOUT"
   end
 end
