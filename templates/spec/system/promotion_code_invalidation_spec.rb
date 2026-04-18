@@ -19,10 +19,13 @@ RSpec.describe 'Promotion Code Invalidation', type: :system, js: true do
 
     visit products_path
     click_link "DL-44"
+    expect(page).to have_content("As seen on TV!")
     click_button "Add To Cart"
+    expect(page).to have_content("Shopping Cart")
 
     visit products_path
     click_link "E-11"
+    expect(page).to have_content("As seen on TV!")
     click_button "Add To Cart"
   end
 
