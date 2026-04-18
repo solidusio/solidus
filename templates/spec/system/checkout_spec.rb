@@ -33,7 +33,8 @@ RSpec.describe 'Checkout', :js, type: :system do
     context "persists state when on address page" do
       before do
         add_mug_to_cart
-        click_button "Checkout"
+        checkout_as_guest
+        expect(page).to have_content("Billing Address")
       end
 
       it 'goes to address state', js: true do
