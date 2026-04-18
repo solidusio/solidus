@@ -18,6 +18,35 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
       let(:order) { create(:order_with_line_items, line_items_count: 1, line_items_price: 10) }
       let(:line_item) { order.line_items[0] }
 
+      context "when the quantity changes with a CreateQuantityAdjustments promotion" do
+        let(:promotion) { create(:promotion, promotion_actions: [promotion_action]) }
+        let(:promotion_action) { Spree::Promotion::Actions::CreateQuantityAdjustments.new(calculator:, preferred_group_size: 2) }
+        let(:calculator) { create :calculator, preferred_amount: 5 }
+        let(:order) { create(:order_with_line_items, line_items_attributes: [{quantity: 2, price: 10}]) }
+
+        before do
+          promotion.activate(order:)
+          order.recalculate
+          line_item.update!(quantity: 5)
+        end
+
+        it "updates the promotion adjustments amount" do
+          expect {
+            subject
+          }.to change {
+            line_item.adjustments.first.amount
+          }.from(-10).to(-20)
+        end
+
+        it "updates the quantity on the line item action" do
+          expect {
+            subject
+          }.to change {
+            promotion_action.line_item_actions.reload.first.quantity
+          }.from(2).to(4)
+        end
+      end
+
       context "when the item quantity has changed" do
         let(:promotion) { create(:promotion, promotion_actions: [promotion_action]) }
         let(:promotion_action) { Spree::Promotion::Actions::CreateItemAdjustments.new(calculator:) }
