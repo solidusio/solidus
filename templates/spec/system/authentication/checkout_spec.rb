@@ -67,8 +67,13 @@ RSpec.feature 'Checkout', :js, type: :system do
       fill_addresses_fields_with(address)
       click_button 'Save and Continue'
 
+      expect(page).to have_content "package from NY Warehouse"
       click_button 'Save and Continue'
+
+      expect(page).to have_content "Check"
       click_button 'Save and Continue'
+
+      expect(page).to have_content "Put your terms and conditions here"
       check 'Agree to Terms of Service'
       click_button 'Place Order'
 
@@ -84,18 +89,25 @@ RSpec.feature 'Checkout', :js, type: :system do
       fill_in 'Email', with: user.email
       fill_in 'Password:', with: user.password
       click_button 'Login'
+      expect(page).to have_text 'Logged in successfully'
       click_link 'Cart'
 
       expect(page).to have_text 'Solidus hoodie'
       within('h1') { expect(page).to have_text 'Shopping Cart' }
 
       click_button 'Checkout'
+      expect(page).to have_text(/Billing Address/i, wait: 10)
 
       fill_addresses_fields_with(address)
       click_button 'Save and Continue'
 
+      expect(page).to have_content "package from NY Warehouse"
       click_button 'Save and Continue'
+
+      expect(page).to have_content "Check"
       click_button 'Save and Continue'
+
+      expect(page).to have_content "Put your terms and conditions here"
       check 'Agree to Terms of Service'
       click_button 'Place Order'
 
@@ -153,8 +165,13 @@ RSpec.feature 'Checkout', :js, type: :system do
       fill_addresses_fields_with(address)
       click_button 'Save and Continue'
 
+      expect(page).to have_content "package from NY Warehouse"
       click_button 'Save and Continue'
+
+      expect(page).to have_content "Check"
       click_button 'Save and Continue'
+
+      expect(page).to have_content "Put your terms and conditions here"
       check 'Agree to Terms of Service'
       click_button 'Place Order'
 
