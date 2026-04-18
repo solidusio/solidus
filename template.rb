@@ -94,6 +94,7 @@ with_log["installing gems"] do
     gem "rubocop-performance", "~> 1.5"
     gem "rubocop-rails", "~> 2.3"
     gem "rubocop-rspec", "~> 3.0"
+    gem "solidus_paypal_commerce_platform", github: "solidusio/solidus_paypal_commerce_platform"
   end
 
   run_bundle
