@@ -8,18 +8,23 @@ module SolidusAdmin
     search_scope(:deleted) { _1.with_discarded.discarded }
     search_scope(:discontinued) { _1.where(discontinue_on: ...Time.current) }
     search_scope(:available) { _1.available }
-    search_scope(:in_stock) { _1.where(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
-    search_scope(:out_of_stock) { _1.where.not(id: Spree::Variant.in_stock.distinct.select(:product_id)) }
+    search_scope(:in_stock) { _1.where(id: Spree::Variant.in_stock.select(:product_id)) }
+    search_scope(:out_of_stock) { _1.where.not(id: Spree::Variant.in_stock.select(:product_id)) }
 
     def index
       products = apply_search_to(
-        Spree::Product.includes(:master, :variants),
-        param: :q
+        Spree::Product.includes(
+          :variant_images,
+          master: :prices,
+          variants: :prices
+        ),
+        param: :q,
+        distinct: false
       )
 
       set_page_and_extract_portion_from(
         products,
-        ordered_by: {updated_at: :desc, id: :desc}
+        ordered_by: {name: :asc}
       )
 
       respond_to do |format|

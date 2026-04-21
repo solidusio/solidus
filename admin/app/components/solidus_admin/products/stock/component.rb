@@ -4,7 +4,7 @@ class SolidusAdmin::Products::Stock::Component < SolidusAdmin::BaseComponent
   def self.from_product(product)
     new(
       on_hand: product.total_on_hand,
-      variants_count: product.variants.count
+      variants_count: product.variants.size
     )
   end
 
