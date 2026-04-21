@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "kaminari/activerecord"
+
 module Spree
   module Core
     module Search
