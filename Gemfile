@@ -2,9 +2,12 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', ENV['RAILS_VERSION'] || '~> 7.2.0'
+gem 'rails', ENV['RAILS_VERSION'] || '~> 8.0.0'
+
+gem "state_machines", "<= 0.6"
 
 group :development do
+  gem 'benchmark', '~> 0.5', require: false
   gem 'guard'
   gem 'guard-shell'
 

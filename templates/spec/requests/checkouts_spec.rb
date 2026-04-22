@@ -324,7 +324,7 @@ RSpec.describe 'Checkouts', type: :request, with_signed_in_user: true do
 
       before do
         allow(Spree::OrderUpdater).to receive(:new).and_return(updater_instance)
-        allow(updater_instance).to receive(:update_payment_state).and_raise(Spree::Core::GatewayError.new('Invalid something or other.'))
+        allow(updater_instance).to receive(:recalculate_payment_state).and_raise(Spree::Core::GatewayError.new('Invalid something or other.'))
         patch update_checkout_path(state: order.state, order: { bill_address_attributes: address_params })
       end
 

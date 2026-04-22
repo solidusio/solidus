@@ -8,7 +8,6 @@ require 'rspec/active_model/mocks'
 require "view_component/test_helpers"
 
 require 'rspec/rails'
-require 'database_cleaner'
 require 'factory_bot'
 require 'ffaker'
 

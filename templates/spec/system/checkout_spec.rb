@@ -33,7 +33,8 @@ RSpec.describe 'Checkout', :js, type: :system do
     context "persists state when on address page" do
       before do
         add_mug_to_cart
-        click_button "Checkout"
+        checkout_as_guest
+        expect(page).to have_content("Billing Address")
       end
 
       it 'goes to address state', js: true do
@@ -442,11 +443,17 @@ RSpec.describe 'Checkout', :js, type: :system do
       click_on "Checkout"
       # edit an address field
       fill_in "order_bill_address_attributes_name", with: "Ryann"
-      click_on "Save and Continue"
-      click_on "Save and Continue"
-      click_on "Save and Continue"
+      click_button 'Save and Continue'
+
+      expect(page).to have_content "package from NY Warehouse"
+      click_button 'Save and Continue'
+
+      expect(page).to have_content "Check"
+      click_button 'Save and Continue'
+
+      expect(page).to have_content "Put your terms and conditions here"
       check 'Agree to Terms of Service'
-      click_on "Place Order"
+      click_button 'Place Order'
 
       order = Spree::Order.last
       expect(page).to have_current_path(token_order_path(order, order.guest_token))
@@ -473,6 +480,7 @@ RSpec.describe 'Checkout', :js, type: :system do
         end
 
         click_on "Update"
+        expect(page).to have_content("$59.97")
       end
 
       it "redirects user back to address step" do
@@ -482,8 +490,11 @@ RSpec.describe 'Checkout', :js, type: :system do
 
       it "updates shipments properly through step address -> delivery transitions" do
         visit checkout_state_path("payment")
+        expect(page).to have_content "Billing Address"
         click_on "Save and Continue"
+        expect(page).to have_content "package from NY Warehouse"
         click_on "Save and Continue"
+        expect(page).to have_content "Payment Information"
 
         expect(Spree::InventoryUnit.count).to eq 3
       end
@@ -496,6 +507,7 @@ RSpec.describe 'Checkout', :js, type: :system do
         visit products_path
         click_link bag.name
         click_button "add-to-cart-button"
+        expect(page).to have_content "Shopping Cart"
       end
 
       it "redirects user back to address step" do
@@ -505,8 +517,11 @@ RSpec.describe 'Checkout', :js, type: :system do
 
       it "updates shipments properly through step address -> delivery transitions" do
         visit checkout_state_path("payment")
+        expect(page).to have_content "Billing Address"
         click_on "Save and Continue"
+        expect(page).to have_content "package from NY Warehouse"
         click_on "Save and Continue"
+        expect(page).to have_content "Payment Information"
 
         expect(Spree::InventoryUnit.count).to eq 2
       end
@@ -635,10 +650,15 @@ RSpec.describe 'Checkout', :js, type: :system do
       allow_any_instance_of(CartLineItemsController).to receive_messages(spree_current_user: user)
 
       visit checkout_state_path(:delivery)
-      click_button "Save and Continue"
-      click_button "Save and Continue"
+      expect(page).to have_content "package from NY Warehouse"
+      click_button 'Save and Continue'
+
+      expect(page).to have_content "Check"
+      click_button 'Save and Continue'
+
+      expect(page).to have_content "Put your terms and conditions here"
       check 'Agree to Terms of Service'
-      click_button "Place Order"
+      click_button 'Place Order'
     end
 
     it "displays a thank you message" do
@@ -661,6 +681,10 @@ RSpec.describe 'Checkout', :js, type: :system do
       before do
         canada.states.destroy_all
         zone.members.create!(zoneable: canada)
+
+        shipping_method.calculator.update!(preferred_amount: 10)
+        mug.shipping_category = shipping_method.shipping_categories.first
+        mug.save!
       end
 
       it "displays the entered state name without evaluating" do
@@ -760,5 +784,6 @@ RSpec.describe 'Checkout', :js, type: :system do
     visit products_path
     click_link mug.name
     click_button "add-to-cart-button"
+    expect(page).to have_content "CHECKOUT"
   end
 end
