@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
@@ -27,7 +27,7 @@ jobs:
       - name: Lint Ruby files
         run: bin/rake lint:rb
       - name: Store test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: standardrb-results
           path: test-results
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
@@ -52,7 +52,7 @@ jobs:
     env:
       ESLINT_USE_FLAT_CONFIG: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:

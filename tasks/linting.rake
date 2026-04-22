@@ -4,12 +4,12 @@ namespace :lint do
   task :rb do
     if ENV["CI"]
       results_dir = "#{__dir__}/../test-results"
-      sh "mkdir -p '#{results_dir}'"
-      ci_options = "--format junit "
-      ci_redirect = " > '#{results_dir}/rubocop-results.xml'"
+      system "mkdir -p '#{results_dir}'"
+      ci_options = "--format 'Standard::Formatter' --format github --format junit --out '#{results_dir}/rubocop-results.xml' "
     end
 
-    sh %{bundle exec standardrb #{ci_options}$(git ls-files -co --exclude-standard | grep -E "\\.rb$" | grep -v "/templates/")#{ci_redirect}}
+    cmd = %{bundle exec standardrb #{ci_options}$(git ls-files -co --exclude-standard | grep -E "\\.rb$" | grep -v "/templates/")}
+    system(cmd) || exit($?.exitstatus)
   end
 
   task :erb do
