@@ -1,5 +1,7 @@
 name: "Install Solidus"
 
+description: "Test Solidus installer with different versions of Rails and Ruby."
+
 inputs:
   flags:
     type: string
