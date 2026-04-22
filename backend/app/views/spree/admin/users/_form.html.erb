@@ -76,5 +76,12 @@
         <% end %>
       <% end %>
     <% end %>
+
+    <% if can?(:update, @user) && @user.respond_to?(:timezone) %>
+      <%= f.field_container :timezone do %>
+        <%= f.label :timezone %>
+        <%= f.time_zone_select :timezone, nil, {include_blank: t("spree.none")}, class: "select2 fullwidth" %>
+      <% end %>
+    <% end %>
   </div>
 </div>
