@@ -84,6 +84,7 @@ RSpec.feature 'Checkout', :js, type: :system do
       user = create(:user, email: 'email@person.com', password: 'password', password_confirmation: 'password')
       click_link 'Solidus hoodie'
       click_button 'Add To Cart'
+      within('h1') { expect(page).to have_text 'Shopping Cart' }
 
       visit login_path
       fill_in 'Email', with: user.email
