@@ -53,10 +53,10 @@ module Spree
           end
         end
 
-        Spree::Bus.publish(:order_recalculated, order:)
-
         persist_totals if persist
       end
+
+      Spree::Bus.publish(:order_recalculated, order:) if persist
     end
     alias_method :update, :recalculate
     deprecate update: :recalculate, deprecator: Spree.deprecator

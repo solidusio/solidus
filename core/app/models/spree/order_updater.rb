@@ -27,9 +27,9 @@ module Spree
           update_shipments
           recalculate_shipment_state
         end
-        Spree::Bus.publish(:order_recalculated, order:)
         persist_totals
       end
+      Spree::Bus.publish(:order_recalculated, order:)
     end
     alias_method :update, :recalculate
     deprecate update: :recalculate, deprecator: Spree.deprecator
