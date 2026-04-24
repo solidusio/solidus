@@ -236,7 +236,6 @@ module Spree
     end
 
     def persist_totals
-      shipments.each(&:persist_amounts)
       assign_item_totals
       log_state_change("payment")
       log_state_change("shipment")
