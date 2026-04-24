@@ -23,6 +23,20 @@ module Spree
           end
         end
 
+        def add_class_list(name, default: [])
+          define_method(name) do
+            list = instance_variable_get("@#{name}")
+            list ||= send("#{name}=", default)
+            list
+          end
+
+          define_method("#{name}=") do |klasses|
+            list = ClassConstantizer::List.new
+            list.concat(klasses)
+            instance_variable_set("@#{name}", list)
+          end
+        end
+
         def add_nested_class_set(name, default: {})
           define_method(name) do
             set = instance_variable_get(:"@#{name}")
