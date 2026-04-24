@@ -90,6 +90,13 @@ module SolidusPromotions
       []
     end
 
+    # Returns relations to copy during promotion system migration.
+    # Defaults to preload_relations for backward compatibility with
+    # custom conditions that don't override this method.
+    def migration_relations
+      preload_relations
+    end
+
     # Determines if this condition can be applied to a given promotable object.
     #
     # @param _promotable [Object] The object to check (e.g., Spree::Order, Spree::LineItem)

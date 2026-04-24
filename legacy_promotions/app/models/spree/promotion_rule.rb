@@ -16,6 +16,13 @@ module Spree
       []
     end
 
+    # Returns relations to copy during promotion system migration.
+    # Defaults to preload_relations for backward compatibility with
+    # custom rules that don't override this method.
+    def migration_relations
+      preload_relations
+    end
+
     def applicable?(_promotable)
       raise NotImplementedError, "applicable? should be implemented in a sub-class of Spree::PromotionRule"
     end

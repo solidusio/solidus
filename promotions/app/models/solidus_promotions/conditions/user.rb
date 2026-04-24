@@ -14,11 +14,19 @@ module SolidusPromotions
       has_many :users, through: :condition_users, class_name: Spree::UserClassHandle.new
 
       def preload_relations
+        []
+      end
+
+      # Returns relations to copy during promotion migration.
+      # Separate from preload_relations because migration needs to copy
+      # user associations, but preloading all users for eligibility
+      # checks causes massive memory allocation with large user lists.
+      def migration_relations
         [:users]
       end
 
       def order_eligible?(order, _options = {})
-        users.include?(order.user)
+        users.where(id: order.user&.id).exists?
       end
 
       def user_ids_string

@@ -96,7 +96,7 @@ module SolidusPromotions
         new_promo_condition_class.call(old_promotion_rule)
       else
         new_condition = new_promo_condition_class.new(old_promotion_rule.attributes.except(*PROMOTION_IGNORED_ATTRIBUTES))
-        new_condition.preload_relations.each do |relation|
+        new_condition.migration_relations.each do |relation|
           new_condition.send(:"#{relation}=", old_promotion_rule.send(relation))
         end
         [new_condition]
