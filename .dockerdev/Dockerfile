@@ -15,6 +15,7 @@ RUN apt-get update -qq \
     imagemagick \
     libvips \
     libffi-dev \
+    libyaml-dev \
     libmariadb-dev \
     sqlite3 \
     libsqlite3-dev \
