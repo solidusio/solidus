@@ -108,6 +108,39 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 
+  describe "#all_log_entries" do
+    let(:payment) { create(:payment, amount: 100) }
+
+    it "is empty when neither the payment nor any refund has log entries" do
+      expect(payment.all_log_entries).to be_empty
+    end
+
+    it "includes log entries whose source is the payment itself" do
+      entry = payment.log_entries.create!(details: "a".to_yaml)
+
+      expect(payment.all_log_entries).to contain_exactly(entry)
+    end
+
+    it "includes log entries from every refund on the payment" do
+      refund_a = create(:refund, payment: payment, reason: refund_reason, amount: 10)
+      refund_b = create(:refund, payment: payment, reason: refund_reason, amount: 20)
+      refund_a_entry = refund_a.log_entries.create!(details: "a".to_yaml)
+      refund_b_entry = refund_b.log_entries.create!(details: "b".to_yaml)
+
+      expect(payment.all_log_entries).to contain_exactly(refund_a_entry, refund_b_entry)
+    end
+
+    it "merges payment and refund entries and orders them chronologically" do
+      refund = create(:refund, payment: payment, reason: refund_reason, amount: 10)
+
+      first = payment.log_entries.create!(details: "first".to_yaml, created_at: 2.minutes.ago)
+      second = refund.log_entries.create!(details: "second".to_yaml, created_at: 1.minute.ago)
+      third = payment.log_entries.create!(details: "third".to_yaml, created_at: Time.current)
+
+      expect(payment.all_log_entries.to_a).to eq([first, second, third])
+    end
+  end
+
   context "validations" do
     it "returns useful error messages when source is invalid" do
       payment.source = Spree::CreditCard.new
