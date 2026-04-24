@@ -632,6 +632,12 @@ module Spree
 
         expect(item).to have_received(:do_something)
       end
+
+      it "does not fire the event when persist: false" do
+        updater.recalculate(persist: false)
+
+        expect(item).not_to have_received(:do_something)
+      end
     end
 
     context "with invalid associated objects" do
