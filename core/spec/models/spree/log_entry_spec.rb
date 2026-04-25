@@ -3,6 +3,20 @@
 require "rails_helper"
 
 RSpec.describe Spree::LogEntry, type: :model do
+  describe ".permitted_classes" do
+    it "skips configured classes that are no longer defined" do
+      stub_spree_preferences(
+        log_entry_permitted_classes: ["Date", "Spree::NoLongerDefinedExampleClass"]
+      )
+
+      expect { described_class.permitted_classes }.not_to raise_error
+      expect(described_class.permitted_classes).to include(Date)
+      expect(described_class.permitted_classes).to match_array(
+        described_class::CORE_PERMITTED_CLASSES + [Date]
+      )
+    end
+  end
+
   describe "#parsed_details" do
     it "allows aliases by default" do
       x = []
@@ -51,6 +65,16 @@ RSpec.describe Spree::LogEntry, type: :model do
       log_entry = described_class.new(details: Date.today)
 
       expect { log_entry.parsed_details }.to raise_error(described_class::DisallowedClass, /log_entry_permitted_classes/)
+    end
+
+    it "still parses known classes when the configured permitted list contains a missing class" do
+      stub_spree_preferences(
+        log_entry_permitted_classes: ["Spree::NoLongerDefinedExampleClass"]
+      )
+      response = ActiveMerchant::Billing::Response.new("success", "message")
+      log_entry = described_class.new(details: response.to_yaml)
+
+      expect { log_entry.parsed_details }.not_to raise_error
     end
   end
 
