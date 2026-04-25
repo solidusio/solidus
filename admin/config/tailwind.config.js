@@ -1,6 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
-const adminRoot = __dirname.replace(/\/config$/, '')
+const adminRoot = __dirname.replace(/[\\/]config$/, '').replace(/\\/g, '/')
 
 module.exports = {
   content: [
@@ -86,6 +86,27 @@ module.exports = {
       },
       height: {
         "5.5": "1.375rem",
+      },
+      fontSize: {
+        // 'body-sm': '0.875rem',
+        sm: ['0.875rem', '1.2'],
+        'body-sm': ['0.875rem', '1.2'],
+
+        // 'body': '1rem',
+        base: ['1rem', '1.2'],
+        'body': ['1rem', '1.2'],
+
+        // 'body-md': '1.125rem',
+        lg: ['1.125rem', '1.4'],
+        'body-md': ['1.125rem', '1.4'],
+
+        // 'body-20': '1.25rem',
+        xl: ['1.25rem', '1.4'],
+        'body-20': ['1.25rem', '1.4'],
+
+        // 'body-lg': '1.5rem',
+        '2xl': ['1.5rem', '1.5'],
+        'body-lg': ['1.5rem', '1.5'],
       }
     },
   },
