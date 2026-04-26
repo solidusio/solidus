@@ -1,10 +1,14 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
-const adminRoot = __dirname.replace(/\/config$/, '')
+const adminRoot = __dirname.replace(/[\\/]config$/, '').replace(/\\/g, '/')
 
 module.exports = {
   content: [
-    `${adminRoot}/{app/helpers,app/views,app/components,app/assets/javascripts,spec/components/previews}/**/*`,
+    `${adminRoot}/app/helpers/**/*`,
+    `${adminRoot}/app/views/**/*`,
+    `${adminRoot}/app/components/**/*`,
+    `${adminRoot}/app/assets/javascripts/**/*`,
+    `${adminRoot}/spec/components/previews/**/*`,
   ],
   theme: {
     extend: {

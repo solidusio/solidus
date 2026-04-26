@@ -16,3 +16,6 @@ en:
   orders_count:
     one: "%{count} order"
     other: "%{count} orders"
+
+  visibility: Visibility
+  visible_to_customer: Visible to customer

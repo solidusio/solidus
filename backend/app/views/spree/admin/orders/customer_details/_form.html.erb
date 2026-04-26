@@ -79,6 +79,16 @@
 
   <div class="clear"></div>
 
+  <fieldset class="no-border-bottom" data-hook="admin_order_frontend_viewable">
+    <legend align="center"><%= t('spree.visibility') %></legend>
+    <div class="field">
+      <label>
+        <%= f.check_box :frontend_viewable %>
+        <%= t('spree.visible_to_customer') %>
+      </label>
+    </div>
+  </fieldset>
+
   <div class="form-buttons filter-actions actions" data-hook="buttons">
     <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
   </div>

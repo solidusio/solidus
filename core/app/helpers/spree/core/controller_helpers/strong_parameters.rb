@@ -52,6 +52,7 @@ module Spree
             permitted_checkout_payment_attributes +
             permitted_attributes.customer_metadata_attributes +
             permitted_checkout_confirm_attributes + [
+              :frontend_viewable,
               {line_items_attributes: permitted_line_item_attributes}
             ]
         end

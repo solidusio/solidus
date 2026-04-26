@@ -161,7 +161,7 @@ module Spree
       def order_params
         {
           created_by_id: spree_current_user.try(:id),
-          frontend_viewable: false,
+          frontend_viewable: params.dig(:order, :frontend_viewable) || false,
           store_id: current_store.try(:id)
         }.with_indifferent_access
       end

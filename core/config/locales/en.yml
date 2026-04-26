@@ -2367,6 +2367,8 @@ en:
     vat_id: VAT-ID
     version: Version
     view_product: View Product On Store
+    visibility: Visibility
+    visible_to_customer: Visible to customer
     void: Void
     weight: Weight
     what_is_a_cvv: What is a (CVV) Credit Card Code?

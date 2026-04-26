@@ -66,6 +66,19 @@
                 <%= format_address @order.bill_address %>
               <% end %>
             </div>
+          <div class="flex flex-col gap-2">
+            <span class="font-semibold text-sm"><%= t('.visibility') %></span>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <%= check_box_tag(
+                'order[frontend_viewable]',
+                '1',
+                @order.frontend_viewable,
+                form: form_id,
+                id: 'order_frontend_viewable',
+                class: 'rounded border-gray-300 text-solidus-red focus:ring-solidus-red'
+              ) %>
+              <span class="font-normal text-sm"><%= t('.visible_to_customer') %></span>
+            </label>
           </div>
 
         <% end %>
