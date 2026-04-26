@@ -23,6 +23,18 @@ describe "Shipments", type: :feature do
     end
   end
 
+  # Regression test for https://github.com/solidusio/solidus/issues/3357
+  context "an order whose units have all been moved into a carton" do
+    let!(:order) { create(:shipped_order, number: "R200") }
+
+    it "does not render the now-empty shipment alongside the carton" do
+      visit spree.edit_admin_order_path(order)
+
+      expect(page).to have_selector("[data-hook='admin_carton_form']")
+      expect(page).not_to have_selector("[data-hook='admin_shipment_form']")
+    end
+  end
+
   context "shipping an order", js: true do
     before(:each) do
       visit spree.admin_path

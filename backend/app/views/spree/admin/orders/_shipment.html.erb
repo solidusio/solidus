@@ -4,6 +4,7 @@
   ).items.sort_by { |item| item.line_item.created_at }
 %>
 
+<% if manifest_items.any? %>
 <div id="<%= "shipment_#{shipment.id}" %>" class="js-shipment-edit" data-hook="admin_shipment_form">
   <fieldset class="no-border-bottom">
     <legend align="center" class="stock-location" data-hook="stock-location">
@@ -66,3 +67,4 @@
     </tbody>
   </table>
 </div>
+<% end %>
