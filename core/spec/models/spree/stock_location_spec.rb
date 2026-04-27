@@ -5,6 +5,32 @@ require "rails_helper"
 module Spree
   RSpec.describe StockLocation, type: :model do
     subject(:stock_location) { create(:stock_location_with_items, backorderable_default: true) }
+      describe "validations" do
+      it "is invalid without a name" do
+        stock_location = build(:stock_location, name: nil)
+        expect(stock_location).not_to be_valid
+        expect(stock_location.errors[:name]).to include("can't be blank")
+      end
+
+      it "is invalid with a duplicate name" do
+        create(:stock_location, name: "Warehouse A")
+        duplicate = build(:stock_location, name: "Warehouse A")
+        expect(duplicate).not_to be_valid
+        expect(duplicate.errors[:name]).to include("has already been taken")
+      end
+
+      it "is case-insensitively unique" do
+        create(:stock_location, name: "warehouse a")
+        duplicate = build(:stock_location, name: "WAREHOUSE A")
+        expect(duplicate).not_to be_valid
+      end
+
+      it "allows different names" do
+        create(:stock_location, name: "Warehouse A")
+        different = build(:stock_location, name: "Warehouse B")
+        expect(different).to be_valid
+      end
+    end
     let(:stock_item) { subject.stock_items.order(:id).first }
     let(:variant) { stock_item.variant }
 

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :stock_location, class: "Spree::StockLocation" do
-    name { "NY Warehouse" }
+    sequence(:name) { |n| "NY Warehouse #{n}" }
     address1 { "1600 Pennsylvania Ave NW" }
     city { "Washington" }
     zipcode { "20500" }

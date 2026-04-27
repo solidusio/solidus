@@ -23,7 +23,7 @@ module Spree
     has_many :shipping_method_stock_locations, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_stock_locations
 
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: { case_sensitive: false}
     validates :code, uniqueness: {allow_blank: true, case_sensitive: false}
 
     scope :active, -> { where(active: true) }
