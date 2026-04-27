@@ -103,6 +103,7 @@ en:
         name: Name
         presentation: Presentation
       spree/order:
+        frontend_viewable: 'Visible'
         additional_tax_total: Tax
         approved_at: Approved at
         approver_id: Approver

@@ -105,6 +105,26 @@ module Spree
         end
       end
 
+      # PATCH
+      def update
+        @order = Spree::Order.find_by!(number: params[:id])
+
+        if @order.update(order_params)
+          respond_to do |format|
+            format.html do
+              flash[:success] = t('spree.admin.updated')
+              redirect_to edit_admin_order_path(@order), status: :see_other
+            end
+            format.json { head :no_content }
+          end
+        else
+          respond_to do |format|
+            format.html { render :edit }
+            format.json { render json: @order.errors, status: :unprocessable_entity }
+          end
+        end
+      end
+
       # PUT
       def complete
         @order.complete!
@@ -161,9 +181,8 @@ module Spree
       def order_params
         {
           created_by_id: spree_current_user.try(:id),
-          frontend_viewable: false,
           store_id: current_store.try(:id)
-        }.with_indifferent_access
+        }.merge(params[:order]&.permit(:frontend_viewable) || {}).with_indifferent_access
       end
 
       def load_order
