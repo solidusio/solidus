@@ -37,3 +37,7 @@ jobs:
         run: |
           cd $RUNNER_TEMP/my_app
           bundle list | grep 'solidus_paypal_commerce_platform (1.'
+      - name: Run starter frontend specs
+        run: |
+          cd $RUNNER_TEMP/my_app
+          bundle exec rspec spec
