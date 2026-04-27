@@ -3,6 +3,9 @@ en:
     items:
       one: 1 Item
       other: '%{count} Items'
+    frontend_viewable:
+      yes: "Visible"
+      no: "Hidden"
   filters:
     status: Status
     store: Store

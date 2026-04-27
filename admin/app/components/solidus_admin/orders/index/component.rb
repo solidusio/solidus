@@ -97,7 +97,8 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
       total_column,
       items_column,
       payment_column,
-      shipment_column
+      shipment_column,
+      frontend_viewable_column 
     ]
   end
 
@@ -181,6 +182,29 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
       header: :shipment,
       data: ->(order) do
         component("ui/badge").new(name: order.shipment_state.humanize, color: order.shipped? ? :green : :yellow) if order.shipment_state?
+      end
+    }
+  end
+
+  def frontend_viewable_column
+    {
+      col: { class: "w-[100px]" },
+      header: :visible,
+      data: ->(order) do
+        content_tag :div, class: "flex justify-center items-center" do
+          content_tag :form, action: solidus_admin.order_path(order), method: :post do
+            content_tag(:input, nil, type: :hidden, name: "_method", value: "patch") +
+            content_tag(:input, nil, type: :hidden, name: "authenticity_token", value: form_authenticity_token) +
+            content_tag(:input, nil, type: :hidden, name: "order[frontend_viewable]", value: "0") +
+            render(component("ui/checkbox").new(
+              name: "order[frontend_viewable]",
+              value: "1",
+              checked: order.frontend_viewable?,
+              onchange: "this.form.submit()",
+              size: :s
+            ))
+          end
+        end
       end
     }
   end

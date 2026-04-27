@@ -25,6 +25,12 @@ SolidusAdmin::Engine.routes.draw do
 
   admin_resources :orders, only: [:index]
 
+  admin_resources :orders, only: [:index] do
+    member do
+      patch :update
+    end
+  end
+
   admin_resources :orders, except: [
     :destroy, :index
   ], constraints: -> { SolidusAdmin::Config.enable_alpha_features? } do

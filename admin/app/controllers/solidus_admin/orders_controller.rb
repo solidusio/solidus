@@ -28,7 +28,7 @@ module SolidusAdmin
     def new
       order = Spree::Order.create!(
         created_by: current_solidus_admin_user,
-        frontend_viewable: false,
+        frontend_viewable: true,
         store_id: current_store.try(:id)
       )
 
@@ -53,12 +53,6 @@ module SolidusAdmin
         flash[:notice] = t(".success")
       else
         flash[:error] = t(".error")
-      end
-
-      respond_to do |format|
-        format.html { redirect_to spree.edit_admin_order_path(@order) }
-
-        format.turbo_stream { render turbo_stream: '<turbo-stream action="refresh" />' }
       end
     end
 
@@ -117,7 +111,7 @@ module SolidusAdmin
     end
 
     def order_params
-      params.require(:order).permit(:user_id, permitted_order_attributes)
+      params.require(:order).permit(:user_id, :frontend_viewable, permitted_order_attributes)
     end
   end
 end
