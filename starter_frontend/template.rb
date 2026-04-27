@@ -37,25 +37,32 @@ with_log["fetching remote templates"] do
   if __FILE__.match?(%r{\Ahttps?://})
     require "uri"
     url_path = URI.parse(__FILE__).path
-    owner = url_path[%r{/([^/]+)/solidus_starter_frontend/}, 1]
-    branch = url_path[%r{solidus_starter_frontend/(raw/)?(.+?)/template.rb}, 2]
+    match = url_path.match(%r{\A/([^/]+)/([^/]+)/raw/(.+?)/starter_frontend/template\.rb\z})
+    unless match
+      say_status :error, shell.set_color(
+        "Could not parse starter_frontend template URL: #{__FILE__}\n" \
+        "Expected shape: https://github.com/<owner>/<repo>/raw/<ref>/starter_frontend/template.rb",
+        :bold
+      ), :red
+      exit 1
+    end
 
-    repo_source = "https://github.com/#{owner}/solidus_starter_frontend.git"
+    owner, repo, branch = match[1], match[2], match[3]
+    repo_source = "https://github.com/#{owner}/#{repo}.git"
+    repo_dir = Rails.root.join("tmp/solidus_starter_frontend-#{SecureRandom.hex}").tap(&:mkpath).to_s
+
+    git clone: [
+      "--quiet",
+      "--depth", "1",
+      "--branch", branch,
+      repo_source,
+      repo_dir
+    ].shelljoin
+
+    templates_dir = Pathname.new(repo_dir).join("starter_frontend", "templates")
   else
-    branch = nil
-    repo_source = "file://#{File.dirname(__FILE__)}"
+    templates_dir = Pathname.new(File.dirname(__FILE__)).join("templates")
   end
-  repo_dir = Rails.root.join("tmp/solidus_starter_frontend-#{SecureRandom.hex}").tap(&:mkpath).to_s
-
-  git clone: [
-    "--quiet",
-    "--depth", "1",
-    *(["--branch", branch] if branch),
-    repo_source,
-    repo_dir
-  ].compact.shelljoin
-
-  templates_dir = Pathname.new(repo_dir).join("templates")
 
   source_paths.unshift(templates_dir)
 end
