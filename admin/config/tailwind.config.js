@@ -29,7 +29,7 @@ module.exports = {
         // Secondary palette
         yellow: "#fdc071",
         orange: "#f68050",
-        blue: "#2554b1",
+        "solidus-blue": "#2554b1",
         moss: "#2d3925",
         forest: "#096756",
         midnight: "#163449",
@@ -112,7 +112,7 @@ module.exports = {
       // Add a text style for links
       addComponents({
         ".body-link": {
-          color: theme("colors.blue"),
+          color: theme("colors.solidus-blue"),
           "&:hover": {
             textDecoration: "underline",
           },
