@@ -1,0 +1,23 @@
+<% admin_breadcrumb(plural_resource_name(Spree::Order), spree.admin_orders_path) %>
+<% admin_breadcrumb(t('spree.new_order')) %>
+
+<%= form_tag admin_orders_path, method: :post do %>
+  <div class="row">
+    <div class="col-12">
+      <fieldset class="no-border-top">
+        <legend><%= t('spree.new_order') %></legend>
+
+        <div class="field">
+          <label for="order_frontend_viewable">
+            <%= check_box_tag "order[frontend_viewable]", "1", false, id: "order_frontend_viewable" %>
+            <%= t('spree.frontend_viewable') %>
+          </label>
+        </div>
+
+        <div class="form-buttons actions" data-hook="buttons">
+          <%= button_tag t('spree.actions.create'), class: 'btn btn-primary' %>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+<% end %>

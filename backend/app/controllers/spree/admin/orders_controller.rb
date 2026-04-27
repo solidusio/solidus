@@ -61,14 +61,15 @@ module Spree
       end
 
       def new
-        user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
-        order_importer_params = order_params
-        order_importer_params[:bill_address] = user&.bill_address
-        order_importer_params[:ship_address] = user&.ship_address
+  if request.post?
+    user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
+    order_importer_params = order_params
+    order_importer_params[:bill_address] = user&.bill_address
+    order_importer_params[:ship_address] = user&.ship_address
+    @order = Spree::Core::Importer::Order.import(user, order_importer_params)
+    redirect_to cart_admin_order_url(@order)
+  end
 
-        @order = Spree::Core::Importer::Order.import(user, order_importer_params)
-        redirect_to cart_admin_order_url(@order)
-      end
 
       def edit
         require_ship_address
@@ -161,7 +162,7 @@ module Spree
       def order_params
         {
           created_by_id: spree_current_user.try(:id),
-          frontend_viewable: false,
+          frontend_viewable: params.dig(:order, :frontend_viewable) == "1",
           store_id: current_store.try(:id)
         }.with_indifferent_access
       end
