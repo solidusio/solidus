@@ -1,0 +1,13 @@
+<%= render 'shared/error_messages', target: @user %>
+
+<section class="wrapper grid-container md:divide-x divide-black">
+  <div class="col-span-6 login-or-guest order-2 md:order-1 border-t border-black md:border-none">
+    <%= render template: 'user_sessions/new' %>
+  </div>
+
+  <% if Spree::Config[:allow_guest_checkout] %>
+    <div class="col-span-6 order-1 md:order-2">
+      <%= render 'checkout_guest_sessions/form' %>
+    </div>
+  <% end %>
+</section>

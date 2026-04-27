@@ -1,0 +1,23 @@
+<%
+  order = order_form.object
+
+  is_order_empty = (
+    order.adjustments.nonzero.exists? ||
+    order.line_item_adjustments.nonzero.exists? ||
+    order.shipment_adjustments.nonzero.exists? ||
+    order.shipments.any?
+  )
+%>
+
+<section class="flex flex-col">
+  <%= render(
+    partial: 'carts/cart_item',
+    collection: order.line_items,
+    as: :line_item,
+    locals: { order_form: order_form }
+  ) %>
+
+  <%# if is_order_empty %>
+    <%#= render 'carts/cart_adjustments' %>
+  <%# end %>
+</section>

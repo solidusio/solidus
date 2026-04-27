@@ -1,0 +1,25 @@
+<% promotions = product.possible_promotions %>
+
+<% if promotions.any? %>
+  <section class="product-promotions">
+    <h2><%= t('spree.promotions') %></h2>
+
+    <% promotions.each do |promotion| %>
+      <article>
+        <header>
+          <h3><%= promotion.name %></h3>
+        </header>
+
+        <p><%= promotion.description %></p>
+
+        <% if promotion.products.any? %>
+          <ul>
+            <% promotion.products.each do |product| %>
+              <li><%= link_to product.name, product_path(product) %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </article>
+    <% end %>
+  </section>
+<% end %>

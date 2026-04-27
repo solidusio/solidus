@@ -1,0 +1,30 @@
+<article class="order-item flex gap-y-5 gap-x-4 pb-5 last:border-b-[1px] last:border-b-gray-mid last:pb-6">
+  <div class="order-item__image flex justify-center items-center bg-gray-50 rounded-lg max-w-[70px] max-h-[70px] w-full h-full aspect-square md:rounded-xl lg:max-w-[90px] lg:max-h-[90px]">
+    <%= link_to(
+      render(ImageComponent.new(
+        image: item.variant.gallery.images.first || item.variant.product.gallery.images.first,
+        size: :small
+      )),
+      item.variant.product
+    ) %>
+  </div>
+
+  <div class="flex items-start justify-between w-full">
+    <div class="flex flex-col gap-y-2 lg:pt-3">
+      <%= render(
+        'orders/item_info',
+        line_item: item,
+        stock_info: false,
+        variant: item.variant,
+        classes: ["!gap-y-2 [&>h3]:text-body [&>h3]:font-sans-md"]
+      ) %>
+
+      <div class="order-item__price-single text-body-sm">
+        <%= item.single_money.to_html %> (<span class="text-body-2xs">&#10005;</span> <%= item.quantity %>)
+      </div>
+    </div>
+    <div class="order-item__price">
+      <strong><%= item.display_amount.to_html %></strong>
+    </div>
+  </div>
+</article>

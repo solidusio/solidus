@@ -1,0 +1,11 @@
+<div class="col-span-full min-h-[50vh]">
+  <h1 class="font-serif text-h4 mb-5 md:text-h3">
+    <%= t('spree.your_cart_is_empty') %>
+  </h1>
+
+  <p class="text-body-sm mb-9 md:mb-14 md:text-body">
+    You have no items in your shopping cart.
+  </p>
+  
+  <%= render partial: "shared/call_to_action", :locals => { :label => t('spree.continue_shopping'), :url => products_path } %>
+</div>

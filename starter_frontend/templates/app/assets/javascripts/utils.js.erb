@@ -1,0 +1,18 @@
+window.Solidus = {};
+
+Solidus.mountedAt = () => {
+  return '<%= Rails.application.routes.url_helpers.spree_path(trailing_slash: true) %>';
+};
+
+Solidus.pathFor = (path) => {
+  const hostname = window.location.hostname;
+  const protocol = window.location.protocol;
+  const port = window.location.port;
+  const locationOrigin = protocol + '//' + hostname + (port ? ':' + port : '');
+  return locationOrigin + Solidus.mountedAt() + path;
+};
+
+Solidus.routes = {
+  states_search: Solidus.pathFor('api/states'),
+  apply_coupon_code: (order_id) => Solidus.pathFor('api/orders/' + order_id + '/coupon_codes')
+};

@@ -1,0 +1,114 @@
+<%
+  base_classes = 'flex flex-col gap-y-3 border-b-[1px] pb-6 border-b-gray-mid md:gap-y-6'
+  classes = defined?(additional_classes) && additional_classes.present? ? "#{base_classes} #{additional_classes}" : base_classes
+%>
+
+<div class="address-inputs <%= classes %>">
+  <div class="text-input">
+    <%= form.label :name, "#{I18n.t("spree.name")}:" %>
+    <%= form.text_field :name, required: true, autofocus: true, autocomplete: "#{address_type} given-name" %>
+  </div>
+
+  <% if Spree::Config[:company] %>
+    <div class="text-input">
+      <%= form.label :company, "#{I18n.t("spree.company")}:" %>
+      <%= form.text_field :company, autocomplete: "#{address_type} organization" %>
+    </div>
+  <% end %>
+
+  <div class="text-input">
+    <%= form.label :address1, "#{I18n.t("spree.street_address")}:" %>
+    <%= form.text_field :address1, required: true, autocomplete: "#{address_type} address-line1" %>
+  </div>
+
+  <div class="text-input">
+    <%= form.label :address2, "#{I18n.t("spree.street_address_2")}:" %>
+    <%= form.text_field :address2, autocomplete: "#{address_type} address-line2" %>
+  </div>
+
+  <div class="text-input">
+    <%= form.label :city, "#{I18n.t("spree.city")}:" %>
+    <%= form.text_field :city, required: true, autocomplete: "#{address_type} address-level2" %>
+  </div>
+
+  <div class="flex flex-col gap-3 md:gap-6 md:flex-row">
+    <div class="select-input w-full">
+      <%= form.label :country_id, "#{I18n.t("spree.country")}:" %>
+
+      <%= form.collection_select(
+        :country_id,
+        available_countries,
+        :id,
+        :name,
+        {},
+        autocomplete: "#{address_type} country-name",
+        class: 'js-trigger-state-change w-full',
+        required: true,
+        "data-state-container": "##{address_type} .js-address-fields"
+      ) %>
+    </div>
+
+    <% if Spree::Config[:address_requires_state] %>
+      <% have_states = !address.country.states.empty? %>
+
+      <span class="js-address-fields w-full" style="display: none;">
+        <div class="select-input w-full">
+          <%= form.label :state_id, "#{I18n.t("spree.state")}:" %>
+
+          <%= form.collection_select(
+            :state_id,
+            address.country.states,
+            :id,
+            :name,
+            { include_blank: true },
+            autocomplete: "#{address_type} address-level1",
+            class: 'required w-full',
+            disabled: !have_states,
+            required: false
+          ) %>
+        </div>
+
+        <%= form.text_field(
+          :state_name,
+          class: !have_states ? 'required' : '',
+          style: have_states ? 'display: none;' : '',
+          disabled: have_states,
+          autocomplete: "#{address_type} address-level1"
+        ) %>
+      </span>
+      <noscript>
+        <%= form.text_field(
+          :state_name,
+          class: 'required',
+          autocomplete: "#{address_type} address-level1",
+          required: true
+        ) %>
+      </noscript>
+    <% end %>
+  </div>
+
+  <div class="text-input">
+    <%= form.label :zipcode, "#{I18n.t("spree.zip")}:" %>
+
+    <%= form.text_field :zipcode,
+      required: address.require_zipcode?,
+      autocomplete: "#{address_type} postal-code"
+    %>
+  </div>
+
+  <div class="text-input">
+    <%= form.label :phone, "#{I18n.t("spree.phone")}:" %>
+
+    <%= form.telephone_field :phone,
+      required: address.require_phone?,
+      autocomplete: "#{address_type} home tel"
+    %>
+  </div>
+
+  <% if Spree::Config[:alternative_shipping_phone] %>
+    <div class="text-input">
+      <%= form.label :alternative_phone, "#{I18n.t("spree.alternative_phone")}:" %>
+      <%= form.telephone_field :alternative_phone, autocomplete: "#{address_type} tel" %>
+    </div>
+  <% end %>
+</div>

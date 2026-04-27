@@ -1,0 +1,32 @@
+<% @body_id = 'cart' %>
+
+<article class="cart-page wrapper grid-container h-auto my-7 lg:my-14" data-controller="cart-page">
+  <% if @order.line_items.empty? %>
+    <%= render 'carts/cart_empty' %>
+  <% else %>
+    <%= form_for @order, url: cart_path, html: {
+      id: 'update-cart',
+      class: 'col-span-full lg:col-span-9 2xl:col-span-8',
+      'data-cart-page-target': 'form',
+      'data-action': 'submit->cart-page#disableUpdateButton'
+    } do |order_form| %>
+      <% order = order_form.object %>
+      <div class="col-span-full mb-2 lg:mb-0">
+        <%= render 'carts/cart_header', order_form: order_form %>
+        <%= render 'shared/error_messages', target: order %>
+        <%= render 'carts/cart_items', order_form: order_form %>
+        <%= render 'carts/cart_secondary_actions', order_form: order_form %>
+      </div>
+    <% end %>
+    
+    <div class="col-span-full flex flex-col justify-between gap-y-8 p-6 bg-gray-50 h-full text-black dark:bg-gray-800 dark:text-sand lg:flex-col lg:col-span-3 2xl:col-start-10">
+      <%= render 'orders/coupon_code' %>
+      <%= form_for @order, url: cart_path, html: {
+        id: 'checkout-button-form',
+      } do |order_form| %>
+        <%= render 'carts/cart_footer', order_form: order_form %>
+      <% end %>
+    </div>
+
+  <% end %>
+</article>

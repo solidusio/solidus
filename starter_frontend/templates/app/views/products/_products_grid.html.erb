@@ -1,0 +1,11 @@
+<ul class="grid-container gap-7 products-grid">
+  <% products.each do |product| %>
+    <% cache [I18n.locale, current_pricing_options, taxon, product] do %>
+      <%= render ProductCardComponent.new(
+        product,
+        price: product.price_for_options(current_pricing_options),
+        additional_classes: "col-span-full md:col-span-6 lg:col-span-4"
+      ) %>
+    <% end %>
+  <% end %>
+</ul>

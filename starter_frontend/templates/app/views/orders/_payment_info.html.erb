@@ -1,0 +1,29 @@
+<div class="payment-info">
+  <div class="flex items-center gap-x-3 mb-6">
+    <h3 class="order-shipments__title font-sans-md text-body lg:text-body-md">
+      <%= t('spree.payment_information') %>
+    </h3>
+
+    <%= link_to(
+      t('spree.actions.edit'),
+      checkout_state_path(:payment),
+      { class: 'payment-info__edit underline text-body-md' }
+    ) unless @order.completed? %>
+  </div>
+
+  <% order.payments.valid.each do |payment| %>
+    <ul class="payment-info__info flex flex-col gap-y-2">
+      <li>
+        <%= render partial_name_with_fallback(
+          'orders/payment_info',
+          payment.payment_method.partial_name,
+          'default'
+        ), payment: payment %>
+      </li>
+      <li>
+        <strong><%= payment.display_amount %></strong>
+        (<%= t(payment.state, scope: 'spree.payment_states') %>)
+      </li>
+    </ul>
+  <% end %>
+</div>

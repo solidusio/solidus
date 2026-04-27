@@ -1,0 +1,3 @@
+web: env RUBY_DEBUG_OPEN=true bin/rails server
+watch: bin/guard -i
+css: bin/rails tailwindcss:watch

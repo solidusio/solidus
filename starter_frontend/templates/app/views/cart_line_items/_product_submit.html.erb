@@ -1,0 +1,11 @@
+<div class="product-submit">
+  <%= render 'cart_line_items/product_availability', product: product %>
+
+  <div class="flex items-center justify-start gap-x-7">
+    <div class="text-input">
+      <%= number_field_tag "quantity", 1, step: 1, class: 'min-w-[100px]', :onchange => "addToCartButtonPriceChangeHandler('#{product.price}')" %>
+    </div>
+    <% cta_label = content_tag(:span, "#{t('spree.add_to_cart')} — ") + content_tag(:span, display_price(product), id: 'cta_price') %>
+    <%= render partial: "shared/call_to_action", :locals => { :label => cta_label, :id => 'add-to-cart-button', :url => nil } %>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<%
+  schema_properties = {
+    itemprop: 'offers',
+    itemscope: true,
+    itemtype: 'http://schema.org/Offer'
+  }
+%>
+
+<%= form_for :order, url: cart_line_items_path, html: schema_properties, :onload => "setupToCartBtnPriceChangeEvt(#{product.price})" do |f| %>
+  <% if product_variants_with_options(product).any? %>
+    <div class="variant-container">
+      <% sorted_option_types(product).each_with_index do |option_type, i| %>
+        <div class="variant-selection mb-12">
+          <%= render 'cart_line_items/product_selection/option_type', product: product, option_type: option_type, index: i %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= render 'cart_line_items/product_variants', product: product %>
+
+  <% if product.price %>
+    <%= render 'cart_line_items/product_submit', product: product %>
+  <% else %>
+    <div id="product-price">
+      <p data-js="price" itemprop="price">
+        <%= t('spree.product_not_available_in_this_currency') %>
+      </p>
+    </div>
+  <% end %>
+<% end %>

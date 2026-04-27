@@ -1,0 +1,26 @@
+<div class="delivery-step">
+  <fieldset class="delivery-step__delivery">
+    <%= form.fields_for :shipments do |ship_form| %>
+      <%= render 'checkouts/steps/delivery_step/proposed_shipment', ship_form: ship_form %>
+    <% end %>
+
+    <% if differentiator.try(:missing?) %>
+      <%= render "checkouts/steps/delivery_step/unshippable_items", items: differentiator.missing %>
+    <% end %>
+
+    <% if Spree::Config[:shipping_instructions] %>
+      <div class="textarea-input">
+        <%= form.label :special_instructions, "#{I18n.t('spree.shipping_instructions')}:" %>
+        <%= form.text_area :special_instructions %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <div class="flex justify-end py-6">
+    <%= form.button(
+      I18n.t("spree.save_and_continue"),
+      class: 'button-primary',
+      name: :commit
+    ) %>
+  </div>
+</div>
