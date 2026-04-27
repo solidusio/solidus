@@ -19,6 +19,7 @@ jobs:
     env:
       DB: sqlite
       RUBY_VERSION: "3.2"
+      SOLIDUS_STARTER_FRONTEND_TEMPLATE: ${{ github.workspace }}/starter_frontend/template.rb
     steps:
       - uses: actions/checkout@v6
       - name: Install libvips
