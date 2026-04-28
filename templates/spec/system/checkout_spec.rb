@@ -593,14 +593,14 @@ RSpec.describe 'Checkout', :js, type: :system do
       Spree::Order.checkout_flow(&@old_checkout_flow)
     end
 
-    it "goes right payment step and place order just fine" do
+    it "goes right to the payment step and places the order" do
       expect(page).to have_current_path(checkout_state_path('payment'))
 
       choose "Credit Card"
       fill_in_credit_card
       click_button "Save and Continue"
+      expect(page).to have_text('Put your terms and conditions here')
 
-      expect(current_path).to eq checkout_state_path('confirm')
       check 'Agree to Terms of Service'
       click_button "Place Order"
     end
