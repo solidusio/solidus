@@ -21,67 +21,36 @@ RSpec.describe 'Address', type: :system do
   end
 
   context 'country requires state', js: true do
-    let!(:canada) { create(:country, name: 'Canada', states_required: true, iso: 'CA') }
-    let!(:uk) { create(:country, name: 'United Kingdom', states_required: true, iso: 'GB') }
+    let!(:has_states_country) { create(:country, name: 'Canada', states_required: true, iso: 'CA') }
+    let!(:no_states_country) { create(:country, name: 'United Kingdom', states_required: true, iso: 'GB') }
+    let!(:states_not_required_country) { create(:country, name: 'France', states_required: false, iso: 'FR') }
 
-    before { stub_spree_preferences(default_country_iso: uk.iso) }
+    before {
+      stub_spree_preferences(default_country_iso: has_states_country.iso)
 
-    context 'but has no state' do
-      it 'shows the state input field' do
-        checkout_as_guest
+      create(:state, name: 'Ontario', country: has_states_country)
+    }
 
-        within('#billing') do
-          select canada.name, from: 'Country'
-          expect(page).to have_no_css(@state_select_css)
-          expect(page).to have_css("#{@state_name_css}.required")
-        end
-      end
-    end
-
-    context 'and has state' do
-      before { create(:state, name: 'Ontario', country: canada) }
-
-      it 'shows the state collection selection' do
-        checkout_as_guest
-
-        within('#billing') do
-          select canada.name, from: 'Country'
-          expect(page).to have_no_css(@state_name_css)
-          expect(page).to have_css("#{@state_select_css}.required")
-        end
-      end
-    end
-
-    context 'user changes to country without states required' do
-      let!(:france) { create(:country, name: 'France', states_required: false, iso: 'FR') }
-
-      it 'clears the state name' do
-        checkout_as_guest
-        within('#billing') do
-          select canada.name, from: 'Country'
-
-          page.find(@state_name_css).set('Toscana')
-
-          select france.name, from: 'Country'
-        end
-
-        expect(page).to have_no_css(@state_name_css)
-        expect(page).to have_no_css(@state_select_css)
-      end
-    end
-  end
-
-  context 'country does not require state', js: true do
-    let!(:france) { create(:country, name: 'France', states_required: false, iso: 'FR') }
-
-    it 'shows a disabled state input field' do
+    scenario 'switching between countries with and without states and states required' do
       checkout_as_guest
 
       within('#billing') do
-        select france.name, from: 'Country'
+        select "United Kingdom", from: 'Country'
 
+        expect(page).to have_css("#{@state_name_css}.required")
+        expect(page).to have_no_css(@state_select_css)
+
+        page.find(@state_name_css).set('Devon')
+
+        select "Canada", from: 'Country'
+
+        expect(page).to have_css("#{@state_select_css}.required")
         expect(page).to have_no_css(@state_name_css)
+
+        select "France", from: 'Country'
+
         expect(page).to have_css("#{@state_select_css}[disabled]", visible: false)
+        expect(page).to have_no_css(@state_name_css)
       end
     end
   end
