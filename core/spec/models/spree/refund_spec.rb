@@ -104,9 +104,9 @@ RSpec.describe Spree::Refund, type: :model do
           expect(refund.reload.amount).to eq amount
         end
 
-        it "creates a log entry" do
+        it "creates a payment log entry" do
           subject
-          expect(refund.reload.log_entries).to be_present
+          expect(payment.reload.log_entries).to be_present
         end
 
         it "attempts to process a transaction" do
