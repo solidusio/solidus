@@ -353,7 +353,7 @@ RSpec.describe SolidusPromotions::Benefit do
 
         it { is_expected.to be true }
 
-        context "with dry_run true" do
+        context "with dry_run true", :silence_deprecations do
           let(:dry_run) { true }
 
           it { is_expected.to be true }
@@ -373,7 +373,7 @@ RSpec.describe SolidusPromotions::Benefit do
       let(:promotable) { order.line_items.first }
       it { is_expected.to be true }
 
-      context "with dry_run true" do
+      context "with dry_run true", :silence_deprecations do
         let(:dry_run) { true }
 
         it { is_expected.to be true }
@@ -391,7 +391,7 @@ RSpec.describe SolidusPromotions::Benefit do
 
         it { is_expected.to be false }
 
-        context "with dry_run true" do
+        context "with dry_run true", :silence_deprecations do
           let(:dry_run) { true }
 
           it { is_expected.to be false }
@@ -425,14 +425,14 @@ RSpec.describe SolidusPromotions::Benefit do
 
         it { is_expected.to be false }
 
-        it "only asks the first condition and does not collect eligibility errors" do
+        it "only asks the first condition and does not collect eligibility errors", :silence_deprecations do
           expect(taxon_condition).to receive(:order_eligible?).and_call_original
           expect(product_condition).not_to receive(:order_eligible?)
           subject
           expect(promotion.eligibility_results.error_messages).to be_empty
         end
 
-        context "if dry_run is true" do
+        context "if dry_run is true", :silence_deprecations do
           let(:dry_run) { true }
           it { is_expected.to be false }
 

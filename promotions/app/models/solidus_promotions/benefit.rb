@@ -270,6 +270,12 @@ module SolidusPromotions
     # @param dry_run [Boolean] whether to collect detailed eligibility information
     # @return [Boolean] true when all applicable conditions are eligible
     def eligible_by_applicable_conditions?(promotable, dry_run: false)
+      if dry_run
+        Spree.deprecator.warn <<~MSG
+          Passing `dry_run` to `#eligible_by_applicable_conditions` is deprecated. If you want to check promotion
+          eligibility, use the `SolidusPromotions::PromotionEligibilityChecker` service object instead.
+        MSG
+      end
       conditions.map do |condition|
         next unless condition.applicable?(promotable)
         eligible = condition.eligible?(promotable)

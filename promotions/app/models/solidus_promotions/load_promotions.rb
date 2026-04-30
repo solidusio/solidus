@@ -3,6 +3,12 @@
 module SolidusPromotions
   class LoadPromotions
     def initialize(order:, dry_run_promotion: nil)
+      if dry_run_promotion
+        Spree.deprecator.warn <<~MSG
+          Passing `dry_run_promotion` to `SolidusPromotions::LoadPromotions` is deprecated.
+          Use `Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call` instead.
+        MSG
+      end
       @order = order
       @dry_run_promotion = dry_run_promotion
     end

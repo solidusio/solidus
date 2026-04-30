@@ -152,6 +152,7 @@ module SolidusPromotions
     def eligibility_results
       @eligibility_results ||= SolidusPromotions::EligibilityResults.new(self)
     end
+    deprecate eligibility_results: "Please use the `SolidusPromotions::PromotionEligibilityChecker` service object instead", deprecator: Spree.deprecator
 
     private
 
