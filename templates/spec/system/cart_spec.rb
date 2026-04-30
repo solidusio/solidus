@@ -18,6 +18,7 @@ RSpec.describe 'Cart', type: :system do
     visit products_path
     click_link "Solidus mug set"
     click_button "add-to-cart-button"
+    expect(page).to have_text "Shopping Cart"
 
     # prevent form submit to verify button is disabled
     page.execute_script("document.getElementById('update-cart').onsubmit = function(){return false;}")
@@ -29,13 +30,16 @@ RSpec.describe 'Cart', type: :system do
 
   it 'allows you to remove an item from the cart', js: true do
     create(:product, name: "Solidus mug set")
+
     visit products_path
+
     click_link "Solidus mug set"
     click_button "add-to-cart-button"
     click_button "Remove"
+
+    expect(page).to have_content("Your cart is empty")
     expect(page).not_to have_content("Line items quantity must be an integer")
     expect(page).not_to have_content("Solidus mug set")
-    expect(page).to have_content("Your cart is empty")
 
     within "#link-to-cart" do
       expect(page.text).to eq('')
@@ -68,7 +72,7 @@ RSpec.describe 'Cart', type: :system do
       visit product_path(product)
       click_button "add-to-cart-button"
 
-      visit cart_path
+      expect(page).to have_content("Shopping Cart")
       expect(page).to have_content(product.name)
     end
   end
