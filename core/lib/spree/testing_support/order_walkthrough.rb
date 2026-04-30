@@ -10,7 +10,7 @@ module Spree
       def up_to(state, user: nil)
         # Need to create a valid zone too...
         @zone = ::FactoryBot.create(:zone)
-        @country = ::FactoryBot.create(:country)
+        @country = Spree::Country.find_by(iso: "US") || ::FactoryBot.create(:country)
         @state = ::FactoryBot.create(:state, country: @country)
 
         @zone.members << Spree::ZoneMember.create(zoneable: @country)
