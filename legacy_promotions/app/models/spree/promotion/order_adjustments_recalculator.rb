@@ -70,7 +70,10 @@ module Spree
 
           adjustment.eligible = calculate_eligibility(adjustment)
 
-          adjustment.save!(validate: false) if persist
+          if persist
+            adjustment.save!(validate: false)
+            adjustment.adjustable.line_item_actions.find_all(&:changed?).each(&:save!) if adjustment.adjustable.respond_to?(:line_item_actions)
+          end
         end
         adjustment.amount
       end
