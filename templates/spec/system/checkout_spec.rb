@@ -111,6 +111,7 @@ RSpec.describe 'Checkout', :js, type: :system do
 
         add_mug_to_cart
         click_button "Checkout"
+        expect(page).to have_content("Billing Address")
         # We need an order reload here to get newly associated addresses.
         # Then we go back to address where we are supposed to be redirected.
         order.reload
