@@ -104,7 +104,14 @@ module Spree
       end
 
       def product_includes
-        [:variant_images, {variants: [:images], master: [:images, :prices]}]
+        image_preloads = Spree::Image.attachment_preloads
+        [
+          {variant_images: image_preloads},
+          {
+            variants: [{images: image_preloads}],
+            master: [{images: image_preloads}, :prices]
+          }
+        ]
       end
 
       def clone_object_url(resource)
