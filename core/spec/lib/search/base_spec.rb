@@ -38,6 +38,14 @@ RSpec.describe Spree::Core::Search::Base do
       expect(subject.first).to eq @product1
       expect(subject.first.images).to eq @product1.master.images
     end
+
+    it "preloads images so accessing them does not trigger additional queries" do
+      results = subject.to_a
+
+      expect {
+        results.first.images.to_a
+      }.not_to make_database_queries
+    end
   end
 
   context "when ascend_by_master_price scope is included in the initialization params" do

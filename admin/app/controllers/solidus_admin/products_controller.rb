@@ -14,7 +14,7 @@ module SolidusAdmin
     def index
       products = apply_search_to(
         Spree::Product.includes(
-          :variant_images,
+          {variant_images: Spree::Image.attachment_preloads},
           master: :prices,
           variants: :prices
         ),

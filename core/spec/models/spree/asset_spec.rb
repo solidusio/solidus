@@ -22,4 +22,38 @@ RSpec.describe Spree::Asset, type: :model do
       expect(asset2.position).to eq 1
     end
   end
+
+  describe ".attachment_preloads" do
+    context "when the class uses ActiveStorage" do
+      let(:asset_class) do
+        Class.new(Spree::Asset) do
+          include Spree::Image::ActiveStorageAttachment
+        end
+      end
+
+      it "returns the nested attachment + blob + variant preloads" do
+        expect(asset_class.attachment_preloads).to eq(
+          [{attachment_attachment: {blob: {variant_records: {image_attachment: :blob}}}}]
+        )
+      end
+    end
+
+    context "when the class uses Paperclip" do
+      let(:asset_class) do
+        Class.new(Spree::Asset) do
+          include Spree::Image::PaperclipAttachment
+        end
+      end
+
+      it "returns an empty array (no-op nested preload)" do
+        expect(asset_class.attachment_preloads).to eq([])
+      end
+    end
+
+    context "when called on Spree::Asset itself" do
+      it "returns an empty array since no attachment is configured" do
+        expect(Spree::Asset.attachment_preloads).to eq([])
+      end
+    end
+  end
 end
