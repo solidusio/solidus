@@ -9,9 +9,9 @@ module Spree
 
     def compute(object = nil)
       if object && preferred_currency.casecmp(object.currency).zero?
-        preferred_amount
+        BigDecimal(preferred_amount.to_s)
       else
-        0
+        BigDecimal("0")
       end
     end
   end
