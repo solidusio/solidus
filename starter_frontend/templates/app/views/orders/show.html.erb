@@ -1,0 +1,25 @@
+<div class="order-page wrapper">
+  <h1 class="order-page__title font-serif-md my-6 text-h4 lg:text-h5">
+    <%= accurate_title %>
+  </h1>
+
+  <% if order_just_completed?(@order) %>
+    <p class="order-page__completed mb-6">
+      <%= t('spree.thank_you_for_your_order') %>
+    </p>
+  <% end %>
+
+  <fieldset class="order-page__info" id="order_summary">
+    <%= render 'order_details', order: @order %>
+  </fieldset>
+
+  <div class="order-page__actions mb-6 p-6 text-end lg:text-center">
+    <%= render partial: "shared/call_to_action", :locals => { :label => t('spree.back_to_store'), :url => root_path } %>
+
+    <% unless order_just_completed?(@order) %>
+      <% if spree_current_user && respond_to?(:account_path) %>
+        <%= render partial: "shared/call_to_action", :locals => { :label => t('spree.my_account'), :type => 'secondary', :url => account_path } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

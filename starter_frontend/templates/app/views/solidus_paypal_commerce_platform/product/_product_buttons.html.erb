@@ -1,0 +1,3 @@
+<% Spree::PaymentMethod.available_to_users.select{ |payment_method| payment_method.try(:display_on_product_page) }.each do |payment_method| %>
+  <%= render partial: "spree/products/payment/#{payment_method.product_page_partial_name}", locals: {payment_method: payment_method} %>
+<% end %>

@@ -1,0 +1,16 @@
+<% order = order_form.object %>
+
+<footer class="cart-footer">
+  <%= render 'carts/cart_adjustments' %>
+  <p class="cart-footer__total flex justify-between mb-3 text-body-20 p-2">
+    <%= t('spree.total') %>: <span class="font-sans-md"><%= order.display_total %></span>
+  </p>
+  <div class="cart-footer__primary-action">
+    <%= order_form.button(
+      I18n.t('spree.checkout'),
+      class: 'button-primary w-full',
+      id: 'checkout-link',
+      name: :checkout
+    ) %>
+  </div>
+</footer>

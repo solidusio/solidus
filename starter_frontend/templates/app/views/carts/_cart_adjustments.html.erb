@@ -1,0 +1,47 @@
+<div class="col-span-full flex flex-col gap-y-3 p-3 last:border-b-gray-200 border-b-[1px] text-body-sm" id="cart_adjustments">
+  <%= render(
+    "carts/cart_amount_row",
+    type: t('spree.cart_subtotal', count: @order.line_items.sum(:quantity)),
+    amount: @order.display_item_total
+  ) %>
+
+  <% if @order.line_item_adjustments.exists? %>
+    <% @order.line_item_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+      <% if adjustments.sum(&:amount) != 0 %>
+        <%= render(
+          "cart_adjustment",
+          type: t('spree.promotion'),
+          label: label,
+          adjustments: adjustments
+        ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% @order.all_adjustments.tax.eligible.group_by(&:label).each do |label, adjustments| %>
+    <%= render(
+      "carts/cart_adjustment",
+      type: t('spree.tax'),
+      label: label,
+      adjustments: adjustments
+    ) %>
+  <% end %>
+
+  <% @order.shipments.each do |shipment| %>
+    <%= render(
+      "carts/cart_amount_row",
+      type: t('spree.shipping'),
+      label: shipment.shipping_method.name,
+      amount: shipment.display_total_before_tax
+    ) %>
+  <% end %>
+
+  <% @order.adjustments.eligible.group_by(&:label).each do |label, adjustments| %>
+    <%= render(
+      "carts/cart_adjustment",
+      type: t('spree.adjustment'),
+      label: label,
+      adjustments: adjustments
+    ) %>
+  <% end %>
+</div>

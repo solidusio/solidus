@@ -1,0 +1,52 @@
+<div class="order-details">
+  <div class="order-details__info grid-container py-6 border-b-[1px] border-b-gray-200 dark:border-b-400">
+    <% if order.has_checkout_step?("address") %>
+      <div class="col-span-full lg:col-span-3">
+        <%= render(
+          'orders/address_overview',
+          address: order.bill_address,
+          title: t('spree.billing_address')
+        ) %>
+      </div>
+    <% end %>
+    
+    <% if order.has_checkout_step?("delivery") %>
+      <div class="col-span-full lg:col-span-3">
+        <%= render(
+          'orders/address_overview',
+          address: order.ship_address,
+          title: t('spree.shipping_address')
+        ) %>
+      </div>
+    <% end %>
+
+    <% if order.has_checkout_step?("delivery") %>
+      <div class="col-span-full lg:col-span-3">
+        <%= render(
+          'orders/order_shipments',
+          order: order,
+          title: t('spree.shipments')
+        ) %>
+      </div>
+    <% end %>
+
+    <% if order.has_checkout_step?("payment") %>
+      <div class="col-span-full lg:col-span-3">
+        <%= render(
+          'orders/payment_info',
+          order: order
+        ) %>
+      </div>
+    <% end %>
+  </div>
+
+  <%
+    wrapper_grid_classes = ["col-span-full bg-sand border-[1px] border-gray-300 p-3 text-black lg:p-6 lg:col-start-2 lg:col-span-10 xl:col-start-3 xl:col-span-8"]
+    wrapper_grid_dark_classes = ["dark:bg-black dark:border-gray-400 dark:text-sand"]
+  %>
+
+  <div class="grid-container gap-0 my-6">
+    <%= render 'orders/order_items', order: order, classes: ["rounded-t-xl border-b-0", wrapper_grid_classes, wrapper_grid_dark_classes] %>
+    <%= render 'orders/line_items', order: order, classes: ["rounded-b-xl border-t-0 py-0", wrapper_grid_classes, wrapper_grid_dark_classes] %>
+  </div>
+</div>

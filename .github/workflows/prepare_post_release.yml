@@ -44,11 +44,6 @@ jobs:
         run: |
           bin/release/bump-docker-image-version \
             ${{ steps.pipeline_context.outputs.next_candidate_dev_version }}
-      - name: "Bump installer starter frontend version"
-        if: github.ref_name == 'main'
-        run: |
-          bin/release/bump-starter-frontend-version \
-            main
       - name: "Publish release draft & tag last commit"
         run: |
           bin/release/publish-release \

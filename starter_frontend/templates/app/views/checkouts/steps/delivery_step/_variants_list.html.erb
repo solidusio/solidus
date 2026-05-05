@@ -1,0 +1,13 @@
+<ul class="variants-list">
+  <% variants.each do |variant, quantity| %>
+    <li>
+      <%= render(ImageComponent.new(
+        image: variant.gallery.images.first || variant.product.gallery.images.first,
+        size: :mini
+      )) %>
+    </li>
+    <li><%= variant.name %></li>
+    <li><%= quantity %></li>
+    <li><%= display_price(variant) %></li>
+  <% end %>
+</ul>

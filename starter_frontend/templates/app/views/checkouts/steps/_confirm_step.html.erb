@@ -1,0 +1,31 @@
+<section class="confirm-step">
+  <fieldset class="confirm-step__info">
+    <legend class="font-serif text-h5 md:text-h4">
+      <%= t('spree.confirm') %>
+    </legend>
+
+    <%= render 'orders/order_details', order: @order %>
+  </fieldset>
+
+  <div class="terms_and_conditions grid-container">
+    <div class="col-span-full lg:col-start-2 lg:col-span-10 xl:col-start-3 xl:col-span-8">
+      <%= render 'checkouts/terms_and_conditions' %>
+      <%= label_tag :accept_terms_and_conditions, class: 'checkbox-input mt-3' do %>
+        <%= check_box_tag :accept_terms_and_conditions, 'accepted', false %>
+        <%= t('spree.agree_to_terms_of_service') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex justify-end py-6 lg:justify-center">
+    <%= button_tag(
+      I18n.t('spree.place_order'),
+      class: 'button-primary',
+      name: :commit,
+    ) %>
+  </div>
+</section>
+
+<script>
+  Solidus.disableSaveOnClick();
+</script>

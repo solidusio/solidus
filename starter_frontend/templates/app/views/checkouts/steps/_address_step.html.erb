@@ -1,0 +1,59 @@
+<% order = form.object %>
+
+<div class="address-step flex flex-col gap-y-6">
+  <fieldset class="address-step__billing contents" id="billing">
+    <legend class="font-serif text-h5 md:text-h4">
+      <%= t("spree.billing_address") %>
+    </legend>
+
+    <%= form.fields_for :bill_address do |bill_form| %>
+      <%= render(
+        "checkouts/steps/address_step/address_inputs",
+        form: bill_form,
+        address_type: "billing",
+        address: order.bill_address,
+      ) %>
+    <% end %>
+  </fieldset>
+
+  <fieldset class="address-step__shipping border-b-[1px] pb-6 border-b-gray-mid" id="shipping">
+    <legend class="font-serif mb-6 text-h5 md:text-h4">
+      <%= t('spree.shipping_address') %>
+    </legend>
+
+    <%= form.fields_for :ship_address do |ship_form| %>
+      <%= label_tag 'order_use_billing', class: 'checkbox-input mb-5' do %>
+        <%= check_box_tag('order[use_billing]', 1, order.shipping_eq_billing_address?) %>
+        <%= t('spree.use_billing_address') %>
+      <% end %>
+
+      <%= render(
+        "checkouts/steps/address_step/address_inputs",
+        form: ship_form,
+        address_type: "shipping",
+        address: order.ship_address,
+        additional_classes: '!border-b-0'
+       ) %>
+    <% end %>
+  </fieldset>
+
+  <div class="address-step__actions flex justify-center flex-col gap-y-6 py-6 md:flex-row md:justify-between md:items-center">
+    <% if spree_current_user %>
+      <%= label_tag 'save-user-address', class: 'checkbox-input' do %>
+        <%= check_box_tag(
+          :save_user_address,
+          1,
+          spree_current_user.respond_to?(:persist_order_address),
+          id: 'save-user-address'
+        ) %>
+        <%= I18n.t("spree.save_my_address") %>
+      <% end %>
+    <% end %>
+
+    <%= form.button(
+      I18n.t("spree.save_and_continue"),
+      class: 'button-primary',
+      name: :commit
+    ) %>
+  </div>
+</div>

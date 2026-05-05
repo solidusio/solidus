@@ -1,0 +1,25 @@
+<article class="wrapper grid-container py-12" id="forgot-password">
+  <div class="col-span-full md:col-start-5 md:col-span-4">
+    <h1 class="font-serif text-h4 md:text-h3 text-center"><%= I18n.t('spree.forgot_password') %></h1>
+
+    <%= form_for Spree::User.new, as: :spree_user, url: reset_password_path, html: { class: "space-y-6 mb-12" } do |f| %>
+      <div class="text-input">
+        <%= f.label :email, "#{t("spree.email")}:" %>
+        <%= f.email_field :email, placeholder: 'name@example.com' %>
+      </div>
+
+      <div class="text-center flex flex-col gap-6 items-center">
+        <%= f.button(
+          t("spree.reset_password"),
+          class: 'w-full w-fit py-3 px-7 rounded-full text-body-sm font-bold leading-none uppercase whitespace-nowrap transiton-colors duration-200 bg-red-500 text-white hover:bg-red-700',
+          name: :commit
+        ) %>
+      </div>
+
+      <div class="mt-12 text-center">
+        <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.create_a_new_account"), signup_path, class:"transition-all duration-300 text-black hover:!text-red-500 dark:text-sand underline" %>
+      </div>
+
+    <% end %>
+  </div>
+</article>

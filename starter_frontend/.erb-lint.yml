@@ -1,0 +1,22 @@
+linters:
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/TrailingBlankLines:
+        Enabled: false
+      Layout/TrailingWhitespace:
+        Enabled: false
+      Naming/FileName:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false
+      Metrics/LineLength:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
+      Rails/OutputSafety:
+        Enabled: false

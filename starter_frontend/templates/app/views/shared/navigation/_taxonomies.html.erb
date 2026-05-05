@@ -1,0 +1,19 @@
+<% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
+
+<nav class="taxonomies flex flex-col">
+  <% cache [I18n.locale, taxonomies, taxon, max_level] do %>
+    <% taxonomies.each do |taxonomy| %>
+      <% cache [I18n.locale, taxonomy, taxon, max_level] do %>
+        <%= render(TaxonsTreeComponent.new(
+          title: t('spree.categories'),
+          root_taxon: taxonomy.root,
+          current_taxon: taxon,
+          max_level: max_level,
+          item_classes: 'mb-2.5 hover:underline underline-offset-8 w-fit flex',
+          current_item_classes: 'underline',
+          title_classes: 'font-sans-md mb-3'
+          )) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</nav>

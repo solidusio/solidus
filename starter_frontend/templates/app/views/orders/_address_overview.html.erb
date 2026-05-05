@@ -1,0 +1,42 @@
+<div class="address-overview">
+  <div class="flex items-center gap-x-3 mb-6">
+    <h3 class="address-overview__title font-sans-md text-body lg:text-body-md">
+      <%= title %>
+    </h3>
+    
+    <%= link_to(
+      t('spree.actions.edit'),
+      checkout_state_path(:address),
+      { class: 'address-overview__edit underline text-body-md' }
+    ) unless @order.completed? %>
+  </div>
+
+  <ul class="address-overview__info flex flex-col gap-y-2">
+    <li><%= address.name %></li>
+    <% unless address.company.blank? %>
+      <li><%= address.company %></li>
+    <% end %>
+    <li><%= address.address1 %></li>
+    <% unless address.address2.blank? %>
+      <li><%= address.address2 %></li>
+    <% end %>
+    <li>
+      <%= address.city %>
+      <%= address.state_text %>
+      <%= address.zipcode %>
+    </li>
+    <li><%= address.country.try(:name) %></li>
+    <% unless address.phone.blank? %>
+      <li>
+        <%= t('spree.phone') %>
+        <%= address.phone %>
+      </li>
+    <% end %>
+    <% unless address.alternative_phone.blank? %>
+      <li>
+        <%= t('spree.alternative_phone') %>
+        <%= address.alternative_phone %>
+      </li>
+    <% end %>
+  </ul>
+</div>

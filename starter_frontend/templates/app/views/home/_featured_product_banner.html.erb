@@ -1,0 +1,14 @@
+<section class="relative my-4 w-full lg:my-12 bg-red-500">
+  <div class="wrapper-mobile-fullwidth">
+    <%= render(ImageComponent.new(
+      image: product.gallery.images.last,
+      size: :full,
+      class: 'w-full object-cover aspect-square md:aspect-auto'
+    )) %>
+    <div class="absolute bottom-0 left-0 right-0 text-center pb-14">
+      <span class="rounded-full px-3 py-1 bg-white text-sm text-black mb-2">New</span>
+      <div class="text-h3 font-serif-md mb-6 text-white md:mb-9 md:text-h2.5"><%= product.name %></div>
+      <%= render "shared/call_to_action", { label: "Shop Now", type: 'secondary', url: product } %>
+    </div>
+  </div>
+</section>

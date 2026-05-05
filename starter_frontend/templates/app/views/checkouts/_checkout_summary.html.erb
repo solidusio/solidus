@@ -1,0 +1,75 @@
+<% dl_classes = 'flex items-center justify-between p-3 [&>dd]:font-sans-md' %>
+
+<section class="checkout-summary p-6 bg-gray-50 h-full text-black dark:bg-gray-800 dark:text-sand" id="checkout-summary">
+  <h2 class="checkout-summary__title font-serif mb-6 text-h6 md:text-h5">
+    <%= t('spree.order_summary') %>
+  </h2>
+
+  <div class="mb-6">
+    <% if order.state == 'payment' %>
+      <%= render 'orders/coupon_code' %>
+    <% end %>
+  </div>
+
+  <dl>
+    <div class="pb-7 border-b-[1px] border-b-gray-200">
+      <div class="checkout-summary__entry <%= dl_classes %>" id="item-total">
+        <dt><%= t('spree.item_total') %>:</dt>
+        <dd><%= order.display_item_total.to_html %></dd>
+      </div>
+
+      <% if order.line_item_adjustments.nonzero.exists? %>
+        <% order.line_item_adjustments.nonzero.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+          <div class="checkout-summary__entry <%= dl_classes %>">
+            <dt><%= label %></dt>
+            <dd><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency).to_html %></dd>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% order.all_adjustments.nonzero.tax.eligible.group_by(&:label).each do |label, adjustments| %>
+        <div class="checkout-summary__entry <%= dl_classes %>">
+          <dt><%= label %></dt>
+          <dd><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency).to_html %></dd>
+        </div>
+      <% end %>
+
+      <% if order.passed_checkout_step?("delivery") && order.shipments.any? %>
+        <div class="checkout-summary__entry <%= dl_classes %>">
+          <dt><%= t('spree.shipping_total') %>:</dt>
+          <dd><%= Spree::Money.new(order.shipments.to_a.sum(&:cost), currency: order.currency).to_html %></dd>
+        </div>
+
+        <% if order.shipment_adjustments.nonzero.exists? %>
+          <% order.shipment_adjustments.nonzero.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+            <div class="checkout-summary__entry <%= dl_classes %>">
+              <dt><%= label %>:</dt>
+              <dd><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency).to_html %></dd>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if order.adjustments.nonzero.non_tax.eligible.exists? %>
+        <div class="checkout-summary__entry <%= dl_classes %> font-sans-md" id="summary-order-charges">
+          <% order.adjustments.nonzero.non_tax.eligible.each do |adjustment| %>
+            <dt><%= adjustment.label %>:</dt>
+            <dd class="text-primary"><%= adjustment.display_amount.to_html %></dd>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if order.total_applicable_store_credit > 0.0 %>
+        <div class="checkout-summary__entry <%= dl_classes %>">
+          <dt><%= t('spree.store_credit.store_credit') %>:</dt>
+          <dd><%= order.display_total_applicable_store_credit.to_html %></dd>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="checkout-summary__total <%= dl_classes %> pt-7">
+      <dt class="text-body-20"><%= t('spree.order_total') %>:</dt>
+      <dd class="text-body-20"><%= order.display_order_total_after_store_credit.to_html %></dd>
+    </div>
+  </dl>
+</section>

@@ -1,0 +1,24 @@
+<% if products.length > 0 %>
+  <section class="wrapper mb-12">
+    <div class="flex items-center justify-between mb-7">
+      <span class="font-serif text-h4 md:text-h3"><%= title %></span>
+      <%= render "shared/call_to_action", { label: "Shop All", type: 'secondary', url: products_path } %>
+    </div>
+
+    <% mobile_classes = 'grid grid-cols-2 gap-4' %>
+    <% desktop_classes = 'md:gap-0 md:flex md:snap-x md:justify-between md:snap-mandatory md:overflow-x-auto md:space-x-6' %>
+
+    <ul class="<%= mobile_classes %> <%= desktop_classes %> no-scrollbar">
+      <% products.each do |product| %>
+        <%= cache [I18n.locale, current_pricing_options, @taxon, product] do %>
+          <%= render ProductCardComponent.new(
+            product,
+            price: product.price_for_options(current_pricing_options),
+            additional_classes: 'snap-start shrink-0 md:w-collection-card h-min-content',
+            home_collection: true
+          ) %>
+        <% end %>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

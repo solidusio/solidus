@@ -1,0 +1,8 @@
+<% currency = @order ? @order.currency : current_pricing_options.currency %>
+
+<script
+  src="<%= payment_method.javascript_sdk_url(order: @order, currency: currency) %>"
+  data-partner-attribution-id="<%= SolidusPaypalCommercePlatform.config.partner_code %>">
+
+  SolidusPaypalCommercePlatform.api_key = <%= spree_current_user&.spree_api_key.to_json %>
+</script>
