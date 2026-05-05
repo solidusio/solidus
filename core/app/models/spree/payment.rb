@@ -94,6 +94,15 @@ module Spree
       amount - refunds.sum(:amount)
     end
 
+    # @return [ActiveRecord::Relation<Spree::LogEntry>] log entries for this
+    #   payment and its refunds, ordered by creation time
+    def all_log_entries
+      Spree::LogEntry
+        .where(source: self)
+        .or(Spree::LogEntry.where(source: refunds))
+        .order(:created_at)
+    end
+
     # @return [Boolean] true when this payment can be credited
     def can_credit?
       credit_allowed > 0

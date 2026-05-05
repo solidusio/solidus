@@ -21,9 +21,10 @@
   </fieldset>
 <% end %>
 
-<% if @payment.log_entries.any? %>
+<% log_entries = @payment.all_log_entries %>
+<% if log_entries.any? %>
   <fieldset class="no-border-bottom">
     <legend><%= plural_resource_name(Spree::LogEntry) %></legend>
-    <%= render 'spree/admin/payments/log_entries', log_entries: @payment.log_entries %>
+    <%= render 'spree/admin/payments/log_entries', log_entries: log_entries %>
   </fieldset>
 <% end %>
