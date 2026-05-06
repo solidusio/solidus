@@ -23,6 +23,14 @@ table {
       padding: 3px 0;
     }
 
+    .icon_link:has(svg) {
+      color: $color-dark;
+
+      &:hover {
+        color: $color-dark-light;
+      }
+    }
+
     &.actions {
       text-align: right;
       padding-left: 1.25rem;
@@ -56,6 +64,14 @@ table {
 
         &:hover {
           background: transparent;
+        }
+      }
+
+      .icon_link:has(svg) {
+        padding: 2px;
+
+        + .icon_link:has(svg) {
+          margin-left: 2px;
         }
       }
 

@@ -24,8 +24,8 @@
 
     <td class="cart-item-delete actions" data-hook="cart_item_delete">
       <% if can? :update, item %>
-        <%= button_tag '', class: 'split-item icon_link fa fa-arrows-h no-text with-tip', data: { action: 'edit', 'variant-id' => item.variant.id }, title: t('spree.actions.split'), type: :button %>
-        <%= button_tag '', class: 'delete-item fa fa-trash no-text with-tip', data: { action: 'remove', 'variant-id' => item.variant.id }, title: t('spree.actions.delete'), type: :button %>
+        <%= button_tag class: 'split-item icon_button no-text with-tip', data: { action: 'edit', 'variant-id' => item.variant.id }, title: t('spree.actions.split'), type: :button do %><%= solidus_icon('arrows-h') %><% end %>
+        <%= button_tag class: 'delete-item icon_button no-text with-tip', data: { action: 'remove', 'variant-id' => item.variant.id }, title: t('spree.actions.delete'), type: :button do %><%= solidus_icon('trash') %><% end %>
       <% end %>
     </td>
   </tr>
