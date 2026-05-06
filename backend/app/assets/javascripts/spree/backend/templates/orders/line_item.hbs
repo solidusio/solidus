@@ -33,12 +33,12 @@
 </td>
 <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
   {{#if editing}}
-    <button class="save-line-item fa fa-ok no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+    <button class="save-line-item icon_button no-text with-tip" data-action="save" title="{{ t "actions.save" }}">{{solidus_icon "ok"}}</button>
     {{#unless noCancel}}
-      <button class="cancel-line-item fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+      <button class="cancel-line-item icon_button no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}">{{solidus_icon "cancel"}}</button>
     {{/unless}}
   {{else}}
-    <button class="edit-line-item fa fa-edit no-text with-tip" data-action="edit" title="{{ t "actions.edit" }}"></button>
-    <button class="delete-line-item fa fa-trash no-text with-tip" data-action="remove" title="{{ t "actions.delete" }}"></button>
+    <button class="edit-line-item icon_button no-text with-tip" data-action="edit" title="{{ t "actions.edit" }}">{{solidus_icon "edit"}}</button>
+    <button class="delete-line-item icon_button no-text with-tip" data-action="remove" title="{{ t "actions.delete" }}">{{solidus_icon "trash"}}</button>
   {{/if}}
 </td>
