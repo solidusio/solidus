@@ -92,20 +92,35 @@ table {
         }
       }
 
-      .fa-trash:hover, .fa-void:hover, .fa-failure:hover {
+      .fa-trash:hover,
+      .fa-void:hover,
+      .fa-failure:hover,
+      [data-action="remove"]:hover {
         color: theme-color("danger");
       }
 
-      .fa-cancel:hover {
+      .fa-cancel:hover,
+      [data-action="cancel"]:hover {
         color: theme-color("warning");
       }
 
-      .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover,
-      .fa-save:hover, .fa-arrows-h:hover, .fa-check:hover {
+      .fa-edit:hover,
+      .fa-capture:hover,
+      .fa-ok:hover,
+      .fa-plus:hover,
+      .fa-save:hover,
+      .fa-arrows-h:hover,
+      .fa-check:hover,
+      [data-action="save"]:hover,
+      [data-action="edit"]:hover,
+      [data-action="capture"]:hover,
+      [data-action="add"]:hover,
+      [data-action="new"]:hover {
         color: theme-color("success");
       }
 
-      .fa-copy:hover {
+      .fa-copy:hover,
+      [data-action="clone"]:hover {
         color: theme-color("warning");
       }
 
@@ -113,7 +128,8 @@ table {
         color: theme-color("success");
       }
 
-      .fa-thumbs-down:hover {
+      .fa-thumbs-down:hover,
+      [data-action="void"]:hover {
         color: theme-color("danger");
       }
     }
