@@ -56,21 +56,29 @@ table {
         }
       }
 
-      button[class*='fa-'] {
-        color: $link-color;
+      button[class*="fa-"],
+      button.icon_button:has(.fa) {
+        padding: 0 !important;
+      }
+
+      button[class*="fa-"],
+      .icon_button {
+        color: $color-dark;
         background: transparent;
         border: 0 none;
-        padding: 0 !important;
 
         &:hover {
+          color: $color-dark-light;
           background: transparent;
         }
       }
 
-      .icon_link:has(svg) {
+      .icon_link:has(svg),
+      .icon_button:has(svg) {
         padding: 2px;
 
-        + .icon_link:has(svg) {
+        + .icon_link:has(svg),
+        + .icon_button:has(svg) {
           margin-left: 2px;
         }
       }

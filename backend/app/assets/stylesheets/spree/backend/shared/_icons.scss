@@ -97,6 +97,7 @@ a {
     fill: currentColor;
   }
 
+  .icon_button,
   .icon_link {
     &:has(svg) {
       display: inline-flex;
