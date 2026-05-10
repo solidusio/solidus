@@ -16,6 +16,7 @@ RUN apt-get update -qq \
     libvips \
     libffi-dev \
     libmariadb-dev \
+    libyaml-dev \
     sqlite3 \
     libsqlite3-dev \
     chromium \
