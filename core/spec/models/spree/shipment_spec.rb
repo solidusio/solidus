@@ -120,13 +120,13 @@ RSpec.describe Spree::Shipment, type: :model do
       }.to change { shipment.state }.from("pending").to("canceled")
     end
 
-    it "returns ready if the order's inventory units have been destroyed" do
+    it "returns pending if the shipment doesn't have any inventory units" do
       expect {
         shipment.inventory_units.each(&:destroy!)
         shipment.reload
 
         recalculate_state
-      }.to change { shipment.state }.from("pending").to("ready")
+      }.not_to change { shipment.state }.from("pending")
     end
 
     it "returns pending unless order.can_ship?" do
