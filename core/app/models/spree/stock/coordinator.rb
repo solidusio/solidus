@@ -10,6 +10,9 @@ module Spree
         Middleware::InventoryUnit.new.call(context)
         @inventory_units = context[:inventory_units]
 
+        Middleware::InventoryUnitGroup.new.call(context)
+        @inventory_unit_groups = context[:inventory_unit_groups]
+
         @splitters = Spree::Config.environment.stock_splitters
 
         @filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
@@ -88,7 +91,7 @@ module Spree
       def get_units(quantities)
         # Change our raw quantities back into inventory units
         quantities.flat_map do |variant, quantity|
-          @inventory_units_by_variant[variant].shift(quantity)
+          @inventory_unit_groups[variant].shift(quantity)
         end
       end
 
