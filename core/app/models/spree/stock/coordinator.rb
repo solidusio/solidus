@@ -4,16 +4,18 @@ module Spree
   module Stock
     class Coordinator
       def initialize(order, inventory_units: nil)
+        context = {order:, inventory_units:}
         @order = order
-        @inventory_units =
-          inventory_units || Spree::Config.stock.inventory_unit_builder_class.new(order).units
+
+        Middleware::InventoryUnit.new.call(context)
+        @inventory_units = context[:inventory_units]
+
         @splitters = Spree::Config.environment.stock_splitters
 
         @filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
         sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(@filtered_stock_locations).sort
         @stock_locations = sorted_stock_locations
 
-        @inventory_units_by_variant = @inventory_units.group_by(&:variant)
         @desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
         @availability = Spree::Stock::Availability.new(
           variants: @desired.variants,
