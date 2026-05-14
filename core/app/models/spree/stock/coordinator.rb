@@ -18,7 +18,9 @@ module Spree
         Middleware::StockLocation.new.call(context)
         @stock_locations = context[:stock_locations]
 
-        @desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
+        Middleware::Desired.new.call(context)
+        @desired = context[:desired]
+
         @availability = Spree::Stock::Availability.new(
           variants: @desired.variants,
           stock_locations: @stock_locations
