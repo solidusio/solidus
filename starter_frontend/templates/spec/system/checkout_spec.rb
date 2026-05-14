@@ -713,6 +713,7 @@ RSpec.describe 'Checkout', :js, type: :system do
         fill_in "Zip", with: "H0H0H0"
 
         click_on 'Save and Continue'
+        expect(page).to have_content "We are unable to calculate shipping rates for the selected items."
         visit checkout_state_path(:address)
 
         expect(page).to have_field(state_name_css, with: xss_string)
