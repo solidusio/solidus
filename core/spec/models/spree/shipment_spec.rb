@@ -304,7 +304,7 @@ RSpec.describe Spree::Shipment, type: :model do
         before do
           allow(line_item).to receive(:order) { order }
           shipment.inventory_units = inventory_units
-          allow(shipment.inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
+          allow(shipment.inventory_units).to receive_message_chain(:not_canceled, :includes, :joins).and_return inventory_units
         end
 
         it "should use symbols for states when adding contents to package" do
@@ -315,6 +315,20 @@ RSpec.describe Spree::Shipment, type: :model do
 
         it "should set the shipment to itself" do
           expect(shipment.to_package.shipment).to eq(shipment)
+        end
+
+        context "with a canceled inventory unit on the shipment" do
+          let(:order_with_units) { create(:order_ready_to_ship, line_items_count: 2) }
+          let(:real_shipment) { order_with_units.shipments.first }
+
+          it "excludes canceled inventory units from the package" do
+            kept_unit, canceled_unit = real_shipment.inventory_units.to_a
+            canceled_unit.update_columns(state: "canceled")
+
+            package = real_shipment.to_package
+
+            expect(package.contents.map(&:inventory_unit)).to contain_exactly(kept_unit)
+          end
         end
       end
     end
