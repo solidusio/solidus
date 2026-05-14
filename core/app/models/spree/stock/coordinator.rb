@@ -21,10 +21,8 @@ module Spree
         Middleware::Desired.new.call(context)
         @desired = context[:desired]
 
-        @availability = Spree::Stock::Availability.new(
-          variants: @desired.variants,
-          stock_locations: @stock_locations
-        )
+        Middleware::Availability.new.call(context)
+        @availability = context[:availability]
 
         @allocator = Spree::Config.stock.allocator_class.new(@availability)
       end
