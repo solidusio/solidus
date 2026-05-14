@@ -15,9 +15,8 @@ module Spree
 
         @splitters = Spree::Config.environment.stock_splitters
 
-        @filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
-        sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(@filtered_stock_locations).sort
-        @stock_locations = sorted_stock_locations
+        Middleware::StockLocation.new.call(context)
+        @stock_locations = context[:stock_locations]
 
         @desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
         @availability = Spree::Stock::Availability.new(
@@ -41,10 +40,6 @@ module Spree
       end
 
       private
-
-      def load_stock_locations
-        Spree::StockLocation.all
-      end
 
       def build_shipments
         # Turn the Stock::Packages into a Shipment with rates
