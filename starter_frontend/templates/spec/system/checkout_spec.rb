@@ -173,7 +173,8 @@ RSpec.describe 'Checkout', :js, type: :system do
         before do
           add_mug_to_cart
           click_button "Checkout"
-
+          expect(page).to have_content("Login as Existing Customer")
+          
           # Simulate user login
           Spree::Order.last.associate_user!(user)
           allow_any_instance_of(CheckoutsController).to receive_messages(spree_current_user: user)
@@ -204,6 +205,7 @@ RSpec.describe 'Checkout', :js, type: :system do
           let(:saved_ship_address) { create(:address, name: 'Steve Jobs') }
 
           it 'shows empty addresses', js: true do
+
             within("#billing") do
               expect(find_field('Name').value).to eq 'Bill Gates'
             end
