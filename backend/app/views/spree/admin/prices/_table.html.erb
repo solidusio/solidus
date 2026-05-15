@@ -24,7 +24,6 @@
               <%= link_to_edit(price, no_text: true) unless price.discarded? %>
             <% end %>
             <% if can?(:destroy, price) %>
-              &nbsp;
               <%= link_to_delete(price, no_text: true) unless price.discarded? %>
             <% end %>
           </td>
