@@ -48,5 +48,32 @@ RSpec.describe Spree::Calculator::FlatRate, type: :model do
       calculator.preferred_currency = "GBP"
       expect(calculator.compute.round(2)).to eq(0.0)
     end
+    context "return type" do
+    it "always returns a BigDecimal when currency matches" do
+      calculator.preferred_amount = 25.0
+      calculator.preferred_currency = "USD"
+      allow(order).to receive_messages currency: "USD"
+      expect(calculator.compute(order)).to be_a(BigDecimal)
+    end
+
+    it "always returns a BigDecimal when currency does not match" do
+      calculator.preferred_amount = 100.0
+      calculator.preferred_currency = "GBP"
+      allow(order).to receive_messages currency: "USD"
+      expect(calculator.compute(order)).to be_a(BigDecimal)
+    end
+
+    it "always returns a BigDecimal when there is no object" do
+      calculator.preferred_amount = 100.0
+      expect(calculator.compute).to be_a(BigDecimal)
+    end
+
+    it "always returns a BigDecimal when amount is zero" do
+      calculator.preferred_amount = 0
+      calculator.preferred_currency = "USD"
+      allow(order).to receive_messages currency: "USD"
+      expect(calculator.compute(order)).to be_a(BigDecimal)
+    end
+  end
   end
 end
