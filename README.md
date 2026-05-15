@@ -214,14 +214,14 @@ and/or customizations to the Solidus admin. Use at your own risk.
   bin/setup
   ```
 
-  _Note_: If you're using PostgreSQL or MySQL, you'll need to install those gems through the DB environment variable.
+  _Note_: If you're using PostgreSQL, MySQL, or MariaDB, you'll need to install those gems through the DB environment variable.
 
   ```bash
   # PostgreSQL
   export DB=postgresql
   bin/setup
 
-  # MySQL
+  # MySQL or MariaDB (mysql2 adapter)
   export DB=mysql
   bin/setup
   ```
@@ -295,14 +295,14 @@ data already loaded.
   bin/sandbox
   ```
 
-  You can create a sandbox with PostgreSQL or MySQL by setting the DB environment variable.
+  You can create a sandbox with PostgreSQL, MySQL, or MariaDB by setting the DB environment variable.
 
   ```bash
   # PostgreSQL
   export DB=postgresql
   bin/sandbox
 
-  # MySQL
+  # MySQL or MariaDB (mysql2 adapter)
   export DB=mysql
   bin/sandbox
   ```
@@ -358,13 +358,13 @@ createuser --superuser --echo postgres # only the first time
 bin/build
 ```
 
-The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
+The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql` (MariaDB uses `DB=mysql`). For example:
 
 ```bash
 env DB=mysql bin/build
 ```
 
-If the command fails with MySQL related errors you can try creating a user with this command:
+If the command fails with MySQL or MariaDB related errors you can try creating a user with this command:
 
 ```bash
 # Creates a user with the same name as the current user and no restrictions.
