@@ -16,5 +16,10 @@ RSpec.describe "Promotion System" do
     end
 
     it_behaves_like "a successfully integrated promotion system"
+
+    it "allows in memory order recalculates without persistence" do
+      order = create(:order_with_line_items)
+      expect { Spree::InMemoryOrderUpdater.new(order).recalculate(persist: false) }.not_to raise_error
+    end
   end
 end
