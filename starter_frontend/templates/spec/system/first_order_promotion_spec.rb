@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'First Order promotion', type: :system do
-  include  SolidusStarterFrontend::System::CheckoutHelpers
+RSpec.describe "First Order promotion", type: :system do
+  include SolidusStarterFrontend::System::CheckoutHelpers
 
   let!(:promotion) do
     FactoryBot.create(
@@ -22,7 +22,7 @@ RSpec.describe 'First Order promotion', type: :system do
     click_button "Add To Cart"
   end
 
-  it 'Adding first order promotion to cart and checking out as guest' do
+  it "Adding first order promotion to cart and checking out as guest" do
     fill_in "Coupon code", with: "FIRSTONEFREE"
     click_button "Apply Code"
     expect(page).to have_content("The coupon code was successfully applied to your order")
@@ -32,7 +32,7 @@ RSpec.describe 'First Order promotion', type: :system do
     end
   end
 
-  it 'Trying to reuse first order promotion', js: true do
+  it "Trying to reuse first order promotion", js: true do
     previous_user = FactoryBot.create(
       :user,
       email: "sam@tom.com"

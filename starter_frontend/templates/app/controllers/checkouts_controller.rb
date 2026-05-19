@@ -62,8 +62,8 @@ class CheckoutsController < CheckoutBaseController
   end
 
   def set_successful_flash_notice
-    flash.notice = t('spree.order_processed_successfully')
-    flash['order_completed'] = true
+    flash.notice = t("spree.order_processed_successfully")
+    flash["order_completed"] = true
   end
 
   def send_to_next_state
@@ -109,7 +109,7 @@ class CheckoutsController < CheckoutBaseController
     return if skip_state_validation?
     return if @order.has_checkout_step?(params[:state] || @order.state)
 
-    @order.state = 'cart'
+    @order.state = "cart"
     redirect_to checkout_state_path(@order.checkout_steps.first)
   end
 
@@ -135,7 +135,7 @@ class CheckoutsController < CheckoutBaseController
     # If the user has a default address, the previous method call takes care
     # of setting that; but if he doesn't, we need to build an empty one here
     @order.bill_address ||= Spree::Address.build_default
-    @order.ship_address ||= Spree::Address.build_default if @order.checkout_steps.include?('delivery')
+    @order.ship_address ||= Spree::Address.build_default if @order.checkout_steps.include?("delivery")
   end
 
   def before_delivery
@@ -157,14 +157,14 @@ class CheckoutsController < CheckoutBaseController
     if spree_current_user && spree_current_user.respond_to?(:wallet)
       @wallet_payment_sources = spree_current_user.wallet.wallet_payment_sources
       @default_wallet_payment_source = @wallet_payment_sources.detect(&:default) ||
-                                       @wallet_payment_sources.first
+        @wallet_payment_sources.first
     end
   end
 
   def order_params
-    params.
-      fetch(:order, {}).
-      permit(:email)
+    params
+      .fetch(:order, {})
+      .permit(:email)
   end
 
   # HACK: We can't remove `skip_state_validation?` as of now because it is

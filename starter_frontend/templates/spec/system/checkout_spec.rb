@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Checkout', :js, type: :system do
-  include  SolidusStarterFrontend::System::CheckoutHelpers
+RSpec.describe "Checkout", :js, type: :system do
+  include SolidusStarterFrontend::System::CheckoutHelpers
 
-  include_context 'checkout setup'
+  include_context "checkout setup"
 
   context "visitor makes checkout as guest without registration" do
     before(:each) do
@@ -19,13 +19,13 @@ RSpec.describe 'Checkout', :js, type: :system do
         click_button "Checkout"
       end
 
-      it 'should default checkbox to checked', js: true do
-        expect(find('input#order_use_billing')).to be_checked
+      it "should default checkbox to checked", js: true do
+        expect(find("input#order_use_billing")).to be_checked
       end
 
       it "should remain checked when used and visitor steps back to address step", js: true do
         fill_in_address
-        expect(find('input#order_use_billing')).to be_checked
+        expect(find("input#order_use_billing")).to be_checked
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe 'Checkout', :js, type: :system do
         expect(page).to have_content("Billing Address")
       end
 
-      it 'goes to address state', js: true do
+      it "goes to address state", js: true do
         expect(Spree::Order.count).to eq(1)
         expect(Spree::Order.last.state).to eq("address")
       end
@@ -74,7 +74,7 @@ RSpec.describe 'Checkout', :js, type: :system do
 
       it "should not show 'Free Shipping' when there are no shipments", js: true do
         within("#checkout-summary") do
-          expect(page).to_not have_content('Free Shipping')
+          expect(page).to_not have_content("Free Shipping")
         end
       end
     end
@@ -119,16 +119,16 @@ RSpec.describe 'Checkout', :js, type: :system do
       end
 
       context "when user has default addresses saved" do
-        let(:saved_bill_address) { create(:address, name: 'Bill Gates') }
-        let(:saved_ship_address) { create(:address, name: 'Steve Jobs') }
+        let(:saved_bill_address) { create(:address, name: "Bill Gates") }
+        let(:saved_ship_address) { create(:address, name: "Steve Jobs") }
 
-        it 'shows the saved addresses', js: true do
+        it "shows the saved addresses", js: true do
           within("#billing") do
-            expect(find_field('Name').value).to eq 'Bill Gates'
+            expect(find_field("Name").value).to eq "Bill Gates"
           end
 
           within("#shipping") do
-            expect(find_field('Name').value).to eq 'Steve Jobs'
+            expect(find_field("Name").value).to eq "Steve Jobs"
           end
         end
       end
@@ -137,9 +137,9 @@ RSpec.describe 'Checkout', :js, type: :system do
         let(:saved_bill_address) { nil }
         let(:saved_ship_address) { nil }
 
-        it 'shows an empty address', js: true do
+        it "shows an empty address", js: true do
           within("#billing") do
-            expect(find_field('Name').value).to be_blank
+            expect(find_field("Name").value).to be_blank
           end
 
           within("#shipping") do
@@ -151,12 +151,12 @@ RSpec.describe 'Checkout', :js, type: :system do
 
     context "when user is not logged in" do
       context "and proceeds with guest checkout" do
-        it 'shows empty addresses', js: true do
+        it "shows empty addresses", js: true do
           add_mug_to_cart
           checkout_as_guest
 
           within("#billing") do
-            expect(find_field('Name').value).to be_blank
+            expect(find_field("Name").value).to be_blank
           end
 
           within("#shipping") do
@@ -174,7 +174,7 @@ RSpec.describe 'Checkout', :js, type: :system do
           add_mug_to_cart
           click_button "Checkout"
           expect(page).to have_content("Login as Existing Customer")
-          
+
           # Simulate user login
           Spree::Order.last.associate_user!(user)
           allow_any_instance_of(CheckoutsController).to receive_messages(spree_current_user: user)
@@ -188,9 +188,9 @@ RSpec.describe 'Checkout', :js, type: :system do
           let(:saved_bill_address) { nil }
           let(:saved_ship_address) { nil }
 
-          it 'shows empty addresses', js: true do
+          it "shows empty addresses", js: true do
             within("#billing") do
-              expect(find_field('Name').value).to be_blank
+              expect(find_field("Name").value).to be_blank
             end
 
             within("#shipping") do
@@ -201,17 +201,16 @@ RSpec.describe 'Checkout', :js, type: :system do
 
         # Regression test for https://github.com/solidusio/solidus/issues/1811
         context "when does have saved addresses" do
-          let(:saved_bill_address) { create(:address, name: 'Bill Gates') }
-          let(:saved_ship_address) { create(:address, name: 'Steve Jobs') }
+          let(:saved_bill_address) { create(:address, name: "Bill Gates") }
+          let(:saved_ship_address) { create(:address, name: "Steve Jobs") }
 
-          it 'shows empty addresses', js: true do
-
+          it "shows empty addresses", js: true do
             within("#billing") do
-              expect(find_field('Name').value).to eq 'Bill Gates'
+              expect(find_field("Name").value).to eq "Bill Gates"
             end
 
             within("#shipping") do
-              expect(find_field('Name').value).to eq 'Steve Jobs'
+              expect(find_field("Name").value).to eq "Steve Jobs"
             end
           end
         end
@@ -234,8 +233,8 @@ RSpec.describe 'Checkout', :js, type: :system do
     it "does not allow successful order submission" do
       visit checkout_path
       order.payments.first.update state: :void
-      check 'Agree to Terms of Service'
-      click_button 'Place Order'
+      check "Agree to Terms of Service"
+      click_button "Place Order"
       expect(page).to have_current_path checkout_state_path(:payment)
     end
   end
@@ -258,11 +257,11 @@ RSpec.describe 'Checkout', :js, type: :system do
       visit checkout_state_path(:delivery)
       click_button "Save and Continue"
       choose "Credit Card"
-      fill_in "Card Number", with: '123'
-      fill_in "Expiration", with: '04 / 20'
-      fill_in "Card Code", with: '123'
+      fill_in "Card Number", with: "123"
+      fill_in "Expiration", with: "04 / 20"
+      fill_in "Card Code", with: "123"
       click_button "Save and Continue"
-      check 'Agree to Terms of Service'
+      check "Agree to Terms of Service"
       click_button "Place Order"
       expect(page).to have_content("Bogus Gateway: Forced failure")
       expect(page.current_url).to include("/checkout/payment")
@@ -293,9 +292,9 @@ RSpec.describe 'Checkout', :js, type: :system do
       # prevent form submit to verify button is disabled
       page.execute_script("document.getElementById('checkout_form_payment').onsubmit = function(){return false;}")
 
-      expect(page).not_to have_selector('button[disabled]')
+      expect(page).not_to have_selector("button[disabled]")
       click_button "Save and Continue"
-      expect(page).to have_selector('button[disabled]')
+      expect(page).to have_selector("button[disabled]")
     end
 
     it "prevents double clicking the confirm button on checkout", js: true do
@@ -303,14 +302,14 @@ RSpec.describe 'Checkout', :js, type: :system do
       visit checkout_state_path(:confirm)
 
       # Test TOS not checked alert
-      accept_alert('Please review and accept the Terms of Service') { click_button "Place Order" }
+      accept_alert("Please review and accept the Terms of Service") { click_button "Place Order" }
 
       # prevent form submit to verify button is disabled
       page.execute_script("document.getElementById('checkout_form_confirm').onsubmit = function(){return false;}")
 
-      check 'Agree to Terms of Service'
+      check "Agree to Terms of Service"
       click_button "Place Order"
-      button = find('button.button-primary')
+      button = find("button.button-primary")
       expect(button).to be_disabled
     end
   end
@@ -342,7 +341,7 @@ RSpec.describe 'Checkout', :js, type: :system do
 
       check "Agree to Terms of Service"
       click_on "Place Order"
-      expect(page).to have_content(I18n.t('spree.order_processed_successfully'))
+      expect(page).to have_content(I18n.t("spree.order_processed_successfully"))
     end
   end
 
@@ -404,7 +403,7 @@ RSpec.describe 'Checkout', :js, type: :system do
       expect(find_existing_payment_radio(wallet_source.id)).to be_checked
 
       click_on "Save and Continue"
-      check 'Agree to Terms of Service'
+      check "Agree to Terms of Service"
       click_on "Place Order"
 
       order = Spree::Order.last
@@ -417,12 +416,12 @@ RSpec.describe 'Checkout', :js, type: :system do
       fill_in_credit_card
 
       click_on "Save and Continue"
-      check 'Agree to Terms of Service'
+      check "Agree to Terms of Service"
       click_on "Place Order"
 
       order = Spree::Order.last
       expect(page).to have_current_path(order_path(order))
-      expect(page).to have_content('Ending in 1111')
+      expect(page).to have_content("Ending in 1111")
     end
   end
 
@@ -446,17 +445,17 @@ RSpec.describe 'Checkout', :js, type: :system do
       click_on "Checkout"
       # edit an address field
       fill_in "order_bill_address_attributes_name", with: "Ryann"
-      click_button 'Save and Continue'
+      click_button "Save and Continue"
 
       expect(page).to have_content "package from NY Warehouse"
-      click_button 'Save and Continue'
+      click_button "Save and Continue"
 
       expect(page).to have_content "Check"
-      click_button 'Save and Continue'
+      click_button "Save and Continue"
 
       expect(page).to have_content "Put your terms and conditions here"
-      check 'Agree to Terms of Service'
-      click_button 'Place Order'
+      check "Agree to Terms of Service"
+      click_button "Place Order"
 
       order = Spree::Order.last
       expect(page).to have_current_path(token_order_path(order, order.guest_token))
@@ -478,7 +477,7 @@ RSpec.describe 'Checkout', :js, type: :system do
       before do
         stock_location.stock_items.update_all(count_on_hand: 5)
         visit cart_path
-        within '.cart-item__quantity' do
+        within ".cart-item__quantity" do
           fill_in "order_line_items_attributes_0_quantity", with: 3
         end
 
@@ -560,10 +559,10 @@ RSpec.describe 'Checkout', :js, type: :system do
 
     context "with invalid coupon" do
       it "doesnt apply the promotion" do
-        fill_in "order_coupon_code", with: 'invalid'
+        fill_in "order_coupon_code", with: "invalid"
         click_on "Apply Code"
 
-        expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
+        expect(page).to have_content(I18n.t("spree.coupon_code_not_found"))
       end
     end
 
@@ -597,14 +596,14 @@ RSpec.describe 'Checkout', :js, type: :system do
     end
 
     it "goes right to the payment step and places the order" do
-      expect(page).to have_current_path(checkout_state_path('payment'))
+      expect(page).to have_current_path(checkout_state_path("payment"))
 
       choose "Credit Card"
       fill_in_credit_card
       click_button "Save and Continue"
-      expect(page).to have_text('Put your terms and conditions here')
+      expect(page).to have_text("Put your terms and conditions here")
 
-      check 'Agree to Terms of Service'
+      check "Agree to Terms of Service"
       click_button "Place Order"
     end
   end
@@ -615,18 +614,18 @@ RSpec.describe 'Checkout', :js, type: :system do
       add_mug_to_cart
     end
 
-    context 'as a guest' do
+    context "as a guest" do
       before do
         Spree::Order.last.update_column(:email, "test@example.com")
         click_button "Checkout"
       end
 
-      it 'should not be displayed', js: true do
+      it "should not be displayed", js: true do
         expect(page).to_not have_css("[data-hook=save_user_address]")
       end
     end
 
-    context 'as a User' do
+    context "as a User" do
       before do
         user = create(:user)
         Spree::Order.last.update_column :user_id, user.id
@@ -636,8 +635,8 @@ RSpec.describe 'Checkout', :js, type: :system do
         click_button "Checkout"
       end
 
-      it 'should be displayed', js: true do
-        expect(page).to have_css('#save-user-address')
+      it "should be displayed", js: true do
+        expect(page).to have_css("#save-user-address")
       end
     end
   end
@@ -654,21 +653,21 @@ RSpec.describe 'Checkout', :js, type: :system do
 
       visit checkout_state_path(:delivery)
       expect(page).to have_content "package from NY Warehouse"
-      click_button 'Save and Continue'
+      click_button "Save and Continue"
 
       expect(page).to have_content "Check"
-      click_button 'Save and Continue'
+      click_button "Save and Continue"
 
       expect(page).to have_content "Put your terms and conditions here"
-      check 'Agree to Terms of Service'
-      click_button 'Place Order'
+      check "Agree to Terms of Service"
+      click_button "Place Order"
     end
 
     it "displays a thank you message only on the first visit" do
-      expect(page).to have_content(I18n.t('spree.thank_you_for_your_order'), normalize_ws: true)
+      expect(page).to have_content(I18n.t("spree.thank_you_for_your_order"), normalize_ws: true)
 
       visit order_path(order)
-      expect(page).to_not have_content(I18n.t('spree.thank_you_for_your_order'))
+      expect(page).to_not have_content(I18n.t("spree.thank_you_for_your_order"))
     end
   end
 
@@ -678,7 +677,7 @@ RSpec.describe 'Checkout', :js, type: :system do
 
       # We need a country with states required but no states so that we have
       # access to the state_name input
-      let!(:canada) { create(:country, name: 'Canada', iso: "CA", states_required: true) }
+      let!(:canada) { create(:country, name: "Canada", iso: "CA", states_required: true) }
       before do
         canada.states.destroy_all
         zone.members.create!(zoneable: canada)
@@ -697,14 +696,14 @@ RSpec.describe 'Checkout', :js, type: :system do
         # intermittently. Please see
         # https://github.com/solidusio/solidus_starter_frontend/pull/172/files#r683067589
         # for more details.
-        within '#existing-customer' do
-          fill_in 'Email:', with: user.email
-          fill_in 'Password:', with: user.password
-          click_button 'Login'
+        within "#existing-customer" do
+          fill_in "Email:", with: user.email
+          fill_in "Password:", with: user.password
+          click_button "Login"
         end
 
         fill_in_address
-        fill_in 'Customer email', with: 'test@example.com'
+        fill_in "Customer email", with: "test@example.com"
 
         state_name_css = "order_bill_address_attributes_state_name"
 
@@ -712,7 +711,7 @@ RSpec.describe 'Checkout', :js, type: :system do
         fill_in state_name_css, with: xss_string
         fill_in "Zip", with: "H0H0H0"
 
-        click_on 'Save and Continue'
+        click_on "Save and Continue"
         expect(page).to have_content "We are unable to calculate shipping rates for the selected items."
         visit checkout_state_path(:address)
 
@@ -765,7 +764,7 @@ RSpec.describe 'Checkout', :js, type: :system do
   end
 
   def fill_in_credit_card(number: "4111 1111 1111 1111")
-    fill_in "Name on card", with: 'Mary Doe'
+    fill_in "Name on card", with: "Mary Doe"
     fill_in_with_force "Card Number", with: number
     fill_in_with_force "Expiration", with: "12 / 24"
     fill_in "Card Code", with: "123"

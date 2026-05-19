@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HomeController < StoreController
-  helper 'spree/products'
+  helper "spree/products"
   respond_to :html
 
   def index

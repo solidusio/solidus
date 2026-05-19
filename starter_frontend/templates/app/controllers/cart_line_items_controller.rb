@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CartLineItemsController < StoreController
-  helper 'spree/products', 'orders'
+  helper "spree/products", "orders"
 
   respond_to :html
 
@@ -12,12 +12,12 @@ class CartLineItemsController < StoreController
     @order = current_order(create_order_if_necessary: true)
     authorize! :update, @order, cookies.signed[:guest_token]
 
-    variant  = Spree::Variant.find(params[:variant_id])
+    variant = Spree::Variant.find(params[:variant_id])
     quantity = params[:quantity].present? ? params[:quantity].to_i : 1
 
     # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
     if !quantity.between?(1, 2_147_483_647)
-      @order.errors.add(:base, t('spree.please_enter_reasonable_quantity'))
+      @order.errors.add(:base, t("spree.please_enter_reasonable_quantity"))
     else
       begin
         @line_item = @order.contents.add(variant, quantity)

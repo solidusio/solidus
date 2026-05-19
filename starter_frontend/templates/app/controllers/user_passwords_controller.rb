@@ -37,7 +37,7 @@ class UserPasswordsController < Devise::PasswordsController
   protected
 
   def translation_scope
-    'devise.user_passwords'
+    "devise.user_passwords"
   end
 
   def new_session_path(resource_name)

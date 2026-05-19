@@ -8,7 +8,7 @@ template =
 
     ref =
       if gem_version && !gem_version.prerelease?
-        "v#{gem_version.segments[0, 2].join('.')}"
+        "v#{gem_version.segments[0, 2].join(".")}"
       else
         "main"
       end

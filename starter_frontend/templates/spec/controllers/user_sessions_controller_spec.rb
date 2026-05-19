@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
 RSpec.describe UserSessionsController, type: :controller do
   let(:user) { create(:user) }
 
-  before { @request.env['devise.mapping'] = Devise.mappings[:spree_user] }
+  before { @request.env["devise.mapping"] = Devise.mappings[:spree_user] }
 
   context "#create" do
     let(:format) { :html }
-    let(:password) { 'secret' }
+    let(:password) { "secret" }
 
     subject do
       post(
@@ -25,13 +25,13 @@ RSpec.describe UserSessionsController, type: :controller do
     end
 
     context "when using correct login information" do
-      context 'with a guest token present' do
+      context "with a guest token present" do
         before do
-          request.cookie_jar.signed[:guest_token] = 'ABC'
+          request.cookie_jar.signed[:guest_token] = "ABC"
         end
 
-        it 'assigns orders with the correct token and no user present' do
-          order = create(:order, email: user.email, guest_token: 'ABC', user_id: nil, created_by_id: nil)
+        it "assigns orders with the correct token and no user present" do
+          order = create(:order, email: user.email, guest_token: "ABC", user_id: nil, created_by_id: nil)
           subject
 
           order.reload
@@ -39,8 +39,8 @@ RSpec.describe UserSessionsController, type: :controller do
           expect(order.created_by_id).to eq user.id
         end
 
-        it 'assigns orders with the correct token and no user or email present' do
-          order = create(:order, guest_token: 'ABC', user_id: nil, created_by_id: nil)
+        it "assigns orders with the correct token and no user or email present" do
+          order = create(:order, guest_token: "ABC", user_id: nil, created_by_id: nil)
           subject
 
           order.reload
@@ -48,10 +48,10 @@ RSpec.describe UserSessionsController, type: :controller do
           expect(order.created_by_id).to eq user.id
         end
 
-        it 'does not assign completed orders' do
-          order = create(:order, email: user.email, guest_token: 'ABC',
-                         user_id: nil, created_by_id: nil,
-                         completed_at: 1.minute.ago)
+        it "does not assign completed orders" do
+          order = create(:order, email: user.email, guest_token: "ABC",
+            user_id: nil, created_by_id: nil,
+            completed_at: 1.minute.ago)
           subject
 
           order.reload
@@ -59,15 +59,15 @@ RSpec.describe UserSessionsController, type: :controller do
           expect(order.created_by_id).to be_nil
         end
 
-        it 'does not assign orders with an existing user' do
-          order = create(:order, guest_token: 'ABC', user_id: 200)
+        it "does not assign orders with an existing user" do
+          order = create(:order, guest_token: "ABC", user_id: 200)
           subject
 
           expect(order.reload.user_id).to eq 200
         end
 
-        it 'does not assign orders with a different token' do
-          order = create(:order, guest_token: 'DEF', user_id: nil, created_by_id: nil)
+        it "does not assign orders with a different token" do
+          order = create(:order, guest_token: "DEF", user_id: nil, created_by_id: nil)
           subject
 
           expect(order.reload.user_id).to be_nil
@@ -95,13 +95,13 @@ RSpec.describe UserSessionsController, type: :controller do
     end
 
     context "when using incorrect login information" do
-      let(:password) { 'wrong' }
+      let(:password) { "wrong" }
 
       context "when html format is requested" do
         it "renders new template again with errors" do
           subject
           expect(response).to render_template(:new)
-          expect(flash[:error]).to eq I18n.t(:'devise.failure.invalid')
+          expect(flash[:error]).to eq I18n.t(:"devise.failure.invalid")
         end
       end
 

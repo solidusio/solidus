@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-require 'rails-controller-testing'
-require 'rspec/active_model/mocks'
+require "rails-controller-testing"
+require "rspec/active_model/mocks"
 
 require "view_component/test_helpers"
 
-require 'rspec/rails'
-require 'factory_bot'
-require 'ffaker'
+require "rspec/rails"
+require "factory_bot"
+require "ffaker"
 
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/url_helpers'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/caching'
-require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/translations'
+require "spree/testing_support/authorization_helpers"
+require "spree/testing_support/url_helpers"
+require "spree/testing_support/preferences"
+require "spree/testing_support/caching"
+require "spree/testing_support/order_walkthrough"
+require "spree/testing_support/translations"
 
 # Define the namespace for the helpers.
 module SolidusStarterFrontend; end
@@ -30,8 +30,8 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.mock_with :rspec
   config.color = true
-  config.fail_fast = ENV.fetch('FAIL_FAST', false)
-  config.order = 'random'
+  config.fail_fast = ENV.fetch("FAIL_FAST", false)
+  config.order = "random"
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
   Kernel.srand config.seed
@@ -75,7 +75,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, with_guest_session: true) do
-    allow_any_instance_of(ActionDispatch::Cookies::CookieJar).to receive(:signed) { { guest_token: order.guest_token } }
+    allow_any_instance_of(ActionDispatch::Cookies::CookieJar).to receive(:signed) { {guest_token: order.guest_token} }
   end
 
   config.around(:each, caching: true) do |example|

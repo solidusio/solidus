@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'orders', type: :system do
+RSpec.describe "orders", type: :system do
   let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:complete) }
   let(:user) { create(:user) }
 
@@ -26,7 +26,7 @@ RSpec.describe 'orders', type: :system do
     visit order_path(order)
 
     # Tests view spree/shared/_order_details
-    within '.order-item__price-single' do
+    within ".order-item__price-single" do
       expect(page).to have_content "19.00"
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe 'orders', type: :system do
   it "should have credit card info if paid with credit card" do
     create(:payment, order: order)
     visit order_path(order)
-    within '.payment-info' do
+    within ".payment-info" do
       expect(page).to have_content "Ending in 1111"
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe 'orders', type: :system do
   it "should have payment method name visible if not paid with credit card" do
     create(:check_payment, order: order)
     visit order_path(order)
-    within '.payment-info' do
+    within ".payment-info" do
       expect(page).to have_content "Check"
     end
   end
@@ -50,8 +50,8 @@ RSpec.describe 'orders', type: :system do
   it "should return the correct title when displaying a completed order" do
     visit order_path(order)
 
-    within 'h1' do
-      expect(page).to have_content("#{I18n.t('spree.order')} #{order.number}")
+    within "h1" do
+      expect(page).to have_content("#{I18n.t("spree.order")} #{order.number}")
     end
   end
 end

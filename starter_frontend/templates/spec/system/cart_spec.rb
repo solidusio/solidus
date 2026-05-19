@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Cart', type: :system do
-  include_context 'featured products'
+RSpec.describe "Cart", type: :system do
+  include_context "featured products"
 
   before { create(:store) }
 
@@ -23,12 +23,12 @@ RSpec.describe 'Cart', type: :system do
     # prevent form submit to verify button is disabled
     page.execute_script("document.getElementById('update-cart').onsubmit = function(){return false;}")
 
-    expect(page).not_to have_selector('button#update-button[disabled]')
-    click_button 'Remove'
-    expect(page).to have_selector('button#update-button[disabled]')
+    expect(page).not_to have_selector("button#update-button[disabled]")
+    click_button "Remove"
+    expect(page).to have_selector("button#update-button[disabled]")
   end
 
-  it 'allows you to remove an item from the cart', js: true do
+  it "allows you to remove an item from the cart", js: true do
     create(:product, name: "Solidus mug set")
 
     visit products_path
@@ -42,11 +42,11 @@ RSpec.describe 'Cart', type: :system do
     expect(page).not_to have_content("Solidus mug set")
 
     within "#link-to-cart" do
-      expect(page.text).to eq('')
+      expect(page.text).to eq("")
     end
   end
 
-  skip 'allows you to empty the cart', js: true do
+  skip "allows you to empty the cart", js: true do
     create(:product, name: "Solidus mug set")
     visit products_path
     click_link "Solidus mug set"
@@ -57,7 +57,7 @@ RSpec.describe 'Cart', type: :system do
     expect(page).to have_content("Your cart is empty")
 
     within "#link-to-cart" do
-      expect(page.text).to eq('')
+      expect(page.text).to eq("")
     end
   end
 

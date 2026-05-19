@@ -12,8 +12,8 @@ RSpec.describe ProductCardComponent, type: :component do
 
     aggregate_failures do
       expect(rendered_component.css("li .product-card_header a").to_html).to include("The best product")
-      expect(rendered_component.css("li .product-card_header a").first[:href]).to eq('/products/123')
-      expect(rendered_component.css("li .product-card_image a").first[:href]).to eq('/products/123')
+      expect(rendered_component.css("li .product-card_header a").first[:href]).to eq("/products/123")
+      expect(rendered_component.css("li .product-card_image a").first[:href]).to eq("/products/123")
     end
   end
 end

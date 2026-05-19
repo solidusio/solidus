@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Home layout', type: :request, with_signed_in_user: true do
+RSpec.describe "Home layout", type: :request, with_signed_in_user: true do
   let(:searcher_class) { instance_double(Spree::Config.searcher_class) }
   let(:user) { create(:user) }
   let(:product) { build_stubbed(:product) }
   let(:variant) { create(:variant) }
-  let!(:featured_product) { create(:product, name: 'Solidus hoodie', variants: [variant] )}
+  let!(:featured_product) { create(:product, name: "Solidus hoodie", variants: [variant]) }
 
   before do
     allow(Spree::Config.searcher_class).to receive(:new) { searcher_class }
@@ -25,7 +25,7 @@ RSpec.describe 'Home layout', type: :request, with_signed_in_user: true do
   context "layout" do
     it "renders default layout" do
       get root_path
-      expect(response).to render_template(layout: 'layouts/storefront')
+      expect(response).to render_template(layout: "layouts/storefront")
     end
   end
 end

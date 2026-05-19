@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Promotion Code Invalidation', type: :system, js: true do
+RSpec.describe "Promotion Code Invalidation", type: :system, js: true do
   let!(:promotion) do
     FactoryBot.create(
       :promotion_with_item_adjustment,
@@ -29,7 +29,7 @@ RSpec.describe 'Promotion Code Invalidation', type: :system, js: true do
     click_button "Add To Cart"
   end
 
-  it 'adding the promotion to a cart with two applicable items' do
+  it "adding the promotion to a cart with two applicable items" do
     fill_in "Coupon code", with: "PROMO"
     click_button "Apply Code"
 
