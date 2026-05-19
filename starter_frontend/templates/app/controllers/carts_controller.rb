@@ -40,7 +40,7 @@ class CartsController < StoreController
   end
 
   def empty
-    if @order = current_order
+    if (@order = current_order)
       authorize! :update, @order, cookies.signed[:guest_token]
       @order.empty!
     end

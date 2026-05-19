@@ -6,23 +6,24 @@ RSpec.describe "current order tracking", type: :request, with_signed_in_user: tr
   let!(:store) { create(:store) }
   let(:user) { create(:user) }
 
-  class TestController < StoreController
-    def create_order
-      @order = current_order(create_order_if_necessary: true)
-      head :ok
-    end
-
-    def not_create_order
-      head :ok
-    end
-  end
-
   before do
+    stub_const("TestController", Class.new(StoreController) do
+      def create_order
+        @order = current_order(create_order_if_necessary: true)
+        head :ok
+      end
+
+      def not_create_order
+        head :ok
+      end
+    end)
+
     Rails.application.routes.draw do
       get "/test", to: "test#create_order"
       get "/test2", to: "test#not_create_order"
     end
   end
+
   after do
     Rails.application.reload_routes!
   end
