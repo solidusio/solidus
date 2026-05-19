@@ -1,0 +1,17 @@
+<div class="products wrapper grid-container gap-7 mt-6 mb-20 lg:mt-8">
+  <aside class="col-span-full m-0 md:col-span-3 lg:col-span-2">
+    <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
+    <%= render 'shared/search/filters', taxon: @taxon %>
+  </aside>
+  <section class="products_section col-span-full md:col-span-9 lg:col-span-10">
+    <h1 class="products__taxon-title mb-4 font-serif text-h3 lg:text-h2"><%= @taxon.name %></h1>
+
+    <%= render 'products/products', products: @products, taxon: @taxon %>
+
+    <% unless params[:keywords].present? %>
+      <% cache [I18n.locale, @taxon] do %>
+        <%= render partial: 'products/products_by_taxon', collection: @taxon.children %>
+      <% end %>
+    <% end %>
+  </section>
+</div>

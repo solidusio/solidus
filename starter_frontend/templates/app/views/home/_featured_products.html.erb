@@ -1,0 +1,16 @@
+<section class="wrapper pt-3 pb-14 md:pb-24">
+  <div class="grid-container">
+    <div class="col-span-full md:col-span-8 md:max">
+      <%= render 'products/featured_product_card', { product: products[0], size: :big } %>
+    </div>
+    <div class="col-span-full flex flex-col gap-y-6 md:col-span-4">
+      <% products.each_with_index do |product, index| %>
+        <% if index > 0 %>
+          <div class="basis-1/2">
+            <%= render 'products/featured_product_card', { product: product, size: :small } %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

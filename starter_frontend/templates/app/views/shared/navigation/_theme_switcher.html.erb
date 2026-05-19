@@ -1,0 +1,20 @@
+<%
+  base_toggle_icon_class = 'absolute top-[3px] p-0.5 h-[22px] w-[22px] transition-opacity duration-200' 
+%>
+<label id="theme-switch-component" class="relative inline-flex items-center cursor-pointer m-0" data-controller="theme-switcher">
+  <%= check_box_tag nil, nil, nil, class: 'sr-only peer', data: {
+    theme_switcher_target: "themeSwitch", action: "theme-switcher#toggleTheme"
+  } %>
+  <div class="
+    relative flex items-center w-14 h-7 py-0.5 px-[3px] bg-black rounded-full dark:bg-sand border border-black
+    after:content-[''] after:bg-sand after:rounded-full after:h-[22px] after:w-[22px] after:transition-all after:translate-x-[120%]
+    dark:after:bg-black dark:after:translate-x-0 peer-focus:outline-none
+  ">
+  </div>
+  <svg class='<%= base_toggle_icon_class %> left-[3px] opacity-100 dark:opacity-0 fill-sand'>
+    <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-sun-line"></use>
+  </svg>
+  <svg class='<%= base_toggle_icon_class %> right-[3px] opacity-0 fill-sand dark:fill-black dark:opacity-100'>
+    <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-moon-clear-line"></use>
+  </svg>
+</label>

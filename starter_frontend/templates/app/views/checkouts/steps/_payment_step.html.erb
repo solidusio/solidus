@@ -1,0 +1,82 @@
+<%
+  payment_method_card_classes = "rounded-xl bg-white p-6 border-[1px] border-gray-mid mb-6 text-black dark:bg-black dark:border-gray-400 dark:text-sand"
+  payment_method_top_label_classes = "flex items-center justify-between mb-6 cursor-pointer font-sans-md text-body-md"
+  payment_method_fieldset_classes = "flex items-center justify-start gap-y-6"
+%>
+
+<div class="payment-step" data-controller="checkout-payment">
+  <fieldset class="payment-step__payment mb-6 border-b-[1px] border-gray-mid">
+    <legend class="font-serif text-h5 md:text-h4">
+      <%= t('spree.payment_information') %>
+    </legend>
+    <% if @order.covered_by_store_credit? %>
+      <p>Your order is fully covered by store credits, no additional payment method is required.</p>
+    <% else %>
+      <ul class="payment-step__selector my-6">
+        <% @wallet_payment_sources&.each do |wallet_payment_source| %>
+          <% payment_method = wallet_payment_source.payment_source.payment_method %>
+          <% default = wallet_payment_source == @default_wallet_payment_source %>
+          <% fieldset_name = "wallet-source-#{wallet_payment_source.id}" %>
+
+          <li class="<%= payment_method_card_classes %>">
+            <label class="<%= payment_method_top_label_classes %>">
+              <%= t(payment_method.name, scope: 'spree.payment_methods', default: payment_method.name) %>
+              <%= radio_button_tag(
+                "order[wallet_payment_source_id]",
+                wallet_payment_source.id,
+                default,
+                'data-action': 'checkout-payment#paymentSelected',
+                'data-checkout-payment-target': "paymentRadio",
+                'data-fieldset-name': fieldset_name,
+                id: ","
+              ) %>
+            </label>
+            <fieldset name="<%= fieldset_name %>" class="payment-step__details <%= payment_method_fieldset_classes %>">
+              <%= render(
+                "checkouts/existing_payment/#{payment_method.partial_name}",
+                wallet_payment_source: wallet_payment_source,
+              ) %>
+            </fieldset>
+          </li>
+        <% end %>
+
+        <% @order.available_payment_methods.each.with_index do |payment_method, index| %>
+          <% default = !@default_wallet_payment_source && index.zero? %>
+          <% fieldset_name = "payment-method-#{payment_method.id}" %>
+
+          <li class="<%= payment_method_card_classes %>">
+            <label class="<%= payment_method_top_label_classes %>">
+              <%= t(payment_method.name, scope: 'spree.payment_method', default: payment_method.name) %>
+              <%= radio_button_tag(
+                "order[payments_attributes][][payment_method_id]",
+                payment_method.id,
+                default,
+                'data-action': 'checkout-payment#paymentSelected',
+                'data-checkout-payment-target': "paymentRadio",
+                'data-fieldset-name': fieldset_name,
+              ) %>
+            </label>
+            <fieldset name="<%= fieldset_name %>" class="payment-step__details <%= payment_method_fieldset_classes %>">
+              <%= render(
+                "checkouts/payment/#{payment_method.partial_name}",
+                payment_method: payment_method,
+              ) %>
+            </fieldset>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </fieldset>
+
+  <div class="flex justify-end py-6">
+    <%= button_tag(
+      I18n.t("spree.save_and_continue"),
+      class: 'button-primary',
+      name: :commit
+    ) %>
+  </div>
+</div>
+
+<script>
+  Solidus.disableSaveOnClick();
+</script>

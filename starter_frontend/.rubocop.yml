@@ -1,0 +1,20 @@
+inherit_from:
+  - .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - bin/*
+    - sandbox/**/*
+    - spec/dummy/**/*
+    - vendor/**/*
+
+Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Metrics/LineLength:
+  Enabled: true
+  Max: 175

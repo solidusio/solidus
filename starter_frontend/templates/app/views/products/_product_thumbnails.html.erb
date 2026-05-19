@@ -1,0 +1,36 @@
+<% thumbnails_class = "flex shrink-0 w-1_col-3 justify-center items-center snap-center bg-gray-50 rounded-lg p-4 aspect-square transition-colors duration-150 hover:bg-gray-100 md:rounded-xl lg:rounded-2xl lg:w-full" %>
+
+<div class="col-span-full no-scrollbar lg:col-span-3 lg:overflow-auto">
+  <ul class="flex flex-nowrap overflow-x-auto no-scrollbar snap-x gap-4 lg:overflow-y-auto lg:snap-y lg:flex-col">
+    <% unless product.has_variants? %>
+      <% product.gallery.images.each do |image| %>
+        <% next if image.viewable_id != product.master.id %>
+
+        <%= content_tag(
+          :li,
+          data: { js: 'product-thumbnail', js_id: image.viewable_id }
+        ) do %>
+          <%= link_to image.url(:product), class: thumbnails_class do %>
+            <%= image_tag(image.url(:small))  %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if product.has_variants? %>
+      <% product.gallery.images.each do |image| %>
+        <% next if image.viewable_id == product.master.id %>
+
+        <%= content_tag(
+          :li,
+          data: { js: 'variant-thumbnail', js_id: image.viewable_id }
+        ) do %>
+          <%= link_to image.url(:product), class: thumbnails_class do %>
+            <%= image_tag(image.url(:small))  %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+

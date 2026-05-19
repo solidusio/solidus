@@ -1,0 +1,12 @@
+<div class="col-span-full md:col-span-2 relative rounded-xl overflow-auto">
+  <div class="relative rounded-xl overflow-auto">
+    <ul class="list-none overscroll-x-scroll flex flex-row md:flex-col space-x-6 md:space-x-0 md:space-y-4">
+      <li class="flex-none py-4 md:py-0">
+        <%= link_to I18n.t('spree.my_orders'), account_path, class: "transition-all duration-300 text-black hover:!text-red-500 dark:text-sand underline" %>
+      </li>
+      <li class="flex-none py-4 md:py-0">
+        <%= link_to I18n.t('spree.edit'), edit_account_path, class:"transition-all duration-300 text-black hover:!text-red-500 dark:text-sand underline" %>
+      </li>
+    </ul>
+  </div>
+</div>

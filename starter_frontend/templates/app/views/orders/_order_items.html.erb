@@ -1,0 +1,15 @@
+<%
+  base_class = "order-items".freeze
+
+  # Optional props
+  classes = local_assigns.fetch(:classes, [])
+
+  # Classes
+  class_names = classes.push(base_class).join(" ")
+%>
+
+<section class="<%= class_names %>">
+  <% order.line_items.each do |item| %>
+    <%= render 'orders/order_item', item: item %>
+  <% end %>
+</section>

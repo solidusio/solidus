@@ -1,0 +1,8 @@
+<% if payment.source.respond_to?(:paypal_funding_source) %>
+  <br />
+  <%= t('paypal_funding', funding: payment.source.display_paypal_funding_source) %>
+<% end %>
+<% if payment.source.respond_to?(:paypal_email) %>
+  <br />
+  <%= t('payment_email', email: payment.source.paypal_email) %>
+<% end %>

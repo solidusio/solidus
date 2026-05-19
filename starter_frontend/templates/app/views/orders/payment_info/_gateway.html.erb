@@ -1,0 +1,5 @@
+<% source = payment.source %>
+
+<% if source.last_digits %>
+  <%= t('spree.ending_in') %> <%= source.last_digits %>
+<% end %>

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# We don't run rsync with --delete because this would delete files in the
+# sandbox that are not in the templates. These would be files installed by
+# `rails new` and by `solidus:install` prior to installing the frontend
+# files from the templates.
+rsync \
+  --archive \
+  --verbose \
+  templates/ \
+  sandbox
+

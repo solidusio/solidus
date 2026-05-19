@@ -1,0 +1,13 @@
+<% if target && target.errors.any? %>
+  <div class="col-span-full">
+    <div id="errorExplanation" class="errorExplanation flash error" data-hook>
+      <h2><%= t('spree.errors_prohibited_this_record_from_being_saved', count: target.errors.count) %>:</h2>
+      <p><%= t('spree.there_were_problems_with_the_following_fields') %>:</p>
+      <ul>
+      <% target.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,47 @@
+<% variant = line_item.variant %>
+
+<%= order_form.fields_for :line_items, line_item do |item_form| %>
+  <article class="cart-item py-6 border-b-[1px] border-b-gray-200 grid-container">
+    <div class="flex justify-center items-center col-span-1 bg-gray-50 rounded-lg p-2 min-w-[60px] min-h-[60px] aspect-square md:rounded-xl md:col-span-3 lg:rounded-2xl">
+      <%= link_to(
+        render(ImageComponent.new(
+          image: variant.gallery.images.first || variant.product.gallery.images.first,
+          size: :small
+        )),
+        variant.product
+      ) %>
+    </div>
+
+    <div class="flex justify-between items-start col-span-3 md:col-span-5">
+      <%= render(
+        'orders/item_info',
+        line_item: line_item,
+        variant: variant,
+        classes: ['cart-item__info']
+      ) %>
+      <div class="cart-item__price md:hidden col-span-2">
+        <p class="font-sans-md"><%= line_item.display_amount.to_html unless line_item.quantity.nil? %></p>
+      </div>
+    </div>
+
+    <div class="flex flex-row-reverse justify-between col-span-full sm:col-span-4 sm:flex-col">
+      <div class="flex items-center justify-between w-full">
+        <div class="cart-item__quantity text-input mr-4">
+          <%= item_form.number_field :quantity %>
+        </div>
+
+        <div class="cart-item__price hidden md:block col-span-2">
+          <p class="font-sans-md"><%= line_item.display_amount.to_html unless line_item.quantity.nil? %></p>
+        </div>
+
+        <div class="flex items-center justify-end md:hidden gap-x-2">
+          <%= render 'carts/cart_item_remove', order_form: order_form, item_form: item_form, line_item: line_item %>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center justify-end gap-x-2">
+        <%= render 'carts/cart_item_remove', order_form: order_form, item_form: item_form, line_item: line_item %>
+      </div>
+    </div>
+  </article>
+<% end %>
