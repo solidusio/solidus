@@ -54,14 +54,15 @@ module Spree
       end
 
       def variant_scope
+        image_preloads = Spree::Image.attachment_preloads
         scope = Spree::Variant
           .accessible_by(current_ability)
           .distinct
           .includes(
-            :images,
-            stock_items: :stock_location,
-            product: :variant_images,
-            option_values: :option_type
+            {images: image_preloads},
+            {stock_items: :stock_location},
+            {product: {variant_images: image_preloads}},
+            {option_values: :option_type}
           )
 
         scope = scope.where(product: @product, is_master: !@product.has_variants?) if @product

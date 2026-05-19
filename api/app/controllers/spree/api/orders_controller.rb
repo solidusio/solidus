@@ -170,7 +170,7 @@ module Spree
 
       def find_order(_lock = false)
         @order = Spree::Order
-          .includes(line_items: [:adjustments, {variant: :images}],
+          .includes(line_items: [:adjustments, {variant: {images: Spree::Image.attachment_preloads}}],
             payments: :payment_method,
             shipments: {
               shipping_rates: {shipping_method: :zones, taxes: :tax_rate}
