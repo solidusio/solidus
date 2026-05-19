@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context 'checkout setup' do
+RSpec.shared_context "checkout setup" do
   let!(:store) { create(:store) }
   let!(:country) { create(:country, states_required: true) }
   let!(:state) { create(:state, country: country) }

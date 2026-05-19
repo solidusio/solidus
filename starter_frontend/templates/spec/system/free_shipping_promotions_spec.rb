@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Free shipping promotions', type: :system, js: true do
-  include  SolidusStarterFrontend::System::CheckoutHelpers
+RSpec.describe "Free shipping promotions", type: :system, js: true do
+  include SolidusStarterFrontend::System::CheckoutHelpers
 
   let!(:store) { create(:store) }
   let!(:country) { create(:country, name: "United States of America", states_required: true) }
@@ -25,7 +25,7 @@ RSpec.describe 'Free shipping promotions', type: :system, js: true do
       promotion_actions: [Spree::Promotion::Actions::FreeShipping.new],
       name: "Free Shipping",
       starts_at: 1.day.ago,
-      expires_at: 1.day.from_now,
+      expires_at: 1.day.from_now
     )
   end
 
@@ -37,7 +37,7 @@ RSpec.describe 'Free shipping promotions', type: :system, js: true do
       checkout_as_guest
       fill_in "order_email", with: "spree@example.com"
       fill_in "Name", with: "John Smith"
-      fill_in 'Street Address:', with: '1 John Street'
+      fill_in "Street Address:", with: "1 John Street"
       fill_in "City", with: "City of John"
       fill_in "Zip", with: "01337"
       select country.name, from: "Country"

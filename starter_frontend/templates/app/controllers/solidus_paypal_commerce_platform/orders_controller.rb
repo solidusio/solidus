@@ -44,7 +44,7 @@ module SolidusPaypalCommercePlatform
       if total_is_correct?(params[:paypal_total])
         render json: {}, status: :ok
       else
-        respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
+        respond_with(@order, default_template: "spree/api/orders/expected_total_mismatch", status: 400)
       end
     end
 
@@ -62,14 +62,14 @@ module SolidusPaypalCommercePlatform
           :admin_area_1,
           :admin_area_2,
           :postal_code,
-          :country_code,
+          :country_code
         ],
         recipient: [
           :email_address,
           {
             name: [
               :given_name,
-              :surname,
+              :surname
             ]
           }
         ]

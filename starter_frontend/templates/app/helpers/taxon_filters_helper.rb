@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core/product_filters'
+require "spree/core/product_filters"
 
 module TaxonFiltersHelper
   def applicable_filters_for(_taxon)

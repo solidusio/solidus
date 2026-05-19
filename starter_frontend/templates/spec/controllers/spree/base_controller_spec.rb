@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
 RSpec.describe Spree::BaseController, type: :controller do
-  describe '#unauthorized_redirect' do
+  describe "#unauthorized_redirect" do
     controller(described_class) do
-      def index; authorize!(:read, :something); end
+      def index
+        authorize!(:read, :something)
+      end
     end
 
     before do
@@ -23,10 +25,10 @@ RSpec.describe Spree::BaseController, type: :controller do
       end
 
       context "when http_referrer is present" do
-        let(:request_referer_path) { '/redirect' }
+        let(:request_referer_path) { "/redirect" }
         let(:request_referer) { "#{request.protocol}#{request.host}#{request_referer_path}" }
 
-        before { request.env['HTTP_REFERER'] = request_referer }
+        before { request.env["HTTP_REFERER"] = request_referer }
 
         it "redirects back" do
           get :index
@@ -44,10 +46,10 @@ RSpec.describe Spree::BaseController, type: :controller do
       end
 
       context "when http_referrer is present" do
-        let(:request_referer_path) { '/redirect' }
+        let(:request_referer_path) { "/redirect" }
         let(:request_referer) { "#{request.protocol}#{request.host}#{request_referer_path}" }
 
-        before { request.env['HTTP_REFERER'] = request_referer }
+        before { request.env["HTTP_REFERER"] = request_referer }
 
         it "redirects back" do
           get :index

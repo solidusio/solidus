@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StoreDeviseController < ApplicationController
-  helper 'spree/base', 'spree/store'
+  helper "spree/base", "spree/store"
 
   include Spree::Core::ControllerHelpers::Auth
   include Spree::Core::ControllerHelpers::Common
@@ -9,5 +9,5 @@ class StoreDeviseController < ApplicationController
   include Spree::Core::ControllerHelpers::Store
   include Taxonomies
 
-  layout 'storefront'
+  layout "storefront"
 end

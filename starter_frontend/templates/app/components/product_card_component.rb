@@ -5,7 +5,7 @@ class ProductCardComponent < ViewComponent::Base
     product,
     locale: I18n.locale,
     price: product.master.default_price,
-    additional_classes: '',
+    additional_classes: "",
     home_collection: false
   )
     @product = product

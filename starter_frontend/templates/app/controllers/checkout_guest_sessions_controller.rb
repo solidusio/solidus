@@ -7,7 +7,7 @@ class CheckoutGuestSessionsController < CheckoutBaseController
     else
       flash[:registration_error] = t(:email_is_invalid, scope: [:errors, :messages])
       @user = Spree::User.new
-      render template: 'checkout_sessions/new'
+      render template: "checkout_sessions/new"
     end
   end
 end

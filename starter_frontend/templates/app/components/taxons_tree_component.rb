@@ -9,7 +9,7 @@ class TaxonsTreeComponent < ViewComponent::Base
     current_taxon: nil,
     max_level: 1,
     item_classes: nil,
-    current_item_classes: 'underline',
+    current_item_classes: "underline",
     title_classes: nil
   )
     @root_taxon = root_taxon
@@ -33,7 +33,7 @@ class TaxonsTreeComponent < ViewComponent::Base
 
   def all_taxon
     classes = item_classes
-    classes = [classes, current_item_classes].join(' ') if current_page?(controller: 'products')
+    classes = [classes, current_item_classes].join(" ") if current_page?(controller: "products")
 
     content_tag :li, class: classes do
       link_to("All", products_path)
@@ -50,7 +50,7 @@ class TaxonsTreeComponent < ViewComponent::Base
     content_tag :ul do
       taxons = root_taxon.children.map do |taxon|
         classes = item_classes
-        classes = [classes, current_item_classes].join(' ') if current_item_classes && current_taxon&.self_and_ancestors&.include?(taxon)
+        classes = [classes, current_item_classes].join(" ") if current_item_classes && current_taxon&.self_and_ancestors&.include?(taxon)
 
         content_tag :li, class: classes do
           link_to(taxon.name, helpers.taxon_seo_url(taxon)) +

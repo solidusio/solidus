@@ -14,13 +14,13 @@ class ImageComponent < ViewComponent::Base
     if image
       image_tag image.url(size), default_options.merge(options)
     else
-      content_tag :div, nil, class: ['image-placeholder', size].join(' ')
+      content_tag :div, nil, class: ["image-placeholder", size].join(" ")
     end
   end
 
   private
 
   def default_options
-    { alt: image.alt, class: classes }
+    {alt: image.alt, class: classes}
   end
 end

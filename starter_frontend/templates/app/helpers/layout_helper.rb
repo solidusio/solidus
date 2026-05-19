@@ -21,9 +21,9 @@ module LayoutHelper
 
     href = "#{request.protocol}#{host}#{path_without_extension}"
 
-    trailing_slash = request.params.key?('action') &&
-      collection_actions.include?(request.params['action'])
-    href += '/' if trailing_slash
+    trailing_slash = request.params.key?("action") &&
+      collection_actions.include?(request.params["action"])
+    href += "/" if trailing_slash
 
     query_params = params.select do |key, value|
       value.present? && allowed_parameters.include?(key.to_sym)

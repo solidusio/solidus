@@ -2,6 +2,7 @@
 
 module Taxonomies
   extend ActiveSupport::Concern
+
   included do
     helper_method :taxonomies
   end

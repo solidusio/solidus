@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'coverage'
-require 'simplecov'
+require "coverage"
+require "simplecov"
 
 SimpleCov.root File.expand_path(__dir__)
 
-if ENV['CODECOV_TOKEN']
-  require 'simplecov-cobertura'
+if ENV["CODECOV_TOKEN"]
+  require "simplecov-cobertura"
 
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
     SimpleCov::Formatter::CoberturaFormatter,
-    SimpleCov.formatter,
+    SimpleCov.formatter
   ])
 else
   warn "Provide a CODECOV_TOKEN environment variable to enable Codecov uploads"
@@ -25,7 +25,7 @@ def (SimpleCov::ResultAdapter).call(result)
     File.exist?(template_path) ? template_path : path
   end
   result.each do |path, coverage|
-    next unless path.end_with?('.erb')
+    next unless path.end_with?(".erb")
 
     # Remove the extra trailing lines added by ERB
     coverage[:lines] = coverage[:lines][...File.read(path).lines.size]

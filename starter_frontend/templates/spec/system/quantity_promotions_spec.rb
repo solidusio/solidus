@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Quantity Promotions', type: :system, js: true do
+RSpec.describe "Quantity Promotions", type: :system, js: true do
   let(:action) do
     Spree::Promotion::Actions::CreateQuantityAdjustments.create(
       calculator: calculator,
@@ -10,7 +10,7 @@ RSpec.describe 'Quantity Promotions', type: :system, js: true do
     )
   end
 
-  let(:promotion) { FactoryBot.create(:promotion, code: 'PROMO') }
+  let(:promotion) { FactoryBot.create(:promotion, code: "PROMO") }
   let(:calculator) { FactoryBot.create(:calculator, preferred_amount: 5) }
 
   before do
@@ -24,7 +24,7 @@ RSpec.describe 'Quantity Promotions', type: :system, js: true do
     click_button "Add To Cart"
   end
 
-  it 'adding and removing items from the cart' do
+  it "adding and removing items from the cart" do
     # Attempt to use the code with too few items.
     fill_in "coupon_code", with: "PROMO"
     click_button "Apply Code"
@@ -65,7 +65,7 @@ RSpec.describe 'Quantity Promotions', type: :system, js: true do
   end
 
   # Catches an earlier issue with quantity calculation.
-  it 'adding odd numbers of items to the cart' do
+  it "adding odd numbers of items to the cart" do
     # Bump quantity to 3
     fill_in "order_line_items_attributes_0_quantity", with: 3
     click_button "Update"
@@ -98,9 +98,9 @@ RSpec.describe 'Quantity Promotions', type: :system, js: true do
       )
     end
 
-    before { FactoryBot.create(:product, name: 'DC-15A') }
+    before { FactoryBot.create(:product, name: "DC-15A") }
 
-    it 'odd number of changes to quantities' do
+    it "odd number of changes to quantities" do
       fill_in "order_line_items_attributes_0_quantity", with: 3
       click_button "Update"
 

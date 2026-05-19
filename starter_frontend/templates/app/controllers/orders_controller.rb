@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class OrdersController < StoreController
-  helper 'spree/products', 'orders'
+  helper "spree/products", "orders"
 
   respond_to :html
 
@@ -15,7 +15,7 @@ class OrdersController < StoreController
   private
 
   def accurate_title
-    t('spree.order_number', number: @order.number)
+    t("spree.order_number", number: @order.number)
   end
 
   def store_guest_token

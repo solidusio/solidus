@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-app_root = 'sandbox'
+app_root = "sandbox"
 
 unless File.exist? "#{app_root}/bin/rails"
   warn "Creating the #{app_root} app..."
@@ -13,4 +13,4 @@ unless File.exist? "#{app_root}/bin/rails"
 end
 
 Dir.chdir app_root
-exec 'bin/rails', *ARGV
+exec "bin/rails", *ARGV

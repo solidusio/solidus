@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Taxon', type: :request, with_signed_in_user: true do
+RSpec.describe "Taxon", type: :request, with_signed_in_user: true do
   let(:user) { create(:admin_user) }
 
   it "provides the current user to the searcher class" do

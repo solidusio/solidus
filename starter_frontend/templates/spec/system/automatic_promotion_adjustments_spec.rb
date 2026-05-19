@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Automatic promotions', type: :system, js: true do
+RSpec.describe "Automatic promotions", type: :system, js: true do
   let!(:store) { create(:store) }
   let!(:product) do
     create(:product, name: "Solidus mug set", price: 20).tap do |product|

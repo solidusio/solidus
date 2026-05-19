@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'products', type: :system, caching: true do
+RSpec.describe "products", type: :system, caching: true do
   let!(:taxon) { create(:taxon, taxonomy: create(:taxonomy)) }
   let!(:product) { create(:product, taxons: [taxon]) }
   let!(:product2) { create(:product, taxons: [taxon]) }

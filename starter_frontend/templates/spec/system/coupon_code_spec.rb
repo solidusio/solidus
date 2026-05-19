@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'solidus_starter_frontend_spec_helper'
+require "solidus_starter_frontend_spec_helper"
 
-RSpec.describe 'Coupon code promotions', type: :system, js: true do
-  include_context 'featured products'
-  include  SolidusStarterFrontend::System::CheckoutHelpers
+RSpec.describe "Coupon code promotions", type: :system, js: true do
+  include_context "featured products"
+  include SolidusStarterFrontend::System::CheckoutHelpers
 
   let!(:store) { create(:store) }
   let!(:zone) { create(:zone) }
@@ -17,9 +17,9 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
     def create_basic_coupon_promotion(code)
       promotion = create(
         :promotion,
-        name:       code.titleize,
-        code:       code,
-        starts_at:  1.day.ago,
+        name: code.titleize,
+        code: code,
+        starts_at: 1.day.ago,
         expires_at: 1.day.from_now
       )
 
@@ -54,13 +54,13 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
         it "informs about an invalid coupon code" do
           fill_in "order_coupon_code", with: "coupon_codes_rule_man"
           click_button "Apply Code"
-          expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
+          expect(page).to have_content(I18n.t("spree.coupon_code_not_found"))
         end
 
         it "can enter an invalid coupon code, then a real one" do
           fill_in "order_coupon_code", with: "coupon_codes_rule_man"
           click_button "Apply Code"
-          expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
+          expect(page).to have_content(I18n.t("spree.coupon_code_not_found"))
           fill_in "order_coupon_code", with: "onetwo"
           click_button "Apply Code"
           expect(page).to have_content("Promotion (Onetwo) -$10.00", normalize_ws: true)
@@ -75,7 +75,7 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
         end
       end
 
-      context 'as logged user' do
+      context "as logged user" do
         let!(:user) { create(:user, bill_address: create(:address), ship_address: create(:address)) }
 
         before do
@@ -86,7 +86,7 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
           allow_any_instance_of(CartLineItemsController).to receive_messages(spree_current_user: user)
         end
 
-        context 'with saved credit card' do
+        context "with saved credit card" do
           let(:bogus) { create(:credit_card_payment_method, name: "Bogus Card") }
           let!(:credit_card) do
             create(:credit_card, user_id: user.id, payment_method: bogus, gateway_customer_profile_id: "BGS-WEFWF")
@@ -129,13 +129,13 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
       it "can enter a coupon code and receives success notification" do
         fill_in "coupon_code", with: "onetwo"
         click_button "Apply Code"
-        expect(page).to have_content(I18n.t('spree.coupon_code_applied'))
+        expect(page).to have_content(I18n.t("spree.coupon_code_applied"))
       end
 
       it "can enter a promotion code with both upper and lower case letters" do
         fill_in "coupon_code", with: "ONETwO"
         click_button "Apply Code"
-        expect(page).to have_content(I18n.t('spree.coupon_code_applied'))
+        expect(page).to have_content(I18n.t("spree.coupon_code_applied"))
       end
 
       it "informs the user about a coupon code which has exceeded its usage" do
@@ -143,7 +143,7 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
 
         fill_in "coupon_code", with: "onetwo"
         click_button "Apply Code"
-        expect(page).to have_content(I18n.t('spree.coupon_code_max_usage'))
+        expect(page).to have_content(I18n.t("spree.coupon_code_max_usage"))
       end
 
       context "informs the user if the coupon code is not eligible" do
@@ -169,7 +169,7 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
         promotion.save!
         fill_in "coupon_code", with: "onetwo"
         click_button "Apply Code"
-        expect(page).to have_content(I18n.t('spree.coupon_code_expired'))
+        expect(page).to have_content(I18n.t("spree.coupon_code_expired"))
       end
 
       context "calculates the correct amount of money saved with flat percent promotions" do
@@ -195,14 +195,14 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
           fill_in "order_line_items_attributes_1_quantity", with: 2
           click_button "Update"
 
-          within '#cart_adjustments' do
+          within "#cart_adjustments" do
             # 20% of $40 = 8
             # 20% of $20 = 4
             # Therefore: promotion discount amount is $12.
             expect(page).to have_content("Promotion (Onetwo) -$12.00", normalize_ws: true)
           end
 
-          within '.cart-footer__total' do
+          within ".cart-footer__total" do
             expect(page).to have_content("$48.00")
           end
         end
@@ -230,18 +230,18 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
 
           visit cart_path
 
-          within '.cart-footer__total' do
+          within ".cart-footer__total" do
             expect(page).to have_content("$30.00")
           end
 
           fill_in "coupon_code", with: "onetwo"
           click_button "Apply Code"
 
-          within '#cart_adjustments' do
+          within "#cart_adjustments" do
             expect(page).to have_content("Promotion (Onetwo) -$30.00", normalize_ws: true)
           end
 
-          within '.cart-footer__total' do
+          within ".cart-footer__total" do
             expect(page).to have_content("$0.00")
           end
 
@@ -249,11 +249,11 @@ RSpec.describe 'Coupon code promotions', type: :system, js: true do
           fill_in "order_line_items_attributes_1_quantity", with: 2
           click_button "Update"
 
-          within '#cart_adjustments' do
+          within "#cart_adjustments" do
             expect(page).to have_content("Promotion (Onetwo) -$60.00", normalize_ws: true)
           end
 
-          within '.cart-footer__total' do
+          within ".cart-footer__total" do
             expect(page).to have_content("$0.00")
           end
         end
