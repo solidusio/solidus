@@ -84,6 +84,7 @@ RSpec.feature 'Checkout', :js, type: :system do
       user = create(:user, email: 'email@person.com', password: 'password', password_confirmation: 'password')
       click_link 'Solidus hoodie'
       click_button 'Add To Cart'
+      within('h1') { expect(page).to have_text 'Shopping Cart' }
 
       visit login_path
       fill_in 'Email', with: user.email
@@ -120,11 +121,13 @@ RSpec.feature 'Checkout', :js, type: :system do
       create(:user, email: 'email@person.com', password: 'password', password_confirmation: 'password')
       click_link 'Solidus hoodie'
       click_button 'Add To Cart'
+      expect(page).to have_text 'Shopping Cart'
 
       visit login_path
       click_link 'Forgot Password?'
       fill_in 'spree_user_email', with: 'email@person.com'
       click_button 'Reset my password'
+      expect(page).to have_text('If an account with that email address exists')
 
       # Need to do this now because the token stored in the DB is the encrypted version
       # The 'plain-text' version is sent in the email and there's one way to get that!

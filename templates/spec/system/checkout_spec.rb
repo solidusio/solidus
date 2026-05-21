@@ -111,6 +111,7 @@ RSpec.describe 'Checkout', :js, type: :system do
 
         add_mug_to_cart
         click_button "Checkout"
+        expect(page).to have_content("Billing Address")
         # We need an order reload here to get newly associated addresses.
         # Then we go back to address where we are supposed to be redirected.
         order.reload
@@ -172,7 +173,8 @@ RSpec.describe 'Checkout', :js, type: :system do
         before do
           add_mug_to_cart
           click_button "Checkout"
-
+          expect(page).to have_content("Login as Existing Customer")
+          
           # Simulate user login
           Spree::Order.last.associate_user!(user)
           allow_any_instance_of(CheckoutsController).to receive_messages(spree_current_user: user)
@@ -203,6 +205,7 @@ RSpec.describe 'Checkout', :js, type: :system do
           let(:saved_ship_address) { create(:address, name: 'Steve Jobs') }
 
           it 'shows empty addresses', js: true do
+
             within("#billing") do
               expect(find_field('Name').value).to eq 'Bill Gates'
             end
@@ -593,14 +596,14 @@ RSpec.describe 'Checkout', :js, type: :system do
       Spree::Order.checkout_flow(&@old_checkout_flow)
     end
 
-    it "goes right payment step and place order just fine" do
+    it "goes right to the payment step and places the order" do
       expect(page).to have_current_path(checkout_state_path('payment'))
 
       choose "Credit Card"
       fill_in_credit_card
       click_button "Save and Continue"
+      expect(page).to have_text('Put your terms and conditions here')
 
-      expect(current_path).to eq checkout_state_path('confirm')
       check 'Agree to Terms of Service'
       click_button "Place Order"
     end
@@ -661,11 +664,9 @@ RSpec.describe 'Checkout', :js, type: :system do
       click_button 'Place Order'
     end
 
-    it "displays a thank you message" do
+    it "displays a thank you message only on the first visit" do
       expect(page).to have_content(I18n.t('spree.thank_you_for_your_order'), normalize_ws: true)
-    end
 
-    it "does not display a thank you message on that order future visits" do
       visit order_path(order)
       expect(page).to_not have_content(I18n.t('spree.thank_you_for_your_order'))
     end
@@ -712,6 +713,7 @@ RSpec.describe 'Checkout', :js, type: :system do
         fill_in "Zip", with: "H0H0H0"
 
         click_on 'Save and Continue'
+        expect(page).to have_content "We are unable to calculate shipping rates for the selected items."
         visit checkout_state_path(:address)
 
         expect(page).to have_field(state_name_css, with: xss_string)
