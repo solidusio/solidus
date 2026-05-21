@@ -4,23 +4,15 @@ module Spree
   module Stock
     class Coordinator
       def initialize(order, inventory_units: nil)
-        @context = {order:, inventory_units:}
         @order = order
-
-        Middleware::InventoryUnit.new.call(@context)
-        Middleware::InventoryUnitGroup.new.call(@context)
-        Middleware::StockLocation.new.call(@context)
-        Middleware::Desired.new.call(@context)
-        Middleware::Availability.new.call(@context)
+        @context = Context.new(order: order, inventory_units: inventory_units)
       end
 
       def shipments
         @shipments ||= begin
-                         Middleware::Allocate.new.call(@context)
-                         Middleware::Package.new.call(@context)
-                         Middleware::Shipment.new.call(@context)
+                         Runner.call(Spree::Config.stock.coordinator_middlewares, @context)
 
-                         shipments = @context[:shipments]
+                         shipments = @context.shipments
 
                          # Make sure we don't add the proposed shipments to the order
                          @order.shipments = @order.shipments - shipments

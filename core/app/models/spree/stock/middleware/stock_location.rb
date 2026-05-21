@@ -4,13 +4,15 @@ module Spree
       class StockLocation
         def call(context)
           filtered_stock_locations = Spree::Config.stock.location_filter_class.new(
-            load_stock_locations, context[:order]
+            load_stock_locations, context.order
           ).filter
           sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(
             filtered_stock_locations
           ).sort
 
-          context[:stock_locations] = sorted_stock_locations
+          context.stock_locations = sorted_stock_locations
+
+          yield context
         end
 
         private

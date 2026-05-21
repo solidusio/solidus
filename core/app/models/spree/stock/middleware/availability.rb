@@ -3,10 +3,12 @@ module Spree
     module Middleware
       class Availability
         def call(context)
-          context[:availability] = Spree::Stock::Availability.new(
-            variants: context[:desired].variants,
-            stock_locations: context[:stock_locations]
+          context.availability = Spree::Stock::Availability.new(
+            variants: context.desired.variants,
+            stock_locations: context.stock_locations
           )
+
+          yield context
         end
       end
     end

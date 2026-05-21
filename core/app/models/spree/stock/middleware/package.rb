@@ -3,9 +3,9 @@ module Spree
     module Middleware
       class Package
         def call(context)
-          packages = context[:stock_locations].map do |stock_location|
-            on_hand = context[:on_hand_packages][stock_location.id] || Spree::StockQuantities.new
-            backordered = context[:backordered_packages][stock_location.id] || Spree::StockQuantities.new
+          packages = context.stock_locations.map do |stock_location|
+            on_hand = context.on_hand_packages[stock_location.id] || Spree::StockQuantities.new
+            backordered = context.backordered_packages[stock_location.id] || Spree::StockQuantities.new
 
             next if on_hand.empty? && backordered.empty?
 
@@ -16,14 +16,16 @@ module Spree
             package
           end.compact
 
-          context[:packages] = split_packages(packages)
+          context.packages = split_packages(packages)
+
+          yield context
         end
 
         private
 
         def get_units(context, quantities)
           quantities.flat_map do |variant, quantity|
-            context[:inventory_unit_groups][variant].shift(quantity)
+            context.inventory_unit_groups[variant].shift(quantity)
           end
         end
 
