@@ -3,7 +3,20 @@
 module Spree
   module Core
     class StockConfiguration < Spree::Preferences::Configuration
+      include Spree::Core::EnvironmentExtension
+
       class_name_attribute :coordinator_class, default: "::Spree::Stock::SimpleCoordinator"
+
+      add_class_list :coordinator_middlewares, default: [
+        "Spree::Stock::Middleware::InventoryUnit",
+        "Spree::Stock::Middleware::InventoryUnitGroup",
+        "Spree::Stock::Middleware::StockLocation",
+        "Spree::Stock::Middleware::Desired",
+        "Spree::Stock::Middleware::Availability",
+        "Spree::Stock::Middleware::Allocate",
+        "Spree::Stock::Middleware::Package",
+        "Spree::Stock::Middleware::Shipment",
+      ]
       class_name_attribute :estimator_class, default: "::Spree::Stock::Estimator"
       class_name_attribute :location_filter_class, default: "::Spree::Stock::LocationFilter::Active"
       class_name_attribute :location_sorter_class, default: "::Spree::Stock::LocationSorter::Unsorted"
