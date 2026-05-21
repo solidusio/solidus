@@ -1,0 +1,21 @@
+<%
+  base_class = "product-availability".freeze
+
+  # Optional props
+  classes = local_assigns.fetch(:classes, [])
+
+  # Classes
+  class_names = classes.push(base_class).join(" ")
+%>
+
+<% if product.master.can_supply? %>
+  <link itemprop="availability" href="http://schema.org/InStock" />
+<% elsif product.variants.empty? %>
+  <span
+    class="<%= class_names %>"
+    itemprop="availability"
+    href="http://schema.org/OutOfStock"
+  >
+    <%= t('spree.out_of_stock') %>
+  </span>
+<% end %>

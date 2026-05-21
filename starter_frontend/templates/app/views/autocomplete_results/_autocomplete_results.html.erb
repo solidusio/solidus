@@ -1,0 +1,28 @@
+<ul class="autocomplete-results__list flex flex-col lg:space-y-4 lg:border border-gray-100 rounded-xl shadow-lg bg-[#F5F3F0] lg:bg-white !p-6 dark:bg-light-black dark:text-sand">
+  <% if results[:products].any? %>
+    <% results[:products].each do |product| %>
+      <li class="autocomplete-results__item text-body-sm transition-colors duration-150 last:pb-3"
+          data-search-target="result">
+        <%= link_to product.name, product_path(product), class: 'w-fit hover:text-primary' %>
+      </li>
+    <% end %>
+    <li class="autocomplete-results__item text-body-sm pt-3 transition-colors duration-150 border-t border-t-gray-300" data-search-target="result">
+      <%= link_to products_path(keywords: params[:keywords]), class: "flex items-center gap-x-1 transition-all duration-150 hover:gap-x-2" do %>
+        <span class="text-body-md">See all results</span>
+        <svg class='w-6 h-6 fill-red-500'>
+          <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-arrow-right-line"></use>
+        </svg>
+      <% end %>
+    </li>
+  <% else %>
+    <li class="autocomplete-results__item autocomplete-results__item--empty text-body-sm !no-underline">No results</li>
+    <li class="autocomplete-results__item text-body-sm pt-3 transition-colors duration-150 border-t border-t-gray-300" data-search-target="result">
+      <%= link_to products_path, class: "flex items-center gap-x-1 transition-all duration-150 hover:gap-x-2" do %>
+        <span class="text-body-md">See all results</span>
+        <svg class='w-6 h-6 fill-red-500'>
+          <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-arrow-right-line"></use>
+        </svg>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

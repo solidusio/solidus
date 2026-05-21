@@ -1,0 +1,20 @@
+<ul class="shipment-items flex flex-col gap-y-5 pb-6 border-b-[1px] border-b-gray-200">
+  <% shipment_items.each do |shipment_item| %>
+    <li class="flex gap-x-4">
+      <div class="shipment-items__image flex justify-center items-center bg-gray-50 rounded-lg p-2 max-w-[90px] max-h-[90px] aspect-square md:rounded-xl">
+        <%= render(ImageComponent.new(
+          image: shipment_item.variant.gallery.images.first || shipment_item.variant.product.gallery.images.first,
+          size: :small
+        )) %>
+      </div>
+      <div class="flex flex-col gap-y-3 items-start justify-start text-body py-3">
+        <div class="shipment-items__name font-sans-md">
+          <%= shipment_item.variant.name %>
+        </div>
+        <div class="shipment-items__price">
+          <%= display_price(shipment_item.variant) %> <%= "(× #{shipment_item.quantity})" %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>

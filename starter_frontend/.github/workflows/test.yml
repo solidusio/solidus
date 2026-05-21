@@ -1,0 +1,17 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 4" # every Thursday
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  rspec:
+    uses: solidusio/test-solidus-extension/.github/workflows/test.yml@main

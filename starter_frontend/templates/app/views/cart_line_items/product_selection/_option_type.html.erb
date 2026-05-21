@@ -1,0 +1,37 @@
+<%
+  classes = {
+    "color" => "flex items-center justify-center rounded-full cursor-pointer w-8 h-8 border border-gray-50 transition-colors duration-150 [&>span]:hidden hover:border-gray-300 peer-checked:outline peer-checked:outline-2 peer-checked:outline-offset-2 peer-checked:outline-red-500",
+    "size" => "flex items-center justify-center rounded border-2 border-gray-50 bg-gray-50 py-3 px-6 cursor-pointer font-sans-md text-body text-black hover:bg-white transition-colors duration-150 peer-checked:border-red-500 peer-checked:bg-white"
+  }
+%>
+
+<div class="modules_product-display-page_product-selection">
+  <div class="optionType<%= option_type.presentation %>">
+    <div class="mb-3 font-sans-md"><%= option_type.presentation %>:
+      <span class="selected-value" id='<%= "selected-#{option_type.name}" %>'>
+        <%= option_values(product: product, option_type: option_type).first&.presentation %>
+      </span>
+    </div>
+
+    <div class="flex items-center gap-x-3">
+      <% option_values(product: product, option_type: option_type).each_with_index do |option_value, i| %>
+        <label class="mb-0 selection-items">
+          <%= tag(
+            :input,
+            class: "peer absolute opacity-0 h-0 w-0",
+            type: "radio",
+            value: option_value.id,
+            checked: i.zero?,
+            name: "#{option_type.name}",
+            "data-action": "clickOnSelection",
+            "data-presentation": option_value.presentation,
+            "data-option-index": index
+          ) %>
+          <span class='<%= "#{classes[option_type.presentation.downcase]}" %> <%= "selected-#{option_value.name.downcase}" %>' style='<%= option_type.presentation.downcase == 'color' && "background-color: #{option_value.name.downcase}" %>'>
+            <span class="value"><%= option_value.presentation %></span>
+          </span>
+        </label>
+      <% end %>
+    </div>
+  </div>
+</div>

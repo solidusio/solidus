@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%== meta_data_tags %>
+    <%= simple_canonical_tag %>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag 'solidus_starter_frontend' %>
+    <%= stylesheet_link_tag 'solidus_starter_frontend', media: 'screen' %>
+
+    <%= javascript_importmap_tags %>
+
+    <%= favicon_link_tag '/storefront_favicon.svg', type: 'image/svg+xml', rel: 'icon' %>
+    <%= favicon_link_tag '/storefront_favicon.ico', rel: 'icon', type: 'image/ico' %>
+
+    <script>
+      const lsTheme = localStorage.getItem('theme') || 'light'
+      document.documentElement.classList.add(lsTheme)
+    </script>
+
+    <%= yield :head %>
+  </head>
+
+  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-turbo="false"  data-controller="drawer">
+    <div class="min-h-screen grid grid-rows-[auto_1fr_auto]">
+      <%= render 'layouts/header', taxons: @taxons, taxon: @taxon %>
+      <main>
+        <%= render BreadcrumbsComponent.new(
+          taxon: @product&.primary_taxon || @taxon,
+          item_classes: 'text-body-xs text-gray-500',
+          separator_classes: 'text-body-xs text-gray-500 ml-2',
+          container_classes: 'flex gap-2',
+          wrapper_classes: 'wrapper mt-4',
+          order: @order
+        ) %>
+        <% if flash_messages.present? %>
+          <%= flash_messages %>
+        <% end %>
+        <%= yield %>
+      </main>
+      <%= render 'layouts/footer' %>
+      <div id="overlay" class="z-30 fixed top-0 left-0 w-full h-full bg-black opacity-50 hidden" data-action="click->drawer#toggle"></div>
+    </div>
+  </body>
+</html>

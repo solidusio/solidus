@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+File.exist?("#{__dir__}/../sandbox") or system("#{__dir__}/sandbox")
+system "#{__dir__}/sync"
+
+Dir.chdir "#{__dir__}/../sandbox" do
+  command = ['bundle', 'exec', 'rspec', *ARGV]
+  warn "$ cd sandbox; #{command.join(' ')}; cd -"
+  exit system *command
+end

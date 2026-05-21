@@ -1,0 +1,32 @@
+<%
+  base_class = "item-info".freeze
+
+  # Optional props
+  stock_info = local_assigns.fetch(:stock_info, true)
+  classes = local_assigns.fetch(:classes, [])
+
+  # Classes
+  class_names = classes.push(base_class).join(" ")
+%>
+
+<div class="<%= class_names %> flex flex-col gap-y-3">
+  <h3 class="<%= base_class %>__name text-body-lg">
+    <%= link_to line_item.name, product_path(variant.product) %>
+  </h3>
+
+  <% if defined?(line_item.single_money) %>
+    <p class="font-sans-md text-body-sm">
+      <%= line_item.single_money.to_html %>
+    </p>
+  <% end %>
+
+  <p class="<%= base_class %>__options text-body">
+    <%= variant.options_text %>
+  </p>
+
+  <% if stock_info && line_item.insufficient_stock? %>
+    <p class="<%= base_class %>__stock font-sans text-body-sm">
+      <%= t('spree.out_of_stock') %>
+    </p>
+  <% end %>
+</div>

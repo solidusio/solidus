@@ -1,0 +1,16 @@
+erblint:
+  enabled: true
+  config_file: .erb-lint.yml
+
+rubocop:
+  version: 0.75.0
+  config_file: .rubocop.yml
+
+scss-lint:
+  enabled: true
+  version: 0.57.1 
+  config_file: .scss-lint.yml
+
+eslint:
+  enabled: true
+  config_file: .eslintrc
