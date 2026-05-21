@@ -6,12 +6,23 @@ module Spree
       class Context
         attr_reader :order
         attr_accessor :inventory_units, :inventory_unit_groups, :stock_locations,
-          :desired, :availability, :on_hand_packages, :backordered_packages,
+          :on_hand_packages, :backordered_packages,
           :packages, :shipments
 
         def initialize(order:, inventory_units: nil)
           @order = order
           @inventory_units = inventory_units
+        end
+
+        def desired
+          @desired ||= Spree::StockQuantities.new(inventory_unit_groups.transform_values(&:count))
+        end
+
+        def availability
+          @availability ||= Spree::Stock::Availability.new(
+            variants: desired.variants,
+            stock_locations: stock_locations
+          )
         end
       end
     end

@@ -11,8 +11,6 @@ module Spree
         "Spree::Stock::Middleware::InventoryUnit",
         "Spree::Stock::Middleware::InventoryUnitGroup",
         "Spree::Stock::Middleware::StockLocation",
-        "Spree::Stock::Middleware::Desired",
-        "Spree::Stock::Middleware::Availability",
         "Spree::Stock::Middleware::Allocate",
         "Spree::Stock::Middleware::Package",
         "Spree::Stock::Middleware::Shipment",
