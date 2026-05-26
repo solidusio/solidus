@@ -18,8 +18,11 @@ export default defineConfig([
     extends: [compat.extends("eslint:recommended"), rootConfig],
 
     languageOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
+      globals: {
+        Solidus: "readonly",
+      },
+      ecmaVersion: 6,
+      sourceType: "module",
     },
   }
 ]);
