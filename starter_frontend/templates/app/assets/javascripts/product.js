@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (variantPrice) {
       document.querySelector("[data-js='price']").innerHTML = variantPrice;
     }
-  };
+  }
 
   function updateVariantImages(variantId) {
     selector = "[data-js='variant-thumbnail'][data-js-id='" + variantId + "']";
@@ -48,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
       variantFirstImage = variantsThumbnailsToDisplay[0].querySelector('a').href
       updateProductImage(variantFirstImage);
     }
-  };
+  }
 
   function updateProductImage(imageSrc) {
     productImage.src = imageSrc;

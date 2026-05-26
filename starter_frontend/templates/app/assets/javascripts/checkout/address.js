@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
           };
           fillStates(stateContainer, countryId);
         });
-    };
+    }
 
     function fillStates(stateContainer, countryId) {
       const stateData = statesCache[countryId];
@@ -74,7 +74,7 @@ window.addEventListener('DOMContentLoaded', () => {
           stateContainer.classList.remove('field-required');
           stateInput.classList.remove('required');
         }
-        stateContainer.style.display = !!statesRequired ? 'block' : 'none';
+        stateContainer.style.display = statesRequired ? 'block' : 'none';
         if (!statesRequired) {
           stateInput.setAttribute('disabled', true);
         } else {
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         stateSelect.classList.remove('required');
       }
-    };
+    }
 
     document.querySelectorAll('.js-trigger-state-change').forEach(element => {
       element.addEventListener('change', () => {
@@ -117,7 +117,7 @@ window.addEventListener('DOMContentLoaded', () => {
         selects.forEach(sel => sel.removeAttribute('disabled'));
         document.querySelector('#shipping .js-trigger-state-change').dispatchEvent(new Event('change'));
       }
-    };
+    }
 
     update_shipping_form_state(orderUseBilling);
   }

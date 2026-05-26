@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', () => {
         submitButton.removeAttribute('disabled');
         submitButton.classList.remove('disabled');
         return false;
-      };
+      }
     };
-  };
+  }
 });
