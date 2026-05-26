@@ -33,8 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateVariantImages(variantId) {
-    selector = "[data-js='variant-thumbnail'][data-js-id='" + variantId + "']";
-    variantsThumbnailsToDisplay = document.querySelectorAll(selector);
+    const selector = "[data-js='variant-thumbnail'][data-js-id='" + variantId + "']";
+    const variantsThumbnailsToDisplay = document.querySelectorAll(selector);
 
     variantsThumbnails.forEach(thumbnail => {
       thumbnail.style.display = 'none';
@@ -45,7 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     if(variantsThumbnailsToDisplay.length) {
-      variantFirstImage = variantsThumbnailsToDisplay[0].querySelector('a').href
+      const variantFirstImage = variantsThumbnailsToDisplay[0].querySelector('a').href
       updateProductImage(variantFirstImage);
     }
   }
