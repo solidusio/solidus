@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_dependency "cancancan", [">= 2.2", "< 4.0"]
   s.add_dependency "carmen", "~> 1.1.0"
   s.add_dependency "db-query-matchers", "~> 0.14"
-  s.add_dependency "discard", "~> 1.0"
+  s.add_dependency "discard", "~> 2.0"
   s.add_dependency "friendly_id", "~> 5.0"
   s.add_dependency "image_processing", "~> 1.10"
   s.add_dependency "mini_magick", "~> 4.10"
