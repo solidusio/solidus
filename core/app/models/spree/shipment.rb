@@ -224,6 +224,8 @@ module Spree
       self.state =
         if shipped?
           "shipped"
+        elsif inventory_units.none?
+          "pending"
         elsif order.canceled? || inventory_units.all?(&:canceled?)
           "canceled"
         elsif !order.can_ship?
