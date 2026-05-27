@@ -26,6 +26,8 @@ gem "database_cleaner", "~> 2.0", require: false
 gem "rspec-activemodel-mocks", "~> 1.1", require: false
 gem "rspec-rails", "~> 6.0.3", require: false
 gem "rspec-retry", "~> 0.6.2", require: false
+gem "mutant", require: false
+gem "mutant-rspec", require: false
 gem "simplecov", require: false
 gem "simplecov-cobertura", require: false
 gem "rack", "< 3", require: false
