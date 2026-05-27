@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# Boot the PostgreSQL container used for mutant runs against solidus_core.
+# Boots with user "postgres" / password "password".
+#
+# Fails loudly if the container is already running, so we never silently attach
+# to (or clobber) an existing database.
+
+set -euo pipefail
+
+CONTAINER_NAME="postgres"
+IMAGE="docker.io/library/postgres:18"
+PG_USER="postgres"
+PG_PASSWORD="password"
+
+red()  { printf '\033[1;31m%s\033[0m\n' "$*"; }
+green(){ printf '\033[1;32m%s\033[0m\n' "$*"; }
+
+# --- Complain loudly if it's already running --------------------------------
+if podman container inspect "$CONTAINER_NAME" >/dev/null 2>&1; then
+  status="$(podman container inspect -f '{{.State.Status}}' "$CONTAINER_NAME")"
+  if [ "$status" = "running" ]; then
+    red "############################################################"
+    red "## ALREADY RUNNING: container '$CONTAINER_NAME' is up."
+    red "## Refusing to start a second one."
+    red "##"
+    red "## Stop it first with:"
+    red "##     podman stop $CONTAINER_NAME && podman rm $CONTAINER_NAME"
+    red "############################################################"
+    exit 1
+  fi
+
+  # Exists but stopped: remove the stale container so we start clean.
+  echo "Removing stopped container '$CONTAINER_NAME'..."
+  podman rm "$CONTAINER_NAME" >/dev/null
+fi
+
+# --- Start it ---------------------------------------------------------------
+green "Starting '$CONTAINER_NAME' ($IMAGE) on 127.0.0.1:5432 ..."
+podman run -d \
+  --name "$CONTAINER_NAME" \
+  -e POSTGRES_USER="$PG_USER" \
+  -e POSTGRES_PASSWORD="$PG_PASSWORD" \
+  -p "127.0.0.1:5432:5432" \
+  "$IMAGE" >/dev/null
+
+green "Started. Connect with:"
+cat <<EOF
+    DB=postgresql DB_HOST=127.0.0.1 DB_USERNAME=$PG_USER DB_PASSWORD=$PG_PASSWORD
+EOF
