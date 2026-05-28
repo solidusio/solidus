@@ -21,7 +21,7 @@ export default defineConfig([
       globals: {
         Solidus: "readonly",
       },
-      ecmaVersion: 6,
+      ecmaVersion: "latest",
       sourceType: "module",
     },
   }
