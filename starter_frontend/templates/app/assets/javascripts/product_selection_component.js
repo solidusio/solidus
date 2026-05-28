@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 document.addEventListener("DOMContentLoaded", function () {
   const optionTypeSelector = document.querySelectorAll(".selection-items");
   for (var i = 0; i < optionTypeSelector.length; i++) {
