@@ -9,11 +9,7 @@ module Spree
       end
 
       def shipments
-        @shipments ||= begin
           Spree::MiddlewareRunner.call(Spree::Config.stock.coordinator_middlewares, @context)
-
-          shipments
-        end
       end
     end
   end
