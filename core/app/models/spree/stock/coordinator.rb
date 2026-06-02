@@ -12,11 +12,6 @@ module Spree
         @shipments ||= begin
                          Spree::MiddlewareRunner.call(Spree::Config.stock.coordinator_middlewares, @context)
 
-                         shipments = @context.shipments
-
-                         # Make sure we don't add the proposed shipments to the order
-                         @order.shipments = @order.shipments - shipments
-
                          shipments
                        end
       end
