@@ -10,10 +10,10 @@ module Spree
 
       def shipments
         @shipments ||= begin
-                         Spree::MiddlewareRunner.call(Spree::Config.stock.coordinator_middlewares, @context)
+          Spree::MiddlewareRunner.call(Spree::Config.stock.coordinator_middlewares, @context)
 
-                         shipments
-                       end
+          shipments
+        end
       end
     end
   end

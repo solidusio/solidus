@@ -13,7 +13,7 @@ module Spree
         "Spree::Stock::Middleware::StockLocation",
         "Spree::Stock::Middleware::Allocate",
         "Spree::Stock::Middleware::Package",
-        "Spree::Stock::Middleware::Shipment",
+        "Spree::Stock::Middleware::Shipment"
       ]
       class_name_attribute :estimator_class, default: "::Spree::Stock::Estimator"
       class_name_attribute :location_filter_class, default: "::Spree::Stock::LocationFilter::Active"
