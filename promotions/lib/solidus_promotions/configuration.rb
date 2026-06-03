@@ -91,7 +91,8 @@ module SolidusPromotions
       "SolidusPromotions::Conditions::ShippingMethod",
       "SolidusPromotions::Conditions::PriceProduct",
       "SolidusPromotions::Conditions::PriceTaxon",
-      "SolidusPromotions::Conditions::PriceOptionValue"
+      "SolidusPromotions::Conditions::PriceOptionValue",
+      "SolidusPromotions::Conditions::TaxonRevenue"
     ]
 
     add_class_set :benefits, default: [

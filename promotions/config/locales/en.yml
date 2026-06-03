@@ -175,6 +175,11 @@ en:
       add: Add
       destroy: Delete
       update: Update
+    operators:
+      gt: greater than
+      gte: greater than or equal to
+      lt: less than
+      lte: less than or equal to
     admin:
       promotions:
         benefits:
@@ -247,6 +252,7 @@ en:
       solidus_promotions/conditions/price_product: Price matches specified product(s)
       solidus_promotions/conditions/price_taxon: Price matches specified taxon(s)
       solidus_promotions/conditions/price_option_value: Price matches specified option value(s)
+      solidus_promotions/conditions/taxon_revenue: Taxon Revenue
       solidus_promotions/promotion_category:
         one: Promotion Category
         other: Promotion Categories
@@ -324,6 +330,10 @@ en:
         description: Available only to logged in users
       solidus_promotions/conditions/user_role:
         description: Order includes User with specified Role(s)
+      solidus_promotions/conditions/taxon_revenue:
+        description: Revenue from configured taxons is...
+        preferred_operator: Operator
+        preferred_amount: Amount
       solidus_promotions/calculators/tiered_flat_rate:
         description: Flat Rate in tiers based on item amount
         preferred_base_amount: Base Amount
