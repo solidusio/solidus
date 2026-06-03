@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 template =
-  ENV["SOLIDUS_STARTER_FRONTEND_TEMPLATE"] ||
+  ENV["SOLIDUS_STOREFRONT_TEMPLATE"] ||
   begin
     version = Spree.solidus_version if defined?(Spree) && Spree.respond_to?(:solidus_version)
     gem_version = version ? Gem::Version.new(version) : nil
@@ -13,7 +13,7 @@ template =
         "main"
       end
 
-    "https://github.com/solidusio/solidus/raw/#{ref}/starter_frontend/template.rb"
+    "https://github.com/solidusio/solidus/raw/#{ref}/storefront/template.rb"
   end
 
 apply template

@@ -1,5 +1,0 @@
-bump:
-  recurse: false
-  file: 'lib/solidus_starter_frontend/version.rb'
-  message: Bump SolidusStarterFrontend to %{version}
-  tag: true
