@@ -87,6 +87,9 @@ with_log["installing gems"] do
     gem "selenium-webdriver" unless Bundler.locked_gems.dependencies["selenium-webdriver"]
 
     gem "capybara-screenshot", "~> 1.0"
+
+    gem "simplecov", require: false
+    gem "simplecov-cobertura", require: false
   end
 
   gem_group :development, :test do

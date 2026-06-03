@@ -20,6 +20,8 @@ jobs:
       DB: sqlite
       RUBY_VERSION: "3.2"
       SOLIDUS_STOREFRONT_TEMPLATE: ${{ github.workspace }}/storefront/template.rb
+      COVERAGE: true
+      COVERAGE_DIR: ${{ github.workspace }}/storefront/coverage
     steps:
       - uses: actions/checkout@v6
       - name: Install libvips
@@ -38,7 +40,17 @@ jobs:
         run: |
           cd $RUNNER_TEMP/my_app
           bundle list | grep 'solidus_paypal_commerce_platform (1.'
+      - name: Setup code coverage
+        run: |
+          cp storefront/lib/testing_support/coverage.rb $RUNNER_TEMP/my_app/spec/support/solidus_storefront/coverage.rb
       - name: Run starter frontend specs
         run: |
           cd $RUNNER_TEMP/my_app
           bundle exec rspec spec
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: solidusio/solidus
+          disable_search: true
+          files: ${{ env.COVERAGE_DIR }}/coverage.xml
