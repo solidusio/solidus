@@ -41,8 +41,14 @@ jobs:
           cd $RUNNER_TEMP/my_app
           bundle list | grep 'solidus_paypal_commerce_platform (1.'
       - name: Setup code coverage
+        # SimpleCov must start before the app is loaded (Ruby's Coverage only
+        # tracks files required after Coverage.start), so we load it from the top
+        # of the generated spec_helper.rb rather than from spec/support, which is
+        # required after rails_helper has already (eager-)loaded the app.
         run: |
-          cp storefront/lib/testing_support/coverage.rb $RUNNER_TEMP/my_app/spec/support/solidus_storefront/coverage.rb
+          cd $RUNNER_TEMP/my_app
+          cp $GITHUB_WORKSPACE/storefront/lib/testing_support/coverage.rb spec/simplecov_setup.rb
+          printf 'require_relative "simplecov_setup"\n%s\n' "$(cat spec/spec_helper.rb)" > spec/spec_helper.rb
       - name: Run starter frontend specs
         run: |
           cd $RUNNER_TEMP/my_app
