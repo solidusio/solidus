@@ -14,7 +14,9 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) do |example|
     screen_size = example.metadata[:screen_size] || [1800, 1400]
-    driven_by(:selenium, using: :headless_chrome, screen_size: screen_size) do |capabilities|
+    using = ENV["CAPYBARA_DRIVER"] == "selenium_chrome" ? :chrome : :headless_chrome
+
+    driven_by(:selenium, using: using, screen_size: screen_size) do |capabilities|
       capabilities.add_argument("--disable-search-engine-choice-screen")
       capabilities.add_preference("autofill.profile_enabled", false)
       capabilities.add_preference("autofill.credit_card_enabled", false)
