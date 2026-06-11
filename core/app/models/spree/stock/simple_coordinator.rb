@@ -27,7 +27,14 @@ module Spree
         :filtered_stock_locations, :inventory_units_by_variant, :desired,
         :availability, :allocator, :packages
 
-      def initialize(order, inventory_units = nil)
+      def initialize(order, inventory_units_deprecated = nil, inventory_units: nil)
+        if inventory_units_deprecated
+          Spree.deprecator.warn "Using the `inventory_units` positional " \
+            "argument is deprecated in favor of using the keyword argument. "
+
+          inventory_units ||= inventory_units_deprecated
+        end
+
         @order = order
         @inventory_units =
           inventory_units || Spree::Config.stock.inventory_unit_builder_class.new(order).units

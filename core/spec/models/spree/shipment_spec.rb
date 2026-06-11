@@ -120,6 +120,15 @@ RSpec.describe Spree::Shipment, type: :model do
       }.to change { shipment.state }.from("pending").to("canceled")
     end
 
+    it "returns pending if the shipment doesn't have any inventory units" do
+      expect {
+        shipment.inventory_units.each(&:destroy!)
+        shipment.reload
+
+        recalculate_state
+      }.not_to change { shipment.state }.from("pending")
+    end
+
     it "returns pending unless order.can_ship?" do
       allow(order).to receive_messages can_ship?: false
       expect(recalculate_state).to eq "pending"
@@ -135,14 +144,28 @@ RSpec.describe Spree::Shipment, type: :model do
       expect(recalculate_state).to eq "shipped"
     end
 
-    it "returns pending when unpaid" do
-      allow(order).to receive_messages paid?: false
-      expect(recalculate_state).to eq "pending"
-    end
-
     it "returns ready when paid" do
       allow(order).to receive_messages paid?: true
       expect(recalculate_state).to eq "ready"
+    end
+
+    context "when the order hasn't been paid" do
+      let(:order) { create(:order_ready_to_complete, line_items_count: 1) }
+
+      it "returns pending" do
+        expect(recalculate_state).to eq "pending"
+      end
+
+      context "when the shipment's inventory units have been destroyed" do
+        it "returns pending" do
+          expect {
+            shipment.inventory_units.each(&:destroy!)
+            shipment.reload
+
+            recalculate_state
+          }.not_to change { shipment.state }.from("pending")
+        end
+      end
     end
   end
 

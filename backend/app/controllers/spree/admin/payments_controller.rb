@@ -9,6 +9,7 @@ module Spree
       before_action :load_payment, except: [:create, :new, :index, :fire]
       before_action :load_payment_for_fire, only: :fire
       before_action :load_data
+      before_action :load_log_entries, only: [:show]
       before_action :require_bill_address, only: [:index]
 
       helper ::Spree::Admin::OrdersHelper
@@ -100,6 +101,13 @@ module Spree
 
       def load_payment
         @payment = Spree::Payment.find(params[:id])
+      end
+
+      def load_log_entries
+        @all_log_entries = Spree::LogEntry
+          .where(source: @payment)
+          .or(Spree::LogEntry.where(source: @payment.refunds))
+          .order(:created_at)
       end
 
       def load_payment_for_fire
