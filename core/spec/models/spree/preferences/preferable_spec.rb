@@ -387,6 +387,17 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
     end
 
+    it "does not re-serialize unchanged preferences when read after load" do
+      loaded = PrefTest.find(@pt.id)
+
+      # NOTE: assigning preferences in after_initialize (even an identical value) flips
+      # the attribute to "from user" state, so every later read re-dumps YAML. Skipping
+      # the redundant assignment keeps reads on the cheaper "from database" path.
+      expect(Psych).not_to receive(:safe_dump)
+
+      loaded.preferences
+    end
+
     it "clear preferences when record is deleted" do
       @pt.save!
       @pt.preferred_pref_test_pref = "lmn"

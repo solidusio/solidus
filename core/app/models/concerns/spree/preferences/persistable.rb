@@ -20,9 +20,10 @@ module Spree
       private
 
       def initialize_preference_defaults
-        if has_attribute?(:preferences)
-          self.preferences = default_preferences.merge(preferences)
-        end
+        return unless has_attribute?(:preferences)
+
+        merged = default_preferences.merge(preferences)
+        self.preferences = merged unless merged == preferences
       end
     end
   end
