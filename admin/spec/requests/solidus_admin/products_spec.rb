@@ -9,6 +9,15 @@ RSpec.describe "SolidusAdmin::ProductsController", type: :request do
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
   end
 
+  describe "GET #index" do
+    it "loads variant stock in a single query" do
+      create(:stock_location)
+      create_list(:product, 3)
+
+      expect { get solidus_admin.products_path }.to make_database_queries(matching: /from .spree_stock_items./i, count: 1)
+    end
+  end
+
   describe "PATCH #update" do
     let(:product) { create(:product) }
     let(:params) do

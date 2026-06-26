@@ -16,7 +16,8 @@ module SolidusAdmin
         Spree::Product.includes(
           :variant_images,
           master: :prices,
-          variants: :prices
+          variants: :prices,
+          variants_including_master: {stock_items: :stock_location}
         ),
         param: :q,
         distinct: false

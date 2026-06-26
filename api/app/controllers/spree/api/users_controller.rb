@@ -5,6 +5,7 @@ class Spree::Api::UsersController < Spree::Api::BaseController
 
   def index
     user_scope = user_class.accessible_by(current_ability, :show)
+      .includes(bill_address: [:state, :country], ship_address: [:state, :country])
     if params[:ids]
       ids = params[:ids].split(",").flatten
       @users = user_scope.where(id: ids)
