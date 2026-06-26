@@ -23,6 +23,17 @@ module Spree
         end
       end
 
+      context "recalculating payment totals" do
+        before { create(:payment_with_refund, order:, amount: 33.25, refund_amount: 3) }
+
+        it "sums refunds from a single preload, not once per payment" do
+          create(:payment_with_refund, order:, amount: 20, refund_amount: 2)
+          order.payments.reset
+
+          expect { updater.recalculate }.to make_database_queries(matching: /from .spree_refunds./i, count: 1)
+        end
+      end
+
       it "update item total" do
         expect {
           updater.recalculate
