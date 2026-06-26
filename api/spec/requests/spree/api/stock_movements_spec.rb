@@ -76,6 +76,18 @@ module Spree::Api
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
       end
+
+      it "loads stock movement variant prices in a single query" do
+        3.times do
+          variant = create(:variant)
+          item = Spree::StockItem.where(stock_location:, variant:).first_or_create!
+          create(:stock_movement, stock_item: item)
+        end
+
+        expect {
+          get spree.api_stock_location_stock_movements_path(stock_location)
+        }.to make_database_queries(matching: /from .spree_prices./i, count: 1)
+      end
     end
   end
 end

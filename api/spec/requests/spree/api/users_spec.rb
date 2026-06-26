@@ -173,6 +173,14 @@ module Spree::Api
         expect(json_response["users"].size).to eq 2
       end
 
+      it "loads user addresses without an N+1" do
+        allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+
+        3.times { create(:user_with_addresses) }
+
+        expect { get spree.api_users_path }.to make_database_queries(matching: /from .spree_addresses./i, count: 1)
+      end
+
       it "can control the page size through a parameter" do
         2.times { create(:user) }
         get spree.api_users_path, params: {per_page: 1}
