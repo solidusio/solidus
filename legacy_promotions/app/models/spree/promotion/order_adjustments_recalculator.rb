@@ -15,6 +15,7 @@ module Spree
 
       def call(persist: true)
         all_items = line_items + shipments
+        ActiveRecord::Associations::Preloader.new(records: all_items, associations: :adjustments).call
         all_items.each do |item|
           promotion_adjustments = item.adjustments.select(&:promotion?)
 

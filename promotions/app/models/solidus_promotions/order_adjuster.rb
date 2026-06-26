@@ -22,6 +22,8 @@ module SolidusPromotions
     def call(persist: true) # rubocop:disable Lint/UnusedMethodArgument
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
 
+      ActiveRecord::Associations::Preloader.new(records: order.line_items + order.shipments, associations: :adjustments).call
+
       SetDiscountsToZero.call(order)
 
       DiscountOrder.new(order, promotions, dry_run: dry_run).call
