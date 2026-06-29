@@ -21,7 +21,7 @@ module Spree
     #                            Spree::ShippingRate)
     # @param ... [args, kwargs] Additional arguments passed to the specific compute method
     #
-    # @return [BigDecimal, Numeric] The computed amount
+    # @return [BigDecimal] The computed amount
     #
     # @raise [NotImplementedError] If the calculator doesn't implement the required compute method
     #
