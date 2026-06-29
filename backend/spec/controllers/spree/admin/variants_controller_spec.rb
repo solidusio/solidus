@@ -7,6 +7,42 @@ module Spree
     describe VariantsController, type: :controller do
       stub_authorization!
 
+      describe "#new" do
+        render_views
+
+        let(:product) { create(:product_with_option_types) }
+
+        before do
+          create(:option_value, option_type: product.option_types.first)
+        end
+
+        subject { get :new, params: {product_id: product.slug} }
+
+        it "builds a variant with the master default price" do
+          subject
+
+          expect(response).to be_successful
+          expect(assigns(:variant).default_price.amount).to eq(product.master.default_price.amount)
+        end
+
+        context "when the product has no master default price" do
+          before do
+            product.master.prices.delete_all
+          end
+
+          it "builds a variant with a new default price" do
+            subject
+
+            default_price = assigns(:variant).default_price
+
+            expect(response).to be_successful
+            expect(default_price).to be_new_record
+            expect(default_price.amount).to be_nil
+            expect(default_price.currency).to eq(Spree::Config[:currency])
+          end
+        end
+      end
+
       describe "#index" do
         let(:product) { create(:product) }
         let(:params) { {product_id: product.slug} }
