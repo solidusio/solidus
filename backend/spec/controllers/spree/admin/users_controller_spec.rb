@@ -72,7 +72,7 @@ describe Spree::Admin::UsersController, type: :controller do
         end)
         @actual_user_class_name = Spree.user_class.name
         Spree.user_class = "UserModel"
-        UserModel.create(email: "a@solidus.io")
+        @custom_user = UserModel.create(email: "a@solidus.io")
         allow(Spree.user_class).to receive(:find_by)
           .with(hash_including(:spree_api_key))
           .and_return(Spree.user_class.new)
@@ -88,6 +88,9 @@ describe Spree::Admin::UsersController, type: :controller do
         get :index
 
         expect(response).to be_successful
+
+        edit_link = Nokogiri::HTML(response.body).at_css("a.icon_link[data-action='edit']")
+        expect(edit_link["href"]).to eq spree.edit_admin_user_path(@custom_user)
       end
     end
   end
