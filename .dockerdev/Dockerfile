@@ -20,6 +20,7 @@ RUN apt-get update -qq \
     libsqlite3-dev \
     chromium \
     chromium-driver \
+    libyaml-dev \
   && rm -rf /var/cache/apt/lists/*
 
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
