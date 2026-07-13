@@ -34,7 +34,7 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrad
     nodejs \
   && rm -rf /var/lib/apt/lists/*
 
-ENV APP_USER=solidus_starter_frontend_user \
+ENV APP_USER=solidus_storefront_user \
     LANG=C.UTF-8 \
     BUNDLE_JOBS=4 \
     BUNDLE_RETRY=3
