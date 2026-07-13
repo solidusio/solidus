@@ -37,7 +37,7 @@ with_log["fetching remote templates"] do
   if __FILE__.match?(%r{\Ahttps?://})
     require "uri"
     url_path = URI.parse(__FILE__).path
-    match = url_path.match(%r{\A/([^/]+)/([^/]+)/raw/(.+?)/starter_frontend/template\.rb\z})
+    match = url_path.match(%r{\A/([^/]+)/([^/]+)/raw/(.+?)/storefront/template\.rb\z})
     unless match
       say_status :error, shell.set_color(
         "Could not parse storefront template URL: #{__FILE__}\n" \
