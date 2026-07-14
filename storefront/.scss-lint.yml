@@ -1,0 +1,9 @@
+linters:
+  LeadingZero:
+    enabled: true
+    style: exclude_zero # or 'include_zero'
+  VendorPrefix:
+    enabled: false
+  NestingDepth:
+    enabled: true
+    max_depth: 6

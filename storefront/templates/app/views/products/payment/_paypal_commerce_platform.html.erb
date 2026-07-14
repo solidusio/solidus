@@ -1,0 +1,16 @@
+<div style="margin-top:20px;">
+  <%= render partial: "solidus_paypal_commerce_platform/shared/javascript_sdk_tag", locals: {payment_method: payment_method} %>
+
+  <div id="paypal-button-container"></div>
+
+  <div data-pp-message data-pp-placement="product" data-pp-amount="<%= @product.price %>"></div>
+
+  <script>
+    SolidusPaypalCommercePlatform.checkout_url = "<%= checkout_url %>"
+    window.addEventListener('DOMContentLoaded', () => {
+      SolidusPaypalCommercePlatform.renderProductButton("<%= payment_method.id %>",<%= raw payment_method.button_style.to_json %>)
+    })
+  </script>
+</div>
+
+<div id="paypal_commerce_platform_overlay"></div>

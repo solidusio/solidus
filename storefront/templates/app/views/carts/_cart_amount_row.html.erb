@@ -1,0 +1,12 @@
+<%
+  type = local_assigns.fetch(:type, t('spree.adjustment'))
+  label = local_assigns.fetch(:label, '')
+%>
+
+<div class="cart-amount-row flex items-center justify-between">
+  <dt>
+    <span class="cart-amount-row__type"><%= type %>:</span>
+    <span class="cart-amount-row__label"><%= label %></span>
+  </dt>
+  <dd class="cart-amount-row__amount font-sans-md"><%= amount %></dd>
+</div>

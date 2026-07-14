@@ -1,0 +1,11 @@
+<%= turbo_stream.replace 'autocomplete-results' do %>
+  <div id="autocomplete-results" class="absolute z-50 top-10 left-0 right-0 hidden w-full lg:block" data-search-target="results">
+    <%= render 'autocomplete_results', results: @results %>
+  </div>
+<% end %>
+
+<%= turbo_stream.replace 'autocomplete-results-mobile' do %>
+  <div id="autocomplete-results-mobile" class="relative w-auto mt-3 [&>ul]:shadow-none [&>ul>li:not(:last-child)]:underline [&>ul>li:last-child]:border-0 lg:hidden" data-search-target="results">
+    <%= render 'autocomplete_results', results: @results %>
+  </div>
+<% end %>

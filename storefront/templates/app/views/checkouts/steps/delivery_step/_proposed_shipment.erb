@@ -1,0 +1,20 @@
+<div class="proposed-shipment">
+  <h2 class="proposed-shipment__title font-serif mb-6 text-h5 md:text-h4">
+    <%= t('spree.package_from') %>
+    <%= ship_form.object.stock_location.name %>
+  </h2>
+
+  <%= render "checkouts/steps/delivery_step/shipment_items", shipment_items: ship_form.object.manifest %>
+
+  <div class="py-7 mb-7 border-b-[1px] border-b-gray-200">
+    <h3 class="proposed-shipment__secondary-title font-serif mb-6 text-h5 md:text-h4">
+      <%= t('spree.shipping_method') %>
+    </h3>
+
+    <%= render(
+      "checkouts/steps/delivery_step/shipping_methods",
+      form: ship_form,
+      shipping_rates: ship_form.object.shipping_rates
+    ) %>
+  </div>
+</div>

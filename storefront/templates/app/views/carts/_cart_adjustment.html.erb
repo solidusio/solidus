@@ -1,0 +1,15 @@
+<%
+  type = local_assigns.fetch(:type, t('spree.adjustment'))
+  label = local_assigns.fetch(:label, '')
+
+  adjustments_sum = adjustments.sum(&:amount)
+%>
+
+<% if adjustments_sum != 0 %>
+  <%= render(
+    "carts/cart_amount_row",
+    type: type,
+    label: label,
+    amount: Spree::Money.new(adjustments_sum, currency: @order.currency)
+  ) %>
+<% end %>

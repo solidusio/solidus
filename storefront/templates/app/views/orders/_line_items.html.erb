@@ -1,0 +1,65 @@
+<%
+  base_class = "line-items".freeze
+
+  # Optional props
+  classes = local_assigns.fetch(:classes, [])
+
+  # Classes
+  class_names = classes.push(base_class).join(" ")
+
+  line_class_names = 'flex items-center justify-between p-2'
+%>
+
+<dl class="<%= class_names %>" id="line-items">
+  <div class="<%= line_class_names %>">
+    <dt><%= t('spree.subtotal') %></dt>
+    <dd><%= order.display_item_total.to_html %></dd>
+  </div>
+
+  <% if order.line_item_adjustments.exists? %>
+    <% if order.line_item_adjustments.promotion.eligible.exists? %>
+      <div id="price-adjustments" class="<%= line_class_names %>">
+        <% order.line_item_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+          <dt><%= t('spree.promotion') %></dt>
+          <dd class="font-sans-md"><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></dd>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div id="shipment-total" class="<%= line_class_names %>">
+    <% order.shipments.group_by { |s| s.selected_shipping_rate.name }.each do |name, shipments| %>
+      <dt><%= t('spree.shipping') %> &mdash; <%= name %></dt>
+      <dd class="font-sans-md"><%= Spree::Money.new(shipments.sum(&:total_before_tax), currency: order.currency).to_html %></dd>
+    <% end %>
+  </div>
+
+  <% if order.all_adjustments.tax.exists? %>
+    <div id="tax-adjustments" class="<%= line_class_names %>">
+      <% order.all_adjustments.tax.group_by(&:label).each do |label, adjustments| %>
+        <dt><%= t('spree.tax') %> &mdash; <%= label %></dt>
+        <dd class="font-sans-md"><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></dd>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if order.total_applicable_store_credit > 0.0 %>
+    <div id="store-credit" class="<%= line_class_names %>">
+      <dt><%= t('spree.store_credit.store_credit') %></dt>
+      <dd class="font-sans-md"><%= order.display_total_applicable_store_credit.to_html %></dd>
+    </div>
+  <% end %>
+
+  <% order.adjustments.eligible.each do |adjustment| %>
+  <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
+    <div id="order-charges" class="<%= line_class_names %> font-sans-md">
+      <dt><%= adjustment.label %></dt>
+      <dd class="text-red-500"><%= adjustment.display_amount.to_html %></dd>
+    </div>
+  <% end %>
+
+  <div class="<%= line_class_names %> my-7 text-body-20">
+    <dt><%= t('spree.order_total') %></dt>
+    <dd class="font-sans-md"><%= order.display_order_total_after_store_credit.to_html %></dd>
+  </div>
+</dl>

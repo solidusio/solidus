@@ -1,0 +1,48 @@
+<div class="wrapper grid-container py-12 space-y-10 md:space-y-14">
+  <%= render 'shared/error_messages', target: @user %>
+
+  <div class="col-span-full space-y-4">
+    <h1 class="font-serif text-h4 md:text-h3"><%= t('spree.my_account') %></h1>
+
+    <div class="flex flex-wrap flex-auto gap-4">
+      <%= @user.email %>
+      <%= form_with(url: logout_path, method: Devise.sign_out_via, local: true) do %>
+        <%= button_tag(t("spree.logout"), class: 'transition-all duration-300 text-black hover:!text-red-500 dark:text-sand underline') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-span-full grid-container">
+    <%= render 'users/users_menu' %>
+    <div class="col-span-full md:col-span-10 md:col-start-3" id="edit-account">
+      <h2 class="font-serif text-h4 md:text-h4 mb-6"><%= t('spree.editing_user') %></h2>
+
+      <div class="grid grid-container">
+        <%= form_for @user, html: { class: "space-y-6 mb-12 col-span-full md:col-span-6" } do |f| %>
+
+          <div class="text-input">
+            <%= f.label :email, "#{t("spree.email")}:" %>
+            <%= f.email_field :email %>
+          </div>
+
+          <div class="text-input">
+            <%= f.label :password, "#{t("spree.password")}:" %>
+            <%= f.password_field :password %>
+          </div>
+
+          <div class="text-input">
+            <%= f.label :password_confirmation, "#{t("spree.confirm_password")}:" %>
+            <%= f.password_field :password_confirmation %>
+          </div>
+
+          <div class="">
+            <%= f.button t("spree.update"),
+              name: :commit,
+              class: 'w-fit py-3 px-7 rounded-full text-body-sm font-bold leading-none uppercase whitespace-nowrap transiton-colors duration-200 bg-red-500 text-white hover:bg-red-700'
+            %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
