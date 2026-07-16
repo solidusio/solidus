@@ -1,4 +1,4 @@
-# Solidus Starter Frontend development information
+# Solidus Storefront development information
 This document aims to give some extra information for developers that are going
 to contribute to our `solidus_storefront` component.
 
