@@ -9,10 +9,12 @@ module Spree
           @products = product_scope.where(id: ids)
         else
           products_includes = [
-            :variants,
             :option_types,
             :product_properties,
-            {classifications: :taxon}
+            {classifications: :taxon},
+            {master: {stock_items: :stock_location}},
+            {variants: {stock_items: :stock_location}},
+            {variants_including_master: {stock_items: :stock_location}}
           ]
           @products = product_scope
             .ransack(params[:q])
