@@ -36,7 +36,7 @@ module SolidusAdmin
     end
 
     def show
-      load_order
+      load_order(Spree::Order.includes(line_items: {variant: [:images, {product: :variant_images, option_values: :option_type}]}))
 
       respond_to do |format|
         format.html { render component("orders/show").new(order: @order) }
@@ -111,8 +111,8 @@ module SolidusAdmin
 
     private
 
-    def load_order
-      @order = Spree::Order.find_by!(number: params[:id])
+    def load_order(scope = Spree::Order)
+      @order = scope.find_by!(number: params[:id])
       authorize! action_name, @order
     end
 
