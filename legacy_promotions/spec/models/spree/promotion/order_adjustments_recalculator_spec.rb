@@ -18,6 +18,16 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
       let(:order) { create(:order_with_line_items, line_items_count: 1, line_items_price: 10) }
       let(:line_item) { order.line_items[0] }
 
+      context "with multiple line items" do
+        let(:order) { create(:order_with_line_items, line_items_count: 3) }
+
+        before { order.reload }
+
+        it "loads line item adjustments in a single query" do
+          expect { subject }.to make_database_queries(matching: /from .spree_adjustments..*adjustable_id. IN \(/im, count: 1)
+        end
+      end
+
       context "when the quantity changes with a CreateQuantityAdjustments promotion" do
         let(:promotion) { create(:promotion, promotion_actions: [promotion_action]) }
         let(:promotion_action) { Spree::Promotion::Actions::CreateQuantityAdjustments.new(calculator:, preferred_group_size: 2) }
