@@ -714,6 +714,17 @@ RSpec.describe Spree::Promotion, type: :model do
           it { is_expected.to be true }
         end
       end
+
+      context "with several line items" do
+        let(:promotion) { create(:promotion, :with_line_item_adjustment, apply_automatically: true) }
+        let(:promotable) { create(:order_with_line_items, line_items_count: 3) }
+
+        before { promotable.reload }
+
+        it "loads line item variants in a single query" do
+          expect { subject }.to make_database_queries(matching: /from .spree_variants..*\bid. IN \(/im, count: 1)
+        end
+      end
     end
 
     context "when promotable is a Spree::LineItem" do
