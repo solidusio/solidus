@@ -1,7 +1,7 @@
 # solidus\_storefront
 
-Storefront contains the Solidus Starter Frontend, a Rails application template
-that provides a modern, minimal, semantic, and easy to extend storefront for
+Storefront contains a Rails application template that provides a modern,
+minimal, semantic, and easy to extend storefront for
 [Solidus](https://solidus.io/).
 
 **DISCLAIMER**: some Solidus extensions (the ones that depend on the legacy
@@ -27,20 +27,18 @@ MANIFEST
 bin/rails generate solidus:install --frontend=starter
 ```
 
-That will create a new Solidus application with the starter frontend as its
-storefront.
+That will create a new Solidus application with this storefront installed.
 
 Please note that [Solidus Auth Devise](https://github.com/solidusio/solidus_auth_devise)
-will also be added to your application as it's required by the starter
-frontend.
+will also be added to your application as it's required by this storefront.
 
 ## Considerations
 
-The installation of the starter frontend copies the storefront views, assets,
-routes, controllers, and specs to your project. You can easily change anything
+The installation of the storefront copies the views, assets, routes,
+controllers, and specs to your project. You can easily change anything
 that we created; this gives you a lot of freedom of customization.
 
-Note that since the starter frontend is a Rails application template, it
+Note that since the storefront is a Rails application template, it
 doesn't have the capability to automatically update your storefront code
 whenever the template is updated.
 
@@ -59,7 +57,7 @@ intended to be used only when Solidus is installed for the first time, we can
 guarantee the latest code only works with the latest available version of
 Solidus and Rails.
 
-Each Solidus version ships with its own version of the starter frontend: the
+Each Solidus version ships with its own version of the storefront: the
 installer applies the templates coming from the Solidus branch corresponding
 to the version being installed. For example, Solidus `v4.5` will use the
 templates coming from the `v4.5` branch of the Solidus repository, while
