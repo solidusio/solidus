@@ -151,7 +151,8 @@ module Spree
     validates :email, presence: true, if: :email_required?
     validates :email, "spree/email" => true, :allow_blank => true
     validates :guest_token, presence: {allow_nil: true}
-    validates :number, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
+    validates :number, presence: true
+    validates :number, uniqueness: {allow_blank: true, case_sensitive: true}, if: :number_changed?
     validates :store_id, presence: true
 
     def self.find_by_param(value)

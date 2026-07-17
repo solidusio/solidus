@@ -920,6 +920,24 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  describe "number uniqueness" do
+    let(:existing_order) { create(:order) }
+
+    it "rejects a new order that reuses an existing number" do
+      expect(build(:order, number: existing_order.number)).not_to be_valid
+    end
+
+    it "rejects changing a persisted order's number to one already taken" do
+      order.number = existing_order.number
+      expect(order).not_to be_valid
+    end
+
+    it "skips the uniqueness query when the number is unchanged" do
+      order
+      expect { order.valid? }.not_to make_database_queries(matching: /SELECT 1 .*spree_orders.*number/i)
+    end
+  end
+
   context "#associate_user!" do
     let!(:user) { FactoryBot.create(:user) }
 
