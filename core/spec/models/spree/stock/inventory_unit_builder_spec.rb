@@ -28,6 +28,16 @@ module Spree
         it "builds the inventory units as pending" do
           expect(subject.units.map(&:pending).uniq).to eq [true]
         end
+
+        context "with multiple line items" do
+          let(:order) { create(:order_with_line_items, line_items_count: 3) }
+
+          before { order.reload }
+
+          it "loads line item variants in a single query" do
+            expect { described_class.new(order).units }.to make_database_queries(matching: /from .spree_variants..*\bid. IN \(/im, count: 1)
+          end
+        end
       end
 
       describe "#missing_units_for_line_item" do

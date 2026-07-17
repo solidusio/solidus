@@ -1,0 +1,31 @@
+<% if flash[:alert] %>
+  <div class="flash errors"><%= flash[:alert] %></div>
+<% end %>
+
+<% @body_id = 'login' %>
+<div id="existing-customer">
+  <h6><%= t('spree.admin_login') %></h6>
+  <div data-hook="login">
+    <%= form_for Spree::User.new, as: :spree_user, url: spree.admin_create_new_session_path do |f| %>
+      <div id="password-credentials">
+        <p>
+          <%= f.label :email, t('spree.email') %><br />
+          <%= f.email_field :email, class: 'title', tabindex: 1, autocomplete: 'username' %>
+        </p>
+        <p>
+          <%= f.label :password, t('spree.password') %><br />
+          <%= f.password_field :password, class: 'title', tabindex: 2, autocomplete: 'current-password' %>
+        </p>
+      </div>
+      <p>
+        <%= f.check_box :remember_me, tabindex: 3 %>
+        <%= f.label :remember_me, t('spree.remember_me') %>
+      </p>
+
+      <p><%= f.submit t('spree.login'), class: 'btn btn-primary', tabindex: 4 %></p>
+    <% end %>
+    <%= t('spree.or') %>
+    <%= link_to t('spree.forgot_password'), spree.admin_recover_password_path %>
+  </div>
+</div>
+<div data-hook="login_extras"></div>

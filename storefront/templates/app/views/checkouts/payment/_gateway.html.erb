@@ -1,0 +1,61 @@
+<div class="gateway-payment-method flex flex-col gap-y-6 w-full">
+  <% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+  <div class="text-input">
+    <% "name_on_card_#{payment_method.id}".tap do |id| %>
+      <%= label_tag id, "#{t('spree.name_on_card')}:" %>
+
+      <%= text_field_tag "#{param_prefix}[name]",
+        @order.billing_name,
+        id: id,
+        autocomplete: "cc-name"
+      %>
+    <% end %>
+  </div>
+
+  <div class="text-input">
+    <% "card_number_#{payment_method.id}".tap do |id| %>
+      <%= label_tag id, "#{t('spree.card_number')}:" %>
+
+      <%= text_field_tag "#{param_prefix}[number]",
+        nil,
+        id: id,
+        placeholder: "xxxx xxxx xxxx xxxx",
+        autocomplete: "cc-number"
+      %>
+    <% end %>
+  </div>
+
+  <div class="flex flex-col gap-6 sm:flex-row">
+    <div class="text-input w-full">
+      <% "card_expiry_#{payment_method.id}".tap do |id| %>
+        <%= label_tag id, "#{t('spree.expiration')}:" %>
+
+        <%= text_field_tag "#{param_prefix}[expiry]",
+          nil,
+          id: id,
+          placeholder: "MM / YY"
+        %>
+      <% end %>
+    </div>
+
+    <div class="text-input w-full">
+      <% "card_code_#{payment_method.id}".tap do |id| %>
+        <%= label_tag id, "#{t('spree.card_code')}:" %>
+
+        <%= text_field_tag "#{param_prefix}[verification_value]",
+          nil,
+          id: id
+        %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @order.bill_address %>
+    <%= fields_for "#{param_prefix}[address_attributes]", @order.bill_address do |f| %>
+      <%= render 'address/form_hidden', form: f %>
+    <% end %>
+  <% end %>
+
+  <%= hidden_field_tag "#{param_prefix}[cc_type]", '', id: "cc_type", class: 'ccType' %>
+</div>

@@ -47,7 +47,7 @@ module Spree
       if locales.empty?
         super(nil)
       else
-        super(locales.map(&:to_s).join(","))
+        super(locales.join(","))
       end
     end
 

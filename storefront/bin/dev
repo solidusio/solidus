@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+if ! gem list foreman -i --silent; then
+  echo "Installing foreman..."
+  gem install foreman
+fi
+
+if ! test -d sandbox; then
+  bin/sandbox
+fi
+
+export PORT=3000
+exec foreman start -f Procfile.dev "$@"

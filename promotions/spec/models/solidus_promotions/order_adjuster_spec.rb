@@ -237,4 +237,21 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
       end
     end
   end
+
+  context "with multiple line items" do
+    let(:order) { create(:order_with_line_items, line_items_count: 3) }
+    let!(:benefit) do
+      SolidusPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator)
+    end
+
+    before do
+      order_adjuster.call
+      order.save!
+      order.reload
+    end
+
+    it "loads line item adjustments in a single query" do
+      expect { order_adjuster.call }.to make_database_queries(matching: /from .spree_adjustments..*adjustable_id. IN \(/im, count: 1)
+    end
+  end
 end
