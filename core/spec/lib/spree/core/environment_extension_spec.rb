@@ -49,6 +49,45 @@ RSpec.describe Spree::Core::EnvironmentExtension do
     end
   end
 
+  describe ".add_class_list" do
+    let(:class_one) { String }
+    let(:class_two) { Array }
+    let(:class_three) { Hash }
+
+    context 'with a class list named "foo"' do
+      before { base.add_class_list("foo") }
+
+      describe "#foo" do
+        it { respond_to?(:foo) }
+        it { expect(subject.foo.to_a).to be_empty }
+        it { expect(subject.foo).to be_kind_of Spree::Core::ClassConstantizer::List }
+      end
+
+      describe "#foo=" do
+        it { respond_to?(:foo=) }
+
+        before { subject.foo = [class_one, class_two] }
+
+        it "assigns the classes in order" do
+          expect(subject.foo.to_a).to eq([class_one, class_two])
+        end
+        it { expect(subject.foo).not_to include(class_three) }
+      end
+    end
+
+    context "with a default value of [class_one, class_two]" do
+      before { base.add_class_list("foo", default: [class_one, class_two]) }
+
+      describe "#foo" do
+        it { respond_to?(:foo) }
+        it { expect(subject.foo).to be_kind_of Spree::Core::ClassConstantizer::List }
+        it "preserves default order" do
+          expect(subject.foo.to_a).to eq([class_one, class_two])
+        end
+      end
+    end
+  end
+
   describe ".add_nested_class_set" do
     let(:class_one) { String }
     let(:class_two) { Array }
