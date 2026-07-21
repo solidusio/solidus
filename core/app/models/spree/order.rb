@@ -308,6 +308,14 @@ module Spree
       inventory_units.reload.all?(&:returned?)
     end
 
+    # Since this method is called from within the order state machine, we cannot
+    # simply delegate this to :shipping. The state_machines gem uses the arity
+    # of the method to determine if it should pass in the transition as an
+    # argument. The arity of the method is masked when using delegates.
+    def create_proposed_shipments
+      shipping.create_proposed_shipments
+    end
+
     def contents
       @contents ||= Spree::Config.order_contents_class.new(self)
     end
@@ -500,17 +508,6 @@ module Spree
 
     def billing_address_required?
       Spree::Config.billing_address_required
-    end
-
-    def create_proposed_shipments
-      if completed?
-        raise CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_order_completed"))
-      elsif shipments.any? { |shipment| !shipment.pending? }
-        raise CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_shipments_not_pending"))
-      else
-        shipments.destroy_all
-        shipments.push(*Spree::Config.stock.coordinator_class.new(self).shipments)
-      end
     end
 
     def create_shipments_for_line_item(line_item)
