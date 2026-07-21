@@ -23,6 +23,8 @@ module Spree
       #
       # @return [Spree::Tax::OrderTax] the calculated taxes for the order
       def calculate
+        ActiveRecord::Associations::Preloader.new(records: order.line_items, associations: {variant: :product}).call
+
         Spree::Tax::OrderTax.new(
           order_id: order.id,
           order_taxes: order_rates,
