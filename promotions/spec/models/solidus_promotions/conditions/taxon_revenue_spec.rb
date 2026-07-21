@@ -32,6 +32,21 @@ RSpec.describe SolidusPromotions::Conditions::TaxonRevenue do
       condition.preferred_operator = "gt"
       expect(condition.preferred_operator).to eq("gt")
     end
+
+    it "defaults preferred_match_policy to 'include'" do
+      expect(condition.preferred_match_policy).to eq("include")
+    end
+
+    it "accepts 'exclude' as a valid match policy" do
+      condition.preferred_match_policy = "exclude"
+      expect(condition.preferred_match_policy).to eq("exclude")
+    end
+
+    it "is invalid with an unrecognized match policy" do
+      condition.preferred_match_policy = "some_other_policy"
+      expect(condition).not_to be_valid
+      expect(condition.errors[:preferred_match_policy]).to be_present
+    end
   end
 
   describe "taxons association" do
@@ -50,6 +65,17 @@ RSpec.describe SolidusPromotions::Conditions::TaxonRevenue do
         ["greater than", "gt"],
         ["less than", "lt"],
         ["less than or equal to", "lte"]
+      )
+    }
+  end
+
+  describe ".match_policy_options" do
+    subject(:match_policy_options) { described_class.match_policy_options }
+
+    it {
+      is_expected.to contain_exactly(
+        ["Revenue from selected taxons", "include"],
+        ["Revenue excluding selected taxons", "exclude"]
       )
     }
   end
@@ -177,6 +203,99 @@ RSpec.describe SolidusPromotions::Conditions::TaxonRevenue do
 
       it "does not count any line items and is not eligible above zero" do
         expect(condition).not_to be_order_eligible(order)
+      end
+    end
+
+    context "when preferred_match_policy is 'exclude'" do
+      before { condition.preferred_match_policy = "exclude" }
+
+      context "when the non-excluded-taxon revenue equals the threshold" do
+        let(:preferred_amount) { 50 }
+
+        it "is eligible" do
+          # matching_item (in matching_taxon) is excluded from the sum;
+          # only non_matching_item (50) counts, and 50 >= 50
+          expect(condition).to be_order_eligible(order)
+        end
+      end
+
+      context "when the non-excluded-taxon revenue exceeds the threshold" do
+        let(:preferred_amount) { 40 }
+
+        it "is eligible" do
+          expect(condition).to be_order_eligible(order)
+        end
+      end
+
+      context "when the non-excluded-taxon revenue is below the threshold" do
+        let(:preferred_amount) { 60 }
+
+        it "is not eligible" do
+          # only non_matching_item (50) counts, 50 < 60
+          expect(condition).not_to be_order_eligible(order)
+        end
+      end
+
+      it "does not count revenue from line items in the excluded taxon" do
+        # If the excluded item were counted, total would be 80 (30 + 50).
+        # With it excluded, only 50 counts, so a threshold of 51 is not met.
+        condition.preferred_amount = 51
+        expect(condition).not_to be_order_eligible(order)
+      end
+
+      context "when all line items belong to the excluded taxon" do
+        let(:order) { build_stubbed(:order, line_items: [matching_item]) }
+        let(:preferred_amount) { 1 }
+
+        it "is not eligible because the non-excluded revenue is zero" do
+          expect(condition).not_to be_order_eligible(order)
+        end
+
+        context "when the preferred amount is zero" do
+          let(:preferred_amount) { 0 }
+
+          it { is_expected.to be_order_eligible(order) }
+        end
+      end
+
+      context "when multiple taxons are excluded" do
+        let(:other_excluded_item) { build(:line_item, price: 25, product: non_matching_product) }
+        let(:third_taxon) { create(:taxon) }
+        let(:third_product) { build(:product, taxons: [third_taxon]) }
+        let(:remaining_item) { build(:line_item, price: 15, product: third_product) }
+        let(:order) { build_stubbed(:order, line_items: [matching_item, other_excluded_item, remaining_item]) }
+        let(:preferred_amount) { 15 }
+
+        before do
+          condition.taxons << other_taxon
+        end
+
+        it "only counts revenue from line items outside every excluded taxon" do
+          # matching_item (matching_taxon) and other_excluded_item (other_taxon) are excluded;
+          # only remaining_item (15) counts, and 15 >= 15
+          expect(condition).to be_order_eligible(order)
+        end
+      end
+
+      context "when a line item belongs to both an excluded and a non-excluded taxon" do
+        let(:multi_taxon_item) { build(:line_item, price: 30, product: multi_taxon_product) }
+        let(:multi_taxon_product) { build(:product, taxons: [matching_taxon, other_taxon]) }
+        let(:order) { build_stubbed(:order, line_items: [multi_taxon_item]) }
+        let(:preferred_amount) { 1 }
+
+        it "is excluded, since it belongs to the excluded taxon" do
+          expect(condition).not_to be_order_eligible(order)
+        end
+      end
+
+      context "when no taxons are configured on the condition" do
+        subject(:condition) { described_class.new(preferred_amount:, preferred_match_policy: "exclude") }
+        let(:preferred_amount) { 79 }
+
+        it "counts all line items, since none belong to an excluded taxon" do
+          # 30 + 50 = 80 >= 79
+          expect(condition).to be_order_eligible(order)
+        end
       end
     end
   end

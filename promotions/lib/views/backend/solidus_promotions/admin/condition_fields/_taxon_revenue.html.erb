@@ -2,6 +2,13 @@
   <%= condition.class.human_attribute_name(:description) %>
 </p>
 <%= fields_for param_prefix, condition do |form| %>
+  <div class="field">
+    <%= form.label :preferred_match_policy %>
+    <%= form.select :preferred_match_policy,
+      SolidusPromotions::Conditions::TaxonRevenue.match_policy_options,
+      {}, class: "custom-select fullwidth" %>
+  </div>
+
   <div class="row">
     <div class="col-6">
       <div class="field">
