@@ -18,7 +18,11 @@ require "spree/testing_support/caching"
 require "spree/testing_support/order_walkthrough"
 require "spree/testing_support/translations"
 
-require "solidus_paypal_commerce_platform/testing_support/factories"
+begin
+  require "solidus_paypal_commerce_platform/testing_support/factories"
+rescue LoadError
+  # solidus_paypal_commerce_platform is optional
+end
 
 # Define the namespace for the helpers.
 module SolidusStorefront; end
