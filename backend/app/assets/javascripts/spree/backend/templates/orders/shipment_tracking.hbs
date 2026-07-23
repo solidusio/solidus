@@ -16,9 +16,9 @@
 </td>
 <td class="actions">
   {{#if editing}}
-    <button class="js-save fa fa-check no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
-    <button class="js-cancel fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+    <button class="js-save icon_button no-text with-tip" data-action="save" title="{{ t "actions.save" }}">{{solidus_icon "check"}}</button>
+    <button class="js-cancel icon_button no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}">{{solidus_icon "cancel"}}</button>
   {{else}}
-    <button class="js-edit fa fa-edit no-text with-tip" data-action="edit" title=""{{ t "actions.edit" }}"></button>
+    <button class="js-edit icon_button no-text with-tip" data-action="edit" title="{{ t "actions.edit" }}">{{solidus_icon "edit"}}</button>
   {{/if}}
 </td>

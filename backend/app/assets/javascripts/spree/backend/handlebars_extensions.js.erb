@@ -24,3 +24,20 @@ Handlebars.registerHelper("concat", function() {
 Handlebars.registerHelper("format_money", function(amount, currency) {
   return Spree.formatMoney(amount, currency);
 });
+
+Handlebars.registerHelper("solidus_icon", function(name) {
+  var useRemix = <%= Spree::Backend::Config.admin_updated_navbar.to_json %>;
+  var spritePath = <%= image_path("spree/backend/themes/solidus_admin/remixicon.symbol.svg").to_json %>;
+  var remixNames = <%= Spree::Backend::REMIX_ICONS.to_json %>;
+  var symbol = remixNames[name];
+
+  if (useRemix && symbol) {
+    return new Handlebars.SafeString(
+      '<svg aria-hidden="true" style="fill: currentColor; width: 16px; height: 16px;"><use xlink:href="' +
+      spritePath + '#' + symbol + '"></use></svg>'
+    );
+  }
+  return new Handlebars.SafeString(
+    '<i class="fa fa-' + name + '" aria-hidden="true"></i>'
+  );
+});
