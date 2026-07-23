@@ -27,6 +27,15 @@
       shadow-base
     ">
 
+    <% available_timezones_for_select = ActiveSupport::TimeZone.all.map(&:name) %>
+    <li class="h-8 flex items-center hover:bg-gray-25 rounded">
+      <%= autosubmit_select_tag(
+        "solidus_timezone",
+        options_for_select(available_timezones_for_select, selected: Time.zone.name),
+        icon: 'time-zone-line',
+      ) %>
+    </li>
+
     <% if (available_locales = Spree.i18n_available_locales).any? %>
       <li class="h-8 flex items-center hover:bg-gray-25 rounded">
         <%= autosubmit_select_tag(

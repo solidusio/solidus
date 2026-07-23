@@ -29,6 +29,11 @@
           <div class="py-1.5">
             <%= f.text_field(:password_confirmation) %>
           </div>
+          <% if @user.respond_to?(:timezone) %>
+            <div class="py-1.5">
+              <%= f.select :timezone, ActiveSupport::TimeZone.all.map { |t| [t.name, t.to_s] }, include_blank: t("spree.none") %>
+            </div>
+          <% end %>
           <div class="py-1.5">
             <%= f.checkbox_row(:spree_role_ids, options: role_options, row_title: "Roles", layout: :subsection) %>
           </div>
