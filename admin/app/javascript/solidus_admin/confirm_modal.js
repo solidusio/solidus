@@ -1,3 +1,5 @@
+import { application } from "solidus_admin/controllers/application"
+
 /*
  * Opens a confirmation modal with the given message and options.
  * This is used as the Turbo confirm modal replacement. It returns a
@@ -13,20 +15,10 @@
  *   confirms, or false if the user cancels.
  */
 export function openConfirmModal(message, formElement, submitter) {
-  const dialog = document.getElementById("confirm")
+  const element = document.getElementById("confirm")
+  const controller = application.getControllerForElementAndIdentifier(element, "layout--confirm")
   const details = submitter?.dataset.confirmDetails ?? formElement?.dataset.confirmDetails ?? ""
   const buttonText = submitter?.dataset.confirmButton ?? formElement?.dataset.confirmButton
-  const accept = dialog.querySelector("#confirm-accept")
 
-  dialog.querySelector(".modal-title").textContent = message
-  dialog.querySelector(".modal-body").textContent = details
-  if (buttonText) accept.textContent = buttonText
-
-  dialog.showModal()
-
-  return new Promise((resolve) => {
-    const controller = new AbortController()
-    accept.addEventListener("click", () => { resolve(true); controller.abort(); dialog.close() }, { signal: controller.signal })
-    dialog.addEventListener("close", () => { resolve(false); controller.abort() }, { signal: controller.signal })
-  })
+  return controller.open(message, { details, buttonText })
 }
