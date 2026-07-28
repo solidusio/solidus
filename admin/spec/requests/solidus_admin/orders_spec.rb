@@ -19,6 +19,7 @@ RSpec.describe "SolidusAdmin::OrdersController", type: :request do
     end
 
     it "loads line item variants in a single query" do
+      order
       expect { get solidus_admin.order_path(order) }
         .to make_database_queries(matching: /from .spree_variants..*\bid. IN \(/im, count: 1)
     end
