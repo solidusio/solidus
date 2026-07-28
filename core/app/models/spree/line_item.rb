@@ -62,7 +62,7 @@ module Spree
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
     def total_before_tax
-      amount + adjustments.reject(&:tax?).sum(&:amount)
+      amount + adjustments.reject { |adjustment| adjustment.tax? || adjustment.marked_for_destruction? }.sum(&:amount)
     end
 
     # @return [BigDecimal] the amount of this line item before VAT tax
