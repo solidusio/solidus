@@ -178,8 +178,8 @@ module Solidus
 
     def install_subcomponents
       apply_template_for :authentication, @selected_authentication
-      apply_template_for :frontend, @selected_frontend
       apply_template_for :payment_method, @selected_payment_method
+      apply_template_for :frontend, @selected_frontend
     end
 
     def install_solidus_admin

@@ -104,15 +104,26 @@ with_log["installing gems"] do
     gem "rubocop-performance", "~> 1.5"
     gem "rubocop-rails", "~> 2.3"
     gem "rubocop-rspec", "~> 3.0"
-    gem "solidus_paypal_commerce_platform", github: "solidusio/solidus_paypal_commerce_platform"
   end
 
   run_bundle
 end
 
 with_log["installing files"] do
+  # Check the Gemfile directly; Bundler.locked_gems is memoized earlier in the run and would be stale here.
+  gemfile = Pathname(app_path).join("Gemfile")
+  paypal_present = gemfile.exist? && gemfile.read.include?("solidus_paypal_commerce_platform")
+
   directory "app", "app", verbose: auto_accept, force: auto_accept
   directory "public", "public"
+
+  unless paypal_present
+    remove_file "app/controllers/solidus_paypal_commerce_platform", verbose: false
+    remove_file "app/views/solidus_paypal_commerce_platform", verbose: false
+    remove_file "app/views/checkouts/payment/_paypal_commerce_platform.html.erb", verbose: false
+    remove_file "app/views/orders/payment/_paypal_commerce_platform.html.erb", verbose: false
+    remove_file "app/views/products/payment/_paypal_commerce_platform.html.erb", verbose: false
+  end
 
   copy_file "config/importmap.rb"
   copy_file "config/initializers/solidus_auth_devise_unauthorized_redirect.rb"
@@ -159,6 +170,11 @@ with_log["installing files"] do
   # Allows to skip frontend specs generation from extensions CI pipelines
   if ENV.fetch("FRONTEND_SPECS", "all") == "all"
     directory "spec", verbose: false
+
+    unless paypal_present
+      remove_file "spec/requests/solidus_paypal_commerce_platform", verbose: false
+      remove_file "spec/system/paypal_spec.rb", verbose: false
+    end
   else
     # This file is always necessary in order to run frontend specs from extensions
     copy_file "spec/solidus_storefront_spec_helper.rb", verbose: auto_accept, force: auto_accept
