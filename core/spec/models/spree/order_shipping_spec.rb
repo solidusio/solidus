@@ -53,6 +53,50 @@ RSpec.describe Spree::OrderShipping do
     end
   end
 
+  describe "#create_proposed_shipments" do
+    subject(:order) { create(:order) }
+
+    it "assigns the coordinator returned shipments to its shipments" do
+      shipment = build(:shipment)
+      allow_any_instance_of(Spree::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
+      order.shipping.create_proposed_shipments
+      expect(order.shipments).to eq [shipment]
+    end
+
+    it "raises an error if any shipments are ready" do
+      shipment = create(:shipment, order:, state: "ready")
+
+      expect {
+        expect {
+          order.shipping.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      }.not_to change { order.reload.shipments.pluck(:id) }
+
+      expect { shipment.reload }.not_to raise_error
+    end
+
+    it "raises an error if any shipments are shipped" do
+      shipment = create(:shipment, order:, state: "shipped")
+      expect {
+        expect {
+          order.shipping.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      }.not_to change { order.reload.shipments.pluck(:id) }
+
+      expect { shipment.reload }.not_to raise_error
+    end
+
+    context "when the order is already completed" do
+      let(:order) { create(:completed_order_with_pending_payment) }
+
+      it "raises an error" do
+        expect {
+          order.shipping.create_proposed_shipments
+        }.to raise_error(Spree::Order::CannotRebuildShipments)
+      end
+    end
+  end
+
   describe "#ship" do
     subject do
       order.shipping.ship(
