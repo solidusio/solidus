@@ -23,14 +23,18 @@ module Spree
       end
 
       def activate
-        promotions.each do |promotion|
-          if (line_item && promotion.eligible?(line_item, promotion_code: promotion_code(promotion))) || promotion.eligible?(order, promotion_code: promotion_code(promotion))
-            promotion.activate(line_item:, order:, promotion_code: promotion_code(promotion))
-          end
-        end
+        promotions.map { |promotion| activate_if_eligible(promotion) }.any?
       end
 
       private
+
+      def activate_if_eligible(promotion)
+        promotion_code = promotion_code(promotion)
+        eligible = (line_item && promotion.eligible?(line_item, promotion_code:)) ||
+          promotion.eligible?(order, promotion_code:)
+
+        eligible && promotion.activate(line_item:, order:, promotion_code:)
+      end
 
       def promotions
         promos = connected_order_promotions | sale_promotions

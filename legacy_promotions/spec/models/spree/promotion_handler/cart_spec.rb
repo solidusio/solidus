@@ -10,12 +10,12 @@ module Spree
       let(:promotion) { create(:promotion, apply_automatically: true) }
       let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
-      subject { Cart.new(order, line_item) }
+      subject(:handler) { described_class.new(order, line_item) }
 
       shared_context "creates the adjustment" do
         it "creates the adjustment" do
           expect {
-            subject.activate
+            handler.activate
           }.to change { adjustable.adjustments.count }.by(1)
         end
       end
@@ -23,7 +23,7 @@ module Spree
       shared_context "creates an order promotion" do
         it "connects the promotion to the order" do
           expect {
-            subject.activate
+            handler.activate
           }.to change { order.promotions.reload.to_a }.from([]).to([promotion])
         end
       end
@@ -36,19 +36,27 @@ module Spree
           include_context "creates the adjustment"
           include_context "creates an order promotion"
 
+          it "returns true when an adjustment is created" do
+            expect(handler.activate).to be(true)
+          end
+
           context "for a non-sale promotion" do
             let(:promotion) { create(:promotion, apply_automatically: false) }
 
             it "doesn't connect the promotion to the order" do
               expect {
-                subject.activate
+                handler.activate
               }.to change { order.promotions.count }.by(0)
             end
 
             it "doesn't create an adjustment" do
               expect {
-                subject.activate
+                handler.activate
               }.to change { adjustable.adjustments.count }.by(0)
+            end
+
+            it "returns false when nothing is activated" do
+              expect(handler.activate).to be(false)
             end
           end
         end
@@ -118,13 +126,13 @@ module Spree
         include_context "creates the adjustment"
 
         it "records the promotion code in the adjustment" do
-          subject.activate
+          handler.activate
           expect(adjustable.adjustments.map(&:promotion_code)).to eq [promotion_code]
         end
 
         it "checks if the promotion code is eligible" do
           expect_any_instance_of(Spree::Promotion).to receive(:eligible?).at_least(2).times.with(anything, promotion_code:).and_return(false)
-          subject.activate
+          handler.activate
         end
       end
     end
