@@ -59,7 +59,15 @@ module Spree
     end
 
     def self.permitted_classes
-      CORE_PERMITTED_CLASSES + Spree::Config.log_entry_permitted_classes.map(&:constantize)
+      # A missing configured class (e.g. a gateway gem dropped a serialized payload class)
+      # would otherwise crash every payment view that loads any log entry.
+      configured = Spree::Config.log_entry_permitted_classes.filter_map do |class_name|
+        class_name.constantize
+      rescue NameError
+        Rails.logger.warn("Spree::LogEntry: ignoring missing permitted class #{class_name.inspect}")
+        nil
+      end
+      CORE_PERMITTED_CLASSES + configured
     end
 
     belongs_to :source, polymorphic: true, optional: true
