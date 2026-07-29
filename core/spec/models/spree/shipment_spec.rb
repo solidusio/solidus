@@ -199,6 +199,16 @@ RSpec.describe Spree::Shipment, type: :model do
     it "returns the amount minus any adjustments" do
       expect(shipment.total_before_tax).to eq(10 - 1 - 2)
     end
+
+    context "with adjustments that are marked for destruction" do
+      before do
+        shipment.adjustments.select { |adjustment| adjustment.amount == -2 }.each(&:mark_for_destruction)
+      end
+
+      it "ignores adjustments that are marked for destruction" do
+        expect(shipment.total_before_tax).to eq(10 - 1)
+      end
+    end
   end
 
   it "#tax_total with included taxes" do
