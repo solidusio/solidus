@@ -263,6 +263,34 @@ RSpec.describe Spree::Shipment, type: :model do
         expect(shipment.manifest.first.variant).to eq variant
       end
     end
+
+    context "when the order and its line items are already loaded" do
+      before { order.line_items.load }
+
+      it "reuses the order's line item instance" do
+        expect(shipment.manifest.first.line_item).to equal(order.line_items.first)
+      end
+
+      it "reflects unsaved changes to the order's line items" do
+        order.line_items.first.adjustment_total = 5
+
+        expect(shipment.manifest.first.line_item.adjustment_total).to eq 5
+      end
+    end
+
+    context "when the order is not loaded" do
+      let(:reloaded_shipment) { Spree::Shipment.find(shipment.id) }
+
+      it "does not load the order" do
+        reloaded_shipment.manifest
+
+        expect(reloaded_shipment.association(:order)).not_to be_loaded
+      end
+
+      it "still returns the line item expected" do
+        expect(reloaded_shipment.manifest.first.line_item).to eq line_item
+      end
+    end
   end
 
   context "shipping_rates" do
