@@ -109,6 +109,20 @@ module Spree::Api
           expect(response.status).to eq(200)
         end
 
+        # Regression test for https://github.com/solidusio/solidus/issues/2845
+        it "does not persist the address to the user's address book when temporary_address is set" do
+          expect_any_instance_of(Spree.user_class).not_to receive(:persist_order_address)
+
+          put spree.api_checkout_path(order),
+            params: {order_token: order.guest_token, order: {
+              temporary_address: true,
+              bill_address_attributes: address,
+              ship_address_attributes: address
+            }}
+
+          expect(response.status).to eq(200)
+        end
+
         # Regression Spec for https://github.com/spree/spree/issues/5389 and https://github.com/spree/spree/issues/5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
           Spree::ShippingMethod.all.find_each(&:destroy)
