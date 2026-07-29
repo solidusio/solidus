@@ -103,6 +103,24 @@ RSpec.describe Spree::Country, type: :model do
     end
   end
 
+  describe "factory states_required default" do
+    it "is false for countries listed in countries_not_requiring_states (Germany by default)" do
+      germany = build(:country, iso: "DE")
+      expect(germany.states_required).to be(false)
+    end
+
+    it "is true for countries with subregions that aren't excluded" do
+      united_states = build(:country, iso: "US")
+      expect(united_states.states_required).to be(true)
+    end
+
+    it "honors a custom countries_not_requiring_states configuration" do
+      stub_spree_preferences(countries_not_requiring_states: ["IT"])
+      italy = build(:country, iso: "IT")
+      expect(italy.states_required).to be(false)
+    end
+  end
+
   describe "#prices" do
     let(:country) { create(:country, iso: "BR") }
     subject { country.prices }

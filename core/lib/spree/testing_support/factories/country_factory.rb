@@ -15,6 +15,9 @@ FactoryBot.define do
     iso3 { carmen_country.alpha_3_code }
     numcode { carmen_country.numeric_code }
 
-    states_required { carmen_country.subregions? }
+    states_required do
+      carmen_country.subregions? &&
+        Spree::Config[:countries_not_requiring_states].exclude?(carmen_country.alpha_2_code)
+    end
   end
 end
