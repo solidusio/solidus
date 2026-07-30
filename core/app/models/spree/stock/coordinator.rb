@@ -20,14 +20,16 @@ module Spree
         estimator_class: Spree::Config.stock.estimator_class
       )
         @order = order
-        @inventory_units =
-          inventory_units || inventory_unit_builder_class.new(order).units
-        @splitters = splitters
+        @inventory_units = inventory_units
+
+        @inventory_unit_builder_class = inventory_unit_builder_class
         @location_filter_class = location_filter_class
         @location_sorter_class = location_sorter_class
-
         @allocator_class = allocator_class
+
         @estimator = estimator_class.new
+
+        @splitters = splitters
       end
 
       def shipments
@@ -58,7 +60,8 @@ module Spree
         filtered_stock_locations = @location_filter_class.new(Spree::StockLocation.all, order).filter
         stock_locations = @location_sorter_class.new(filtered_stock_locations).sort
 
-        # Allocate any available on hand inventory and remaining desired inventory from backorders
+        @inventory_units ||= inventory_unit_builder_class.new(order).units
+
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
         desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
         availability = Spree::Stock::Availability.new(
