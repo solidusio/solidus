@@ -7,7 +7,7 @@ module Spree
 
       # @api private
       attr_reader :inventory_units, :splitters, :stock_locations,
-        :filtered_stock_locations, :packages
+        :filtered_stock_locations
 
       def initialize(
         order,
@@ -34,8 +34,8 @@ module Spree
 
       def shipments
         @shipments ||= begin
-          @packages = build_packages
-          shipments = build_shipments
+          packages = build_packages
+          shipments = build_shipments(packages)
 
           # Make sure we don't add the proposed shipments to the order
           order.shipments = order.shipments - shipments
@@ -50,7 +50,7 @@ module Spree
         Spree::StockLocation.all
       end
 
-      def build_shipments
+      def build_shipments(packages)
         # Turn the Stock::Packages into a Shipment with rates
         packages.map do |package|
           shipment = package.shipment = package.to_shipment
