@@ -10,14 +10,23 @@ module Spree
         :filtered_stock_locations, :inventory_units_by_variant, :desired,
         :availability, :allocator, :packages
 
-      def initialize(order, inventory_units: nil)
+      def initialize(
+        order,
+        inventory_units: nil,
+        inventory_unit_builder_class: Spree::Config.stock.inventory_unit_builder_class,
+        splitters: Spree::Config.environment.stock_splitters,
+        location_filter_class: Spree::Config.stock.location_filter_class,
+        location_sorter_class: Spree::Config.stock.location_sorter_class,
+        allocator_class: Spree::Config.stock.allocator_class,
+        estimator_class: Spree::Config.stock.estimator_class
+      )
         @order = order
         @inventory_units =
-          inventory_units || Spree::Config.stock.inventory_unit_builder_class.new(order).units
-        @splitters = Spree::Config.environment.stock_splitters
+          inventory_units || inventory_unit_builder_class.new(order).units
+        @splitters = splitters
 
-        @filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
-        sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
+        @filtered_stock_locations = location_filter_class.new(load_stock_locations, order).filter
+        sorted_stock_locations = location_sorter_class.new(filtered_stock_locations).sort
         @stock_locations = sorted_stock_locations
 
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
@@ -27,7 +36,8 @@ module Spree
           stock_locations:
         )
 
-        @allocator = Spree::Config.stock.allocator_class.new(availability)
+        @allocator = allocator_class.new(availability)
+        @estimator = estimator_class.new
       end
 
       def shipments
@@ -52,7 +62,7 @@ module Spree
         # Turn the Stock::Packages into a Shipment with rates
         packages.map do |package|
           shipment = package.shipment = package.to_shipment
-          shipment.shipping_rates = Spree::Config.stock.estimator_class.new.shipping_rates(package)
+          shipment.shipping_rates = @estimator.shipping_rates(package)
           shipment
         end
       end
