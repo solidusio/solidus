@@ -7,8 +7,7 @@ module Spree
 
       # @api private
       attr_reader :inventory_units, :splitters, :stock_locations,
-        :filtered_stock_locations, :inventory_units_by_variant, :desired,
-        :availability, :allocator, :packages
+        :filtered_stock_locations, :packages
 
       def initialize(
         order,
@@ -29,14 +28,7 @@ module Spree
         sorted_stock_locations = location_sorter_class.new(filtered_stock_locations).sort
         @stock_locations = sorted_stock_locations
 
-        @inventory_units_by_variant = @inventory_units.group_by(&:variant)
-        @desired = Spree::StockQuantities.new(inventory_units_by_variant.transform_values(&:count))
-        @availability = Spree::Stock::Availability.new(
-          variants: desired.variants,
-          stock_locations:
-        )
-
-        @allocator = allocator_class.new(availability)
+        @allocator_class = allocator_class
         @estimator = estimator_class.new
       end
 
@@ -69,6 +61,14 @@ module Spree
 
       def build_packages
         # Allocate any available on hand inventory and remaining desired inventory from backorders
+        @inventory_units_by_variant = @inventory_units.group_by(&:variant)
+        desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
+        availability = Spree::Stock::Availability.new(
+          variants: desired.variants,
+          stock_locations:
+        )
+        allocator = @allocator_class.new(availability)
+
         on_hand_packages, backordered_packages, leftover = allocator.allocate_inventory(desired)
 
         raise Spree::Order::InsufficientStock.new(items: leftover.quantities) unless leftover.empty?
@@ -103,7 +103,7 @@ module Spree
       def get_units(quantities)
         # Change our raw quantities back into inventory units
         quantities.flat_map do |variant, quantity|
-          inventory_units_by_variant[variant].shift(quantity)
+          @inventory_units_by_variant[variant].shift(quantity)
         end
       end
     end
