@@ -33,6 +33,7 @@ module Spree
       def shipments
         @shipments ||= begin
           packages = build_packages
+          packages = split_packages(packages)
           shipments = build_shipments(packages)
 
           # Make sure we don't add the proposed shipments to the order
@@ -85,9 +86,6 @@ module Spree
 
           package
         end.compact
-
-        # Split the packages
-        split_packages(packages)
       end
 
       def split_packages(initial_packages)
