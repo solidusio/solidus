@@ -22,14 +22,17 @@ module Spree
         @order = order
         @inventory_units = inventory_units
 
+        # TODO: PackageBuilder
         @inventory_unit_builder_class = inventory_unit_builder_class
         @location_filter_class = location_filter_class
         @location_sorter_class = location_sorter_class
         @allocator_class = allocator_class
 
-        @estimator = estimator_class.new
-
+        # TODO: PackageSplitter
         @splitters = splitters
+
+        # TODO: ShipmentBuilder
+        @estimator = estimator_class.new
       end
 
       def shipments
