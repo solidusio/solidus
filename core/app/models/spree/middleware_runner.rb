@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+module Spree
+  module MiddlewareRunner
+    def self.call(middlewares, context)
+      chain = middlewares.to_a.reverse.reduce(->(_ctx) {}) { |inner, klass|
+        ->(ctx) { klass.new.call(ctx, &inner) }
+      }
+
+      chain.call(context)
+    end
+  end
+end
