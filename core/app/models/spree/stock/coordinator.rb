@@ -23,10 +23,8 @@ module Spree
         @inventory_units =
           inventory_units || inventory_unit_builder_class.new(order).units
         @splitters = splitters
-
-        @filtered_stock_locations = location_filter_class.new(load_stock_locations, order).filter
-        sorted_stock_locations = location_sorter_class.new(filtered_stock_locations).sort
-        @stock_locations = sorted_stock_locations
+        @location_filter_class = location_filter_class
+        @location_sorter_class = location_sorter_class
 
         @allocator_class = allocator_class
         @estimator = estimator_class.new
@@ -46,10 +44,6 @@ module Spree
 
       private
 
-      def load_stock_locations
-        Spree::StockLocation.all
-      end
-
       def build_shipments(packages)
         # Turn the Stock::Packages into a Shipment with rates
         packages.map do |package|
@@ -60,6 +54,9 @@ module Spree
       end
 
       def build_packages
+        filtered_stock_locations = @location_filter_class.new(Spree::StockLocation.all, order).filter
+        stock_locations = @location_sorter_class.new(filtered_stock_locations).sort
+
         # Allocate any available on hand inventory and remaining desired inventory from backorders
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
         desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
