@@ -13,14 +13,16 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details }.not_to raise_error
     end
 
-    it "can disable aliases and raises a meaningful exception when used" do
+    it "can disable aliases and returns a wrapper referencing the meaningful message when used" do
       stub_spree_preferences(log_entry_allow_aliases: false)
       x = []
       x << x
 
       log_entry = described_class.new(details: x.to_yaml)
 
-      expect { log_entry.parsed_details }.to raise_error(described_class::BadAlias, /log_entry_allow_aliases/)
+      details = log_entry.parsed_details
+      expect(details.success?).to eq(false)
+      expect(details.params["error"]).to match(/log_entry_allow_aliases/)
     end
 
     it "can parse ActiveMerchant::Billing::Response instances" do
@@ -59,10 +61,51 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details }.not_to raise_error
     end
 
-    it "raises a meaningful exception when a disallowed class is found" do
-      log_entry = described_class.new(details: Date.today)
+    it "returns a wrapper referencing the meaningful message when a disallowed class is found" do
+      serialized_date = Date.today.to_yaml
+      log_entry = described_class.new(details: serialized_date)
 
-      expect { log_entry.parsed_details }.to raise_error(described_class::DisallowedClass, /log_entry_permitted_classes/)
+      details = log_entry.parsed_details
+      expect(details.success?).to eq(false)
+      expect(details.message).to include("[WARNING: An error occurred while trying to deserialize the stored payment response]")
+      expect(details.params["data"]).to eq(serialized_date)
+      expect(details.params["error"]).to match(/log_entry_permitted_classes/)
+    end
+
+    it "returns a wrapper when the stored details are malformed YAML" do
+      malformed = "{ this: is: not: valid"
+      log_entry = described_class.new(details: malformed)
+
+      details = log_entry.parsed_details
+      expect(details.success?).to eq(false)
+      expect(details.message).to include("[WARNING: An error occurred while trying to deserialize the stored payment response]")
+      expect(details.params["data"]).to eq(malformed)
+      expect(details.params["error"]).to be_present
+    end
+
+    it "reports the deserialization error so it is visible to developers" do
+      subscriber = Class.new do
+        attr_reader :reported
+
+        def initialize
+          @reported = []
+        end
+
+        def report(error, handled:, severity:, context:, source: nil)
+          @reported << {error: error, handled: handled, severity: severity, context: context}
+        end
+      end.new
+      Rails.error.subscribe(subscriber)
+
+      described_class.new(details: "{ this: is: not: valid").parsed_details
+
+      expect(subscriber.reported.size).to eq(1)
+      report = subscriber.reported.first
+      expect(report[:error]).to be_a(Psych::Exception)
+      expect(report[:handled]).to eq(true)
+      expect(report[:severity]).to eq(:warning)
+    ensure
+      Rails.error.unsubscribe(subscriber) if Rails.error.respond_to?(:unsubscribe)
     end
   end
 
@@ -83,14 +126,14 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details = x }.not_to raise_error
     end
 
-    it "can disable aliases and raises a meaningful exception when used" do
+    it "dumps self-referential structures without restricting aliases" do
       stub_spree_preferences(log_entry_allow_aliases: false)
       x = []
       x << x
 
       log_entry = described_class.new
 
-      expect { log_entry.parsed_details = x }.to raise_error(described_class::BadAlias, /log_entry_allow_aliases/)
+      expect { log_entry.parsed_details = x }.not_to raise_error
     end
 
     it "can dump ActiveMerchant::Billing::Response instances" do
@@ -121,25 +164,15 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details = {"foo" => "bar"}.with_indifferent_access }.not_to raise_error
     end
 
-    it "can dump user specified class instances" do
-      stub_spree_preferences(log_entry_permitted_classes: ["Date"])
-
+    it "dumps arbitrary class instances without restriction" do
       log_entry = described_class.new
 
       expect { log_entry.parsed_details = Date.new }.not_to raise_error
     end
-
-    it "raises a meaningful exception when a disallowed class is found" do
-      log_entry = described_class.new
-
-      expect { log_entry.parsed_details = Date.new }.to raise_error(
-        described_class::DisallowedClass, /log_entry_permitted_classes/
-      )
-    end
   end
 
   describe "#parsed_payment_response_details_with_fallback=" do
-    it "wraps non serializable responses" do
+    it "stores the full response and wraps it when it cannot be safely deserialized" do
       log_entry = described_class.new
       bad_response = ActiveMerchant::Billing::Response.new(
         true,
@@ -150,10 +183,10 @@ RSpec.describe Spree::LogEntry, type: :model do
       log_entry.parsed_payment_response_details_with_fallback = bad_response
       details = log_entry.parsed_details
 
-      expect(details.success?).to eq(true)
-      expect(details.message).to eq("[WARNING: An error occurred while trying to serialize the payment response] FooBar")
+      expect(details.success?).to eq(false)
+      expect(details.message).to include("[WARNING: An error occurred while trying to deserialize the stored payment response]")
       expect(details.params["data"]).to include("FooBar")
-      expect(details.params["error"]).to include("Tried to dump unspecified class: Date")
+      expect(details.params["error"]).to include("Tried to load unspecified class: Date")
     end
   end
 end
