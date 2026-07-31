@@ -39,6 +39,18 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details }.not_to raise_error
     end
 
+    it "can parse Symbol instances" do
+      log_entry = described_class.new(details: :foo.to_yaml)
+
+      expect { log_entry.parsed_details }.not_to raise_error
+    end
+
+    it "can parse ActiveSupport::HashWithIndifferentAccess instances" do
+      log_entry = described_class.new(details: {"foo" => "bar"}.with_indifferent_access.to_yaml)
+
+      expect { log_entry.parsed_details }.not_to raise_error
+    end
+
     it "can parse user specified class instances" do
       stub_spree_preferences(log_entry_permitted_classes: ["Date"])
 
@@ -97,6 +109,18 @@ RSpec.describe Spree::LogEntry, type: :model do
       expect { log_entry.parsed_details = time }.not_to raise_error
     end
 
+    it "can dump Symbol instances" do
+      log_entry = described_class.new
+
+      expect { log_entry.parsed_details = :foo }.not_to raise_error
+    end
+
+    it "can dump ActiveSupport::HashWithIndifferentAccess instances" do
+      log_entry = described_class.new
+
+      expect { log_entry.parsed_details = {"foo" => "bar"}.with_indifferent_access }.not_to raise_error
+    end
+
     it "can dump user specified class instances" do
       stub_spree_preferences(log_entry_permitted_classes: ["Date"])
 
@@ -120,7 +144,7 @@ RSpec.describe Spree::LogEntry, type: :model do
       bad_response = ActiveMerchant::Billing::Response.new(
         true,
         "FooBar",
-        {foo: {bar: "Symbol keys are not allowed"}}
+        {"data" => {"date" => Date.today}}
       )
 
       log_entry.parsed_payment_response_details_with_fallback = bad_response
@@ -128,8 +152,8 @@ RSpec.describe Spree::LogEntry, type: :model do
 
       expect(details.success?).to eq(true)
       expect(details.message).to eq("[WARNING: An error occurred while trying to serialize the payment response] FooBar")
-      expect(details.params["data"]).to include('"Symbol keys are not allowed"')
-      expect(details.params["error"]).to include("Tried to dump unspecified class: Symbol")
+      expect(details.params["data"]).to include("FooBar")
+      expect(details.params["error"]).to include("Tried to dump unspecified class: Date")
     end
   end
 end

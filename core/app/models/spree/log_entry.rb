@@ -11,8 +11,10 @@ module Spree
     CORE_PERMITTED_CLASSES = [
       ActiveMerchant::Billing::Response,
       ActiveSupport::TimeWithZone,
+      ActiveSupport::HashWithIndifferentAccess,
       Time,
-      ActiveSupport::TimeZone
+      ActiveSupport::TimeZone,
+      Symbol
     ].freeze
 
     class SerializationError < RuntimeError
