@@ -18,13 +18,6 @@ FactoryBot.define do
       end
     end
 
-    factory :admin_user do
-      after(:create) do |user, _|
-        admin_role = Spree::Role.find_by(name: "admin") || create(:role, name: "admin")
-        user.spree_roles << admin_role
-      end
-    end
-
     factory :user_with_addresses do |_u|
       bill_address
       ship_address
