@@ -91,11 +91,15 @@ jobs:
       # leaves libvips missing and surfaces much later as an opaque
       # "undefined method 'new' for nil" from ImageProcessing::Vips inside the
       # specs. `vips --version` makes a bad install fail here instead.
+      #
+      # ruby-vips binds libvips.so through FFI at runtime, so the docs and the GUI
+      # tools apt recommends are dead weight; libvips-tools is requested explicitly
+      # because it provides the `vips` binary used by the check below.
       - name: Install libvips
         if: ${{ matrix.storage == 'activestorage' }}
         run: |
           sudo apt-get update
-          sudo apt-get install -yq libvips-dev
+          sudo apt-get install -yq --no-install-recommends libvips-dev libvips-tools
           vips --version
       - name: Setup coverage
         id: setup-coverage
