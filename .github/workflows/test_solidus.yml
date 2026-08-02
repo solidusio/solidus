@@ -83,11 +83,17 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - uses: awalsh128/cache-apt-pkgs-action@v1
+      # NOTE: Install libvips with plain apt-get rather than a caching action. A
+      # cached install can report a cache hit while restoring zero packages, which
+      # leaves libvips missing and surfaces much later as an opaque
+      # "undefined method 'new' for nil" from ImageProcessing::Vips inside the
+      # specs. `vips --version` makes a bad install fail here instead.
+      - name: Install libvips
         if: ${{ matrix.storage == 'activestorage' }}
-        name: Install libvips
-        with:
-          packages: libvips-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -yq libvips-dev
+          vips --version
       - name: Setup coverage
         id: setup-coverage
         if: ${{ inputs.coverage && matrix.rails == '8.0' && matrix.ruby == '3.4' }}
