@@ -16,7 +16,10 @@ on:
 jobs:
   RSpec:
     name: Rails ${{ matrix.rails }}, Ruby ${{ matrix.ruby }}, ${{ matrix.database }}, ${{ matrix.storage }}
-    runs-on: ubuntu-22.04
+    # NOTE: ubuntu-24.04 is required for libvips 8.13+. ActiveStorage 8.1 refuses to
+    # load with older libvips, because it cannot disable the unfuzzed operations that
+    # are unsafe on untrusted content. ubuntu-22.04 only ships libvips 8.12.1.
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
