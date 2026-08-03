@@ -13,8 +13,6 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
     t(".title", number: @order.number)
   end
 
-  NBSP = "&nbsp;".html_safe
-
   def initialize(order:, adjustments:)
     @order = order
     @adjustments = adjustments

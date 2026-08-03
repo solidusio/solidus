@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spree/backend/config"
+require "spree/backend/remix_icons"
 
 module Spree
   module Backend
