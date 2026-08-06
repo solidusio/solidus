@@ -106,5 +106,33 @@ module Spree
         end
       end
     end
+
+    context "when an order with loaded line items is given" do
+      let(:order) { create(:order_with_line_items) }
+      it "reuses the order's line item instances" do
+        manifest = described_class.new(inventory_units: shipment.inventory_units, order: order)
+        expect(manifest.items.map { |item| item.line_item.object_id })
+          .to match_array(order.line_items.map(&:object_id))
+      end
+
+      it "reflects unsaved changes made to the order's line items" do
+        order.line_items.first.adjustment_total = 5
+        manifest = described_class.new(inventory_units: shipment.inventory_units, order: order)
+        expect(manifest.items.first.line_item.adjustment_total).to eq(5)
+      end
+
+      it "does not mark the inventory units as changed" do
+        manifest = described_class.new(inventory_units: shipment.inventory_units, order: order)
+        expect { manifest.items }.not_to change { shipment.inventory_units.map(&:changed?) }
+      end
+    end
+
+    context "when the order's line items are not loaded" do
+      it "does not load them" do
+        order.association(:line_items).reset
+        described_class.new(inventory_units: shipment.inventory_units, order: order).items
+        expect(order.association(:line_items)).not_to be_loaded
+      end
+    end
   end
 end

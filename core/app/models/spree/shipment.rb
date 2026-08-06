@@ -178,7 +178,12 @@ module Spree
     end
 
     def manifest
-      @manifest ||= Spree::ShippingManifest.new(inventory_units:).items
+      @manifest ||= Spree::ShippingManifest.new(
+        inventory_units:,
+        # Only when it is already in memory — the manifest treats the order as an
+        # optimization and must not cause a query for it.
+        order: (order if association(:order).loaded?)
+      ).items
     end
 
     def selected_shipping_rate_id
