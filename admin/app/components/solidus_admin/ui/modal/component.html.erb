@@ -11,7 +11,7 @@
     <div class="min-w-[40rem] max-h-screen pointer-events-auto cursor-auto relative transform overflow-auto rounded-lg bg-white text-left shadow-xl max-w-lg divide-y divide-gray-100">
 
       <header class="flex items-center justify-between p-4 sticky top-0 bg-inherit">
-        <h3 class="text-xl font-semibold text-gray-900">
+        <h3 class="text-xl font-semibold text-gray-900 modal-title">
           <%= @title %>
         </h3>
         <form method="dialog">
@@ -23,9 +23,7 @@
         </form>
       </header>
 
-      <div class="p-4">
-        <%= content %>
-      </div>
+      <div class="p-4 empty:hidden modal-body"><%= content %></div>
 
       <% if actions? %>
         <footer class="p-4 flex gap-2 justify-end sticky bottom-0 bg-inherit">

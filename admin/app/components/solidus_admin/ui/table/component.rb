@@ -117,13 +117,15 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     }
 
     if batch_action.require_confirmation
-      params["data-action"] = "click->#{stimulus_id}#confirmAction"
-      params["data-#{stimulus_id}-message-param"] = t(
+      params["data-turbo-confirm"] = t(".are_you_sure")
+      params["data-confirmation-template"] = t(
         ".action_confirmation",
         action: batch_action.label.downcase
       )
-      params["data-#{stimulus_id}-resource-singular-param"] = @data.singular_name.downcase
-      params["data-#{stimulus_id}-resource-plural-param"] = @data.plural_name.downcase
+      params["data-confirm-button"] = batch_action.label
+      params["data-resource-singular"] = @data.singular_name.downcase
+      params["data-resource-plural"] = @data.plural_name.downcase
+      params.merge! stimulus_target("batchActionButton")
     end
 
     render component("ui/button").new(**params)

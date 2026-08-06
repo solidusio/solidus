@@ -10,6 +10,7 @@ pin "sortablejs", to: "https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/+esm"
 pin "@rails/request.js", to: "https://cdn.jsdelivr.net/npm/@rails/request.js@0.0.9/+esm"
 
 pin "solidus_admin/application", preload: true
+pin "solidus_admin/confirm_modal"
 pin "solidus_admin/utils"
 pin "solidus_admin/tom-select", to: "solidus_admin/tom-select/tom-select.js"
 pin "vendor/custom_elements", preload: true
