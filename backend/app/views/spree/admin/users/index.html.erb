@@ -1,7 +1,7 @@
-<% admin_breadcrumb(plural_resource_name(Spree::LegacyUser)) %>
+<% admin_breadcrumb(plural_resource_name(Spree.admin_user_class)) %>
 
 <% content_for :page_actions do %>
-  <% if can?(:admin, Spree.user_class) && can?(:create, Spree.user_class) %>
+  <% if can?(:admin, Spree.admin_user_class) && can?(:create, Spree.admin_user_class) %>
     <li>
       <%= link_to t('spree.new_user'), new_admin_user_url, id: 'admin_new_user_link', class: 'btn btn-primary' %>
     </li>
@@ -24,7 +24,7 @@
         </div>
         <div class="col-xs-12 col-md-3">
           <div class="form-group">
-            <%= f.label :spree_roles_id_in, Spree.user_class.human_attribute_name(:spree_roles) %>
+            <%= f.label :spree_roles_id_in, Spree.admin_user_class.human_attribute_name(:spree_roles) %>
             <%= f.collection_select :spree_roles_id_in, @roles, :id, :name, {},
               multiple: true, class: 'select2 fullwidth' %>
           </div>
@@ -69,10 +69,10 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_users_index_headers">
-      <th><%= sort_link @search, :email, Spree.user_class.human_attribute_name(:email), {title: 'users_email_title'} %></th>
-      <th><%= Spree.user_class.human_attribute_name(:spree_roles) %></th>
+      <th><%= sort_link @search, :email, Spree.admin_user_class.human_attribute_name(:email), {title: 'users_email_title'} %></th>
+      <th><%= Spree.admin_user_class.human_attribute_name(:spree_roles) %></th>
       <th class="align-center"><%= t('spree.num_orders') %></th>
-      <th class="align-center"><%= Spree.user_class.human_attribute_name(:lifetime_value) %></th>
+      <th class="align-center"><%= Spree.admin_user_class.human_attribute_name(:lifetime_value) %></th>
       <th class="align-center"><%= sort_link @search, :created_at, t('spree.member_since') %></th>
       <th data-hook="admin_users_index_header_actions" class="actions"></th>
     </tr>

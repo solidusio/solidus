@@ -86,6 +86,12 @@ end
   Spree.user_class = <%= options[:user_class].inspect %>
 <% end -%>
 
+# By default, admin users share the same class as storefront users.
+# Override this if you use a separate model for admin users.
+<% if options[:user_class].present? -%>
+  Spree.admin_user_class = <%= options[:user_class].inspect %>
+<% end -%>
+
 # Rules for avoiding to store the current path into session for redirects
 # When at least one rule is matched, the request path will not be stored
 # in session.

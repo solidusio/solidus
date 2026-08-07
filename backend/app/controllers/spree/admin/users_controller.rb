@@ -21,7 +21,7 @@ module Spree
       end
 
       def create
-        @user = Spree.user_class.new(user_params)
+        @user = Spree.admin_user_class.new(user_params)
         if @user.save
           set_roles
           set_stock_locations
@@ -82,7 +82,7 @@ module Spree
       end
 
       def model_class
-        Spree.user_class
+        Spree.admin_user_class
       end
 
       private
