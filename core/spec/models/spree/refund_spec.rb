@@ -109,6 +109,14 @@ RSpec.describe Spree::Refund, type: :model do
           expect(refund.reload.log_entries).to be_present
         end
 
+        it "persists the log entry with correct source" do
+          subject
+          entry = Spree::LogEntry.find_by(source: refund)
+          expect(entry).not_to be_nil
+          expect(entry.source_type).to eq("Spree::Refund")
+          expect(entry.parsed_details).to be_present
+        end
+
         it "attempts to process a transaction" do
           expect(payment.payment_method).to receive(:credit).once.and_call_original
           subject
