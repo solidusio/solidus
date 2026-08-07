@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class BaseController < Spree::BaseController
+      include Spree::Core::ControllerHelpers::Timezone
+
       helper "spree/admin/navigation"
       layout "spree/layouts/admin"
 

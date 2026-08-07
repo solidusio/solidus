@@ -33,7 +33,7 @@ describe SolidusAdmin::BaseController, type: :controller do
     end
   end
 
-  context "successful request" do
+  context "authorized request" do
     before do
       user = create(:admin_user, email: "admin@example.com")
       allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(user)
@@ -42,6 +42,12 @@ describe SolidusAdmin::BaseController, type: :controller do
     it "returns a 200 response" do
       get :index
       expect(response.code).to eq "200"
+    end
+
+    it "sets timezone by param" do
+      get :index, params: {solidus_timezone: "Hawaii"}
+      expect(session).to have_key(:solidus_timezone)
+      expect(session[:solidus_timezone]).to eq("Hawaii")
     end
   end
 

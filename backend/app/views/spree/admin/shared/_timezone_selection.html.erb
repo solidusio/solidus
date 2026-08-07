@@ -1,0 +1,10 @@
+<% available_timezones_for_select = ActiveSupport::TimeZone.all.map(&:name) %>
+
+<%= form_tag(url_for, method: :get, style: "width: 100%;") do %>
+  <label class="admin-navbar-selection admin-timezone-selection">
+    <i class="fa fa-globe fa-fw" title="<%= I18n.t('spree.choose_dashboard_locale') %>"></i>
+    <select name="solidus_timezone" class="custom-select fullwidth" onchange="this.form.requestSubmit()">
+      <%= options_for_select(available_timezones_for_select, selected: Time.zone.name) %>
+    </select>
+  </label>
+<% end %>

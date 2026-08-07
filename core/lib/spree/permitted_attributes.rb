@@ -138,7 +138,7 @@ module Spree
     # by changing a user with higher priveleges' email to one a lower-priveleged
     # admin owns. Creating a user with an email is handled separate at the
     # controller level.
-    @@user_attributes = [:password, :password_confirmation, customer_metadata: {}]
+    @@user_attributes = [:password, :password_confirmation, :timezone, customer_metadata: {}]
 
     @@variant_attributes = [
       :name, :presentation, :cost_price, :lock_version,
