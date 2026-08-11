@@ -46,10 +46,10 @@ services:
     ports:
       - "${SANDBOX_PORT:-3000}:${SANDBOX_PORT:-3000}"
     volumes:
-      - .:/home/solidus_user/app:delegated
+      - .:/home/solidus_user/app:delegated,z
       - bundle:/home/solidus_user/gems:cached
       - history:/home/solidus_user/history:cached
-      - .dockerdev/.psqlrc:/home/solidus_user/.psqlrc:cached
+      - .dockerdev/.psqlrc:/home/solidus_user/.psqlrc:cached,z
     tty: true
     stdin_open: true
     tmpfs:
