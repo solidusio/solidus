@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   mysql:
     image: docker.io/mysql:8.0
