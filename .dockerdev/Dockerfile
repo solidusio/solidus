@@ -54,6 +54,8 @@ RUN gem update --system \
 
 USER $APP_USER
 
+RUN git config --global --add safe.directory /home/$APP_USER/app
+
 RUN mkdir -p /home/$APP_USER/history
 
 WORKDIR /home/$APP_USER/app
