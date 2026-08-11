@@ -20,6 +20,7 @@ RUN apt-get update -qq \
     libsqlite3-dev \
     chromium \
     chromium-driver \
+    libyaml-dev \
   && rm -rf /var/cache/apt/lists/*
 
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
@@ -53,6 +54,8 @@ RUN gem update --system \
   && chown -R $APP_USER:$(id -g $APP_USER) /home/$APP_USER/gems
 
 USER $APP_USER
+
+RUN git config --global --add safe.directory /home/$APP_USER/app
 
 RUN mkdir -p /home/$APP_USER/history
 
