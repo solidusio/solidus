@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   mysql:
-    image: mysql:8.0
+    image: docker.io/mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -10,7 +10,7 @@ services:
       - mysql:/var/lib/mysql:cached
 
   postgres:
-    image: postgres:13.2
+    image: docker.io/postgres:13.2
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
