@@ -1,0 +1,25 @@
+---
+# Keep it high to avoid spam.
+Metrics/LineLength:
+  Max: 140
+
+# This should truly be on for well documented gems.
+Style/Documentation:
+  Enabled: false
+
+# Neatly aligned code is too swell.
+Layout/SpaceBeforeFirstArg:
+  Enabled: false
+
+# Don't mess with RSpec DSL.
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+# Avoid contradictory style rules by enforce single quotes.
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+# It say we should use fail over raise..yeah right
+Style/SignalException:
+  Enabled: false
