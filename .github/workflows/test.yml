@@ -60,6 +60,13 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+  solidus_i18n:
+    uses: ./.github/workflows/test_solidus.yml
+    with:
+      lib_name: i18n
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
   solidus_sample:
     uses: ./.github/workflows/test_solidus.yml
     with:

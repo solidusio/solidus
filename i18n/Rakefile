@@ -1,10 +1,21 @@
 # frozen_string_literal: true
 
-require "bundler/gem_tasks"
-require "solidus_dev_support/rake_tasks"
-SolidusDevSupport::RakeTasks.install
-
+require "rubygems"
+require "rake"
+require "rake/testtask"
+require "rspec/core/rake_task"
 require "solidus_i18n"
+require "spree/testing_support/dummy_app/rake_tasks"
+require "bundler/gem_tasks"
+
+RSpec::Core::RakeTask.new
+task default: :spec
+
+DummyApp::RakeTasks.new(
+  gem_root: File.dirname(__FILE__),
+  lib_name: "solidus_i18n"
+)
+
 namespace :solidus_i18n do
   desc "Update by retrieving the latest Solidus locale files"
   task update_default: :environment do
@@ -20,4 +31,4 @@ namespace :solidus_i18n do
   end
 end
 
-task default: "extension:specs"
+task test_app: "db:reset"
