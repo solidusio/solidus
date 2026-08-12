@@ -253,5 +253,13 @@ RSpec.describe SolidusPromotions::OrderAdjuster, type: :model do
     it "loads line item adjustments in a single query" do
       expect { order_adjuster.call }.to make_database_queries(matching: /from .spree_adjustments..*adjustable_id. IN \(/im, count: 1)
     end
+
+    it "loads line item variants in a single query" do
+      expect { order_adjuster.call }.to make_database_queries(matching: /from .spree_variants./im, count: 1)
+    end
+
+    it "loads variant products in a single query" do
+      expect { order_adjuster.call }.to make_database_queries(matching: /from .spree_products./im, count: 1)
+    end
   end
 end

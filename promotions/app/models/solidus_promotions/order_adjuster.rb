@@ -23,6 +23,8 @@ module SolidusPromotions
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
 
       ActiveRecord::Associations::Preloader.new(records: order.line_items + order.shipments, associations: :adjustments).call
+      # DiscountOrder dereferences `line_item.variant.product` for every line item.
+      ActiveRecord::Associations::Preloader.new(records: order.line_items, associations: {variant: :product}).call
 
       SetDiscountsToZero.call(order)
 
