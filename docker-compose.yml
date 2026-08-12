@@ -8,7 +8,7 @@ services:
       - mysql:/var/lib/mysql:cached
 
   postgres:
-    image: docker.io/postgres:13.2
+    image: docker.io/postgres:18
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
       args:
         RUBY_VERSION: "3.4.6"
-        PG_VERSION: 13
+        PG_VERSION: 18
         NODE_VERSION: 20
         MYSQL_VERSION: "8.0"
         BUNDLER_VERSION: 2
