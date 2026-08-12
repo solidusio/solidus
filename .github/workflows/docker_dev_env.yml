@@ -1,0 +1,41 @@
+name: Docker dev environment
+
+on:
+  pull_request:
+    paths:
+      - "docker-compose.yml"
+      - ".dockerdev/**"
+      - "Gemfile"
+      - "**/*.gemspec"
+      - "core/lib/spree/core/version.rb"
+      - ".github/workflows/docker_dev_env.yml"
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: docker-dev-env-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  compose:
+    name: Build image and bundle
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Build app image
+        run: docker compose build app
+      - name: Grant the container user write access to the checkout
+        run: sudo chown -R 1000 .
+      - name: Bundle install inside container
+        run: docker compose run --rm app bash -c "bundle check || bundle"
+      - name: Tear down
+        if: always()
+        run: |
+          docker compose down -v
+          sudo chown -R "$(id -u)" .
