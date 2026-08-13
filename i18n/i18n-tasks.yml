@@ -1,0 +1,4 @@
+data:
+  yaml:
+    write:
+      line_width: 140

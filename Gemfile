@@ -74,6 +74,10 @@ group :promotions do
   gem "shoulda-matchers", "~> 5.0", require: false
 end
 
+group :i18n do
+  gem "solidus_i18n", path: "i18n", require: false
+end
+
 group :lint do
   gem "erb-formatter", "~> 0.7", require: false
   gem "standard", "~> 1.50", require: false
