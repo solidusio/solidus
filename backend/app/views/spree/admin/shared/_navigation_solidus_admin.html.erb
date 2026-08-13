@@ -33,7 +33,7 @@
                 data-legacy-label="<%= 'spree.navigation.switch_to_legacy'.then { t(_1, default: t(_1, locale: :en)) } %>"
                 data-admin-label="<%= 'spree.navigation.switch_to_solidus_admin'.then { t(_1, default: t(_1, locale: :en)) } %>"
               ></span>
-              <span><input type="checkbox" id="solidus-admin-switch" class="solidus-admin--nav--switch"/></span>
+              <span><input type="checkbox" id="solidus-admin-switch" class="solidus-admin--nav--switch"></span>
             </label>
           </li>
         </ul>
@@ -49,6 +49,7 @@
           </summary>
 
           <ul>
+            <%= render 'spree/admin/shared/timezone_selection_solidus_admin' %>
             <%= render 'spree/admin/shared/locale_selection_solidus_admin' %>
             <%= render 'spree/admin/shared/theme_selection_solidus_admin' %>
 

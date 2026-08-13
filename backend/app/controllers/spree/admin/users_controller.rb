@@ -42,6 +42,10 @@ module Spree
           set_roles
           set_stock_locations
 
+          if @user.respond_to?(:timezone) && @user.saved_change_to_timezone? && @user == spree_current_user
+            session[:solidus_timezone] = nil
+          end
+
           flash[:success] = t("spree.account_updated")
           redirect_to edit_admin_user_url(@user)
         else
