@@ -25,7 +25,8 @@ module SolidusAdmin
 
       set_page_and_extract_portion_from(
         products,
-        ordered_by: {name: :asc}
+        ordered_by: {name: :asc},
+        per_page: SolidusAdmin::Config[:pagination_ratios_per_page]
       )
 
       respond_to do |format|
