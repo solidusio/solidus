@@ -26,7 +26,7 @@
         <pre><%= entry.parsed_details.message %></pre>
       </td>
       <td class="text-right">
-        <i class='fa fa-<%= entry.parsed_details.success? ? 'check' : 'remove' %>'></i>
+        <%= solidus_icon(entry.parsed_details.success? ? 'check' : 'remove') %>
       </td>
     </tr>
   <% end %>

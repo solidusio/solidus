@@ -152,9 +152,56 @@ describe Spree::Admin::NavigationHelper, type: :helper do
 
   describe "#solidus_icon" do
     context "if given an icon_name" do
-      subject(:solidus_icon) { helper.solidus_icon("example-icon-name") }
+      subject(:solidus_icon) { helper.solidus_icon(icon_name) }
 
-      it { is_expected.to eq "<i class=\"example-icon-name\"></i>" }
+      context "when the icon is a fontawesome icon" do
+        let(:icon_name) { "fa fa-example-icon-name" }
+
+        it "returns an fa icon tag" do
+          Spree.deprecator.silence do
+            is_expected.to eq '<i class="fa fa-example-icon-name"></i>'
+          end
+        end
+
+        it "is deprecated" do
+          expect(Spree.deprecator).to receive(:warn)
+          subject
+        end
+      end
+
+      context "when the icon is a remix icon" do
+        let(:icon_name) { "ri-example-icon-name" }
+
+        it "returns a svg icon" do
+          is_expected.to have_css 'svg.icon use[href*="#ri-example-icon-name"]'
+        end
+      end
+
+      context "when the icon is a generic icon name" do
+        context "when the icon name maps to a remix icon" do
+          let(:icon_name) { "copy" }
+
+          context "when updated navbar is disabled" do
+            before do
+              stub_spree_preferences(Spree::Backend::Config, admin_updated_navbar: false)
+            end
+
+            it "returns an fa icon tag" do
+              is_expected.to eq '<i class="fa fa-copy"></i>'
+            end
+          end
+
+          context "when updated navbar is enabled" do
+            before do
+              stub_spree_preferences(Spree::Backend::Config, admin_updated_navbar: true)
+            end
+
+            it "returns a svg icon" do
+              is_expected.to have_css 'svg.icon use[href*="#ri-file-copy-line"]'
+            end
+          end
+        end
+      end
     end
 
     context "if not given nil icon_name" do
