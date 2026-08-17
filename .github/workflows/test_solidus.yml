@@ -16,7 +16,10 @@ on:
 jobs:
   RSpec:
     name: Rails ${{ matrix.rails }}, Ruby ${{ matrix.ruby }}, ${{ matrix.database }}, ${{ matrix.storage }}
-    runs-on: ubuntu-22.04
+    # NOTE: ubuntu-24.04 is required for libvips 8.13+. ActiveStorage 8.1 refuses to
+    # load with older libvips, because it cannot disable the unfuzzed operations that
+    # are unsafe on untrusted content. ubuntu-22.04 only ships libvips 8.12.1.
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -83,11 +86,21 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - uses: awalsh128/cache-apt-pkgs-action@v1
+      # NOTE: Install libvips with plain apt-get rather than a caching action. A
+      # cached install can report a cache hit while restoring zero packages, which
+      # leaves libvips missing and surfaces much later as an opaque
+      # "undefined method 'new' for nil" from ImageProcessing::Vips inside the
+      # specs. `vips --version` makes a bad install fail here instead.
+      #
+      # ruby-vips binds libvips.so through FFI at runtime, so the docs and the GUI
+      # tools apt recommends are dead weight; libvips-tools is requested explicitly
+      # because it provides the `vips` binary used by the check below.
+      - name: Install libvips
         if: ${{ matrix.storage == 'activestorage' }}
-        name: Install libvips
-        with:
-          packages: libvips-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -yq --no-install-recommends libvips-dev libvips-tools
+          vips --version
       - name: Setup coverage
         id: setup-coverage
         if: ${{ inputs.coverage && matrix.rails == '8.0' && matrix.ruby == '3.4' }}
