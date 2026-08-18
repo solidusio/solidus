@@ -35,5 +35,5 @@ Gem::Specification.new do |s|
   s.add_dependency "solidus_core", "> 4.2"
   s.add_dependency "stimulus-rails", "~> 1.2"
   s.add_dependency "turbo-rails", "~> 2.0"
-  s.add_dependency "view_component", "~> 3.9"
+  s.add_dependency "view_component", "~> 4.0"
 end
