@@ -27,7 +27,7 @@ class BreadcrumbsComponent < ViewComponent::Base
     content_tag(:div, class: wrapper_classes) do
       content_tag(:nav) do
         content_tag(:ol, class: container_classes, itemscope: "", itemtype: "https://schema.org/BreadcrumbList") do
-          raw(items.map(&:mb_chars).join)
+          raw(items.join)
         end
       end
     end
