@@ -10,7 +10,7 @@ if Rails.env.development? || Rails.env.test?
     next unless args.last[:name]&.starts_with?("SolidusAdmin::")
 
     event = ActiveSupport::Notifications::Event.new(*args)
-    SolidusAdmin::BaseComponent.logger.debug \
+    Rails.logger.debug \
       "  Rendered #{bold}#{event.payload[:name]}#{clear}" \
       " (Duration: #{event.duration.round(1)}ms)"
   end
