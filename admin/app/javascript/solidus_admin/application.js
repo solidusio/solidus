@@ -4,4 +4,8 @@ import "solidus_admin/controllers"
 import { openConfirmModal } from "solidus_admin/confirm_modal"
 import "solidus_admin/web_components/solidus_select"
 
-Turbo.config.forms.confirm = openConfirmModal
+if (Turbo.config) {
+  Turbo.config.forms.confirm = openConfirmModal
+} else {
+  window.Turbo.setConfirmMethod(openConfirmModal)
+}
