@@ -131,7 +131,7 @@ describe "Order", :js, type: :feature do
 
       expect(Spree::Order.last.line_items.last.quantity).to eq(4)
 
-      accept_confirm("Are you sure?") { click_on "Delete" }
+      accept_turbo_confirm("Are you sure?") { click_on "Delete" }
       expect(page).to have_content("Line item removed successfully", wait: 5)
 
       expect(Spree::Order.last.line_items.count).to eq(0)
