@@ -52,6 +52,21 @@ module Spree
         expect(new_inventory_units.first.line_item).to eq return_item.inventory_unit.line_item
       end
 
+      it "passes the filtered stock locations to the coordinator" do
+        inactive_stock_location = create(:stock_location, active: false)
+
+        stock_locations = nil
+        allow(Spree::Config.stock.coordinator_class).to receive(:new).and_wrap_original do |original, *args, **kwargs|
+          stock_locations = kwargs[:stock_locations]
+          original.call(*args, **kwargs)
+        end
+
+        subject
+
+        expect(stock_locations).to be_present
+        expect(stock_locations).not_to include(inactive_stock_location)
+      end
+
       context "when it cannot create shipments for all items" do
         before do
           StockItem.where(variant_id: return_item.exchange_variant_id).find_each(&:destroy)

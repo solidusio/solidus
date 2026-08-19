@@ -22,7 +22,7 @@ module Spree
 
     def perform!
       begin
-        shipments = Spree::Config.stock.coordinator_class.new(
+        shipments = Spree::Config.stock.build_coordinator(
           @order,
           inventory_units: @reimbursement_objects.map(&:build_exchange_inventory_unit)
         ).shipments

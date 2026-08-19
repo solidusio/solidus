@@ -1787,6 +1787,22 @@ RSpec.describe Spree::Order, type: :model do
       expect { subject }.to change { order.shipments.count }.from(0).to(1)
     end
 
+    it "passes the filtered stock locations to the coordinator" do
+      line_item
+      inactive_stock_location = create(:stock_location, active: false)
+
+      stock_locations = nil
+      allow(Spree::Config.stock.coordinator_class).to receive(:new).and_wrap_original do |original, *args, **kwargs|
+        stock_locations = kwargs[:stock_locations]
+        original.call(*args, **kwargs)
+      end
+
+      subject
+
+      expect(stock_locations).to be_present
+      expect(stock_locations).not_to include(inactive_stock_location)
+    end
+
     context "with a custom inventory unit builder" do
       before do
         # Because the defined method runs in the context of the instance of our
