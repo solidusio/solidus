@@ -21,7 +21,7 @@ class Spree::OrderShipping
       raise Spree::Order::CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_shipments_not_pending"))
     else
       @order.shipments.destroy_all
-      @order.shipments.push(*Spree::Config.stock.coordinator_class.new(@order).shipments)
+      @order.shipments.push(*Spree::Config.stock.coordinator_class.new(@order, stock_locations:).shipments)
     end
   end
 
@@ -91,5 +91,12 @@ class Spree::OrderShipping
 
     Spree::Bus.publish(:carton_shipped, carton:)
     carton
+  end
+
+  private
+
+  def stock_locations
+    # TODO: add stock location filtering and sorting here, pulling out what was
+    # done in the Coordinator class
   end
 end
