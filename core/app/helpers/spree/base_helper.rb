@@ -93,7 +93,7 @@ module Spree
         end
       end
 
-      content_tag(:nav, content_tag(:ol, raw(items.join), class: breadcrumb_class, itemscope: "", itemtype: "https://schema.org/BreadcrumbList"), id: "breadcrumbs", class: "sixteen columns")
+      content_tag(:nav, content_tag(:ol, safe_join(items), class: breadcrumb_class, itemscope: "", itemtype: "https://schema.org/BreadcrumbList"), id: "breadcrumbs", class: "sixteen columns")
     end
 
     def taxons_tree(root_taxon, current_taxon, max_level = 1)
