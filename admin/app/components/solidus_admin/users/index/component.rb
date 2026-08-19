@@ -4,7 +4,7 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   include SolidusAdmin::LastLoginHelper
 
   def model_class
-    Spree.user_class
+    Spree.admin_user_class
   end
 
   def search_key

@@ -16,7 +16,7 @@ class SolidusAdmin::UsersController < SolidusAdmin::BaseController
   include SolidusAdmin::ControllerHelpers::Search
 
   def index
-    users = apply_search_to(Spree.user_class.order(id: :desc), param: :q)
+    users = apply_search_to(Spree.admin_user_class.order(id: :desc), param: :q)
     # ...
 ```
 
@@ -24,7 +24,7 @@ For pagination support, the index action should also call the `set_page_and_extr
 
 ```ruby
 def index
-  users = apply_search_to(Spree.user_class.order(id: :desc), param: :q)
+  users = apply_search_to(Spree.admin_user_class.order(id: :desc), param: :q)
   set_page_and_extract_portion_from(users)
   # ...
 ```
@@ -33,7 +33,7 @@ Finally, the index action should render the `index` component passing the `@page
 
 ```ruby
 def index
-  users = apply_search_to(Spree.user_class.order(id: :desc), param: :q)
+  users = apply_search_to(Spree.admin_user_class.order(id: :desc), param: :q)
   set_page_and_extract_portion_from(users)
   render component('users/index').new(page: @page)
 end
@@ -50,7 +50,7 @@ The index component requires only the `page` argument during initialization, all
 ```ruby
 class SolidusAdmin::Users::Index < Solidus::Admin::UI::Pages::Index
   def model_class
-    Spree.user_class
+    Spree.admin_user_class
   end
 end
 
@@ -92,7 +92,7 @@ end
 ```ruby
 # in the controller
 def delete
-  @users = Spree.user_class.where(id: params[:id])
+  @users = Spree.admin_user_class.where(id: params[:id])
   @users.destroy_all
   flash[:notice] = "Admin users deleted"
   redirect_to solidus_admin.users_path, status: :see_other
@@ -124,7 +124,7 @@ module SolidusAdmin
     search_scope(:all)
 
     def index
-      users = apply_search_to(Spree.user_class.order(id: :desc), param: :q)
+      users = apply_search_to(Spree.admin_user_class.order(id: :desc), param: :q)
       # ...
 ```
 
