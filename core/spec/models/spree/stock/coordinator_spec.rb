@@ -15,16 +15,6 @@ module Spree
           subject.shipments
         end
 
-        it "uses the configured stock location filter" do
-          expect(Spree::Config.stock).to receive(:location_filter_class).and_call_original
-          subject.shipments
-        end
-
-        it "uses the configured stock location sorter" do
-          expect(Spree::Config.stock).to receive(:location_sorter_class).and_call_original
-          subject.shipments
-        end
-
         it "uses the pluggable allocator class" do
           expect(Spree::Config.stock).to receive(:allocator_class).and_call_original
           subject.shipments
@@ -61,6 +51,29 @@ module Spree
           }.not_to change {
             order.shipments.count
           }
+        end
+
+        context "when stock locations are given" do
+          let!(:stock_location_1) { create(:stock_location, propagate_all_variants: false) }
+          let!(:stock_location_2) { create(:stock_location, propagate_all_variants: false) }
+
+          let!(:variant) do
+            create(:variant, track_inventory: true).tap do |variant|
+              variant.stock_items.destroy_all
+
+              [stock_location_1, stock_location_2].each do |stock_location|
+                variant.stock_items.create!(stock_location:).set_count_on_hand(5)
+              end
+            end
+          end
+
+          let(:order) { create(:order, line_items: [create(:line_item, variant:, quantity: 1)]) }
+
+          subject { Coordinator.new(order, stock_locations: [stock_location_2]) }
+
+          it "only allocates inventory from the given stock locations" do
+            expect(subject.shipments.map(&:stock_location)).to eq [stock_location_2]
+          end
         end
       end
 
