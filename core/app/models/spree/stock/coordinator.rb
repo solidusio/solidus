@@ -14,10 +14,11 @@ module Spree
         inventory_units: nil,
         inventory_unit_builder_class: Spree::Config.stock.inventory_unit_builder_class,
         splitters: Spree::Config.environment.stock_splitters,
+        allocator_class: Spree::Config.stock.allocator_class,
+        estimator_class: Spree::Config.stock.estimator_class,
         location_filter_class: Spree::Config.stock.location_filter_class,
         location_sorter_class: Spree::Config.stock.location_sorter_class,
-        allocator_class: Spree::Config.stock.allocator_class,
-        estimator_class: Spree::Config.stock.estimator_class
+        stock_locations: nil
       )
         @order = order
         @inventory_units = inventory_units
