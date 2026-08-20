@@ -74,4 +74,20 @@ describe SolidusAdmin::BaseController, type: :controller do
       end
     end
   end
+
+  describe "#per_page" do
+    it "returns SolidusAdmin::Config.per_page" do
+      allow(SolidusAdmin::Config).to receive(:per_page).and_return(35)
+      expect(controller.send(:per_page)).to eq(35)
+    end
+  end
+
+  describe "#set_page_and_extract_portion_from" do
+    it "passes per_page to geared_pagination" do
+      records = Spree::Order.all
+      allow(SolidusAdmin::Config).to receive(:per_page).and_return(15)
+      controller.send(:set_page_and_extract_portion_from, records)
+      expect(controller.instance_variable_get(:@page).recordset.ratios.fixed).to eq(15)
+    end
+  end
 end

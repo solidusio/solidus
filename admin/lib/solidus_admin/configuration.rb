@@ -46,6 +46,11 @@ module SolidusAdmin
     #                     Default: false
     preference :enable_alpha_features, :boolean, default: false
 
+    # @!attribute [rw] per_page
+    #   @return [Integer] Default number of resources shown per page on admin index pages.
+    #                     Default: 20
+    preference :per_page, :integer, default: 20
+
     alias_method :enable_alpha_features?, :enable_alpha_features
 
     preference :storefront_product_path_proc, :proc, default: ->(_version) {

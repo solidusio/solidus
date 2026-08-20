@@ -25,6 +25,14 @@ module SolidusAdmin
 
     private
 
+    def set_page_and_extract_portion_from(records, per_page: self.per_page, **options)
+      super(records, per_page:, **options)
+    end
+
+    def per_page
+      SolidusAdmin::Config.per_page
+    end
+
     def set_layout
       if turbo_frame_request?
         "turbo_rails/frame"

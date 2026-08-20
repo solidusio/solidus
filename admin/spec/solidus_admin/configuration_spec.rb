@@ -40,6 +40,19 @@ RSpec.describe SolidusAdmin::Configuration do
     end
   end
 
+  describe "#per_page" do
+    it "defaults to 20" do
+      config = described_class.new
+      expect(config.per_page).to eq(20)
+    end
+
+    it "can be configured" do
+      config = described_class.new
+      config.per_page = 50
+      expect(config.per_page).to eq(50)
+    end
+  end
+
   describe "#import_menu_items_from_backend!" do
     it "imports the menu items from the backend" do
       allow(Spree::Backend::Config).to receive(:menu_items).and_return([
