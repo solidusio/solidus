@@ -29,6 +29,25 @@ def index
   # ...
 ```
 
+By default, `set_page_and_extract_portion_from` uses the global `SolidusAdmin::Config.per_page` setting (default: 20).
+
+You can configure the global per page count in an initializer:
+
+```ruby
+SolidusAdmin::Config.per_page = 50
+```
+
+Alternatively, you can customize the per page count for a specific controller by overriding the `per_page` method or passing `per_page:` explicitly:
+
+```ruby
+class SolidusAdmin::UsersController < SolidusAdmin::BaseController
+  # ...
+  def per_page
+    10
+  end
+end
+```
+
 Finally, the index action should render the `index` component passing the `@page` instance variable as the `collection` prop.
 
 ```ruby

@@ -2,7 +2,6 @@
 
 module SolidusAdmin
   class ResourcesController < SolidusAdmin::BaseController
-    DEFAULT_PER_PAGE = 20
 
     include SolidusAdmin::ControllerHelpers::Search
 
@@ -86,10 +85,6 @@ module SolidusAdmin
 
     def resources_sorting_options
       {id: :desc}
-    end
-
-    def per_page
-      DEFAULT_PER_PAGE
     end
 
     def resources_collection
