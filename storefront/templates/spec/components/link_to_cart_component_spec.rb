@@ -1,10 +1,8 @@
 require "solidus_storefront_spec_helper"
 
 RSpec.describe LinkToCartComponent, type: :component do
-  let(:text) { "" }
-
   let(:link_to_cart_component) do
-    described_class.new(text)
+    described_class.new
   end
 
   let(:current_order) { nil }
