@@ -126,7 +126,7 @@ module Solidus
     def install_file_attachment
       if options[:active_storage]
         say_status :assets, "Active Storage", :green
-        rake "active_storage:install"
+        rake "active_storage:install", abort_on_failure: true
       else
         say_status :assets, "Paperclip", :green
         gsub_file "config/initializers/spree.rb", "::ActiveStorageAttachment", "::PaperclipAttachment"
@@ -158,19 +158,19 @@ module Solidus
 
     def install_migrations
       say_status :copying, "migrations"
-      rake "railties:install:migrations"
+      rake "railties:install:migrations", abort_on_failure: true
     end
 
     def create_database
       say_status :creating, "database"
-      rake "db:create"
+      rake "db:create", abort_on_failure: true
     end
 
     def run_migrations
       if @run_migrations
         say_status :running, "migrations"
 
-        rake "db:migrate"
+        rake "db:migrate", abort_on_failure: true
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
@@ -200,7 +200,7 @@ module Solidus
         rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
         rake_options << "ADMIN_PASSWORD=#{options[:admin_password]}" if options[:admin_password]
 
-        rake("db:seed #{rake_options.join(" ")}")
+        rake("db:seed #{rake_options.join(" ")}", abort_on_failure: true)
       else
         say_status :skipping, "seed data (you can always run rake db:seed)"
       end
@@ -209,7 +209,7 @@ module Solidus
     def load_sample_data
       if @load_sample_data
         say_status :loading, "sample data"
-        rake "spree_sample:load"
+        rake "spree_sample:load", abort_on_failure: true
       else
         say_status :skipping, "sample data (you can always run rake spree_sample:load)"
       end
