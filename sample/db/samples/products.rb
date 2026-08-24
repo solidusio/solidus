@@ -181,6 +181,8 @@ products = [
 ]
 
 products.each do |product_attrs|
+  next if Spree::Product.exists?(name: product_attrs[:name])
+
   eur_price = product_attrs.delete(:eur_price)
   Spree::Config[:currency] = "USD"
 
