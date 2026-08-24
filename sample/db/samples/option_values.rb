@@ -5,7 +5,7 @@ Spree::Sample.load_sample("option_types")
 size = Spree::OptionType.find_by!(presentation: "Size")
 color = Spree::OptionType.find_by!(presentation: "Color")
 
-Spree::OptionValue.create!([
+[
   {
     name: "Small",
     presentation: "S",
@@ -54,4 +54,8 @@ Spree::OptionValue.create!([
     position: 4,
     option_type: color
   }
-])
+].each do |attrs|
+  Spree::OptionValue.find_or_create_by!(name: attrs[:name], option_type: attrs[:option_type]) do |option_value|
+    option_value.assign_attributes(attrs)
+  end
+end
