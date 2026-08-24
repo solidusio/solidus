@@ -114,7 +114,7 @@ module Spree
       inverse_of: :order
 
     # Payments
-    has_many :payments, dependent: :destroy, inverse_of: :order
+    has_many :payments, dependent: :destroy, inverse_of: :order, autosave: true
     has_many :valid_store_credit_payments, -> { store_credits.valid }, inverse_of: :order, class_name: "Spree::Payment", foreign_key: :order_id
 
     # Returns
