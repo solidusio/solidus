@@ -3,6 +3,16 @@
 module SolidusPromotions
   module PermissionSets
     class SolidusPromotionManagement < Spree::PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :solidus_promotion
+        end
+      end
+
       def activate!
         can :manage, SolidusPromotions::Promotion
         can :manage, SolidusPromotions::Condition
