@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Spree::OptionType.create!([
+[
   {
     name: "clothing-size",
     presentation: "Size",
@@ -11,4 +11,8 @@ Spree::OptionType.create!([
     presentation: "Color",
     position: 2
   }
-])
+].each do |attrs|
+  Spree::OptionType.find_or_create_by!(name: attrs[:name]) do |option_type|
+    option_type.assign_attributes(attrs)
+  end
+end

@@ -322,7 +322,11 @@ masters = {
   }
 }
 
-Spree::Variant.create!(variants)
+variants.each do |variant_attrs|
+  Spree::Variant.find_or_create_by!(sku: variant_attrs[:sku]) do |variant|
+    variant.assign_attributes(variant_attrs)
+  end
+end
 
 masters.each do |product, variant_attrs|
   product.master.update!(variant_attrs)
