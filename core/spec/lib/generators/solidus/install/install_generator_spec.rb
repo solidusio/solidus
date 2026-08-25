@@ -94,7 +94,9 @@ RSpec.describe Solidus::InstallGenerator do
       generator.prepare_options
       allow(generator).to receive(:say_status)
 
-      expect(generator).to receive(:rake).with("db:seed ", abort_on_failure: true)
+      # --auto-accept sets options[:auto_accept], which populate_seed_data
+      # folds into rake_options as "AUTO_ACCEPT=1".
+      expect(generator).to receive(:rake).with("db:seed AUTO_ACCEPT=1", abort_on_failure: true)
 
       generator.populate_seed_data
     end
