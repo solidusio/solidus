@@ -32,4 +32,16 @@ RSpec.describe SolidusPromotions::PermissionSets::SolidusPromotionManagement do
     it { is_expected.not_to be_able_to(:manage, SolidusPromotions::PromotionCategory) }
     it { is_expected.not_to be_able_to(:manage, SolidusPromotions::PromotionCode) }
   end
+
+  describe ".privilege" do
+    it "returns the correct privilege symbol" do
+      expect(described_class.privilege).to eq(:management)
+    end
+  end
+
+  describe ".category" do
+    it "returns the correct category symbol" do
+      expect(described_class.category).to eq(:solidus_promotion)
+    end
+  end
 end

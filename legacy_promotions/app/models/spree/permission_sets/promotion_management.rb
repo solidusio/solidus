@@ -13,6 +13,16 @@ module Spree
     # - Promotion categories
     # - Promotion codes
     class PromotionManagement < PermissionSets::Base
+      class << self
+        def privilege
+          :management
+        end
+
+        def category
+          :promotion
+        end
+      end
+
       def activate!
         can :manage, Spree::Promotion
         can :manage, Spree::PromotionRule
