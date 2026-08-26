@@ -5,8 +5,6 @@ class CartLineItemsController < StoreController
 
   respond_to :html
 
-  before_action :store_guest_token
-
   # Adds a new item to the order (creating a new order if none already exists)
   def create
     @order = current_order(create_order_if_necessary: true)
@@ -37,11 +35,5 @@ class CartLineItemsController < StoreController
         end
       end
     end
-  end
-
-  private
-
-  def store_guest_token
-    cookies.permanent.signed[:guest_token] = params[:token] if params[:token]
   end
 end
