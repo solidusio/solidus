@@ -27,3 +27,6 @@ changelog:
     - title: Solidus Promotions
       labels:
         - "changelog:solidus_promotions"
+    - title: Breaking Changes
+      labels:
+        - "changelog:breaking-change"
