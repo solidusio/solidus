@@ -276,6 +276,15 @@ module Spree
     #   (default: +['IT']+)
     preference :countries_that_use_nested_subregions, :array, default: ["IT"]
 
+    # @!attribute [rw] countries_not_requiring_states
+    #   @return [Array] An array of ISO alpha-2 country codes whose addresses do not
+    #   require a state, even though Carmen exposes subregions for them. Used at
+    #   country-seeding time to override `Spree::Country#states_required`. Germany is
+    #   the canonical case: PayPal/Braintree return no state for German addresses,
+    #   which would otherwise fail address validation at checkout.
+    #   (default: +['DE']+)
+    preference :countries_not_requiring_states, :array, default: ["DE"]
+
     # @!attribute [rw] send_core_emails
     #   @return [Boolean] Whether to send transactional emails (default: true)
     preference :send_core_emails, :boolean, default: true
