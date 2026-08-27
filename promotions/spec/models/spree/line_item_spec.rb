@@ -94,6 +94,20 @@ RSpec.describe Spree::LineItem do
 
       it { is_expected.to eq(26) }
     end
+
+    context "with an adjustment from a discarded promotion" do
+      before do
+        pre_lane_promotion.discard!
+      end
+
+      it "does not crash when accessing promotion.lane" do
+        expect { subject }.not_to raise_error
+      end
+
+      it "still calculates the discounted amount correctly" do
+        is_expected.to eq(23)
+      end
+    end
   end
 
   describe "#current_lane_discounts" do
