@@ -55,7 +55,7 @@ jobs:
       SOLIDUS_RAISE_DEPRECATIONS: true
     services:
       postgres:
-        image: postgres:13
+        image: postgres:latest
         env:
           POSTGRES_USER: ${{ env.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
