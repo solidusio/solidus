@@ -173,6 +173,7 @@ module SolidusPromotions
 
     def delete_cart_connections
       order_promotions.where(order: Spree::Order.incomplete).destroy_all
+      benefits.each(&:remove_adjustments_from_incomplete_orders)
     end
   end
 end
