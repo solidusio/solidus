@@ -9,7 +9,7 @@ module SolidusPromotions
     belongs_to :category, class_name: "SolidusPromotions::PromotionCategory",
       foreign_key: :promotion_category_id, optional: true
     belongs_to :original_promotion, class_name: "Spree::Promotion", optional: true
-    has_many :benefits, class_name: "SolidusPromotions::Benefit", dependent: :destroy
+    has_many :benefits, class_name: "SolidusPromotions::Benefit", dependent: :destroy, inverse_of: :promotion
     has_many :conditions, through: :benefits
     has_many :codes, class_name: "SolidusPromotions::PromotionCode", dependent: :destroy, inverse_of: :promotion
     has_many :code_batches, class_name: "SolidusPromotions::PromotionCodeBatch", dependent: :destroy
