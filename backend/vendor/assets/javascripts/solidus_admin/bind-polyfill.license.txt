@@ -1,0 +1,9 @@
+bind-polyfill.js in this directory is the Function.prototype.bind
+polyfill code example from MDN Web Docs:
+
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+
+MDN's code examples are dedicated to the public domain under CC0:
+
+  https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Attrib_copyright_license
+  https://creativecommons.org/publicdomain/zero/1.0/
