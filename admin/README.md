@@ -83,3 +83,8 @@ instead of the sandbox application.
 2. Commit the changes with the message `Release solidus_admin/v1.2.3`
 3. `cd admin; bundle exec rake release`
 4. Manually release on GitHub
+
+## Acknowledgements
+
+This project uses icons from [Remix Icon](https://remixicon.com), licensed
+under the [Remix Icon License v1.0](app/assets/images/solidus_admin/remixicon.license.txt).
