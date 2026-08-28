@@ -12,7 +12,7 @@ module SolidusPromotions
       optional: true,
       inverse_of: :promotions
     belongs_to :original_promotion, class_name: "Spree::Promotion", optional: true
-    has_many :benefits, class_name: "SolidusPromotions::Benefit", dependent: :destroy
+    has_many :benefits, class_name: "SolidusPromotions::Benefit", dependent: :destroy, inverse_of: :promotion
     has_many :conditions, through: :benefits
     has_many :codes, class_name: "SolidusPromotions::PromotionCode", dependent: :destroy, inverse_of: :promotion
     has_many :code_batches, class_name: "SolidusPromotions::PromotionCodeBatch", dependent: :destroy
@@ -173,6 +173,7 @@ module SolidusPromotions
 
     def delete_cart_connections
       order_promotions.where(order: Spree::Order.incomplete).destroy_all
+      benefits.each(&:remove_adjustments_from_incomplete_orders)
     end
   end
 end

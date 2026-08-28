@@ -40,7 +40,7 @@ module SolidusPromotions
     # @!attribute [rw] promotion
     #   The owning promotion.
     #   @return [SolidusPromotions::Promotion]
-    belongs_to :promotion, inverse_of: :benefits
+    belongs_to :promotion, -> { with_discarded }, inverse_of: :benefits
     # @!attribute [rw] original_promotion_action
     #   Back-reference to the original Solidus (Spree) promotion action, when migrated.
     #   @return [Spree::PromotionAction, nil]

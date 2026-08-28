@@ -11,6 +11,16 @@ RSpec.describe SolidusPromotions::Benefit do
   it { is_expected.to respond_to :discount }
   it { is_expected.to respond_to :can_discount? }
 
+  describe "promotion association" do
+    let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
+    let(:benefit) { promotion.benefits.first }
+
+    it "loads discarded promotions" do
+      promotion.discard!
+      expect(benefit.reload.promotion).to eq(promotion)
+    end
+  end
+
   describe "#can_adjust?" do
     let(:adjustable) { Spree::LineItem.new }
     let(:benefit_class) do
