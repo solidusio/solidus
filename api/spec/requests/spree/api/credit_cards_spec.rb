@@ -124,5 +124,51 @@ module Spree::Api
         end
       end
     end
+
+    # Regression test for the anonymous guest-card authorization flaw.
+    # An unauthenticated caller may hold a token for an order they own; that
+    # must not grant them access to another customer's guest-checkout card
+    # (user_id NULL), which the `user_id: user.id` customer rule used to match.
+    describe "#update as an anonymous attacker" do
+      # NOTE: authentication is deliberately NOT stubbed here so the real
+      # anonymous request path is exercised.
+      let!(:attacker_order) { create(:order) }
+      let!(:guest_card) { create(:credit_card, name: "Victim Guest", user: nil) }
+
+      def attack(card)
+        put spree.api_credit_card_path(card.to_param), params: {
+          order_token: attacker_order.guest_token,
+          order_id: attacker_order.number,
+          credit_card: {name: "ATTACKER WAS HERE"}
+        }
+      end
+
+      it "refuses to update a stranger's guest credit card" do
+        attack(guest_card)
+
+        expect(response.status).to eq(401)
+        expect(guest_card.reload.name).to eq("Victim Guest")
+      end
+
+      it "refuses a guest card built by a real guest checkout" do
+        guest_order = create(:order, user: nil, email: "guest@example.com")
+        payment_method = create(:credit_card_payment_method)
+        payment = Spree::PaymentCreate.new(guest_order, {
+          payment_method_id: payment_method.id,
+          source_attributes: {
+            number: "4111111111111111", month: "1", year: "#{2.years.from_now.year}",
+            verification_value: "123", name: "Real Guest Buyer"
+          }
+        }).build
+        payment.save!
+        card = payment.source.reload
+        expect(card.user_id).to be_nil
+
+        attack(card)
+
+        expect(response.status).to eq(401)
+        expect(card.reload.name).to eq("Real Guest Buyer")
+      end
+    end
   end
 end
