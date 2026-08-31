@@ -724,10 +724,12 @@ module Spree
       attributes = Array(attributes)
 
       attributes.each do |payment_attributes|
-        payment_method_id = payment_attributes[:payment_method_id]
-
         # raise RecordNotFound unless it is an allowed payment method
+        payment_method_id = payment_attributes[:payment_method_id]
         available_payment_methods.find(payment_method_id) if payment_method_id
+
+        payment_id = payment_attributes[:id]
+        payments.checkout.find(payment_id) if payment_id
       end
     end
 
