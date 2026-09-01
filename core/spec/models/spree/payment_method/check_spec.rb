@@ -54,6 +54,44 @@ RSpec.describe Spree::PaymentMethod::Check do
     end
   end
 
+  context "#can_credit?" do
+    let(:payment) { create(:payment, order:, state:, amount: 10) }
+
+    context "with payment in state completed" do
+      let(:state) { "completed" }
+
+      it "returns true" do
+        expect(subject.can_credit?(payment)).to be_truthy
+      end
+
+      context "when the payment is fully refunded" do
+        before do
+          create(:refund, payment:, amount: payment.amount)
+        end
+
+        it "returns false" do
+          expect(subject.can_credit?(payment)).to be_falsy
+        end
+      end
+    end
+
+    context "with payment in state checkout" do
+      let(:state) { "checkout" }
+
+      it "returns false" do
+        expect(subject.can_credit?(payment)).to be_falsy
+      end
+    end
+
+    context "with payment in state invalid" do
+      let(:state) { "invalid" }
+
+      it "returns false" do
+        expect(subject.can_credit?(payment)).to be_falsy
+      end
+    end
+  end
+
   context "#capture" do
     it "succeeds" do
       expect(subject.capture).to be_success
