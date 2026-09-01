@@ -264,4 +264,18 @@ RSpec.describe Spree::AppConfiguration do
       it { is_expected.to be true }
     end
   end
+
+  describe "#require_refundable_payment_state" do
+    subject { prefs[:require_refundable_payment_state] }
+
+    it { is_expected.to be false }
+
+    context "if solidus version is 5.0" do
+      before do
+        prefs.load_defaults "5.0"
+      end
+
+      it { is_expected.to be true }
+    end
+  end
 end

@@ -6,7 +6,7 @@ RSpec.describe Spree::Refund, type: :model do
   let(:amount) { 100.0 }
   let(:amount_in_cents) { amount * 100 }
 
-  let(:payment) { create(:payment, amount: payment_amount, payment_method:) }
+  let(:payment) { create(:payment, state: "completed", amount: payment_amount, payment_method:) }
   let(:payment_amount) { amount * 2 }
   let(:payment_method) { create(:credit_card_payment_method) }
 
@@ -52,6 +52,57 @@ RSpec.describe Spree::Refund, type: :model do
 
       it "creates a refund record" do
         expect { subject }.to change { Spree::Refund.count }.by(1)
+      end
+    end
+
+    context "when the payment is in a refundable state" do
+      %w[completed pending].each do |state|
+        context "with a #{state} payment" do
+          let(:payment) { create(:payment, state:, amount: payment_amount, payment_method:) }
+
+          it "does not emit a deprecation warning" do
+            expect(Spree.deprecator).not_to receive(:warn)
+            subject
+          end
+
+          context "with require_refundable_payment_state enabled" do
+            before { stub_spree_preferences(require_refundable_payment_state: true) }
+
+            it "creates a refund record" do
+              expect { subject }.to change { Spree::Refund.count }.by(1)
+            end
+          end
+        end
+      end
+    end
+
+    context "when the payment is not in a refundable state" do
+      %w[checkout invalid failed void processing].each do |state|
+        context "with a #{state} payment" do
+          let(:payment) { create(:payment, state:, amount: payment_amount, payment_method:) }
+
+          context "with require_refundable_payment_state disabled" do
+            before { stub_spree_preferences(require_refundable_payment_state: false) }
+
+            it "emits a deprecation warning" do
+              expect(Spree.deprecator).to receive(:warn)
+                .with(/Creating a refund for a payment in the '#{state}' state is deprecated/, any_args)
+              subject
+            end
+          end
+
+          context "with require_refundable_payment_state enabled" do
+            before { stub_spree_preferences(require_refundable_payment_state: true) }
+
+            it "is invalid without emitting a deprecation warning" do
+              expect(Spree.deprecator).not_to receive(:warn)
+              expect { subject }.to raise_error(ActiveRecord::RecordInvalid) { |error|
+                expect(error.record.errors.full_messages)
+                  .to eq ["Payment cannot be refunded in its current state."]
+              }
+            end
+          end
+        end
       end
     end
   end

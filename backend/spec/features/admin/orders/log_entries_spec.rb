@@ -55,7 +55,7 @@ describe "Log entries", type: :feature do
   end
 
   context "with a log entry belonging to a refund of the payment", :js do
-    let(:payment) { create(:payment, amount: 100) }
+    let(:payment) { create(:payment, state: "completed", amount: 100) }
     let(:refund) { create(:refund, payment:, amount: 10) }
 
     before do

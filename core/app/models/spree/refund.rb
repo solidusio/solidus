@@ -4,6 +4,8 @@ module Spree
   class Refund < Spree::Base
     include Metadata
 
+    REFUNDABLE_PAYMENT_STATES = %w[completed pending].freeze
+
     belongs_to :payment, inverse_of: :refunds, optional: true
     belongs_to :reason, class_name: "Spree::RefundReason", foreign_key: :refund_reason_id, optional: true
     belongs_to :reimbursement, inverse_of: :refunds, optional: true
@@ -15,6 +17,7 @@ module Spree
     validates :amount, presence: true, numericality: {greater_than: 0}
 
     validate :amount_is_less_than_or_equal_to_allowed_amount, on: :create
+    validate :payment_is_in_refundable_state, on: :create
 
     attr_reader :perform_response
 
@@ -88,6 +91,22 @@ module Spree
     def amount_is_less_than_or_equal_to_allowed_amount
       if payment && amount > payment.credit_allowed
         errors.add(:amount, :greater_than_allowed)
+      end
+    end
+
+    def payment_is_in_refundable_state
+      return if payment.nil? || REFUNDABLE_PAYMENT_STATES.include?(payment.state)
+
+      if Spree::Config.require_refundable_payment_state
+        errors.add(:payment, :not_refundable)
+      else
+        Spree.deprecator.warn(
+          "Creating a refund for a payment in the '#{payment.state}' state is deprecated " \
+          "and will become a validation error in Solidus 5.0. Refunds should only be created " \
+          "for payments in one of these states: #{REFUNDABLE_PAYMENT_STATES.join(", ")}. " \
+          "Set `Spree::Config.require_refundable_payment_state = true` to adopt the new " \
+          "behavior early."
+        )
       end
     end
 

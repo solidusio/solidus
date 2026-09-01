@@ -284,7 +284,8 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
             payment_method:,
             source: store_credit,
             amount: captured_amount,
-            response_code: auth_code)
+            response_code: auth_code,
+            state: "completed")
         end
 
         it "refunds the capture amount" do

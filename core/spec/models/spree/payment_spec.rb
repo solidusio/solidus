@@ -674,6 +674,8 @@ RSpec.describe Spree::Payment, type: :model do
   end
 
   describe "#credit_allowed" do
+    before { payment.update!(state: "completed") }
+
     it "is the difference between refunds total and payment amount" do
       payment.amount = 100
 
@@ -698,7 +700,10 @@ RSpec.describe Spree::Payment, type: :model do
   describe "#fully_refunded?" do
     subject { payment.fully_refunded? }
 
-    before { payment.amount = 100 }
+    before do
+      payment.update!(state: "completed")
+      payment.amount = 100
+    end
 
     context "before refund" do
       it { is_expected.to be false }
