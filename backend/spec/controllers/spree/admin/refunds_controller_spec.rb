@@ -5,13 +5,33 @@ require "spec_helper"
 describe Spree::Admin::RefundsController do
   stub_authorization!
 
+  let(:refund_reason) { create(:refund_reason) }
+  let(:refund_amount) { 100.0 }
+
+  let(:payment) { create(:payment, state: "completed", amount: payment_amount) }
+  let(:payment_amount) { refund_amount * 2 }
+
+  describe "GET new" do
+    subject do
+      get(:new, params: {order_id: payment.order_id, payment_id: payment.id})
+    end
+
+    it "renders the new template" do
+      is_expected.to render_template(:new)
+    end
+
+    context "when the payment is not in a refundable state" do
+      let(:payment) { create(:payment, state: "checkout", amount: payment_amount) }
+
+      it "redirects to the payments page with an error" do
+        subject
+        expect(response).to redirect_to(spree.admin_order_payments_path(payment.order))
+        expect(flash[:error]).to eq I18n.t("spree.payment_is_not_refundable")
+      end
+    end
+  end
+
   describe "POST create" do
-    let(:refund_reason) { create(:refund_reason) }
-    let(:refund_amount) { 100.0 }
-
-    let(:payment) { create(:payment, amount: payment_amount) }
-    let(:payment_amount) { refund_amount * 2 }
-
     subject do
       post(
         :create,
@@ -56,6 +76,24 @@ describe Spree::Admin::RefundsController do
       end
 
       it { is_expected.to render_template(:new) }
+    end
+
+    context "when the payment is not in a refundable state" do
+      %w[checkout invalid].each do |state|
+        context "with a #{state} payment" do
+          let(:payment) { create(:payment, state:, amount: payment_amount) }
+
+          it "does not create a refund record" do
+            expect { subject }.to_not change { Spree::Refund.count }
+          end
+
+          it "redirects to the payments page with an error" do
+            subject
+            expect(response).to redirect_to(spree.admin_order_payments_path(payment.order))
+            expect(flash[:error]).to eq I18n.t("spree.payment_is_not_refundable")
+          end
+        end
+      end
     end
   end
 end

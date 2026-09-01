@@ -5,6 +5,7 @@ module Spree
     class RefundsController < ResourceController
       belongs_to "spree/payment"
       before_action :load_order
+      before_action :ensure_refundable_payment, only: [:new, :create]
 
       helper_method :refund_reasons
 
@@ -35,6 +36,13 @@ module Spree
       def load_order
         # the spree/admin/shared/order_tabs partial expects the @order instance variable to be set
         @order = @payment.order if @payment
+      end
+
+      def ensure_refundable_payment
+        return if Spree::Refund::REFUNDABLE_PAYMENT_STATES.include?(@payment.state)
+
+        flash[:error] = t("spree.payment_is_not_refundable")
+        redirect_to admin_order_payments_path(@order)
       end
 
       def refund_reasons
