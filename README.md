@@ -5,7 +5,7 @@
 [![Test](https://github.com/solidusio/solidus/actions/workflows/test.yml/badge.svg)](https://github.com/solidusio/solidus/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/solidusio/solidus/branch/main/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus/branch/main)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
-[![License](http://img.shields.io/badge/license-BSD-blue.svg)](LICENSE.md)
+[![License](http://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 
 [![Supporters on Open Collective](https://opencollective.com/solidus/tiers/supporter/badge.svg?label=Supporters&color=brightgree)](https://opencollective.com/solidus)
 [![Bronze Partners on Open Collective](https://opencollective.com/solidus/tiers/bronze/badge.svg?label=Bronze&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
