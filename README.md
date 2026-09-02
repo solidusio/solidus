@@ -249,7 +249,7 @@ environment variable:
 ```bash
 SANDBOX_PORT=4000 docker-compose up -d
 docker-compose exec app bin/sandbox
-docker-compose exec app bin/rails server --binding 0.0.0.0 --port 4000
+SANDBOX_PORT=4000 docker-compose exec app bin/dev
 ```
 
 ### Sandbox
@@ -303,7 +303,7 @@ sandbox one by running the command:
 
 Please note: if you run `bin/rails server` or similar commands, only the Rails server will
 start. This might cause the error `couldn't find file 'solidus_admin/tailwind.css'` when you
-try to load admin pages.
+try to load all pages.
 
 ### Tests
 

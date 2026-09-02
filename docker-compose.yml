@@ -42,7 +42,7 @@ services:
       ACTIVE_STORAGE_VARIANT_PROCESSOR: "vips"
       BINDING: "0.0.0.0"
     ports:
-      - "${SANDBOX_PORT:-3000}:${SANDBOX_PORT:-3000}"
+      - "${SANDBOX_PORT:-3000}:3000"
     volumes:
       - .:/home/solidus_user/app:delegated,z
       - bundle:/home/solidus_user/gems:cached
