@@ -13,7 +13,6 @@ module Spree
         inventory_units: nil,
         inventory_unit_builder_class: Spree::Config.stock.inventory_unit_builder_class,
         splitters: Spree::Config.environment.stock_splitters,
-        allocator_class: Spree::Config.stock.allocator_class,
         estimator_class: Spree::Config.stock.estimator_class,
         stock_locations: Spree::StockLocation.all
       )
@@ -22,7 +21,6 @@ module Spree
         @stock_locations = stock_locations
 
         @inventory_unit_builder_class = inventory_unit_builder_class
-        @allocator_class = allocator_class
 
         @estimator = estimator_class.new
 
@@ -56,33 +54,10 @@ module Spree
       def build_packages
         @inventory_units ||= @inventory_unit_builder_class.new(order).units
 
-        @inventory_units_by_variant = @inventory_units.group_by(&:variant)
-        desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
-        availability = Spree::Stock::Availability.new(
-          variants: desired.variants,
-          stock_locations:
-        )
-        allocator = @allocator_class.new(availability)
-
-        on_hand_packages, backordered_packages, leftover = allocator.allocate_inventory(desired)
-
-        raise Spree::Order::InsufficientStock.new(items: leftover.quantities) unless leftover.empty?
-
-        packages = stock_locations.map do |stock_location|
-          # Combine on_hand and backorders into a single package per-location
-          on_hand = on_hand_packages[stock_location.id] || Spree::StockQuantities.new
-          backordered = backordered_packages[stock_location.id] || Spree::StockQuantities.new
-
-          # Skip this location it has no inventory
-          next if on_hand.empty? && backordered.empty?
-
-          # Turn our raw quantities into a Stock::Package
-          package = Spree::Stock::Package.new(stock_location)
-          package.add_multiple(get_units(on_hand), :on_hand)
-          package.add_multiple(get_units(backordered), :backordered)
-
-          package
-        end.compact
+        Spree::Config.stock.package_builder_class.new(
+          inventory_units: @inventory_units,
+          stock_locations: @stock_locations
+        ).call
       end
 
       def split_packages(initial_packages)
