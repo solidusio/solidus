@@ -495,6 +495,8 @@ en:
           attributes:
             amount:
               greater_than_allowed: is greater than the allowed amount.
+            payment:
+              not_refundable: cannot be refunded in its current state.
         spree/reimbursement:
           attributes:
             base:
@@ -1943,6 +1945,7 @@ en:
     payment_could_not_be_created: Payment could not be created.
     payment_identifier: Payment Identifier
     payment_information: Payment Information
+    payment_is_not_refundable: This payment cannot be refunded in its current state.
     payment_method: Payment Method
     payment_method_not_supported: That payment method is unsupported. Please choose another one.
     payment_method_settings_warning: If you are changing the payment method type, you must save first before you can edit the payment method settings
