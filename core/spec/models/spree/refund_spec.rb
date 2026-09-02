@@ -76,6 +76,27 @@ RSpec.describe Spree::Refund, type: :model do
       end
     end
 
+    context "with a customized refundable_payment_states list" do
+      before { stub_spree_preferences(refundable_payment_states: %w[completed pending void]) }
+
+      context "with a void payment" do
+        let(:payment) { create(:payment, state: "void", amount: payment_amount, payment_method:) }
+
+        it "does not emit a deprecation warning" do
+          expect(Spree.deprecator).not_to receive(:warn)
+          subject
+        end
+
+        context "with require_refundable_payment_state enabled" do
+          before { stub_spree_preferences(require_refundable_payment_state: true) }
+
+          it "creates a refund record" do
+            expect { subject }.to change { Spree::Refund.count }.by(1)
+          end
+        end
+      end
+    end
+
     context "when the payment is not in a refundable state" do
       %w[checkout invalid failed void processing].each do |state|
         context "with a #{state} payment" do

@@ -265,6 +265,12 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  describe "#refundable_payment_states" do
+    subject { prefs[:refundable_payment_states] }
+
+    it { is_expected.to eq %w[completed pending] }
+  end
+
   describe "#require_refundable_payment_state" do
     subject { prefs[:require_refundable_payment_state] }
 

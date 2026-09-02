@@ -29,6 +29,16 @@ describe Spree::Admin::RefundsController do
         expect(flash[:error]).to eq I18n.t("spree.payment_is_not_refundable")
       end
     end
+
+    context "with a customized refundable_payment_states list" do
+      before { stub_spree_preferences(refundable_payment_states: %w[completed pending void]) }
+
+      let(:payment) { create(:payment, state: "void", amount: payment_amount) }
+
+      it "renders the new template" do
+        is_expected.to render_template(:new)
+      end
+    end
   end
 
   describe "POST create" do

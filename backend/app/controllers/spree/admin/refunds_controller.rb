@@ -39,7 +39,7 @@ module Spree
       end
 
       def ensure_refundable_payment
-        return if Spree::Refund::REFUNDABLE_PAYMENT_STATES.include?(@payment.state)
+        return if Spree::Config.refundable_payment_states.include?(@payment.state)
 
         flash[:error] = t("spree.payment_is_not_refundable")
         redirect_to admin_order_payments_path(@order)

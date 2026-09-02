@@ -250,12 +250,16 @@ module Spree
     #   @return [Boolean] Whether to recalculate cart prices when recalculating (default: +false+)
     versioned_preference :recalculate_cart_prices, :boolean, initial_value: false, boundaries: {"5.0.0.alpha" => true}
 
+    # @!attribute [rw] refundable_payment_states
+    #   @return [Array<String>] Payment states in which refunds may be created (default: +["completed", "pending"]+)
+    preference :refundable_payment_states, :array, default: %w[completed pending]
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true
 
     # @!attribute [rw] require_refundable_payment_state
-    #   @return [Boolean] Whether creating a refund for a payment outside Spree::Refund::REFUNDABLE_PAYMENT_STATES is a validation error rather than a deprecation warning (default: +false+)
+    #   @return [Boolean] Whether creating a refund for a payment outside Spree::Config.refundable_payment_states is a validation error rather than a deprecation warning (default: +false+)
     versioned_preference :require_refundable_payment_state, :boolean, initial_value: false, boundaries: {"5.0.0.alpha" => true}
 
     # @!attribute [rw] require_payment_to_ship
