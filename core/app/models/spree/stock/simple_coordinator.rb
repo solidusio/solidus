@@ -24,8 +24,8 @@ module Spree
 
       # @api private
       attr_reader :inventory_units, :splitters, :stock_locations,
-        :filtered_stock_locations, :inventory_units_by_variant, :desired,
-        :availability, :allocator, :packages
+        :inventory_units_by_variant, :desired, :availability, :allocator,
+        :packages
 
       def initialize(order, inventory_units_deprecated = nil, inventory_units: nil, stock_locations: nil)
         if inventory_units_deprecated
@@ -41,7 +41,7 @@ module Spree
         @splitters = Spree::Config.environment.stock_splitters
 
         @stock_locations = stock_locations || begin
-          @filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
+          filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
           Spree::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
         end
 
