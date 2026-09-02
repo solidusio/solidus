@@ -6,7 +6,7 @@ module SolidusAdmin::AdminResources
     batch_actions &= options[:only] if options[:only]
     batch_actions -= options[:except] if options[:except]
 
-    resources(resource, options) do
+    resources(resource, **options) do
       yield if block_given?
 
       collection do
