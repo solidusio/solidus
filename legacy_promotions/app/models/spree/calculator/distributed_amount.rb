@@ -10,7 +10,7 @@ require_dependency "spree/calculator"
 module Spree
   class Calculator::DistributedAmount < Calculator
     preference :amount, :decimal, default: 0
-    preference :currency, :string, default: -> { Spree::Config[:currency] }
+    preference :currency, :string, default: -> { Spree::Config.currency }
 
     def compute_line_item(line_item)
       return 0 unless line_item

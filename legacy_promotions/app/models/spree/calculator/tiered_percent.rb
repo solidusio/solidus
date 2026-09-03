@@ -6,7 +6,7 @@ module Spree
   class Calculator::TieredPercent < Calculator
     preference :base_percent, :decimal, default: 0
     preference :tiers, :hash, default: {}
-    preference :currency, :string, default: -> { Spree::Config[:currency] }
+    preference :currency, :string, default: -> { Spree::Config.currency }
 
     before_validation do
       # Convert tier values to decimals. Strings don't do us much good.
