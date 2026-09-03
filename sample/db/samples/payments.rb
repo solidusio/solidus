@@ -7,11 +7,17 @@ method = Spree::PaymentMethod.where(name: "Credit Card", active: true).first
 # reference it as such. Make it explicit here that this table has been renamed.
 Spree::CreditCard.table_name = "spree_credit_cards"
 
-creditcard = Spree::CreditCard.create(cc_type: "visa", month: 12, year: 2.years.from_now.year, last_digits: "1111",
-  name: "Sean Schofield", gateway_customer_profile_id: "BGS-1234")
+creditcard = Spree::CreditCard.find_or_create_by!(cc_type: "visa", last_digits: "1111", name: "Sean Schofield") do |cc|
+  cc.month = 12
+  cc.year = 2.years.from_now.year
+  cc.gateway_customer_profile_id = "BGS-1234"
+end
 
 Spree::Order.all.each_with_index do |order, _index|
   order.recalculate
-  payment = order.payments.create!(amount: order.total, source: creditcard.clone, payment_method: method)
-  payment.update_columns(state: "pending", response_code: "12345")
+  payment = order.payments.find_or_create_by!(payment_method: method) do |p|
+    p.amount = order.total
+    p.source = creditcard.clone
+  end
+  payment.update_columns(state: "pending", response_code: "12345") if payment.previously_new_record?
 end

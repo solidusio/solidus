@@ -119,7 +119,13 @@ taxons = [
 
 taxons.each do |taxon_attrs|
   if taxon_attrs[:parent]
-    taxon_attrs[:parent] = Spree::Taxon.find_by!(name: taxon_attrs[:parent])
-    Spree::Taxon.create!(taxon_attrs)
+    # parent lookup is scoped to the taxonomy to avoid ambiguity between same-named taxons
+    taxon_attrs[:parent] = taxon_attrs[:taxonomy].taxons.find_by!(name: taxon_attrs[:parent])
+    products = taxon_attrs.delete(:products) || []
+
+    taxon = Spree::Taxon.find_or_create_by!(taxon_attrs.slice(:name, :taxonomy, :parent)) do |t|
+      t.assign_attributes(taxon_attrs)
+    end
+    taxon.products |= products
   end
 end
