@@ -27,6 +27,15 @@ changelog:
     - title: Solidus Promotions
       labels:
         - "changelog:solidus_promotions"
+    - title: Solidus Legacy Promotions
+      labels:
+        - "changelog:solidus_legacy_promotions"
+    - title: Solidus Storefront
+      labels:
+        - "changelog:solidus_storefront"
+    - title: Solidus I18n
+      labels:
+        - "changelog:solidus_i18n"
     - title: Breaking Changes
       labels:
         - "changelog:breaking-change"
