@@ -75,6 +75,21 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  context "deprecated alternative_billing_phone" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/alternative_billing_phone/, any_args)
+
+      prefs.alternative_billing_phone = true
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.alternative_billing_phone = true
+        expect(prefs.alternative_billing_phone).to eq true
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do

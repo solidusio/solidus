@@ -81,7 +81,14 @@ module Spree
 
     # @!attribute [rw] alternative_billing_phone
     #   @return [Boolean] Request an extra phone number for bill address (default: +false+)
+    #   @deprecated Unused since c40d4cbeef; remove it from your initializer.
     preference :alternative_billing_phone, :boolean, default: false
+    msg = "`Spree::Config.alternative_billing_phone` has had no effect since commit c40d4cbeef; remove it from your initializer."
+    deprecate(
+      alternative_billing_phone: msg,
+      "alternative_billing_phone=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] alternative_shipping_phone
     #   @return [Boolean] Request an extra phone number for shipping address (default: +false+)
