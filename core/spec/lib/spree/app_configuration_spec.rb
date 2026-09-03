@@ -90,6 +90,21 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  context "deprecated auto_capture_exchanges" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/auto_capture_exchanges/, any_args)
+
+      prefs.auto_capture_exchanges = true
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.auto_capture_exchanges = true
+        expect(prefs.auto_capture_exchanges).to eq true
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do

@@ -108,7 +108,14 @@ module Spree
 
     # @!attribute [rw] auto_capture_exchanges
     #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
+    #   @deprecated Unused since ca63667027; remove it from your initializer.
     preference :auto_capture_exchanges, :boolean, default: false
+    msg = "`Spree::Config.auto_capture_exchanges` has had no effect since commit ca63667027; remove it from your initializer."
+    deprecate(
+      auto_capture_exchanges: msg,
+      "auto_capture_exchanges=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] automatic_default_address
     #   The default value of true preserves existing backwards compatible feature of
