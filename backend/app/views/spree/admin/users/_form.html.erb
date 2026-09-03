@@ -35,7 +35,7 @@
       </div>
     <% end %>
 
-    <% if Spree::Config[:can_restrict_stock_management] && can?(:show, Spree::StockLocation) %>
+    <% if Spree::Config.can_restrict_stock_management && can?(:show, Spree::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
         <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
         <ul>

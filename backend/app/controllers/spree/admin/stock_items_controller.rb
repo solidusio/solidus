@@ -50,7 +50,7 @@ module Spree
         )
         @variant_display_attributes = self.class.variant_display_attributes
         @variants = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: variant_scope).results
-          .order(id: :desc).page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
+          .order(id: :desc).page(params[:page]).per(params[:per_page] || Spree::Config.orders_per_page)
       end
 
       def variant_scope

@@ -93,7 +93,7 @@ module Spree
           .order(id: :asc)
           .includes(product_includes)
           .page(params[:page])
-          .per(Spree::Config[:admin_products_per_page])
+          .per(Spree::Config.admin_products_per_page)
       end
 
       def update_before
