@@ -235,7 +235,14 @@ module Spree
 
     # @!attribute [rw] order_capturing_time_window
     #   @return [Integer] the number of days to look back for fully-shipped/cancelled orders in order to charge for them
+    #   @deprecated Unused since 9c5107fcae; remove it from your initializer.
     preference :order_capturing_time_window, :integer, default: 14
+    msg = "`Spree::Config.order_capturing_time_window` has had no effect since commit 9c5107fcae; remove it from your initializer."
+    deprecate(
+      order_capturing_time_window: msg,
+      "order_capturing_time_window=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] order_mutex_max_age
     #   @return [Integer] Max age of {Spree::OrderMutex} in seconds (default: 2 minutes)

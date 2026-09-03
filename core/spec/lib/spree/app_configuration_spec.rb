@@ -120,6 +120,21 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  context "deprecated order_capturing_time_window" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/order_capturing_time_window/, any_args)
+
+      prefs.order_capturing_time_window = 30
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.order_capturing_time_window = 30
+        expect(prefs.order_capturing_time_window).to eq 30
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do
