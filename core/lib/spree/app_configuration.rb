@@ -70,7 +70,14 @@ module Spree
 
     # @!attribute [rw] allow_return_item_amount_editing
     #   @return [Boolean] Determines whether an admin is allowed to change a return item's pre-calculated amount (default: +false+)
+    #   @deprecated Unused since a6755a7f0f; remove it from your initializer.
     preference :allow_return_item_amount_editing, :boolean, default: false
+    msg = "`Spree::Config.allow_return_item_amount_editing` has had no effect since commit a6755a7f0f; remove it from your initializer."
+    deprecate(
+      allow_return_item_amount_editing: msg,
+      "allow_return_item_amount_editing=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] alternative_billing_phone
     #   @return [Boolean] Request an extra phone number for bill address (default: +false+)

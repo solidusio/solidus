@@ -60,6 +60,21 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.mergeable_orders_finder_class).to eq Spree::MergeableOrdersFinder
   end
 
+  context "deprecated allow_return_item_amount_editing" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/allow_return_item_amount_editing/, any_args)
+
+      prefs.allow_return_item_amount_editing = true
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.allow_return_item_amount_editing = true
+        expect(prefs.allow_return_item_amount_editing).to eq true
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do
