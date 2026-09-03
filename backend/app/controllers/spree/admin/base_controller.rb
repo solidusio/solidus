@@ -51,7 +51,7 @@ module Spree
       end
 
       def config_locale
-        Spree::Backend::Config[:locale]
+        Spree::Backend::Config.locale
       end
 
       def lock_order

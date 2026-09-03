@@ -120,7 +120,7 @@ module Spree
       end
 
       def require_bill_address
-        if Spree::Config[:order_bill_address_used] && @order.bill_address.nil?
+        if Spree::Config.order_bill_address_used && @order.bill_address.nil?
           flash[:notice] = t("spree.fill_in_customer_info")
           redirect_to edit_admin_order_customer_url(@order)
         end

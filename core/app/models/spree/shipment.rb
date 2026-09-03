@@ -55,7 +55,7 @@ module Spree
     def can_transition_from_pending_to_ready?
       order.can_ship? &&
         inventory_units.all? { |iu| iu.shipped? || iu.allow_ship? || iu.canceled? } &&
-        (order.paid? || !Spree::Config[:require_payment_to_ship])
+        (order.paid? || !Spree::Config.require_payment_to_ship)
     end
 
     def can_transition_from_canceled_to_ready?
@@ -83,7 +83,7 @@ module Spree
     end
 
     def currency
-      order ? order.currency : Spree::Config[:currency]
+      order ? order.currency : Spree::Config.currency
     end
 
     # @return [BigDecimal] the amount of this shipment, taking into

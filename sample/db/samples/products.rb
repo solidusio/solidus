@@ -182,14 +182,14 @@ products = [
 
 products.each do |product_attrs|
   eur_price = product_attrs.delete(:eur_price)
-  Spree::Config[:currency] = "USD"
+  Spree::Config.currency = "USD"
 
   product = Spree::Product.create!(default_attrs.merge(product_attrs))
-  Spree::Config[:currency] = "EUR"
+  Spree::Config.currency = "EUR"
   product.reload
   product.price = eur_price
   product.shipping_category = shipping_category
   product.save!
 end
 
-Spree::Config[:currency] = "USD"
+Spree::Config.currency = "USD"

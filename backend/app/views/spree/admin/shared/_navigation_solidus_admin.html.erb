@@ -4,7 +4,7 @@
   <aside class="solidus-admin--nav">
     <header class="solidus-admin--nav--section">
       <%= link_to spree.admin_path, class: 'solidus-admin--nav--logo' do %>
-        <%= image_tag(Spree::Config[:admin_interface_logo]) %>
+        <%= image_tag(Spree::Config.admin_interface_logo) %>
       <%- end %>
 
       <%= link_to "//#{default_store.url}", target: '_blank', class: 'solidus-admin--nav--store-link' do %>

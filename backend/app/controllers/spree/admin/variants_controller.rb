@@ -27,7 +27,7 @@ module Spree
         end
 
         search = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: base_variant_scope)
-        @collection = search.results.includes(variant_includes).page(params[:page]).per(Spree::Config[:admin_variants_per_page])
+        @collection = search.results.includes(variant_includes).page(params[:page]).per(Spree::Config.admin_variants_per_page)
       end
 
       def load_data

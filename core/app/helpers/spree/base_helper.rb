@@ -57,7 +57,7 @@ module Spree
       @body_class
     end
 
-    def logo(image_path = Spree::Config[:logo])
+    def logo(image_path = Spree::Config.logo)
       link_to image_tag(image_path), spree.root_path
     end
 
@@ -110,7 +110,7 @@ module Spree
       end
     end
 
-    def available_countries(restrict_to_zone: Spree::Config[:checkout_zone])
+    def available_countries(restrict_to_zone: Spree::Config.checkout_zone)
       countries = Spree::Country.available(restrict_to_zone:)
 
       country_names = Carmen::Country.all.map do |country|

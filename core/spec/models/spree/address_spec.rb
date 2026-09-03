@@ -75,7 +75,7 @@ RSpec.describe Spree::Address, type: :model do
           stub_spree_preferences(default_country_iso: default_country.iso)
         end
 
-        it "sets up a new record with Spree::Config[:default_country_iso]" do
+        it "sets up a new record with Spree::Config.default_country_iso" do
           expect(Spree::Address.build_default.country).to eq default_country
         end
 

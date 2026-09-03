@@ -118,7 +118,7 @@ module Spree
     # @return [true] whether or not the address requires a phone number to be
     #   present
     def require_phone?
-      Spree::Config[:address_requires_phone]
+      Spree::Config.address_requires_phone
     end
 
     # @todo Remove this from the public API if possible.

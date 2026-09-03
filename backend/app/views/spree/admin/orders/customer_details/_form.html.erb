@@ -41,7 +41,7 @@
   </fieldset>
 
   <div class="row">
-    <% if Spree::Config[:order_bill_address_used] %>
+    <% if Spree::Config.order_bill_address_used %>
       <div class="col-6" data-hook="bill_address_wrapper">
         <fieldset class="no-border-bottom">
           <legend align="center"><%= t('spree.billing_address') %></legend>
@@ -57,7 +57,7 @@
     <div class="col-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= t('spree.shipping_address') %></legend>
-        <% if Spree::Config[:order_bill_address_used] %>
+        <% if Spree::Config.order_bill_address_used %>
           <div class="field">
             <span data-hook="use_billing">
               <label>

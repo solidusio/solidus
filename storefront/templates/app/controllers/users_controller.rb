@@ -36,7 +36,7 @@ class UsersController < StoreController
 
       if params[:user][:password].present?
         # this logic needed b/c devise wants to log us out after password changes
-        if Spree::Auth::Config[:signout_after_password_change]
+        if Spree::Auth::Config.signout_after_password_change
           redirect_url = login_url
         else
           bypass_sign_in(@user)

@@ -21,7 +21,7 @@ module Spree
           .order(:zone_id)
         @collection = @collection
           .page(params[:page])
-          .per(Spree::Config[:admin_products_per_page])
+          .per(Spree::Config.admin_products_per_page)
       end
     end
   end

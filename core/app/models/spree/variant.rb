@@ -400,17 +400,17 @@ module Spree
 
     # Ensures a new variant takes the product master price when price is not supplied
     def set_price
-      self.price = product.master.price if price.nil? && Spree::Config[:require_master_price] && !is_master?
+      self.price = product.master.price if price.nil? && Spree::Config.require_master_price && !is_master?
     end
 
     def check_price
-      if price.nil? && Spree::Config[:require_master_price] && is_master?
+      if price.nil? && Spree::Config.require_master_price && is_master?
         errors.add :price, "Must supply price for variant or master.price for product."
       end
     end
 
     def set_cost_currency
-      self.cost_currency = Spree::Config[:currency] if cost_currency.blank?
+      self.cost_currency = Spree::Config.currency if cost_currency.blank?
     end
 
     def create_stock_items

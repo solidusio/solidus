@@ -238,7 +238,7 @@ module Spree
     end
 
     def currency
-      self[:currency] || Spree::Config[:currency]
+      self[:currency] || Spree::Config.currency
     end
 
     def shipping_discount
@@ -272,7 +272,7 @@ module Spree
 
     # Returns the address for taxation based on configuration
     def tax_address
-      if Spree::Config[:tax_using_ship_address]
+      if Spree::Config.tax_using_ship_address
         ship_address
       else
         bill_address
@@ -877,7 +877,7 @@ module Spree
     end
 
     def set_currency
-      self.currency = Spree::Config[:currency] if self[:currency].nil?
+      self.currency = Spree::Config.currency if self[:currency].nil?
     end
 
     def create_token

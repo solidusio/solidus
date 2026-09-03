@@ -122,7 +122,7 @@ module Spree
       end
 
       def requires_authentication?
-        Spree::Api::Config[:requires_authentication]
+        Spree::Api::Config.requires_authentication
       end
 
       def not_found

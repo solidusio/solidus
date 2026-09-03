@@ -12,7 +12,7 @@ module SolidusPromotions
       include PromotionCalculator
 
       preference :amount, :decimal, default: Spree::ZERO
-      preference :currency, :string, default: -> { Spree::Config[:currency] }
+      preference :currency, :string, default: -> { Spree::Config.currency }
 
       # Computes the discount amount for an item.
       #
