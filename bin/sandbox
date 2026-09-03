@@ -27,8 +27,9 @@ sqlite|'')
   ;;
 esac
 
-# Stay away from the bundler env of the containing extension.
-# # The unbundled helper requires Bundler 2.1 or above
+# Wraps any given shell command to use an environment without the user's
+# current Bundler environment settings. The intent is to isolate the Solidus
+# development gem set from the Solidus sandbox gem set.
 function unbundled {
   ruby -rbundler -e'
     Gem::Version.new(Bundler::VERSION) < Gem::Version.new("2.1") ?
