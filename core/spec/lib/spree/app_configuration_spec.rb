@@ -105,6 +105,21 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  context "deprecated customer_returns_per_page" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/customer_returns_per_page/, any_args)
+
+      prefs.customer_returns_per_page = 20
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.customer_returns_per_page = 20
+        expect(prefs.customer_returns_per_page).to eq 20
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do

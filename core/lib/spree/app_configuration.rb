@@ -163,7 +163,14 @@ module Spree
 
     # @!attribute [rw] customer_returns_per_page
     #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
+    #   @deprecated Unused since 834a24a695; remove it from your initializer.
     preference :customer_returns_per_page, :integer, default: 15
+    msg = "`Spree::Config.customer_returns_per_page` has had no effect since commit 834a24a695; remove it from your initializer."
+    deprecate(
+      customer_returns_per_page: msg,
+      "customer_returns_per_page=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
