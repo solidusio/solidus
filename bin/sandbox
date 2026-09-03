@@ -33,7 +33,7 @@ function unbundled {
   ruby -rbundler -e'
     Gem::Version.new(Bundler::VERSION) < Gem::Version.new("2.1") ?
       abort("The sandbox requires at least Bundler 2.1, please run bin/setup to update it.") :
-      Bundler.with_unbundled_env {system *ARGV}' -- \
+      Bundler.with_unbundled_env {system(*ARGV) || raise($?.to_s)}' -- \
         env BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES=true $@
 }
 
