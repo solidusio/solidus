@@ -54,7 +54,7 @@ module Spree
       # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
       def self.from_context(context)
         new(
-          currency: context.current_store.try!(:default_currency).presence || Spree::Config[:currency],
+          currency: context.current_store.try!(:default_currency).presence || Spree::Config.currency,
           country_iso: context.current_store.try!(:cart_tax_country_iso).presence
         )
       end
