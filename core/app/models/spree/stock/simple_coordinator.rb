@@ -12,7 +12,7 @@ module Spree
     #   * Combine allocated and on hand inventory into a single shipment per-location
     #
     # Allocation logic can be changed using a custom class (as
-    # configured in Spree::Config::stock_allocator_class )
+    # configured in Spree::Config.stock.allocator_class)
     #
     # After allocation, splitters are run on each Package (as configured in
     # Spree::Config.environment.stock_splitters)

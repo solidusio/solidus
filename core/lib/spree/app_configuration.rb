@@ -397,7 +397,15 @@ module Spree
     #   Spree::Variant::VatPriceGenerator.
     class_name_attribute :variant_vat_prices_generator_class, default: "Spree::Variant::VatPriceGenerator"
 
+    # @!attribute [rw] allocator_class
+    #   @deprecated Never read; use Spree::Config.stock.allocator_class instead.
     class_name_attribute :allocator_class, default: "Spree::Stock::Allocator::OnHandFirst"
+    msg = "`Spree::Config.allocator_class` has never been read; the stock allocator is configured with `Spree::Config.stock.allocator_class`."
+    deprecate(
+      allocator_class: msg,
+      "allocator_class=": msg,
+      deprecator: Spree.deprecator
+    )
 
     class_name_attribute :shipping_rate_sorter_class, default: "Spree::Stock::ShippingRateSorter"
 

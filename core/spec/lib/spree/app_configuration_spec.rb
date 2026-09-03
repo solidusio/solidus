@@ -135,6 +135,21 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  context "deprecated allocator_class" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/allocator_class/, any_args)
+
+      prefs.allocator_class = "DummyClass"
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.allocator_class = "DummyClass"
+        expect(prefs.allocator_class).to eq DummyClass
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do
