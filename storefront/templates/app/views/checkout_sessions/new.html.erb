@@ -5,7 +5,7 @@
     <%= render template: 'user_sessions/new' %>
   </div>
 
-  <% if Spree::Config[:allow_guest_checkout] %>
+  <% if Spree::Config.allow_guest_checkout %>
     <div class="col-span-6 order-1 md:order-2">
       <%= render 'checkout_guest_sessions/form' %>
     </div>

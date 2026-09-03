@@ -10,7 +10,7 @@ class StoreController < Spree::BaseController
   layout "storefront"
 
   def unauthorized
-    render "shared/auth/unauthorized", layout: Spree::Config[:layout], status: 401
+    render "shared/auth/unauthorized", layout: Spree::Config.layout, status: 401
   end
 
   def cart_link

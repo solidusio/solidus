@@ -1,4 +1,4 @@
-<% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
+<% max_level = Spree::Config.max_level_in_taxons_menu || 1 %>
 
 <nav class="taxonomies flex flex-col">
   <% cache [I18n.locale, taxonomies, taxon, max_level] do %>

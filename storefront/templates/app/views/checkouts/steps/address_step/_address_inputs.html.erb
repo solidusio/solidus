@@ -9,7 +9,7 @@
     <%= form.text_field :name, required: true, autofocus: true, autocomplete: "#{address_type} given-name" %>
   </div>
 
-  <% if Spree::Config[:company] %>
+  <% if Spree::Config.company %>
     <div class="text-input">
       <%= form.label :company, "#{I18n.t("spree.company")}:" %>
       <%= form.text_field :company, autocomplete: "#{address_type} organization" %>
@@ -48,7 +48,7 @@
       ) %>
     </div>
 
-    <% if Spree::Config[:address_requires_state] %>
+    <% if Spree::Config.address_requires_state %>
       <% have_states = !address.country.states.empty? %>
 
       <span class="js-address-fields w-full" style="display: none;">
@@ -105,7 +105,7 @@
     %>
   </div>
 
-  <% if Spree::Config[:alternative_shipping_phone] %>
+  <% if Spree::Config.alternative_shipping_phone %>
     <div class="text-input">
       <%= form.label :alternative_phone, "#{I18n.t("spree.alternative_phone")}:" %>
       <%= form.telephone_field :alternative_phone, autocomplete: "#{address_type} tel" %>
