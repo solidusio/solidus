@@ -14,7 +14,7 @@
     "#{prefix}[calculator_attributes][preferred_currency]",
     options_for_select(
       Spree::Config.available_currencies,
-      calculator.preferred_currency || Spree::Config[:currency]
+      calculator.preferred_currency || Spree::Config.currency
     ),
     { is: "select-two", class: 'fullwidth' }
   ) %>
