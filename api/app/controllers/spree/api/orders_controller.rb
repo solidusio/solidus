@@ -155,7 +155,25 @@ module Spree
       end
 
       def permitted_order_attributes
-        can?(:admin, Spree::Order) ? (super + admin_order_attributes) : super
+        if can?(:admin, Spree::Order)
+          super + admin_order_attributes
+        else
+          # We need to remove the `:amount` attribute from payments_attributes
+          # for non-admin users. Unfortunately, order_attributes uses the
+          # checkout_payment_attributes instead of the payment_attributes, which
+          # needs to be able to set the amount.
+          #
+          # We're doing a deep_dup here to avoid modifying the original
+          # permitted attributes, which could have unintended side effects.
+          order_attributes = super.deep_dup
+
+          payments_attributes = order_attributes.find do |attribute|
+            attribute.is_a?(Hash) && attribute.has_key?(:payments_attributes)
+          end
+          payments_attributes[:payments_attributes] -= [:amount]
+
+          order_attributes
+        end
       end
 
       def permitted_shipment_attributes
