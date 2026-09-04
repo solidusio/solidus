@@ -78,7 +78,9 @@ module Spree
           params[:payment][:source_attributes] = source_params
         end
 
-        params.require(:payment).permit(permitted_payment_attributes)
+        # Admins are allowed to set the amount of a payment, so we need to
+        # permit it here. This is not permitted for non-admin users.
+        params.require(:payment).permit(permitted_payment_attributes + [:amount])
       end
 
       def load_data
