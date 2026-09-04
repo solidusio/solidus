@@ -19,6 +19,9 @@ RSpec.describe Spree::OrderMailerSubscriber do
       if ENV["SOLIDUS_RAISE_DEPRECATIONS"]
         expect { subject }.to raise_error(ActiveSupport::DeprecationException)
       else
+        expect { subject }
+          .to output(/DEPRECATION WARNING: send_confirmation_email/)
+          .to_stderr
         expect(subject).to eq nil
       end
     end
@@ -31,6 +34,9 @@ RSpec.describe Spree::OrderMailerSubscriber do
       if ENV["SOLIDUS_RAISE_DEPRECATIONS"]
         expect { subject }.to raise_error(ActiveSupport::DeprecationException)
       else
+        expect { subject }
+          .to output(/DEPRECATION WARNING: send_reimbursement_email/)
+          .to_stderr
         expect(subject).to eq nil
       end
     end
