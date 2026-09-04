@@ -45,7 +45,7 @@ module Spree::Api
           end
 
           it "can create a new payment" do
-            post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50 } }
+            post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id } }
             expect(response.status).to eq(201)
             expect(json_response).to have_attributes(attributes)
           end
@@ -56,7 +56,6 @@ module Spree::Api
                       payment: {
                         customer_metadata: { 'type' => 'credit card' },
                         payment_method_id: Spree::PaymentMethod.first.id,
-                        amount: 50,
                         source_attributes: { gateway_payment_profile_id: 1 }
                       }
             }
@@ -71,7 +70,7 @@ module Spree::Api
               Spree::PaymentMethod.first.update!(available_to_users: false)
 
               expect {
-                post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50 } }
+                post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id } }
               }.not_to change { Spree::Payment.count }
               expect(response.status).to eq(404)
             end
@@ -81,7 +80,7 @@ module Spree::Api
         context "payment source is required" do
           context "no source is provided" do
             it "returns errors" do
-              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50 } }
+              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id } }
               expect(response.status).to eq(422)
               expect(json_response['error']).to eq("Invalid resource. Please fix errors and try again.")
               expect(json_response['errors']['source']).to eq(["can't be blank"])
@@ -90,7 +89,7 @@ module Spree::Api
 
           context "source is provided" do
             it "can create a new payment" do
-              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50, source_attributes: { gateway_payment_profile_id: 1 } } }
+              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, source_attributes: { gateway_payment_profile_id: 1 } } }
               expect(response.status).to eq(201)
               expect(json_response).to have_attributes(attributes)
             end
@@ -103,7 +102,7 @@ module Spree::Api
         end
 
         it "cannot update a payment" do
-          put spree.api_order_payment_path(order, payment), params: { payment: { amount: 2.01 } }
+          put spree.api_order_payment_path(order, payment), params: { payment: {} }
           assert_unauthorized!
         end
 

@@ -3,6 +3,9 @@
 module Spree
   module Api
     class PaymentsController < Spree::Api::BaseController
+      class_attribute :admin_payment_attributes
+      self.admin_payment_attributes = [:amount]
+
       before_action :find_order
       around_action :lock_order, only: [:create, :update, :authorize, :capture, :purchase, :void]
       before_action :find_payment, only: [:update, :show, :authorize, :purchase, :capture, :void]
@@ -77,6 +80,14 @@ module Spree
 
       def payment_params
         params.require(:payment).permit(permitted_payment_attributes)
+      end
+
+      def permitted_payment_attributes
+        if can?(:admin, Spree::Payment)
+          super + admin_payment_attributes
+        else
+          super
+        end
       end
     end
   end
