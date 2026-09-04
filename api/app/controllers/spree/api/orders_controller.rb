@@ -11,6 +11,12 @@ module Spree
 
       class_attribute :admin_payment_attributes
       self.admin_payment_attributes = [:payment_method, :amount, :state, source: {}]
+      msg = "`Spree::Api::OrdersController.admin_payment_attributes` is deprecated."
+      deprecate(
+        admin_payment_attributes: msg,
+        "admin_payment_attributes=": msg,
+        deprecator: Spree.deprecator
+      )
 
       before_action :find_order, except: [:create, :mine, :current, :index]
       around_action :lock_order, except: [:create, :mine, :current, :index, :show]
@@ -161,6 +167,12 @@ module Spree
       end
 
       def permitted_payment_attributes
+        Spree.deprecator.warn(
+          "`Spree::Api::OrdersController#permitted_payment_attributes` is deprecated. " \
+          "This method was never actually used in this controller because " \
+          "permitted_order_attributes uses the permitted_checkout_payment_attributes " \
+          "method to determine the permitted attributes for payments."
+        )
         if can?(:admin, Spree::Payment)
           super + admin_payment_attributes
         else
