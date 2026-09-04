@@ -60,6 +60,96 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.mergeable_orders_finder_class).to eq Spree::MergeableOrdersFinder
   end
 
+  context "deprecated allow_return_item_amount_editing" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/allow_return_item_amount_editing/, any_args)
+
+      prefs.allow_return_item_amount_editing = true
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.allow_return_item_amount_editing = true
+        expect(prefs.allow_return_item_amount_editing).to eq true
+      end
+    end
+  end
+
+  context "deprecated alternative_billing_phone" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/alternative_billing_phone/, any_args)
+
+      prefs.alternative_billing_phone = true
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.alternative_billing_phone = true
+        expect(prefs.alternative_billing_phone).to eq true
+      end
+    end
+  end
+
+  context "deprecated auto_capture_exchanges" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/auto_capture_exchanges/, any_args)
+
+      prefs.auto_capture_exchanges = true
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.auto_capture_exchanges = true
+        expect(prefs.auto_capture_exchanges).to eq true
+      end
+    end
+  end
+
+  context "deprecated customer_returns_per_page" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/customer_returns_per_page/, any_args)
+
+      prefs.customer_returns_per_page = 20
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.customer_returns_per_page = 20
+        expect(prefs.customer_returns_per_page).to eq 20
+      end
+    end
+  end
+
+  context "deprecated order_capturing_time_window" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/order_capturing_time_window/, any_args)
+
+      prefs.order_capturing_time_window = 30
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.order_capturing_time_window = 30
+        expect(prefs.order_capturing_time_window).to eq 30
+      end
+    end
+  end
+
+  context "deprecated allocator_class" do
+    it "warns on assignment" do
+      expect(Spree.deprecator).to receive(:warn).with(/allocator_class/, any_args)
+
+      prefs.allocator_class = "DummyClass"
+    end
+
+    it "still stores the value" do
+      Spree.deprecator.silence do
+        prefs.allocator_class = "DummyClass"
+        expect(prefs.allocator_class).to eq DummyClass
+      end
+    end
+  end
+
   context "deprecated preferences" do
     around do |example|
       Spree.deprecator.silence do
