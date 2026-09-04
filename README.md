@@ -310,13 +310,14 @@ try to load all pages.
 Solidus uses [RSpec](http://rspec.info) for tests. Refer to its documentation for
 more information about the testing library.
 
-#### CircleCI
+#### CI/CD
 
-We use CircleCI to run the tests for Solidus as well as all incoming pull
-requests. All pull requests must pass to be merged.
+We use GitHub Actions to run Solidus' test suites against all supported versions
+of Ruby and Rails. Before a pull request can be merged, all of the tests must
+pass.
 
-You can see the build statuses at
-[https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus).
+You can see the build statuses on the repository's [GitHub Actions
+page](https://github.com/solidusio/solidus/actions).
 
 #### Run all tests
 
