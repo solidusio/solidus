@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 SolidusAdmin::Config.configure do |config|
+  # Enable alpha features.
+  #
+  # Do this at your own risk. Alpha features are still in development. Enabling
+  # this option will likely break some admin pages and components.
+  config.enable_alpha_features = <%= config[:enable_alpha_features] %>
+
   # Path to the logo used in the admin interface.
   #
   # It needs to be a path to an image file accessible by Sprockets.
