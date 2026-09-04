@@ -46,17 +46,33 @@ RSpec.describe SolidusAdmin::BaseComponent, type: :component do
   end
 
   describe "missing translations" do
-    it "logs and shows the full chain of keys" do
-      debug_logs = []
+    let(:debug_logs) { [] }
+    let(:component) { mock_component { erb_template "" } }
 
+    before do
       allow(Rails.logger).to receive(:debug) { debug_logs << _1 }
 
-      component = mock_component { erb_template "" }
       render_inline(component)
+    end
+    it "logs and shows the full chain of keys" do
       translation = component.translate("foo.bar.baz")
 
       expect(translation).to eq("translation missing: en.foo.bar.baz")
       expect(debug_logs).to include(%(  [Foo::Component] Missing translation: en.foo.bar.baz))
+    end
+
+    it "retries in English when an explicit non-English locale is given" do
+      translation = component.translate("foo.bar.baz", locale: :de)
+
+      expect(translation).to eq("translation missing: en.foo.bar.baz")
+      expect(debug_logs).to include(
+        %(  [Foo::Component] Missing translation: de.foo.bar.baz),
+        %(  [Foo::Component] Missing translation: en.foo.bar.baz)
+      )
+    end
+
+    it "resolves relative keys through `t` as well as `translate`" do
+      expect(component.t("foo.bar.baz")).to eq("translation missing: en.foo.bar.baz")
     end
   end
 end

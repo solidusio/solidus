@@ -57,6 +57,15 @@ runs:
       run: |
         cd $RUNNER_TEMP/my_app
         bundle add solidus --path "$(ruby -e"puts File.expand_path ENV['GITHUB_WORKSPACE']")"
+        bundle add solidus_admin --path "$(ruby -e"puts File.expand_path File.join(ENV['GITHUB_WORKSPACE'], 'admin')")"
+
+        # The released `solidus_admin` gem ships a prebuilt `app/assets/builds/solidus_admin/tailwind.css`,
+        # but it's gitignored, so bundling the gem from the checkout above leaves
+        # `solidus_admin/application.css` unable to resolve its `require solidus_admin/tailwind.css`.
+        # The installer only needs the file to exist, not to be styled.
+        mkdir -p "$GITHUB_WORKSPACE/admin/app/assets/builds/solidus_admin"
+        touch "$GITHUB_WORKSPACE/admin/app/assets/builds/solidus_admin/tailwind.css"
+
         unset RAILS_ENV # avoid doing everything on the test environment
 
         # Due to [a bug in `sprockets-rails`](https://github.com/rails/sprockets-rails/pull/546) we need to manually add
