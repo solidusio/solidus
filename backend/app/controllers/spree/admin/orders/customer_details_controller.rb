@@ -26,7 +26,7 @@ module Spree
           if @order.contents.update_cart(order_params)
 
             if should_associate_user?
-              requested_user = Spree.user_class.find(params[:user_id])
+              requested_user = Spree.admin_user_class.find(params[:user_id])
               @order.associate_user!(requested_user, @order.email.blank?)
             end
 
