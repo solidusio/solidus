@@ -121,13 +121,9 @@ module Spree
       def link_to_with_icon(icon_name, text, url, options = {})
         options[:class] = "#{options[:class]} icon_link with-tip".strip
 
-        if icon_name.starts_with?("ri-")
-          svg_map = image_path("spree/backend/themes/solidus_admin/remixicon.symbol.svg")
-          icon_tag = tag.svg(
-            tag.use("xlink:href": "#{svg_map}##{icon_name}"),
-            "aria-hidden": true,
-            style: "fill: currentColor;"
-          )
+        icon = icon_for(icon_name)
+        if icon.starts_with?("ri-")
+          icon_tag = remix_icon(icon)
         else
           options[:class] << " fa fa-#{icon_name}"
           icon_tag = "".html_safe
@@ -141,7 +137,28 @@ module Spree
       end
 
       def solidus_icon(icon_name)
-        icon_name ? content_tag(:i, "", class: icon_name) : ""
+        if icon_name&.include?("fa-")
+          icon_name = icon_name.gsub(/(fa\s|fa-)/, "")
+          Spree.deprecator.warn "Using FontAwesome icon classes with solidus_icon is deprecated. Please use just `#{icon_name}` instead."
+        end
+        icon = icon_for(icon_name)
+        if icon&.starts_with?("ri-")
+          remix_icon(icon)
+        elsif icon_name
+          content_tag(:i, "", class: "fa fa-#{icon_name}")
+        else
+          ""
+        end
+      end
+
+      def remix_icon(icon_name)
+        svg_map = image_path("spree/backend/themes/solidus_admin/remixicon.symbol.svg")
+        tag.svg(
+          tag.use(href: "#{svg_map}##{icon_name}"),
+          "aria-hidden": true,
+          style: "fill: currentColor",
+          class: "icon"
+        )
       end
 
       def configurations_menu_item(link_text, url, description = "")
@@ -173,6 +190,12 @@ module Spree
         content_tag(:li, options) do
           link_to(link_text, url)
         end
+      end
+
+      private
+
+      def icon_for(icon_name)
+        Spree::Backend::Config.admin_updated_navbar ? Spree::Backend::REMIX_ICONS.fetch(icon_name, icon_name) : icon_name
       end
     end
   end

@@ -5,7 +5,7 @@ module Spree
     module AdjustmentsHelper
       def adjustment_state(adjustment)
         icon = adjustment.finalized? ? "lock" : "unlock"
-        content_tag(:span, "", class: "fa fa-#{icon}")
+        solidus_icon(icon)
       end
 
       def display_adjustable(adjustable)
