@@ -97,9 +97,17 @@ images = {
   ]
 }
 
+def available_image_count(key, color)
+  index = 1
+  index += 1 while image("#{key}_#{color}_#{index}", "png")
+  index - 1
+end
+
 products.each do |key, product|
   product.reload.variants.each do |variant|
     color = variant.option_value("clothing-color").downcase
+    next if variant.images.count >= available_image_count(key, color)
+
     index = 1
 
     loop do
@@ -116,6 +124,8 @@ products.each do |key, product|
 end
 
 images.each do |variant, attachments|
+  next if variant.images.count >= attachments.length
+
   shell.say_status :sample, "images for #{variant.product.name}"
   attachments.each do |attachment|
     File.open(attachment[:attachment]) do |f|
