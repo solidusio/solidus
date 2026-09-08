@@ -101,6 +101,7 @@ class CheckoutsController < CheckoutBaseController
     move_payment_source_into_payments_attributes(massaged_params)
     move_wallet_payment_source_id_into_payments_attributes(massaged_params)
     set_payment_parameters_amount(massaged_params, @order)
+    merge_payment_parameters_ids(massaged_params, @order)
 
     massaged_params
   end

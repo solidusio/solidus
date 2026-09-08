@@ -165,6 +165,7 @@ module Spree
 
     @@checkout_payment_attributes = [
       payments_attributes: payment_attributes + [
+        :id,
         source_attributes:
       ]
     ]
