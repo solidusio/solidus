@@ -130,4 +130,19 @@ RSpec.describe SolidusAdmin::Configuration do
       ])
     end
   end
+
+  describe "#pagination_ratios_per_page" do
+    subject { described_class.new.pagination_ratios_per_page }
+
+    it "returns the number of resources to display on the first, second, third and remaining pages" do
+      expect(subject).to eq([15, 30, 50, 100])
+    end
+
+    it "allows an array of integers to be set as the pagination ratios" do
+      config = described_class.new
+      config.pagination_ratios_per_page = [1, 2, 3, 4]
+
+      expect(config.pagination_ratios_per_page).to eq([1, 2, 3, 4])
+    end
+  end
 end

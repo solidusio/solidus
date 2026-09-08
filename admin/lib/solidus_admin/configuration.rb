@@ -191,6 +191,13 @@ module SolidusAdmin
     # The HTTP method used to logout the user in the admin interface.
     preference :logout_link_method, :string, default: :delete
 
+    # @!attribute [rw] pagination_ratios_per_page
+    #   @return [Array] An array of four integers representing the number of
+    #   items to display per page in the admin interface. The values in this
+    #   array represent the number of resources displayed on the first, second,
+    #   third and every subsequent page after.
+    preference :pagination_ratios_per_page, :array, default: [15, 30, 50, 100]
+
     # @!attribute [rw] themes
     #   @return [Hash] A hash containing the themes that are available for the admin panel
     preference :themes, :hash, default: {

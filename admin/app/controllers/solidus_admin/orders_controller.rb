@@ -18,7 +18,7 @@ module SolidusAdmin
         distinct: false
       )
 
-      set_page_and_extract_portion_from(orders)
+      set_page_and_extract_portion_from(orders, per_page: SolidusAdmin::Config[:pagination_ratios_per_page])
 
       respond_to do |format|
         format.html { render component("orders/index").new(page: @page) }

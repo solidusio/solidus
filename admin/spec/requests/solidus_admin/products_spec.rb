@@ -10,7 +10,7 @@ RSpec.describe "SolidusAdmin::ProductsController", type: :request do
   end
 
   describe "GET #index" do
-    before { create_list(:product, 3) }
+    let!(:products) { create_list(:product, 3) }
 
     it "renders successfully" do
       get solidus_admin.products_path
@@ -20,6 +20,35 @@ RSpec.describe "SolidusAdmin::ProductsController", type: :request do
     it "loads stock for every product without an N+1" do
       expect { get solidus_admin.products_path }
         .to make_database_queries(matching: /from .spree_stock_items./i, count: 1)
+    end
+
+    context "with pagination config" do
+      around do |example|
+        original_per_page = SolidusAdmin::Config[:pagination_ratios_per_page]
+        SolidusAdmin::Config[:pagination_ratios_per_page] = [1, 2, 3, 4]
+        example.run
+        SolidusAdmin::Config[:pagination_ratios_per_page] = original_per_page
+      end
+
+      it "paginates resources on first and second page based on pagination config" do
+        get solidus_admin.products_path
+        expect(response).to have_http_status(:ok)
+
+        products.sort_by!(&:name)
+
+        expect(response.body).to include(products[0].name)
+        expect(response.body).to_not include(products[1].name)
+        expect(response.body).to_not include(products[2].name)
+
+        # Extract next page query param for cursored pagination.
+        next_href = Nokogiri::HTML(response.body).at_css('a[rel="next"]')["href"]
+        next_page = Rack::Utils.parse_nested_query(URI(next_href).query)["page"]
+
+        get solidus_admin.products_path(params: {page: next_page})
+
+        expect(response.body).to_not include(products[0].name)
+        expect(response.body).to include(products[1].name)
+      end
     end
   end
 
