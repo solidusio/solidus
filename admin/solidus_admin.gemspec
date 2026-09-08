@@ -30,6 +30,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "blueprinter"
   s.add_dependency "geared_pagination", "~> 1.1"
+  # Rails < 8.1 isn't compatible with json 3.x
+  s.add_dependency "json", "< 3"
   s.add_dependency "importmap-rails", [">= 2.0", "< 3"]
   s.add_dependency "solidus_backend"
   s.add_dependency "solidus_core", "> 4.2"
