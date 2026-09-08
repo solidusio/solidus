@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency "discard", "~> 2.0"
   s.add_dependency "friendly_id", "~> 5.0"
   s.add_dependency "image_processing", "~> 1.10"
+  s.add_dependency "json", "< 3"
   s.add_dependency "mini_magick", "~> 4.10"
   s.add_dependency "monetize", "~> 1.8"
   s.add_dependency "kt-paperclip", [">= 6.3", "< 8.1"]
