@@ -11,11 +11,6 @@ RSpec.describe "user factory" do
 
     it_behaves_like "a working factory"
   end
-  describe "admin user" do
-    let(:factory) { :admin_user }
-
-    it_behaves_like "a working factory"
-  end
   describe "user with addresses" do
     let(:factory) { :user_with_addresses }
 

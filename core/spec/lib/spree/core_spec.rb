@@ -19,6 +19,76 @@ RSpec.describe Spree::Core do
     end
   end
 
+  describe ".admin_user_class" do
+    around do |example|
+      prev_user_class = Spree.user_class_name
+      prev_admin_user_class = Spree.admin_user_class_name
+      example.run
+      Spree.user_class = prev_user_class
+      Spree.admin_user_class = prev_admin_user_class == prev_user_class ? nil : prev_admin_user_class
+    end
+
+    context "when unset" do
+      before do
+        Spree.user_class = "Spree::LegacyUser"
+        Spree.admin_user_class = nil
+      end
+
+      it "falls back to Spree.user_class" do
+        expect(Spree.admin_user_class).to eq(Spree::LegacyUser)
+      end
+    end
+
+    context "when set to a String" do
+      before { Spree.admin_user_class = "Spree::LegacyUser" }
+
+      it "constantizes it" do
+        expect(Spree.admin_user_class).to eq(Spree::LegacyUser)
+      end
+    end
+
+    context "when set to a Symbol" do
+      before { Spree.admin_user_class = :"Spree::LegacyUser" }
+
+      it "constantizes it" do
+        expect(Spree.admin_user_class).to eq(Spree::LegacyUser)
+      end
+    end
+
+    context "when set to a Class" do
+      before { Spree.admin_user_class = Spree::LegacyUser }
+
+      it "raises" do
+        expect { Spree.admin_user_class }.to raise_error(
+          RuntimeError, "Spree.admin_user_class MUST be a String or Symbol object, not a Class object."
+        )
+      end
+    end
+  end
+
+  describe ".admin_user_class_name" do
+    around do |example|
+      prev_user_class = Spree.user_class_name
+      prev_admin_user_class = Spree.admin_user_class_name
+      example.run
+      Spree.user_class = prev_user_class
+      Spree.admin_user_class = prev_admin_user_class == prev_user_class ? nil : prev_admin_user_class
+    end
+
+    it "falls back to Spree.user_class_name when unset" do
+      Spree.user_class = "Spree::LegacyUser"
+      Spree.admin_user_class = nil
+
+      expect(Spree.admin_user_class_name).to eq("Spree::LegacyUser")
+    end
+
+    it "returns the configured admin_user_class when set" do
+      Spree.admin_user_class = "Spree::AdminUser"
+
+      expect(Spree.admin_user_class_name).to eq("Spree::AdminUser")
+    end
+  end
+
   describe ".load_defaults" do
     it "load defaults for all available components" do
       config_instance_builder = -> { Class.new(Spree::Preferences::Configuration).new }
