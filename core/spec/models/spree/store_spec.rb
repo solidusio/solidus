@@ -142,7 +142,7 @@ RSpec.describe Spree::Store, type: :model do
       it "prevents deletion" do
         store = create(:store, default: true)
         expect(store.destroy).to eq false
-        expect(store.errors.full_messages.join).to match /Cannot destroy/
+        expect(store.errors.full_messages.join).to match(/Cannot destroy/)
         expect { store.reload }.not_to raise_error
       end
     end

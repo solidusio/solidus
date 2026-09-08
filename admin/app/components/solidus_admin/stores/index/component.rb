@@ -32,9 +32,9 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
         label: t(".batch_actions.delete"),
         action: solidus_admin.stores_path,
         method: :delete,
-        icon: 'delete-bin-7-line',
-        require_confirmation: true,
-      },
+        icon: "delete-bin-7-line",
+        require_confirmation: true
+      }
     ]
   end
 
@@ -43,7 +43,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
       name_column,
       url_column,
       slug_column,
-      default_column,
+      default_column
     ]
   end
 
@@ -53,7 +53,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :name,
       data: ->(store) do
-        link_to store.name, edit_path(store), class: 'body-link'
+        link_to store.name, edit_path(store), class: "body-link"
       end
     }
   end
@@ -62,7 +62,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :url,
       data: ->(store) do
-        link_to store.url, edit_path(store), class: 'body-link'
+        link_to store.url, edit_path(store), class: "body-link"
       end
     }
   end
@@ -71,7 +71,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :slug,
       data: ->(store) do
-        link_to store.code, edit_path(store), class: 'body-link'
+        link_to store.code, edit_path(store), class: "body-link"
       end
     }
   end
@@ -80,7 +80,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
     {
       header: :default,
       data: ->(store) do
-        store.default? ? component('ui/badge').yes : component('ui/badge').no
+        store.default? ? component("ui/badge").yes : component("ui/badge").no
       end
     }
   end
