@@ -28,6 +28,16 @@
   - changed-files:
     - any-glob-to-any-file:
       - "legacy_promotions/**/*"
+"changelog:solidus_storefront":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "storefront/**/*"
+"changelog:solidus_i18n":
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "i18n/**/*"
 "changelog:solidus_sample":
 - any:
   - changed-files:
@@ -53,6 +63,8 @@
       - "!promotions/**/*"
       - "!legacy_promotions/**/*"
       - "!sample/**/*"
+      - "!storefront/**/*"
+      - "!i18n/**/*"
       - "!lib/**/*"
       - "!README.md"
       - "!solidus.gemspec"
