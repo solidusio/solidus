@@ -6,7 +6,7 @@ require "cancan/matchers"
 require "spree/testing_support/ability_helpers"
 
 RSpec.describe Spree::Ability, type: :model do
-  let(:user) { build(:user) }
+  let(:user) { create(:user) }
   let(:ability) { Spree::Ability.new(user) }
   let(:token) { nil }
 
