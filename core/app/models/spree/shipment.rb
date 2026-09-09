@@ -133,7 +133,13 @@ module Spree
     end
 
     def item_cost
-      line_items.sum(&:total)
+      # `line_items` is a distinct join through inventory_units, so a line item
+      # split across several shipments shows up in every one of them. Prorate
+      # each line item's total by the fraction of its units that are actually
+      # in this shipment instead of counting the whole line item in each.
+      manifest.sum do |item|
+        item.line_item.total * item.quantity / item.line_item.quantity
+      end
     end
 
     def ready_or_pending?

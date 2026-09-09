@@ -210,6 +210,41 @@ RSpec.describe Spree::Shipment, type: :model do
     it "should equal line items final amount with tax" do
       expect(shipment.item_cost).to eql(11.0)
     end
+
+    # Regression test for https://github.com/solidusio/solidus/issues/2919
+    context "when a line item's units are split across shipments" do
+      let(:order) do
+        create(
+          :order_ready_to_ship,
+          line_items_attributes: [{price: 10, quantity: 2, variant:}],
+          ship_address:
+        )
+      end
+
+      let(:second_shipment) do
+        order.shipments.create!(
+          state: "pending",
+          cost: 0,
+          stock_location: shipment.stock_location
+        )
+      end
+
+      before do
+        # `line_items` is a distinct join through inventory_units, so both
+        # shipments see the same (single) line item even though each only
+        # holds one of its two units.
+        second_shipment
+        unit_to_move = shipment.inventory_units.last
+        unit_to_move.update_column(:shipment_id, second_shipment.id)
+        shipment.reload
+        second_shipment.reload
+      end
+
+      it "only counts the units actually present in each shipment, not the whole line item" do
+        expect(shipment.item_cost).to eql(11.0)
+        expect(second_shipment.item_cost).to eql(11.0)
+      end
+    end
   end
 
   describe "#total_before_tax" do
