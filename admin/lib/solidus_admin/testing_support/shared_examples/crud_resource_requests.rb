@@ -21,21 +21,21 @@ RSpec.shared_examples_for "CRUD resource requests" do |resource_name, except: []
     allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
   end
 
-  describe "GET /index", skip: :index.in?(except) && "not applicable" do
+  describe "GET /index", unless: :index.in?(except) do
     it "renders the index template with a 200 OK status" do
       get resources_path
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "GET /new", skip: :new.in?(except) && "not applicable" do
+  describe "GET /new", unless: :new.in?(except) do
     it "renders the new template with a 200 OK status" do
       get new_resource_path
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "POST /create", skip: :create.in?(except) && "not applicable" do
+  describe "POST /create", unless: :create.in?(except) do
     context "with valid parameters" do
       it "creates a new #{resource_name.humanize}" do
         expect {
@@ -72,14 +72,14 @@ RSpec.shared_examples_for "CRUD resource requests" do |resource_name, except: []
     end
   end
 
-  describe "GET /edit", skip: :edit.in?(except) && "not applicable" do
+  describe "GET /edit", unless: :edit.in?(except) do
     it "renders the edit template with a 200 OK status" do
       get edit_resource_path
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "PATCH /update", skip: :update.in?(except) && "not applicable" do
+  describe "PATCH /update", unless: :update.in?(except) do
     context "with valid parameters" do
       it "updates the #{resource_name.humanize}" do
         patch resource_path, params: {resource_name => valid_attributes}
@@ -116,7 +116,7 @@ RSpec.shared_examples_for "CRUD resource requests" do |resource_name, except: []
     end
   end
 
-  describe "DELETE /destroy single", skip: :destroy_single.in?(except) && "not applicable" do
+  describe "DELETE /destroy single", unless: :destroy_single.in?(except) do
     it "deletes the #{resource_name.humanize} and redirects with a 303 See Other status" do
       # This ensures resource exists prior to deletion.
       resource
@@ -133,8 +133,8 @@ RSpec.shared_examples_for "CRUD resource requests" do |resource_name, except: []
     end
   end
 
-  describe "DELETE /destroy bulk", skip: :destroy_bulk.in?(except) && "not applicable" do
-    it 'allows to bulk delete resources' do
+  describe "DELETE /destroy bulk", unless: :destroy_bulk.in?(except) do
+    it "allows to bulk delete resources" do
       ids = [create(factory), create(factory)].map(&:id)
       expect { delete resources_path, params: {id: ids} }.to change { resource_class.count }.by(-ids.size)
 
