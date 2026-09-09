@@ -2,7 +2,6 @@
 
 class SolidusPromotions::PromotionCategories::Edit::Component < SolidusAdmin::BaseComponent
   def initialize(record)
-    super
     @promotion_category = record
   end
 

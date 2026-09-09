@@ -16,10 +16,10 @@ module SolidusAdmin
     config.autoload_paths << SolidusAdmin::Engine.root.join("spec/components/previews")
 
     initializer "solidus_admin.view_component" do |app|
-      app.config.view_component.preview_paths << SolidusAdmin::Engine.root.join("spec/components/previews").to_s
+      app.config.view_component.previews.paths << SolidusAdmin::Engine.root.join("spec/components/previews").to_s
 
       app.config.to_prepare do
-        preview_controller_class = app.config.view_component.preview_controller.constantize
+        preview_controller_class = app.config.view_component.previews.controller.constantize
 
         # This is needed to make the preview controller have access to the same
         # set of helpers that are available to the Preview class.
