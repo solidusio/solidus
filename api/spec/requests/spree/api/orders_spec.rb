@@ -76,6 +76,19 @@ module Spree::Api
               }.not_to change { Spree::Payment.count }
             end
           end
+
+          context "when passing an amount" do
+            let(:attributes) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id, amount: 100 }]) }
+            let!(:payment_method) { create(:check_payment_method, name: "allowed") }
+
+            it "ignores the amount parameter" do
+              expect {
+                subject
+              }.to change { Spree::Payment.count }.by(1)
+
+              expect(Spree::Payment.last.amount).to eq(0)
+            end
+          end
         end
       end
 
