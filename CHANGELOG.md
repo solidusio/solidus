@@ -1,3 +1,44 @@
+## Solidus v4.7.1 (2026-09-09)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.7] Only fire order recalculated events after save by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6449
+* [v4.7] Remove redundant item total setting by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6473
+* [v4.7] Don't "persist_amounts" in order recalculation by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6490
+* [v4.7] Fix: {LineItem;Shipment}#total_before_tax: Ignore stale adjustments by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6523
+* [v4.7] Fix a few test environment issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6538
+* [v4.7] Reuse the order's line items when building a shipping manifest by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6536
+* [v4.7] Address Licensing Issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6574
+* [v4.7] Disallow setting payment amounts through the orders and payments APIs by @jarednorman in https://github.com/solidusio/solidus/pull/6593
+* [v4.7] Deny anonymous access to guest credit cards by @jarednorman in https://github.com/solidusio/solidus/pull/6592
+
+## Solidus Admin
+
+* [v4.7] Fix a few test environment issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6538
+* [v4.7] Address Licensing Issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6574
+
+## Solidus Backend
+
+* [v4.7] Reuse the order's line items when building a shipping manifest by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6536
+* [v4.7] Address Licensing Issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6574
+* [v4.7] Disallow setting payment amounts through the orders and payments APIs by @jarednorman in https://github.com/solidusio/solidus/pull/6593
+
+## Solidus API
+
+* [v4.7] Disallow setting payment amounts through the orders and payments APIs by @jarednorman in https://github.com/solidusio/solidus/pull/6593
+* [v4.7] Deny anonymous access to guest credit cards by @jarednorman in https://github.com/solidusio/solidus/pull/6592
+
+## Solidus Promotions
+
+* [v4.7] Fix SolidusPromotion OrderRecalculator patch by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6487
+* [v4.7] Add privilege and category to legacy_promotions and promotion permission sets by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6556
+* [v4.7] Remove adjustments from cart orders when promotion is discarded by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6561
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.7.0...v4.7.1
+
+
 ## Solidus v4.7.0 (2026-04-15)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
