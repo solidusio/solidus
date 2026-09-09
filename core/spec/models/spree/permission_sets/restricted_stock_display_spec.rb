@@ -25,11 +25,41 @@ RSpec.describe Spree::PermissionSets::RestrictedStockDisplay do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:read, sl1) }
+    # This permission set does not grant `:read` on `StockLocation` at all (see
+    # https://github.com/solidusio/solidus/issues/4744): every user already gets
+    # `can :read, StockLocation, active: true` from the always-on `:default` role,
+    # so a narrower grant here could never actually restrict location visibility —
+    # it could only accidentally widen it to inactive locations. Neither of these
+    # inactive locations is readable through either permission set.
+    it { is_expected.to_not be_able_to(:read, sl1) }
     it { is_expected.to_not be_able_to(:read, sl2) }
 
     it { is_expected.to be_able_to(:read, item1) }
     it { is_expected.to_not be_able_to(:read, item2) }
+  end
+
+  context "when activated, with active locations" do
+    let(:sl1) { create :stock_location, active: true }
+    let(:sl2) { create :stock_location, active: true }
+
+    before do
+      described_class.new(ability).activate!
+    end
+
+    # Documents the actual, known limitation reported in #4744: DefaultCustomer
+    # grants every user `:read` on any active StockLocation, and `:read` on any
+    # StockItem at an active location, regardless of this permission set — so
+    # neither is genuinely restrictable to assigned locations once they're
+    # active. Only the `:admin` action (not granted by DefaultCustomer) stays
+    # scoped to assigned locations.
+    it { is_expected.to be_able_to(:read, sl1) }
+    it { is_expected.to be_able_to(:read, sl2) }
+
+    it { is_expected.to be_able_to(:read, item1) }
+    it { is_expected.to be_able_to(:read, item2) }
+
+    it { is_expected.to be_able_to(:admin, item1) }
+    it { is_expected.to_not be_able_to(:admin, item2) }
   end
 
   context "when not activated" do

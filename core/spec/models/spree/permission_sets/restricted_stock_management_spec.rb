@@ -25,8 +25,33 @@ RSpec.describe Spree::PermissionSets::RestrictedStockManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:read, sl1) }
+    # This permission set does not grant `:read` on `StockLocation` at all (see
+    # https://github.com/solidusio/solidus/issues/4744): every user already gets
+    # `can :read, StockLocation, active: true` from the always-on `:default` role,
+    # so a narrower grant here could never actually restrict location visibility —
+    # it could only accidentally widen it to inactive locations. Neither of these
+    # inactive locations is readable through either permission set.
+    it { is_expected.to_not be_able_to(:read, sl1) }
     it { is_expected.to_not be_able_to(:read, sl2) }
+
+    it { is_expected.to be_able_to(:manage, item1) }
+    it { is_expected.to_not be_able_to(:manage, item2) }
+  end
+
+  context "when activated, with active locations" do
+    let(:sl1) { create :stock_location, active: true }
+    let(:sl2) { create :stock_location, active: true }
+
+    before do
+      described_class.new(ability).activate!
+    end
+
+    # Documents the actual, known limitation reported in #4744: stock location
+    # read access is granted to every user via DefaultCustomer regardless of
+    # this permission set, including for a location the user isn't assigned to.
+    # `:manage` on `StockItem` remains correctly scoped to assigned locations.
+    it { is_expected.to be_able_to(:read, sl1) }
+    it { is_expected.to be_able_to(:read, sl2) }
 
     it { is_expected.to be_able_to(:manage, item1) }
     it { is_expected.to_not be_able_to(:manage, item2) }
