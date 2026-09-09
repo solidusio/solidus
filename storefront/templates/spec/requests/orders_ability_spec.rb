@@ -28,16 +28,17 @@ RSpec.describe "Order permissions", type: :request do
 
     context "#show" do
       context "when token parameter present" do
-        it "always override existing token when passing a new one" do
-          get order_path(id: another_order.number, token: another_order.guest_token)
-          jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
-          expect(jar.signed[:guest_token]).to eq another_order.guest_token
+        it "authorizes the request against the supplied token" do
+          get order_path(id: order.number, token: order.guest_token)
+
+          expect(response).to have_http_status(:ok)
         end
 
-        it "stores as guest_token in session" do
-          get order_path(id: order.number, token: order.guest_token)
+        it "never adopts the URL token as the visitor's guest_token cookie" do
+          get order_path(id: another_order.number, token: another_order.guest_token)
+
           jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
-          expect(jar.signed[:guest_token]).to eq order.guest_token
+          expect(jar.signed[:guest_token]).not_to eq another_order.guest_token
         end
       end
 

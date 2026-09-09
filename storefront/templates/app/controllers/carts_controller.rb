@@ -5,7 +5,6 @@ class CartsController < StoreController
 
   respond_to :html
 
-  before_action :store_guest_token
   before_action :assign_order, only: :update
   # note: do not lock the #show action because that's where we redirect when we fail to acquire a lock
   around_action :lock_order, only: :update
@@ -52,10 +51,6 @@ class CartsController < StoreController
 
   def accurate_title
     t("spree.shopping_cart")
-  end
-
-  def store_guest_token
-    cookies.permanent.signed[:guest_token] = params[:token] if params[:token]
   end
 
   def order_params
