@@ -73,7 +73,7 @@ module Spree
 
     @@option_type_attributes = [:name, :presentation, option_values_attributes: option_value_attributes]
 
-    @@payment_attributes = [:amount, :payment_method_id, :payment_method, customer_metadata: {}]
+    @@payment_attributes = [:payment_method_id, :payment_method, customer_metadata: {}]
 
     @@product_properties_attributes = [:property_name, :value, :position]
 
@@ -165,6 +165,7 @@ module Spree
 
     @@checkout_payment_attributes = [
       payments_attributes: payment_attributes + [
+        :amount,
         source_attributes:
       ]
     ]
