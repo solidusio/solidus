@@ -1,3 +1,39 @@
+## Solidus v4.6.3 (2026-09-09)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Solidus Core
+
+* [v4.6] Fix return item initialization in backend by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6415
+* [v4.6] Add tax_category_id method to Spree::Product by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6427
+* Fix order walkthrough for iso uniqueness by @AlistairNorman in https://github.com/solidusio/solidus/pull/6474
+* [v4.6] Address Licensing Issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6573
+* [v4.6] Disallow setting payment amounts through the orders and payments APIs by @jarednorman in https://github.com/solidusio/solidus/pull/6595
+* [v4.6] Deny anonymous access to guest credit cards by @jarednorman in https://github.com/solidusio/solidus/pull/6594
+
+## Solidus Admin
+
+* [v4.6] Address Licensing Issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6573
+
+## Solidus Backend
+
+* [v4.6] Fix return item initialization in backend by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6415
+* [v4.6] Address Licensing Issues by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6573
+* [v4.6] Disallow setting payment amounts through the orders and payments APIs by @jarednorman in https://github.com/solidusio/solidus/pull/6595
+
+## Solidus API
+
+* [v4.6] Disallow setting payment amounts through the orders and payments APIs by @jarednorman in https://github.com/solidusio/solidus/pull/6595
+* [v4.6] Deny anonymous access to guest credit cards by @jarednorman in https://github.com/solidusio/solidus/pull/6594
+
+## Solidus Promotions
+
+* [v4.6] Promotions: Fix default calculator fields partial bug and make PercentWithCap calculator available in the UI by @mamhoff in https://github.com/solidusio/solidus/pull/6394
+* [v4.6] Fix line item option condition params by @mamhoff in https://github.com/solidusio/solidus/pull/6396
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.6.2...v4.6.3
+
+
 ## Solidus v4.6.2 (2025-11-27)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
