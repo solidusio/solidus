@@ -48,6 +48,10 @@ module SolidusAdmin
 
     alias_method :enable_alpha_features?, :enable_alpha_features
 
+    preference :force_legacy_admin_proc, :proc, default: ->(_req) {
+      return false;
+    }
+
     preference :storefront_product_path_proc, :proc, default: ->(_version) {
       ->(product) { "/products/#{product.slug}" }
     }
