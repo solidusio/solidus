@@ -12,7 +12,13 @@ module SolidusPromotions
     before_destroy :remove_adjustments_from_incomplete_orders
     before_destroy :raise_for_adjustments_for_completed_orders
 
-    belongs_to :promotion, inverse_of: :benefits
+    # @!attribute [rw] promotion
+    #   The owning promotion.
+    #   @return [SolidusPromotions::Promotion]
+    belongs_to :promotion, -> { with_discarded }, inverse_of: :benefits
+    # @!attribute [rw] original_promotion_action
+    #   Back-reference to the original Solidus (Spree) promotion action, when migrated.
+    #   @return [Spree::PromotionAction, nil]
     belongs_to :original_promotion_action, class_name: "Spree::PromotionAction", optional: true
     has_many :adjustments, class_name: "Spree::Adjustment", as: :source, dependent: :restrict_with_error
     has_many :shipping_rate_discounts, class_name: "SolidusPromotions::ShippingRateDiscount", inverse_of: :benefit, dependent: :restrict_with_error

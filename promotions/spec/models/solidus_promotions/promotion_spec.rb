@@ -93,6 +93,17 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
       it "destroys the connection" do
         expect { subject }.to change(SolidusPromotions::OrderPromotion, :count).by(-1)
       end
+
+      it "removes adjustments from incomplete orders" do
+        benefit = promotion.benefits.first
+        order.adjustments.create!(
+          source: benefit,
+          order: order,
+          amount: -10.0,
+          label: "Test Adjustment"
+        )
+        expect { subject }.to change { order.adjustments.reload.count }.from(1).to(0)
+      end
     end
 
     context "when the promotion has been added to a complete order" do
