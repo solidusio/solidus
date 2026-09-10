@@ -21,6 +21,38 @@ RSpec.describe "SolidusAdmin::OptionValuesController", type: :request do
     let(:expected_after_update_path) { %r{/admin/option_types/\d+/edit} }
     let(:expected_after_destroy_path) { %r{/admin/option_types/\d+/edit} }
 
+    context "when format is not turbo_stream" do
+      context "#edit" do
+        before do
+          get edit_resource_path
+        end
+
+        it "does not respond with turbo stream" do
+          expect(response.content_type)
+            .not_to include("text/vnd.turbo-stream.html")
+        end
+
+        it "responds with a 200" do
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      context "#update" do
+        before do
+          patch resource_path, params: {option_value: valid_attributes}
+        end
+
+        it "does not respond with turbo stream" do
+          expect(response.content_type)
+            .not_to include("text/vnd.turbo-stream.html")
+        end
+
+        it "responds with a 303" do
+          expect(response).to have_http_status(:see_other)
+        end
+      end
+    end
+
     context "when format is turbo_stream" do
       let(:format) { :turbo_stream }
 
