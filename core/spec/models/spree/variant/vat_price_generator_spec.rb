@@ -42,6 +42,25 @@ RSpec.describe Spree::Variant::VatPriceGenerator do
       described_class.new(variant).run
       expect { subject }.not_to change { variant.prices.size }
     end
+
+    context "when the default price has no amount" do
+      let(:variant) { build(:variant, price: nil, tax_category:) }
+
+      it "builds no additional prices" do
+        expect { subject }.not_to change { variant.prices.length }
+      end
+    end
+
+    context "when the variant has no default price" do
+      before do
+        variant.prices.destroy_all
+        variant.reload
+      end
+
+      it "builds no additional prices" do
+        expect { subject }.not_to change { variant.prices.length }
+      end
+    end
   end
 
   context "with no default admin country" do

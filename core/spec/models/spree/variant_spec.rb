@@ -120,6 +120,19 @@ RSpec.describe Spree::Variant, type: :model do
 
         it { is_expected.to be_valid }
       end
+
+      context "when VAT rates exist for other countries" do
+        let(:product) { build(:base_product, price: nil, tax_category:) }
+        let(:tax_category) { create(:tax_category) }
+        let(:germany) { create(:country, iso: "DE") }
+        let(:germany_zone) { create(:zone, countries: [germany]) }
+        let!(:german_vat) { create(:tax_rate, included_in_price: true, amount: 0.19, zone: germany_zone, tax_categories: [tax_category]) }
+
+        it "is invalid without a price instead of raising" do
+          variant.valid?
+          expect(subject.errors.full_messages).to include("Price Must supply price for variant or master.price for product.")
+        end
+      end
     end
   end
 
