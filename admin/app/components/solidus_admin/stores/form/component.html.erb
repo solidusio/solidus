@@ -1,0 +1,90 @@
+<%= form_for @store, url: @url, html: { id: @id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component('ui/panel').new do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <div class="flex flex-col gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :name) %>
+            <%= render component("ui/forms/field").text_field(f, :code) %>
+            <%= render component("ui/forms/field").text_field(f, :url) %>
+            <%= render component("ui/forms/field").text_field(f, :mail_from_address) %>
+          </div>
+        <% end %>
+      <% end %>
+      <%= render component('ui/panel').new(title: t('.localization')) do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <div class="flex flex-col gap-4 w-full">
+            <%= render component("ui/forms/field").select(f, :default_currency, Spree::Config.available_currencies.map(&:iso_code)) %>
+            <%= render component("ui/forms/field").select(f, :cart_tax_country_iso, Spree::Country.order(:name).map { |c| [c.name, c.iso] },
+              include_blank: t(".tax_country.no_taxes_without_address")
+            ) %>
+            <%= render component("ui/forms/field").select(f, :available_locales, available_locales, multiple: true) %>
+          </div>
+          <%= render component('ui/panel').new do |inner_panel| %>
+            <% inner_panel.with_section(class: "flex justify-between") do %>
+              <div class="flex gap-2 items-center">
+                <div class="p-1 border border-gray-100 rounded-sm">
+                  <%= render component("ui/icon").new(name: "github-fill", class: "w-9 h-9 fill-gray-500") %>
+                </div>
+                <div class="flex flex-col">
+                  <div class="flex gap-1">
+                    <div class="font-semibold"><%= t(".plugins.solidus_i18n.title") %></div>
+                    <%= render component("ui/badge").new(name: t(".plugins.plugin"), color: :blue, size: :s) %>
+                  </div>
+                  <div class="text-sm text-gray-500"><%= t(".plugins.solidus_i18n.desc") %></div>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <%= render component("ui/button").new(
+                  tag: :a,
+                  text: t(".plugins.install"),
+                  scheme: :secondary,
+                  href: t(".plugins.solidus_i18n.href"),
+                  target: "_blank"
+                ) %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <%= render component('ui/panel').new do |inner_panel| %>
+            <% inner_panel.with_section(class: "flex justify-between") do %>
+              <div class="flex gap-2 items-center">
+                <div class="p-1 border border-gray-100 rounded-sm">
+                  <%= render component("ui/icon").new(name: "github-fill", class: "w-9 h-9 fill-gray-500") %>
+                </div>
+                <div class="flex flex-col">
+                  <div class="flex gap-1">
+                    <div class="font-semibold"><%= t(".plugins.solidus_globalize.title") %></div>
+                    <%= render component("ui/badge").new(name: t(".plugins.plugin"), color: :blue, size: :s) %>
+                  </div>
+                  <div class="text-sm text-gray-500"><%= t(".plugins.solidus_globalize.desc") %></div>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <%= render component("ui/button").new(
+                  tag: :a,
+                  text: t(".plugins.install"),
+                  scheme: :secondary,
+                  href: t(".plugins.solidus_globalize.href"),
+                  target: "_blank"
+                ) %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component('ui/panel').new(title: t('.seo')) do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <div class="flex flex-col gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :seo_title) %>
+            <%= render component("ui/forms/field").text_field(f, :meta_keywords) %>
+            <%= render component("ui/forms/field").text_field(f, :meta_description) %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
