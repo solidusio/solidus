@@ -40,6 +40,15 @@ RSpec.describe SolidusAdmin::UI::Button::Component, type: :component do
     end
   end
 
+  describe ".add" do
+    let(:component) { described_class.add(path: "/index") }
+
+    it "renders Add button" do
+      render_inline(component)
+      expect(page).to have_link(href: "/index", text: "Add")
+    end
+  end
+
   describe ".back" do
     let(:component) { described_class.back(path: "/index") }
 
