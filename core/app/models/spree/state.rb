@@ -3,7 +3,10 @@
 module Spree
   class State < Spree::Base
     belongs_to :country, class_name: "Spree::Country"
-    has_many :addresses, dependent: :nullify, inverse_of: :state
+    has_many :addresses,
+      foreign_key: :principal_subdivision_id,
+      dependent: :nullify,
+      inverse_of: :principal_subdivision
 
     validates :name, presence: true
 
