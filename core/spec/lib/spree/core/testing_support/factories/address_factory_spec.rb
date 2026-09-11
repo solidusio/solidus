@@ -42,7 +42,7 @@ RSpec.describe "address factory" do
 
         it "infers the country from the state" do
           expect(subject).to be_valid
-          expect(subject.state.abbr).to eq("PE")
+          expect(subject.principal_subdivision.abbr).to eq("PE")
           expect(subject.country.iso).to eq("IT")
         end
       end
@@ -52,18 +52,18 @@ RSpec.describe "address factory" do
 
         it "automatically finds or creates an appropriate state" do
           expect(subject).to be_valid
-          expect(subject.state.abbr).to eq("AL")
+          expect(subject.principal_subdivision.abbr).to eq("AL")
           expect(subject.country.iso).to eq("IT")
         end
       end
 
       context "when given a country, no state but a state_name" do
-        subject { build(:address, country:, state_name: "Bogus state") }
+        subject { build(:address, country:, principal_subdivision_name: "Bogus state") }
 
         it "does not automatically find or create an appropriate state" do
           expect(subject).to be_valid
-          expect(subject.state).to be_nil
-          expect(subject.state_name).to eq("Bogus state")
+          expect(subject.principal_subdivision).to be_nil
+          expect(subject.principal_subdivision_name).to eq("Bogus state")
         end
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe "address factory" do
 
       it "does not automatically find or create an appropriate state" do
         expect(subject).to be_valid
-        expect(subject.state).to be_nil
+        expect(subject.principal_subdivision).to be_nil
         expect(subject.country.iso).to eq("AI")
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe "address factory" do
 
         it "works" do
           expect(subject).to be_valid
-          expect(subject.state.abbr).to eq("NY")
+          expect(subject.principal_subdivision.abbr).to eq("NY")
           expect(subject.country.iso).to eq("US")
         end
       end
@@ -101,7 +101,7 @@ RSpec.describe "address factory" do
 
     it "shares the same country and state objects" do
       expect(address1.country).to eq(address2.country)
-      expect(address1.state).to eq(address2.state)
+      expect(address1.principal_subdivision).to eq(address2.principal_subdivision)
       expect(Spree::Country.count).to eq(1)
       expect(Spree::State.count).to eq(1)
     end

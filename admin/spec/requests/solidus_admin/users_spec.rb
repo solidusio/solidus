@@ -16,7 +16,7 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
           address2: address.address2,
           city: address.city,
           zipcode: address.zipcode,
-          state_id: address.state_id,
+          principal_subdivision_id: address.principal_subdivision_id,
           country_id: address.country_id,
           phone: address.phone
         }
@@ -33,7 +33,7 @@ RSpec.describe "SolidusAdmin::UsersController", type: :request do
           address2: address.address2,
           city: address.city,
           zipcode: address.zipcode,
-          state_id: address.state_id,
+          principal_subdivision_id: address.principal_subdivision_id,
           country_id: address.country_id,
           phone: address.phone
         }

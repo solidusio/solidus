@@ -43,7 +43,7 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_field("City", with: user.bill_address.city)
       expect(page).to have_field("Zip Code", with: user.bill_address.zipcode)
       expect(page).to have_select("Country", selected: "United States of America", visible: false)
-      expect(page).to have_select("State", selected: user.bill_address.state.name, visible: false)
+      expect(page).to have_select("State", selected: user.bill_address.principal_subdivision.name, visible: false)
       expect(page).to have_field("Phone", with: user.bill_address.phone)
       click_button "Update"
       expect(Spree::Order.last.user).not_to be_nil

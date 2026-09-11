@@ -8,18 +8,18 @@ RSpec.describe Spree::Tax::TaxLocation do
 
   subject { described_class.new }
 
-  it { is_expected.to respond_to(:state_id) }
+  it { is_expected.to respond_to(:principal_subdivision_id) }
   it { is_expected.to respond_to(:country_id) }
 
   describe "default values" do
     it "has a nil state and country id" do
-      expect(subject.state_id).to eq(nil)
+      expect(subject.principal_subdivision_id).to eq(nil)
       expect(subject.country_id).to eq(nil)
     end
   end
 
   describe "#==" do
-    let(:other) { described_class.new(state: nil, country: nil) }
+    let(:other) { described_class.new(principal_subdivision: nil, country: nil) }
 
     it "compares the values of state id and country id and does not care about object identity" do
       expect(subject).to eq(other)
@@ -65,7 +65,7 @@ RSpec.describe Spree::Tax::TaxLocation do
     end
 
     context "with a state present" do
-      let(:args) { {state:} }
+      let(:args) { {principal_subdivision: state} }
 
       it { is_expected.to be false }
     end

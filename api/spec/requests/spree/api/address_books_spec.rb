@@ -13,7 +13,7 @@ module Spree::Api
         "city" => "Surrey",
         "zipcode" => "10010",
         "phone" => "555-5555",
-        "state_id" => state.id,
+        "principal_subdivision_id" => state.id,
         "country_id" => state.country.id
       }
     end
@@ -26,7 +26,7 @@ module Spree::Api
         "city" => "Devon, West Country",
         "zipcode" => "10010",
         "phone" => "555-5555",
-        "state_id" => state.id,
+        "principal_subdivision_id" => state.id,
         "country_id" => state.country.id
       }
     end

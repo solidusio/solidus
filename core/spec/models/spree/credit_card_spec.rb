@@ -96,7 +96,7 @@ RSpec.describe Spree::CreditCard, type: :model do
         address1: "123 Main",
         city: "Somewhere",
         country_id: country.id,
-        state_id: state.id,
+        principal_subdivision_id: state.id,
         zipcode: 55_555,
         phone: "1234567890"
       }

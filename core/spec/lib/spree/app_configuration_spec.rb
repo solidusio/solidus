@@ -319,7 +319,7 @@ RSpec.describe Spree::AppConfiguration do
 
   it "has a default admin VAT location with nil values by default" do
     expect(prefs.admin_vat_location).to eq(Spree::Tax::TaxLocation.new)
-    expect(prefs.admin_vat_location.state_id).to eq(nil)
+    expect(prefs.admin_vat_location.principal_subdivision_id).to eq(nil)
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
 

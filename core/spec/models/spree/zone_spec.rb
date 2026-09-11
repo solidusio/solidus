@@ -10,8 +10,8 @@ RSpec.describe Spree::Zone, type: :model do
     let(:alabama_address) { create(:address) }
     let(:canada_address) { create(:address, country: canada) }
 
-    let!(:new_york_zone) { create(:zone, states: [new_york_address.state]) }
-    let!(:alabama_zone) { create(:zone, states: [alabama_address.state]) }
+    let!(:new_york_zone) { create(:zone, states: [new_york_address.principal_subdivision]) }
+    let!(:alabama_zone) { create(:zone, states: [alabama_address.principal_subdivision]) }
     let!(:united_states_zone) { create(:zone, countries: [new_york_address.country]) }
     let!(:canada_zone) { create(:zone, countries: [canada_address.country]) }
     let!(:north_america_zone) { create(:zone, countries: [canada_address.country, new_york_address.country]) }

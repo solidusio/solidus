@@ -477,7 +477,7 @@ describe "Users", type: :feature do
         expect(page).to have_field("City", with: user_a.bill_address.city)
         expect(page).to have_field("Zip Code", with: user_a.bill_address.zipcode)
         expect(page).to have_select("Country", selected: "#{user_a.bill_address.country} of America")
-        expect(page).to have_select("State", selected: user_a.bill_address.state.name)
+        expect(page).to have_select("State", selected: user_a.bill_address.principal_subdivision.name)
         expect(page).to have_field("Phone", with: user_a.bill_address.phone)
       end
 
@@ -487,7 +487,7 @@ describe "Users", type: :feature do
         expect(page).to have_field("City", with: user_a.ship_address.city)
         expect(page).to have_field("Zip Code", with: user_a.ship_address.zipcode)
         expect(page).to have_select("Country", selected: "#{user_a.ship_address.country} of America")
-        expect(page).to have_select("State", selected: user_a.ship_address.state.name)
+        expect(page).to have_select("State", selected: user_a.ship_address.principal_subdivision.name)
         expect(page).to have_field("Phone", with: user_a.ship_address.phone)
       end
     end
