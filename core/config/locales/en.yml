@@ -27,6 +27,9 @@ en:
         email: Email
         name: Name
         phone: Phone
+        principal_subdivision: State
+        principal_subdivision_id: State
+        principal_subdivision_name: State name
         vat_id: VAT-ID
         zipcode: Zip Code
       spree/adjustment:
@@ -347,10 +350,11 @@ en:
         fulfillable: Fulfillable
         name: Name
         phone: Phone
+        principal_subdivision: State
+        principal_subdivision_id: State
+        principal_subdivision_name: State name
         propagate_all_variants: Propagate All Variants
         restock_inventory: Restock Inventory
-        state: State
-        state_id: State
         zipcode: Zip
       spree/stock_movement:
         originated_by: Originated By
@@ -444,7 +448,7 @@ en:
       models:
         spree/address:
           attributes:
-            state:
+            principal_subdivision:
               does_not_match_country: does not match the country
         spree/calculator/tiered_flat_rate:
           attributes:
