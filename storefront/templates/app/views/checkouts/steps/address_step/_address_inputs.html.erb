@@ -53,10 +53,10 @@
 
       <span class="js-address-fields w-full" style="display: none;">
         <div class="select-input w-full">
-          <%= form.label :state_id, "#{I18n.t("spree.state")}:" %>
+          <%= form.label :principal_subdivision_id, "#{I18n.t("spree.state")}:" %>
 
           <%= form.collection_select(
-            :state_id,
+            :principal_subdivision_id,
             address.country.states,
             :id,
             :name,
@@ -69,7 +69,7 @@
         </div>
 
         <%= form.text_field(
-          :state_name,
+          :principal_subdivision_name,
           class: !have_states ? 'required' : '',
           style: have_states ? 'display: none;' : '',
           disabled: have_states,
@@ -78,7 +78,7 @@
       </span>
       <noscript>
         <%= form.text_field(
-          :state_name,
+          :principal_subdivision_name,
           class: 'required',
           autocomplete: "#{address_type} address-level1",
           required: true

@@ -41,7 +41,7 @@ RSpec.describe "Free shipping promotions", type: :system, js: true do
       fill_in "City", with: "City of John"
       fill_in "Zip", with: "01337"
       select country.name, from: "Country"
-      select state.name, from: "order[bill_address_attributes][state_id]"
+      select state.name, from: "order[bill_address_attributes][principal_subdivision_id]"
       fill_in "Phone", with: "555-555-5555"
 
       # To shipping method screen

@@ -61,7 +61,7 @@ module SolidusStorefront
             fill_in "order_bill_address_attributes_#{field}", with: address.send(field).to_s
           end
           select "United States of America", from: "order_bill_address_attributes_country_id"
-          select address.state.name.to_s, from: "order_bill_address_attributes_state_id"
+          select address.principal_subdivision.name.to_s, from: "order_bill_address_attributes_principal_subdivision_id"
 
           break if find("#order_bill_address_attributes_#{fields.first}").value == address.send(fields.first).to_s
 

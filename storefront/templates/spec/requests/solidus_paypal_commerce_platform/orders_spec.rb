@@ -101,7 +101,7 @@ RSpec.describe "Paypal Orders", type: :request do
         .to change { order.reload.ship_address&.attributes }
         .to include(
           "address1" => "123 Main St",
-          "state_id" => california.id,
+          "principal_subdivision_id" => california.id,
           "city" => "Los Angeles",
           "zipcode" => "90001",
           "name" => "Monty Norman"

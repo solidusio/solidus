@@ -17,8 +17,8 @@ RSpec.describe "Address", type: :system do
     click_button "add-to-cart-button"
 
     address = "order_bill_address_attributes"
-    @state_select_css = "##{address}_state_id"
-    @state_name_css = "##{address}_state_name"
+    @state_select_css = "##{address}_principal_subdivision_id"
+    @state_name_css = "##{address}_principal_subdivision_name"
   end
 
   context "country requires state", js: true do
