@@ -63,6 +63,17 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     )
   }
 
+  def self.add(path:, **options)
+    new(
+      tag: :a,
+      text: t(".add"),
+      icon: "add-line",
+      scheme: :primary,
+      href: path,
+      **options
+    )
+  end
+
   def self.back(path:, **options)
     new(
       tag: :a,
