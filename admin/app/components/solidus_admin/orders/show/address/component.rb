@@ -39,7 +39,7 @@ class SolidusAdmin::Orders::Show::Address::Component < SolidusAdmin::BaseCompone
       address.address2,
       address.city,
       address.zipcode,
-      address.state&.name,
+      address.principal_subdivision&.name,
       tag.br,
       address.country.name,
       tag.br,
