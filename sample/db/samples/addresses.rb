@@ -30,7 +30,7 @@ phone_numbers = ["(392)859-7319 x670", "738-831-3210 x6047",
     address1: street_addresses.sample,
     address2: secondary_addresses.sample,
     city: cities.sample,
-    state: new_york,
+    principal_subdivision: new_york,
     zipcode: 16_804,
     country: united_states,
     phone: phone_numbers.sample

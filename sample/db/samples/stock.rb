@@ -3,7 +3,7 @@
 Spree::Sample.load_sample("variants")
 
 country = Spree::Country.find_by(iso: "US")
-location = Spree::StockLocation.first_or_create! name: "default", address1: "Example Street", city: "City", zipcode: "12345", country:, state: country.states.first
+location = Spree::StockLocation.first_or_create! name: "default", address1: "Example Street", city: "City", zipcode: "12345", country:, principal_subdivision: country.states.first
 location.active = true
 location.save!
 
