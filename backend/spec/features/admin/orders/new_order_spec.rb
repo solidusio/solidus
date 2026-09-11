@@ -177,7 +177,7 @@ describe "New Order", type: :feature do
 
     context "when one customer address have only textual state" do
       let(:country) { create :country, iso: "IT" }
-      let(:bill_address) { create :address, country:, state: nil, state_name: "Veneto" }
+      let(:bill_address) { create :address, country:, principal_subdivision: nil, principal_subdivision_name: "Veneto" }
 
       it "changes the bill address state accordingly" do
         click_on "Customer"
@@ -186,21 +186,21 @@ describe "New Order", type: :feature do
           targetted_select2_search user.email, from: "#s2id_customer_search"
         end
 
-        expect(find("select#order_bill_address_attributes_state_id").value).to eq user.bill_address.state_id.to_s
+        expect(find("select#order_bill_address_attributes_principal_subdivision_id").value).to eq user.bill_address.principal_subdivision_id.to_s
 
         within "#select-customer" do
           targetted_select2_search other_user.email, from: "#s2id_customer_search"
         end
 
-        expect(find("select#order_bill_address_attributes_state_id", visible: false).value).to eq ""
-        expect(find("#order_bill_address_attributes_state_name").value).to eq other_user.bill_address.state_name
+        expect(find("select#order_bill_address_attributes_principal_subdivision_id", visible: false).value).to eq ""
+        expect(find("#order_bill_address_attributes_principal_subdivision_name").value).to eq other_user.bill_address.principal_subdivision_name
       end
     end
 
     context "when customers have same country but different state" do
-      let(:different_state) { Spree::State.where.not(id: user.bill_address.state_id).first }
+      let(:different_state) { Spree::State.where.not(id: user.bill_address.principal_subdivision_id).first }
 
-      let(:bill_address) { create :address, country: user.bill_address.country, state: different_state }
+      let(:bill_address) { create :address, country: user.bill_address.country, principal_subdivision: different_state }
 
       it "changes the bill address state accordingly" do
         click_on "Customer"
@@ -209,13 +209,13 @@ describe "New Order", type: :feature do
           targetted_select2_search user.email, from: "#s2id_customer_search"
         end
 
-        expect(find("#order_bill_address_attributes_state_id").value).to eq user.bill_address.state_id.to_s
+        expect(find("#order_bill_address_attributes_principal_subdivision_id").value).to eq user.bill_address.principal_subdivision_id.to_s
 
         within "#select-customer" do
           targetted_select2_search other_user.email, from: "#s2id_customer_search"
         end
 
-        expect(find("#order_bill_address_attributes_state_id").value).to eq other_user.bill_address.state_id.to_s
+        expect(find("#order_bill_address_attributes_principal_subdivision_id").value).to eq other_user.bill_address.principal_subdivision_id.to_s
       end
     end
   end

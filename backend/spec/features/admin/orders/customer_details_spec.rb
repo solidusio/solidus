@@ -87,13 +87,13 @@ describe "Customer Details", type: :feature, js: true do
 
         within("#billing") do
           select "Brazil", from: "Country"
-          fill_in "order_bill_address_attributes_state_name", with: "Piaui"
+          fill_in "order_bill_address_attributes_principal_subdivision_name", with: "Piaui"
         end
 
         click_button "Update"
         expect(page).to have_content "Customer Details Updated"
         click_link "Customer"
-        expect(page).to have_field("order_bill_address_attributes_state_name", with: "Piaui")
+        expect(page).to have_field("order_bill_address_attributes_principal_subdivision_name", with: "Piaui")
       end
     end
 

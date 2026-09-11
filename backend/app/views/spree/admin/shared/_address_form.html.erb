@@ -41,15 +41,15 @@
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :state_id, Spree::State.model_name.human %>
+    <%= f.label :principal_subdivision_id, Spree::State.model_name.human %>
     <span id="<%= s_or_b %>state">
-      <%= f.hidden_field :state_name, value: nil %>
+      <%= f.hidden_field :principal_subdivision_name, value: nil %>
       <% states = f.object.country.try(:states).nil? ? [] : f.object.country.states %>
-      <%= f.text_field :state_name,
+      <%= f.text_field :principal_subdivision_name,
             style: "display: #{states.empty? ? 'block' : 'none' };",
             disabled: !states.empty?, class: 'fullwidth state_name js-state_name' %>
-      <%= f.hidden_field :state_id, value: nil %>
-      <%= f.collection_select :state_id,
+      <%= f.hidden_field :principal_subdivision_id, value: nil %>
+      <%= f.collection_select :principal_subdivision_id,
             states.sort,
             :id, :name,
             { include_blank: true },

@@ -11,8 +11,8 @@ json.array!(@users) do |user|
     :city,
     :zipcode,
     :phone,
-    :state_name,
-    :state_id,
+    :principal_subdivision_name,
+    :principal_subdivision_id,
     :country_id,
     :company,
     :email,
@@ -22,9 +22,14 @@ json.array!(@users) do |user|
   json.ship_address do
     if user.ship_address
       json.call(user.ship_address, *address_fields)
-      if user.ship_address.state
+      json.state_name user.ship_address.principal_subdivision_name
+      json.state_id user.ship_address.principal_subdivision_id
+      if user.ship_address.principal_subdivision
+        json.principal_subdivision do
+          json.name user.ship_address.principal_subdivision.name
+        end
         json.state do
-          json.name user.ship_address.state.name
+          json.name user.ship_address.principal_subdivision.name
         end
       end
       if user.ship_address.country
@@ -38,9 +43,14 @@ json.array!(@users) do |user|
   json.bill_address do
     if user.bill_address
       json.call(user.bill_address, *address_fields)
-      if user.bill_address.state
+      json.state_name user.bill_address.principal_subdivision_name
+      json.state_id user.bill_address.principal_subdivision_id
+      if user.bill_address.principal_subdivision
+        json.principal_subdivision do
+          json.name user.bill_address.principal_subdivision.name
+        end
         json.state do
-          json.name user.bill_address.state.name
+          json.name user.bill_address.principal_subdivision.name
         end
       end
       if user.bill_address.country
