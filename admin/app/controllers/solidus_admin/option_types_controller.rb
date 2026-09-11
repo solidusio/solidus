@@ -1,30 +1,25 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  class OptionTypesController < SolidusAdmin::BaseController
-    include SolidusAdmin::ControllerHelpers::Search
+  class OptionTypesController < SolidusAdmin::ResourcesController
     include SolidusAdmin::Moveable
 
-    def index
-      option_types = apply_search_to(
-        Spree::OptionType.all,
-        param: :q
-      )
+    private
 
-      set_page_and_extract_portion_from(option_types)
-
-      respond_to do |format|
-        format.html { render component("option_types/index").new(page: @page) }
-      end
+    def after_create_path
+      solidus_admin.edit_option_type_path(@resource)
     end
 
-    def destroy
-      @option_types = Spree::OptionType.where(id: params[:id])
+    def resource_class = Spree::OptionType
 
-      Spree::OptionType.transaction { @option_types.destroy_all }
+    def permitted_resource_params
+      params.require(:option_type).permit(:name, :presentation)
+    end
 
-      flash[:notice] = t(".success")
-      redirect_back_or_to option_types_path, status: :see_other
+    def resources_collection = Spree::OptionType.unscoped
+
+    def resources_sorting_options
+      {position: :asc}
     end
   end
 end

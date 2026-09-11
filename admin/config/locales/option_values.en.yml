@@ -1,0 +1,9 @@
+en:
+  solidus_admin:
+    option_values:
+      create:
+        success: "Option value was successfully created."
+      destroy:
+        success: "Option values were successfully removed."
+      update:
+        success: "Option value was successfully updated."

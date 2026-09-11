@@ -78,7 +78,7 @@ module Spree::Api
           end
 
           context "when passing an amount" do
-            let(:attributes) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id, amount: 100 }]) }
+            let(:attributes) { super().merge(payments_attributes: [{payment_method_id: payment_method.id, amount: 100}]) }
             let!(:payment_method) { create(:check_payment_method, name: "allowed") }
 
             it "ignores the amount parameter" do

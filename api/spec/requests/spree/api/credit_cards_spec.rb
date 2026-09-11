@@ -156,7 +156,7 @@ module Spree::Api
         payment = Spree::PaymentCreate.new(guest_order, {
           payment_method_id: payment_method.id,
           source_attributes: {
-            number: "4111111111111111", month: "1", year: "#{2.years.from_now.year}",
+            number: "4111111111111111", month: "1", year: 2.years.from_now.year.to_s,
             verification_value: "123", name: "Real Guest Buyer"
           }
         }).build
