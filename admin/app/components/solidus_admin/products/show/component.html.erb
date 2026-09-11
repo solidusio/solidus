@@ -42,6 +42,7 @@
         <%= render component("ui/panel").new(title: t(".media")) do |panel| %>
           <% panel.with_action(
             name: t(".manage_images"),
+            scheme: :secondary,
             href: spree.admin_product_images_path(@product)
           ) %>
         <% end %>
@@ -59,6 +60,7 @@
 
           <% panel.with_action(
             name: t(".manage_stock"),
+            scheme: :secondary,
             href: spree.admin_product_stock_path(@product)
           ) %>
         <% end %>
@@ -112,6 +114,7 @@
 
           <% panel.with_action(
             name: t(".manage_options"),
+            scheme: :secondary,
             href: solidus_admin.option_types_path
           ) %>
         <% end %>
@@ -119,6 +122,7 @@
         <%= render component("ui/panel").new(title: t(".specifications")) do |panel| %>
           <% panel.with_action(
             name: t(".manage_properties"),
+            scheme: :secondary,
             href: spree.admin_product_product_properties_path(@product)
           ) %>
         <% end %>
