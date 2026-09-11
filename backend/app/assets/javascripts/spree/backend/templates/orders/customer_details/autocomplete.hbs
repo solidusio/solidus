@@ -6,10 +6,10 @@
       {{bill_address.name}}<br>
       {{bill_address.address1}}, {{bill_address.address2}}<br>
       {{bill_address.city}}<br>
-      {{#if bill_address.state_id }}
-        {{bill_address.state.name}}
+      {{#if bill_address.principal_subdivision_id }}
+        {{bill_address.principal_subdivision.name}}
       {{else}}
-        {{bill_address.state_name}}
+        {{bill_address.principal_subdivision_name}}
       {{/if}}
       {{bill_address.country.name}}
     {{/if}}

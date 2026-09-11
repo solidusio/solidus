@@ -10,26 +10,26 @@ RSpec.describe Spree::Address, type: :model do
     let(:state) { create :state, name: "maryland", abbr: "md", country: }
     let(:address) { build(:address, country:) }
 
-    context "state validation" do
-      let(:state_validator) { instance_spy(Spree::Address.state_validator_class) }
+    context "principal subdivision validation" do
+      let(:principal_subdivision_validator) { instance_spy(Spree::Address.principal_subdivision_validator_class) }
 
-      it "calls the state validator" do
-        allow(Spree::Address.state_validator_class)
+      it "calls the principal subdivision validator" do
+        allow(Spree::Address.principal_subdivision_validator_class)
           .to receive(:new).with(address)
-          .and_return(state_validator)
-        expect(state_validator).to receive(:perform)
+          .and_return(principal_subdivision_validator)
+        expect(principal_subdivision_validator).to receive(:perform)
         address.valid?
       end
 
       # basic integration test with the validator
-      # See address/state_validator_spec for a full address state validation
+      # See address/principal_subdivision_validator_spec for a full validation
       # test suite
-      it "performs the state validation" do
+      it "performs the principal subdivision validation" do
         address.country.states_required = true
-        address.state = nil
-        address.state_name = nil
+        address.principal_subdivision = nil
+        address.principal_subdivision_name = nil
         expect(address.valid?).to eq(false)
-        expect(address.errors["state"]).to eq(["can't be blank"])
+        expect(address.errors["principal_subdivision"]).to eq(["can't be blank"])
       end
     end
 
@@ -225,14 +225,14 @@ RSpec.describe Spree::Address, type: :model do
 
   describe ".taxation_attributes" do
     context "both taxation and non-taxation attributes are present " do
-      let(:address) { Spree::Address.new name: "Michael Jackson", state_id: 1, country_id: 2, zipcode: "12345" }
+      let(:address) { Spree::Address.new name: "Michael Jackson", principal_subdivision_id: 1, country_id: 2, zipcode: "12345" }
 
       it "removes the non-taxation attributes" do
         expect(address.taxation_attributes).not_to eq("name" => "Michael Jackson")
       end
 
       it "returns only the taxation attributes" do
-        expect(address.taxation_attributes).to eq("state_id" => 1, "country_id" => 2, "zipcode" => "12345")
+        expect(address.taxation_attributes).to eq("principal_subdivision_id" => 1, "country_id" => 2, "zipcode" => "12345")
       end
     end
 
@@ -240,7 +240,7 @@ RSpec.describe Spree::Address, type: :model do
       let(:address) { Spree::Address.new name: "Michael Jackson" }
 
       it "returns a subset of the attributes with the correct keys and nil values" do
-        expect(address.taxation_attributes).to eq("state_id" => nil, "country_id" => nil, "zipcode" => nil)
+        expect(address.taxation_attributes).to eq("principal_subdivision_id" => nil, "country_id" => nil, "zipcode" => nil)
       end
     end
   end
@@ -270,22 +270,74 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
-  context "#state_text" do
-    context "state is blank" do
-      let(:address) { Spree::Address.new state: nil, state_name: "virginia" }
-      specify { expect(address.state_text).to eq("virginia") }
+  describe "#principal_subdivision_text" do
+    subject { address.principal_subdivision_text }
+
+    context "when the principal subdivision is blank" do
+      let(:address) { Spree::Address.new principal_subdivision: nil, principal_subdivision_name: "virginia" }
+
+      it { is_expected.to eq("virginia") }
     end
 
-    context "both name and abbr is present" do
-      let(:state) { Spree::State.new name: "virginia", abbr: "va" }
-      let(:address) { Spree::Address.new state: }
-      specify { expect(address.state_text).to eq("va") }
+    context "when both name and abbr are present" do
+      let(:principal_subdivision) { Spree::State.new name: "virginia", abbr: "va" }
+      let(:address) { Spree::Address.new principal_subdivision: }
+
+      it { is_expected.to eq("va") }
     end
 
-    context "only name is present" do
-      let(:state) { Spree::State.new name: "virginia", abbr: nil }
-      let(:address) { Spree::Address.new state: }
-      specify { expect(address.state_text).to eq("virginia") }
+    context "when only name is present" do
+      let(:principal_subdivision) { Spree::State.new name: "virginia", abbr: nil }
+      let(:address) { Spree::Address.new principal_subdivision: }
+
+      it { is_expected.to eq("virginia") }
+    end
+  end
+
+  describe "#state" do
+    subject { address.state }
+
+    let(:principal_subdivision) { Spree::State.new name: "virginia", abbr: "va" }
+    let(:address) { Spree::Address.new principal_subdivision: }
+
+    it "returns the principal subdivision" do
+      expect(Spree.deprecator).to receive(:warn).at_least(:once)
+      expect(subject).to eq(principal_subdivision)
+    end
+  end
+
+  describe "#state=" do
+    subject { address.state = principal_subdivision }
+
+    let(:principal_subdivision) { Spree::State.new name: "virginia", abbr: "va" }
+    let(:address) { Spree::Address.new }
+
+    it "assigns the principal subdivision" do
+      expect(Spree.deprecator).to receive(:warn).at_least(:once)
+      subject
+      expect(address.principal_subdivision).to eq(principal_subdivision)
+    end
+  end
+
+  describe "#state_id" do
+    subject { address.state_id }
+
+    let(:address) { Spree::Address.new principal_subdivision_id: 42 }
+
+    it "returns the principal subdivision id" do
+      expect(Spree.deprecator).to receive(:warn).at_least(:once)
+      expect(subject).to eq(42)
+    end
+  end
+
+  describe "#state_name" do
+    subject { address.state_name }
+
+    let(:address) { Spree::Address.new principal_subdivision_name: "virginia" }
+
+    it "returns the principal subdivision name" do
+      expect(Spree.deprecator).to receive(:warn).at_least(:once)
+      expect(subject).to eq("virginia")
     end
   end
 

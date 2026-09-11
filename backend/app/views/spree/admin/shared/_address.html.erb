@@ -5,6 +5,6 @@
   <%= address.vat_id unless address.vat_id.blank? %><br>
   <%= address.address1 %><br>
   <% if address.address2.present? %><%= address.address2 %><br><% end %>
-  <%= "#{address.city}, #{address.state_text}, #{address.zipcode}" %><br>
+  <%= "#{address.city}, #{address.principal_subdivision_text}, #{address.zipcode}" %><br>
   <%= address.country.name %>
 </div>

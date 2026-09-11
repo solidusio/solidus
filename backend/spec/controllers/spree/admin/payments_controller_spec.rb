@@ -71,7 +71,7 @@ module Spree
                 "address1" => address.address1,
                 "city" => address.city,
                 "country_id" => address.country_id,
-                "state_id" => address.state_id,
+                "principal_subdivision_id" => address.principal_subdivision_id,
                 "zipcode" => address.zipcode,
                 "phone" => address.phone
               }

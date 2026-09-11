@@ -39,7 +39,7 @@ module Spree
           name: "Fox Mulder",
           city: "Washington",
           country_id: country.id,
-          state_id: state.id,
+          principal_subdivision_id: state.id,
           zipcode: "66666",
           phone: "666-666-6666"
         }
@@ -175,13 +175,13 @@ module Spree
       end
 
       it "can build an order from API with state attributes" do
-        ship_address.delete(:state_id)
+        ship_address.delete(:principal_subdivision_id)
         ship_address[:state] = {"name" => state.name}
         params = {ship_address_attributes: ship_address,
                   line_items_attributes: line_items}
 
         order = Importer::Order.import(user, params)
-        expect(order.ship_address.state.name).to eq "Alabama"
+        expect(order.ship_address.principal_subdivision.name).to eq "Alabama"
       end
 
       context "with a different currency" do
@@ -230,24 +230,24 @@ module Spree
         let(:other_state) { create(:state, name: "Uhuhuh", country: create(:country, iso: "BR")) }
 
         before do
-          ship_address.delete(:state_id)
+          ship_address.delete(:principal_subdivision_id)
           ship_address[:state] = {"name" => other_state.name}
         end
 
         it "sets states name instead of state id" do
           order = Importer::Order.import(user, params)
-          expect(order.ship_address.state_name).to eq other_state.name
+          expect(order.ship_address.principal_subdivision_name).to eq other_state.name
         end
       end
 
       it "sets state name if state record not found" do
-        ship_address.delete(:state_id)
+        ship_address.delete(:principal_subdivision_id)
         ship_address[:state] = {"name" => "XXX"}
         params = {ship_address_attributes: ship_address,
                   line_items_attributes: line_items}
 
         order = Importer::Order.import(user, params)
-        expect(order.ship_address.state_name).to eq "XXX"
+        expect(order.ship_address.principal_subdivision_name).to eq "XXX"
       end
 
       context "variant not deleted" do
@@ -283,12 +283,18 @@ module Spree
         }.to raise_error ActiveRecord::RecordNotFound
       end
 
-      it "ensures_state_id for state fields" do
+      it "ensures_principal_subdivision_id for principal subdivision fields" do
         [:name, :abbr].each do |field|
-          address = {country_id: country.id, state: {field => state.send(field)}}
-          Importer::Order.ensure_state_id_from_params(address)
-          expect(address[:state_id]).to eq state.id
+          address = {country_id: country.id, principal_subdivision: {field => state.send(field)}}
+          Importer::Order.ensure_principal_subdivision_id_from_params(address)
+          expect(address[:principal_subdivision_id]).to eq state.id
         end
+      end
+
+      it "still resolves the deprecated state key" do
+        address = {country_id: country.id, state: {"name" => state.name}}
+        Importer::Order.ensure_principal_subdivision_id_from_params(address)
+        expect(address[:principal_subdivision_id]).to eq state.id
       end
 
       context "shipments" do

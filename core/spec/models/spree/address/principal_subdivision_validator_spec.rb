@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Spree::Address::StateValidator do
+RSpec.describe Spree::Address::PrincipalSubdivisionValidator do
   let(:country) { create :country, states_required: true }
   let(:state) { create :state, name: "maryland", abbr: "md", country: }
   let(:address) { build(:address, country:) }
@@ -13,32 +13,32 @@ RSpec.describe Spree::Address::StateValidator do
     context "having a country with no states" do
       before do
         address.country = country
-        address.state = state
+        address.principal_subdivision = state
         allow(country).to receive(:states).and_return([])
       end
 
       it "nullifies the state attr" do
-        address.state = state
-        expect { subject }.to change(address, :state).from(state).to(nil)
+        address.principal_subdivision = state
+        expect { subject }.to change(address, :principal_subdivision).from(state).to(nil)
       end
     end
 
     context "with state_name attr present" do
       before do
         address.country = country
-        address.state_name = state_name
+        address.principal_subdivision_name = state_name
       end
 
       context "and state attr present" do
         let(:state_name) { "A State Name" }
 
         before do
-          address.state = state
+          address.principal_subdivision = state
         end
 
         it "nullifies the state_name if the state attr belongs to the country" do
-          expect { subject }.to change(address, :state_name).from(state_name).to(nil)
-          expect { subject }.to_not change(address, :state).from(state)
+          expect { subject }.to change(address, :principal_subdivision_name).from(state_name).to(nil)
+          expect { subject }.to_not change(address, :principal_subdivision).from(state)
         end
 
         context "belonging to a different country" do
@@ -47,7 +47,7 @@ RSpec.describe Spree::Address::StateValidator do
           end
 
           it "doesn't nullify the state name" do
-            expect { subject }.to_not change(address, :state_name).from(state_name)
+            expect { subject }.to_not change(address, :principal_subdivision_name).from(state_name)
           end
         end
       end
@@ -56,12 +56,12 @@ RSpec.describe Spree::Address::StateValidator do
         let(:state_name) { state.name }
 
         before do
-          address.state = nil
+          address.principal_subdivision = nil
         end
 
         it "sets the state having the specified state name" do
           expect { subject }
-            .to change { [address.state, address.state_name] }
+            .to change { [address.principal_subdivision, address.principal_subdivision_name] }
             .from([nil, state.name])
             .to([state, nil])
         end
@@ -72,8 +72,8 @@ RSpec.describe Spree::Address::StateValidator do
   context "state is not required" do
     shared_examples "no state validation" do
       it "doesn't validate the state presence" do
-        address.state = nil
-        address.state_name = nil
+        address.principal_subdivision = nil
+        address.principal_subdivision_name = nil
         subject
 
         expect(address.errors).to be_empty
@@ -103,8 +103,8 @@ RSpec.describe Spree::Address::StateValidator do
     end
 
     it "state_name is not nil and country does not have any states" do
-      address.state = nil
-      address.state_name = "alabama"
+      address.principal_subdivision = nil
+      address.principal_subdivision_name = "alabama"
 
       subject
 
@@ -112,12 +112,12 @@ RSpec.describe Spree::Address::StateValidator do
     end
 
     it "errors when state_name is nil" do
-      address.state_name = nil
-      address.state = nil
+      address.principal_subdivision_name = nil
+      address.principal_subdivision = nil
 
       subject
 
-      expect(address.errors.messages).to eq({state: ["can't be blank"]})
+      expect(address.errors.messages).to eq({principal_subdivision: ["can't be blank"]})
     end
 
     context "state country doesn't match the address' country" do
@@ -128,11 +128,11 @@ RSpec.describe Spree::Address::StateValidator do
 
         it "is invalid" do
           address.country = italy
-          address.state = us_state
+          address.principal_subdivision = us_state
 
           subject
 
-          expect(address.errors["state"]).to eq(["does not match the country"])
+          expect(address.errors["principal_subdivision"]).to eq(["does not match the country"])
         end
       end
     end

@@ -7,8 +7,8 @@ Spree.Views.StateSelect = Backbone.View.extend({
 
     // read initial values from page
     this.model.set({
-      state_name: this.$state_input.val(),
-      state_id: this.$state_select.val()
+      principal_subdivision_name: this.$state_input.val(),
+      principal_subdivision_id: this.$state_select.val()
     })
 
     this.updateStates();
@@ -23,8 +23,8 @@ Spree.Views.StateSelect = Backbone.View.extend({
 
   onChange: function() {
     this.model.set({
-      state_name: this.$state_input.val(),
-      state_id: this.$state_select.val()
+      principal_subdivision_name: this.$state_input.val(),
+      principal_subdivision_id: this.$state_select.val()
     })
   },
 
@@ -51,7 +51,7 @@ Spree.Views.StateSelect = Backbone.View.extend({
           $('<option>').prop('value', state.id).text(state.get("name"))
         );
       })
-      this.$state_select.val(this.model.get("state_id"))
+      this.$state_select.val(this.model.get("principal_subdivision_id"))
       this.$state_select.show().prop("disabled", false);
     } else {
       this.$state_input.show().prop('disabled', false);

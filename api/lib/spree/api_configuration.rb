@@ -84,8 +84,9 @@ module Spree
 
     preference :address_attributes, :array, default: [
       :id, :name, :address1, :address2, :city, :zipcode, :phone, :company,
-      :alternative_phone, :country_id, :country_iso, :state_id, :state_name,
-      :state_text, :email, :vat_id, :reverse_charge_status
+      :alternative_phone, :country_id, :country_iso,
+      :principal_subdivision_id, :principal_subdivision_name, :principal_subdivision_text,
+      :email, :vat_id, :reverse_charge_status
     ]
 
     preference :country_attributes, :array, default: [:id, :iso_name, :iso, :iso3, :name, :numcode]
@@ -123,7 +124,8 @@ module Spree
     preference :property_attributes, :array, default: [:id, :name, :presentation]
 
     preference :stock_location_attributes, :array, default: [
-      :id, :name, :address1, :address2, :city, :state_id, :state_name,
+      :id, :name, :address1, :address2, :city,
+      :principal_subdivision_id, :principal_subdivision_name,
       :country_id, :zipcode, :phone, :active
     ]
 

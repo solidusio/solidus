@@ -76,7 +76,7 @@ module Spree::Api
             city: "Bethesda",
             phone: "3014445002",
             zipcode: "20814",
-            state_id: @state.id,
+            principal_subdivision_id: @state.id,
             country_id: @country.id,
             email: "john@doe.com",
             vat_id: "ab1235",

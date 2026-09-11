@@ -9,9 +9,22 @@ json.cache! address do
       json.nil!
     end
   end
+  json.principal_subdivision do
+    if address.principal_subdivision
+      json.call(address.principal_subdivision, *state_attributes)
+    else
+      json.nil!
+    end
+  end
+
+  # Deprecated aliases of the principal_subdivision keys above. Sourced from the
+  # new readers so that serialisation does not emit deprecation warnings.
+  json.state_id address.principal_subdivision_id
+  json.state_name address.principal_subdivision_name
+  json.state_text address.principal_subdivision_text
   json.state do
-    if address.state
-      json.call(address.state, *state_attributes)
+    if address.principal_subdivision
+      json.call(address.principal_subdivision, *state_attributes)
     else
       json.nil!
     end

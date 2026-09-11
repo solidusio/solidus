@@ -6,7 +6,7 @@ RSpec.describe "API Orders", type: :request do
   let!(:order) { create(:order) }
   let(:variant) { create(:variant) }
   let(:line_item) { create(:line_item) }
-  let(:address_params) { {country_id: Country.first.id, state_id: State.first.id} }
+  let(:address_params) { {country_id: Country.first.id, principal_subdivision_id: State.first.id} }
 
   let(:current_api_user) do
     user = Spree.user_class.new(email: "solidus@example.com")

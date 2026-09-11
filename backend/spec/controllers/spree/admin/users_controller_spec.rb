@@ -11,7 +11,7 @@ describe Spree::Admin::UsersController, type: :controller do
       name: "Foo Bar",
       city: "New York",
       country_id: state.country.id,
-      state_id: state.id,
+      principal_subdivision_id: state.id,
       phone: "555-555-5555",
       address1: "123 Fake St.",
       zipcode: "10001"

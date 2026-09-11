@@ -8,9 +8,9 @@ module Spree
           params = params.to_h
           ActiveRecord::Base.transaction do
             ensure_country_id_from_params params[:ship_address_attributes]
-            ensure_state_id_from_params params[:ship_address_attributes]
+            ensure_principal_subdivision_id_from_params params[:ship_address_attributes]
             ensure_country_id_from_params params[:bill_address_attributes]
-            ensure_state_id_from_params params[:bill_address_attributes]
+            ensure_principal_subdivision_id_from_params params[:bill_address_attributes]
 
             create_params = params.slice :currency
             order = Spree::Order.create! create_params
@@ -193,24 +193,37 @@ module Spree
           address[:country_id] = Spree::Country.where(search).first!.id
         end
 
-        def self.ensure_state_id_from_params(address)
-          return if address.nil? || address[:state_id].present? || address[:state].nil?
+        def self.ensure_principal_subdivision_id_from_params(address)
+          return if address.nil?
+          return if address[:principal_subdivision_id].present? || address[:state_id].present?
+
+          subdivision = address[:principal_subdivision] || address[:state]
+          return if subdivision.nil?
 
           search = {}
-          if (name = address[:state]["name"])
+          if (name = subdivision["name"])
             search[:name] = name
-          elsif (abbr = address[:state]["abbr"])
+          elsif (abbr = subdivision["abbr"])
             search[:abbr] = abbr.upcase
           end
 
+          address.delete(:principal_subdivision)
           address.delete(:state)
           search[:country_id] = address[:country_id]
 
           if (state = Spree::State.where(search).first)
-            address[:state_id] = state.id
+            address[:principal_subdivision_id] = state.id
           else
-            address[:state_name] = search[:name] || search[:abbr]
+            address[:principal_subdivision_name] = search[:name] || search[:abbr]
           end
+        end
+
+        class << self
+          alias_method :ensure_state_id_from_params, :ensure_principal_subdivision_id_from_params
+          deprecate(
+            ensure_state_id_from_params: :ensure_principal_subdivision_id_from_params,
+            deprecator: Spree.deprecator
+          )
         end
       end
     end

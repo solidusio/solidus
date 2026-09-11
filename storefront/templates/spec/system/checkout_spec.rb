@@ -676,7 +676,7 @@ RSpec.describe "Checkout", :js, type: :system do
       let(:user) { create(:user) }
 
       # We need a country with states required but no states so that we have
-      # access to the state_name input
+      # access to the principal_subdivision_name input
       let!(:canada) { create(:country, name: "Canada", iso: "CA", states_required: true) }
       before do
         canada.states.destroy_all
@@ -705,7 +705,7 @@ RSpec.describe "Checkout", :js, type: :system do
         fill_in_address
         fill_in "Customer email", with: "test@example.com"
 
-        state_name_css = "order_bill_address_attributes_state_name"
+        state_name_css = "order_bill_address_attributes_principal_subdivision_name"
 
         select "Canada", from: "order_bill_address_attributes_country_id"
         fill_in state_name_css, with: xss_string
@@ -776,7 +776,7 @@ RSpec.describe "Checkout", :js, type: :system do
     fill_in "#{address}_address1", with: "143 Swan Street"
     fill_in "#{address}_city", with: "Richmond"
     select "United States of America", from: "#{address}_country_id"
-    select "Alabama", from: "#{address}_state_id"
+    select "Alabama", from: "#{address}_principal_subdivision_id"
     fill_in "#{address}_zipcode", with: "12345"
     fill_in "#{address}_phone", with: "(555) 555-5555"
   end

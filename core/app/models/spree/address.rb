@@ -8,23 +8,70 @@ module Spree
   class Address < Spree::Base
     extend ActiveModel::ForbiddenAttributesProtection
 
-    mattr_accessor :state_validator_class
-    self.state_validator_class = Spree::Address::StateValidator
+    mattr_accessor :principal_subdivision_validator_class
+    self.principal_subdivision_validator_class = Spree::Address::PrincipalSubdivisionValidator
+
+    class << self
+      def state_validator_class
+        principal_subdivision_validator_class
+      end
+
+      def state_validator_class=(value)
+        self.principal_subdivision_validator_class = value
+      end
+
+      deprecate(
+        :state_validator_class => :principal_subdivision_validator_class,
+        :state_validator_class= => :principal_subdivision_validator_class=,
+        :deprecator => Spree.deprecator
+      )
+    end
 
     belongs_to :country, class_name: "Spree::Country"
-    belongs_to :state, class_name: "Spree::State", optional: true
+    belongs_to :principal_subdivision, class_name: "Spree::State", optional: true
+
+    # Declared against the same foreign key as :principal_subdivision so that
+    # `joins(:state)`, `includes(:state)` and `where(state: ...)` keep working. The
+    # accessors below shadow the generated ones and delegate to
+    # :principal_subdivision, so the two associations can never hold different
+    # records.
+    belongs_to :state,
+      class_name: "Spree::State",
+      foreign_key: :principal_subdivision_id,
+      optional: true
+
+    def state
+      principal_subdivision
+    end
+
+    def state=(value)
+      self.principal_subdivision = value
+    end
+
+    alias_attribute :state_id, :principal_subdivision_id
+    alias_attribute :state_name, :principal_subdivision_name
+
+    deprecate(
+      :state => :principal_subdivision,
+      :state= => :principal_subdivision=,
+      :state_id => :principal_subdivision_id,
+      :state_id= => :principal_subdivision_id=,
+      :state_name => :principal_subdivision_name,
+      :state_name= => :principal_subdivision_name=,
+      :deprecator => Spree.deprecator
+    )
 
     validates :address1, :city, :name, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
     validate do
-      self.class.state_validator_class.new(self).perform
+      self.class.principal_subdivision_validator_class.new(self).perform
     end
 
     self.ignored_columns = %w[firstname lastname]
     DB_ONLY_ATTRS = %w[id updated_at created_at].freeze
-    TAXATION_ATTRS = %w[state_id country_id zipcode].freeze
+    TAXATION_ATTRS = %w[principal_subdivision_id country_id zipcode].freeze
 
     self.allowed_ransackable_attributes = %w[name]
 
@@ -83,10 +130,12 @@ module Spree
       self.class.value_attributes(attributes.slice(*TAXATION_ATTRS))
     end
 
-    # @return [String] a string representation of this state
-    def state_text
-      state.try(:abbr) || state.try(:name) || state_name
+    # @return [String] a string representation of this principal subdivision
+    def principal_subdivision_text
+      principal_subdivision.try(:abbr) || principal_subdivision.try(:name) || principal_subdivision_name
     end
+    alias_method :state_text, :principal_subdivision_text
+    deprecate state_text: :principal_subdivision_text, deprecator: Spree.deprecator
 
     def to_s
       "#{name}: #{address1}"
@@ -107,7 +156,7 @@ module Spree
         address1:,
         address2:,
         city:,
-        state: state_text,
+        state: principal_subdivision_text,
         zip: zipcode,
         country: country.try(:iso),
         phone:

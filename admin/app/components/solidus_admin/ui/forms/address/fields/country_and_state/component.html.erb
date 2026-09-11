@@ -15,13 +15,13 @@
       ) do %>
     <%= render component("ui/forms/field").text_field(
       @form_field_name,
-      :state_name,
+      :principal_subdivision_name,
       object: @addressable,
-      value: @addressable.try(:state_name),
+      value: @addressable.try(:principal_subdivision_name),
       "data-#{stimulus_id}-target": "stateName"
     ) %>
   <% end %>
-  <input autocomplete="off" type="hidden" name=<%= "#{@form_field_name}[state_id]" %>>
+  <input autocomplete="off" type="hidden" name=<%= "#{@form_field_name}[principal_subdivision_id]" %>>
 
   <%= content_tag(:div,
     data: { "#{stimulus_id}-target": "stateWrapper" },
@@ -29,10 +29,10 @@
       ) do %>
     <%= render component("ui/forms/field").select(
       @form_field_name,
-      :state_id,
+      :principal_subdivision_id,
       state_options,
       object: @addressable,
-      value: @addressable.try(:state_id),
+      value: @addressable.try(:principal_subdivision_id),
       "data-#{stimulus_id}-target": "state"
     ) %>
   <% end %>

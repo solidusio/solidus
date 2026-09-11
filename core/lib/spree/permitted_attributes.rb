@@ -40,10 +40,14 @@ module Spree
     mattr_reader(*ATTRIBUTES)
 
     @@address_attributes = [
-      :id, :name, :address1, :address2, :city, :country_id, :state_id,
-      :zipcode, :phone, :state_name, :country_iso, :alternative_phone, :company,
+      :id, :name, :address1, :address2, :city, :country_id,
+      :principal_subdivision_id, :principal_subdivision_name,
+      # Deprecated aliases of the principal_subdivision_* attributes above.
+      :state_id, :state_name,
+      :zipcode, :phone, :country_iso, :alternative_phone, :company,
       :email, :vat_id, :reverse_charge_status,
       country: [:iso, :name, :iso3, :iso_name],
+      principal_subdivision: [:name, :abbr],
       state: [:name, :abbr]
     ]
 
@@ -114,7 +118,10 @@ module Spree
 
     @@stock_location_attributes = [
       :name, :active, :address1, :address2, :city, :zipcode,
-      :backorderable_default, :state_name, :state_id, :country_id, :phone,
+      :backorderable_default, :principal_subdivision_name, :principal_subdivision_id,
+      # Deprecated aliases of the principal_subdivision_* attributes above.
+      :state_name, :state_id,
+      :country_id, :phone,
       :propagate_all_variants
     ]
 

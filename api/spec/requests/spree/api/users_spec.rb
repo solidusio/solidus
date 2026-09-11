@@ -80,7 +80,7 @@ module Spree::Api
             address1: "1 Test Rd",
             city: "City",
             country_id: country.id,
-            state_id: state.id,
+            principal_subdivision_id: state.id,
             zipcode: "55555",
             phone: "5555555555"
           },
@@ -89,7 +89,7 @@ module Spree::Api
             address1: "1 Test Rd",
             city: "City",
             country_id: country.id,
-            state_id: state.id,
+            principal_subdivision_id: state.id,
             zipcode: "55555",
             phone: "5555555555"
           }
@@ -113,7 +113,7 @@ module Spree::Api
               address1: "1 Test Rd",
               city: "City",
               country_id: country.id,
-              state_id: state.id,
+              principal_subdivision_id: state.id,
               zipcode: "55555",
               phone: "5555555555"
             },
@@ -122,7 +122,7 @@ module Spree::Api
               address1: "1 Test Rd",
               city: "City",
               country_id: country.id,
-              state_id: state.id,
+              principal_subdivision_id: state.id,
               zipcode: "55555",
               phone: "5555555555"
             }

@@ -35,7 +35,7 @@ module Spree
     preference :address_requires_phone, :boolean, default: true
 
     # @!attribute [rw] address_requires_state
-    #   @return [Boolean] should state/state_name be required (default: +true+)
+    #   @return [Boolean] should principal_subdivision/principal_subdivision_name be required (default: +true+)
     preference :address_requires_state, :boolean, default: true
 
     # @!attribute [rw] admin_interface_logo
@@ -807,7 +807,7 @@ module Spree
 
     # Default admin VAT location
     #
-    # An object that responds to :state_id and :country_id so it can double as a Spree::Address in
+    # An object that responds to :principal_subdivision_id and :country_id so it can double as a Spree::Address in
     # Spree::Zone.for_address. Takes the `admin_vat_country_iso` as input.
     #
     # @see admin_vat_country_iso The admin VAT country

@@ -17,7 +17,7 @@ module Spree::Api
         :total_quantity, :display_item_total, :currency, :customer_metadata]
     }
 
-    let(:address_params) { {country_id: Country.first.id, state_id: State.first.id} }
+    let(:address_params) { {country_id: Country.first.id, principal_subdivision_id: State.first.id} }
 
     let(:current_api_user) do
       user = Spree.user_class.new(email: "solidus@example.com")
@@ -608,12 +608,12 @@ module Spree::Api
       let(:billing_address) {
         {name: "Tiago Motta", address1: "Av Paulista",
          city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-         country_id: country.id, state_id: state.id}
+         country_id: country.id, principal_subdivision_id: state.id}
       }
       let(:shipping_address) {
         {name: "Tiago Motta", address1: "Av Paulista",
          city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-         country_id: country.id, state_id: state.id}
+         country_id: country.id, principal_subdivision_id: state.id}
       }
       let(:country) { create(:country, {name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76}) }
       let(:state) { create(:state, country_iso: "BR") }
