@@ -10,11 +10,22 @@ FactoryBot.define do
     active { true }
     backorderable_default { true }
 
+    transient do
+      # Deprecated alias of principal_subdivision, kept so that
+      # `build(:stock_location, state: ...)` keeps working.
+      state { nil }
+    end
+
     country { |stock_location| Spree::Country.first || stock_location.association(:country) }
-    state do |stock_location|
-      carmen_country = Carmen::Country.coded(stock_location.country.iso)
-      if carmen_country.subregions?
-        stock_location.country.states.first || stock_location.association(:state, country: stock_location.country)
+    principal_subdivision do |stock_location|
+      if stock_location.state
+        stock_location.state
+      else
+        carmen_country = Carmen::Country.coded(stock_location.country.iso)
+        if carmen_country.subregions?
+          stock_location.country.states.first ||
+            stock_location.association(:state, country: stock_location.country)
+        end
       end
     end
 

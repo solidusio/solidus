@@ -54,12 +54,12 @@
         <span id="country"><%= f.collection_select :country_id, available_countries(restrict_to_zone: nil), :id, :name, { include_blank: true }, { class: 'custom-select js-country_id fullwidth' } %></span>
       <% end %>
 
-      <%= f.field_container :state do %>
+      <%= f.field_container :principal_subdivision do %>
         <% country = f.object.country %>
-        <%= f.label :state_id %>
+        <%= f.label :principal_subdivision_id %>
         <span id="state" class="region">
-          <%= f.text_field :state_name, style: "display: none", class: 'fullwidth state_name js-state_name' %>
-          <%= f.collection_select :state_id, country ? country.states.sort : [], :id, :name, { include_blank: true }, {class: 'custom-select fullwidth js-state_id', style: "display: none" } %>
+          <%= f.text_field :principal_subdivision_name, style: "display: none", class: 'fullwidth state_name js-state_name' %>
+          <%= f.collection_select :principal_subdivision_id, country ? country.states.sort : [], :id, :name, { include_blank: true }, {class: 'custom-select fullwidth js-state_id', style: "display: none" } %>
         </span>
       <% end %>
     </fieldset>

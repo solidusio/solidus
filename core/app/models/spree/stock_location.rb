@@ -17,8 +17,39 @@ module Spree
     has_many :users, through: :user_stock_locations
     has_many :customer_returns, inverse_of: :stock_location, dependent: :restrict_with_error
 
-    belongs_to :state, class_name: "Spree::State", optional: true
+    belongs_to :principal_subdivision, class_name: "Spree::State", optional: true
     belongs_to :country, class_name: "Spree::Country", optional: true
+
+    # Declared against the same foreign key as :principal_subdivision so that
+    # `joins(:state)`, `includes(:state)` and `where(state: ...)` keep working. The
+    # accessors below shadow the generated ones and delegate to
+    # :principal_subdivision, so the two associations can never hold different
+    # records.
+    belongs_to :state,
+      class_name: "Spree::State",
+      foreign_key: :principal_subdivision_id,
+      optional: true
+
+    def state
+      principal_subdivision
+    end
+
+    def state=(value)
+      self.principal_subdivision = value
+    end
+
+    alias_attribute :state_id, :principal_subdivision_id
+    alias_attribute :state_name, :principal_subdivision_name
+
+    deprecate(
+      :state => :principal_subdivision,
+      :state= => :principal_subdivision=,
+      :state_id => :principal_subdivision_id,
+      :state_id= => :principal_subdivision_id=,
+      :state_name => :principal_subdivision_name,
+      :state_name= => :principal_subdivision_name=,
+      :deprecator => Spree.deprecator
+    )
 
     has_many :shipping_method_stock_locations, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_stock_locations
@@ -34,9 +65,11 @@ module Spree
 
     self.allowed_ransackable_attributes = %w[name]
 
-    def state_text
-      state.try(:abbr) || state.try(:name) || state_name
+    def principal_subdivision_text
+      principal_subdivision.try(:abbr) || principal_subdivision.try(:name) || principal_subdivision_name
     end
+    alias_method :state_text, :principal_subdivision_text
+    deprecate state_text: :principal_subdivision_text, deprecator: Spree.deprecator
 
     # Wrapper for creating a new stock item respecting the backorderable config
     def propagate_variant(variant)

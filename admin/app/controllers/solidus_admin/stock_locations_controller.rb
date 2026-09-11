@@ -15,6 +15,9 @@ module SolidusAdmin
         :address2,
         :city, :zipcode,
         :country_id,
+        :principal_subdivision_name,
+        :principal_subdivision_id,
+        # Deprecated aliases of the principal_subdivision_* params above.
         :state_name,
         :state_id,
         :phone,
