@@ -10,6 +10,28 @@ module ThirdParty
 end
 
 RSpec.describe Spree::Product, type: :model do
+  describe "#touch" do
+    subject { product.touch }
+
+    let(:taxonomy) { create(:taxonomy) }
+    let(:root) { taxonomy.root }
+    let(:child) { create(:taxon, parent: root, taxonomy:) }
+    let!(:product) { create(:product, taxons: [child]) }
+
+    before do
+      root.update_column(:updated_at, 1.day.ago)
+      child.update_column(:updated_at, 1.day.ago)
+      taxonomy.update_column(:updated_at, 1.day.ago)
+    end
+
+    it "touches the taxons, their ancestors and the taxonomy" do
+      subject
+
+      expect(child.reload.updated_at).to be_within(1.second).of(Time.current)
+      expect(root.reload.updated_at).to be_within(1.second).of(Time.current)
+      expect(taxonomy.reload.updated_at).to be_within(1.second).of(Time.current)
+    end
+  end
   context "product instance" do
     let(:product) { create(:product) }
     let(:variant) { create(:variant, product:) }

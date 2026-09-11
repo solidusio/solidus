@@ -3,6 +3,29 @@
 require "rails_helper"
 
 RSpec.describe Spree::Taxon, type: :model do
+  describe "#touch" do
+    subject { child.touch }
+
+    let(:taxonomy) { create(:taxonomy) }
+    let(:root) { taxonomy.root }
+    let(:parent) { create(:taxon, parent: root, taxonomy:) }
+    let!(:child) { create(:taxon, parent:, taxonomy:) }
+
+    before do
+      root.update_column(:updated_at, 1.day.ago)
+      parent.update_column(:updated_at, 1.day.ago)
+      taxonomy.update_column(:updated_at, 1.day.ago)
+    end
+
+    it "touches the ancestors and taxonomy" do
+      subject
+
+      expect(root.reload.updated_at).to be_within(1.second).of(Time.current)
+      expect(parent.reload.updated_at).to be_within(1.second).of(Time.current)
+      expect(taxonomy.reload.updated_at).to be_within(1.second).of(Time.current)
+    end
+  end
+
   it_behaves_like "an attachment" do
     subject { create(:taxon) }
     let(:attachment_name) { :icon }
