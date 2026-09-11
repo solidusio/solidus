@@ -6,7 +6,12 @@ FactoryBot.define do
       # There's `Spree::Address#country_iso=`, prohibiting me from using `country_iso` here
       country_iso_code { "US" }
       state_code { "AL" }
+      # Deprecated alias of principal_subdivision, kept so that
+      # `build(:address, state: ...)` keeps working.
+      state { nil }
     end
+
+    principal_subdivision { state }
 
     name { "John Von Doe" }
     company { "Company" }
@@ -18,8 +23,8 @@ FactoryBot.define do
     alternative_phone { "555-555-0199" }
 
     country do |address|
-      if address.state
-        address.state.country
+      if address.principal_subdivision
+        address.principal_subdivision.country
       else
         Spree::Country.find_by(iso: country_iso_code) ||
           address.association(:country, strategy: :create, iso: country_iso_code)
@@ -27,8 +32,10 @@ FactoryBot.define do
     end
 
     after(:build) do |address, evaluator|
-      if address&.country&.states_required? && address.state.nil? && address.state_name.nil?
-        address.state = address.country.states.find_by(abbr: evaluator.state_code) ||
+      if address&.country&.states_required? &&
+          address.principal_subdivision.nil? &&
+          address.principal_subdivision_name.nil?
+        address.principal_subdivision = address.country.states.find_by(abbr: evaluator.state_code) ||
           create(:state, country_iso: address.country.iso, state_code: evaluator.state_code)
       end
     end

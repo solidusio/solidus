@@ -283,12 +283,18 @@ module Spree
         }.to raise_error ActiveRecord::RecordNotFound
       end
 
-      it "ensures_state_id for state fields" do
+      it "ensures_principal_subdivision_id for principal subdivision fields" do
         [:name, :abbr].each do |field|
-          address = {country_id: country.id, state: {field => state.send(field)}}
-          Importer::Order.ensure_state_id_from_params(address)
-          expect(address[:state_id]).to eq state.id
+          address = {country_id: country.id, principal_subdivision: {field => state.send(field)}}
+          Importer::Order.ensure_principal_subdivision_id_from_params(address)
+          expect(address[:principal_subdivision_id]).to eq state.id
         end
+      end
+
+      it "still resolves the deprecated state key" do
+        address = {country_id: country.id, state: {"name" => state.name}}
+        Importer::Order.ensure_principal_subdivision_id_from_params(address)
+        expect(address[:principal_subdivision_id]).to eq state.id
       end
 
       context "shipments" do

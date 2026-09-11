@@ -33,7 +33,7 @@ module Spree
 
     scope :for_address, ->(address) do
       if address
-        with_member_ids(address.state_id, address.country_id)
+        with_member_ids(address.principal_subdivision_id, address.country_id)
       else
         none
       end
@@ -77,7 +77,7 @@ module Spree
         when "Spree::Country"
           zone_member.zoneable_id == address.country_id
         when "Spree::State"
-          zone_member.zoneable_id == address.state_id
+          zone_member.zoneable_id == address.principal_subdivision_id
         else
           false
         end
