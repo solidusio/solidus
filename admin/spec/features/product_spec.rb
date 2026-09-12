@@ -166,7 +166,7 @@ describe "Product", type: :feature do
         click_on "Add new category"
         expect(page).to have_content("New Category")
 
-        within(dialog) do
+        within(dialog(text: "New Category")) do
           fill_in "Name", with: "Jackets"
           solidus_select "Apparel", from: "Parent Category"
           click_on "Add Category"
@@ -179,13 +179,17 @@ describe "Product", type: :feature do
       end
 
       context "with invalid attributes" do
+        let(:new_category_dialog) { dialog text: "New Category" }
         context "with blank name" do
           it "shows error" do
             visit "/admin/products/just-a-prod"
             click_on "Add new category"
-            within(dialog) { click_on "Add Category" }
 
-            expect(dialog).to have_content("can't be blank")
+            within new_category_dialog do
+              click_on "Add Category"
+            end
+
+            expect(new_category_dialog).to have_content("can't be blank")
           end
         end
 
@@ -193,13 +197,15 @@ describe "Product", type: :feature do
           it "shows error" do
             visit "/admin/products/just-a-prod"
             click_on "Add new category"
-            within(dialog) do
+
+            within new_category_dialog do
               fill_in "Name", with: child_taxon.name
               solidus_select "Apparel", from: "Parent Category"
               click_on "Add Category"
             end
 
-            expect(dialog).to have_content("must be unique under the same parent Taxon")
+            expect(new_category_dialog)
+              .to have_content("must be unique under the same parent Taxon")
           end
         end
       end
