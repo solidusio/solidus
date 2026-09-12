@@ -36,6 +36,9 @@ changelog:
     - title: Solidus I18n
       labels:
         - "changelog:solidus_i18n"
+    - title: Deprecations
+      labels:
+        - "changelog:deprecation"
     - title: Breaking Changes
       labels:
         - "changelog:breaking-change"
