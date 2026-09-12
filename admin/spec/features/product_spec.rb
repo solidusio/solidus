@@ -79,6 +79,8 @@ describe "Product", type: :feature do
       options_panel = panel(title: "Options")
 
       within(options_panel) { click_on "Save" }
+      expect(page).to have_content("Product was successfully updated.")
+
       expect(options_panel).to have_content("clothing-size:Size")
       expect(options_panel).to have_content("S:Small")
       expect(options_panel).to have_content("M:Medium")
@@ -87,7 +89,9 @@ describe "Product", type: :feature do
       expect(options_panel).to have_content("red:Red")
 
       solidus_unselect(%w[clothing-size:Size clothing-color:Color], from: "Option Types")
+
       within(options_panel) { click_on "Save" }
+      expect(page).to have_content("Product was successfully updated.")
 
       expect(options_panel).not_to have_content("clothing-size:Size")
       expect(options_panel).not_to have_content("S:Small")
