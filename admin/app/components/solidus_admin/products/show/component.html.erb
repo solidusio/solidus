@@ -154,7 +154,8 @@
         <% end %>
 
         <%= render component("ui/panel").new(title: t(".product_organization")) do |panel| %>
-          <%= f.hidden_field :taxon_ids, multiple: true, value: nil %>
+          <%= hidden_field_tag "#{f.object_name}[taxon_ids][]", nil %>
+
           <%= render component("turbo/target_frame").new(:product_organization_frame, source: :new_product_category) do %>
             <%= render component("ui/forms/field").select(
               f,
