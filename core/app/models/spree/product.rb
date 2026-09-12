@@ -355,14 +355,17 @@ module Spree
       run_callbacks(:touch)
     end
 
-    # Iterate through this product's taxons and taxonomies and touch their timestamps in a batch
+    # Iterate through this product's taxons and taxonomies and touch their timestamps
     def touch_taxons
-      taxons_to_touch = taxons.flat_map(&:self_and_ancestors).uniq
-      unless taxons_to_touch.empty?
-        Spree::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
+      taxons_to_touch = taxons.flat_map(&:self_and_ancestors).uniq.sort_by(&:id)
+      return if taxons_to_touch.empty?
 
-        taxonomy_ids_to_touch = taxons_to_touch.flat_map(&:taxonomy_id).uniq
-        Spree::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
+      time = Time.current
+      taxons_to_touch.each { |taxon| taxon.update_column(:updated_at, time) }
+
+      taxonomy_ids_to_touch = taxons_to_touch.map(&:taxonomy_id).uniq
+      Spree::Taxonomy.where(id: taxonomy_ids_to_touch).order(:id).each do |taxonomy|
+        taxonomy.update_column(:updated_at, time)
       end
     end
 
