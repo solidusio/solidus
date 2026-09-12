@@ -77,8 +77,15 @@ describe "Product", type: :feature do
       visit "/admin/products/just-a-prod"
       solidus_select(%w[clothing-size:Size clothing-color:Color], from: "Option Types")
       options_panel = panel(title: "Options")
-      # for some reason capybara on circle ci does not register a form submit when clicking "Save" within options panel,
-      # so we have to resort to Save button in the header
+
+      # FIXME: There is some kind of minor issue with this form that prevents
+      # the headless browser running in CI from successfully clicking "Save"
+      # within the options panel:
+      #
+      #    within(options_panel) { click_on "Save" } # Doesn't work. :-(
+      #
+      # If you can figure out why, please resolve this FIXME! Until then,
+      # we can save using the button in the header.
       within("header") { click_on "Save" }
 
       expect(options_panel).to have_content("clothing-size:Size")
