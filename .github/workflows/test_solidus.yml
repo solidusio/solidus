@@ -3,6 +3,10 @@ name: "Test Solidus"
 on:
   workflow_call:
     inputs:
+      artifacts:
+        description: "Whether to save test artifacts during the workflow run."
+        type: boolean
+        default: false
       lib_name:
         description: "The name of the Solidus library to test (e.g., core, backend, frontend)"
         type: string
@@ -41,6 +45,7 @@ jobs:
             database: postgres
             storage: activestorage
     env:
+      ARTIFACTS_DIR: ${{ github.workspace }}/${{ inputs.lib_name }}/artifacts
       BUNDLE_WITHOUT: "lint release"
       COVERAGE_DIR: ${{ github.workspace }}/${{ inputs.lib_name }}/coverage
       DB: ${{ matrix.database }}
@@ -120,3 +125,10 @@ jobs:
           slug: solidusio/solidus
           disable_search: true
           files: ${{ env.COVERAGE_DIR }}/coverage.xml
+      - name: Store test artifacts
+        uses: actions/upload-artifact@v7
+        if: ${{ inputs.artifacts == 'true' }}
+        with:
+          name: test-artifacts
+          path: ${{ env.ARTIFACTS_DIR }}/**/*
+

@@ -14,11 +14,11 @@ jobs:
   solidus_admin:
     uses: ./.github/workflows/test_solidus.yml
     with:
+      artifacts: true
       lib_name: admin
       coverage: true
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
   solidus_api:
     uses: ./.github/workflows/test_solidus.yml
     with:
