@@ -98,9 +98,7 @@ describe "Product", type: :feature do
     end
 
     context "clicking on Edit" do
-      # skipping test until updated option types UI is merged
-      # https://github.com/solidusio/solidus/pull/6236
-      xit "leads to option type edit page" do
+      it "leads to option type edit page" do
         option_type = create(:option_type)
         product.option_types << option_type
         visit "/admin/products/just-a-prod"
