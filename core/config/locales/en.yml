@@ -191,6 +191,7 @@ en:
         sku: Master SKU
         slug: Slug
         tax_category: Tax Category
+        taxon_ids: Categories
         weight: Weight
         width: Width
       spree/product_property:
@@ -408,6 +409,7 @@ en:
         meta_keywords: Meta Keywords
         meta_title: Meta Title
         name: Name
+        parent_id: Parent Category
         permalink: Permalink
         position: Position
       spree/taxonomy:

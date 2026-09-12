@@ -51,7 +51,7 @@ require "spree/testing_support/blacklist_urls"
 require "spree/testing_support/silence_deprecations"
 
 require "capybara-screenshot/rspec"
-Capybara.save_path = ENV["CIRCLE_ARTIFACTS"] if ENV["CIRCLE_ARTIFACTS"]
+Capybara.save_path = ENV["ARTIFACTS_DIR"] if ENV["ARTIFACTS_DIR"]
 Capybara.exact = true
 
 require "spree/testing_support/capybara_driver"

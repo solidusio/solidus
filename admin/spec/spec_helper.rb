@@ -14,6 +14,7 @@ if ENV["COVERAGE"]
   SimpleCov.merge_timeout(3600)
   SimpleCov.start("rails") do
     add_filter "/shared_examples/"
+    add_filter "/testing_support/feature_helpers"
   end
 end
 
@@ -48,7 +49,7 @@ require "capybara/rspec"
 require "capybara-screenshot/rspec"
 require "spree/testing_support/capybara_driver"
 
-Capybara.save_path = ENV["CIRCLE_ARTIFACTS"] if ENV["CIRCLE_ARTIFACTS"]
+Capybara.save_path = ENV["ARTIFACTS_DIR"] if ENV["ARTIFACTS_DIR"]
 Capybara.exact = true
 Capybara.disable_animation = true
 Capybara.default_max_wait_time = ENV["DEFAULT_MAX_WAIT_TIME"].to_f if ENV["DEFAULT_MAX_WAIT_TIME"].present?

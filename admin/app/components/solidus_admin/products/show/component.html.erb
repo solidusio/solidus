@@ -89,7 +89,9 @@
                         <%= render component("ui/icon").new(name: "draggable", class: "w-6 h-6 cursor-grab handle fill-gray-500") %>
                       </div>
                       <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-sm"><%= product_option.option_type.name %>:<%= product_option.option_type.presentation %></span>
+                        <span class="font-semibold text-sm">
+                          <%= product_option.option_type.name %>:<%= product_option.option_type.presentation %>
+                        </span>
                         <div class="flex gap-2 flex-wrap">
                           <% product_option.option_type.option_values.each do |value| %>
                             <%= render component("ui/badge").new(name: "#{value.name}:#{value.presentation}") %>
@@ -108,8 +110,14 @@
 
           <div class="flex gap-4 justify-between items-end">
             <%= hidden_field_tag "#{f.object_name}[option_type_ids][]", nil %>
-            <%= f.select(:option_type_ids, option_type_options, multiple: true) %>
-            <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
+            <%= render component("ui/forms/field").select(
+              f,
+              :option_type_ids,
+              option_type_options,
+              multiple: true
+            ) %>
+
+            <%= render component("ui/button").new(type: :submit, form: form_id, text: t(".save")) %>
           </div>
 
           <% panel.with_action(
@@ -145,8 +153,22 @@
           <%= f.checkbox(:promotionable, hint: t(".hints.promotionable_html")) %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".product_organization")) do %>
-          <%= f.select(:taxon_ids, taxon_options, multiple: true) %>
+        <%= render component("ui/panel").new(title: t(".product_organization")) do |panel| %>
+          <%= hidden_field_tag "#{f.object_name}[taxon_ids][]", nil %>
+
+          <%= render component("turbo/target_frame").new(:product_organization_frame, source: :new_product_category) do %>
+            <%= render component("ui/forms/field").select(
+              f,
+              :taxon_ids,
+              taxon_options,
+              multiple: true
+            ) %>
+          <% end %>
+          <% panel.with_action(
+            name: t(".add_new_category"),
+            href: solidus_admin.new_product_taxon_path(@product),
+            data: { turbo_frame: :new_product_category }
+          ) %>
         <% end %>
       <% end %>
     <% end %>
@@ -166,3 +188,5 @@
     <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
   <% end %>
 <% end %>
+
+<%= turbo_frame_tag :new_product_category, target: :product_organization_frame %>
