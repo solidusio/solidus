@@ -45,7 +45,7 @@ module Spree
             source,
             gateway_options
           )
-          pend! if handle_response(response)
+          handle_response(response) ? pend! : save!
         end
       end
 
@@ -61,7 +61,7 @@ module Spree
             source,
             gateway_options
           )
-          complete! if handle_response(response)
+          handle_response(response) ? complete! : save!
         end
 
         capture_events.create!(amount:)
@@ -86,7 +86,7 @@ module Spree
           money = ::Money.new(capture_amount, currency)
           capture_events.create!(amount: money.to_d)
           update!(amount: captured_amount)
-          complete! if handle_response(response)
+          handle_response(response) ? complete! : save!
         end
       end
 
@@ -156,7 +156,7 @@ module Spree
           self.response_code = response.authorization
           void
         else
-          gateway_error(response)
+          gateway_error!(response)
         end
       end
 
@@ -169,26 +169,27 @@ module Spree
         return unless payment_method.source_required?
 
         unless source
-          gateway_error(I18n.t("spree.payment_processing_failed"))
+          gateway_error!(I18n.t("spree.payment_processing_failed"))
         end
 
         unless payment_method.supports?(source)
           invalidate!
-          gateway_error(I18n.t("spree.payment_method_not_supported"))
+          gateway_error!(I18n.t("spree.payment_method_not_supported"))
         end
 
         true
       end
 
-      # @returns true if the response is successful
-      # @returns false (and calls #failure) if the response is not successful
+      # @returns Boolean Whether or not further payment state transitions should
+      #   be made. If the response is asynchronous, then payment transitions
+      #   should wait for webhook callbacks before proceeding.
+      # @raises Spree::Core::GatewayError If the response is not successful
       def handle_response(response)
         record_response(response)
 
         unless response.success?
           failure
-          gateway_error(response)
-          return false
+          gateway_error!(response)
         end
 
         unless response.authorization.nil?
@@ -201,7 +202,7 @@ module Spree
           end
         end
 
-        true
+        !ActiveModel::Type::Boolean.new.cast(response.params.fetch("asynchronous", false))
       end
 
       def record_response(response)
@@ -211,10 +212,14 @@ module Spree
       def protect_from_connection_error
         yield
       rescue ActiveMerchant::ConnectionError => error
-        gateway_error(error)
+        gateway_error!(error)
       end
 
-      def gateway_error(error)
+      # Logs the payment error and then raises a Spree::Core::GatewayError with
+      # the error message.
+      #
+      # @raises Spree::Core::GatewayError
+      def gateway_error!(error)
         message, log = case error
         when ActiveMerchant::Billing::Response
           [

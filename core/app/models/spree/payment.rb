@@ -187,7 +187,7 @@ module Spree
 
       payment_method.create_profile(self)
     rescue ActiveMerchant::ConnectionError => error
-      gateway_error error
+      gateway_error! error
     end
 
     def invalidate_old_payments
