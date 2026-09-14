@@ -18,10 +18,10 @@ RSpec.describe Spree::CustomerReturn, type: :model do
     let(:first_shipment) { first_order.shipments.first }
     let(:second_shipment) { second_order.shipments.first }
 
-    let(:first_inventory_unit) { build(:inventory_unit, shipment: first_shipment) }
+    let(:first_inventory_unit) { build(:inventory_unit, shipment: first_shipment, state: "shipped") }
     let(:first_return_item) { build(:return_item, inventory_unit: first_inventory_unit) }
 
-    let(:second_inventory_unit) { build(:inventory_unit, shipment: second_shipment) }
+    let(:second_inventory_unit) { build(:inventory_unit, shipment: second_shipment, state: "shipped") }
     let(:second_return_item) { build(:return_item, inventory_unit: second_inventory_unit) }
 
     before do
@@ -50,6 +50,42 @@ RSpec.describe Spree::CustomerReturn, type: :model do
       end
     end
 
+    context "when a return item's inventory unit has not shipped" do
+      let(:first_inventory_unit) { build(:inventory_unit, shipment: first_shipment, state: "on_hand") }
+
+      it "is not valid" do
+        expect(subject).to eq false
+      end
+
+      it "adds an error message" do
+        subject
+
+        expect(customer_return.errors.full_messages)
+          .to include(I18n.t("spree.return_items_must_have_shipped_inventory_units"))
+      end
+    end
+
+    context "when a return item is being received against an unshipped unit" do
+      let(:first_inventory_unit) { build(:inventory_unit, shipment: first_shipment, state: "on_hand") }
+      let(:first_return_item) do
+        build(:return_item, inventory_unit: first_inventory_unit, reception_status_event: "receive")
+      end
+
+      it "is not valid" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "when a return item has already been received" do
+      let(:customer_return) { create(:customer_return, return_items_count: 1) }
+
+      before { customer_return.return_items.first.receive! }
+
+      it "is still valid once its inventory unit has been returned" do
+        expect(customer_return.reload).to be_valid
+      end
+    end
+
     context "when inventory is not present" do
       before do
         customer_return.return_items.clear
@@ -60,6 +96,32 @@ RSpec.describe Spree::CustomerReturn, type: :model do
       it "is invalid" do
         expect(subject).to eq false
       end
+    end
+  end
+
+  describe "#save" do
+    subject { customer_return.save }
+
+    let(:order) { create(:shipped_order, line_items_count: 1) }
+    let(:inventory_unit) { order.inventory_units.first }
+    let(:customer_return) do
+      build(:customer_return_without_return_items).tap do |record|
+        record.return_items = [
+          build(:return_item, inventory_unit:, reception_status_event: "receive")
+        ]
+      end
+    end
+
+    context "when the inventory unit has not shipped" do
+      before { inventory_unit.update_column(:state, "on_hand") }
+
+      it "is rejected rather than raising an invalid transition" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "when the inventory unit has shipped" do
+      it { is_expected.to eq true }
     end
   end
 
