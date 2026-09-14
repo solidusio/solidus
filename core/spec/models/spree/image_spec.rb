@@ -5,6 +5,30 @@ require "rails_helper"
 RSpec.describe Spree::Image, type: :model do
   include ImageSpecHelper
 
+  describe ".attachment_preloads" do
+    subject(:attachment_preloads) { described_class.attachment_preloads }
+
+    context "for active storage attachments" do
+      before do
+        stub_spree_preferences(Spree::Config, image_attachment_module: Spree::Image::ActiveStorageAttachment)
+      end
+
+      it "returns necessary preloads" do
+        is_expected.to eq([
+          {attachment_attachment: {blob: {variant_records: {image_attachment: :blob}}}}
+        ])
+      end
+    end
+
+    context "for paperclip attachments" do
+      before do
+        stub_spree_preferences(Spree::Config, image_attachment_module: Spree::Image::PaperclipAttachment)
+      end
+
+      it { is_expected.to eq([]) }
+    end
+  end
+
   it_behaves_like "an attachment" do
     subject { create(:image) }
     let(:attachment_name) { :attachment }

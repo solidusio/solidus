@@ -107,11 +107,13 @@ module Spree
           :option_types,
           :product_properties,
           {classifications: :taxon},
-          {master: {stock_items: :stock_location}},
-          {variants: {stock_items: :stock_location}},
-          {variants_including_master: {stock_items: :stock_location}}
+          {master: variants_includes},
+          {variants: variants_includes},
+          {variants_including_master: variants_includes}
         ]
       end
+
+      def variants_includes = {stock_items: :stock_location, images: Spree::Image.attachment_preloads}
 
       def product_params
         product_params = params.require(:product).permit(permitted_product_attributes)
