@@ -355,6 +355,32 @@ RSpec.describe Spree::Payment, type: :model do
           expect(payment).to receive(:pend!)
           subject
         end
+
+        context "and the payment processes asynchronously" do
+          let!(:success_response) do
+            ActiveMerchant::Billing::Response.new(true, "", { asynchronous: true }, {
+              authorization: "123",
+              cvv_result: cvv_code,
+              avs_result: {code: avs_code}
+            })
+          end
+
+          it "should leave the payment in the processing state" do
+            allow(payment).to receive(:pend!).and_call_original
+            expect {
+              subject
+            }.to change { payment.state }.from("checkout").to("processing")
+            expect(payment).not_to have_received(:pend!)
+          end
+
+          it "persists the response_code, avs_response and cvv_response fields" do
+            subject
+            expect(payment.reload.response_code).to eq("123")
+            expect(payment.reload.avs_response).to eq(avs_code)
+            expect(payment.reload.cvv_response_code).to eq(cvv_code)
+            expect(payment.reload.cvv_response_message).to eq(ActiveMerchant::Billing::CVVResult::MESSAGES[cvv_code])
+          end
+        end
       end
 
       context "if unsuccessful" do
@@ -416,6 +442,37 @@ RSpec.describe Spree::Payment, type: :model do
         it "should set the uncaptured amount to 0" do
           subject
           expect(payment.uncaptured_amount).to eq(0)
+        end
+
+        context "and the payment processes asynchronously" do
+          let!(:success_response) do
+            ActiveMerchant::Billing::Response.new(true, "", { asynchronous: true }, {
+              authorization: "123",
+              cvv_result: cvv_code,
+              avs_result: {code: avs_code}
+            })
+          end
+
+          it "should leave the payment in the processing state" do
+            allow(payment).to receive(:complete!).and_call_original
+            expect {
+              subject
+            }.to change { payment.state }.from("checkout").to("processing")
+            expect(payment).not_to have_received(:complete!)
+          end
+
+          it "persists the response_code, avs_response and cvv_response fields" do
+            subject
+            expect(payment.reload.response_code).to eq("123")
+            expect(payment.reload.avs_response).to eq(avs_code)
+            expect(payment.reload.cvv_response_code).to eq(cvv_code)
+            expect(payment.reload.cvv_response_message).to eq(ActiveMerchant::Billing::CVVResult::MESSAGES[cvv_code])
+          end
+
+          it "should set the uncaptured amount to 0" do
+            subject
+            expect(payment.uncaptured_amount).to eq(0)
+          end
         end
       end
 
@@ -496,6 +553,40 @@ RSpec.describe Spree::Payment, type: :model do
             it "updates the amount of the payment" do
               payment.capture!(6000)
               expect(payment.reload.amount).to eq(60)
+            end
+          end
+
+          context "and the payment processes asynchronously" do
+            let!(:success_response) do
+              ActiveMerchant::Billing::Response.new(true, "", { asynchronous: true }, {
+                authorization: "123",
+                cvv_result: cvv_code,
+                avs_result: {code: avs_code}
+              })
+            end
+
+            before do
+              expect(payment.payment_method).to receive(:capture).with(
+                payment.display_amount.money.cents,
+                payment.response_code,
+                anything
+              ).and_return(success_response)
+            end
+
+            it "should leave the payment in the processing state" do
+              allow(payment).to receive(:complete!).and_call_original
+              expect {
+                subject
+              }.to change { payment.state }.from("pending").to("processing")
+              expect(payment).not_to have_received(:complete!)
+            end
+
+            it "persists the response_code, avs_response and cvv_response fields" do
+              subject
+              expect(payment.reload.response_code).to eq("123")
+              expect(payment.reload.avs_response).to eq(avs_code)
+              expect(payment.reload.cvv_response_code).to eq(cvv_code)
+              expect(payment.reload.cvv_response_message).to eq(ActiveMerchant::Billing::CVVResult::MESSAGES[cvv_code])
             end
           end
 
