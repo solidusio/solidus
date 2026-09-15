@@ -8,4 +8,16 @@ class SolidusAdmin::PaymentMethods::Form::Component < SolidusAdmin::BaseComponen
     @url = url
     @form_id = form_id
   end
+
+  def available_preference_sources
+    Spree::PaymentMethod.available_preference_sources
+  end
+
+  def available_types
+    Rails.application.config.spree.payment_methods.sort_by(&:name)
+  end
+
+  def store_select_values
+    Spree::Store.pluck(:name, :id)
+  end
 end
