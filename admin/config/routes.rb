@@ -47,6 +47,11 @@ SolidusAdmin::Engine.routes.draw do
     end
   end
 
+  admin_resources :payment_methods,
+    constraints: -> { SolidusAdmin::Config.enable_alpha_features? },
+    except: [:show],
+    sortable: true
+
   admin_resources :users, only: [:index, :edit, :destroy] do
     member do
       get :addresses
@@ -77,7 +82,6 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :promotion_categories, only: [:index, :destroy]
   admin_resources :tax_categories, except: [:show]
   admin_resources :tax_rates, except: [:show]
-  admin_resources :payment_methods, except: [:show], sortable: true
   admin_resources :stock_items, only: [:index, :edit, :update]
   admin_resources :shipping_methods, only: [:index, :destroy]
   admin_resources :shipping_categories, except: [:show]

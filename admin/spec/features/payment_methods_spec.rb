@@ -4,7 +4,10 @@ require "spec_helper"
 require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Payment Methods", :js, type: :feature do
-  before { sign_in create(:admin_user, email: "admin@example.com") }
+  before do
+    allow(SolidusAdmin::Config).to receive(:enable_alpha_features?).and_return(true)
+    sign_in create(:admin_user, email: "admin@example.com")
+  end
 
   it "lists users and allows deleting them" do
     create(:check_payment_method, name: "Check", active: true)
