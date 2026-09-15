@@ -24,6 +24,7 @@ module Spree
         include Preferences::StaticallyConfigurable
 
         preference :color, :string
+        preference :shape, :string, default: "rect"
 
         attr_accessor :preference_source
       end
@@ -61,6 +62,30 @@ module Spree
       it "ignores assignment" do
         subject.preferences = {color: "orange"}
         expect(subject.preferred_color).to eq "red"
+      end
+
+      context "for a preference the source does not set" do
+        it "falls back to the default through the reader" do
+          expect(subject.preferred_shape).to eq "rect"
+        end
+
+        it "falls back to the default through the preferences hash" do
+          expect(subject.preferences[:shape]).to eq "rect"
+          expect(subject.preferences.to_hash[:shape]).to eq "rect"
+        end
+
+        it "keeps the statically configured value for preferences the source sets" do
+          expect(subject.preferences.to_hash[:color]).to eq "red"
+        end
+
+        it "includes the defaulted preference in the keys" do
+          expect(subject.preferences.keys).to match_array([:color, :shape])
+        end
+
+        it "still ignores assignment" do
+          subject.preferences[:shape] = "pill"
+          expect(subject.preferred_shape).to eq "rect"
+        end
       end
     end
   end

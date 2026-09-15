@@ -22,7 +22,8 @@ module Spree
 
       def preferences
         if respond_to?(:preference_source) && preference_source
-          self.class.preference_sources[preference_source] || {}
+          source = self.class.preference_sources[preference_source]
+          source ? default_preferences.merge(source.to_hash) : {}
         else
           self[:preferences]
         end

@@ -62,7 +62,11 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
     let(:payment_method) { create(:credit_card_payment_method, preference_source: "test_preference_source") }
 
     it "reads static preferences" do
-      expect(payment_method.options).to eq({server: "bar"})
+      expect(payment_method.options[:server]).to eq("bar")
+    end
+
+    it "falls back to the default for preferences the source does not set" do
+      expect(payment_method.options[:test_mode]).to be(true)
     end
   end
 end
