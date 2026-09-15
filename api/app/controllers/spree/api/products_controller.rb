@@ -8,20 +8,12 @@ module Spree
           ids = params[:ids].split(",").flatten
           @products = product_scope.where(id: ids)
         else
-          products_includes = [
-            :option_types,
-            :product_properties,
-            {classifications: :taxon},
-            {master: {stock_items: :stock_location}},
-            {variants: {stock_items: :stock_location}},
-            {variants_including_master: {stock_items: :stock_location}}
-          ]
           @products = product_scope
             .ransack(params[:q])
             .result
-            .includes(products_includes)
         end
 
+        @products = @products.includes(products_includes)
         @products = paginate(@products.distinct)
         expires_in 15.minutes, public: true
         headers["Surrogate-Control"] = "max-age=#{15.minutes}"
@@ -109,6 +101,19 @@ module Spree
       end
 
       private
+
+      def products_includes
+        [
+          :option_types,
+          :product_properties,
+          {classifications: :taxon},
+          {master: variants_includes},
+          {variants: variants_includes},
+          {variants_including_master: variants_includes}
+        ]
+      end
+
+      def variants_includes = {stock_items: :stock_location, images: Spree::Image.attachment_preloads}
 
       def product_params
         product_params = params.require(:product).permit(permitted_product_attributes)

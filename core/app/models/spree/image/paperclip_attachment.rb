@@ -22,6 +22,9 @@ module Spree::Image::PaperclipAttachment
     after_post_process :find_dimensions, if: :valid?
   end
 
+  # When using the Paperclip adapter, attachment preloads are a no-op.
+  def self.attachment_preloads = []
+
   def url(size)
     attachment.url(size)
   end
