@@ -12,7 +12,7 @@ namespace :lint do
   end
 
   task :js do
-    sh 'npx -y eslint $(git ls-files -co --exclude-standard | grep -E "\.js$" | grep -vE "/(vendor|config|spec)/")'
+    sh 'npx -y eslint@8 $(git ls-files -co --exclude-standard | grep -E "\.js$" | grep -vE "/(vendor|config|spec)/")'
   end
 end
 
