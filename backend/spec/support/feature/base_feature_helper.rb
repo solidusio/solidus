@@ -22,7 +22,7 @@ module BaseFeatureHelper
         # noop
       else
         # Make the navigation visible with Selenium driver,
-        if Spree::Backend::Config.admin_updated_navbar # rubocop:disable Style/IfInsideElse
+        if Spree::Backend::Config.admin_updated_navbar
           primary_nav.click
         else
           primary_nav.hover

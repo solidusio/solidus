@@ -25,6 +25,6 @@ module Spree
       all
     }
 
-    default_scope -> { order([default: :desc, updated_at: :desc]) }
+    default_scope -> { order([{ default: :desc, updated_at: :desc }]) }
   end
 end

@@ -168,7 +168,7 @@ module Spree
           order_attributes = super.deep_dup
 
           payments_attributes = order_attributes.find do |attribute|
-            attribute.is_a?(Hash) && attribute.has_key?(:payments_attributes)
+            attribute.is_a?(Hash) && attribute.key?(:payments_attributes)
           end
           payments_attributes[:payments_attributes] -= [:amount]
 

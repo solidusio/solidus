@@ -95,7 +95,7 @@ module Spree::Api
             name: "Option Type",
             presentation: "Option Type",
             option_values_attributes: [
-              name: "foo", presentation: "Foo"
+              { name: "foo", presentation: "Foo" }
             ]
           }
         }
