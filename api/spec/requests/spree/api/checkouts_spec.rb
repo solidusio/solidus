@@ -313,6 +313,32 @@ module Spree::Api
         end
       end
 
+      context "reusing another user's gateway profile id" do
+        before do
+          order.update_column(:state, "payment")
+          create(:credit_card, user: create(:user), gateway_payment_profile_id: "other-users-profile")
+        end
+
+        let(:params) do
+          {
+            order_token: order.guest_token,
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: @payment_method.id.to_s,
+                  source_attributes: {gateway_payment_profile_id: "other-users-profile"}
+                }
+              ]
+            }
+          }
+        end
+
+        it "does not create a payment" do
+          expect { put(spree.api_checkout_path(order), params:) }.not_to change { Spree::Payment.count }
+          expect(response.status).to eq 404
+        end
+      end
+
       it "cannot update attributes of another step" do
         order.update_column(:state, "payment")
 
