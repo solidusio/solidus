@@ -9,7 +9,7 @@ RSpec.describe SolidusPromotions::OrderAdjuster::RecalculatePromoTotals do
     let(:order) { create(:order_with_line_items, line_items_count: 2) }
     subject { described_class.call(order) }
 
-    context "with zero-amount adjustments" do
+    context "with zero-amount promotion adjustments" do
       before do
         order.line_items.first.adjustments.build(
           amount: 0,
@@ -20,6 +20,22 @@ RSpec.describe SolidusPromotions::OrderAdjuster::RecalculatePromoTotals do
       it "marks zero-amount adjustments for destruction" do
         subject
         expect(order.line_items.first.adjustments.select(&:marked_for_destruction?)).not_to be_empty
+      end
+    end
+
+    context "with zero-amount tax adjustments" do
+      let(:tax_rate) { create(:tax_rate) }
+
+      before do
+        order.line_items.first.adjustments.build(
+          amount: 0,
+          source: tax_rate
+        )
+      end
+
+      it "does not mark zero-amount tax adjustments for destruction" do
+        subject
+        expect(order.line_items.first.adjustments.select(&:marked_for_destruction?)).to be_empty
       end
     end
 
@@ -50,6 +66,23 @@ RSpec.describe SolidusPromotions::OrderAdjuster::RecalculatePromoTotals do
       it "calculates promo_total for shipments" do
         subject
         expect(shipment.promo_total).to eq(-5)
+      end
+    end
+
+    context "with a shipment that has a zero-amount tax adjustment" do
+      let(:shipment) { create(:shipment, order: order) }
+      let(:tax_rate) { create(:tax_rate) }
+
+      before do
+        shipment.adjustments.build(
+          amount: 0,
+          source: tax_rate
+        )
+      end
+
+      it "does not mark zero-amount tax adjustments for destruction" do
+        subject
+        expect(shipment.adjustments.select(&:marked_for_destruction?)).to be_empty
       end
     end
 
