@@ -1051,12 +1051,16 @@ RSpec.describe Spree::Payment, type: :model do
       expect(payment.gateway_options[:ip]).to eq(order.last_ip_address)
     end
 
-    it "contains the email address from a persisted order" do
-      # Sets the payment's order to a different Ruby object entirely
-      payment.order = Spree::Order.find(payment.order_id)
-      email = "foo@example.com"
-      order.update(email:)
-      expect(payment.gateway_options[:email]).to eq(email)
+    it "uses the email address from the in-memory order without reloading" do
+      order.email = "foo@example.com"
+      expect(payment.gateway_options[:email]).to eq("foo@example.com")
+    end
+
+    it "does not reload the order, preserving loaded associations" do
+      order.line_items.load
+      expect(order).not_to receive(:reload)
+      expect { payment.gateway_options }
+        .not_to change { order.association(:line_items).loaded? }.from(true)
     end
   end
 
