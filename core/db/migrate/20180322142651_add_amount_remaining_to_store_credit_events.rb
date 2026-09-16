@@ -36,7 +36,6 @@ class AddAmountRemainingToStoreCreditEvents < ActiveRecord::Migration[5.0]
           # These actions do not change the amount_remaining so the previous
           # amount available is used (either the credit's amount or the
           # amount_remaining coming from the event right before this one).
-          credit_amount
         when StoreCredit::AUTHORIZE_ACTION,
              StoreCredit::INVALIDATE_ACTION
           # These actions remove the amount from the available credit amount.

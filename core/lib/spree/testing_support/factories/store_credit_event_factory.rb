@@ -8,11 +8,11 @@ FactoryBot.define do
     action               { Spree::StoreCredit::AUTHORIZE_ACTION }
 
     factory :store_credit_auth_event, class: 'Spree::StoreCreditEvent' do
-      action             { Spree::StoreCredit::AUTHORIZE_ACTION }
+      action { Spree::StoreCredit::AUTHORIZE_ACTION }
     end
 
     factory :store_credit_capture_event do
-      action             { Spree::StoreCredit::CAPTURE_ACTION }
+      action { Spree::StoreCredit::CAPTURE_ACTION }
     end
 
     factory :store_credit_adjustment_event do

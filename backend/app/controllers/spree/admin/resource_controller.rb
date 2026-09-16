@@ -17,7 +17,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     respond_with(@object) do |format|
       format.html { render layout: !request.xhr? }
       if request.xhr?
-        format.js   { render layout: false }
+        format.js { render layout: false }
       end
     end
   end
@@ -26,7 +26,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     respond_with(@object) do |format|
       format.html { render layout: !request.xhr? }
       if request.xhr?
-        format.js   { render layout: false }
+        format.js { render layout: false }
       end
     end
   end

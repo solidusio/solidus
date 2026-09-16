@@ -28,6 +28,7 @@ gem 'rspec-retry', '~> 0.6.2', require: false
 gem 'simplecov', require: false
 gem 'simplecov-cobertura', require: false
 gem 'rack', '< 3', require: false
+gem 'json', '< 3', require: false # json 3 is incompatible with Rails < 8.1.
 gem 'rake', require: false, groups: [:lint, :release]
 gem 'rails-controller-testing', require: false
 gem 'puma', '< 7', require: false
@@ -76,9 +77,9 @@ end
 
 group :lint do
   gem 'erb-formatter', '~> 0.7', require: false
-  gem 'rubocop', '~> 1', require: false
-  gem 'rubocop-performance', '~> 1.4', require: false
-  gem 'rubocop-rails', '~> 2.9', require: false
+  gem 'rubocop', '~> 1.91.0', require: false
+  gem 'rubocop-performance', '~> 1.24.0', require: false
+  gem 'rubocop-rails', '~> 2.37.0', require: false
 end
 
 group :release do
