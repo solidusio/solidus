@@ -7,13 +7,13 @@ module SolidusPromotions
 
       def call(order)
         order.line_items.each do |line_item|
-          line_item.adjustments.select { _1.amount.zero? }.each(&:mark_for_destruction)
+          line_item.adjustments.select { _1.promotion? && _1.amount.zero? }.each(&:mark_for_destruction)
 
           line_item.promo_total = calculate_promo_total_for_adjustable(line_item)
         end
 
         order.shipments.each do |shipment|
-          shipment.adjustments.select { _1.amount.zero? }.each(&:mark_for_destruction)
+          shipment.adjustments.select { _1.promotion? && _1.amount.zero? }.each(&:mark_for_destruction)
           shipment.shipping_rates.each do |shipping_rate|
             shipping_rate.discounts.select { _1.amount.zero? }.each(&:mark_for_destruction)
           end
