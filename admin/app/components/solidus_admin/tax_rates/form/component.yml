@@ -1,0 +1,9 @@
+en:
+  calculation: "Calculation"
+  hints:
+    included_in_price: "Enables automatic inclusion of the applicable tax amount within product prices, providing customers with an all-inclusive pricing experience."
+    show_rate_in_label: "Allows users to display the applicable tax rate alongside product prices for transparent and informative pricing."
+  levels:
+    item: "Item level"
+    order: "Order level"
+  validity: "Validity"

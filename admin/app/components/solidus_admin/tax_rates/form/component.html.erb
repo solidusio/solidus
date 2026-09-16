@@ -1,0 +1,25 @@
+<%= solidus_form_for @tax_rate, url: @form_url, html: { id: @form_id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component("ui/panel").new do %>
+        <%= f.text_field(:name) %>
+        <%= f.select(:zone_id, zone_options) %>
+        <%= f.select(:tax_category_ids, tax_category_options, multiple: true) %>
+        <%= f.switch_field(:show_rate_in_label, hint: t(".hints.show_rate_in_label")) %>
+      <% end %>
+
+      <%= render component("ui/panel").new(title: t(".calculation")) do %>
+        <%= f.select(:calculator_type, calculator_options) %>
+        <%= f.text_field(:amount, type: :number, step: 0.01) %>
+        <%= f.select(:level, level_options) %>
+        <%= f.switch_field(:included_in_price, hint: t(".hints.included_in_price")) %>
+      <% end %>
+    <% end %>
+    <%= page_with_sidebar_aside do %>
+      <%= render component("ui/panel").new(title: t(".validity")) do %>
+        <%= f.text_field(:starts_at, type: :date) %>
+        <%= f.text_field(:expires_at, type: :date) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

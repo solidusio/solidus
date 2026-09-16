@@ -83,6 +83,11 @@ module SolidusAdmin
         dialog = find("dialog", text: title)
         within(dialog) { find_button(id: "confirm-accept").click }
       end
+
+      def switch(locator, on: true)
+        checkbox = find(:label, text: locator).find(:checkbox)
+        on ? checkbox.check : checkbox.uncheck
+      end
     end
   end
 end
