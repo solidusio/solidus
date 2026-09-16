@@ -443,9 +443,9 @@ pt-BR:
         spree/inventory_unit:
           attributes:
             base:
-              cannot_destroy_shipment_state: Não foi possível remover Estado de Envio
+              cannot_destroy_shipment_state: Não é possível remover uma unidade de estoque de um envio %{state}
             state:
-              cannot_destroy: Não foi possível remover
+              cannot_destroy: Não é possível remover uma unidade de estoque %{state}
         spree/line_item:
           attributes:
             currency:
@@ -472,15 +472,15 @@ pt-BR:
         spree/return_item:
           attributes:
             inventory_unit:
-              other_completed_return_item_exists: Outro item de retorno completo já existe
+              other_completed_return_item_exists: "%{inventory_unit_id} já foi usado pelo item de devolução %{return_item_id}"
             reimbursement:
               cannot_be_associated_unless_accepted: Só pode ser associado se for aceito
         spree/shipment:
           attributes:
             base:
-              cannot_remove_items_shipment_state: Não foi possível remover Estado de Envio do item
+              cannot_remove_items_shipment_state: Não é possível remover itens de um envio %{state}
             state:
-              cannot_destroy: Não foi possível remover
+              cannot_destroy: Não é possível remover um envio %{state}
         spree/store:
           attributes:
             base:
@@ -1072,10 +1072,10 @@ pt-BR:
     adjustment: Ajuste
     adjustment_amount: Valor
     adjustment_labels:
-      line_item: Item de Linha
-      order: Pedido
+      line_item: "%{promotion} (%{promotion_name})"
+      order: "%{promotion} (%{promotion_name})"
       tax_rates:
-        sales_tax: Taxa de venda
+        sales_tax: "%{name}"
         sales_tax_refund: Taxa de restituição de venda
         sales_tax_refund_with_rate:
         sales_tax_with_rate:
@@ -1625,7 +1625,7 @@ pt-BR:
       spree/product:
         promotionable: 'Isto determina se promoções podem ou não ser aplicadas a este produto.<br> Padrão: Selecionado'
         shipping_category: 'Isto determina que tipo de envio este produto utiliza.<br> Padrão: Default'
-        tax_category: 'Isto determina que tipos de taxas são aplicadas a este produto.<br> Padrão: Nenhuma'
+        tax_category: 'Isto determina que tipos de taxas são aplicadas a este produto.<br> Padrão: %{default_tax_category}'
       spree/promotion:
         expires_at: >-
           Isto determina quando a promoção pode ser aplicada nos pedidos.<br> Se nenhum valor for especificado, a promoção fica disponível imediatamente
@@ -1687,7 +1687,7 @@ pt-BR:
     inventory: Inventário
     inventory_adjustment: Ajuste de Inventário
     inventory_canceled: Inventário cancelado
-    inventory_error_flash_for_insufficient_quantity: Um item no seu carrinho está indisponível
+    inventory_error_flash_for_insufficient_quantity: "%{names} ficou indisponível."
     inventory_not_available: Inventário não disponível para o item %{item}
     inventory_state: Estado do Inventário
     inventory_states:
@@ -2114,8 +2114,8 @@ pt-BR:
         instructions: Instruções
         refund_summary: Resumo da Restituição
         subject: Assunto
-        total_refunded: Total Restituído
-    reimbursement_perform_failed: Processo de Restituição falhou
+        total_refunded: "Total restituído: %{total}"
+    reimbursement_perform_failed: "Não foi possível realizar a restituição. Erro: %{error}"
     reimbursement_status: Status de Restituição
     reimbursement_type: Tipo de Restituição
     reimbursement_type_override: Sobrescrever Tipo de Restituição
@@ -2201,7 +2201,7 @@ pt-BR:
     shipment: Distribuição
     shipment_adjustments: Ajustes de envio
     shipment_date: Data de Envio
-    shipment_details: Detalhes de envio
+    shipment_details: De %{stock_location} via %{shipping_method}
     shipment_mailer:
       shipped_email:
         dear_customer: Caro cliente,
