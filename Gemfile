@@ -29,6 +29,7 @@ gem "rspec-retry", "~> 0.6.2", require: false
 gem "simplecov", require: false
 gem "simplecov-cobertura", require: false
 gem "rack", "< 3", require: false
+gem "json", "< 3", require: false # json 3 is incompatible with Rails < 8.1.
 gem "rake", require: false, groups: [:lint, :release]
 gem "rails-controller-testing", require: false
 gem "puma", "< 7", require: false
