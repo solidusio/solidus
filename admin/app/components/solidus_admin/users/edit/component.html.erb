@@ -18,7 +18,7 @@
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
 
-      <%= render component('ui/panel').new(title: Spree.user_class.model_name.human) do %>
+      <%= render component('ui/panel').new(title: Spree.admin_user_class.model_name.human) do %>
         <%= solidus_form_for @user, url: solidus_admin.user_path(@user), html: { id: form_id, autocomplete: "off" } do |f| %>
           <div class="py-1.5">
             <%= f.text_field(:email) %>
