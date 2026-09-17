@@ -662,7 +662,7 @@ pl:
     invalid_promotion_rule: Niepoprawna reguła promocyjna.
     inventory: Inwentarz
     inventory_adjustment: Poprawka inwentarza
-    inventory_error_flash_for_insufficient_quantity: Pozycja w Twoim koszyku nie jest już dostępna.
+    inventory_error_flash_for_insufficient_quantity: "%{names} nie jest już dostępne."
     inventory_state:
     is_not_available_to_shipment_address: nie jest dostępny dla adresu wysyłki
     iso_name: Nazwa Iso
