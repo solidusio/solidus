@@ -1,0 +1,36 @@
+<article class="wrapper grid-container py-12" id="new-customer">
+  <div class="col-span-full md:col-start-5 md:col-span-4">
+    <h1 class="font-serif text-h4 md:text-h3 text-center"><%= I18n.t('spree.new_customer') %></h1>
+
+    <%= render 'shared/error_messages', target: resource %>
+
+    <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "space-y-6 mb-12" } do |f| %>
+      <div class="text-input">
+        <%= f.label :email, "#{t("spree.email")}:" %>
+        <%= f.email_field :email, placeholder: 'name@example.com' %>
+      </div>
+
+      <div class="text-input">
+        <%= f.label :password, "#{t("spree.password")}:" %>
+        <%= f.password_field :password, placeholder: "p455w0rd" %>
+      </div>
+
+      <div class="text-input">
+        <%= f.label :password_confirmation, "#{t("spree.confirm_password")}:" %>
+        <%= f.password_field :password_confirmation, placeholder: "p455w0rd" %>
+      </div>
+
+      <div class="text-center flex flex-col gap-6 items-center">
+        <%= f.button t("spree.create"),
+          name: :commit,
+          class: 'w-full w-fit py-3 px-7 rounded-full text-body-sm font-bold leading-none uppercase whitespace-nowrap transiton-colors duration-200 bg-red-500 text-white hover:bg-red-700'
+        %>
+      </div>
+
+      <div class="mt-12 text-center">
+        <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path, class:"transition-all duration-300 text-black hover:!text-red-500 dark:text-sand underline" %>
+      </div>
+
+    <% end %>
+  </div>
+</article>

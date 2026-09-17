@@ -151,7 +151,8 @@ module Spree
     validates :email, presence: true, if: :email_required?
     validates :email, "spree/email" => true, :allow_blank => true
     validates :guest_token, presence: {allow_nil: true}
-    validates :number, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
+    validates :number, presence: true
+    validates :number, uniqueness: {allow_blank: true, case_sensitive: true}, if: :number_changed?
     validates :store_id, presence: true
 
     def self.find_by_param(value)
@@ -237,7 +238,7 @@ module Spree
     end
 
     def currency
-      self[:currency] || Spree::Config[:currency]
+      self[:currency] || Spree::Config.currency
     end
 
     def shipping_discount
@@ -271,7 +272,7 @@ module Spree
 
     # Returns the address for taxation based on configuration
     def tax_address
-      if Spree::Config[:tax_using_ship_address]
+      if Spree::Config.tax_using_ship_address
         ship_address
       else
         bill_address
@@ -305,6 +306,14 @@ module Spree
       # potentially return stale data. This situation requires to *reload* `inventory_units`
       # in order to pick-up the latest changes and make the check on `returned?` reliable.
       inventory_units.reload.all?(&:returned?)
+    end
+
+    # Since this method is called from within the order state machine, we cannot
+    # simply delegate this to :shipping. The state_machines gem uses the arity
+    # of the method to determine if it should pass in the transition as an
+    # argument. The arity of the method is masked when using delegates.
+    def create_proposed_shipments
+      shipping.create_proposed_shipments
     end
 
     def contents
@@ -501,21 +510,10 @@ module Spree
       Spree::Config.billing_address_required
     end
 
-    def create_proposed_shipments
-      if completed?
-        raise CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_order_completed"))
-      elsif shipments.any? { |shipment| !shipment.pending? }
-        raise CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_shipments_not_pending"))
-      else
-        shipments.destroy_all
-        shipments.push(*Spree::Config.stock.coordinator_class.new(self).shipments)
-      end
-    end
-
     def create_shipments_for_line_item(line_item)
-      units = Spree::Config.stock.inventory_unit_builder_class.new(self).missing_units_for_line_item(line_item)
+      inventory_units = Spree::Config.stock.inventory_unit_builder_class.new(self).missing_units_for_line_item(line_item)
 
-      Spree::Config.stock.coordinator_class.new(self, units).shipments.each do |shipment|
+      Spree::Config.stock.coordinator_class.new(self, inventory_units:).shipments.each do |shipment|
         shipments << shipment
       end
     end
@@ -879,7 +877,7 @@ module Spree
     end
 
     def set_currency
-      self.currency = Spree::Config[:currency] if self[:currency].nil?
+      self.currency = Spree::Config.currency if self[:currency].nil?
     end
 
     def create_token

@@ -69,17 +69,20 @@ SolidusAdmin::Engine.routes.draw do
 
   admin_resources :promotions, only: [:index, :destroy]
   admin_resources :properties, except: [:show]
-  admin_resources :option_types, only: [:index, :destroy], sortable: true
+  admin_resources :option_types, except: [:show], sortable: true do
+    admin_resources :option_values, only: [:new, :create, :destroy], controller: "option_values", sortable: false
+  end
+  admin_resources :option_values, only: [:edit, :update], sortable: true
   admin_resources :taxonomies, only: [:index, :destroy], sortable: true
   admin_resources :promotion_categories, only: [:index, :destroy]
   admin_resources :tax_categories, except: [:show]
-  admin_resources :tax_rates, only: [:index, :destroy]
+  admin_resources :tax_rates, except: [:show]
   admin_resources :payment_methods, only: [:index, :destroy], sortable: true
   admin_resources :stock_items, only: [:index, :edit, :update]
   admin_resources :shipping_methods, only: [:index, :destroy]
   admin_resources :shipping_categories, except: [:show]
   admin_resources :stock_locations, except: [:show]
-  admin_resources :stores, only: [:index, :destroy]
+  admin_resources :stores, except: [:show]
   admin_resources :zones, except: [:show]
   admin_resources :refund_reasons, except: [:show]
   admin_resources :reimbursement_types, only: [:index]

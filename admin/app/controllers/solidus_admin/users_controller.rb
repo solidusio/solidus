@@ -112,13 +112,13 @@ module SolidusAdmin
     def set_orders
       params[:q] ||= {}
       @search = Spree::Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
-      @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+      @orders = @search.result.page(params[:page]).per(Spree::Config.admin_products_per_page)
     end
 
     def set_items
       params[:q] ||= {}
       @search = Spree::Order.reverse_chronological.includes(line_items: {variant: [:product, {option_values: :option_type}]}).ransack(params[:q].merge(user_id_eq: @user.id))
-      @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+      @orders = @search.result.page(params[:page]).per(Spree::Config.admin_products_per_page)
       @items = @orders&.map(&:line_items)&.flatten
     end
 

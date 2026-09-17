@@ -9,7 +9,7 @@ module Spree
       preference :first_item, :decimal, default: 0.0
       preference :additional_item, :decimal, default: 0.0
       preference :max_items, :integer, default: 0
-      preference :currency, :string, default: -> { Spree::Config[:currency] }
+      preference :currency, :string, default: -> { Spree::Config.currency }
 
       def compute_package(package)
         compute_from_quantity(package.contents.sum(&:quantity))

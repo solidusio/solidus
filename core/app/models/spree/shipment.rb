@@ -55,7 +55,7 @@ module Spree
     def can_transition_from_pending_to_ready?
       order.can_ship? &&
         inventory_units.all? { |iu| iu.shipped? || iu.allow_ship? || iu.canceled? } &&
-        (order.paid? || !Spree::Config[:require_payment_to_ship])
+        (order.paid? || !Spree::Config.require_payment_to_ship)
     end
 
     def can_transition_from_canceled_to_ready?
@@ -83,7 +83,7 @@ module Spree
     end
 
     def currency
-      order ? order.currency : Spree::Config[:currency]
+      order ? order.currency : Spree::Config.currency
     end
 
     # @return [BigDecimal] the amount of this shipment, taking into
@@ -95,7 +95,7 @@ module Spree
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
     def total_before_tax
-      amount + adjustments.reject(&:tax?).sum(&:amount)
+      amount + adjustments.reject { |adjustment| adjustment.tax? || adjustment.marked_for_destruction? }.sum(&:amount)
     end
 
     # @return [BigDecimal] the amount of this shipment before VAT tax
@@ -178,7 +178,12 @@ module Spree
     end
 
     def manifest
-      @manifest ||= Spree::ShippingManifest.new(inventory_units:).items
+      @manifest ||= Spree::ShippingManifest.new(
+        inventory_units:,
+        # Only when it is already in memory — the manifest treats the order as an
+        # optimization and must not cause a query for it.
+        order: (order if association(:order).loaded?)
+      ).items
     end
 
     def selected_shipping_rate_id
@@ -224,6 +229,8 @@ module Spree
       self.state =
         if shipped?
           "shipped"
+        elsif inventory_units.none?
+          "pending"
         elsif order.canceled? || inventory_units.all?(&:canceled?)
           "canceled"
         elsif !order.can_ship?

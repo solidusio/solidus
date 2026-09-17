@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.metadata["source_code_uri"] = "https://github.com/solidusio/solidus"
   s.metadata["changelog_uri"] = "https://github.com/solidusio/solidus/blob/main/CHANGELOG.md"
 
-  s.files = Dir["README.md", "lib/**/*"]
+  s.files = Dir["README.md", "LICENSE", "lib/**/*"]
 
   s.required_ruby_version = ">= 3.2.0"
   s.required_rubygems_version = ">= 1.8.23"

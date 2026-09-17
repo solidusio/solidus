@@ -63,6 +63,17 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
     )
   }
 
+  def self.add(path:, **options)
+    new(
+      tag: :a,
+      text: t(".add"),
+      icon: "add-line",
+      scheme: :primary,
+      href: path,
+      **options
+    )
+  end
+
   def self.back(path:, **options)
     new(
       tag: :a,
@@ -70,6 +81,15 @@ class SolidusAdmin::UI::Button::Component < SolidusAdmin::BaseComponent
       icon: "arrow-left-line",
       scheme: :secondary,
       href: path,
+      **options
+    )
+  end
+
+  def self.delete(**options)
+    new(
+      tag: :button,
+      text: t(".delete"),
+      scheme: :danger,
       **options
     )
   end

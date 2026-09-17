@@ -1,0 +1,13 @@
+<% filters = applicable_filters_for(taxon) %>
+
+<% unless filters.empty? %>
+  <%= form_tag '', method: :get, id: 'sidebar_products_search', class: "mt-8" do %>
+    <%= hidden_field_tag 'per_page', params[:per_page] %>
+
+    <% filters.each do |filter| %>
+      <%= render(FilterComponent.new(filter: filter, search_params: params[:search])) %>
+    <% end %>
+
+    <%= button_tag t("spree.search"), class: 'button-primary button-primary--full-width mt-6' %>
+  <% end %>
+<% end %>

@@ -111,6 +111,13 @@ module Spree
           line_item_action = line_item_actions.where(
             line_item_id: line_item.id
           ).first_or_initialize
+
+          if line_item_action.persisted?
+            line_item.line_item_actions
+              .find { |action| action.id == line_item_action.id }
+              .quantity = quantity
+          end
+
           line_item_action.quantity = quantity
         end
 

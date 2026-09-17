@@ -48,11 +48,12 @@ require "capybara/rspec"
 require "capybara-screenshot/rspec"
 require "spree/testing_support/capybara_driver"
 
-Capybara.save_path = ENV["CIRCLE_ARTIFACTS"] if ENV["CIRCLE_ARTIFACTS"]
+Capybara.save_path = ENV["ARTIFACTS_DIR"] if ENV["ARTIFACTS_DIR"]
 Capybara.exact = true
 Capybara.disable_animation = true
 Capybara.default_max_wait_time = ENV["DEFAULT_MAX_WAIT_TIME"].to_f if ENV["DEFAULT_MAX_WAIT_TIME"].present?
 Capybara.enable_aria_label = true
+Capybara.server = :puma, {Silent: true} # A workaround for https://github.com/rspec/rspec-rails/issues/1897
 
 # DATABASE CLEANER
 require "database_cleaner"

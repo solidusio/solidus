@@ -74,7 +74,7 @@ module Spree
     end
 
     def check_price
-      self.currency ||= Spree::Config[:currency]
+      self.currency ||= Spree::Config.currency
     end
 
     def pricing_options

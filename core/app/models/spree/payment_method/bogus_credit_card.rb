@@ -83,6 +83,10 @@ module Spree
       %w[capture void credit]
     end
 
+    def can_credit?(payment)
+      payment.completed? && payment.credit_allowed > 0
+    end
+
     private
 
     def generate_profile_id(success)

@@ -1,0 +1,5 @@
+<%= render 'featured_products', { products: @featured_products } if @featured_products.try(:any?) %>
+<%= render 'collection', { title: "Shop Collection", products: @collection_products } if @collection_products.try(:any?) %>
+<%= render 'collections_with_call_to_action', { products: @cta_collection_products[0..1] } if @cta_collection_products.try(:any?) %>
+<%= render 'featured_product_banner', { product: @cta_collection_products[2] } if @cta_collection_products && @cta_collection_products.size > 2 %>
+<%= render 'collection', { title: "New Arrivals", products: @new_arrivals } if @new_arrivals.try(:any?) %>

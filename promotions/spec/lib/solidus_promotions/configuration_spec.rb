@@ -19,6 +19,12 @@ RSpec.describe SolidusPromotions::Configuration do
     end
   end
 
+  describe ".eligibility_checker_class" do
+    it "is the standard eligibility checker" do
+      expect(subject.eligibility_checker_class).to eq(SolidusPromotions::PromotionEligibilityChecker)
+    end
+  end
+
   describe ".advertiser_class" do
     it "is the standard advertiser" do
       expect(subject.advertiser_class).to eq(SolidusPromotions::PromotionAdvertiser)

@@ -120,6 +120,15 @@ RSpec.describe Spree::Shipment, type: :model do
       }.to change { shipment.state }.from("pending").to("canceled")
     end
 
+    it "returns pending if the shipment doesn't have any inventory units" do
+      expect {
+        shipment.inventory_units.each(&:destroy!)
+        shipment.reload
+
+        recalculate_state
+      }.not_to change { shipment.state }.from("pending")
+    end
+
     it "returns pending unless order.can_ship?" do
       allow(order).to receive_messages can_ship?: false
       expect(recalculate_state).to eq "pending"
@@ -135,14 +144,28 @@ RSpec.describe Spree::Shipment, type: :model do
       expect(recalculate_state).to eq "shipped"
     end
 
-    it "returns pending when unpaid" do
-      allow(order).to receive_messages paid?: false
-      expect(recalculate_state).to eq "pending"
-    end
-
     it "returns ready when paid" do
       allow(order).to receive_messages paid?: true
       expect(recalculate_state).to eq "ready"
+    end
+
+    context "when the order hasn't been paid" do
+      let(:order) { create(:order_ready_to_complete, line_items_count: 1) }
+
+      it "returns pending" do
+        expect(recalculate_state).to eq "pending"
+      end
+
+      context "when the shipment's inventory units have been destroyed" do
+        it "returns pending" do
+          expect {
+            shipment.inventory_units.each(&:destroy!)
+            shipment.reload
+
+            recalculate_state
+          }.not_to change { shipment.state }.from("pending")
+        end
+      end
     end
   end
 
@@ -199,6 +222,16 @@ RSpec.describe Spree::Shipment, type: :model do
     it "returns the amount minus any adjustments" do
       expect(shipment.total_before_tax).to eq(10 - 1 - 2)
     end
+
+    context "with adjustments that are marked for destruction" do
+      before do
+        shipment.adjustments.select { |adjustment| adjustment.amount == -2 }.each(&:mark_for_destruction)
+      end
+
+      it "ignores adjustments that are marked for destruction" do
+        expect(shipment.total_before_tax).to eq(10 - 1)
+      end
+    end
   end
 
   it "#tax_total with included taxes" do
@@ -238,6 +271,34 @@ RSpec.describe Spree::Shipment, type: :model do
 
       it "still returns variant expected" do
         expect(shipment.manifest.first.variant).to eq variant
+      end
+    end
+
+    context "when the order and its line items are already loaded" do
+      before { order.line_items.load }
+
+      it "reuses the order's line item instance" do
+        expect(shipment.manifest.first.line_item).to equal(order.line_items.first)
+      end
+
+      it "reflects unsaved changes to the order's line items" do
+        order.line_items.first.adjustment_total = 5
+
+        expect(shipment.manifest.first.line_item.adjustment_total).to eq 5
+      end
+    end
+
+    context "when the order is not loaded" do
+      let(:reloaded_shipment) { Spree::Shipment.find(shipment.id) }
+
+      it "does not load the order" do
+        reloaded_shipment.manifest
+
+        expect(reloaded_shipment.association(:order)).not_to be_loaded
+      end
+
+      it "still returns the line item expected" do
+        expect(reloaded_shipment.manifest.first.line_item).to eq line_item
       end
     end
   end

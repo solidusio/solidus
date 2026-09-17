@@ -34,6 +34,7 @@ module Spree
 
       def scope
         @stock_location.stock_movements.accessible_by(current_ability)
+          .includes(stock_item: {variant: [:product, :prices, :stock_items, :images, {option_values: :option_type}]})
       end
 
       def stock_movement_params

@@ -1,0 +1,42 @@
+<%
+  variants = product.variants_and_option_values_for(current_pricing_options)
+%>
+
+<% if variants.any? %>
+  <section class="product-variants hidden">
+    <h2 class="product-variants__title">
+      <%= t('spree.variants') %>
+    </h2>
+
+    <ul class="product-variants__list">
+      <% variants.each_with_index do |variant, index| %>
+        <li class='hidden'>
+          <%= radio_button_tag(
+            'variant_id',
+            variant.id,
+            index == 0,
+            "data-js" => 'variant-radio',
+            "data-js_price" => variant.price_for_options(current_pricing_options)&.money.to_s,
+            "data-option-value-ids" => sorted_option_values(variant).to_json,
+            "data-target" => "variantOptions",
+            "data-price" => variant.price_for_options(current_pricing_options)&.money&.to_html
+          ) %>
+
+          <%= label_tag "variant_id_#{ variant.id }" do %>
+            <%= variant_options variant %>
+
+            <% if variant_price variant %>
+              <span class="price diff"><%= variant_price variant %></span>
+            <% end %>
+
+            <% unless variant.can_supply? %>
+              <span class="out-of-stock"><%= t('spree.out_of_stock') %></span>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% else %>
+  <%= hidden_field_tag "variant_id", product.master.id %>
+<% end %>

@@ -24,7 +24,9 @@ RSpec.describe "Spree.deprecator" do
       if ENV["SOLIDUS_RAISE_DEPRECATIONS"]
         expect { Dummy.new.deprecated_method }.to raise_error(ActiveSupport::DeprecationException)
       else
-        expect { Dummy.new.deprecated_method }.not_to raise_error
+        expect { Dummy.new.deprecated_method }.to output(/DEPRECATION WARNING: deprecated_method/).to_stderr,
+          "If this test fails, it means an real error was raised or the " \
+          "STDERR output we're asserting on is stale."
       end
     end
   end

@@ -177,7 +177,7 @@ following partnership tiers:
 - **Silver ($325/month)**: Guarantees access to the partnership program as a Silver partner and, as a result, access to the stakeholders group.
 - **Gold ($750+/month)**: Guarantees access to the partnership program as a Gold partner and, as a result, access to the stakeholders group.
 
-Once it's done, send a Slack DM to Sean Denny (@seand) to request access to the private Slack channel.
+Once it's done, send a Slack DM to any of the core team to request access to the private Slack channel.
 
 ### Join as Advisor
 
@@ -186,7 +186,7 @@ experience, professional network or other means. They participate in the stakeho
 with the purpose of informing the group’s decisions and the platform’s direction. Advisors hold no decisional power. They are
 elected during stakeholder meetings and their status must be re-confirmed every 6 months.
 
-If you want to be nominated as Advisor please, send a Slack DM to Sean Denny (@seand) to request membership, explaining
+If you want to be nominated as Advisor please, send a Slack DM to any of the core team to request membership, explaining
 how you have contributed to Solidus and what value you can bring to the stakeholders.
 
 Your request must be approved by 2/3rds of the existing stakeholders for you to become a member.

@@ -3,12 +3,12 @@
     <%= page_header_back(solidus_admin.users_path) %>
     <%= page_header_title(t(".title", email: @user.email)) %>
 
-    <% # @todo: I am not sure how we want to handle Cancan stuff in the new admin. %>
-    <% # if can?(:admin, Spree::Order) && can?(:create, Spree::Order) %>
+    <%# @todo: I am not sure how we want to handle Cancan stuff in the new admin. %>
+    <%# if can?(:admin, Spree::Order) && can?(:create, Spree::Order) %>
       <%= page_header_actions do %>
         <%= render component("ui/button").new(tag: :a, text: t(".create_order_for_user"), href: spree.new_admin_order_path(user_id: @user.id)) %>
       <% end %>
-    <% # end %>
+    <%# end %>
   <% end %>
 
   <%= page_header do %>
@@ -29,6 +29,11 @@
           <div class="py-1.5">
             <%= f.text_field(:password_confirmation) %>
           </div>
+          <% if @user.respond_to?(:timezone) %>
+            <div class="py-1.5">
+              <%= f.select(:timezone, ActiveSupport::TimeZone.all.map { [_1.to_s, _1.name] }, include_blank: t("spree.none")) %>
+            </div>
+          <% end %>
           <div class="py-1.5">
             <%= f.checkbox_row(:spree_role_ids, options: role_options, row_title: "Roles", layout: :subsection) %>
           </div>

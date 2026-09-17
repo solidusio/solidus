@@ -15,6 +15,7 @@ module Spree
 
       def call(persist: true)
         all_items = line_items + shipments
+        ActiveRecord::Associations::Preloader.new(records: all_items, associations: :adjustments).call
         all_items.each do |item|
           promotion_adjustments = item.adjustments.select(&:promotion?)
 
@@ -70,7 +71,10 @@ module Spree
 
           adjustment.eligible = calculate_eligibility(adjustment)
 
-          adjustment.save!(validate: false) if persist
+          if persist
+            adjustment.save!(validate: false)
+            adjustment.adjustable.line_item_actions.find_all(&:changed?).each(&:save!) if adjustment.adjustable.respond_to?(:line_item_actions)
+          end
         end
         adjustment.amount
       end

@@ -52,6 +52,8 @@ module SolidusPromotions
       end
 
       def load_taxon_ids_with_children
+        return [] unless taxon_ids.present?
+
         aggregation_function = if ActiveRecord::Base.connection.adapter_name.downcase.match?(/postgres/)
           "string_agg(child.id::text, ',')"
         else

@@ -11,7 +11,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type:
   describe "#eligible_for_return?" do
     subject { validator.eligible_for_return? }
 
-    let(:interval) { Spree::Config[:return_eligibility_number_of_days] }
+    let(:interval) { Spree::Config.return_eligibility_number_of_days }
 
     before do
       allow(return_item)

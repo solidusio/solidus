@@ -7,7 +7,7 @@ module Spree
     class BaseController < ActionController::Base
       self.responder = Spree::Api::Responders::AppResponder
       respond_to :json
-      protect_from_forgery unless: -> { request.format.json? }
+      protect_from_forgery with: :exception, unless: -> { request.format.json? }
 
       include CanCan::ControllerAdditions
       include ActiveStorage::SetCurrent
@@ -122,7 +122,7 @@ module Spree
       end
 
       def requires_authentication?
-        Spree::Api::Config[:requires_authentication]
+        Spree::Api::Config.requires_authentication
       end
 
       def not_found

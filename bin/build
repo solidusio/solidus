@@ -36,6 +36,11 @@ echo "* Testing Solidus Core *"
 echo "************************"
 bin/rspec core/spec
 
+echo "************************"
+echo "* Testing Solidus I18n *"
+echo "************************"
+bin/rspec i18n/spec
+
 echo "**************************"
 echo "* Testing Solidus Sample *"
 echo "**************************"

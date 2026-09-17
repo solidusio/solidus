@@ -6,7 +6,7 @@ json.cache! [I18n.locale, Spree::StockLocation.accessible_by(current_ability), v
   json.variant_properties(variant.variant_properties) do |variant_property|
     json.call(variant_property, *variant_property_attributes)
   end
-  json.stock_items(variant.stock_items.accessible_by(current_ability)) do |stock_item|
+  json.stock_items(variant.stock_items.select { can?(:read, _1) }) do |stock_item|
     json.call(stock_item, :id, :count_on_hand, :stock_location_id, :backorderable)
     json.available stock_item.available?
     json.stock_location_name(stock_item.stock_location.name)

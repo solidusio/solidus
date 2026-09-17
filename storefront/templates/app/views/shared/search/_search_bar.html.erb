@@ -1,0 +1,37 @@
+<%
+  base_classes = "flex items-center gap-x-1"
+  form_classes = defined?(locals) && locals[:additional_classes].present? ? "#{base_classes} #{locals[:additional_classes]}" : base_classes
+
+  form_id = defined?(locals) && locals[:search_input_id].present? ? locals[:search_input_id] : 'search-input-area'
+
+  results_list_id = defined?(locals) && locals[:results_list_id].present? ? locals[:results_list_id] : 'autocomplete-results'
+%>
+
+<%= content_tag :div,
+  "data-controller": "search",
+  "data-search-current-class": "text-primary" do %>
+  <%= form_tag autocomplete_results_path, method: :get, class: form_classes, id: "search-form",
+      "data-turbo": true,
+      "data-turbo-stream": true,
+      "data-search-target": "form" do %>
+
+    <%= search_field_tag :keywords, params[:keywords], placeholder: "Search", id: form_id, class: 'bg-transparent !border-b border-gray-300 px-0 py-1 text-sm w-full lg:min-w-[200px] focus:ring-0 focus:border-b-red-500', autocomplete: "off",
+      "data-action": "input->search#fetchResults
+                      keydown.down->search#nextResult
+                      keydown.up->search#previousResult
+                      keydown.enter->search#openResult:prevent:stop
+                      keydown.esc->search#reset:prevent:stop
+                      click@window->search#focusOut",
+      "data-search-target": "keywords" %>
+
+
+    <%= button_tag type: 'submit', class: "search-bar__button", title: 'Search', "data-search-id-param": form_id do %>
+      <svg class='w-6 h-6 fill-black dark:fill-white'>
+        <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-search-2-line"></use>
+      </svg>
+    <% end %>
+  <% end %>
+  <div id="<%= results_list_id %>" class="hidden" data-search-target="results"></div>
+<% end %>
+
+

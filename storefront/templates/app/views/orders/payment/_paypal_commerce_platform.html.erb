@@ -1,0 +1,19 @@
+<div style="margin-left:auto;margin-right:auto;width:50%;margin-top:20px;">
+  <%= render partial: "solidus_paypal_commerce_platform/shared/javascript_sdk_tag", locals: {payment_method: payment_method} %>
+
+  <div id="paypal-button-container"></div>
+
+  <div data-pp-message data-pp-placement="cart" data-pp-amount="<%= @order.total %>"></div>
+
+  <script>
+    SolidusPaypalCommercePlatform.api_key = "<%= spree_current_user.try(:spree_api_key) %>"
+    SolidusPaypalCommercePlatform.current_order_id = "<%= @order.number %>"
+    SolidusPaypalCommercePlatform.current_order_token = "<%= @order.guest_token %>"
+    SolidusPaypalCommercePlatform.checkout_url = "<%= checkout_url %>"
+    window.addEventListener('DOMContentLoaded', () => {
+      SolidusPaypalCommercePlatform.renderCartButton("<%= payment_method.id %>",<%= raw payment_method.button_style.to_json %>)
+    })
+  </script>
+</div>
+
+<div id="paypal_commerce_platform_overlay"></div>

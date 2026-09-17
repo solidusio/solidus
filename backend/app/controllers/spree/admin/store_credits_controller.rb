@@ -110,7 +110,7 @@ module Spree
 
       def build_resource
         parent.store_credits.build(
-          currency: Spree::Config[:currency]
+          currency: Spree::Config.currency
         )
       end
     end

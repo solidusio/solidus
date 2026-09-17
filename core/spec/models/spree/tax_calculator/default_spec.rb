@@ -76,5 +76,18 @@ RSpec.describe Spree::TaxCalculator::Default do
         expect(order_tax.label).to eq "Flat Book Fee"
       end
     end
+
+    context "with multiple line items" do
+      before do
+        2.times do
+          order.contents.add(FactoryBot.create(:product, tax_category: books_category).master)
+        end
+        order.reload
+      end
+
+      it "loads line item variants in a single query" do
+        expect { calculator.calculate }.to make_database_queries(matching: /from .spree_variants..*\bid. IN \(/im, count: 1)
+      end
+    end
   end
 end

@@ -6,7 +6,7 @@
     <%= f.text_field :name, class: 'fullwidth' %>
   </div>
 
-  <% if Spree::Config[:company] %>
+  <% if Spree::Config.company %>
     <div class="field <%= "#{type}-row" %>">
       <%= f.label :company %>
       <%= f.text_field :company, class: 'fullwidth' %>

@@ -1,0 +1,65 @@
+<%
+  table_head_classes = 'p-3 pb-5'
+  table_cells_classes = 'py-5 px-3 leading-none min-w-[150px]'
+%>
+
+<div class="wrapper grid-container py-12 space-y-10 md:space-y-14">
+  <div class="col-span-full space-y-4">
+    <h1 class="font-serif text-h4 md:text-h3"><%= t('spree.my_account') %></h1>
+    <div class="flex flex-wrap flex-auto gap-4">
+      <%= @user.email %>
+      <%= form_with(url: logout_path, method: Devise.sign_out_via, local: true) do %>
+        <%= button_tag(t("spree.logout"), class: 'transition-all duration-300 text-black hover:!text-red-500 dark:text-sand underline') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-span-full grid-container">
+    <%= render 'users/users_menu' %>
+
+    <div class="col-span-full md:col-span-10 md:col-start-3">
+      <h2 class="font-serif text-h4 md:text-h4 mb-6"><%= I18n.t('spree.my_orders') %></h2>
+      <% if @orders.present? %>
+        <div class="bg-white rounded-xl border border-gray-300 p-6 relative overflow-auto no-scrollbar dark:bg-black dark:border-gray-700">
+          <table class="border-collapse w-full table-auto">
+            <thead class="border-b border-gray-mid text-left dark:border-gray-400">
+              <tr>
+                <th class="<%= table_head_classes %>"><%= I18n.t(:number, scope: 'activerecord.attributes.spree/order') %></th>
+                <th class="<%= table_head_classes %>"><%= I18n.t('spree.date') %></th>
+                <th class="<%= table_head_classes %>"><%= I18n.t('spree.status') %></th>
+                <th class="<%= table_head_classes %>"><%= I18n.t('spree.payment_state') %></th>
+                <th class="<%= table_head_classes %>"><%= I18n.t('spree.shipment_state') %></th>
+                <th class="<%= table_head_classes %>"><%= I18n.t('spree.total') %></th>
+              </tr>
+            </thead>
+            <tbody class="[&>tr:not(:last-child)]:border-b [&>tr:not(:last-child)]:border-gray-mid">
+            <% @orders.each do |order| %>
+              <tr>
+                <td class="<%= table_cells_classes %>"><%= link_to order.number, order_url(order), class: 'hover:text-red-500 transition-colors duration-200' %></td>
+                <td class="<%= table_cells_classes %>"><%= l order.completed_at.to_date %></td>
+                <td class="<%= table_cells_classes %>">
+                  <div class="badge badge-<%= I18n.t("spree.order_state.#{order.state}").downcase %>">
+                    <%= I18n.t("spree.order_state.#{order.state}").titleize %>
+                  </div>
+                </td>
+                <td class="<%= table_cells_classes %>"><%= I18n.t("spree.payment_states.#{order.payment_state}").titleize if order.payment_state %></td>
+                <td class="<%= table_cells_classes %>">
+                  <% if order.shipment_state %>
+                    <div class="badge badge-<%= I18n.t("spree.shipment_states.#{order.shipment_state}").downcase %>">
+                      <%= I18n.t("spree.shipment_states.#{order.shipment_state}").titleize %>
+                    </div>
+                  <% end %>
+                </td>
+                <td class="<%= table_cells_classes %>"><%= order.display_total %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+        <% else %>
+
+        <p class="rounded-lg bg-black text-white text-center p-4 mt-4 inline-block"><%= I18n.t('spree.you_have_no_orders_yet') %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

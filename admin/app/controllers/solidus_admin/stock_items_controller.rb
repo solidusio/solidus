@@ -7,7 +7,7 @@ module SolidusAdmin
     search_scope(:all, default: true) { _1 }
     search_scope(:back_orderable) { _1.where(backorderable: true) }
     search_scope(:out_of_stock) { _1.where("count_on_hand <= 0") }
-    search_scope(:low_stock) { _1.where("count_on_hand > 0 AND count_on_hand < ?", SolidusAdmin::Config[:low_stock_value]) }
+    search_scope(:low_stock) { _1.where("count_on_hand > 0 AND count_on_hand < ?", SolidusAdmin::Config.low_stock_value) }
     search_scope(:in_stock) { _1.where("count_on_hand > 0") }
 
     def index
@@ -33,7 +33,12 @@ module SolidusAdmin
 
     def resource_class = Spree::StockItem
 
-    def resources_collection = Spree::StockItem.reorder(nil)
+    def resources_collection
+      Spree::StockItem.reorder(nil).includes(
+        :stock_location,
+        variant: [:product, :images, {option_values: :option_type}]
+      )
+    end
 
     def resources_sorting_options
       {

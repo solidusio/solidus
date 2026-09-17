@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_storefront/version.rb'
+  message: Bump SolidusStorefront to %{version}
+  tag: true

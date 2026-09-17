@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  class StoresController < SolidusAdmin::BaseController
+  class StoresController < SolidusAdmin::ResourcesController
     include SolidusAdmin::ControllerHelpers::Search
 
     def index
@@ -18,18 +18,45 @@ module SolidusAdmin
     end
 
     def destroy
-      @stores = Spree::Store.where(id: params[:id])
+      @resource = resource_class.where(id: params[:id])
 
-      Spree::Store.transaction { @stores.destroy_all }
+      failed = @resource.destroy_all.reject(&:destroyed?)
+      if failed.none?
+        flash[:notice] = t(".success")
+      else
+        failure_summary = failed.map { |record|
+          t ".error.description",
+            name: record.name,
+            reason: record.errors.full_messages.join(", ")
+        }.join("<br/>")
 
-      flash[:notice] = t(".success")
-      redirect_back_or_to stores_path, status: :see_other
+        flash[:alert] = {
+          danger: {title: t(".error.title"), message: failure_summary}
+        }
+      end
+
+      redirect_to after_destroy_path, status: :see_other
     end
 
     private
 
-    def store_params
-      params.require(:store).permit(:store_id, permitted_store_attributes)
+    def resource_class = Spree::Store
+
+    def resources_collection = Spree::Store
+
+    def permitted_resource_params
+      params.require(:store).permit(
+        :name,
+        :url,
+        :code,
+        :meta_description,
+        :meta_keywords,
+        :seo_title,
+        :mail_from_address,
+        :default_currency,
+        :cart_tax_country_iso,
+        available_locales: []
+      )
     end
   end
 end

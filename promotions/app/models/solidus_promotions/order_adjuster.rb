@@ -5,6 +5,12 @@ module SolidusPromotions
     attr_reader :order, :promotions, :dry_run
 
     def initialize(order, dry_run_promotion: nil)
+      if dry_run_promotion
+        Spree.deprecator.warn <<~MSG
+          Passing `dry_run_promotion` to `SolidusPromotions::OrderAdjuster` is deprecated.
+          Use `Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call` instead.
+        MSG
+      end
       @order = order
       @dry_run = !!dry_run_promotion
       @promotions = SolidusPromotions::LoadPromotions.new(
@@ -15,6 +21,10 @@ module SolidusPromotions
 
     def call(persist: true) # rubocop:disable Lint/UnusedMethodArgument
       return order unless SolidusPromotions::Promotion.order_activatable?(order)
+
+      ActiveRecord::Associations::Preloader.new(records: order.line_items + order.shipments, associations: :adjustments).call
+      # DiscountOrder dereferences `line_item.variant.product` for every line item.
+      ActiveRecord::Associations::Preloader.new(records: order.line_items, associations: {variant: :product}).call
 
       SetDiscountsToZero.call(order)
 

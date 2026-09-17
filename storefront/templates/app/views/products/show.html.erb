@@ -1,0 +1,25 @@
+<% @body_id = 'product-details' %>
+
+<% cache [I18n.locale, current_pricing_options, @product] do %>
+  <section itemscope itemtype="http://schema.org/Product">
+    <div class="wrapper grid-container py-4 lg:pb-12">
+      <div class="col-span-full lg:col-span-8">
+        <div class="flex flex-col-reverse gap-4 overflow-auto lg:h-full lg:grid-container lg:max-h-[680px]">
+          <%= render 'product_thumbnails', product: @product %>
+          <%= render 'product_image', product: @product %>
+        </div>
+      </div>
+
+      <div class="flex flex-col col-span-full gap-y-8 lg:col-span-4 lg:gap-y-16">
+        <%= render 'product_header', product: @product %>
+        <%= render 'product_promotions', product: @product %>
+        <%= render 'cart_line_items/form', product: @product %>
+        <%= render 'product_info', product: @product %>
+      </div>
+    </div>
+
+    <div class="col-span-full pt-12">
+      <%= render partial: 'home/collection', :locals => { :title => "You May Also Like", :products => @similar_products } %>
+    </div>
+  </section>
+<% end %>

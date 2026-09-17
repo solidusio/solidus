@@ -6,6 +6,12 @@ module SolidusPromotions
       attr_reader :order, :promotions, :dry_run
 
       def initialize(order, promotions, dry_run: false)
+        if dry_run
+          Spree.deprecator.warn <<~MSG
+            Passing `dry_run` to `SolidusPromotions::OrderAdjuster::DiscountOrder` is deprecated.
+            Use `Spree::Config.promotions.eligibility_checker_class.new(order: order, promotion: promotion).call` instead.
+          MSG
+        end
         @order = order
         @promotions = promotions
         @dry_run = dry_run
@@ -46,27 +52,20 @@ module SolidusPromotions
       def adjust_line_items(benefits)
         order.discountable_line_items.filter_map do |line_item|
           next unless line_item.variant.product.promotionable?
-
-          discounts = generate_discounts(benefits, line_item)
-          chosen_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
-          (line_item.current_lane_discounts - chosen_discounts).each(&:mark_for_destruction)
+          generate_discounts(benefits, line_item)
         end
       end
 
       def adjust_shipments(benefits)
         order.shipments.map do |shipment|
-          discounts = generate_discounts(benefits, shipment)
-          chosen_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
-          (shipment.current_lane_discounts - chosen_discounts).each(&:mark_for_destruction)
+          generate_discounts(benefits, shipment)
         end
       end
 
       def adjust_shipping_rates(benefits)
         order.shipments.flat_map(&:shipping_rates).filter_map do |rate|
           next unless rate.cost
-          discounts = generate_discounts(benefits, rate)
-          chosen_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
-          (rate.current_lane_discounts - chosen_discounts).each(&:mark_for_destruction)
+          generate_discounts(benefits, rate)
         end
       end
 
@@ -78,9 +77,11 @@ module SolidusPromotions
 
       def generate_discounts(possible_benefits, item)
         eligible_benefits = eligible_benefits_for_promotable(possible_benefits, item)
-        eligible_benefits.filter_map do |benefit|
+        discounts = eligible_benefits.filter_map do |benefit|
           benefit.can_discount?(item) && benefit.discount(item)
         end
+        chosen_discounts = SolidusPromotions.config.discount_chooser_class.new(discounts).call
+        (item.current_lane_discounts - chosen_discounts).each(&:mark_for_destruction)
       end
     end
   end

@@ -124,7 +124,7 @@ module Spree
     validates :meta_keywords, length: {maximum: 255}
     validates :meta_title, length: {maximum: 255}
     validates :name, presence: true
-    validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
+    validates :price, presence: true, if: proc { Spree::Config.require_master_price }
     validates :slug, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
 
     attr_accessor :option_values_hash

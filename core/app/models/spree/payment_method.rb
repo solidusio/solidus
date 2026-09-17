@@ -156,7 +156,7 @@ module Spree
     end
 
     def auto_capture?
-      auto_capture.nil? ? Spree::Config[:auto_capture] : auto_capture
+      auto_capture.nil? ? Spree::Config.auto_capture : auto_capture
     end
 
     # Check if given source is supported by this payment method

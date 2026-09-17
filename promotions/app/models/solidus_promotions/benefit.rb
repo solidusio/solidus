@@ -40,7 +40,7 @@ module SolidusPromotions
     # @!attribute [rw] promotion
     #   The owning promotion.
     #   @return [SolidusPromotions::Promotion]
-    belongs_to :promotion, inverse_of: :benefits
+    belongs_to :promotion, -> { with_discarded }, inverse_of: :benefits
     # @!attribute [rw] original_promotion_action
     #   Back-reference to the original Solidus (Spree) promotion action, when migrated.
     #   @return [Spree::PromotionAction, nil]
@@ -270,6 +270,12 @@ module SolidusPromotions
     # @param dry_run [Boolean] whether to collect detailed eligibility information
     # @return [Boolean] true when all applicable conditions are eligible
     def eligible_by_applicable_conditions?(promotable, dry_run: false)
+      if dry_run
+        Spree.deprecator.warn <<~MSG
+          Passing `dry_run` to `#eligible_by_applicable_conditions` is deprecated. If you want to check promotion
+          eligibility, use the `SolidusPromotions::PromotionEligibilityChecker` service object instead.
+        MSG
+      end
       conditions.map do |condition|
         next unless condition.applicable?(promotable)
         eligible = condition.eligible?(promotable)

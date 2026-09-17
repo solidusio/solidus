@@ -308,7 +308,7 @@ RSpec.describe SolidusPromotions::PromotionHandler::Coupon, type: :model do
     context "with a whole-order adjustment benefit" do
       let!(:benefit) { SolidusPromotions::Benefits::AdjustLineItem.create(promotion: promotion, calculator: calculator) }
       context "right coupon given" do
-        let(:order) { create(:order) }
+        let(:order) { create(:order_with_line_items) }
         let(:calculator) { SolidusPromotions::Calculators::DistributedAmount.new(preferred_amount: 10) }
 
         before do

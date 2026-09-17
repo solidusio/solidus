@@ -35,7 +35,7 @@
       </div>
     <% end %>
 
-    <% if Spree::Config[:can_restrict_stock_management] && can?(:show, Spree::StockLocation) %>
+    <% if Spree::Config.can_restrict_stock_management && can?(:show, Spree::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
         <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
         <ul>
@@ -74,6 +74,13 @@
           <%= f.password_field :password_confirmation, class: 'fullwidth' %>
           <%= f.error_message_on :password_confirmation %>
         <% end %>
+      <% end %>
+    <% end %>
+
+    <% if can?(:update, @user) && @user.respond_to?(:timezone) %>
+      <%= f.field_container :timezone do %>
+        <%= f.label :timezone %>
+        <%= f.time_zone_select :timezone, nil, {include_blank: t("spree.none")}, class: "select2 fullwidth" %>
       <% end %>
     <% end %>
   </div>

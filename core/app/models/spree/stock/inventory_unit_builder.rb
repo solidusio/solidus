@@ -8,6 +8,7 @@ module Spree
       end
 
       def units
+        ActiveRecord::Associations::Preloader.new(records: @order.line_items, associations: {variant: :product}).call
         @order.line_items.flat_map do |line_item|
           build_units(line_item, line_item.quantity)
         end

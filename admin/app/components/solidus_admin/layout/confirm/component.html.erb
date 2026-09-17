@@ -1,0 +1,18 @@
+<div id="confirm" data-controller="<%= stimulus_id %>">
+  <%= render component("ui/modal").new(
+    title: t(".title"),
+    open: false
+  ) do |modal| %>
+    <% modal.with_actions do %>
+      <form method="dialog">
+        <%= render component("ui/button").new(scheme: :secondary, text: t(".cancel")) %>
+      </form>
+      <%= render component("ui/button").new(
+        text: t(".confirm"),
+        id: "confirm-accept",
+        scheme: :danger,
+        data: { "#{stimulus_id}-target": "accept" }
+      ) %>
+    <% end %>
+  <% end %>
+</div>

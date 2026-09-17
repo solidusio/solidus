@@ -10,7 +10,7 @@ module Spree
       # To customize the error message you can also override `ineligible_message`.
       class ItemTotal < PromotionRule
         preference :amount, :decimal, default: 100.00
-        preference :currency, :string, default: -> { Spree::Config[:currency] }
+        preference :currency, :string, default: -> { Spree::Config.currency }
         preference :operator, :string, default: "gt"
 
         # The list of allowed operators names mapped to their symbols.

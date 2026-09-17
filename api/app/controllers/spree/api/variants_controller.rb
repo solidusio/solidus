@@ -89,8 +89,16 @@ module Spree
       end
 
       def include_list
-        [{option_values: :option_type}, :product, :prices, :images, {stock_items: :stock_location}]
+        [
+          {option_values: :option_type},
+          {product: {master: images_includes}},
+          :prices,
+          images_includes,
+          {stock_items: :stock_location}
+        ]
       end
+
+      def images_includes = {images: Spree::Image.attachment_preloads}
     end
   end
 end

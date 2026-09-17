@@ -25,7 +25,7 @@ module SolidusPromotions
       preference :first_item, :decimal, default: Spree::ZERO
       preference :additional_item, :decimal, default: Spree::ZERO
       preference :max_items, :integer, default: 0
-      preference :currency, :string, default: -> { Spree::Config[:currency] }
+      preference :currency, :string, default: -> { Spree::Config.currency }
 
       # Computes the discount amount for a line item based on its quantity.
       #

@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class BaseController < Spree::BaseController
+      include Spree::Core::ControllerHelpers::Timezone
+
       helper "spree/admin/navigation"
       layout "spree/layouts/admin"
 
@@ -49,7 +51,7 @@ module Spree
       end
 
       def config_locale
-        Spree::Backend::Config[:locale]
+        Spree::Backend::Config.locale
       end
 
       def lock_order

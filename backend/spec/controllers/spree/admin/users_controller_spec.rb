@@ -483,6 +483,39 @@ describe Spree::Admin::UsersController, type: :controller do
         expect(user.reload.stock_locations).to eq([location1])
       end
     end
+
+    context "when the user has a timezone column" do
+      let(:user) { double("User", id: 1, timezone: nil) }
+
+      before do
+        # We need to stub loading the user here because the legacy user does not
+        # have a timezone column, and we want to test the behavior of the controller
+        # when the user does have one.
+        allow_any_instance_of(controller.class).to receive(:load_resource) do
+          controller.instance_variable_set(:@user, user)
+        end
+      end
+
+      context "and the timezone is changed" do
+        before do
+          allow(user).to receive(:update).and_return(true)
+          allow(user).to receive(:saved_change_to_timezone?).and_return(true)
+        end
+
+        context "and the user is the current user" do
+          before do
+            # We cannot stubt the spree_current_user method because it is the authenticated user
+            allow(user).to receive(:==).and_return(true)
+          end
+
+          it "resets the session timezone" do
+            session[:solidus_timezone] = "Berlin"
+            put :update, params: {id: user.id, user: {email: ""}}
+            expect(session[:solidus_timezone]).to be_nil
+          end
+        end
+      end
+    end
   end
 
   describe "#destroy" do

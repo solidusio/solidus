@@ -64,7 +64,7 @@ module Spree
             calculator.available?(package) &&
               (calculator.preferences[:currency].blank? ||
                calculator.preferences[:currency] == package.shipment.order.currency)
-        end
+          end
       end
     end
   end

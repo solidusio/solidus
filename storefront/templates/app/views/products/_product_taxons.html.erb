@@ -1,0 +1,15 @@
+<% if !product.taxons.blank? %>
+  <section class="product-taxons">
+    <h1 class="product-taxons__title">
+      <%= t('spree.look_for_similar_items') %>:
+    </h1>
+
+    <ul class="product-taxons__list">
+      <% product.taxons.each do |taxon| %>
+        <li>
+          <%= link_to taxon.name, taxon_seo_url(taxon) %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

@@ -65,11 +65,21 @@ RSpec.describe Spree::LineItem, type: :model do
     before do
       line_item.update!(price: 10, quantity: 2)
     end
-    let!(:admin_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -1, source: nil) }
-    let!(:other_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -2, source: nil) }
+    let!(:admin_adjustment) { build(:adjustment, adjustable: line_item, order: line_item.order, amount: -1, source: nil) }
+    let!(:other_adjustment) { build(:adjustment, adjustable: line_item, order: line_item.order, amount: -2, source: nil) }
 
     it "returns the amount minus any adjustments" do
       expect(line_item.total_before_tax).to eq(20 - 1 - 2)
+    end
+
+    context "with adjustments that are marked for destruction" do
+      before do
+        other_adjustment.mark_for_destruction
+      end
+
+      it "ignores adjustments that are marked for destruction" do
+        expect(line_item.total_before_tax).to eq(20 - 1)
+      end
     end
   end
 

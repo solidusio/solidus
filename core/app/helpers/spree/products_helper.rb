@@ -8,7 +8,7 @@ module Spree
     # @param variant [Spree::Variant] the variant
     # @return [Spree::Money] the price or price diff
     def variant_price(variant)
-      if Spree::Config[:show_variant_full_price]
+      if Spree::Config.show_variant_full_price
         variant_full_price(variant)
       else
         variant_price_diff(variant)
@@ -46,7 +46,7 @@ module Spree
     # @param product [Spree::Product] the product whose description you want to filter
     # @return [String] the generated HTML
     def product_description(product)
-      if Spree::Config[:show_raw_product_description]
+      if Spree::Config.show_raw_product_description
         raw(product.description)
       else
         raw(product.description.gsub(/(.*?)\r?\n\r?\n/m, '<p>\1</p>'))

@@ -3,6 +3,7 @@
 module SolidusAdmin
   module Generators
     class InstallGenerator < Rails::Generators::Base
+      class_option :alpha_features, type: :boolean, default: !!ENV["SOLIDUS_ADMIN_ALPHA_FEATURES"], desc: "Enable unstable alpha features currently in development."
       class_option :lookbook, type: :boolean, default: !!ENV["SOLIDUS_ADMIN_LOOKBOOK"], desc: "Install Lookbook for component previews"
       class_option :tailwind, type: :boolean, default: false, desc: "Install TailwindCSS for custom components"
 
@@ -18,7 +19,9 @@ module SolidusAdmin
       end
 
       def copy_initializer
-        template "config/initializers/solidus_admin.rb.tt", "config/initializers/solidus_admin.rb"
+        template "config/initializers/solidus_admin.rb.tt",
+          "config/initializers/solidus_admin.rb",
+          enable_alpha_features: options[:alpha_features]
       end
 
       def ignore_tailwind_build_files

@@ -1,0 +1,74 @@
+<header class="wrapper grid-container w-full pt-2.5 px-5 lg:px-6 2xl:px-0">
+  <div class="col-span-full flex items-center justify-center max-h-[70px] lg:justify-between lg:gap-x-6">
+    <div class="flex items-center justify-center w-8 h-8 lg:py-2 lg:hidden">
+      <button type="button" class="inline-flex flex-col gap-y-2 items-center p-2 w-10 h-10 justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500" aria-controls="navbar-default" aria-expanded="false" data-action="click->drawer#toggle">
+        <span class="sr-only">Open main menu</span>
+        <svg class="bg-black dark:bg-sand" xmlns="http://www.w3.org/2000/svg" width="26" height="2" viewBox="0 0 26 2" fill="currentColor">
+          <line y1="1" x2="26" y2="1" stroke-width="2"/>
+        </svg>
+        <svg class="bg-black dark:bg-sand" xmlns="http://www.w3.org/2000/svg" width="26" height="2" viewBox="0 0 26 2" fill="currentColor">
+          <line y1="1" x2="26" y2="1" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center gap-x-4 xl:gap-x-8 w-full justify-center lg:justify-start">
+      <%= link_to root_path, class: 'absolute lg:relative left-1/2 lg:left-0 lg:-translate-x-0 -translate-x-1/2 flex items-center space-x-3' do %>
+        <%= image_tag "logo_small_no_label.svg" %>
+        <span class="uppercase font-sans font-semibold mb-0 dark:text-sand text-body lg:text-body-sm xl:text-body-sm"><%= Spree::Store.default.name %></span>
+      <% end %>
+
+      <% categories = taxonomies.first %>
+      <% navMobileClasses = '
+        categories-menu bg-white
+        fixed top-0 left-0 z-40 w-[80%] max-w-[400px] min-w-[270px] h-full
+        transition-transform duration-300 ease-in-out -translate-x-full
+        flex flex-col
+        lg:bg-sand dark:bg-black dark:text-white text-black dark:lg:text-sand
+        px-8 py-5 text-body-sm'
+      %>
+      <% navDesktopClasses = '
+        lg:relative lg:z-0 lg:h-auto lg:max-h-[70px] lg:transition-none lg:translate-x-0
+        lg:flex-row lg:items-center
+        dark:lg:text-sand
+        lg:p-0'
+      %>
+
+      <nav class="<%= navMobileClasses + navDesktopClasses %> text-" data-drawer-target="drawer">
+        <button type="button" class="w-8 h-8 self-start -ml-[5px] lg:hidden" aria-controls="navbar-default" aria-expanded="false" data-action="click->drawer#toggle">
+          <span class="sr-only">Close main menu</span>
+          <svg class='w-8 h-8 fill-gray-500'>
+            <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-close-line"></use>
+          </svg>
+        </button>
+
+        <div class="block my-12">
+          <%= render 'shared/search/search_bar', taxons: taxons, taxon: taxon, :locals => { :additional_classes => 'lg:hidden', search_input_id: 'mobile-search-input-area', results_list_id: 'autocomplete-results-mobile' } %>
+        </div>
+
+        <% cache [I18n.locale, categories, taxon] do %>
+          <%= render(TaxonsTreeComponent.new(
+            root_taxon: categories.root,
+            current_taxon: taxon,
+            max_level: 1,
+            item_classes: 'font-sans-md',
+            current_item_classes: 'text-solidus-red',
+            )) if categories %>
+        <% end %>
+
+        <div class="lg:hidden mt-auto">
+        <div class="flex justify-between">
+          <%= render "shared/navigation/theme_switcher" %>
+
+          <%= link_to "https://solidus.io", class:"flex flex-row items-center gap-1" do %>
+            <span class="font-semibold text-black dark:text-white">solidus.io</span>
+            <svg class='w-5 h-5 fill-black dark:fill-white'>
+              <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-arrow-right-up-line"></use>
+            </svg>
+          <% end %>
+        </div>
+        </div>
+      </nav>
+    </div>
+    <%= render 'layouts/top_bar', taxons: taxons, taxon: taxon %>
+  </div>
+</header>

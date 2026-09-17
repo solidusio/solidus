@@ -60,12 +60,14 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     end
   end
 
-  def initialize(id:, data:, search: nil, sortable: nil)
+  # @option options [Boolean] :embedded if true, does not add border around table
+  def initialize(id:, data:, search: nil, sortable: nil, **options)
     @id = id
     @data = Data.new(**data)
     @data.columns.unshift selectable_column if @data.batch_actions.present? && @data.rows.present?
     @search = Search.new(**search) if search
     @sortable = Sortable.new(**sortable) if sortable
+    @options = options
   end
 
   def selectable_column
@@ -117,13 +119,15 @@ class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
     }
 
     if batch_action.require_confirmation
-      params["data-action"] = "click->#{stimulus_id}#confirmAction"
-      params["data-#{stimulus_id}-message-param"] = t(
+      params["data-turbo-confirm"] = t(".are_you_sure")
+      params["data-confirmation-template"] = t(
         ".action_confirmation",
         action: batch_action.label.downcase
       )
-      params["data-#{stimulus_id}-resource-singular-param"] = @data.singular_name.downcase
-      params["data-#{stimulus_id}-resource-plural-param"] = @data.plural_name.downcase
+      params["data-confirm-button"] = batch_action.label
+      params["data-resource-singular"] = @data.singular_name.downcase
+      params["data-resource-plural"] = @data.plural_name.downcase
+      params.merge! stimulus_target("batchActionButton")
     end
 
     render component("ui/button").new(**params)

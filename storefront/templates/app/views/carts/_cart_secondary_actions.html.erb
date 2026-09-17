@@ -1,0 +1,13 @@
+<div class="col-span-full mt-6">
+  <div class="flex gap-x-2 items-center justify-end">
+    <svg class='w-6 h-6 fill-black dark:fill-white'>
+      <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-refresh-line"></use>
+    </svg>
+    <%= order_form.button(
+      t("spree.update"),
+      class: 'body-md cursor-pointer',
+      id: 'update-button',
+      'data-cart-page-target': 'updateButton',
+    ) %>
+  </div>
+</div>

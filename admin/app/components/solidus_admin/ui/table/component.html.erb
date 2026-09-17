@@ -1,8 +1,6 @@
 <div
   class="
-    rounded-lg
-    border
-    border-gray-100
+    <%= 'rounded-lg border border-gray-100' unless @options[:embedded] %>
     <%= 'overflow-hidden' unless @search %>
   "
   data-controller="<%= stimulus_id %>"
@@ -103,7 +101,7 @@
     </colgroup>
 
     <thead
-      class="bg-gray-15 text-gray-700 text-left text-small"
+      class="bg-gray-15 text-gray-700 text-left"
       data-<%= stimulus_id %>-target="defaultHeader"
     >
       <tr>
@@ -116,7 +114,7 @@
     <% if @data.batch_actions && @data.rows.any? %>
       <thead
         data-<%= stimulus_id %>-target="batchHeader"
-        class="bg-white color-black text-xs leading-none text-left"
+        class="bg-white color-black leading-none text-left"
         hidden
       >
         <tr>
@@ -146,8 +144,8 @@
           <% if row_url %>
             data-action="click-><%= stimulus_id %>#rowClicked"
             data-<%= stimulus_id %>-url-param="<%= row_url %>"
-            <%= "data-sortable-url=#{@sortable.url.call(row)}" if @sortable&.url %>
           <% end %>
+          <%= "data-sortable-url=#{@sortable.url.call(row)}" if @sortable&.url %>
         >
           <% @data.columns.each do |column| %>
             <%= render_data_cell(column, row) %>

@@ -12,6 +12,18 @@ module Spree
       let(:user) { create(:admin_user) }
       let(:order) { create(:order) }
 
+      describe "#index" do
+        let(:order) { create(:order, bill_address: create(:address)) }
+
+        it "loads the listed payments' methods without an N+1" do
+          3.times { create(:payment, order:, payment_method: create(:check_payment_method)) }
+
+          expect {
+            get :index, params: {order_id: order.number}
+          }.to make_database_queries(matching: /from .spree_payment_methods./i, count: 2)
+        end
+      end
+
       describe "#create" do
         context "with a valid credit card" do
           let(:order) { create(:order_with_line_items, state: "payment") }

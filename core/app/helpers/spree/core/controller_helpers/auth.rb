@@ -37,7 +37,7 @@ module Spree
 
         def set_guest_token
           if cookies.signed[:guest_token].blank?
-            cookies.permanent.signed[:guest_token] = Spree::Config[:guest_token_cookie_options].merge(
+            cookies.permanent.signed[:guest_token] = Spree::Config.guest_token_cookie_options.merge(
               value: SecureRandom.urlsafe_base64(nil, false),
               httponly: true
             )

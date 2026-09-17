@@ -3,6 +3,18 @@
 ENV["RAILS_ENV"] = "test"
 ENV["DISABLE_DATABASE_ENVIRONMENT_CHECK"] = "1"
 
+# Speed up the sqlite runs: `fast_sqlite` patches SQLite3::Database#initialize to
+# set `PRAGMA synchronous = OFF` and `journal_mode = MEMORY`, trading durability we
+# don't need for a database the suite recreates anyway.
+#
+# NOTE: The gem is declared `require: false`, and only when DB is sqlite, so it is
+# genuinely absent for the mysql and postgres runs.
+begin
+  require "fast_sqlite"
+rescue LoadError
+  # Not running against sqlite, nothing to speed up.
+end
+
 require "rails"
 require "active_record/railtie"
 require "action_controller/railtie"
@@ -106,7 +118,10 @@ module DummyApp
 
     # Set the preview path within the dummy app:
     if ActionMailer::Base.respond_to? :preview_paths # Rails 7.1+
-      config.action_mailer.preview_paths << File.expand_path("dummy_app/mailer_previews", __dir__)
+      # Some Rails versions return a frozen array here; assign a new array
+      # to avoid FrozenError when augmenting the paths.
+      existing = Array(config.action_mailer.preview_paths)
+      config.action_mailer.preview_paths = existing + [File.expand_path("dummy_app/mailer_previews", __dir__)]
     else
       config.action_mailer.preview_path = File.expand_path("dummy_app/mailer_previews", __dir__)
     end

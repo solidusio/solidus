@@ -65,7 +65,7 @@ module Spree
     end
 
     def currency
-      adjustable ? adjustable.currency : Spree::Config[:currency]
+      adjustable ? adjustable.currency : Spree::Config.currency
     end
 
     # @return [Boolean] true when this is a promotion adjustment (Promotion adjustments have a {PromotionAction} source)

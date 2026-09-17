@@ -5,7 +5,7 @@
 [![Test](https://github.com/solidusio/solidus/actions/workflows/test.yml/badge.svg)](https://github.com/solidusio/solidus/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/solidusio/solidus/branch/main/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus/branch/main)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
-[![License](http://img.shields.io/badge/license-BSD-blue.svg)](LICENSE.md)
+[![License](http://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 
 [![Supporters on Open Collective](https://opencollective.com/solidus/tiers/supporter/badge.svg?label=Supporters&color=brightgree)](https://opencollective.com/solidus)
 [![Bronze Partners on Open Collective](https://opencollective.com/solidus/tiers/bronze/badge.svg?label=Bronze&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
@@ -84,37 +84,9 @@ Begin by making sure you have
 required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if
 you're on a Mac.)
 
-To add Solidus, begin with a newly created Rails application with its database.
+To install Solidus with the current storefront, follow the instructions in
+[storefront/README.md](storefront/README.md).
 
-```bash
-rails new my_store
-```
-
-> [!CAUTION]
-> Due to [a bug in `sprockets-rails`](https://github.com/rails/sprockets-rails/pull/546) we need to manually add the sprockets manifest into the generated rails app **before** running any rails commands inside the rails app folder.
-
-```bash
-mkdir -p my_store/app/assets/config
-cat <<MANIFEST > my_store/app/assets/config/manifest.js
-//= link_tree ../images
-//= link_directory ../javascripts .js
-//= link_directory ../stylesheets .css
-MANIFEST
-```
-
-### Installing Solidus
-
-In your application's root folder run:
-
-```bash
-bundle add solidus
-bin/rails g solidus:install
-```
-
-> [!NOTE]
-> Please make sure to generate the sprockets manifest before running the `solidus:install` generator.
-
-And follow the prompt's instructions.
 ### Accessing Solidus Store
 
 Start the Rails server with the command:
@@ -214,14 +186,14 @@ and/or customizations to the Solidus admin. Use at your own risk.
   bin/setup
   ```
 
-  _Note_: If you're using PostgreSQL or MySQL, you'll need to install those gems through the DB environment variable.
+  _Note_: If you're using PostgreSQL, MySQL, or MariaDB, you'll need to install those gems through the DB environment variable.
 
   ```bash
   # PostgreSQL
   export DB=postgresql
   bin/setup
 
-  # MySQL
+  # MySQL or MariaDB (mysql2 adapter)
   export DB=mysql
   bin/setup
   ```
@@ -277,7 +249,7 @@ environment variable:
 ```bash
 SANDBOX_PORT=4000 docker-compose up -d
 docker-compose exec app bin/sandbox
-docker-compose exec app bin/rails server --binding 0.0.0.0 --port 4000
+SANDBOX_PORT=4000 docker-compose exec app bin/dev
 ```
 
 ### Sandbox
@@ -295,14 +267,14 @@ data already loaded.
   bin/sandbox
   ```
 
-  You can create a sandbox with PostgreSQL or MySQL by setting the DB environment variable.
+  You can create a sandbox with PostgreSQL, MySQL, or MariaDB by setting the DB environment variable.
 
   ```bash
   # PostgreSQL
   export DB=postgresql
   bin/sandbox
 
-  # MySQL
+  # MySQL or MariaDB (mysql2 adapter)
   export DB=mysql
   bin/sandbox
   ```
@@ -331,20 +303,21 @@ sandbox one by running the command:
 
 Please note: if you run `bin/rails server` or similar commands, only the Rails server will
 start. This might cause the error `couldn't find file 'solidus_admin/tailwind.css'` when you
-try to load admin pages.
+try to load all pages.
 
 ### Tests
 
 Solidus uses [RSpec](http://rspec.info) for tests. Refer to its documentation for
 more information about the testing library.
 
-#### CircleCI
+#### CI/CD
 
-We use CircleCI to run the tests for Solidus as well as all incoming pull
-requests. All pull requests must pass to be merged.
+We use GitHub Actions to run Solidus' test suites against all supported versions
+of Ruby and Rails. Before a pull request can be merged, all of the tests must
+pass.
 
-You can see the build statuses at
-[https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus).
+You can see the build statuses on the repository's [GitHub Actions
+page](https://github.com/solidusio/solidus/actions).
 
 #### Run all tests
 
@@ -358,13 +331,13 @@ createuser --superuser --echo postgres # only the first time
 bin/build
 ```
 
-The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
+The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql` (MariaDB uses `DB=mysql`). For example:
 
 ```bash
 env DB=mysql bin/build
 ```
 
-If the command fails with MySQL related errors you can try creating a user with this command:
+If the command fails with MySQL or MariaDB related errors you can try creating a user with this command:
 
 ```bash
 # Creates a user with the same name as the current user and no restrictions.

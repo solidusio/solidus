@@ -1,4 +1,5 @@
 en:
+  are_you_sure: "Are you sure?"
   no_resources_found: "No %{resources} found"
   rows_selected: 'selected'
   select_all: 'Select all'

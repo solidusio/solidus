@@ -1,0 +1,11 @@
+<div class="col-span-full md:col-span-9">
+  <picture class="flex justify-center items-center bg-gray-50 w-full h-full rounded-lg md:rounded-xl lg:rounded-2xl aspect-square">
+    <%= render(ImageComponent.new(
+      image: product.gallery.images.first,
+      size: :product,
+      itemprop: "image",
+      data: { js: 'product-main-image' },
+      class: 'object-contain'
+    )) %>
+  </picture>
+</div>

@@ -148,7 +148,7 @@ module Spree
     end
 
     def recalculate_payment_total
-      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
+      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(&:amount) }
     end
     alias_method :update_payment_total, :recalculate_payment_total
     deprecate update_payment_total: :recalculate_payment_total, deprecator: Spree.deprecator

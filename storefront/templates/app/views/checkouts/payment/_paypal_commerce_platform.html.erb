@@ -1,0 +1,33 @@
+<%= render partial: "solidus_paypal_commerce_platform/shared/javascript_sdk_tag", locals: {payment_method: payment_method} %>
+
+<div id="paypal-button-container"></div>
+
+<div data-pp-message data-pp-placement="payment" data-pp-amount="<%= @order.total %>"></div>
+
+<input type="hidden" name="payment_source[<%= payment_method.id %>][paypal_order_id]" id="payments_source_paypal_order_id">
+<input type="hidden" name="payment_source[<%= payment_method.id %>][paypal_email]" id="payments_source_paypal_email">
+<input type="hidden" name="payment_source[<%= payment_method.id %>][paypal_funding_source]" id="payments_source_paypal_funding_source">
+
+<script>
+  SolidusPaypalCommercePlatform.api_key = "<%= spree_current_user.try(:spree_api_key) %>"
+  SolidusPaypalCommercePlatform.current_order_id = "<%= @order.number %>"
+  SolidusPaypalCommercePlatform.current_order_token = "<%= @order.guest_token %>"
+</script>
+
+<% unless payment_method.render_only_venmo_standalone? %>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      SolidusPaypalCommercePlatform.renderButton("<%= payment_method.id %>",<%= raw payment_method.button_style.to_json %>)
+    })
+  </script>
+<% end %>
+
+<% if payment_method.venmo_standalone_enabled? %>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      SolidusPaypalCommercePlatform.renderVenmoStandalone("<%= payment_method.id %>",<%= raw payment_method.button_style.to_json %>)
+    })
+  </script>
+<% end %>
+
+<div id="paypal_commerce_platform_overlay"></div>

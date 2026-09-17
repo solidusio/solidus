@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+set -e
+test -z "${DEBUG+empty_string}" || set -x
+
+test "$DB" = "sqlite" && export DB="sqlite3"
+
+if [ -z "$PAYMENT_METHOD" ]
+then
+  PAYMENT_METHOD="none"
+fi
+
+if [ -z "$SOLIDUS_BRANCH" ]
+then
+  echo "~~> Use 'export SOLIDUS_BRANCH=[main|v4.0|...]' to control the Solidus branch"
+  SOLIDUS_BRANCH="main"
+fi
+echo "~~> Using branch $SOLIDUS_BRANCH of solidus"
+
+# Stay away from the bundler env of the containing extension.
+function unbundled {
+  ruby -rbundler -e'
+      Bundler.with_unbundled_env {system *ARGV}' -- \
+        env BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES=true $@
+}
+
+echo "~~~> Removing the old sandbox"
+rm -rf ./sandbox
+
+echo "~~~> Creating a pristine Rails app"
+rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
+
+# --skip-solid was added in Rails 8.0 to skip Solid Cache, Queue, and Cable
+# setup which is unnecessary for the sandbox and fails during generation.
+rails_major=$(echo "$rails_version" | cut -d. -f1)
+skip_solid_flag=""
+if [ "$rails_major" -ge 8 ] 2>/dev/null; then
+  skip_solid_flag="--skip-solid"
+fi
+
+bundle exec rails _${rails_version}_ new sandbox \
+  --database="${DB:-sqlite3}" \
+  --skip-git \
+  --skip-keeps \
+  --skip-rc \
+  --skip-bootsnap \
+  --skip-test \
+  $skip_solid_flag
+
+if [ ! -d "sandbox" ]; then
+  echo 'sandbox rails application failed'
+  exit 1
+fi
+
+echo "~~~> Adding solidus (with i18n) to the Gemfile"
+cd ./sandbox
+
+if [ -n "$DB_HOST" ]; then
+  echo "~~~> Configuring database.yml for DB_HOST=$DB_HOST"
+  ruby -i -pe '
+    if $_ =~ /^  pool:/
+      $_ += "  host: <%= ENV.fetch(\"DB_HOST\", \"localhost\") %>\n"
+      $_ += "  username: <%= ENV[\"DB_USERNAME\"] %>\n"
+    end
+  ' config/database.yml
+fi
+
+cat <<RUBY >> Gemfile
+gem 'solidus', github: 'solidusio/solidus', branch: '$SOLIDUS_BRANCH'
+gem 'rails-i18n'
+gem 'solidus_i18n'
+gem 'solidus_auth_devise', github: "solidusio/solidus_auth_devise"
+
+# Ruby 4.0 removed benchmark from default gems, but ActiveSupport requires it.
+gem 'benchmark' if RUBY_VERSION >= '4.0'
+
+group :test, :development do
+  platforms :mri do
+    gem 'pry-byebug'
+  end
+end
+RUBY
+
+echo "Generating manifest file"
+mkdir -p app/assets/config
+cat <<MANIFESTJS > app/assets/config/manifest.js
+//= link_tree ../images
+//= link_directory ../javascripts .js
+//= link_directory ../stylesheets .css
+MANIFESTJS
+
+unbundled bundle install --gemfile Gemfile
+
+unbundled bundle exec rake db:drop db:create
+
+export FRONTEND="$PWD/../template.rb"
+unbundled bundle exec rails generate solidus:install \
+  --auto-accept \
+  $@
+
+echo
+echo "🚀 Sandbox app successfully created for the starter frontend!"
+echo "🚀 Use 'export DB=[postgres|mysql|sqlite3]' to control the DB adapter"
+echo "🧪 This app is intended for test purposes."

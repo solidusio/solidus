@@ -6,14 +6,16 @@ module Spree
       %w[capture void credit]
     end
 
-    # Indicates whether its possible to capture the payment
     def can_capture?(payment)
       ["checkout", "pending"].include?(payment.state)
     end
 
-    # Indicates whether its possible to void the payment.
     def can_void?(payment)
       payment.state != "void"
+    end
+
+    def can_credit?(payment)
+      payment.completed? && payment.credit_allowed > 0
     end
 
     def capture(*)

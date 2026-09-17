@@ -1,6 +1,7 @@
 <%
   manifest_items = Spree::ShippingManifest.new(
     inventory_units: shipment.inventory_units.where(carton_id: nil),
+    order: order
   ).items.sort_by { |item| item.line_item.created_at }
 %>
 

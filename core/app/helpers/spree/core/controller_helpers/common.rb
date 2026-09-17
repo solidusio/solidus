@@ -27,7 +27,7 @@ module Spree
         def title
           title_string = @title.presence || accurate_title
           if title_string.present?
-            if Spree::Config[:always_put_site_name_in_title]
+            if Spree::Config.always_put_site_name_in_title
               [title_string, default_title].join(" - ")
             else
               title_string
@@ -75,7 +75,7 @@ module Spree
         # Default layout is: +app/views/spree/layouts/spree_application+
         #
         def get_layout
-          Spree::Config[:layout]
+          Spree::Config.layout
         end
       end
     end

@@ -70,11 +70,25 @@ module Spree
 
     # @!attribute [rw] allow_return_item_amount_editing
     #   @return [Boolean] Determines whether an admin is allowed to change a return item's pre-calculated amount (default: +false+)
+    #   @deprecated Unused since a6755a7f0f; remove it from your initializer.
     preference :allow_return_item_amount_editing, :boolean, default: false
+    msg = "`Spree::Config.allow_return_item_amount_editing` has had no effect since commit a6755a7f0f; remove it from your initializer."
+    deprecate(
+      allow_return_item_amount_editing: msg,
+      "allow_return_item_amount_editing=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] alternative_billing_phone
     #   @return [Boolean] Request an extra phone number for bill address (default: +false+)
+    #   @deprecated Unused since c40d4cbeef; remove it from your initializer.
     preference :alternative_billing_phone, :boolean, default: false
+    msg = "`Spree::Config.alternative_billing_phone` has had no effect since commit c40d4cbeef; remove it from your initializer."
+    deprecate(
+      alternative_billing_phone: msg,
+      "alternative_billing_phone=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] alternative_shipping_phone
     #   @return [Boolean] Request an extra phone number for shipping address (default: +false+)
@@ -94,7 +108,14 @@ module Spree
 
     # @!attribute [rw] auto_capture_exchanges
     #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
+    #   @deprecated Unused since ca63667027; remove it from your initializer.
     preference :auto_capture_exchanges, :boolean, default: false
+    msg = "`Spree::Config.auto_capture_exchanges` has had no effect since commit ca63667027; remove it from your initializer."
+    deprecate(
+      auto_capture_exchanges: msg,
+      "auto_capture_exchanges=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] automatic_default_address
     #   The default value of true preserves existing backwards compatible feature of
@@ -142,7 +163,14 @@ module Spree
 
     # @!attribute [rw] customer_returns_per_page
     #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
+    #   @deprecated Unused since 834a24a695; remove it from your initializer.
     preference :customer_returns_per_page, :integer, default: 15
+    msg = "`Spree::Config.customer_returns_per_page` has had no effect since commit 834a24a695; remove it from your initializer."
+    deprecate(
+      customer_returns_per_page: msg,
+      "customer_returns_per_page=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
@@ -207,7 +235,14 @@ module Spree
 
     # @!attribute [rw] order_capturing_time_window
     #   @return [Integer] the number of days to look back for fully-shipped/cancelled orders in order to charge for them
+    #   @deprecated Unused since 9c5107fcae; remove it from your initializer.
     preference :order_capturing_time_window, :integer, default: 14
+    msg = "`Spree::Config.order_capturing_time_window` has had no effect since commit 9c5107fcae; remove it from your initializer."
+    deprecate(
+      order_capturing_time_window: msg,
+      "order_capturing_time_window=": msg,
+      deprecator: Spree.deprecator
+    )
 
     # @!attribute [rw] order_mutex_max_age
     #   @return [Integer] Max age of {Spree::OrderMutex} in seconds (default: 2 minutes)
@@ -250,9 +285,17 @@ module Spree
     #   @return [Boolean] Whether to recalculate cart prices when recalculating (default: +false+)
     versioned_preference :recalculate_cart_prices, :boolean, initial_value: false, boundaries: {"5.0.0.alpha" => true}
 
+    # @!attribute [rw] refundable_payment_states
+    #   @return [Array<String>] Payment states in which refunds may be created (default: +["completed", "pending"]+)
+    preference :refundable_payment_states, :array, default: %w[completed pending]
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true
+
+    # @!attribute [rw] require_refundable_payment_state
+    #   @return [Boolean] Whether creating a refund for a payment outside Spree::Config.refundable_payment_states is a validation error rather than a deprecation warning (default: +false+)
+    versioned_preference :require_refundable_payment_state, :boolean, initial_value: false, boundaries: {"5.0.0.alpha" => true}
 
     # @!attribute [rw] require_payment_to_ship
     #   @return [Boolean] Allows shipments to be ready to ship regardless of the order being paid if false (default: +true+)
@@ -354,7 +397,15 @@ module Spree
     #   Spree::Variant::VatPriceGenerator.
     class_name_attribute :variant_vat_prices_generator_class, default: "Spree::Variant::VatPriceGenerator"
 
+    # @!attribute [rw] allocator_class
+    #   @deprecated Never read; use Spree::Config.stock.allocator_class instead.
     class_name_attribute :allocator_class, default: "Spree::Stock::Allocator::OnHandFirst"
+    msg = "`Spree::Config.allocator_class` has never been read; the stock allocator is configured with `Spree::Config.stock.allocator_class`."
+    deprecate(
+      allocator_class: msg,
+      "allocator_class=": msg,
+      deprecator: Spree.deprecator
+    )
 
     class_name_attribute :shipping_rate_sorter_class, default: "Spree::Stock::ShippingRateSorter"
 

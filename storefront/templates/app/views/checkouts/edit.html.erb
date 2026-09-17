@@ -1,0 +1,16 @@
+<article class="checkout grid-container wrapper mb-14">
+  <%= render "shared/error_messages", target: @order %>
+  <%= render "checkout_header" %>
+
+  <div class="checkout__main col-span-full grid-container">
+    <section class="checkout__step col-span-full <%= @order.state != "confirm" ? 'lg:col-span-8' : '' %>">
+      <%= render "checkout_step", order: @order %>
+    </section>
+
+    <% if @order.state != "confirm" %>
+      <div class="checkout__summary col-span-full lg:col-span-4 xl:col-start-10 xl:col-span-3">
+        <%= render "checkout_summary", order: @order %>
+      </div>
+    <% end %>
+  </div>
+</article>

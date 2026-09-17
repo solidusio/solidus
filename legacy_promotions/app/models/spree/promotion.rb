@@ -240,6 +240,7 @@ module Spree
       when Spree::LineItem
         !promotable.variant.product.promotionable?
       when Spree::Order
+        ActiveRecord::Associations::Preloader.new(records: promotable.line_items, associations: {variant: :product}).call
         promotable.line_items.any? { |line_item| !line_item.variant.product.promotionable? }
       end
     end

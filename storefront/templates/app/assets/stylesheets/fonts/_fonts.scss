@@ -1,0 +1,38 @@
+$inter-font-path: './inter/';
+$source-serif-font-path: './source-serif/'; 
+
+@font-face {
+  font-family: 'Inter Regular';
+  src: url('#{$inter-font-path}inter-v18-latin-regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter Medium';
+  src: url('#{$inter-font-path}inter-v18-latin-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter Semibold';
+  src: url('#{$inter-font-path}inter-v18-latin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif';
+  src: url('#{$source-serif-font-path}source-serif-4-v8-latin-regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Medium';
+  src: url('#{$source-serif-font-path}source-serif-4-v8-latin-500.woff2') format('woff2');
+  font-display: swap;
+}

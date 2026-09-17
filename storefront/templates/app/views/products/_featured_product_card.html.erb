@@ -1,0 +1,12 @@
+<div class="relative bg-black overflow-hidden rounded-lg md:rounded-xl lg:rounded-2xl">
+  <% image = product.gallery.images.second || product.gallery.images.first %>
+  <%= render(ImageComponent.new(
+    image: image,
+    size: size,
+    class: 'w-full object-cover'
+  )) %>
+  <div class="absolute flex flex-col gap-y-2 lg:gap-y-4 inset-x-6 bottom-6 lg:inset-x-8 lg:bottom-8">
+    <span class="text-white drop-shadow-sm text-h6 font-serif md:text-h5 lg:text-h3"><%= product.name %></span>
+    <%= render partial: "shared/call_to_action", :locals => { :label => "Shop now", :url => product } %>
+  </div>
+</div>

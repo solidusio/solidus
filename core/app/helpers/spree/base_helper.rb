@@ -57,7 +57,7 @@ module Spree
       @body_class
     end
 
-    def logo(image_path = Spree::Config[:logo])
+    def logo(image_path = Spree::Config.logo)
       link_to image_tag(image_path), spree.root_path
     end
 
@@ -93,7 +93,7 @@ module Spree
         end
       end
 
-      content_tag(:nav, content_tag(:ol, raw(items.map(&:mb_chars).join), class: breadcrumb_class, itemscope: "", itemtype: "https://schema.org/BreadcrumbList"), id: "breadcrumbs", class: "sixteen columns")
+      content_tag(:nav, content_tag(:ol, safe_join(items), class: breadcrumb_class, itemscope: "", itemtype: "https://schema.org/BreadcrumbList"), id: "breadcrumbs", class: "sixteen columns")
     end
 
     def taxons_tree(root_taxon, current_taxon, max_level = 1)
@@ -110,7 +110,7 @@ module Spree
       end
     end
 
-    def available_countries(restrict_to_zone: Spree::Config[:checkout_zone])
+    def available_countries(restrict_to_zone: Spree::Config.checkout_zone)
       countries = Spree::Country.available(restrict_to_zone:)
 
       country_names = Carmen::Country.all.map do |country|

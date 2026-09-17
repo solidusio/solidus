@@ -15,6 +15,7 @@ export default class extends Controller {
     "batchHeader",
     "tableBody",
     "selectedRowsCount",
+    "batchActionButton",
   ]
 
   static classes = ["selectedRow"]
@@ -123,19 +124,6 @@ export default class extends Controller {
     return this.checkboxTargets.filter((checkbox) => checkbox.checked)
   }
 
-  confirmAction(event) {
-    const message = event.params.message
-      .replace("${count}", this.selectedRows().length)
-      .replace(
-        "${resource}",
-        this.selectedRows().length > 1 ? event.params.resourcePlural : event.params.resourceSingular
-      )
-
-    if (!confirm(message)) {
-      event.preventDefault()
-    }
-  }
-
   render() {
     const selectedRows = this.selectedRows()
 
@@ -172,5 +160,15 @@ export default class extends Controller {
         checkbox.checked = true
       else if (selectedRows.length > 0) checkbox.indeterminate = true
     })
+
+    // Update confirmation text
+    this.batchActionButtonTargets.forEach((button) => {
+      button.dataset.confirmDetails = button.dataset.confirmationTemplate
+        .replace("${count}", selectedRows.length)
+        .replace(
+          "${resource}",
+          this.selectedRows().length > 1 ? button.dataset.resourcePlural : button.dataset.resourceSingular,
+        );
+    });
   }
 }

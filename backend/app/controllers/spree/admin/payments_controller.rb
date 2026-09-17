@@ -9,6 +9,7 @@ module Spree
       before_action :load_payment, except: [:create, :new, :index, :fire]
       before_action :load_payment_for_fire, only: :fire
       before_action :load_data
+      before_action :load_log_entries, only: [:show]
       before_action :require_bill_address, only: [:index]
 
       helper ::Spree::Admin::OrdersHelper
@@ -16,7 +17,7 @@ module Spree
       respond_to :html
 
       def index
-        @payments = @order.payments.includes(refunds: :reason)
+        @payments = @order.payments.includes(:payment_method, refunds: :reason)
         @refunds = @payments.flat_map(&:refunds)
         redirect_to new_admin_order_payment_url(@order) if @payments.empty?
       end
@@ -77,7 +78,9 @@ module Spree
           params[:payment][:source_attributes] = source_params
         end
 
-        params.require(:payment).permit(permitted_payment_attributes)
+        # Admins are allowed to set the amount of a payment, so we need to
+        # permit it here. This is not permitted for non-admin users.
+        params.require(:payment).permit(permitted_payment_attributes + [:amount])
       end
 
       def load_data
@@ -102,6 +105,13 @@ module Spree
         @payment = Spree::Payment.find(params[:id])
       end
 
+      def load_log_entries
+        @all_log_entries = Spree::LogEntry
+          .where(source: @payment)
+          .or(Spree::LogEntry.where(source: @payment.refunds))
+          .order(:created_at)
+      end
+
       def load_payment_for_fire
         load_payment
         authorize! params[:e].to_sym, @payment
@@ -112,7 +122,7 @@ module Spree
       end
 
       def require_bill_address
-        if Spree::Config[:order_bill_address_used] && @order.bill_address.nil?
+        if Spree::Config.order_bill_address_used && @order.bill_address.nil?
           flash[:notice] = t("spree.fill_in_customer_info")
           redirect_to edit_admin_order_customer_url(@order)
         end

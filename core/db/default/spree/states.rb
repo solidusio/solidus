@@ -13,7 +13,7 @@ ActiveRecord::Base.transaction do
     carmen_country = Carmen::Country.coded(country.iso)
     next unless carmen_country.subregions?
 
-    if Spree::Config[:countries_that_use_nested_subregions].include? country.iso
+    if Spree::Config.countries_that_use_nested_subregions.include? country.iso
       create_states(carmen_country.subregions.flat_map(&:subregions), country)
     else
       create_states(carmen_country.subregions, country)

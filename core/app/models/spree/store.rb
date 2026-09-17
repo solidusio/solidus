@@ -25,7 +25,7 @@ module Spree
     self.allowed_ransackable_attributes = %w[name url code]
 
     before_save :ensure_default_exists_and_is_unique
-    before_destroy :validate_not_default
+    before_destroy :validate_not_default, prepend: true
 
     enum :reverse_charge_status, {
       disabled: 0,
@@ -47,7 +47,7 @@ module Spree
       if locales.empty?
         super(nil)
       else
-        super(locales.map(&:to_s).join(","))
+        super(locales.join(","))
       end
     end
 
@@ -73,6 +73,7 @@ module Spree
     def validate_not_default
       if default
         errors.add(:base, :cannot_destroy_default_store)
+        throw :abort
       end
     end
   end

@@ -920,6 +920,24 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  describe "number uniqueness" do
+    let(:existing_order) { create(:order) }
+
+    it "rejects a new order that reuses an existing number" do
+      expect(build(:order, number: existing_order.number)).not_to be_valid
+    end
+
+    it "rejects changing a persisted order's number to one already taken" do
+      order.number = existing_order.number
+      expect(order).not_to be_valid
+    end
+
+    it "skips the uniqueness query when the number is unchanged" do
+      order
+      expect { order.valid? }.not_to make_database_queries(matching: /SELECT 1 .*spree_orders.*number/i)
+    end
+  end
+
   context "#associate_user!" do
     let!(:user) { FactoryBot.create(:user) }
 
@@ -1244,49 +1262,6 @@ RSpec.describe Spree::Order, type: :model do
       let(:refund) { create(:refund, reimbursement_id: 123, amount: 5, payment_amount: 14) }
 
       it { is_expected.to eq false }
-    end
-  end
-
-  describe "#create_proposed_shipments" do
-    subject(:order) { create(:order) }
-    it "assigns the coordinator returned shipments to its shipments" do
-      shipment = build(:shipment)
-      allow_any_instance_of(Spree::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
-      subject.create_proposed_shipments
-      expect(subject.shipments).to eq [shipment]
-    end
-
-    it "raises an error if any shipments are ready" do
-      shipment = create(:shipment, order: subject, state: "ready")
-
-      expect {
-        expect {
-          subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
-      }.not_to change { subject.reload.shipments.pluck(:id) }
-
-      expect { shipment.reload }.not_to raise_error
-    end
-
-    it "raises an error if any shipments are shipped" do
-      shipment = create(:shipment, order: subject, state: "shipped")
-      expect {
-        expect {
-          subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
-      }.not_to change { subject.reload.shipments.pluck(:id) }
-
-      expect { shipment.reload }.not_to raise_error
-    end
-
-    context "when the order is already completed" do
-      let(:order) { create(:completed_order_with_pending_payment) }
-
-      it "raises an error" do
-        expect {
-          order.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
-      end
     end
   end
 

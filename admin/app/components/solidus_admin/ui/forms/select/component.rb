@@ -31,6 +31,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
   #   When +:src+ parameter is provided, use +:choices+ to provide the list of selected options only.
   # @param src [nil, String] URL of a JSON resource with options data to be loaded instead of rendering options in place.
+  # @option attributes [nil, String, Integer, Array<String, Integer>] :value which option should be selected
   # @option attributes [String] :"data-option-value-field"
   # @option attributes [String] :"data-option-label-field" when +:src+ param is passed, value and label of loaded options
   #   will be mapped to JSON response +"id"+ and +"name"+ by default. Use these parameters to map to different keys.

@@ -13,6 +13,16 @@ module Spree
     # - Promotion categories
     # - Promotion codes
     class PromotionDisplay < PermissionSets::Base
+      class << self
+        def privilege
+          :display
+        end
+
+        def category
+          :promotion
+        end
+      end
+
       def activate!
         can [:read, :admin, :edit], Spree::Promotion
         can [:read, :admin], Spree::PromotionRule

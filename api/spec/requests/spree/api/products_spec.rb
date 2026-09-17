@@ -58,6 +58,13 @@ module Spree::Api
         expect(json_response["per_page"]).to eq(Kaminari.config.default_per_page)
       end
 
+      it "loads stock for every product variant without an N+1" do
+        2.times { create(:variant, product: create(:product)) }
+
+        expect { get spree.api_products_path }
+          .to make_database_queries(matching: /from .spree_stock_items./i, count: 3)
+      end
+
       it "retrieves a list of products by id" do
         get spree.api_products_path, params: {ids: [product.id]}
         expect(json_response["products"].first).to have_attributes(show_attributes)

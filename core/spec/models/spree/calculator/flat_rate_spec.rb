@@ -26,14 +26,18 @@ RSpec.describe Spree::Calculator::FlatRate, type: :model do
       calculator.preferred_amount = 100.0
       calculator.preferred_currency = "GBP"
       allow(order).to receive_messages currency: "USD"
-      expect(calculator.compute(order).round(2)).to eq(0.0)
+      result = calculator.compute(order)
+      expect(result).to be_a(BigDecimal)
+      expect(result.round(2)).to eq(0.0)
     end
 
     it "should compute the amount as 0 when currency is blank" do
       calculator.preferred_amount = 100.0
       calculator.preferred_currency = ""
       allow(order).to receive_messages currency: "GBP"
-      expect(calculator.compute(order).round(2)).to eq(0.0)
+      result = calculator.compute(order)
+      expect(result).to be_a(BigDecimal)
+      expect(result.round(2)).to eq(0.0)
     end
 
     it "should compute the amount as the rate when the currencies use different casing" do
@@ -46,7 +50,9 @@ RSpec.describe Spree::Calculator::FlatRate, type: :model do
     it "should compute the amount as 0 when there is no object" do
       calculator.preferred_amount = 100.0
       calculator.preferred_currency = "GBP"
-      expect(calculator.compute.round(2)).to eq(0.0)
+      result = calculator.compute
+      expect(result).to be_a(BigDecimal)
+      expect(result.round(2)).to eq(0.0)
     end
   end
 end

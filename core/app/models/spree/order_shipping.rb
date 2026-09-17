@@ -8,6 +8,23 @@ class Spree::OrderShipping
     @order = order
   end
 
+  # A method that destroys the current shipments on an order, creates new
+  # shipments for the line items, and assigns them to the order.
+  #
+  # @return [Array<Spree::Shipment>] The created shipments
+  # @raise [Spree::Order::CannotRebuildShipments] raised if order is completed
+  #   or there are any non-pending shipments.
+  def create_proposed_shipments
+    if @order.completed?
+      raise Spree::Order::CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_order_completed"))
+    elsif @order.shipments.any? { |shipment| !shipment.pending? }
+      raise Spree::Order::CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_shipments_not_pending"))
+    else
+      @order.shipments.destroy_all
+      @order.shipments.push(*Spree::Config.stock.coordinator_class.new(@order).shipments)
+    end
+  end
+
   # A shortcut method that ships *all* inventory units in a shipment in a single
   # carton.  See also {#ship}.
   #

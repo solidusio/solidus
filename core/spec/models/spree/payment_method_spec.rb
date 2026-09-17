@@ -130,10 +130,10 @@ RSpec.describe Spree::PaymentMethod, type: :model do
 
     context "when auto_capture is nil" do
       before(:each) do
-        expect(Spree::Config).to receive("[]").with(:auto_capture).and_return(auto_capture)
+        stub_spree_preferences(auto_capture: auto_capture)
       end
 
-      context "and when Spree::Config[:auto_capture] is false" do
+      context "and when Spree::Config.auto_capture is false" do
         let(:auto_capture) { false }
 
         it "should be false" do
@@ -142,7 +142,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
         end
       end
 
-      context "and when Spree::Config[:auto_capture] is true" do
+      context "and when Spree::Config.auto_capture is true" do
         let(:auto_capture) { true }
 
         it "should be true" do

@@ -1,0 +1,31 @@
+<div class="order-shipments">
+  <div class="flex items-center gap-x-3 mb-6">
+    <h3 class="order-shipments__title font-sans-md text-body lg:text-body-md">
+      <%= title %>
+    </h3>
+
+    <%= link_to(
+      t('spree.actions.edit'),
+      checkout_state_path(:delivery),
+      { class: 'order-shipments__edit  underline text-body-md' }
+    ) unless @order.completed? %>
+  </div>
+
+  <ul class="order-shipments__info flex flex-col gap-y-2">
+    <% order.shipments.each do |shipment| %>
+      <li>
+        <%= t(
+          'spree.shipment_details',
+          stock_location: shipment.stock_location.name,
+          shipping_method: shipment.selected_shipping_rate.name
+        ) %>
+        <% if order.shipped? && link_to_tracking(shipment) %>
+          <div class="order-shipments__info__tracking">
+            <h4><%= t('spree.tracking') %></h4>
+            <p><%= link_to_tracking(shipment) %></p>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

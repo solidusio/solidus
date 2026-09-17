@@ -1,0 +1,34 @@
+<footer class="wrapper mx-auto grid-container w-full">
+  <div class="col-span-full border-t-[1px] border-t-black dark:border-t-white py-16">
+    <div class="text-center col-span-full md:flex md:items-center md:justify-between md:col-start-2 md:col-span-10">
+      <div class="col-span-full mb-14 md:mb-0">
+        <%= image_tag "logo_full_with_label.svg", class: "mx-auto w-52 mb-7 dark:hidden" %>
+        <%= image_tag "logo_full_with_label_white.svg", class: "mx-auto w-52 mb-7 hidden dark:block" %>
+        <%= render partial: "shared/call_to_action", :locals => { :label => "Visit Solidus.io", :url => 'https://solidus.io', :target => '_blank', :additional_classes => "block mx-auto" } %>
+      </div>
+      <div class="col-span-full">
+        <%= render "shared/social_icons" %>
+      </div>
+    </div>
+    <%
+      available_locales = current_store.available_locales.map do |locale|
+        [
+          I18n.t('spree.i18n.this_file_language',
+          locale: locale,
+          default: locale.to_s,
+          fallback: false), locale
+        ]
+      end.sort
+    %>
+    <% if available_locales.many? %>
+      <div class="locale-selector"  data-controller="locale-selector">
+        <%= form_tag select_locale_path do %>
+          <div class="locale-selector__select-input select-input">
+            <%= label_tag :switch_to_locale, "#{t('spree.i18n.language')}:" %>
+            <%= select_tag(:switch_to_locale, options_for_select(available_locales, I18n.locale), data: { action: "locale-selector#submitForm", "locale-selector-target" => "selector" }) %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</footer>

@@ -42,6 +42,10 @@ module Spree
           set_roles
           set_stock_locations
 
+          if @user.respond_to?(:timezone) && @user.saved_change_to_timezone? && @user == spree_current_user
+            session[:solidus_timezone] = nil
+          end
+
           flash[:success] = t("spree.account_updated")
           redirect_to edit_admin_user_url(@user)
         else
@@ -66,7 +70,7 @@ module Spree
       def orders
         params[:q] ||= {}
         @search = Spree::Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
-        @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+        @orders = @search.result.page(params[:page]).per(Spree::Config.admin_products_per_page)
       end
 
       def items
@@ -78,7 +82,7 @@ module Spree
           }
         ).ransack(params[:q].merge(user_id_eq: @user.id))
 
-        @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+        @orders = @search.result.page(params[:page]).per(Spree::Config.admin_products_per_page)
       end
 
       def model_class
@@ -93,7 +97,7 @@ module Spree
         @search = super.ransack(params[:q])
         @collection = @search.result.includes(:spree_roles)
         @collection = @collection.includes(:orders)
-        @collection = @collection.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+        @collection = @collection.page(params[:page]).per(Spree::Config.admin_products_per_page)
       end
 
       def user_params
