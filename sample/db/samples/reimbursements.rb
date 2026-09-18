@@ -19,6 +19,7 @@ order.shipments.each do |shipment|
   shipment.suppress_mailer = false
   shipment.ship!
 end
+inventory_unit.reload
 
 # Create a return authorization
 return_item = Spree::ReturnItem.new(
