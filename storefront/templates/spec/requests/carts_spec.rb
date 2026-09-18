@@ -60,6 +60,16 @@ RSpec.describe "Cart", type: :request do
 
         expect(response).to redirect_to checkout_state_path("address")
       end
+
+      context "when sending payment attributes" do
+        let(:check) { create(:check_payment_method) }
+
+        it "does not allow creating a payment" do
+          expect {
+            patch cart_path, params: {order: {payments_attributes: [{amount: 10.0, payment_method_id: check.id}]}}
+          }.not_to change { order.reload.payments.count }
+        end
+      end
     end
   end
 

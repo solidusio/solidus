@@ -55,10 +55,18 @@ class CartsController < StoreController
 
   def order_params
     if params[:order]
-      params[:order].permit(*permitted_order_attributes)
+      params[:order].permit(*permitted_cart_attributes)
     else
       {}
     end
+  end
+
+  def permitted_cart_attributes
+    permitted_attributes.customer_metadata_attributes +
+      [
+        :email,
+        line_items_attributes: permitted_line_item_attributes,
+      ]
   end
 
   def assign_order
