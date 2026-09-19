@@ -158,6 +158,9 @@ en:
         display_on: Display
         name: Name
         preference_source: Preference Source
+        preferred_server: Server
+        preferred_test_mode: Test Mode
+        store_ids: Stores
         type: Type
       spree/price:
         amount: Price
