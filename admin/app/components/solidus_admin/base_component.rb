@@ -16,6 +16,15 @@ module SolidusAdmin
       render component("ui/icon").new(name:, **attrs)
     end
 
+    # Log missing translations instead of rendering ActionView's
+    # `translation_missing` span, falling back to the English translation.
+    def translate(key = nil, **options)
+      super(key, **options, raise: true)
+    rescue ::I18n::MissingTranslationData
+      missing_translation(self.class.__vc_i18n_key(key, options[:scope]), options.except(:scope))
+    end
+    alias_method :t, :translate
+
     def missing_translation(key, options)
       keys = I18n.normalize_keys(options[:locale] || I18n.locale, key, options[:scope])
 
@@ -28,8 +37,11 @@ module SolidusAdmin
       end
     end
 
-    def self.i18n_scope
-      @i18n_scope ||= name.underscore.tr("/", ".")
+    # ViewComponent assigns `virtual_path` in its `inherited` hook, which runs
+    # before an anonymous subclass has been given a name. Resolve it lazily so
+    # that translation scopes also work for dynamically built components.
+    def self.virtual_path
+      @virtual_path ||= name&.underscore
     end
 
     def self.stimulus_id
