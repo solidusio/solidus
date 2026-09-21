@@ -3,7 +3,7 @@
     <%= page_with_sidebar_main do %>
       <%= render component("ui/panel").new do %>
         <%= f.text_field :name %>
-        <%= f.text_field :description %>
+        <%= f.text_area :description %>
         <%= f.select :auto_capture,
            auto_capture_select_options,
            hint: t(".hints.auto_capture_html") %>
