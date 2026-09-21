@@ -86,14 +86,17 @@ module Spree
     # @return [String] this taxon's ancestors names followed by its own name,
     #   separated by arrows
     def pretty_name
-      if parent.present?
-        [
-          parent.pretty_name,
-          name
-        ].compact.join(" -> ")
-      else
-        name
+      return name if depth.zero?
+
+      path = []
+      taxon_tree = Spree::Taxon.where(taxonomy:).order(:lft).pluck(:id, :depth, :name)
+      root_index = taxon_tree.find_index([id, depth, name]) - depth
+
+      (depth + 1).times.with_index(root_index) do |_, depth_index|
+        path << taxon_tree[depth_index].last
       end
+
+      path.compact.join(" -> ")
     end
 
     # @see https://github.com/spree/spree/issues/3390
