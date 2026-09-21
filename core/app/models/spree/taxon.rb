@@ -83,9 +83,16 @@ module Spree
       Variant.where(product_id: all_products.select(:id))
     end
 
+    # Displays a taxon's name prefixed with its ancestors names (like a
+    # breadcrumb path).
+    #
+    # @example Output:
+    #   Root Taxon -> Parent Taxon -> Current Taxon
+    # @param separator [String] the separator to use between each ancestor
+    #   (default: " -> ")
     # @return [String] this taxon's ancestors names followed by its own name,
     #   separated by arrows
-    def pretty_name
+    def pretty_name(separator: " -> ")
       return name if depth.zero?
 
       path = []
@@ -96,7 +103,7 @@ module Spree
         path << taxon_tree[depth_index].last
       end
 
-      path.compact.join(" -> ")
+      path.join(separator)
     end
 
     # @see https://github.com/spree/spree/issues/3390

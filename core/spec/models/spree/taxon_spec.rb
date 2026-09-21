@@ -318,7 +318,7 @@ RSpec.describe Spree::Taxon, type: :model do
   end
 
   describe "#pretty_name" do
-    subject { taxon.pretty_name }
+    subject { taxon.pretty_name(separator: " > ") }
 
     let(:taxonomy) { create :taxonomy, name: "Beverages" }
 
@@ -335,7 +335,7 @@ RSpec.describe Spree::Taxon, type: :model do
     context "for a taxon with no parent except the root taxon" do
       let(:taxon) { create :taxon, taxonomy_id:, name: "Coffee" }
 
-      it { is_expected.to eq "Beverages -> Coffee" }
+      it { is_expected.to eq "Beverages > Coffee" }
     end
 
     context "for a taxon further down in the taxon tree" do
@@ -346,7 +346,7 @@ RSpec.describe Spree::Taxon, type: :model do
           name: "Arabica"
       }
 
-      it { is_expected.to eq "Beverages -> Coffee -> Arabica" }
+      it { is_expected.to eq "Beverages > Coffee > Arabica" }
     end
   end
 end
