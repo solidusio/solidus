@@ -57,11 +57,17 @@ describe "Payment Methods", :js, type: :feature do
   end
 
   context "creating payment method" do
-    before { create(:store, name: "Store") }
+    before do
+      create :store, default: true, name: "Default Store"
+      create :store, name: "Store"
+    end
+
     context "with valid attributes" do
       it "creates payment method" do
         visit "/admin/payment_methods"
         click_on "Add new"
+
+        expect(solidus_select_control("Stores")).to have_content "Default Store"
 
         expect(page).to have_current_path("/admin/payment_methods/new")
         expect(page).to be_axe_clean
