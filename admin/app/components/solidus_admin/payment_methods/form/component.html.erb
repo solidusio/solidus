@@ -13,7 +13,7 @@
         <%= f.select :type, available_types.map { [_1.model_name.human, _1.to_s] } %>
         <%= f.select :preference_source, available_preference_sources, include_blank: t(".preference_source_none") %>
         <%= f.text_field :preferred_server %>
-        <%= f.switch_field :preferred_test_mode, hint: t(".hints.test_mode").html_safe %>
+        <%= f.switch_field :preferred_test_mode, hint: t(".hints.test_mode_html") %>
       <% end %>
     <% end %>
 
