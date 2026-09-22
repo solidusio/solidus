@@ -2103,6 +2103,7 @@ en:
     return_items: Return Items
     return_items_cannot_be_associated_with_multiple_orders: Return items cannot be associated with multiple orders.
     return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange: Return items cannot be created for inventory units that are already awaiting exchange.
+    return_items_must_have_shipped_inventory_units: Return items can only be created for shipped inventory units.
     return_number: Return Number
     return_quantity: Return Quantity
     return_reasons: Return Reasons
