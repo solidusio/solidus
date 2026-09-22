@@ -655,7 +655,7 @@ nl:
     invalid_promotion_rule: Ongeldige promotieregel.
     inventory: Voorraad
     inventory_adjustment: Voorraadaanpassing
-    inventory_error_flash_for_insufficient_quantity: Een item in uw winkelwagen is niet meer beschikbaar zijn.
+    inventory_error_flash_for_insufficient_quantity: "%{names} is niet meer beschikbaar."
     inventory_state:
     is_not_available_to_shipment_address: is niet beschikbaar voor afleveradres
     iso_name: ISO Naam
