@@ -9,6 +9,17 @@ class SolidusAdmin::PaymentMethods::Form::Component < SolidusAdmin::BaseComponen
     @form_id = form_id
   end
 
+  def auto_capture_select_options
+    current_app_default =
+      Spree::Config.auto_capture ? t(".auto_capture.yes_setting") : t(".auto_capture.no_setting")
+
+    [
+      [t(".auto_capture.app_default", current_app_default:), ""],
+      [t(".auto_capture.yes_setting"), true],
+      [t(".auto_capture.no_setting"), false]
+    ]
+  end
+
   def available_preference_sources
     Spree::PaymentMethod.available_preference_sources
   end

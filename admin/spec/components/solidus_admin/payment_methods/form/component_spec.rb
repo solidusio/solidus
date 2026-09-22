@@ -9,6 +9,19 @@ RSpec.describe SolidusAdmin::PaymentMethods::Form::Component, type: :component d
       form_id: "test-form-id"
   }
 
+  describe "#auto_capture_select_options" do
+    subject { component.auto_capture_select_options }
+
+    before do
+      allow(Spree::Config).to receive(:auto_capture).and_return(true)
+
+      # The component must be rendered to provide view context for the i18n strings.
+      render_inline component
+    end
+
+    it { is_expected.to contain_exactly ["Use App Default (Yes)", ""], ["Yes", true], ["No", false] }
+  end
+
   describe "#available_preference_sources" do
     subject { component.available_preference_sources }
 

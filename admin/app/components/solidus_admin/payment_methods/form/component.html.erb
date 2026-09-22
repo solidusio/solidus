@@ -4,7 +4,9 @@
       <%= render component("ui/panel").new do %>
         <%= f.text_field :name %>
         <%= f.text_field :description %>
-        <%= f.switch_field :auto_capture, hint: t(".hints.autocapture").html_safe %>
+        <%= f.select :auto_capture,
+           auto_capture_select_options,
+           hint: t(".hints.auto_capture_html") %>
       <% end %>
 
       <%= render component("ui/panel").new(title: t(".deployment")) do %>

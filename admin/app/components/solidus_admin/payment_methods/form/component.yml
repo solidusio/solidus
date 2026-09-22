@@ -1,8 +1,12 @@
 en:
+  auto_capture:
+    app_default: "Use App Default (%{current_app_default})"
+    no_setting: "No"
+    yes_setting: "Yes"
   availability: "Availability"
   deployment: "Deployment"
   hints:
-    autocapture: >-
+    auto_capture_html: >-
       <p>Auto-capture setting charges customer's account upon transaction authorization.</p>
       <p>Enable to reduce manual intervention and streamline the payment process.</p>
     test_mode: >-
