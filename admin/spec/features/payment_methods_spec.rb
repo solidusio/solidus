@@ -68,7 +68,7 @@ describe "Payment Methods", :js, type: :feature do
 
         fill_in "Name", with: "Checking"
         fill_in "Description", with: "Payment Method Description"
-        switch "Auto Capture"
+        solidus_select "No", from: "Auto Capture"
         solidus_select "Check Payments", from: "Type"
         fill_in "Server", with: "test"
         switch "Test Mode"
