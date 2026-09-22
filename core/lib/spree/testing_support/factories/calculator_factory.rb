@@ -22,4 +22,10 @@ FactoryBot.define do
   factory :shipping_no_amount_calculator, class: "Spree::Calculator::Shipping::FlatRate" do
     preferred_amount { 0 }
   end
+
+  factory :flexi_rate_calculator, class: "Spree::Calculator::Shipping::FlexiRate" do
+    preferred_first_item { 10.0 }
+    preferred_additional_item { 5.0 }
+    preferred_max_items { 100 }
+  end
 end
