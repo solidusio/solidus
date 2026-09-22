@@ -4,6 +4,8 @@ module SolidusAdmin
   class PaymentMethodsController < SolidusAdmin::ResourcesController
     include SolidusAdmin::Moveable
 
+    before_action :initialize_resource, only: [:new]
+
     search_scope(:all)
     search_scope(:active, default: true, &:active)
     search_scope(:inactive) { _1.where.not(active: true) }
@@ -21,6 +23,10 @@ module SolidusAdmin
     def permitted_resource_params
       params.require(:payment_method).permit(:name, :description, :auto_capture, :type, :preference_source,
         :preferred_server, :preferred_test_mode, :active, :available_to_admin, :available_to_users, store_ids: [])
+    end
+
+    def initialize_resource
+      @resource = resource_class.new(stores: [Spree::Store.default])
     end
   end
 end
