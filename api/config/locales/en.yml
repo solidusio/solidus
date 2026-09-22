@@ -12,6 +12,7 @@ en:
       order:
         expected_total_mismatch: Expected total does not match actual total.
         invalid_shipping_method: Invalid shipping method specified.
+        invalid_state: Invalid state specified.
         quantity_is_not_available: Quantity is not available for items in your order
       payment:
         credit_over_limit: This payment can only be credited up to %{limit}. Please specify an amount less than or equal to this number.

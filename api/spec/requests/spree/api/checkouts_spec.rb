@@ -369,6 +369,83 @@ module Spree::Api
         expect(json_response['email']).to eq("guest@solidus.io")
         expect(response.status).to eq(200)
       end
+
+      context "when attempting to set a state on an order" do
+        let(:payment_method) { create(:check_payment_method) }
+
+        context "and arbitrary state setting is disabled" do
+          before do
+            stub_spree_preferences(Spree::Api::Config, allow_arbitrary_state_in_checkout: false)
+          end
+
+          it "allows setting a previous state" do
+            order.update_column(:state, "confirm")
+            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            expect(response.status).to eq(200)
+
+            # We call order.next! after updating the order. So even though we
+            # set the state to address, it will be advanced to delivery.
+            expect(json_response["state"]).to eq("delivery")
+          end
+
+          it "allows setting the current state" do
+            order.update_column(:state, "address")
+            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            expect(response.status).to eq(200)
+            expect(json_response["state"]).to eq("delivery")
+          end
+
+          it "does not allow setting a future state" do
+            order.update_column(:state, "address")
+            put spree.api_checkout_path(order), params: {
+              order_token: order.guest_token,
+              state: "payment",
+              order: {
+                payments_attributes: [{
+                  payment_method_id: payment_method.id
+                }]
+              }
+            }
+            expect(response.status).to eq(422)
+            expect(json_response["errors"]).to include("state" => ["Invalid state specified."])
+          end
+        end
+
+        context "and arbitrary state setting is enabled" do
+          before do
+            stub_spree_preferences(Spree::Api::Config, allow_arbitrary_state_in_checkout: true)
+          end
+
+          it "allows setting a previous state" do
+            order.update_column(:state, "confirm")
+            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            expect(response.status).to eq(200)
+            expect(json_response["state"]).to eq("delivery")
+          end
+
+          it "allows setting the current state" do
+            order.update_column(:state, "address")
+            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            expect(response.status).to eq(200)
+            expect(json_response["state"]).to eq("delivery")
+          end
+
+          it "allows setting a future state" do
+            order.update_column(:state, "address")
+            put spree.api_checkout_path(order), params: {
+              order_token: order.guest_token,
+              state: "payment",
+              order: {
+                payments_attributes: [{
+                  payment_method_id: payment_method.id
+                }]
+              }
+            }
+            expect(response.status).to eq(200)
+            expect(json_response["state"]).to eq("confirm")
+          end
+        end
+      end
     end
 
     context "PUT 'next'" do
