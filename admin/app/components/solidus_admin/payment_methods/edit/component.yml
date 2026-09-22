@@ -1,2 +1,2 @@
 en:
-  title: "Edit Payment Method"
+  title: "Edit %{payment_method_name}"

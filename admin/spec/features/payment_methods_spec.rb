@@ -103,6 +103,8 @@ describe "Payment Methods", :js, type: :feature do
         visit "/admin/payment_methods"
         click_on "Check payments"
 
+        expect(page).to have_content "Edit Check payments"
+
         fill_in "Name", with: "Checking payments"
         solidus_select "Check Payments", from: "Type"
         click_on "Save"
