@@ -87,11 +87,11 @@ module Spree
     # breadcrumb path).
     #
     # @example Output:
-    #   Root Taxon -> Parent Taxon -> Current Taxon
+    #   "Root Taxon -> Parent Taxon -> Current Taxon"
     # @param separator [String] the separator to use between each ancestor
     #   (default: " -> ")
-    # @return [String] this taxon's ancestors names followed by its own name,
-    #   separated by arrows
+    # @return [String] this taxon's ancestors' names followed by its own name,
+    #   separated by the given separator substring
     def pretty_name(separator: " -> ")
       return name if depth.zero?
 
