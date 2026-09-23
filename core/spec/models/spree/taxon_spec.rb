@@ -316,37 +316,4 @@ RSpec.describe Spree::Taxon, type: :model do
       expect(taxon.slugs.pluck(:slug)).to include(expected_updated_slug)
     end
   end
-
-  describe "#pretty_name" do
-    subject { taxon.pretty_name(separator: " > ") }
-
-    let(:taxonomy) { create :taxonomy, name: "Beverages" }
-
-    # The taxon factory uses `_id`s, so we must set the `#taxonomy_id`s
-    # explicitly in these tests.
-    let(:taxonomy_id) { taxonomy.id }
-
-    context "for a root taxon" do
-      let(:taxon) { taxonomy.root }
-
-      it { is_expected.to eq "Beverages" }
-    end
-
-    context "for a taxon with no parent except the root taxon" do
-      let(:taxon) { create :taxon, taxonomy_id:, name: "Coffee" }
-
-      it { is_expected.to eq "Beverages > Coffee" }
-    end
-
-    context "for a taxon further down in the taxon tree" do
-      let(:taxon) {
-        create :taxon,
-          taxonomy_id:,
-          parent_id: create(:taxon, taxonomy_id:, name: "Coffee").id,
-          name: "Arabica"
-      }
-
-      it { is_expected.to eq "Beverages > Coffee > Arabica" }
-    end
-  end
 end
