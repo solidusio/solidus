@@ -16,6 +16,7 @@ module Spree
         allocator_class: Spree::Config.stock.allocator_class,
         estimator_class: Spree::Config.stock.estimator_class,
         package_builder_class: Spree::Config.stock.package_builder_class,
+        shipment_builder_class: Spree::Config.stock.shipment_builder_class,
         stock_locations: Spree::StockLocation.all
       )
         @order = order
@@ -25,8 +26,8 @@ module Spree
         @inventory_unit_builder_class = inventory_unit_builder_class
         @allocator_class = allocator_class
         @package_builder_class = package_builder_class
-
-        @estimator = estimator_class.new
+        @shipment_builder_class = shipment_builder_class
+        @estimator_class = estimator_class
 
         @splitters = splitters
       end
@@ -47,12 +48,10 @@ module Spree
       private
 
       def build_shipments(packages)
-        # Turn the Stock::Packages into a Shipment with rates
-        packages.map do |package|
-          shipment = package.shipment = package.to_shipment
-          shipment.shipping_rates = @estimator.shipping_rates(package)
-          shipment
-        end
+        @shipment_builder_class.new(
+          packages:,
+          estimator_class: @estimator_class
+        ).call
       end
 
       def build_packages

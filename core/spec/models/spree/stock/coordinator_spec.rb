@@ -28,6 +28,14 @@ module Spree
           subject.shipments.count == StockLocation.count
         end
 
+        it "uses the pluggable shipment builder class" do
+          expect(Spree::Config.stock)
+            .to receive(:shipment_builder_class)
+            .and_call_original
+
+          subject.shipments
+        end
+
         it "uses the pluggable inventory unit builder class" do
           expect(Spree::Config.stock)
             .to receive(:inventory_unit_builder_class)
@@ -282,4 +290,3 @@ module Spree
     end
   end
 end
-
