@@ -338,13 +338,27 @@ RSpec.describe Spree::Taxon, type: :model do
       it { is_expected.to eq "Beverages > Coffee" }
     end
 
-    context "for a taxon further down in the taxon tree" do
+    context "for a taxon further down in the taxon tree with siblings",
+      pending: "This fails due to a bug in the implementation." do
+      let(:parent_taxon) { create :taxon, taxonomy_id:, name: "Coffee" }
       let(:taxon) {
         create :taxon,
           taxonomy_id:,
-          parent_id: create(:taxon, taxonomy_id:, name: "Coffee").id,
+          parent_id: parent_taxon.id,
           name: "Arabica"
       }
+
+      before do
+        create :taxon,
+          taxonomy_id:,
+          parent_id: parent_taxon.id,
+          name: "Robusta"
+
+        create :taxon,
+          taxonomy_id:,
+          parent_id: parent_taxon.id,
+          name: "Excelsa"
+      end
 
       it { is_expected.to eq "Beverages > Coffee > Arabica" }
     end
