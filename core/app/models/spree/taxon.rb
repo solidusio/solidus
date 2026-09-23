@@ -95,15 +95,14 @@ module Spree
     def pretty_name(separator: " -> ")
       return name if depth.zero?
 
-      path = []
       taxon_tree = Spree::Taxon.where(taxonomy:).order(:lft).pluck(:id, :depth, :name)
-      root_index = taxon_tree.find_index([id, depth, name]) - depth
+      index = taxon_tree.find_index([id, depth, name])
 
-      (depth + 1).times.with_index(root_index) do |_, depth_index|
-        path << taxon_tree[depth_index].last
-      end
-
-      path.join(separator)
+      (0..depth).to_a.reverse.map { |depth_index|
+        pretty_parent_name taxon_tree:,
+          starts_at_index: index,
+          for_depth: depth_index
+      }.reverse.join(separator)
     end
 
     # @see https://github.com/spree/spree/issues/3390
@@ -148,6 +147,21 @@ module Spree
     end
 
     private
+
+    # This private method was written specifically to traverse taxon trees
+    # as constructed in `Spree::Taxon#pretty_name`. Don't attempt to reuse
+    # this method.
+    def pretty_parent_name(taxon_tree:, starts_at_index:, for_depth:)
+      index = starts_at_index
+      _id, depth, name = taxon_tree[index]
+
+      while depth != for_depth
+        index -= 1
+        _id, depth, name = taxon_tree[index]
+      end
+
+      name
+    end
 
     def touch_ancestors_and_taxonomy
       # Touches ancestors directly rather than through #touch to avoid a recursive taxonomy touch.
