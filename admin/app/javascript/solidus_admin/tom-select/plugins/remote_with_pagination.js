@@ -10,6 +10,12 @@ const loadOptions = async function(query, callback) {
   callback(options);
 }
 
+const afterLoadOptions = async function(options, _optgroup) {
+  const selectedOptions = this.privateContext?.selected;
+  if (!selectedOptions || selectedOptions.length === 0) return;
+  this.setValue(selectedOptions);
+};
+
 // Fetch options from remote source. If options data is nested in json response, specify path to it with "jsonPath"
 // E.g. https://whatcms.org/API/List data is deep nested in json response: `{ result: { list: [...] } }`, so
 //  in order to access it, pass config options to this plugin as follows:
@@ -47,8 +53,11 @@ const buildUrl = function(query) {
 }
 
 export default function(config) {
+  this.privateContext = {selected: config.selected};
+
   this.settings.firstUrl = () => config.src;
   this.settings.load = loadOptions.bind(this);
+  this.settings.onLoad = afterLoadOptions.bind(this);
   this.settings.preload = config.preload;
   this.settings.searchField = [this.settings.labelField];
   this.settings.jsonPath = config.jsonPath;

@@ -24,9 +24,6 @@ class SolidusAdmin::UI::Forms::Select::ComponentPreview < ViewComponent::Preview
   )
     args = {label: "Search", name: "select", multiple:, choices: [], placeholder: "Type to search"}
 
-    # FIXME: Currently, preselecting values with our select component is
-    # incompatible with our Tom Select selector. We must update
-    # `solidus_select.js` to respond to given preselected values.
     if selected_values
       args[:value] = Spree::Product.available.first(multiple ? 2 : 1).map(&:id)
     end
