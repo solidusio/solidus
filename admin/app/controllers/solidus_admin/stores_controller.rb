@@ -55,7 +55,8 @@ module SolidusAdmin
         :mail_from_address,
         :default_currency,
         :cart_tax_country_iso,
-        available_locales: []
+        available_locales: [],
+        address_attributes: Spree::PermittedAttributes.address_attributes
       )
     end
   end
