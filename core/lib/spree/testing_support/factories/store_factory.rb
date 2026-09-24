@@ -6,5 +6,9 @@ FactoryBot.define do
     sequence(:name) { |i| "Spree Test Store #{i}" }
     sequence(:url) { |i| "www.example#{i}.com" }
     mail_from_address { "solidus@example.org" }
+
+    trait :with_address do
+      address
+    end
   end
 end
