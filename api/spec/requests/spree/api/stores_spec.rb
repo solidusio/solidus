@@ -38,7 +38,8 @@ module Spree::Api
             "default_currency" => nil,
             "code" => store.code,
             "default" => true,
-            "available_locales" => ["en"]
+            "available_locales" => ["en"],
+            "address" => nil
           },
           {
             "id" => non_default_store.id,
@@ -53,7 +54,8 @@ module Spree::Api
             "default_currency" => nil,
             "code" => non_default_store.code,
             "default" => false,
-            "available_locales" => ["en"]
+            "available_locales" => ["en"],
+            "address" => nil
           }
         ])
       end
@@ -73,7 +75,8 @@ module Spree::Api
           "default_currency" => nil,
           "code" => store.code,
           "default" => true,
-          "available_locales" => ["en"]
+          "available_locales" => ["en"],
+          "address" => nil
         )
       end
 
@@ -99,6 +102,50 @@ module Spree::Api
         expect(store.reload.url).to eql "spree123.example.com"
         expect(store.reload.mail_from_address).to eql "me@example.com"
         expect(store.reload.bcc_email).to eql "bcc@example.net"
+      end
+
+      context "address" do
+        let(:country) { create(:country, states_required: false) }
+        let(:address_params) do
+          attributes_for(:address).slice(:name, :address1, :city, :zipcode, :phone).merge(country_id: country.id)
+        end
+
+        it "includes the address in the store details" do
+          store.update!(address: create(:address))
+          get spree.api_store_path(store)
+          expect(json_response["address"]).to include(
+            "id" => store.address.id,
+            "address1" => store.address.address1,
+            "city" => store.address.city
+          )
+          expect(json_response["address"]["country"]).to include("iso" => store.address.country.iso)
+        end
+
+        it "can create a new store with an address" do
+          store_hash = {
+            code: "spree123",
+            name: "Hack0rz",
+            url: "spree123.example.com",
+            mail_from_address: "me@example.com",
+            address_attributes: address_params
+          }
+          post spree.api_stores_path, params: {store: store_hash}
+          expect(response.status).to eq(201)
+          expect(json_response["address"]).to include("address1" => address_params[:address1])
+        end
+
+        it "can update the address of an existing store" do
+          put spree.api_store_path(store), params: {store: {address_attributes: address_params}}
+          expect(response.status).to eq(200)
+          expect(store.reload.address.address1).to eq(address_params[:address1])
+          expect(store.address.country).to eq(country)
+        end
+
+        it "responds with an error for an invalid address" do
+          put spree.api_store_path(store), params: {store: {address_attributes: address_params.merge(city: "")}}
+          expect(response.status).to eq(422)
+          expect(json_response["errors"]).to include("address")
+        end
       end
 
       context "deleting a store" do
