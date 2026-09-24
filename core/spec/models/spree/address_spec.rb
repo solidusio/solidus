@@ -187,6 +187,25 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
+  describe ".blank_attributes?" do
+    it "is true if all attributes are blank" do
+      expect(described_class.blank_attributes?(name: "", address1: nil)).to be true
+    end
+
+    it "ignores attributes that address forms always submit" do
+      expect(described_class.blank_attributes?("name" => "", "country_id" => 1, "state_id" => 2, "reverse_charge_status" => "disabled")).to be true
+    end
+
+    it "is false if any other attribute is present" do
+      expect(described_class.blank_attributes?(name: "Jane", country_id: 1)).to be false
+    end
+
+    it "accepts permitted parameters" do
+      params = ActionController::Parameters.new(name: "", country_id: 1).permit!
+      expect(described_class.blank_attributes?(params)).to be true
+    end
+  end
+
   describe ".value_attributes" do
     subject do
       Spree::Address.value_attributes(base_attributes, merge_attributes)

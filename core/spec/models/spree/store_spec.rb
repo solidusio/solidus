@@ -137,6 +137,58 @@ RSpec.describe Spree::Store, type: :model do
     end
   end
 
+  describe "#address" do
+    it "is optional" do
+      expect(build(:store, address: nil)).to be_valid
+    end
+
+    it "can be assigned" do
+      store = create(:store, :with_address)
+      expect(store.reload.address).to be_a(Spree::Address)
+    end
+  end
+
+  describe "#address_attributes=" do
+    let(:address_attributes) { attributes_for(:address).merge(country_id: create(:country, states_required: false).id) }
+
+    it "creates an address" do
+      store = create(:store, address_attributes:)
+      expect(store.reload.address).to have_attributes(address_attributes.slice(:name, :address1, :city))
+    end
+
+    it "invalidates the store if the address is invalid" do
+      store = build(:store, address_attributes: address_attributes.merge(city: nil))
+      expect(store).not_to be_valid
+      expect(store.errors).to include(:address)
+    end
+
+    it "ignores blank attributes if the store has no address" do
+      store = build(:store, address_attributes: {name: "", address1: "", country_id: create(:country).id, reverse_charge_status: "disabled"})
+      expect(store).to be_valid
+      expect(store.address).to be_nil
+    end
+
+    it "does not modify the existing address on change" do
+      store = create(:store, :with_address)
+      original_address = store.address
+
+      store.update!(address_attributes: {city: "New City"})
+
+      expect(store.reload.address).not_to eq(original_address)
+      expect(store.address.city).to eq("New City")
+      expect(original_address.reload.city).not_to eq("New City")
+    end
+
+    it "keeps the existing address if nothing changed" do
+      store = create(:store, :with_address)
+      original_address = store.address
+
+      store.update!(address_attributes: {city: original_address.city})
+
+      expect(store.reload.address).to eq(original_address)
+    end
+  end
+
   describe "#validate_not_default" do
     context "when deleting a default store" do
       it "prevents deletion" do
