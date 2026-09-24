@@ -56,10 +56,11 @@ module Spree
       credit_cents = money.cents
 
       @perform_response = process!(credit_cents)
-      log_entries.create!(parsed_payment_response_details_with_fallback: perform_response)
 
       self.transaction_id = perform_response.authorization
       save!
+
+      log_entries.create!(parsed_payment_response_details_with_fallback: perform_response)
 
       update_order
     end
