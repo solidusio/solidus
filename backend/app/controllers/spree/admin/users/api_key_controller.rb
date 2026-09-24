@@ -21,7 +21,7 @@ module Spree
         private
 
         def user
-          @user ||= Spree.user_class.find(params[:user_id])
+          @user ||= Spree.admin_user_class.find(params[:user_id])
         end
       end
     end
