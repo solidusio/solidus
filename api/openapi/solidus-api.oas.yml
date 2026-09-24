@@ -6474,6 +6474,8 @@ components:
           type: string
         url:
           type: string
+        address:
+          $ref: '#/components/schemas/address'
     taxonomy:
       type: object
       properties:
@@ -6955,6 +6957,8 @@ components:
           type: string
         cart_tax_country_iso:
           type: string
+        address_attributes:
+          $ref: '#/components/schemas/address-input'
     taxonomy-input:
       type: object
       title: Taxonomy input
