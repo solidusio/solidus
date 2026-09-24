@@ -55,8 +55,12 @@ module SolidusAdmin
         :mail_from_address,
         :default_currency,
         :cart_tax_country_iso,
-        available_locales: []
-      )
+        available_locales: [],
+        address_attributes: Spree::PermittedAttributes.address_attributes
+      ).tap do |store_params|
+        without_address_parameter = store_params[:address_attributes]&.except(:country_id, :state_id, :reverse_charge_status)&.compact_blank&.empty?
+        store_params.delete(:address_attributes) if without_address_parameter
+      end
     end
   end
 end
