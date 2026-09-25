@@ -3,19 +3,21 @@
     <%= solidus_form_for @zone, url: @form_url, html: { id: @form_id, **stimulus_controller, **stimulus_value(name: :kind, value: @zone.kind) } do |f| %>
       <div class="flex flex-col gap-6 pb-4">
         <%= f.text_field(:name, class: "required") %>
+
         <div class="hidden" <%= tag.attributes(stimulus_target("countriesWrapper")) %>>
           <%= f.select(
             :country_ids,
-            Spree::Country.order(:name).map { |c| [c.name, c.id] },
+            country_select_options,
             multiple: true,
             class: "required",
             **stimulus_target("countriesSelect")
           ) %>
         </div>
+
         <div class="hidden" <%= tag.attributes(stimulus_target("statesWrapper")) %>>
           <%= f.select(
             :state_ids,
-            Spree::State.where(id: @zone.state_ids).map { |s| [s.state_with_country, s.id] },
+            selected_state_select_options,
             multiple: true,
             class: "required",
             src: solidus_admin.states_url(view: :state_with_country),
@@ -23,14 +25,17 @@
             **stimulus_target("statesSelect")
           ) %>
         </div>
+
         <%= f.text_field(:description, class: "required") %>
+
         <%= f.select(
           :kind,
           [[t(".kinds.country"), :country], [t(".kinds.state"), :state]],
-          value: @zone.kind || :state,
+          value: @zone.kind || default_zone_kind,
           **stimulus_action("toggleKind", on: "change")
         ) %>
       </div>
+
       <% modal.with_actions do %>
         <form method="dialog">
           <%= render component("ui/button").cancel %>
