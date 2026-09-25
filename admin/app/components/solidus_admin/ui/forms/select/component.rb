@@ -86,6 +86,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
 
     if src.present?
       @attributes[:"data-src"] = src
+      @attributes[:"data-selected"] = @attributes[:value]
     end
 
     if (blank_option = @attributes.delete(:include_blank))
