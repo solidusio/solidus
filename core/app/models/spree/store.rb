@@ -17,6 +17,8 @@ module Spree
 
     has_many :orders, class_name: "Spree::Order"
 
+    belongs_to :address, class_name: "Spree::Address", optional: true, validate: true
+
     validates :code, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     validates :name, presence: true
     validates :url, presence: true
@@ -49,6 +51,16 @@ module Spree
       else
         super(locales.join(","))
       end
+    end
+
+    # Addresses are immutable, so a changed address is stored as a new record.
+    # Untouched address forms are skipped, as the store address is optional.
+    #
+    # @param attributes [Hash, ActionController::Parameters] the address attributes
+    def address_attributes=(attributes)
+      return if address.nil? && Spree::Address.blank_attributes?(attributes)
+
+      self.address = Spree::Address.immutable_merge(address, attributes)
     end
 
     def self.default

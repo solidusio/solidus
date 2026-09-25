@@ -1,4 +1,5 @@
 en:
+  address: Address
   localization: Localization
   plugins:
     install: Install

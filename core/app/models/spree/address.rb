@@ -25,6 +25,7 @@ module Spree
     self.ignored_columns = %w[firstname lastname]
     DB_ONLY_ATTRS = %w[id updated_at created_at].freeze
     TAXATION_ATTRS = %w[state_id country_id zipcode].freeze
+    FORM_PRESET_ATTRS = %w[country_id state_id reverse_charge_status].freeze
 
     self.allowed_ransackable_attributes = %w[name]
 
@@ -66,6 +67,15 @@ module Spree
       else
         new_address
       end
+    end
+
+    # Address forms always submit a preselected country, state and reverse charge status,
+    # so these are ignored.
+    #
+    # @param attributes [Hash, ActionController::Parameters] the address attributes
+    # @return [Boolean] whether all other attributes are blank
+    def self.blank_attributes?(attributes)
+      attributes.to_h.stringify_keys.except(*FORM_PRESET_ATTRS).values.all?(&:blank?)
     end
 
     # @return [Hash] hash of attributes contributing to value equality with optional merge

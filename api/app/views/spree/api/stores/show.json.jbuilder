@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.call(@store, *store_attributes)
+json.partial!("spree/api/stores/store", store: @store)

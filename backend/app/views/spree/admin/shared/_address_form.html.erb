@@ -18,10 +18,12 @@
     <%= f.text_field :address1, class: 'fullwidth' %>
   </div>
 
-  <div class="field <%= "#{type}-row" %>">
-    <%= f.label :address2 %>
-    <%= f.text_field :address2, class: 'fullwidth' %>
-  </div>
+  <% unless local_assigns.fetch(:excludes, []).include?(:address2) %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :address2 %>
+      <%= f.text_field :address2, class: 'fullwidth' %>
+    </div>
+  <% end %>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :city %>
@@ -59,15 +61,19 @@
     </span>
   </div>
 
-  <div class="field <%= "#{type}-row" %>">
-    <%= f.label :phone %>
-    <%= f.phone_field :phone, class: 'fullwidth' %>
-  </div>
+  <% unless local_assigns.fetch(:excludes, []).include?(:phone) %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :phone %>
+      <%= f.phone_field :phone, class: 'fullwidth' %>
+    </div>
+  <% end %>
 
-  <div class="field <%= "#{type}-row" %>">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: 'fullwidth' %>
-  </div>
+  <% unless local_assigns.fetch(:excludes, []).include?(:email) %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'fullwidth' %>
+    </div>
+  <% end %>
   
   <% if Spree::Backend::Config.show_reverse_charge_fields %>
     <div class="field <%= "#{type}-row" %>">
