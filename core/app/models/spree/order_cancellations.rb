@@ -53,6 +53,7 @@ class Spree::OrderCancellations
         end
       end
 
+      @order.refresh_shipment_rates
       @order.recalculate
 
       short_ship_tax_notifier&.call(unit_cancels)

@@ -357,21 +357,22 @@ RSpec.describe Spree::Shipment, type: :model do
       end
 
       context "to_package" do
-        let(:inventory_units) do
-          [build(:inventory_unit, line_item:, variant:, state: "on_hand"),
-            build(:inventory_unit, line_item:, variant:, state: "backordered")]
-        end
+        let(:line_item) { create(:line_item, order: shipment.order) }
+        let(:variant) { line_item.variant }
 
-        before do
-          allow(line_item).to receive(:order) { order }
-          shipment.inventory_units = inventory_units
-          allow(shipment.inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
-        end
+        let!(:on_hand_unit) { create(:inventory_unit, shipment:, line_item:, variant:, state: "on_hand") }
+        let!(:backordered_unit) { create(:inventory_unit, shipment:, line_item:, variant:, state: "backordered") }
+        let!(:canceled_unit) { create(:inventory_unit, shipment:, line_item:, variant:, state: "canceled") }
 
         it "should use symbols for states when adding contents to package" do
           package = shipment.to_package
           expect(package.on_hand.count).to eq 1
           expect(package.backordered.count).to eq 1
+        end
+
+        it "should not add canceled inventory units to the package" do
+          expect(shipment.to_package.contents.map(&:inventory_unit))
+            .to contain_exactly(on_hand_unit, backordered_unit)
         end
 
         it "should set the shipment to itself" do
