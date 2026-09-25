@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-6 pb-4">
         <%= f.text_field(:name, class: "required") %>
 
-        <div class="hidden" <%= tag.attributes(stimulus_target("countriesWrapper")) %>>
+        <%= tag.div(class: "hidden", **stimulus_target("countriesWrapper")) do %>
           <%= f.select(
             :country_ids,
             country_select_options,
@@ -12,9 +12,9 @@
             class: "required",
             **stimulus_target("countriesSelect")
           ) %>
-        </div>
+        <% end %>
 
-        <div class="hidden" <%= tag.attributes(stimulus_target("statesWrapper")) %>>
+        <%= tag.div(class: "hidden", **stimulus_target("statesWrapper")) do %>
           <%= f.select(
             :state_ids,
             selected_state_select_options,
@@ -24,7 +24,7 @@
             "data-query-param": "q[name_or_country_name_cont]",
             **stimulus_target("statesSelect")
           ) %>
-        </div>
+        <% end %>
 
         <%= f.text_field(:description, class: "required") %>
 
