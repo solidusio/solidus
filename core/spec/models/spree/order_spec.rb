@@ -1758,6 +1758,23 @@ RSpec.describe Spree::Order, type: :model do
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
+
+    context "with a payment ID that does not belong to this order" do
+      let(:attributes) { [ActionController::Parameters.new(id: -1)] }
+
+      it "raises RecordNotFound" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context "with a payment ID that belongs to this order" do
+      let(:attributes) { [ActionController::Parameters.new(id: payment.id)] }
+      let(:payment) { create(:payment, order: order) }
+
+      it "doesn't error" do
+        expect { subject }.not_to raise_error
+      end
+    end
   end
 
   describe "#create_shipments_for_line_item" do
