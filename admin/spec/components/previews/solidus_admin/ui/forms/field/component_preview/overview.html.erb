@@ -1,3 +1,7 @@
+<h2 class="mb-3 mt-0">
+  Component with text input as block
+</h2>
+
 <div class="mb-8">
   <h6 class="text-gray-500 mb-3 mt-0">
     With just the label
@@ -9,6 +13,7 @@
     <%= render component('ui/forms/input').new(value: "Hello world!") %>
   <% end %>
 </div>
+
 <div class="mb-8">
   <h6 class="text-gray-500 mb-3 mt-0">
     With hint,
@@ -22,5 +27,75 @@
     error: "The second letter should be lowecase",
   ) do %>
     <%= render component('ui/forms/input').new(value: "HEllo world!", error: "The second letter should be lowecase") %>
+  <% end %>
+</div>
+
+<hr class="mt-3 mb-3" />
+
+<h2 class="mb-3 mt-0">
+  Taxon select
+</h2>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Single select
+  </h6>
+
+  <%= form_for Spree::Taxon.new, url: "/null" do |f| %>
+    <%= render current_component.select_taxons(
+      f,
+      :parent,
+      choices: [],
+      multiple: false
+    ) %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Single select (preselected options)
+  </h6>
+
+  <%= form_for Spree::Taxon.new, url: "/null" do |f| %>
+    <%=
+      preselected_option = Spree::Taxon.second
+
+      render current_component.select_taxons(
+        f,
+        :parent,
+        choices: [preselected_option].map { [_1.pretty_name, _1.id] },
+        multiple: false,
+        value: preselected_option.id
+      )
+    %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Multi select
+  </h6>
+
+  <%= form_for Spree::Product.first, url: "/null" do |f| %>
+    <%= render current_component.select_taxons(f, :taxons, choices: []) %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Multi select (preselected options)
+  </h6>
+
+  <%= form_for Spree::Product.first, url: "/null" do |f| %>
+    <%=
+      preselected_options = [Spree::Taxon.third, Spree::Taxon.fourth]
+
+      render current_component.select_taxons(
+        f,
+        :taxons,
+        choices: preselected_options.map { [_1.pretty_name, _1.id] },
+        value: preselected_options.map(&:id)
+      )
+    %>
   <% end %>
 </div>
