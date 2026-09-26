@@ -47,6 +47,9 @@ module SolidusAdmin
         end
 
         route "mount Lookbook::Engine, at: '#{solidus_mount_point}lookbook' if Rails.env.development?"
+
+        template "config/initializers/lookbook.rb.tt",
+          "config/initializers/lookbook.rb"
       end
 
       private
