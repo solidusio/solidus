@@ -1,0 +1,21 @@
+
+Rails.application.config.to_prepare do
+  module LookbookAuthenticationOverride
+    extend ActiveSupport::Concern
+
+    included do
+      before_action :ensure_solidus_admin!
+    end
+
+    # Some components in Lookbook require an admin user to be authenticated
+    # For example, you must be authenticated in order for the zone admin
+    # `<select>`s to be populated with `Spree::Country` and  `Spree::State`s.
+    def ensure_solidus_admin!
+      return if current_spree_user&.admin?
+
+      raise "Log in as an admin user to use Lookbook."
+    end
+
+    Lookbook::ApplicationController.include self
+  end
+end
