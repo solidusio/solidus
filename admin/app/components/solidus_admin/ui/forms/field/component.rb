@@ -49,6 +49,44 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.select_taxons(form, method, **attributes)
+    _object_name, object, label, errors = extract_form_details(form, object, method)
+
+    # FIXME: Obviously don't merge this. This is for discussion. Two issues:.
+    #
+    #    1. Tom Select does not seem to take paths, only URLs.
+    #    2. There is currently no mechanism for authenticating and using
+    #       `solidus_api` routes in `solidus_admin`. What is the best
+    #       approach?
+    #
+    insecure_result_url =
+      Spree::Core::Engine.routes.url_helpers.api_taxons_url(
+        host: "http://localhost:3000",
+        params: {token: Spree.user_class.admin.first.spree_api_key}
+      )
+
+    selected_taxons = records_from(object, method)
+
+    taxon_select_attributes = {
+      choices: selected_taxons.map { [_1.pretty_name, _1.id] },
+      errors:,
+      label:,
+      multiple: true,
+      src: insecure_result_url,
+      value: selected_taxons.map(&:id),
+      "data-option-label-field": :pretty_name,
+      "data-query-param": "q[pretty_name_cont]"
+    }
+    attributes = taxon_select_attributes.merge(attributes)
+
+    select(form, method, attributes[:choices], **attributes)
+  end
+
+  def self.records_from(object, method)
+    association_method = method.to_s.sub(/_id(s?)\z/, '\1')
+    Array.wrap(object.try(association_method))
+  end
+
   def self.text_area(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
