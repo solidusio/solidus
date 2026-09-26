@@ -1,3 +1,5 @@
+<% selected_country = Spree::Country.first %>
+
 <section>
   <div class="flex gap-6">
     <div class="flex flex-col flex-grow gap-2">
@@ -32,19 +34,31 @@
 
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Remote options</h6>
-        <%= render current_component.new(id: "single-src-empty", choices: [], src: solidus_admin.country_states_url(country_id: 1), label: "State", name: "state") %>
+        <%= render current_component.new(
+          id: "single-src-empty",
+          choices: [],
+          src: solidus_admin.country_states_url(country_id: selected_country.id),
+          label: "State",
+          name: "state"
+        ) %>
       </div>
 
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Remote options (preselected)</h6>
-        <%= render current_component.new(
-          id: "single-src-selected",
-          choices: Spree::State.where(id: 1).map { [_1.name, _1.id] },
-          src: solidus_admin.country_states_url(country_id: 1),
-          label: "State",
-          name: "state",
-          value: "1"
-        ) %>
+
+        <%=
+          preselected_states = Spree::State.where(country: selected_country).first(1)
+            .map { [_1.name, _1.id] }
+
+          render current_component.new(
+            id: "single-src-selected",
+            choices: preselected_states,
+            src: solidus_admin.country_states_url(country_id: selected_country.id),
+            label: "State",
+            name: "state",
+            value: preselected_states
+          )
+        %>
       </div>
 
       <div class="mb-8">
@@ -90,20 +104,32 @@
 
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Remote options</h6>
-        <%= render current_component.new(id: "multiple-src-empty", choices: [], src: solidus_admin.country_states_url(country_id: 1), label: "State", name: "state", multiple: true) %>
+        <%= render current_component.new(
+          id: "multiple-src-empty",
+          choices: [],
+          src: solidus_admin.country_states_url(country_id: selected_country.id),
+          label: "State",
+          name: "state",
+          multiple: true
+        ) %>
       </div>
 
       <div class="mb-8">
         <h6 class="text-gray-500 mb-3 mt-0">Remote options (preselected)</h6>
-        <%= render current_component.new(
-          id: "multiple-src-selected",
-          choices: Spree::State.where(id: [1,2,3]).map { [_1.name, _1.id] },
-          src: solidus_admin.country_states_url(country_id: 1),
-          label: "State",
-          name: "state",
-          multiple: true,
-          value: [1,2,3]
-        ) %>
+
+        <%=
+          preselected_states = Spree::State.where(country: selected_country).first(3)
+
+          render current_component.new(
+            id: "multiple-src-selected",
+            choices: preselected_states.map { [_1.name, _1.id] },
+            src: solidus_admin.country_states_url(country_id: selected_country.id),
+            label: "State",
+            name: "state",
+            multiple: true,
+            value: preselected_states.map(&:id)
+          )
+        %>
       </div>
     </div>
   </div>
