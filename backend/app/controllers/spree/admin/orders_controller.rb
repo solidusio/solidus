@@ -61,7 +61,7 @@ module Spree
       end
 
       def new
-        user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
+        user = Spree.admin_user_class.find_by(id: params[:user_id]) if params[:user_id]
         order_importer_params = order_params
         order_importer_params[:bill_address] = user&.bill_address
         order_importer_params[:ship_address] = user&.ship_address
