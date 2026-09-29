@@ -83,6 +83,7 @@ describe "Stores", :js, type: :feature do
         available_locales: %w[en])
 
       create(:country, iso: "US")
+      create(:country, iso: "DE", states_required: false)
       visit "/admin/stores"
       click_on "B2C Store"
       expect(page).to be_axe_clean
@@ -110,6 +111,28 @@ describe "Stores", :js, type: :feature do
       click_on "Updated Store"
       expect(solidus_select_control("Default Currency")).to have_content("USD")
       expect(solidus_select_control("Tax Country")).to have_content("United States")
+    end
+
+    it "updates store address" do
+      expect(page).not_to have_field("Email", exact: true)
+
+      fill_in "Name", with: "B2C Store Inc."
+      fill_in "Street Address", with: "1 Store Street"
+      fill_in "City", with: "Storetown"
+      fill_in "Zip Code", with: "12345"
+      fill_in "Phone", with: "555-555-0199"
+      solidus_select("Germany", from: "Country")
+
+      within("header") { click_on "Save" }
+
+      expect(page).to have_content("Store was successfully updated")
+      expect(Spree::Store.find_by(name: "B2C Store").address).to have_attributes(
+        name: "B2C Store Inc.",
+        address1: "1 Store Street",
+        city: "Storetown",
+        phone: "555-555-0199",
+        country: Spree::Country.find_by(iso: "DE")
+      )
     end
   end
 

@@ -11,6 +11,15 @@
           </div>
         <% end %>
       <% end %>
+      <%= render component('ui/panel').new(title: t('.address')) do |panel| %>
+        <% panel.with_section do %>
+          <%= render component('ui/forms/address').new(
+            addressable: address,
+            form_field_name: "store[address_attributes]",
+            excludes: address_excludes
+          ) %>
+        <% end %>
+      <% end %>
       <%= render component('ui/panel').new(title: t('.localization')) do |panel| %>
         <% panel.with_section(class: "flex flex-col gap-4") do %>
           <div class="flex flex-col gap-4 w-full">

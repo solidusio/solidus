@@ -41,6 +41,13 @@
         <%= f.error_message_on :reverse_charge_status %>
       <% end %>
     <% end %>
+
+    <fieldset class="no-border-bottom js-addresses-form" data-hook="store_address_wrapper">
+      <legend align="center"><%= Spree::Address.model_name.human %></legend>
+      <%= f.fields_for :address, f.object.address || Spree::Address.new(country: Spree::Country.find_by(iso: Spree::Config.default_country_iso)) do |address_form| %>
+        <%= render partial: 'spree/admin/shared/address_form', locals: { f: address_form, type: "store", excludes: Spree::Config.address_requires_phone ? [:address2, :email] : [:address2, :email, :phone] } %>
+      <% end %>
+    </fieldset>
   </div>
   <div class="col-12 col-md-6">
     <%= f.field_container :url do %>

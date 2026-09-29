@@ -17,6 +17,8 @@ module Spree
 
     has_many :orders, class_name: "Spree::Order"
 
+    belongs_to :address, class_name: "Spree::Address", optional: true, validate: true
+
     validates :code, presence: true, uniqueness: {allow_blank: true, case_sensitive: true}
     validates :name, presence: true
     validates :url, presence: true
@@ -49,6 +51,10 @@ module Spree
       else
         super(locales.join(","))
       end
+    end
+
+    def address_attributes=(attributes)
+      self.address = Spree::Address.immutable_merge(address, attributes)
     end
 
     def self.default
