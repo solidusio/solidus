@@ -43,13 +43,10 @@
         <%= render component("ui/panel").new(title: t(".product_organization")) do %>
           <%= hidden_field_tag "#{f.object_name}[taxon_ids][]", nil %>
 
-          <%= render component("ui/forms/field").select(
-            f,
+          <%= render component("ui/forms/select_taxons").new f,
             :taxon_ids,
-            taxon_options,
-            multiple: true,
-            placeholder: t(".placeholders.taxon_ids")
-          ) %>
+            selected_category_options,
+            multiple: true %>
         <% end %>
       <% end %>
     <% end %>
