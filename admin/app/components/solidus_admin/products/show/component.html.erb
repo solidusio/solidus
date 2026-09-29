@@ -149,12 +149,7 @@
           <%= hidden_field_tag "#{f.object_name}[taxon_ids][]", nil %>
 
           <%= render component("turbo/target_frame").new(:product_organization_frame, source: :new_product_category) do %>
-            <%= render component("ui/forms/field").select(
-              f,
-              :taxon_ids,
-              taxon_options,
-              multiple: true
-            ) %>
+            <%= render component("ui/forms/field").select_taxons f, :taxon_ids %>
           <% end %>
           <% panel.with_action(
             name: t(".add_new_category"),
