@@ -152,7 +152,7 @@ describe "Payment Methods", :js, type: :feature do
         fill_in "Name", with: "Bogus Credit Card"
         fill_in "Description", with: "Payment Method Description"
         solidus_select "No", from: "Auto Capture"
-        solidus_select "Bogus Credit Card", from: "Type"
+        solidus_select "Bogus Credit Card Payments", from: "Type"
 
         disabled_inputs = find_all("[disabled]")
         expect(disabled_inputs.size).to be_zero
