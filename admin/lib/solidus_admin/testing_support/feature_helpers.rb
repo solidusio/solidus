@@ -60,7 +60,9 @@ module SolidusAdmin
         end
 
         Array.wrap(value).each do |val|
-          input.fill_in(with: val).send_keys(:return)
+          input.fill_in(with: val)
+          within(dropdown) { expect(page).to have_text(val) }
+          send_keys(:return)
           expect(control).to have_text(val)
         end
       end
