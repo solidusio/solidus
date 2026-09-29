@@ -12,6 +12,8 @@ class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
     @form_id ||= "#{stimulus_id}--form-#{@product.id}"
   end
 
+  def selected_category_options = @product.taxons.map { [_1.pretty_name, _1.id] }
+
   def product_properties
     @product_properties ||= @product.product_properties.includes(:property)
   end

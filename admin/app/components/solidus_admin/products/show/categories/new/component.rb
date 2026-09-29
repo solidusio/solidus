@@ -6,12 +6,9 @@ class SolidusAdmin::Products::Show::Categories::New::Component < SolidusAdmin::B
     @taxon = taxon || product.taxons.build
   end
 
-  private
+  def selected_parent_option
+    return [] unless (parent = @taxon.parent)
 
-  def parent_taxon_options
-    @parent_taxon_options ||= Spree::Taxon.order(:lft).pluck(:name, :id, :depth).map do
-      name, id, depth = _1
-      ["#{"    " * depth} → #{name}", id, {data: {item_label: name}}]
-    end
+    [[parent.pretty_name, parent.id]]
   end
 end

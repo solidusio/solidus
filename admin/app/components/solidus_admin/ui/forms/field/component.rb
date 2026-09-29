@@ -55,6 +55,10 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.select_taxons(form, method, choices, **attributes)
+    component("ui/forms/select_taxons").new(form, method, choices, **attributes)
+  end
+
   def self.text_area(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
