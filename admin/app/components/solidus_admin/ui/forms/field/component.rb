@@ -49,6 +49,21 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.select_taxons(form, method, **attributes)
+    selected_taxons = records_from(form.object, method)
+
+    taxon_select_attributes = {
+      choices: selected_taxons.map { [_1.pretty_name, _1.id] },
+      multiple: true,
+      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_url,
+      value: selected_taxons.map(&:id),
+      "data-option-label-field": :pretty_name
+    }
+    attributes = taxon_select_attributes.merge(attributes)
+
+    select(form, method, attributes[:choices], **attributes)
+  end
+
   def self.text_area(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
@@ -102,5 +117,10 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     label = object.class.human_attribute_name(method)
 
     [object_name, object, label, errors]
+  end
+
+  private_class_method def self.records_from(object, method)
+    association_method = method.to_s.sub(/_id(s?)\z/, '\1')
+    Array.wrap(object.try(association_method))
   end
 end
