@@ -46,12 +46,16 @@ module SolidusAdmin
         control = input.ancestor(".control")
         dropdown = control.sibling(".dropdown", visible: :all)
 
-        # Make sure options are loaded
-        control.click
-        within(dropdown) { expect(first(".option", visible: :all)).to be }
+        # Solidus Select can be configured to preload options or load options
+        # on click. This check handles both configurations, waiting for
+        # options to be present.
+        unless options_preloaded?(dropdown)
+          control.click
+          dropdown.first(".option")
+        end
 
         Array.wrap(value).each do |val|
-          option = dropdown.first(".option", exact_text: val, minimum: 0, wait: 0)
+          option = dropdown.first(".option", exact_text: val, minimum: 0)
           if option
             option.click
           else
@@ -102,6 +106,14 @@ module SolidusAdmin
 
       def turbo_frame_modal
         dialog(parent: find("turbo-frame", visible: :all))
+      end
+
+      private
+
+      def options_preloaded?(dropdown)
+        dropdown.first(".option")
+      rescue
+        false
       end
     end
   end
