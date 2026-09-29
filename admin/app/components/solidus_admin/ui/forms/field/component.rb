@@ -49,6 +49,18 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.select_taxons(form, method, choices, **attributes)
+    taxon_select_attributes = {
+      multiple: true,
+      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_url,
+      value: choices.map(&:last),
+      "data-option-label-field": :pretty_name
+    }
+    attributes = taxon_select_attributes.merge(attributes)
+
+    select(form, method, choices, **attributes)
+  end
+
   def self.text_area(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 
