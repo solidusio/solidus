@@ -775,7 +775,7 @@ tr:
         thanks: Alışverişiniz için teşekkürler
         total: Toplam
     order_not_found: Siparişinizi bulamadık. Lütfen tekrar deneyiniz.
-    order_number: Sipariş Numarası
+    order_number: "Sipariş %{number}"
     order_processed_successfully: Siparişiniz başarıyla işlenmiştir.
     order_resumed:
     order_state:

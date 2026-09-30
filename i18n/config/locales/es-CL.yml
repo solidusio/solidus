@@ -1317,7 +1317,7 @@ es-CL:
       choose_users: Escoje Usuarios
     users: Usuarios
     validation:
-      unpaid_amount_not_zero: "La cantidad no fue totalmente reembolsada. Aún así: % {amount}"
+      unpaid_amount_not_zero: "La cantidad no fue totalmente reembolsada. Aún así: %{amount}"
       cannot_be_less_than_shipped_units: no puede ser menor que el número de unidades enviadas.
       cannot_destroy_line_item_as_inventory_units_have_shipped: No se puede eliminar artículo ya que algunas unidades se han enviado.
       exceeds_available_stock: excede el stock disponible. Por favor asegúrate que los artículos tienen un cantidad válida.

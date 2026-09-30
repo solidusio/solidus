@@ -818,7 +818,7 @@ id:
         thanks: Terima kasih.
         total:
     order_not_found: Kami tidak dapat menemukan pemesanan Anda. Silahkan coba lagi.
-    order_number: Nomor Pemesanan
+    order_number: "Pesanan %{number}"
     order_processed_successfully: Pemesanan anda telah berhasil diproses
     order_resumed:
     order_state:

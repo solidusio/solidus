@@ -1397,7 +1397,7 @@ it:
         shipping_category: 'Questo determina quale tipo di spedizione questo prodotto
           richiede.<br/> Predefinito: Predefinita'
         tax_category: 'Questo determina quale tipo di tassazione è applicata a questo
-          prodotto.<br/> Predefinito: Nessuna'
+          prodotto.<br/> Predefinito: %{default_tax_category}'
       spree/promotion:
         expires_at: Questo determina quando termina la promozione.<br/>Se nessun valore
           è specificato, la promozione non terminerà mai.
