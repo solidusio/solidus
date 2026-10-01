@@ -121,7 +121,7 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
         columns:,
         batch_actions:,
         url: -> { row_url(_1) },
-        page: @page.current_page,
+        page: @page,
         per_page: 20 # FIXME
       },
       search: search_options,
