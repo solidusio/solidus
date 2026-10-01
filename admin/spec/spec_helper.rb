@@ -108,6 +108,19 @@ RSpec.configure do |config|
   config.define_derived_metadata(file_path: %r{spec/features}) do |metadata|
     metadata[:solidus_admin] = true
   end
+  config.before type: :feature do |example|
+    # For feature tests that use the default Rack Test driver, a Capybara
+    # session server is not available. So we can't use it to generate default
+    # URL options for use with URL helpers.
+    host = Capybara.current_session.server&.host || "0.0.0.0"
+    port = Capybara.current_session.server&.port
+
+    [Rails.application, SolidusAdmin::Engine].each do
+      _1.routes.default_url_options ||= {}
+      _1.routes.default_url_options[:host] = host
+      _1.routes.default_url_options[:port] = port
+    end
+  end
 
   config.include FactoryBot::Syntax::Methods
 
