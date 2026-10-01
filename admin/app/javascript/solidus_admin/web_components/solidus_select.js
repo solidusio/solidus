@@ -73,17 +73,6 @@ class SolidusSelect extends HTMLSelectElement {
       settings.valueField = this.getAttribute("data-option-value-field") || "id";
       settings.labelField = this.getAttribute("data-option-label-field") || "name";
 
-      const normalizedSelectedValues = function(attributeValue) {
-        let data = attributeValue || [];
-        switch (typeof data) {
-          case "string":
-            data = data.split(/[\s,]/);
-            return data.length === 0 ? [] : [].concat(data);
-          case "object":
-            return [].concat(data);
-        }
-      };
-
       settings.plugins.remote_with_pagination = {
         src: this.getAttribute("data-src"),
         preload: this.getAttribute("data-no-preload") !== "true",
@@ -91,7 +80,6 @@ class SolidusSelect extends HTMLSelectElement {
         queryParam: this.getAttribute("data-query-param"),
         loadingMessage: this.getAttribute("data-loading-message"),
         loadingMoreMessage: this.getAttribute("data-loading-more-message"),
-        selected: normalizedSelectedValues(this.getAttribute("data-selected")),
       };
     }
 
