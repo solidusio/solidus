@@ -1267,7 +1267,7 @@ fr:
       spree/product:
         promotionable: "Détermine si une réduction peut être appliquée ou non pour ce produit.<br/>Défaut: Oui"
         shipping_category: "Détermine le type de livraison nécessaire pour ce produit.<br/> Défaut: Défaut"
-        tax_category: "Détermine le type de taxes appliquées à ce produit.<br/> Défaut: Aucune"
+        tax_category: "Détermine le type de taxes appliquées à ce produit.<br/> Défaut: %{default_tax_category}"
       spree/promotion:
         starts_at: "Détermine quand une réduction peut être appliquée aux commandes. <br/> Si rien n'est indiqué, la promotion sera disponible dès maintenant."
         expires_at: "Détermine quand une réduction expirera. <br/> Si rien n'est indiqué, elle n'expirera jamais."
@@ -1504,8 +1504,8 @@ fr:
         instructions: Votre commande a été ANNULÉE. Veuillez conserver les informations suivantes à propos de votre commande annulée.
         order_summary_canceled: Sommaire de la commande [ANNULÉE]
         subject: Annulation de la commande
-        subtotal: ! 'Sous-total: %{subtotal}'
-        total: ! 'Total de la commande: %{total}'
+        subtotal: ! 'Sous-total:'
+        total: ! 'Total de la commande:'
       confirm_email:
         dear_customer: Cher client,
         instructions: Veuillez vérifier et sauvegarder les informations suivantes à propos de votre commande.
@@ -1513,7 +1513,7 @@ fr:
         subject: Confirmation de commande
         subtotal: Sous-total de la commande
         thanks: Merci d'avoir fait affaire avec nous.
-        total: ! 'Total de la commande: %{total}'
+        total: ! 'Total de la commande:'
     order_not_found: Impossible de trouver votre commande. Merci d'essayer à nouveau.
     order_number: Numéro de commande %{number}
     order_processed_successfully: Votre commande a été traitée avec succès

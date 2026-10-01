@@ -1081,7 +1081,7 @@ nb:
         subject: Forsendelsesbekreftelse
         thanks: Takk for handelen.
         track_information: 'Sporingsinformasjon: %{tracking}'
-        track_link: Sporingslink
+        track_link: "Sporingslink: %{url}"
     shipment_state: Forsendelsestatus
     shipment_states:
       backorder: restordre

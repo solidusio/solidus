@@ -709,7 +709,7 @@ da:
       spree/product:
         promotionable: "Kan der køres kampanger på dette produkt.<br>Default: Checked"
         shipping_category: "Hvilken type fragt kræver dette produkt.<br> Default: Default"
-        tax_category: "Hvilke afgifter lægges på dette produkt.<br> Default: None"
+        tax_category: "Hvilke afgifter lægges på dette produkt.<br> Default: %{default_tax_category}"
       spree/promotion:
         starts_at: "Fra hvornår gælder en kampagne. <br> Hvis feltet er tomt gælder kampagnen med det samme."
         expires_at: "Hvornår udløber kampagnen. <br> Hvis feltet er tomt udløber kampagnen aldrig."
