@@ -10,3 +10,5 @@ en:
         success: "Products were successfully activated."
       update:
         success: "Product was successfully updated."
+      create:
+        success: "Product was successfully created."

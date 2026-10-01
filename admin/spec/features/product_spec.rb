@@ -35,6 +35,64 @@ describe "Product", type: :feature do
     expect(page).to have_current_path("/admin/products/just-a-prod")
   end
 
+  describe "creating a new product", :js do
+    before do
+      create(:shipping_category, name: "Default Shipping")
+      create(:tax_category, name: "Default Tax", is_default: true)
+    end
+
+    it "creates a new product from the products index" do
+      visit "/admin/products"
+      click_on "Add new"
+
+      expect(page).to have_current_path("/admin/products/new")
+
+      fill_in "Name", with: "Just a product"
+      fill_in "Master Price", with: "19.99"
+      solidus_select "Default Shipping", from: "Shipping category"
+      within("header") { click_button "Save" }
+
+      expect(page).to have_content("Product was successfully created.")
+      expect(page).to have_content("Just a product")
+      expect(Spree::Product.count).to eq(1)
+    end
+
+    it "generates the slug from the product name" do
+      visit "/admin/products/new"
+
+      fill_in "Name", with: "Just a product"
+      fill_in "Master Price", with: "19.99"
+      solidus_select "Default Shipping", from: "Shipping category"
+      within("header") { click_button "Save" }
+
+      expect(page).to have_current_path("/admin/products/just-a-product")
+      expect(Spree::Product.last.slug).to eq("just-a-product")
+    end
+
+    it "shows validation errors" do
+      visit "/admin/products/new"
+
+      fill_in "Name", with: ""
+      within("header") { click_button "Save" }
+
+      expect(page).to have_content("Name can't be blank")
+      expect(Spree::Product.count).to eq(0)
+    end
+
+    it "shows the product form panels" do
+      visit "/admin/products/new"
+
+      expect(page).to have_content("SEO")
+      expect(page).to have_content("Pricing")
+      expect(page).to have_content("Stock")
+      expect(page).to have_content("Shipping")
+      expect(page).to have_content("Options")
+      expect(page).to have_content("Publishing")
+      expect(page).to have_content("Product organization")
+      expect(page).to be_axe_clean
+    end
+  end
+
   it "can update a product", :js do
     create(:product, name: "Just a product", slug: "just-a-prod", price: 19.99)
 

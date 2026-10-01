@@ -1,0 +1,15 @@
+<%= render component("ui/panel").new(title: t(".title")) do %>
+  <%= @form.text_field(
+    :available_on,
+    hint: t(".hints.available_on_html"),
+    type: :date,
+    value: @form.object.available_on&.to_date
+  ) %>
+  <%= @form.text_field(
+    :discontinue_on,
+    hint: t(".hints.discontinue_on_html"),
+    type: :date,
+    value: @form.object.discontinue_on&.to_date
+  ) %>
+  <%= @form.checkbox(:promotionable, hint: t(".hints.promotionable_html")) %>
+<% end %>

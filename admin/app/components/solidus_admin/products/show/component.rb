@@ -2,6 +2,7 @@
 
 class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::Layout::PageHelpers
+  include SolidusAdmin::Products::FormOptions
 
   def initialize(product:)
     @product = product
@@ -9,26 +10,5 @@ class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
 
   def form_id
     @form_id ||= "#{stimulus_id}--form-#{@product.id}"
-  end
-
-  private
-
-  def taxon_options
-    @taxon_options ||= Spree::Taxon.order(:lft).pluck(:name, :id, :lft, :depth).map do
-      name, id, _lft, depth = _1
-      ["#{"    " * depth} → #{name}", id, {data: {item_label: name}}]
-    end
-  end
-
-  def option_type_options
-    @option_type_options ||= Spree::OptionType.order(:presentation).pluck(:presentation, :name, :id).map do
-      ["#{_2}:#{_1}", _3]
-    end
-  end
-
-  def condition_options
-    @condition_options ||= Spree::Variant.conditions.map do |key, value|
-      [t("spree.condition.#{key}"), value]
-    end
   end
 end
