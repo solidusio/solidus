@@ -12,6 +12,8 @@ module Spree
       class_name_attribute :availability_validator_class, default: "::Spree::Stock::AvailabilityValidator"
       class_name_attribute :inventory_validator_class, default: "::Spree::Stock::InventoryValidator"
       class_name_attribute :quantifier_class, default: "::Spree::Stock::Quantifier"
+      class_name_attribute :package_builder_class, default: "::Spree::Stock::PackageBuilder"
+      class_name_attribute :shipment_builder_class, default: "::Spree::Stock::ShipmentBuilder"
     end
   end
 end
