@@ -46,7 +46,18 @@ module SolidusAdmin
           run "bundle install"
         end
 
-        route "mount Lookbook::Engine, at: '#{solidus_mount_point}lookbook' if Rails.env.development?"
+        route <<~RUBY
+          lookbook_root_path = "#{solidus_mount_point}lookbook"
+
+          constraints ->(req) { Rails.env.development? && req.env["warden"]&.user&.admin? } do
+            mount Lookbook::Engine, at: lookbook_root_path
+          end
+
+          get lookbook_root_path, to: redirect { |_, req|
+            req.flash[:alert] = "Lookbook is only available to admin users."
+            "#{solidus_mount_point}admin/login"
+          }
+        RUBY
       end
 
       private
