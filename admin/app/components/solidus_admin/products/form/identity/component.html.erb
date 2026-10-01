@@ -1,0 +1,5 @@
+<%= render component("ui/panel").new do %>
+  <%= @form.text_field(:name, placeholder: t(".name_placeholder")) %>
+  <%= @form.text_field(:slug, placeholder: product.persisted? ? nil : t(".slug_placeholder"), disabled: !product.persisted?) %>
+  <%= @form.text_area(:description, placeholder: t(".description_placeholder")) %>
+<% end %>
