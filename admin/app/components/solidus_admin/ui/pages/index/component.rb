@@ -121,8 +121,8 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
         columns:,
         batch_actions:,
         url: -> { row_url(_1) },
-        page: @page.current_page,
-        per_page: @page.limit_value
+        page: @page&.current_page,
+        per_page: @page&.limit_value
       },
       search: search_options,
       sortable: sortable_options
