@@ -160,5 +160,31 @@ module Spree
 
       params
     end
+
+    # This method merges the payment IDs of unprocessed payments into the params
+    # hash so that we can re-use existing payment records instead of creating
+    # new ones each time a customer navigates through the payment step.
+    #
+    # It should be run after the wallet payment source ID has been moved into
+    # the payments attributes so that it isn't overwritten by that method.
+    def merge_payment_parameters_ids(params, order)
+      return params if params[:order].blank?
+      return params if params[:order][:payments_attributes].blank?
+
+      order.unprocessed_payments.each do |payment|
+        payment_params = params[:order][:payments_attributes].find do |p|
+          if p[:payment_method_id]
+            p[:payment_method_id].to_i == payment.payment_method_id
+          elsif p[:source_attributes] && p[:source_attributes][:wallet_payment_source_id]
+            wallet_payment_source_id = p[:source_attributes][:wallet_payment_source_id]
+            wallet_payment_source = order.user&.wallet&.find(wallet_payment_source_id)
+            wallet_payment_source&.payment_source&.payment_method_id == payment.payment_method_id
+          end
+        end
+        payment_params[:id] = payment.id if payment_params
+      end
+
+      params
+    end
   end
 end
