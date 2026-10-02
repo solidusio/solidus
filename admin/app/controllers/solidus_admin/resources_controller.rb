@@ -16,7 +16,7 @@ module SolidusAdmin
     # Uses {set_paginated_resources} to set @resources
     # and a instance variable with the plural name of the resource.
     #
-    # Uses the geared_pagination gem to set @page for pagination.
+    # Uses {paginate} to set @page for pagination.
     #
     # @see set_paginated_resources
     # @see resources_collection
@@ -93,8 +93,7 @@ module SolidusAdmin
         param: :q
       ).tap do |resources|
         instance_variable_set("@#{plural_resource_name}", resources)
-        # sets @page instance variable in geared_pagination gem
-        set_page_and_extract_portion_from(resources, ordered_by: resources_sorting_options, per_page:)
+        @page = paginate(resources, ordered_by: resources_sorting_options, per_page:)
       end
     end
 
