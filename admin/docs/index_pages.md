@@ -29,6 +29,12 @@ def index
   # ...
 ```
 
+To sort the records, pass `ordered_by:` with the columns and directions to sort by. The primary key is added as a final sort column when it isn't already included, so records with equal values don't repeat or go missing between pages.
+
+```ruby
+@page = paginate(products, ordered_by: {name: :asc}) # ORDER BY name ASC, id ASC
+```
+
 Finally, the index action should render the `index` component passing the `@page` instance variable as the `page` prop.
 
 ```ruby
