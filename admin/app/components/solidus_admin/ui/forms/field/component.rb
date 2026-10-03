@@ -33,6 +33,25 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.file_field(form, method, object: nil, hint: nil, tip: nil, size: :m, **attributes)
+    object_name, _object, label, errors = extract_form_details(form, object, method)
+
+    new(
+      label:,
+      hint:,
+      tip:,
+      error: errors,
+      input_attributes: {
+        name: "#{object_name}[#{method}]",
+        tag: :input,
+        type: :file,
+        size:,
+        error: errors&.to_sentence&.capitalize,
+        **attributes
+      }
+    )
+  end
+
   def self.select(form, method, choices, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 

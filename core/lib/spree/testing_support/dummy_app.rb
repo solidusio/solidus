@@ -178,5 +178,6 @@ Spree.config do |config|
   if ENV["DISABLE_ACTIVE_STORAGE"] == "true"
     config.image_attachment_module = "Spree::Image::PaperclipAttachment"
     config.taxon_attachment_module = "Spree::Taxon::PaperclipAttachment"
+    config.store_attachment_module = "Spree::Store::PaperclipAttachment"
   end
 end

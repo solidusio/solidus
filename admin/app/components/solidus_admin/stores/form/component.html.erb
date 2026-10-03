@@ -1,4 +1,4 @@
-<%= form_for @store, url: @url, html: { id: @id } do |f| %>
+<%= form_for @store, url: @url, html: { id: @id, multipart: true } do |f| %>
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
       <%= render component('ui/panel').new do |panel| %>
@@ -9,6 +9,20 @@
             <%= render component("ui/forms/field").text_field(f, :url) %>
             <%= render component("ui/forms/field").text_field(f, :mail_from_address) %>
           </div>
+        <% end %>
+      <% end %>
+      <%= render component('ui/panel').new(title: t('.branding')) do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <% %i[logo favicon].each do |attachment| %>
+            <div class="flex gap-4 items-end">
+              <% if (preview_url = attachment_preview_url(attachment)) %>
+                <%= render component("ui/thumbnail").new(src: preview_url, alt: Spree::Store.human_attribute_name(attachment)) %>
+              <% end %>
+              <div class="grow">
+                <%= render component("ui/forms/field").file_field(f, attachment, accept: Spree::Config.allowed_image_mime_types.join(",")) %>
+              </div>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
       <%= render component('ui/panel').new(title: t('.address')) do |panel| %>

@@ -5,6 +5,40 @@ require "rails_helper"
 RSpec.describe Spree::Store, type: :model do
   it { is_expected.to respond_to(:cart_tax_country_iso) }
 
+  it_behaves_like "an attachment" do
+    subject { create(:store) }
+    let(:attachment_name) { :logo }
+    let(:default_style) { :original }
+  end
+
+  it_behaves_like "an attachment" do
+    subject { create(:store) }
+    let(:attachment_name) { :favicon }
+    let(:default_style) { :original }
+  end
+
+  describe "logo and favicon" do
+    include ImageSpecHelper
+
+    let(:store) { create(:store) }
+
+    it "keeps the two attachments apart" do
+      store.update!(logo: open_image("blank.jpg"))
+
+      expect(store.reload.logo_present?).to be true
+      expect(store.favicon_present?).to be false
+    end
+
+    it "destroys only the named attachment" do
+      store.update!(logo: open_image("blank.jpg"), favicon: open_image("blank.jpg"))
+
+      store.destroy_attachment(:favicon)
+
+      expect(store.reload.favicon_present?).to be false
+      expect(store.logo_present?).to be true
+    end
+  end
+
   describe ".default" do
     it "should ensure saved store becomes default if one doesn't exist yet" do
       expect(Spree::Store.where(default: true).count).to eq(0)

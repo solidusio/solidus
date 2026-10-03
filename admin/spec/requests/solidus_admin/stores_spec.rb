@@ -60,4 +60,34 @@ RSpec.describe "SolidusAdmin::StoresController", type: :request do
       expect(Spree::Store.find_by!(code: "new-store").address).to be_nil
     end
   end
+
+  describe "logo and favicon" do
+    let(:admin_user) { create(:admin_user) }
+    let(:store) { create(:store, default: false) }
+    let(:image) { Rack::Test::UploadedFile.new(Spree::Core::Engine.root.join("lib/spree/testing_support/fixtures/blank.jpg"), "image/jpeg") }
+
+    before { allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user) }
+
+    it "renders a multipart form with a file field for each" do
+      get solidus_admin.edit_store_path(store)
+      expect(response.body).to include('enctype="multipart/form-data"')
+      expect(response.body).to include('name="store[logo]"').and include('name="store[favicon]"')
+      expect(response.body.scan('type="file"').size).to eq(2)
+    end
+
+    it "saves the uploaded images" do
+      patch solidus_admin.store_path(store), params: {store: {logo: image, favicon: image}}
+      expect(response).to have_http_status(:see_other)
+      expect(store.reload).to have_attributes(logo_present?: true, favicon_present?: true)
+    end
+
+    it "shows the saved images on the form" do
+      store.update!(logo: image, favicon: image)
+      # These specs draw the app's routes without Active Storage's, so its URLs can't be generated.
+      allow_any_instance_of(Spree::ActiveStorageAdapter::Attachment).to receive(:url).and_return("/stored.jpg")
+
+      get solidus_admin.edit_store_path(store)
+      expect(response.body).to include('alt="Logo"').and include('alt="Favicon"')
+    end
+  end
 end

@@ -367,6 +367,8 @@ en:
         code: Slug
         default: Default
         default_currency: Default Currency
+        favicon: Favicon
+        logo: Logo
         mail_from_address: Mail From Address
         meta_description: Meta Description
         meta_keywords: Meta Keywords

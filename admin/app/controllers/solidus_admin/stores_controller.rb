@@ -55,6 +55,8 @@ module SolidusAdmin
         :mail_from_address,
         :default_currency,
         :cart_tax_country_iso,
+        :logo,
+        :favicon,
         available_locales: [],
         address_attributes: Spree::PermittedAttributes.address_attributes
       ).tap do |store_params|
