@@ -1,0 +1,12 @@
+<%= render component("ui/panel").new(title: t(".title")) do %>
+  <%= @form.select(
+    :shipping_category_id,
+    shipping_category_options,
+    tip: t(".hints.shipping_category_html")
+  ) %>
+  <%= @form.select(
+    :tax_category_id,
+    tax_category_options,
+    tip: t(".hints.tax_category_html")
+  ) %>
+<% end %>

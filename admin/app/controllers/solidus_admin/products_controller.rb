@@ -37,6 +37,29 @@ module SolidusAdmin
       redirect_to action: :show
     end
 
+    def new
+      @product = Spree::Product.new
+
+      respond_to do |format|
+        format.html { render component("products/new").new(product: @product) }
+      end
+    end
+
+    def create
+      @product = Spree::Product.new(product_params.except(:slug))
+
+      if @product.save
+        flash[:success] = t(".success")
+        redirect_to product_path(@product), status: :see_other
+      else
+        flash.now[:error] = @product.errors.full_messages.join(", ")
+
+        respond_to do |format|
+          format.html { render component("products/new").new(product: @product), status: :unprocessable_entity }
+        end
+      end
+    end
+
     def show
       @product = Spree::Product.with_discarded.friendly.find(params[:id])
 

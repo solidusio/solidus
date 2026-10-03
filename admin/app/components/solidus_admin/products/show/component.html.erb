@@ -26,19 +26,10 @@
   <%= solidus_form_for @product, url: solidus_admin.product_path(@product), html: { id: form_id } do |f| %>
     <%= page_with_sidebar do %>
       <%= page_with_sidebar_main do %>
-        <%= render component("ui/panel").new do %>
-          <%= f.text_field(:name) %>
-          <%= f.text_field(:slug) %>
-          <%= f.text_area(:description) %>
-        <% end %>
+        <%= render component("products/form/identity").new(form: f) %>
 
-        <%= render component("ui/panel").new(title: t(".seo")) do %>
-          <%= f.text_field(:meta_title) %>
-          <%= f.text_field(:meta_description) %>
-          <%= f.text_area(:meta_keywords) %>
-          <%= f.text_field(:gtin) %>
-          <%= f.select(:condition, condition_options, include_blank: t("spree.unset")) %>
-        <% end %>
+        <%= render component("products/form/seo").new(form: f) %>
+
         <%= render component("ui/panel").new(title: t(".media")) do |panel| %>
           <% panel.with_action(
             name: t(".manage_images"),
@@ -47,13 +38,7 @@
           ) %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".pricing")) do %>
-          <%= f.text_field(:price) %>
-          <div class="flex gap-4 justify-items-stretch">
-            <%= f.text_field(:cost_price) %>
-            <%= f.text_field(:cost_currency) %>
-          </div>
-        <% end %>
+        <%= render component("products/form/pricing").new(form: f) %>
 
         <%= render component("ui/panel").new(title: t(".stock")) do |panel| %>
           <%= f.text_field(:sku) %>
@@ -65,18 +50,7 @@
           ) %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".shipping")) do %>
-          <%= f.select(
-            :shipping_category_id,
-            [[t(".none"), nil]] + Spree::ShippingCategory.order(:name).pluck(:name, :id),
-            tip: t(".hints.shipping_category_html")
-          ) %>
-          <%= f.select(
-            :tax_category_id,
-            [[t(".none"), nil]] + Spree::TaxCategory.order(:name).pluck(:name, :id),
-            tip: t(".hints.tax_category_html")
-          ) %>
-        <% end %>
+        <%= render component("products/form/shipping").new(form: f) %>
 
         <%= render component("ui/panel").new(title: t(".options")) do |panel| %>
           <% if @product.product_option_types.present? %>
@@ -129,21 +103,7 @@
       <% end %>
 
       <%= page_with_sidebar_aside do %>
-        <%= render component("ui/panel").new(title: t(".publishing")) do %>
-          <%= f.text_field(
-            :available_on,
-            hint: t(".hints.available_on_html"),
-            type: :date,
-            value: f.object.available_on&.to_date
-          ) %>
-          <%= f.text_field(
-            :discontinue_on,
-            hint: t(".hints.discontinue_on_html"),
-            type: :date,
-            value: f.object.discontinue_on&.to_date
-          ) %>
-          <%= f.checkbox(:promotionable, hint: t(".hints.promotionable_html")) %>
-        <% end %>
+        <%= render component("products/form/publishing").new(form: f) %>
 
         <%= render component("ui/panel").new(title: t(".product_organization")) do |panel| %>
           <%= hidden_field_tag "#{f.object_name}[taxon_ids][]", nil %>

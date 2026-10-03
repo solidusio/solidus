@@ -1,0 +1,7 @@
+<%= render component("ui/panel").new(title: t(".title")) do %>
+  <%= @form.text_field(:meta_title, placeholder: t(".meta_title_placeholder")) %>
+  <%= @form.text_field(:meta_description, placeholder: t(".meta_description_placeholder")) %>
+  <%= @form.text_area(:meta_keywords, placeholder: t(".meta_keywords_placeholder")) %>
+  <%= @form.text_field(:gtin) %>
+  <%= @form.select(:condition, condition_options, include_blank: t(".unset")) %>
+<% end %>

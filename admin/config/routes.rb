@@ -20,10 +20,9 @@ SolidusAdmin::Engine.routes.draw do
     resources :taxons, only: [:new, :create], controller: :product_taxons
   end
 
-  # Needs a constraint to avoid interpreting "new" as a product's slug
   admin_resources :products, only: [
-    :show, :edit
-  ], constraints: -> { SolidusAdmin::Config.enable_alpha_features? && _1.path != "/admin/products/new" }
+    :new, :create, :show, :edit
+  ], constraints: -> { SolidusAdmin::Config.enable_alpha_features? }
 
   admin_resources :orders, only: [:index]
 
