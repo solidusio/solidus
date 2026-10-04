@@ -84,6 +84,59 @@ module Spree
             end
           end
         end
+
+        context "with an existing credit card" do
+          let(:customer) { create(:user) }
+          let(:other_user) { create(:user) }
+          let(:order) { create(:order_with_line_items, state: "payment", user: customer) }
+          let(:payment_method) { create(:credit_card_payment_method, available_to_admin: true, available_to_users: false) }
+          let(:own_card) do
+            create(:credit_card, payment_method:, user: customer, gateway_customer_profile_id: "CUSTOMER_PROFILE").tap do |card|
+              customer.wallet.add(card)
+            end
+          end
+          let(:other_card) do
+            create(:credit_card, payment_method:, user: other_user, gateway_customer_profile_id: "OTHER_PROFILE").tap do |card|
+              other_user.wallet.add(card)
+            end
+          end
+          let(:attributes) do
+            {
+              order_id: order.number,
+              card: card_id,
+              payment: {
+                amount: order.total,
+                payment_method_id: payment_method.id.to_s
+              }
+            }
+          end
+
+          before do
+            own_card
+            other_card
+            post :create, params: attributes
+          end
+
+          context "belonging to the order's user" do
+            let(:card_id) { own_card.id }
+
+            it "creates the payment with that card as the source" do
+              expect(order.payments.count).to eq(1)
+              expect(order.payments.last.source).to eq(own_card)
+              expect(response).to redirect_to(spree.admin_order_payments_path(order))
+            end
+          end
+
+          context "belonging to another user" do
+            let(:card_id) { other_card.id }
+
+            it "does not create the payment" do
+              expect(order.payments).to be_empty
+              expect(flash[:error]).to eq(I18n.t("spree.payment_could_not_be_created"))
+              expect(response).to render_template(:new)
+            end
+          end
+        end
       end
 
       describe "#new" do
