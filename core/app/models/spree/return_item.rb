@@ -41,6 +41,7 @@ module Spree
 
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order
+    validate :belongs_to_return_authorization_order, if: -> { inventory_unit_id_changed? || return_authorization_id_changed? }
     validate :validate_acceptance_status_for_reimbursement
     validate :validate_no_other_completed_return_items
 
@@ -222,6 +223,14 @@ module Spree
       return unless customer_return && inventory_unit
 
       if customer_return.order_id != inventory_unit.order_id
+        errors.add(:base, I18n.t("spree.return_items_cannot_be_associated_with_multiple_orders"))
+      end
+    end
+
+    def belongs_to_return_authorization_order
+      return unless return_authorization && inventory_unit
+
+      if return_authorization.order_id != inventory_unit.order_id
         errors.add(:base, I18n.t("spree.return_items_cannot_be_associated_with_multiple_orders"))
       end
     end
