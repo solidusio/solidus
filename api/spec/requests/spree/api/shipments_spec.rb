@@ -510,6 +510,33 @@ module Spree::Api
             expect(response).to be_unauthorized
           end
         end
+
+        context "if the user can only read active stock locations" do
+          let(:user) { create(:user, spree_api_key: "abc123") }
+
+          custom_authorization! do |_|
+            can :manage, Spree::Shipment
+          end
+
+          before do
+            stock_location.restock(variant, 1)
+          end
+
+          it "transfers to an active stock location" do
+            subject
+            expect(response).to be_accepted
+            expect(parsed_response["success"]).to be true
+          end
+
+          context "and the stock location is inactive" do
+            let(:stock_location) { create(:stock_location, active: false) }
+
+            it "returns a 404" do
+              expect { subject }.not_to change { order.shipments.count }
+              expect(response).to be_not_found
+            end
+          end
+        end
       end
 
       describe "POST /api/shipments/transfer_to_shipment" do
