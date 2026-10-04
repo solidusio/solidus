@@ -58,6 +58,11 @@ module Spree
       def fire
         return unless (event = params[:e]) && @payment.payment_source
 
+        unless @payment.actions.include?(event)
+          flash[:error] = t("spree.cannot_perform_operation")
+          return
+        end
+
         # Because we have a transition method also called void, we do this to avoid conflicts.
         event = "void_transaction" if event == "void"
         if @payment.send("#{event}!")
