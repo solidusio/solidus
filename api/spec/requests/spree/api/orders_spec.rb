@@ -269,6 +269,7 @@ module Spree::Api
       context "when the user can administer the order" do
         custom_authorization! do |_|
           can [:admin, :update], Spree::Order
+          can :show, Spree.user_class
         end
 
         it "will associate users" do
@@ -280,6 +281,29 @@ module Spree::Api
         it "updates the otherwise forbidden attributes" do
           expect { subject }.to change { order.reload.number }
             .to("anothernumber")
+        end
+      end
+
+      context "when the user can administer the order but cannot see users" do
+        custom_authorization! do |_|
+          can [:admin, :update], Spree::Order
+        end
+
+        it { is_expected.to be_not_found }
+
+        it "does not update the order" do
+          expect {
+            subject
+          }.not_to change { order.reload.attributes.slice("user_id", "email", "number") }
+        end
+
+        context "without a user_id" do
+          let(:order_params) { {number: "anothernumber", email: "foo@foobar.com"} }
+
+          it "updates the order" do
+            expect { subject }.to change { order.reload.number }
+              .to("anothernumber")
+          end
         end
       end
     end

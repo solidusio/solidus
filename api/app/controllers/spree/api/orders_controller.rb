@@ -85,11 +85,13 @@ module Spree
       def update
         authorize! :update, @order, order_token
 
+        user_id = params[:order][:user_id]
+        if can?(:admin, @order) && user_id
+          user = Spree.user_class.accessible_by(current_ability, :show).find(user_id)
+        end
+
         if @order.contents.update_cart(order_params)
-          user_id = params[:order][:user_id]
-          if can?(:admin, @order) && user_id
-            @order.associate_user!(Spree.user_class.find(user_id))
-          end
+          @order.associate_user!(user) if user
           respond_with(@order, default_template: :show)
         else
           invalid_resource!(@order)
