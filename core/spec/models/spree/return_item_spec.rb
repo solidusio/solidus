@@ -501,6 +501,44 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
   end
 
+  describe "inventory unit and return authorization order validation" do
+    let(:order) { create(:shipped_order) }
+    let(:return_authorization) { create(:return_authorization, order:) }
+    let(:return_item) { build(:return_item, return_authorization:, inventory_unit:) }
+
+    context "when the inventory unit belongs to the return authorization's order" do
+      let(:inventory_unit) { order.inventory_units.first }
+
+      it "is valid" do
+        expect(return_item).to be_valid
+      end
+    end
+
+    context "when the inventory unit belongs to a different order" do
+      let(:inventory_unit) { create(:shipped_order).inventory_units.first }
+
+      it "is invalid" do
+        expect(return_item).not_to be_valid
+        expect(return_item.errors[:base]).to include(I18n.t("spree.return_items_cannot_be_associated_with_multiple_orders"))
+      end
+
+      it "does not cancel other return items for the inventory unit" do
+        other_return_item = create(:return_item, inventory_unit:)
+
+        expect(return_item.save).to eq(false)
+        expect(other_return_item.reload.reception_status).to eq("awaiting")
+      end
+
+      context "when the return item was persisted before the validation existed" do
+        before { return_item.save!(validate: false) }
+
+        it "can still be cancelled" do
+          expect { return_item.cancel! }.to change { return_item.reload.reception_status }.to("cancelled")
+        end
+      end
+    end
+  end
+
   describe 'validity for reimbursements' do
     let(:return_item) { create(:return_item, acceptance_status:) }
     let(:acceptance_status) { 'pending' }
