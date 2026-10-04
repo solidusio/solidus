@@ -63,4 +63,37 @@ RSpec.describe "SolidusAdmin::OrdersController", type: :request do
       end
     end
   end
+
+  describe "GET #customers_for" do
+    let(:order) { create(:order) }
+    let!(:customer) { create(:user, email: "customer@example.com") }
+
+    it "lists customers" do
+      get solidus_admin.customers_for_order_path(order)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("customer@example.com")
+    end
+
+    context "when the admin cannot see users" do
+      before do
+        ability = Class.new do
+          include CanCan::Ability
+
+          def initialize
+            can :manage, Spree::Order
+          end
+        end.new
+
+        allow_any_instance_of(SolidusAdmin::BaseController).to receive(:current_ability).and_return(ability)
+      end
+
+      it "does not list customers" do
+        get solidus_admin.customers_for_order_path(order)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include("customer@example.com")
+      end
+    end
+  end
 end

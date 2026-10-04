@@ -101,6 +101,7 @@ module SolidusAdmin
       load_order
 
       @users = Spree.user_class
+        .accessible_by(current_ability, :show)
         .where.not(id: @order.user_id)
         .order(created_at: :desc, id: :desc)
         .ransack(params[:q])
