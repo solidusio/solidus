@@ -150,7 +150,7 @@ module Spree
       # @api public
       def determine_order_user
         if order_params[:user_id].present?
-          Spree.user_class.find(order_params[:user_id])
+          Spree.user_class.accessible_by(current_ability, :show).find(order_params[:user_id])
         else
           current_api_user
         end

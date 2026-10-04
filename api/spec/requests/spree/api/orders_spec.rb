@@ -157,6 +157,7 @@ module Spree::Api
       context "when the current user can administrate the order" do
         custom_authorization! do |_|
           can [:admin, :create], Spree::Order
+          can :show, Spree.user_class
         end
 
         it "it permits all params and allows overriding the user" do
@@ -168,6 +169,28 @@ module Spree::Api
         end
 
         it { is_expected.to be_successful }
+      end
+
+      context "when the current user can administrate the order but cannot see users" do
+        custom_authorization! do |_|
+          can [:admin, :create], Spree::Order
+        end
+
+        it { is_expected.to be_not_found }
+
+        it "does not create an order" do
+          expect { subject }.not_to change { Spree::Order.count }
+        end
+
+        context "without a user_id" do
+          let(:attributes) { {created_at: date_override, email: target_user.email} }
+
+          it "creates the order for the current user" do
+            subject
+            expect(response).to be_successful
+            expect(Spree::Order.last.user).to eq current_api_user
+          end
+        end
       end
 
       context "when the line items have custom attributes" do
