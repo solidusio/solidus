@@ -27,6 +27,7 @@ RSpec.describe Spree::UserMethods do
         include CanCan::Ability
 
         def initialize(_user)
+          can :read, ::Spree::Role
           can :manage, ::Spree::Role, name: 'accessible_role'
         end
       end.new(:user)
