@@ -81,10 +81,16 @@ class Spree::Api::UsersController < Spree::Api::BaseController
   end
 
   def permitted_user_attributes
+    attributes = super
+
     if action_name == "create" || can?(:update_email, @user)
-      super | [:email]
-    else
-      super
+      attributes |= [:email]
     end
+
+    unless action_name == "create" || @user == current_api_user || can?(:update_password, @user)
+      attributes -= [:password, :password_confirmation]
+    end
+
+    attributes
   end
 end
