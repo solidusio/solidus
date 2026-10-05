@@ -71,6 +71,7 @@ module Spree
       # Can be used to capture partial amounts of a payment, and will create
       # a new pending payment record for the remaining amount to capture later.
       def capture!(capture_amount = nil)
+        return unless check_payment_preconditions!
         return true if completed?
         return false unless amount.positive?
 

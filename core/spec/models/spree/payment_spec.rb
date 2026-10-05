@@ -606,6 +606,17 @@ RSpec.describe Spree::Payment, type: :model do
         end
       end
 
+      context "when payment is processing" do
+        before do
+          payment.state = "processing"
+        end
+
+        it "should do nothing" do
+          expect(payment.payment_method).not_to receive(:capture)
+          expect { subject }.not_to change(payment.log_entries, :count)
+        end
+      end
+
       # Regression test for https://github.com/spree/spree/issues/2119
       context "when payment is completed" do
         before do
