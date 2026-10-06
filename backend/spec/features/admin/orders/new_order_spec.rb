@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "New Order", type: :feature do
+describe "New Order", type: :feature, js: true do
   include OrderFeatureHelper
 
   let!(:product) { create(:product_in_stock) }
@@ -41,6 +41,7 @@ describe "New Order", type: :feature do
       targetted_select2_search user.email, from: "#s2id_customer_search"
     end
 
+    check "Frontend Viewable"
     expect(page).to have_checked_field("order_use_billing")
     fill_in_address
     click_on "Update"
@@ -55,6 +56,7 @@ describe "New Order", type: :feature do
     click_on "Complete Order"
 
     expect(page).to have_content("Order completed")
+    expect(Spree::Order.last.frontend_viewable).to eq(true)
 
     expect(current_path).to eql(spree.edit_admin_order_path(Spree::Order.last))
 
