@@ -380,7 +380,7 @@ module Spree::Api
 
           it "allows setting a previous state" do
             order.update_column(:state, "confirm")
-            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            put spree.api_checkout_path(order), params: {order_token: order.guest_token, state: "address"}
             expect(response.status).to eq(200)
 
             # We call order.next! after updating the order. So even though we
@@ -390,7 +390,7 @@ module Spree::Api
 
           it "allows setting the current state" do
             order.update_column(:state, "address")
-            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            put spree.api_checkout_path(order), params: {order_token: order.guest_token, state: "address"}
             expect(response.status).to eq(200)
             expect(json_response["state"]).to eq("delivery")
           end
@@ -418,14 +418,14 @@ module Spree::Api
 
           it "allows setting a previous state" do
             order.update_column(:state, "confirm")
-            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            put spree.api_checkout_path(order), params: {order_token: order.guest_token, state: "address"}
             expect(response.status).to eq(200)
             expect(json_response["state"]).to eq("delivery")
           end
 
           it "allows setting the current state" do
             order.update_column(:state, "address")
-            put spree.api_checkout_path(order), params: { order_token: order.guest_token, state: "address" }
+            put spree.api_checkout_path(order), params: {order_token: order.guest_token, state: "address"}
             expect(response.status).to eq(200)
             expect(json_response["state"]).to eq("delivery")
           end
