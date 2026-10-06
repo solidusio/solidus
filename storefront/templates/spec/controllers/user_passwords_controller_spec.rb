@@ -79,7 +79,7 @@ RSpec.describe UserPasswordsController, type: :controller do
       it "redirects back to the login page" do
         post :create, params: {spree_user: {email: "admin@example.com"}}
 
-        expect(response).to redirect_to spree.login_path
+        expect(response).to redirect_to login_path
         expect(response).to have_http_status(302)
       end
     end
