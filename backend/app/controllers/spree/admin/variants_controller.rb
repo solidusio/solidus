@@ -12,6 +12,10 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:variant).permit(permitted_variant_attributes)
+      end
+
       def new_before
         @object.attributes = @object.product.master.attributes.except('id', 'created_at', 'deleted_at',
                                                                       'sku', 'is_master')

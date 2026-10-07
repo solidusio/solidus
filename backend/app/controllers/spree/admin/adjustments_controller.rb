@@ -21,6 +21,10 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:adjustment).permit(:amount, :label, :adjustment_reason_id)
+      end
+
       def find_adjustment
         # Need to assign to @object here to keep ResourceController happy
         @adjustment = @object = parent.all_adjustments.find(params[:id])

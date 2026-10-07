@@ -9,6 +9,13 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        # We remove viewable_type because it is explicitly set by set_viewable.
+        # The field isn't editable with the current UI, so we don't want to
+        # allow it to be set via mass assignment.
+        params.require(:image).permit(permitted_image_attributes - [:viewable_type])
+      end
+
       def location_after_destroy
         admin_product_images_url(@product)
       end
