@@ -5,6 +5,10 @@ module Spree
     class ReturnItemsController < ResourceController
       private
 
+      def permitted_resource_params
+        params.require(:return_item).permit(:acceptance_status, :reception_status_event)
+      end
+
       def location_after_save
         url_for([:edit, :admin, @return_item.customer_return.order, @return_item.customer_return])
       end
