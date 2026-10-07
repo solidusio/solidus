@@ -274,11 +274,25 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     spree
   end
 
-  # Allow all attributes to be updatable.
+  # Any subclasses should override it to limit the params to a safe list of
+  # attributes.
   #
-  # Other controllers can, should, override it to set custom logic
+  # Previously, this method would permit all attributes, but that is not safe.
+  # That legacy behaviour is preserved here behind a configuration flag. We
+  # strongly recommend disabling the flag and implementing this method in your
+  # controller to explicitly permit only the attributes you want to allow.
   def permitted_resource_params
-    params[object_name].present? ? params.require(object_name).permit! : ActionController::Parameters.new.permit!
+    if Spree::Backend::Config.permit_all_resource_params_fallback
+      Spree.deprecator.warn(
+        "Using `permit_all_resource_params_fallback` is not safe and will be " \
+        "removed in a future version of Solidus. Please implement " \
+        "`permitted_resource_params` in your controller to explicitly permit only " \
+        "the attributes you want to allow."
+      )
+      params[object_name].present? ? params.require(object_name).permit! : ActionController::Parameters.new.permit!
+    else
+      raise NotImplementedError, "You must implement permitted_resource_params in your controller"
+    end
   end
 
   def collection_actions
