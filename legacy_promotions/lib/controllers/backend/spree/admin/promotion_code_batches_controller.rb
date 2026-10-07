@@ -22,6 +22,10 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:promotion_code_batch).permit(:base_code, :number_of_codes, :join_characters, :email)
+      end
+
       def build_promotion_code_batch
         @promotion_code_batch.process
       end
