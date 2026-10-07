@@ -10,6 +10,10 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:product_property).permit(permitted_product_properties_attributes)
+      end
+
       def find_properties
         @properties = Spree::Property.pluck(:name)
       end

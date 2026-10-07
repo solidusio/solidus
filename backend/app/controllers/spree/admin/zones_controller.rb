@@ -11,6 +11,10 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:zone).permit(:name, :description, :kind, country_ids: [], state_ids: [])
+      end
+
       def collection
         params[:q] ||= {}
         params[:q][:s] ||= "name asc"
