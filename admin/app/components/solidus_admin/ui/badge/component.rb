@@ -5,7 +5,7 @@ class SolidusAdmin::UI::Badge::Component < SolidusAdmin::BaseComponent
     graphite_light: "text-black bg-graphite-light",
     red: "text-red-500 bg-red-100",
     green: "text-forest bg-seafoam",
-    blue: "text-blue bg-sky",
+    blue: "text-solidus-blue bg-sky",
     black: "text-white bg-black",
     yellow: "text-orange bg-papaya-whip"
   }.freeze
