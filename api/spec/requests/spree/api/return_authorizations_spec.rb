@@ -18,7 +18,7 @@ module Spree::Api
         stock_location = FactoryBot.create(:stock_location)
         reason = FactoryBot.create(:return_reason)
         reimbursement = FactoryBot.create(:reimbursement_type)
-        unit = FactoryBot.create(:inventory_unit)
+        unit = order.inventory_units.first
         rma_params = { stock_location_id: stock_location.id,
                        return_reason_id: reason.id,
                        return_items_attributes: [{
@@ -32,6 +32,22 @@ module Spree::Api
         expect(json_response["state"]).not_to be_blank
         return_authorization = Spree::ReturnAuthorization.last
         expect(return_authorization.return_items.first.preferred_reimbursement_type).to eql reimbursement
+      end
+
+      it "cannot create a return authorization for another order's inventory unit" do
+        other_order = create(:shipped_order)
+        other_unit = other_order.inventory_units.first
+        other_return_item = create(:return_item, inventory_unit: other_unit)
+        rma_params = { stock_location_id: create(:stock_location).id,
+                       return_items_attributes: [{ inventory_unit_id: other_unit.id }] }
+
+        expect {
+          post spree.api_order_return_authorizations_path(order), params: { order_id: order.number, return_authorization: rma_params }
+        }.not_to change(Spree::ReturnAuthorization, :count)
+
+        expect(response.status).to eq(422)
+        expect(json_response["errors"].to_s).to include("Return items cannot be associated with multiple orders.")
+        expect(other_return_item.reload.reception_status).to eq("awaiting")
       end
     end
 

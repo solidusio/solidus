@@ -70,6 +70,66 @@ module Spree
       end
     end
 
+    context "with gateway profile ids" do
+      let(:user) { create(:user) }
+      let(:payment_method) { create(:credit_card_payment_method) }
+      let(:profile_attributes) { { profile_attribute => "gateway-profile-id" } }
+      let(:attributes) do
+        {
+          amount: 100,
+          payment_method:,
+          source_attributes: profile_attributes
+        }
+      end
+
+      %i[gateway_customer_profile_id gateway_payment_profile_id].each do |attribute|
+        context "for #{attribute}" do
+          let(:profile_attribute) { attribute }
+
+          context "when the id is unknown to the store (e.g. a one-time token)" do
+            it "builds the source without card numbers" do
+              expect(new_payment).to be_valid
+              expect(new_payment.source.public_send(attribute)).to eq "gateway-profile-id"
+              expect(new_payment.source.user_id).to eq user.id
+            end
+          end
+
+          context "when the id belongs to a card owned by the order's user" do
+            before { create(:credit_card, user:, **profile_attributes) }
+
+            it "builds the source" do
+              expect(new_payment).to be_valid
+              expect(new_payment.source.public_send(attribute)).to eq "gateway-profile-id"
+            end
+          end
+
+          context "when the id belongs to a card without a user" do
+            before { create(:credit_card, user: nil, **profile_attributes) }
+
+            it "builds the source" do
+              expect(new_payment).to be_valid
+            end
+          end
+
+          context "when the id belongs to a card owned by a different user" do
+            before { create(:credit_card, user: create(:user), **profile_attributes) }
+
+            it "raises RecordNotFound" do
+              expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
+            end
+
+            context "and the order has no user" do
+              let(:user) { nil }
+
+              it "raises RecordNotFound" do
+                expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
+              end
+            end
+          end
+        end
+      end
+    end
+
     context "with strong params" do
       let(:valid_attributes) do
         {

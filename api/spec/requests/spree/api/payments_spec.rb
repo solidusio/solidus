@@ -93,6 +93,19 @@ module Spree::Api
               expect(response.status).to eq(201)
               expect(json_response).to have_attributes(attributes)
             end
+
+            context "when the gateway profile id belongs to another user's card" do
+              before do
+                create(:credit_card, user: create(:user), gateway_payment_profile_id: "other-users-profile")
+              end
+
+              it "does not create a payment" do
+                expect {
+                  post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, source_attributes: { gateway_payment_profile_id: "other-users-profile" } } }
+                }.not_to change { Spree::Payment.count }
+                expect(response.status).to eq(404)
+              end
+            end
           end
         end
 
