@@ -47,6 +47,22 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        # update_before may clear params[:product] when removing all product properties
+        params.require(:product).permit(
+          *(permitted_attributes.product_attributes - [:deleted_at, :option_values_hash]),
+          :slug, :meta_title, :rebuild_vat_prices, :promotionable, :track_inventory,
+          taxon_ids: [],
+          option_type_ids: [],
+          product_properties_attributes: [:id, *permitted_product_properties_attributes],
+          variant_property_rules_attributes: [
+            :id, :apply_to_all,
+            option_value_ids: [],
+            values_attributes: [:id, :property_name, :value]
+          ]
+        )
+      end
+
       def set_default_tax_category
         @product.tax_category_id ||= @default_tax_category&.id
       end
