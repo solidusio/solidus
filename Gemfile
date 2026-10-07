@@ -13,6 +13,11 @@ end
 # rubocop:enable Bundler/DuplicatedGem
 
 gem 'pry'
+
+# Newer releases of these gems break the test suite: state_machines recurses
+# until the stack overflows, and json 3 is incompatible with Rails < 8.1.
+gem 'state_machines', '<= 0.6'
+gem 'json', '< 3'
 gem 'launchy', require: false
 
 dbs = ENV['DB_ALL'] ? 'all' : ENV.fetch('DB', 'sqlite')
