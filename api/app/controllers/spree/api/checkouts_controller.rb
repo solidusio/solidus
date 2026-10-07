@@ -105,8 +105,18 @@ module Spree
       end
 
       def update_order_state
-        @order.state = params[:state] if params[:state]
+        return unless params[:state]
+
+        unless Spree::Api::Config.allow_arbitrary_state_in_checkout || valid_checkout_step?(params[:state])
+          return respond_with(@order, default_template: "spree/api/orders/invalid_state", status: 422)
+        end
+
+        @order.state = params[:state]
         state_callback(:before)
+      end
+
+      def valid_checkout_step?(step)
+        @order.passed_checkout_step?(step) || @order.state == step
       end
 
       def state_callback(before_or_after = :before)

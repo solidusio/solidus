@@ -2,7 +2,15 @@
 
 FactoryBot.define do
   factory :return_item, class: "Spree::ReturnItem" do
-    association(:inventory_unit, factory: :inventory_unit, state: :shipped)
+    inventory_unit do
+      # When a return authorization is given, the inventory unit must belong
+      # to the same order.
+      if __override_names__.include?(:return_authorization) && return_authorization&.order
+        association(:inventory_unit, state: :shipped, order: return_authorization.order)
+      else
+        association(:inventory_unit, state: :shipped)
+      end
+    end
     association(:return_reason, factory: :return_reason)
     return_authorization do |_return_item|
       build(:return_authorization, order: inventory_unit.order)

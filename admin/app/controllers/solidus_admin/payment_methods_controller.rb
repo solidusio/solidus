@@ -5,6 +5,7 @@ module SolidusAdmin
     include SolidusAdmin::Moveable
 
     before_action :initialize_resource, only: [:new]
+    before_action :validate_type, only: [:create, :update]
 
     search_scope(:all)
     search_scope(:active, default: true, &:active)
@@ -27,6 +28,20 @@ module SolidusAdmin
 
     def initialize_resource
       @resource = resource_class.new(stores: [Spree::Store.default])
+    end
+
+    def available_types
+      Rails.application.config.spree.payment_methods.map(&:name)
+    end
+
+    def validate_type
+      unless available_types.include?(params[:payment_method][:type])
+        @resource ||= resource_class.new(permitted_resource_params.except(:type))
+        @resource.errors.add(:type, :invalid)
+
+        page_component = @resource.persisted? ? edit_component.new(@resource) : new_component.new(@resource)
+        render_resource_form_with_errors(page_component)
+      end
     end
   end
 end

@@ -18,5 +18,33 @@ RSpec.describe "SolidusAdmin::PaymentMethodsController", type: :request do
     let(:resource_class) { Spree::PaymentMethod }
     let(:valid_attributes) { {name: "Credit Card", type: "Spree::PaymentMethod::BogusCreditCard"} }
     let(:invalid_attributes) { {name: "", type: ""} }
+
+    describe "POST /create" do
+      context "with an invalid type" do
+        let(:invalid_attributes) { {name: "Invalid Payment Method", type: "Spree::InvalidType"} }
+
+        it "does not create a payment method" do
+          expect {
+            post solidus_admin.payment_methods_path, params: {payment_method: invalid_attributes}
+          }.not_to change(Spree::PaymentMethod, :count)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
+    describe "PUT /update" do
+      context "with an invalid type" do
+        let(:invalid_attributes) { {type: "Spree::InvalidType"} }
+
+        it "does not update the payment method" do
+          expect {
+            put solidus_admin.payment_method_path(resource), params: {payment_method: invalid_attributes}
+          }.not_to change { resource.reload.name }
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
   end
 end
