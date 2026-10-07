@@ -260,5 +260,47 @@ module Spree::Api
         expect(json_response["users"].first["email"]).to eq distinct_user.email
       end
     end
+
+    context "updating passwords" do
+      let(:password_params) { {password: "diff123", password_confirmation: "diff123"} }
+      let(:updated_attributes) { [] }
+
+      before do
+        allow_any_instance_of(Spree.user_class).to receive(:update).and_wrap_original do |original, attributes|
+          updated_attributes.concat(attributes.keys)
+          original.call(attributes)
+        end
+      end
+
+      it "allows a user to update their own password" do
+        put spree.api_user_path(user.id), params: {token: user.spree_api_key, user: password_params}
+
+        expect(response.status).to eq(200)
+        expect(updated_attributes).to match_array(%w[password password_confirmation])
+      end
+
+      context "with the user management permission set" do
+        before do
+          Spree::Config.roles.assign_permissions "user_manager", [Spree::PermissionSets::UserManagement]
+          user.spree_roles << create(:role, name: "user_manager")
+        end
+
+        it "allows updating the password of a user without roles" do
+          put spree.api_user_path(stranger.id), params: {token: user.spree_api_key, user: password_params}
+
+          expect(response.status).to eq(200)
+          expect(updated_attributes).to match_array(%w[password password_confirmation])
+        end
+
+        it "ignores the password of a user with roles" do
+          admin = create(:admin_user)
+
+          put spree.api_user_path(admin.id), params: {token: user.spree_api_key, user: password_params}
+
+          expect(response.status).to eq(200)
+          expect(updated_attributes).to be_empty
+        end
+      end
+    end
   end
 end
