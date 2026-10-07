@@ -111,5 +111,9 @@ module Spree::Preferences
     def allowed_admin_form_preference_types
       DEFAULT_ADMIN_FORM_PREFERENCE_TYPES
     end
+
+    def permitted_preference_attributes
+      new.admin_form_preference_names.map { |name| :"preferred_#{name}" }
+    end
   end
 end
