@@ -1,3 +1,36 @@
+## Solidus v4.6.4 (2026-10-07)
+
+<!-- Please, don't edit manually. The content is automatically generated. -->
+
+## Security
+
+* Users with UserManagement permissions can assign themselves the admin role or change an admin's password ([GHSA-rw5f-4cm4-pc4m](https://github.com/solidusio/solidus/security/advisories/GHSA-rw5f-4cm4-pc4m))
+* Stored cross-site scripting in Solidus product descriptions ([GHSA-x943-j5hw-mr2w](https://github.com/solidusio/solidus/security/advisories/GHSA-x943-j5hw-mr2w))
+* Missing authorization check on return item inventory units allows cancelling other customers' returns ([GHSA-6p7r-vx57-9gw3](https://github.com/solidusio/solidus/security/advisories/GHSA-6p7r-vx57-9gw3))
+* Checkout state skip via unvalidated state parameter ([GHSA-qwqm-3jx5-rr8m](https://github.com/solidusio/solidus/security/advisories/GHSA-qwqm-3jx5-rr8m))
+* Customers can attach another user's stored gateway payment profile to their own payment ([GHSA-vgwx-9pm9-8qvj](https://github.com/solidusio/solidus/security/advisories/GHSA-vgwx-9pm9-8qvj))
+
+## Solidus Core
+
+* [v4.6] Skip VAT price generation without a valid price by @solidus-bot[bot] in https://github.com/solidusio/solidus/pull/6622
+* Get CI passing again for v4.6 by @jarednorman in https://github.com/solidusio/solidus/pull/6624
+* [v4.6] Touch taxons one at a time in id order by @jarednorman in https://github.com/solidusio/solidus/pull/6635
+
+## Solidus Backend
+
+* Get CI passing again for v4.6 by @jarednorman in https://github.com/solidusio/solidus/pull/6624
+
+## Solidus API
+
+* Get CI passing again for v4.6 by @jarednorman in https://github.com/solidusio/solidus/pull/6624
+
+## Solidus Promotions
+
+* [v4.6] Remove adjustments from cart orders when promotion is discarded by @mamhoff in https://github.com/solidusio/solidus/pull/6562
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.6.3...v4.6.4
+
+
 ## Solidus v4.6.3 (2026-09-09)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
