@@ -19,4 +19,27 @@ RSpec.describe "SolidusAdmin::StatesController", type: :request do
       expect(JSON.parse(response.body).size).to eq(3)
     end
   end
+
+  describe "GET /index pagination headers" do
+    it "links to the next page while more states remain" do
+      allow_any_instance_of(SolidusAdmin::StatesController).to receive(:per_page).and_return(2)
+      create_list(:state, 3)
+
+      get solidus_admin.states_path(view: "state_with_country")
+
+      expect(response.headers["X-Total-Count"]).to eq("3")
+      expect(response.headers["Link"]).to eq(
+        %(<http://www.example.com/admin/states?page=2&view=state_with_country>; rel="next")
+      )
+    end
+
+    it "sends no next link on the last page" do
+      create_list(:state, 3)
+
+      get solidus_admin.states_path
+
+      expect(response.headers["X-Total-Count"]).to eq("3")
+      expect(response.headers["Link"]).to be_nil
+    end
+  end
 end

@@ -23,7 +23,10 @@ module SolidusAdmin
     def index
       respond_to do |format|
         format.html { render index_component.new(page: @page) }
-        format.json { render json: blueprint.render(@page.records, view: blueprint_view) }
+        format.json do
+          set_pagination_headers(@page)
+          render json: blueprint.render(@page.records, view: blueprint_view)
+        end
       end
     end
 

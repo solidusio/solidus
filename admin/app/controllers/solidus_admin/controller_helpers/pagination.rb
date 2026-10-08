@@ -10,7 +10,18 @@ module SolidusAdmin
         records.page(params[:page]).per(per_page)
       end
 
+      def set_pagination_headers(page)
+        response.headers["X-Total-Count"] = page.total_count.to_s
+        response.headers["Link"] = %(<#{page_url(page.next_page)}>; rel="next") if page.next_page
+      end
+
       private
+
+      def page_url(number)
+        uri = URI.parse(request.url)
+        uri.query = request.query_parameters.merge("page" => number).to_query
+        uri.to_s
+      end
 
       # Offset pagination needs a unique sort, or rows with equal values (e.g. two
       # products with the same name) can repeat or go missing across pages.
