@@ -2,7 +2,7 @@
 
 module Spree
   # Base class for all Solidus background jobs
-  class BaseJob < ActiveJob::Base # rubocop:disable Rails/ApplicationJob
+  class BaseJob < ActiveJob::Base
     # Automatically retry jobs that encountered a deadlock
     retry_on ActiveRecord::Deadlocked
 
