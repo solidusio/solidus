@@ -23,12 +23,16 @@ module Spree
         end
 
         def update
-          if @order.contents.update_cart(order_params)
+          if should_associate_user?
+            requested_user = Spree.user_class.accessible_by(current_ability, :show).find_by(id: params[:user_id])
 
-            if should_associate_user?
-              requested_user = Spree.user_class.find(params[:user_id])
-              @order.associate_user!(requested_user, @order.email.blank?)
+            unless requested_user
+              return resource_not_found(flash_class: Spree.user_class, redirect_url: edit_admin_order_customer_url(@order))
             end
+          end
+
+          if @order.contents.update_cart(order_params)
+            @order.associate_user!(requested_user, @order.email.blank?) if requested_user
 
             unless @order.completed?
               @order.contents.advance

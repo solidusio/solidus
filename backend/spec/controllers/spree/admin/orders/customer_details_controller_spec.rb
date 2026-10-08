@@ -115,6 +115,44 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         end
       end
 
+      context "when the admin cannot see users" do
+        stub_authorization! do |_user|
+          can :manage, Spree::Order
+        end
+
+        let(:order) { create(:order, number: "R123456789", email: "original@example.com") }
+        let!(:assigned_user) { create :user }
+
+        it "does not associate the user or update the order" do
+          attributes = {
+            order_id: order.number,
+            user_id: assigned_user.id,
+            guest_checkout: "false",
+            order: {email: "changed@example.com"}
+          }
+
+          expect {
+            put :update, params: attributes
+          }.not_to change { [order.reload.user_id, order.email] }
+
+          expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+          expect(flash[:error]).to be_present
+        end
+
+        it "still updates an order when the current user is resubmitted" do
+          attributes = {
+            order_id: order.number,
+            user_id: order.user_id,
+            guest_checkout: "false",
+            order: {email: "changed@example.com"}
+          }
+
+          expect {
+            put :update, params: attributes
+          }.to change { order.reload.email }.to("changed@example.com")
+        end
+      end
+
       context "not false guest checkout param" do
         it "does not attempt to associate the user" do
           allow(order).to receive_messages(update: true,

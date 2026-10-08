@@ -46,6 +46,10 @@ module SolidusAdmin
     def update
       load_order
 
+      if order_params[:user_id].present? && order_params[:user_id].to_s != @order.user_id.to_s
+        Spree.user_class.accessible_by(current_ability, :show).find(order_params[:user_id])
+      end
+
       @order.assign_attributes(order_params)
       @order.email ||= @order.user.email if @order.user&.changed?
 
@@ -97,6 +101,7 @@ module SolidusAdmin
       load_order
 
       @users = Spree.user_class
+        .accessible_by(current_ability, :show)
         .where.not(id: @order.user_id)
         .order(created_at: :desc, id: :desc)
         .ransack(params[:q])

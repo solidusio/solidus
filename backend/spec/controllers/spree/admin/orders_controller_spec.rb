@@ -102,14 +102,26 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "when a user_id is passed as a parameter" do
-        let(:user) { mock_model(Spree.user_class, ship_address: mock_model(Spree::Address), bill_address: nil) }
-        before { allow(Spree.user_class).to receive_messages find_by: user }
+        let(:customer) { create(:user) }
 
         it "imports a new order and assigns the user to the order" do
           expect(Spree::Core::Importer::Order).to receive(:import)
-            .with(user, hash_including(created_by_id: controller.spree_current_user.id))
+            .with(customer, hash_including(created_by_id: controller.spree_current_user.id))
             .and_return(order)
-          get :new, params: {user_id: user.id}
+          get :new, params: {user_id: customer.id}
+        end
+
+        context "when the admin cannot see users" do
+          stub_authorization! do |_user|
+            can :manage, Spree::Order
+          end
+
+          it "imports a new order without assigning the user" do
+            expect(Spree::Core::Importer::Order).to receive(:import)
+              .with(nil, hash_including(created_by_id: controller.spree_current_user.id))
+              .and_return(order)
+            get :new, params: {user_id: customer.id}
+          end
         end
       end
 
