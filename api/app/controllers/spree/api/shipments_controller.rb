@@ -93,7 +93,7 @@ module Spree
       end
 
       def transfer_to_location
-        @desired_stock_location = Spree::StockLocation.find(params[:stock_location_id])
+        @desired_stock_location = Spree::StockLocation.accessible_by(current_ability, :show).find(params[:stock_location_id])
         @desired_shipment = @original_shipment.order.shipments.build(stock_location: @desired_stock_location)
         transfer_to_shipment
       end
