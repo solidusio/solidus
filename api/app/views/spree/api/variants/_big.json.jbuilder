@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.cache! [I18n.locale, Spree::StockLocation.accessible_by(current_ability), variant] do
+json.cache! [I18n.locale, Spree::StockLocation.accessible_by(current_ability), variant, variant_attributes] do
   json.call(variant, *variant_attributes)
   json.partial!("spree/api/variants/small", variant:)
   json.variant_properties(variant.variant_properties) do |variant_property|
