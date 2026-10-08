@@ -134,6 +134,25 @@ RSpec.describe "Visiting Products", type: :system do
     end
   end
 
+  context "when the product only has a country-specific price" do
+    let(:product) { Spree::Product.find_by(name: "Solidus tote") }
+    let(:country) { Spree::Country.find_by(iso: "US") || create(:country, iso: "US") }
+
+    before do
+      Spree::Store.first.update!(cart_tax_country_iso: country.iso)
+      product.master.prices.each { |price| price.update!(country:) }
+    end
+
+    it "shows the price and the add to cart button" do
+      visit product_path(product)
+
+      within("#product-price") { expect(page).to have_content("$19.99") }
+      within("#cta_price") { expect(page).to have_content("$19.99") }
+      expect(page).to have_button("add-to-cart-button")
+      expect(page).not_to have_content("This product is not available in the selected currency.")
+    end
+  end
+
   context "a product with variants" do
     let(:product) { Spree::Product.find_by(name: "Solidus hoodie") }
     let(:option_value) { create(:option_value) }

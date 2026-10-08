@@ -19,7 +19,7 @@
 
   <%= render 'cart_line_items/product_variants', product: product %>
 
-  <% if product.price %>
+  <% if product.price_for_options(current_pricing_options) %>
     <%= render 'cart_line_items/product_submit', product: product %>
   <% else %>
     <div id="product-price">
