@@ -249,6 +249,17 @@ describe Spree::Admin::UsersController, type: :controller do
       end
     end
 
+    context "with the user management permission set" do
+      stub_authorization! do |_user|
+        Spree::PermissionSets::UserManagement.new(self).activate!
+      end
+
+      it "cannot assign users roles" do
+        post :create, params: {user: {name: "Bob Bloggs", spree_role_ids: [dummy_role.id]}}
+        expect(user.spree_roles).to eq([])
+      end
+    end
+
     it "can create a shipping_address" do
       post :create, params: {user: {ship_address_attributes: valid_address_attributes}}
       expect(user.reload.ship_address.city).to eq("New York")
@@ -372,6 +383,25 @@ describe Spree::Admin::UsersController, type: :controller do
         user.spree_roles << role2
         put :update, params: {id: user.id, user: {spree_role_ids: [role1.id]}}
         expect(user.reload.spree_roles).to match_array([role1, role2])
+      end
+    end
+
+    context "with the user management permission set" do
+      stub_authorization! do |_user|
+        Spree::PermissionSets::UserManagement.new(self).activate!
+      end
+
+      it "cannot set roles" do
+        expect {
+          put :update, params: {id: user.id, user: {spree_role_ids: [dummy_role.id]}}
+        }.not_to change { user.reload.spree_roles.to_a }
+      end
+
+      it "cannot clear roles" do
+        user.spree_roles << dummy_role
+        expect {
+          put :update, params: {id: user.id, user: {spree_role_ids: [""]}}
+        }.not_to change { user.reload.spree_roles.to_a }
       end
     end
 

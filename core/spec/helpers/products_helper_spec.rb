@@ -152,6 +152,16 @@ THIS IS THE BEST PRODUCT EVER!
         description = product_description(product)
         expect(description).to eq(description)
       end
+
+      it "sanitizes event-handler markup when raw descriptions are disabled" do
+        product.description = %(ATO <img src=x onerror="alert(1)"> <script>alert(2)</script>)
+
+        description = product_description(product)
+
+        expect(description).not_to include("onerror")
+        expect(description).not_to include("<script")
+        expect(description).to be_html_safe
+      end
     end
 
     context "#line_item_description_text" do

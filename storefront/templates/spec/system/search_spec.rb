@@ -19,11 +19,12 @@ RSpec.describe "searching products", :js, type: :system do
 
   it "shows autocomplete suggestions" do
     fill_search_input_with "Solidus"
-    expect(page.all('[data-search-target="result"]').size).to eq(6)
+    expect(page).to have_selector('[data-search-target="result"]', count: 6)
   end
 
   it "automatically selects the first suggestion" do
     fill_search_input_with "Solidus"
+    wait_for_autocomplete
     expect(page.all('[data-search-target="result"]')[0][:class]).to include("text-primary")
   end
 
@@ -72,7 +73,7 @@ RSpec.describe "searching products", :js, type: :system do
   end
 
   def wait_for_autocomplete
-    expect(page).to have_selector('[data-search-target="result"]', visible: true)
+    expect(page).to have_selector('[data-search-target="result"]', count: 6, visible: true)
   end
 
   def fill_search_input_with(text)

@@ -8,6 +8,10 @@ module Spree
     #   * :payment_method_id Id of payment method used for this payment
     #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
     #     * :wallet_payment_source_id (Integer): The id of a {WalletPaymentSource} to use
+    #     * :gateway_customer_profile_id, :gateway_payment_profile_id (String): Gateway
+    #       identifiers for a new {CreditCard}, e.g. a one-time token. Raises
+    #       ActiveRecord::RecordNotFound if either already belongs to a {CreditCard}
+    #       owned by a different user.
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: nil, request_env: {})
@@ -44,11 +48,30 @@ module Spree
     def build_source
       payment_method = payment.payment_method
       if source_attributes.present? && payment_method.try(:payment_source_class)
+        ensure_gateway_profile_ownership!(payment_method.payment_source_class)
         payment.source = payment_method.payment_source_class.new(source_attributes)
         payment.source.payment_method_id = payment_method.id
         if order && payment.source.respond_to?(:user=)
           payment.source.user = order.user
         end
+      end
+    end
+
+    # Gateway profile ids may only be submitted for a new source when they are
+    # unknown to the store (e.g. a one-time token) or already belong to the
+    # order's user. Raises if either id is stored on a {CreditCard} owned by a
+    # different user, so customers cannot pay with another customer's stored
+    # gateway credential.
+    def ensure_gateway_profile_ownership!(source_class)
+      return unless source_class <= Spree::CreditCard
+
+      %i[gateway_customer_profile_id gateway_payment_profile_id].each do |attribute|
+        value = source_attributes[attribute]
+        next if value.blank?
+
+        foreign_cards = Spree::CreditCard.where(attribute => value).where.not(user_id: nil)
+        foreign_cards = foreign_cards.where.not(user_id: order.user_id) if order&.user_id
+        raise ActiveRecord::RecordNotFound if foreign_cards.exists?
       end
     end
 
