@@ -29,6 +29,13 @@ module SolidusPromotions
 
       private
 
+      def permitted_resource_params
+        params.require(:promotion).permit(
+          :name, :customer_label, :description, :promotion_category_id, :usage_limit,
+          :per_code_usage_limit, :starts_at, :expires_at, :lane, :apply_automatically, :path
+        )
+      end
+
       def collection
         return @collection if @collection
 
