@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.cache! [I18n.locale, shipment] do
+json.cache! [I18n.locale, shipment, shipment_attributes, line_item_attributes, order_attributes, variant_attributes] do
   json.(shipment, *shipment_attributes)
   json.partial!("spree/api/shipments/small", shipment:)
   json.inventory_units(shipment.inventory_units) do |inventory_unit|
