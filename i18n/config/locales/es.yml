@@ -1241,7 +1241,7 @@ es:
       spree/product:
         promotionable: "Esto determina si las promociones pueden aplicarse a este producto.<br/>Predeterminado: Revisado"
         shipping_category: "Esto determina qué tipo de envío requiere este producto.<br/> Predeterminado: Default"
-        tax_category: "Esto determina qué clase de impuestos se aplica a este producto.<br/> Predeterminado: Ninguno"
+        tax_category: "Esto determina qué clase de impuestos se aplica a este producto.<br/> Predeterminado: %{default_tax_category}"
       spree/promotion:
         starts_at: "Determina cuando la promoción se puede aplicar a pedidos. <br/> Si no se especifica ningún valor, la promoción estará inmediatamente disponible."
         expires_at: "Esto determina cuándo expira la promoción. <br/> Si no se especifica ningún valor, la promoción nunca expira."
@@ -1250,8 +1250,8 @@ es:
       spree/variant:
         tax_category: "Esto determina qué clase de impuestos se aplica a esta variante.<br/> Predeterminado: Usar categoría de impuestos del producto asociado con esta variante"
         deleted: "Variante eliminada"
-        deleted_explanation: "Esta variante se eliminó en% {date}."
-        deleted_explanation_with_replacement: "Esta variante se eliminó en% {date}. Desde entonces ha sido sustituida por otra con el mismo SKU."
+        deleted_explanation: "Esta variante se eliminó en %{date}."
+        deleted_explanation_with_replacement: "Esta variante se eliminó en %{date}. Desde entonces ha sido sustituida por otra con el mismo SKU."
       spree/tax_rate:
         validity_period: "Esto determina el período de validez dentro del cual la tasa de impuestos es válida y se aplicará a los artículos elegibles. <br /> Si no se especifica ningún valor de fecha de inicio, la tasa de impuestos estará inmediatamente disponible. <br /> Si no hay valor de fecha de vencimiento Se especifica, la tasa impositiva nunca expirará "
     failed_payment_attempts: Falló la tentativa de pago

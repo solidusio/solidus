@@ -195,9 +195,9 @@ ja:
         spree/return_item:
           attributes:
             inventory_unit:
-              other_completed_return_item_exists: "は受諾されなかった返品に関連付けられませんでした。"
+              other_completed_return_item_exists: "%{inventory_unit_id}はすでに返品%{return_item_id}として使われています。"
             reimbursement:
-              cannot_be_associated_unless_accepted: "%{inventory_unit_id}はすでに返品%{return_item_id}として使われています。"
+              cannot_be_associated_unless_accepted: "は受諾されなかった返品に関連付けられませんでした。"
         spree/store:
           attributes:
             base:

@@ -1,4 +1,26 @@
+base_locale: en
 data:
+  read:
+    - config/locales/%{locale}.yml
+    # en.yml lives in solidus_core; this gem only ships the translations.
+    # Without it i18n-tasks has no base locale and every check passes trivially.
+    - <%= File.expand_path("../core/config/locales", Dir.pwd) %>/%{locale}.yml
   yaml:
     write:
       line_width: 140
+
+# Translations of an older English string that lost a variable when en.yml changed.
+# They render, just without the detail, and need a translator rather than a token fix.
+# Remove a key from this list once its translations are updated.
+ignore_inconsistent_interpolations:
+  - spree.inventory_error_flash_for_insufficient_quantity
+  - spree.shipment_details
+  - spree.no_resource_found
+  - spree.successfully_refunded
+  - spree.reimbursement_perform_failed
+  - spree.reimbursement_mailer.reimbursement_email.days_to_send
+  - spree.no_option_values_on_product_html
+  - spree.validation.unpaid_amount_not_zero
+  - activerecord.errors.models.spree/return_item.attributes.inventory_unit.other_completed_return_item_exists
+  # Correct as is: Russian "one" also covers 21, 31, … so it needs the count.
+  - spree.payments_failed_count.one

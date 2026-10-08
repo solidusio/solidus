@@ -1066,7 +1066,7 @@ de:
         available_on: 'Setzt das Erhältlichkeitsdatum des Artikels. Wenn diese Datum leer ist oder in der Zukunft liegt, so ist das Produkt nicht im Shop zu sehen.'
         promotionable: 'Hier wird festgelegt, ob Werbeaktionen auf diesen Artikel angewendet werden können.<br>Voreinstellung: ja'
         shipping_category: 'Hier wird festgelegt, welche Art von Lieferung dieser Artikel benötigt.<br/>Voreinstellung: Default'
-        tax_category: 'Hier wird festgelegt, welche Art von Besteuerung dieser Artikel benötigt.<br/>Voreinstellung: Keine'
+        tax_category: 'Hier wird festgelegt, welche Art von Besteuerung dieser Artikel benötigt.<br/>Voreinstellung: %{default_tax_category}'
       spree/promotion:
         expires_at: 'Hier wird festgelegt, wann die Werbeaktion abläuft.<br/>Wenn nichts festgelegt wird, läuft die Werbeaktion nie aus.'
         starts_at: 'Hier wird festgelegt, wann die Werbeaktion beginnt.<br/>Wenn nichts festgelegt wird, beginnt die Werbeaktion sofort.'
