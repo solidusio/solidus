@@ -175,6 +175,31 @@ module Spree
       end
 
       describe "#fire" do
+        describe "events" do
+          let(:payment) { create(:payment, state: "checkout", amount: 10) }
+          let(:order) { payment.order }
+
+          it "fires an event that is one of the payment's actions" do
+            expect {
+              post(:fire, params: {id: payment.to_param, e: "void", order_id: order.to_param})
+            }.to change { payment.reload.state }.from("checkout").to("void")
+          end
+
+          it "does not fire a state machine event that is not one of the payment's actions" do
+            expect {
+              post(:fire, params: {id: payment.to_param, e: "complete", order_id: order.to_param})
+            }.to_not change { payment.reload.state }
+            expect(flash[:error]).to eq("Cannot perform requested operation")
+          end
+
+          it "does not call other methods on the payment" do
+            post(:fire, params: {id: payment.to_param, e: "destroy", order_id: order.to_param})
+
+            expect(Spree::Payment.exists?(payment.id)).to be(true)
+            expect(flash[:error]).to eq("Cannot perform requested operation")
+          end
+        end
+
         describe "authorization" do
           let(:payment) { create(:payment, state: "checkout", amount: 10) }
           let(:order) { payment.order }
