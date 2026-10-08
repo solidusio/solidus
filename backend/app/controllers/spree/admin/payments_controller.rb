@@ -29,7 +29,9 @@ module Spree
       def create
         @payment = PaymentCreate.new(@order, object_params).build
         if @payment.payment_method.source_required? && params[:card].present? && params[:card] != "new"
-          @payment.source = @payment.payment_method.payment_source_class.find_by(id: params[:card])
+          @payment.source = @payment.payment_method
+            .reusable_sources(@order)
+            .detect { |source| source.id == params[:card].to_i }
         end
 
         begin
