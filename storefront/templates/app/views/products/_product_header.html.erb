@@ -3,13 +3,13 @@
     <%= product.name %>
   </h1>
 
-  <% if product.price_for_options(current_pricing_options)&.money and !product.price.nil? %>
+  <% if (price = product.price_for_options(current_pricing_options)&.money) %>
     <h2 class="font-sans-md text-body-md" id="product-price">
       <%= content_tag(
         :span,
-        display_price(product),
+        price.to_html,
         itemprop: 'price',
-        content: product.price_for_options(current_pricing_options)&.money.to_d,
+        content: price.to_d,
         data: { js: 'price' }
       ) %>
 

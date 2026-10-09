@@ -3,7 +3,7 @@
 
   <div id="paypal-button-container"></div>
 
-  <div data-pp-message data-pp-placement="product" data-pp-amount="<%= @product.price %>"></div>
+  <div data-pp-message data-pp-placement="product" data-pp-amount="<%= @product.price_for_options(current_pricing_options)&.amount %>"></div>
 
   <script>
     SolidusPaypalCommercePlatform.checkout_url = "<%= checkout_url %>"
