@@ -60,7 +60,7 @@ jobs:
       SOLIDUS_RAISE_DEPRECATIONS: true
     services:
       postgres:
-        image: postgres:latest
+        image: public.ecr.aws/docker/library/postgres:latest
         env:
           POSTGRES_USER: ${{ env.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
@@ -72,7 +72,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       mysql:
-        image: mysql:5.7
+        image: public.ecr.aws/docker/library/mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
           MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
