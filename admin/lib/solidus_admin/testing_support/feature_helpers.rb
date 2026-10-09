@@ -45,13 +45,24 @@ module SolidusAdmin
         input = find_field(from, visible: :all)
         control = input.ancestor(".control")
         dropdown = control.sibling(".dropdown", visible: :all)
+        original_select = control.ancestor("div.wrapper").find(
+          :xpath,
+          "preceding-sibling::select[contains(@class, 'tomselected')][1]",
+          visible: false
+        )
 
-        # Make sure options are loaded
-        control.click
-        within(dropdown) { expect(first(".option", visible: :all)).to be }
+        if original_select["data-no-preload"].blank?
+          control.click
+          within(dropdown) { expect(page).to have_css(".option", minimum: 1) }
+        else
+          within(dropdown) { expect(page).to have_css(".option", minimum: 1) }
+          control.click
+        end
 
         Array.wrap(value).each do |val|
-          input.fill_in(with: val).send_keys(:return)
+          input.fill_in(with: val)
+          within(dropdown) { expect(page).to have_text(val) }
+          send_keys(:return)
           expect(control).to have_text(val)
         end
       end
