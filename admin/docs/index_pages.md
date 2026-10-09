@@ -20,21 +20,27 @@ class SolidusAdmin::UsersController < SolidusAdmin::BaseController
     # ...
 ```
 
-For pagination support, the index action should also call the `set_page_and_extract_portion_from` method provided by the `geared_pagination` gem. This method sets the `@page` instance variable to the paginated collection and returns the portion of the collection to be displayed on the current page.
+For pagination support, the index action should also call the `paginate` method provided by `SolidusAdmin::ControllerHelpers::Pagination` (included in `SolidusAdmin::BaseController`). It paginates the collection with Kaminari, 20 records per page by default (pass `per_page:` to change it), and returns the page to be displayed. Assign it to `@page`.
 
 ```ruby
 def index
   users = apply_search_to(Spree.user_class.order(id: :desc), param: :q)
-  set_page_and_extract_portion_from(users)
+  @page = paginate(users)
   # ...
 ```
 
-Finally, the index action should render the `index` component passing the `@page` instance variable as the `collection` prop.
+To sort the records, pass `ordered_by:` with the columns and directions to sort by. The primary key is added as a final sort column when it isn't already included, so records with equal values don't repeat or go missing between pages.
+
+```ruby
+@page = paginate(products, ordered_by: {name: :asc}) # ORDER BY name ASC, id ASC
+```
+
+Finally, the index action should render the `index` component passing the `@page` instance variable as the `page` prop.
 
 ```ruby
 def index
   users = apply_search_to(Spree.user_class.order(id: :desc), param: :q)
-  set_page_and_extract_portion_from(users)
+  @page = paginate(users)
   render component('users/index').new(page: @page)
 end
 ```

@@ -10,7 +10,7 @@ module SolidusAdmin
         param: :q
       )
 
-      set_page_and_extract_portion_from(reimbursement_types)
+      @page = paginate(reimbursement_types)
 
       respond_to do |format|
         format.html { render component("reimbursement_types/index").new(page: @page) }

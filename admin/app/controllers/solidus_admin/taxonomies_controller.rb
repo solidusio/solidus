@@ -11,7 +11,7 @@ module SolidusAdmin
         param: :q
       )
 
-      set_page_and_extract_portion_from(taxonomies)
+      @page = paginate(taxonomies)
 
       respond_to do |format|
         format.html { render component("taxonomies/index").new(page: @page) }

@@ -35,7 +35,6 @@ RSpec.describe "SolidusAdmin::ZonesController", type: :request do
 
     let(:expected_count) do
       [
-        1, # count zones
         1, # select zones
         1, # preload zone_members
         1, # preload countries
