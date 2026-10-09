@@ -46,6 +46,7 @@ describe "Stores", :js, type: :feature do
     before do
       visit "/admin/stores"
       click_on "Add new"
+      expect(page).to have_field("Store Name")
       expect(page).to be_axe_clean
     end
 
@@ -86,6 +87,7 @@ describe "Stores", :js, type: :feature do
       create(:country, iso: "DE", states_required: false)
       visit "/admin/stores"
       click_on "B2C Store"
+      expect(page).to have_field("Store Name", with: "B2C Store")
       expect(page).to be_axe_clean
     end
 
