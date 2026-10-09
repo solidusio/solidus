@@ -16,7 +16,7 @@ module SolidusAdmin
         param: :q
       )
 
-      set_page_and_extract_portion_from(promotions)
+      @page = paginate(promotions)
 
       respond_to do |format|
         format.html { render component("promotions/index").new(page: @page) }

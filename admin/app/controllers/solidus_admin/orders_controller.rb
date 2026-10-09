@@ -18,7 +18,7 @@ module SolidusAdmin
         distinct: false
       )
 
-      set_page_and_extract_portion_from(orders)
+      @page = paginate(orders)
 
       respond_to do |format|
         format.html { render component("orders/index").new(page: @page) }
