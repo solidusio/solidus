@@ -579,6 +579,42 @@ module Spree::Api
             expect(parsed_response["error"]).to eq("The resource you were looking for could not be found.")
           end
         end
+
+        context "if the target shipment belongs to another order" do
+          let(:other_order) { create(:completed_order_with_totals) }
+          let(:target_shipment) { other_order.shipments.first }
+
+          it "returns a 404 and does not move the inventory units" do
+            expect { subject }.not_to change { target_shipment.inventory_units.count }
+            expect(response).to be_not_found
+          end
+        end
+
+        context "if the user can not update the target shipment" do
+          let(:user) { create(:user, spree_api_key: "abc123") }
+          let(:ability) do
+            source_stock_location_id = source_shipment.stock_location_id
+            Class.new do
+              include CanCan::Ability
+
+              define_method(:initialize) do |_user|
+                can :manage, Spree::Shipment, stock_location_id: source_stock_location_id
+              end
+            end
+          end
+
+          before do
+            stock_location.restock(variant, 1)
+            Spree::Ability.register_ability(ability)
+          end
+
+          after { Spree::Ability.remove_ability(ability) }
+
+          it "returns a 401 and does not move the inventory units" do
+            expect { subject }.not_to change { target_shipment.inventory_units.count }
+            expect(response).to be_unauthorized
+          end
+        end
       end
     end
   end
