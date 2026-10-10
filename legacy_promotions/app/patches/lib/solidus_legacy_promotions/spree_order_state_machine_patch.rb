@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/core/state_machines/order"
-
 module SolidusLegacyPromotions
   module SpreeOrderStateMachinePatch
     def define_state_machine!

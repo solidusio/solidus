@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/calculator"
-
 module Spree
   class Calculator::TieredPercent < Calculator
     preference :base_percent, :decimal, default: 0

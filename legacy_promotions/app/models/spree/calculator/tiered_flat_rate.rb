@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/calculator"
-
 module Spree
   class Calculator::TieredFlatRate < Calculator
     preference :base_amount, :decimal, default: 0
