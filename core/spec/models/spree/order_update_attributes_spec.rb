@@ -45,5 +45,51 @@ module Spree
         end
       end
     end
+
+    context "with payment attributes for an existing payment" do
+      let(:payment) { create(:payment, order:, payment_method:, amount: 10) }
+      let(:original_source) { payment.source }
+
+      let(:attributes) do
+        {
+          payments_attributes: [
+            {
+              id: payment.id,
+              payment_method_id: payment_method.id,
+              amount: 20,
+              source_attributes: attributes_for(:credit_card, number: "5555555555554444")
+            }
+          ]
+        }
+      end
+
+      it "does not create a new payment" do
+        payment # ensure the payment is created before the update
+
+        expect { update.call }.not_to change { order.payments.reload.count }
+      end
+
+      it "replaces the source on the existing payment" do
+        expect {
+          update.call
+        }.to change { payment.reload.source }.from(original_source)
+
+        expect(payment.reload.source.last_digits).to eq("4444")
+      end
+
+      it "updates the amount on the existing payment" do
+        expect {
+          update.call
+        }.to change { payment.reload.amount }.from(10).to(20)
+      end
+
+      context "when the payment is not in the checkout state" do
+        let(:payment) { create(:payment, order:, payment_method:, state: "completed") }
+
+        it "raises RecordNotFound" do
+          expect { update.call }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
   end
 end

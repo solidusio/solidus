@@ -36,7 +36,10 @@ module Spree
 
     def assign_payments_attributes
       @payments_attributes.each do |payment_attributes|
-        PaymentCreate.new(order, payment_attributes, request_env: @request_env).build
+        payment_id = payment_attributes.delete(:id)
+        payment = order.payments.find { |payment| payment.id == payment_id.to_i }
+
+        PaymentCreate.new(order, payment_attributes, payment:, request_env: @request_env).build
       end
     end
   end
