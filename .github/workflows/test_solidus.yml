@@ -24,6 +24,7 @@ jobs:
     # load with older libvips, because it cannot disable the unfuzzed operations that
     # are unsafe on untrusted content. ubuntu-22.04 only ships libvips 8.12.1.
     runs-on: ubuntu-24.04
+    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       fail-fast: false
       matrix:
@@ -44,6 +45,11 @@ jobs:
             ruby: "4.0"
             database: postgres
             storage: activestorage
+          - rails: main
+            ruby: "4.0"
+            database: sqlite
+            storage: activestorage
+            experimental: true
     env:
       ARTIFACTS_DIR: ${{ github.workspace }}/${{ inputs.lib_name }}/artifacts
       BUNDLE_WITHOUT: "lint release"
@@ -56,7 +62,9 @@ jobs:
       DISABLE_ACTIVE_STORAGE: ${{ matrix.storage == 'paperclip' }}
       LIB_NAME: ${{ inputs.lib_name }}
       RAILS_ENV: test
-      RAILS_VERSION: '~> ${{ matrix.rails }}'
+      RAILS_VERSION: ${{ matrix.rails == 'main' && 'main' || format('~> {0}', matrix.rails) }}
+      RAILS_DEPRECATIONS_BEHAVIOR: ${{ matrix.experimental == true && 'raise' || '' }}
+      RSPEC_GITHUB_FORMAT: ${{ matrix.experimental == true && '' || '--format RSpec::Github::Formatter' }}
       SOLIDUS_RAISE_DEPRECATIONS: true
     services:
       postgres:
@@ -116,7 +124,7 @@ jobs:
         run: |
           cd ${{ inputs.lib_name }}
           bundle exec rake test_app
-          bundle exec rspec --profile 10 --format progress --format RSpec::Github::Formatter
+          bundle exec rspec --profile 10 --format progress $RSPEC_GITHUB_FORMAT
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v5
         if: ${{ steps.setup-coverage.outputs.coverage == 'true' }}
