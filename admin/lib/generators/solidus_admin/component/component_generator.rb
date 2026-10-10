@@ -17,6 +17,9 @@ module SolidusAdmin
     end
 
     def setup_inflections
+      # Exit if the relevant inflections exist and have been loaded already.
+      return if ActiveSupport::Inflector.inflections.acronyms.key?("ui")
+
       # This is needed because the generator won't run the initialization process,
       # in order to ensure that UI is not rendered as Ui we need to setup inflections
       # manually.
