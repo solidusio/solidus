@@ -251,8 +251,6 @@ module Spree
           end
         end
       end
-
-      ::Spree::Product.prepend self
     end
   end
 end

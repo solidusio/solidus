@@ -47,8 +47,6 @@ module Spree
           end
         end
       end
-
-      ::Spree::Variant.prepend self
     end
   end
 end

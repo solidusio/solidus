@@ -373,7 +373,7 @@ module Spree
       removed_classifications = classifications.where(taxon:)
       removed_classifications.each(&:remove_from_list)
     end
+
+    prepend Scopes
   end
 end
-
-require_dependency "spree/product/scopes"
