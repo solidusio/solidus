@@ -1,4 +1,14 @@
 module LayoutHelper
+  # @return [String, nil] the URL of the current store's logo, if it has one
+  def store_logo_url
+    current_store.logo.url if current_store&.logo_present?
+  end
+
+  # @return [String, nil] the URL of the current store's favicon, if it has one
+  def store_favicon_url
+    current_store.favicon.url if current_store&.favicon_present?
+  end
+
   # Generates a simple canonical tag based on the request path, preserving allowed
   # parameters. For collection actions, a trailing slash is added to the href.
   # For more advanced use cases, consider using the `canonical-rails` gem.

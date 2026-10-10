@@ -19,6 +19,15 @@ class SolidusAdmin::Stores::Form::Component < SolidusAdmin::BaseComponent
     excludes
   end
 
+  # Only a saved attachment has a URL: after a failed save the form is shown
+  # again with a new file assigned but not stored yet.
+  def attachment_preview_url(name)
+    return unless @store.persisted? && @store.errors.empty?
+    return unless @store.public_send(:"#{name}_present?")
+
+    @store.public_send(name).url
+  end
+
   def available_locales
     Spree.i18n_available_locales.map do |locale|
       [I18n.t("spree.i18n.this_file_language", locale: locale, default: locale.to_s, fallback: false), locale]

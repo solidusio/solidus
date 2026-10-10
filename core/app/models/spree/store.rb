@@ -9,6 +9,8 @@ module Spree
   # hosted by a single Solidus implementation can be built.
   #
   class Store < Spree::Base
+    include ::Spree::Config.store_attachment_module
+
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
 

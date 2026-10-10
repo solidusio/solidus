@@ -663,6 +663,15 @@ module Spree
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
 
+    # Allows switching attachment library for Store
+    #
+    # `Spree::Store::ActiveStorageAttachment`
+    # is the default and provides the Active Storage implementation.
+    #
+    # @!attribute [rw] store_attachment_module
+    # @return [Module] a module that can be included into Spree::Store to allow attachments
+    class_name_attribute :store_attachment_module, default: "Spree::Store::ActiveStorageAttachment"
+
     # Allows changing the default behavior for redirects when a user is not authorized
     #
     # @!attribute [rw] unauthorized_redirect_handler_class
