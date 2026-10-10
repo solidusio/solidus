@@ -162,7 +162,9 @@ RSpec.describe Spree::BaseHelper, type: :helper do
     end
 
     it "should use the Spree::I18N_GENERIC_PLURAL constant" do
-      expect(base_class.model_name).to receive(:human).with(hash_including(count: plural_config))
+      model_name = base_class.model_name.dup
+      allow(base_class).to receive(:model_name).and_return(model_name)
+      expect(model_name).to receive(:human).with(hash_including(count: plural_config))
       subject
     end
   end
