@@ -60,8 +60,6 @@ Rails.application.config.view_component.test_controller = "SolidusAdmin::BaseCon
 require "view_component/test_helpers"
 
 RSpec.configure do |config|
-  config.fixture_path = File.join(__dir__, "fixtures")
-
   config.infer_spec_type_from_file_location!
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

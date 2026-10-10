@@ -27,8 +27,6 @@ ActiveJob::Base.queue_adapter = :test
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
-  config.fixture_path = File.join(__dir__, "fixtures")
-
   config.infer_spec_type_from_file_location!
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
