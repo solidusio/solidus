@@ -210,6 +210,26 @@ RSpec.describe Spree::Shipment, type: :model do
     it "should equal line items final amount with tax" do
       expect(shipment.item_cost).to eql(11.0)
     end
+
+    context 'with more shipments for the same line_item' do
+      let(:order) do
+        create(
+          :order_with_line_items,
+          line_items_attributes: [{ price: 10, variant: variant, quantity: 2 }],
+          ship_address: ship_address,
+        )
+      end
+      let(:other_shipment) { order.shipments.create(stock_location_id: shipment.stock_location) }
+
+      it 'returns shipment line items amount with tax' do
+        expect(order.shipments.first.item_cost).to eql(22.0)
+        expect {
+          order.inventory_units.last.update(shipment_id: other_shipment.id)
+        }.to change { order.shipments.reload.first.item_cost }.from(22.0).to(11.0)
+
+        expect(order.shipments.second.item_cost).to eql(11.0)
+      end
+    end
   end
 
   describe "#total_before_tax" do
