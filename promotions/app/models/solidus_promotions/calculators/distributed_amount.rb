@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/calculator"
-
 module SolidusPromotions
   module Calculators
     # A calculator that distributes a fixed discount amount across line items based on their value.

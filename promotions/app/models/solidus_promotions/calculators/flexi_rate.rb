@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/calculator"
-
 module SolidusPromotions
   module Calculators
     # A calculator that applies different discount amounts for the first item and additional items.
