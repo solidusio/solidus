@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Products::New::Component < SolidusAdmin::BaseComponent
   include SolidusAdmin::Layout::PageHelpers
   include SolidusAdmin::Products::FormOptions
 
@@ -9,6 +9,6 @@ class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
   end
 
   def form_id
-    @form_id ||= "#{stimulus_id}--form-#{@product.id}"
+    @form_id ||= "#{stimulus_id}--form-new"
   end
 end

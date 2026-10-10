@@ -1,0 +1,6 @@
+en:
+  title: "Shipping"
+  none: "None"
+  hints:
+    shipping_category_html: "Manage Shipping in Settings"
+    tax_category_html: "Manage Taxes in Settings"
