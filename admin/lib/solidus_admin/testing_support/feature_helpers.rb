@@ -51,7 +51,12 @@ module SolidusAdmin
         within(dropdown) { expect(first(".option", visible: :all)).to be }
 
         Array.wrap(value).each do |val|
-          input.fill_in(with: val).send_keys(:return)
+          option = dropdown.first(".option", exact_text: val, minimum: 0, wait: 0)
+          if option
+            option.click
+          else
+            input.fill_in(with: val).send_keys(:return)
+          end
           expect(control).to have_text(val)
         end
       end
