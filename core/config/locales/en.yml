@@ -781,6 +781,19 @@ en:
       user:
         one: User
         other: Users
+    state_machines:
+      spree/order:
+        states:
+          address: Address
+          awaiting_return: Awaiting return
+          canceled: Canceled
+          cart: Cart
+          complete: Complete
+          confirm: Confirm
+          delivery: Delivery
+          payment: Payment
+          resumed: Resumed
+          returned: Returned
   errors:
     messages:
       already_confirmed: was already confirmed
