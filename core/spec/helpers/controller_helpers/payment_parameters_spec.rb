@@ -205,4 +205,116 @@ RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :control
       end
     end
   end
+
+  describe "#merge_payment_parameters_ids" do
+    subject do
+      controller.merge_payment_parameters_ids(params, order)
+    end
+
+    let(:params) do
+      ActionController::Parameters.new(
+        order: {
+          payments_attributes: payments_attributes,
+          other_order_param: 1
+        },
+        other_param: 2
+      )
+    end
+
+    let(:user) { create(:user) }
+    let(:order) { create(:order_with_line_items, user:) }
+
+    context "when order has no unprocessed payments" do
+      let(:check_payment_method) { create(:check_payment_method) }
+      let(:payments_attributes) do
+        [
+          {
+            payment_method_id: check_payment_method.id.to_s
+          }
+        ]
+      end
+
+      it "returns the original hash" do
+        expect(params_hash).to eq(
+          order: {
+            payments_attributes: [
+              {
+                payment_method_id: check_payment_method.id.to_s
+              }
+            ],
+            other_order_param: 1
+          },
+          other_param: 2
+        )
+      end
+    end
+
+    context "when order has an unprocessed payment" do
+      let(:card_payment_method) { create(:credit_card_payment_method) }
+
+      context "and it matches a payment method in the params" do
+        let(:payments_attributes) do
+          [
+            {
+              payment_method_id: card_payment_method.id.to_s
+            }
+          ]
+        end
+
+        let!(:unprocessed_payment) { create(:payment, order:, payment_method: card_payment_method) }
+
+        it "injects the payment ID of the matching payment method into the hash" do
+          expect(params_hash).to eq(
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: card_payment_method.id.to_s,
+                  id: unprocessed_payment.id
+                }
+              ],
+              other_order_param: 1
+            },
+            other_param: 2
+          )
+        end
+      end
+
+      context "and it matches a wallet payment source in the params" do
+        let(:payments_attributes) do
+          [
+            {
+              source_attributes: {
+                wallet_payment_source_id: wallet_payment_source.id.to_s
+              }
+            }
+          ]
+        end
+
+        let!(:unprocessed_payment) { create(:payment, order:, payment_method: card_payment_method) }
+
+        let(:wallet_payment_source) do
+          user.wallet.add(
+            create(:credit_card, payment_method: card_payment_method, user:)
+          )
+        end
+
+        it "injects the payment ID of the matching payment method into the hash" do
+          expect(params_hash).to eq(
+            order: {
+              payments_attributes: [
+                {
+                  source_attributes: {
+                    wallet_payment_source_id: wallet_payment_source.id.to_s
+                  },
+                  id: unprocessed_payment.id
+                }
+              ],
+              other_order_param: 1
+            },
+            other_param: 2
+          )
+        end
+      end
+    end
+  end
 end
