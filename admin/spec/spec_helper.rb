@@ -60,6 +60,7 @@ Capybara.server = :puma, {Silent: true} # A workaround for https://github.com/rs
 require "database_cleaner"
 
 # FACTORY BOT
+require "spree/testing_support/db_query_matchers"
 require "spree/testing_support/factory_bot"
 Spree::TestingSupport::FactoryBot.add_paths_and_load!
 

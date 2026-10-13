@@ -63,6 +63,7 @@ require "spree/testing_support/capybara_ext"
 
 # Requires factories defined in Solidus core and this extension.
 # See: lib/solidus_promotions/testing_support/factories.rb
+require "spree/testing_support/db_query_matchers"
 require "spree/testing_support/factory_bot"
 require "solidus_legacy_promotions/testing_support/factory_bot"
 require "solidus_promotions/testing_support/factory_bot"

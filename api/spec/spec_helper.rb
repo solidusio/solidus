@@ -34,6 +34,7 @@ require "database_cleaner"
 # in spec/support/ and its subdirectories.
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 
+require "spree/testing_support/db_query_matchers"
 require "spree/testing_support/factory_bot"
 require "spree/testing_support/partial_double_verification"
 require "spree/testing_support/preferences"
