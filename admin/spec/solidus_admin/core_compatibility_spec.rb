@@ -24,4 +24,15 @@ RSpec.describe "solidus_core compatibility guards" do
         "along with the specs covering the unguarded path."
     end
   end
+
+  describe "Spree::Store#address" do
+    it "is still guarded, because solidus_core 4.7 does not provide it" do
+      expect(solidus_core_requirement).to be_satisfied_by(Gem::Version.new("4.7.0")),
+        "solidus_core 4.7 is no longer supported, so stores always have an address. " \
+        "Remove the `Spree::Store.reflect_on_association(:address)` checks from " \
+        "app/controllers/solidus_admin/stores_controller.rb, " \
+        "app/components/solidus_admin/stores/form/component.html.erb, " \
+        "along with the specs covering the unguarded path."
+    end
+  end
 end

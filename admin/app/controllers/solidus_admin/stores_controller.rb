@@ -45,7 +45,7 @@ module SolidusAdmin
     def resources_collection = Spree::Store
 
     def permitted_resource_params
-      params.require(:store).permit(
+      permitted = [
         :name,
         :url,
         :code,
@@ -55,9 +55,12 @@ module SolidusAdmin
         :mail_from_address,
         :default_currency,
         :cart_tax_country_iso,
-        available_locales: [],
-        address_attributes: Spree::PermittedAttributes.address_attributes
-      ).tap do |store_params|
+        {available_locales: []}
+      ]
+      # This check can be removed once we drop support for Solidus 4.7 and earlier.
+      permitted << {address_attributes: Spree::PermittedAttributes.address_attributes} if Spree::Store.reflect_on_association(:address)
+
+      params.require(:store).permit(*permitted).tap do |store_params|
         without_address_parameter = store_params[:address_attributes]&.except(:country_id, :state_id, :reverse_charge_status)&.compact_blank&.empty?
         store_params.delete(:address_attributes) if without_address_parameter
       end
