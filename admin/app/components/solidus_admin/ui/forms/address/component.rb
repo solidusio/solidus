@@ -3,8 +3,6 @@
 class SolidusAdmin::UI::Forms::Address::Component < SolidusAdmin::BaseComponent
   DefaultNamedFieldsetNotFound = Class.new(NameError)
 
-  include SolidusAdmin::SlotableDefault
-
   renders_one :fieldset
 
   # @param fieldset [Symbol] use a default named fieldset, component of the same name must be defined

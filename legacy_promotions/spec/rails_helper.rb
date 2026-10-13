@@ -56,8 +56,8 @@ require "axe-capybara"
 Capybara.enable_aria_label = true
 
 # VIEW COMPONENTS
-Rails.application.config.view_component.test_controller = "SolidusAdmin::BaseController"
 require "view_component/test_helpers"
+require "solidus_admin/testing_support/component_helpers"
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
@@ -83,6 +83,7 @@ RSpec.configure do |config|
   end
 
   config.include ViewComponent::TestHelpers, type: :component
+  config.include SolidusAdmin::TestingSupport::ComponentHelpers, type: :component
 
   config.include ActiveJob::TestHelper
   config.include SolidusAdmin::TestingSupport::FeatureHelpers, type: :feature
