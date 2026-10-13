@@ -6,7 +6,7 @@ class SolidusAdmin::UI::Pages::Index::ComponentPreview < ViewComponent::Preview
 
   def overview
     records = Spree::Order.all
-    page = GearedPagination::Recordset.new(records).page(1)
+    page = records.page(1)
 
     component_subclcass = Class.new(component("ui/pages/index")) do
       def self.name

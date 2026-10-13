@@ -10,7 +10,7 @@ module SolidusAdmin
         param: :q
       )
 
-      set_page_and_extract_portion_from(stores)
+      @page = paginate(stores)
 
       respond_to do |format|
         format.html { render component("stores/index").new(page: @page) }

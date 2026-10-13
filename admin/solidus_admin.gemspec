@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.8.23"
 
   s.add_dependency "blueprinter"
-  s.add_dependency "geared_pagination", "~> 1.1"
   # Rails < 8.1 isn't compatible with json 3.x
   s.add_dependency "json", "< 3"
   s.add_dependency "importmap-rails", [">= 2.0", "< 3"]
@@ -38,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_dependency "stimulus-rails", "~> 1.2"
   s.add_dependency "turbo-rails", "~> 2.0"
   s.add_dependency "view_component", "~> 3.9"
+  s.add_dependency "kaminari", "~> 1.1"
 end

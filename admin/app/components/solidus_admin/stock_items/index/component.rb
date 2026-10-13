@@ -132,7 +132,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
 
   # Cache the stock movement counts to avoid N+1 queries
   def stock_movement_counts
-    @stock_movement_counts ||= Spree::StockMovement.where(stock_item_id: @page.records.ids).group(:stock_item_id).count
+    @stock_movement_counts ||= Spree::StockMovement.where(stock_item_id: @page.records.map(&:id)).group(:stock_item_id).count
   end
 
   def stock_movements_column
