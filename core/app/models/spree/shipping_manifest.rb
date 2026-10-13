@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Spree::ShippingManifest
-  ManifestItem = Struct.new(:line_item, :variant, :quantity, :states)
+  ManifestItem = Struct.new(:line_item, :variant, :quantity, :states) do
+    def item_cost
+      (line_item.price + (line_item.adjustment_total / line_item.quantity)) * quantity
+    end
+  end
 
   attr_reader :inventory_units, :order
 
