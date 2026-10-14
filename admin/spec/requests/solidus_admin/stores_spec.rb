@@ -59,5 +59,26 @@ RSpec.describe "SolidusAdmin::StoresController", type: :request do
       expect(response).to have_http_status(:see_other)
       expect(Spree::Store.find_by!(code: "new-store").address).to be_nil
     end
+
+    context "when solidus_core does not provide Spree::Store#address" do
+      before do
+        allow(Spree::Store).to receive(:reflect_on_association).and_call_original
+        allow(Spree::Store).to receive(:reflect_on_association).with(:address).and_return(nil)
+      end
+
+      it "omits the address fields" do
+        get solidus_admin.edit_store_path(store)
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include('name="store[address_attributes]')
+      end
+
+      it "ignores address attributes" do
+        expect {
+          patch solidus_admin.store_path(store), params: {store: {name: "Renamed Store", address_attributes:}}
+        }.not_to change(Spree::Address, :count)
+        expect(response).to have_http_status(:see_other)
+        expect(store.reload.name).to eq("Renamed Store")
+      end
+    end
   end
 end

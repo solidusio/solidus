@@ -11,13 +11,16 @@
           </div>
         <% end %>
       <% end %>
-      <%= render component('ui/panel').new(title: t('.address')) do |panel| %>
-        <% panel.with_section do %>
-          <%= render component('ui/forms/address').new(
-            addressable: address,
-            form_field_name: "store[address_attributes]",
-            excludes: address_excludes
-          ) %>
+      <%# This check can be removed once we drop support for Solidus 4.7 and earlier. %>
+      <% if Spree::Store.reflect_on_association(:address) %>
+        <%= render component('ui/panel').new(title: t('.address')) do |panel| %>
+          <% panel.with_section do %>
+            <%= render component('ui/forms/address').new(
+              addressable: address,
+              form_field_name: "store[address_attributes]",
+              excludes: address_excludes
+            ) %>
+          <% end %>
         <% end %>
       <% end %>
       <%= render component('ui/panel').new(title: t('.localization')) do |panel| %>
