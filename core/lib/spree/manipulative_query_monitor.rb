@@ -2,13 +2,15 @@
 
 module Spree
   class ManipulativeQueryMonitor
+    MANIPULATIVE_QUERY = /^\ *(INSERT|UPDATE|DELETE\ FROM)/
+
     def self.call(&block)
-      counter = ::DBQueryMatchers::QueryCounter.new({matches: [/^\ *(INSERT|UPDATE|DELETE\ FROM)/]})
-      ActiveSupport::Notifications.subscribed(counter.to_proc,
-        "sql.active_record",
-        &block)
-      if counter.count > 0
-        message = "Detected #{counter.count} manipulative queries. #{counter.log.join(", ")}\n"
+      queries = []
+      callback = ->(*, payload) { queries << payload[:sql].strip if payload[:sql].match?(MANIPULATIVE_QUERY) }
+      ActiveSupport::Notifications.subscribed(callback, "sql.active_record", &block)
+
+      if queries.any?
+        message = "Detected #{queries.count} manipulative queries. #{queries.join(", ")}\n"
 
         message += caller.select { |line| line.include?(Rails.root.to_s) || line.include?("solidus") }.join("\n")
 
