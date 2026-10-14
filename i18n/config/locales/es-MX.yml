@@ -494,6 +494,19 @@ es-MX:
       spree/zone:
         one: Zona
         other: Zonas
+    state_machines:
+      spree/order:
+        states:
+          address: Dirección
+          awaiting_return: Esperando Respuesta
+          canceled: Cancelado
+          cart: Carrito
+          complete: Completado
+          confirm: Confirmado
+          delivery: Envío
+          payment: Pago
+          resumed: Reanudado
+          returned: Devuelto
   time:
     formats:
       solidus:

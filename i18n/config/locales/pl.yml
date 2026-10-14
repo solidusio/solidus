@@ -285,6 +285,19 @@ pl:
       spree/zone:
         one: Strefa
         other: Strefy
+    state_machines:
+      spree/order:
+        states:
+          address: adres
+          awaiting_return: czeka na zwrot
+          canceled: anulowane
+          cart: koszyk
+          complete: zakończone
+          confirm: potwierdź
+          delivery: dostawa
+          payment: płatność
+          resumed: wznowione
+          returned: zwrócone
   spree:
     abbreviation: Skrót
     accept:

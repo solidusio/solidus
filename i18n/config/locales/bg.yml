@@ -275,6 +275,17 @@ bg:
       spree/zone:
         one: Zone Зона
         other: "Зони"
+    state_machines:
+      spree/order:
+        states:
+          canceled: отказано
+          cart: количка
+          complete: завършено
+          confirm: потвърди
+          delivery: доставка
+          payment: плащане
+          resumed: възобновено
+          returned: върнато
   spree:
     abbreviation: "Абривиатура"
     accept:

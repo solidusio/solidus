@@ -281,6 +281,19 @@ en-IN:
       spree/zone:
         one: Zone
         other: Zones
+    state_machines:
+      spree/order:
+        states:
+          address: address
+          awaiting_return: awaiting return
+          canceled: canceled
+          cart: cart
+          complete: complete
+          confirm: confirm
+          delivery: delivery
+          payment: payment
+          resumed: resumed
+          returned: returned
   spree:
     abbreviation: Abbreviation
     accept:

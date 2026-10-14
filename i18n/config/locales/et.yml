@@ -263,6 +263,19 @@ et:
       spree/zone:
         one: Zone
         other: Zones
+    state_machines:
+      spree/order:
+        states:
+          address: Aadress
+          awaiting_return: ootab tagastamist
+          canceled: Tühistatud
+          cart: Ostukorv
+          complete: Esitatud
+          confirm: kinnitamine
+          delivery: Saatmine
+          payment: Tasumine
+          resumed: resumed
+          returned: Tagastamine
   spree:
     abbreviation: Lühend
     accept:
