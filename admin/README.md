@@ -50,6 +50,15 @@ mount SolidusAdmin::Engine, at: '/admin', constraints: ->(req) {
 }
 ```
 
+The generated constraint also consults the `force_legacy_admin_proc` preference, which receives the Rack request. Use it to send only some pages back to `solidus_backend`, for example the ones you have customized heavily and haven't ported yet:
+
+```ruby
+# config/initializers/solidus_admin.rb
+SolidusAdmin::Config.force_legacy_admin_proc = ->(req) {
+  req.path.start_with?('/admin/promotions')
+}
+```
+
 ### Authentication & Authorization
 
 - Solidus Amidn delegates authentication to `solidus_backend` and relies on `solidus_core` for authorization.
