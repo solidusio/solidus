@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/calculator"
-
 module Spree
   class Calculator::DefaultTax < Calculator
     include Spree::Tax::TaxHelpers

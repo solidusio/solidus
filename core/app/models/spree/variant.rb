@@ -438,7 +438,7 @@ module Spree
     def enforce_unique_sku?
       !deleted_at
     end
+
+    prepend Scopes
   end
 end
-
-require_dependency "spree/variant/scopes"

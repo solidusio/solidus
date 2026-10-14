@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency "spree/calculator"
-
 module Spree
   class Calculator::PercentOnLineItem < Calculator
     preference :percent, :decimal, default: 0
