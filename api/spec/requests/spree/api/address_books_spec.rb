@@ -235,7 +235,7 @@ module Spree::Api
           get "/api/users/#{other_user.id}/address_book",
             headers: {Authorization: "Bearer galleon"}
 
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
 
         it "does not update another user address" do
@@ -250,7 +250,7 @@ module Spree::Api
               headers: {Authorization: "Bearer galleon"}
           }.not_to change { Spree::UserAddress.count }
 
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
 
         it "does not archive another user address" do
@@ -265,7 +265,7 @@ module Spree::Api
               headers: {Authorization: "Bearer galleon"}
           }.not_to change { other_user.user_addresses.count }
 
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
       end
     end

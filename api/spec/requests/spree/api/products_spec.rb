@@ -210,7 +210,7 @@ module Spree::Api
         expect(required_attributes).to include("shipping_category")
       end
 
-      it_behaves_like "modifying product actions are restricted"
+      it_behaves_like "modifying product actions are restricted", :forbidden
     end
 
     context "as an admin" do

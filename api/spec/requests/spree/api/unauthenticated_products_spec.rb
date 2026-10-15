@@ -21,7 +21,7 @@ module Spree::Api
         expect(json_response["pages"]).to eq(1)
       end
 
-      it_behaves_like "modifying product actions are restricted"
+      it_behaves_like "modifying product actions are restricted", :unauthorized
     end
   end
 end

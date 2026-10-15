@@ -117,17 +117,17 @@ module Spree::Api
 
       it "cannot create a new taxon if not an admin" do
         post spree.api_taxonomy_taxons_path(taxonomy), params: {taxon: {name: "Location"}}
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update a taxon if not an admin" do
         put spree.api_taxonomy_taxon_path(taxonomy, taxon.id), params: {taxon: {name: "I hacked your store!"}}
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot delete a taxon if not an admin" do
         delete spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       context "getting all products into a taxon" do

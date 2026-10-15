@@ -116,12 +116,12 @@ module Spree::Api
 
         it "cannot update a payment" do
           put spree.api_order_payment_path(order, payment), params: {payment: {}}
-          assert_unauthorized!
+          assert_forbidden!
         end
 
         it "cannot authorize a payment" do
           put spree.authorize_api_order_payment_path(order, payment)
-          assert_unauthorized!
+          assert_forbidden!
         end
       end
 
@@ -132,7 +132,7 @@ module Spree::Api
 
         it "cannot view payments for somebody else's order" do
           get spree.api_order_payments_path(order)
-          assert_unauthorized!
+          assert_forbidden!
         end
 
         it "can view the payments for an order given the order token" do

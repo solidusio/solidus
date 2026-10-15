@@ -56,7 +56,7 @@ module Spree::Api
           }
 
           post(spree.api_stock_location_stock_items_path(stock_location), params:)
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
       end
 

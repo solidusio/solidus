@@ -277,7 +277,7 @@ module Spree::Api
 
     it "cannot create a new variant if not an admin" do
       post spree.api_product_variants_path(product), params: {variant: {sku: "12345"}}
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     it "cannot update a variant" do

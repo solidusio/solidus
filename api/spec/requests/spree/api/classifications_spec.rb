@@ -21,7 +21,7 @@ module Spree::Api
     context "as a user" do
       it "cannot change the order of a product" do
         put spree.api_classifications_path, params: {taxon_id: taxon, product_id: taxon.products.first, position: 1}
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
     end
 

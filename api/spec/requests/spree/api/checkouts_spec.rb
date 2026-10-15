@@ -365,7 +365,7 @@ module Spree::Api
       it "returns the order if the order is already complete" do
         order.update_columns(completed_at: Time.current, state: "complete")
         put spree.api_checkout_path(order.to_param), params: {order_token: order.guest_token}
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       context "in delivery state" do

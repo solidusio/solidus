@@ -139,7 +139,7 @@ module Spree::Api
 
       it "cannot delete itself" do
         delete spree.api_user_path(user.id), params: {token: user.spree_api_key}
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
 
       it "cannot delete other user" do

@@ -72,7 +72,7 @@ module Spree::Api
             presentation: "Option Value"
           }
         }
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot alter an option value" do
