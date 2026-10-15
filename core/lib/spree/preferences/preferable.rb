@@ -6,7 +6,24 @@ require "active_support/core_ext/hash/keys"
 
 module Spree
   module Preferences
-    # Preferable allows defining preference accessor methods.
+    # Preference types explicitly supported by the +Preferable+ module.
+    TYPES = %i[
+      array
+      boolean
+      decimal
+      encrypted_string
+      hash
+      integer
+      password
+      string
+      text
+    ]
+
+    # A subset of preference types that correspond to Solidus admin-provided
+    # form fields. These types should be be renderable in any user-facing form
+    # for any preference-enabled model.
+    FORM_FIELD_TYPES = TYPES - %i[array hash]
+
     #
     # A class including Preferable must implement #preferences which should return
     # an object responding to .fetch(key), []=(key, val), and .delete(key).

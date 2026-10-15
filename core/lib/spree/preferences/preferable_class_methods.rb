@@ -4,16 +4,6 @@ require "spree/encryptor"
 
 module Spree::Preferences
   module PreferableClassMethods
-    DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i[
-      boolean
-      decimal
-      integer
-      password
-      string
-      text
-      encrypted_string
-    ]
-
     def defined_preferences
       []
     end
@@ -108,8 +98,6 @@ module Spree::Preferences
     # +app/views/spree/admin/shared/preference_fields/+
     #
     # @return [Array]
-    def allowed_admin_form_preference_types
-      DEFAULT_ADMIN_FORM_PREFERENCE_TYPES
-    end
+    def allowed_admin_form_preference_types = Spree::Preferences::FORM_FIELD_TYPES
   end
 end
