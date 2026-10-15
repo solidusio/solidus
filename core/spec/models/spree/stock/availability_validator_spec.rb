@@ -106,6 +106,42 @@ module Spree
             include_examples "passes validation"
           end
         end
+
+        context "when an inventory unit has a different variant than the line item" do
+          let(:line_item) { order.line_items.first }
+          let(:other_variant) { create(:variant) }
+
+          before do
+            create(:inventory_unit, variant: other_variant, line_item:, shipment: order.shipments.first)
+            line_item.variant.stock_items.update_all(count_on_hand: 10, backorderable: false)
+          end
+
+          context "and the other variant has no stock" do
+            before do
+              other_variant.stock_items.update_all(count_on_hand: 0, backorderable: false)
+            end
+
+            include_examples "fails validation"
+          end
+
+          context "and the other variant has stock" do
+            before do
+              other_variant.stock_items.update_all(count_on_hand: 1, backorderable: false)
+            end
+
+            include_examples "passes validation"
+          end
+
+          context "and only the other variant's units are pending" do
+            before do
+              line_item.inventory_units.where(variant: line_item.variant).update_all(pending: false)
+              line_item.variant.stock_items.update_all(count_on_hand: 0, backorderable: false)
+              other_variant.stock_items.update_all(count_on_hand: 1, backorderable: false)
+            end
+
+            include_examples "passes validation"
+          end
+        end
       end
 
       context "line_item is split across two shipments" do
