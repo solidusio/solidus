@@ -281,6 +281,19 @@ ro:
       spree/zone:
         one: Zonă
         other: Zone
+    state_machines:
+      spree/order:
+        states:
+          address: adresă
+          awaiting_return: în așteptarea returului
+          canceled: anulat
+          cart: coș cumpărături
+          complete: procesat
+          confirm: confirmă
+          delivery: livrare
+          payment: plată
+          resumed: reluat
+          returned: returnat
   spree:
     abbreviation: Prescurtare
     accept:

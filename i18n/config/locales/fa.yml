@@ -271,6 +271,19 @@ fa:
       spree/zone:
         one: Zone
         other: Zones
+    state_machines:
+      spree/order:
+        states:
+          address: آدرس
+          awaiting_return: awaiting return
+          canceled: لغو شد
+          cart: سبد خرید
+          complete: تکمیل
+          confirm: تایید
+          delivery: تحویل
+          payment: پرداخت
+          resumed: ادامه
+          returned: برگشت خورد
   spree:
     quick_search: جستوجو سریع . . .
     filter: فیلتر

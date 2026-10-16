@@ -303,6 +303,19 @@ cs:
         few: Zóny
         one: Zóna
         other: Zón
+    state_machines:
+      spree/order:
+        states:
+          address: Adresa
+          awaiting_return: Čeká na návrat
+          canceled: Zrušeno
+          cart: Košik
+          complete: Dokončení
+          confirm: Potvrzení
+          delivery: Možnosti dodání
+          payment: Platba
+          resumed: Obnovená
+          returned: Vracená
   spree:
     abbreviation: Zkratka
     accept: Přijmout

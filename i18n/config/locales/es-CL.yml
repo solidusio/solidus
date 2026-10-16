@@ -316,6 +316,19 @@ es-CL:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
+    state_machines:
+      spree/order:
+        states:
+          address: dirección
+          awaiting_return: esperando devolución
+          canceled: cancelada
+          cart: carrito
+          complete: completado
+          confirm: Confirmada
+          delivery: Entrega
+          payment: Pago
+          resumed: reanudado
+          returned: devuelto
 
   number:
     percentage:

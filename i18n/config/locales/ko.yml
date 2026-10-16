@@ -237,6 +237,15 @@ ko:
       spree/user:
       spree/variant:
       spree/zone:
+    state_machines:
+      spree/order:
+        states:
+          address: 주소
+          canceled: 취소됨
+          cart: 장바구니
+          complete: 완료
+          confirm: 확인
+          payment: 지불
   spree:
     abbreviation: "생략"
     accept:

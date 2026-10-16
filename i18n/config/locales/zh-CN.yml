@@ -290,6 +290,19 @@ zh-CN:
       spree/zone:
         one: "区域"
         other: "区域"
+    state_machines:
+      spree/order:
+        states:
+          address: 地址
+          awaiting_return: 等待退货
+          canceled: 取消
+          cart: 购物车
+          complete: 完成
+          confirm: 确认
+          delivery: 配送
+          payment: 支付
+          resumed: 重新开始
+          returned: 返回
   spree:
     abbreviation: "缩写"
     accept:

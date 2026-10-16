@@ -721,6 +721,19 @@ fr:
       spree/zone:
         one: Zone
         other: Zones
+    state_machines:
+      spree/order:
+        states:
+          address: adresse
+          awaiting_return: en attente du retour
+          canceled: annulée
+          cart: panier
+          complete: traité
+          confirm: confirmation
+          delivery: livraison
+          payment: paiement
+          resumed: reprise
+          returned: retourné
   spree:
     abbreviation: Abréviation
     accept: Accepter

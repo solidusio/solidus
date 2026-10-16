@@ -757,6 +757,19 @@ it:
       user:
         one: Utente
         other: Utenti
+    state_machines:
+      spree/order:
+        states:
+          address: Indirizzo
+          awaiting_return: In attesa di restituzione
+          canceled: Annullato
+          cart: Carrello
+          complete: Completo
+          confirm: Conferma
+          delivery: Spedizione
+          payment: Pagamento
+          resumed: Riattivato
+          returned: Restituito
   errors:
     messages:
       already_confirmed: è già stato confermato

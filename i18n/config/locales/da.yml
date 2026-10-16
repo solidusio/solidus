@@ -283,6 +283,19 @@ da:
       spree/zone:
         one: Zone
         other: Zoner
+    state_machines:
+      spree/order:
+        states:
+          address: adresse
+          awaiting_return: afventer returnering
+          canceled: annulleret
+          cart: indkøbskurv
+          complete: gennemført
+          confirm: bekræft
+          delivery: levering
+          payment: betaling
+          resumed: genoptager
+          returned: returneret
   spree:
     abbreviation: Forkortelse
     accept:

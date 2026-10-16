@@ -281,6 +281,19 @@ ca:
       spree/zone:
         one: Zona
         other:
+    state_machines:
+      spree/order:
+        states:
+          address: adreça
+          awaiting_return: esperant resposta
+          canceled: cancel·lat
+          cart: carret
+          complete: completat
+          confirm: confirmat
+          delivery: enviament
+          payment: pagament
+          resumed: continuat
+          returned: retornat
   spree:
     abbreviation: Abreviatura
     accept:

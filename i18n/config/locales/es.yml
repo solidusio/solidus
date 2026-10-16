@@ -708,6 +708,19 @@ es:
           attributes:
             payment_source:
               has_to_be_payment_source_class: "Tiene que ser un Spree::PaymentSource"
+    state_machines:
+      spree/order:
+        states:
+          address: Dirección
+          awaiting_return: Esperando devolución
+          canceled: Cancelado
+          cart: Carrito
+          complete: Completo
+          confirm: Confirmar
+          delivery: Entrega
+          payment: Pago
+          resumed: Reanudado
+          returned: Devuelto
   time:
     formats:
       solidus:

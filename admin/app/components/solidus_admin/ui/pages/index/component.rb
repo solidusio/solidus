@@ -64,7 +64,7 @@ class SolidusAdmin::UI::Pages::Index::Component < SolidusAdmin::BaseComponent
   end
 
   def title
-    model_class.model_name.human.pluralize
+    model_class.model_name.human(count: 2)
   end
 
   def search_params

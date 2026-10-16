@@ -277,6 +277,19 @@ th:
       spree/zone:
         one: "เขต"
         other: "เขต"
+    state_machines:
+      spree/order:
+        states:
+          address: ที่อยู่
+          awaiting_return: อยู่ในระหว่างการคืน
+          canceled: ยกเลิก
+          cart: ตะกร้า
+          complete: เสร็จสิ้น
+          confirm: ยืนยัน
+          delivery: ส่งสินค้า
+          payment: ชำระเงิน
+          resumed: ต่อไป
+          returned: คืน
   spree:
     abbreviation: "คำย่อ"
     accept:

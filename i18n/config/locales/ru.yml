@@ -752,6 +752,19 @@ ru:
         many: Пользователей
         one: Пользователь
         other: Пользователи
+    state_machines:
+      spree/order:
+        states:
+          address: Адрес
+          awaiting_return: Ожидает возврата
+          canceled: Отменён
+          cart: В корзине
+          complete: Завершен
+          confirm: Подтверждение
+          delivery: Доставка
+          payment: Оплата
+          resumed: Возобновлён
+          returned: Возвращён
   spree:
     abbreviation: Аббревиатура
     accept: Принять

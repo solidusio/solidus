@@ -311,6 +311,19 @@ sv:
       spree/zone:
         one: Zone
         other: Zoner
+    state_machines:
+      spree/order:
+        states:
+          address: adress
+          awaiting_return: väntar på retur
+          canceled: annulerad
+          cart: kundvagn
+          complete: slutförd
+          confirm: bekräfta
+          delivery: leverans
+          payment: betalning
+          resumed: fortsatt
+          returned: returnerad
   spree:
     abbreviation: Förkortning
     accept: Accept

@@ -377,6 +377,19 @@ uk:
         many: "Зон"
         one: "Зона"
         other: "Зон"
+    state_machines:
+      spree/order:
+        states:
+          address: адреса
+          awaiting_return: чекає на повернення
+          canceled: скасовано
+          cart: кошик
+          complete: завершення
+          confirm: підтвердження
+          delivery: доставка
+          payment: оплата
+          resumed: відновлено
+          returned: повернено
   spree:
     abbreviation: "Абревіатура"
     accept: "Прийняти"

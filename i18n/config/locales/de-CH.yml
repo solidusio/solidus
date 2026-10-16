@@ -237,6 +237,19 @@ de-CH:
       spree/user:
       spree/variant:
       spree/zone:
+    state_machines:
+      spree/order:
+        states:
+          address: Adresse
+          awaiting_return: awaiting return
+          canceled: Abgebrochen
+          cart: Warenkorb
+          complete: Abgeschlossen
+          confirm: Bestätigt
+          delivery: Versendet
+          payment: Bezahlt
+          resumed: resumed
+          returned: returned
   spree:
     abbreviation: Abkürzung
     accept:

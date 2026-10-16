@@ -517,6 +517,19 @@ de:
       spree/zone:
         one: Gebiet
         other: Gebiete
+    state_machines:
+      spree/order:
+        states:
+          address: Adresse
+          awaiting_return: erwartet Erstattung
+          canceled: Storniert
+          cart: Warenkorb
+          complete: Abgeschlossen
+          confirm: Überprüfen
+          delivery: Versand
+          payment: Bezahlung
+          resumed: wieder aufgenommen
+          returned: zurück erstattet
   number:
     percentage:
       format:

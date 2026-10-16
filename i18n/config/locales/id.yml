@@ -281,6 +281,19 @@ id:
       spree/zone:
         one: Wilayah
         other: Wilayah-wilayah
+    state_machines:
+      spree/order:
+        states:
+          address: Alamat
+          awaiting_return: Menunggu pengembalian
+          canceled: Telah dibatalkan
+          cart: keranjang
+          complete: selesai
+          confirm: konfirmasi
+          delivery: pengiriman
+          payment: pembayaran
+          resumed: dilanjutkan
+          returned: kembali
   spree:
     abbreviation: Singkatan
     accept:
