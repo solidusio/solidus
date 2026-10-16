@@ -16,8 +16,6 @@ on:
         default: true
     secrets:
       CODECOV_TOKEN:
-      DOCKERHUB_USERNAME:
-      DOCKERHUB_TOKEN:
 
 jobs:
   RSpec:
@@ -63,9 +61,6 @@ jobs:
     services:
       postgres:
         image: ${{ matrix.database == 'postgres' && 'postgres:latest' || '' }}
-        credentials:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
         env:
           POSTGRES_USER: ${{ env.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
@@ -78,9 +73,6 @@ jobs:
           --health-retries 5
       mysql:
         image: ${{ matrix.database == 'mysql' && 'mysql:5.7' || '' }}
-        credentials:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
           MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
