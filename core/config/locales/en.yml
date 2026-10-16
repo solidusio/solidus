@@ -162,6 +162,16 @@ en:
         preferred_test_mode: Test Mode
         store_ids: Stores
         type: Type
+      spree/payment_method/bogus_credit_card:
+        preferred_bogus_array: Bogus Array Preference
+        preferred_bogus_boolean: Bogus Boolean Preference
+        preferred_bogus_decimal: Bogus Decimal Preference
+        preferred_bogus_encrypted_string: Bogus Encrypted String Preference
+        preferred_bogus_integer: Bogus Integer Preference
+        preferred_bogus_password: Bogus Password Preference
+        preferred_bogus_hash: Bogus Hash Preference
+        preferred_bogus_string: Bogus String Preference
+        preferred_bogus_text: Bogus Text Preference
       spree/price:
         amount: Price
         country: Country

@@ -12,4 +12,14 @@ RSpec.describe Spree::PaymentMethod::BogusCreditCard, type: :model do
         gateway_customer_profile_id: "BGS-RERTERT"
     }.not_to raise_error
   end
+
+  it "has one of every kind of supported preference type" do
+    preference_types = payment_method.preferences.keys
+      .map { payment_method.preference_type(_1) }
+      .uniq
+
+    # To make this class more valuable to developers as a test payment method,
+    # it should have at least one of each preference type configured on it.
+    expect(preference_types).to contain_exactly(*Spree::Preferences::TYPES)
+  end
 end

@@ -13,6 +13,18 @@ module Spree
     FAILURE_MESSAGE = "Bogus Gateway: Forced failure"
     SUCCESS_MESSAGE = "Bogus Gateway: Forced success"
 
+    preference :bogus_array, :array, default: [1, "b", 3]
+    preference :bogus_boolean, :boolean, default: false
+    preference :bogus_decimal, :decimal, default: 1.0
+    preference :bogus_encrypted_string,
+      :encrypted_string,
+      encryption_key: "STORE-REAL-KEYS-SOMEWHERE-SAFE-!"
+    preference :bogus_hash, :hash, default: {one: [], two: "two", three: nil}
+    preference :bogus_integer, :integer
+    preference :bogus_password, :password
+    preference :bogus_string, :string, default: "string-value"
+    preference :bogus_text, :text, default: "Lorem ipsum dolor sit amet"
+
     attr_accessor :test
 
     def gateway_class
