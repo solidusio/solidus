@@ -2,9 +2,14 @@
 
 require "rails_helper"
 
-module Spree
-  RSpec.describe PaymentMethod::BogusCreditCard, type: :model do
-    let(:bogus) { create(:credit_card_payment_method) }
-    let!(:cc) { create(:credit_card, payment_method: bogus, gateway_customer_profile_id: "BGS-RERTERT") }
+RSpec.describe Spree::PaymentMethod::BogusCreditCard, type: :model do
+  let(:payment_method) { create :credit_card_payment_method }
+
+  it "works as a payment method with a payment source" do
+    expect {
+      create :credit_card,
+        payment_method:,
+        gateway_customer_profile_id: "BGS-RERTERT"
+    }.not_to raise_error
   end
 end
