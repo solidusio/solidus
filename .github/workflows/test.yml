@@ -17,24 +17,21 @@ jobs:
       artifacts: true
       lib_name: admin
       coverage: true
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
 
   solidus_api:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: api
       coverage: true
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
 
   solidus_backend:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: backend
       coverage: true
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
 
   solidus_backend_js:
     name: solidus_backend JS
@@ -58,34 +55,31 @@ jobs:
     with:
       lib_name: core
       coverage: true
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
 
   solidus_i18n:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: i18n
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
 
   solidus_sample:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: sample
       coverage: false
+    secrets: inherit
 
   solidus_legacy_promotions:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: legacy_promotions
       coverage: true
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
 
   solidus_promotions:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: promotions
       coverage: true
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    secrets: inherit
