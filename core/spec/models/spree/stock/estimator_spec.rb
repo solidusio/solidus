@@ -19,6 +19,11 @@ class Spree::Stock::TestSorter
   end
 end
 
+class Spree::Stock::TestFilter
+  def initialize(_rates, frontend_only:)
+  end
+end
+
 class Spree::Tax::TestTaxCalculator
   def initialize(_order)
   end
@@ -201,6 +206,11 @@ module Spree
             expect(subject.shipping_rates(package).map(&:shipping_method_id)).to eq([generic_method.id])
           end
 
+          it "returns backend rates when not restricted to the frontend" do
+            expect(subject.shipping_rates(package, false).map(&:shipping_method_id))
+              .to contain_exactly(backend_method.id, generic_method.id)
+          end
+
           # regression for https://github.com/spree/spree/issues/3287
           it "doesn't select backend rates even if they're more affordable" do
             expect(subject.shipping_rates(package).map(&:selected)).to eq [true]
@@ -258,6 +268,17 @@ module Spree
           subject.shipping_rates(package)
 
           expect(shipping_rate.selected).to eq(true)
+        end
+
+        it "uses the configured shipping rate filter" do
+          stub_spree_preferences(shipping_rate_filter_class: Spree::Stock::TestFilter)
+
+          filter = double(:filter, filter: [])
+          allow(Spree::Stock::TestFilter).to receive(:new) { filter }
+
+          subject.shipping_rates(package)
+
+          expect(filter).to have_received(:filter)
         end
 
         it "uses the configured shipping rate sorter" do
