@@ -21,6 +21,31 @@ RSpec.describe Spree::UnitCancel do
       expect(adjustment).to be_finalized
     end
 
+    it "does not recalculate the order" do
+      expect(inventory_unit.line_item.order).not_to receive(:recalculate)
+
+      subject
+    end
+
+    context "when given a line item" do
+      subject { unit_cancel.adjust!(line_item) }
+
+      let(:line_item) { Spree::LineItem.find(inventory_unit.line_item_id) }
+
+      it "creates the adjustment on that line item" do
+        expect { subject }.to change { line_item.adjustments.size }.by(1)
+        expect(unit_cancel.adjustment.adjustable).to eq line_item
+      end
+
+      context "that does not belong to the inventory unit" do
+        let(:line_item) { create(:line_item) }
+
+        it "raises an error" do
+          expect { subject }.to raise_error RuntimeError, "Adjustable does not match line item"
+        end
+      end
+    end
+
     context "when an adjustment has already been created" do
       before { unit_cancel.adjust! }
 
@@ -78,6 +103,7 @@ RSpec.describe Spree::UnitCancel do
           described_class.create!(inventory_unit:, reason: described_class::SHORT_SHIP).adjust!
           inventory_unit.cancel!
         end
+        order.recalculate
         expect(line_item.reload.total.to_d).to eq(0)
       end
     end

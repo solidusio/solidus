@@ -13,21 +13,16 @@ class Spree::UnitCancel < Spree::Base
   validates :inventory_unit, presence: true
 
   # Creates necessary cancel adjustments for the line item.
-  def adjust!
+  def adjust!(line_item = inventory_unit.line_item)
     raise "Adjustment is already created" if adjustment
 
-    amount = compute_amount(inventory_unit.line_item)
-
-    self.adjustment = inventory_unit.line_item.adjustments.create!(
+    self.adjustment = line_item.adjustments.create!(
       source: self,
-      amount:,
-      order: inventory_unit.order,
+      amount: compute_amount(line_item),
+      order: line_item.order,
       label: "#{I18n.t("spree.cancellation")} - #{reason}",
       finalized: true
     )
-
-    inventory_unit.line_item.order.recalculate
-    adjustment
   end
 
   # This method is used by Adjustment#update to recalculate the cost.

@@ -96,7 +96,23 @@ RSpec.describe Spree::OrderCancellations do
     end
 
     it "adjusts the order" do
-      expect { subject }.to change { order.reload.total }.by(-10.0)
+      expect { subject }.to change { order.total }.by(-10.0)
+    end
+
+    context "with line_item adjustments association loaded" do
+      before do
+        order.line_items.each { |item| item.adjustments.to_a }
+      end
+
+      it "adjusts the order" do
+        expect { subject }.to change { order.total }.by(-10.0)
+      end
+
+      it "adjusts the loaded line item" do
+        line_item = order.line_items.first
+
+        expect { subject }.to change { line_item.adjustment_total }.by(-10.0)
+      end
     end
 
     context "multiple inventory units" do
@@ -107,7 +123,13 @@ RSpec.describe Spree::OrderCancellations do
       let(:inventory_units) { Spree::InventoryUnit.find(order.line_items.first.inventory_units.pluck(:id)) }
 
       it "adjusts the order" do
-        expect { subject }.to change { order.reload.total }.by(-40.0)
+        expect { subject }.to change { order.total }.by(-40.0)
+      end
+
+      it "recalculates the order once" do
+        expect(order).to receive(:recalculate).once.and_call_original
+
+        subject
       end
 
       context "when cancelling all items in a completed order" do
@@ -121,6 +143,14 @@ RSpec.describe Spree::OrderCancellations do
 
         it "updates the shipment state" do
           expect { subject }.to change { order.shipments.first.reload.state }.to("canceled")
+        end
+
+        context "with shipments association loaded" do
+          before { order.shipments.to_a }
+
+          it "updates the shipment state" do
+            expect { subject }.to change { order.shipments.first.reload.state }.to("canceled")
+          end
         end
 
         context "when the shipment is already shipped" do
