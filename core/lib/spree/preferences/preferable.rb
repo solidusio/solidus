@@ -48,6 +48,11 @@ module Spree
     #
     #     preference :color,       :string,  default: 'red'
     #     preference :temperature, :integer, default: 21
+    #
+    #     # Note: the `:encrypted_string` preference requires an encryption key.
+    #     preference :my_secret,
+    #       :encrypted_string,
+    #       encryption_key: Rails.application.credentials[:secret_32_byte_key]
     #   end
     #
     #   s = MySettings.new
@@ -60,9 +65,15 @@ module Spree
     #   # Typecasting is performed on assignment.
     #   s.preferred_temperature = '24'
     #   s.preferred_color # => 24
+    #   s.preferred_my_secret = "Ruby is cool."
     #
     #   # Modifications have been made to the preferences hash.
-    #   s.preferences #=> {color: 'blue', temperature: 24}
+    #   s.preferences
+    #   # => {
+    #   #   color: 'blue',
+    #   #   temperature: 24,
+    #   #   my_secret: "9wPMYTR9--/zlHm98zEKD2qfns--VsNoMiQ+uJ8Lffji0bYqCw=="
+    #   # }
     #   s.save!
     module Preferable
       extend ActiveSupport::Concern
