@@ -102,6 +102,8 @@ module Spree::Preferences
     #   +app/views/spree/admin/shared/preference_fields/<your_preference_type>.<partial_extension>+
     #
     # @return [Array]
-    def allowed_admin_form_preference_types = Spree::Preferences::FORM_FIELD_TYPES
+    def allowed_admin_form_preference_types
+      Spree::Preferences::FORM_FIELD_TYPES.dup
+    end
   end
 end
