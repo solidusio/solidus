@@ -16,6 +16,8 @@ on:
         default: true
     secrets:
       CODECOV_TOKEN:
+      DOCKERHUB_USERNAME:
+      DOCKERHUB_TOKEN:
 
 jobs:
   RSpec:
@@ -60,7 +62,10 @@ jobs:
       SOLIDUS_RAISE_DEPRECATIONS: true
     services:
       postgres:
-        image: public.ecr.aws/docker/library/postgres:latest
+        image: ${{ matrix.database == 'postgres' && 'postgres:latest' || '' }}
+        credentials:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
         env:
           POSTGRES_USER: ${{ env.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
@@ -72,7 +77,10 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       mysql:
-        image: public.ecr.aws/docker/library/mysql:5.7
+        image: ${{ matrix.database == 'mysql' && 'mysql:5.7' || '' }}
+        credentials:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
           MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
