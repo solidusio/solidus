@@ -1601,6 +1601,7 @@ en:
     free_shipping_amount: "-"
     from: From
     front_end: Front End
+    frontend_viewable: Frontend Viewable
     gateway: Gateway
     gateway_config_unavailable: Gateway unavailable for environment
     gateway_error: Gateway Error

@@ -4,7 +4,7 @@
     <legend align="center"><%= t('spree.account') %></legend>
 
     <div data-hook="customer_fields" class="row">
-      <div class="col-9">
+      <div class="col-6">
         <div class="field">
           <%= f.label :email %>
           <%= f.email_field :email, required: true, class: 'fullwidth' %>
@@ -35,6 +35,14 @@
               <%= hidden_field_tag :user_id, @order.user_id %>
             <% end %>
           </ul>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="field">
+          <label>
+            <%= check_box_tag 'order[frontend_viewable]', '1', @order.frontend_viewable %>
+            <%= t('spree.frontend_viewable') %>
+          </label>
         </div>
       </div>
     </div>
