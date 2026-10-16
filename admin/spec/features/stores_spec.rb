@@ -7,7 +7,7 @@ describe "Stores", :js, type: :feature do
 
   it "lists stores and allows deleting them" do
     create(:store, name: "B2C Store")
-    create(:store, name: "B2B Store")
+    create(:store, name: "B2B Store", default: true)
 
     visit "/admin/stores"
     expect(page).to have_content("B2C Store")
