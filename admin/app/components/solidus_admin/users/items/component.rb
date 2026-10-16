@@ -133,8 +133,6 @@ class SolidusAdmin::Users::Items::Component < SolidusAdmin::BaseComponent
     content << "<strong>#{t("spree.sku")}:</strong> #{item.variant.sku}" if item.variant.sku.present?
 
     # The `.html_safe` is required for the description to display as desired.
-    # rubocop:disable Rails/OutputSafety
     safe_join([content_tag(:div, content.join("<br>").html_safe, class: "text-sm")])
-    # rubocop:enable Rails/OutputSafety
   end
 end
