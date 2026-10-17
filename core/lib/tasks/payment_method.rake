@@ -14,7 +14,7 @@ namespace :payment_method do
   def fix_payment_method_record(id, previous_type)
     connection = ActiveRecord::Base.connection
     false_value = connection.quoted_false
-    connection.exec_update(<<-SQL
+    connection.update(<<-SQL)
       UPDATE spree_payment_methods
       SET
         type='#{Spree::PaymentMethod.name}',
@@ -24,6 +24,5 @@ namespace :payment_method do
         available_to_admin=#{false_value}
       WHERE id=#{id};
     SQL
-                          )
   end
 end
