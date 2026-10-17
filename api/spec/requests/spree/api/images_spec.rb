@@ -94,20 +94,20 @@ module Spree::Api
         it "cannot get an image of another product" do
           get spree.api_product_image_path(product.id, product_image)
           expect(response.status).to eq(404)
-          expect(json_response["error"]).to eq(I18n.t(:resource_not_found, scope: "spree.api"))
+          expect(json_response["error"]).to eq("The resource you were looking for could not be found.")
         end
 
         it "cannot get an image of another variant" do
           get spree.api_variant_image_path(product.master.id, product_image)
           expect(response.status).to eq(404)
-          expect(json_response["error"]).to eq(I18n.t(:resource_not_found, scope: "spree.api"))
+          expect(json_response["error"]).to eq("The resource you were looking for could not be found.")
         end
 
         it "cannot update image of another product" do
           expect(product_image.position).to eq(1)
           put spree.api_variant_image_path(product.master.id, product_image), params: {image: {position: 2}}
           expect(response.status).to eq(404)
-          expect(json_response["error"]).to eq(I18n.t(:resource_not_found, scope: "spree.api"))
+          expect(json_response["error"]).to eq("The resource you were looking for could not be found.")
         end
       end
     end
