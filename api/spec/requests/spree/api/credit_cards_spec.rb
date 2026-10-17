@@ -120,7 +120,7 @@ module Spree::Api
 
         it "rejects the request" do
           put spree.api_credit_card_path(credit_card.to_param), params: {credit_card: {name: "Jordan Brough"}}
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
       end
     end

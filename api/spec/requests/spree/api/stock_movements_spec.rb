@@ -16,7 +16,7 @@ module Spree::Api
     context "as a user" do
       it "cannot see a list of stock movements" do
         get spree.api_stock_location_stock_movements_path(stock_location)
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
 
       it "cannot see a stock movement" do
@@ -32,7 +32,7 @@ module Spree::Api
         }
 
         post(spree.api_stock_location_stock_movements_path(stock_location), params:)
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
     end
 

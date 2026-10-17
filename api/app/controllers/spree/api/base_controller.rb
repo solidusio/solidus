@@ -29,7 +29,7 @@ module Spree
 
       rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
-      rescue_from CanCan::AccessDenied, with: :unauthorized
+      rescue_from CanCan::AccessDenied, with: :access_denied
       rescue_from Spree::Core::GatewayError, with: :gateway_error
       rescue_from StateMachines::InvalidTransition, with: :invalid_transition
 
@@ -99,8 +99,20 @@ module Spree
         end
       end
 
+      def access_denied
+        if current_api_user
+          forbidden
+        else
+          unauthorized
+        end
+      end
+
       def unauthorized
         render "spree/api/errors/unauthorized", status: :unauthorized
+      end
+
+      def forbidden
+        render "spree/api/errors/forbidden", status: :forbidden
       end
 
       def gateway_error(exception)

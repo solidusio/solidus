@@ -70,9 +70,9 @@ module Spree::Api
           allow(Spree::Config.promotions.promotion_finder_class).to receive(:by_code_or_id).and_return(found_promotion)
         end
 
-        it "should be unauthorized" do
+        it "is forbidden" do
           subject
-          assert_unauthorized!
+          assert_forbidden!
         end
       end
     end

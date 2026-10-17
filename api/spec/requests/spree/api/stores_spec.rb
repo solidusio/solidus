@@ -197,22 +197,22 @@ module Spree::Api
     context "as an user" do
       it "cannot list all the stores" do
         get spree.api_stores_path
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
 
       it "cannot get the store details" do
         get spree.api_store_path(store)
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
 
       it "cannot create a new store" do
         post spree.api_stores_path, params: {store: {}}
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
 
       it "cannot update an existing store" do
         put spree.api_store_path(store), params: {store: {}}
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
       end
     end
   end

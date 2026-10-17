@@ -23,6 +23,11 @@ module Spree
           expect(response.status).to eq 401
         end
 
+        def assert_forbidden!
+          expect(json_response).to eq({"error" => "You do not have permission to perform that action."})
+          expect(response.status).to eq 403
+        end
+
         def stub_authentication!
           allow(Spree.user_class).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
         end

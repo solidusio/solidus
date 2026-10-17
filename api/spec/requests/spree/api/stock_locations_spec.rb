@@ -53,21 +53,21 @@ module Spree::Api
           }
 
           post(spree.api_stock_locations_path, params:)
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
       end
 
       describe "#update" do
         it "cannot update a stock location" do
           put spree.api_stock_location_path(stock_location), params: {stock_location: {name: "South Pole"}}
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
       end
 
       describe "#destroy" do
         it "cannot delete a stock location" do
           delete spree.api_stock_location_path(stock_location)
-          expect(response.status).to eq(401)
+          expect(response.status).to eq(403)
         end
       end
     end

@@ -19,31 +19,31 @@ module Spree::Api
       it "cannot see any customer returns" do
         get spree.api_order_customer_returns_path(order)
 
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot see a single customer return" do
         get spree.api_order_customer_return_path(order, 1)
 
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot learn how to create a new customer return" do
         get spree.new_api_order_customer_return_path(order)
 
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update a customer return" do
         put spree.api_order_customer_return_path(order, 0)
 
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot create a new customer return" do
         post spree.api_order_customer_returns_path(order)
 
-        assert_unauthorized!
+        assert_forbidden!
       end
     end
 

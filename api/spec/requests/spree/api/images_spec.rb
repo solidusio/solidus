@@ -117,7 +117,7 @@ module Spree::Api
 
       it "cannot create an image" do
         post spree.api_product_images_path(product.id)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update an image" do

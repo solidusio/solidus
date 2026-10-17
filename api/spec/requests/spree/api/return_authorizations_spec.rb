@@ -58,17 +58,17 @@ module Spree::Api
 
       it "cannot see any return authorizations" do
         get spree.api_order_return_authorizations_path(order)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot see a single return authorization" do
         get spree.api_order_return_authorization_path(order, 1)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot learn how to create a new return authorization" do
         get spree.new_api_order_return_authorization_path(order)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it_behaves_like "a return authorization creator"
@@ -91,7 +91,7 @@ module Spree::Api
 
       it "cannot create a new return authorization" do
         post spree.api_order_return_authorizations_path(order)
-        assert_unauthorized!
+        assert_forbidden!
       end
     end
 
@@ -198,14 +198,14 @@ module Spree::Api
     context "as just another user" do
       it "cannot add a return authorization to the order" do
         post spree.api_order_return_authorizations_path(order), params: {return_autorization: {order_id: order.number, memo: "Defective"}}
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update a return authorization on the order" do
         FactoryBot.create(:return_authorization, order:)
         return_authorization = order.return_authorizations.first
         put spree.api_order_return_authorization_path(order, return_authorization.id), params: {return_authorization: {memo: "ABC"}}
-        assert_unauthorized!
+        assert_forbidden!
         expect(return_authorization.reload.memo).not_to eq("ABC")
       end
 
@@ -213,7 +213,7 @@ module Spree::Api
         FactoryBot.create(:return_authorization, order:)
         return_authorization = order.return_authorizations.first
         delete spree.api_order_return_authorization_path(order, return_authorization.id)
-        assert_unauthorized!
+        assert_forbidden!
         expect { return_authorization.reload }.not_to raise_error
       end
     end

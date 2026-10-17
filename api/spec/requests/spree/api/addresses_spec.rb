@@ -45,12 +45,12 @@ module Spree::Api
 
       it "cannot retrieve address information" do
         get spree.api_order_address_path(@order, @address.id)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update address information" do
         get spree.api_order_address_path(@order, @address.id)
-        assert_unauthorized!
+        assert_forbidden!
       end
     end
   end

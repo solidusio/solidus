@@ -55,7 +55,7 @@ module Spree::Api
           presentation: "Option Type"
         }
       }
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     it "cannot alter an option type" do

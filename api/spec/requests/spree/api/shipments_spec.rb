@@ -18,27 +18,27 @@ module Spree::Api
     context "as a non-admin" do
       it "cannot make a shipment ready" do
         put spree.ready_api_shipment_path(shipment)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot make a shipment shipped" do
         put spree.ship_api_shipment_path(shipment)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot remove order contents from shipment" do
         put spree.remove_api_shipment_path(shipment)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot add contents to the shipment" do
         put spree.add_api_shipment_path(shipment)
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update the shipment" do
         put spree.api_shipment_path(shipment)
-        assert_unauthorized!
+        assert_forbidden!
       end
     end
 
@@ -382,9 +382,9 @@ module Spree::Api
           }.not_to change(shipment, :shipped_at)
         end
 
-        it "responds with a 401" do
+        it "responds with a 403" do
           subject
-          expect(response.status).to eq 401
+          expect(response.status).to eq 403
         end
       end
 
@@ -397,9 +397,9 @@ module Spree::Api
           }.not_to change(shipment, :shipped_at)
         end
 
-        it "responds with a 401" do
+        it "responds with a 403" do
           subject
-          expect(response).to be_unauthorized
+          expect(response).to be_forbidden
         end
       end
     end
@@ -489,9 +489,9 @@ module Spree::Api
             can :destroy, Spree::Shipment
           end
 
-          it "is not authorized" do
+          it "is forbidden" do
             subject
-            expect(response).to be_unauthorized
+            expect(response).to be_forbidden
           end
         end
 
@@ -505,9 +505,9 @@ module Spree::Api
             can :create, Spree::Shipment
           end
 
-          it "is not authorized" do
+          it "is forbidden" do
             subject
-            expect(response).to be_unauthorized
+            expect(response).to be_forbidden
           end
         end
 

@@ -57,19 +57,19 @@ module Spree::Api
 
         it "can't add a new line item" do
           post spree.api_order_line_items_path(order), params: {line_item: {variant_id: product.master.to_param, quantity: 1}}
-          assert_unauthorized!
+          assert_forbidden!
         end
 
         it "can't update a line item" do
           line_item = order.line_items.first
           put spree.api_order_line_item_path(order, line_item), params: {line_item: {quantity: 10}}
-          assert_unauthorized!
+          assert_forbidden!
         end
 
         it "can't delete a line item" do
           line_item = order.line_items.first
           delete spree.api_order_line_item_path(order, line_item)
-          assert_unauthorized!
+          assert_forbidden!
         end
       end
 
@@ -265,20 +265,20 @@ module Spree::Api
 
       it "cannot add a new line item to the order" do
         post spree.api_order_line_items_path(order), params: {line_item: {variant_id: product.master.to_param, quantity: 1}}
-        assert_unauthorized!
+        assert_forbidden!
       end
 
       it "cannot update a line item on the order" do
         line_item = order.line_items.first
         put spree.api_order_line_item_path(order, line_item), params: {line_item: {quantity: 1000}}
-        assert_unauthorized!
+        assert_forbidden!
         expect(line_item.reload.quantity).not_to eq(1000)
       end
 
       it "cannot delete a line item on the order" do
         line_item = order.line_items.first
         delete spree.api_order_line_item_path(order, line_item)
-        assert_unauthorized!
+        assert_forbidden!
         expect { line_item.reload }.not_to raise_error
       end
     end

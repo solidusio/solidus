@@ -63,17 +63,17 @@ module Spree::Api
 
     it "cannot create a new property if not an admin" do
       post spree.api_properties_path, params: {property: {name: "My Property 3"}}
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     it "cannot update a property if not admin" do
       put spree.api_property_path(property_1.name), params: {property: {presentation: "my value 456"}}
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     it "cannot delete a property if not admin" do
       delete spree.api_property_path(property_1.name)
-      assert_unauthorized!
+      assert_forbidden!
       expect { property_1.reload }.not_to raise_error
     end
 

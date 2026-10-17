@@ -333,7 +333,7 @@ module Spree::Api
 
     it "cannot view all orders" do
       get spree.api_orders_path
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     context "the current api user does not exist" do
@@ -533,7 +533,7 @@ module Spree::Api
     it "can not view someone else's order" do
       allow_any_instance_of(Spree::Order).to receive_messages user: stub_model(Spree::LegacyUser)
       get spree.api_order_path(order)
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     it "can view an order if the token is known" do
@@ -550,7 +550,7 @@ module Spree::Api
       order.update_attribute(:completed_at, Time.current)
       order.update_attribute(:shipment_state, "ready")
       put spree.cancel_api_order_path(order)
-      assert_unauthorized!
+      assert_forbidden!
     end
 
     it "can create an order" do

@@ -4,6 +4,7 @@ en:
     api:
       could_not_transition: The %{resource} could not be transitioned. Please fix the errors and try again.
       delete_restriction_error: Cannot delete record.
+      forbidden: You do not have permission to perform that action.
       gateway_error: 'There was a problem with the payment gateway: %{text}'
       invalid_api_key: Invalid API key (%{key}) specified.
       invalid_resource: Invalid resource. Please fix errors and try again.
