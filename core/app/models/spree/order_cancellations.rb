@@ -114,7 +114,7 @@ class Spree::OrderCancellations
       reason: Spree::UnitCancel::SHORT_SHIP,
       created_by:
     )
-    unit_cancel.adjust!
+    unit_cancel.adjust!(@order.line_items.detect { |line_item| line_item.id == inventory_unit.line_item_id })
     inventory_unit.cancel!
 
     unit_cancel
