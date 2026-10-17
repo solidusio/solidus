@@ -117,7 +117,7 @@ module Spree::Api
               bill_address_attributes: address,
               ship_address_attributes: address
             }}
-          expect(json_response["error"]).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
+          expect(json_response["error"]).to eq("The order could not be transitioned. Please fix the errors and try again.")
           expect(response.status).to eq(422)
         end
 
@@ -562,7 +562,7 @@ module Spree::Api
           it "returns a state machine error" do
             subject
 
-            expect(json_response["error"]).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
+            expect(json_response["error"]).to eq("The order could not be transitioned. Please fix the errors and try again.")
             expect(response.status).to eq(422)
           end
         end

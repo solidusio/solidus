@@ -1044,7 +1044,7 @@ module Spree::Api
         it "cannot cancel not completed order" do
           put spree.cancel_api_order_path(order)
 
-          expect(json_response["error"]).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
+          expect(json_response["error"]).to eq("The order could not be transitioned. Please fix the errors and try again.")
           expect(response.status).to eq(422)
         end
 
