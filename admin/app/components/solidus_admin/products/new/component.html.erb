@@ -1,0 +1,63 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(solidus_admin.products_path) %>
+    <%= page_header_title(t(".title")) %>
+    <%= page_header_actions do %>
+      <%= render component("ui/button").save(form: form_id) %>
+    <% end %>
+  <% end %>
+
+  <%= solidus_form_for @product, url: solidus_admin.products_path, html: { id: form_id } do |f| %>
+    <%= page_with_sidebar do %>
+      <%= page_with_sidebar_main do %>
+        <%= render component("products/form/identity").new(form: f) %>
+
+        <%= render component("products/form/seo").new(form: f) %>
+
+        <%= render component("products/form/pricing").new(form: f) %>
+
+        <%= render component("ui/panel").new(title: t(".stock")) do %>
+          <%= f.text_field(:sku, placeholder: t(".placeholders.sku")) %>
+        <% end %>
+
+        <%= render component("products/form/shipping").new(form: f) %>
+
+        <%= render component("ui/panel").new(title: t(".options")) do |panel| %>
+          <div class="flex gap-4 justify-between items-end">
+            <%= hidden_field_tag "#{f.object_name}[option_type_ids][]", nil %>
+            <%= f.select(:option_type_ids, option_type_options, multiple: true) %>
+            <%= render component("ui/button").new(type: :submit, text: t(".save")) %>
+          </div>
+
+          <% panel.with_action(
+            name: t(".manage_options"),
+            scheme: :secondary,
+            href: solidus_admin.option_types_path
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= page_with_sidebar_aside do %>
+        <%= render component("products/form/publishing").new(form: f) %>
+
+        <%= render component("ui/panel").new(title: t(".product_organization")) do %>
+          <%= hidden_field_tag "#{f.object_name}[taxon_ids][]", nil %>
+
+          <%= render component("turbo/target_frame").new(:product_organization_frame, source: :new_product_category) do %>
+            <%= render component("ui/forms/field").select(
+              f,
+              :taxon_ids,
+              taxon_options,
+              multiple: true,
+              placeholder: t(".placeholders.taxon_ids")
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= page_footer do %>
+    <%= render component("ui/button").new(tag: :button, text: t(".save"), form: form_id) %>
+  <% end %>
+<% end %>

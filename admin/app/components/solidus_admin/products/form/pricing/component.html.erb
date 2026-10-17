@@ -1,0 +1,7 @@
+<%= render component("ui/panel").new(title: t(".title")) do %>
+  <%= @form.text_field(:price) %>
+  <div class="flex gap-4 justify-items-stretch">
+    <%= @form.text_field(:cost_price) %>
+    <%= @form.text_field(:cost_currency) %>
+  </div>
+<% end %>
