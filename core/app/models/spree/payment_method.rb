@@ -3,13 +3,17 @@
 require "spree/preferences/statically_configurable"
 
 module Spree
-  # A base class which is used for implementing payment methods.
+  # A base class to be used for implementing payment methods. It uses single-
+  # table inheritance to store all implemented payment methods in the
+  # +spree_payment_methods+ table.
   #
-  # Uses STI (single table inheritance) to store all implemented payment methods
-  # in one table (+spree_payment_methods+).
+  # This class is not meant to be instantiated. Always create instances of
+  # payment methods via their subclass.
   #
-  # This class is not meant to be instantiated. Please create instances of concrete payment methods.
-  #
+  # Custom payment method integrations often require custom configuration
+  # settings that must be manageable by admin users. Consult the documentation
+  # for +Spree::Preferences+ before starting your integration. It may help you
+  # avoid writing unnecessary application code for your Solidus admin interface.
   class PaymentMethod < Spree::Base
     include Spree::Preferences::Persistable
 
