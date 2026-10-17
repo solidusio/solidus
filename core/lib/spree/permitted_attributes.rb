@@ -126,6 +126,7 @@ module Spree
       :meta_description, :default_currency,
       :mail_from_address, :cart_tax_country_iso,
       :bcc_email, :reverse_charge_status,
+      :logo, :favicon,
       address_attributes:]
 
     @@taxonomy_attributes = [:name]
