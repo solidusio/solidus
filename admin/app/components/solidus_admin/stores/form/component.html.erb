@@ -1,4 +1,4 @@
-<%= form_for @store, url: @url, html: { id: @id } do |f| %>
+<%= form_for @store, url: @url, html: { id: @id, multipart: true } do |f| %>
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
       <%= render component('ui/panel').new do |panel| %>
@@ -9,6 +9,15 @@
             <%= render component("ui/forms/field").text_field(f, :url) %>
             <%= render component("ui/forms/field").text_field(f, :mail_from_address) %>
           </div>
+        <% end %>
+      <% end %>
+      <%# Only stores on the Active Storage adapter, with a Solidus that has them, have a logo and favicon. %>
+      <% if Spree::Store.reflect_on_attachment(:logo) %>
+        <%= render component('ui/panel').new(title: t('.branding')) do |panel| %>
+          <% panel.with_section(class: "flex flex-col gap-4") do %>
+            <%= render component("stores/form/attachment").new(form: f, attachment: @store.logo) %>
+            <%= render component("stores/form/attachment").new(form: f, attachment: @store.favicon) %>
+          <% end %>
         <% end %>
       <% end %>
       <%# This check can be removed once we drop support for Solidus 4.7 and earlier. %>
