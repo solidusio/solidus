@@ -59,6 +59,7 @@ module SolidusAdmin
       ]
       # This check can be removed once we drop support for Solidus 4.7 and earlier.
       permitted << {address_attributes: Spree::PermittedAttributes.address_attributes} if Spree::Store.reflect_on_association(:address)
+      permitted.push(:logo, :favicon) if Spree::Store.try(:attachments_available?)
 
       params.require(:store).permit(*permitted).tap do |store_params|
         without_address_parameter = store_params[:address_attributes]&.except(:country_id, :state_id, :reverse_charge_status)&.compact_blank&.empty?
