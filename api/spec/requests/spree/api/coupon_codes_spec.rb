@@ -71,7 +71,7 @@ module Spree::Api
           expect(response.status).to eq(422)
           expect(json_response).to eq({
             "success" => nil,
-            "error" => I18n.t("spree.coupon_code_unknown_error"),
+            "error" => "This coupon code could not be applied to the cart at this time.",
             "successful" => false,
             "status_code" => "coupon_code_unknown_error"
           })
@@ -105,7 +105,7 @@ module Spree::Api
           subject
           expect(response.status).to eq(200)
           expect(json_response).to eq({
-            "success" => I18n.t("spree.coupon_code_removed"),
+            "success" => "The coupon code was successfully removed from this order.",
             "error" => nil,
             "successful" => true,
             "status_code" => "coupon_code_removed"
@@ -134,7 +134,7 @@ module Spree::Api
           expect(response.status).to eq(422)
           expect(json_response).to eq({
             "success" => nil,
-            "error" => I18n.t("spree.coupon_code_not_present"),
+            "error" => "The coupon code you are trying to remove is not present on this order.",
             "successful" => false,
             "status_code" => "coupon_code_not_present"
           })
