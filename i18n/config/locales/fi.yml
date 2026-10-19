@@ -293,6 +293,19 @@ fi:
       spree/zone:
         one: Alue
         other: Alueet
+    state_machines:
+      spree/order:
+        states:
+          address: osoite
+          awaiting_return: odottaa palautusta
+          canceled: peruutettu
+          cart: ostoskori
+          complete: valmis
+          confirm: vahvista
+          delivery: toimitus
+          payment: maksu
+          resumed: resumed
+          returned: palautettu
   spree:
     abbreviation: Lyhenne
     accept:

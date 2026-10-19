@@ -356,6 +356,19 @@ sk:
         one: "Zóna"
         few: "Zóny"
         other: "Zón"
+    state_machines:
+      spree/order:
+        states:
+          address: adresa
+          awaiting_return: čaká na vrátenie
+          canceled: zrušené
+          cart: košík
+          complete: dokončiť
+          confirm: potvrdenie
+          delivery: doručenie
+          payment: platba
+          resumed: obnovené
+          returned: vrátené
   spree:
     abbreviation: Skratka
     accept: "Prijať"

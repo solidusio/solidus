@@ -237,6 +237,19 @@ sl-SI:
       spree/user:
       spree/variant:
       spree/zone:
+    state_machines:
+      spree/order:
+        states:
+          address: naslov
+          awaiting_return: čakajo na vrnitev
+          canceled: preklicana
+          cart: košarica
+          complete: končaj
+          confirm: potrdi
+          delivery: dostava
+          payment: plačilo
+          resumed: resumed
+          returned: vračilo
   spree:
     abbreviation: Okrajšava
     accept:

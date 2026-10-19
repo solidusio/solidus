@@ -283,6 +283,19 @@ es-EC:
       spree/zone:
         one: Zona
         other: Zonas
+    state_machines:
+      spree/order:
+        states:
+          address: Dirección
+          awaiting_return: Esperando devolución
+          canceled: cancelada
+          cart: Carrito
+          complete: completado
+          confirm: Confirmada
+          delivery: Entrega
+          payment: Pago
+          resumed: reanudado
+          returned: devuelto
   spree:
     abbreviation: Abreviatura
     accept:

@@ -281,6 +281,19 @@ nb:
       spree/zone:
         one: Sone
         other: Soner
+    state_machines:
+      spree/order:
+        states:
+          address: adresse
+          awaiting_return: venter på retur
+          canceled: kansellert
+          cart: handlekurv
+          complete: ferdig
+          confirm: bekreftelse
+          delivery: levering
+          payment: betaling
+          resumed: gjenopptatt
+          returned: returnert
   spree:
     abbreviation: Fortkortelse
     accept:

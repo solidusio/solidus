@@ -241,6 +241,19 @@ zh-TW:
       spree/user: "使用者"
       spree/variant: "型號"
       spree/zone: "區域"
+    state_machines:
+      spree/order:
+        states:
+          address: 地址
+          awaiting_return: 等待寄回
+          canceled: 取消
+          cart: 購物車
+          complete: 完成
+          confirm: 確認
+          delivery: 寄送方式
+          payment: 付款
+          resumed: 重新開始
+          returned: 己寄回
   spree:
     abbreviation: "縮寫"
     accept:

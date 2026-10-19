@@ -283,6 +283,19 @@ nl:
       spree/zone:
         one: Zone
         other: Zones
+    state_machines:
+      spree/order:
+        states:
+          address: adres
+          awaiting_return: wachten op retour
+          canceled: geannuleerd
+          cart: winkelwagen
+          complete: voltooid
+          confirm: bevestigen
+          delivery: verzendmethode
+          payment: betalen
+          resumed: hervatten
+          returned: geretourneerd
   spree:
     abbreviation: Afkorting
     accept:

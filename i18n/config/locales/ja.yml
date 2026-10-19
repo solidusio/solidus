@@ -335,6 +335,19 @@ ja:
       spree/page:
         one: "特集ページ"
         other: "特集ページ"
+    state_machines:
+      spree/order:
+        states:
+          address: 住所
+          awaiting_return: 返品待ち
+          canceled: キャンセル
+          cart: カート
+          complete: 完了
+          confirm: 確認
+          delivery: 配送
+          payment: 支払い
+          resumed: 再開
+          returned: 返品済み
   spree:
     abbreviation: "省略"
     accept: "受付"

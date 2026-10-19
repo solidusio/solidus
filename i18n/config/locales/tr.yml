@@ -237,6 +237,19 @@ tr:
       spree/user: Kullanıcılar
       spree/variant: "Çeşitler"
       spree/zone: Bölgeler
+    state_machines:
+      spree/order:
+        states:
+          address: adres bilgileri
+          awaiting_return: dönüş bekleniyor
+          canceled: iptal edildi
+          cart: sepet
+          complete: sipariş tamamlandı
+          confirm: onay bekliyor
+          delivery: teslimat bilgileri
+          payment: ödeme bilgileri
+          resumed: devam edildi
+          returned: geri döndü
   spree:
     abbreviation: Kısaltma
     accept:

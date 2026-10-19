@@ -739,6 +739,19 @@ pt-BR:
       user:
         one: Usuário
         other: Usuários
+    state_machines:
+      spree/order:
+        states:
+          address: Endereço
+          awaiting_return: Aguardando Retorno
+          canceled: Cancelado
+          cart: Carrinho
+          complete: Completo
+          confirm: Confirmação
+          delivery: Entrega
+          payment: Pagamento
+          resumed: Retomado
+          returned: Devolvido
   solidus_admin:
     adjustment_reasons:
       index:

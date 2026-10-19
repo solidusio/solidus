@@ -237,6 +237,19 @@ pt:
       spree/user:
       spree/variant:
       spree/zone:
+    state_machines:
+      spree/order:
+        states:
+          address: endereço
+          awaiting_return: aguardando retorno
+          canceled: cancelado
+          cart: carrinho de compras
+          complete: completo
+          confirm: confirmação
+          delivery: entrega
+          payment: pagamento
+          resumed: resumido
+          returned: devolvido
   spree:
     abbreviation: Abreviação
     accept:
