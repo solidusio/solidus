@@ -117,7 +117,7 @@ module Spree::Api
               bill_address_attributes: address,
               ship_address_attributes: address
             }}
-          expect(json_response["error"]).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
+          expect(json_response["error"]).to eq("The order could not be transitioned. Please fix the errors and try again.")
           expect(response.status).to eq(422)
         end
 
@@ -497,7 +497,7 @@ module Spree::Api
         order.update_column(:email, "solidus@example.com")
         put spree.next_api_checkout_path(order), params: {order_token: order.guest_token}
         expect(response.status).to eq(422)
-        expect(json_response["errors"]["base"]).to include(I18n.t("spree.there_are_no_items_for_this_order"))
+        expect(json_response["errors"]["base"]).to include("There are no items for this order. Please add an item to the order to continue.")
       end
 
       it "can transition an order to the next state" do
@@ -541,7 +541,7 @@ module Spree::Api
 
         it "returns a sensible error when no payment method is specified" do
           subject
-          expect(json_response["errors"]["base"]).to include(I18n.t("spree.no_payment_found"))
+          expect(json_response["errors"]["base"]).to include("No payment found")
         end
 
         context "with mismatched expected_total" do
@@ -550,7 +550,7 @@ module Spree::Api
           it "returns an error if expected_total is present and does not match actual total" do
             subject
             expect(response.status).to eq(400)
-            expect(json_response["errors"]["expected_total"]).to include(I18n.t("spree.api.order.expected_total_mismatch"))
+            expect(json_response["errors"]["expected_total"]).to include("Expected total does not match actual total.")
           end
         end
 
@@ -562,7 +562,7 @@ module Spree::Api
           it "returns a state machine error" do
             subject
 
-            expect(json_response["error"]).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
+            expect(json_response["error"]).to eq("The order could not be transitioned. Please fix the errors and try again.")
             expect(response.status).to eq(422)
           end
         end
