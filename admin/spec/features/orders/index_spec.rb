@@ -18,11 +18,8 @@ describe "Orders", type: :feature do
   end
 
   context "with different currency" do
-    around do |example|
-      currency_was = Spree::Config.currency
-      Spree::Config.currency = "EUR"
-      example.run
-      Spree::Config.currency = currency_was
+    before do
+      stub_spree_preferences(currency: "EUR")
     end
 
     it "displays correct currency" do
