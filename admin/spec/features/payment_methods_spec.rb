@@ -4,9 +4,29 @@ require "spec_helper"
 require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Payment Methods", :js, type: :feature do
+  let(:preferences_with_preference_sources) {
+    Spree::Preferences::StaticModelPreferences.new.tap { |preferences|
+      preferences.add Spree::PaymentMethod::BogusCreditCard,
+        "static_preferences",
+        {
+          bogus_array: ["static"],
+          bogus_boolean: false,
+          bogus_decimal: 22.123,
+          bogus_encrypted_string: "static-encrypted-string-value",
+          bogus_hash: {static: true},
+          bogus_integer: 999,
+          bogus_password: "incredibly-strong-static-one",
+          bogus_string: "static-string-value",
+          bogus_text: "Statically set text value."
+        }
+    }
+  }
+
   before do
     allow(SolidusAdmin::Config).to receive(:enable_alpha_features?).and_return(true)
     sign_in create(:admin_user, email: "admin@example.com")
+
+    stub_spree_preferences(static_model_preferences: preferences_with_preference_sources)
   end
 
   it "lists users and allows deleting them" do
@@ -112,6 +132,35 @@ describe "Payment Methods", :js, type: :feature do
         expect(page).to have_content("Payment method was successfully created.")
         expect(page).to have_content("Checking")
         expect(page).to have_content("Check Payments")
+      end
+    end
+
+    context "with a preference source" do
+      it "creates payment method" do
+        visit "/admin/payment_methods"
+        click_on "Add new"
+
+        expect(solidus_select_control("Stores")).to have_content "Default Store"
+
+        expect(page).to have_current_path("/admin/payment_methods/new")
+
+        fill_in "Name", with: "Bogus Credit Card"
+        fill_in "Description", with: "Payment Method Description"
+        solidus_select "No", from: "Auto Capture"
+        solidus_select "Bogus Credit Card", from: "Type"
+
+        disabled_inputs = find_all("[disabled]")
+        expect(disabled_inputs.size).to be_zero
+
+        solidus_select "static_preferences", from: "Preference Source"
+
+        disabled_inputs = find_all("[disabled]")
+        expect(disabled_inputs.size).not_to be_zero
+
+        click_on "Save"
+
+        expect(page).to have_content("Payment method was successfully created.")
+        expect(page).to have_content("Bogus Credit Card")
       end
     end
 
