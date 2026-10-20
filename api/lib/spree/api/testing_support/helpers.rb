@@ -14,17 +14,17 @@ module Spree
         end
 
         def assert_not_found!
-          expect(json_response).to eq({"error" => "The resource you were looking for could not be found."})
+          expect(json_response).to eq({"error" => I18n.t(:resource_not_found, scope: "spree.api")})
           expect(response.status).to eq 404
         end
 
         def assert_unauthorized!
-          expect(json_response).to eq({"error" => "You are not authorized to perform that action."})
+          expect(json_response).to eq({"error" => I18n.t(:unauthorized, scope: "spree.api")})
           expect(response.status).to eq 401
         end
 
         def assert_forbidden!
-          expect(json_response).to eq({"error" => "You do not have permission to perform that action."})
+          expect(json_response).to eq({"error" => I18n.t(:forbidden, scope: "spree.api")})
           expect(response.status).to eq 403
         end
 
