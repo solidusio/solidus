@@ -25,9 +25,13 @@ module Spree
         if line_item.inventory_units.empty?
           Spree::Config.stock.quantifier_class.new(line_item.variant).can_supply?(line_item.quantity)
         else
-          quantity_by_stock_location_id = line_item.inventory_units.pending.joins(:shipment).group(:stock_location_id).count
-          quantity_by_stock_location_id.all? do |stock_location_id, quantity|
-            Spree::Config.stock.quantifier_class.new(line_item.variant, stock_location_id).can_supply?(quantity)
+          quantity_by_variant_and_stock_location = line_item.inventory_units.pending.joins(:shipment)
+            .group(:variant_id, :stock_location_id).count
+          variant_ids = quantity_by_variant_and_stock_location.keys.map(&:first)
+          variants = Spree::Variant.with_discarded.where(id: variant_ids).index_by(&:id)
+
+          quantity_by_variant_and_stock_location.all? do |(variant_id, stock_location_id), quantity|
+            Spree::Config.stock.quantifier_class.new(variants.fetch(variant_id), stock_location_id).can_supply?(quantity)
           end
         end
       end
