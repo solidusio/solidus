@@ -2,6 +2,10 @@
 
 module Spree
   module Stock
+    # This class is responsible for coordinating the building of shipments for
+    # an order. It takes in an order and an optional list of stock locations and
+    # inventory units, then builds shipments based on the available stock and
+    # the order's requirements for fulfillment.
     class Coordinator
       attr_reader :order
 
@@ -32,6 +36,10 @@ module Spree
         @splitters = config.fetch(:splitters, Spree::Config.environment.stock_splitters)
       end
 
+      # Builds packages, then splits them, and converts them into shipments. The
+      # resulting shipments are not added to the order.
+      #
+      # @return [Array<Spree::Shipment>] the shipments built for the order
       def shipments
         @shipments ||= begin
           packages = build_packages
