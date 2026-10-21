@@ -35,13 +35,13 @@ module SolidusAdmin
     end
 
     def validate_type
-      unless available_types.include?(params[:payment_method][:type])
-        @resource ||= resource_class.new(permitted_resource_params.except(:type))
-        @resource.errors.add(:type, :invalid)
+      return if available_types.include?(params[:payment_method][:type])
 
-        page_component = @resource.persisted? ? edit_component.new(@resource) : new_component.new(@resource)
-        render_resource_form_with_errors(page_component)
-      end
+      @resource ||= resource_class.new(permitted_resource_params.except(:type))
+      @resource.errors.add(:type, :invalid)
+
+      page_component = @resource.persisted? ? edit_component.new(@resource) : new_component.new(@resource)
+      render_resource_form_with_errors(page_component)
     end
   end
 end
