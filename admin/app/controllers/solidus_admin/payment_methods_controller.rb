@@ -6,6 +6,7 @@ module SolidusAdmin
 
     before_action :initialize_resource, only: [:new]
     before_action :validate_type, only: [:create, :update]
+    before_action :change_type, only: [:update]
 
     search_scope(:all)
     search_scope(:active, default: true, &:active)
@@ -22,16 +23,50 @@ module SolidusAdmin
     def resources_sorting_options = {position: :asc}
 
     def permitted_resource_params
-      params.require(:payment_method).permit(:name, :description, :auto_capture, :type, :preference_source,
-        :preferred_server, :preferred_test_mode, :active, :available_to_admin, :available_to_users, store_ids: [])
+      params.require(:payment_method).permit(
+        *permitted_attribute_params,
+        *permitted_preference_params
+      )
+    end
+
+    def permitted_attribute_params
+      [
+        :name,
+        :description,
+        :auto_capture,
+        :type,
+        :active,
+        :available_to_admin,
+        :available_to_users,
+        :preference_source,
+        store_ids: []
+      ]
+    end
+
+    def permitted_preference_params
+      return [] unless (type = params.dig(:payment_method, :type))
+      return [] unless available_types.include?(type)
+
+      type.constantize.new.options.keys.map { :"preferred_#{_1}" }
     end
 
     def initialize_resource
-      @resource = resource_class.new(stores: [Spree::Store.default])
+      @resource = resource_class.new(
+        type: available_types.first,
+        stores: [Spree::Store.default]
+      )
     end
 
     def available_types
-      Rails.application.config.spree.payment_methods.map(&:name)
+      Rails.application.config.spree.payment_methods.map(&:name).sort
+    end
+
+    def change_type
+      return unless (new_type = params.dig(:payment_method, :type))
+      return unless @resource.persisted? && @resource.type != new_type
+
+      @resource = @resource.becomes(new_type.constantize)
+      @resource.run_callbacks(:update, :before)
     end
 
     def validate_type

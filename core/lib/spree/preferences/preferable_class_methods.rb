@@ -101,6 +101,10 @@ module Spree::Preferences
     #
     #   +app/views/spree/admin/shared/preference_fields/<your_preference_type>.<partial_extension>+
     #
+    # In +solidus_admin+, place view component files in the directory:
+    #
+    #   +app/components/solidus_admin/preference_fields/<your_preference_type>/+
+    #
     # @return [Array]
     def allowed_admin_form_preference_types = Spree::Preferences::FORM_FIELD_TYPES
   end

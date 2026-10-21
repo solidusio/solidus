@@ -75,10 +75,35 @@ describe "Payment Methods", :js, type: :feature do
         fill_in "Name", with: "Checking"
         fill_in "Description", with: "Payment Method Description"
         solidus_select "No", from: "Auto Capture"
-        solidus_select "Check Payments", from: "Type"
-        fill_in "Server", with: "test"
-        switch "Test Mode"
+
+        within(panel(title: "Deployment")) do
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq true
+          expect(field?("Bogus Decimal Preference")).to eq true
+          expect(field?("Bogus Encrypted String Preference")).to eq true
+          expect(field?("Bogus Integer Preference")).to eq true
+          expect(field?("Bogus Password Preference")).to eq true
+          expect(field?("Bogus String Preference")).to eq true
+          expect(field?("Bogus Text Preference")).to eq true
+
+          solidus_select "Check Payments", from: "Type"
+
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq false
+          expect(field?("Bogus Decimal Preference")).to eq false
+          expect(field?("Bogus Encrypted String Preference")).to eq false
+          expect(field?("Bogus Integer Preference")).to eq false
+          expect(field?("Bogus Password Preference")).to eq false
+          expect(field?("Bogus String Preference")).to eq false
+          expect(field?("Bogus Text Preference")).to eq false
+        end
+
+        fill_in "Server", with: "australia-test-1"
+        switch "Test Mode", on: false
         check "Active"
+
         solidus_select("Store", from: "Stores")
         check "Available to Admin"
         check "Available to Users"
@@ -88,6 +113,10 @@ describe "Payment Methods", :js, type: :feature do
         expect(page).to have_content("Payment method was successfully created.")
         expect(page).to have_content("Checking")
         expect(page).to have_content("Check Payments")
+        click_on("Check Payments")
+
+        expect(field_value("Test Mode")).to eq false
+        expect(field_value("Server")).to eq "australia-test-1"
       end
     end
 
@@ -102,17 +131,68 @@ describe "Payment Methods", :js, type: :feature do
   end
 
   context "updating payment method" do
-    before { create(:payment_method, name: "Check payments") }
+    before { create(:payment_method, name: "Bogus Credit Card") }
 
     context "with valid attributes" do
-      it "updates payment method" do
+      it "updates the payment method attributes" do
         visit "/admin/payment_methods"
-        click_on "Check payments"
+        click_on "Bogus Credit Card"
 
-        expect(page).to have_content "Edit Check payments"
+        expect(page).to have_content "Edit Bogus Credit Card"
+
+        switch "Bogus Boolean Preference"
+        fill_in "Bogus Decimal Preference", with: "2.2"
+        fill_in "Bogus Encrypted String Preference", with: "secret-value"
+        fill_in "Bogus Integer Preference", with: "999"
+        fill_in "Bogus Password Preference", with: "another-secret-value"
+        fill_in "Bogus String Preference", with: "string-setting"
+
+        click_on "Save"
+
+        expect(page).to have_content("Payment method was successfully updated.")
+
+        click_on "Bogus Credit Card"
+
+        expect(field_value("Bogus Boolean Preference")).to eq true
+        expect(field_value("Bogus Decimal Preference")).to eq "2.2"
+        expect(field_value("Bogus Encrypted String Preference")).not_to be_blank
+        expect(field_value("Bogus Integer Preference")).to eq "999"
+        expect(field_value("Bogus Password Preference")).not_to be_blank
+        expect(field_value("Bogus String Preference")).to eq "string-setting"
+      end
+
+      it "updates the payment method type" do
+        visit "/admin/payment_methods"
+        click_on "Bogus Credit Card"
+
+        expect(page).to have_content "Edit Bogus Credit Card"
 
         fill_in "Name", with: "Checking payments"
-        solidus_select "Check Payments", from: "Type"
+
+        within(panel(title: "Deployment")) do
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq true
+          expect(field?("Bogus Decimal Preference")).to eq true
+          expect(field?("Bogus Encrypted String Preference")).to eq true
+          expect(field?("Bogus Integer Preference")).to eq true
+          expect(field?("Bogus Password Preference")).to eq true
+          expect(field?("Bogus String Preference")).to eq true
+          expect(field?("Bogus Text Preference")).to eq true
+
+          solidus_select "Check Payments", from: "Type"
+
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq false
+          expect(field?("Bogus Decimal Preference")).to eq false
+          expect(field?("Bogus Encrypted String Preference")).to eq false
+          expect(field?("Bogus Integer Preference")).to eq false
+          expect(field?("Bogus Password Preference")).to eq false
+          expect(field?("Bogus String Preference")).to eq false
+          expect(field?("Bogus Text Preference")).to eq false
+        end
+
         click_on "Save"
 
         expect(page).to have_content("Payment method was successfully updated.")
@@ -124,7 +204,7 @@ describe "Payment Methods", :js, type: :feature do
     context "with invalid attributes" do
       it "shows validation errors" do
         visit "/admin/payment_methods"
-        click_on "Check payments"
+        click_on "Bogus Credit Card"
 
         fill_in "Name", with: ""
         click_on "Save"
@@ -132,5 +212,22 @@ describe "Payment Methods", :js, type: :feature do
         expect(page).to have_content("can't be blank")
       end
     end
+  end
+
+  def field_value(label)
+    input = find(:label, text: label).find("input")
+
+    case input["type"]&.to_sym
+    when :checkbox then input.checked?
+    else input.value
+    end
+  end
+
+  # Use sparingly. This is a slow method due to finder wait times.
+  def field?(label_text)
+    find(:label, text: label_text)
+    true
+  rescue Capybara::ElementNotFound
+    false
   end
 end
