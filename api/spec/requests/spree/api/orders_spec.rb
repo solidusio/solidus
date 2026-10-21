@@ -218,6 +218,41 @@ module Spree::Api
           }.to_not change{ order.reload.number }
         end
 
+        context "when attempting to update the variant on an existing line item" do
+          let!(:order) { create(:order_with_line_items) }
+          let(:line_item) { order.line_items.first }
+          let(:new_variant) { create(:variant) }
+          let(:new_line_item_variant) { create(:variant) }
+          let(:order_params) do
+            {
+              line_items: {
+                "0" => {
+                  id: line_item.id,
+                  variant_id: new_variant.id
+                },
+                "1" => {
+                  variant_id: new_line_item_variant.id,
+                  quantity: 1
+                }
+              }
+            }
+          end
+
+          it "does not update the variant" do
+            expect {
+              subject
+            }.not_to change { line_item.reload.variant }
+          end
+
+          it "creates a new variant" do
+            expect {
+              subject
+            }.to change { order.reload.line_items.count }.by(1)
+
+            expect(order.line_items.last.variant).to eq(new_line_item_variant)
+          end
+        end
+
         context 'creating payment' do
           let!(:order) { create(:order_with_line_items) }
           let(:order_params) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
