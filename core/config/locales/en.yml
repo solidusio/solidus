@@ -1644,8 +1644,18 @@ en:
       spree/calculator:
         shipping_methods: This is used to calculate the shipping rates on a per order or per package rate.
         tax_rates: The "Default Tax" calculator is used for both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store. "Flat Fee" can be used for any taxes that require a flat fee be charged to the customer.
+      spree/payment_method:
+        preferred_test_mode_html: "<p>Payment methods test mode allows users to simulate transactions using dummy data, ensuring the payment gateway's functionality without real transactions.</p> <p>In test mode, users can check if payment methods, such as credit cards or digital wallets, are functioning correctly before going live with real transactions.</p>"
       spree/payment_method/bogus_credit_card:
+        preferred_bogus_array: Hint for no-op array preference.
         preferred_bogus_boolean: Hint for no-op bogus boolean preference.
+        preferred_bogus_decimal: Hint for no-op bogus decimal preference.
+        preferred_bogus_encrypted_string: Hint for no-op bogus encrypted string preference.
+        preferred_bogus_hash: Hint for no-op bogus hash preference.
+        preferred_bogus_integer: Hint for no-op bogus integer preference.
+        preferred_bogus_password: Hint for no-op bogus password preference.
+        preferred_bogus_string: Hint for no-op bogus string preference.
+        preferred_bogus_text: Hint for no-op bogus text preference.
       spree/price:
         country: 'This determines in what country the price is valid.<br>Default: Any Country'
         master_variant: Changing master variant prices will not change variant prices below, but will be used to populate all new variants

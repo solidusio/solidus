@@ -20,17 +20,18 @@ class SolidusAdmin::PaymentMethods::Form::Component < SolidusAdmin::BaseComponen
     ]
   end
 
-  def available_preference_sources
-    Spree::PaymentMethod.available_preference_sources
-  end
-
-  def available_type_select_options
-    Rails.application.config.spree.payment_methods.sort_by(&:name).map {
-      [_1.model_name.human, _1.id]
-    }
+  def deployable?
+    type = params.dig(:payment_method, :type) || @payment_method.type
+    type.in?(available_types)
   end
 
   def store_select_values
     Spree::Store.pluck(:name, :id)
+  end
+
+  private
+
+  def available_types
+    Rails.application.config.spree.payment_methods.map(&:name)
   end
 end
