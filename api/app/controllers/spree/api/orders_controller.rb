@@ -119,6 +119,7 @@ module Spree
         if params[:order]
           normalize_params
           prevent_customer_metadata_update
+          prevent_line_item_variant_update
           params.require(:order).permit(permitted_order_attributes)
         else
           {}
@@ -129,6 +130,16 @@ module Spree
         return unless @order&.completed? && cannot?(:admin, Spree::Order)
 
         params[:order]&.delete(:customer_metadata)
+      end
+
+      def prevent_line_item_variant_update
+        line_items_attributes = params[:order][:line_items_attributes]
+        return unless line_items_attributes
+
+        line_items_attributes = line_items_attributes.values unless line_items_attributes.is_a?(Array)
+        line_items_attributes.each do |line_item_attributes|
+          line_item_attributes.delete(:variant_id) if line_item_attributes[:id].present?
+        end
       end
 
       def normalize_params
