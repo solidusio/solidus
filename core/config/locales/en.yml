@@ -1644,6 +1644,8 @@ en:
       spree/calculator:
         shipping_methods: This is used to calculate the shipping rates on a per order or per package rate.
         tax_rates: The "Default Tax" calculator is used for both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store. "Flat Fee" can be used for any taxes that require a flat fee be charged to the customer.
+      spree/payment_method/bogus_credit_card:
+        preferred_bogus_boolean: Hint for no-op bogus boolean preference.
       spree/price:
         country: 'This determines in what country the price is valid.<br>Default: Any Country'
         master_variant: Changing master variant prices will not change variant prices below, but will be used to populate all new variants

@@ -1,0 +1,48 @@
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3">
+    Enabled
+  </h6>
+
+  <%= form_for Spree::PaymentMethod::BogusCreditCard.new, url: "#" do |f| %>
+    <%= render current_component.new(
+      form: f,
+      type: "Spree::PaymentMethod::BogusCreditCard",
+      preference_name: :bogus_password,
+      name: "field_name_for_rails_form",
+      value: "prefilled value",
+    ) %>
+  <% end %>
+</div>
+
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3">
+    Disabled
+  </h6>
+
+  <%= form_for Spree::PaymentMethod::BogusCreditCard.new, url: "#" do |f| %>
+    <%= render current_component.new(
+      form: f,
+      type: "Spree::PaymentMethod::BogusCreditCard",
+      preference_name: :bogus_password,
+      disabled: true,
+      name: "field_name_for_rails_form",
+      value: "prefilled value",
+    ) %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3">
+    Without hint or translated label
+  </h6>
+
+  <%= form_for Spree::PaymentMethod::BogusCreditCard.new, url: "#" do |f| %>
+    <%= render current_component.new(
+      form: f,
+      type: "Spree::PaymentMethod::BogusCreditCard",
+      preference_name: :unregistered,
+      name: "field_name_for_rails_form",
+    ) %>
+  <% end %>
+</div>
