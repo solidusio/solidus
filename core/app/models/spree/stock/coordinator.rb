@@ -8,28 +8,28 @@ module Spree
       # @api private
       attr_reader :inventory_units, :splitters, :stock_locations
 
-      def initialize(
-        order,
-        inventory_units: nil,
-        inventory_unit_builder_class: Spree::Config.stock.inventory_unit_builder_class,
-        splitters: Spree::Config.environment.stock_splitters,
-        allocator_class: Spree::Config.stock.allocator_class,
-        estimator_class: Spree::Config.stock.estimator_class,
-        package_builder_class: Spree::Config.stock.package_builder_class,
-        shipment_builder_class: Spree::Config.stock.shipment_builder_class,
-        stock_locations: Spree::StockLocation.all
-      )
+      # @param order [Spree::Order] the order to build shipments for
+      # @param inventory_units [Array<Spree::InventoryUnit>] the inventory units to build shipments for
+      # @param stock_locations [Array<Spree::StockLocation>] the stock locations to build shipments from
+      # @param config [Hash] the configuration options for the coordinator
+      # @option config [Class] :package_builder_class
+      # @option config [Class] :shipment_builder_class
+      # @option config [Class] :inventory_unit_builder_class
+      # @option config [Class] :allocator_class
+      # @option config [Class] :estimator_class
+      # @option config [Array<Class>] :splitters
+      def initialize(order, inventory_units: nil, stock_locations: Spree::StockLocation.all, config: {})
         @order = order
         @inventory_units = inventory_units
         @stock_locations = stock_locations
 
-        @inventory_unit_builder_class = inventory_unit_builder_class
-        @allocator_class = allocator_class
-        @package_builder_class = package_builder_class
-        @shipment_builder_class = shipment_builder_class
-        @estimator_class = estimator_class
+        @inventory_unit_builder_class = config.fetch(:inventory_unit_builder_class, Spree::Config.stock.inventory_unit_builder_class)
+        @allocator_class = config.fetch(:allocator_class, Spree::Config.stock.allocator_class)
+        @package_builder_class = config.fetch(:package_builder_class, Spree::Config.stock.package_builder_class)
+        @shipment_builder_class = config.fetch(:shipment_builder_class, Spree::Config.stock.shipment_builder_class)
+        @estimator_class = config.fetch(:estimator_class, Spree::Config.stock.estimator_class)
 
-        @splitters = splitters
+        @splitters = config.fetch(:splitters, Spree::Config.environment.stock_splitters)
       end
 
       def shipments
