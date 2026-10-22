@@ -52,7 +52,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
   def self.select_taxons(form, method, choices, **attributes)
     taxon_select_attributes = {
       multiple: true,
-      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_url,
+      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_path,
       value: choices.map(&:last),
       "data-option-label-field": :pretty_name
     }
