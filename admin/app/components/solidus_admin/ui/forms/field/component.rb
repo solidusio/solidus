@@ -55,7 +55,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     taxon_select_attributes = {
       choices: selected_taxons.map { [_1.pretty_name, _1.id] },
       multiple: true,
-      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_url,
+      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_path,
       value: selected_taxons.map(&:id),
       "data-option-label-field": :pretty_name
     }
