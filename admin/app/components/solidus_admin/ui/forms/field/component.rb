@@ -59,7 +59,7 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
       errors:,
       label:,
       multiple: true,
-      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_url,
+      src: SolidusAdmin::Engine.routes.url_helpers.pretty_names_taxons_path,
       value: selected_taxons.map(&:id),
       "data-option-label-field": :pretty_name,
       "data-query-param": "q[pretty_name_cont]"
