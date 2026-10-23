@@ -42,22 +42,30 @@ module SolidusAdmin
       # @param value [String, Array<String>] which option(s) to select
       # @param from [String] label of the select box
       def solidus_select(value, from:)
-        input = find_field(from, visible: :all)
-        control = input.ancestor(".control")
-        dropdown = control.sibling(".dropdown", visible: :all)
+        controls = solidus_select_controls(from)
 
-        # Make sure options are loaded
-        control.click
-        within(dropdown) { expect(first(".option", visible: :all)).to be }
+        # Make sure options are loaded.
+        controls[:control].click
+
+        within(controls[:dropdown]) do
+          expect(first(".option", visible: :all)).to be
+        end
 
         Array.wrap(value).each do |val|
-          option = dropdown.first(".option", exact_text: val, minimum: 0, wait: 0)
+          option = controls[:dropdown]
+            .first(".option", exact_text: val, minimum: 0, wait: 0)
+
           if option
             option.click
           else
-            input.fill_in(with: val).send_keys(:return)
+            controls[:input].fill_in(with: val).send_keys(:return)
           end
-          expect(control).to have_text(val)
+
+          # Reload the select controls in case they have been replaced by
+          # new DOM elements. This can happen, for example, when a select
+          # element is hooked up to Turbo controller JavaScript function.
+          controls = solidus_select_controls(from)
+          expect(controls[:control]).to have_text(val)
         end
       end
 
@@ -102,6 +110,16 @@ module SolidusAdmin
 
       def turbo_frame_modal
         dialog(parent: find("turbo-frame", visible: :all))
+      end
+
+      private
+
+      def solidus_select_controls(from)
+        input = find_field(from, visible: :all)
+        control = input.ancestor(".control")
+        dropdown = control.sibling(".dropdown", visible: :all)
+
+        {input:, control:, dropdown:}
       end
     end
   end
