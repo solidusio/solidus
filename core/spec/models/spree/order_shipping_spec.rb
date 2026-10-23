@@ -63,6 +63,31 @@ RSpec.describe Spree::OrderShipping do
       expect(order.shipments).to eq [shipment]
     end
 
+    it "uses the configured stock location filter" do
+      expect(Spree::Config.stock).to receive(:location_filter_class).and_call_original
+      order.shipping.create_proposed_shipments
+    end
+
+    it "uses the configured stock location sorter" do
+      expect(Spree::Config.stock).to receive(:location_sorter_class).and_call_original
+      order.shipping.create_proposed_shipments
+    end
+
+    it "passes the filtered and sorted stock locations to the coordinator" do
+      create(:stock_location, active: false)
+      active_stock_location = create(:stock_location, active: true)
+
+      stock_locations = nil
+      allow(Spree::Config.stock.coordinator_class).to receive(:new).and_wrap_original do |original, *args, **kwargs|
+        stock_locations = kwargs[:stock_locations]
+        original.call(*args, **kwargs)
+      end
+
+      order.shipping.create_proposed_shipments
+
+      expect(stock_locations).to eq [active_stock_location]
+    end
+
     it "raises an error if any shipments are ready" do
       shipment = create(:shipment, order:, state: "ready")
 
