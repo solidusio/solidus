@@ -4,16 +4,6 @@ require "spree/encryptor"
 
 module Spree::Preferences
   module PreferableClassMethods
-    DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i[
-      boolean
-      decimal
-      integer
-      password
-      string
-      text
-      encrypted_string
-    ]
-
     def defined_preferences
       []
     end
@@ -99,17 +89,19 @@ module Spree::Preferences
       Spree::Encryptor.new(key)
     end
 
-    # List of preference types allowed as form fields in the Solidus admin
+    # Preference types allowed as form fields in the Solidus admin.
     #
-    # Overwrite this method in your class that includes +Spree::Preferable+
-    # if you want to provide more fields. If you do so, you also need to provide
-    # a preference field partial that lives in:
+    # Overwrite this method in classes that include
+    # +Spree::Preferences::Preferable+ if you want to provide custom fields.
     #
-    # +app/views/spree/admin/shared/preference_fields/+
+    # If records are configurable via the Solidus admin, you must also add
+    # corresponding view code to your application or extension for each field.
+    #
+    # In +solidus_backend+, place a view partial at:
+    #
+    #   +app/views/spree/admin/shared/preference_fields/<your_preference_type>.<partial_extension>+
     #
     # @return [Array]
-    def allowed_admin_form_preference_types
-      DEFAULT_ADMIN_FORM_PREFERENCE_TYPES
-    end
+    def allowed_admin_form_preference_types = Spree::Preferences::FORM_FIELD_TYPES
   end
 end
