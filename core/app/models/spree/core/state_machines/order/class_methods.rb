@@ -96,12 +96,15 @@ module Spree
               before_transition to: :complete, do: :ensure_promotions_eligible
               before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
               before_transition to: :complete, do: :ensure_inventory_units
+              around_transition to: :complete, do: :claim_promotion_usage
               if states[:payment]
                 before_transition to: :complete, do: :process_payments_before_complete
               end
 
               after_transition to: :complete, do: :finalize
               after_transition to: :resumed, do: :after_resume
+              after_transition to: :resumed, do: :reclaim_promotion_usage
+              after_transition to: :canceled, do: :release_promotion_usage
               after_transition to: :canceled, do: :after_cancel
 
               after_transition from: any - :cart, to: any - [:confirm, :complete] do |order|
