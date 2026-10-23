@@ -1,0 +1,4 @@
+en:
+  name_placeholder: "Enter a clear product name"
+  slug_placeholder: "Slug will be generated after saving"
+  description_placeholder: "Write an engaging description"

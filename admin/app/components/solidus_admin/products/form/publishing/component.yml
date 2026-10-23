@@ -1,0 +1,6 @@
+en:
+  title: "Publishing"
+  hints:
+    available_on_html: "Product availability starts from the set date.<br> Empty date indicates no availability."
+    discontinue_on_html: "Product availability ends from the set date.<br> Empty date indicates continuous availability."
+    promotionable_html: "Promotions can apply to this product"

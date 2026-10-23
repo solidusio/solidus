@@ -21,7 +21,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
     render component("ui/button").new(
       tag: :a,
       text: t(".add"),
-      href: spree.new_admin_product_path,
+      href: solidus_admin.new_product_path,
       icon: "add-line"
     )
   end

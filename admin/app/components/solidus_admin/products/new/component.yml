@@ -1,0 +1,10 @@
+en:
+  title: "New Product"
+  placeholders:
+    sku: "Enter SKU code"
+    taxon_ids: "Add taxonomies"
+  manage_options: "Manage option types"
+  options: "Options"
+  product_organization: "Product organization"
+  save: "Save"
+  stock: "Stock"
