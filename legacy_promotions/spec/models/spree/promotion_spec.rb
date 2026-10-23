@@ -941,4 +941,49 @@ RSpec.describe Spree::Promotion, type: :model do
       expect { subject }.to change { Spree::OrderPromotion.count }.from(1).to(0)
     end
   end
+
+  describe "usage claims" do
+    let(:promotion) { create(:promotion, usage_limit: 2) }
+
+    it "claims uses up to the usage limit" do
+      expect(promotion.claim_usage).to be(true)
+      expect(promotion.claim_usage).to be(true)
+      expect(promotion.claim_usage).to be(false)
+      expect(promotion.reload.usage_claims_count).to eq(2)
+    end
+
+    it "claims uses past the usage limit when not enforcing it" do
+      2.times { promotion.claim_usage }
+      expect(promotion.claim_usage(enforce_limit: false)).to be(true)
+      expect(promotion.reload.usage_claims_count).to eq(3)
+    end
+
+    it "releases uses without going below zero" do
+      promotion.claim_usage
+      2.times { promotion.release_usage }
+      expect(promotion.reload.usage_claims_count).to eq(0)
+    end
+
+    context "when a usage limit is added" do
+      let(:promotion) { create(:promotion, :with_order_adjustment, code: "claims") }
+      let(:code) { promotion.codes.first }
+
+      before do
+        create_list(:completed_order_with_promotion, 2, promotion:)
+      end
+
+      it "counts the existing uses of the promotion and its codes" do
+        promotion.update!(usage_limit: 5, per_code_usage_limit: 5)
+        expect(promotion.reload.usage_claims_count).to eq(2)
+        expect(code.reload.usage_claims_count).to eq(2)
+      end
+
+      it "doesn't recount when an existing usage limit changes" do
+        promotion.update!(usage_limit: 5)
+        promotion.claim_usage
+        promotion.update!(usage_limit: 10)
+        expect(promotion.reload.usage_claims_count).to eq(3)
+      end
+    end
+  end
 end

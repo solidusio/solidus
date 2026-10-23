@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Spree::PromotionCode < Spree::Base
+  include Spree::PromotionUsageClaims
+
   belongs_to :promotion, inverse_of: :codes, optional: true
   belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
   has_many :adjustments, dependent: :restrict_with_error
