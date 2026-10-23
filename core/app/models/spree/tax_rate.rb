@@ -120,9 +120,11 @@ module Spree
     private
 
     def amount_for_adjustment_label
-      ActiveSupport::NumberHelper::NumberToPercentageConverter.convert(
-        amount * 100,
-        locale: I18n.locale
+      per_amount = amount * 100
+      precision = per_amount.to_s.split(".").last.size
+
+      ActiveSupport::NumberHelper.number_to_percentage(
+        per_amount, locale: I18n.locale, precision: precision
       )
     end
 
