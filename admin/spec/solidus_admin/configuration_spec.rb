@@ -40,6 +40,14 @@ RSpec.describe SolidusAdmin::Configuration do
     end
   end
 
+  describe "#force_legacy_admin_proc" do
+    it "defaults to a proc that does not force the legacy admin" do
+      request = instance_double(Rack::Request)
+
+      expect(described_class.new.force_legacy_admin_proc.call(request)).to be(false)
+    end
+  end
+
   describe "#import_menu_items_from_backend!" do
     it "imports the menu items from the backend" do
       allow(Spree::Backend::Config).to receive(:menu_items).and_return([
