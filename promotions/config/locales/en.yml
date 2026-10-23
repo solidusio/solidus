@@ -38,6 +38,7 @@ en:
     shipment_benefits: Shipment Benefits
     order_benefits: Order Benefits
     invalid_benefit: Invalid promotion benefit.
+    usage_limit_reached_before_complete: One or more of the promotions on your order have reached their usage limit. Please try again shortly or remove the promotion.
     invalid_condition: Invalid promotion condition.
     create_promotion_code: Create promotion code
     current_promotion_usage: 'Current Usage: %{count}'
