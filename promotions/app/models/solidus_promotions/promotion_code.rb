@@ -2,6 +2,8 @@
 
 module SolidusPromotions
   class PromotionCode < Spree::Base
+    include SolidusPromotions::UsageClaims
+
     belongs_to :promotion, -> { with_discarded }, inverse_of: :codes
     belongs_to :promotion_code_batch, inverse_of: :promotion_codes, optional: true
 

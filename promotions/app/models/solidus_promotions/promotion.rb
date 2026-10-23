@@ -5,6 +5,7 @@ module SolidusPromotions
     UNACTIVATABLE_ORDER_STATES = ["awaiting_return", "returned", "canceled"]
 
     include Spree::SoftDeletable
+    include SolidusPromotions::UsageClaims
 
     belongs_to :category,
       class_name: "SolidusPromotions::PromotionCategory",
@@ -27,6 +28,8 @@ module SolidusPromotions
     validate :apply_automatically_disallowed_with_promotion_codes
 
     before_save :normalize_blank_values
+    after_save :recalculate_usage_claims_counts,
+      if: -> { saved_change_to_usage_limit?(from: nil) || saved_change_to_per_code_usage_limit?(from: nil) }
     after_discard :delete_cart_connections
 
     scope :active, ->(time = Time.current) { has_benefits.started_and_unexpired(time) }
@@ -100,6 +103,15 @@ module SolidusPromotions
         .where.not(id: [excluded_orders.map(&:id)])
         .where.not(spree_orders: {state: :canceled})
         .count
+    end
+
+    # Resets the usage claims counters of the promotion and its codes from
+    # their recorded usage. The counters aren't kept up to date while there's
+    # no usage limit, so this runs whenever a usage limit is added.
+    def recalculate_usage_claims_counts
+      recalculate_usage_claims_count
+      codes.where.not(usage_claims_count: 0).update_all(usage_claims_count: 0)
+      codes.where(id: order_promotions.select(:promotion_code_id)).find_each(&:recalculate_usage_claims_count)
     end
 
     def used_by?(user, excluded_orders = [])
