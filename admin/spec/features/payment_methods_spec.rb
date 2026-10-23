@@ -4,9 +4,29 @@ require "spec_helper"
 require "solidus_admin/testing_support/shared_examples/moveable"
 
 describe "Payment Methods", :js, type: :feature do
+  let(:preferences_with_preference_sources) {
+    Spree::Preferences::StaticModelPreferences.new.tap { |preferences|
+      preferences.add Spree::PaymentMethod::BogusCreditCard,
+        "static_preferences",
+        {
+          bogus_array: ["static"],
+          bogus_boolean: false,
+          bogus_decimal: 22.123,
+          bogus_encrypted_string: "static-encrypted-string-value",
+          bogus_hash: {static: true},
+          bogus_integer: 999,
+          bogus_password: "incredibly-strong-static-one",
+          bogus_string: "static-string-value",
+          bogus_text: "Statically set text value."
+        }
+    }
+  }
+
   before do
     allow(SolidusAdmin::Config).to receive(:enable_alpha_features?).and_return(true)
     sign_in create(:admin_user, email: "admin@example.com")
+
+    stub_spree_preferences(static_model_preferences: preferences_with_preference_sources)
   end
 
   it "lists users and allows deleting them" do
@@ -75,7 +95,31 @@ describe "Payment Methods", :js, type: :feature do
         fill_in "Name", with: "Checking"
         fill_in "Description", with: "Payment Method Description"
         solidus_select "No", from: "Auto Capture"
-        solidus_select "Check Payments", from: "Type"
+
+        within(panel(title: "Deployment")) do
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq true
+          expect(field?("Bogus Decimal Preference")).to eq true
+          expect(field?("Bogus Encrypted String Preference")).to eq true
+          expect(field?("Bogus Integer Preference")).to eq true
+          expect(field?("Bogus Password Preference")).to eq true
+          expect(field?("Bogus String Preference")).to eq true
+          expect(field?("Bogus Text Preference")).to eq true
+
+          solidus_select "Check Payments", from: "Type"
+
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq false
+          expect(field?("Bogus Decimal Preference")).to eq false
+          expect(field?("Bogus Encrypted String Preference")).to eq false
+          expect(field?("Bogus Integer Preference")).to eq false
+          expect(field?("Bogus Password Preference")).to eq false
+          expect(field?("Bogus String Preference")).to eq false
+          expect(field?("Bogus Text Preference")).to eq false
+        end
+
         fill_in "Server", with: "test"
         switch "Test Mode"
         check "Active"
@@ -91,6 +135,35 @@ describe "Payment Methods", :js, type: :feature do
       end
     end
 
+    context "with a preference source" do
+      it "creates payment method" do
+        visit "/admin/payment_methods"
+        click_on "Add new"
+
+        expect(solidus_select_control("Stores")).to have_content "Default Store"
+
+        expect(page).to have_current_path("/admin/payment_methods/new")
+
+        fill_in "Name", with: "Bogus Credit Card"
+        fill_in "Description", with: "Payment Method Description"
+        solidus_select "No", from: "Auto Capture"
+        solidus_select "Bogus Credit Card", from: "Type"
+
+        disabled_inputs = find_all("[disabled]")
+        expect(disabled_inputs.size).to be_zero
+
+        solidus_select "static_preferences", from: "Preference Source"
+
+        disabled_inputs = find_all("[disabled]")
+        expect(disabled_inputs.size).not_to be_zero
+
+        click_on "Save"
+
+        expect(page).to have_content("Payment method was successfully created.")
+        expect(page).to have_content("Bogus Credit Card")
+      end
+    end
+
     context "with invalid attributes" do
       it "shows validation errors" do
         visit "/admin/payment_methods"
@@ -102,17 +175,68 @@ describe "Payment Methods", :js, type: :feature do
   end
 
   context "updating payment method" do
-    before { create(:payment_method, name: "Check payments") }
+    before { create(:payment_method, name: "Bogus Credit Card") }
 
     context "with valid attributes" do
-      it "updates payment method" do
+      it "updates the payment method attributes" do
         visit "/admin/payment_methods"
-        click_on "Check payments"
+        click_on "Bogus Credit Card"
 
-        expect(page).to have_content "Edit Check payments"
+        expect(page).to have_content "Edit Bogus Credit Card"
+
+        switch "Bogus Boolean Preference"
+        fill_in "Bogus Decimal Preference", with: "2.2"
+        fill_in "Bogus Encrypted String Preference", with: "secret-value"
+        fill_in "Bogus Integer Preference", with: "999"
+        fill_in "Bogus Password Preference", with: "another-secret-value"
+        fill_in "Bogus String Preference", with: "string-setting"
+
+        click_on "Save"
+
+        expect(page).to have_content("Payment method was successfully updated.")
+
+        click_on "Bogus Credit Card"
+
+        expect(field_value("Bogus Boolean Preference")).to eq "on"
+        expect(field_value("Bogus Decimal Preference")).to eq "2.2"
+        expect(field_value("Bogus Encrypted String Preference")).not_to be_blank
+        expect(field_value("Bogus Integer Preference")).to eq "999"
+        expect(field_value("Bogus Password Preference")).not_to be_blank
+        expect(field_value("Bogus String Preference")).to eq "string-setting"
+      end
+
+      it "updates the payment method type" do
+        visit "/admin/payment_methods"
+        click_on "Bogus Credit Card"
+
+        expect(page).to have_content "Edit Bogus Credit Card"
 
         fill_in "Name", with: "Checking payments"
-        solidus_select "Check Payments", from: "Type"
+
+        within(panel(title: "Deployment")) do
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq true
+          expect(field?("Bogus Decimal Preference")).to eq true
+          expect(field?("Bogus Encrypted String Preference")).to eq true
+          expect(field?("Bogus Integer Preference")).to eq true
+          expect(field?("Bogus Password Preference")).to eq true
+          expect(field?("Bogus String Preference")).to eq true
+          expect(field?("Bogus Text Preference")).to eq true
+
+          solidus_select "Check Payments", from: "Type"
+
+          expect(field?("Test Mode")).to eq true
+          expect(field?("Server")).to eq true
+          expect(field?("Bogus Boolean Preference")).to eq false
+          expect(field?("Bogus Decimal Preference")).to eq false
+          expect(field?("Bogus Encrypted String Preference")).to eq false
+          expect(field?("Bogus Integer Preference")).to eq false
+          expect(field?("Bogus Password Preference")).to eq false
+          expect(field?("Bogus String Preference")).to eq false
+          expect(field?("Bogus Text Preference")).to eq false
+        end
+
         click_on "Save"
 
         expect(page).to have_content("Payment method was successfully updated.")
@@ -124,7 +248,7 @@ describe "Payment Methods", :js, type: :feature do
     context "with invalid attributes" do
       it "shows validation errors" do
         visit "/admin/payment_methods"
-        click_on "Check payments"
+        click_on "Bogus Credit Card"
 
         fill_in "Name", with: ""
         click_on "Save"
@@ -132,5 +256,17 @@ describe "Payment Methods", :js, type: :feature do
         expect(page).to have_content("can't be blank")
       end
     end
+  end
+
+  def field_value(label)
+    find(:label, text: label).find("input").value
+  end
+
+  # Use sparingly. This is a slow method due to finder wait times.
+  def field?(label_text)
+    find(:label, text: label_text)
+    true
+  rescue Capybara::ElementNotFound
+    false
   end
 end

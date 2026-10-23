@@ -22,26 +22,49 @@ module SolidusAdmin
     def resources_sorting_options = {position: :asc}
 
     def permitted_resource_params
-      params.require(:payment_method).permit(:name, :description, :auto_capture, :type, :preference_source,
-        :preferred_server, :preferred_test_mode, :active, :available_to_admin, :available_to_users, store_ids: [])
+      params.require(:payment_method).permit(
+        *permitted_attribute_params,
+        *permitted_preference_params
+      )
+    end
+
+    def permitted_attribute_params
+      [
+        :name,
+        :description,
+        :auto_capture,
+        :type,
+        :active,
+        :available_to_admin,
+        :available_to_users,
+        :preference_source,
+        store_ids: []
+      ]
+    end
+
+    def permitted_preference_params
+      @resource&.options&.keys&.map { :"preferred_#{_1}" } || []
     end
 
     def initialize_resource
-      @resource = resource_class.new(stores: [Spree::Store.default])
+      @resource = resource_class.new(
+        type: available_types.first,
+        stores: [Spree::Store.default]
+      )
     end
 
     def available_types
-      Rails.application.config.spree.payment_methods.map(&:name)
+      Rails.application.config.spree.payment_methods.map(&:name).sort
     end
 
     def validate_type
-      unless available_types.include?(params[:payment_method][:type])
-        @resource ||= resource_class.new(permitted_resource_params.except(:type))
-        @resource.errors.add(:type, :invalid)
+      return if available_types.include?(params[:payment_method][:type])
 
-        page_component = @resource.persisted? ? edit_component.new(@resource) : new_component.new(@resource)
-        render_resource_form_with_errors(page_component)
-      end
+      @resource ||= resource_class.new(permitted_resource_params.except(:type))
+      @resource.errors.add(:type, :invalid)
+
+      page_component = @resource.persisted? ? edit_component.new(@resource) : new_component.new(@resource)
+      render_resource_form_with_errors(page_component)
     end
   end
 end
