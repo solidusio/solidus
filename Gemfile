@@ -25,7 +25,14 @@ gem "benchmark", "~> 0.5", require: false
 gem "database_cleaner", "~> 2.0", require: false
 gem "db-query-matchers", "~> 0.14", require: false
 gem "rspec-activemodel-mocks", "~> 1.1", require: false
-gem "rspec-rails", "~> 8.0", require: false
+# rubocop:disable Bundler/DuplicatedGem
+if ENV["RAILS_VERSION"] == "main"
+  # Rails 8.2 support is unreleased: rspec/rspec-rails#2907, #2909, #2915
+  gem "rspec-rails", github: "rspec/rspec-rails", branch: "main", require: false
+else
+  gem "rspec-rails", "~> 8.0", require: false
+end
+# rubocop:enable Bundler/DuplicatedGem
 gem "rspec-retry", "~> 0.6.2", require: false
 gem "simplecov", require: false
 gem "simplecov-cobertura", require: false
