@@ -74,4 +74,36 @@ describe SolidusAdmin::BaseController, type: :controller do
       end
     end
   end
+
+  describe "logout path" do
+    subject { controller.send(:solidus_admin_logout_path) }
+
+    context "with a configured logout path" do
+      before do
+        allow(SolidusAdmin::Config).to receive(:logout_link_path).and_return("/sign_out")
+      end
+
+      it "uses the configured path" do
+        is_expected.to eq "/sign_out"
+      end
+    end
+
+    context "without a configured logout path" do
+      before do
+        allow(SolidusAdmin::Config).to receive(:logout_link_path).and_return(nil)
+      end
+
+      it "uses the backend logout path, wherever the backend is mounted" do
+        allow(controller).to receive(:spree).and_return(double(admin_logout_path: "/store/admin/logout"))
+
+        is_expected.to eq "/store/admin/logout"
+      end
+
+      it "falls back to /admin/logout when the backend has no logout route" do
+        allow(controller).to receive(:spree).and_return(double)
+
+        is_expected.to eq "/admin/logout"
+      end
+    end
+  end
 end
