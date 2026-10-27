@@ -9,8 +9,8 @@ If your Gemfile contains the line `gem "solidus"`, this gem is automatically ins
 ```rb
 gem "solidus_legacy_promotions"
 ```
-
-This gem is slated for deprecation, as its name implies. We're working on integrating a new implementation for promotions and shipping it later this year.
+> [!WARNING]
+> This gem is deprecated and will be removed in Solidus 5.0. Please migrate to [`solidus_promotions`](../promotions) by following the [Migration Guide](../promotions/MIGRATING.md).
 
 ## Architecture overview
 

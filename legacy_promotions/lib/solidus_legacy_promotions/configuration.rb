@@ -4,6 +4,12 @@ module SolidusLegacyPromotions
   class Configuration < Spree::Preferences::Configuration
     include Spree::Core::EnvironmentExtension
 
+    def initialize
+      Spree.deprecator.warn("Solidus Legacy Promotions is deprecated and will be removed in Solidus 5.0.
+      Follow the migration instructions to the new promotion system at https://github.com/solidusio/solidus/blob/main/promotions/MIGRATING.md.")
+      super
+    end
+
     # @!attribute [rw] promotions_per_page
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
