@@ -187,7 +187,9 @@ RSpec.shared_examples "a successfully integrated promotion system" do
     let(:order) { create(:order_with_line_items, line_items_attributes: [{variant: shirt}]) }
 
     before do
-      Spree::Config.promotions = SolidusLegacyPromotions::Configuration.new
+      Spree::Config.promotions = Spree.deprecator.silence do
+        SolidusLegacyPromotions::Configuration.new
+      end
       Spree::Config.order_contents_class = "Spree::OrderContents"
       SolidusPromotions.config.sync_order_promotions = true
       promotion_code = spree_promotion.codes.first
