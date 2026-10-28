@@ -22,7 +22,9 @@ module SolidusAdmin::ControllerHelpers::Authentication
   end
 
   def solidus_admin_logout_path
-    SolidusAdmin::Config.logout_link_path
+    SolidusAdmin::Config.logout_link_path ||
+      spree.try(:admin_logout_path) ||
+      "/admin/logout"
   end
 
   def solidus_admin_logout_method

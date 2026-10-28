@@ -130,4 +130,37 @@ RSpec.describe SolidusAdmin::Configuration do
       ])
     end
   end
+
+  describe "menu item path matching when the engine is mounted elsewhere" do
+    before do
+      allow(Rails.application.routes.url_helpers).to receive(:solidus_admin_path).and_return("/dashboard")
+    end
+
+    it "matches the default products item under the mount path" do
+      products = described_class.new.menu_items.find { _1[:key] == "products" }
+      match_path = products[:children].find { _1[:key] == "products" }[:match_path]
+
+      expect(match_path.call("/dashboard/products/a-product")).to be(true)
+      expect(match_path.call("/admin/products/a-product")).to be(false)
+    end
+
+    it "matches imported backend items given a string under the mount path" do
+      allow(Spree::Backend::Config).to receive(:menu_items).and_return([
+        Spree::BackendConfiguration::MenuItem.new(
+          label: :item1,
+          icon: "ri-inbox-line",
+          condition: -> {},
+          match_path: "/foo",
+          url: :foo
+        )
+      ])
+
+      config = described_class.new
+      config.import_menu_items_from_backend!
+      match_path = config.menu_items.first[:match_path]
+
+      expect(match_path.call("/dashboard/foo/1")).to be(true)
+      expect(match_path.call("/admin/foo/1")).to be(false)
+    end
+  end
 end

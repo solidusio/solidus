@@ -85,7 +85,7 @@ module SolidusAdmin
             {
               key: "products",
               route: -> { solidus_admin.products_path },
-              match_path: -> { _1.start_with?("/admin/products/") },
+              match_path: -> { _1.start_with?("#{mount_path}/products/") },
               position: 0
             },
             {
@@ -148,7 +148,7 @@ module SolidusAdmin
           case item.match_path
           when Regexp then -> { _1 =~ item.match_path }
           when Proc then item.match_path
-          when String then -> { _1.start_with?("/admin#{item.match_path}") }
+          when String then -> { _1.start_with?("#{mount_path}#{item.match_path}") }
           when nil then -> { _1.start_with?(route.call) }
           else raise ArgumentError, "Unknown match_path type #{item.match_path.class}"
           end
@@ -185,8 +185,9 @@ module SolidusAdmin
     # The method used to retrieve the current user in the admin interface.
     preference :current_user_method, :string, default: :spree_current_user
 
-    # The path used to logout the user in the admin interface.
-    preference :logout_link_path, :string, default: "/admin/logout"
+    # The path used to logout the user in the admin interface, defaults to the
+    # solidus_backend logout path.
+    preference :logout_link_path, :string, default: nil
 
     # The HTTP method used to logout the user in the admin interface.
     preference :logout_link_method, :string, default: :delete
@@ -209,6 +210,12 @@ module SolidusAdmin
 
     def theme_path(user_theme)
       themes.fetch(user_theme&.to_sym, themes[theme.to_sym])
+    end
+
+    private
+
+    def mount_path
+      Rails.application.routes.url_helpers.solidus_admin_path
     end
   end
 end
