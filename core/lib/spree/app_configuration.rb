@@ -319,6 +319,15 @@ module Spree
     #   (default: +['IT']+)
     preference :countries_that_use_nested_subregions, :array, default: ["IT"]
 
+    # @!attribute [rw] countries_that_require_states
+    #   @return [Array] ISO codes of the countries whose addresses require a
+    #   state. This is used to set +states_required+ when seeding countries. It
+    #   matches the countries for which PayPal and Shopify require a state.
+    #   (default: +['AE', 'AU', 'BR', 'CA', 'CN', 'ES', 'HK', 'IE', 'IN', 'IT', 'MX', 'MY', 'NZ', 'PT', 'RO', 'TH', 'US', 'ZA']+)
+    preference :countries_that_require_states, :array, default: %w[
+      AE AU BR CA CN ES HK IE IN IT MX MY NZ PT RO TH US ZA
+    ]
+
     # @!attribute [rw] send_core_emails
     #   @return [Boolean] Whether to send transactional emails (default: true)
     preference :send_core_emails, :boolean, default: true
