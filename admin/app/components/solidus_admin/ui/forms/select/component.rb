@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
-  DATA_SRC_URL_PROTOCOL_REGEXP = /\A[a-zA-Z][a-zA-Z0-9+\-.]*:/
-
   FONT_SIZES = {
     s: "[&>.control]:text-xs [&_.dropdown]:text-xs",
     m: "[&>.control]:text-sm [&_.dropdown]:text-sm",
@@ -27,10 +25,8 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     }
   }.freeze
 
-  # Renders a custom select component, which uses the "solidus_select" web
-  # component.
-  # @see +admin/app/javascript/solidus_admin/web_components/solidus_select.js+
-  #
+  # Render custom select component, which uses "solidus_select" custom element
+  # @see "admin/app/javascript/solidus_admin/web_components/solidus_select.js"
   # @param choices [Array<String>, Array<Array<String>>] container with options to be rendered
   #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).
   #   When +:src+ parameter is provided, use +:choices+ to provide the list of selected options only.
@@ -74,26 +70,6 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     @attributes[:is] = "solidus-select"
     @attributes[:id] ||= "#{stimulus_id}_#{name}"
     @attributes[:"data-error-message"] = @error.presence
-  end
-
-  # A helper method to forward attributes to the component. It uses the request context from render time to fill in
-  # details about the request URL if a +data-src+` is present. (The Tom Select library used by the "solidus_select"
-  # web component only supports absolute URLs as source URLs, but components may not always have access to URL options
-  # before render time.)
-  #
-  # @param request_context [ActionDispatch::Request] the request context at component render
-  # @return [Hash] either the component's given attributes or the attributes with a respecified +data-src+
-  def attributes(request_context:)
-    return @attributes if (data_src = @attributes[:"data-src"]).blank?
-    return @attributes if data_src.match?(DATA_SRC_URL_PROTOCOL_REGEXP)
-
-    base_url = [
-      request_context.protocol + request_context.host,
-      request_context.optional_port
-    ].compact.join(":")
-
-    @attributes[:"data-src"] = base_url + data_src
-    @attributes
   end
 
   private
