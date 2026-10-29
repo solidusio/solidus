@@ -9,6 +9,20 @@ module Spree
   # hosted by a single Solidus implementation can be built.
   #
   class Store < Spree::Base
+    # The logo and favicon are stored with Active Storage, so a store has them
+    # only when images use the Active Storage attachment adapter.
+    #
+    # @return [Boolean]
+    def self.attachments_available?
+      Spree::Image.include?(Spree::Image::ActiveStorageAttachment)
+    end
+
+    if attachments_available?
+      has_one_attached :logo
+      has_one_attached :favicon
+      validate :logo_and_favicon_are_supported_images
+    end
+
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
 
@@ -67,6 +81,16 @@ module Spree
     end
 
     private
+
+    def logo_and_favicon_are_supported_images
+      [:logo, :favicon].each do |name|
+        attachment = public_send(name)
+        next unless attachment.attached?
+        next if attachment.content_type.in?(Spree::Config.allowed_image_mime_types)
+
+        errors.add(name, :content_type_not_supported)
+      end
+    end
 
     def ensure_default_exists_and_is_unique
       if default
