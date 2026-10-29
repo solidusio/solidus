@@ -77,6 +77,9 @@ require "rails/generators/testing/behavior"
 require "solidus_admin/testing_support/component_helpers"
 require "solidus_admin/testing_support/feature_helpers"
 
+# SOLIDUS TEST HELPERS
+require "spree/testing_support/preferences"
+
 # AXE - ACCESSIBILITY
 require "axe-rspec"
 require "axe-capybara"
@@ -118,6 +121,7 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include SolidusAdmin::TestingSupport::ComponentHelpers, type: :component
+  config.include Spree::TestingSupport::Preferences
 
   config.include Rails::Generators::Testing::Behavior, type: :generator
   config.include FileUtils, type: :generator
