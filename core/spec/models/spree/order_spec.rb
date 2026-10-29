@@ -1459,6 +1459,17 @@ RSpec.describe Spree::Order, type: :model do
         end
       end
 
+      context "there is a pending payment that exceeds the order total" do
+        let(:store_credit) { create(:store_credit, amount: 50) }
+        let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:recalculate) }
+        let!(:cc_payment) { create(:payment, order:, state: "pending", amount: order_total + 10) }
+
+        it "does not create a store credit payment" do
+          expect { subject }.not_to raise_error
+          expect(order.payments.store_credits).to be_empty
+        end
+      end
+
       context "there are multiple store credits" do
         context "they have different credit type priorities" do
           let(:amount_difference) { 100 }
