@@ -44,16 +44,18 @@ module SolidusAdmin
       def solidus_select(value, from:)
         controls = solidus_select_controls(from)
 
-        # Make sure options are loaded.
+        # Initiate option loading.
         controls[:control].click
 
-        within(controls[:dropdown]) do
-          expect(first(".option", visible: :all)).to be
-        end
+        # Wait until options have finished loaded. This accounts for select
+        # instances that load data from a remote data source URL on click. We
+        # want the exact text to contain at least one character, as options
+        # will at first load with "" as text values, causing timing-related
+        # test failures.
+        controls[:dropdown].first(".option", exact_text: /.+/)
 
         Array.wrap(value).each do |val|
-          option = controls[:dropdown]
-            .first(".option", exact_text: val, minimum: 0, wait: 0)
+          option = controls[:dropdown].first(".option", exact_text: val)
 
           if option
             option.click

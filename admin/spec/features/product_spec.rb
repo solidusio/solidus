@@ -205,7 +205,8 @@ describe "Product", type: :feature do
         visit "/admin/products/just-a-prod"
         expect(solidus_select_control("Categories").text).to be_empty
 
-        solidus_select %w[Apparel Caps], from: "Categories"
+        solidus_select ["Apparel", "Apparel -> Caps"], from: "Categories"
+
         within("header") { click_on "Save" }
         expect(page).to have_content("Product was successfully updated.")
 
