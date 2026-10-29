@@ -24,10 +24,10 @@ module Spree
 
       # @api private
       attr_reader :inventory_units, :splitters, :stock_locations,
-        :filtered_stock_locations, :inventory_units_by_variant, :desired,
-        :availability, :allocator, :packages
+        :inventory_units_by_variant, :desired, :availability, :allocator,
+        :packages
 
-      def initialize(order, inventory_units_deprecated = nil, inventory_units: nil)
+      def initialize(order, inventory_units_deprecated = nil, inventory_units: nil, stock_locations: nil)
         if inventory_units_deprecated
           Spree.deprecator.warn "Using the `inventory_units` positional " \
             "argument is deprecated in favor of using the keyword argument. "
@@ -40,15 +40,16 @@ module Spree
           inventory_units || Spree::Config.stock.inventory_unit_builder_class.new(order).units
         @splitters = Spree::Config.environment.stock_splitters
 
-        @filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
-        sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
-        @stock_locations = sorted_stock_locations
+        @stock_locations = stock_locations || begin
+          filtered_stock_locations = Spree::Config.stock.location_filter_class.new(load_stock_locations, order).filter
+          Spree::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
+        end
 
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
         @desired = Spree::StockQuantities.new(inventory_units_by_variant.transform_values(&:count))
         @availability = Spree::Stock::Availability.new(
           variants: desired.variants,
-          stock_locations:
+          stock_locations: @stock_locations
         )
 
         @allocator = Spree::Config.stock.allocator_class.new(availability)
