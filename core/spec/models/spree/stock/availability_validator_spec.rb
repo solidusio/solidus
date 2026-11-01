@@ -171,6 +171,28 @@ module Spree
           include_examples "fails validation"
         end
       end
+
+      context "another line item in the order has the same variant" do
+        let!(:order) { create(:order_with_line_items) }
+        let(:line_item) { order.line_items.first }
+        let(:variant) { line_item.variant }
+
+        before do
+          other_line_item = create(:line_item, order:, variant:)
+          create(:inventory_unit, line_item: other_line_item, variant:, shipment: order.shipments.first)
+          variant.stock_items.update_all(count_on_hand:, backorderable: false)
+        end
+
+        context "and there is enough stock for both" do
+          let(:count_on_hand) { 2 }
+          include_examples "passes validation"
+        end
+
+        context "and there is only enough stock for one" do
+          let(:count_on_hand) { 1 }
+          include_examples "fails validation"
+        end
+      end
     end
   end
 end
