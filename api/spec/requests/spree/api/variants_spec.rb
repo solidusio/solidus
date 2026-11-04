@@ -269,6 +269,67 @@ module Spree::Api
       end
     end
 
+    context "when a product is not yet available" do
+      let!(:unavailable_product) { create(:product, available_on: 1.day.from_now) }
+      let!(:unavailable_variant) { unavailable_product.master }
+
+      it "does not include its variants in the index" do
+        get spree.api_variants_path
+        expect(json_response["variants"].map { |v| v["id"] }).to eq([variant.id])
+      end
+
+      it "cannot show its variant" do
+        get spree.api_variant_path(unavailable_variant)
+        expect(response.status).to eq(404)
+      end
+
+      it "cannot list its variants" do
+        get spree.api_product_variants_path(unavailable_product)
+        expect(response.status).to eq(404)
+      end
+
+      context "as an admin" do
+        sign_in_as_admin!
+
+        it "includes its variants in the index" do
+          get spree.api_variants_path
+          expect(json_response["variants"].map { |v| v["id"] }).to include(unavailable_variant.id)
+        end
+
+        it "can show its variant" do
+          get spree.api_variant_path(unavailable_variant)
+          expect(response.status).to eq(200)
+          expect(json_response["id"]).to eq(unavailable_variant.id)
+        end
+
+        it "can list its variants" do
+          get spree.api_product_variants_path(unavailable_product)
+          expect(response.status).to eq(200)
+          expect(json_response["variants"].map { |v| v["id"] }).to eq([unavailable_variant.id])
+        end
+      end
+    end
+
+    context "when a product is discontinued" do
+      let!(:unavailable_product) { create(:product, discontinue_on: 1.day.ago) }
+      let!(:unavailable_variant) { unavailable_product.master }
+
+      it "does not include its variants in the index" do
+        get spree.api_variants_path
+        expect(json_response["variants"].map { |v| v["id"] }).to eq([variant.id])
+      end
+
+      it "cannot show its variant" do
+        get spree.api_variant_path(unavailable_variant)
+        expect(response.status).to eq(404)
+      end
+
+      it "cannot list its variants" do
+        get spree.api_product_variants_path(unavailable_product)
+        expect(response.status).to eq(404)
+      end
+    end
+
     it "can learn how to create a new variant" do
       get spree.new_api_variant_path(variant)
       expect(json_response["attributes"]).to eq(new_attributes.map(&:to_s))
