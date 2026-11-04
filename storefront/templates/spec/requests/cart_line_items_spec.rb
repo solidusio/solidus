@@ -21,6 +21,42 @@ RSpec.describe "Cart Line Items", type: :request do
       expect(order_by_token).to be_persisted
     end
 
+    context "when the variant's product is not yet available" do
+      let(:variant) { create(:variant, product: create(:product, available_on: 1.day.from_now)) }
+
+      it "does not add it to the cart" do
+        expect do
+          post cart_line_items_path, params: {variant_id: variant.id}
+        end.not_to change(Spree::LineItem, :count)
+
+        expect(response.status).to eq(404)
+      end
+
+      context "as an admin", with_signed_in_user: true do
+        let(:user) { create(:admin_user) }
+
+        it "adds it to the cart" do
+          expect do
+            post cart_line_items_path, params: {variant_id: variant.id}
+          end.to change(Spree::LineItem, :count).by(1)
+
+          expect(response).to redirect_to cart_path
+        end
+      end
+    end
+
+    context "when the variant's product is discontinued" do
+      let(:variant) { create(:variant, product: create(:product, discontinue_on: 1.day.ago)) }
+
+      it "does not add it to the cart" do
+        expect do
+          post cart_line_items_path, params: {variant_id: variant.id}
+        end.not_to change(Spree::LineItem, :count)
+
+        expect(response.status).to eq(404)
+      end
+    end
+
     context "when variant" do
       let(:user) { create(:user) }
 
