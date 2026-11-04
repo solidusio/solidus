@@ -10,7 +10,7 @@ module Spree
       end
 
       def create
-        variant = Spree::Variant.find(params[:line_item][:variant_id])
+        variant = find_variant
         begin
           @line_item = @order.contents.add(
             variant,
@@ -46,6 +46,13 @@ module Spree
       def load_order
         @order ||= Spree::Order.includes(:line_items).find_by!(number: order_id)
         authorize! :update, @order, order_token
+      end
+
+      def find_variant
+        variant = Spree::Variant.find(params[:line_item][:variant_id])
+        raise ActiveRecord::RecordNotFound unless can?(:admin, @order) || variant.product.available?
+
+        variant
       end
 
       def find_line_item
