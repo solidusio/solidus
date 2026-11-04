@@ -20,13 +20,13 @@ jobs:
       BUNDLE_ONLY: "release"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v6.1.0
+      - uses: ruby/setup-ruby@v1.336.0
         with:
           ruby-version: "3.2"
           bundler-cache: true
       - id: pipeline_context
-        uses: ./.github/actions/extract_pipeline_context
+        uses: $/.github/actions/extract_pipeline_context
         with:
           last_minor: ${{ inputs.last_minor }}
       - name: "Bump version"
@@ -45,7 +45,7 @@ jobs:
             last_minor_label=""
           fi
           echo "labels='changelog:skip release:generate $last_minor_label'" >> $GITHUB_OUTPUT
-      - uses: ./.github/actions/commit_and_submit_pull_request
+      - uses: $/.github/actions/commit_and_submit_pull_request
         with:
           labels: ${{ steps.pr_labels.outputs.labels }}
           message: |
