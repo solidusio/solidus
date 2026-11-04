@@ -10,7 +10,7 @@ RSpec.describe Spree::Preference, type: :model do
     expect(@preference).to be_valid
   end
 
-  describe "type coversion for values" do
+  describe "type conversion for values" do
     def round_trip_preference(key, value)
       element = Spree::Preference.new
       element.value = value
