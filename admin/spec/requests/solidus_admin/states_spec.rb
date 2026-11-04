@@ -3,43 +3,114 @@
 require "spec_helper"
 
 RSpec.describe "SolidusAdmin::StatesController", type: :request do
-  let(:admin_user) { create(:admin_user) }
-
   before do
-    allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user)
+    allow_any_instance_of(SolidusAdmin::BaseController)
+      .to receive(:spree_current_user)
+      .and_return(user)
   end
 
   describe "GET /index" do
-    before { create_list(:state, 3) }
+    context "when unauthenticated" do
+      let(:user) { nil }
 
-    it "serves json with a 200 OK status" do
-      get solidus_admin.states_path
-      expect(response.headers["Content-Type"]).to include("application/json")
-      expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body).size).to eq(3)
-    end
-  end
+      it "responds as unauthorized", pending: "Currently redirects to /unauthorized" do
+        get solidus_admin.states_path
 
-  describe "GET /index pagination headers" do
-    it "links to the next page while more states remain" do
-      allow_any_instance_of(SolidusAdmin::StatesController).to receive(:per_page).and_return(2)
-      create_list(:state, 3)
+        expect(response).to have_http_status :unauthorized
+      end
 
-      get solidus_admin.states_path(view: "state_with_country")
+      it "responds in JSON format", pending: "Not yet implemented" do
+        get solidus_admin.states_path
 
-      expect(response.headers["X-Total-Count"]).to eq("3")
-      expect(response.headers["Link"]).to eq(
-        %(<http://www.example.com/admin/states?page=2&view=state_with_country>; rel="next")
-      )
+        expect(response.content_type).to match /^application\/json/
+      end
     end
 
-    it "sends no next link on the last page" do
-      create_list(:state, 3)
+    context "when authenticated as any user" do
+      let(:user) { create :user }
 
-      get solidus_admin.states_path
+      it "responds as forbidden" do
+        get solidus_admin.states_path
 
-      expect(response.headers["X-Total-Count"]).to eq("3")
-      expect(response.headers["Link"]).to be_nil
+        expect(response).to have_http_status :forbidden
+      end
+
+      it "responds in JSON format", pending: "Not yet implemented" do
+        get solidus_admin.states_path
+
+        expect(response.content_type).to match /^application\/json/
+      end
+    end
+
+    context "when authenticated as a limited admin user" do
+      context "who does not have permission to administrate states" do
+        let(:user) {
+          create :limited_admin_user,
+            permissions: [Spree::PermissionSets::ProductDisplay]
+        }
+
+        it "responds as forbidden" do
+          get solidus_admin.states_path
+
+          expect(response).to have_http_status :forbidden
+        end
+
+        it "responds in JSON format", pending: "Not yet implemented" do
+          get solidus_admin.states_path
+
+          expect(response.content_type).to match(/^application\/json/)
+        end
+      end
+
+      context "who has permission to administrate states" do
+        let(:user) {
+          create :limited_admin_user,
+            permissions: [Spree::PermissionSets::ConfigurationDisplay]
+        }
+
+        before do
+          create_list(:state, 3)
+        end
+
+        it "responds in JSON format" do
+          get solidus_admin.states_path
+
+          expect(response.content_type).to match(/^application\/json/)
+        end
+
+        it "serves JSON with a 200 OK status" do
+          get solidus_admin.states_path
+
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body).size).to eq(3)
+        end
+
+        context "with pagination" do
+          it "links to the next page while more states remain" do
+            allow_any_instance_of(SolidusAdmin::StatesController)
+              .to receive(:per_page)
+              .and_return(2)
+
+            get solidus_admin.states_path(view: "state_with_country")
+
+            expect(response.headers["X-Total-Count"]).to eq("3")
+            expect(response.headers["Link"]).to eq(
+              %(<http://www.example.com/admin/states?page=2&view=state_with_country>; rel="next")
+            )
+          end
+
+          it "sends no next link on the last page" do
+            allow_any_instance_of(SolidusAdmin::StatesController)
+              .to receive(:per_page)
+              .and_return(3)
+
+            get solidus_admin.states_path
+
+            expect(response.headers["X-Total-Count"]).to eq("3")
+            expect(response.headers["Link"]).to be_nil
+          end
+        end
+      end
     end
   end
 end
