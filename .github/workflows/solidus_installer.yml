@@ -27,6 +27,8 @@ jobs:
       COVERAGE_DIR: ${{ github.workspace }}/storefront/coverage
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Install libvips
         run: |
           sudo apt-get update

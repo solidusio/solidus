@@ -28,6 +28,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Build app image
         run: docker compose build app
       - name: Grant the container user write access to the checkout
