@@ -330,8 +330,15 @@ module Spree
 
     # Associates the specified user with the order.
     def associate_user!(user, override_email = true)
+      user_changed = user_id != user.try(:id)
       self.user = user
       attrs_to_set = {user_id: user.try(:id)}
+
+      if user_changed
+        self.guest_token = nil
+        attrs_to_set[:guest_token] = create_token
+      end
+
       attrs_to_set[:email] = user.try(:email) if override_email
       attrs_to_set[:created_by_id] = user.try(:id) if created_by.blank?
 
