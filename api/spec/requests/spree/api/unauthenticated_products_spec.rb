@@ -21,6 +21,21 @@ module Spree::Api
         expect(json_response["pages"]).to eq(1)
       end
 
+      it "allows shared caches to store the product list" do
+        get spree.api_products_path
+        expect(response.headers["Cache-Control"]).to eq "max-age=900, public"
+        expect(response.headers["Surrogate-Control"]).to eq "max-age=900"
+        expect(response.headers["Surrogate-Key"]).to be_nil
+      end
+
+      it "allows shared caches to store a single product" do
+        other_product = create(:product)
+        get spree.api_product_path(other_product)
+        expect(response.headers["Cache-Control"]).to eq "max-age=900, public"
+        expect(response.headers["Surrogate-Control"]).to eq "max-age=900"
+        expect(response.headers["Surrogate-Key"]).to eq "product_id=#{other_product.id}"
+      end
+
       it_behaves_like "modifying product actions are restricted", :unauthorized
     end
   end
