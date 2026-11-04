@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
@@ -38,6 +40,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
@@ -53,6 +57,8 @@ jobs:
       ESLINT_USE_FLAT_CONFIG: false
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:

@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: "Check for the presence of a changelog label"
         env:
           GH_TOKEN: ${{ github.token }}
