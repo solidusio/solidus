@@ -9,6 +9,13 @@ on:
     types:
       - closed
 
+permissions:
+  # Pushes the patch branch, publishes the release draft and its tag,
+  # opens the two pull requests and creates the backport label.
+  contents: write
+  pull-requests: write
+  issues: write
+
 jobs:
   prepare:
     runs-on: ubuntu-latest

@@ -16,5 +16,8 @@ jobs:
           sync-labels: true
           dot: true
   ensure:
+    permissions:
+      contents: read
+      pull-requests: read
     uses: "./.github/workflows/ensure_changelog_label.yml"
     needs: "triage"
