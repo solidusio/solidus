@@ -17,7 +17,7 @@ jobs:
   ensure:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
         with:
           persist-credentials: false
       - name: "Check for the presence of a changelog label"
