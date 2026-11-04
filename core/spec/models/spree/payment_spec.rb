@@ -109,6 +109,12 @@ RSpec.describe Spree::Payment, type: :model do
   end
 
   context "validations" do
+    it "does not allow negative amounts" do
+      payment.amount = -1
+      expect(payment).not_to be_valid
+      expect(payment.errors[:amount]).to include("must be greater than or equal to 0")
+    end
+
     it "returns useful error messages when source is invalid" do
       payment.source = Spree::CreditCard.new
       expect(payment).not_to be_valid
