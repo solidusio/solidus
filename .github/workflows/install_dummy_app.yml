@@ -12,6 +12,9 @@ concurrency:
   group: dummy-app-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   install_dummy_app:
     name: Dummy App

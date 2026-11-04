@@ -12,6 +12,9 @@ concurrency:
   group: solidus-installer-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   solidus_installer:
     name: Test Installer

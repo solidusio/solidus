@@ -9,6 +9,11 @@ on:
     types:
       - closed
 
+permissions:
+  # Creates or updates the release draft from the merged pull requests.
+  contents: write
+  pull-requests: read
+
 jobs:
   update:
     runs-on: ubuntu-latest

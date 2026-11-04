@@ -10,6 +10,9 @@ concurrency:
   group: test-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   solidus_admin:
     uses: ./.github/workflows/test_solidus.yml
