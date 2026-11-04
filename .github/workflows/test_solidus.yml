@@ -17,6 +17,9 @@ on:
     secrets:
       CODECOV_TOKEN:
 
+permissions:
+  contents: read
+
 jobs:
   RSpec:
     name: Rails ${{ matrix.rails }}, Ruby ${{ matrix.ruby }}, ${{ matrix.database }}, ${{ matrix.storage }}

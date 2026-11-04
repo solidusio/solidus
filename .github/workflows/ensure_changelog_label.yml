@@ -8,6 +8,11 @@ on:
       - v*
   workflow_call:
 
+permissions:
+  contents: read
+  # gh pr view reads the labels of the pull request.
+  pull-requests: read
+
 jobs:
   ensure:
     runs-on: ubuntu-latest
