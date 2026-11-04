@@ -19,6 +19,11 @@ RSpec.describe Spree::Preference, type: :model do
       Spree::Preference.find_by(key:)
     end
 
+    it ":array" do
+      pref = round_trip_preference(:array_key, ["a", 2, :c])
+      expect(pref.value).to eq ["a", 2, :c]
+    end
+
     it ":boolean" do
       pref = round_trip_preference(:boolean_key, true)
       expect(pref.value).to eq true
@@ -37,6 +42,11 @@ RSpec.describe Spree::Preference, type: :model do
     it ":decimal" do
       pref = round_trip_preference(:decimal_key, 1.5)
       expect(pref.value).to eq 1.5
+    end
+
+    it ":hash" do
+      pref = round_trip_preference(:decimal_key, {one: 1, two: "2", three: :three})
+      expect(pref.value).to eq({one: 1, two: "2", three: :three})
     end
 
     it ":string" do
