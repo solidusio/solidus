@@ -13,7 +13,8 @@ module SolidusAdmin
         route <<~RUBY
           mount SolidusAdmin::Engine, at: '#{solidus_mount_point}admin', constraints: ->(req) {
             req.cookies['solidus_admin'] != 'false' &&
-            req.params['solidus_admin'] != 'false'
+            req.params['solidus_admin'] != 'false' &&
+            !SolidusAdmin::Config.force_legacy_admin_proc.call(req)
           }
         RUBY
       end
