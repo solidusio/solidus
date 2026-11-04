@@ -13,13 +13,13 @@ RSpec.describe "SolidusAdmin::StatesController", type: :request do
     context "when unauthenticated" do
       let(:user) { nil }
 
-      it "responds as unauthorized", pending: "Currently redirects to /unauthorized" do
+      it "responds as unauthorized" do
         get solidus_admin.states_path
 
         expect(response).to have_http_status :unauthorized
       end
 
-      it "responds in JSON format", pending: "Not yet implemented" do
+      it "responds in JSON format" do
         get solidus_admin.states_path
 
         expect(response.content_type).to match /^application\/json/
@@ -35,7 +35,7 @@ RSpec.describe "SolidusAdmin::StatesController", type: :request do
         expect(response).to have_http_status :forbidden
       end
 
-      it "responds in JSON format", pending: "Not yet implemented" do
+      it "responds in JSON format" do
         get solidus_admin.states_path
 
         expect(response.content_type).to match /^application\/json/
@@ -55,7 +55,7 @@ RSpec.describe "SolidusAdmin::StatesController", type: :request do
           expect(response).to have_http_status :forbidden
         end
 
-        it "responds in JSON format", pending: "Not yet implemented" do
+        it "responds in JSON format" do
           get solidus_admin.states_path
 
           expect(response.content_type).to match(/^application\/json/)
