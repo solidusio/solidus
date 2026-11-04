@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "solidus_admin/testing_support/shared_examples/json_endpoint_requests"
 
 RSpec.describe "SolidusAdmin::StatesController", type: :request do
   before do
@@ -10,37 +11,9 @@ RSpec.describe "SolidusAdmin::StatesController", type: :request do
   end
 
   describe "GET /index" do
-    context "when unauthenticated" do
-      let(:user) { nil }
-
-      it "responds as unauthorized" do
-        get solidus_admin.states_path
-
-        expect(response).to have_http_status :unauthorized
-      end
-
-      it "responds in JSON format" do
-        get solidus_admin.states_path
-
-        expect(response.content_type).to match /^application\/json/
-      end
-    end
-
-    context "when authenticated as any user" do
-      let(:user) { create :user }
-
-      it "responds as forbidden" do
-        get solidus_admin.states_path
-
-        expect(response).to have_http_status :forbidden
-      end
-
-      it "responds in JSON format" do
-        get solidus_admin.states_path
-
-        expect(response.content_type).to match /^application\/json/
-      end
-    end
+    include_examples "JSON endpoint requests",
+      method: :get,
+      admin_path: :states_path
 
     context "when authenticated as a limited admin user" do
       context "who does not have permission to administrate states" do
