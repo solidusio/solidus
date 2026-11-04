@@ -26,6 +26,21 @@ module Spree::Api
       })
     end
 
+    shared_examples "not shared-cacheable product responses" do
+      it "does not allow shared caches to store the product list" do
+        get spree.api_products_path
+        expect(response.headers["Cache-Control"]).to eq "max-age=0, private, must-revalidate"
+        expect(response.headers["Surrogate-Control"]).to be_nil
+      end
+
+      it "does not allow shared caches to store a single product" do
+        get spree.api_product_path(product)
+        expect(response.headers["Cache-Control"]).to eq "max-age=0, private, must-revalidate"
+        expect(response.headers["Surrogate-Control"]).to be_nil
+        expect(response.headers["Surrogate-Key"]).to be_nil
+      end
+    end
+
     before do
       stub_authentication!
     end
@@ -48,6 +63,8 @@ module Spree::Api
           ActionController::Base.perform_caching = false
         end
       end
+
+      it_behaves_like "not shared-cacheable product responses"
 
       it "retrieves a list of products" do
         get spree.api_products_path
@@ -211,6 +228,8 @@ module Spree::Api
       let(:taxon_2) { create(:taxon) }
 
       sign_in_as_admin!
+
+      it_behaves_like "not shared-cacheable product responses"
 
       it "can see all products" do
         get spree.api_products_path
