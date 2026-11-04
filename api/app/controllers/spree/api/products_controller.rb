@@ -21,8 +21,7 @@ module Spree
         end
 
         @products = paginate(@products.distinct)
-        expires_in 15.minutes, public: true
-        headers["Surrogate-Control"] = "max-age=#{15.minutes}"
+        set_cache_headers
         respond_with(@products)
       end
 
@@ -31,9 +30,7 @@ module Spree
 
       def show
         @product = find_product(params[:id])
-        expires_in 15.minutes, public: true
-        headers["Surrogate-Control"] = "max-age=#{15.minutes}"
-        headers["Surrogate-Key"] = "product_id=1"
+        set_cache_headers(surrogate_key: "product_id=#{@product.id}")
         respond_with(@product)
       end
 
@@ -107,6 +104,14 @@ module Spree
       end
 
       private
+
+      def set_cache_headers(surrogate_key: nil)
+        return if current_api_user
+
+        expires_in 15.minutes, public: true
+        headers["Surrogate-Control"] = "max-age=#{15.minutes}"
+        headers["Surrogate-Key"] = surrogate_key if surrogate_key
+      end
 
       def product_params
         product_params = params.require(:product).permit(permitted_product_attributes)
