@@ -9,6 +9,13 @@ on:
     types:
       - closed
 
+permissions:
+  # Pushes the patch branch, publishes the release draft and its tag,
+  # opens the two pull requests and creates the backport label.
+  contents: write
+  pull-requests: write
+  issues: write
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -21,13 +28,13 @@ jobs:
         contains(github.event.pull_request.labels.*.name, 'release:generate')
       )
     steps:
-      - uses: actions/checkout@v6
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v6.1.0
+      - uses: ruby/setup-ruby@v1.336.0
         with:
           ruby-version: "3.2"
           bundler-cache: true
       - id: pipeline_context
-        uses: ./.github/actions/extract_pipeline_context
+        uses: $/.github/actions/extract_pipeline_context
         with:
           last_minor: ${{ contains(github.event.pull_request.labels.*.name, 'release:generate-last_minor') }}
       - name: "Bump to the development version"
@@ -66,7 +73,7 @@ jobs:
           git checkout -b $candidate_patch_branch
           git push --set-upstream origin $candidate_patch_branch
       - name: "Create PR for main"
-        uses: ./.github/actions/commit_and_submit_pull_request
+        uses: $/.github/actions/commit_and_submit_pull_request
         with:
           labels: changelog:skip
           message: |
@@ -92,7 +99,7 @@ jobs:
             ${{ steps.pipeline_context.outputs.candidate_next_patch_dev_version }}
       - name: "Create PR for the patch branch"
         if: github.ref_name == 'main'
-        uses: ./.github/actions/commit_and_submit_pull_request
+        uses: $/.github/actions/commit_and_submit_pull_request
         with:
           labels: changelog:skip
           base: ${{ steps.pipeline_context.outputs.candidate_patch_branch }}

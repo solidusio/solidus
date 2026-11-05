@@ -8,11 +8,18 @@ on:
       - v*
   workflow_call:
 
+permissions:
+  contents: read
+  # gh pr view reads the labels of the pull request.
+  pull-requests: read
+
 jobs:
   ensure:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
       - name: "Check for the presence of a changelog label"
         env:
           GH_TOKEN: ${{ github.token }}

@@ -12,6 +12,9 @@ concurrency:
   group: dummy-app-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   install_dummy_app:
     name: Dummy App
@@ -19,9 +22,11 @@ jobs:
     env:
       RUBY_VERSION: "3.2"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.336.0
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
