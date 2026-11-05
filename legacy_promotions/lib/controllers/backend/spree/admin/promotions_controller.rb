@@ -38,12 +38,12 @@ module Spree
           promotion_rules_attributes: [
             :id, :product_ids_string, :taxon_ids_string, :user_ids_string,
             *preference_attributes(Spree::Config.promotions.rules),
-            store_ids: []
+            { store_ids: [] }
           ],
           promotion_actions_attributes: [
             :id, :calculator_type,
             *preference_attributes(Spree::Config.promotions.actions),
-            calculator_attributes: preference_attributes(promotion_calculators)
+            { calculator_attributes: preference_attributes(promotion_calculators) }
           ]
         )
       end
@@ -62,8 +62,8 @@ module Spree
           instance.defined_preferences.map do |name|
             attribute = :"preferred_#{name}"
             case instance.preference_type(name)
-            when :array then [attribute, {attribute => []}]
-            when :hash then {attribute => {}}
+            when :array then [attribute, { attribute => [] }]
+            when :hash then { attribute => {} }
             else attribute
             end
           end

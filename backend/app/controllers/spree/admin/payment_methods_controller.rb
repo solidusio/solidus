@@ -75,7 +75,6 @@ module Spree
         )
       end
 
-
       def build_resource
         model_class.new(
           store_ids: [Spree::Store.default.id].compact

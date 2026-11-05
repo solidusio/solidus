@@ -115,7 +115,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
     context "with attributes the controller does not permit" do
       let(:params) do
-        {widget: {name: "a widget", position: 5}}
+        { widget: { name: "a widget", position: 5 } }
       end
 
       it "ignores them" do
@@ -168,7 +168,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       let(:params) do
         {
           id: widget.to_param,
-          widget: {name: "widget renamed", position: 5}
+          widget: { name: "widget renamed", position: 5 }
         }
       end
 

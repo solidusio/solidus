@@ -8,7 +8,7 @@ module Spree::Api
     let(:customer) { create(:user, :with_api_key) }
 
     def get_as(user, path)
-      get path, headers: {"Authorization" => "Bearer #{user.spree_api_key}"}
+      get path, headers: { "Authorization" => "Bearer #{user.spree_api_key}" }
       expect(response).to have_http_status(:ok)
       json_response
     end
@@ -37,7 +37,7 @@ module Spree::Api
         expect(as_admin["line_items"].first["variant"]).to have_key("cost_price")
         expect(as_admin["shipments"].first).to have_key("admin_metadata")
 
-        get spree.api_order_path(order), params: {order_token: order.guest_token}
+        get spree.api_order_path(order), params: { order_token: order.guest_token }
         expect(response).to have_http_status(:ok)
 
         expect(json_response).not_to have_key("admin_metadata")
@@ -52,7 +52,7 @@ module Spree::Api
 
       it "does not serve admin-only attributes to a customer after an admin request" do
         shipment = order.shipments.first
-        put spree.api_shipment_path(shipment), headers: {"Authorization" => "Bearer #{admin.spree_api_key}"}
+        put spree.api_shipment_path(shipment), headers: { "Authorization" => "Bearer #{admin.spree_api_key}" }
         expect(response).to have_http_status(:ok)
         expect(json_response).to have_key("admin_metadata")
         get_as(admin, spree.api_order_path(order))

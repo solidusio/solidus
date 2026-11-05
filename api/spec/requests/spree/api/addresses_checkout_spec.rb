@@ -17,7 +17,7 @@ module Spree::Api
     let(:order) do
       create(:order_with_line_items, ship_address: ny_address, bill_address: create(:address, state: new_york, country:, address1: "1 Billing St"), user: nil, email: "guest@example.com")
     end
-    let(:token_params) { {order_token: order.guest_token} }
+    let(:token_params) { { order_token: order.guest_token } }
 
     before do
       order.next! until order.state == "delivery"
@@ -27,7 +27,7 @@ module Spree::Api
       expect(order.shipments.first.shipping_method).to eq(ny_shipping)
 
       put spree.api_order_address_path(order, order.ship_address_id),
-        params: token_params.merge(address: {state_id: california.id, city: "Los Angeles", zipcode: "90001"})
+        params: token_params.merge(address: { state_id: california.id, city: "Los Angeles", zipcode: "90001" })
 
       expect(response.status).to eq(200)
       order.reload

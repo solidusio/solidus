@@ -352,7 +352,7 @@ module Spree::Api
               payments_attributes: [
                 {
                   payment_method_id: @payment_method.id.to_s,
-                  source_attributes: {gateway_payment_profile_id: "guest-profile"}
+                  source_attributes: { gateway_payment_profile_id: "guest-profile" }
                 }
               ]
             }

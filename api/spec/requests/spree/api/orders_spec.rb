@@ -542,18 +542,18 @@ module Spree::Api
       before { order.associate_user!(create(:user)) }
 
       it "rejects the original guest token" do
-        get spree.api_order_path(order), headers: {"X-Spree-Order-Token" => guest_token}
+        get spree.api_order_path(order), headers: { "X-Spree-Order-Token" => guest_token }
         assert_unauthorized!
       end
 
       it "rejects updates with the original guest token" do
-        put spree.api_order_path(order), params: {order: {special_instructions: "changed"}}, headers: {"X-Spree-Order-Token" => guest_token}
+        put spree.api_order_path(order), params: { order: { special_instructions: "changed" } }, headers: { "X-Spree-Order-Token" => guest_token }
         assert_unauthorized!
         expect(order.reload.special_instructions).to be_nil
       end
 
       it "accepts the rotated token" do
-        get spree.api_order_path(order), headers: {"X-Spree-Order-Token" => order.reload.guest_token}
+        get spree.api_order_path(order), headers: { "X-Spree-Order-Token" => order.reload.guest_token }
         expect(response.status).to eq(200)
       end
     end
