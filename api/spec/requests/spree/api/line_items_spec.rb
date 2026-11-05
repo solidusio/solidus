@@ -80,6 +80,28 @@ module Spree::Api
         expect(json_response["variant"]["name"]).not_to be_blank
       end
 
+      context "when the variant's product is not yet available" do
+        let(:product) { create(:product, available_on: 1.day.from_now) }
+
+        it "cannot add the line item" do
+          expect {
+            post spree.api_order_line_items_path(order), params: {line_item: {variant_id: product.master.to_param, quantity: 1}}
+          }.not_to change { order.line_items.count }
+          expect(response.status).to eq(404)
+        end
+      end
+
+      context "when the variant's product is discontinued" do
+        let(:product) { create(:product, discontinue_on: 1.day.ago) }
+
+        it "cannot add the line item" do
+          expect {
+            post spree.api_order_line_items_path(order), params: {line_item: {variant_id: product.master.to_param, quantity: 1}}
+          }.not_to change { order.line_items.count }
+          expect(response.status).to eq(404)
+        end
+      end
+
       it "can add a new line item to an existing order with options" do
         without_partial_double_verification do
           expect_any_instance_of(Spree::LineItem).to receive(:some_option=).with("foobar")
@@ -230,6 +252,18 @@ module Spree::Api
 
     context "as an admin" do
       sign_in_as_admin!
+
+      it "can add a line item for a product that is not yet available" do
+        product = create(:product, available_on: 1.day.from_now)
+        post spree.api_order_line_items_path(order), params: {line_item: {variant_id: product.master.to_param, quantity: 1}}
+        expect(response.status).to eq(201)
+      end
+
+      it "can add a line item for a discontinued product" do
+        product = create(:product, discontinue_on: 1.day.ago)
+        post spree.api_order_line_items_path(order), params: {line_item: {variant_id: product.master.to_param, quantity: 1}}
+        expect(response.status).to eq(201)
+      end
 
       it "can see admin_metadata" do
         post spree.api_order_line_items_path(order),
