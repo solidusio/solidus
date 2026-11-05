@@ -20,6 +20,12 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.fetch(:reimbursement, {}).permit(
+          return_items_attributes: [:id, :amount, :override_reimbursement_type_id, :exchange_variant_id]
+        )
+      end
+
       def recalculate_order
         @reimbursement.order.recalculate
       end

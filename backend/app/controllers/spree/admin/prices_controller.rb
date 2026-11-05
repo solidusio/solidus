@@ -23,6 +23,12 @@ module Spree
 
       def edit
       end
+
+      private
+
+      def permitted_resource_params
+        params.require(:price).permit(:variant_id, :country_iso, :price, :currency)
+      end
     end
   end
 end

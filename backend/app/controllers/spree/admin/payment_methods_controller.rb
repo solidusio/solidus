@@ -67,8 +67,14 @@ module Spree
       end
 
       def payment_method_params
-        params.require(:payment_method).permit!
+        params.require(:payment_method).permit(
+          :name, :description, :type, :preference_source, :auto_capture,
+          :active, :available_to_admin, :available_to_users,
+          *@payment_method_type.permitted_preference_attributes,
+          store_ids: []
+        )
       end
+
 
       def build_resource
         model_class.new(

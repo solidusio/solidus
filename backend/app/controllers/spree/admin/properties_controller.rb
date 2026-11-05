@@ -9,6 +9,10 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:property).permit(permitted_property_attributes)
+      end
+
       def collection
         return @collection if @collection
         # params[:q] can be blank upon pagination

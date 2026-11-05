@@ -13,12 +13,19 @@ module Spree
 
       private
 
-      def store_params
-        params.require(:store).permit(permitted_params)
+      def permitted_resource_params
+        store_params.tap do |permitted|
+          without_address_parameters = permitted[:address_attributes]&.except(:country_id, :state_id, :reverse_charge_status)&.compact_blank&.empty?
+          permitted.delete(:address_attributes) if without_address_parameters
+        end
       end
 
-      def permitted_params
-        Spree::PermittedAttributes.store_attributes
+      def store_params
+        params.require(:store).permit(
+          *permitted_store_attributes,
+          :code,
+          available_locales: []
+        )
       end
     end
   end
