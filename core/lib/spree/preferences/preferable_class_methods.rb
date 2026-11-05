@@ -4,6 +4,8 @@ require "spree/encryptor"
 
 module Spree::Preferences
   module PreferableClassMethods
+    class NoEncryptionKeyError < StandardError; end
+
     VALID_OPTIONS = [:default, :encryption_key]
 
     def defined_preferences = []
@@ -95,6 +97,11 @@ module Spree::Preferences
       key = options[:encryption_key] ||
         ENV["SOLIDUS_PREFERENCES_MASTER_KEY"] ||
         Rails.application.credentials.secret_key_base
+
+      if key.blank?
+        raise NoEncryptionKeyError,
+          "must provide an encryption key for encrypted string preferences"
+      end
 
       Spree::Encryptor.new(key)
     end
