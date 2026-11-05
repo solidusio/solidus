@@ -106,8 +106,16 @@ module Spree
           context "when the id belongs to a card without a user" do
             before { create(:credit_card, user: nil, **profile_attributes) }
 
-            it "builds the source" do
-              expect(new_payment).to be_valid
+            it "raises RecordNotFound" do
+              expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
+            end
+
+            context "and the order has no user" do
+              let(:user) { nil }
+
+              it "raises RecordNotFound" do
+                expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
+              end
             end
           end
 

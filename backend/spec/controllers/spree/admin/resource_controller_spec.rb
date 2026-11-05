@@ -10,6 +10,12 @@ module Spree
       def model_class
         Widget
       end
+
+      private
+
+      def permitted_resource_params
+        params.fetch(:widget, {}).permit(:name)
+      end
     end
   end
 end
@@ -107,6 +113,17 @@ describe Spree::Admin::WidgetsController, type: :controller do
       expect { subject }.to change { Widget.count }.by(1)
     end
 
+    context "with attributes the controller does not permit" do
+      let(:params) do
+        {widget: {name: "a widget", position: 5}}
+      end
+
+      it "ignores them" do
+        subject
+        expect(Widget.last.position).to eq(1)
+      end
+    end
+
     context "failure" do
       let(:params) do
         {widget: {name: ""}} # blank name generates an error
@@ -145,6 +162,19 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
     it "updates the resource" do
       expect { subject }.to change { widget.reload.name }.from("a widget").to("widget renamed")
+    end
+
+    context "with attributes the controller does not permit" do
+      let(:params) do
+        {
+          id: widget.to_param,
+          widget: {name: "widget renamed", position: 5}
+        }
+      end
+
+      it "ignores them" do
+        expect { subject }.not_to change { widget.reload.position }
+      end
     end
 
     context "failure" do
@@ -290,6 +320,47 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
       expect(response).to redirect_to("/admin/widgets")
       expect(flash[:error]).to eql("Product is not found")
+    end
+  end
+
+  describe "ResourceController#permitted_resource_params" do
+    # Calls the base implementation, bypassing the WidgetsController override,
+    # to cover subclasses that don't implement it.
+    subject do
+      controller.params = ActionController::Parameters.new(params)
+      Spree::Admin::ResourceController.instance_method(:permitted_resource_params).bind_call(controller)
+    end
+
+    let(:params) { { widget: { name: "a widget", position: 5 } } }
+
+    it "raises NotImplementedError" do
+      expect { subject }.to raise_error(NotImplementedError, /You must implement permitted_resource_params/)
+    end
+
+    context "with the permit_all_resource_params_fallback preference enabled" do
+      before do
+        stub_spree_preferences(Spree::Backend::Config, permit_all_resource_params_fallback: true)
+        allow(Spree.deprecator).to receive(:warn)
+      end
+
+      it "warns that the fallback is deprecated" do
+        subject
+        expect(Spree.deprecator).to have_received(:warn).with(/permit_all_resource_params_fallback/)
+      end
+
+      it "permits all of the resource's attributes" do
+        expect(subject).to be_permitted
+        expect(subject.to_h).to eq("name" => "a widget", "position" => 5)
+      end
+
+      context "without any parameters for the resource" do
+        let(:params) { {} }
+
+        it "returns empty permitted parameters" do
+          expect(subject).to be_permitted
+          expect(subject.to_h).to be_empty
+        end
+      end
     end
   end
 

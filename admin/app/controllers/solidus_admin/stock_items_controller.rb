@@ -10,6 +10,8 @@ module SolidusAdmin
     search_scope(:low_stock) { _1.where("count_on_hand > 0 AND count_on_hand < ?", SolidusAdmin::Config.low_stock_value) }
     search_scope(:in_stock) { _1.where("count_on_hand > 0") }
 
+    before_action :authorize_stock_item, only: %i[edit update]
+
     def index
       respond_to do |format|
         format.html { render component("stock_items/index").new(page: @page) }
@@ -34,10 +36,14 @@ module SolidusAdmin
     def resource_class = Spree::StockItem
 
     def resources_collection
-      Spree::StockItem.reorder(nil).includes(
+      Spree::StockItem.accessible_by(current_ability, action_name.to_sym).reorder(nil).includes(
         :stock_location,
         variant: [:product, :images, {option_values: :option_type}]
       )
+    end
+
+    def authorize_stock_item
+      authorize! action_name.to_sym, @stock_item
     end
 
     def resources_sorting_options

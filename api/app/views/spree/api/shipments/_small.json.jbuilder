@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.cache! [I18n.locale, shipment] do
+json.cache! [I18n.locale, shipment, shipment_attributes] do
   json.call(shipment, *shipment_attributes)
   json.order_id(shipment.order.number)
   json.stock_location_name(shipment.stock_location.name)

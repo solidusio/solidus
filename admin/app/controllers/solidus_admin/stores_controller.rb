@@ -28,7 +28,7 @@ module SolidusAdmin
           t ".error.description",
             name: record.name,
             reason: record.errors.full_messages.join(", ")
-        }.join("<br/>")
+        }.join("\n")
 
         flash[:alert] = {
           danger: {title: t(".error.title"), message: failure_summary}

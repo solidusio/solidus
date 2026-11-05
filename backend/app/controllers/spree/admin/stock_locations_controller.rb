@@ -7,6 +7,13 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:stock_location).permit(
+          *permitted_stock_location_attributes,
+          :code, :admin_name, :default, :restock_inventory, :fulfillable, :check_stock_on_transfer
+        )
+      end
+
       def set_country
         @stock_location.country = Spree::Country.default
       rescue ActiveRecord::RecordNotFound

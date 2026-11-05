@@ -11,7 +11,7 @@ module Spree
     #     * :gateway_customer_profile_id, :gateway_payment_profile_id (String): Gateway
     #       identifiers for a new {CreditCard}, e.g. a one-time token. Raises
     #       ActiveRecord::RecordNotFound if either already belongs to a {CreditCard}
-    #       owned by a different user.
+    #       owned by a different user or order.
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: nil, request_env: {})
@@ -57,11 +57,11 @@ module Spree
       end
     end
 
-    # Gateway profile ids may only be submitted for a new source when they are
+    # Gateway profile IDs may only be submitted for a new source when they are
     # unknown to the store (e.g. a one-time token) or already belong to the
     # order's user. Raises if either id is stored on a {CreditCard} owned by a
-    # different user, so customers cannot pay with another customer's stored
-    # gateway credential.
+    # different user or no user, so customers cannot pay with another
+    # customer's stored gateway credential.
     def ensure_gateway_profile_ownership!(source_class)
       return unless source_class <= Spree::CreditCard
 
@@ -69,8 +69,10 @@ module Spree
         value = source_attributes[attribute]
         next if value.blank?
 
-        foreign_cards = Spree::CreditCard.where(attribute => value).where.not(user_id: nil)
-        foreign_cards = foreign_cards.where.not(user_id: order.user_id) if order&.user_id
+        foreign_cards = Spree::CreditCard.where(attribute => value)
+        if order&.user_id
+          foreign_cards = foreign_cards.where(user_id: nil).or(foreign_cards.where.not(user_id: order.user_id))
+        end
         raise ActiveRecord::RecordNotFound if foreign_cards.exists?
       end
     end
