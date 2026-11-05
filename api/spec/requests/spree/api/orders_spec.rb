@@ -241,6 +241,41 @@ module Spree::Api
           }.to_not change { order.reload.number }
         end
 
+        context "when attempting to update the variant on an existing line item" do
+          let!(:order) { create(:order_with_line_items) }
+          let(:line_item) { order.line_items.first }
+          let(:new_variant) { create(:variant) }
+          let(:new_line_item_variant) { create(:variant) }
+          let(:order_params) do
+            {
+              line_items: {
+                "0" => {
+                  id: line_item.id,
+                  variant_id: new_variant.id
+                },
+                "1" => {
+                  variant_id: new_line_item_variant.id,
+                  quantity: 1
+                }
+              }
+            }
+          end
+
+          it "does not update the variant" do
+            expect {
+              subject
+            }.not_to change { line_item.reload.variant }
+          end
+
+          it "creates a new variant" do
+            expect {
+              subject
+            }.to change { order.reload.line_items.count }.by(1)
+
+            expect(order.line_items.last.variant).to eq(new_line_item_variant)
+          end
+        end
+
         context "creating payment" do
           let!(:order) { create(:order_with_line_items) }
           let(:order_params) { super().merge(payments_attributes: [{payment_method_id: payment_method.id}]) }
@@ -544,6 +579,30 @@ module Spree::Api
     it "can view an order if the token is passed in header" do
       get spree.api_order_path(order), headers: {"X-Spree-Order-Token" => order.guest_token}
       expect(response.status).to eq(200)
+    end
+
+    context "when a guest order has been associated with a user" do
+      let!(:order) { create(:order, user: nil) }
+      let!(:guest_token) { order.guest_token }
+      let(:current_api_user) { nil }
+
+      before { order.associate_user!(create(:user)) }
+
+      it "rejects the original guest token" do
+        get spree.api_order_path(order), headers: {"X-Spree-Order-Token" => guest_token}
+        assert_unauthorized!
+      end
+
+      it "rejects updates with the original guest token" do
+        put spree.api_order_path(order), params: {order: {special_instructions: "changed"}}, headers: {"X-Spree-Order-Token" => guest_token}
+        assert_unauthorized!
+        expect(order.reload.special_instructions).to be_nil
+      end
+
+      it "accepts the rotated token" do
+        get spree.api_order_path(order), headers: {"X-Spree-Order-Token" => order.reload.guest_token}
+        expect(response.status).to eq(200)
+      end
     end
 
     it "cannot cancel an order that doesn't belong to them" do

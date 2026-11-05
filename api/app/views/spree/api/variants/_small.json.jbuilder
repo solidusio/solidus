@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.cache! [I18n.locale, current_pricing_options, variant] do
+json.cache! [I18n.locale, current_pricing_options, variant, variant_attributes] do
   json.call(variant, *variant_attributes)
   json.price(variant.price_for_options(current_pricing_options)&.amount)
   json.display_price(variant.price_for_options(current_pricing_options)&.money&.to_s)

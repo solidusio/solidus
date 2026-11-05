@@ -26,6 +26,18 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        attributes = permitted_return_authorization_attributes.map do |attribute|
+          next attribute unless attribute.is_a?(Hash) && attribute.key?(:return_items_attributes)
+
+          attribute.except(:customer_metadata).merge(
+            return_items_attributes: [:id, :_destroy, :amount, *attribute[:return_items_attributes]]
+          )
+        end
+
+        params.require(:return_authorization).permit(attributes)
+      end
+
       def load_form_data
         load_return_items
         load_reimbursement_types

@@ -15,7 +15,7 @@ module Spree
         authorize! :update, @order, order_token
         find_address
 
-        success = @order.update({"#{@order_source}_attributes" => address_params})
+        success = @order.contents.update_cart({"#{@order_source}_attributes" => address_params})
         @address = @order.send(@order_source)
 
         if success

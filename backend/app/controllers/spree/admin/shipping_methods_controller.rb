@@ -20,6 +20,22 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        params.require(:shipping_method).permit(
+          :name, :admin_name, :code, :carrier, :service_level, :tracking_url,
+          :available_to_all, :available_to_users, :tax_category_id, :calculator_type,
+          store_ids: [],
+          stock_location_ids: [],
+          calculator_attributes: [:id, *calculator_attributes]
+        )
+      end
+
+      def calculator_attributes
+        @calculators.flat_map do |calculator_class|
+          calculator_class.permitted_preference_attributes
+        end
+      end
+
       def set_shipping_category
         return true if params["shipping_method"][:shipping_categories] == ""
         @shipping_method.shipping_categories = Spree::ShippingCategory.where(id: params["shipping_method"][:shipping_categories])
