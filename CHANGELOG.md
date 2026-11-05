@@ -1,3 +1,29 @@
+## Solidus v4.7.3 (2026-11-05)
+
+## Security
+
+* Users can attach guest's gateway payment profile to their own payment ([GHSA-qj8v-qw92-p6cx](https://github.com/solidusio/solidus/security/advisories/GHSA-qj8v-qw92-p6cx))
+* Admin-only attributes served to non-admin API clients from shared fragment cache ([GHSA-6qcp-q5gw-p7hv](https://github.com/solidusio/solidus/security/advisories/GHSA-6qcp-q5gw-p7hv))
+* Missing authorization check on the target shipment in the transfer_to_shipment API endpoint ([GHSA-m8v9-2qv9-xrpj](https://github.com/solidusio/solidus/security/advisories/GHSA-m8v9-2qv9-xrpj))
+* Customer can change shipping address after selecting quote via API ([GHSA-7p8v-x53p-mgqc](https://github.com/solidusio/solidus/security/advisories/GHSA-7p8v-x53p-mgqc))
+* Product API and admin product search mark role-dependent responses as publicly cacheable ([GHSA-9h39-92j5-v6wm](https://github.com/solidusio/solidus/security/advisories/GHSA-9h39-92j5-v6wm))
+* Customer API keeps the original line price after variant_id is changed to a more expensive SKU ([GHSA-r9gh-7v7c-6g4j](https://github.com/solidusio/solidus/security/advisories/GHSA-r9gh-7v7c-6g4j))
+* Order token still reads and changes a cart after the order belongs to a customer account ([GHSA-pr4p-xm72-h6r3](https://github.com/solidusio/solidus/security/advisories/GHSA-pr4p-xm72-h6r3))
+* Over permissive attributes in Solidus admin ([GHSA-q5w8-wf94-jc29](https://github.com/solidusio/solidus/security/advisories/GHSA-q5w8-wf94-jc29))
+
+## Solidus Core
+
+* [v4.7] Remove Rubocop directives for cops Standard doesn't load by @jarednorman in https://github.com/solidusio/solidus/pull/6699
+* Prevent destroying the default store by @jarednorman in https://github.com/solidusio/solidus/pull/6688
+
+## Solidus Admin
+
+* [v4.7] Remove Rubocop directives for cops Standard doesn't load by @jarednorman in https://github.com/solidusio/solidus/pull/6699
+* Prevent destroying the default store by @jarednorman in https://github.com/solidusio/solidus/pull/6688
+
+**Full Changelog**: https://github.com/solidusio/solidus/compare/v4.7.2...v4.7.3
+
+
 ## Solidus v4.7.2 (2026-10-07)
 
 <!-- Please, don't edit manually. The content is automatically generated. -->
