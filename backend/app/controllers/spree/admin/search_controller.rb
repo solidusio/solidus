@@ -30,8 +30,6 @@ module Spree
         end
 
         @products = list_products
-        expires_in 15.minutes, public: true
-        headers["Surrogate-Control"] = "max-age=#{15.minutes}"
       end
 
       private

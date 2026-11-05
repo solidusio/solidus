@@ -68,9 +68,10 @@ describe Spree::Admin::SearchController, type: :controller do
         expect(response).to be_successful
       end
 
-      it "should set the Surrogate-Control header" do
+      it "does not allow shared caches to store the response" do
         subject
-        expect(response.headers["Surrogate-Control"]).to eq "max-age=900"
+        expect(response.headers["Cache-Control"].to_s).not_to include("public")
+        expect(response.headers["Surrogate-Control"]).to be_nil
       end
 
       it "should find the correct products" do

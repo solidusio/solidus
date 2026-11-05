@@ -7,6 +7,8 @@ module Spree
   class BackendConfiguration < Preferences::Configuration
     preference :locale, :string, default: I18n.default_locale
 
+    preference :permit_all_resource_params_fallback, :boolean, default: false
+
     # @!attribute [rw] themes
     #   @return [Hash] A hash containing the themes that are available for the admin panel
     preference :themes, :hash, default: {

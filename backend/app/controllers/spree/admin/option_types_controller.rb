@@ -17,6 +17,16 @@ module Spree
 
       private
 
+      def permitted_resource_params
+        attributes = permitted_option_type_attributes.map do |attribute|
+          next attribute unless attribute.is_a?(Hash) && attribute.key?(:option_values_attributes)
+
+          attribute.merge(option_values_attributes: [:id, *permitted_option_value_attributes])
+        end
+
+        params.require(:option_type).permit(attributes)
+      end
+
       def location_after_save
         edit_admin_option_type_url(@option_type)
       end

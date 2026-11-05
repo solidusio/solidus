@@ -42,7 +42,11 @@ module Spree
       end
 
       def refund_params
-        params.require(:refund).permit!
+        params.require(:refund).permit(:amount, :refund_reason_id)
+      end
+
+      def permitted_resource_params
+        params.require(:refund).permit(:refund_reason_id)
       end
 
       def build_resource

@@ -974,6 +974,18 @@ RSpec.describe Spree::Order, type: :model do
         order.associate_user!(user)
       end.not_to change { address.persisted? }.from(false)
     end
+
+    it "replaces the guest token" do
+      order = create(:order, user: nil)
+
+      expect { order.associate_user!(user) }.to change { order.reload.guest_token }
+    end
+
+    it "keeps the guest token when the user is unchanged" do
+      order = create(:order, user:)
+
+      expect { order.associate_user!(user) }.not_to change { order.reload.guest_token }
+    end
   end
 
   context "#assign_default_user_addresses" do

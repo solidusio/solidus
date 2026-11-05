@@ -99,7 +99,10 @@ module Spree
       end
 
       def transfer_to_shipment
-        @desired_shipment ||= Spree::Shipment.find_by!(number: params[:target_shipment_number])
+        unless @desired_shipment
+          @desired_shipment = @original_shipment.order.shipments.find_by!(number: params[:target_shipment_number])
+          authorize! :update, @desired_shipment
+        end
 
         fulfilment_changer = Spree::FulfilmentChanger.new(
           current_shipment: @original_shipment,
