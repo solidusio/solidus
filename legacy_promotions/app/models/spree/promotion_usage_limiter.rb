@@ -30,10 +30,12 @@ module Spree
       if claimed.size < records.size
         order.errors.add(:base, I18n.t("spree.promotion_usage_limit_reached_before_complete"))
       else
+        order.promotion_usage_claims = claimed
         yield
         completed = true
       end
     ensure
+      order.promotion_usage_claims = nil
       claimed&.each(&:release_usage) unless completed
     end
 

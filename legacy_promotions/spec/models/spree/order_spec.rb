@@ -177,6 +177,17 @@ RSpec.describe Spree::Order do
       end
     end
 
+    context "when payments are captured during completion" do
+      before { stub_spree_preferences(auto_capture: true) }
+
+      it "keeps the promotion it claimed the last use of" do
+        expect { order.complete! }.not_to change { order.reload.promo_total }
+
+        expect(order.promo_total).to be_negative
+        expect(order.payment_state).to eq("paid")
+      end
+    end
+
     context "when payment processing raises an error" do
       before { allow(order).to receive(:process_payments!).and_raise(Timeout::Error) }
 
