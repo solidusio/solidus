@@ -262,7 +262,7 @@ RSpec.describe "Checkouts", type: :request, with_signed_in_user: true do
           end
         end
 
-        context 'when updating an existing payment' do
+        context "when updating an existing payment" do
           let!(:payment) do
             create(
               :payment,
@@ -279,26 +279,26 @@ RSpec.describe "Checkouts", type: :request, with_signed_in_user: true do
                   {
                     id: payment.id,
                     payment_method_id: payment_method.id.to_s,
-                    source_attributes: attributes_for(:credit_card, number: '5555555555554444')
+                    source_attributes: attributes_for(:credit_card, number: "5555555555554444")
                   }
                 ]
               }
             }
           end
 
-          it 'does not create a new payment' do
+          it "does not create a new payment" do
             expect {
-              patch update_checkout_path(state: 'payment', params: params)
+              patch update_checkout_path(state: "payment", params: params)
             }.not_to change { order.payments.count }
           end
 
-          it 'updates the existing payment' do
+          it "updates the existing payment" do
             expect {
-              patch update_checkout_path(state: 'payment', params: params)
+              patch update_checkout_path(state: "payment", params: params)
             }.to change { Spree::CreditCard.count }.by(1) # because the source is a new credit card
 
-            expect(payment.reload.source.last_digits).to eq('4444')
-            expect(payment.state).to eq('checkout')
+            expect(payment.reload.source.last_digits).to eq("4444")
+            expect(payment.state).to eq("checkout")
           end
         end
       end

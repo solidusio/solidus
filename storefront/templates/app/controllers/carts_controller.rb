@@ -65,7 +65,7 @@ class CartsController < StoreController
     permitted_attributes.customer_metadata_attributes +
       [
         :email,
-        line_items_attributes: permitted_line_item_attributes,
+        line_items_attributes: permitted_line_item_attributes
       ]
   end
 
