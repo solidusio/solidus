@@ -28,6 +28,13 @@ module SolidusLegacyPromotions
     # order_adjuster_class allows extensions to provide their own Order Adjuster
     class_name_attribute :order_adjuster_class, default: "Spree::Promotion::OrderAdjustmentsRecalculator"
 
+    # The usage limiter is responsible for helping keep track of how many times
+    # a promotion has been used and whether it can be used again.
+    # @return [Class] an object that conforms to the API of
+    #   the standard promotion usage limiter class.
+    #   Defaults to "Spree::PromotionUsageLimiter".
+    class_name_attribute :usage_limiter_class, default: "Spree::PromotionUsageLimiter"
+
     # promotion_finder_class allows extensions to provide their own Promotion Finder
     class_name_attribute :promotion_finder_class, default: "Spree::PromotionFinder"
 

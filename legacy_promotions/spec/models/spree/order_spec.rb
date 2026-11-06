@@ -126,4 +126,89 @@ RSpec.describe Spree::Order do
       it { is_expected.to eq(false) }
     end
   end
+
+  describe "completing with usage limited promotions" do
+    let!(:promotion) do
+      create(:promotion, :with_order_adjustment, code: "limited", usage_limit: 1, per_code_usage_limit: 1)
+    end
+    let(:code) { promotion.codes.first }
+    let(:order) { create(:order_ready_to_complete) }
+
+    before do
+      order.coupon_code = "limited"
+      Spree::Config.promotions.coupon_code_handler_class.new(order).apply
+      order.payments.first.update!(amount: order.total)
+    end
+
+    it "claims a use of the promotion and its code" do
+      order.complete!
+
+      expect(order).to be_complete
+      expect(promotion.reload.usage_claims_count).to eq(1)
+      expect(code.reload.usage_claims_count).to eq(1)
+    end
+
+    context "when another checkout holds the last use of the code" do
+      before { code.claim_usage }
+
+      it "doesn't take payment and releases the use already claimed" do
+        expect(order.complete).to be(false)
+
+        expect(order.errors[:base]).to include(I18n.t("spree.promotion_usage_limit_reached_before_complete"))
+        expect(order.payments.first.reload).to be_checkout
+        expect(promotion.reload.usage_claims_count).to eq(0)
+        expect(code.reload.usage_claims_count).to eq(1)
+      end
+    end
+
+    context "when payment fails" do
+      before do
+        order.payments.destroy_all
+        create(:payment, order:, amount: order.total, source: create(:credit_card, :failing))
+        order.payments.reload
+      end
+
+      it "releases the claimed uses" do
+        expect(order.complete).to be(false)
+
+        expect(order.reload.state).to eq("payment")
+        expect(promotion.reload.usage_claims_count).to eq(0)
+        expect(code.reload.usage_claims_count).to eq(0)
+      end
+    end
+
+    context "when payments are captured during completion" do
+      before { stub_spree_preferences(auto_capture: true) }
+
+      it "keeps the promotion it claimed the last use of" do
+        expect { order.complete! }.not_to change { order.reload.promo_total }
+
+        expect(order.promo_total).to be_negative
+        expect(order.payment_state).to eq("paid")
+      end
+    end
+
+    context "when payment processing raises an error" do
+      before { allow(order).to receive(:process_payments!).and_raise(Timeout::Error) }
+
+      it "releases the claimed uses" do
+        expect { order.complete }.to raise_error(Timeout::Error)
+
+        expect(promotion.reload.usage_claims_count).to eq(0)
+        expect(code.reload.usage_claims_count).to eq(0)
+      end
+    end
+
+    it "releases the uses when the order is canceled and claims them again when it is resumed" do
+      order.complete!
+
+      order.cancel!
+      expect(promotion.reload.usage_claims_count).to eq(0)
+      expect(code.reload.usage_claims_count).to eq(0)
+
+      order.resume!
+      expect(promotion.reload.usage_claims_count).to eq(1)
+      expect(code.reload.usage_claims_count).to eq(1)
+    end
+  end
 end
