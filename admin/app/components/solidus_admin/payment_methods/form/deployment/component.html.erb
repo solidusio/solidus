@@ -1,0 +1,37 @@
+<%= render component("turbo/target_frame").new(
+  :payment_method_form_deployment_frame,
+  source: :payment_method_form_deployment
+) do %>
+  <%= tag.div **stimulus_attributes do %>
+    <%= render component("ui/panel").new(title: t(".title")) do %>
+      <%= f.select :type,
+        available_type_select_options,
+        value: @type,
+        data: {action: "change->#{stimulus_id}#change"} %>
+
+      <%= f.select :preference_source,
+        available_preference_sources,
+        value: @preference_source,
+        include_blank: t(".preference_source_none"),
+        data: {action: "change->#{stimulus_id}#change"} %>
+
+      <% if static_preference_source? %>
+        <% current_type_instance.admin_form_preference_names.each do |name| %>
+          <%= render field_for(name, selected_preference_source_settings[name]) %>
+        <% end %>
+      <% else %>
+        <% current_type_instance.admin_form_preference_names.each do |name| %>
+          <%=
+            current_value =
+              params.dig(:payment_method, "preferred_#{name}".to_sym).presence ||
+                @form.object.options[name]
+
+            render field_for(name, current_value)
+          %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= turbo_frame_tag :payment_method_form_deployment, target: :payment_method_form_deployment_frame %>
