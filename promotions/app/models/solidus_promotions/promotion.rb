@@ -93,15 +93,33 @@ module SolidusPromotions
         ).distinct
     end
 
-    # Number of times the code has been used overall
+    # Number of times the promotion has been used overall
+    #
+    # If a usage limit is set, this method uses the usage claims counter. Which
+    # is more efficient. Otherwise, it falls back to counting the number of
+    # completed orders that have used the promotion.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
     def usage_count(excluded_orders: [])
-      discounted_orders
-        .complete
+      return usage_count_from_orders(excluded_orders:) unless usage_limit
+
+      usage_claims_count_excluding(excluded_orders)
+    end
+
+    # Number of times the promotion has been used in completed orders
+    #
+    # This method will always count the number of completed orders that have
+    # used the promotion, regardless of whether a usage limit is set. It is less
+    # efficient than `usage_count`, but we need it to help backfill the usage
+    # claims counter. It's also useful for checking usage of any promotions that
+    # don't have a limit.
+    #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
+    # @return [Integer] usage count
+    def usage_count_from_orders(excluded_orders: [])
+      usage_orders
         .where.not(id: [excluded_orders.map(&:id)])
-        .where.not(spree_orders: {state: :canceled})
         .count
     end
 
@@ -125,12 +143,33 @@ module SolidusPromotions
 
     # Whether the promotion has exceeded its usage restrictions.
     #
+    # This method uses the usage claims counter, which is more efficient than
+    # counting the number of completed orders that have used the promotion, but
+    # it can drift from the actual usage count if the counter is not kept up to
+    # date. Use `usage_limit_exceeded_from_orders?` to check against the actual
+    # usage count.
+    #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
     # @return true or false
     def usage_limit_exceeded?(excluded_orders: [])
       return unless usage_limit
 
       usage_count(excluded_orders: excluded_orders) >= usage_limit
+    end
+
+    # Whether the promotion has exceeded its usage restrictions, based on the
+    # actual usage count from completed orders.
+    #
+    # This method is less efficient than `usage_limit_exceeded?`, but does not
+    # rely on the usage claims counter, which can drift from the actual usage
+    # count if the counter is not kept up to date.
+    #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
+    # @return true or false
+    def usage_limit_exceeded_from_orders?(excluded_orders: [])
+      return unless usage_limit
+
+      usage_count_from_orders(excluded_orders: excluded_orders) >= usage_limit
     end
 
     def not_expired?(time = Time.current)
@@ -167,6 +206,12 @@ module SolidusPromotions
     deprecate eligibility_results: "Please use the `SolidusPromotions::PromotionEligibilityChecker` service object instead", deprecator: Spree.deprecator
 
     private
+
+    def usage_orders
+      discounted_orders
+        .complete
+        .where.not(spree_orders: {state: :canceled})
+    end
 
     def normalize_blank_values
       self[:path] = nil if self[:path].blank?
