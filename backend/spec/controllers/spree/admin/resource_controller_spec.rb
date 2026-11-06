@@ -331,7 +331,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       Spree::Admin::ResourceController.instance_method(:permitted_resource_params).bind_call(controller)
     end
 
-    let(:params) { { widget: { name: "a widget", position: 5 } } }
+    let(:params) { {widget: {name: "a widget", position: 5}} }
 
     it "raises NotImplementedError" do
       expect { subject }.to raise_error(NotImplementedError, /You must implement permitted_resource_params/)
