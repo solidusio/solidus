@@ -5,7 +5,7 @@ SolidusAdmin::Engine.routes.draw do
   extend SolidusAdmin::AdminResources
 
   resource :account, only: :show
-  resources :countries, only: [] do
+  resources :countries, only: [], defaults: {format: :json} do
     get "states", to: "countries#states"
   end
 
