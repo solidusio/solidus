@@ -2,8 +2,12 @@
   <div class="col-span-full border-t-[1px] border-t-black dark:border-t-white py-16">
     <div class="text-center col-span-full md:flex md:items-center md:justify-between md:col-start-2 md:col-span-10">
       <div class="col-span-full mb-14 md:mb-0">
-        <%= image_tag "logo_full_with_label.svg", class: "mx-auto w-52 mb-7 dark:hidden" %>
-        <%= image_tag "logo_full_with_label_white.svg", class: "mx-auto w-52 mb-7 hidden dark:block" %>
+        <% if (logo_url = store_logo_url) %>
+          <%= image_tag logo_url, alt: current_store.name, class: "mx-auto w-52 mb-7" %>
+        <% else %>
+          <%= image_tag "logo_full_with_label.svg", class: "mx-auto w-52 mb-7 dark:hidden" %>
+          <%= image_tag "logo_full_with_label_white.svg", class: "mx-auto w-52 mb-7 hidden dark:block" %>
+        <% end %>
         <%= render partial: "shared/call_to_action", :locals => { :label => "Visit Solidus.io", :url => 'https://solidus.io', :target => '_blank', :additional_classes => "block mx-auto" } %>
       </div>
       <div class="col-span-full">

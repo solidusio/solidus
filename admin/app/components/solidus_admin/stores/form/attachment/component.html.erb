@@ -1,0 +1,8 @@
+<div class="flex gap-4 items-end">
+  <% if (url = preview_url) %>
+    <%= render component("ui/thumbnail").new(src: url, alt: label) %>
+  <% end %>
+  <div class="grow">
+    <%= render component("ui/forms/field").file_field(@form, name, accept: Spree::Config.allowed_image_mime_types.join(",")) %>
+  </div>
+</div>

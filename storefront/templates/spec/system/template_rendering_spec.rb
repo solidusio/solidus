@@ -82,4 +82,29 @@ RSpec.describe "Template rendering", type: :system do
       find("link[rel=canonical]")[:href]
     ).to eql("http://spreestore.example.com/t/solidus-brand/accessories?page=2")
   end
+
+  it "uses the default logo and favicon when the store has none" do
+    visit root_path
+
+    expect(page).to have_css("header img[src*='logo_small_no_label']")
+    expect(page).to have_css("footer img[src*='logo_full_with_label']", count: 2)
+    expect(page).to have_css("link[rel=icon][href*='storefront_favicon']", count: 2)
+  end
+
+  it "uses the store's logo and favicon when it has them" do
+    image = Spree::Core::Engine.root.join("lib/spree/testing_support/fixtures/blank.jpg")
+    Spree::Store.default.update!(
+      logo: {io: File.open(image), filename: "logo.jpg"},
+      favicon: {io: File.open(image), filename: "favicon.jpg"}
+    )
+
+    visit root_path
+
+    expect(page).to have_css("header img[alt='My Spree Store']")
+    expect(page).to have_css("footer img[alt='My Spree Store']", count: 1)
+    expect(page).not_to have_css("img[src*='logo_small_no_label'], img[src*='logo_full_with_label']")
+    expect(page).to have_css("header img[src*='/rails/active_storage/']")
+    expect(page).to have_css("link[rel=icon][href*='/rails/active_storage/']", count: 1)
+    expect(page).not_to have_css("link[rel=icon][href*='storefront_favicon']")
+  end
 end
