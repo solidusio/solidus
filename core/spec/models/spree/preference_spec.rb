@@ -10,70 +10,63 @@ RSpec.describe Spree::Preference, type: :model do
     expect(@preference).to be_valid
   end
 
-  describe "type coversion for values" do
+  describe "type conversion for values" do
     def round_trip_preference(key, value)
       element = Spree::Preference.new
       element.value = value
-      element.key = key
-      element.save
-
+      element.key = key.to_s
+      element.save!
       Spree::Preference.find_by(key:)
     end
 
+    it ":array" do
+      pref = round_trip_preference(:array_key, ["a", 2, :c])
+      expect(pref.value).to eq ["a", 2, :c]
+    end
+
     it ":boolean" do
-      value = true
-      key = "boolean_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:boolean_key, true)
+      expect(pref.value).to eq true
     end
 
     it "false :boolean" do
-      value = false
-      key = "boolean_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:boolean_key, false)
+      expect(pref.value).to eq false
     end
 
     it ":integer" do
-      value = 10
-      key = "integer_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:integer_key, 10)
+      expect(pref.value).to eq 10
     end
 
     it ":decimal" do
-      value = 1.5
-      key = "decimal_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:decimal_key, 1.5)
+      expect(pref.value).to eq 1.5
+    end
+
+    it ":hash" do
+      pref = round_trip_preference(:decimal_key, {one: 1, two: "2", three: :three})
+      expect(pref.value).to eq({one: 1, two: "2", three: :three})
     end
 
     it ":string" do
-      value = "This is a string"
-      key = "string_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:string_key, "string-value")
+      expect(pref.value).to eq "string-value"
     end
 
     it ":text" do
-      value = "This is a string stored as text"
-      key = "text_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:text_key, "Some text")
+      expect(pref.value).to eq "Some text"
     end
 
     it ":password" do
-      value = "This is a password"
-      key = "password_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:password_key, "amazing-password")
+      expect(pref.value).to eq "amazing-password"
     end
 
     it ":any" do
-      value = [1, 2]
-      key = "any_key"
-      pref = round_trip_preference(key, value)
-      expect(pref.value).to eq value
+      pref = round_trip_preference(:any_key, [1, 2, :something])
+      expect(pref.value).to eq [1, 2, :something]
     end
   end
 end
