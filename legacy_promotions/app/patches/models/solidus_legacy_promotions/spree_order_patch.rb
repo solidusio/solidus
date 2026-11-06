@@ -13,6 +13,11 @@ module SolidusLegacyPromotions
       base.has_many :promotions, through: :order_promotions
     end
 
+    # Used to keep track of any active promotion usage claims for the order.
+    # Helps avoid large queries to the database for each promotion and code when
+    # checking usage limits.
+    attr_accessor :promotion_usage_claims
+
     def apply_shipping_promotions(_event = nil)
       Spree::Config.promotions.shipping_promotion_handler_class.new(self).activate
       recalculate

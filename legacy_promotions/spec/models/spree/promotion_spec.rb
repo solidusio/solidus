@@ -271,8 +271,8 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
-  describe "#usage_limit_exceeded?" do
-    subject { promotion.usage_limit_exceeded? }
+  describe "#usage_limit_exceeded_from_orders?" do
+    subject { promotion.usage_limit_exceeded_from_orders? }
 
     shared_examples "it should" do
       context "when there is a usage limit" do
@@ -356,7 +356,7 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
-  describe "#usage_count" do
+  describe "#usage_count_from_orders" do
     let(:promotion) do
       FactoryBot.create(
         :promotion,
@@ -365,7 +365,7 @@ RSpec.describe Spree::Promotion, type: :model do
       )
     end
 
-    subject { promotion.usage_count }
+    subject { promotion.usage_count_from_orders }
 
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
@@ -558,7 +558,7 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
-  context "#usage_count" do
+  context "#usage_count_from_orders" do
     let!(:promotion) do
       create(
         :promotion,
@@ -589,13 +589,13 @@ RSpec.describe Spree::Promotion, type: :model do
 
     it "counts eligible adjustments" do
       adjustment.update_column(:eligible, true)
-      expect(promotion.usage_count).to eq(0)
+      expect(promotion.usage_count_from_orders).to eq(0)
     end
 
     # Regression test for https://github.com/spree/spree/issues/4112
     it "does not count ineligible adjustments" do
       adjustment.update_column(:eligible, false)
-      expect(promotion.usage_count).to eq(0)
+      expect(promotion.usage_count_from_orders).to eq(0)
     end
   end
 
@@ -642,6 +642,7 @@ RSpec.describe Spree::Promotion, type: :model do
       context "when promotion's usage limit is exceeded" do
         before do
           promotion.usage_limit = 1
+          promotion.usage_claims_count = 1
           create(:completed_order_with_promotion, promotion:)
         end
 
@@ -652,6 +653,7 @@ RSpec.describe Spree::Promotion, type: :model do
         before do
           promotion.per_code_usage_limit = 1
           create(:completed_order_with_promotion, promotion:)
+          promotion.codes.first.update_column(:usage_claims_count, 1)
           promotion.codes.first.adjustments.update_all(eligible: true)
         end
 
@@ -659,22 +661,24 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       context "when promotion is at last usage on the same order" do
-        let(:order) { create(:completed_order_with_promotion, promotion:) }
+        let!(:order) { create(:completed_order_with_promotion, promotion:) }
         let(:promotable) { order }
 
         before do
           promotion.usage_limit = 1
+          promotion.usage_claims_count = 1
         end
 
         it { is_expected.to be true }
       end
 
       context "when promotion code is at last usage on the same order" do
-        let(:order) { create(:completed_order_with_promotion, promotion:) }
+        let!(:order) { create(:completed_order_with_promotion, promotion:) }
         let(:promotable) { order }
 
         before do
           promotion.per_code_usage_limit = 1
+          order.order_promotions.first.promotion_code.update_column(:usage_claims_count, 1)
         end
 
         it { is_expected.to be true }
@@ -984,6 +988,77 @@ RSpec.describe Spree::Promotion, type: :model do
         promotion.update!(usage_limit: 10)
         expect(promotion.reload.usage_claims_count).to eq(3)
       end
+    end
+  end
+
+  describe "#usage_count" do
+    let(:promotion) { create(:promotion, :with_order_adjustment, code: "discount", usage_limit:) }
+    let(:usage_limit) { 5 }
+    let!(:order) { create(:completed_order_with_promotion, promotion:) }
+
+    context "without a usage limit" do
+      let(:usage_limit) { nil }
+
+      it "counts the completed orders" do
+        expect(promotion.usage_count).to eq(1)
+      end
+    end
+
+    it "counts the claimed uses" do
+      2.times { promotion.claim_usage }
+      expect(promotion.reload.usage_count).to eq(2)
+    end
+
+    it "doesn't count the excluded completed orders' claims" do
+      2.times { promotion.claim_usage }
+      expect(promotion.reload.usage_count(excluded_orders: [order])).to eq(1)
+    end
+
+    it "counts the claims of excluded orders that don't hold one" do
+      promotion.claim_usage
+      order.cancel!
+      2.times { promotion.claim_usage }
+
+      expect(promotion.reload.usage_count(excluded_orders: [order, create(:order)])).to eq(2)
+    end
+
+    context "when an excluded order is completing" do
+      let(:order) { create(:order_with_line_items) }
+
+      before do
+        promotion.claim_usage
+        order.promotion_usage_claims = [promotion]
+      end
+
+      it "doesn't count its claim, even when the promotion was loaded before the claim" do
+        stale_promotion = Spree::Promotion.find(promotion.id)
+        promotion.claim_usage
+
+        expect(stale_promotion.usage_count(excluded_orders: [order])).to eq(1)
+        expect(promotion.reload.usage_count(excluded_orders: [order])).to eq(1)
+      end
+
+      it "counts its claim when it was made on another promotion" do
+        order.promotion_usage_claims = [create(:promotion, usage_limit: 1)]
+
+        expect(promotion.reload.usage_count(excluded_orders: [order])).to eq(1)
+      end
+    end
+  end
+
+  describe "#usage_limit_exceeded?" do
+    let(:promotion) { create(:promotion, :with_order_adjustment, code: "discount", usage_limit: 1) }
+    let!(:order) { create(:completed_order_with_promotion, promotion:) }
+
+    it "is exceeded when the uses have been claimed, regardless of completed orders" do
+      expect(promotion.usage_limit_exceeded?).to be(false)
+      promotion.claim_usage
+      expect(promotion.reload.usage_limit_exceeded?).to be(true)
+    end
+
+    it "isn't exceeded for the order holding the last claim" do
+      promotion.claim_usage
+      expect(promotion.reload.usage_limit_exceeded?(excluded_orders: [order])).to be(false)
     end
   end
 end
