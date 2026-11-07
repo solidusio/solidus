@@ -38,7 +38,7 @@ const fetchOptions = async function(query) {
 }
 
 const buildUrl = function(query) {
-  const url = new URL(this.getUrl(query));
+  const url = new URL(this.getUrl(query), window.location.href);
   const queryParam = this.settings.queryParam;
   if (!query || !queryParam) return url.toString();
 
