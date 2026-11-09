@@ -261,8 +261,24 @@ RSpec.describe Spree::TaxRate, type: :model do
   end
 
   describe "#display_amount" do
-    subject(:rate) { create(:tax_rate, amount: 0.1).display_amount }
+    context "with a basic 10% rate" do
+      subject(:rate) { create(:tax_rate, amount: 0.1).display_amount }
 
-    it { is_expected.to eq("10.0%") }
+      it { is_expected.to eq "10.0%" }
+    end
+
+    context "when the amount is 0.0" do
+      subject(:rate) { create(:tax_rate, amount: 0.0).display_amount }
+
+      it { is_expected.to eq "0.0%" }
+    end
+
+    context "when the amount is 0.09975 (9.975%)" do
+      subject(:rate) do
+        create(:tax_rate, name: "Quebec Sales Tax", amount: 0.09975).display_amount
+      end
+
+      it { is_expected.to eq "9.975%" }
+    end
   end
 end
