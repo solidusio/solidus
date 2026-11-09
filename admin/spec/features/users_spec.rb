@@ -185,9 +185,13 @@ describe "Users", :js, type: :feature do
     end
 
     context "when a user has ordered before" do
-      let!(:user) { create(:user, :with_orders, email: "loyal_customer@example.com") }
+      let(:currency) { "USD" }
+      let(:user) { create(:user, :with_orders, email: "loyal_customer@example.com") }
 
       before do
+        stub_spree_preferences(currency:)
+        user
+
         visit "/admin/users"
         find_row("loyal_customer@example.com").click
         click_on "Order History"
@@ -208,12 +212,7 @@ describe "Users", :js, type: :feature do
       end
 
       context "with a different currency" do
-        around do |example|
-          currency_was = Spree::Config.currency
-          Spree::Config.currency = "EUR"
-          example.run
-          Spree::Config.currency = currency_was
-        end
+        let(:currency) { "EUR" }
 
         it "displays correct currency" do
           page.assert_selector("section table td:last-child", exact_text: /€\d\.\d{2}/, count: user.orders.count)

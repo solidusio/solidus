@@ -31,6 +31,28 @@ RSpec.describe "SolidusAdmin::PaymentMethodsController", type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
         end
       end
+
+      context "with a type and and type-specific preferences" do
+        let(:valid_attributes) {
+          {
+            name: "Valid Payment Method",
+            type: "Spree::PaymentMethod::BogusCreditCard",
+            preferred_bogus_string: "bogus-string-setting"
+          }
+        }
+
+        it "creates a payment method with the given settings" do
+          expect {
+            post solidus_admin.payment_methods_path,
+              params: {payment_method: valid_attributes}
+          }.to change(Spree::PaymentMethod, :count)
+
+          record = Spree::PaymentMethod.last
+
+          expect(record.type).to eq "Spree::PaymentMethod::BogusCreditCard"
+          expect(record.options[:bogus_string]).to eq "bogus-string-setting"
+        end
+      end
     end
 
     describe "PUT /update" do
@@ -43,6 +65,30 @@ RSpec.describe "SolidusAdmin::PaymentMethodsController", type: :request do
           }.not_to change { resource.reload.name }
 
           expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+
+      context "when updating a payment method's type" do
+        let(:factory) { :check_payment_method }
+        let(:valid_attributes) {
+          {
+            type: "Spree::PaymentMethod::BogusCreditCard",
+            preferred_bogus_string: "new-value"
+          }
+        }
+
+        it "updates the payment method type and its type-specific preferences" do
+          expect {
+            put solidus_admin.payment_method_path(resource),
+              params: {payment_method: valid_attributes}
+          }
+            .to change { Spree::PaymentMethod.find(resource.id).type }
+            .from("Spree::PaymentMethod::Check")
+            .to("Spree::PaymentMethod::BogusCreditCard")
+
+          record = Spree::PaymentMethod.last
+
+          expect(record.options[:bogus_string]).to eq "new-value"
         end
       end
     end
