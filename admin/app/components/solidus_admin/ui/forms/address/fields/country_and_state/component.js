@@ -2,11 +2,14 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["country", "state", "stateName", "stateWrapper", "stateNameWrapper"]
+  static values = {
+    url: String,
+  }
 
   loadStates() {
     const countryId = this.countryTarget.value
 
-    fetch(`/admin/countries/${countryId}/states`)
+    fetch(this.urlValue.replace(":country_id", countryId))
       .then((response) => response.json())
       .then((data) => {
         this.updateStateOptions(data)
