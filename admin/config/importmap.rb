@@ -18,6 +18,7 @@ pin "vendor/custom_elements", preload: true
 pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/controllers"), under: "solidus_admin/controllers"
 pin_all_from SolidusAdmin::Engine.root.join("app/components")
 pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/web_components"), under: "solidus_admin/web_components"
+pin_all_from SolidusAdmin::Engine.root.join("app/javascript/solidus_admin/tom-select/plugins"), under: "solidus_admin/tom-select/plugins"
 
 pin "tom-select", to: "https://ga.jspm.io/npm:tom-select@2.4.3/dist/esm/tom-select.complete.js"
 pin "@orchidjs/sifter", to: "https://ga.jspm.io/npm:@orchidjs/sifter@1.1.0/dist/esm/sifter.js"
