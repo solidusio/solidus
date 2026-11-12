@@ -10,7 +10,7 @@ class CartLineItemsController < StoreController
     @order = current_order(create_order_if_necessary: true)
     authorize! :update, @order, cookies.signed[:guest_token]
 
-    variant = Spree::Variant.find(params[:variant_id])
+    variant = find_variant
     quantity = params[:quantity].present? ? params[:quantity].to_i : 1
 
     # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
@@ -35,5 +35,14 @@ class CartLineItemsController < StoreController
         end
       end
     end
+  end
+
+  private
+
+  def find_variant
+    variant = Spree::Variant.find(params[:variant_id])
+    raise ActiveRecord::RecordNotFound unless spree_current_user.try(:has_spree_role?, "admin") || variant.product.available?
+
+    variant
   end
 end

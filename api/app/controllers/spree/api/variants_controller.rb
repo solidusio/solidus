@@ -59,7 +59,7 @@ module Spree
       private
 
       def product
-        @product ||= Spree::Product.accessible_by(current_ability, :show).friendly.find(params[:product_id]) if params[:product_id]
+        @product ||= find_product(params[:product_id]) if params[:product_id]
       end
 
       def scope
@@ -71,6 +71,10 @@ module Spree
 
         if current_ability.can?(:manage, Variant) && params[:show_deleted]
           variants = variants.with_discarded
+        end
+
+        unless can?(:admin, Spree::Product)
+          variants = variants.where(product_id: Spree::Product.available.select(:id))
         end
 
         in_stock_only = ActiveRecord::Type::Boolean.new.cast(params[:in_stock_only])
