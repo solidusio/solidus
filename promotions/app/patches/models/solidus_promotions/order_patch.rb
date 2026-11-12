@@ -16,6 +16,11 @@ module SolidusPromotions
       base.has_many :solidus_promotions, through: :solidus_order_promotions, source: :promotion
     end
 
+    # Used to keep track of any active promotion usage claims for the order.
+    # Helps avoid large queries to the database for each promotion and code when
+    # checking usage limits.
+    attr_accessor :promotion_usage_claims
+
     def discountable_item_total
       line_items.sum(&:discountable_amount)
     end

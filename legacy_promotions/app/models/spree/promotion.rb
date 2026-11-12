@@ -4,6 +4,8 @@ module Spree
   class Promotion < Spree::Base
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
+    include Spree::PromotionUsageClaims
+
     attr_reader :eligibility_errors
 
     belongs_to :promotion_category, optional: true
@@ -34,6 +36,8 @@ module Spree
     validate :apply_automatically_disallowed_with_paths
 
     before_save :normalize_blank_values
+    after_save :recalculate_usage_claims_counts,
+      if: -> { saved_change_to_usage_limit?(from: nil) || saved_change_to_per_code_usage_limit?(from: nil) }
 
     scope :coupons, -> { joins(:codes).distinct }
     scope :advertised, -> { where(advertise: true) }
@@ -179,24 +183,68 @@ module Spree
 
     # Whether the promotion has exceeded its usage restrictions.
     #
+    # This method uses the usage claims counter, which is more efficient than
+    # counting the number of completed orders that have used the promotion, but
+    # it can drift from the actual usage count if the counter is not kept up to
+    # date. Use `usage_limit_exceeded_from_orders?` to check against the actual
+    # usage count.
+    #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
     # @return true or false
     def usage_limit_exceeded?(excluded_orders: [])
-      if usage_limit
-        usage_count(excluded_orders:) >= usage_limit
-      end
+      usage_count(excluded_orders:) >= usage_limit if usage_limit
     end
 
-    # Number of times the code has been used overall
+    # Whether the promotion has exceeded its usage restrictions, based on the
+    # actual usage count from completed orders.
+    #
+    # This method is less efficient than `usage_limit_exceeded?`, but does not
+    # rely on the usage claims counter, which can drift from the actual usage
+    # count if the counter is not kept up to date.
+    #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
+    # @return true or false
+    def usage_limit_exceeded_from_orders?(excluded_orders: [])
+      usage_count_from_orders(excluded_orders:) >= usage_limit if usage_limit
+    end
+
+    # Number of times the promotion has been used overall
+    #
+    # If a usage limit is set, this method uses the usage claims counter. Which
+    # is more efficient. Otherwise, it falls back to counting the number of
+    # completed orders that have used the promotion.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
     def usage_count(excluded_orders: [])
-      discounted_orders
-        .complete
+      return usage_count_from_orders(excluded_orders:) unless usage_limit
+
+      usage_claims_count_excluding(excluded_orders)
+    end
+
+    # Number of times the promotion has been used in completed orders
+    #
+    # This method will always count the number of completed orders that have
+    # used the promotion, regardless of whether a usage limit is set. It is less
+    # efficient than `usage_count`, but we need it to help backfill the usage
+    # claims counter. It's also useful for checking usage of any promotions that
+    # don't have a limit.
+    #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
+    # @return [Integer] usage count
+    def usage_count_from_orders(excluded_orders: [])
+      usage_orders
         .where.not(id: [excluded_orders.map(&:id)])
-        .where.not(spree_orders: {state: :canceled})
         .count
+    end
+
+    # Resets the usage claims counters of the promotion and its codes from
+    # their recorded usage. The counters aren't kept up to date while there's
+    # no usage limit, so this runs whenever a usage limit is added.
+    def recalculate_usage_claims_counts
+      recalculate_usage_claims_count
+      codes.where.not(usage_claims_count: 0).update_all(usage_claims_count: 0)
+      codes.where(id: order_promotions.select(:promotion_code_id)).find_each(&:recalculate_usage_claims_count)
     end
 
     def line_item_actionable?(order, line_item, promotion_code: nil)
@@ -234,6 +282,12 @@ module Spree
     end
 
     private
+
+    def usage_orders
+      discounted_orders
+        .complete
+        .where.not(spree_orders: {state: :canceled})
+    end
 
     def blacklisted?(promotable)
       case promotable

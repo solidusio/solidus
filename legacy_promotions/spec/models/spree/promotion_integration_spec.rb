@@ -225,6 +225,8 @@ RSpec.describe "Legacy promotion system" do
         order.next! until order.can_complete?
         order.complete!
       end
+
+      order.reload
     end
 
     it "makes the promotion ineligible" do
@@ -262,6 +264,8 @@ RSpec.describe "Legacy promotion system" do
         order.next! until order.can_complete?
         order.complete!
       end
+
+      order.reload
     end
 
     context "with the in-memory order updater" do

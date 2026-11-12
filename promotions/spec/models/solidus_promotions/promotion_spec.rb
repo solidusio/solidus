@@ -296,8 +296,8 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
   end
 
-  describe "#usage_limit_exceeded?" do
-    subject { promotion.usage_limit_exceeded? }
+  describe "#usage_limit_exceeded_from_orders?" do
+    subject { promotion.usage_limit_exceeded_from_orders? }
 
     shared_examples "it should" do
       context "when there is a usage limit" do
@@ -377,8 +377,8 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
     end
   end
 
-  describe "#usage_count" do
-    subject { promotion.usage_count }
+  describe "#usage_count_from_orders" do
+    subject { promotion.usage_count_from_orders }
 
     let(:promotion) do
       FactoryBot.create(
@@ -790,6 +790,122 @@ RSpec.describe SolidusPromotions::Promotion, type: :model do
       let(:order) { create :order, state: "returned" }
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe "usage claims" do
+    let(:promotion) { create(:solidus_promotion, usage_limit: 2) }
+
+    it "claims uses up to the usage limit" do
+      expect(promotion.claim_usage).to be(true)
+      expect(promotion.claim_usage).to be(true)
+      expect(promotion.claim_usage).to be(false)
+      expect(promotion.reload.usage_claims_count).to eq(2)
+    end
+
+    it "claims uses past the usage limit when not enforcing it" do
+      2.times { promotion.claim_usage }
+      expect(promotion.claim_usage(enforce_limit: false)).to be(true)
+      expect(promotion.reload.usage_claims_count).to eq(3)
+    end
+
+    it "releases uses without going below zero" do
+      promotion.claim_usage
+      2.times { promotion.release_usage }
+      expect(promotion.reload.usage_claims_count).to eq(0)
+    end
+
+    context "when a usage limit is added" do
+      let(:promotion) { create(:solidus_promotion, :with_order_adjustment, code: "claims") }
+      let(:code) { promotion.codes.first }
+
+      before do
+        create_list(:completed_order_with_solidus_promotion, 2, promotion:)
+      end
+
+      it "counts the existing uses of the promotion and its codes" do
+        promotion.update!(usage_limit: 5, per_code_usage_limit: 5)
+        expect(promotion.reload.usage_claims_count).to eq(2)
+        expect(code.reload.usage_claims_count).to eq(2)
+      end
+
+      it "doesn't recount when an existing usage limit changes" do
+        promotion.update!(usage_limit: 5)
+        promotion.claim_usage
+        promotion.update!(usage_limit: 10)
+        expect(promotion.reload.usage_claims_count).to eq(3)
+      end
+    end
+  end
+
+  describe "#usage_count" do
+    let(:promotion) { create(:solidus_promotion, :with_order_adjustment, code: "discount", usage_limit:) }
+    let(:usage_limit) { 5 }
+    let!(:order) { create(:completed_order_with_solidus_promotion, promotion:) }
+
+    context "without a usage limit" do
+      let(:usage_limit) { nil }
+
+      it "counts the completed orders" do
+        expect(promotion.usage_count).to eq(1)
+      end
+    end
+
+    it "counts the claimed uses" do
+      2.times { promotion.claim_usage }
+      expect(promotion.reload.usage_count).to eq(2)
+    end
+
+    it "doesn't count the excluded completed orders' claims" do
+      2.times { promotion.claim_usage }
+      expect(promotion.reload.usage_count(excluded_orders: [order])).to eq(1)
+    end
+
+    it "counts the claims of excluded orders that don't hold one" do
+      promotion.claim_usage
+      order.cancel!
+      2.times { promotion.claim_usage }
+
+      expect(promotion.reload.usage_count(excluded_orders: [order, create(:order)])).to eq(2)
+    end
+
+    context "when an excluded order is completing" do
+      let(:order) { create(:order_with_line_items) }
+
+      before do
+        promotion.claim_usage
+        order.promotion_usage_claims = [promotion]
+      end
+
+      it "doesn't count its claim, even when the promotion was loaded before the claim" do
+        stale_promotion = SolidusPromotions::Promotion.find(promotion.id)
+        promotion.claim_usage
+
+        expect(stale_promotion.usage_count(excluded_orders: [order])).to eq(1)
+        expect(promotion.reload.usage_count(excluded_orders: [order])).to eq(1)
+      end
+
+      it "counts its claim when it was made on another promotion" do
+        order.promotion_usage_claims = [create(:solidus_promotion, usage_limit: 1)]
+
+        expect(promotion.reload.usage_count(excluded_orders: [order])).to eq(1)
+      end
+    end
+  end
+
+  describe "#usage_limit_exceeded?" do
+    let(:promotion) { create(:solidus_promotion, :with_order_adjustment, code: "discount", usage_limit: 1) }
+    let!(:order) { create(:completed_order_with_solidus_promotion, promotion:) }
+
+    it "is exceeded when the uses have been claimed, regardless of completed orders" do
+      expect(promotion.usage_limit_exceeded?).to be(false)
+      promotion.claim_usage
+      expect(promotion.reload.usage_limit_exceeded?).to be(true)
+    end
+
+    it "isn't exceeded for the order holding the last claim" do
+      promotion.claim_usage
+      expect(promotion.reload.usage_limit_exceeded?(excluded_orders: [order])).to be(false)
     end
   end
 end
