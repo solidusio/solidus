@@ -2,8 +2,6 @@
 
 module SolidusAdmin
   class StatesController < SolidusAdmin::ResourcesController
-    skip_before_action :authorize_solidus_admin_user!
-
     private
 
     def resource_class
