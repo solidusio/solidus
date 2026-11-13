@@ -1,0 +1,3 @@
+en:
+  title: "%{label}: cannot be rendered"
+  message: "The component for `%{preference_type}` failed to render with the error: %{error}"
