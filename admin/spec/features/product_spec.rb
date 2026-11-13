@@ -27,6 +27,45 @@ describe "Product", type: :feature do
     expect(page).to be_axe_clean
   end
 
+  describe "storefront link", :js do
+    let!(:product) { create(:product, name: "Just a product", slug: "just-a-prod") }
+
+    context "with a single store" do
+      it "links to the product on the current host" do
+        visit "/admin/products/just-a-prod"
+
+        expect(page).to have_link("View online", href: "/products/just-a-prod")
+      end
+    end
+
+    context "with multiple stores" do
+      before do
+        create(:store, name: "US Store", url: "us.example.com", default: true)
+        create(:store, name: "EU Store", url: "https://eu.example.com/")
+      end
+
+      it "offers a link for each store" do
+        visit "/admin/products/just-a-prod"
+
+        expect(page).not_to have_link("View online")
+        find("summary", text: "View online").click
+
+        expect(page).to have_link("US Store", href: "https://us.example.com/products/just-a-prod")
+        expect(page).to have_link("EU Store", href: "https://eu.example.com/products/just-a-prod")
+        expect(page).to be_axe_clean
+      end
+
+      it "uses the configured storefront path" do
+        allow(SolidusAdmin::Config).to receive(:storefront_product_path) { "/p/#{_1.slug}" }
+
+        visit "/admin/products/just-a-prod"
+        find("summary", text: "View online").click
+
+        expect(page).to have_link("US Store", href: "https://us.example.com/p/just-a-prod")
+      end
+    end
+  end
+
   it "redirects the edit route to the show path" do
     create(:product, slug: "just-a-prod")
 
