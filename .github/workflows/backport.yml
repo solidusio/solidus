@@ -22,12 +22,12 @@ jobs:
     steps:
       - name: Generate token
         id: generate_token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v2.2.2
         with:
           app-id: ${{ vars.SOLIDUS_BOT_APP_ID }}
           private-key: ${{ secrets.SOLIDUS_BOT_APP_PRIVATE_KEY }}
       - name: Backport Action
-        uses: sqren/backport-github-action@v9.5.1
+        uses: sorenlouv/backport-github-action@v9.5.1
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
           auto_backport_label_prefix: backport-

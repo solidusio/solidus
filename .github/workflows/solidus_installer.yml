@@ -12,6 +12,9 @@ concurrency:
   group: solidus-installer-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   solidus_installer:
     name: Test Installer
@@ -23,17 +26,19 @@ jobs:
       COVERAGE: true
       COVERAGE_DIR: ${{ github.workspace }}/storefront/coverage
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
       - name: Install libvips
         run: |
           sudo apt-get update
           sudo apt-get install -yq libvips-dev
       - name: Install Solidus
-        uses: ./.github/actions/install_solidus
+        uses: $/.github/actions/install_solidus
         with:
           flags: "--sample=false --frontend=starter --authentication=devise"
       - name: "Check homepage"
-        uses: ./.github/actions/check_page_content
+        uses: $/.github/actions/check_page_content
         with:
           expected_text: "<title>Sample Store</title>"
       - name: Ensure the correct PayPal is installed for SSF
@@ -54,7 +59,7 @@ jobs:
           cd $RUNNER_TEMP/my_app
           bundle exec rspec spec
       - name: Upload coverage report to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v5.5.5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: solidusio/solidus

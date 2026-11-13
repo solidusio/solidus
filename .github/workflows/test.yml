@@ -10,6 +10,9 @@ concurrency:
   group: test-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   solidus_admin:
     uses: ./.github/workflows/test_solidus.yml
@@ -17,21 +20,24 @@ jobs:
       artifacts: true
       lib_name: admin
       coverage: true
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_api:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: api
       coverage: true
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_backend:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: backend
       coverage: true
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_backend_js:
     name: solidus_backend JS
@@ -39,9 +45,11 @@ jobs:
     env:
       LIB_NAME: backend
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.336.0
         with:
           ruby-version: 3.4
           bundler-cache: true
@@ -55,31 +63,36 @@ jobs:
     with:
       lib_name: core
       coverage: true
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_i18n:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: i18n
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_sample:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: sample
       coverage: false
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_legacy_promotions:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: legacy_promotions
       coverage: true
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   solidus_promotions:
     uses: ./.github/workflows/test_solidus.yml
     with:
       lib_name: promotions
       coverage: true
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
