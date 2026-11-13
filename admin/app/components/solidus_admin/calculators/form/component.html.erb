@@ -27,11 +27,15 @@
         <%= @form.fields_for :calculator, calculator do |calculator_form| %>
           <% calculator.admin_form_preference_names.each do |name| %>
             <div class="mb-3">
-              <%= render component("calculators/preference_fields/#{calculator.preference_type(name)}").new(
-                form: calculator_form,
-                attribute: "preferred_#{name}",
-                label: t(name, scope: 'spree', default: name.to_s.humanize)
-              ) %>
+              <%=
+                current_value = params.dig(
+                    :shipping_method,
+                    :calculator_attributes,
+                    "preferred_#{name}".to_sym
+                  ).presence || calculator_form.object.preferences[name]
+
+                render field_for(name, current_value, calculator)
+              %>
             </div>
           <% end %>
         <% end %>
