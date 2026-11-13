@@ -9,6 +9,7 @@ class SolidusAdmin::UI::PreferenceFields::Error::Component < SolidusAdmin::UI::P
         preference_type: @args[:preference_type],
         error: @error&.to_sentence
       ),
+      dismissable: false,
       scheme: :danger
     )
   end
