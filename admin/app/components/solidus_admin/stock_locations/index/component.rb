@@ -127,7 +127,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
 
         link_to(
           "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
-          spree.admin_stock_location_stock_movements_path(stock_location),
+          solidus_admin.stock_location_stock_movements_path(stock_location),
           class: "body-link"
         )
       end

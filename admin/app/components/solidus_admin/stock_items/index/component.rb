@@ -143,9 +143,9 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
 
         link_to(
           "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
-          spree.admin_stock_location_stock_movements_path(
+          solidus_admin.stock_location_stock_movements_path(
             _1.stock_location.id,
-            q: {variant_sku_eq: _1.variant.sku}
+            q: {variant_sku_or_variant_product_name_cont: _1.variant.sku}
           ),
           class: "body-link"
         )
