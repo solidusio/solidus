@@ -1,0 +1,3 @@
+en:
+  title: "Stock Movements for %{stock_location}"
+  created_at: "Date"
