@@ -73,16 +73,16 @@ Keep the following in mind:
 
 Each `Spree::BackendConfiguration::MenuItem` becomes a SolidusAdmin menu item:
 
-| Backend (`MenuItem`) | SolidusAdmin | Notes |
-| --- | --- | --- |
-| `label` | `key` | Translated with `solidus_admin.menu_item.#{key}`, falling back to the humanized key. Backend labels are translated with `spree.admin.tab.#{label}`, so copy your custom labels over to the new scope. |
-| `url` | `route` | A `Symbol` is called on the **SolidusAdmin** route helpers, a `String` is used as is, and a `Proc` is evaluated with access to the `spree` and `solidus_admin` route helpers. When there is no `url`, `spree.admin_#{label}_path` is used. |
-| `match_path` | `match_path` | Strings are matched as a prefix of the path, after the admin mount path. Without a `match_path`, the item is active when the current path starts with its own route. |
-| `icon` | `icon` | Only [Remixicon](https://remixicon.com/) names (`ri-` prefixed) are kept, anything else (e.g. Font Awesome names) falls back to a generic icon. |
-| `children` | `children` | Converted recursively. |
-| position in the array | `position` | Items keep the order they have in the backend configuration. |
-| `condition` | – | Not imported, see below. |
-| `partial`, `data_hook` | – | Not supported: SolidusAdmin menus are data only. Use `children` instead of a partial. |
+| Backend (`MenuItem`)   | SolidusAdmin | Notes                                                                                                                                                                                                                                      |
+|------------------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `label`                | `key`        | Translated with `solidus_admin.menu_item.#{key}`, falling back to the humanized key. Backend labels are translated with `spree.admin.tab.#{label}`, so copy your custom labels over to the new scope.                                      |
+| `url`                  | `route`      | A `Symbol` is called on the **SolidusAdmin** route helpers, a `String` is used as is, and a `Proc` is evaluated with access to the `spree` and `solidus_admin` route helpers. When there is no `url`, `spree.admin_#{label}_path` is used. |
+| `match_path`           | `match_path` | Strings are matched as a prefix of the path, after the admin mount path. Without a `match_path`, the item is active when the current path starts with its own route.                                                                       |
+| `icon`                 | `icon`       | Only [Remixicon](https://remixicon.com/) names (`ri-` prefixed) are kept, anything else (e.g. Font Awesome names) falls back to a generic icon.                                                                                            |
+| `children`             | `children`   | Converted recursively.                                                                                                                                                                                                                     |
+| position in the array  | `position`   | Items keep the order they have in the backend configuration.                                                                                                                                                                               |
+| `condition`            | –            | Not imported, see below.                                                                                                                                                                                                                   |
+| `partial`, `data_hook` | –            | Not supported: SolidusAdmin menus are data only. Use `children` instead of a partial.                                                                                                                                                      |
 
 Because `condition` is not imported, items are shown to every admin user,
 regardless of the permissions checked by the backend. The page the item links
