@@ -88,7 +88,7 @@ Because `condition` is not imported, items are shown to every admin user,
 regardless of the permissions checked by the backend. The page the item links
 to is still subject to its own authorization.
 
-Since a `Symbol` url is resolved against the SolidusAdmin routes, a backend
+Since a `Symbol` URL is resolved against the SolidusAdmin routes, a backend
 item pointing to one of your own legacy routes needs a `Proc` in order to keep
 working in both admins:
 
