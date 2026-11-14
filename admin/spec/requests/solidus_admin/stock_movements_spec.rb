@@ -21,6 +21,18 @@ RSpec.describe "SolidusAdmin::StockMovementsController", type: :request do
       expect(response.body).to include("MOVED-SKU")
     end
 
+    it "shows who or what originated each stock movement" do
+      stock_item = create(:stock_item, stock_location:, variant: create(:variant))
+      shipment = create(:shipment, number: "H123456789", stock_location:)
+      create(:stock_movement, stock_item:, quantity: -1, originator: shipment)
+      create(:stock_movement, stock_item:, quantity: 3, originator: admin_user)
+
+      get solidus_admin.stock_location_stock_movements_path(stock_location)
+
+      expect(response.body).to include("H123456789")
+      expect(response.body).to include(admin_user.email)
+    end
+
     context "with stock management restricted to a stock location" do
       let(:admin_user) { create(:user, spree_roles: [role], stock_locations: [assigned_location]) }
       let(:role) { create(:role, name: "warehouse") }
