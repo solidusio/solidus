@@ -339,6 +339,17 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         expect(a.get_preference(:secret)).to eq("my_default_secret")
         expect(a.preferences[:secret]).not_to eq("my_default_secret")
       end
+
+      it "raises an error when no encryption key is available" do
+        expect {
+          ConfigClassA.preference :secret,
+            :encrypted_string,
+            default: "my_default_secret"
+        }.to raise_error(
+          Spree::Preferences::PreferableClassMethods::NoEncryptionKeyError,
+          "must provide an encryption key for encrypted string preferences"
+        )
+      end
     end
   end
 
