@@ -37,7 +37,7 @@ module Spree
 
     attr_accessor :request_env
 
-    validates :amount, numericality: true
+    validates :amount, numericality: {greater_than_or_equal_to: 0}
     validates :source, presence: true, if: :source_required?
     validates :payment_method, presence: true
 
