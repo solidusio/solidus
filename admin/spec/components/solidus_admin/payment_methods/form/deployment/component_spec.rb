@@ -113,6 +113,42 @@ RSpec.describe SolidusAdmin::PaymentMethods::Form::Deployment::Component, type: 
             value: "string-value")
       end
     end
+
+    context "when the field is not supported in Solidus" do
+      let(:args) { [:bogus_text, nil] }
+      let(:stubbed_payment_method_type) {
+        Spree::PaymentMethod::BogusCreditCard.new
+      }
+
+      before do
+        component.instance_variable_set :@current_type_instance,
+          stubbed_payment_method_type
+
+        allow(stubbed_payment_method_type)
+          .to receive(:preference_type)
+          .with(:bogus_text)
+          .and_return(:unknown_field_type)
+      end
+
+      it "renders an error component in place of a preference field" do
+        allow(SolidusAdmin::UI::PreferenceFields::Error::Component)
+          .to receive(:new)
+
+        subject
+
+        expect(SolidusAdmin::UI::PreferenceFields::Error::Component)
+          .to have_received(:new)
+          .with(disabled: false,
+            name: "payment_method[preferred_bogus_text]",
+            preference_name: :bogus_text,
+            preference_type: :unknown_field_type,
+            type: "Spree::PaymentMethod::BogusCreditCard",
+            value: "Lorem ipsum dolor sit amet",
+            error: an_instance_of(
+              SolidusAdmin::ComponentRegistry::ComponentNotFoundError
+            ))
+      end
+    end
   end
 
   describe "#static_preference_source?" do

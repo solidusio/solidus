@@ -38,4 +38,19 @@
       <%= render current_component.new(scheme: :info, title: "Locales available", message: "Did you know you can update storefront locales <a href='#' class='underline'>here</a>?".html_safe) %>
     </div>
   </div>
+
+  <div class="flex items-center">
+    <h6 class="text-gray-500 mb-3 mt-0 w-1/6">
+      Undismissable
+    </h6>
+
+    <div class="w-5/6">
+      <%= render current_component.new(
+        dismissable: false,
+        scheme: :info,
+        title: "Locales available",
+        message: "Did you know you can update storefront locales <a href='#' class='underline'>here</a>?".html_safe)
+      %>
+    </div>
+  </div>
 </div>

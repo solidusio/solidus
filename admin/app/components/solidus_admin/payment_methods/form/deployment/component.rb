@@ -38,6 +38,10 @@ class SolidusAdmin::PaymentMethods::Form::Deployment::Component < SolidusAdmin::
     }
 
     component("ui/preference_fields/#{field_type}").new(**field_args)
+  rescue SolidusAdmin::ComponentRegistry::ComponentNotFoundError => error
+    field_args = field_args.merge(error:, preference_type: field_type)
+
+    component("ui/preference_fields/error").new(**field_args)
   end
 
   def static_preference_source?
