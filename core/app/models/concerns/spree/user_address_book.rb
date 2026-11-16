@@ -60,6 +60,14 @@ module Spree
       accepts_nested_attributes_for :bill_address
     end
 
+    # The user's ship_address_id and bill_address_id columns predate the
+    # address book and are only kept in sync for backwards compatibility.
+    deprecate ship_address_id: :ship_address,
+      "ship_address_id=": :ship_address=,
+      bill_address_id: :bill_address,
+      "bill_address_id=": :bill_address=,
+      deprecator: Spree.deprecator
+
     # saves address in address book
     # sets address to the default if automatic_default_address is set to true
     # if address is nil, does nothing and returns nil
@@ -96,7 +104,7 @@ module Spree
           order.ship_address.attributes,
           Spree::Config.automatic_default_address
         )
-        self.ship_address_id = address.id if address&.persisted?
+        self[:ship_address_id] = address.id if address&.persisted?
       end
 
       if order.bill_address
@@ -105,7 +113,7 @@ module Spree
           Spree::Config.automatic_default_address,
           :billing
         )
-        self.bill_address_id = address.id if address&.persisted?
+        self[:bill_address_id] = address.id if address&.persisted?
       end
 
       save! # In case the ship_address_id or bill_address_id was set
@@ -185,8 +193,8 @@ module Spree
     end
 
     def remove_user_address_reference(address_id)
-      self.bill_address_id = (bill_address_id == address_id.to_i) ? nil : bill_address_id
-      self.ship_address_id = (ship_address_id == address_id.to_i) ? nil : ship_address_id
+      self[:bill_address_id] = nil if self[:bill_address_id] == address_id.to_i
+      self[:ship_address_id] = nil if self[:ship_address_id] == address_id.to_i
       save if changed?
     end
   end
