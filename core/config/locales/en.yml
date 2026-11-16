@@ -170,6 +170,12 @@ en:
         preferred_bogus_hash: Bogus Hash Preference
         preferred_bogus_integer: Bogus Integer Preference
         preferred_bogus_password: Bogus Password Preference
+        preferred_bogus_select: Bogus Select Preference
+        preferred_bogus_select_options:
+          one: Option One
+          the_fourth_option: Option Four
+          three: Option Three
+          two: Option Two
         preferred_bogus_string: Bogus String Preference
         preferred_bogus_text: Bogus Text Preference
       spree/price:

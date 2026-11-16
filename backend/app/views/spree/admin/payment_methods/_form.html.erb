@@ -20,9 +20,7 @@
               <%= t('spree.preference_source_using', name: @object.preference_source) %>
             <% elsif !@object.new_record? %>
               <% @object.admin_form_preference_names.each do |name| %>
-                <%= render "spree/admin/shared/preference_fields/#{@object.preference_type(name)}",
-                  form: f, attribute: "preferred_#{name}",
-                  label: t(name, scope: 'spree', default: name.to_s.humanize) %>
+                <%= preference_field_for(f, name) %>
               <% end %>
             <% end %>
           </div>
