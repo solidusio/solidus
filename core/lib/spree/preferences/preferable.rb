@@ -6,6 +6,8 @@ require "active_support/core_ext/hash/keys"
 
 module Spree
   module Preferences
+    class NotAnOptionError < StandardError; end
+
     # Preference types explicitly supported by the +Preferable+ module.
     TYPES = %i[
       array
@@ -15,6 +17,7 @@ module Spree
       hash
       integer
       password
+      select
       string
       text
     ]
@@ -98,6 +101,17 @@ module Spree
         send self.class.preference_setter_method(name), value
       end
 
+      # Get candidate preference options
+      #
+      # @param name [Symbol] name of preference
+      # @return [Array<Array>] a collection of preference options
+      def preference_options(name)
+        has_preference! name
+        return [] unless preference_type(name) == :select
+
+        send self.class.preference_options_getter_method(name, :select)
+      end
+
       # @param name [#to_sym] name of preference
       # @return [Symbol] The type of preference +name+
       def preference_type(name)
@@ -155,7 +169,7 @@ module Spree
 
       private
 
-      def convert_preference_value(value, type, preference_encryptor = nil)
+      def convert_preference_value(value, type, preference_encryptor = nil, name = nil)
         return nil if value.nil?
         case type
         when :string, :text
@@ -182,6 +196,9 @@ module Spree
         when :hash
           raise TypeError, "Hash expected got #{value.inspect}" unless value.is_a?(Hash)
           value
+        when :select
+          return value.to_sym if preference_options(name).include?(value.to_sym)
+          raise NotAnOptionError, "Expected a defined option, got #{value.inspect}"
         else
           value
         end
