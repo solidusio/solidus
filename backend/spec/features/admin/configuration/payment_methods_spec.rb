@@ -169,6 +169,16 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_no_content("secret")
     end
 
+    it "includes a usable Bogus Credit Card select preference" do
+      click_link "Payments"
+      expect(page).to have_link "Payment Methods"
+      click_icon :edit
+
+      select2 "Option Four", from: "Bogus select"
+      click_on "Update"
+      expect(page).to have_content("Option Four")
+    end
+
     after do
       # cleanup
       Spree::Config.static_model_preferences.for_class(Spree::PaymentMethod::BogusCreditCard).clear

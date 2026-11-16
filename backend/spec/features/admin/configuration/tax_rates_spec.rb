@@ -30,6 +30,20 @@ describe "Tax Rates", type: :feature do
     expect(page).to have_content("Tax Rate has been successfully created!")
   end
 
+  context "with a calculator that has preferences" do
+    before do
+      allow(Rails.application.config.spree.calculators).to receive(:tax_rates)
+        .and_return([Spree::Calculator::DefaultTax, Spree::Calculator::Shipping::FlatRate])
+    end
+
+    it "renders the calculator's preference fields" do
+      click_link "Tax Rates"
+      click_link "New Tax Rate"
+
+      expect(page).to have_field("Amount", visible: :all)
+    end
+  end
+
   describe "listing" do
     let(:calculator) { create(:default_tax_calculator) }
     let!(:tax_rate_1) { create(:tax_rate, name: "Tax Rate 1", calculator:) }
