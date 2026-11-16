@@ -86,7 +86,9 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :stock_items, only: [:index, :edit, :update]
   admin_resources :shipping_methods, only: [:index, :destroy]
   admin_resources :shipping_categories, except: [:show]
-  admin_resources :stock_locations, except: [:show]
+  admin_resources :stock_locations, except: [:show] do
+    resources :stock_movements, only: [:index]
+  end
   admin_resources :stores, except: [:show]
   admin_resources :zones, except: [:show]
   admin_resources :refund_reasons, except: [:show]
