@@ -61,8 +61,8 @@ RSpec.describe Spree::PromotionCode do
     end
   end
 
-  describe "#usage_limit_exceeded?" do
-    subject { code.usage_limit_exceeded? }
+  describe "#usage_limit_exceeded_from_orders?" do
+    subject { code.usage_limit_exceeded_from_orders? }
 
     shared_examples "it should" do
       context "when there is a usage limit" do
@@ -148,7 +148,7 @@ RSpec.describe Spree::PromotionCode do
     end
   end
 
-  describe "#usage_count" do
+  describe "#usage_count_from_orders" do
     let(:promotion) do
       FactoryBot.create(
         :promotion,
@@ -158,7 +158,7 @@ RSpec.describe Spree::PromotionCode do
     end
     let(:code) { promotion.codes.first }
 
-    subject { code.usage_count }
+    subject { code.usage_count_from_orders }
 
     context "when the code is applied to a non-complete order" do
       let(:order) { FactoryBot.create(:order_with_line_items) }
@@ -184,6 +184,57 @@ RSpec.describe Spree::PromotionCode do
         it { is_expected.to eq 0 }
         it { expect(order.state).to eq "canceled" }
       end
+    end
+  end
+
+  describe "#usage_count" do
+    let(:promotion) { create(:promotion, :with_order_adjustment, code: "discount", per_code_usage_limit:) }
+    let(:per_code_usage_limit) { 5 }
+    let(:code) { promotion.codes.first }
+    let!(:order) { create(:completed_order_with_promotion, promotion:) }
+
+    context "without a usage limit" do
+      let(:per_code_usage_limit) { nil }
+
+      it "counts the completed orders" do
+        expect(code.usage_count).to eq(1)
+      end
+    end
+
+    it "counts the claimed uses" do
+      2.times { code.claim_usage }
+      expect(code.reload.usage_count).to eq(2)
+    end
+
+    it "doesn't count the excluded completed orders' claims" do
+      2.times { code.claim_usage }
+      expect(code.reload.usage_count(excluded_orders: [order])).to eq(1)
+    end
+
+    it "doesn't count the claim of an excluded order that is completing" do
+      completing_order = create(:order_with_line_items)
+      completing_order.promotion_usage_claims = [code]
+      stale_code = Spree::PromotionCode.find(code.id)
+      code.claim_usage
+
+      expect(stale_code.usage_count(excluded_orders: [completing_order])).to eq(0)
+    end
+  end
+
+  describe "#usage_limit_exceeded?" do
+    let(:promotion) { create(:promotion, :with_order_adjustment, code: "discount", per_code_usage_limit: 1) }
+    let(:code) { promotion.codes.first }
+    let!(:order) { create(:completed_order_with_promotion, promotion:) }
+
+    it "is exceeded when the uses have been claimed, regardless of completed orders" do
+      expect(code.usage_limit_exceeded?).to be(false)
+      code.claim_usage
+      expect(code.reload.usage_limit_exceeded?).to be(true)
+    end
+
+    it "isn't exceeded for the order holding the last claim" do
+      code.claim_usage
+      expect(code.reload.usage_limit_exceeded?(excluded_orders: [order])).to be(false)
     end
   end
 

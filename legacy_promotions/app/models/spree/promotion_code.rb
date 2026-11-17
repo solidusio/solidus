@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Spree::PromotionCode < Spree::Base
+  include Spree::PromotionUsageClaims
+
   belongs_to :promotion, inverse_of: :codes, optional: true
   belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
   has_many :adjustments, dependent: :restrict_with_error
@@ -15,27 +17,50 @@ class Spree::PromotionCode < Spree::Base
 
   # Whether the promotion code has exceeded its usage restrictions
   #
+  # This method uses the usage claims counter, which is more efficient than
+  # checking the count from completed orders.
+  #
   # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
   # @return true or false
   def usage_limit_exceeded?(excluded_orders: [])
-    if usage_limit
-      usage_count(excluded_orders:) >= usage_limit
-    end
+    usage_count(excluded_orders:) >= usage_limit if usage_limit
+  end
+
+  # Whether the promotion code has exceeded its usage restrictions
+  #
+  # This method is less efficient than `usage_limit_exceeded?`, but does not
+  # rely on the usage claims counter, which can drift from the actual usage
+  # count if the counter is not kept up to date.
+  #
+  # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
+  # @return true or false
+  def usage_limit_exceeded_from_orders?(excluded_orders: [])
+    usage_count_from_orders(excluded_orders:) >= usage_limit if usage_limit
   end
 
   # Number of times the code has been used overall
   #
+  # If a usage limit is set, this method uses the usage claims counter, which is
+  # more efficient. Otherwise, it falls back to counting the number of completed
+  # orders that have used the promotion.
+  #
   # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
   # @return [Integer] usage count
   def usage_count(excluded_orders: [])
-    promotion
-      .discounted_orders
-      .complete
-      .where.not(spree_orders: {state: :canceled})
-      .joins(:order_promotions)
-      .where(spree_orders_promotions: {promotion_code_id: id})
-      .where.not(id: excluded_orders.map(&:id))
-      .count
+    return usage_count_from_orders(excluded_orders:) unless usage_limit
+
+    usage_claims_count_excluding(excluded_orders)
+  end
+
+  # Number of times the code has been used in completed orders
+  #
+  # This method will always count the number of completed orders that have used
+  # the promotion, regardless of whether a usage limit is set.
+  #
+  # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
+  # @return [Integer] usage count
+  def usage_count_from_orders(excluded_orders: [])
+    usage_orders.where.not(id: excluded_orders.map(&:id)).count
   end
 
   def usage_limit
@@ -47,6 +72,15 @@ class Spree::PromotionCode < Spree::Base
   end
 
   private
+
+  def usage_orders
+    promotion
+      .discounted_orders
+      .complete
+      .where.not(spree_orders: {state: :canceled})
+      .joins(:order_promotions)
+      .where(spree_orders_promotions: {promotion_code_id: id})
+  end
 
   def normalize_code
     self.value = value.downcase.strip

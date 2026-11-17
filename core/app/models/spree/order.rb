@@ -812,6 +812,18 @@ module Spree
       end
     end
 
+    def claim_promotion_usage(&)
+      Spree::Config.promotions.usage_limiter_class.new(self).claim(&)
+    end
+
+    def release_promotion_usage
+      Spree::Config.promotions.usage_limiter_class.new(self).release
+    end
+
+    def reclaim_promotion_usage
+      Spree::Config.promotions.usage_limiter_class.new(self).reclaim
+    end
+
     def ensure_promotions_eligible
       Spree::Config.promotions.order_adjuster_class.new(self).call(persist: false)
 

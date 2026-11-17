@@ -8,6 +8,15 @@ module Spree
       # order_adjuster_class allows extensions to provide their own Order Adjuster
       class_name_attribute :order_adjuster_class, default: "Spree::NullPromotionAdjuster"
 
+      # Allows providing a different promotion usage limiter. The usage limiter
+      # is responsible for helping keep track of how many times a promotion has
+      # been used and whether it can be used again.
+      # @see Spree::NullPromotionUsageLimiter
+      # @return [Class] an object that conforms to the API of
+      #   the standard promotion usage limiter class
+      #   Spree::NullPromotionUsageLimiter.
+      class_name_attribute :usage_limiter_class, default: "Spree::NullPromotionUsageLimiter"
+
       # Allows providing a different coupon code handler.
       # @!attribute [rw] coupon_code_handler_class
       # @see Spree::NullPromotionHandler

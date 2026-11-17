@@ -8,6 +8,13 @@ module SolidusPromotions
 
     class_name_attribute :order_adjuster_class, default: "SolidusPromotions::OrderAdjuster"
 
+    # The usage limiter is responsible for helping keep track of how many times
+    # a promotion has been used and whether it can be used again.
+    # @return [Class] an object that conforms to the API of
+    #   the standard promotion usage limiter class.
+    #   Defaults to "SolidusPromotions::UsageLimiter".
+    class_name_attribute :usage_limiter_class, default: "SolidusPromotions::UsageLimiter"
+
     # Service object that checks whether a promotion is eligible for an order.
     # @!attribute [rw] eligibility_checker_class
     #   @return [String] Defaults to "SolidusPromotions::PromotionEligibilityChecker".

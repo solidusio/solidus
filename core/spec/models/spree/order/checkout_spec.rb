@@ -624,6 +624,45 @@ RSpec.describe Spree::Order, type: :model do
         expect(order.complete).to eq(true)
       end
     end
+
+    context "with a promotion usage limiter" do
+      let(:order) { create(:order_ready_to_complete) }
+      let(:limiter) { instance_double(Spree::NullPromotionUsageLimiter) }
+
+      before do
+        limiter_class = class_double(Spree::NullPromotionUsageLimiter, new: limiter)
+        allow(Spree::Config.promotions).to receive(:usage_limiter_class).and_return(limiter_class)
+      end
+
+      it "processes payments within the claim" do
+        expect(limiter).to receive(:claim) do |&block|
+          expect(order.payments.first).to be_checkout
+          block.call
+          expect(order.payments.first).not_to be_checkout
+        end
+
+        expect(order.complete).to be(true)
+      end
+
+      it "doesn't complete the order or process payments when the claim doesn't yield" do
+        allow(limiter).to receive(:claim)
+
+        expect(order.complete).to be(false)
+        expect(order.reload.state).to eq("confirm")
+        expect(order.payments.first.reload).to be_checkout
+      end
+
+      it "releases the claim when canceled and reclaims it when resumed" do
+        allow(limiter).to receive(:claim).and_yield
+        order.complete!
+
+        expect(limiter).to receive(:release)
+        order.cancel!
+
+        expect(limiter).to receive(:reclaim)
+        order.resume!
+      end
+    end
   end
 
   context "resuming a canceled order" do
