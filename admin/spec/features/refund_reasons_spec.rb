@@ -63,6 +63,28 @@ describe "Refund Reasons", type: :feature do
         expect(page.current_url).to include(query)
       end
     end
+
+    context "with errors on the refund reason itself", :js do
+      before do
+        allow_any_instance_of(Spree::RefundReason).to receive(:valid?) do |refund_reason|
+          refund_reason.errors.add(:base, "Refunds are frozen")
+          false
+        end
+      end
+
+      it "shows them in an alert and keeps the modal open" do
+        fill_in "Name", with: "Return process"
+        click_on "Add Refund Reason"
+
+        within("dialog #flash_alerts") { expect(page).to have_content("Refunds are frozen") }
+        expect(page).to have_css("dialog", text: "New Refund Reason")
+        expect(Spree::RefundReason.count).to eq(0)
+
+        within("#flash_alerts") { click_on "Close" }
+        expect(page).not_to have_content("Refunds are frozen")
+        expect(page).to have_css("dialog", text: "New Refund Reason")
+      end
+    end
   end
 
   context "when editing an existing refund reason" do
