@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SolidusLegacyPromotions::Configuration do
-  subject(:config) { described_class.new }
+  subject(:config) { Spree.deprecator.silence { described_class.new } }
 
   it "uses base searcher class by default" do
     expect(config.promotion_chooser_class).to eq Spree::PromotionChooser
