@@ -193,6 +193,27 @@ module Spree
           include_examples "fails validation"
         end
       end
+
+      context "another line item is short at a stock location this line item uses for a different variant" do
+        let!(:order) { create(:order_with_line_items) }
+        let(:line_item) { order.line_items.first }
+        let(:variant) { line_item.variant }
+        let(:other_variant) { create(:variant) }
+        let(:other_stock_location) { create(:stock_location) }
+
+        before do
+          other_shipment = order.shipments.create!(stock_location: other_stock_location)
+          create(:inventory_unit, line_item:, variant: other_variant, shipment: other_shipment)
+          other_line_item = create(:line_item, order:, variant:)
+          create(:inventory_unit, line_item: other_line_item, variant:, shipment: other_shipment)
+
+          variant.stock_items.update_all(count_on_hand: 1, backorderable: false)
+          variant.stock_items.where(stock_location: other_stock_location).update_all(count_on_hand: 0)
+          other_variant.stock_items.update_all(count_on_hand: 1, backorderable: false)
+        end
+
+        include_examples "passes validation"
+      end
     end
   end
 end
