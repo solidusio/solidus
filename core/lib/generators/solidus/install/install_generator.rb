@@ -37,7 +37,7 @@ module Solidus
     class_option :admin_preview, type: :boolean, default: true, desc: "Install the admin preview"
     class_option :build_admin_tailwind, type: :boolean, default: true, desc: "Build and install Solidus Admin Tailwind CSS file and rake tasks"
     class_option :auto_accept, type: :boolean
-    class_option :user_class, type: :string
+    class_option :user_class, type: :string, desc: "The class used for users (e.g. \"User\"). Migrations create foreign keys to its table"
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :mount_point, type: :string, desc: "Indicates where Solidus should be mounted. Defaults to '/'"
@@ -53,10 +53,6 @@ module Solidus
     end
 
     def prepare_options
-      @run_migrations = options[:migrate]
-      @load_seed_data = options[:seed] && @run_migrations
-      @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
-
       @selected_frontend = selected_option_for(
         "frontend",
         selected: ENV["FRONTEND"] || options[:frontend],
@@ -81,6 +77,10 @@ module Solidus
           ENV["PAYMENT_METHOD"] || options[:payment_method],
         available_options: PAYMENT_METHODS
       )
+
+      @run_migrations = options[:migrate] && run_migrations_with_default_user_class?
+      @load_seed_data = options[:seed] && @run_migrations
+      @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
       ENV["VERBOSE"] = "false"
@@ -220,6 +220,28 @@ module Solidus
     end
 
     private
+
+    # Migrations add foreign keys to the table of `Spree.user_class`, so changing
+    # the user class after running them leaves those keys pointing to the old
+    # table. Give the chance to skip them when the user class is not set yet.
+    def run_migrations_with_default_user_class?
+      return true if options[:user_class].present?
+      return true unless %w[custom none].include?(@selected_authentication)
+
+      say_status :warning, <<~TEXT.squish, :yellow
+        Migrations create foreign keys to the "spree_users" table, used by the
+        default user class. If you are going to use your own user class, skip
+        them now, set `Spree.user_class` in config/initializers/spree.rb and
+        run them afterwards, or install again with `--user_class=YourUserClass`.
+      TEXT
+      return true if options[:auto_accept]
+
+      ask_with_description(
+        desc: "Would you like to run the migrations now? [yes] or [no]",
+        limited_to: %w[yes no],
+        default: "yes"
+      ) == "yes"
+    end
 
     def bundle_command(command, env = {})
       # Make `bundle install` less verbose by skipping the "Using ..." messages
