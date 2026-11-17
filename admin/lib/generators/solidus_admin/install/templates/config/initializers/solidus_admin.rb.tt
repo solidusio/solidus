@@ -17,8 +17,12 @@ SolidusAdmin::Config.configure do |config|
   # config.importmap_cache_sweepers << Rails.root.join("app/javascript/my_admin_components")
 
   # If you want to avoid defining menu_item customizations twice while migrating to SolidusAdmin
-  # you can import menu_items from the backend by uncommenting the following line,
-  # but you will need to
+  # you can import menu_items from the backend with the following line. The imported items
+  # replace the default SolidusAdmin menu. Only the backend menu customizations defined before
+  # this line are imported, so if they are in config/initializers/spree.rb (which runs after
+  # this file), call `SolidusAdmin::Config.import_menu_items_from_backend!` at the end of that
+  # file instead.
+  # See https://github.com/solidusio/solidus/blob/main/admin/docs/menu_items.md
   <%- if defined? Spree::Backend -%>
   config.import_menu_items_from_backend!
   <%- else -%>
