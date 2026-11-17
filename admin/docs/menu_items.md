@@ -39,7 +39,7 @@ SolidusAdmin::Config.configure do |config|
 end
 ```
 
-Your custom link will be rendered in the active state when its base path (i.e, the path without the query string) matches the one for the current url.
+Your custom link will be rendered in the active state when its base path (i.e, the path without the query string) matches the one for the current URL.
 
 ## Reusing menu items from `solidus_backend`
 
