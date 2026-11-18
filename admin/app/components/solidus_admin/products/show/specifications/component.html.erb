@@ -35,21 +35,11 @@
       </div>
     <% end %>
 
-    <% panel.with_section do %>
-      <div class="flex gap-2">
-        <%= render component("ui/button").add(
-          text: t(".add_group"),
-          path: solidus_admin.new_product_variant_property_rule_path(@product),
-          scheme: :secondary,
-          data: { turbo_frame: :specifications_modal }
-        ) %>
-        <%= render component("ui/button").new(
-          tag: :a,
-          href: spree.admin_product_product_properties_path(@product),
-          scheme: :secondary,
-          text: t(".manage_properties")
-        ) %>
-      </div>
-    <% end %>
+    <% panel.with_action(
+      name: t(".add_group"),
+      href: solidus_admin.new_product_variant_property_rule_path(@product),
+      scheme: :secondary,
+      data: { turbo_frame: :specifications_modal }
+    ) %>
   <% end %>
 </div>
