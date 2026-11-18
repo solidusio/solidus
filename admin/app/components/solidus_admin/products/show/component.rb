@@ -11,18 +11,4 @@ class SolidusAdmin::Products::Show::Component < SolidusAdmin::BaseComponent
   def form_id
     @form_id ||= "#{stimulus_id}--form-#{@product.id}"
   end
-
-  def product_properties
-    @product_properties ||= @product.product_properties.includes(:property)
-  end
-
-  def variant_property_rules
-    @variant_property_rules ||= @product.variant_property_rules
-      .includes(option_values: :option_type, values: :property)
-      .order(:id)
-  end
-
-  def variant_property_rule_title(rule)
-    rule.option_values.map { |option_value| "#{option_value.option_type.presentation}:#{option_value.presentation}" }.join(", ")
-  end
 end

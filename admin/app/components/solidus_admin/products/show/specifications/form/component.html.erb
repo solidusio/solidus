@@ -1,0 +1,22 @@
+<%= turbo_frame_tag :specifications_modal, target: "_top" do %>
+  <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
+    <%= solidus_form_for @product, url: solidus_admin.product_product_properties_path(@product), method: :patch, html: { id: form_id } do |f| %>
+      <% if @product.errors.any? %>
+        <ul class="text-sm text-red-600 pb-4">
+          <% @product.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <%= render component("products/show/specifications/rows").new(form: f, association: :product_properties, new_row_href: new_row_path) %>
+    <% end %>
+
+    <% modal.with_actions do %>
+      <form method="dialog">
+        <%= render component("ui/button").cancel %>
+      </form>
+      <%= render component("ui/button").save(type: :submit, form: form_id) %>
+    <% end %>
+  <% end %>
+<% end %>
