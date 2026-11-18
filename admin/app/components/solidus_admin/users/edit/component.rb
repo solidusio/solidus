@@ -1,19 +1,9 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Users::Edit::Component < SolidusAdmin::BaseComponent
+class SolidusAdmin::Users::Edit::Component < SolidusAdmin::Resources::Edit::Component
   include SolidusAdmin::Layout::PageHelpers
 
-  def initialize(user:)
-    @user = user
-  end
+  def role_options = Spree::Role.all.map { {label: _1.name, id: _1.id} }
 
-  def form_id
-    @form_id ||= "#{stimulus_id}--form-#{@user.id}"
-  end
-
-  def role_options
-    Spree::Role.all.map do |role|
-      {label: role.name, id: role.id}
-    end
-  end
+  def back_url = solidus_admin.users_path
 end

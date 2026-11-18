@@ -1,25 +1,26 @@
-<%= page do %>
+<%= page id: :resource_form do %>
   <%= page_header do %>
-    <%= page_header_back(solidus_admin.users_path) %>
-    <%= page_header_title(t(".title", email: @user.email)) %>
+    <%= page_header_back(back_url) %>
+    <%= page_header_title(t(".title", email: @resource.email)) %>
 
-    <%# @todo: I am not sure how we want to handle Cancan stuff in the new admin. %>
-    <%# if can?(:admin, Spree::Order) && can?(:create, Spree::Order) %>
-      <%= page_header_actions do %>
-        <%= render component("ui/button").new(tag: :a, text: t(".create_order_for_user"), href: spree.new_admin_order_path(user_id: @user.id)) %>
-      <% end %>
-    <%# end %>
+    <%= page_header_actions do %>
+      <%= render component("ui/button").new(
+        tag: :a,
+        text: t(".create_order_for_user"),
+        href: spree.new_admin_order_path(user_id: @resource.id)
+      ) %>
+    <% end %>
   <% end %>
 
   <%= page_header do %>
-    <%= render component("users/edit/tabs").new(user: @user, current: :account) %>
+    <%= render component("users/edit/tabs").new(current: :account, user: @resource) %>
   <% end %>
 
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>
 
       <%= render component('ui/panel').new(title: Spree.user_class.model_name.human) do %>
-        <%= solidus_form_for @user, url: solidus_admin.user_path(@user), html: { id: form_id, autocomplete: "off" } do |f| %>
+        <%= solidus_form_for @resource, url: form_url, html: { id: form_id, autocomplete: "off" } do |f| %>
           <div class="py-1.5">
             <%= f.text_field(:email) %>
           </div>
@@ -29,7 +30,7 @@
           <div class="py-1.5">
             <%= f.password_field(:password_confirmation) %>
           </div>
-          <% if @user.respond_to?(:timezone) %>
+          <% if @resource.respond_to?(:timezone) %>
             <div class="py-1.5">
               <%= f.select(:timezone, ActiveSupport::TimeZone.all.map { [_1.to_s, _1.name] }, include_blank: t("spree.none")) %>
             </div>
@@ -39,17 +40,20 @@
           </div>
           <div class="py-1.5 text-center">
             <%= f.submit(text: t(".update")) %>
-            <%= render component("ui/button").new(tag: :a, text: t(".cancel"), href: solidus_admin.user_path(@user), scheme: :secondary) %>
+            <%= render component("ui/button").new(tag: :a, text: t(".cancel"), href: back_url, scheme: :secondary) %>
           </div>
         <% end %>
       <% end %>
 
-      <%= render component("users/edit/api_access").new(user: @user) %>
-
+      <%= render component("users/edit/api_access").new(user: @resource) %>
     <% end %>
 
     <%= page_with_sidebar_aside do %>
-      <%= render component("users/stats").new(user: @user) %>
+      <%= render component("users/stats").new(user: @resource) %>
     <% end %>
+  <% end %>
+
+  <%= page_footer do %>
+    <%= render component("ui/button").save(form: form_id) %>
   <% end %>
 <% end %>

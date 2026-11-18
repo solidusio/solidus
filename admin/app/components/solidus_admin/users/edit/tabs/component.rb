@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class SolidusAdmin::Users::Edit::Tabs::Component < SolidusAdmin::BaseComponent
-  def initialize(user:, current:)
-    @user = user
+class SolidusAdmin::Users::Edit::Tabs::Component < SolidusAdmin::Resources::Edit::Component
+  def initialize(current:, user:)
     @current = current
+    @user = user
   end
 
   def call
@@ -18,7 +18,7 @@ class SolidusAdmin::Users::Edit::Tabs::Component < SolidusAdmin::BaseComponent
     [
       {
         text: t(".account"),
-        href: solidus_admin.user_path(@user),
+        href: solidus_admin.edit_user_path(@user),
         current: @current == :account
       },
       {
