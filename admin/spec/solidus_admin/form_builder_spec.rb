@@ -96,6 +96,14 @@ RSpec.describe SolidusAdmin::FormBuilder do
     end
   end
 
+  describe "#password_field" do
+    it "renders a hidden input" do
+      result = builder.password_field(:slug)
+      expect(result).to include("Slug")
+      expect(result).to match(%r{<input.+type="password"})
+    end
+  end
+
   describe "#switch_field" do
     it "renders a switch field" do
       object.promotionable = false

@@ -24,10 +24,10 @@
             <%= f.text_field(:email) %>
           </div>
           <div class="py-1.5">
-            <%= f.text_field(:password) %>
+            <%= f.password_field(:password) %>
           </div>
           <div class="py-1.5">
-            <%= f.text_field(:password_confirmation) %>
+            <%= f.password_field(:password_confirmation) %>
           </div>
           <% if @user.respond_to?(:timezone) %>
             <div class="py-1.5">
