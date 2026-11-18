@@ -221,7 +221,7 @@ describe "Product", type: :feature do
       visit "/admin/products/just-a-prod"
       specifications_panel = panel(title: "Specifications")
 
-      expect(specifications_panel).to have_content("Color:Red")
+      expect(specifications_panel).to have_content("Color: Red")
       expect(specifications_panel).to have_content("Washing Instructions:Max 30°")
       expect(specifications_panel).to have_content("General")
       expect(specifications_panel).to have_content("No specifications yet")
@@ -260,6 +260,89 @@ describe "Product", type: :feature do
       expect(specifications_panel).to have_content("care:Dry clean only")
       expect(specifications_panel).not_to have_content("Gender:Unisex")
       expect(find_field("Name").value).to eq("Just a product (unsaved)")
+    end
+
+    context "with variant property rules" do
+      let(:size) { create(:option_type, name: "clothing-size", presentation: "Size") }
+      let(:color) { create(:option_type, name: "clothing-color", presentation: "Color") }
+      let(:small) { create(:option_value, option_type: size, name: "S", presentation: "Small") }
+      let(:medium) { create(:option_value, option_type: size, name: "M", presentation: "Medium") }
+      let(:brown) { create(:option_value, option_type: color, name: "brown", presentation: "Brown") }
+      let(:red) { create(:option_value, option_type: color, name: "red", presentation: "Red") }
+
+      before do
+        product.option_types = [size, color]
+        [small, medium].product([brown, red]).each do |option_values|
+          create(:variant, product:, option_values:)
+        end
+      end
+
+      it "adds, edits and deletes a specification group in a dialog" do
+        visit "/admin/products/just-a-prod"
+        within(panel(title: "Specifications")) { click_on "Add specification group" }
+
+        specifications_dialog = dialog(text: "Add specifications")
+        expect(specifications_dialog).to have_content("Currently matches 0 of 4 variants")
+        expect(page).to be_axe_clean
+
+        within(specifications_dialog) do
+          solidus_select ["Size: Small", "Color: Red"], from: "Applies to variants with"
+          find(".modal-title").click
+          switch "Require all selected option values", on: true
+          click_on "Add specification"
+          find_field("Property name", with: "").fill_in(with: "care")
+          all(:field, "Value").last.fill_in(with: "Dry clean only")
+          click_on "Save"
+        end
+
+        expect(page).to have_content("Specification group was successfully created.")
+        expect(page).not_to have_css("dialog")
+
+        specifications_panel = panel(title: "Specifications")
+        expect(specifications_panel).to have_content("Size: Small + Color: Red")
+        expect(specifications_panel).to have_content("1 of 4 variants")
+        expect(specifications_panel).to have_content("care:Dry clean only")
+
+        within(specifications_panel) { all(:link, "Edit").last.click }
+        specifications_dialog = dialog(text: "Edit specifications")
+        expect(specifications_dialog).to have_content("Currently matches 1 of 4 variants")
+
+        within(specifications_dialog) do
+          solidus_unselect "Size: Small", from: "Applies to variants with"
+          find(".modal-title").click
+          switch "Require all selected option values", on: false
+          click_on "Save"
+        end
+
+        expect(page).to have_content("Specification group was successfully updated.")
+        expect(specifications_panel).to have_content("Color: Red")
+        expect(specifications_panel).not_to have_content("Size: Small")
+        expect(specifications_panel).to have_content("2 of 4 variants")
+
+        within(specifications_panel) { all(:link, "Edit").last.click }
+        accept_turbo_confirm("Are you sure you want to delete this specification group?") do
+          within(dialog(text: "Edit specifications")) { click_on "Delete" }
+        end
+
+        expect(page).to have_content("Specification group was successfully removed.")
+        expect(specifications_panel).not_to have_content("Color: Red")
+        expect(Spree::VariantPropertyRule.count).to eq(0)
+      end
+
+      it "requires at least one option value" do
+        visit "/admin/products/just-a-prod"
+        within(panel(title: "Specifications")) { click_on "Add specification group" }
+
+        within(dialog(text: "Add specifications")) do
+          click_on "Add specification"
+          find_field("Property name", with: "").fill_in(with: "care")
+          all(:field, "Value").last.fill_in(with: "Dry clean only")
+          click_on "Save"
+        end
+
+        expect(dialog(text: "Add specifications")).to have_content("Option values can't be blank")
+        expect(Spree::VariantPropertyRule.count).to eq(0)
+      end
     end
   end
 
