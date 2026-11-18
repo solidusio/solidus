@@ -58,6 +58,54 @@ describe "Users", :js, type: :feature do
     end
   end
 
+  context "when creating a user" do
+    context "with valid data" do
+      it "successfully creates a new user, keeping page and q params" do
+        visit "/admin/users"
+        click_on "Add new"
+
+        fill_in "Email", with: "newuser@example.com"
+        fill_in "Password", with: "password123"
+        fill_in "Password confirmation", with: "password123"
+
+        within("form.new_user") do
+          find("label", text: /admin/i).find("input[type=checkbox]").check
+        end
+
+        click_on "Add User"
+
+        expect(page).to have_content("User was successfully created.")
+        expect(Spree.user_class.find_by(email: "newuser@example.com")).to be_present
+      end
+    end
+
+    context "with invalid data" do
+      let(:user_class) {
+        Class.new(Spree::LegacyUser) do
+          validates :email, presence: true
+        end
+      }
+
+      before do
+        # The legacy user class we have in tests does not have any attribute
+        # validations, so we redefine the application user class for these
+        # tests.
+        allow(Spree).to receive(:user_class).and_return(user_class)
+      end
+
+      it "fails to create a new user" do
+        visit "/admin/users"
+        click_on "Add new"
+
+        fill_in "Password", with: "password123"
+        fill_in "Password confirmation", with: "not-a-match"
+        click_on "Add User"
+
+        expect(page).to have_content("can't be blank")
+      end
+    end
+  end
+
   context "when editing an existing user" do
     before do
       # This is needed for the actions which are still powered by the backend

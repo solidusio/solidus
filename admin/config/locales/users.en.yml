@@ -2,6 +2,8 @@ en:
   solidus_admin:
     users:
       title: "Users"
+      create:
+        success: "User was successfully created."
       destroy:
         success: "Users were successfully removed."
       update:

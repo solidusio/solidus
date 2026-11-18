@@ -23,16 +23,19 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
     render component("ui/button").new(
       tag: :a,
       text: t(".add"),
-      href: spree.new_admin_user_path,
+      href: solidus_admin.new_user_path,
+      data: {turbo_frame: :resource_form},
       icon: "add-line"
     )
   end
+
+  def turbo_frames = %w[resource_form]
 
   def batch_actions
     [
       {
         label: t(".batch_actions.delete"),
-        action: solidus_admin.users_path,
+        action: solidus_admin.users_path(**search_filter_params),
         method: :delete,
         icon: "delete-bin-7-line"
       }
