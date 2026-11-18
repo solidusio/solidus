@@ -81,4 +81,48 @@ RSpec.describe "SolidusAdmin::StoresController", type: :request do
       end
     end
   end
+
+  describe "logo and favicon", if: Spree::Store.attachments_available? do
+    let(:admin_user) { create(:admin_user) }
+    let(:store) { create(:store, default: false) }
+    let(:image) { fixture_file_upload(Spree::Core::Engine.root.join("lib/spree/testing_support/fixtures/blank.jpg"), "image/jpeg") }
+
+    before { allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user) }
+
+    it "renders a multipart form with a file field for each" do
+      get solidus_admin.edit_store_path(store)
+      expect(response.body).to include('enctype="multipart/form-data"')
+      expect(response.body).to include('name="store[logo]"').and include('name="store[favicon]"')
+      expect(response.body.scan('type="file"').size).to eq(2)
+    end
+
+    it "saves the uploaded images" do
+      patch solidus_admin.store_path(store), params: {store: {logo: image, favicon: image}}
+      expect(response).to have_http_status(:see_other)
+      expect(store.reload.logo).to be_attached
+      expect(store.favicon).to be_attached
+    end
+
+    it "shows the saved images on the form" do
+      store.update!(logo: image, favicon: image)
+      # These specs draw the app's routes without Active Storage's, so its URLs can't be generated.
+      allow_any_instance_of(ActiveStorage::Blob).to receive(:url).and_return("/stored.jpg")
+
+      get solidus_admin.edit_store_path(store)
+      expect(response.body).to include('alt="Logo"').and include('alt="Favicon"')
+    end
+  end
+
+  describe "logo and favicon without Active Storage", unless: Spree::Store.attachments_available? do
+    let(:admin_user) { create(:admin_user) }
+    let(:store) { create(:store, default: false) }
+
+    before { allow_any_instance_of(SolidusAdmin::BaseController).to receive(:spree_current_user).and_return(admin_user) }
+
+    it "renders the form without file fields" do
+      get solidus_admin.edit_store_path(store)
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('type="file"')
+    end
+  end
 end

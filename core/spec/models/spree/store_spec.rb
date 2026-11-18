@@ -5,6 +5,47 @@ require "rails_helper"
 RSpec.describe Spree::Store, type: :model do
   it { is_expected.to respond_to(:cart_tax_country_iso) }
 
+  describe "#logo and #favicon", if: described_class.attachments_available? do
+    let(:store) { create(:store) }
+
+    def upload(name, content_type)
+      Rack::Test::UploadedFile.new(Spree::Core::Engine.root.join("lib/spree/testing_support/fixtures", name), content_type)
+    end
+
+    it "attaches each image separately" do
+      store.update!(logo: upload("blank.jpg", "image/jpeg"))
+
+      expect(store.reload.logo).to be_attached
+      expect(store.favicon).not_to be_attached
+    end
+
+    it "accepts the allowed image types" do
+      store.favicon.attach(upload("blank.jpg", "image/jpeg"))
+
+      expect(store).to be_valid
+    end
+
+    it "rejects files that are not one of the allowed image types" do
+      store.logo.attach(io: StringIO.new("not an image"), filename: "logo.txt", content_type: "text/plain")
+      store.favicon.attach(io: StringIO.new("not an image"), filename: "favicon.txt", content_type: "text/plain")
+
+      expect(store).not_to be_valid
+      expect(store.errors.details[:logo]).to include(error: :content_type_not_supported)
+      expect(store.errors.details[:favicon]).to include(error: :content_type_not_supported)
+    end
+  end
+
+  describe ".attachments_available?" do
+    it "is true only with the Active Storage image adapter" do
+      expect(described_class.attachments_available?).to eq(Spree::Config.image_attachment_module == Spree::Image::ActiveStorageAttachment)
+    end
+
+    it "defines the logo and favicon only when available" do
+      expect(described_class.new.respond_to?(:logo)).to eq(described_class.attachments_available?)
+      expect(described_class.new.respond_to?(:favicon)).to eq(described_class.attachments_available?)
+    end
+  end
+
   describe ".default" do
     it "should ensure saved store becomes default if one doesn't exist yet" do
       expect(Spree::Store.where(default: true).count).to eq(0)
