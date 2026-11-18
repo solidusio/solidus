@@ -12,9 +12,7 @@
     <% end %>
   <% end %>
 
-  <%= page_header do %>
-    <%= render component("users/edit/tabs").new(current: :account, user: @resource) %>
-  <% end %>
+  <%= render component("users/edit/tabs").new(current: :account, user: @resource) %>
 
   <%= page_with_sidebar do %>
     <%= page_with_sidebar_main do %>

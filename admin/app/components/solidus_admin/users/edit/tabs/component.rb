@@ -11,7 +11,7 @@ class SolidusAdmin::Users::Edit::Tabs::Component < SolidusAdmin::Resources::Edit
       render component("ui/button").new(tag: :a, scheme: :ghost, text: tab[:text], "aria-current": tab[:current], href: tab[:href])
     end
 
-    safe_join(rendered_tabs)
+    tag.div(class: "flex p-1") { safe_join(rendered_tabs) }
   end
 
   def tabs
