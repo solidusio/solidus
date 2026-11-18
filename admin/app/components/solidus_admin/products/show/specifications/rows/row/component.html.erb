@@ -1,0 +1,15 @@
+<div class="flex gap-2 items-center has-[:checked]:hidden">
+  <%= render component("ui/icon").new(name: "draggable", class: "w-6 h-6 shrink-0 cursor-grab handle fill-gray-500") %>
+  <%= @form.input(:property_name, list: "properties", placeholder: t(".property_name"), "aria-label": t(".property_name")) %>
+  <%= @form.input(:value, placeholder: t(".value"), "aria-label": t(".value")) %>
+  <%= @form.check_box(:_destroy, class: "sr-only peer/destroy", "aria-label": t(".remove")) %>
+  <%= render component("ui/button").new(
+    tag: :label,
+    for: @form.field_id(:_destroy),
+    scheme: :ghost,
+    icon: "delete-bin-7-line",
+    title: t(".remove"),
+    class: "cursor-pointer peer-focus-visible/destroy:ring-2 peer-focus-visible/destroy:ring-gray-300"
+  ) %>
+  <%= @form.hidden_field(:id) %>
+</div>

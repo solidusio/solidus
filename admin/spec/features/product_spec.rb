@@ -223,7 +223,43 @@ describe "Product", type: :feature do
 
       expect(specifications_panel).to have_content("Color:Red")
       expect(specifications_panel).to have_content("Washing Instructions:Max 30°")
-      expect(specifications_panel).not_to have_content("General")
+      expect(specifications_panel).to have_content("General")
+      expect(specifications_panel).to have_content("No specifications yet")
+    end
+
+    it "edits the general specifications in a dialog" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      gender = create(:property, name: "gender", presentation: "Gender")
+      create(:product_property, product:, property: brand, value: "Solidus")
+      create(:product_property, product:, property: gender, value: "Unisex")
+
+      visit "/admin/products/just-a-prod"
+      fill_in "Name", with: "Just a product (unsaved)"
+      within(panel(title: "Specifications")) { click_on "Edit" }
+
+      specifications_dialog = dialog(text: "Edit specifications")
+      expect(page).to be_axe_clean
+
+      within(specifications_dialog) do
+        find_field("Value", with: "Solidus").fill_in(with: "Solidus Inc")
+        rows = find("#specification_rows").all(:xpath, "./*")
+        within(rows.last) { check "Remove", allow_label_click: true }
+        expect(rows.last).to have_checked_field("Remove", visible: :all)
+        click_on "Add specification"
+        find_field("Property name", with: "").fill_in(with: "care")
+        all(:field, "Value").last.fill_in(with: "Dry clean only")
+        expect(page).to have_current_path("/admin/products/just-a-prod")
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Product specifications were successfully updated.")
+      expect(page).not_to have_css("dialog")
+
+      specifications_panel = panel(title: "Specifications")
+      expect(specifications_panel).to have_content("Brand:Solidus Inc")
+      expect(specifications_panel).to have_content("care:Dry clean only")
+      expect(specifications_panel).not_to have_content("Gender:Unisex")
+      expect(find_field("Name").value).to eq("Just a product (unsaved)")
     end
   end
 

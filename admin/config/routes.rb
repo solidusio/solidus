@@ -22,6 +22,7 @@ SolidusAdmin::Engine.routes.draw do
     end
 
     resources :taxons, only: [:new, :create], controller: :product_taxons
+    resource :product_properties, only: [:new, :edit, :update]
   end
 
   admin_resources :products, only: [

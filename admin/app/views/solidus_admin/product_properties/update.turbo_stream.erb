@@ -1,0 +1,3 @@
+<%= turbo_stream.replace("specifications_panel", component("products/show/specifications").new(product: @product)) %>
+<%= turbo_stream.update(:specifications_modal, nil) %>
+<%= turbo_stream.replace("flash_toasts", component("layout/flashes").new) %>
