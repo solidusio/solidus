@@ -18,10 +18,10 @@
   <%= render current_component.new(
     label: "Greeting",
     hint: "A brief explanation",
-    tip: "More in-detail information about this filed",
-    error: "The second letter should be lowecase",
+    tip: "More in-detail information about this field",
+    error: "The second letter should be lowercase",
   ) do %>
-    <%= render component('ui/forms/input').new(value: "HEllo world!", error: "The second letter should be lowecase") %>
+    <%= render component("ui/forms/input").new(value: "HEllo world!", error: "The second letter should be lowercase") %>
   <% end %>
 </div>
 
