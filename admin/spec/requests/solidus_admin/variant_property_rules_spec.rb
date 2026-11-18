@@ -127,6 +127,32 @@ RSpec.describe "SolidusAdmin::VariantPropertyRulesController", type: :request do
       expect(rule.values.map(&:value)).to eq(["Max 40°"])
     end
 
+    context "with reordered and added rows" do
+      let(:washing) { create(:property, name: "washing") }
+      let!(:care_value) { rule.values.create!(property: washing, value: "Dry clean only") }
+      let(:params) do
+        {
+          variant_property_rule: {
+            option_value_ids: ["", red.id],
+            values_attributes: {
+              "1" => {id: care_value.id, property_name: "washing", position: 2},
+              "952" => {property_name: "fabric", value: "Cotton"},
+              "0" => {id: rule.values.first.id, property_name: rule.values.first.property_name},
+              "48" => {property_name: "origin", value: "Italy"}
+            }
+          }
+        }
+      end
+
+      it "numbers the rows in the submitted order" do
+        patch solidus_admin.product_variant_property_rule_path(product, rule, format: :turbo_stream), params: params
+
+        expect(response).to have_http_status(:ok)
+        expect(rule.values.reload.map { |value| [value.value, value.position] })
+          .to eq([["Dry clean only", 1], ["Cotton", 2], ["Max 30°", 3], ["Italy", 4]])
+      end
+    end
+
     context "with no option values" do
       let(:params) { {variant_property_rule: {option_value_ids: [""]}} }
 

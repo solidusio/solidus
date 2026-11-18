@@ -13,6 +13,23 @@ module SolidusAdmin::ProductSpecifications
     @product = Spree::Product.friendly.find(params[:product_id])
   end
 
+  # Numbers the rows of the +association+ nested attributes in the order
+  # they were submitted, which is their order in the dialog, skipping the
+  # rows marked for destruction.
+  def with_row_positions(permitted, association)
+    key = :"#{association}_attributes"
+    return permitted unless permitted[key]
+
+    position = 0
+    rows = permitted[key].transform_values do |row|
+      next row if ActiveModel::Type::Boolean.new.cast(row[:_destroy])
+
+      row.merge(position: position += 1)
+    end
+
+    permitted.merge(key => rows)
+  end
+
   def form_component
     component("products/show/specifications/form").new(product: @product, rule: @rule)
   end

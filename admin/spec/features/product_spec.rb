@@ -262,6 +262,50 @@ describe "Product", type: :feature do
       expect(find_field("Name").value).to eq("Just a product (unsaved)")
     end
 
+    it "reorders the general specifications by dragging" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      gender = create(:property, name: "gender", presentation: "Gender")
+      create(:product_property, product:, property: brand, value: "Solidus", position: 1)
+      create(:product_property, product:, property: gender, value: "Unisex", position: 2)
+
+      visit "/admin/products/just-a-prod"
+      within(panel(title: "Specifications")) { click_on "Edit" }
+
+      within(dialog(text: "Edit specifications")) do
+        rows = find("[data-controller='sortable']").all(:xpath, "./*")
+        rows.last.find(".handle").drag_to(rows.first)
+        expect(find("[data-controller='sortable']").all(:xpath, "./*").first).to have_field("Value", with: "Unisex")
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Product specifications were successfully updated.")
+      expect(panel(title: "Specifications").text).to match(/Gender:Unisex.*Brand:Solidus/m)
+      expect(product.product_properties.reload.map { |product_property| [product_property.property_name, product_property.position] })
+        .to eq([["gender", 1], ["brand", 2]])
+    end
+
+    it "places the added specifications after the existing ones" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      create(:product_property, product:, property: brand, value: "Solidus", position: 1)
+
+      visit "/admin/products/just-a-prod"
+      within(panel(title: "Specifications")) { click_on "Edit" }
+
+      within(dialog(text: "Edit specifications")) do
+        click_on "Add specification"
+        find_field("Property name", with: "").fill_in(with: "care")
+        all(:field, "Value").last.fill_in(with: "Dry clean only")
+        click_on "Add specification"
+        find_field("Property name", with: "").fill_in(with: "origin")
+        all(:field, "Value").last.fill_in(with: "Italy")
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Product specifications were successfully updated.")
+      expect(product.product_properties.reload.map { |product_property| [product_property.property_name, product_property.position] })
+        .to eq([["brand", 1], ["care", 2], ["origin", 3]])
+    end
+
     context "with variant property rules" do
       let(:size) { create(:option_type, name: "clothing-size", presentation: "Size") }
       let(:color) { create(:option_type, name: "clothing-color", presentation: "Color") }
@@ -327,6 +371,34 @@ describe "Product", type: :feature do
         expect(page).to have_content("Specification group was successfully removed.")
         expect(specifications_panel).not_to have_content("Color: Red")
         expect(Spree::VariantPropertyRule.count).to eq(0)
+      end
+
+      it "reorders the specifications of a group by dragging" do
+        rule = product.variant_property_rules.create!(option_values: [red])
+        brand = create(:property, name: "brand", presentation: "Brand")
+        gender = create(:property, name: "gender", presentation: "Gender")
+        care = create(:property, name: "care", presentation: "Care")
+        rule.values.create!(property: brand, value: "Solidus", position: 1)
+        rule.values.create!(property: gender, value: "Unisex", position: 2)
+        rule.values.create!(property: care, value: "Dry clean only", position: 3)
+
+        visit "/admin/products/just-a-prod"
+        within(panel(title: "Specifications")) { all(:link, "Edit").last.click }
+
+        within(dialog(text: "Edit specifications")) do
+          rows = find("[data-controller='sortable']").all(:xpath, "./*")
+          within(rows.first) { check "Remove", allow_label_click: true }
+          rows.last.find(".handle").drag_to(rows.first)
+          expect(find("[data-controller='sortable']").all(:xpath, "./*", visible: :all).first)
+            .to have_field("Value", with: "Dry clean only", visible: :all)
+          click_on "Save"
+        end
+
+        expect(page).to have_content("Specification group was successfully updated.")
+        expect(panel(title: "Specifications").text).to match(/Care:Dry clean only.*Gender:Unisex/m)
+        expect(panel(title: "Specifications")).not_to have_content("Brand:Solidus")
+        expect(rule.values.reload.map { |value| [value.property_name, value.position] })
+          .to eq([["care", 1], ["gender", 2]])
       end
 
       it "requires at least one option value" do

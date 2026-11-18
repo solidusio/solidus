@@ -15,7 +15,7 @@ module SolidusAdmin
     def create
       @rule = @product.variant_property_rules.build(variant_property_rule_params)
 
-      if option_values_given? && @rule.save
+      if option_values_given? && save_rule { @rule.save }
         respond_with_success(t(".success"))
       else
         respond_with_errors
@@ -27,7 +27,7 @@ module SolidusAdmin
     end
 
     def update
-      if option_values_given? && @rule.update(variant_property_rule_params)
+      if option_values_given? && save_rule { @rule.update(variant_property_rule_params) }
         respond_with_success(t(".success"))
       else
         respond_with_errors
@@ -46,6 +46,10 @@ module SolidusAdmin
       Spree::Variant
     end
 
+    def save_rule(&block)
+      Spree::VariantPropertyRuleValue.acts_as_list_no_update(&block)
+    end
+
     def option_values_given?
       return true if variant_property_rule_params[:option_value_ids].to_a.compact_blank.any?
 
@@ -54,11 +58,11 @@ module SolidusAdmin
     end
 
     def variant_property_rule_params
-      params.require(:variant_property_rule).permit(
+      with_row_positions(params.require(:variant_property_rule).permit(
         :apply_to_all,
         option_value_ids: [],
         values_attributes: [:id, :property_name, :value, :_destroy]
-      )
+      ), :values)
     end
 
     def load_rule

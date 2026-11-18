@@ -73,6 +73,32 @@ RSpec.describe "SolidusAdmin::ProductPropertiesController", type: :request do
       expect(response).to have_http_status(:see_other)
     end
 
+    context "with reordered, removed and added rows" do
+      let(:gender_property) { create(:product_property, product:, property: create(:property, name: "gender"), value: "Unisex") }
+      let(:care_property) { create(:product_property, product:, property: create(:property, name: "care"), value: "Dry clean") }
+      let(:params) do
+        {
+          product: {
+            product_properties_attributes: {
+              "2" => {id: care_property.id, property_name: "care", value: "Dry clean"},
+              "1" => {id: gender_property.id, property_name: "gender", value: "Unisex", _destroy: "1"},
+              "3825" => {property_name: "origin", value: "Italy"},
+              "0" => {id: brand_property.id, property_name: "brand", value: "Solidus", position: 1},
+              "117" => {property_name: "fabric", value: "Cotton"}
+            }
+          }
+        }
+      end
+
+      it "numbers the remaining rows in the submitted order" do
+        patch solidus_admin.product_product_properties_path(product, format: :turbo_stream), params: params
+
+        expect(response).to have_http_status(:ok)
+        expect(product.product_properties.reload.map { |product_property| [product_property.property_name, product_property.position] })
+          .to eq([["care", 1], ["origin", 2], ["brand", 3], ["fabric", 4]])
+      end
+    end
+
     context "when the product cannot be saved" do
       before do
         allow_any_instance_of(Spree::Product).to receive(:save).and_return(false)

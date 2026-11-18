@@ -17,7 +17,7 @@ module SolidusAdmin
     end
 
     def update
-      if @product.update(product_properties_params)
+      if update_product
         respond_with_success(t(".success"))
       else
         respond_with_errors
@@ -26,8 +26,15 @@ module SolidusAdmin
 
     private
 
+    def update_product
+      Spree::ProductProperty.acts_as_list_no_update { @product.update(product_properties_params) }
+    end
+
     def product_properties_params
-      params.require(:product).permit(product_properties_attributes: [:id, :property_name, :value, :_destroy])
+      with_row_positions(
+        params.require(:product).permit(product_properties_attributes: [:id, :property_name, :value, :_destroy]),
+        :product_properties
+      )
     end
   end
 end
