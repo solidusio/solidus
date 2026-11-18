@@ -1,2 +1,10 @@
 en:
-  title: "Edit specifications"
+  add_title: "Add specifications"
+  applies_to: "Applies to variants with"
+  applies_to_hint: "Pick one or more option values to narrow it down."
+  apply_to_all: "Require all selected option values"
+  apply_to_all_hint: "On: only variants that have every value above. Off: any variant that has at least one of them."
+  delete: "Delete"
+  delete_confirmation: "Are you sure you want to delete this specification group?"
+  edit_title: "Edit specifications"
+  matches_html: "Currently matches <strong>%{count} of %{total} variants</strong>"

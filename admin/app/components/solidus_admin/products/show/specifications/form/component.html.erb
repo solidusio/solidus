@@ -1,18 +1,50 @@
 <%= turbo_frame_tag :specifications_modal, target: "_top" do %>
-  <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
-    <%= solidus_form_for @product, url: solidus_admin.product_product_properties_path(@product), method: :patch, html: { id: form_id } do |f| %>
-      <% if @product.errors.any? %>
+  <%= render component("ui/modal").new(title: title) do |modal| %>
+    <%= solidus_form_for form_object, url: form_url, method: form_method, html: { id: form_id } do |f| %>
+      <% if form_object.errors.any? %>
         <ul class="text-sm text-red-600 pb-4">
-          <% @product.errors.full_messages.each do |message| %>
+          <% form_object.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
         </ul>
       <% end %>
 
-      <%= render component("products/show/specifications/rows").new(form: f, association: :product_properties, new_row_href: new_row_path) %>
+      <% if rule? %>
+        <div class="flex flex-col gap-6 pb-6">
+          <div>
+            <%= hidden_field_tag "#{f.object_name}[option_value_ids][]", nil %>
+            <%= render component("ui/forms/select").new(
+              label: t(".applies_to"),
+              name: "#{f.object_name}[option_value_ids][]",
+              choices: option_value_choices,
+              value: @rule.option_value_ids,
+              hint: t(".applies_to_hint"),
+              multiple: true
+            ) %>
+          </div>
+
+          <%= f.switch_field :apply_to_all, label: t(".apply_to_all"), hint: t(".apply_to_all_hint") %>
+
+          <p class="text-sm text-gray-500">
+            <%= t(".matches_html", count: matching_variants_count, total: variants_count) %>
+          </p>
+        </div>
+      <% end %>
+
+      <%= render component("products/show/specifications/rows").new(form: f, association: rows_association, new_row_href: new_row_path) %>
     <% end %>
 
     <% modal.with_actions do %>
+      <% if rule? && @rule.persisted? %>
+        <%= form_with url: solidus_admin.product_variant_property_rule_path(@product, @rule), method: :delete, class: "mr-auto" do %>
+          <%= render component("ui/button").new(
+            tag: :button,
+            text: t(".delete"),
+            scheme: :danger,
+            "data-turbo-confirm": t(".delete_confirmation")
+          ) %>
+        <% end %>
+      <% end %>
       <form method="dialog">
         <%= render component("ui/button").cancel %>
       </form>
