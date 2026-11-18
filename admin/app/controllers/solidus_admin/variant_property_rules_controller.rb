@@ -15,7 +15,7 @@ module SolidusAdmin
     def create
       @rule = @product.variant_property_rules.build(variant_property_rule_params)
 
-      if option_values_given? && @rule.save
+      if option_values_given? && save_rule { @rule.save }
         respond_with_success(t(".success"))
       else
         respond_with_errors
@@ -27,7 +27,7 @@ module SolidusAdmin
     end
 
     def update
-      if option_values_given? && @rule.update(variant_property_rule_params)
+      if option_values_given? && save_rule { @rule.update(variant_property_rule_params) }
         respond_with_success(t(".success"))
       else
         respond_with_errors
@@ -44,6 +44,10 @@ module SolidusAdmin
 
     def authorization_subject
       Spree::Variant
+    end
+
+    def save_rule(&block)
+      Spree::VariantPropertyRuleValue.acts_as_list_no_update(&block)
     end
 
     def option_values_given?

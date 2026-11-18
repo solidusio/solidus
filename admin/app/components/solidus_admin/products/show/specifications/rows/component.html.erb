@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4 pb-4">
   <span class="font-semibold text-sm"><%= t(".title") %></span>
 
-  <div id="specification_rows" class="flex flex-col gap-2">
+  <div id="specification_rows" class="flex flex-col gap-2" data-controller="sortable" data-sortable-handle-value=".handle">
     <%= @form.fields_for @association, include_id: false do |row| %>
       <%= render component("products/show/specifications/rows/row").new(form: row) %>
     <% end %>

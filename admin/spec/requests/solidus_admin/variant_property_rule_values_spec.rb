@@ -22,16 +22,20 @@ RSpec.describe "SolidusAdmin::VariantPropertyRuleValuesController", type: :reque
       expect(response.body).to match(/name="variant_property_rule\[values_attributes\]\[\d+\]\[property_name\]"/)
       expect(response.body).to match(/name="variant_property_rule\[values_attributes\]\[\d+\]\[value\]"/)
       expect(response.body).to match(/name="variant_property_rule\[values_attributes\]\[\d+\]\[_destroy\]"/)
+      expect(response.body).to match(/name="variant_property_rule\[values_attributes\]\[\d+\]\[position\]" value="1"/)
     end
 
     context "with a persisted rule" do
       let(:rule) { create(:variant_property_rule, product:, option_value: red) }
 
-      it "appends a blank row to the dialog of the rule" do
+      before { rule.values.first.update!(position: 2) }
+
+      it "appends a blank row after the last persisted one" do
         get solidus_admin.new_product_variant_property_rule_value_path(product, variant_property_rule_id: rule.id, format: :turbo_stream)
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to match(/name="variant_property_rule\[values_attributes\]\[\d+\]\[property_name\]"/)
+        expect(response.body).to match(/name="variant_property_rule\[values_attributes\]\[\d+\]\[position\]" value="3"/)
       end
     end
 

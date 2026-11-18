@@ -11,6 +11,8 @@ RSpec.describe "SolidusAdmin::ProductPropertiesController", type: :request do
   end
 
   describe "GET /new" do
+    let!(:brand_property) { create(:product_property, product:, property: create(:property, name: "brand"), position: 3) }
+
     it "appends a blank row to the specifications dialog" do
       get solidus_admin.new_product_product_properties_path(product, format: :turbo_stream)
 
@@ -20,6 +22,12 @@ RSpec.describe "SolidusAdmin::ProductPropertiesController", type: :request do
       expect(response.body).to match(/name="product\[product_properties_attributes\]\[\d+\]\[property_name\]"/)
       expect(response.body).to match(/name="product\[product_properties_attributes\]\[\d+\]\[value\]"/)
       expect(response.body).to match(/name="product\[product_properties_attributes\]\[\d+\]\[_destroy\]"/)
+    end
+
+    it "places the row after the last persisted one" do
+      get solidus_admin.new_product_product_properties_path(product, format: :turbo_stream)
+
+      expect(response.body).to match(/name="product\[product_properties_attributes\]\[\d+\]\[position\]" value="4"/)
     end
   end
 
@@ -71,6 +79,36 @@ RSpec.describe "SolidusAdmin::ProductPropertiesController", type: :request do
 
       expect(response).to redirect_to(solidus_admin.product_path(product))
       expect(response).to have_http_status(:see_other)
+    end
+
+    context "with explicit positions" do
+      let(:properties) do
+        others = %w[gender care origin].map do |name|
+          create(:product_property, product:, property: create(:property, name:), value: name)
+        end
+
+        [brand_property, *others]
+      end
+      let(:params) do
+        {
+          product: {
+            product_properties_attributes: {
+              "0" => {id: properties[0].id, property_name: "brand", position: 3},
+              "1" => {id: properties[1].id, property_name: "gender", position: 2},
+              "2" => {id: properties[2].id, property_name: "care", position: 4},
+              "3" => {id: properties[3].id, property_name: "origin", position: 1}
+            }
+          }
+        }
+      end
+
+      it "persists the positions as sent" do
+        patch solidus_admin.product_product_properties_path(product, format: :turbo_stream), params: params
+
+        expect(response).to have_http_status(:ok)
+        expect(product.product_properties.reload.map { |product_property| [product_property.property_name, product_property.position] })
+          .to eq([["origin", 1], ["gender", 2], ["brand", 3], ["care", 4]])
+      end
     end
 
     context "when the product cannot be saved" do

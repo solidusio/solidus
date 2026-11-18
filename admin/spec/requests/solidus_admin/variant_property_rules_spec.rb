@@ -127,6 +127,29 @@ RSpec.describe "SolidusAdmin::VariantPropertyRulesController", type: :request do
       expect(rule.values.map(&:value)).to eq(["Max 40°"])
     end
 
+    context "with explicit positions" do
+      let(:washing) { create(:property, name: "washing") }
+      let!(:care_value) { rule.values.create!(property: washing, value: "Dry clean only") }
+      let(:params) do
+        {
+          variant_property_rule: {
+            option_value_ids: ["", red.id],
+            values_attributes: {
+              "0" => {id: rule.values.first.id, property_name: rule.values.first.property_name, position: 2},
+              "1" => {id: care_value.id, property_name: "washing", position: 1}
+            }
+          }
+        }
+      end
+
+      it "persists the positions as sent" do
+        patch solidus_admin.product_variant_property_rule_path(product, rule, format: :turbo_stream), params: params
+
+        expect(response).to have_http_status(:ok)
+        expect(rule.values.reload.map { |value| [value.value, value.position] }).to eq([["Dry clean only", 1], ["Max 30°", 2]])
+      end
+    end
+
     context "with no option values" do
       let(:params) { {variant_property_rule: {option_value_ids: [""]}} }
 

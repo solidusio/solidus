@@ -7,7 +7,7 @@ module SolidusAdmin
     before_action :load_rule
 
     def new
-      @value = @rule.values.build
+      @value = @rule.values.build(position: next_position)
 
       respond_to do |format|
         format.turbo_stream
@@ -18,6 +18,10 @@ module SolidusAdmin
 
     def authorization_subject
       Spree::Variant
+    end
+
+    def next_position
+      @rule.values.maximum(:position).to_i + 1
     end
 
     def load_rule
