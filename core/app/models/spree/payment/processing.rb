@@ -75,6 +75,11 @@ module Spree
         return false unless amount.positive?
 
         capture_amount ||= money.money.cents
+        # Refuse before talking to the gateway: capturing less than what was
+        # already refunded would leave the payment worth less than its refunds.
+        if ::Money.new(capture_amount, currency).to_d < refunds.sum(:amount)
+          gateway_error(I18n.t("spree.capture_amount_less_than_refunded"))
+        end
         started_processing!
         protect_from_connection_error do
           # Standard ActiveMerchant capture usage
