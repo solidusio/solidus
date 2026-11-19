@@ -12,6 +12,9 @@ concurrency:
   group: solidus-installer-${{ github.ref_name }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions:
+  contents: read
+
 jobs:
   solidus_installer:
     name: Test Installer
@@ -24,6 +27,8 @@ jobs:
       COVERAGE_DIR: ${{ github.workspace }}/storefront/coverage
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Install libvips
         run: |
           sudo apt-get update
