@@ -497,6 +497,31 @@ RSpec.describe Spree::Payment, type: :model do
               payment.capture!(6000)
               expect(payment.reload.amount).to eq(60)
             end
+
+            context "when the payment has refunds" do
+              before { create(:refund, payment:, amount: 80) }
+
+              context "and the amount to capture is less than the refunds" do
+                it "raises a gateway error without capturing" do
+                  expect(payment.payment_method).not_to receive(:capture)
+
+                  expect { payment.capture!(6000) }.to raise_error(
+                    Spree::Core::GatewayError,
+                    "Cannot capture less than the amount already refunded."
+                  )
+                  expect(payment.capture_events.count).to eq(0)
+                  expect(payment).to be_pending
+                end
+              end
+
+              context "and the amount to capture covers the refunds" do
+                it "captures the payment" do
+                  payment.capture!(8000)
+                  expect(payment.reload.amount).to eq(80)
+                  expect(payment).to be_completed
+                end
+              end
+            end
           end
 
           context "if unsuccessful" do
@@ -682,6 +707,39 @@ RSpec.describe Spree::Payment, type: :model do
       expect {
         create(:refund, payment:, amount: 80)
       }.to change { payment.credit_allowed }.from(100).to(20)
+    end
+  end
+
+  describe "amount validation" do
+    before do
+      payment.update!(state: "completed", amount: 100)
+      create(:refund, payment:, amount: 60)
+    end
+
+    it "is invalid when the amount is less than the refunds total" do
+      payment.amount = 50
+      expect(payment).not_to be_valid
+      expect(payment.errors[:amount]).to include("cannot be less than the amount already refunded (60.0).")
+    end
+
+    it "is valid when the amount equals the refunds total" do
+      payment.amount = 60
+      expect(payment).to be_valid
+    end
+
+    context "when an existing payment already has more refunded than its amount" do
+      before { payment.update_columns(amount: 50) }
+
+      it "can still be saved when the amount is not changing" do
+        payment.response_code = "abc"
+        expect(payment).to be_valid
+        expect { payment.save! }.not_to raise_error
+      end
+
+      it "cannot have its amount lowered further" do
+        payment.amount = 40
+        expect(payment).not_to be_valid
+      end
     end
   end
 

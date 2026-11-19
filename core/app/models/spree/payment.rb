@@ -40,6 +40,7 @@ module Spree
     validates :amount, numericality: true
     validates :source, presence: true, if: :source_required?
     validates :payment_method, presence: true
+    validate :amount_not_less_than_refunds, if: :will_save_change_to_amount?
 
     default_scope -> { order(:created_at) }
 
@@ -166,6 +167,18 @@ module Spree
       end
       if errors.any?
         throw :abort
+      end
+    end
+
+    # A payment can never be worth less than what has already been refunded
+    # from it, otherwise #credit_allowed and the order's payment total go
+    # negative.
+    def amount_not_less_than_refunds
+      return if amount.nil?
+
+      refunded = refunds.sum(:amount)
+      if amount < refunded
+        errors.add(:amount, :less_than_refunded, refunded:)
       end
     end
 
