@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    variant_property_rules:
+      title: "Specification groups"
+      create:
+        success: "Specification group was successfully created."
+      destroy:
+        success: "Specification group was successfully removed."
+      update:
+        success: "Specification group was successfully updated."

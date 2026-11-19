@@ -93,13 +93,7 @@
           ) %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".specifications")) do |panel| %>
-          <% panel.with_action(
-            name: t(".manage_properties"),
-            scheme: :secondary,
-            href: spree.admin_product_product_properties_path(@product)
-          ) %>
-        <% end %>
+        <%= render component("products/show/specifications").new(product: @product) %>
       <% end %>
 
       <%= page_with_sidebar_aside do %>
@@ -142,3 +136,4 @@
 <% end %>
 
 <%= turbo_frame_tag :new_product_category, target: :product_organization_frame %>
+<%= turbo_frame_tag :specifications_modal, target: "_top" %>

@@ -20,7 +20,7 @@ export default class extends Controller {
   }
 
   async onEnd({ item, newIndex }) {
-    if (!item.dataset.sortableUrl) return
+    if (!item.dataset.sortableUrl) return this.renumber()
 
     const data = new FormData()
     let newPosition = newIndex + 1;
@@ -31,6 +31,15 @@ export default class extends Controller {
     data.append(this.paramValue, newPosition)
 
     return await patch(item.dataset.sortableUrl, { body: data, responseKind: "js" })
+  }
+
+  renumber() {
+    Array.from(this.element.children)
+      .filter((item) => !item.querySelector('input[name$="[_destroy]"]:checked'))
+      .forEach((item, index) => {
+        const input = item.querySelector(`input[name$="[${this.paramValue}]"]`)
+        if (input) input.value = index + 1
+      })
   }
 
   disconnect() {

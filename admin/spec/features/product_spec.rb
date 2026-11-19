@@ -194,6 +194,208 @@ describe "Product", type: :feature do
     end
   end
 
+  describe "specifications", :js do
+    let!(:product) { create(:product, name: "Just a product", slug: "just-a-prod", price: 19.99) }
+
+    it "shows the product properties in position order" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      gender = create(:property, name: "gender", presentation: "Gender")
+      create(:product_property, product:, property: brand, value: "Solidus", position: 2)
+      create(:product_property, product:, property: gender, value: "Unisex", position: 1)
+
+      visit "/admin/products/just-a-prod"
+      specifications_panel = panel(title: "Specifications")
+
+      expect(specifications_panel).to have_content("General")
+      expect(specifications_panel.text).to match(/Gender:Unisex.*Brand:Solidus/m)
+      expect(page).to be_axe_clean
+    end
+
+    it "shows the variant property rules grouped by option value" do
+      color = create(:option_type, name: "clothing-color", presentation: "Color")
+      red = create(:option_value, option_type: color, name: "red", presentation: "Red")
+      washing = create(:property, name: "washing", presentation: "Washing Instructions")
+      rule = product.variant_property_rules.create!(option_values: [red])
+      rule.values.create!(property: washing, value: "Max 30°")
+
+      visit "/admin/products/just-a-prod"
+      specifications_panel = panel(title: "Specifications")
+
+      expect(specifications_panel).to have_content("Color: Red")
+      expect(specifications_panel).to have_content("Washing Instructions:Max 30°")
+      expect(specifications_panel).to have_content("General")
+      expect(specifications_panel).to have_content("No specifications yet")
+    end
+
+    it "edits the general specifications in a dialog" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      gender = create(:property, name: "gender", presentation: "Gender")
+      create(:product_property, product:, property: brand, value: "Solidus")
+      create(:product_property, product:, property: gender, value: "Unisex")
+
+      visit "/admin/products/just-a-prod"
+      fill_in "Name", with: "Just a product (unsaved)"
+      within(panel(title: "Specifications")) { click_on "Edit" }
+
+      specifications_dialog = dialog(text: "Edit specifications")
+      expect(page).to be_axe_clean
+
+      within(specifications_dialog) do
+        find_field("Value", with: "Solidus").fill_in(with: "Solidus Inc")
+        rows = find("#specification_rows").all(:xpath, "./*")
+        within(rows.last) { check "Remove", allow_label_click: true }
+        expect(rows.last).to have_checked_field("Remove", visible: :all)
+        click_on "Add specification"
+        find_field("Property name", with: "").fill_in(with: "care")
+        all(:field, "Value").last.fill_in(with: "Dry clean only")
+        expect(page).to have_current_path("/admin/products/just-a-prod")
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Product specifications were successfully updated.")
+      expect(page).not_to have_css("dialog")
+
+      specifications_panel = panel(title: "Specifications")
+      expect(specifications_panel).to have_content("Brand:Solidus Inc")
+      expect(specifications_panel).to have_content("care:Dry clean only")
+      expect(specifications_panel).not_to have_content("Gender:Unisex")
+      expect(find_field("Name").value).to eq("Just a product (unsaved)")
+    end
+
+    it "reorders the general specifications by dragging" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      gender = create(:property, name: "gender", presentation: "Gender")
+      create(:product_property, product:, property: brand, value: "Solidus", position: 1)
+      create(:product_property, product:, property: gender, value: "Unisex", position: 2)
+
+      visit "/admin/products/just-a-prod"
+      within(panel(title: "Specifications")) { click_on "Edit" }
+
+      within(dialog(text: "Edit specifications")) do
+        rows = find("[data-controller='sortable']").all(:xpath, "./*")
+        rows.last.find(".handle").drag_to(rows.first)
+        expect(find("[data-controller='sortable']").all(:xpath, "./*").first).to have_field("Value", with: "Unisex")
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Product specifications were successfully updated.")
+      expect(panel(title: "Specifications").text).to match(/Gender:Unisex.*Brand:Solidus/m)
+      expect(product.product_properties.reload.map { |product_property| [product_property.property_name, product_property.position] })
+        .to eq([["gender", 1], ["brand", 2]])
+    end
+
+    context "with variant property rules" do
+      let(:size) { create(:option_type, name: "clothing-size", presentation: "Size") }
+      let(:color) { create(:option_type, name: "clothing-color", presentation: "Color") }
+      let(:small) { create(:option_value, option_type: size, name: "S", presentation: "Small") }
+      let(:medium) { create(:option_value, option_type: size, name: "M", presentation: "Medium") }
+      let(:brown) { create(:option_value, option_type: color, name: "brown", presentation: "Brown") }
+      let(:red) { create(:option_value, option_type: color, name: "red", presentation: "Red") }
+
+      before do
+        product.option_types = [size, color]
+        [small, medium].product([brown, red]).each do |option_values|
+          create(:variant, product:, option_values:)
+        end
+      end
+
+      it "adds, edits and deletes a specification group in a dialog" do
+        visit "/admin/products/just-a-prod"
+        within(panel(title: "Specifications")) { click_on "Add specification group" }
+
+        specifications_dialog = dialog(text: "Add specifications")
+        expect(specifications_dialog).to have_content("Currently matches 0 of 4 variants")
+        expect(page).to be_axe_clean
+
+        within(specifications_dialog) do
+          solidus_select ["Size: Small", "Color: Red"], from: "Applies to variants with"
+          find(".modal-title").click
+          switch "Require all selected option values", on: true
+          click_on "Add specification"
+          find_field("Property name", with: "").fill_in(with: "care")
+          all(:field, "Value").last.fill_in(with: "Dry clean only")
+          click_on "Save"
+        end
+
+        expect(page).to have_content("Specification group was successfully created.")
+        expect(page).not_to have_css("dialog")
+
+        specifications_panel = panel(title: "Specifications")
+        expect(specifications_panel).to have_content("Size: Small + Color: Red")
+        expect(specifications_panel).to have_content("1 of 4 variants")
+        expect(specifications_panel).to have_content("care:Dry clean only")
+
+        within(specifications_panel) { all(:link, "Edit").last.click }
+        specifications_dialog = dialog(text: "Edit specifications")
+        expect(specifications_dialog).to have_content("Currently matches 1 of 4 variants")
+
+        within(specifications_dialog) do
+          solidus_unselect "Size: Small", from: "Applies to variants with"
+          find(".modal-title").click
+          switch "Require all selected option values", on: false
+          click_on "Save"
+        end
+
+        expect(page).to have_content("Specification group was successfully updated.")
+        expect(specifications_panel).to have_content("Color: Red")
+        expect(specifications_panel).not_to have_content("Size: Small")
+        expect(specifications_panel).to have_content("2 of 4 variants")
+
+        within(specifications_panel) { all(:link, "Edit").last.click }
+        accept_turbo_confirm("Are you sure you want to delete this specification group?") do
+          within(dialog(text: "Edit specifications")) { click_on "Delete" }
+        end
+
+        expect(page).to have_content("Specification group was successfully removed.")
+        expect(specifications_panel).not_to have_content("Color: Red")
+        expect(Spree::VariantPropertyRule.count).to eq(0)
+      end
+
+      it "reorders the specifications of a group by dragging" do
+        rule = product.variant_property_rules.create!(option_values: [red])
+        brand = create(:property, name: "brand", presentation: "Brand")
+        gender = create(:property, name: "gender", presentation: "Gender")
+        care = create(:property, name: "care", presentation: "Care")
+        rule.values.create!(property: brand, value: "Solidus", position: 1)
+        rule.values.create!(property: gender, value: "Unisex", position: 2)
+        rule.values.create!(property: care, value: "Dry clean only", position: 3)
+
+        visit "/admin/products/just-a-prod"
+        within(panel(title: "Specifications")) { all(:link, "Edit").last.click }
+
+        within(dialog(text: "Edit specifications")) do
+          rows = find("[data-controller='sortable']").all(:xpath, "./*")
+          within(rows.first) { check "Remove", allow_label_click: true }
+          rows.last.find(".handle").drag_to(rows.first)
+          expect(find("[data-controller='sortable']").all(:xpath, "./*", visible: :all).first)
+            .to have_field("Value", with: "Dry clean only", visible: :all)
+          click_on "Save"
+        end
+
+        expect(page).to have_content("Specification group was successfully updated.")
+        expect(panel(title: "Specifications").text).to match(/Care:Dry clean only.*Gender:Unisex/m)
+        expect(panel(title: "Specifications")).not_to have_content("Brand:Solidus")
+        expect(rule.values.reload.map { |value| [value.property_name, value.position] })
+          .to eq([["care", 1], ["gender", 2]])
+      end
+
+      it "requires at least one option value" do
+        visit "/admin/products/just-a-prod"
+        within(panel(title: "Specifications")) { click_on "Add specification group" }
+
+        within(dialog(text: "Add specifications")) do
+          click_on "Add specification"
+          find_field("Property name", with: "").fill_in(with: "care")
+          all(:field, "Value").last.fill_in(with: "Dry clean only")
+          click_on "Save"
+        end
+
+        expect(dialog(text: "Add specifications")).to have_content("Option values can't be blank")
+        expect(Spree::VariantPropertyRule.count).to eq(0)
+      end
+    end
+  end
+
   describe "product organization", :js do
     let(:taxonomy) { create(:taxonomy, name: "Apparel") }
     let(:root_taxon) { taxonomy.root }

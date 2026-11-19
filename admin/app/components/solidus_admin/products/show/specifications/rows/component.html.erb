@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-4 pb-4">
+  <span class="font-semibold text-sm"><%= t(".title") %></span>
+
+  <div id="specification_rows" class="flex flex-col gap-2" data-controller="sortable" data-sortable-handle-value=".handle">
+    <%= @form.fields_for @association, include_id: false do |row| %>
+      <%= render component("products/show/specifications/rows/row").new(form: row) %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= render component("ui/button").new(
+      tag: :a,
+      href: @new_row_href,
+      scheme: :ghost,
+      icon: "add-line",
+      text: t(".add"),
+      data: { turbo_stream: true }
+    ) %>
+  </div>
+
+  <datalist id="properties">
+    <%= options_for_select(property_options) %>
+  </datalist>
+</div>
