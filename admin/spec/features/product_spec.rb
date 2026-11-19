@@ -194,6 +194,39 @@ describe "Product", type: :feature do
     end
   end
 
+  describe "specifications", :js do
+    let!(:product) { create(:product, name: "Just a product", slug: "just-a-prod", price: 19.99) }
+
+    it "shows the product properties in position order" do
+      brand = create(:property, name: "brand", presentation: "Brand")
+      gender = create(:property, name: "gender", presentation: "Gender")
+      create(:product_property, product:, property: brand, value: "Solidus", position: 2)
+      create(:product_property, product:, property: gender, value: "Unisex", position: 1)
+
+      visit "/admin/products/just-a-prod"
+      specifications_panel = panel(title: "Specifications")
+
+      expect(specifications_panel).to have_content("General")
+      expect(specifications_panel.text).to match(/Gender:Unisex.*Brand:Solidus/m)
+      expect(page).to be_axe_clean
+    end
+
+    it "shows the variant property rules grouped by option value" do
+      color = create(:option_type, name: "clothing-color", presentation: "Color")
+      red = create(:option_value, option_type: color, name: "red", presentation: "Red")
+      washing = create(:property, name: "washing", presentation: "Washing Instructions")
+      rule = product.variant_property_rules.create!(option_values: [red])
+      rule.values.create!(property: washing, value: "Max 30°")
+
+      visit "/admin/products/just-a-prod"
+      specifications_panel = panel(title: "Specifications")
+
+      expect(specifications_panel).to have_content("Color:Red")
+      expect(specifications_panel).to have_content("Washing Instructions:Max 30°")
+      expect(specifications_panel).not_to have_content("General")
+    end
+  end
+
   describe "product organization", :js do
     let(:taxonomy) { create(:taxonomy, name: "Apparel") }
     let(:root_taxon) { taxonomy.root }
