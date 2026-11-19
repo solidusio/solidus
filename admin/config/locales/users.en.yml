@@ -2,8 +2,12 @@ en:
   solidus_admin:
     users:
       title: "Users"
+      create:
+        success: "User was successfully created."
       destroy:
         success: "Users were successfully removed."
+      update:
+        success: "The user was successfully updated."
       update_addresses:
         bill:
           success: "Billing Address has been successfully updated."

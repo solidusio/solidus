@@ -33,6 +33,12 @@ class SolidusAdmin::UI::Forms::Field::Component < SolidusAdmin::BaseComponent
     )
   end
 
+  def self.password_field(form, method, object: nil, hint: nil, tip: nil, size: :m, autocomplete: "off", **attributes)
+    attributes = attributes.merge(type: :password, autocomplete:)
+
+    text_field(form, method, object:, hint:, tip:, size:, **attributes)
+  end
+
   def self.select(form, method, choices, object: nil, hint: nil, tip: nil, size: :m, **attributes)
     object_name, object, label, errors = extract_form_details(form, object, method)
 

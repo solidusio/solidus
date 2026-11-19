@@ -18,9 +18,19 @@
   <%= render current_component.new(
     label: "Greeting",
     hint: "A brief explanation",
-    tip: "More in-detail information about this filed",
-    error: "The second letter should be lowecase",
+    tip: "More in-detail information about this field",
+    error: "The second letter should be lowercase",
   ) do %>
-    <%= render component('ui/forms/input').new(value: "HEllo world!", error: "The second letter should be lowecase") %>
+    <%= render component("ui/forms/input").new(value: "HEllo world!", error: "The second letter should be lowercase") %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Input rendered as a password field
+  </h6>
+
+  <%= form_for Spree::Product.new, url: "/null" do |f| %>
+    <%= render current_component.password_field(f, :slug, value: "initial-value") %>
   <% end %>
 </div>

@@ -53,7 +53,7 @@ SolidusAdmin::Engine.routes.draw do
     except: [:show],
     sortable: true
 
-  admin_resources :users, only: [:index, :edit, :destroy] do
+  admin_resources :users do
     member do
       get :addresses
       put :update_addresses

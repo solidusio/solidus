@@ -44,6 +44,10 @@ class SolidusAdmin::FormBuilder < ActionView::Helpers::FormBuilder
     input(method, type: :hidden, autocomplete: "off", **options)
   end
 
+  def password_field(method, **options)
+    render component("ui/forms/field").password_field(self, method, **options)
+  end
+
   def switch_field(method, label: nil, include_hidden: true, **options)
     label = @object.class.human_attribute_name(method) if label.nil?
     name = "#{@object_name}[#{method}]"
