@@ -55,6 +55,7 @@ class ConfigClassA
   end
 
   preference :color, :string, default: "green"
+  preference :finish, :select, options: [:gold, :silver, :bronze]
 end
 
 class ConfigClassB < ConfigClassA
@@ -117,6 +118,35 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         a.get_preference :flavor
       }.to raise_error(NoMethodError, "flavor preference not defined")
     end
+
+    context "for a preference type without options" do
+      it "does not have options" do
+        expect { a.preferred_color_options }.to raise_error(NoMethodError)
+      end
+    end
+
+    context "for a preference type with options" do
+      it "has options" do
+        expect(a.preferred_finish_options).to eq [:gold, :silver, :bronze]
+      end
+    end
+
+    context "for a 'select' preference type with no options given" do
+      it "raises an error and does not create preference methods", :aggregate_failures do
+        expect {
+          a.class.preference :lemon_select, :select
+        }.to raise_error(
+          Spree::Preferences::PreferableClassMethods::NoOptionsError,
+          "cannot create a preference with type :select without options"
+        )
+
+        expect { a.preferred_lemon_select }.to raise_error(NoMethodError)
+        expect { a.preferred_lemon_select = "value" }.to raise_error(NoMethodError)
+        expect { a.preferred_lemon_select_default }.to raise_error(NoMethodError)
+        expect { a.preferred_lemon_select_options }.to raise_error(NoMethodError)
+        expect { a.preferred_lemon_select_type }.to raise_error(NoMethodError)
+      end
+    end
   end
 
   describe "preference access" do
@@ -148,6 +178,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
     it "builds a hash of preference defaults" do
       expect(b.default_preferences).to eq({
         flavor: nil,
+        finish: nil,
         color: "green"
       })
     end
@@ -276,6 +307,39 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       it "with hash and keys are integers" do
         a.set_preference(:is_hash, {1 => 2, 3 => 4})
         expect(a.preferences[:is_hash]).to eql({1 => 2, 3 => 4})
+      end
+    end
+
+    context "uses select preference options" do
+      before do
+        ConfigClassA.preference :region, :select,
+          default: "Canada",
+          options: ["Canada", "Germany", "Italy", "France"]
+      end
+
+      it "returns the default value" do
+        expect(a.preferences[:region]).to eq "Canada"
+      end
+
+      context "with an invalid default value" do
+        it "returns the default value" do
+          expect {
+            ConfigClassA.preference :secondary_region, :select,
+              default: "Not Valid",
+              options: ["Japan"]
+          }.to raise_error(Spree::Preferences::PreferableClassMethods::InvalidDefaultError)
+        end
+      end
+
+      it "uses set preference values", :aggregate_failues do
+        expect { a.set_preference(:region, "Italy") }.not_to raise_error
+
+        expect(a.preferences[:region]).to eq(:Italy)
+      end
+
+      it "does not allow setting a nonexistant option" do
+        expect { a.set_preference(:region, "Not an Option") }
+          .to raise_error(Spree::Preferences::NotAnOptionError)
       end
     end
 

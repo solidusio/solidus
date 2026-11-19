@@ -4,9 +4,11 @@ require "spree/encryptor"
 
 module Spree::Preferences
   module PreferableClassMethods
+    class InvalidDefaultError < StandardError; end
     class NoEncryptionKeyError < StandardError; end
+    class NoOptionsError < StandardError; end
 
-    VALID_OPTIONS = [:default, :encryption_key]
+    VALID_OPTIONS = [:default, :encryption_key, :options]
 
     def defined_preferences = []
 
@@ -35,6 +37,26 @@ module Spree::Preferences
         given.is_a?(Proc) ? given : proc { given }
       end
 
+      if (options_method_name = preference_options_getter_method(name, type))
+        preference_options = options[:options]&.map(&:to_sym)
+        default_option = options[:default].presence&.to_sym
+
+        if preference_options.nil? || preference_options.none?
+          raise NoOptionsError,
+            "cannot create a preference with type :select without options"
+        end
+
+        unless default_option.nil? || preference_options.include?(default_option)
+          raise InvalidDefaultError,
+            "cannot use #{default_option.inspect} as a default value as it's not " \
+            "in the given options"
+        end
+
+        define_method options_method_name do
+          preference_options
+        end
+      end
+
       singleton_preferences = (@defined_singleton_preferences ||= [])
       singleton_preferences << name.to_sym
 
@@ -49,7 +71,7 @@ module Spree::Preferences
       end
 
       define_method preference_setter_method(name) do |value|
-        value = convert_preference_value(value, type, preference_encryptor)
+        value = convert_preference_value(value, type, preference_encryptor, name)
         preferences[name] = value
 
         # If this is an Active Record object, +ActiveRecord::Dirty+ should
@@ -96,6 +118,10 @@ module Spree::Preferences
     def preference_default_getter_method(name) = :"preferred_#{name}_default"
 
     def preference_type_getter_method(name) = :"preferred_#{name}_type"
+
+    def preference_options_getter_method(name, type)
+      :"preferred_#{name}_options" if type == :select
+    end
 
     def preference_encryptor(options)
       key = options[:encryption_key] ||

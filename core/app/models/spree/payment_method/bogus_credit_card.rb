@@ -23,6 +23,9 @@ module Spree
     preference :bogus_integer, :integer
     preference :bogus_password, :password
     preference :bogus_string, :string, default: "string-value"
+    preference :bogus_select, :select,
+      default: :one,
+      options: [:one, :two, :three, :"the fourth option"]
     preference :bogus_text, :text, default: "Lorem ipsum dolor sit amet"
 
     attr_accessor :test
