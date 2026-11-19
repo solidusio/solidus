@@ -1,0 +1,68 @@
+<h2 class="mb-3 mt-0">
+  Taxon select
+</h2>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Single select
+  </h6>
+
+  <%= form_for Spree::Taxon.new, url: "/null" do |f| %>
+    <%= render component("ui/forms/select_taxons").new(
+      f,
+      :parent,
+      [],
+      multiple: false
+    ) %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Single select (preselected options)
+  </h6>
+
+  <%= form_for Spree::Taxon.new, url: "/null" do |f| %>
+    <%=
+      preselected_option = Spree::Taxon.second
+
+      render component("ui/forms/select_taxons").new(
+        f,
+        :parent,
+        [preselected_option].map { [_1.pretty_name, _1.id] },
+        multiple: false,
+        value: preselected_option.id
+      )
+    %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Multi select
+  </h6>
+
+  <%= form_for Spree::Product.first, url: "/null" do |f| %>
+    <%= render component("ui/forms/select_taxons").new(f, :taxons, []) %>
+  <% end %>
+</div>
+
+<div class="mb-8">
+  <h6 class="text-gray-500 mb-3 mt-0">
+    Multi select (preselected options)
+  </h6>
+
+  <%= form_for Spree::Product.first, url: "/null" do |f| %>
+    <%=
+      preselected_options = [Spree::Taxon.third, Spree::Taxon.fourth]
+
+      render component("ui/forms/select_taxons").new(
+        f,
+        :taxons,
+        preselected_options.map { [_1.pretty_name, _1.id] },
+        multiple: true,
+        value: preselected_options.map(&:id)
+      )
+    %>
+  <% end %>
+</div>

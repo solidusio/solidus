@@ -9,6 +9,10 @@ SolidusAdmin::Engine.routes.draw do
     get "states", to: "countries#states"
   end
 
+  resource :taxons, only: [] do
+    get :pretty_names
+  end
+
   resources :states, only: [:index], defaults: {format: :json}
 
   admin_resources :products, only: [:index, :update, :destroy] do
