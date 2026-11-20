@@ -5,8 +5,8 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     Spree::ShippingMethod
   end
 
-  def row_url(shipping_method)
-    spree.edit_admin_shipping_method_path(shipping_method)
+  def edit_path(shipping_method)
+    solidus_admin.edit_shipping_method_path(shipping_method)
   end
 
   def search_url
@@ -21,7 +21,7 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     render component("ui/button").new(
       tag: :a,
       text: t(".add"),
-      href: spree.new_admin_shipping_method_path,
+      href: solidus_admin.new_shipping_method_path,
       icon: "add-line",
       class: "align-self-end w-full"
     )
@@ -42,7 +42,10 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
     [
       {
         header: :name,
-        data: -> { [_1.admin_name.presence, _1.name].compact.join(" / ") }
+        data: ->(shipping_method) do
+          name = [shipping_method.admin_name.presence, shipping_method.name].compact.join(" / ")
+          link_to name, edit_path(shipping_method), class: "body-link"
+        end
       },
       {
         header: :zone,
