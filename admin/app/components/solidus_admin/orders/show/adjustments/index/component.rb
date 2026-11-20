@@ -48,7 +48,7 @@ class SolidusAdmin::Orders::Show::Adjustments::Index::Component < SolidusAdmin::
   end
 
   def search_key
-    :label_cont
+    :label_i_cont
   end
 
   def search_url

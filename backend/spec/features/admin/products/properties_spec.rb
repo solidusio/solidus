@@ -33,7 +33,7 @@ describe "Properties", type: :feature do
 
     context "searching properties" do
       it "should list properties matching search query", js: true do
-        fill_in "q_name_cont", with: "size"
+        fill_in "q_name_i_cont", with: "size"
         click_button "Search"
 
         expect(page).to have_content("shirt size")

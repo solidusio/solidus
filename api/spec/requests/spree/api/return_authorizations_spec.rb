@@ -130,7 +130,7 @@ module Spree::Api
         FactoryBot.create(:return_authorization, order:)
         expected_result = create(:return_authorization, memo: "damaged")
         order.return_authorizations << expected_result
-        get spree.api_order_return_authorizations_path(order), params: {q: {memo_cont: "damaged"}}
+        get spree.api_order_return_authorizations_path(order), params: {q: {memo_i_cont: "damaged"}}
         expect(json_response["count"]).to eq(1)
         expect(json_response["return_authorizations"].first["memo"]).to eq expected_result.memo
       end

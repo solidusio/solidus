@@ -21,7 +21,7 @@ describe "Store Credit Reasons", type: :feature do
   end
 
   context "when creating a new store credit reason" do
-    let(:query) { "?page=1&q%5Bname_cont%5D=new" }
+    let(:query) { "?page=1&q%5Bname_i_cont%5D=new" }
 
     before do
       visit "/admin/store_credit_reasons#{query}"
@@ -63,7 +63,7 @@ describe "Store Credit Reasons", type: :feature do
   end
 
   context "when editing an existing store credit reason" do
-    let(:query) { "?page=1&q%5Bname_cont%5D=customer" }
+    let(:query) { "?page=1&q%5Bname_i_cont%5D=customer" }
 
     before do
       Spree::StoreCreditReason.create(name: "New Customer Reward")

@@ -28,7 +28,7 @@ RSpec.describe "Orders Listing", type: :feature, js: true do
 
       it "only shows the orders with the selected promotion" do
         click_on "Filter Results"
-        fill_in "q_order_promotions_promotion_code_value_start", with: promotion.codes.first.value
+        fill_in "q_order_promotions_promotion_code_value_i_start", with: promotion.codes.first.value
         click_on "Filter Results"
         within_row(1) { expect(page).to have_content("R100") }
         within("table#listing_orders") { expect(page).not_to have_content("R200") }

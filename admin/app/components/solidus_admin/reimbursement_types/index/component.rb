@@ -10,7 +10,7 @@ class SolidusAdmin::ReimbursementTypes::Index::Component < SolidusAdmin::Refunds
   end
 
   def search_key
-    :name_cont
+    :name_i_cont
   end
 
   def columns

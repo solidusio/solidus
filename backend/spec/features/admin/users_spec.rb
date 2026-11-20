@@ -113,7 +113,7 @@ describe "Users", type: :feature do
     end
 
     it "displays the correct results for a user search by email" do
-      fill_in "q_email_cont", with: user_a.email
+      fill_in "q_email_i_cont", with: user_a.email
       click_button "Search"
       within_table("listing_users") do
         expect(page).to have_text user_a.email

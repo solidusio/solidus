@@ -21,7 +21,7 @@
             multiple: true,
             class: "required",
             src: solidus_admin.states_url(view: :state_with_country),
-            "data-query-param": "q[name_or_country_name_cont]",
+            "data-query-param": "q[name_or_country_name_i_cont]",
             **stimulus_target("statesSelect")
           ) %>
         <% end %>

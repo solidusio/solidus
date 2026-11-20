@@ -21,7 +21,7 @@ describe "Adjustment Reasons", type: :feature do
   end
 
   context "when creating a new adjustment reason" do
-    let(:query) { "?page=1&q%5Bname_or_code_cont%5D=new" }
+    let(:query) { "?page=1&q%5Bname_or_code_i_cont%5D=new" }
 
     before do
       visit "/admin/adjustment_reasons#{query}"
@@ -66,7 +66,7 @@ describe "Adjustment Reasons", type: :feature do
   end
 
   context "when editing an existing adjustment reason" do
-    let(:query) { "?page=1&q%5Bname_or_code_cont%5D=reason" }
+    let(:query) { "?page=1&q%5Bname_or_code_i_cont%5D=reason" }
 
     before do
       Spree::AdjustmentReason.create(name: "Good Reason", code: 5999)

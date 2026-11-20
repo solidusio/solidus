@@ -48,7 +48,7 @@ module Spree::Api
 
       it "can search for an option type" do
         create(:option_value, name: "buzz")
-        get spree.api_option_values_path, params: {q: {name_cont: option_value.name}}
+        get spree.api_option_values_path, params: {q: {name_i_cont: option_value.name}}
         expect(json_response.count).to eq(1)
         expect(json_response.first).to have_attributes(attributes)
       end

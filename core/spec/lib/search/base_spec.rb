@@ -86,7 +86,7 @@ RSpec.describe Spree::Core::Search::Base do
 
   it "uses ransack if scope not found" do
     params = {per_page: "",
-              search: {"name_not_cont" => "Shirt"}}
+              search: {"name_not_i_cont" => "Shirt"}}
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.retrieve_products.count).to eq(2)
   end

@@ -10,7 +10,7 @@ class SolidusAdmin::Properties::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def search_key
-    :name_cont
+    :name_i_cont
   end
 
   def search_url

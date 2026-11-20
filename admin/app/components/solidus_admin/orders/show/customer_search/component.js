@@ -5,7 +5,7 @@ export default class extends Controller {
 
   async search({ detail: { query, controller } }) {
     controller.resultsValue = await (
-      await fetch(`${this.customersUrlValue}?q[name_or_variants_including_master_sku_cont]=${query}`)
+      await fetch(`${this.customersUrlValue}?q[name_or_variants_including_master_sku_i_cont]=${query}`)
     ).text()
   }
 

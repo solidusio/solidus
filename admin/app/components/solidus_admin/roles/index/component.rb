@@ -6,7 +6,7 @@ class SolidusAdmin::Roles::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   end
 
   def search_key
-    :name_cont
+    :name_i_cont
   end
 
   def search_url

@@ -88,7 +88,7 @@ describe "Orders Listing", type: :feature, js: true do
     context "when there's a single store" do
       it "should be able to search orders" do
         click_on "Filter Results"
-        fill_in "q_number_start", with: "R200"
+        fill_in "q_number_i_start", with: "R200"
         click_on "Filter Results"
         within_row(1) do
           expect(page).to have_content("R200")

@@ -37,17 +37,17 @@ RSpec.describe Spree::Admin::PromotionsController, type: :controller do
       end
 
       it "filters by name" do
-        get :index, params: {q: {name_cont: promotion1.name}}
+        get :index, params: {q: {name_i_cont: promotion1.name}}
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by code" do
-        get :index, params: {q: {codes_value_cont: promotion1.codes.first.value}}
+        get :index, params: {q: {codes_value_i_cont: promotion1.codes.first.value}}
         expect(assigns[:promotions]).to eq [promotion1]
       end
 
       it "filters by path" do
-        get :index, params: {q: {path_cont: promotion1.path}}
+        get :index, params: {q: {path_i_cont: promotion1.path}}
         expect(assigns[:promotions]).to eq [promotion1]
       end
 

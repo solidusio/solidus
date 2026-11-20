@@ -191,7 +191,7 @@ module Spree::Api
 
       it "can query the results through a paramter" do
         expected_result = create(:user, email: "brian@solidus.io")
-        get spree.api_users_path, params: {q: {email_cont: "brian"}}
+        get spree.api_users_path, params: {q: {email_i_cont: "brian"}}
         expect(json_response["count"]).to eq(1)
         expect(json_response["users"].first["email"]).to eq expected_result.email
       end
@@ -260,8 +260,8 @@ module Spree::Api
         get spree.api_users_path, params: {
           q: {
             m: "or",
-            email_start: "distinct_test",
-            name_start: "distinct_test"
+            email_i_start: "distinct_test",
+            name_i_start: "distinct_test"
           }
         }
         expect(json_response["count"]).to eq(1)

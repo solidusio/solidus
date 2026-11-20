@@ -20,7 +20,7 @@ class SolidusAdmin::StockLocations::Index::Component < SolidusAdmin::Shipping::C
   end
 
   def search_key
-    :name_or_description_cont
+    :name_or_description_i_cont
   end
 
   def edit_path(stock_location)

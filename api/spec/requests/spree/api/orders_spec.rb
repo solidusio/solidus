@@ -1016,7 +1016,7 @@ module Spree::Api
         let(:expected_result) { Spree::Order.last }
 
         it "can query the results through a parameter" do
-          get spree.api_orders_path, params: {q: {email_cont: "solidus"}}
+          get spree.api_orders_path, params: {q: {email_i_cont: "solidus"}}
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["orders"].first["email"]).to eq(expected_result.email)

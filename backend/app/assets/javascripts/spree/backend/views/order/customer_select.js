@@ -33,8 +33,8 @@ Spree.Views.Order.CustomerSelect = Backbone.View.extend({
           return {
             q: {
               m: 'or',
-              email_start: term,
-              name_start: term
+              email_i_start: term,
+              name_i_start: term
             }
           }
         },
