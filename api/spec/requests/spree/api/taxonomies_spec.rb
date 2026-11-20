@@ -34,7 +34,7 @@ module Spree::Api
 
       it "can query the results through a paramter" do
         expected_result = create(:taxonomy, name: "Style")
-        get spree.api_taxonomies_path, params: {q: {name_cont: "style"}}
+        get spree.api_taxonomies_path, params: {q: {name_i_cont: "style"}}
         expect(json_response["count"]).to eq(1)
         expect(json_response["taxonomies"].first["name"]).to eq expected_result.name
       end

@@ -24,7 +24,7 @@ class SolidusAdmin::TaxRates::Index::Component < SolidusAdmin::Taxes::Component
   end
 
   def search_key
-    :name_or_description_cont
+    :name_or_description_i_cont
   end
 
   def batch_actions

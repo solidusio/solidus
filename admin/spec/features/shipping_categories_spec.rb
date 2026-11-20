@@ -21,7 +21,7 @@ describe "Shipping Categories", type: :feature do
   end
 
   context "when creating a new shipping category" do
-    let(:query) { "?page=1&q%5Bname_or_description_cont%5D=What" }
+    let(:query) { "?page=1&q%5Bname_or_description_i_cont%5D=What" }
 
     before do
       visit "/admin/shipping_categories#{query}"
@@ -63,7 +63,7 @@ describe "Shipping Categories", type: :feature do
   end
 
   context "when editing an existing shipping category" do
-    let(:query) { "?page=1&q%5Bname_or_description_cont%5D=mail" }
+    let(:query) { "?page=1&q%5Bname_or_description_i_cont%5D=mail" }
 
     before do
       Spree::ShippingCategory.create(name: "Letter Mail")

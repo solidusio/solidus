@@ -21,7 +21,7 @@ describe "Return Reasons", type: :feature do
   end
 
   context "when creating a new return reason" do
-    let(:query) { "?page=1&q%5Bname_cont%5D=new" }
+    let(:query) { "?page=1&q%5Bname_i_cont%5D=new" }
 
     before do
       visit "/admin/return_reasons#{query}"
@@ -65,7 +65,7 @@ describe "Return Reasons", type: :feature do
   end
 
   context "when editing an existing return reason" do
-    let(:query) { "?page=1&q%5Bname_cont%5D=reason" }
+    let(:query) { "?page=1&q%5Bname_i_cont%5D=reason" }
 
     before do
       Spree::ReturnReason.create(name: "Good Reason")

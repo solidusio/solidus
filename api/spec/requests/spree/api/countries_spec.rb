@@ -26,7 +26,7 @@ module Spree::Api
       end
 
       it "can query the results through a paramter" do
-        get spree.api_countries_path, params: {q: {name_cont: "zam"}}
+        get spree.api_countries_path, params: {q: {name_i_cont: "zam"}}
         expect(json_response["count"]).to eq(1)
         expect(json_response["countries"].first["name"]).to eq @zambia.name
       end

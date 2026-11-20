@@ -55,7 +55,7 @@ $.fn.taxonAutocomplete = function (options) {
             page: page,
             without_children: true,
             q: {
-              name_cont: term
+              name_i_cont: term
             },
             token: Spree.api_key
           };

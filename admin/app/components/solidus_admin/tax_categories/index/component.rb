@@ -31,7 +31,7 @@ class SolidusAdmin::TaxCategories::Index::Component < SolidusAdmin::Taxes::Compo
   end
 
   def search_key
-    :name_or_description_cont
+    :name_or_description_i_cont
   end
 
   def batch_actions

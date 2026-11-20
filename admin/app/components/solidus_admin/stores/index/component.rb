@@ -6,7 +6,7 @@ class SolidusAdmin::Stores::Index::Component < SolidusAdmin::UI::Pages::Index::C
   end
 
   def search_key
-    :name_or_url_or_code_cont
+    :name_or_url_or_code_i_cont
   end
 
   def search_url

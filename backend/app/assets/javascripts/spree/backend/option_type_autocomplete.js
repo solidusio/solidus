@@ -26,7 +26,7 @@ Spree.ready(function () {
         params: { "headers": {  'Authorization': 'Bearer ' + Spree.api_key } },
         data: function (term) {
           return {
-            q: { name_cont: term }
+            q: { name_i_cont: term }
           };
         },
         results: function (data) {

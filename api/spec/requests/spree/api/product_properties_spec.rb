@@ -43,7 +43,7 @@ module Spree::Api
     it "can query the results through a parameter" do
       Spree::ProductProperty.last.update_attribute(:value, "loose")
       property = Spree::ProductProperty.last
-      get spree.api_product_product_properties_path(product), params: {q: {value_cont: "loose"}}
+      get spree.api_product_product_properties_path(product), params: {q: {value_i_cont: "loose"}}
       expect(json_response["count"]).to eq(1)
       expect(json_response["product_properties"].first["value"]).to eq property.value
     end

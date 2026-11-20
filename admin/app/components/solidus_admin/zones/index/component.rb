@@ -10,7 +10,7 @@ class SolidusAdmin::Zones::Index::Component < SolidusAdmin::UI::Pages::Index::Co
   end
 
   def search_key
-    :name_or_description_cont
+    :name_or_description_i_cont
   end
 
   def search_url

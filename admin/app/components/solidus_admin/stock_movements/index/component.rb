@@ -23,7 +23,7 @@ class SolidusAdmin::StockMovements::Index::Component < SolidusAdmin::UI::Pages::
   end
 
   def search_key
-    :variant_sku_or_variant_product_name_cont
+    :variant_sku_or_variant_product_name_i_cont
   end
 
   def columns

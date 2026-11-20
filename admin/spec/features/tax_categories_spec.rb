@@ -23,7 +23,7 @@ describe "Tax categories", type: :feature do
   end
 
   context "when creating a new tax category" do
-    let(:query) { "?page=1&q%5Bname_or_description_cont%5D=Cloth" }
+    let(:query) { "?page=1&q%5Bname_or_description_i_cont%5D=Cloth" }
 
     before do
       visit "/admin/tax_categories#{query}"
@@ -68,7 +68,7 @@ describe "Tax categories", type: :feature do
   end
 
   context "when editing an existing tax category" do
-    let(:query) { "?page=1&q%5Bname_or_description_cont%5D=Cloth" }
+    let(:query) { "?page=1&q%5Bname_or_description_i_cont%5D=Cloth" }
 
     before do
       Spree::TaxCategory.create(name: "Clothing", is_default: true)

@@ -14,7 +14,7 @@ class SolidusAdmin::ShippingMethods::Index::Component < SolidusAdmin::Shipping::
   end
 
   def search_key
-    :name_or_description_cont
+    :name_or_description_i_cont
   end
 
   def page_actions

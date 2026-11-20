@@ -29,7 +29,7 @@ $.fn.optionValueAutocomplete = function (options) {
         var productId = typeof(productSelect) !== 'undefined' ? $(productSelect).select2('val') : null;
         return {
           q: {
-            name_cont: term,
+            name_i_cont: term,
             variants_product_id_eq: productId
           },
           token: Spree.api_key

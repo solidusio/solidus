@@ -13,11 +13,11 @@ module Spree
       class Variant
         class_attribute :search_terms
         self.search_terms = [
-          :sku_cont,
-          :product_name_cont,
-          :product_slug_cont,
-          :option_values_presentation_cont,
-          :option_values_name_cont
+          :sku_i_cont,
+          :product_name_i_cont,
+          :product_slug_i_cont,
+          :option_values_presentation_i_cont,
+          :option_values_name_i_cont
         ]
 
         def initialize(query_string, scope: Spree::Variant.all)

@@ -6,7 +6,7 @@ class SolidusAdmin::Orders::Index::Component < SolidusAdmin::UI::Pages::Index::C
   end
 
   def search_key
-    :number_or_shipments_number_or_bill_address_name_or_email_cont
+    :number_or_shipments_number_or_bill_address_name_or_email_i_cont
   end
 
   def search_url

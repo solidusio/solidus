@@ -8,7 +8,7 @@ class SolidusAdmin::Users::Index::Component < SolidusAdmin::UsersAndRoles::Compo
   end
 
   def search_key
-    :email_cont
+    :email_i_cont
   end
 
   def search_url
