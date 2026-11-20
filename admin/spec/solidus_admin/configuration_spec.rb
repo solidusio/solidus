@@ -49,6 +49,38 @@ RSpec.describe SolidusAdmin::Configuration do
   end
 
   describe "#import_menu_items_from_backend!" do
+    it "uses the URL resolved by the backend menu item" do
+      allow(Spree::Backend::Config).to receive(:menu_items).and_return([
+        Spree::BackendConfiguration::MenuItem.new(label: :orders, url: :admin_orders_path),
+        Spree::BackendConfiguration::MenuItem.new(label: :orders, url: nil),
+        Spree::BackendConfiguration::MenuItem.new(label: :custom, url: -> { "/admin/custom" }),
+        Spree::BackendConfiguration::MenuItem.new(label: :external, url: "https://example.com")
+      ])
+
+      config = described_class.new
+      config.import_menu_items_from_backend!
+
+      expect(config.menu_items.map { _1[:route].call }).to eq([
+        "/admin/orders",
+        "/admin/orders",
+        "/admin/custom",
+        "https://example.com"
+      ])
+    end
+
+    it "matches the current path against the resolved URL when no match_path is given" do
+      allow(Spree::Backend::Config).to receive(:menu_items).and_return([
+        Spree::BackendConfiguration::MenuItem.new(label: :orders, url: :admin_orders_path)
+      ])
+
+      config = described_class.new
+      config.import_menu_items_from_backend!
+      match_path = config.menu_items.first[:match_path]
+
+      expect(match_path.call("/admin/orders/1")).to be(true)
+      expect(match_path.call("/admin/products")).to be(false)
+    end
+
     it "imports the menu items from the backend" do
       allow(Spree::Backend::Config).to receive(:menu_items).and_return([
         Spree::BackendConfiguration::MenuItem.new(
