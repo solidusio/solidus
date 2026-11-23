@@ -3,8 +3,9 @@
 module Spree
   class Promotion < Spree::Base
     # This class encapsulates all the things the promotion system does to
-    # an order. It is called from the `Spree::OrderUpdater` before taxes are
-    # calculated, such that taxes always respect promotions.
+    # an order. It is called from the `Spree::OrderUpdater` and the
+    # `Spree::InMemoryOrderUpdater` before taxes are calculated, such that
+    # taxes always respect promotions.
 
     # This class iterates over all existing promotion adjustments and recalculates
     # their amount and eligibility using their adjustment source.
@@ -25,7 +26,7 @@ module Spree
           item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
         end
         # Update and select the best promotion adjustment for the order.
-        # We don't update the order.promo_total yet. Order totals are updated later
+        # The order.promo_total is set below. Other order totals are updated later
         # in #update_adjustment_total since they include the totals from the order's
         # line items and/or shipments.
         order_promotion_adjustments = order.adjustments.select(&:promotion?)
@@ -48,11 +49,11 @@ module Spree
 
       delegate :line_items, :shipments, to: :order
 
-      # Recalculate and persist the amount from this adjustment's source based on
-      # the adjustable ({Order}, {Shipment}, or {LineItem})
+      # Recalculate and, if +persist+ is true, persist the amount from this
+      # adjustment's source based on the adjustable ({Order}, {Shipment}, or {LineItem})
       #
       # If the adjustment has no source (such as when created manually from the
-      # admin) or is closed, this is a noop.
+      # admin) or is finalized, this is a noop.
       #
       # @return [BigDecimal] New amount of this adjustment
       def recalculate(adjustment, persist:)

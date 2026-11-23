@@ -12,7 +12,7 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
+        # This is never eligible if the order does not have a user, or that user does not have any previous completed orders.
         #
         # This is eligible if the user's most recently completed order is more than the preferred days ago
         # @param order [Spree::Order]

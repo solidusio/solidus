@@ -13,7 +13,7 @@ module SolidusLegacyPromotions
     # the adjustable ({Order}, {Shipment}, or {LineItem})
     #
     # If the adjustment has no source (such as when created manually from the
-    # admin) or is closed, this is a noop.
+    # admin) or is finalized and not a tax adjustment, this is a noop.
     #
     # @return [BigDecimal] New amount of this adjustment
     def recalculate

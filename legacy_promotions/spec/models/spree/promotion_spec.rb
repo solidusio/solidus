@@ -865,7 +865,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   # regression for https://github.com/spree/spree/issues/4059
-  # admin form posts the code and path as empty string
+  # admin form posts the path as empty string
   describe "normalize blank values for path" do
     it "will save blank value as nil value instead" do
       promotion = Spree::Promotion.create(name: "A promotion", path: "")

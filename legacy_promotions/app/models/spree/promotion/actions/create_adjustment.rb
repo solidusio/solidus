@@ -23,7 +23,7 @@ module Spree
         # through options hash
         #
         # Returns `true` if an adjustment is applied to an order,
-        # `false` if the promotion has already been applied.
+        # `nil` if the promotion has already been applied.
         def perform(options = {})
           order = options[:order]
           return if promotion_credit_exists?(order)
@@ -61,12 +61,12 @@ module Spree
 
         private
 
-        # Tells us if there if the specified promotion is already associated with the line item
-        # regardless of whether or not its currently eligible. Useful because generally
+        # Tells us if the specified promotion is already associated with the order
+        # regardless of whether or not it's currently eligible. Useful because generally
         # you would only want a promotion action to apply to order no more than once.
         #
-        # Receives an adjustment +source+ (here a PromotionAction object) and tells
-        # if the order has adjustments from that already
+        # Receives an +adjustable+ (here an Order object) and tells
+        # if it has adjustments from this action already
         def promotion_credit_exists?(adjustable)
           adjustments.where(adjustable_id: adjustable.id).exists?
         end

@@ -14,7 +14,7 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
+        # This is never eligible if the order does not have a user, or that user does not have any previous completed orders.
         #
         # Use the first order rule if you want a promotion to be applied to the first order for a user.
         # @param order [Spree::Order]
