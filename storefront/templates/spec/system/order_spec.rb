@@ -25,7 +25,7 @@ RSpec.describe "orders", type: :system do
 
     visit order_path(order)
 
-    # Tests view spree/shared/_order_details
+    # Tests view orders/_order_item
     within ".order-item__price-single" do
       expect(page).to have_content "19.00"
     end
