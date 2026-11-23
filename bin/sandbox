@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Used in the sandbox rake task in Rakefile
+# Used by bin/dev
 
 set -e
 test -z "${DEBUG+empty_string}" || set -x

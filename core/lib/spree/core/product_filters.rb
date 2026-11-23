@@ -39,15 +39,15 @@ module Spree
     # scope's context.
     #
     # The details of how/when filters are used is a detail for specific models.
-    # For example, see the Taxon model/controller. See specific filters below
+    # For example, see the storefront's TaxonFiltersHelper. See specific filters below
     # for concrete examples.
     module ProductFilters
       # Example: Filtering by price
       #
       # The named scope just maps incoming labels onto their conditions, and
-      # builds the conjunction 'price' is in the base scope's context (e.g.
-      # "select foo from products where ...") so we can access the field right
-      # away. The filter identifies which scope to use, then sets the
+      # builds the disjunction. 'price' is not in the base scope's context (e.g.
+      # "select foo from products where ...") so we join the master variant's
+      # prices. The filter identifies which scope to use, then sets the
       # conditions for each price range.
       #
       # If user checks off three different price ranges then the argument passed

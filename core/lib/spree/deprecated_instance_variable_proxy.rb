@@ -6,7 +6,7 @@ module Spree
   # This DeprecatedInstanceVariableProxy transforms instance variable to
   # deprecated instance variable.
   #
-  # It differs from ActiveSupport::DeprecatedInstanceVariableProxy since
+  # It differs from ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy since
   # it allows to define a custom message.
   #
   #   class Example
@@ -24,7 +24,7 @@ module Spree
   #     end
   #   end
   #
-  # When someone execute any method on @request variable this will trigger
+  # When someone executes any method on @request variable this will trigger
   # +warn+ method on +deprecator_instance+ and will fetch <tt>@_request</tt>
   # variable via +request+ method and execute the same method on non-proxy
   # instance variable.

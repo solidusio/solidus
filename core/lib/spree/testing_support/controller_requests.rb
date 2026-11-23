@@ -2,7 +2,7 @@
 
 module Spree
   module TestingSupport
-    # *There is generaly no need* to use this module. Instead, in
+    # *There is generally no need* to use this module. Instead, in
     # a functional/controller test against a Spree controller, just
     # use standard Rails functionality by including:
     #

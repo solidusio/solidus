@@ -23,7 +23,7 @@ end
 country_values = -> do
   carmen_countries = Carmen::Country.all
 
-  # find entires already in the database (so that we may ignore them)
+  # find entries already in the database (so that we may ignore them)
   existing_country_isos =
     Spree::Country.where(iso: carmen_countries.map(&:alpha_2_code)).pluck(:iso)
 
@@ -38,7 +38,7 @@ country_columns = %w[name iso3 iso iso_name numcode states_required].join(", ")
 country_vals = country_values.call
 
 if country_vals.present?
-  # execute raw SQL (insted of ActiveRecord.create) to use a single
+  # execute raw SQL (instead of ActiveRecord.create) to use a single
   # INSERT statement, and to avoid any validations or callbacks
   connection.execute <<-SQL
     INSERT INTO spree_countries (#{country_columns})

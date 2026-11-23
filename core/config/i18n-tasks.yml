@@ -72,7 +72,7 @@ search:
     - app/assets/videos
 
   ## Alternatively, the only files or `File.fnmatch patterns` to search in `paths`:
-  ## If specified, this settings takes priority over `exclude`, but `exclude` still applies.
+  ## If specified, this setting takes priority over `exclude`, but `exclude` still applies.
   # only: ["*.rb", "*.html.slim"]
 
   ## If `strict` is `false`, guess usages such as t("categories.#{category}.title"). The default is `true`.

@@ -53,20 +53,20 @@ module Spree
       #     it 'publishes foo event' do
       #       stub_spree_bus
       #
-      #       Spree::Bus.publish 'foo'
+      #       Spree::Bus.publish :foo
       #
-      #       expect('foo').to have_been_published
+      #       expect(:foo).to have_been_published
       #     end
       #
-      #   It can be chain through `with` to match with the published payload:
+      #   It can be chained through `with` to match with the published payload:
       #
       #   @example
       #     it 'publishes foo event with the expected payload' do
       #       stub_spree_bus
       #
-      #       Spree::Bus.publish 'foo', bar: :baz, qux: :quux
+      #       Spree::Bus.publish :foo, bar: :baz, qux: :quux
       #
-      #       expect('foo').to have_been_published.with(a_hash_including(bar: :baz))
+      #       expect(:foo).to have_been_published.with(a_hash_including(bar: :baz))
       #     end
       #
       #   @param [Symbol] event_name

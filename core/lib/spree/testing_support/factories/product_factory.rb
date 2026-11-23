@@ -14,7 +14,7 @@ FactoryBot.define do
         r.association(:shipping_category, strategy: :create)
     end
 
-    # ensure stock item will be created for this products master
+    # ensure stock item will be created for this product's master
     before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }
 
     factory :custom_product do

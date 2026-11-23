@@ -39,7 +39,7 @@ module Spree
       attr_reader :boundaries
 
       # @param initial_value [Any]
-      # @param boundary [Hash<String, Any>] Map from version number to new value
+      # @param boundaries [Hash<String, Any>] Map from version number to new value
       def initialize(initial_value, boundaries = {})
         @boundaries = {"0" => initial_value}
           .merge(boundaries)

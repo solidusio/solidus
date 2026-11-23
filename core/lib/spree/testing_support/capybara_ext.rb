@@ -111,7 +111,7 @@ module Spree
       end
 
       def find_label_by_text(text)
-        # This used to find the label by it's text using an xpath query, so we use
+        # This used to find the label by its text using an xpath query, so we use
         # a case insensitive search to avoid breakage with existing usage.
         # We need to select labels which are not .select2-offscreen, as select2
         # makes a duplicate label with the same text, and we want to be sure to
