@@ -6,7 +6,7 @@ module Spree
   RSpec.describe UserAddressBook do
     #
     # Using LegacyUser as a subject
-    # since it uses the UserAddressBookExtension
+    # since it includes UserAddressBook
     #
     let!(:user) { create(:user) }
 

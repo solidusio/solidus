@@ -556,7 +556,7 @@ RSpec.describe Spree::Variant, type: :model do
     let!(:master) { create(:master_variant) }
 
     before do
-      # Order bar than foo
+      # Order bar then foo
       variant.option_values << create(:option_value, {name: "Foo", presentation: "Foo", option_type: create(:option_type, position: 2, name: "Foo Type", presentation: "Foo Type")})
       variant.option_values << create(:option_value, {name: "Bar", presentation: "Bar", option_type: create(:option_type, position: 1, name: "Bar Type", presentation: "Bar Type")})
     end

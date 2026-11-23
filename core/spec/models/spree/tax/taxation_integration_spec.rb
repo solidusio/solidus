@@ -559,7 +559,7 @@ RSpec.describe "Taxation system integration tests" do
     let(:new_york_zone) { create(:zone, states: [new_york]) }
     let(:united_states_zone) { create(:zone, countries: [united_states]) }
     # Creating two rates for books here to
-    # mimick the existing specs
+    # mimic the existing specs
     let!(:new_york_books_tax) do
       create(
         :tax_rate,
