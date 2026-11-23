@@ -8,12 +8,12 @@ module SolidusPromotions
   # determines how much discount to apply and produces the corresponding
   # adjustments.
   #
-  # Subclasses specialize the discounting target (orders, line items, or
-  # shipments) and usually include one of the following mixins to integrate with
-  # Solidus' adjustment system:
+  # Subclasses specialize the discounting target by defining a public
+  # `discount_<type>` method for each class of object they discount, such as
+  # `discount_line_item` or `discount_shipment`. Built-in subclasses include:
   # - SolidusPromotions::Benefits::AdjustLineItem
   # - SolidusPromotions::Benefits::AdjustShipment
-  # - SolidusPromotions::Benefits::CreateDiscountedItem
+  # - SolidusPromotions::Benefits::AdvertisePrice
   #
   # A benefit can discount any object for which {#can_discount?} returns true.
   # Implementors must provide a calculator via Spree::CalculatedAdjustments and
@@ -21,10 +21,11 @@ module SolidusPromotions
   #
   # Usage example
   #
-  #   benefit = SolidusPromotions::Benefits::AdjustLineItem.new(promotion: promo)
+  #   calculator = SolidusPromotions::Calculators::Percent.new(preferred_percent: 10)
+  #   benefit = SolidusPromotions::Benefits::AdjustLineItem.new(promotion: promo, calculator: calculator)
   #   if benefit.can_discount?(line_item)
   #     discount = benefit.discount(line_item)
-  #     # => #<SolidusPromotions::ItemDiscount ...>
+  #     # => #<Spree::Adjustment ...>
   #   end
   #
   # @see SolidusPromotions::Promotion
@@ -77,7 +78,7 @@ module SolidusPromotions
       SolidusPromotions::Condition.applicable_to([Spree::Order])
     end
 
-    # Returns relations that should be preloaded for this condition.
+    # Returns relations that should be preloaded for this benefit.
     #
     # Override this method in subclasses to specify associations that should be eager loaded
     # to avoid N+1 queries when computing discounts or performing automations.
@@ -89,8 +90,8 @@ module SolidusPromotions
 
     # Whether this benefit can discount the given object.
     #
-    # Subclasses must implement this according to the kinds
-    # of objects they are able to discount.
+    # Returns true if the benefit responds to the `discount_<type>` method named
+    # after the object's class, e.g. `discount_line_item` for a Spree::LineItem.
     #
     # @param object [Object] a potential adjustable (order, line item, or shipment)
     # @return [Boolean]
@@ -103,14 +104,15 @@ module SolidusPromotions
 
     # Calculates and returns a discount for the given adjustable object.
     #
-    # This method computes the discount amount using the benefit's calculator and returns
-    # an ItemDiscount object representing the discount to be applied. If the computed
-    # amount is zero, no discount is returned.
+    # This method dispatches to the `discount_<type>` method named after the adjustable's
+    # class and returns its result.
     #
     # @param adjustable [Object] The object to calculate the discount for (e.g., LineItem, Shipment, ShippingRate)
-    # @param ... [args, kwargs] Additional arguments passed to the calculator's compute method
+    # @param ... [args, kwargs] Additional arguments passed to the `discount_<type>` method
     #
-    # @return [Spree::Adjustment, SolidusPromotions::ShippingRateDiscount, nil] An ItemDiscount object if a discount applies, nil if the amount is zero
+    # @return [Spree::Adjustment, SolidusPromotions::ShippingRateDiscount, SolidusPromotions::ItemDiscount]
+    #   What the built-in benefits return for line items and shipments, shipping rates, and prices respectively
+    # @raise [NotImplementedError] if the benefit cannot discount the adjustable
     #
     # @example Calculating a discount for a line item
     #   benefit.discount(line_item)
@@ -310,15 +312,8 @@ module SolidusPromotions
       end
     end
 
-    # Base set of order-level condition classes available to all benefits.
-    #
-    # These generic order conditions apply regardless of the concrete benefit
-    # type, as every benefit ultimately operates within the context of an order.
-    # Concrete benefit subclasses may extend or override this to include
-    # additional applicable conditions that are specific to their discount
-    # target (e.g., line-item or shipment conditions).
-    #
-    # @return [Set<Class<SolidusPromotions::Condition>>]
+    # @deprecated Use the class method {.applicable_conditions} instead.
+    # @return [Enumerable<Class<SolidusPromotions::Condition>>]
     def possible_conditions
       Spree.deprecator.warn("Use #{self.class.name}.applicable_conditions instead.")
       self.class.applicable_conditions
