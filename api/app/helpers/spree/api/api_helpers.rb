@@ -56,7 +56,7 @@ module Spree
       def required_fields_for(model)
         required_fields = model._validators.select do |_field, validations|
           validations.any? { |validation| validation.is_a?(ActiveModel::Validations::PresenceValidator) }
-        end.map(&:first) # get fields that are invalid
+        end.map(&:first) # get fields that have a presence validator
         # Permalinks presence is validated, but are really automatically generated
         # Therefore we shouldn't tell API clients that they MUST send one through
         required_fields.map!(&:to_s).delete("permalink")

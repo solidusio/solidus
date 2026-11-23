@@ -21,7 +21,7 @@ module Spree
         respond_with(@variant, status: 204)
       end
 
-      # The lazyloaded associations here are pretty much attached to which nodes
+      # The eager loaded associations here are pretty much attached to which nodes
       # we render on the view so we better update it any time a node is included
       # or removed from the views.
       def index

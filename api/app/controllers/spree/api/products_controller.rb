@@ -36,17 +36,17 @@ module Spree
       #
       #   product: {
       #     ...
-      #     variants: {
+      #     variants: [{
       #       price: 19.99,
       #       sku: "hey_you",
       #       options: [
       #         { name: "size", value: "small" },
       #         { name: "color", value: "black" }
       #       ]
-      #     }
+      #     }]
       #   }
       #
-      # Or just pass in the option types hash:
+      # Or just pass in the option types array:
       #
       #   product: {
       #     ...

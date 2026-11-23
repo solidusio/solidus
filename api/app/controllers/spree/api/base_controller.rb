@@ -24,7 +24,7 @@ module Spree
       before_action :deprecated_load_user
       before_action :authorize_for_order, if: proc { order_token.present? }
       before_action :authenticate_user
-      # This is deprecated and will be removed in Spree 5.0
+      # This is deprecated and will be removed in Solidus 5.0
       before_action :load_deprecated_user_roles
 
       rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
