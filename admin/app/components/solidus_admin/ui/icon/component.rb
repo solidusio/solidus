@@ -3,7 +3,7 @@
 class SolidusAdmin::UI::Icon::Component < SolidusAdmin::BaseComponent
   NAMES = Set.new(File.read("#{__dir__}/names.txt").split("\n").map(&:freeze)).freeze
 
-  # Renders a remixincon svg.
+  # Renders a remixicon svg.
   #
   # @param name [String] the name of the icon
   # @option attrs [String] :class the class to add to the svg

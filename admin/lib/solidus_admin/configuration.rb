@@ -66,7 +66,7 @@ module SolidusAdmin
     #  SolidusAdmin::Config.menu_items << {
     #    key: :my_custom_link,
     #    route: :products_path,
-    #    icon: "solidus_admin/price-tag-3-line.svg",
+    #    icon: "price-tag-3-line",
     #    position: 80
     #  }
     #

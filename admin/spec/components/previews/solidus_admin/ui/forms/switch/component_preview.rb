@@ -7,7 +7,6 @@ class SolidusAdmin::UI::Forms::Switch::ComponentPreview < ViewComponent::Preview
   # **With a form builder**
   #
   # The switch component renders a standalone switch input.
-  # If the id attribute is not filled, it will be set as a random string.
   #
   # ```erb
   #   <%= form_for @product do |form| %>

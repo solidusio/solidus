@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# @component "ui/forms/switch"
+# @component "ui/radio"
 class SolidusAdmin::UI::Radio::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 

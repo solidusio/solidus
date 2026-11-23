@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# @component "ui/preference_fields/boolean"
+# @component "ui/preference_fields/string"
 class SolidusAdmin::UI::PreferenceFields::String::ComponentPreview < ViewComponent::Preview
   include SolidusAdmin::Preview
 

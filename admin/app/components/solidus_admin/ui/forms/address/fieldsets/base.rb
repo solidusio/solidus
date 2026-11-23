@@ -13,8 +13,8 @@ class SolidusAdmin::UI::Forms::Address::Fieldsets::Base < SolidusAdmin::BaseComp
   # @example
   #   component("ui/forms/address/fieldsets/contact").new(
   #     extends: [
-  #       title: -> { component("ui/forms/field").select(...) }, # this will add a custom :title select field
-  #       name: -> { component("path/to/component").new }, # this will override existing default :name field
+  #       {title: -> { component("ui/forms/field").select(...) }}, # this will add a custom :title select field
+  #       {name: -> { component("path/to/component").new }}, # this will override existing default :name field
   #       :company, # this will add a text field for :company
   #     ],
   #     excludes: %i[phone reverse_charge], # this will exclude :phone and :reverse_charge from the fieldset

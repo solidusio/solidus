@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Menu item within a {Sidebar}
+# Menu item within a {SolidusAdmin::Layout::Navigation::Component}
 class SolidusAdmin::Layout::Navigation::Item::Component < SolidusAdmin::BaseComponent
   with_collection_parameter :item
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This file is a Rails app template and should be loaded with `bin/rails `.
+# This file is a Rails app template and should be loaded with `bin/rails app:template`.
 
 engine_root = File.expand_path("#{__dir__}/../..")
 config_path = "config/solidus_admin/tailwind.config.js"
