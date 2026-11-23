@@ -11,12 +11,12 @@ module Spree
     end
 
     # Only verify inventory for completed orders (as orders in frontend checkout
-    # have inventory assigned via +order.create_proposed_shipment+) or when
+    # have inventory assigned via +order.create_proposed_shipments+) or when
     # shipment is explicitly passed
     #
     # In case shipment is passed the stock location should only unstock or
     # restock items if the order is completed. That is so because stock items
-    # are always unstocked when the order is completed through +shipment.finalize+
+    # are always unstocked when the order is completed through +shipment.finalize!+
     def verify(shipment = nil)
       if order.completed? || shipment.present?
 

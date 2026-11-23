@@ -18,7 +18,7 @@ module Spree
     self.allowed_ransackable_associations = %w[country]
     self.allowed_ransackable_attributes = %w[name]
 
-    # table of { country.id => [ state.id , state.name ] }, arrays sorted by name
+    # table of { country.id.to_s => [ [ state.id , state.name ], ... ] }, arrays sorted by name
     # blank is added elsewhere, if needed
     def self.states_group_by_country_id
       state_info = Hash.new { |hash, key| hash[key] = [] }

@@ -6,10 +6,10 @@ module Spree
     # quantity from related stock item and updates the given inventory units to
     # not be pending.
     class InventoryUnitsFinalizer
-      # @attr_reader [Spree::InventoryUnit] inventory_units to be finalized
+      # @attr_reader [Enumerable<Spree::InventoryUnit>] inventory_units to be finalized
       attr_reader :inventory_units
 
-      # @param [Spree::InventoryUnit] inventory_units to be finalized
+      # @param [Enumerable<Spree::InventoryUnit>] inventory_units to be finalized
       def initialize(inventory_units)
         @inventory_units = inventory_units
       end

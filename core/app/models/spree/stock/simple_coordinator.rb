@@ -9,7 +9,7 @@ module Spree
     #     * Allocate as much on hand inventory as possible from this location
     #     * Remove the amount allocated from the amount desired
     #   * Repeat but for backordered inventory
-    #   * Combine allocated and on hand inventory into a single shipment per-location
+    #   * Combine on hand and backordered inventory into a single shipment per-location
     #
     # Allocation logic can be changed using a custom class (as
     # configured in Spree::Config.stock.allocator_class)
@@ -92,7 +92,7 @@ module Spree
           on_hand = on_hand_packages[stock_location.id] || Spree::StockQuantities.new
           backordered = backordered_packages[stock_location.id] || Spree::StockQuantities.new
 
-          # Skip this location it has no inventory
+          # Skip this location if it has no inventory
           next if on_hand.empty? && backordered.empty?
 
           # Turn our raw quantities into a Stock::Package

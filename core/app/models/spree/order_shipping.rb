@@ -25,7 +25,7 @@ class Spree::OrderShipping
     end
   end
 
-  # A shortcut method that ships *all* inventory units in a shipment in a single
+  # A shortcut method that ships *all* shippable inventory units in a shipment in a single
   # carton.  See also {#ship}.
   #
   # @param shipment The shipment to create a carton from.
@@ -57,7 +57,7 @@ class Spree::OrderShipping
   # @param shipping_method Shipping method used for the carton.
   # @param shipped_at The time at which the shipment was shipped.
   # @param external_number An optional external number. e.g. from a shipping company or 3PL.
-  # @param tracking_number An option tracking number.
+  # @param tracking_number An optional tracking number.
   # @return The carton created.
   def ship(inventory_units:, stock_location:, address:, shipping_method:,
     shipped_at: Time.current, external_number: nil, tracking_number: nil, suppress_mailer: false)

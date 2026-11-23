@@ -32,7 +32,7 @@ module Spree
       payment.can_void?
     end
 
-    # Indicates whether its possible to credit the payment.  Note that most
+    # Indicates whether it's possible to credit the payment.  Note that most
     # gateways require that the payment be settled first which generally
     # happens within 12-24 hours of the transaction.
     #

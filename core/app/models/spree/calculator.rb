@@ -33,7 +33,7 @@ module Spree
     #   end
     #
     # @see Spree::CalculatedAdjustments for how calculators connect to calculables, such as
-    #      Spree::TaxRate, Spree::ShippingRate, SolidusPromotions::Benefit, or Spree::PromotionAction
+    #      Spree::TaxRate, Spree::ShippingMethod, SolidusPromotions::Benefit, or Spree::PromotionAction
     def compute(computable, ...)
       # Spree::LineItem -> :compute_line_item
       computable_name = computable.class.name.demodulize.underscore

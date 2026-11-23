@@ -17,7 +17,7 @@ module Spree
 
       # Returns the total number of inventory units on hand for the variant.
       #
-      # @return [Fixnum] number of inventory units on hand, or infinity if
+      # @return [Integer, Float] number of inventory units on hand, or infinity if
       #   inventory is not tracked on the variant.
       def total_on_hand
         if variant.should_track_inventory?
@@ -36,7 +36,7 @@ module Spree
 
       # Checks if it is possible to supply a given number of units.
       #
-      # @param required [Fixnum] the number of required stock units
+      # @param required [Integer] the number of required stock units
       # @return [Boolean] true if we have the required amount on hand or the
       #   variant is backorderable, otherwise false
       def can_supply?(required)

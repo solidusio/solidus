@@ -10,7 +10,7 @@ module Spree
       # The pricing options represent "given circumstances" for a price: The currency
       # we need and the country that the price applies to.
       # Every price selector is designed to work with a particular set of pricing options
-      # embodied in it's pricing options class.
+      # embodied in its pricing options class.
       #
       def self.pricing_options_class
         Spree::Variant::PricingOptions

@@ -7,7 +7,7 @@
 #
 #     Spree::Config.current_store_selector_class = Spree::StoreSelector::Legacy
 #
-# This classes behaviour is somewhat complicated and has issues, which is why
+# This class's behaviour is somewhat complicated and has issues, which is why
 # it has been replaced with Spree::StoreSelector::ByServerName by default.
 #
 # It will:

@@ -9,11 +9,11 @@ module Spree
     #   The admin is configured to show German gross prices
     #   (Spree::Config.admin_vat_country_iso == "DE")
     #
-    #   There is VATs configured for Germany (19%) and Finland (24%).
+    #   There are VATs configured for Germany (19%) and Finland (24%).
     #   The VAT price generator is run on a variant with a base (German) price of 10.00.
     #   The Price Generator will generate:
-    #     - A price for Finland (country_id == "FI"): 10.42
-    #     - A price for any other country (country_id == nil): 8.40
+    #     - A price for Finland (country_iso == "FI"): 10.42
+    #     - A price for any other country (country_iso == nil): 8.40
     #
     class VatPriceGenerator
       attr_reader :variant
@@ -23,7 +23,7 @@ module Spree
       end
 
       def run
-        # Early return if there is no VAT rates in the current store.
+        # Early return if there are no VAT rates in the current store.
         return if !variant.tax_category || variant_vat_rates.empty?
         return if variant.default_price&.amount.nil?
 

@@ -8,7 +8,7 @@ class Spree::Wallet::AddPaymentSourcesToWallet
     @order = order
   end
 
-  # This is called after an order transistions to complete and should save the
+  # This is called after an order transitions to complete and should save the
   # order's payment source in the user's "wallet" for future use.
   #
   # @return [void]

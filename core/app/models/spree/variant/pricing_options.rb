@@ -41,17 +41,16 @@ module Spree
       end
 
       # This creates the correct pricing options for a price, so that we can easily find other prices
-      # with the same pricing-relevant attributes and mark them as non-default.
-      # @see Spree::Price#set_default_price
-      # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
+      # with the same pricing-relevant attributes.
+      # @return [Spree::Variant::PricingOptions] pricing options matching the given price
       #
       def self.from_price(price)
         new(currency: price.currency, country_iso: price.country_iso)
       end
 
-      # This creates the correct pricing options for a price, so the store owners can easily customize how to
-      # find the pricing based on the view context, having available current_store, current_spree_user, request.host_name, etc.
-      # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
+      # This creates the correct pricing options for a view context, so the store owners can easily customize how to
+      # find the pricing based on the view context, having available current_store, spree_current_user, request.host, etc.
+      # @return [Spree::Variant::PricingOptions] pricing options for the given view context
       def self.from_context(context)
         new(
           currency: context.current_store.try!(:default_currency).presence || Spree::Config.currency,
@@ -82,14 +81,14 @@ module Spree
       end
 
       # Shorthand for accessing the currency part of the desired attributes
-      # @return [String,nil] three-digit currency code or nil
+      # @return [String,nil] three-letter currency code or nil
       #
       def currency
         desired_attributes[:currency]
       end
 
       # Shorthand for accessing the country part of the desired attributes
-      # @return [String,nil] two-digit country code or nil
+      # @return [String,nil] two-letter country code or nil
       #
       def country_iso
         desired_attributes[:country_iso]

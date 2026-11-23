@@ -27,7 +27,7 @@ module Spree
           relevant_option_values = variant.option_values.select { |ov| option_type_restrictions.include? ov.option_type.name }
 
           if relevant_option_values.present?
-            # Finds all the OptionValueVariants that have any of the
+            # Finds all the OptionValuesVariants that have any of the
             # relevant option values, groups by variant and ensures the variant
             # has ALL of the relevant option values.
             variant_ids = Spree::OptionValuesVariant

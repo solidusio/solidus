@@ -8,13 +8,13 @@ module Spree
       @order = order
     end
 
-    # Add a line items to the order if there is inventory to do so
+    # Add a line item to the order if there is inventory to do so
     # and populate Promotions
     #
     # @param [Spree::Variant] variant The variant the line_item should
     #   be associated with
     # @param [Integer] quantity The line_item quantity
-    # @param [Hash] options Options for the adding proccess
+    # @param [Hash] options Options for the adding process
     #   Valid options:
     #     shipment: [Spree::Shipment] LineItem target shipment
     #

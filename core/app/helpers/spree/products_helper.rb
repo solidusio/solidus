@@ -6,7 +6,7 @@ module Spree
     # a difference depending on configuration
     #
     # @param variant [Spree::Variant] the variant
-    # @return [Spree::Money] the price or price diff
+    # @return [String, nil] the price or price diff
     def variant_price(variant)
       if Spree::Config.show_variant_full_price
         variant_full_price(variant)
@@ -19,7 +19,7 @@ module Spree
     # from product price
     #
     # @param variant [Spree::Variant] the variant
-    # @return [String] formatted string with label and amount
+    # @return [String, nil] formatted string with label and amount
     def variant_price_diff(variant)
       return if variant.price_same_as_master?(current_pricing_options)
       difference = variant.price_difference_from_master(current_pricing_options)
@@ -32,7 +32,7 @@ module Spree
     # price differs from product price.
     #
     # @param variant [Spree::Variant] the variant
-    # @return [Spree::Money] the full price
+    # @return [String, nil] the full price
     def variant_full_price(variant)
       return if variant.product.variants
         .with_prices(current_pricing_options)

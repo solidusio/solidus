@@ -4,8 +4,8 @@ module Spree
   module PermissionSets
     # Full permissions for stock management limited to allowed locations.
     #
-    # This permission set grants full control over all stock items a user has
-    # access to their locations. Those locations are also readable by the
+    # This permission set grants full control over all stock items in the
+    # locations a user has access to. Those locations are also readable by the
     # corresponding ability.
     class RestrictedStockManagement < PermissionSets::Base
       class << self

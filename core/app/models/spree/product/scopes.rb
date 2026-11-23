@@ -56,9 +56,9 @@ module Spree
           #   Spree::Product.joins(:taxons).where(Taxon.table_name => { id: taxon.id })
           #
           # If you're using count on the result of this scope, you must use the
-          # `:distinct` option as well:
+          # `distinct` method as well:
           #
-          #   Spree::Product.in_taxon(taxon).count(distinct: true)
+          #   Spree::Product.in_taxon(taxon).distinct.count
           #
           # This is so that the count query is distinct'd:
           #
@@ -74,9 +74,6 @@ module Spree
           end
 
           # This scope selects products in all taxons AND all its descendants
-          # If you need products only within one taxon use
-          #
-          #   Spree::Product.taxons_id_eq([x,y])
           add_search_scope :in_taxons do |*taxons|
             taxons = get_taxons(taxons)
             taxons.first ? prepare_taxon_conditions(taxons) : where(nil)
@@ -149,10 +146,10 @@ module Spree
           end
 
           # Sorts products from most popular (popularity is extracted from how many
-          # times use has put product in cart, not completed orders)
+          # times users have put product in cart, not completed orders)
           #
           # there is alternative faster and more elegant solution, it has small drawback though,
-          # it doesn stack with other scopes :/
+          # it doesn't stack with other scopes :/
           #
           # joins: "LEFT OUTER JOIN (SELECT line_items.variant_id as vid, COUNT(*) as cnt FROM line_items GROUP BY line_items.variant_id) AS popularity_count ON variants.id = vid",
           # order: 'COALESCE(cnt, 0) DESC'

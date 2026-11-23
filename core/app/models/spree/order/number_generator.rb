@@ -8,7 +8,7 @@ module Spree
   #
   #     Spree::Config.order_number_generator = Spree::Order::NumberGenerator.new(
   #       prefix: 'B',
-  #       lenght: 8,
+  #       length: 8,
   #       letters: false
   #     )
   #

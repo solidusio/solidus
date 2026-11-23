@@ -13,7 +13,7 @@ module Spree
 
       # Create a new tax calculator.
       #
-      # @param [Spree::Order] order the order to calculator taxes on
+      # @param [Spree::Order] order the order to calculate taxes on
       # @return [Spree::TaxCalculator::Default] a Spree::TaxCalculator::Default object
       def initialize(order)
         @order = order

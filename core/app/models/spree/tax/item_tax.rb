@@ -14,7 +14,7 @@ module Spree
     #   adjustments
     # @attr_reader [BigDecimal] amount the amount of tax applied to the item
     # @attr_reader [Boolean] included_in_price whether the amount is included
-    #   in the items price, or additional tax.
+    #   in the item's price, or additional tax.
     class ItemTax
       include ActiveModel::Model
 

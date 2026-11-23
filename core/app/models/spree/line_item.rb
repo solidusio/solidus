@@ -122,7 +122,7 @@ module Spree
       # When price is part of the options we are not going to fetch
       # it from the variant. Please note that this always allows to set
       # a price for this line item, even if there is no existing price
-      # for the associated line item in the order currency.
+      # for the associated variant in the order currency.
       unless options.key?(:price) || options.key?("price")
         self.money_price = variant.price_for_options(pricing_options)&.money
       end
@@ -152,7 +152,7 @@ module Spree
 
     # @return [Integer] the variant's tax category ID
     #
-    # This returns the variant's tax category ID if the tax category ID on the line_id is nil. It looks
+    # This returns the variant's tax category ID if the tax category ID on the line_item is nil. It looks
     # like an association, but really is an override.
     #
     def tax_category_id

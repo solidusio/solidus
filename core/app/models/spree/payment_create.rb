@@ -11,7 +11,7 @@ module Spree
     #     * :gateway_customer_profile_id, :gateway_payment_profile_id (String): Gateway
     #       identifiers for a new {CreditCard}, e.g. a one-time token. Raises
     #       ActiveRecord::RecordNotFound if either already belongs to a {CreditCard}
-    #       owned by a different user or order.
+    #       owned by a different user or no user.
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: nil, request_env: {})

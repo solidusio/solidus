@@ -94,7 +94,7 @@ module Spree
     end
     scope :included_in_price, -> { where(included_in_price: true) }
 
-    # This method is used by Adjustment#update to recalculate the cost.
+    # This method is used by the tax calculators to calculate the tax amount.
     def compute_amount(item)
       calculator.compute(item)
     end

@@ -81,7 +81,7 @@ module Spree
 
     # Represents the gateway of this payment method
     #
-    # The gateway is responsible for communicating with the providers API.
+    # The gateway is responsible for communicating with the provider's API.
     #
     # It implements methods for:
     #
@@ -117,7 +117,7 @@ module Spree
     #
     # Used by Spree::Payment as source (e.g. Spree::CreditCard in the case of a credit card payment method).
     #
-    # Returning nil means the payment method doesn't support storing sources (e.g. Spree::PaymentMethod::Check)
+    # Returning nil means the payment method doesn't support storing sources
     def payment_source_class
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
@@ -130,7 +130,7 @@ module Spree
     #     The form your customer enters the payment information in during checkout
     #
     #     2. app/views/spree/checkout/existing_payment/_{partial_name}.html.erb
-    #     The payment information of your customers reusable sources during checkout
+    #     The payment information of your customer's reusable sources during checkout
     #
     #     3. app/views/spree/admin/payments/source_forms/_{partial_name}.html.erb
     #     The form an admin enters payment information in when creating orders in the backend
@@ -175,7 +175,7 @@ module Spree
     # Used by Spree::Payment#cancel!
     #
     # Implement `try_void` on your payment method implementation to handle void attempts.
-    # In that method return a ActiveMerchant::Billing::Response object if the void succeeds.
+    # In that method return an ActiveMerchant::Billing::Response object if the void succeeds.
     # Return +false+ or +nil+ if the void is not possible anymore - because it was already processed by the bank.
     # Solidus will refund the amount of the payment in this case.
     #
