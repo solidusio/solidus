@@ -1,19 +1,24 @@
 # frozen_string_literal: true
 
 module SolidusPromotions
-  # This constants maps rules and actions from the legacy promotion system to conditions and benefits, respectively.
+  # This constant maps rules and actions from the legacy promotion system to conditions and benefits, respectively.
   # This is used to migrate promotions from the legacy promotion system to the new one.
   # If you have custom rules or actions, you can add them to this hash like so:
 
   # # lib/my_store/promotion_map.rb
   # require "solidus_promotions/promotion_map"
   #
-  # MyStore::PROMOTION_MAP = SolidusPromotions::PROMOTION_MAP.merge(
+  # MyStore::PROMOTION_MAP = SolidusPromotions::PROMOTION_MAP.deep_merge(
   #   conditions: {
   #     Spree::Promotion::Rules::MyCustomRule => MyStore::Conditions::MyCustomCondition
   #   },
   #   actions: {
-  #     Spree::Promotion::Actions::MyCustomAction => MyStore::Benefits::MyCustomAction
+  #     # Choose the new calculator based on the old action's calculator, as the built-in entries below do.
+  #     Spree::Promotion::Actions::MyCustomAction => ->(old_action) {
+  #       MyStore::Benefits::MyCustomBenefit.new(
+  #         calculator: SolidusPromotions::Calculators::FlatRate.new(preferences: old_action.calculator.preferences)
+  #       )
+  #     }
   #   }
   # )
 
@@ -21,7 +26,7 @@ module SolidusPromotions
 
   # # lib/rake/my_store.rake
   # namespace :my_store do
-  #   desc "Migrate Spree Promotions to Friendly Promotions using a map"
+  #   desc "Migrate Spree Promotions to Solidus Promotions using a map"
   #   task migrate_existing_promotions: :environment do
   #     require "solidus_promotions/promotion_migrator"
   #     require "my_store/promotion_map"
@@ -29,8 +34,9 @@ module SolidusPromotions
   #   end
   # end
 
-  # Note that the key in both the conditions and actions hash should be the class of the rule or action you want to map, while the value can be either
-  # a class or a lambda that returns a class. If you use a lambda, it will be called with the old action or rule as an argument.
+  # Note that the key in both the conditions and actions hash should be the class of the rule or action you want to map. In the conditions hash, the value
+  # can be either a condition class or a lambda that is called with the old rule and returns a new condition or an array of conditions. In the actions
+  # hash, the value must be a lambda that is called with the old action and returns a new benefit.
   PROMOTION_MAP = {
     conditions: {
       Spree::Promotion::Rules::ItemTotal =>
