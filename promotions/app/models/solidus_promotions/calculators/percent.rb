@@ -20,11 +20,11 @@ module SolidusPromotions
       #
       # Calculates the discount by applying the preferred percentage to the item's
       # discountable amount, then rounds the result to the appropriate precision
-      # for the order's currency.
+      # for the item's currency.
       #
-      # @param object [Object] The object to calculate the discount for (e.g., LineItem, Shipment, ShippingRate)
+      # @param object [Object] The object to calculate the discount for (e.g., LineItem, Shipment, ShippingRate, Price)
       #
-      # @return [BigDecimal] The discount amount, rounded to the order's currency precision
+      # @return [BigDecimal] The discount amount, rounded to the item's currency precision
       #
       # @example Computing a 20% discount on a $50 line item
       #   calculator = Percent.new(preferred_percent: 20)
@@ -39,7 +39,7 @@ module SolidusPromotions
       # @example Computing a 15% discount on a price
       #   calculator = Percent.new(preferred_percent: 15)
       #   price.discountable_amount # => 100.00
-      #   calculator.compute_item(shipment) # => 15
+      #   calculator.compute_price(price) # => 15.00
       def compute_item(object, _options = {})
         currency = object.respond_to?(:currency) ? object.currency : object.order.currency
         round_to_currency(object.discountable_amount * preferred_percent / 100, currency)

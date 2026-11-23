@@ -4,8 +4,9 @@ module SolidusPromotions
   module Calculators
     # A calculator that applies a flat rate discount amount.
     #
-    # This calculator returns a fixed discount amount if the item's order currency
-    # matches the preferred currency, otherwise it returns zero.
+    # This calculator returns the preferred amount, capped at the item's discountable
+    # amount, if the item's order currency matches the preferred currency, otherwise
+    # it returns zero.
     class FlatRate < Spree::Calculator
       include PromotionCalculator
 
@@ -14,16 +15,18 @@ module SolidusPromotions
 
       # Computes the discount amount for an item.
       #
-      # Returns the preferred amount if the item's order currency matches the
-      # preferred currency, otherwise returns 0.
+      # Returns the preferred amount, capped at the item's discountable amount,
+      # if the item's order currency matches the preferred currency (ignoring
+      # case), otherwise returns 0.
       #
       # @param item [Object] The item to calculate the discount for (e.g., LineItem, Shipment, ShippingRate)
       #
-      # @return [BigDecimal] The discount amount (preferred_amount if currency matches, 0 otherwise)
+      # @return [BigDecimal] The discount amount
       #
       # @example Computing discount for a line item with matching currency
       #   calculator = FlatRate.new(preferred_amount: 10, preferred_currency: 'USD')
       #   line_item.order.currency # => 'USD'
+      #   line_item.discountable_amount # => 50.00
       #   calculator.compute_item(line_item) # => 10.0
       #
       # @example Computing discount for a line item with non-matching currency

@@ -11,25 +11,25 @@ module SolidusPromotions
     # If the item doesn't meet any tier threshold, the base amount is used. The discount is only
     # applied if the currency matches the preferred currency.
     #
-    # @example Use case: Volume-based shipping discounts
-    #   # Free shipping on orders over $100, $5 off on orders over $50
+    # @example Use case: Discounts on expensive line items
+    #   # Tiers are compared with each line item's discountable amount
     #   calculator = TieredFlatRate.new(
     #     preferred_base_amount: 0,
     #     preferred_tiers: {
-    #       50 => 5,   # $5 discount when amount >= $50
-    #       100 => 15  # $15 discount when amount >= $100
+    #       50 => 5,   # $5 off when amount >= $50
+    #       100 => 15  # $15 off when amount >= $100
     #     },
     #     preferred_currency: 'USD'
     #   )
     #
     # @example Use case: Bulk purchase incentives
-    #   # Tiered discounts for line items based on total line value
+    #   # Tiered discounts for line items based on each line item's discountable amount
     #   calculator = TieredFlatRate.new(
     #     preferred_base_amount: 2,
     #     preferred_tiers: {
-    #       25 => 5,    # $5 off when line total >= $25
-    #       50 => 12,   # $12 off when line total >= $50
-    #       100 => 30   # $30 off when line total >= $100
+    #       25 => 5,    # $5 off when amount >= $25
+    #       50 => 12,   # $12 off when amount >= $50
+    #       100 => 30   # $30 off when amount >= $100
     #     },
     #     preferred_currency: 'USD'
     #   )
@@ -96,16 +96,15 @@ module SolidusPromotions
 
       # Transforms preferred_tiers keys and values to BigDecimal for consistent calculations.
       #
-      # Converts all tier threshold keys and percentage values from strings or other numeric
+      # Converts all tier threshold keys and amount values from strings or other numeric
       # types to BigDecimal to ensure precision in monetary calculations.
       def transform_preferred_tiers
         preferred_tiers.transform_keys! { |key| key.to_s.to_d }
         preferred_tiers.transform_values! { |value| value.to_s.to_d }
       end
 
-      # Validates that preferred_tiers is a hash with positive numeric keys.
-      #
-      # Ensures the tiers preference is properly formatted for tier-based calculations.
+      # Validates that all keys (thresholds) of preferred_tiers are positive numbers.
+      # Values are not validated.
       def preferred_tiers_content
         unless preferred_tiers.keys.all? { |key| key.is_a?(Numeric) && key > 0 }
           errors.add(:base, :keys_should_be_positive_number)
