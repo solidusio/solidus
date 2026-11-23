@@ -35,8 +35,8 @@ class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
     # We propose different approaches, just pick the one that you prefer or
     # write your custom one.
     #
-    # The fist one (raising an exception) is the default but you can
-    # comment/uncomment the one then better fits you needs or use a
+    # The first one (raising an exception) is the default but you can
+    # comment/uncomment the one that better fits your needs or use a
     # custom class or callable object.
     #
     SolidusLegacyPromotions::Migrations::PromotionWithCodeHandlers::RaiseException

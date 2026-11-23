@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RenameBogusGateways < ActiveRecord::Migration[5.0]
-  # This migration was only performing a data migration useful updating to
+  # This migration was only performing a data migration useful when updating to
   # Solidus v2.3.
   # Once the update is done, this is no more required to run so we can clean
   # this file to just be a noop.
