@@ -104,7 +104,7 @@ RSpec.describe SolidusPromotions::PromotionMigrator do
   context "if our rules and actions are missing from the promotion map" do
     let(:promotion_map) do
       {
-        rules: {},
+        conditions: {},
         actions: {}
       }
     end
