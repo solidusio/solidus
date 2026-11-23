@@ -130,7 +130,7 @@ Now, create your own Promotion conversion map:
 require 'solidus_promotions/promotion_map'
 
 MY_PROMOTION_MAP = SolidusPromotions::PROMOTION_MAP.deep_merge(
-  rules: {
+  conditions: {
     MyRule => MyCondition
   }
 )
@@ -142,7 +142,7 @@ The value of the conversion map can also be a callable that takes the original p
 require 'solidus_promotions/promotion_map'
 
 MY_PROMOTION_MAP = SolidusPromotions::PROMOTION_MAP.deep_merge(
-  rules: {
+  conditions: {
     MyRule => ->(old_promotion_rule) {
       MyCondition.new(preferred_quantity: old_promotion_rule.preferred_count)
     }
