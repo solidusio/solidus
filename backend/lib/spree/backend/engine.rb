@@ -5,7 +5,7 @@ require "spree/backend/config"
 module Spree
   module Backend
     class Engine < ::Rails::Engine
-      # Leave initializer empty for backwards-compatability. Other apps
+      # Leave initializer empty for backwards-compatibility. Other apps
       # might still rely on this event.
       initializer("spree.backend.environment", before: :load_config_initializers) {}
 

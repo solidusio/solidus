@@ -10,7 +10,7 @@
   /**
     * Make the element a select2 dropdown used for finding Variants. By default, the search term will be
     * passed to the defined Spree::Config.variant_search_class by the controller with its defined scope.
-    * @param  {Object|undefined|null} options Options to be passed to select2. If null, the default options will be used.
+    * @param  {Object|undefined} options Options to be passed to select2. If undefined, the default options will be used.
     * @param  {Function|undefined} options.searchParameters Returns a hash object for params to merge on the select2 ajax request
     *                                                       Accepts an argument of the select2 search term. To use Ransack, define
     *                                                       variant_search_term as a falsy value, and q as the Ransack query. Note,

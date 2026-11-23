@@ -121,7 +121,7 @@ module Spree
     end
 
     # @!attribute [rw] admin_updated_navbar
-    #   @return [Boolean] Should the updated navbar be used in admin (default: +false+)
+    #   @return [Boolean] Should the updated navbar be used in admin (default: +false+, +true+ from load_defaults 4.2)
     #
     versioned_preference :admin_updated_navbar, :boolean, initial_value: false, boundaries: {"4.2.0" => true}
 
@@ -161,7 +161,6 @@ module Spree
     #     icon: 'file-text-o', # see https://fontawesome.com/v4/icons/
     #     url: :my_admin_reports_path,
     #     condition: -> { can?(:admin, MyReports) },
-    #     partial: 'spree/admin/shared/my_reports_sub_menu',
     #     match_path: '/reports',
     #   )
     # end

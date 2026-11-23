@@ -644,9 +644,9 @@ describe "Order Details", type: :feature, js: true do
 
   context "as Fakedispatch" do
     custom_authorization! do |_user|
-      # allow dispatch to :admin, :index, and :edit on Spree::Order
+      # allow dispatch to :admin, :edit, :index, and :show on Spree::Order
       can [:admin, :edit, :index, :show], Spree::Order
-      # allow dispatch to :index, :show, :create and :update shipments on the admin
+      # allow dispatch to :admin, :manage, :show and :ship shipments on the admin
       can [:admin, :manage, :show, :ship], Spree::Shipment
     end
 

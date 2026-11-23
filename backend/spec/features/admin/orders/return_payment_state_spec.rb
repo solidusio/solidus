@@ -18,7 +18,7 @@ describe "Return payment state spec" do
     # From an order with a shipped shipment
     visit "/admin/orders/#{order.number}/edit"
 
-    # Create a Return Authorization (select the Original Reimbursement type)
+    # Create a Return Authorization
     click_on "RMA"
     click_on "New RMA"
 

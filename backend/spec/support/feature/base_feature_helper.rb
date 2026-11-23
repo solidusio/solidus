@@ -18,7 +18,7 @@ module BaseFeatureHelper
 
     if subnav_text
       if Capybara.current_driver == :rack_test
-        # RackTest implementation of `hover`raises NotImplementedError
+        # RackTest implementation of `hover` raises NotImplementedError
         # noop
       else
         # Make the navigation visible with Selenium driver,

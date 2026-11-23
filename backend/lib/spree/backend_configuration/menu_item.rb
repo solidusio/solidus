@@ -22,8 +22,9 @@ module Spree
       # @param label [Symbol] The translation key for a label to use for this
       #   menu item.
       # @param children [Array<Spree::BackendConfiguration::MenuItem>] An array
-      # @param url [String|Symbol] A url where this link should send the user to or a Symbol representing a route name
-      # @param match_path [String, Regexp, callable] (nil) If the {url} to determine the active tab is ambigous
+      # @param url [String|Symbol|callable] A url where this link should send the user to, a Symbol representing a route name
+      #   or a callable returning the url
+      # @param match_path [String, Regexp, callable] (nil) If the {url} to determine the active tab is ambiguous
       #   you can pass a String, Regexp or callable to identify this menu item. The callable
       #   accepts a request object and returns a Boolean value.
       def initialize(

@@ -12,11 +12,11 @@
 /**
 This is a collection of javascript functions and whatnot
 under the spree namespace that do stuff we find helpful.
-Hopefully, this will evolve into a propper class.
+Hopefully, this will evolve into a proper class.
 **/
 
 Spree.ready(function() {
-  // Highlight hovered table column
+  // Highlight hovered table row
   $('table').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')

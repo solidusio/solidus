@@ -534,7 +534,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
         context "and the user is the current user" do
           before do
-            # We cannot stubt the spree_current_user method because it is the authenticated user
+            # We cannot stub the spree_current_user method because it is the authenticated user
             allow(user).to receive(:==).and_return(true)
           end
 
