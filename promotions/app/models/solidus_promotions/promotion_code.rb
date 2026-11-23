@@ -22,7 +22,7 @@ module SolidusPromotions
     # checking the count from completed orders.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
-    # @return true or false
+    # @return true or false, or nil if there is no usage limit
     def usage_limit_exceeded?(excluded_orders: [])
       return unless usage_limit
 
@@ -36,7 +36,7 @@ module SolidusPromotions
     # count if the counter is not kept up to date.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
-    # @return true or false
+    # @return true or false, or nil if there is no usage limit
     def usage_limit_exceeded_from_orders?(excluded_orders: [])
       return unless usage_limit
 

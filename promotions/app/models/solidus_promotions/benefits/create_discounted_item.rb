@@ -54,7 +54,7 @@ module SolidusPromotions
 
       def determine_item_quantity(order)
         # Integer division will floor automatically, which is what we want here:
-        # 1 Item, 2 needed: 1 * 1 / 2 => 0
+        # 1 Item, 2 needed: 1 / 2 * 1 => 0
         # 5 items, 2 preferred, 2 needed: 5 / 2 * 2 => 4
         applicable_line_items(order).sum(&:quantity) / preferred_necessary_quantity * preferred_quantity
       end

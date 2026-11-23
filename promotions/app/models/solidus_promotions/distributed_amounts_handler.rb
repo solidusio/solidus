@@ -18,7 +18,7 @@ module SolidusPromotions
     private
 
     # @private
-    # @return [Hash<Integer, BigDecimal>] a hash of line item IDs and their
+    # @return [Hash<LineItem, Money>] a hash of line items and their
     #   corresponding weighted adjustments
     def distributed_amounts
       line_items.zip(allocated_amounts).to_h

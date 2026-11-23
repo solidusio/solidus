@@ -4,11 +4,6 @@ module SolidusPromotions
   module Conditions
     # Promotion condition for ensuring an order contains a minimum quantity of
     # applicable items.
-    #
-    # This promotion condition is only compatible with the "all" match policy. It
-    # doesn't make a lot of sense to use it without that policy as it reduces
-    # it to a simple quantity check across the entire order which would be
-    # better served by an item total condition.
     class MinimumQuantity < Condition
       # TODO: Remove in Solidus 5
       include OrderLevelCondition
@@ -18,7 +13,8 @@ module SolidusPromotions
       preference :minimum_quantity, :integer, default: 1
 
       # Will look at all of the "applicable" line items in the order and
-      # determine if the sum of their quantity is greater than the minimum.
+      # determine if the sum of their quantity is greater than or equal to the
+      # minimum.
       #
       # "Applicable" items are ones that pass all eligibility checks of applicable conditions.
       #

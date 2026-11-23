@@ -17,7 +17,7 @@ module SolidusPromotions
 
     # Service object that checks whether a promotion is eligible for an order.
     # @!attribute [rw] eligibility_checker_class
-    #   @return [String] Defaults to "SolidusPromotions::PromotionEligibilityChecker".
+    #   @return [Class] Defaults to "SolidusPromotions::PromotionEligibilityChecker".
     class_name_attribute :eligibility_checker_class, default: "SolidusPromotions::PromotionEligibilityChecker"
 
     class_name_attribute :coupon_code_handler_class, default: "SolidusPromotions::PromotionHandler::Coupon"
@@ -27,7 +27,7 @@ module SolidusPromotions
     # You can customize this by creating your own normalizer class or by overriding
     # the existing SolidusPromotions::CouponCodeNormalizer class using a decorator.
     # @!attribute [rw] coupon_code_normalizer_class
-    #   @return [String] The class used to normalize coupon codes.
+    #   @return [Class] The class used to normalize coupon codes.
     #   Defaults to "SolidusPromotions::CouponCodeNormalizer".
     class_name_attribute :coupon_code_normalizer_class, default: "SolidusPromotions::CouponCodeNormalizer"
 

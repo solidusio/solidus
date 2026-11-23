@@ -13,7 +13,7 @@ module SolidusPromotions
   #
   # @example Getting lanes before the current one
   #   PromotionLane.current_lane = :post
-  #   PromotionLane.previous_lanes # => ["pre"]
+  #   PromotionLane.previous_lanes # => ["pre", "default"]
   #
   # @see ActiveSupport::CurrentAttributes
   class PromotionLane < ActiveSupport::CurrentAttributes

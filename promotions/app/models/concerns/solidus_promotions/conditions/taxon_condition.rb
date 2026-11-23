@@ -45,7 +45,7 @@ module SolidusPromotions
       # @return [Array<Array<Integer>>] array of arrays of taxon ids, one per root taxon
       # @example
       #   # For condition with taxons [10, 42]
-      #   condition.condition_taxon_ids_with_children
+      #   condition.taxon_ids_with_children
       #   # => [[10, 11, 12], [42, 43]]
       def taxon_ids_with_children
         @taxon_ids_with_children ||= load_taxon_ids_with_children

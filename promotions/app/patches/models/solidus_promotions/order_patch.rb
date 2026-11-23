@@ -32,7 +32,7 @@ module SolidusPromotions
 
     # This helper method excludes line items that are managed by an order benefit for the benefit
     # of calculators and benefits that discount normal line items. Line items that are managed by an
-    # order benefits handle their discounts themselves.
+    # order benefit handle their discounts themselves.
     def discountable_line_items
       line_items.reject(&:managed_by_order_benefit)
     end

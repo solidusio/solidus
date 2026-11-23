@@ -5,7 +5,7 @@ module SolidusPromotions
     # A calculator that distributes a fixed discount amount across line items based on their value.
     #
     # This calculator takes a preferred total discount amount and distributes it proportionally
-    # across applicable line items based on their prices. More expensive line items receive
+    # across applicable line items based on their discountable amounts. More expensive line items receive
     # a greater share of the discount.
     #
     # @example
@@ -22,7 +22,7 @@ module SolidusPromotions
       # Computes the weighted discount amount for a specific line item.
       #
       # The discount is calculated by distributing the preferred amount across all
-      # applicable line items, weighted by their prices. Returns 0 if:
+      # applicable line items, weighted by their discountable amounts. Returns 0 if:
       # - The line item is nil
       # - The currency doesn't match the preferred currency
       # - The line item is not in the list of applicable line items
