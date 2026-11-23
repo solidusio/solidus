@@ -7,22 +7,19 @@ module SolidusPromotions
   # promotable object (such as an order or line item). Each condition subclass implements
   # the eligibility logic and specifies what type of objects it can be applied to.
   #
-  # Conditions work at different levels:
-  # - Order-level conditions (include OrderLevelCondition): Check entire orders
-  # - Line item-level conditions (include LineItemLevelCondition): Check individual line items
-  # - Hybrid conditions (include LineItemApplicableOrderLevelCondition): Check orders but can also
-  #   filter which line items are eligible
+  # Conditions work at different levels, depending on the eligibility methods they define:
+  # - Order-level conditions (define `order_eligible?`): Check entire orders
+  # - Line item-level conditions (define `line_item_eligible?`): Check individual line items
+  # - Hybrid conditions (define both): Check orders and also filter which line items are eligible
   #
-  # @abstract Subclass and override {#applicable?} and {#eligible?} to implement
-  #   a custom condition.
+  # @abstract Subclass and define a public `<type>_eligible?` method for each
+  #   promotable class, e.g. `order_eligible?` for Spree::Order.
   #
   # @example Creating an order-level condition
   #   class MinimumPurchaseCondition < Condition
-  #     include OrderLevelCondition
-  #
   #     preference :minimum_amount, :decimal, default: 50.00
   #
-  #     def eligible?(order, _options = {})
+  #     def order_eligible?(order, _options = {})
   #       if order.item_total < preferred_minimum_amount
   #         eligibility_errors.add(:base, "Order total too low")
   #       end
@@ -32,12 +29,10 @@ module SolidusPromotions
   #
   # @example Creating a line item-level condition
   #   class SpecificProductCondition < Condition
-  #     include LineItemLevelCondition
-  #
   #     preference :product_id, :integer
   #
-  #     def eligible?(line_item, _options = {})
-  #       if line_item.product_id != preferred_product_id
+  #     def line_item_eligible?(line_item, _options = {})
+  #       if line_item.variant.product_id != preferred_product_id
   #         eligibility_errors.add(:base, "Wrong product")
   #       end
   #       eligibility_errors.empty?
@@ -55,12 +50,12 @@ module SolidusPromotions
     validate :possible_condition_for_benefit, if: -> { benefit.present? }
 
     class << self
-      # Returns the subset of conditions that can compute eligibility instances of the provided array of classes.
+      # Returns the configured condition classes that can compute eligibility for instances of any of the provided classes.
       #
       # @example SolidusPromotions::Condition.applicable_to([Spree::Order, Spree::LineItem])
       #
-      # @param [Array<Class>] An array of classes to compute eligibility for
-      # @return [Array<SolidusPromotions::Condition>] Conditions that can compute eligibility for the provided classes.
+      # @param classes [Array<Class>] An array of classes to compute eligibility for
+      # @return [Array<Class<SolidusPromotions::Condition>>]
       def applicable_to(classes)
         SolidusPromotions.config.conditions.select do |condition_class|
           (condition_class.instance_methods & classes.map { |k| eligible_method_for(k) }).any?
@@ -92,11 +87,11 @@ module SolidusPromotions
 
     # Determines if this condition can be applied to a given promotable object.
     #
-    # @param _promotable [Object] The object to check (e.g., Spree::Order, Spree::LineItem)
+    # @param promotable [Object] The object to check (e.g., Spree::Order, Spree::LineItem)
     #
     # @return [Boolean] true if this condition applies to the promotable type
     #
-    # @example Condition applicability
+    # @example A condition that only defines `order_eligible?`
     #   condition.applicable?(order)      # => true
     #   condition.applicable?(line_item)  # => false
     def applicable?(promotable)
@@ -105,13 +100,14 @@ module SolidusPromotions
 
     # Determines if the promotable object meets this condition's eligibility requirements.
     #
-    # This typically dispatches to a specific eligibility method defined on a subclass, such as
-    # `#order_eligible?` or `line_item_eligible?`.
+    # This dispatches to the eligibility method named after the promotable's class, such as
+    # `order_eligible?` or `line_item_eligible?`, which subclasses define.
     #
-    # @param _promotable [Object] The object to evaluate (e.g., Spree::Order, Spree::LineItem)
-    # @param _options [Hash] Additional options for eligibility checking
+    # @param promotable [Object] The object to evaluate (e.g., Spree::Order, Spree::LineItem)
+    # @param ... [args, kwargs] Additional arguments passed to the eligibility method
     #
     # @return [Boolean] true if the promotable meets the condition, false otherwise
+    # @raise [NotImplementedError] if the condition is not applicable to the promotable
     #
     # @see #eligibility_errors
     def eligible?(promotable, ...)
@@ -160,14 +156,14 @@ module SolidusPromotions
 
     # Returns an errors object for tracking eligibility failures.
     #
-    # When {#eligible?} determines that a promotable doesn't meet the condition,
+    # When an eligibility method determines that a promotable doesn't meet the condition,
     # it should add descriptive errors to this object. These errors are used to
     # provide feedback about why a promotion isn't being applied.
     #
     # @return [ActiveModel::Errors] An errors collection for this condition
     #
     # @example Adding an eligibility error
-    #   def eligible?(order, _options = {})
+    #   def order_eligible?(order, _options = {})
     #     if order.item_total < 50
     #       eligibility_errors.add(:base, "Minimum order is $50", error_code: :item_total_too_low)
     #     end
@@ -214,7 +210,7 @@ module SolidusPromotions
 
     # Validates that this condition type is allowed for the associated benefit.
     #
-    # Checks the benefit's {Benefit#applicable_conditions} to ensure this condition
+    # Checks the benefit class's {Benefit.applicable_conditions} to ensure this condition
     # type is compatible.
     def possible_condition_for_benefit
       benefit.class.applicable_conditions.include?(self.class) || errors.add(:type, :invalid_condition_type)
