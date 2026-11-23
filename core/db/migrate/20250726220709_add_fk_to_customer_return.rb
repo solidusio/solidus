@@ -6,7 +6,7 @@ class AddFkToCustomerReturn < ActiveRecord::Migration[7.0]
   def up
     # Uncomment the following code to remove orphaned records if this migration fails
     #
-    # say_with_time "Removing invalid adjustment reason IDs from adjustments table" do
+    # say_with_time "Removing customer returns with an invalid stock location ID" do
     #   Spree::CustomerReturn.where.not(stock_location_id: nil).left_joins(:stock_location).where(spree_stock_locations: { id: nil }).delete_all
     # end
 
@@ -16,7 +16,7 @@ class AddFkToCustomerReturn < ActiveRecord::Migration[7.0]
       say <<~MSG
         ⚠️ Foreign key constraint failed when adding :spree_customer_returns => :spree_stock_locations.
         To fix this:
-          1. Uncomment the code that removes invalid adjustment reason IDs from the spree_customer_returns table.
+          1. Uncomment the code that removes orphaned records.
           2. Rerun the migration.
         Offending error: #{e.cause.class} - #{e.cause.message}
       MSG

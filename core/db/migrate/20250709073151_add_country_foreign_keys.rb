@@ -47,7 +47,7 @@ class AddCountryForeignKeys < ActiveRecord::Migration[7.0]
     end
     # Uncomment the following code to remove orphaned records if this migration fails
     #
-    # say_with_time "Deleting orphaned prices (country ID without corresponding country)" do
+    # say_with_time "Resetting the country of orphaned prices (country ISO without corresponding country)" do
     #   Spree::Price.where.not(country_iso: nil).left_joins(:country).where(spree_countries: { iso: nil }).update_all(country_iso: Spree::Config.default_country_iso)
     # end
 
