@@ -1,5 +1,5 @@
-# frozent_string_literal: true
-#
+# frozen_string_literal: true
+
 class AddFkToCustomerReturn < ActiveRecord::Migration[7.0]
   FOREIGN_KEY_VIOLATION_ERRORS = %w[PG::ForeignKeyViolation Mysql2::Error SQLite3::ConstraintException]
 
