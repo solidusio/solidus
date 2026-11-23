@@ -245,12 +245,12 @@ module SolidusPromotions
     end
     deprecate :level, deprecator: Spree.deprecator
 
-    # Returns the set of condition classes that can still be attached to this benefit.
-    # Already-persisted conditions are excluded.
+    # Returns the condition classes that can still be attached to this benefit.
+    # The classes of already-persisted conditions are excluded.
     #
-    # @return [Set<Class<SolidusPromotions::Condition>>]
+    # @return [Array<Class<SolidusPromotions::Condition>>]
     def available_conditions
-      self.class.applicable_conditions - conditions.select(&:persisted?)
+      self.class.applicable_conditions - conditions.select(&:persisted?).map(&:class)
     end
 
     # Returns the calculators allowed for this benefit type.
