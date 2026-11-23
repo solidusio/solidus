@@ -1,0 +1,18 @@
+<%= page do %>
+  <%= page_header do %>
+    <%= page_header_back(back_url) %>
+    <%= page_header_title(title) %>
+  <% end %>
+
+  <%= render component("ui/panel").new do |panel| %>
+    <% panel.with_section(wide: true, high: true) do %>
+      <ol class="flex flex-col w-full bg-gray-25">
+        <%= render component("taxonomies/show/taxon").new(
+          taxon: @taxonomy.root,
+          taxonomy: @taxonomy,
+          prefix: "1",
+        ) %>
+      </ol>
+    <% end %>
+  <% end %>
+<% end %>

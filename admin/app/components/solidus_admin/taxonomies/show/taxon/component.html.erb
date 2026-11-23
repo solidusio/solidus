@@ -1,0 +1,27 @@
+<%= tag.li(**container_attributes) do %>
+  <div class="bg-white h-12 flex items-center border border-gray-100 rounded-sm hover:bg-gray-50 py-2 leading-none">
+    <span aria-roledescription="<%= t(".reorder", name:) %>" class="px-4" draggable="true">
+      <%= render component("ui/icon").new(
+        name: "draggable",
+        class: "w-6 h-6 my-4 cursor-grab handle fill-gray-500")
+       %>
+    </span>
+
+    <span class="select-none">
+      <span class="px-4 w-16"><%= position %>.</span>
+      <span role="listitem"><%= name %></span>
+    </span>
+  </div>
+
+  <% children = @taxon.children %>
+  <%= tag.ol(class: "bg-gray-25 flex flex-col pt-2", data: list_data) do %>
+    <% children.each_with_index do |child, index| %>
+      <%= render component("taxonomies/show/taxon").new(
+        taxon: child,
+        taxonomy: @taxonomy,
+        prefix: "#{@prefix}.#{index + 1}",
+        indent: true
+      ) %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -4,3 +4,5 @@ en:
       title: "Taxonomies"
       destroy:
         success: "Taxonomies were successfully removed."
+      show:
+        no_taxons: "No taxons in this taxonomy."
