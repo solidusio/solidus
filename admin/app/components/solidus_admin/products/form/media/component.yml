@@ -10,3 +10,4 @@ en:
   select: "Select"
   batch_actions:
     set_as_master: "Set as master images"
+    destroy: "Delete"

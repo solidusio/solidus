@@ -20,7 +20,17 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
     }
   end
 
-  def batch_actions = []
+  def batch_actions
+    [
+      {
+        label: t(".batch_actions.destroy"),
+        action: solidus_admin.product_images_path(product),
+        method: :delete,
+        icon: "delete-bin-7-line",
+        require_confirmation: true
+      }
+    ]
+  end
 
   def columns
     [

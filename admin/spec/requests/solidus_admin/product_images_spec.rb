@@ -85,5 +85,21 @@ RSpec.describe "SolidusAdmin::ProductImagesController", type: :request do
       expect(response).to redirect_to(solidus_admin.product_path(product))
       expect(response).to have_http_status(:see_other)
     end
+
+    context "with batch delete (array of ids)" do
+      let!(:image2) { create(:image, viewable: product.master) }
+
+      it "destroys all selected images" do
+        expect {
+          delete solidus_admin.product_images_path(product), params: {id: [image.id, image2.id]}
+        }.to change(Spree::Image, :count).by(-2)
+      end
+
+      it "redirects to the product show page" do
+        delete solidus_admin.product_images_path(product), params: {id: [image.id, image2.id]}
+        expect(response).to redirect_to(solidus_admin.product_path(product))
+        expect(response).to have_http_status(:see_other)
+      end
+    end
   end
 end

@@ -21,7 +21,11 @@ SolidusAdmin::Engine.routes.draw do
       put :activate
     end
 
-    resources :images, only: [:new, :create, :destroy], controller: :product_images
+    resources :images, only: [:new, :create, :destroy], controller: :product_images do
+      collection do
+        delete :destroy
+      end
+    end
     resources :taxons, only: [:new, :create], controller: :product_taxons
   end
 

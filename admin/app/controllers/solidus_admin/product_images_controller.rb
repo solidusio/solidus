@@ -2,8 +2,7 @@
 
 module SolidusAdmin
   class ProductImagesController < SolidusAdmin::BaseController
-    before_action :load_product, only: [:new, :create]
-    before_action :load_image, only: [:destroy]
+    before_action :load_product, only: [:new, :create, :destroy]
 
     def new
       @image = @product.master.images.new
@@ -32,7 +31,11 @@ module SolidusAdmin
     end
 
     def destroy
-      @image.destroy
+      images = Spree::Image.where(id: Array.wrap(params[:id]))
+      count = images.size
+      images.destroy_all
+
+      flash[:notice] = t("solidus_admin.products.images.destroy.success", count:)
 
       redirect_to @product, status: :see_other
     end
@@ -41,11 +44,6 @@ module SolidusAdmin
 
     def load_product
       @product = Spree::Product.friendly.find(params[:product_id])
-    end
-
-    def load_image
-      @image = Spree::Image.find(params[:id])
-      @product = @image.viewable.product
     end
 
     def image_params

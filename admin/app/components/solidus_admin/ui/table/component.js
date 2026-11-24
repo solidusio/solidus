@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import { debounce } from "solidus_admin/utils"
 
+
 export default class extends Controller {
   static targets = [
     "checkbox",
@@ -22,6 +23,12 @@ export default class extends Controller {
   static values = {
     mode: { type: String, default: "scopes" },
     sortable: { type: Boolean, default: false },
+    batchActionsFormId: String,
+    batchActionsFormToken: String,
+  }
+
+  connect() {
+    this.ensureBatchActionsForm()
   }
 
   initialize() {
@@ -170,5 +177,24 @@ export default class extends Controller {
           this.selectedRows().length > 1 ? button.dataset.resourcePlural : button.dataset.resourceSingular,
         );
     });
+  }
+
+  ensureBatchActionsForm() {
+    const id = this.batchActionsFormIdValue;
+    if (!id) return;
+    if (document.getElementById(id)) return;
+
+    const form = document.createElement("form");
+    form.id = id;
+    form.method = "post";
+    form.hidden = true;
+
+    /* To keep batch action forms idempotent, use `data-turbo-temporary`
+     * to prevent a stale form from being cached with the document. (For example,
+     * if the user visits a page by clicking their browser's "back" button,
+     * they won't encounter an error when submitting a stale form.)
+     ***/
+    form.setAttribute("data-turbo-temporary", "");
+    document.body.appendChild(form);
   }
 }
