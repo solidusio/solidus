@@ -23,10 +23,6 @@ class CreateSpreeStoreCreditReasonsTable < ActiveRecord::Migration[5.1]
 
     add_column :spree_store_credit_events, :store_credit_reason_id, :integer
     execute "update spree_store_credit_events set store_credit_reason_id = update_reason_id"
-
-    # TODO: table spree_store_credit_update_reasons and column
-    # column spree_store_credit_update_reasons.update_reason_id
-    # must be dropped in a future Solidus release
   end
 
   def down

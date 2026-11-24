@@ -7,9 +7,9 @@ class SolidusOneFour < ActiveRecord::Migration[5.0]
     # already exists. Assume the best.
     return if table_exists?(:spree_addresses)
 
-    # this table should not technically exist in the database (as its provided by auth_devise),
-    # but spree_api depends on it existing. This defininition comes from solidus_auth_devise's first migration,
-    # and creates a table equivolent to it
+    # this table should not technically exist in the database (as it's provided by auth_devise),
+    # but spree_api depends on it existing. This definition comes from solidus_auth_devise's first migration,
+    # and creates a table equivalent to it
     create_table "spree_users", force: true do |t|
       t.string "crypted_password", limit: 128
       t.string "salt", limit: 128
