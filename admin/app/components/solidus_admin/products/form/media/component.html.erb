@@ -1,0 +1,13 @@
+<%= render component("ui/panel").new(title: t(".title")) do |panel| %>
+  <% panel.with_section(high: true, wide: true) do %>
+    <div class="pb-2">
+      <%= render component("ui/table").new(
+        id: :media,
+        data: table_data,
+        embedded: true
+      ) %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= turbo_frame_tag :new_product_image %>

@@ -1,0 +1,10 @@
+en:
+  title: "Media"
+  image: "Image"
+  date_added: "Date added"
+  size: "Size"
+  featured: "Featured"
+  add_files: "Add files"
+  select: "Select"
+  batch_actions:
+    set_as_master: "Set as master images"

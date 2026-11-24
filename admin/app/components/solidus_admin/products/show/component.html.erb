@@ -30,13 +30,7 @@
 
         <%= render component("products/form/seo").new(form: f) %>
 
-        <%= render component("ui/panel").new(title: t(".media")) do |panel| %>
-          <% panel.with_action(
-            name: t(".manage_images"),
-            scheme: :secondary,
-            href: spree.admin_product_images_path(@product)
-          ) %>
-        <% end %>
+        <%= render component("products/form/media").new(form: f) %>
 
         <%= render component("products/form/pricing").new(form: f) %>
 
