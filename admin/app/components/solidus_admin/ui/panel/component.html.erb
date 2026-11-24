@@ -23,10 +23,14 @@
 
   <% if @title %>
     <%= render_section do %>
-      <h2>
-        <span class="font-semibold text-base"><%= @title %></span>
-        <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
-      </h2>
+      <div class="flex items-center justify-between">
+        <h2>
+          <span class="font-semibold text-base"><%= @title %></span>
+          <%= render component("ui/toggletip").new(text: @title_hint) if @title_hint %>
+        </h2>
+
+        <%= tag.div(header_action) if header_action? %>
+      </div>
     <% end %>
   <% end %>
 

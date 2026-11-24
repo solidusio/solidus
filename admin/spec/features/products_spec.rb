@@ -20,7 +20,6 @@ describe "Products", type: :feature do
     find_row("Just a product").click
 
     expect(page).to have_current_path("/admin/products/just-a-prod")
-    expect(page).to have_content("Manage images")
   end
 
   it "can delete multiple products at once", js: true do

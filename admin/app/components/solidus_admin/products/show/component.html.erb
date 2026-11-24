@@ -30,7 +30,9 @@
 
         <%= render component("products/form/seo").new(form: f) %>
 
-        <%= render component("products/form/media").new(form: f) %>
+        <%= render component("turbo/target_frame").new(:product_media_frame, source: :media_frame) do %>
+          <%= render component("products/form/media").new(form: f) %>
+        <% end %>
 
         <%= render component("products/form/pricing").new(form: f) %>
 
@@ -162,3 +164,4 @@
 <% end %>
 
 <%= turbo_frame_tag :new_product_category, target: :product_organization_frame %>
+<%= turbo_frame_tag :media_frame, target: :product_media_frame  %>

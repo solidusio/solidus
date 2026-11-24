@@ -5,6 +5,7 @@ en:
   date_added: "Date added"
   size: "Size"
   featured: "Featured"
+  reorder: "Reorder"
   add_files: "Add files"
   select: "Select"
   batch_actions:
