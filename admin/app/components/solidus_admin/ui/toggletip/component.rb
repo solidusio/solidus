@@ -12,10 +12,16 @@ class SolidusAdmin::UI::Toggletip::Component < SolidusAdmin::BaseComponent
     }
   }.freeze
 
-  def initialize(text:, position: :above, **attributes)
+  def initialize(text:, position: :above, label: nil, icon: "question-fill", **attributes)
     @text = text
     @position = position
+    @label = label
+    @icon = icon
     @attributes = attributes
     @attributes[:class] = "relative inline-block #{@attributes[:class]}"
   end
+
+  attr_reader :label
+
+  attr_reader :icon
 end
