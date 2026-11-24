@@ -39,7 +39,14 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
         }
       },
       {
-        header: "",
+        header: t(".filename"),
+        data: ->(image) {
+          render component("products/form/filename_info")
+            .new(filename: image.attachment.filename)
+        }
+      },
+      {
+        header: -> { tag.span(t(".featured"), class: "sr-only") },
         data: ->(image) {
           return unless image.position == 1
           render component("ui/badge").new(name: t(".featured"), color: :green)

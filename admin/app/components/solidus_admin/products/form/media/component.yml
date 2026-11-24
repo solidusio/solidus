@@ -1,6 +1,7 @@
 en:
   title: "Media"
   image: "Image"
+  filename: "Filename"
   date_added: "Date added"
   size: "Size"
   featured: "Featured"
