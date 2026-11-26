@@ -92,10 +92,7 @@ module Spree
               # Sequence of before_transition to: :complete
               # calls matter so that we do not process payments
               # until validations have passed
-              before_transition to: :complete, do: :validate_line_item_availability
-              before_transition to: :complete, do: :ensure_promotions_eligible
-              before_transition to: :complete, do: :ensure_line_item_variants_are_not_deleted
-              before_transition to: :complete, do: :ensure_inventory_units
+              before_transition to: :complete, do: :order_ready_for_complete
               if states[:payment]
                 before_transition to: :complete, do: :process_payments_before_complete
               end

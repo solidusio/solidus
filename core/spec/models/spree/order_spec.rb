@@ -2303,4 +2303,58 @@ RSpec.describe Spree::Order, type: :model do
       expect(Spree::Adjustment.exists?(adj.id)).to eq(false)
     end
   end
+
+  describe "#order_ready_for_complete" do
+    let(:order) { build_stubbed(:order) }
+
+    it "returns true if every check passes" do
+      stub_spree_preferences(order_payment_ready_checks: [->(_order) { true }, ->(_order) { true }])
+
+      expect(order.order_ready_for_complete).to eq(true)
+    end
+
+    it "treats symbols in the config checks as callable methods on the order" do
+      allow(order).to receive(:ensure_inventory_units).and_return(true)
+      stub_spree_preferences(order_payment_ready_checks: [:ensure_inventory_units])
+
+      order.order_ready_for_complete
+
+      expect(order).to have_received(:ensure_inventory_units)
+    end
+
+    it 'accepts abritrary procs in the config checks' do
+      received = nil
+      stub_spree_preferences(order_payment_ready_checks: [->(o) { received = o }])
+
+      order.order_ready_for_complete
+
+      expect(received).to eq(order)
+    end
+
+    it "stops at the first check that returns false" do
+      later_check_called = false
+      stub_spree_preferences(order_payment_ready_checks: [
+        ->(_order) { false },
+        ->(_order) { later_check_called = true }
+      ])
+
+      order.order_ready_for_complete
+
+      expect(later_check_called).to eq(false)
+    end
+
+    context "with the default checks" do
+      let(:order) { create(:order_with_line_items) }
+
+      it "returns true for a valid order" do
+        expect(order.order_ready_for_complete).to eq(true)
+      end
+
+      it "raises when a line item has insufficient stock" do
+        order.line_items.first.variant.stock_items.update_all(count_on_hand: 0, backorderable: false)
+
+        expect { order.order_ready_for_complete }.to raise_error(Spree::Order::InsufficientStock)
+      end
+    end
+  end
 end

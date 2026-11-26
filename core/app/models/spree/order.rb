@@ -733,6 +733,45 @@ module Spree
       end
     end
 
+    def order_ready_for_complete
+      Spree::Config.order_payment_ready_checks.none? { it.to_proc.call(self) == false }
+    end
+
+    def validate_line_item_availability
+      availability_validator = Spree::Config.stock.availability_validator_class.new
+
+      # NOTE: This code assumes that the availability validator will return
+      # true for success and false for failure. This is not normally the
+      # behaviour of validators, as the framework only cares about the
+      # population of the errors, not the return value of the validate method.
+      raise InsufficientStock unless line_items.all? { |line_item|
+        availability_validator.validate(line_item)
+      }
+    end
+
+    def ensure_promotions_eligible
+      Spree::Config.promotions.order_adjuster_class.new(self).call(persist: false)
+
+      if promo_total_changed?
+        restart_checkout_flow
+        recalculate
+        errors.add(:base, I18n.t("spree.promotion_total_changed_before_complete"))
+      end
+      errors.empty?
+    end
+
+    def ensure_inventory_units
+      if has_checkout_step?("delivery")
+        inventory_validator = Spree::Config.stock.inventory_validator_class.new
+
+        errors = line_items.map { |line_item|
+          inventory_validator.validate(line_item)
+        }.compact
+
+        raise InsufficientStock if errors.any?
+      end
+    end
+
     private
 
     def process_payments_before_complete
@@ -791,41 +830,6 @@ module Spree
     # @note This method was called require_email before.
     def email_required?
       true unless new_record? || ["cart", "address"].include?(state)
-    end
-
-    def ensure_inventory_units
-      if has_checkout_step?("delivery")
-        inventory_validator = Spree::Config.stock.inventory_validator_class.new
-
-        errors = line_items.map { |line_item|
-          inventory_validator.validate(line_item)
-        }.compact
-
-        raise InsufficientStock if errors.any?
-      end
-    end
-
-    def ensure_promotions_eligible
-      Spree::Config.promotions.order_adjuster_class.new(self).call(persist: false)
-
-      if promo_total_changed?
-        restart_checkout_flow
-        recalculate
-        errors.add(:base, I18n.t("spree.promotion_total_changed_before_complete"))
-      end
-      errors.empty?
-    end
-
-    def validate_line_item_availability
-      availability_validator = Spree::Config.stock.availability_validator_class.new
-
-      # NOTE: This code assumes that the availability validator will return
-      # true for success and false for failure. This is not normally the
-      # behaviour of validators, as the framework only cares about the
-      # population of the errors, not the return value of the validate method.
-      raise InsufficientStock unless line_items.all? { |line_item|
-        availability_validator.validate(line_item)
-      }
     end
 
     def ensure_line_items_present

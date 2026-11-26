@@ -273,6 +273,13 @@ module Spree
     #   @return [Integer] Maximum length that value can have in customer and admin metadata column (default: +256+)
     preference :meta_data_max_value_length, :integer, default: 256
 
+    preference :order_payment_ready_checks, :array, default: [
+      :validate_line_item_availability,
+      :ensure_promotions_eligible,
+      :ensure_line_item_variants_are_not_deleted,
+      :ensure_inventory_units
+    ]
+
     # @!attribute [rw] properties_per_page
     #   @return [Integer] Properties to show per-page in the admin (default: +15+)
     preference :properties_per_page, :integer, default: 15
