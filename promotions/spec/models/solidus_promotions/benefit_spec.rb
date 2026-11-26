@@ -326,6 +326,28 @@ RSpec.describe SolidusPromotions::Benefit do
     it { is_expected.to include(SolidusPromotions::Conditions::User) }
   end
 
+  describe "#available_conditions" do
+    subject { benefit.available_conditions }
+
+    let(:promotion) { create(:solidus_promotion, :with_adjustable_benefit) }
+    let(:benefit) { promotion.benefits.first }
+
+    it { is_expected.to match_array(benefit.class.applicable_conditions) }
+
+    context "with a persisted condition" do
+      before { benefit.conditions << SolidusPromotions::Conditions::User.new }
+
+      it { is_expected.not_to include(SolidusPromotions::Conditions::User) }
+      it { is_expected.to include(SolidusPromotions::Conditions::FirstOrder) }
+    end
+
+    context "with an unsaved condition" do
+      before { benefit.conditions.build(type: "SolidusPromotions::Conditions::User") }
+
+      it { is_expected.to include(SolidusPromotions::Conditions::User) }
+    end
+  end
+
   describe "#possible_conditions", :silence_deprecations do
     subject { described_class.new.possible_conditions }
 
