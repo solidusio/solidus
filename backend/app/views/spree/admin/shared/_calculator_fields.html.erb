@@ -17,9 +17,7 @@
       <div class="js-calculator-preferences" data-calculator-type="<%= calculator_class %>">
         <%= f.fields_for :calculator, calculator do |calculator_form| %>
           <% calculator.admin_form_preference_names.each do |name| %>
-            <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(name)}",
-              form: calculator_form, attribute: "preferred_#{name}",
-              label: t(name, scope: 'spree', default: name.to_s.humanize) %>
+            <%= preference_field_for(calculator_form, name) %>
           <% end %>
         <% end %>
       </div>

@@ -64,6 +64,11 @@ RSpec.describe Spree::Preference, type: :model do
       expect(pref.value).to eq "amazing-password"
     end
 
+    it ":select" do
+      pref = round_trip_preference(:select_key, :value)
+      expect(pref.value).to eq :value
+    end
+
     it ":any" do
       pref = round_trip_preference(:any_key, [1, 2, :something])
       expect(pref.value).to eq [1, 2, :something]

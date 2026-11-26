@@ -106,6 +106,7 @@ describe "Payment Methods", :js, type: :feature do
           expect(field?("Bogus Password Preference")).to eq true
           expect(field?("Bogus String Preference")).to eq true
           expect(field?("Bogus Text Preference")).to eq true
+          expect(field?("Bogus Select Preference")).to eq true
 
           solidus_select "Check Payments", from: "Type"
 
@@ -118,6 +119,7 @@ describe "Payment Methods", :js, type: :feature do
           expect(field?("Bogus Password Preference")).to eq false
           expect(field?("Bogus String Preference")).to eq false
           expect(field?("Bogus Text Preference")).to eq false
+          expect(field?("Bogus Select Preference")).to eq false
         end
 
         fill_in "Server", with: "australia-test-1"
@@ -195,6 +197,7 @@ describe "Payment Methods", :js, type: :feature do
         fill_in "Bogus Integer Preference", with: "999"
         fill_in "Bogus Password Preference", with: "another-secret-value"
         fill_in "Bogus String Preference", with: "string-setting"
+        solidus_select "Option Four", from: "Bogus Select Preference"
 
         click_on "Save"
 
@@ -208,6 +211,7 @@ describe "Payment Methods", :js, type: :feature do
         expect(field_value("Bogus Integer Preference")).to eq "999"
         expect(field_value("Bogus Password Preference")).not_to be_blank
         expect(field_value("Bogus String Preference")).to eq "string-setting"
+        expect(select_field_value("Bogus Select Preference")).to eq "Option Four"
       end
 
       it "updates the payment method type" do
@@ -228,6 +232,7 @@ describe "Payment Methods", :js, type: :feature do
           expect(field?("Bogus Password Preference")).to eq true
           expect(field?("Bogus String Preference")).to eq true
           expect(field?("Bogus Text Preference")).to eq true
+          expect(field?("Bogus Select Preference")).to eq true
 
           solidus_select "Check Payments", from: "Type"
 
@@ -240,6 +245,7 @@ describe "Payment Methods", :js, type: :feature do
           expect(field?("Bogus Password Preference")).to eq false
           expect(field?("Bogus String Preference")).to eq false
           expect(field?("Bogus Text Preference")).to eq false
+          expect(field?("Bogus Select Preference")).to eq false
         end
 
         click_on "Save"
@@ -261,6 +267,10 @@ describe "Payment Methods", :js, type: :feature do
         expect(page).to have_content("can't be blank")
       end
     end
+  end
+
+  def select_field_value(label)
+    find_field(label, visible: :all).sibling("div").text
   end
 
   def field_value(label)

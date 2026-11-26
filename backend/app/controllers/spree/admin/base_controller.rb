@@ -6,6 +6,7 @@ module Spree
       include Spree::Core::ControllerHelpers::Timezone
 
       helper "spree/admin/navigation"
+      helper "spree/admin/preference_fields"
       layout "spree/layouts/admin"
 
       before_action :authorize_admin
