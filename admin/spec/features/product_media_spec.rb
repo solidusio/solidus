@@ -12,6 +12,25 @@ describe "Product Media Management", :js, type: :feature do
   let(:product) { @product }
 
   context "uploading images" do
+    it "shows an error when uploading an unsupported file type" do
+      visit "/admin/products/test-product"
+
+      expect(page).to have_content(/No images found/i)
+      expect(page).to have_link("Add files")
+
+      click_on "Add files"
+      attach_file("image_attachment", File.join(
+        Spree::Core::Engine.root, "lib/spree/testing_support/fixtures/file.txt"
+      ), make_visible: true)
+
+      expect(page).to have_css("dialog", visible: :visible)
+      expect(page).to have_content("Upload failed")
+      expect(page).to have_content("file.txt: Attachment is not an image")
+      expect(page).to have_content("Add files")
+      expect(page).to have_content("or drag and drop them here")
+      expect(Spree::Image.where(viewable: product.master).count).to eq(0)
+    end
+
     it "uploads a single image and shows it in the media table" do
       visit "/admin/products/test-product"
 

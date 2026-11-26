@@ -15,21 +15,35 @@ module SolidusAdmin
     def create
       attachments = (image_params[:attachment] || []).reject(&:blank?)
 
-      if attachments.any?
-        @images = attachments.map { @product.master.images.new(attachment: _1) }
+      if attachments.none?
+        render component("products/show").new(product: @product),
+          status: :unprocessable_entity
+        return
+      end
 
-        if @images.all?(&:save)
-          respond_to do |format|
-            format.html { redirect_to @product, status: :see_other }
-            format.turbo_stream
-          end
-        else
-          @image = @images.first
-          render component("products/show").new(product: @product), status: :unprocessable_entity
+      @images = attachments.map { Spree::Image.new(viewable: @product.master, attachment: _1) }
+
+      if @images.all?(&:save)
+        respond_to do |format|
+          format.html { redirect_to @product, status: :see_other }
+          format.turbo_stream
         end
       else
-        @image = @product.master.images.new
-        render component("products/show").new(product: @product), status: :unprocessable_entity
+        flash.now[:error] = build_attachment_error_messages(@images)
+
+        respond_to do |format|
+          format.html {
+            render component("products/show").new(product: @product),
+              status: :unprocessable_entity
+          }
+          format.turbo_stream {
+            render turbo_stream: turbo_stream.replace(
+              :new_product_image,
+              component("products/show/images/new").new(product: @product, flash:)
+            ),
+              status: :unprocessable_entity
+          }
+        end
       end
     end
 
@@ -75,5 +89,12 @@ module SolidusAdmin
     end
 
     def moveable_class = Spree::Image
+
+    def build_attachment_error_messages(images)
+      @images.filter_map { |image|
+        next unless image.errors.any?
+        image.errors.full_messages.map { |message| "#{image.filename}: #{message}" }
+      }.flatten.join("<br>")
+    end
   end
 end
