@@ -1,4 +1,4 @@
-<%= turbo_frame_tag @id do %>
+<%= turbo_frame_tag @id, class: "w-full" do %>
   <%= content %>
   <%= turbo_stream.update(@source, nil) if @source %>
   <%= turbo_stream.replace :flash_toasts, component("layout/flashes/toasts").new(toasts:) %>
