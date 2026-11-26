@@ -79,7 +79,7 @@ en:
         total_excluding_vat: Pre-Tax Total
       spree/image:
         alt: Alternative Text
-        attachment: Filename
+        attachment: Attachment
       spree/inventory_unit:
         state: State
       spree/legacy_user:
