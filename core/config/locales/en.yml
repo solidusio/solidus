@@ -486,6 +486,10 @@ en:
             base:
               card_expired: Card has expired
               expiry_invalid: Card expiration is invalid
+        spree/image:
+          attributes:
+            attachment:
+              content_type_not_supported: not a supported file type
         spree/inventory_unit:
           attributes:
             base:
