@@ -136,6 +136,7 @@
       <%= "data-sortable-animation-value=#{@sortable.animation}" if @sortable&.animation %>
       <%= "data-sortable-page-value=#{@data.page}" if @data&.page %>
       <%= "data-sortable-per-page-value=#{@data.per_page}" if @data&.per_page %>
+      <%= "data-sortable-turbo-frame-value=#{@sortable.turbo_frame}" if @sortable&.turbo_frame %>
     >
       <% @data.rows.each do |row| %>
         <% row_url = @data.url&.call(row) %>

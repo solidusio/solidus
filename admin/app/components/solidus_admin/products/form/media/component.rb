@@ -28,7 +28,8 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
         solidus_admin.move_product_image_path(product, image)
       },
       param: "position",
-      handle: ".handle"
+      handle: ".handle",
+      turbo_frame: :product_media_frame
     }
   end
 

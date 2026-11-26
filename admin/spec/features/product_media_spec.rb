@@ -212,6 +212,24 @@ describe "Product Media Management", :js, type: :feature do
         expect(first_image.position).to eq(2)
       end
     end
+
+    it "updates the featured badge to the new first image after drag and drop" do
+      visit "/admin/products/test-product"
+
+      expect(page).to have_css("tbody tr", text: "Featured")
+
+      rows = find_all("tbody tr")
+      third_row = rows.last
+      first_row = rows.first
+      third_image_id = third_row.find("input[type='checkbox']").value
+      draggable_handle = third_row.find(".handle")
+
+      draggable_handle.drag_to(first_row)
+
+      expect(page).to have_css("tbody tr:first-child", text: "Featured")
+      expect(page).to have_css("tbody tr", text: "Featured", count: 1)
+      expect(find("tbody tr:first-child input[type='checkbox']").value).to eq(third_image_id)
+    end
   end
 
   context "editing an image" do

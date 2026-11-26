@@ -2,7 +2,7 @@
 
 class SolidusAdmin::UI::Table::Component < SolidusAdmin::BaseComponent
   Column = Struct.new(:header, :data, :col, :wrap, keyword_init: true)
-  Sortable = Struct.new(:url, :param, :animation, :handle, keyword_init: true)
+  Sortable = Struct.new(:url, :param, :animation, :handle, :turbo_frame, keyword_init: true)
   Scope = Struct.new(:label, :name, :default, keyword_init: true)
   Filter = Struct.new(:label, :combinator, :attribute, :predicate, :options, keyword_init: true)
   BatchAction = Struct.new(:label, :icon, :action, :require_confirmation, :method, keyword_init: true) # rubocop:disable Lint/StructNewOverride
