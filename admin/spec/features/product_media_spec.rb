@@ -173,6 +173,47 @@ describe "Product Media Management", :js, type: :feature do
     end
   end
 
+  context "reordering images" do
+    before do
+      create(:image, viewable: product.master, position: 1)
+      create(:image, viewable: product.master, position: 2)
+      create(:image, viewable: product.master, position: 3)
+    end
+
+    it "reorders images via drag and drop" do
+      visit "/admin/products/test-product"
+
+      within_section "Media" do
+        rows = find_all("tbody tr")
+        expect(rows.count).to eq 3
+
+        initial_positions = rows.map { |row| row.find("input[type='checkbox']").value }
+        first_image_id = initial_positions.first
+        third_image_id = initial_positions.last
+
+        first_image = Spree::Image.find(first_image_id)
+        third_image = Spree::Image.find(third_image_id)
+        expect(first_image.position).to eq(1)
+        expect(third_image.position).to eq(3)
+
+        third_row = rows.last
+        first_row = rows.first
+        draggable_handle = third_row.find(".handle")
+
+        draggable_handle.drag_to(first_row)
+
+        # Sorry for the sleep. There are no changes to the DOM that can
+        # easily be asserted on.
+        sleep 0.5
+
+        third_image.reload
+        first_image.reload
+        expect(third_image.position).to eq(1)
+        expect(first_image.position).to eq(2)
+      end
+    end
+  end
+
   def within_section(heading, &block)
     section = find("h2", text: heading).ancestor("[data-controller='ui--panel']")
     within(section) do

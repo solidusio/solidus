@@ -2,7 +2,9 @@
 
 module SolidusAdmin
   class ProductImagesController < SolidusAdmin::BaseController
-    before_action :load_product, only: [:new, :create, :destroy]
+    include SolidusAdmin::Moveable
+
+    before_action :load_product, only: [:new, :create, :destroy, :move]
 
     def new
       @image = @product.master.images.new
@@ -53,5 +55,7 @@ module SolidusAdmin
     def authorization_subject
       Spree::Image
     end
+
+    def moveable_class = Spree::Image
   end
 end

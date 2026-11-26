@@ -16,7 +16,19 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
       rows: images,
       class: Spree::Image,
       batch_actions: batch_actions,
-      columns: columns
+      columns: columns,
+      page: nil,
+      per_page: nil
+    }
+  end
+
+  def sortable_options
+    {
+      url: ->(image) {
+        solidus_admin.move_product_image_path(product, image)
+      },
+      param: "position",
+      handle: ".handle"
     }
   end
 
@@ -69,6 +81,14 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
       {
         header: t(".size"),
         data: ->(image) { human_size(image.attachment.byte_size) if image.attachment.attached? }
+      },
+      {
+        header: -> { tag.span(t(".reorder"), class: "sr-only") },
+        data: ->(_) {
+          component("ui/icon")
+            .new(name: "draggable", class: "h-5 cursor-pointer handle")
+        },
+        col: {class: "w-12"}
       }
     ]
   end
