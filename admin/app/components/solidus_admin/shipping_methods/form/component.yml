@@ -1,0 +1,11 @@
+en:
+  details: "Details"
+  zones: "Zones"
+  shipping_categories: "Shipping Categories"
+  tax_category: "Tax Category"
+  availability: "Availability"
+  stores: "Stores"
+  stock_locations_placeholder: "Choose stock locations"
+  organization: "Organization"
+  taxation: "Taxation"
+  pricing: "Pricing"

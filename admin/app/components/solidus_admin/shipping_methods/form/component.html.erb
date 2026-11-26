@@ -1,0 +1,129 @@
+<%= form_for @shipping_method, url: @url, html: { id: @id } do |f| %>
+  <%= page_with_sidebar do %>
+    <%= page_with_sidebar_main do %>
+      <%= render component("ui/panel").new(title: t(".details")) do |panel| %>
+        <% panel.with_section(class: "flex flex-col gap-4") do %>
+          <div class="flex gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :name, required: true) %>
+            <%= render component("ui/forms/field").text_field(f, :admin_name) %>
+          </div>
+          <div class="flex gap-4 w-full">
+            <%= render component("ui/forms/field").text_field(f, :code) %>
+            <%= render component("ui/forms/field").text_field(f, :carrier) %>
+            <%= render component("ui/forms/field").text_field(f, :service_level) %>
+          </div>
+          <%= render component("ui/forms/field").text_field(
+            f,
+            :tracking_url,
+            placeholder: t('spree.tracking_url_placeholder')
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render component("ui/panel").new(title: t('.pricing')) do |panel| %>
+        <% panel.with_section do %>
+          <%= render component("calculators/form").new(
+            form: f,
+            calculators: @calculators
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render component("ui/panel").new(title: t(".taxation")) do |panel| %>
+        <% panel.with_section do %>
+          <%= render component("ui/forms/field").select(
+            f.object_name,
+            :tax_category_id,
+            Spree::TaxCategory.pluck(:name, :id),
+            object: @shipping_method,
+            value: @shipping_method.tax_category_id,
+            include_blank: true,
+            label: t(".tax_category")
+          ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= page_with_sidebar_aside do %>
+      <%= render component("ui/panel").new(title: t('.availability')) do |panel| %>
+        <% panel.with_section do %>
+          <div class="flex flex-col gap-4">
+            <%= hidden_field_tag "shipping_method[store_ids][]", "" %>
+            <%= render component("ui/forms/field").select(
+              f.object_name,
+              :store_ids,
+              Spree::Store.pluck(:name, :id),
+              object: @shipping_method,
+              value: @shipping_method.store_ids,
+              multiple: true,
+              label: t(".stores")
+            ) %>
+
+            <%= hidden_field_tag "shipping_method[zone_ids][]", "" %>
+            <%= render component("ui/forms/field").select(
+              f.object_name,
+              :zone_ids,
+              Spree::Zone.pluck(:name, :id),
+              object: @shipping_method,
+              value: @shipping_method.zone_ids,
+              multiple: true,
+              label: t(".zones")
+            ) %>
+
+            <div data-controller="shipping-methods--form">
+              <%= render component("ui/forms/checkbox").new(
+                object_name: f.object_name,
+                method: :available_to_all,
+                checked: f.object.available_to_all,
+                data: {
+                  "shipping-methods--form-target": "stockLocationCheckbox",
+                  "action": "change->shipping-methods--form#toggle"
+                }
+              ) do |checkbox| %>
+                <%= checkbox.with_label(text: Spree::ShippingMethod.human_attribute_name(:available_to_all), weight: :semibold, size: :xs) %>
+              <% end %>
+
+              <div data-shipping-methods--form-target="stockLocations">
+                <%= hidden_field_tag "shipping_method[stock_location_ids][]", "" %>
+                <%= render component("ui/forms/field").select(
+                  f.object_name,
+                  :stock_location_ids,
+                  Spree::StockLocation.order_default.pluck(:name, :id),
+                  object: @shipping_method,
+                  value: @shipping_method.stock_location_ids,
+                  multiple: true,
+                  label: nil,
+                  placeholder: t('.stock_locations_placeholder')
+                ) %>
+              </div>
+            </div>
+
+            <%= render component("ui/forms/checkbox").new(
+              object_name: f.object_name,
+              method: :available_to_users,
+              checked: f.object.available_to_users
+            ) do |checkbox| %>
+              <%= checkbox.with_label(text: Spree::ShippingMethod.human_attribute_name(:available_to_users), weight: :semibold, size: :xs) %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= render component("ui/panel").new(title: t(".organization")) do |panel| %>
+        <% panel.with_section do %>
+          <%= hidden_field_tag "shipping_method[shipping_category_ids][]", "" %>
+          <%= render component("ui/forms/field").select(
+            f.object_name,
+            :shipping_category_ids,
+            Spree::ShippingCategory.pluck(:name, :id),
+            object: @shipping_method,
+            value: @shipping_method.shipping_category_ids,
+            multiple: true,
+            label: t(".shipping_categories"),
+            required: true
+          ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
