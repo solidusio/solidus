@@ -5,7 +5,7 @@ module Spree
     module Rules
       # This is the basic rule that ships with Solidus that avoids storing in
       # session the current path for login/logout/signup routes, avoiding possibly
-      # infinte redirects.
+      # infinite redirects.
       module AuthenticationRule
         AUTHENTICATION_ROUTES = %w[spree_signup_path spree_login_path spree_logout_path]
 

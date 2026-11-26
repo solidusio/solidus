@@ -45,33 +45,33 @@ module Spree
 
       # Allows getting and setting rules. Deprecated.
       # @!attribute [rw] rules
-      # @return [Array] a set of rules
+      # @return [Spree::Core::ClassConstantizer::Set] a set of rules
       add_class_set :rules
       deprecate :rules, :rules=, deprecator: Spree.deprecator
 
       # Allows getting and setting actions. Deprecated.
       # @!attribute [rw] actions
-      # @return [Array] a set of actions
+      # @return [Spree::Core::ClassConstantizer::Set] a set of actions
       add_class_set :actions
       deprecate :actions, :actions=, deprecator: Spree.deprecator
 
       # Allows getting and setting shipping actions. Deprecated.
       # @!attribute [rw] shipping_actions
-      # @return [Array] a set of shipping_actions
+      # @return [Spree::Core::ClassConstantizer::Set] a set of shipping_actions
       add_class_set :shipping_actions
       deprecate :shipping_actions, :shipping_actions=, deprecator: Spree.deprecator
 
-      # Allows getting an setting calculators for actions. Deprecated.
+      # Allows getting and setting calculators for actions. Deprecated.
       # @!attribute [rw] calculators
       # @return [Spree::Core::NestedClassSet] a set of calculators
       add_nested_class_set :calculators
       deprecate :calculators, :calculators=, deprecator: Spree.deprecator
 
-      # Allows providing a different promotion shipping promotion handler.
+      # Allows providing a different shipping promotion handler.
       # @!attribute [rw] shipping_promotion_handler_class
       # @see Spree::NullPromotionHandler
       # @return [Class] an object that conforms to the API of
-      #   the standard promotion finder class
+      #   the standard shipping promotion handler class
       #   Spree::NullPromotionHandler.
       class_name_attribute :shipping_promotion_handler_class, default: "Spree::NullPromotionHandler"
       deprecate :shipping_promotion_handler_class, deprecator: Spree.deprecator
@@ -85,7 +85,7 @@ module Spree
       #   Spree::NullPromotionAdvertiser.
       class_name_attribute :advertiser_class, default: "Spree::NullPromotionAdvertiser"
 
-      # !@attribute [rw] promotion_api_attributes
+      # @!attribute [rw] promotion_api_attributes
       #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion
       preference :promotion_api_attributes, :array, default: []
     end

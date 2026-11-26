@@ -28,7 +28,7 @@ module SolidusPromotions
         line_item_match_policy = preferred_match_policy.in?(%w[any all]) ? "include" : "exclude"
         line_item_condition = LineItemTaxon.new(taxons:, preferred_match_policy: line_item_match_policy)
 
-        # Hydrate the instance cache with our @taxon_ids_with_children cache\
+        # Hydrate the instance cache with our @taxon_ids_with_children cache
         line_item_condition.taxons_ids_with_children = taxon_ids_with_children
 
         result = line_item_condition.line_item_eligible?(line_item)

@@ -28,7 +28,7 @@ end
 module SolidusStorefront; end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
+# in spec/support/solidus_storefront/ and its subdirectories.
 Dir["#{__dir__}/support/solidus_storefront/**/*.rb"].sort.each { |f| require f }
 
 RSpec.configure do |config|
@@ -70,7 +70,7 @@ RSpec.configure do |config|
     WARN
   end
 
-  # We currently have examples wherein we mock or stub method that do not exist on
+  # We currently have examples wherein we mock or stub methods that do not exist on
   # the real objects.
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = false

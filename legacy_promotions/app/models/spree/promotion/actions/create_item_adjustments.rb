@@ -31,8 +31,7 @@ module Spree
           results.any?
         end
 
-        # Ensure a negative amount which does not exceed the sum of the order's
-        # item_total and ship_total
+        # Ensure a negative amount which does not exceed the adjustable's amount
         def compute_amount(adjustable)
           order = adjustable.is_a?(Order) ? adjustable : adjustable.order
           return 0 unless promotion.line_item_actionable?(order, adjustable)
@@ -71,12 +70,12 @@ module Spree
           true
         end
 
-        # Tells us if there if the specified promotion is already associated with the line item
-        # regardless of whether or not its currently eligible. Useful because generally
+        # Tells us if the specified promotion is already associated with the line item
+        # regardless of whether or not it's currently eligible. Useful because generally
         # you would only want a promotion action to apply to line item no more than once.
         #
-        # Receives an adjustment +source+ (here a PromotionAction object) and tells
-        # if the order has adjustments from that already
+        # Receives an +adjustable+ (here a LineItem object) and tells
+        # if it has adjustments from this action already
         def promotion_credit_exists?(adjustable)
           adjustments.where(adjustable_id: adjustable.id).exists?
         end

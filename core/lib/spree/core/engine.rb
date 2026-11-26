@@ -30,7 +30,7 @@ module Spree
         app.config.spree = Spree::Config.environment
       end
 
-      # leave empty initializers for backwards-compatability. Other apps might still rely on these events
+      # leave empty initializers for backwards-compatibility. Other apps might still rely on these events
       initializer("spree.default_permissions", before: :load_config_initializers) {}
       initializer("spree.register.calculators", before: :load_config_initializers) {}
       initializer("spree.register.stock_splitters", before: :load_config_initializers) {}

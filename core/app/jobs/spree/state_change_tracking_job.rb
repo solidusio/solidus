@@ -5,9 +5,9 @@ module Spree
   # This avoids performance impact during checkout and prevents
   # callback-related issues with recent versions of the state_machines gem.
   class StateChangeTrackingJob < BaseJob
-    # @param stateful [GlobalId] The stateful object to track changes for
-    # @param previous_state [String] The previous state of the order
-    # @param current_state [String] The current state of the order
+    # @param stateful [ActiveRecord::Base] The stateful object to track changes for
+    # @param previous_state [String] The previous state of the stateful object
+    # @param current_state [String] The current state of the stateful object
     # @param transition_timestamp [Time] When the state transition occurred
     # @param name [String] The element name of the state transition being
     #   tracked. It defaults to the `stateful` model element name.

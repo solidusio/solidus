@@ -6,7 +6,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   # @param combinator [String] The combining logic for filter options.
   # @param attribute [String] The database attribute the filter is based on.
   # @param predicate [String] The comparison logic for the filter (e.g., "eq" for equals).
-  # @param options [Proc] A callable that returns filter options.
+  # @param options [Array<Array>] The filter options, as pairs of label and value.
   # @param index [Integer] The index of the filter.
   # @param form [String] The form in which the filter resides.
   def initialize(
@@ -41,7 +41,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   # @param type [Symbol] The type of the form attribute.
   # @param value [String] The value of the form attribute.
   # @param opt_index [Integer] The index of the option, if applicable.
-  # @return [FormAttribute] The built form attribute.
+  # @return [Attribute] The built form attribute.
   def build(type, value, opt_index = nil)
     suffix = SUFFIXES[type] % {index: opt_index || @index}
     Attribute.new("#{@group}#{suffix}", value)
@@ -50,7 +50,7 @@ class SolidusAdmin::UI::Table::RansackFilter::Component < SolidusAdmin::BaseComp
   # Determines if a given value should be checked based on the params.
   #
   # @param value [String] The value of the checkbox.
-  # @return [Boolean] Returns true if the checkbox should be checked, false otherwise.
+  # @return [Boolean, nil] Returns true if the checkbox should be checked, false or nil otherwise.
   def checked?(value)
     conditions = params.dig(:q, :g, @index.to_s, :c)
     conditions&.values&.any? { |c| c[:v]&.include?(value.to_s) }

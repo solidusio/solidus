@@ -3,11 +3,11 @@
 # This module will add all the necessary harness to a ViewComponent::Preview
 # to be able to render Solidus components.
 #
-# Adds a `current_component` helper method that will return the the component class
+# Adds a `current_component` helper method that will return the component class
 # based on the preview class name. The component class name is inferred by removing
 # the `Preview` suffix from the preview class name.
 #
-# Adds a `helpers` method that will return the helpers module from SolidusAdmin::BaseController
+# Adds a `helpers` method that will return the helpers proxy from SolidusAdmin::BaseController
 # making them available to the preview class (which is not a standard controller). All helpers
 # are available to the preview class via `method_missing`.
 #
@@ -48,7 +48,7 @@ module SolidusAdmin::Preview
       @current_component ||= begin
         # Lookbook sets the @preview instance variable with a PreviewEntity instance, while ViewComponent uses the preview class.
         # Lookbook's PreviewEntity has `#preview_class_name` as part of its public api.
-        # Since we want to support both ways or rendering components, we need to check.
+        # Since we want to support both ways of rendering components, we need to check.
         preview_class_name = @preview.respond_to?(:preview_class_name) ? @preview.preview_class_name : @preview.name
         preview_class_name.chomp("Preview").constantize
       end

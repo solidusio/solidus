@@ -39,8 +39,9 @@ module Spree
       end
     end
 
-    # Sets this taxons permalink to a valid url encoded string based on its
-    # name and its parents permalink (if present.)
+    # Sets this taxon's permalink to a valid url encoded string based on the
+    # last part of its permalink (or its name if the permalink is blank) and
+    # its parent's permalink (if present.)
     def set_permalink
       permalink_tail = permalink.present? ? permalink.split("/").last : name
       self.permalink_part = Spree::Config.taxon_url_parametizer_class.parameterize(permalink_tail)
@@ -64,7 +65,7 @@ module Spree
       permalink
     end
 
-    # @return [ActiveRecord::Relation<Spree::Product>] the active products the
+    # @return [ActiveRecord::Relation<Spree::Product>] the active products that
     #   belong to this taxon
     def active_products
       products.not_deleted.available
@@ -102,7 +103,7 @@ module Spree
       # child node so that its resulting position matches the observable
       # 0-indexed position.
       #
-      # NOTE: no :position column needed - awesom_nested_set doesn't handle the
+      # NOTE: no :position column needed - awesome_nested_set doesn't handle the
       # reordering if you bring your own :order_column.
       move_to_child_with_index(parent, idx.to_i) unless new_record?
     end
@@ -126,7 +127,7 @@ module Spree
     end
 
     # override for {FriendlyId::Slugged#normalize_friendly_id} method,
-    # to control over the slug format
+    # to control the slug format
     def normalize_friendly_id(value)
       return "" if value.blank?
 

@@ -136,8 +136,8 @@ module Spree
     ]
 
     # Intentionally leaving off email here to prevent privilege escalation
-    # by changing a user with higher priveleges' email to one a lower-priveleged
-    # admin owns. Creating a user with an email is handled separate at the
+    # by changing a user with higher privileges' email to one a lower-privileged
+    # admin owns. Creating a user with an email is handled separately at the
     # controller level.
     @@user_attributes = [:password, :password_confirmation, :timezone, customer_metadata: {}]
 

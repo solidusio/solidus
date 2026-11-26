@@ -397,7 +397,7 @@ describe "Users", type: :feature do
 
     context :total do
       it_behaves_like "a sortable attribute" do
-        # Since Spree::Money renders each piece of the total in it's own span,
+        # Since Spree::Money renders each piece of the total in its own span,
         # we are just checking the dollar total matches. Mainly due to how
         # RSpec matcher appear_before works since it can't index the broken up total.
         let(:text_match_1) { order.total.to_i.to_s }

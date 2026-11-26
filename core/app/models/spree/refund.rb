@@ -34,7 +34,7 @@ module Spree
       end
     end
 
-    # Sets this price's amount to a new value, parsing it if the new value is
+    # Sets this refund's amount to a new value, parsing it if the new value is
     # a string.
     #
     # @param price [String, #to_d] a new amount

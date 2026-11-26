@@ -45,14 +45,14 @@ module Spree
       where(country: Spree::Country.default).build(*args, &block)
     end
 
-    # @return [Address] an equal address already in the database or a newly created one
+    # @return [Address] an equal address already in the database or a new unsaved one
     def self.factory(attributes)
       full_attributes = value_attributes(column_defaults, new(attributes).attributes)
       find_or_initialize_by(full_attributes)
     end
 
     # @return [Address] address from existing address plus new_attributes as diff
-    # @note, this may return existing_address if there are no changes to value equality
+    # @note this may return existing_address if there are no changes to value equality
     def self.immutable_merge(existing_address, new_attributes)
       # Ensure new_attributes is a sanitized hash
       new_attributes = sanitize_for_mass_assignment(new_attributes)
@@ -115,7 +115,7 @@ module Spree
     end
 
     # @todo Remove this from the public API if possible.
-    # @return [true] whether or not the address requires a phone number to be
+    # @return [Boolean] whether or not the address requires a phone number to be
     #   present
     def require_phone?
       Spree::Config.address_requires_phone

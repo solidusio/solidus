@@ -6,7 +6,7 @@ module Spree
   # rather than one at a time.
   #
   # To use an alternative tax calculator do this:
-  #    Spree::ReturnAuthorization.reimbursement_tax_calculator = calculator_object
+  #    Spree::Reimbursement.reimbursement_tax_calculator = calculator_object
   # where `calculator_object` is an object that responds to "call" and accepts a reimbursement object
 
   class ReimbursementTaxCalculator

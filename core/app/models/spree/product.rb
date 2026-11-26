@@ -156,7 +156,7 @@ module Spree
     # Ensures option_types and product_option_types exist for keys in
     # option_values_hash.
     #
-    # @return [Array] the option_values
+    # @return [Array<Integer>, nil] the option type ids
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
       required_option_type_ids = option_values_hash.keys.map(&:to_i)
@@ -228,7 +228,7 @@ module Spree
     # @param variant_scope [ActiveRecord_Associations_CollectionProxy] scope to filter the variants
     # used to determine the applied option_types
     # @return [Hash<Spree::OptionType, Array<Spree::OptionValue>>] all option types and option values
-    # associated with the products variants grouped by option type
+    # associated with the product's variants grouped by option type
     def variant_option_values_by_option_type(variant_scope = nil)
       option_value_scope = Spree::OptionValuesVariant.joins(:variant)
         .where(spree_variants: {product_id: id})
@@ -274,7 +274,7 @@ module Spree
     # The number of on-hand stock items; Infinity if any variant does not track
     # inventory.
     #
-    # @return [Fixnum, Infinity]
+    # @return [Integer, Float]
     def total_on_hand
       variants_including_master.sum do |variant|
         Spree::Config.stock.quantifier_class.new(variant).total_on_hand
@@ -294,7 +294,7 @@ module Spree
     # The gallery for the product, which represents all the images
     # associated with it, including those on its variants
     #
-    # @return [Spree::Gallery] the media for a variant
+    # @return [Spree::Gallery] the media for a product
     def gallery
       @gallery ||= Spree::Config.product_gallery_class.new(self)
     end

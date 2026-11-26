@@ -25,7 +25,7 @@ class Spree::UnitCancel < Spree::Base
     )
   end
 
-  # This method is used by Adjustment#update to recalculate the cost.
+  # This method is used by #adjust! to calculate the adjustment amount.
   def compute_amount(line_item)
     raise "Adjustable does not match line item" unless line_item == inventory_unit.line_item
 

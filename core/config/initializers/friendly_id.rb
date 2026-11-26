@@ -33,7 +33,7 @@ FriendlyId.defaults do |config|
   #    MyModel.find('foo')
   #
   # This is significantly more convenient but may not be appropriate for
-  # all applications, so you must explicity opt-in to this behavior. You can
+  # all applications, so you must explicitly opt-in to this behavior. You can
   # always also configure it on a per-model basis if you prefer.
   #
   # Something else to consider is that using the :finders addon boosts
@@ -66,7 +66,7 @@ FriendlyId.defaults do |config|
   #  ### Controlling when slugs are generated
   #
   # As of FriendlyId 5.0, new slugs are generated only when the slug field is
-  # nil, but if you're using a column as your base method can change this
+  # nil, but if you're using a column as your base method you can change this
   # behavior by overriding the `should_generate_new_friendly_id` method that
   # FriendlyId adds to your model. The change below makes FriendlyId 5.0 behave
   # more like 4.0.
@@ -78,7 +78,7 @@ FriendlyId.defaults do |config|
   # }
   #
   # FriendlyId uses Rails's `parameterize` method to generate slugs, but for
-  # languages that don't use the Roman alphabet, that's not usually suffient. Here
+  # languages that don't use the Roman alphabet, that's not usually sufficient. Here
   # we use the Babosa library to transliterate Russian Cyrillic slugs to ASCII. If
   # you use this, don't forget to add "babosa" to your Gemfile.
   #

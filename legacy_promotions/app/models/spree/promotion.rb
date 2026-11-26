@@ -168,8 +168,8 @@ module Spree
       specific_rules = rules.select { |rule| rule.applicable?(promotable) }
       return [] if specific_rules.none?
 
-      # If there are rules for this promotion, but no rules for this
-      # particular promotable, then the promotion is ineligible by default.
+      # If any of the rules for this particular promotable is not eligible,
+      # then the promotion is ineligible.
       unless specific_rules.all?(&eligible)
         @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
         return nil
@@ -190,7 +190,7 @@ module Spree
     # usage count.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
-    # @return true or false
+    # @return true or false, or nil if there is no usage limit
     def usage_limit_exceeded?(excluded_orders: [])
       usage_count(excluded_orders:) >= usage_limit if usage_limit
     end
@@ -203,14 +203,14 @@ module Spree
     # count if the counter is not kept up to date.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
-    # @return true or false
+    # @return true or false, or nil if there is no usage limit
     def usage_limit_exceeded_from_orders?(excluded_orders: [])
       usage_count_from_orders(excluded_orders:) >= usage_limit if usage_limit
     end
 
     # Number of times the promotion has been used overall
     #
-    # If a usage limit is set, this method uses the usage claims counter. Which
+    # If a usage limit is set, this method uses the usage claims counter, which
     # is more efficient. Otherwise, it falls back to counting the number of
     # completed orders that have used the promotion.
     #

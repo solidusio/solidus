@@ -3,7 +3,7 @@
 module Spree
   module Admin
     module OrdersHelper
-      # Renders all the extension partials that may have been specified in the extensions
+      # Renders a button for each event that can currently be fired on the order
       #
       # @return [ActiveSupport::SafeBuffer] the string returned is already html-safe
       def event_links
@@ -22,7 +22,7 @@ module Spree
         safe_join(links, "&nbsp;".html_safe)
       end
 
-      # Addresss Verification System response code
+      # Address Verification System response code
       #
       # @see https://en.wikipedia.org/wiki/Address_verification_service
       #
@@ -58,7 +58,7 @@ module Spree
         }
       end
 
-      # Addresss Verification System response code
+      # Card Verification Value response code
       #
       # @see https://developer.visa.com/request_response_codes#card_verification2_results
       # @see https://developer.paypal.com/api/nvp-soap/AVSResponseCodes/#cvv2-error-response-codes

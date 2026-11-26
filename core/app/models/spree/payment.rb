@@ -69,7 +69,7 @@ module Spree
     # @return [String] this payment's currency
     delegate :currency, to: :order
 
-    # @return [Spree::Money] this amount of this payment as money object
+    # @return [Spree::Money] the amount of this payment as money object
     def money
       Spree::Money.new(amount, {currency:})
     end
@@ -112,7 +112,7 @@ module Spree
       sa
     end
 
-    # @return [Object] the source of ths payment
+    # @return [Object] the source of this payment
     def payment_source
       res = source.is_a?(Payment) ? source.source : source
       res || payment_method

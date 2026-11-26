@@ -39,7 +39,7 @@ module SolidusPromotions
 
     private
 
-    # Returns discount objects added by promotion in lanes that come before the current lane.
+    # Returns discount objects added by promotions in lanes that come before the current lane.
     #
     # This method retrieves all discounts that were applied by promotion lanes with a priority
     # lower than the current lane, effectively getting discounts from earlier processing stages.

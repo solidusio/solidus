@@ -8,7 +8,7 @@
 # setters:
 # a.color = :blue
 # a[:color] = :blue
-# a.set :color = :blue
+# a.set color: :blue
 # a.preferred_color = :blue
 #
 # getters:
@@ -28,7 +28,7 @@ module Spree
   class AppConfiguration < Preferences::Configuration
     include Spree::Core::EnvironmentExtension
 
-    # Preferences (alphabetized to more easily lookup particular preferences)
+    # Preferences
 
     # @!attribute [rw] address_requires_phone
     #   @return [Boolean] should phone number be required (default: +true+)
@@ -100,7 +100,7 @@ module Spree
 
     # @!attribute [rw] auto_capture
     #   @note Setting this to true is not recommended. Performing an authorize
-    #     and later capture has far superior error handing. VISA and MasterCard
+    #     and later capture has far superior error handling. VISA and MasterCard
     #     also require that shipments are sent within a certain time of the card
     #     being charged.
     #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
@@ -144,12 +144,12 @@ module Spree
     #   @return [Boolean] Request company field for billing and shipping addresses. (default: +false+)
     preference :company, :boolean, default: false
 
-    # @!attribute [rw] completable_order_created_cutoff
-    #   @return [Integer] the number of days to look back for created orders which get returned to the user as last completed
+    # @!attribute [rw] completable_order_created_cutoff_days
+    #   @return [Integer] the number of days to look back for created orders which get returned to the user as last incomplete
     preference :completable_order_created_cutoff_days, :integer, default: nil
 
-    # @!attribute [rw] completable_order_created_cutoff
-    #   @return [Integer] the number of days to look back for updated orders which get returned to the user as last completed
+    # @!attribute [rw] completable_order_updated_cutoff_days
+    #   @return [Integer] the number of days to look back for updated orders which get returned to the user as last incomplete
     preference :completable_order_updated_cutoff_days, :integer, default: nil
 
     # @!attribute [rw] credit_to_new_allocation
@@ -174,7 +174,7 @@ module Spree
 
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
-    #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
+    #   @return [String] Two-letter ISO code of a {Spree::Country} to be assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: "US"
 
     # @!attribute [rw] default_email_regexp
@@ -188,7 +188,7 @@ module Spree
 
     # @!attribute [rw] inventory_cache_threshold
     #   Only invalidate product caches when the count on hand for a stock item
-    #   falls below or rises about the inventory_cache_threshold.  When undefined, the
+    #   falls below or rises above the inventory_cache_threshold.  When undefined, the
     #   product caches will be invalidated anytime the count on hand is changed.
     #   @return [Integer]
     preference :inventory_cache_threshold, :integer
@@ -197,7 +197,7 @@ module Spree
     #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
     preference :layout, :string, default: "spree/layouts/spree_application"
 
-    # !@attribute [rw] line_item_comparison_hooks
+    # @!attribute [rw] line_item_comparison_hooks
     #   @return [Array<Symbol>] An array of methods to call on {Spree::Order} to determine if a line item is equal to another
     #   (default: +[]+)
     #   @example
@@ -359,15 +359,15 @@ module Spree
     # @!attribute [rw] track_inventory_levels
     #   Determines whether to track on_hand values for variants / products. If
     #   you do not track inventory, or have effectively unlimited inventory for
-    #   all products you can turn this on.
-    #   @return [] Track on_hand values for variants / products. (default: true)
+    #   all products you can turn this off.
+    #   @return [Boolean] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
     # Other configurations
 
     # Allows restricting what currencies will be available.
     #
-    # @!attribute [r] available_currencies
+    # @!attribute [rw] available_currencies
     #   @return [Array] An array of available currencies from Money::Currency.all
     attr_writer :available_currencies
     def available_currencies
@@ -390,7 +390,7 @@ module Spree
     delegate :pricing_options_class, to: :variant_price_selector_class
 
     # Shortcut for the default pricing options
-    # @return [variant_price_selector_class] An instance of the pricing options class with default desired
+    # @return [pricing_options_class] An instance of the pricing options class with default desired
     #   attributes
     def default_pricing_options
       pricing_options_class.new
@@ -495,7 +495,7 @@ module Spree
     #
     # @!attribute [rw] order_contents_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::OrderContents.
+    #   Spree::SimpleOrderContents.
     class_name_attribute :order_contents_class, default: "Spree::SimpleOrderContents"
 
     # Allows providing your own class for shipping an order.
@@ -516,7 +516,7 @@ module Spree
     # Allows providing your own class for canceling payments.
     #
     # @!attribute [rw] payment_canceller
-    # @return [Class] a class instance that responds to `cancel!(payment)`
+    # @return [Class] a class instance that responds to `cancel(payment)`
     attr_writer :payment_canceller
     def payment_canceller
       @payment_canceller ||= Spree::Payment::Cancellation.new(
@@ -559,7 +559,7 @@ module Spree
     #
     # @!attribute [rw] current_store_selector_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::CurrentStoreSelector
+    #   Spree::StoreSelector::ByServerName
     class_name_attribute :current_store_selector_class, default: "Spree::StoreSelector::ByServerName"
 
     # Allows providing your own class for creating urls on taxons
@@ -573,14 +573,14 @@ module Spree
     #
     # @!attribute [rw] variant_gallery_class
     # @return [Class] a class that implements an `images` method and returns an
-    # Enumerable of images adhering to the present_image_class interface
+    # Enumerable of images
     class_name_attribute :variant_gallery_class, default: "Spree::Gallery::VariantGallery"
 
     # Allows providing your own class for image galleries on Products
     #
     # @!attribute [rw] product_gallery_class
     # @return [Class] a class that implements an `images` method and returns an
-    # Enumerable of images adhering to the present_image_class interface
+    # Enumerable of images
     class_name_attribute :product_gallery_class, default: "Spree::Gallery::ProductGallery"
 
     # Allows switching attachment library for Image
@@ -590,7 +590,6 @@ module Spree
     #
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
-    # Enumerable of images adhering to the present_image_class interface
     class_name_attribute :image_attachment_module, default: "Spree::Image::ActiveStorageAttachment"
 
     # @!attribute [rw] allowed_image_mime_types
@@ -615,7 +614,7 @@ module Spree
     # `{ mini: '48x48>',
     #    small: '400x400>',
     #    product: '680x680>',
-    #    large: '1200x1200>' } is the default.
+    #    large: '1200x1200>' }` is the default.
     #
     # @return [Hash]
     class_name_attribute :product_image_styles, default: {mini: "48x48>",
@@ -653,13 +652,11 @@ module Spree
     # @return [Symbol]
     class_name_attribute :taxon_image_style_default, default: :mini
 
-    # @!attribute [rw] taxon_styles
+    # @!attribute [rw] taxon_image_styles
     #
     # Defines taxon styles/sizes hash for styles
-    # `{ mini: '48x48>',
-    #    small: '400x400>',
-    #    product: '680x680>',
-    #    large: '1200x1200>' } is the default.
+    # `{ mini: '32x32>',
+    #    normal: '128x128>' }` is the default.
     #
     # @return [Hash]
     class_name_attribute :taxon_image_styles, default: {mini: "32x32>", normal: "128x128>"}
@@ -671,7 +668,6 @@ module Spree
     #
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
-    # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: "Spree::Taxon::ActiveStorageAttachment"
 
     # Allows changing the default behavior for redirects when a user is not authorized

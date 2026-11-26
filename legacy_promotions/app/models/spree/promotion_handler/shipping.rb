@@ -2,7 +2,7 @@
 
 module Spree
   module PromotionHandler
-    # Used for activating promotions with shipping rules
+    # Used for activating promotions with shipping actions
     class Shipping
       attr_reader :order
       attr_accessor :error, :success

@@ -9,13 +9,11 @@ module Spree
   # @see Spree::PermissionSets
   #
   # @example Adding order, product, and user display to customer service users.
-  #   Spree::RoleConfiguration.configure do |config|
-  #     config.assign_permissions :customer_service, [
-  #       Spree::PermissionSets::OrderDisplay,
-  #       Spree::PermissionSets::UserDisplay,
-  #       Spree::PermissionSets::ProductDisplay
-  #     ]
-  #   end
+  #   Spree::Config.roles.assign_permissions :customer_service, [
+  #     Spree::PermissionSets::OrderDisplay,
+  #     Spree::PermissionSets::UserDisplay,
+  #     Spree::PermissionSets::ProductDisplay
+  #   ]
   class RoleConfiguration
     # An internal structure for the association between a role and a
     # set of permissions.
@@ -31,7 +29,7 @@ module Spree
 
     attr_accessor :roles
 
-    # Given a CanCan::Ability, and a user, determine what permissions sets can
+    # Given a CanCan::Ability, and a user, determine what permission sets can
     # be activated on the ability, then activate them.
     #
     # This performs can/cannot declarations on the ability, and can modify its
@@ -52,7 +50,6 @@ module Spree
       end
     end
 
-    # Not public due to the fact this class is a Singleton
     # @!visibility private
     def initialize
       @roles = Hash.new do |hash, name|

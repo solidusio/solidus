@@ -82,7 +82,7 @@ module Spree
 
       # @param state [:backordered, :on_hand, nil] the state of the content
       #   items of which we want the quantity, or nil for the full quantity
-      # @return [Fixnum] the number of inventory units in the package,
+      # @return [Integer] the number of inventory units in the package,
       #   counting only those in the given state if it was specified
       def quantity(state = nil)
         matched_contents = state.nil? ? contents : contents.select { |content| content.state.to_s == state.to_s }
@@ -107,7 +107,7 @@ module Spree
       end
 
       # @return [ActiveRecord::Relation] the [Spree::ShippingMethod]s available
-      #   for this pacakge based on the stock location and shipping categories.
+      #   for this package based on the stock location and shipping categories.
       def shipping_methods
         Spree::ShippingMethod
           .with_all_shipping_category_ids(shipping_category_ids)
@@ -115,12 +115,10 @@ module Spree
       end
 
       # @return [Spree::Shipment] a new shipment containing this package's
-      #   inventory units, with the appropriate shipping rates and associated
-      #   with the correct stock location
+      #   inventory units and associated with the correct stock location
       def to_shipment
         # At this point we should only have one content item per inventory unit
-        # across the entire set of inventory units to be shipped, which has
-        # been taken care of by the Prioritizer
+        # across the entire set of inventory units to be shipped
         contents.each { |content_item| content_item.inventory_unit.state = content_item.state.to_s }
 
         Spree::Shipment.new(
@@ -132,7 +130,7 @@ module Spree
 
       private
 
-      # @return [Array<Fixnum>] the unique ids of all shipping categories of
+      # @return [Array<Integer>] the unique ids of all shipping categories of
       #   variants in this package
       def shipping_category_ids
         contents.map { |item| item.variant.shipping_category_id }.compact.uniq

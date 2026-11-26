@@ -196,7 +196,7 @@ class CheckoutsController < CheckoutBaseController
       Spree::Config.allow_guest_checkout
   end
 
-  # Overrides the equivalent method defined in Spree::Core.  This variation of the method will ensure that users
+  # This method will ensure that users
   # are redirected to the tokenized order url unless authenticated as a registered user.
   def completion_route
     return order_path(@order) if spree_current_user

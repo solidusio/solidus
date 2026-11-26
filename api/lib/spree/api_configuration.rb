@@ -2,7 +2,7 @@
 
 module Spree
   class ApiConfiguration < Preferences::Configuration
-    # @!attribute [rw] allow_arbitrary_state_in_api
+    # @!attribute [rw] allow_arbitrary_state_in_checkout
     #  @return [Boolean] When true, the API will allow arbitrary state transitions on orders (default: +false+)
     preference :allow_arbitrary_state_in_checkout, :boolean, default: false
 

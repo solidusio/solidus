@@ -80,7 +80,7 @@ module Spree::Preferences
     #
     # In +solidus_admin+, place view component files in the directory:
     #
-    #   +app/components/solidus_admin/preference_fields/<your_preference_type>/+
+    #   +app/components/solidus_admin/ui/preference_fields/<your_preference_type>/+
     #
     # @return [Array]
     def allowed_admin_form_preference_types = Spree::Preferences::FORM_FIELD_TYPES

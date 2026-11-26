@@ -28,8 +28,8 @@ module SolidusPromotions
     # Returns discounts from specified promotion lanes.
     #
     # @param lanes [Array] An array of lanes to filter discounts by.
-    # @return [Array<SolidusPromotions::ShippingRateDiscount] An array of discounts from the
-    #   specified lans that are not marked for destruction.
+    # @return [Array<SolidusPromotions::ShippingRateDiscount>] An array of discounts from the
+    #   specified lanes that are not marked for destruction.
     def discounts_by_lanes(lanes)
       discounts.select do |discount|
         !discount.marked_for_destruction? &&

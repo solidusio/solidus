@@ -23,7 +23,7 @@ Spree.Views.Images.UploadProgress = Backbone.View.extend({
   },
 
   render: function() {
-    // Skip progress bar update for better performance
+    // Skip re-rendering on progress bar updates for better performance
     var changedAttrs = Object.keys(this.model.changed);
     if(changedAttrs.length === 1 && changedAttrs[0] == 'progress') return this;
 

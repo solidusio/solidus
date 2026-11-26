@@ -202,9 +202,9 @@ module Spree
         let(:order) { reimbursement.order.reload }
 
         before do
-          # Set the payment amount to actually be the order total of 110
+          # Set the payment amount to 10
           reimbursement.order.payments.first.update_column :amount, amount
-          # Creates a refund of 110
+          # Creates a refund of 10
           create(:refund, amount:,
             payment: reimbursement.order.payments.first,
             reimbursement:)

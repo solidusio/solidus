@@ -7,11 +7,11 @@ module Spree
   module Sample
     class << self
       def load_sample(file, shell: Thor::Base.shell.new)
-        # If file is exists within application it takes precendence.
+        # If file exists within application it takes precedence.
         path = if File.exist?(File.join(Rails.root, "db", "samples", "#{file}.rb"))
           File.expand_path(File.join(Rails.root, "db", "samples", "#{file}.rb"))
         else
-          # Otherwise we will use this gems default file.
+          # Otherwise we will use this gem's default file.
           File.expand_path(samples_path + "#{file}.rb")
         end
         # Check to see if the specified file has been loaded before

@@ -25,7 +25,7 @@ class Spree::Carton < Spree::Base
   make_permalink field: :number, length: 11, prefix: "C"
 
   scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
-  # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
+  # sort by most recent shipped_at. add "id desc" to make specs that involve this scope more deterministic.
   scope :reverse_chronological, -> { order(shipped_at: :desc, id: :desc) }
 
   def to_param

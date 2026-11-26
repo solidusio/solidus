@@ -80,7 +80,7 @@ describe "Option Types", type: :feature do
     visit page.current_url
     # What *is* visible is a new option value field, with blank values
     # Sometimes the page doesn't load before the all check is done
-    # lazily finding the element gives the page 10 seconds
+    # lazily finding the element gives the page time to load
     expect(page).to have_css("tbody#option_values")
     all("tbody#option_values tr input", count: 2).each do |input|
       expect(input.value).to be_blank
@@ -95,11 +95,11 @@ describe "Option Types", type: :feature do
 
     expect(page).to have_css("tbody#option_values tr", count: 1)
 
-    # Add a new option type
+    # Add a new option value
     click_button "Add Option Value"
     expect(page).to have_css("tbody#option_values tr", count: 2)
 
-    # Remove default option type
+    # Remove default option value
     within("tbody#option_values") do
       within_row(1) do
         find(".fa-trash").click
@@ -108,7 +108,7 @@ describe "Option Types", type: :feature do
     # Assert that the field is hidden automatically
     expect(page).to have_css("tbody#option_values tr", count: 1)
 
-    # Remove added option type
+    # Remove added option value
     within("tbody#option_values") do
       find(".fa-trash").click
     end

@@ -179,7 +179,7 @@ RSpec.describe SolidusPromotions::Conditions::TaxonRevenue do
         end
 
         it "still counts the item only once" do
-          # 40, not 80
+          # 30, not 60
           expect(condition).not_to be_order_eligible(order)
         end
       end

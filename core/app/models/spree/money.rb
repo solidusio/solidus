@@ -49,9 +49,9 @@ module Spree
       format
     end
 
-    # @param options [Hash, String] the options for formatting the money object
+    # @param options [Hash] the options for formatting the money object
     # @option options [Boolean] with_currency when true, show the currency
-    # @option options [Boolean] no_cents when true, round to the closest dollar
+    # @option options [Boolean] no_cents when true, omit the cents
     # @option options [String] decimal_mark the mark for delimiting the
     #   decimals
     # @option options [String, false, nil] thousands_separator the character to

@@ -3,7 +3,7 @@
 module Spree
   class OrderUpdateAttributes
     # @param order [Order] existing (persisted) order
-    # @param attributes [Hash] attributes which are assigned to the new order.
+    # @param attributes [Hash] attributes which are assigned to the order.
     #   These attributes should already have been filtered.
     #   * :payments_attributes attributes
     def initialize(order, attributes, request_env: nil)

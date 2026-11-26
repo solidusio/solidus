@@ -68,10 +68,10 @@ module Spree
                 line_item = order.contents.add(Spree::Variant.find(inventory_unit[:variant_id]), 1)
               end
 
-              # Spree expects a Inventory Unit to always reference a line
+              # Spree expects an Inventory Unit to always reference a line
               # item and variant otherwise users might get exceptions when
               # trying to view these units. Note the Importer might not be
-              # able to find the line item if line_item.variant_id |= iu.variant_id
+              # able to find the line item if line_item.variant_id != iu.variant_id
               shipment.inventory_units.new(
                 variant_id: inventory_unit[:variant_id],
                 line_item:

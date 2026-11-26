@@ -520,7 +520,7 @@ module Spree::Api
         it "contains adjustments on shipment" do
           subject
 
-          # Test to insure shipment has adjustments
+          # Test to ensure shipment has adjustments
           shipment = json_response["shipments"][0]
           expect(shipment).to_not be_nil
           expect(shipment["adjustments"][0]).not_to be_empty

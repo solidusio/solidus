@@ -60,7 +60,7 @@ module SolidusAdmin
 
           # Reload the select controls in case they have been replaced by
           # new DOM elements. This can happen, for example, when a select
-          # element is hooked up to Turbo controller JavaScript function.
+          # element is hooked up to a Turbo controller JavaScript function.
           controls = solidus_select_controls(from)
           expect(controls[:control]).to have_text(val)
         end

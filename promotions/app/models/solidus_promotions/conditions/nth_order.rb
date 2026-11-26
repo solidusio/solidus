@@ -11,7 +11,7 @@ module SolidusPromotions
       # Instead we could use the first_order condition
       validates :preferred_nth_order, numericality: {only_integer: true, greater_than: 1}
 
-      # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
+      # This is never eligible if the order does not have a user, or that user does not have any previous completed orders.
       #
       # Use the first order condition if you want a promotion to be applied to the first order for a user.
       # @param order [Spree::Order]

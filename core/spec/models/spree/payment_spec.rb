@@ -1373,7 +1373,7 @@ RSpec.describe Spree::Payment, type: :model do
         # because the processing state does not provide
         # clarity about what has happened with an external
         # payment processor, so we want to allow the ability
-        # to have someone look at the what happened and determine
+        # to have someone look at what happened and determine
         # to mark the payment as having failed
         subject.state = "processing"
         expect(subject.actions).to include "failure"

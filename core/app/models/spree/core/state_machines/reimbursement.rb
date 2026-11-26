@@ -3,7 +3,7 @@
 module Spree
   module Core
     class StateMachines
-      # Reimbursement' state machine
+      # Reimbursements' state machine
       #
       # for each event the following instance methods are dynamically implemented:
       #   #<event_name>

@@ -12,7 +12,7 @@ module Spree
       # @param frontend_only [Boolean] restricts the shipping methods to only
       #   those marked frontend if truthy
       # @return [Array<Spree::ShippingRate>] the shipping rates sorted by
-      #   descending cost, with the least costly marked "selected"
+      #   ascending cost, with the least costly marked "selected"
       def shipping_rates(package, frontend_only = true)
         raise ShipmentRequired if package.shipment.nil?
         raise OrderRequired if package.shipment.order.nil?

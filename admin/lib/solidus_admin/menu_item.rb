@@ -80,8 +80,8 @@ module SolidusAdmin
 
     # Returns whether the item should be marked as active
     #
-    # An item is considered active when it is the current item or any of its
-    # children is active.
+    # An item is considered active when it is the current item, its match_path
+    # matches the given full path, or any of its children is active.
     #
     # @param url_helpers [#solidus_admin, #spree] context object giving access
     #   to url helpers

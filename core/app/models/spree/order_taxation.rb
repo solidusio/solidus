@@ -45,7 +45,7 @@ module Spree
     # adjustments that weren't touched.
     #
     # @private
-    # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
+    # @param [#adjustments] item a {Spree::Order}, {Spree::LineItem} or {Spree::Shipment}
     # @param [Array<Spree::Tax::ItemTax>] taxed_items a list of calculated taxes for an item
     # @return [void]
     def update_adjustments(item, taxed_items)
@@ -63,7 +63,7 @@ module Spree
     # Update or create a new tax adjustment on an item.
     #
     # @private
-    # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
+    # @param [#adjustments] item a {Spree::Order}, {Spree::LineItem} or {Spree::Shipment}
     # @param [Spree::Tax::ItemTax] tax_item calculated taxes for an item
     # @return [Spree::Adjustment] the created or updated tax adjustment
     def update_adjustment(item, tax_item)

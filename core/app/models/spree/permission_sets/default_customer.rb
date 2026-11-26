@@ -28,7 +28,7 @@ module Spree
     # - Stock items
     # - Stock locations
     #
-    # Abilities with this role can also create refund authorizations for orders
+    # Abilities with this role can also create return authorizations for orders
     # with the same user, as well as reading and updating the user record and
     # their associated cards.
     class DefaultCustomer < PermissionSets::Base

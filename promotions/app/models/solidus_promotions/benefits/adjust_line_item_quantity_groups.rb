@@ -46,7 +46,7 @@ module SolidusPromotions
       #
       # *Result:* -$15
       #
-      # *Reasoning:* The total quantity of eligible items is 4, so we the
+      # *Reasoning:* The total quantity of eligible items is 4, so the
       # adjustment will be non-zero. However, we only apply it to groups of 3,
       # therefore there is one extra item that is not eligible for the
       # adjustment. +adjustment_amount * 3+ or $15.
@@ -77,8 +77,8 @@ module SolidusPromotions
       end
 
       ##
-      # Used specifically for PercentOnLineItem calculator. That calculator uses
-      # `line_item.amount`, however we might not necessarily want to discount the
+      # Used specifically for the Percent calculator. That calculator uses
+      # `line_item.discountable_amount`, however we might not necessarily want to discount the
       # entire amount. This class allows us to determine the discount per
       # quantity and then calculate the adjustment amount the way we normally do
       # for flat rate adjustments.

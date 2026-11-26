@@ -14,7 +14,7 @@ module SolidusLegacyPromotions
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
 
-    # @!attribute [rw] promotion_attributes
+    # @!attribute [rw] promotion_api_attributes
     #   @return [Array<Symbol>] Attributes to be returned by the API for a promotion
     preference :promotion_api_attributes, :array, default: [
       :id,
@@ -49,13 +49,13 @@ module SolidusLegacyPromotions
     # @see Spree::PromotionHandler::Shipping
     # @return [Class] an object that conforms to the API of
     #   the standard shipping promotion handler class
-    #   Spree::PromotionHandler::Coupon.
+    #   Spree::PromotionHandler::Shipping.
     class_name_attribute :shipping_promotion_handler_class, default: "Spree::PromotionHandler::Shipping"
 
     # Allows providing your own Mailer for promotion code batch mailer.
     #
     # @!attribute [rw] promotion_code_batch_mailer_class
-    # @return [ActionMailer::Base] an object that responds to "promotion_code_batch_finished",
+    # @return [Class] an object that responds to "promotion_code_batch_finished",
     #   and "promotion_code_batch_errored"
     #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
     #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.

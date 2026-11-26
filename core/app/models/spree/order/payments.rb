@@ -3,7 +3,7 @@
 module Spree
   class Order < Spree::Base
     module Payments
-      # processes any pending payments and must return a boolean as it's
+      # processes any pending payments and must return a boolean as its
       # return value is used by the checkout state_machine to determine
       # success or failure of the 'complete' event for the order
       #
@@ -13,7 +13,7 @@ module Spree
       #
       # - true if a payment failed, ie. raised a GatewayError
       #   which gets rescued and converted to TRUE when
-      #   :allow_checkout_gateway_error is set to true
+      #   :allow_checkout_on_gateway_error is set to true
       #
       # - false if a payment failed, ie. raised a GatewayError
       #   which gets rescued and converted to FALSE when

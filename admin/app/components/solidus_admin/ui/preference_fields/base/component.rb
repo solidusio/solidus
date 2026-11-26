@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Solidus provides preference fields that can be rendered in user-facing
-# forms for preference-enabled model objects. For example. +Spree::Calculator+
+# forms for preference-enabled model objects. For example, +Spree::Calculator+
 # and +Spree::PaymentMethod+ subclasses are all preference-enabled. For
 # more information about accessing preferences, see the +Spree::Preferences+
 # class documentation.
@@ -23,7 +23,7 @@
 #
 # @param type [String] the class as a string for the current form object
 # @param preference_name [String] the preference field name (i.e.
-#   "preferred_color")
+#   "color")
 # @param error [String]
 # @param args [Hash] a hash of additional input context for rendering
 # @return [ViewComponent] an instance of preference field view component

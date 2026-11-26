@@ -66,7 +66,7 @@ module Spree
         current_shipment.refresh_rates
       end
 
-      # The desired shipment has also change, so we need to make sure shipping rates
+      # The desired shipment has also changed, so we need to make sure shipping rates
       # are up-to-date, too.
       desired_shipment.refresh_rates
 
@@ -143,7 +143,7 @@ module Spree
     end
 
     # We don't need to handle stock counts for incomplete orders. Also, if
-    # the new shipment and the desired shipment will ship from the same stock location,
+    # the current shipment and the desired shipment will ship from the same stock location,
     # unstocking and restocking will not be necessary.
     def handle_stock_counts?
       current_shipment.order.completed? && current_stock_location != desired_stock_location

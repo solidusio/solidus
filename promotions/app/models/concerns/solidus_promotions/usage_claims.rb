@@ -6,7 +6,7 @@ module SolidusPromotions
   # exceed the usage limit.
   #
   # Including models need an integer `usage_claims_count` column and must
-  # respond to `usage_limit` and `usage_count_from_orders`.
+  # respond to `usage_limit`, `usage_orders` and `usage_count_from_orders`.
   module UsageClaims
     # Claims a use, unless the usage limit has been reached. We use an atomic
     # update to avoid race conditions when multiple checkouts are trying to

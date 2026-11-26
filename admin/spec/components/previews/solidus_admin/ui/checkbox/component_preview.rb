@@ -8,7 +8,7 @@ class SolidusAdmin::UI::Checkbox::ComponentPreview < ViewComponent::Preview
   #
   # The checkbox component is used to render a checkbox input.
   # It can be used with a Rails form builder by setting the `name` attribute
-  # with `forom.object_name`.
+  # with `form.object_name`.
   #
   # ```erb
   #   <%= form_for @product do |form| %>
@@ -34,7 +34,7 @@ class SolidusAdmin::UI::Checkbox::ComponentPreview < ViewComponent::Preview
   # ```
   #
   # ```js
-  #   import { Controller } from "stimulus"
+  #   import { Controller } from "@hotwired/stimulus"
   #
   #   export default class extends Controller {
   #     static targets = ["checkbox"]

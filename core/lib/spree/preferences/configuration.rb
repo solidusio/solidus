@@ -4,8 +4,8 @@ require "spree/core/versioned_value"
 require "spree/preferences/preferable"
 
 module Spree::Preferences
-  # This takes the preferrable methods and adds some
-  # syntatic sugar to access the preferences
+  # This takes the preferable methods and adds some
+  # syntactic sugar to access the preferences
   #
   #   class App < Configuration
   #     preference :color, :string
@@ -46,8 +46,8 @@ module Spree::Preferences
       @load_defaults_called = false
     end
 
-    # @param [String] Solidus version from which take defaults when preferences
-    # are not overriden by the user.
+    # @param version [String] Solidus version from which to take defaults when
+    # preferences are not overridden by the user.
     # @see #loaded_defaults
     def load_defaults(version)
       @loaded_defaults = version
@@ -81,7 +81,7 @@ module Spree::Preferences
       @preference_store ||= default_preferences
     end
 
-    # Replace the default legacy preference store, which stores preferences in
+    # Replace the legacy preference store, which stores preferences in
     # the spree_preferences table, with a plain in memory hash. This is faster
     # and less error prone.
     #

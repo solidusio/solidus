@@ -25,7 +25,7 @@ module Spree
       variants.find_each(&:touch)
     end
 
-    # @return [String] a string representation of all option value and its
+    # @return [String] a string representation of the option value and its
     #   option type
     def presentation_with_option_type
       "#{option_type.presentation} - #{presentation}"

@@ -92,7 +92,7 @@ module Spree
       cost + adjustment_total
     end
 
-    # @return [BigDecimal] the amount of this item, taking into consideration
+    # @return [BigDecimal] the amount of this shipment, taking into consideration
     #   all non-tax adjustments.
     def total_before_tax
       amount + adjustments.reject { |adjustment| adjustment.tax? || adjustment.marked_for_destruction? }.sum(&:amount)
@@ -113,7 +113,7 @@ module Spree
     end
 
     # Decrement the stock counts for all pending inventory units in this
-    # shipment and mark.
+    # shipment and mark them as no longer pending.
     # Any previous non-pending inventory units are skipped as their stock had
     # already been allocated.
     def finalize!
@@ -144,7 +144,7 @@ module Spree
       return shipping_rates if shipped?
       return [] unless can_get_rates?
 
-      # StockEstimator.new assigment below will replace the current shipping_method
+      # Spree::Config.stock.estimator_class.new assignment below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try!(:id)
 
       new_rates = Spree::Config.stock.estimator_class.new.shipping_rates(to_package)

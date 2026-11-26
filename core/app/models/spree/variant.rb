@@ -13,8 +13,8 @@ module Spree
   # All variants can access the product properties directly (via reverse
   # delegation). Inventory units are tied to Variant.  The master variant can
   # have inventory units, but not option values. All other variants have
-  # option values and may have inventory units. Sum of on_hand each variant's
-  # inventory level determine "on_hand" level for the product.
+  # option values and may have inventory units. The sum of each variant's
+  # on_hand inventory level determines the "on_hand" level for the product.
   class Variant < Spree::Base
     acts_as_list scope: :product
 
@@ -174,7 +174,7 @@ module Spree
 
     # @return [Integer] the variant's shipping category id
     #
-    # This returns the product's shipping category if if the shipping category ID on the variant is nil.
+    # This returns the product's shipping category if the shipping category ID on the variant is nil.
     #
     def shipping_category_id
       super || product_shipping_category_id
@@ -183,7 +183,7 @@ module Spree
     # Sets the cost_price for the variant.
     #
     # @param price [Any] the price to set
-    # @return [Bignum]
+    # @return [BigDecimal]
     def cost_price=(price)
       self[:cost_price] = Spree::LocalizedNumber.parse(price) if price.present?
     end
@@ -191,14 +191,14 @@ module Spree
     # Sets the weight for the variant.
     #
     # @param weight [Any] the weight to set
-    # @return [Bignum]
+    # @return [BigDecimal]
     def weight=(weight)
       self[:weight] = Spree::LocalizedNumber.parse(weight) if weight.present?
     end
 
     # Counts the number of units currently on backorder for this variant.
     #
-    # @return [Fixnum]
+    # @return [Integer]
     def on_backorder
       inventory_units.with_state("backordered").size
     end
@@ -339,7 +339,7 @@ module Spree
       end
     end
 
-    # @param quantity [Fixnum] how many are desired
+    # @param quantity [Integer] how many are desired
     # @param stock_location [Spree::StockLocation] Optionally restrict stock
     #   quantity check to a specific stock location. If unspecified it will
     #   check inventory in all available StockLocations.
@@ -353,7 +353,7 @@ module Spree
     # @param stock_location [Spree::StockLocation] Optionally restrict stock
     #   quantity check to a specific stock location. If unspecified it will
     #   check inventory in all available StockLocations.
-    # @return [Fixnum] the number currently on-hand
+    # @return [Integer, Float] the number currently on-hand
     def total_on_hand(stock_location = nil)
       Spree::Config.stock.quantifier_class.new(self, stock_location).total_on_hand
     end

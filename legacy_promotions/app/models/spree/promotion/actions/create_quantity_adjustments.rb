@@ -50,7 +50,7 @@ module Spree
         #
         # *Result:* -$15
         #
-        # *Reasoning:* The total quantity of eligible items is 4, so we the
+        # *Reasoning:* The total quantity of eligible items is 4, so the
         # adjustment will be non-zero. However, we only apply it to groups of 3,
         # therefore there is one extra item that is not eligible for the
         # adjustment. +adjustment_amount * 3+ or $15.

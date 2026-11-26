@@ -23,7 +23,7 @@ module Spree
     self.allowed_ransackable_attributes = ["count_on_hand", "stock_location_id"]
     self.allowed_ransackable_associations = %w[variant]
 
-    # @return [Array<Spree::InventoryUnit>] the backordered inventory units
+    # @return [ActiveRecord::Relation<Spree::InventoryUnit>] the backordered inventory units
     #   associated with this stock item
     def backordered_inventory_units
       Spree::InventoryUnit.backordered_for_stock_item(self)
@@ -32,7 +32,7 @@ module Spree
     # Adjusts the count on hand by a given value.
     #
     # @note This will cause backorders to be processed.
-    # @param value [Fixnum] the amount to change the count on hand by, positive
+    # @param value [Integer] the amount to change the count on hand by, positive
     #   or negative values are valid
     def adjust_count_on_hand(value)
       with_lock do
@@ -46,7 +46,7 @@ module Spree
     # Sets this stock item's count on hand.
     #
     # @note This will cause backorders to be processed.
-    # @param value [Fixnum] the desired count on hand
+    # @param value [Integer] the desired count on hand
     def set_count_on_hand(value)
       self.count_on_hand = value
       process_backorders(count_on_hand - count_on_hand_was)
@@ -54,7 +54,7 @@ module Spree
       save!
     end
 
-    # @return [Boolean] true if this stock item's count on hand is not zero
+    # @return [Boolean] true if this stock item's count on hand is greater than zero
     def in_stock?
       count_on_hand > 0
     end
@@ -64,9 +64,9 @@ module Spree
       in_stock? || backorderable?
     end
 
-    # Sets the count on hand to zero if it not already zero.
+    # Sets the count on hand to zero if it is greater than zero.
     #
-    # @note This processes backorders if the count on hand is not zero.
+    # @note This does not process backorders, as the count on hand does not increase.
     def reduce_count_on_hand_to_zero
       set_count_on_hand(0) if count_on_hand > 0
     end

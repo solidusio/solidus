@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  # The customers cart until completed, then acts as permanent record of the transaction.
+  # The customer's cart until completed, then acts as permanent record of the transaction.
   #
   # `Spree::Order` is the heart of the Solidus system, as it acts as the customer's
   # cart as they shop. Once an order is complete, it serves as the
@@ -12,7 +12,7 @@ module Spree
   #
   # * Implements a customizable state machine to manage the lifecycle of an order.
   #
-  # * Implements business logic to provide a single interface for quesitons like
+  # * Implements business logic to provide a single interface for questions like
   # `checkout_allowed?` or `payment_required?`.
   #
   #  * Implements an interface for mutating the order with methods like
@@ -136,7 +136,6 @@ module Spree
     accepts_nested_attributes_for :payments
     accepts_nested_attributes_for :shipments
 
-    # Needs to happen before save_permalink is called
     before_validation :associate_store
     before_validation :set_currency
     before_validation :generate_order_number, on: :create
@@ -219,7 +218,6 @@ module Spree
       where.not(state: "canceled")
     end
 
-    # For compatiblity with Calculator::PriceSack
     def amount
       line_items.sum(&:amount)
     end
@@ -301,7 +299,7 @@ module Spree
     end
 
     def all_inventory_units_returned?
-      # Inventory units are transitioned to the "return" state through CustomerReturn and
+      # Inventory units are transitioned to the "returned" state through CustomerReturn and
       # ReturnItem instead of using Order#inventory_units, thus making the latter method
       # potentially return stale data. This situation requires to *reload* `inventory_units`
       # in order to pick-up the latest changes and make the check on `returned?` reliable.
@@ -458,7 +456,7 @@ module Spree
     end
 
     ##
-    # Check to see if any line item variants are soft, deleted.
+    # Check to see if any line item variants are soft-deleted.
     # If so add error and restart checkout.
     def ensure_line_item_variants_are_not_deleted
       if line_items.any? { |li| li.variant.discarded? }
@@ -675,7 +673,7 @@ module Spree
 
     # Assigns a default bill_address and ship_address to the order based on the
     # associated user's bill_address and ship_address.
-    # @note This doesn't persist the change bill_address or ship_address
+    # @note This doesn't persist the changed bill_address or ship_address
     def assign_default_user_addresses
       if user
         bill_address = user.bill_address
@@ -794,7 +792,7 @@ module Spree
     # We don't require email for orders in the cart state or address state because those states
     # precede the entry of an email address.
     #
-    # @return [Boolean] true if the email is required
+    # @return [true, nil] true if the email is required
     # @note This method was called require_email before.
     def email_required?
       true unless new_record? || ["cart", "address"].include?(state)

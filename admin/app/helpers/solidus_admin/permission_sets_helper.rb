@@ -4,7 +4,7 @@ module SolidusAdmin
   module PermissionSetsHelper
     # @param permission_sets [Array<Spree::PermissionSet>] an array of
     #   PermissionSet objects to be organized into categories based on their
-    #   names.
+    #   category and privilege.
     # @param view_label [String] A string of your choice associated with "View"
     #   or "Display" level permissions. Used when rendering the checkbox.
     # @param edit_label [String] A string of your choice associated with "Edit"

@@ -29,7 +29,7 @@ module Spree
     class_attribute :reimbursement_tax_calculator
     self.reimbursement_tax_calculator = ReimbursementTaxCalculator
     # A separate attribute here allows you to use a more performant calculator for estimates
-    # and a different one (e.g. one that hits a 3rd party API) for the final caluclations.
+    # and a different one (e.g. one that hits a 3rd party API) for the final calculations.
     class_attribute :reimbursement_simulator_tax_calculator
     self.reimbursement_simulator_tax_calculator = ReimbursementTaxCalculator
 
@@ -39,7 +39,6 @@ module Spree
     # Each model must implement a "total_amount_reimbursed_for" method.
     # Example:
     #   Refund.total_amount_reimbursed_for(reimbursement)
-    # See the `reimbursement_generator` property regarding the generation of custom reimbursements.
     class_attribute :reimbursement_models
     self.reimbursement_models = [Spree::Refund, Spree::Reimbursement::Credit]
 

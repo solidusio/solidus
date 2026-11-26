@@ -112,7 +112,7 @@ RSpec.describe "Quantity Promotions", type: :system, js: true do
         expect(page).to have_content("-$15.00")
       end
 
-      # Add two different products to our cart
+      # Add a different product to our cart
       visit products_path
       click_link "E-11"
       click_button "Add To Cart"

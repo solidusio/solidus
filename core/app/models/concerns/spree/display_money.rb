@@ -18,7 +18,7 @@ module Spree
     #
     # Decorate a method, but with some additional options
     #     extend Spree::DisplayMoney
-    #     money_methods tax_amount: { currency: "CAD", no_cents: true }, :price
+    #     money_methods :price, tax_amount: { currency: "CAD", no_cents: true }
     def money_methods(*args)
       args.each do |money_method|
         money_method = {money_method => {}} unless money_method.is_a? Hash

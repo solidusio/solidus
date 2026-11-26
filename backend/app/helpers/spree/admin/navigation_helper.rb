@@ -39,8 +39,8 @@ module Spree
         end
       end
 
-      # Make an admin tab that covers one or more resources supplied by symbols
-      # Option hash may follow. Valid options are
+      # Make an admin tab from an option hash. Supplying resources by symbols is deprecated.
+      # Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
       #   * :match_path as an alternative way to control when the tab is active, /products would match /admin/products, /admin/products/5/variants etc.
       #   * :match_path can also be a callable that takes a request and determines whether the menu item is selected for the request.

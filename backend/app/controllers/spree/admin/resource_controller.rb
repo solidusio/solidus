@@ -81,8 +81,8 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       positions = params[:positions]
 
       positions.each do |id, index|
-        # Yes here there is a N+1 but acts_as_list use after update callback
-        # so we can't keep not reloaded data without create a bug
+        # Yes, there is an N+1 here, but acts_as_list uses an after update callback,
+        # so we can't keep data that is not reloaded without creating a bug
         # (spec : backend/spec/controllers/spree/admin/resource_controller_spec.rb)
         # "with take care of acts_as_list's after update callback" test
         #

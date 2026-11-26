@@ -27,7 +27,7 @@ RSpec.describe SolidusAdmin::UI::PreferenceFields::Base::Component, type: :compo
   }
 
   before do
-    # Because testing against the base class can raise +NotImplementError+s
+    # Because testing against the base class can raise +NotImplementedError+s
     # and Standard does not like it when we create arbitrary constants within
     # test files, we can create an anonymous class and ensure it has a class
     # name so that Active Support class methods like +.name+ and +.demodulize+

@@ -167,7 +167,7 @@ module Spree
 
       private
 
-      # @raises Spree::Core::GatewayError
+      # @raise [Spree::Core::GatewayError]
       def check_payment_preconditions!
         return if processing?
         return unless payment_method

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  # This service object is responsible for storing the current path into
+  # This service object is responsible for storing the current path
   # into `session[:spree_user_return_to]` for redirects after successful
   # user/admin authentication.
   class UserLastUrlStorer

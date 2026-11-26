@@ -25,7 +25,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
     }
   }.freeze
 
-  # Render custom select component, which uses "solidus_select" custom element
+  # Render custom select component, which uses "solidus-select" custom element
   # @see "admin/app/javascript/solidus_admin/web_components/solidus_select.js"
   # @param choices [Array<String>, Array<Array<String>>] container with options to be rendered
   #   (see `ActionView::Helpers::FormOptionsHelper#options_for_select`).

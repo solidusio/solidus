@@ -21,9 +21,9 @@ module Spree
       # This method  may be used for stubbing one or more different preferences
       # at the same time.
       #
-      # @param prefs_or_conf_class [Class, Hash] the class we want to stub
-      #   preferences for or the preferences hash (see prefs param). If this
-      #   param is an Hash, preferences will be stubbed on Spree::Config.
+      # @param prefs_or_conf_class [Spree::Preferences::Configuration, Hash] the
+      #   configuration we want to stub preferences for or the preferences hash
+      #   (see prefs param). If this param is a Hash, preferences will be stubbed on Spree::Config.
       # @param prefs [Hash, nil] names and values to be stubbed
       #
       # @example Stubs `currency` and `track_inventory_levels` on `Spree::Config`:
@@ -31,7 +31,7 @@ module Spree
       #   expect(Spree::Config.currency).to eql 'EUR'
       #
       # @example Stubs `locale` preference on `Spree::Backend::Config`:
-      #   stub_spree_preferences(Spree::Backend::Config, locale: 'fr'),
+      #   stub_spree_preferences(Spree::Backend::Config, locale: 'fr')
       #   expect(Spree::Backend::Config.locale).to eql 'fr'
       #
       # @see https://github.com/solidusio/solidus/issues/3219
@@ -84,8 +84,8 @@ module Spree
       # extension has its own Spree::ExtensionName::Config class, we can
       # freeze it and be sure we always stub values on it during tests.
       #
-      # @param preference_store_class [Class] the configuration class we want
-      #   to freeze.
+      # @param preference_store_class [Spree::Preferences::Configuration] the
+      #   configuration we want to freeze.
       def self.freeze_preferences(preference_store_class)
         config_class = preference_store_class.class
         config_class.preference :unfrozen_preference_store, :hash

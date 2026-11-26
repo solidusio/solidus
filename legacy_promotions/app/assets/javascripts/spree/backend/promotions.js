@@ -1,5 +1,5 @@
 // This is called on page load and via an ajax request in
-// app/views/spree/admin/promotion_actions/create.js.erb
+// lib/views/backend/spree/admin/promotion_actions/create.js.erb
 window.initPromotionActions = function() {
   $('#promotion-filters').find('.variant_autocomplete').variantAutocomplete();
 

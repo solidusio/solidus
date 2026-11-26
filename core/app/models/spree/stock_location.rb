@@ -52,7 +52,7 @@ module Spree
 
     # Returns an instance of StockItem for the variant id.
     #
-    # @param variant_id [String] The id of a variant.
+    # @param variant_id [Spree::Variant, Integer] The variant or the id of a variant.
     #
     # @return [StockItem] Corresponding StockItem for the StockLocation's variant.
     def stock_item(variant_id)

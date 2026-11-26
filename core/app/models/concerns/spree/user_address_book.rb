@@ -96,7 +96,7 @@ module Spree
 
     # saves order.ship_address and order.bill_address in address book
     # sets ship_address to the default if automatic_default_address is set to true
-    # sets bill_address to the default if automatic_default_address is set to true and there is no ship_address
+    # sets bill_address to the default if automatic_default_address is set to true
     # if one address is nil, does not save that address
     def persist_order_address(order)
       if order.ship_address
@@ -123,7 +123,7 @@ module Spree
     # @param address_attributes HashWithIndifferentAccess of attributes that will be
     # treated as value equality to de-dup among existing Addresses
     # @param default set whether or not this address will show up from
-    # #default_address or not
+    # #ship_address (or #bill_address) or not
     def save_in_address_book(address_attributes, default = false, address_type = :shipping)
       return nil if address_attributes.blank?
 

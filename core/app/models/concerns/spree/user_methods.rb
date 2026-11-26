@@ -118,7 +118,7 @@ module Spree
 
     # Restrict to delete users with existing orders
     #
-    # Override this in your user model class to add another logic.
+    # Override this in your user model class to add other logic.
     #
     # Ie. to allow to delete users with incomplete orders add:
     #
@@ -131,10 +131,10 @@ module Spree
     # Updates the roles in keeping with the given ability's permissions
     #
     # Roles that the given ability cannot manage will be ignored. It also
-    # ensure not to remove non manageable roles when assigning new manageable
+    # ensures not to remove non manageable roles when assigning new manageable
     # ones.
     #
-    # @param given_roles [Spree::Role]
+    # @param given_roles [Enumerable<Spree::Role>]
     # @param ability [Spree::Ability]
     def update_spree_roles(given_roles, ability:)
       accessible_roles = Spree::Role.accessible_by(ability, :manage)

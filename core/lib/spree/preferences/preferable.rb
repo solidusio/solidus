@@ -20,7 +20,7 @@ module Spree
     ]
 
     # A subset of preference types that correspond to Solidus admin-provided
-    # form fields. These types should be be renderable in any user-facing form
+    # form fields. These types should be renderable in any user-facing form
     # for any preference-enabled model.
     FORM_FIELD_TYPES = TYPES - %i[array hash]
 
@@ -64,7 +64,7 @@ module Spree
     #
     #   # Typecasting is performed on assignment.
     #   s.preferred_temperature = '24'
-    #   s.preferred_color # => 24
+    #   s.preferred_temperature # => 24
     #   s.preferred_my_secret = "Ruby is cool."
     #
     #   # Modifications have been made to the preferences hash.
@@ -138,11 +138,11 @@ module Spree
         end.to_h
       end
 
-      # Preference types representable as form fields in Solidus backend. Not
+      # Preference names representable as form fields in Solidus backend. Not
       # all preference types are representable as admin form fields. See the
       # method documentation for the class method
       #
-      #   +Spree::Preferences::Preferable.allowed_admin_form_preference_types+
+      #   +Spree::Preferences::PreferableClassMethods#allowed_admin_form_preference_types+
       #
       # for more information.
       #

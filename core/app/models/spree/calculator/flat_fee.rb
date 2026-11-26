@@ -6,7 +6,7 @@ module Spree
   class Calculator::FlatFee < Calculator
     alias_method :rate, :calculable
 
-    # Amount is fixed regardles of what it's being applied to.
+    # Amount is fixed regardless of what it's being applied to.
     def compute(_object)
       rate.active? ? rate.amount : 0
     end

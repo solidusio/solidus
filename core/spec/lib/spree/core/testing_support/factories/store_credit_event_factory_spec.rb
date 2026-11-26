@@ -14,7 +14,7 @@ RSpec.describe "store credit event factory" do
     end
 
     # No test for .create, as this base factory misses an `action`
-    # and thus violates a NOT NULL constraint on e the DB
+    # and thus violates a NOT NULL constraint on the DB
   end
 
   describe "store credit auth event" do

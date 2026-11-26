@@ -1183,7 +1183,7 @@ RSpec.describe Spree::Order, type: :model do
 
   # Regression test for https://github.com/spree/spree/issues/4923
   context "locking" do
-    let(:order) { Spree::Order.create } # need a persisted in order to test locking
+    let(:order) { Spree::Order.create } # need a persisted order to test locking
 
     it "can lock" do
       order.with_lock {}
@@ -1212,7 +1212,7 @@ RSpec.describe Spree::Order, type: :model do
           li.adjustments.build(amount: -3)
         end
       ]
-      # (2*10)-2 + 30-3 = 18 + 27 = 14
+      # (2*10)-2 + 30-3 = 18 + 27 = 45
       expect(subject.item_total_before_tax).to eq 45.0
       expect(subject.display_item_total_before_tax).to eq Spree::Money.new(45)
     end
@@ -1228,7 +1228,7 @@ RSpec.describe Spree::Order, type: :model do
           li.adjustments.build(amount: -3)
         end
       ]
-      # 20-2 + 30-3 = 18 + 27 = 14
+      # 20-2 + 30-3 = 18 + 27 = 45
       expect(subject.shipment_total_before_tax).to eq 45.0
       expect(subject.display_shipment_total_before_tax).to eq Spree::Money.new(45)
     end
@@ -1245,7 +1245,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#quantity" do
-    # Uses a persisted record, as the quantity is retrieved via a DB count
+    # Uses a persisted record, as the quantity is retrieved via a DB sum
     let(:order) { create :order_with_line_items, line_items_count: 3 }
 
     it "sums the quantity of all line items" do
@@ -1454,7 +1454,7 @@ RSpec.describe Spree::Order, type: :model do
             expect(order.payments.first.amount).to eq 100
           end
 
-          # see associated comment in order_decorator#add_store_credit_payments
+          # see associated comment in Spree::Order#add_store_credit_payments
           context "the store credit is already in the pending state" do
             before do
               order.payments.store_credits.last.authorize!

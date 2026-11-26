@@ -117,7 +117,7 @@ module Spree
       verification_value.present?
     end
 
-    # @return [String] the card number, with all but last 4 numbers replace
+    # @return [String] the card number, with all but last 4 numbers replaced
     #   with "X", as in "XXXX-XXXX-XXXX-4338"
     def display_number
       "XXXX-XXXX-XXXX-#{last_digits}"

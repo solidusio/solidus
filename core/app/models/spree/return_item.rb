@@ -23,7 +23,7 @@ module Spree
 
     # @!scope class
     # @!attribute refund_amount_calculator
-    # Configurable calculator for determining the amount ro refund when
+    # Configurable calculator for determining the amount to refund when
     # refunding.
     # @return [Class]
     class_attribute :refund_amount_calculator
@@ -84,7 +84,7 @@ module Spree
 
     money_methods :amount, :total, :total_excluding_vat
 
-    # @return [Boolean] true when this retur item is in a complete reception
+    # @return [Boolean] true when this return item is in a complete reception
     #   state
     def reception_completed?
       COMPLETED_RECEPTION_STATUSES.map(&:to_s).include?(reception_status.to_s)
@@ -136,8 +136,7 @@ module Spree
     end
 
     # Builds the exchange inventory unit for this return item, only if an
-    # exchange is required, correctly associating the variant, line item and
-    # order.
+    # exchange is required, correctly associating the variant and line item.
     def build_exchange_inventory_unit
       # The inventory unit needs to have the new variant
       # but it also needs to know the original line item
@@ -154,7 +153,7 @@ module Spree
 
     # Calculates and sets the default amount to be refunded.
     #
-    # @note This uses the configured refund_amount_calculator configured on the
+    # @note This uses the refund_amount_calculator configured on the
     #   class.
     def set_default_amount
       self.amount = refund_amount_calculator.new.compute(self)

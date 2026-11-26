@@ -91,7 +91,7 @@ module Spree::Api
         end
 
         it "returns only requested ids" do
-          # We need a completly new branch to avoid having parent that can be preloaded from the rails ancestors
+          # We need a completely new branch to avoid having parent that can be preloaded from the rails ancestors
           python = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy:)
           python_three = create(:taxon, name: "3.0", parent: python, taxonomy:)
 

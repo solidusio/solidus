@@ -3,9 +3,8 @@
 module SolidusPromotions
   module Conditions
     # A condition to limit a promotion based on products in the order.  Can
-    # require all or any of the products to be present.  Valid products
-    # either come from assigned product group or are assingned directly to
-    # the condition.
+    # require all, any or none of the products to be present, or only those
+    # products.  Valid products are assigned directly to the condition.
     class Product < Condition
       include LineItemApplicableOrderLevelCondition
 

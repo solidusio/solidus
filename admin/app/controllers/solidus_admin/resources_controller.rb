@@ -14,7 +14,7 @@ module SolidusAdmin
     # GET /index
     #
     # Uses {set_paginated_resources} to set @resources
-    # and a instance variable with the plural name of the resource.
+    # and an instance variable with the plural name of the resource.
     #
     # Uses {paginate} to set @page for pagination.
     #

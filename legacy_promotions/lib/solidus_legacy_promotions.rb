@@ -6,7 +6,7 @@ require "solidus_support"
 
 # We carry controllers and views for both the traditional backend
 # and the new Solidus Admin interface, but we want to continue to function
-# if either of them are not present. If they are present,
+# if either of them is not present. If they are present,
 # however, they need to load before us.
 begin
   require "solidus_admin"

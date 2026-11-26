@@ -68,7 +68,8 @@ module Spree
       adjustable ? adjustable.currency : Spree::Config.currency
     end
 
-    # @return [Boolean] true when this is a promotion adjustment (Promotion adjustments have a {PromotionAction} source)
+    # @return [Boolean] true when this is a promotion adjustment (Promotion adjustments have a source type
+    #   listed in Spree::Config.adjustment_promotion_source_types)
     def promotion?
       source_type.to_s.in?(Spree::Config.adjustment_promotion_source_types.map(&:to_s))
     end

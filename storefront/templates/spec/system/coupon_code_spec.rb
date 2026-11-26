@@ -118,7 +118,7 @@ RSpec.describe "Coupon code promotions", type: :system, js: true do
       end
     end
 
-    # CheckoutsController
+    # CouponCodesController
     context "on the cart page" do
       before do
         visit products_path
