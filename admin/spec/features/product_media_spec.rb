@@ -214,6 +214,48 @@ describe "Product Media Management", :js, type: :feature do
     end
   end
 
+  context "editing an image" do
+    before do
+      create(:image, viewable: product.master, position: 1, alt: "Original alt text")
+    end
+
+    it "opens edit modal and updates alt text" do
+      visit "/admin/products/test-product"
+
+      within_section "Media" do
+        click_on "Edit"
+      end
+
+      expect(page).to have_css("dialog", visible: :visible)
+      expect(page).to have_content("Edit image")
+
+      fill_in "Alternative Text", with: "New alt text"
+
+      click_on "Update"
+
+      expect(page).to have_content("Image was successfully updated.")
+
+      image = Spree::Image.first
+      expect(image.alt).to eq("New alt text")
+    end
+
+    it "cancels edit without saving" do
+      visit "/admin/products/test-product"
+
+      within_section "Media" do
+        click_on "Edit"
+      end
+
+      expect(page).to have_css("dialog", visible: :visible)
+      click_on "Cancel"
+
+      expect(page).to have_no_css("dialog", visible: :visible)
+
+      image = Spree::Image.first
+      expect(image.alt).to eq("Original alt text")
+    end
+  end
+
   def within_section(heading, &block)
     section = find("h2", text: heading).ancestor("[data-controller='ui--panel']")
     within(section) do

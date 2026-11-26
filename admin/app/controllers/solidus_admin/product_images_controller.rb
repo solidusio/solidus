@@ -4,7 +4,8 @@ module SolidusAdmin
   class ProductImagesController < SolidusAdmin::BaseController
     include SolidusAdmin::Moveable
 
-    before_action :load_product, only: [:new, :create, :destroy, :move]
+    before_action :load_product
+    before_action :load_image, only: [:edit, :update]
 
     def new
       @image = @product.master.images.new
@@ -42,10 +43,27 @@ module SolidusAdmin
       redirect_to @product, status: :see_other
     end
 
+    def edit
+      render component("products/show/images/edit").new(product: @product, image: @image)
+    end
+
+    def update
+      if @image.update(image_params)
+        flash[:notice] = t("solidus_admin.products.images.update.success")
+        redirect_to @product, status: :see_other
+      else
+        render component("products/show/images/edit").new(product: @product, image: @image), status: :unprocessable_entity
+      end
+    end
+
     private
 
     def load_product
       @product = Spree::Product.friendly.find(params[:product_id])
+    end
+
+    def load_image
+      @image = Spree::Image.find(params[:id])
     end
 
     def image_params

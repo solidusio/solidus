@@ -53,10 +53,10 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
             begin
               image_tag image.url(:mini), class: "w-12 h-12 object-cover rounded"
             rescue
-              tag.div(nil, class: "w-12 h-12 bg-gray-200 rounded")
+              tag.div(class: "w-12 h-12 bg-gray-200 rounded")
             end
           else
-            tag.div(nil, class: "w-12 h-12 bg-gray-200 rounded")
+            tag.div(class: "w-12 h-12 bg-gray-200 rounded")
           end
         }
       },
@@ -81,6 +81,20 @@ class SolidusAdmin::Products::Form::Media::Component < SolidusAdmin::BaseCompone
       {
         header: t(".size"),
         data: ->(image) { human_size(image.attachment.byte_size) if image.attachment.attached? }
+      },
+      {
+        header: -> { tag.span(t(".edit"), class: "sr-only") },
+        data: ->(image) {
+          render component("ui/button").new(
+            tag: :a,
+            href: solidus_admin.edit_product_image_path(product, image),
+            scheme: :ghost,
+            icon: "pencil-line",
+            "aria-label": t(".edit"),
+            data: {turbo_frame: :edit_image_modal}
+          )
+        },
+        col: {class: "w-12"}
       },
       {
         header: -> { tag.span(t(".reorder"), class: "sr-only") },

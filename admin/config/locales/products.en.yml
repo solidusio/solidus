@@ -13,6 +13,8 @@ en:
       create:
         success: "Product was successfully created."
       images:
+        update:
+          success: "Image was successfully updated."
         destroy:
           success:
             one: "One image was successfully deleted."

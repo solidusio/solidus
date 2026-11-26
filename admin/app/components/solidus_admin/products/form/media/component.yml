@@ -6,6 +6,7 @@ en:
   size: "Size"
   featured: "Featured"
   reorder: "Reorder"
+  edit: "Edit"
   add_files: "Add files"
   select: "Select"
   batch_actions:
