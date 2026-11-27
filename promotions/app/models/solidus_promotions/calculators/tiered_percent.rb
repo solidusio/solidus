@@ -20,9 +20,9 @@ module SolidusPromotions
     #   calculator = TieredPercent.new(
     #     preferred_base_percent: 5,
     #     preferred_tiers: {
-    #       100 => 10,  # 10% off when order total >= $100
-    #       250 => 15,  # 15% off when order total >= $250
-    #       500 => 20   # 20% off when order total >= $500
+    #       100 => 10,  # 10% off when order item total >= $100
+    #       250 => 15,  # 15% off when order item total >= $250
+    #       500 => 20   # 20% off when order item total >= $500
     #     },
     #     preferred_currency: 'USD'
     #   )
@@ -32,9 +32,9 @@ module SolidusPromotions
     #   calculator = TieredPercent.new(
     #     preferred_base_percent: 0,
     #     preferred_tiers: {
-    #       200 => 5,    # 5% wholesale discount at $200
-    #       500 => 10,   # 10% wholesale discount at $500
-    #       1000 => 15   # 15% wholesale discount at $1000
+    #       200 => 5,    # 5% wholesale discount when order item total >= $200
+    #       500 => 10,   # 10% wholesale discount when order item total >= $500
+    #       1000 => 15   # 15% wholesale discount when order item total >= $1000
     #     },
     #     preferred_currency: 'USD'
     #   )
@@ -116,12 +116,11 @@ module SolidusPromotions
         preferred_tiers.transform_values! { |value| value.to_s.to_d }
       end
 
-      # Validates that preferred_tiers is properly formatted with valid thresholds and percentages.
+      # Validates that preferred_tiers has valid thresholds and percentages.
       #
       # Ensures:
-      # - Tiers is a hash
       # - All keys (thresholds) are positive numbers
-      # - All values (percentages) are between 0 and 100
+      # - All values (percentages) are numbers between 0 and 100, inclusive
       def preferred_tiers_content
         unless preferred_tiers.keys.all? { |key| key.is_a?(Numeric) && key > 0 }
           errors.add(:base, :keys_should_be_positive_number)
