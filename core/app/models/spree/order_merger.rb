@@ -10,7 +10,7 @@ module Spree
   class OrderMerger
     # @!attribute order
     #   @api public
-    #   @return [Spree::Order] The order which items wll be merged into.
+    #   @return [Spree::Order] The order which items will be merged into.
     attr_accessor :order
 
     # Create the OrderMerger
@@ -24,12 +24,13 @@ module Spree
 
     # Merge a second order in to the order the OrderMerger was initialized with
     #
-    # The line items from `other_order` will be merged in to the `order` for
-    # this OrderMerger object. If the line items are for the same variant, it
-    # will add the quantity of the incoming line item to the existing line item.
-    # Otherwise, it will assign the line item to the new order.
+    # If both orders have the same currency, the line items from `other_order`
+    # will be merged in to the `order` for this OrderMerger object. If the line
+    # items are for the same variant, it will add the quantity of the incoming
+    # line item to the existing line item. Otherwise, it will build a new line
+    # item on the `order` from the attributes of the incoming line item.
     #
-    # After the orders have been merged the `other_order` will be destroyed.
+    # After that, if the `order` is valid, the `other_order` will be destroyed.
     #
     # @example
     #   initial_order = Spree::Order.find(1)
@@ -42,7 +43,7 @@ module Spree
     # @api public
     # @param [Spree::Order] other_order An order which will be merged in to the
     # order the OrderMerger was initialized with.
-    # @param [Spree::User] user Associate the order the user specified. If not
+    # @param [Spree::User] user Associate the order with the user specified. If not
     # specified, the order user association will not be changed.
     # @return [void]
     def merge!(other_order, user = nil)
@@ -57,7 +58,7 @@ module Spree
       if order.valid?
         persist_merge
 
-        # So that the destroy doesn't take out line items which may have been re-assigned
+        # So that the destroy uses the line items as they are in the database
         other_order.line_items.reload
         other_order.destroy
       end
@@ -65,7 +66,7 @@ module Spree
 
     private
 
-    # Retreive a matching line item from the existing order
+    # Retrieve a matching line item from the existing order
     #
     # It will compare line items based on variants, and all line item
     # comparison hooks on the order.
@@ -97,15 +98,15 @@ module Spree
 
     # Merge the `other_order_line_item` into `current_line_item`
     #
-    # If `current_line_item` is nil, the `other_order_line_item` will be
-    # re-assigned to the `order`.
+    # If `current_line_item` is nil, a new line item will be built on the
+    # `order` from the attributes of the `other_order_line_item`.
     #
     # If the merged line item can not be saved, an error will be added to
     # `order`.
     #
     # @api private
     # @param [Spree::LineItem] current_line_item The line item to be merged
-    # into. If nil, the `other_order_line_item` will be re-assigned.
+    # into. If nil, a copy of the `other_order_line_item` will be added.
     # @param [Spree::LineItem] other_order_line_item The line item to merge in.
     # @return [void]
     def handle_merge(current_line_item, other_order_line_item)

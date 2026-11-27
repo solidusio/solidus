@@ -68,8 +68,8 @@ module Spree
       end
 
       # Takes the amount in cents to capture.
-      # Can be used to capture partial amounts of a payment, and will create
-      # a new pending payment record for the remaining amount to capture later.
+      # Can be used to capture partial amounts of a payment. The amount of this
+      # payment is then set to the sum of its capture events.
       def capture!(capture_amount = nil)
         return true if completed?
         return false unless amount.positive?
@@ -185,8 +185,8 @@ module Spree
         true
       end
 
-      # @returns true if the response is successful
-      # @returns false (and calls #failure) if the response is not successful
+      # @return [true] if the response is successful
+      # @raise [Spree::Core::GatewayError] (after calling #failure) if the response is not successful
       def handle_response(response)
         record_response(response)
 

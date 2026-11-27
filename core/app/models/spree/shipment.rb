@@ -219,12 +219,17 @@ module Spree
       end
     end
 
-    # Assigns the appropriate +state+ according to the following logic:
+    # Assigns the appropriate +state+ according to the following logic, using
+    # the first rule that matches:
     #
-    # canceled   if order is canceled
-    # pending    unless order is complete and +order.payment_state+ is +paid+
     # shipped    if already shipped (ie. does not change the state)
-    # ready      all other cases
+    # pending    if there are no inventory units
+    # canceled   if order is canceled or all inventory units are canceled
+    # pending    unless +order.can_ship?+
+    # ready      if every inventory unit is shipped, canceled or +allow_ship?+, and
+    #            the order is paid or payment is not required to ship
+    #            (+Spree::Config.require_payment_to_ship+)
+    # pending    all other cases
     def recalculate_state
       self.state =
         if shipped?

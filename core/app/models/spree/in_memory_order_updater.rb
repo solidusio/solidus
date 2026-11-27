@@ -6,7 +6,9 @@ module Spree
   class InMemoryOrderUpdater
     attr_reader :order
 
-    # logs a warning when a manipulative query is made when the persist flag is set to false
+    # when true, +recalculate+ logs a warning for manipulative queries (INSERT,
+    # UPDATE or DELETE) made before the order is saved. When persisting, queries
+    # made while updating the totals are exempt.
     class_attribute :log_manipulative_queries
     self.log_manipulative_queries = true
 
@@ -20,9 +22,10 @@ module Spree
     # It is meant to be called from various observers so that the Order is aware of changes
     # that affect totals and other values stored in the Order.
     #
-    # This method should never do anything to the Order that results in a save call on the
-    # object with callbacks (otherwise you will end up in an infinite recursion as the
-    # associations try to save and then in turn try to call +update!+ again.)
+    # The recalculation runs in a transaction. Unless +persist+ is false, it
+    # ends by saving the Order, and after that the +order_recalculated+ event is
+    # published. Do not call this method from Order save callbacks or
+    # +order_recalculated+ subscribers, as that would recurse.
     def recalculate(persist: true)
       monitor =
         if log_manipulative_queries
@@ -61,15 +64,15 @@ module Spree
     alias_method :update, :recalculate
     deprecate update: :recalculate, deprecator: Spree.deprecator
 
-    # Recalculates the state on all of them shipments, then recalculates the
-    # +shipment_state+ attribute according to the following logic:
+    # Recalculates the state on all of the shipments, then recalculates the
+    # +shipment_state+ attribute according to the following logic,
+    # using the first rule that matches:
     #
-    # shipped   when all Shipments are in the "shipped" state
-    # partial   when at least one Shipment has a state of "shipped" and there is another Shipment with a state other than "shipped"
-    #           or there are InventoryUnits associated with the order that have a state of "sold" but are not associated with a Shipment.
-    # ready     when all Shipments are in the "ready" state
-    # backorder when there is backordered inventory associated with an order
-    # pending   when all Shipments are in the "pending" state
+    # backorder when any Shipment has a backordered InventoryUnit
+    # partial   when the Shipments are not all in the same state, which most likely means the Order is partially shipped
+    #
+    # Otherwise it is the state that all Shipments share (e.g. "pending", "ready"
+    # or "shipped"), or nil when there are no Shipments.
     #
     # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def recalculate_shipment_state
@@ -81,13 +84,14 @@ module Spree
     alias_method :update_shipment_state, :recalculate_shipment_state
     deprecate update_shipment_state: :recalculate_shipment_state, deprecator: Spree.deprecator
 
-    # Recalculates the +payment_state+ attribute according to the following logic:
+    # Recalculates the +payment_state+ attribute according to the following logic,
+    # using the first rule that matches:
     #
-    # paid          when +payment_total+ is equal to +total+
-    # balance_due   when +payment_total+ is less than +total+
-    # credit_owed   when +payment_total+ is greater than +total+
-    # failed        when most recent payment is in the failed state
+    # failed        when there are payments, all of them failed, invalid or void, and +outstanding_balance+ is not 0
     # void          when the order has been canceled and the payment total is 0
+    # balance_due   when +outstanding_balance+ is greater than 0
+    # credit_owed   when +outstanding_balance+ is less than 0
+    # paid          when +outstanding_balance+ is 0
     #
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def recalculate_payment_state
@@ -121,7 +125,7 @@ module Spree
         # get all the shipment states for this order
         shipment_states = shipments.states
         if shipment_states.size > 1
-          # multiple shiment states means it's most likely partially shipped
+          # multiple shipment states means it's most likely partially shipped
           "partial"
         else
           # will return nil if no shipments are found
@@ -130,10 +134,10 @@ module Spree
       end
     end
 
-    # This will update and select the best promotion adjustment, update tax
-    # adjustments, update cancellation adjustments, and then update the total
-    # fields (promo_total, included_tax_total, additional_tax_total, and
-    # adjustment_total) on the item.
+    # This will run the promotion adjuster, then the tax adjuster, and then
+    # update the total fields (included_tax_total, additional_tax_total, and
+    # adjustment_total) on every line item and shipment. Promotion systems may
+    # change how those totals are computed, as solidus_legacy_promotions does.
     # @return [void]
     def update_adjustments(persist:)
       # Promotion adjustments must be applied first, then tax adjustments.
@@ -148,11 +152,15 @@ module Spree
 
     # Updates the following Order total values:
     #
-    # +payment_total+      The total value of all finalized Payments (NOTE: non-finalized Payments are excluded)
+    # +payment_total+      The total value of all completed Payments, minus their Refunds
     # +item_total+         The total value of all LineItems
-    # +adjustment_total+   The total value of all adjustments (promotions, credits, etc.)
-    # +promo_total+        The total value of all promotion adjustments
-    # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +adjustment_total+.
+    # +shipment_total+     The total cost of all Shipments
+    # +adjustment_total+   By default, the +adjustment_total+ of all LineItems and Shipments, plus the Order's own adjustments
+    # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +shipment_total+ plus +adjustment_total+.
+    #
+    # The tax totals (+included_tax_total+ and +additional_tax_total+) are updated
+    # too. +promo_total+ is not computed by the updater itself, but by the
+    # promotion adjuster that this method runs.
     def update_totals(persist:)
       recalculate_payment_total
       recalculate_item_total
