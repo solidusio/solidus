@@ -9,6 +9,23 @@ class SolidusAdmin::Taxons::New::Component < SolidusAdmin::BaseComponent
     @taxonomy = taxonomy
   end
 
+  def form_id = dom_id(@taxon, :form)
+
+  def slug_input_attributes
+    if @taxon.persisted?
+      {
+        tag: :input,
+        name: "#{@taxon.model_name.param_key}[permalink_part]",
+        value: @taxon.permalink_part,
+        prefix: ("#{@taxon.parent.permalink}/" if @taxon.parent)
+      }
+    else
+      {tag: :input, readonly: true, placeholder: t(".slug_placeholder")}
+    end
+  end
+
+  def parent_editable? = @taxon.new_record? || !@taxon.root?
+
   def selected_parent_option
     return [] unless (parent = @taxon.parent)
 

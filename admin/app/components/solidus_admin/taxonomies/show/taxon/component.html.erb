@@ -13,6 +13,10 @@
     </span>
 
     <%= render component("ui/dropdown").new(class: "relative ml-auto px-4") do %>
+      <%= link_to solidus_admin.edit_taxonomy_taxon_path(@taxonomy, @taxon.id), class: "flex items-center gap-2 text-sm", data: { turbo_frame: :taxon_form, action: "#{component("ui/dropdown").stimulus_id}#close" } do %>
+        <%= icon_tag "pencil-line", class: "w-4 h-4 fill-current" %>
+        <%= t(".edit") %>
+      <% end %>
       <%= link_to solidus_admin.new_taxonomy_taxon_path(@taxonomy, parent_id: @taxon.id), class: "flex items-center gap-2 text-sm", data: { turbo_frame: :taxon_form, action: "#{component("ui/dropdown").stimulus_id}#close" } do %>
         <%= icon_tag "add-line", class: "w-4 h-4 fill-current" %>
         <%= t(".add_new") %>

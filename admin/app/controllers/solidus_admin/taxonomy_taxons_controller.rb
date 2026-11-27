@@ -4,7 +4,7 @@ module SolidusAdmin
   class TaxonomyTaxonsController < SolidusAdmin::BaseController
     include SolidusAdmin::Moveable
 
-    before_action :load_taxonomy, only: [:new, :create]
+    before_action :load_taxonomy, only: [:new, :create, :edit, :update]
 
     def new
       parent = @taxonomy.taxons.find_by(id: params[:parent_id]) || @taxonomy.root
@@ -18,13 +18,26 @@ module SolidusAdmin
       if taxon.save
         redirect_to solidus_admin.taxonomy_path(@taxonomy), status: :see_other, notice: t(".success")
       else
-        component = new_component(taxon)
-        respond_to do |format|
-          format.html { render component, status: :unprocessable_entity }
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace(:taxon_form, component), status: :unprocessable_entity
-          end
-        end
+        render_form_with_errors(new_component(taxon))
+      end
+    end
+
+    def edit
+      render edit_component(@taxonomy.taxons.find(params[:id]))
+    end
+
+    def update
+      taxon = @taxonomy.taxons.find(params[:id])
+      taxon.assign_attributes(taxon_params.except(:parent_id))
+      taxon.parent = @taxonomy.taxons.find_by(id: taxon_params[:parent_id]) || taxon.parent unless taxon.root?
+
+      if taxon&.parent&.is_or_is_descendant_of?(taxon)
+        taxon.errors.add(:parent_id, :invalid)
+        render_form_with_errors(edit_component(taxon))
+      elsif taxon.save
+        redirect_to solidus_admin.taxonomy_path(@taxonomy), status: :see_other, notice: t(".success")
+      else
+        render_form_with_errors(edit_component(taxon))
       end
     end
 
@@ -58,6 +71,25 @@ module SolidusAdmin
       @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
     end
 
+    def render_form_with_errors(component)
+      respond_to do |format|
+        format.html { render component, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(:taxon_form, component), status: :unprocessable_entity
+        end
+      end
+    end
+
+    def edit_component(taxon)
+      component("taxons/edit").new(
+        taxon:,
+        url: solidus_admin.taxonomy_taxon_path(@taxonomy, taxon.id),
+        frame: :taxon_form,
+        target: "_top",
+        taxonomy: @taxonomy
+      )
+    end
+
     def new_component(taxon)
       component("taxons/new").new(
         taxon:,
@@ -69,7 +101,7 @@ module SolidusAdmin
     end
 
     def taxon_params
-      params.require(:taxon).permit(:name, :parent_id, :description)
+      params.require(:taxon).permit(:name, :parent_id, :description, :permalink_part)
     end
 
     def render_tree

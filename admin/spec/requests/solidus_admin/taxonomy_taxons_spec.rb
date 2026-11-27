@@ -126,6 +126,71 @@ RSpec.describe "SolidusAdmin::TaxonomyTaxonsController", type: :request do
     end
   end
 
+  describe "GET /edit" do
+    it "renders the edit taxon form" do
+      get solidus_admin.edit_taxonomy_taxon_path(taxonomy, child_a1.id)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Edit Category")
+      expect(response.body).to include("#{parent_a.permalink}/")
+      expect(response.body).to include(%(name="taxon[permalink_part]" value="child-a1"))
+    end
+  end
+
+  describe "PATCH /update" do
+    def update_taxon(taxon, **attributes)
+      patch solidus_admin.taxonomy_taxon_path(taxonomy, taxon.id), params: {taxon: attributes}
+    end
+
+    it "updates the taxon" do
+      update_taxon(child_a1, name: "Renamed", description: "New")
+
+      expect(response).to redirect_to(solidus_admin.taxonomy_path(taxonomy))
+      expect(response).to have_http_status(:see_other)
+      expect(child_a1.reload).to have_attributes(name: "Renamed", description: "New")
+    end
+
+    it "updates the last part of the permalink" do
+      update_taxon(child_a1, permalink_part: "Whatever I Want")
+
+      expect(child_a1.reload.permalink).to eq "#{parent_a.permalink}/whatever-i-want"
+    end
+
+    it "moves the taxon to a new parent and updates permalinks" do
+      update_taxon(child_a1, parent_id: parent_b.id)
+
+      expect(child_a1.reload).to have_attributes(parent: parent_b, depth: 2, permalink: "#{parent_b.permalink}/child-a1")
+    end
+
+    it "does not move the taxon under a parent from another taxonomy" do
+      update_taxon(child_a1, parent_id: create(:taxon).id)
+
+      expect(child_a1.reload.parent).to eq parent_a
+    end
+
+    it "does not move the taxon under itself or its descendants" do
+      grandchild = create(:taxon, taxonomy:, parent: child_a1)
+
+      update_taxon(child_a1, parent_id: grandchild.id)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(child_a1.reload.parent).to eq parent_a
+    end
+
+    it "does not change the parent of the root taxon" do
+      update_taxon(root, name: "Renamed root", parent_id: parent_a.id)
+
+      expect(root.reload).to have_attributes(name: "Renamed root", parent: nil)
+    end
+
+    it "responds with unprocessable entity when invalid" do
+      update_taxon(child_a1, name: "")
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(child_a1.reload.name).to eq "Child A1"
+    end
+  end
+
   describe "DELETE /destroy" do
     let!(:grandchild_a1_1) { create(:taxon, name: "Grandchild A1-1", taxonomy:, parent: child_a1) }
     let!(:grandchild_a1_2) { create(:taxon, name: "Grandchild A1-2", taxonomy:, parent: child_a1) }

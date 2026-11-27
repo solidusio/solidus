@@ -135,6 +135,92 @@ describe "Taxonomies", :js, type: :feature do
     end
   end
 
+  describe "editing a taxon" do
+    let!(:taxonomy) { create(:taxonomy, name: "Categories") }
+    let!(:parent_a) { create(:taxon, name: "Parent A", taxonomy: taxonomy) }
+    let!(:parent_b) { create(:taxon, name: "Parent B", taxonomy: taxonomy) }
+    let!(:taxon_a1) { create(:taxon, name: "Child A1", taxonomy: taxonomy, parent: parent_a, description: "Old") }
+
+    def open_edit_modal(name)
+      row = taxon_row(name).find("div", match: :first)
+      row.find("summary").click
+      row.click_on "Edit"
+    end
+
+    it "edits a taxon" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      open_edit_modal("Child A1")
+
+      within(dialog(text: "Edit Category")) do
+        expect(page).to have_field("Name", with: "Child A1")
+        expect(page).to have_content("categories/parent-a/")
+        expect(page).to have_field("taxon[permalink_part]", with: "child-a1")
+        expect(page).to have_field("taxon[description]", with: "Old")
+        expect(solidus_select_control("Parent Category")).to have_text("Categories -> Parent A")
+
+        fill_in "Name", with: "Renamed A1"
+        fill_in "taxon[description]", with: "New"
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Category was successfully updated.")
+      expect(page).not_to have_css("dialog")
+      expect(page).to have_content("1.1.1. Renamed A1")
+      expect(taxon_a1.reload).to have_attributes(name: "Renamed A1", description: "New")
+    end
+
+    it "edits the last part of a taxon's slug" do
+      grandchild = create(:taxon, name: "Grandchild", taxonomy: taxonomy, parent: taxon_a1)
+
+      visit solidus_admin.taxonomy_path(taxonomy)
+      open_edit_modal("Child A1")
+
+      within(dialog(text: "Edit Category")) do
+        fill_in "taxon[permalink_part]", with: "whatever-i-want"
+        click_on "Save"
+      end
+
+      expect(page).to have_content("Category was successfully updated.")
+      expect(taxon_a1.reload.permalink).to eq "categories/parent-a/whatever-i-want"
+      expect(grandchild.reload.permalink).to eq "categories/parent-a/whatever-i-want/grandchild"
+    end
+
+    it "moves a taxon to another parent" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      open_edit_modal("Child A1")
+
+      within(dialog(text: "Edit Category")) do
+        solidus_select "Categories -> Parent B", from: "Parent Category"
+        click_on "Save"
+      end
+
+      expect(page).to have_content("1.2.1. Child A1")
+      expect(taxon_a1.reload).to have_attributes(parent: parent_b, depth: 2)
+    end
+
+    it "shows validation errors" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      open_edit_modal("Child A1")
+
+      within(dialog(text: "Edit Category")) do
+        fill_in "Name", with: ""
+        click_on "Save"
+      end
+
+      expect(dialog(text: "Edit Category")).to have_content("can't be blank")
+    end
+
+    it "does not offer changing the parent of the root taxon" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      open_edit_modal("Categories")
+
+      within(dialog(text: "Edit Category")) do
+        expect(page).to have_field("Name", with: "Categories")
+        expect(page).not_to have_content("Parent Category")
+      end
+    end
+  end
+
   describe "deleting a taxon" do
     let!(:taxonomy) { create(:taxonomy, name: "Categories") }
     let!(:parent_a) { create(:taxon, name: "Parent A", taxonomy: taxonomy) }

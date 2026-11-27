@@ -1,10 +1,12 @@
 <%= turbo_frame_tag @frame, target: @target do %>
   <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
-    <%= form_for @taxon, url: @url, method: :post, html: { id: dom_id(@taxon) } do |f| %>
+    <%= form_for @taxon, url: @url, html: { id: form_id } do |f| %>
       <div class="flex flex-col gap-6 pb-4">
         <%= render component("ui/forms/field").text_field(f, :name, class: "required") %>
-        <%= render component("ui/forms/field").new(label: t(".slug"), input_attributes: { tag: :input, readonly: true, placeholder: t(".slug_placeholder") }) %>
-        <%= render component("ui/forms/select_taxons").new(f, :parent_id, selected_parent_option, **parent_select_attributes) %>
+        <%= render component("ui/forms/field").new(label: t(".slug"), error: @taxon.errors[:permalink].presence&.to_sentence, input_attributes: slug_input_attributes) %>
+        <% if parent_editable? %>
+          <%= render component("ui/forms/select_taxons").new(f, :parent_id, selected_parent_option, **parent_select_attributes) %>
+        <% end %>
         <%= render component("ui/forms/field").text_area(f, :description) %>
       </div>
     <% end %>
@@ -12,7 +14,7 @@
       <form method="dialog">
         <%= render component("ui/button").new(scheme: :secondary, text: t('.cancel')) %>
       </form>
-      <%= render component("ui/button").new(type: :submit, text: t('.submit'), form: dom_id(@taxon)) %>
+      <%= render component("ui/button").new(type: :submit, text: t('.submit'), form: form_id) %>
     <% end %>
   <% end %>
 <% end %>

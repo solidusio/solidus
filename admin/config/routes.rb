@@ -84,7 +84,7 @@ SolidusAdmin::Engine.routes.draw do
   end
   admin_resources :option_values, only: [:edit, :update], sortable: true
   admin_resources :taxonomies, only: [:index, :show, :destroy], sortable: true do
-    resources :taxons, only: [:new, :create, :destroy], controller: "taxonomy_taxons" do
+    resources :taxons, only: [:new, :create, :edit, :update, :destroy], controller: "taxonomy_taxons" do
       member do
         patch :move
       end

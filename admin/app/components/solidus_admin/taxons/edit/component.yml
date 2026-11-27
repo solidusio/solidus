@@ -1,0 +1,7 @@
+en:
+  cancel: "Cancel"
+  none: "None"
+  submit: "Save"
+  title: "Edit Category"
+  slug: "Slug"
+  slug_placeholder: "Slug will be generated after saving."
