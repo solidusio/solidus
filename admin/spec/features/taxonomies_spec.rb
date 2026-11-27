@@ -81,6 +81,7 @@ describe "Taxonomies", :js, type: :feature do
       click_on "Add Category"
 
       within(dialog(text: "New Category")) do
+        expect(page).to have_field("Slug", readonly: true, placeholder: "Slug will be generated after saving.")
         fill_in "Name", with: "Parent B"
         click_on "Add Category"
       end
