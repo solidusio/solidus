@@ -6,6 +6,7 @@ RSpec.describe SolidusAdmin::UI::Forms::Input::Component, type: :component do
   it "renders the overview preview" do
     render_preview(:overview)
     render_preview(:input_playground)
+    render_preview(:input_playground, params: {prefix: "categories/"})
     render_preview(:textarea_playground)
   end
 
@@ -38,6 +39,15 @@ RSpec.describe SolidusAdmin::UI::Forms::Input::Component, type: :component do
       render_inline(described_class.new(type: :date, name: "name", value: "2020-01-01"))
 
       expect(page).to have_css("input[type='date'][name='name'][value='2020-01-01']")
+    end
+  end
+
+  describe "with `prefix`" do
+    it "renders the prefix before the input" do
+      render_inline(described_class.new(type: :text, name: "name", value: "value", prefix: "categories/"))
+
+      expect(page).to have_css("span", exact_text: "categories/")
+      expect(page).to have_css("span + input[name='name'][value='value']")
     end
   end
 

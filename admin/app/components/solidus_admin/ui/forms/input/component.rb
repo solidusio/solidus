@@ -37,7 +37,17 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
     hidden
   ]).freeze
 
-  def initialize(tag: :input, size: :m, error: nil, **attributes)
+  # Initializes a view component that will render an HTML input element.
+  #
+  # @param tag [Symbol] the HTML to build for input (default: +:input:+)
+  # @param size [Symbol] the size of the input to create: either +:s, +:m+,
+  #   or +:l+ (default: +:m+)
+  # @param error [String] an error message for display to the user
+  # @param prefix [String] a read-only prefix to prepend to the form field
+  #   (for context or presentation)
+  # @param attributes [Hash] a hash of attribute options to pass down to
+  #  the form builder methods and affect render presentation
+  def initialize(tag: :input, size: :m, error: nil, prefix: nil, **attributes)
     raise ArgumentError, "unsupported tag: #{tag}" unless %i[input textarea].include?(tag)
 
     specialized_classes = []
@@ -71,12 +81,14 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
       ],
       SIZES[size],
       specialized_classes,
+      ("rounded-l-none" if prefix),
       attributes[:class]
     ].compact.join(" ")
 
     @tag = tag
     @size = size
     @error = error
+    @prefix = prefix
     @attributes = attributes
   end
 
@@ -85,7 +97,11 @@ class SolidusAdmin::UI::Forms::Input::Component < SolidusAdmin::BaseComponent
       with_content @attributes.delete(:value)
     end
 
-    build_tag
+    return build_tag unless @prefix
+
+    tag.div(class: "flex w-full") do
+      tag.span(@prefix, class: "flex items-center px-3 #{HEIGHTS[@size]} text-sm text-gray-500 bg-gray-15 border border-r-0 border-gray-300 rounded-l-sm whitespace-nowrap") + build_tag
+    end
   end
 
   private
