@@ -71,6 +71,50 @@ describe "Taxonomies", :js, type: :feature do
     end
   end
 
+  describe "deleting a taxon" do
+    let!(:taxonomy) { create(:taxonomy, name: "Categories") }
+    let!(:parent_a) { create(:taxon, name: "Parent A", taxonomy: taxonomy) }
+    let!(:taxon_a1) { create(:taxon, name: "Child A1", taxonomy: taxonomy, parent: parent_a) }
+    let!(:taxon_a2) { create(:taxon, name: "Child A2", taxonomy: taxonomy, parent: parent_a) }
+    let!(:child_a1_1) { create(:taxon, name: "Grandchild A1-1", taxonomy: taxonomy, parent: taxon_a1) }
+    let!(:child_a1_2) { create(:taxon, name: "Grandchild A1-2", taxonomy: taxonomy, parent: taxon_a1) }
+
+    it "deletes the taxon and moves its children up a level" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+
+      within(taxon_row("Child A1").find("div", match: :first)) do
+        find("summary").click
+        click_on "Delete"
+      end
+      within("dialog", text: "Delete Child A1?") { click_on "Cancel" }
+      expect(page).to have_content("1.1.1. Child A1")
+
+      row = taxon_row("Child A1").find("div", match: :first)
+      row.find("summary").click
+      accept_turbo_confirm("Delete Child A1?") { row.click_on "Delete" }
+
+      expect(page).not_to have_content("Child A1")
+      expect(page).to have_content("1.1.1. Grandchild A1-1")
+      expect(page).to have_content("1.1.2. Grandchild A1-2")
+      expect(page).to have_content("1.1.3. Child A2")
+
+      expect(Spree::Taxon.exists?(taxon_a1.id)).to eq false
+      expect(child_a1_1.reload).to have_attributes(parent: parent_a, depth: 2)
+      expect(child_a1_2.reload).to have_attributes(parent: parent_a, depth: 2)
+    end
+
+    it "does not offer deleting the root taxon" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+
+      expect(taxon_row("Child A1")).to have_css("summary")
+      expect(taxon_row("Categories").find("div", match: :first)).not_to have_css("summary")
+    end
+  end
+
+  def taxon_row(name)
+    find(:xpath, ".//li[./div//span[@role='listitem' and normalize-space()='#{name}']]")
+  end
+
   def taxon_handle(name)
     find(:xpath, ".//li[./div//span[@role='listitem' and normalize-space()='#{name}']]/div//*[contains(@class, 'handle')]")
   end

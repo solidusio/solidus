@@ -9,6 +9,28 @@ module SolidusAdmin
       @moveable.move_to_child_with_index(parent, params.require(:position).to_i - 1)
       @moveable.reload.update_permalinks
 
+      render_tree
+    end
+
+    def destroy
+      @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
+      taxon = @taxonomy.taxons.where.not(parent_id: nil).find(params[:id])
+      authorize! :destroy, taxon
+
+      Spree::Taxon.transaction do
+        taxon.children.reverse_each do |child|
+          child.move_to_right_of(taxon)
+          child.reload.update_permalinks
+        end
+        taxon.reload.destroy!
+      end
+
+      render_tree
+    end
+
+    private
+
+    def render_tree
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
@@ -18,8 +40,6 @@ module SolidusAdmin
         end
       end
     end
-
-    private
 
     def load_moveable
       @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])

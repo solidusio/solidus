@@ -1,3 +1,6 @@
 en:
   reorder: "Reorder %{name} in the taxon tree"
   title: "Taxon"
+  delete: "Delete"
+  confirm_delete: "Delete %{name}?"
+  confirm_delete_details: "Its child taxons will be moved up a level. This cannot be undone."

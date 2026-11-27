@@ -65,4 +65,39 @@ RSpec.describe "SolidusAdmin::TaxonomyTaxonsController", type: :request do
       expect(child_a2.reload.parent).to eq parent_a
     end
   end
+
+  describe "DELETE /destroy" do
+    let!(:grandchild_a1_1) { create(:taxon, name: "Grandchild A1-1", taxonomy:, parent: child_a1) }
+    let!(:grandchild_a1_2) { create(:taxon, name: "Grandchild A1-2", taxonomy:, parent: child_a1) }
+
+    def destroy(taxon)
+      delete solidus_admin.taxonomy_taxon_path(taxonomy, taxon.id, format: :turbo_stream)
+    end
+
+    it "deletes the taxon" do
+      expect { destroy(child_a1) }.to change(Spree::Taxon, :count).by(-1)
+      expect(Spree::Taxon.exists?(child_a1.id)).to eq false
+    end
+
+    it "moves the taxon's children up a level in its place" do
+      destroy(child_a1)
+
+      expect(parent_a.reload.children).to eq [grandchild_a1_1, grandchild_a1_2, child_a2]
+      expect(grandchild_a1_1.reload).to have_attributes(depth: 2, permalink: "#{parent_a.permalink}/grandchild-a1-1")
+      expect(grandchild_a1_2.reload).to have_attributes(depth: 2, permalink: "#{parent_a.permalink}/grandchild-a1-2")
+    end
+
+    it "responds with the re-rendered taxon tree" do
+      destroy(child_a1)
+
+      expect(response.media_type).to eq "text/vnd.turbo-stream.html"
+      expect(response.body).to include(%(<turbo-stream action="replace" target="taxon_#{root.id}">))
+      expect(response.body).not_to include("Child A1")
+    end
+
+    it "does not allow deleting the root taxon" do
+      expect { destroy(root) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(Spree::Taxon.exists?(root.id)).to eq true
+    end
+  end
 end
