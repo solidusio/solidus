@@ -143,7 +143,7 @@ module Spree::Api
 
       it "can search for products" do
         create(:product, name: "The best product in the world")
-        get spree.api_products_path, params: {q: {name_cont: "best"}}
+        get spree.api_products_path, params: {q: {name_i_cont: "best"}}
         expect(json_response["products"].first).to have_attributes(show_attributes)
         expect(json_response["count"]).to eq(1)
       end

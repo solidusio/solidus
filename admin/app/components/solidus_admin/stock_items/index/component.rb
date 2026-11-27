@@ -6,7 +6,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def search_key
-    :variant_product_name_or_variant_sku_or_variant_option_values_name_or_variant_option_values_presentation_cont
+    :variant_product_name_or_variant_sku_or_variant_option_values_name_or_variant_option_values_presentation_i_cont
   end
 
   def search_url
@@ -145,7 +145,7 @@ class SolidusAdmin::StockItems::Index::Component < SolidusAdmin::UI::Pages::Inde
           "#{count} #{Spree::StockMovement.model_name.human(count:).downcase}",
           solidus_admin.stock_location_stock_movements_path(
             _1.stock_location.id,
-            q: {variant_sku_or_variant_product_name_cont: _1.variant.sku}
+            q: {variant_sku_or_variant_product_name_i_cont: _1.variant.sku}
           ),
           class: "body-link"
         )

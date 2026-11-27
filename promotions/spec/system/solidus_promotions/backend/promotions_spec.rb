@@ -51,19 +51,19 @@ RSpec.feature "Promotions admin" do
       end
 
       it "filters by name" do
-        visit solidus_promotions.admin_promotions_path(q: {name_cont: promotion1.name})
+        visit solidus_promotions.admin_promotions_path(q: {name_i_cont: promotion1.name})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
       end
 
       it "filters by code" do
-        visit solidus_promotions.admin_promotions_path(q: {codes_value_cont: promotion1.codes.first.value})
+        visit solidus_promotions.admin_promotions_path(q: {codes_value_i_cont: promotion1.codes.first.value})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
       end
 
       it "filters by path" do
-        visit solidus_promotions.admin_promotions_path(q: {path_cont: promotion1.path})
+        visit solidus_promotions.admin_promotions_path(q: {path_i_cont: promotion1.path})
         expect(page).to have_content(promotion1.name)
         expect(page).not_to have_content(promotion2.name)
       end

@@ -21,7 +21,7 @@ describe "Refund Reasons", type: :feature do
   end
 
   context "when creating a new refund reason" do
-    let(:query) { "?page=1&q%5Bname_or_code_cont%5D=Ret" }
+    let(:query) { "?page=1&q%5Bname_or_code_i_cont%5D=Ret" }
 
     before do
       visit "/admin/refund_reasons/#{query}"
@@ -66,7 +66,7 @@ describe "Refund Reasons", type: :feature do
   end
 
   context "when editing an existing refund reason" do
-    let(:query) { "?page=1&q%5Bname_or_code_cont%5D=Ret" }
+    let(:query) { "?page=1&q%5Bname_or_code_i_cont%5D=Ret" }
 
     before do
       Spree::RefundReason.create(name: "Return process", active: false)

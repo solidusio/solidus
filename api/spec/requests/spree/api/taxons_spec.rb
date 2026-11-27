@@ -48,7 +48,7 @@ module Spree::Api
       describe "searching" do
         context "with a name" do
           before do
-            get spree.api_taxons_path, params: {q: {name_cont: name}}
+            get spree.api_taxons_path, params: {q: {name_i_cont: name}}
           end
 
           context "with one result" do

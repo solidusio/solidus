@@ -13,7 +13,7 @@ module Spree
         @taxons = if params[:ids]
           Spree::Taxon.where(id: params[:ids].split(","))
         else
-          Spree::Taxon.limit(20).ransack(name_cont: params[:q]).result
+          Spree::Taxon.limit(20).ransack(name_i_cont: params[:q]).result
         end
       end
 

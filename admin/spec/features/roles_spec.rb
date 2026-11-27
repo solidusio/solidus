@@ -49,7 +49,7 @@ describe "Roles", type: :feature do
   end
 
   context "when creating a role" do
-    let(:query) { "?page=1&q%5Bname_cont%5D=new" }
+    let(:query) { "?page=1&q%5Bname_i_cont%5D=new" }
 
     before do
       visit "/admin/roles#{query}"
@@ -118,7 +118,7 @@ describe "Roles", type: :feature do
   end
 
   context "when editing an existing role" do
-    let(:query) { "?page=1&q%5Bname_cont%5D=er" }
+    let(:query) { "?page=1&q%5Bname_i_cont%5D=er" }
 
     before do
       Spree::Role.create(name: "Reviewer", permission_sets: [settings_edit_permission])

@@ -18,7 +18,7 @@ class SolidusAdmin::UI::Pages::Index::ComponentPreview < ViewComponent::Preview
       end
 
       def search_key
-        :number_cont
+        :number_i_cont
       end
 
       def search_url

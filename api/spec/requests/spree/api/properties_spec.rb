@@ -27,7 +27,7 @@ module Spree::Api
     end
 
     it "can query the results through a parameter" do
-      get spree.api_properties_path, params: {q: {name_cont: "ba"}}
+      get spree.api_properties_path, params: {q: {name_i_cont: "ba"}}
       expect(json_response["count"]).to eq(1)
       expect(json_response["properties"].first["presentation"]).to eq property_2.presentation
     end

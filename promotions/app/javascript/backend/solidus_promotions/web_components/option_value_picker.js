@@ -30,7 +30,7 @@ $.fn.optionValueAutocomplete = function (options) {
         var productId = this[0].dataset.productId;
         return {
           q: {
-            name_cont: term,
+            name_i_cont: term,
             variants_product_id_eq: productId,
           },
           token: Spree.api_key,

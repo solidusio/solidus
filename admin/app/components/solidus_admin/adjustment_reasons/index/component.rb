@@ -10,7 +10,7 @@ class SolidusAdmin::AdjustmentReasons::Index::Component < SolidusAdmin::RefundsA
   end
 
   def search_key
-    :name_or_code_cont
+    :name_or_code_i_cont
   end
 
   def page_actions

@@ -64,28 +64,28 @@ module Spree
         {
           partial: "spree/admin/shared/search_fields/text_field",
           locals: {
-            ransack: :number_start,
+            ransack: :number_i_start,
             label: -> { I18n.t(:order_number, scope: :spree, number: "") }
           }
         },
         {
           partial: "spree/admin/shared/search_fields/text_field",
           locals: {
-            ransack: :shipments_number_start,
+            ransack: :shipments_number_i_start,
             label: -> { I18n.t(:shipment_number, scope: :spree) }
           }
         },
         {
           partial: "spree/admin/shared/search_fields/text_field",
           locals: {
-            ransack: :bill_address_name_cont,
+            ransack: :bill_address_name_i_cont,
             label: -> { I18n.t(:name_contains, scope: :spree) }
           }
         },
         {
           partial: "spree/admin/shared/search_fields/text_field",
           locals: {
-            ransack: :email_start,
+            ransack: :email_i_start,
             label: -> { I18n.t(:email, scope: :spree) }
           }
         },

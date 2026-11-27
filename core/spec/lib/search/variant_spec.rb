@@ -81,7 +81,7 @@ module Spree
       context "removing a search query" do
         around do |example|
           search_terms = described_class.search_terms
-          described_class.search_terms -= [:sku_cont]
+          described_class.search_terms -= [:sku_i_cont]
           example.run
           described_class.search_terms = search_terms
         end
@@ -112,7 +112,7 @@ module Spree
             if /\A\d+\z/.match?(word)
               super
             else
-              super - [:sku_cont]
+              super - [:sku_i_cont]
             end
           end
         end)

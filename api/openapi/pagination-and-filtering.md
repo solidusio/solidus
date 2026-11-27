@@ -15,9 +15,9 @@ Most endpoints that return a collection also have the ability to filter data usi
 For example, if we want to retrieve only products that contain the word "Watch" in their title we can make the following request:
 
 ```
-GET /products?q[name_cont]=Watch
+GET /products?q[name_i_cont]=Watch
 ```
 
-The `name_cont` matcher will generate a query using `LIKE` to retrieve all the products that contain the value specified. For an extensive list of search matchers supported, please refer to the Ransack documentation.
+The `name_i_cont` matcher will generate a case-insensitive `LIKE` query (`ILIKE` on PostgreSQL) to retrieve all the products that contain the value specified. Use `name_cont` for a case-sensitive match. For an extensive list of search matchers supported, please refer to the Ransack documentation.
 
 The result will be paginated as described in the paragraph above.

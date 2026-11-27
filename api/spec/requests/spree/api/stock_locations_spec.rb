@@ -108,7 +108,7 @@ module Spree::Api
 
         it "can query the results through a paramter" do
           expected_result = create(:stock_location, name: "South America")
-          get spree.api_stock_locations_path, params: {q: {name_cont: "south"}}
+          get spree.api_stock_locations_path, params: {q: {name_i_cont: "south"}}
           expect(json_response["count"]).to eq(1)
           expect(json_response["stock_locations"].first["name"]).to eq expected_result.name
         end

@@ -43,7 +43,7 @@ class SolidusAdmin::UI::Forms::Select::Component < SolidusAdmin::BaseComponent
   #   a query parameter to be used with search, e.g.:
   #   ```
   #   src: solidus_admin.countries_url,
-  #   "data-query-param": "q[name_cont]",
+  #   "data-query-param": "q[name_i_cont]",
   #   ```
   # @option attributes [String] :"data-no-preload" when +:src+ param is passed, options are preloaded when the component
   #   is initialized. Use this option to disable preload.

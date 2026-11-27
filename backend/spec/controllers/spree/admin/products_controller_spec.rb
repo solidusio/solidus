@@ -11,7 +11,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     # Regression test for https://github.com/spree/spree/issues/1259
     it "can find a product by SKU" do
       product = create(:product, sku: "ABC123")
-      get :index, params: {q: {sku_start: "ABC123"}}
+      get :index, params: {q: {sku_i_start: "ABC123"}}
       expect(assigns[:collection]).not_to be_empty
       expect(assigns[:collection]).to include(product)
     end

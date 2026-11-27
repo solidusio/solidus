@@ -6,7 +6,7 @@ class SolidusAdmin::Products::Index::Component < SolidusAdmin::UI::Pages::Index:
   end
 
   def search_key
-    :name_or_variants_including_master_sku_cont
+    :name_or_variants_including_master_sku_i_cont
   end
 
   def search_url

@@ -10,7 +10,7 @@ class SolidusAdmin::ReturnReasons::Index::Component < SolidusAdmin::RefundsAndRe
   end
 
   def search_key
-    :name_cont
+    :name_i_cont
   end
 
   def edit_path(return_reason)

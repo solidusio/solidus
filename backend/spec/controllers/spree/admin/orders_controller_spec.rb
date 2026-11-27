@@ -326,7 +326,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       context "by email" do
         it "does not display duplicated results" do
           get :index, params: {q: {
-            email_start: Spree::Order.first.email
+            email_i_start: Spree::Order.first.email
           }}
           expect(assigns[:orders].size).to eq 1
           expect(assigns[:orders][0].email).to eq(Spree::Order.first.email)

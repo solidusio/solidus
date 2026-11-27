@@ -6,7 +6,7 @@ class SolidusAdmin::Promotions::Index::Component < SolidusAdmin::UI::Pages::Inde
   end
 
   def search_key
-    :name_or_codes_value_or_path_or_description_cont
+    :name_or_codes_value_or_path_or_description_i_cont
   end
 
   def search_url

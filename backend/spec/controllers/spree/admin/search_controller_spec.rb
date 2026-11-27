@@ -37,6 +37,12 @@ describe Spree::Admin::SearchController, type: :controller do
         end
       end
 
+      context "when searching by email in a different case" do
+        it_should_behave_like "user found by search" do
+          let(:search_query) { starting_letters(user.email).upcase }
+        end
+      end
+
       context "when searching by ship addresss name" do
         it_should_behave_like "user found by search" do
           let(:search_query) { starting_letters(user.ship_address.name) }
@@ -90,7 +96,7 @@ describe Spree::Admin::SearchController, type: :controller do
 
     context "when ids param is not present" do
       context "when the default ransack is used" do
-        let(:params) { {q: {name_cont: "jersey"}} }
+        let(:params) { {q: {name_i_cont: "jersey"}} }
 
         it_should_behave_like "product search" do
           let(:expected_products) { [product_one, product_two] }

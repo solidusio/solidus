@@ -21,8 +21,8 @@ $.fn.productAutocomplete = function (options) {
 
     return {
       q: {
-        name_cont: term,
-        variants_including_master_sku_start: term,
+        name_i_cont: term,
+        variants_including_master_sku_i_start: term,
         m: 'or'
       }
     }
