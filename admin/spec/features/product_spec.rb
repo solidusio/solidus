@@ -190,6 +190,7 @@ describe "Product", type: :feature do
       let(:factory_attrs) { {products: [product]} }
       let(:displayed_attribute) { :name }
       let(:handle) { ".handle" }
+      let(:scope) { panel(title: "Options") }
       let(:path) { solidus_admin.product_path(product) }
     end
   end
