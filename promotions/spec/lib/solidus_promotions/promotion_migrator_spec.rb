@@ -104,7 +104,7 @@ RSpec.describe SolidusPromotions::PromotionMigrator do
   context "if our rules and actions are missing from the promotion map" do
     let(:promotion_map) do
       {
-        rules: {},
+        conditions: {},
         actions: {}
       }
     end
@@ -113,6 +113,17 @@ RSpec.describe SolidusPromotions::PromotionMigrator do
       subject
       expect(Spree::Promotion.count).not_to be_zero
       expect(SolidusPromotions::Promotion.count).to eq(Spree::Promotion.count)
+    end
+  end
+
+  context "if only our rules are missing from the promotion map" do
+    let(:promotion_map) { SolidusPromotions::PROMOTION_MAP.merge(conditions: {}) }
+
+    it "creates the benefit without conditions" do
+      subject
+      benefit = SolidusPromotions::Promotion.first.benefits.first
+      expect(benefit).to be_present
+      expect(benefit.conditions).to be_empty
     end
   end
 end
