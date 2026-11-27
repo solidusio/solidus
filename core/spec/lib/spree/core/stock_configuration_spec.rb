@@ -144,4 +144,127 @@ RSpec.describe Spree::Core::StockConfiguration do
       Object.send(:remove_const, :MyInventoryValidator)
     end
   end
+
+  describe "#build_coordinator" do
+    let(:order) { create(:order_with_line_items) }
+    let!(:inactive_stock_location) { create(:stock_location, active: false) }
+
+    subject(:coordinator) { stock_configuration.build_coordinator(order) }
+
+    before { allow(Spree.deprecator).to receive(:warn) }
+
+    def build_coordinator_class(&block)
+      Class.new do
+        attr_reader :order, :kwargs
+
+        class_eval(&block)
+      end
+    end
+
+    context "with a coordinator that accepts stock_locations" do
+      before do
+        stock_configuration.coordinator_class = "::Spree::Stock::Coordinator"
+      end
+
+      it "passes in the filtered stock locations" do
+        expect(coordinator.stock_locations).to match_array(Spree::StockLocation.active)
+        expect(coordinator.stock_locations).not_to include(inactive_stock_location)
+      end
+
+      it "does not warn about deprecated usage" do
+        coordinator
+        expect(Spree.deprecator).not_to have_received(:warn)
+      end
+    end
+
+    context "with the default coordinator" do
+      it "passes in the filtered stock locations" do
+        expect(coordinator.stock_locations).not_to include(inactive_stock_location)
+      end
+
+      it "does not warn about deprecated usage" do
+        coordinator
+        expect(Spree.deprecator).not_to have_received(:warn)
+      end
+    end
+
+    context "with a coordinator that accepts any keyword arguments" do
+      let(:coordinator_class) do
+        build_coordinator_class do
+          def initialize(order, **kwargs)
+            @order = order
+            @kwargs = kwargs
+          end
+        end
+      end
+
+      before do
+        allow(stock_configuration).to receive(:coordinator_class).and_return(coordinator_class)
+      end
+
+      it "passes in the filtered stock locations" do
+        expect(coordinator.kwargs[:stock_locations]).not_to include(inactive_stock_location)
+        expect(coordinator.kwargs[:stock_locations]).to be_present
+      end
+
+      it "does not warn about deprecated usage" do
+        coordinator
+        expect(Spree.deprecator).not_to have_received(:warn)
+      end
+    end
+
+    context "with a coordinator that does not accept stock_locations" do
+      let(:coordinator_class) do
+        build_coordinator_class do
+          def initialize(order, inventory_units: nil)
+            @order = order
+            @kwargs = {inventory_units:}
+          end
+        end
+      end
+
+      before do
+        allow(stock_configuration).to receive(:coordinator_class).and_return(coordinator_class)
+      end
+
+      it "builds the coordinator without stock locations" do
+        expect(coordinator.order).to eq order
+        expect(coordinator.kwargs).not_to have_key(:stock_locations)
+      end
+
+      it "warns about deprecated usage" do
+        coordinator
+        expect(Spree.deprecator).to have_received(:warn).with(/should accept a `stock_locations:` keyword/)
+      end
+    end
+
+    context "when inventory units are given" do
+      let(:inventory_units) { [build(:inventory_unit)] }
+
+      subject(:coordinator) { stock_configuration.build_coordinator(order, inventory_units:) }
+
+      it "passes them to the coordinator" do
+        expect(coordinator.inventory_units).to eq inventory_units
+      end
+    end
+  end
+
+  describe "#stock_locations_for" do
+    let(:order) { create(:order) }
+    let!(:active_stock_location) { create(:stock_location, active: true) }
+    let!(:inactive_stock_location) { create(:stock_location, active: false) }
+
+    subject { stock_configuration.stock_locations_for(order) }
+
+    it "excludes inactive stock locations" do
+      is_expected.to include(active_stock_location)
+      is_expected.not_to include(inactive_stock_location)
+    end
+
+    it "uses the configured stock location filter and sorter" do
+      expect(stock_configuration).to receive(:location_filter_class).and_call_original
+      expect(stock_configuration).to receive(:location_sorter_class).and_call_original
+      subject
+    end
+  end
 end

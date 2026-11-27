@@ -520,7 +520,7 @@ module Spree
     def create_shipments_for_line_item(line_item)
       inventory_units = Spree::Config.stock.inventory_unit_builder_class.new(self).missing_units_for_line_item(line_item)
 
-      Spree::Config.stock.coordinator_class.new(self, inventory_units:).shipments.each do |shipment|
+      Spree::Config.stock.build_coordinator(self, inventory_units:).shipments.each do |shipment|
         shipments << shipment
       end
     end

@@ -21,7 +21,7 @@ class Spree::OrderShipping
       raise Spree::Order::CannotRebuildShipments.new(I18n.t("spree.cannot_rebuild_shipments_shipments_not_pending"))
     else
       @order.shipments.destroy_all
-      @order.shipments.push(*Spree::Config.stock.coordinator_class.new(@order).shipments)
+      @order.shipments.push(*Spree::Config.stock.build_coordinator(@order).shipments)
     end
   end
 
