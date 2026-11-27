@@ -1,3 +1,5 @@
 en:
-  title: "Taxonomy"
   add_category: "Add Category"
+  edit_categories: "Edit %{name}"
+  title: "Taxonomy"
+

@@ -13,7 +13,9 @@
     <% end %>
   <% end %>
 
-  <%= render component("ui/panel").new do |panel| %>
+  <%= render component("ui/panel").new(
+    title: t(".edit_categories", name: @taxonomy.name)
+  ) do |panel| %>
     <% panel.with_section(wide: true, high: true) do %>
       <ol class="flex flex-col w-full bg-gray-25">
         <%= render component("taxonomies/show/taxon").new(
