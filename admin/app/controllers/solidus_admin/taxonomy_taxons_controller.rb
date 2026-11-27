@@ -4,6 +4,30 @@ module SolidusAdmin
   class TaxonomyTaxonsController < SolidusAdmin::BaseController
     include SolidusAdmin::Moveable
 
+    before_action :load_taxonomy, only: [:new, :create]
+
+    def new
+      parent = @taxonomy.taxons.find_by(id: params[:parent_id]) || @taxonomy.root
+      render new_component(@taxonomy.taxons.build(parent:))
+    end
+
+    def create
+      taxon = @taxonomy.taxons.build(taxon_params)
+      taxon.parent = @taxonomy.taxons.find_by(id: taxon.parent_id) || @taxonomy.root
+
+      if taxon.save
+        redirect_to solidus_admin.taxonomy_path(@taxonomy), status: :see_other, notice: t(".success")
+      else
+        component = new_component(taxon)
+        respond_to do |format|
+          format.html { render component, status: :unprocessable_entity }
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace(:taxon_form, component), status: :unprocessable_entity
+          end
+        end
+      end
+    end
+
     def move
       parent = params[:parent_id] ? @taxonomy.taxons.find(params[:parent_id]) : @moveable.parent
       @moveable.move_to_child_with_index(parent, params.require(:position).to_i - 1)
@@ -29,6 +53,24 @@ module SolidusAdmin
     end
 
     private
+
+    def load_taxonomy
+      @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
+    end
+
+    def new_component(taxon)
+      component("taxons/new").new(
+        taxon:,
+        url: solidus_admin.taxonomy_taxons_path(@taxonomy),
+        frame: :taxon_form,
+        target: "_top",
+        taxonomy: @taxonomy
+      )
+    end
+
+    def taxon_params
+      params.require(:taxon).permit(:name, :parent_id, :description)
+    end
 
     def render_tree
       respond_to do |format|

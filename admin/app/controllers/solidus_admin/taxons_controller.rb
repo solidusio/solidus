@@ -21,6 +21,7 @@ module SolidusAdmin
           Spree::Taxonomy.arel_table[:position].asc,
           Spree::Taxon.arel_table[:lft].asc
         )
+      taxons = taxons.where(taxonomy_id: params[:taxonomy_id]) if params[:taxonomy_id]
       taxons.associate_parents(taxons)
     end
   end

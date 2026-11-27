@@ -71,6 +71,69 @@ describe "Taxonomies", :js, type: :feature do
     end
   end
 
+  describe "adding a taxon" do
+    let!(:taxonomy) { create(:taxonomy, name: "Categories") }
+    let!(:parent_a) { create(:taxon, name: "Parent A", taxonomy: taxonomy) }
+    let!(:taxon_a1) { create(:taxon, name: "Child A1", taxonomy: taxonomy, parent: parent_a) }
+
+    it "adds a taxon to the root of the taxonomy by default" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      click_on "Add Category"
+
+      within(dialog(text: "New Category")) do
+        fill_in "Name", with: "Parent B"
+        click_on "Add Category"
+      end
+
+      expect(page).to have_content("Category was successfully added.")
+      expect(page).not_to have_css("dialog")
+      expect(page).to have_content("1.2. Parent B")
+      expect(taxonomy.root.children.last).to have_attributes(name: "Parent B", depth: 1)
+    end
+
+    it "adds a taxon under the selected parent" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      click_on "Add Category"
+
+      within(dialog(text: "New Category")) do
+        fill_in "Name", with: "Child A2"
+        solidus_select "Categories -> Parent A", from: "Parent Category"
+        click_on "Add Category"
+      end
+
+      expect(page).to have_content("1.1.2. Child A2")
+      expect(parent_a.reload.children.last).to have_attributes(name: "Child A2", depth: 2)
+    end
+
+    it "adds a taxon under a row's taxon from its menu" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+
+      row = taxon_row("Child A1").find("div", match: :first)
+      row.find("summary").click
+      row.click_on "Add new"
+
+      within(dialog(text: "New Category")) do
+        expect(solidus_select_control("Parent Category")).to have_text("Categories -> Parent A -> Child A1")
+        fill_in "Name", with: "Grandchild A1-1"
+        click_on "Add Category"
+      end
+
+      expect(page).to have_content("1.1.1.1. Grandchild A1-1")
+      expect(taxon_a1.reload.children.last).to have_attributes(name: "Grandchild A1-1", depth: 3)
+    end
+
+    it "shows validation errors" do
+      visit solidus_admin.taxonomy_path(taxonomy)
+      click_on "Add Category"
+
+      within(dialog(text: "New Category")) do
+        click_on "Add Category"
+      end
+
+      expect(dialog(text: "New Category")).to have_content("can't be blank")
+    end
+  end
+
   describe "deleting a taxon" do
     let!(:taxonomy) { create(:taxonomy, name: "Categories") }
     let!(:parent_a) { create(:taxon, name: "Parent A", taxonomy: taxonomy) }
@@ -106,8 +169,11 @@ describe "Taxonomies", :js, type: :feature do
     it "does not offer deleting the root taxon" do
       visit solidus_admin.taxonomy_path(taxonomy)
 
-      expect(taxon_row("Child A1")).to have_css("summary")
-      expect(taxon_row("Categories").find("div", match: :first)).not_to have_css("summary")
+      row = taxon_row("Categories").find("div", match: :first)
+      row.find("summary").click
+
+      expect(row).to have_link("Add new")
+      expect(row).not_to have_button("Delete")
     end
   end
 

@@ -4,3 +4,4 @@ en:
   delete: "Delete"
   confirm_delete: "Delete %{name}?"
   confirm_delete_details: "Its child taxons will be moved up a level. This cannot be undone."
+  add_new: "Add new"

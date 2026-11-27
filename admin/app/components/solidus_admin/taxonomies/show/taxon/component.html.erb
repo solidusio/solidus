@@ -12,9 +12,16 @@
       <span role="listitem"><%= name %></span>
     </span>
 
-    <% unless @taxon.root? %>
-      <%= render component("ui/dropdown").new(class: "relative ml-auto px-4") do %>
-        <%= button_to t(".delete"), solidus_admin.taxonomy_taxon_path(@taxonomy, @taxon.id), method: :delete, class: "text-red-500 text-left", data: {turbo_confirm: t(".confirm_delete", name:), confirm_details: t(".confirm_delete_details"), confirm_button: t(".delete")} %>
+    <%= render component("ui/dropdown").new(class: "relative ml-auto px-4") do %>
+      <%= link_to solidus_admin.new_taxonomy_taxon_path(@taxonomy, parent_id: @taxon.id), class: "flex items-center gap-2 text-sm", data: { turbo_frame: :taxon_form, action: "#{component("ui/dropdown").stimulus_id}#close" } do %>
+        <%= icon_tag "add-line", class: "w-4 h-4 fill-current" %>
+        <%= t(".add_new") %>
+      <% end %>
+      <% unless @taxon.root? %>
+        <%= button_to solidus_admin.taxonomy_taxon_path(@taxonomy, @taxon.id), method: :delete, class: "flex items-center gap-2 text-sm text-red-500 text-left", data: {turbo_confirm: t(".confirm_delete", name:), confirm_details: t(".confirm_delete_details"), confirm_button: t(".delete")} do %>
+          <%= icon_tag "delete-bin-7-line", class: "w-4 h-4 fill-current" %>
+          <%= t(".delete") %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

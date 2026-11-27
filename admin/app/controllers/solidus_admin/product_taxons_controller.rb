@@ -2,14 +2,19 @@
 
 module SolidusAdmin
   class ProductTaxonsController < SolidusAdmin::BaseController
+    before_action :init_taxon, only: [:new, :create]
     before_action :load_product, only: [:new, :create]
 
     def new
-      render component("products/show/categories/new").new(product: @product)
+      render component("taxons/new").new(
+        taxon: @taxon,
+        url: solidus_admin.product_taxons_path(@product),
+        frame: :new_product_category,
+        target: :product_organization_frame
+      )
     end
 
     def create
-      init_taxon
       root_taxon! if @taxon.root?
       @product.taxons << @taxon
 
@@ -17,7 +22,14 @@ module SolidusAdmin
         format.html { redirect_to @product, status: :see_other, notice: t(".success") }
       end
     rescue ActiveRecord::RecordInvalid
-      component = component("products/show/categories/new").new(product: @product, taxon: @taxon)
+      component =
+        component("taxons/new").new(
+          taxon: @taxon,
+          url: solidus_admin.product_taxons_path(@product),
+          frame: :new_product_category,
+          target: :product_organization_frame
+        )
+
       respond_to do |format|
         format.html { render component, status: :unprocessable_entity }
         format.turbo_stream do
@@ -52,7 +64,7 @@ module SolidusAdmin
     end
 
     def category_params
-      params.require(:taxon).permit(:name, :parent_id, :description)
+      params.fetch(:taxon, {}).permit(:name, :parent_id, :description)
     end
   end
 end
