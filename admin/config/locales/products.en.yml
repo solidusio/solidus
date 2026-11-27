@@ -12,3 +12,10 @@ en:
         success: "Product was successfully updated."
       create:
         success: "Product was successfully created."
+      images:
+        update:
+          success: "Image was successfully updated."
+        destroy:
+          success:
+            one: "One image was successfully deleted."
+            other: "%{count} images were successfully deleted."

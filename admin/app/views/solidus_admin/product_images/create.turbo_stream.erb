@@ -1,0 +1,14 @@
+<%= turbo_stream.replace "new_product_image" do end %>
+
+<%= turbo_stream.replace "product_media_frame" do %>
+  <%= turbo_frame_tag :product_media_frame, class: "w-full" do %>
+    <%= render component("products/form/media").new(
+      form: ActionView::Helpers::FormBuilder.new(
+        @product.class.model_name.param_key,
+        @product,
+        self,
+        {}
+      )
+    ) %>
+  <% end %>
+<% end %>

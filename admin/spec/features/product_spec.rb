@@ -50,6 +50,11 @@ describe "Product", type: :feature do
       fill_in "Name", with: "Just a product"
       fill_in "Master Price", with: "19.99"
       solidus_select "Default Shipping", from: "Shipping category"
+
+      # Resolves flakiness in CI runs related to the test continuing before
+      # the select element options have completed loading.
+      expect(page).to have_no_css(".loading")
+
       within("header") { click_button "Save" }
 
       expect(page).to have_content("Product was successfully created.")
@@ -190,6 +195,7 @@ describe "Product", type: :feature do
       let(:factory_attrs) { {products: [product]} }
       let(:displayed_attribute) { :name }
       let(:handle) { ".handle" }
+      let(:scope) { panel(title: "Options") }
       let(:path) { solidus_admin.product_path(product) }
     end
   end

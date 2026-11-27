@@ -79,7 +79,7 @@ en:
         total_excluding_vat: Pre-Tax Total
       spree/image:
         alt: Alternative Text
-        attachment: Filename
+        attachment: Attachment
       spree/inventory_unit:
         state: State
       spree/legacy_user:
@@ -486,6 +486,10 @@ en:
             base:
               card_expired: Card has expired
               expiry_invalid: Card expiration is invalid
+        spree/image:
+          attributes:
+            attachment:
+              content_type_not_supported: not a supported file type
         spree/inventory_unit:
           attributes:
             base:

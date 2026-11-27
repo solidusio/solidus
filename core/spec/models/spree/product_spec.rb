@@ -633,6 +633,36 @@ RSpec.describe Spree::Product, type: :model do
     end
   end
 
+  context "#image_ids" do
+    subject { product.image_ids }
+
+    let(:product) { build :product }
+    let(:master) { product.master }
+
+    it "delegates #images_ids to the master variant" do
+      allow(master).to receive(:image_ids)
+
+      subject
+
+      expect(master).to have_received(:image_ids).once
+    end
+  end
+
+  context "#image_ids=" do
+    subject { product.image_ids = [1, 2, 3] }
+
+    let(:product) { build :product }
+    let(:master) { product.master }
+
+    it "delegates #images_ids to the master variant" do
+      allow(master).to receive(:image_ids=).with([1, 2, 3])
+
+      subject
+
+      expect(master).to have_received(:image_ids=).with([1, 2, 3]).once
+    end
+  end
+
   # Regression tests for https://github.com/spree/spree/issues/2352
   context "classifications and taxons" do
     it "is joined through classifications" do

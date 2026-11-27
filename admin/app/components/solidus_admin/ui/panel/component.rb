@@ -5,6 +5,10 @@ class SolidusAdmin::UI::Panel::Component < SolidusAdmin::BaseComponent
     render component("ui/button").add(text: name, path: href, icon:, size:, **args)
   }
 
+  renders_one :header_action, ->(name:, href:, icon: "add-line", size: :m, **args) {
+    render component("ui/button").add(text: name, path: href, icon:, size:, **args)
+  }
+
   renders_many :sections, ->(**args, &block) do
     render_section(**args, &block)
   end

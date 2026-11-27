@@ -1,0 +1,17 @@
+<div class="flex-col">
+  <div class="flex items-center text-black">
+    <%= file %>
+
+    <% if requires_truncation? %>
+      <%= render component("ui/toggletip").new text: @filename,
+        class: "px-1",
+        label: t(".full_filename"),
+        position: :below,
+        icon: "file-info-fill" %>
+    <% end %>
+  </div>
+
+  <div class="text-gray-500">
+    <%= extension %>
+  </div>
+</div>

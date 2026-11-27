@@ -1,0 +1,37 @@
+<%= turbo_frame_tag :new_product_image do %>
+  <%= render component("ui/modal").new(title: t(".title")) do |modal| %>
+    <%= form_for @image, url: solidus_admin.product_images_path(@product), html: { id: dom_id(@image), multipart: true } do |f| %>
+      <div class="flex flex-col gap-6 pb-4">
+        <% if error_message.present? %>
+          <%= render component("ui/alert").new(
+            title: t(".error.title"),
+            message: error_message.html_safe,
+            scheme: :danger,
+            dismissable: false
+          ) %>
+        <% end %>
+
+        <div id="drop-zone"
+             class="relative w-full border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-colors duration-200 hover:bg-gray-100"
+             data-controller="products--form--media"
+             data-action="dragover->products--form--media#preventDefaultAndHighlight dragenter->products--form--media#preventDefaultAndHighlight dragleave->products--form--media#unhighlight drop->products--form--media#onDrop">
+          <%= f.file_field :attachment,
+            multiple: true,
+            class: "required absolute inset-0 w-full h-full opacity-0 cursor-pointer",
+            data: { "products--form--media-target": "fileInput" } %>
+          <div class="relative z-10 pointer-events-none">
+            <div id="media-loading" class="hidden" data-products--form--media-target="loading">
+              <%= render component("ui/loading").new %>
+            </div>
+            <div id="media-upload-content" data-products--form--media-target="uploadContent">
+              <%= button_tag type: "button", class: "inline-block", data: { action: "click->products--form--media#openFileInput" } do %>
+                <%= render component("ui/button").new(scheme: :secondary, icon: "upload-2-fill", text: t('.add_files')) %>
+              <% end %>
+              <p class="mt-2 text-sm text-gray-500"><%= t('.drag_and_drop') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

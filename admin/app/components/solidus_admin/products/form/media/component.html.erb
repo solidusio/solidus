@@ -1,0 +1,22 @@
+<%= render component("ui/panel").new(title: t(".title")) do |panel| %>
+  <% panel.with_header_action(
+    name: t(".add_files"),
+    scheme: :secondary,
+    icon: "upload-2-fill",
+    href: solidus_admin.new_product_image_path(product),
+    data: {turbo_frame: :new_product_image}
+  ) %>
+  <% panel.with_section(high: true, wide: true) do %>
+    <div class="pb-2">
+      <%= render component("ui/table").new(
+        id: :media,
+        data: table_data,
+        sortable: sortable_options,
+        embedded: true
+      ) %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= turbo_frame_tag :new_product_image %>
+<%= turbo_frame_tag :edit_image_modal, target: "_top" %>
