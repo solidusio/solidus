@@ -12,13 +12,25 @@
         scheme: :ghost
       ) %>
 
-      <%= render component("ui/button").new(
-        tag: :a,
-        text: t(".view"),
-        href: SolidusAdmin::Config.storefront_product_path(@product),
-        target: :_blank,
-        scheme: :ghost
-      ) %>
+      <% if storefront_links.one? %>
+        <%= render component("ui/button").new(
+          tag: :a,
+          text: t(".view"),
+          href: storefront_links.first.url,
+          target: :_blank,
+          scheme: :ghost
+        ) %>
+      <% else %>
+        <%= render component("ui/dropdown").new(
+          text: t(".view"),
+          size: :s,
+          class: "relative font-semibold text-gray-700 [&>summary]:px-3 [&>summary]:py-1.5 [&>summary]:rounded [&>summary:hover]:bg-gray-50"
+        ) do %>
+          <% storefront_links.each do |link| %>
+            <%= link_to link.name, link.url, target: :_blank, rel: :noopener, class: "font-normal whitespace-nowrap" %>
+          <% end %>
+        <% end %>
+      <% end %>
       <%= render component("ui/button").save(form: form_id) %>
     <% end %>
   <% end %>
