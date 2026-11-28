@@ -1,5 +1,6 @@
 en:
   address: Address
+  branding: Logo and favicon
   localization: Localization
   plugins:
     install: Install

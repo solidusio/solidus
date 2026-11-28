@@ -13,7 +13,11 @@
     </div>
     <div class="flex items-center gap-x-4 xl:gap-x-8 w-full justify-center lg:justify-start">
       <%= link_to root_path, class: 'absolute lg:relative left-1/2 lg:left-0 lg:-translate-x-0 -translate-x-1/2 flex items-center space-x-3' do %>
-        <%= image_tag "logo_small_no_label.svg" %>
+        <% if (logo_url = store_logo_url) %>
+          <%= image_tag logo_url, alt: current_store.name, class: "h-8 w-auto" %>
+        <% else %>
+          <%= image_tag "logo_small_no_label.svg" %>
+        <% end %>
         <span class="uppercase font-sans font-semibold mb-0 dark:text-sand text-body lg:text-body-sm xl:text-body-sm"><%= Spree::Store.default.name %></span>
       <% end %>
 
