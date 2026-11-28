@@ -79,6 +79,81 @@ RSpec.describe Solidus::InstallGenerator do
     end
   end
 
+  describe "running migrations before the user class is set" do
+    let(:options) { ["--frontend=none", "--authentication=none", "--payment-method=none"] }
+
+    def build_generator(*extra_options)
+      described_class.new([], options + extra_options).tap do |generator|
+        allow(generator).to receive(:say_status)
+      end
+    end
+
+    it "warns and asks whether to run the migrations" do
+      generator = build_generator
+      allow(generator).to receive(:ask_with_description).and_return("no")
+
+      generator.prepare_options
+
+      expect(generator).to have_received(:say_status).with(:warning, /"spree_users" table/, :yellow)
+      expect(generator).to have_received(:ask_with_description).with(hash_including(limited_to: %w[yes no], default: "yes"))
+      aggregate_failures do
+        expect(generator.instance_variable_get(:@run_migrations)).to eq(false)
+        expect(generator.instance_variable_get(:@load_seed_data)).to eq(false)
+        expect(generator.instance_variable_get(:@load_sample_data)).to eq(false)
+      end
+    end
+
+    it "runs the migrations when the answer is yes" do
+      generator = build_generator
+      allow(generator).to receive(:ask_with_description).and_return("yes")
+
+      generator.prepare_options
+
+      expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
+    end
+
+    it "only warns with --auto-accept" do
+      generator = build_generator("--auto-accept")
+      allow(generator).to receive(:ask_with_description)
+
+      generator.prepare_options
+
+      expect(generator).to have_received(:say_status).with(:warning, /"spree_users" table/, :yellow)
+      expect(generator).not_to have_received(:ask_with_description)
+      expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
+    end
+
+    it "does not ask when --user_class is given" do
+      generator = build_generator("--user_class=User")
+      allow(generator).to receive(:ask_with_description)
+
+      generator.prepare_options
+
+      expect(generator).not_to have_received(:say_status).with(:warning, any_args)
+      expect(generator).not_to have_received(:ask_with_description)
+      expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
+    end
+
+    it "does not ask when solidus_auth_devise provides the user class" do
+      generator = build_generator("--authentication=devise")
+      allow(generator).to receive(:ask_with_description)
+
+      generator.prepare_options
+
+      expect(generator).not_to have_received(:ask_with_description)
+      expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
+    end
+
+    it "does not ask when migrations are disabled" do
+      generator = build_generator("--migrate=false")
+      allow(generator).to receive(:ask_with_description)
+
+      generator.prepare_options
+
+      expect(generator).not_to have_received(:ask_with_description)
+    end
+  end
+
   describe "failure handling" do
     it "aborts instead of continuing when migrations fail" do
       generator = described_class.new([], ["--auto-accept"])
