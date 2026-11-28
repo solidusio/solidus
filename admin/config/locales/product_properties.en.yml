@@ -1,0 +1,6 @@
+en:
+  solidus_admin:
+    product_properties:
+      title: "Product specifications"
+      update:
+        success: "Product specifications were successfully updated."

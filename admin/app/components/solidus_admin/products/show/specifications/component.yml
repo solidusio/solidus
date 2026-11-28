@@ -1,0 +1,8 @@
+en:
+  add_group: "Add specification group"
+  all_variants: "All variants"
+  edit: "Edit"
+  empty: "No specifications yet"
+  general: "General"
+  matching_variants: "%{count} of %{total} variants"
+  title: "Specifications"

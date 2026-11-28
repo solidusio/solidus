@@ -93,41 +93,7 @@
           ) %>
         <% end %>
 
-        <%= render component("ui/panel").new(title: t(".specifications")) do |panel| %>
-          <% if product_properties.any? || variant_property_rules.any? %>
-            <% panel.with_section do %>
-              <div class="flex flex-col gap-4">
-                <% if product_properties.any? %>
-                  <div class="flex flex-col gap-2">
-                    <span class="font-semibold text-sm"><%= t(".general_specifications") %></span>
-                    <div class="flex gap-2 flex-wrap">
-                      <% product_properties.each do |product_property| %>
-                        <%= render component("ui/badge").new(name: "#{product_property.property.presentation}:#{product_property.value}") %>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-
-                <% variant_property_rules.each do |rule| %>
-                  <div class="flex flex-col gap-2">
-                    <span class="font-semibold text-sm"><%= variant_property_rule_title(rule) %></span>
-                    <div class="flex gap-2 flex-wrap">
-                      <% rule.values.each do |rule_value| %>
-                        <%= render component("ui/badge").new(name: "#{rule_value.property.presentation}:#{rule_value.value}") %>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-
-          <% panel.with_action(
-            name: t(".manage_properties"),
-            scheme: :secondary,
-            href: spree.admin_product_product_properties_path(@product)
-          ) %>
-        <% end %>
+        <%= render component("products/show/specifications").new(product: @product) %>
       <% end %>
 
       <%= page_with_sidebar_aside do %>
@@ -168,3 +134,4 @@
 <% end %>
 
 <%= turbo_frame_tag :new_product_category, target: :product_organization_frame %>
+<%= turbo_frame_tag :specifications_modal, target: "_top" %>

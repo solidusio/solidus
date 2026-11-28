@@ -1,0 +1,7 @@
+<%= turbo_stream.append :specification_rows do %>
+  <%= fields_for :product, @product, builder: SolidusAdmin::FormBuilder do |form| %>
+    <%= form.fields_for :product_properties, @product_property, child_index: SecureRandom.random_number(2**32) do |row| %>
+      <%= render component("products/show/specifications/rows/row").new(form: row) %>
+    <% end %>
+  <% end %>
+<% end %>
