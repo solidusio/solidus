@@ -3,3 +3,5 @@ en:
   none: "None"
   submit: "Add Category"
   title: "New Category"
+  slug: "Slug"
+  slug_placeholder: "Slug will be generated after saving."

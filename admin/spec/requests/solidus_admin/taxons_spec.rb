@@ -39,5 +39,16 @@ RSpec.describe "SolidusAdmin::TaxonsController", type: :request do
         {"id" => taxon_b2.id, "pretty_name" => "Tree B -> Parent B -> Child B2"}
       ]
     end
+
+    it "filters taxons by taxonomy" do
+      get "/admin/taxons/pretty_names", params: {taxonomy_id: taxonomy_b.id}
+
+      expect(JSON.parse(response.body).pluck("pretty_name")).to eq [
+        "Tree B",
+        "Tree B -> Parent B",
+        "Tree B -> Parent B -> Child B1",
+        "Tree B -> Parent B -> Child B2"
+      ]
+    end
   end
 end

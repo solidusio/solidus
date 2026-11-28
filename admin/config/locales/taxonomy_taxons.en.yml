@@ -1,0 +1,7 @@
+en:
+  solidus_admin:
+    taxonomy_taxons:
+      create:
+        success: "Category was successfully added."
+      update:
+        success: "Category was successfully updated."

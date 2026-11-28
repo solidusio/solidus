@@ -1,0 +1,44 @@
+<%= tag.li(**container_attributes) do %>
+  <div class="bg-white h-12 flex items-center border border-gray-100 rounded-sm hover:bg-gray-50 py-2 leading-none">
+    <span aria-roledescription="<%= t(".reorder", name:) %>" class="px-4" draggable="true">
+      <%= render component("ui/icon").new(
+        name: "draggable",
+        class: "w-6 h-6 my-4 cursor-grab handle fill-gray-500")
+       %>
+    </span>
+
+    <span class="select-none">
+      <span class="px-4 w-16"><%= position %>.</span>
+      <span role="listitem"><%= name %></span>
+    </span>
+
+    <%= render component("ui/dropdown").new(class: "relative ml-auto px-4") do %>
+      <%= link_to solidus_admin.edit_taxonomy_taxon_path(@taxonomy, @taxon.id), class: "flex items-center gap-2 text-sm", data: { turbo_frame: :taxon_form, action: "#{component("ui/dropdown").stimulus_id}#close" } do %>
+        <%= icon_tag "pencil-line", class: "w-4 h-4 fill-current" %>
+        <%= t(".edit") %>
+      <% end %>
+      <%= link_to solidus_admin.new_taxonomy_taxon_path(@taxonomy, parent_id: @taxon.id), class: "flex items-center gap-2 text-sm", data: { turbo_frame: :taxon_form, action: "#{component("ui/dropdown").stimulus_id}#close" } do %>
+        <%= icon_tag "add-line", class: "w-4 h-4 fill-current" %>
+        <%= t(".add_new") %>
+      <% end %>
+      <% unless @taxon.root? %>
+        <%= button_to solidus_admin.taxonomy_taxon_path(@taxonomy, @taxon.id), method: :delete, class: "flex items-center gap-2 text-sm text-red-500 text-left", data: {turbo_confirm: t(".confirm_delete", name:), confirm_details: t(".confirm_delete_details"), confirm_button: t(".delete")} do %>
+          <%= icon_tag "delete-bin-7-line", class: "w-4 h-4 fill-current" %>
+          <%= t(".delete") %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% children = @taxon.children %>
+  <%= tag.ol(class: "bg-gray-25 flex flex-col pt-2", data: list_data) do %>
+    <% children.each_with_index do |child, index| %>
+      <%= render component("taxonomies/show/taxon").new(
+        taxon: child,
+        taxonomy: @taxonomy,
+        prefix: "#{@prefix}.#{index + 1}",
+        indent: true
+      ) %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -12,13 +12,15 @@ class SolidusAdmin::UI::Forms::Input::ComponentPreview < ViewComponent::Preview
   # @param size select { choices: [s, m, l] }
   # @param value text
   # @param type select :input_types
-  def input_playground(error: false, size: "m", value: "value", type: "text")
+  # @param prefix text
+  def input_playground(error: false, size: "m", value: "value", type: "text", prefix: "")
     render component("ui/forms/input").new(
       tag: :input,
       type: type.to_sym,
       error: error ? "There is an error" : nil,
       size: size.to_sym,
-      value:
+      value:,
+      prefix: prefix.presence
     )
   end
 

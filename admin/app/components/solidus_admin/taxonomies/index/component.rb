@@ -5,9 +5,7 @@ class SolidusAdmin::Taxonomies::Index::Component < SolidusAdmin::UI::Pages::Inde
     Spree::Taxonomy
   end
 
-  def row_url(taxonomy)
-    spree.edit_admin_taxonomy_path(taxonomy)
-  end
+  def row_url(taxonomy) = solidus_admin.taxonomy_path(taxonomy)
 
   def sortable_options
     {

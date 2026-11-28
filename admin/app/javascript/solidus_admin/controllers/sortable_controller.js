@@ -9,20 +9,24 @@ export default class extends Controller {
     animation: { type: Number, default: 150 },
     page: { type: Number },
     perPage: { type: Number },
+    group: String,
+    responseKind: { type: String, default: 'js' },
   }
 
   connect() {
-    this.sortable = Sortable.create(this.element, {
+    this.sortable ??= Sortable.create(this.element, {
       onEnd: this.onEnd.bind(this),
       animation: this.animationValue,
       handle: this.handleValue,
+      group: this.groupValue || undefined,
     })
   }
 
-  async onEnd({ item, newIndex }) {
+  async onEnd({ item, newIndex, to }) {
     if (!item.dataset.sortableUrl) return
 
     const data = new FormData()
+    if (to.dataset.sortableParentId) data.append("parent_id", to.dataset.sortableParentId)
     let newPosition = newIndex + 1;
     if (this.pageValue && this.perPageValue) {
       const offset = (this.pageValue - 1) * this.perPageValue;
@@ -30,10 +34,12 @@ export default class extends Controller {
     }
     data.append(this.paramValue, newPosition)
 
-    return await patch(item.dataset.sortableUrl, { body: data, responseKind: "js" })
+    return await patch(item.dataset.sortableUrl, { body: data, responseKind: this.responseKindValue })
   }
 
   disconnect() {
+    if (this.element.isConnected) return
+
     this.sortable.destroy()
     this.sortable = null
   }

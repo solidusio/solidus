@@ -18,6 +18,14 @@ module SolidusAdmin
       end
     end
 
+    def show
+      @taxonomy = Spree::Taxonomy.find(params[:id])
+
+      respond_to do |format|
+        format.html { render component("taxonomies/show").new(taxonomy: @taxonomy) }
+      end
+    end
+
     def destroy
       @taxonomies = Spree::Taxonomy.where(id: params[:id])
 
