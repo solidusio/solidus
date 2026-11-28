@@ -1,0 +1,6 @@
+en:
+  title: "Edit Reimbursement Type"
+  cancel: "Cancel"
+  submit: "Update Reimbursement Type"
+  hints:
+    active: "When checked, this reimbursement type will be available for selection."

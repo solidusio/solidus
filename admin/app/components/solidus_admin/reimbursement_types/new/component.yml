@@ -1,0 +1,5 @@
+en:
+  title: "New Reimbursement Type"
+  cancel: "Cancel"
+  hints:
+    active: "When checked, this reimbursement type will be available for selection."

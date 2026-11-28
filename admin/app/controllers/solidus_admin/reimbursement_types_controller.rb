@@ -1,26 +1,15 @@
 # frozen_string_literal: true
 
 module SolidusAdmin
-  class ReimbursementTypesController < SolidusAdmin::BaseController
-    include SolidusAdmin::ControllerHelpers::Search
-
-    def index
-      reimbursement_types = apply_search_to(
-        Spree::ReimbursementType.unscoped.order(id: :desc),
-        param: :q
-      )
-
-      @page = paginate(reimbursement_types)
-
-      respond_to do |format|
-        format.html { render component("reimbursement_types/index").new(page: @page) }
-      end
-    end
-
+  class ReimbursementTypesController < SolidusAdmin::ResourcesController
     private
 
-    def reimbursement_type_params
-      params.require(:reimbursement_type).permit(:reimbursement_type_id, permitted_reimbursement_type_attributes)
+    def resource_class = Spree::ReimbursementType
+
+    def resources_collection = Spree::ReimbursementType.unscoped
+
+    def permitted_resource_params
+      params.require(:reimbursement_type).permit(:name, :active)
     end
   end
 end

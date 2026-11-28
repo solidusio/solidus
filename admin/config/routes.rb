@@ -96,7 +96,7 @@ SolidusAdmin::Engine.routes.draw do
   admin_resources :stores, except: [:show]
   admin_resources :zones, except: [:show]
   admin_resources :refund_reasons, except: [:show]
-  admin_resources :reimbursement_types, only: [:index]
+  admin_resources :reimbursement_types, except: [:show]
   admin_resources :return_reasons, except: [:show]
   admin_resources :roles, except: [:show]
   admin_resources :adjustment_reasons, except: [:show]
