@@ -39,6 +39,12 @@ RSpec.describe SolidusAdmin::UI::Alert::Component, type: :component do
 
           expect(button["aria-label"]).to eq "Close"
         end
+
+        it "animates the alert in" do
+          render_inline(component)
+
+          expect(page).to have_css('[data-controller="alert-animation"]')
+        end
       end
 
       context "when not dismissable" do
@@ -48,6 +54,12 @@ RSpec.describe SolidusAdmin::UI::Alert::Component, type: :component do
           render_inline(component)
 
           expect(page.find_all("button")).to be_empty
+        end
+
+        it "is not animated" do
+          render_inline(component)
+
+          expect(page).not_to have_css("[data-controller]")
         end
       end
     end

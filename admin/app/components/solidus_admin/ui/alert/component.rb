@@ -66,7 +66,7 @@ class SolidusAdmin::UI::Alert::Component < SolidusAdmin::BaseComponent
   end
 
   def stimulus_attributes
-    return {} unless @dimissable
+    return {} unless @dismissable
 
     {
       "data-controller": "alert-animation",

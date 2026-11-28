@@ -144,15 +144,33 @@ module SolidusAdmin
     end
 
     def render_resource_form_with_errors(page_component)
+      set_base_errors_flash
+
       respond_to do |format|
         format.html do
           render page_component, status: :unprocessable_entity
         end
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(resource_form_frame, page_component),
-            status: :unprocessable_entity
+          streams = [turbo_stream.replace(resource_form_frame, page_component)]
+          streams << turbo_stream.replace("flash_alerts", component("layout/flashes/alerts").new(alerts: flash[:alert])) if flash[:alert]
+
+          render turbo_stream: streams, status: :unprocessable_entity
         end
       end
+    end
+
+    # Errors on the resource itself (i.e. not on one of its attributes) have no
+    # form field to be shown next to, so they are shown in an alert instead.
+    #
+    # Override this method to show them differently for a given resource.
+    def set_base_errors_flash
+      # Some controllers keep the record in another instance variable.
+      return unless @resource
+
+      base_errors = @resource.errors[:base]
+      return if base_errors.empty?
+
+      flash.now[:alert] = {danger: {message: base_errors.join("\n")}}
     end
 
     def permitted_resource_params
